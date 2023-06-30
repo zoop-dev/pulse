@@ -62,7 +62,6 @@ import no.nordicsemi.android.dfu.DfuServiceInitiator;
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
@@ -92,6 +91,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.adablefs.AdaBleFsProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.ResourceUploadProgressListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -112,6 +115,8 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     private final DeviceInfoProfile<PineTimeJFSupport> deviceInfoProfile;
     private final BatteryInfoProfile<PineTimeJFSupport> batteryInfoProfile;
+
+    private final AdaBleFsProfile<PineTimeJFSupport> adaBleFsProfile;
 
     private final int MaxNotificationLength = 100;
     private final int CutNotificationTitleMinAt = 25;
@@ -250,6 +255,101 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     percent, speed, averageSpeed, segment, totalSegments));
         }
     };
+    private final ResourceUploadProgressListener resourceUploadProgressListener = new ResourceUploadProgressListener() {
+        private final LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
+
+        /**
+         * Sets the progress bar to indeterminate or not, also makes it visible
+         *
+         * @param indeterminate if indeterminate
+         */
+        public void setIndeterminate(boolean indeterminate) {
+            manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_INDETERMINATE, indeterminate));
+        }
+
+        /**
+         * Sets the status text and logs it
+         */
+        public void setProgress(int progress) {
+            manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_PROGRESS, progress));
+        }
+
+        /**
+         * Sets the text that describes progress
+         *
+         * @param progressText text to display
+         */
+        public void setProgressText(String progressText) {
+            manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
+        }
+
+        @Override
+        public void onDeviceConnecting(final String mac) {
+            this.setIndeterminate(true);
+            this.setProgressText(getContext().getString(R.string.devicestatus_connecting));
+        }
+
+        @Override
+        public void onDeviceConnected(final String mac) {
+            this.setIndeterminate(true);
+            this.setProgressText(getContext().getString(R.string.devicestatus_connected));
+        }
+
+        @Override
+        public void onUploadStarting(final String mac) {
+            this.setIndeterminate(true);
+            this.setProgressText(getContext().getString(R.string.devicestatus_upload_starting));
+        }
+
+        @Override
+        public void onDeviceDisconnecting(final String mac) {
+            this.setProgressText(getContext().getString(R.string.devicestatus_disconnecting));
+        }
+
+        @Override
+        public void onDeviceDisconnected(final String mac) {
+            this.setIndeterminate(true);
+            this.setProgressText(getContext().getString(R.string.devicestatus_disconnected));
+        }
+
+        @Override
+        public void onUploadCompleted(final String mac) {
+            this.setProgressText(getContext().getString(R.string.devicestatus_upload_completed));
+            this.setIndeterminate(false);
+            this.setProgress(100);
+
+            handler = null;
+            controller = null;
+            gbDevice.unsetBusyTask();
+            // TODO: Request reconnection
+        }
+
+        @Override
+        public void onUploadAborted(final String mac) {
+            this.setProgressText(getContext().getString(R.string.devicestatus_upload_aborted));
+            gbDevice.unsetBusyTask();
+        }
+
+        @Override
+        public void onError(final String mac, int error, int errorType, final String message) {
+            this.setProgressText(getContext().getString(R.string.devicestatus_upload_failed));
+            gbDevice.unsetBusyTask();
+        }
+
+        @Override
+        public void onProgressChanged(final String mac,
+                                      int percent,
+                                      float speed,
+                                      float averageSpeed,
+                                      int segment,
+                                      int totalSegments) {
+            this.setProgress(percent);
+            this.setIndeterminate(false);
+            this.setProgressText(String.format(Locale.ENGLISH,
+                    getContext().getString(R.string.firmware_update_progress),
+                    percent, speed, averageSpeed, segment, totalSegments));
+        }
+    };
 
     public PineTimeJFSupport() {
         super(LOG);
@@ -287,6 +387,10 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         batteryInfoProfile = new BatteryInfoProfile<>(this);
         batteryInfoProfile.addListener(mListener);
         addSupportedProfile(batteryInfoProfile);
+
+        adaBleFsProfile = new AdaBleFsProfile<>(this);
+        addSupportedProfile(adaBleFsProfile);
+        addSupportedService(AdaBleFsProfile.UUID_CHARACTERISTIC_FS_TRANSFER);
     }
 
     private void handleBatteryInfo(nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo info) {
@@ -444,9 +548,42 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     @Override
     public void onInstallApp(Uri uri, @NonNull final Bundle options) {
-        try {
-            handler = new PineTimeInstallHandler(uri, getContext());
+        handler = new PineTimeInstallHandler(uri, getContext());
+        if (!handler.isValid()) {
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT)
+                    .putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.fwinstaller_firmware_not_compatible_to_device)));
+            return;
+        }
+        if (handler.updateType == PineTimeInstallHandler.InfiniTimeUpdateType.DFU) {
+            installDfu(uri);
+        } else if (handler.updateType == PineTimeInstallHandler.InfiniTimeUpdateType.RESOURCES) {
+            installResource(uri);
+        }
+    }
 
+    public void installResource(Uri uri) {
+        try {
+            gbDevice.setBusyTask("resources upgrade");
+            adaBleFsProfile.loadResources(uri, getContext(), getQueue());
+
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR)
+                    .putExtra(GB.PROGRESS_BAR_INDETERMINATE, true)
+            );
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT)
+                    .putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.devicestatus_upload_starting))
+            );
+        } catch (Exception ex) {
+            GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            if (gbDevice.isBusy() && gbDevice.getBusyTask().equals("resources upgrade")) {
+                gbDevice.unsetBusyTask();
+            }
+        }
+
+    }
+
+    public void installDfu(Uri uri) {
+        handler = new PineTimeInstallHandler(uri, getContext());
+        try {
             if (handler.isValid()) {
                 gbDevice.setBusyTask(R.string.updating_firmware, getContext());
                 DfuServiceInitiator starter = new DfuServiceInitiator(getDevice().getAddress())
@@ -470,7 +607,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             } else {
                 LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT)
                         .putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.fwinstaller_firmware_not_compatible_to_device)));
-            }
+	    }
         } catch (Exception ex) {
             GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
             if (gbDevice.isBusy() && gbDevice.getBusyTask().equals("firmware upgrade")) {
