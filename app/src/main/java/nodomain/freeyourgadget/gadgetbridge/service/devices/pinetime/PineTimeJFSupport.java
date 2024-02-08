@@ -972,7 +972,14 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     private void onSendWeatherSimple(WeatherSpec weatherSpec) {
         long timestampLocal = weatherSpec.getTimestamp() + Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()) / 1000L;
 
-        ByteBuffer currentPacket = ByteBuffer.allocate(49).order(ByteOrder.LITTLE_ENDIAN);
+        int weatherMemAlloc = 49;
+        byte version = 0;
+        if (isFirmwareAtLeastVersion0_15()) {
+            weatherMemAlloc = 53;
+            version = 1;
+        }
+        ByteBuffer currentPacket = ByteBuffer.allocate(weatherMemAlloc).order(ByteOrder.LITTLE_ENDIAN);
+        currentPacket.put(1, version);
         currentPacket.putLong(2, timestampLocal);
         currentPacket.putShort(10, (short) ((weatherSpec.getCurrentTemp() - 273.15) * 100));
         currentPacket.putShort(12, (short) ((weatherSpec.getTodayMinTemp() - 273.15) * 100));
@@ -984,6 +991,14 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             }
         }
         currentPacket.put(48, mapOpenWeatherConditionToPineTimeCondition(weatherSpec.getCurrentConditionCode()).value);
+
+        if (isFirmwareAtLeastVersion0_15()) {
+            // Calculate sunrise and sunset minutes since midnight
+            short sunriseMinutes = (short) ((weatherSpec.getSunRise() + Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()) / 1000L) / 60 % 1440);
+            short sunsetMinutes = (short) ((weatherSpec.getSunSet() + Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()) / 1000L) / 60 % 1440);
+            currentPacket.putShort(49, sunriseMinutes);
+            currentPacket.putShort(51, sunsetMinutes);
+        }
 
         TransactionBuilder currentBuilder = createTransactionBuilder("SimpleWeatherData");
         safeWriteToCharacteristic(currentBuilder,
