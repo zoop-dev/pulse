@@ -394,7 +394,11 @@ public class XiaomiFWHelper {
     }
 
     private boolean parseAsFirmware() {
-        // TODO parse and set version
+        // Only test for Mi Band 8 Pro
+        if (fw[0] == 96 && fw[1] == 90 && fw[2] == 90 && fw[4] == 126) {
+            version = new String(fw, 4, 11, StandardCharsets.UTF_8);
+            return true;
+        }
         return false;
     }
 }
