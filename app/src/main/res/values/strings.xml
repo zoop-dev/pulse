@@ -3908,9 +3908,12 @@
     <string name="notification_channel_connection_status_name">Connection Status</string>
     <string name="uploading">Uploading…</string>
     <string name="uploading_watchface">Uploading watchface…</string>
+    <string name="uploading_rpk">Uploading rpk…</string>
     <string name="uploadwatchfaceoperation_in_progress">Uploading watchface</string>
     <string name="uploadwatchfaceoperation_complete">Watchface installation completed</string>
     <string name="uploadwatchfaceoperation_failed">Watchface installation failed</string>
+    <string name="uploadrpkoperation_complete">Rpk installation completed</string>
+    <string name="uploadrpkoperation_failed">Rpk installation failed</string>
     <string name="pref_force_connection_type_title">Force connection type</string>
     <string name="pref_force_connection_type_description">You may try forcing the connection type in case your device does not respond to Gadgetbridge</string>
     <string name="pref_force_connection_type_auto">Automatic</string>

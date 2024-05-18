@@ -42,6 +42,7 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
 
     public static final byte TYPE_WATCHFACE = 16;
     public static final byte TYPE_FIRMWARE = 32;
+    public static final byte TYPE_RPK = 64;
     public static final byte TYPE_NOTIFICATION_ICON = 50;
 
     private Callback callback;
