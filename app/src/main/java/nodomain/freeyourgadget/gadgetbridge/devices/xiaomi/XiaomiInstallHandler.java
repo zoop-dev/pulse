@@ -84,6 +84,9 @@ public class XiaomiInstallHandler implements InstallHandler {
         } else if (helper.isFirmware()) {
             installItem.setIcon(R.drawable.ic_firmware);
             installItem.setName(mContext.getString(R.string.kind_firmware));
+        } else if (helper.isRpk()) {
+            installItem.setIcon(R.drawable.ic_watchapp);
+            installItem.setName(mContext.getString(R.string.kind_app));
         } else {
             installItem.setIcon(R.drawable.ic_device_unknown);
             installItem.setName(mContext.getString(R.string.kind_invalid));
