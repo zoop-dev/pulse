@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 
 import com.google.protobuf.ByteString;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +71,7 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
                 final XiaomiProto.DataUploadAck dataUploadAck = cmd.getDataUpload().getDataUploadAck();
                 LOG.debug("Got upload start, unknown2={}, resumePosition={}", dataUploadAck.getUnknown2(), dataUploadAck.getResumePosition());
 
-                if (dataUploadAck.getUnknown2() != 0 || dataUploadAck.getResumePosition() != 0) {
+                if (dataUploadAck.getUnknown2() != 0) {
                     LOG.warn("Unexpected response");
                     onUploadFinish(false);
                     return;
@@ -83,7 +84,7 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
                 }
 
                 LOG.debug("Using chunk size of {} bytes", chunkSize);
-                doUpload(currentType, currentBytes);
+                doUpload(currentType, currentBytes,dataUploadAck.getResumePosition());
                 return;
         }
 
@@ -125,11 +126,11 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
         );
     }
 
-    private void doUpload(final short type, final byte[] bytes) {
+    private void doUpload(final short type, final byte[] bytes,int resumePosition) {
         LOG.debug("Doing upload for {} bytes of type {}", bytes.length, type);
 
         // type + md5 + size + bytes + crc32
-        final ByteBuffer buf1 = ByteBuffer.allocate(2 + 16 + 4 + bytes.length).order(ByteOrder.LITTLE_ENDIAN);
+        final ByteBuffer buf1 = ByteBuffer.allocate(2 + 16 + 4 + bytes.length - resumePosition).order(ByteOrder.LITTLE_ENDIAN);
         final byte[] md5 = CheckSums.md5(bytes);
         if (md5 == null) {
             onUploadFinish(false);
@@ -140,7 +141,7 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
         buf1.put((byte) type);
         buf1.put(md5);
         buf1.putInt(bytes.length);
-        buf1.put(bytes);
+        buf1.put(ArrayUtils.subarray(bytes,resumePosition,bytes.length));
 
         final ByteBuffer buf2 = ByteBuffer.allocate(buf1.capacity() + 4).order(ByteOrder.LITTLE_ENDIAN);
         buf2.put(buf1.array());
