@@ -41,12 +41,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.CreateFileMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.DownloadRequestMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FileTransferDataMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FilterMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SynchronizationMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SystemEventMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.UploadRequestMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.CreateFileStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.DownloadRequestStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.FileTransferDataStatusMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.FilterStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.UploadRequestStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -94,6 +97,16 @@ public class FileTransferHandler implements MessageHandler {
             return upload.setUploadRequestStatusMessage((UploadRequestStatusMessage) message);
         else if (message instanceof FileTransferDataStatusMessage)
             return upload.processUploadProgress((FileTransferDataStatusMessage) message);
+        else if (message instanceof SynchronizationMessage)
+            return processSynchronizationMessage((SynchronizationMessage) message);
+        else if (message instanceof FilterStatusMessage)
+            return initiateDownload();
+        return null;
+    }
+
+    private FilterMessage processSynchronizationMessage(SynchronizationMessage message) {
+        if (message.shouldProceed())
+            return new FilterMessage();
 
         return null;
     }

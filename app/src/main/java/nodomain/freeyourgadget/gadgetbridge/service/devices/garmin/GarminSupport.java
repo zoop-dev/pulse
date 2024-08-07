@@ -110,6 +110,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SetD
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SetFileFlagsMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SupportedFileTypesMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SystemEventMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.GenericStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.NotificationSubscriptionStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
@@ -295,8 +296,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return; //message cannot be handled
         }
 
-        LOG.debug("Got GFDIMessage {} ({} bytes)", parsedMessage.getClass().getSimpleName(), message.length);
-
+        LOG.debug("INCOMING message: {}/{}: {}", parsedMessage, parsedMessage.getGarminMessage(), GB.hexdump(message));
         /*
         the handler elaborates the followup message but might change the status message since it does
         check the integrity of the incoming message payload. Hence we let the handlers elaborate the
@@ -317,13 +317,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             evaluateGBDeviceEvent(event);
         }
 
-        communicator.sendMessage("send status", parsedMessage.getAckBytestream()); //send status message
+        sendAck("send status", parsedMessage); //send status message
 
         sendOutgoingMessage("send reply", parsedMessage); //send reply if any
 
         sendOutgoingMessage("send followup", followup); //send followup message if any
 
-        if (parsedMessage instanceof ConfigurationMessage) { //the last forced message exchange
+        if (parsedMessage instanceof GenericStatusMessage && ((GenericStatusMessage) parsedMessage).getGarminMessage() == GFDIMessage.GarminMessage.CONFIGURATION) { //the last forced message exchange
             completeInitialization();
         }
 
@@ -477,6 +477,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         // We initiate download here even in the new sync protocol so that the watch "flushes" the data
         // otherwise we might get incomplete monitor files
         sendOutgoingMessage("fetch recorded data", fileTransferHandler.initiateDownload());
+
+        //TODO: ask the watch to initiate the sync? Something like:
+        //        sendOutgoingMessage("set sync ready", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_READY, 0));
+        //        sendOutgoingMessage("set foreground", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.HOST_DID_ENTER_FOREGROUND, 0));
     }
 
     public boolean newSyncProtocol() {
@@ -598,7 +602,17 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private void sendOutgoingMessage(final String taskName, final GFDIMessage message) {
         if (message == null)
             return;
+        if (message.getOutgoingMessage() != null)
+            LOG.debug("OUTGOING message {}: {}", message, GB.hexdump(message.getOutgoingMessage()));
         communicator.sendMessage(taskName, message.getOutgoingMessage());
+    }
+
+    private void sendAck(final String taskName, final GFDIMessage message) {
+        if (message == null)
+            return;
+        if (message.getAckBytestream() != null)
+            LOG.debug("OUTGOING ACK {}: {}", message, GB.hexdump(message.getAckBytestream()));
+        communicator.sendMessage(taskName, message.getAckBytestream());
     }
 
     private void sendWeatherConditions(WeatherSpec weather) {
@@ -708,19 +722,23 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     private void completeInitialization() {
+        sendOutgoingMessage("request supported file types", new SupportedFileTypesMessage());
+        sendDeviceSettings();
+
         if (GBApplication.getPrefs().syncTime()) {
             onSetTime();
         }
-        enableWeather();
-
         //following is needed for vivomove style
         sendOutgoingMessage("set sync ready", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_READY, 0));
 
         enableBatteryLevelUpdate();
 
-        gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
+        sendOutgoingMessage("set foreground", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.HOST_DID_ENTER_FOREGROUND, 0));
 
-        sendOutgoingMessage("request supported file types", new SupportedFileTypesMessage());
+
+        gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext());
+
 
         if (mFirstConnect) {
             sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
@@ -833,6 +851,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     getDevice().sendDeviceUpdateIntent(getContext());
                 }
                 isBusyFetching = false;
+
+                sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
+                sendOutgoingMessage("set background", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.HOST_DID_ENTER_BACKGROUND, 0));
+
                 return;
             }
 
@@ -855,6 +877,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     GB.signalActivityDataFinish(getDevice());
                     transferNotification.finish();
                     getDevice().sendDeviceUpdateIntent(getContext());
+                    isBusyFetching = false;
                 }
             });
         }
@@ -872,12 +895,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         sendOutgoingMessage("enable battery updates", batteryLevelProtobufRequest);
     }
 
-    private void enableWeather() {
+    private void sendDeviceSettings() {
         final Map<SetDeviceSettingsMessage.GarminDeviceSetting, Object> settings = new LinkedHashMap<>(3);
-        settings.put(SetDeviceSettingsMessage.GarminDeviceSetting.AUTO_UPLOAD_ENABLED, false);
+        settings.put(SetDeviceSettingsMessage.GarminDeviceSetting.AUTO_UPLOAD_ENABLED, true);
         settings.put(SetDeviceSettingsMessage.GarminDeviceSetting.WEATHER_CONDITIONS_ENABLED, true);
         settings.put(SetDeviceSettingsMessage.GarminDeviceSetting.WEATHER_ALERTS_ENABLED, false);
-        sendOutgoingMessage("enable weather", new SetDeviceSettingsMessage(settings));
+        sendOutgoingMessage("send device settings", new SetDeviceSettingsMessage(settings));
     }
 
     @Override

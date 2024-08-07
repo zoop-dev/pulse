@@ -27,8 +27,9 @@ public class DeviceInformationMessage extends GFDIMessage {
     private final String deviceName;
     private final String deviceModel;
     // dual-pairing flags & MAC addresses...
+    private final boolean generateOutgoing;
 
-    public DeviceInformationMessage(GarminMessage garminMessage, int protocolVersion, int productNumber, String unitNumber, int softwareVersion, int maxPacketSize, String bluetoothFriendlyName, String deviceName, String deviceModel) {
+    public DeviceInformationMessage(GarminMessage garminMessage, int protocolVersion, int productNumber, String unitNumber, int softwareVersion, int maxPacketSize, String bluetoothFriendlyName, String deviceName, String deviceModel, boolean generateOutgoing) {
         this.garminMessage = garminMessage;
         this.incomingProtocolVersion = protocolVersion;
         this.incomingProductNumber = productNumber;
@@ -41,6 +42,11 @@ public class DeviceInformationMessage extends GFDIMessage {
 
         GFDIMessage.setMaxPacketSize(maxPacketSize);
         this.statusMessage = getStatusMessage();
+        this.generateOutgoing = generateOutgoing;
+    }
+
+    public DeviceInformationMessage(GarminMessage garminMessage, int protocolVersion, int productNumber, String unitNumber, int softwareVersion, int maxPacketSize, String bluetoothFriendlyName, String deviceName, String deviceModel) {
+        this(garminMessage, protocolVersion, productNumber, unitNumber, softwareVersion, maxPacketSize, bluetoothFriendlyName, deviceName, deviceModel, false);
     }
 
     public static DeviceInformationMessage parseIncoming(MessageReader reader, GarminMessage garminMessage) {
@@ -82,7 +88,7 @@ public class DeviceInformationMessage extends GFDIMessage {
         writer.writeString(Build.MANUFACTURER);
         writer.writeString(Build.DEVICE);
         writer.writeByte(protocolFlags);
-        return true;
+        return this.generateOutgoing;
     }
 
     @Override

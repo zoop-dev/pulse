@@ -58,6 +58,10 @@ public abstract class GFDIMessage {
         }
     }
 
+    public GarminMessage getGarminMessage() {
+        return garminMessage;
+    }
+
     protected abstract boolean generateOutgoing();
 
     public byte[] getOutgoingMessage() {
@@ -100,6 +104,7 @@ public abstract class GFDIMessage {
         UPLOAD_REQUEST(5003, UploadRequestMessage.class),
         FILE_TRANSFER_DATA(5004, FileTransferDataMessage.class),
         CREATE_FILE(5005, CreateFileMessage.class),
+        FILTER(5007, FilterMessage.class),
         SET_FILE_FLAG(5008, SetFileFlagsMessage.class),
         FIT_DEFINITION(5011, FitDefinitionMessage.class),
         FIT_DATA(5012, FitDataMessage.class),
@@ -112,6 +117,7 @@ public abstract class GFDIMessage {
         NOTIFICATION_CONTROL(5034, NotificationControlMessage.class),
         NOTIFICATION_DATA(5035, NotificationDataMessage.class),
         NOTIFICATION_SUBSCRIPTION(5036, NotificationSubscriptionMessage.class),
+        SYNCHRONIZATION(5037, SynchronizationMessage.class),
         FIND_MY_PHONE_REQUEST(5039, FindMyPhoneRequestMessage.class),
         FIND_MY_PHONE_CANCEL(5040, FindMyPhoneCancelMessage.class),
         MUSIC_CONTROL(5041, MusicControlMessage.class),
@@ -121,8 +127,7 @@ public abstract class GFDIMessage {
         MUSIC_CONTROL_ENTITY_UPDATE(5049, MusicControlEntityUpdateMessage.class),
         CONFIGURATION(5050, ConfigurationMessage.class),
         CURRENT_TIME_REQUEST(5052, CurrentTimeRequestMessage.class),
-        AUTH_NEGOTIATION(5101, AuthNegotiationMessage.class)
-        ;
+        AUTH_NEGOTIATION(5101, AuthNegotiationMessage.class);
         private final Class<? extends GFDIMessage> objectClass;
         private final int id;
 
