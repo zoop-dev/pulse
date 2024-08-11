@@ -8,13 +8,14 @@ import android.content.Intent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -23,6 +24,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
+import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Factory;
+
 
 public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
@@ -35,14 +41,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     public final BatteryInfoProfile<IGPSportDeviceSupport> batteryInfoProfile;
 
 
-
+    private int mtuSize=247; //FIXME use actual device mtu
     public IGPSportDeviceSupport() {
         super(LOG);
 
         addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
         addSupportedService(GattService.UUID_SERVICE_BATTERY_SERVICE);
-        addSupportedService(IGPSportConstants.UUID_IGPSPORT_SERVICE);
-        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_REPORT);
+
 
         IntentListener mListener = new IntentListener() {
             @Override
@@ -63,6 +68,16 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         batteryInfoProfile = new BatteryInfoProfile<>(this);
         batteryInfoProfile.addListener(mListener);
         addSupportedProfile(batteryInfoProfile);
+
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_SERVICE);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_SERVICE);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_SERVICE);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FOURTH_RX);
+        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FORTH_SERVICE);
+
 
     }
 
@@ -85,14 +100,18 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         handleGBDeviceEvent(batteryCmd);
     }
 
+    @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // mark the device as initializing
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
-        readCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_REPORT);
-        writeCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_CONTROL);
+        readCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX);
+        writeCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_TX);
 
-        builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_REPORT), true);
-        builder.notify(getCharacteristic(GattService.UUID_SERVICE_BATTERY_SERVICE), true);
+        builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX), true);
+        builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX), true);
+        builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX), true);
+        builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FOURTH_RX), true);
+
         builder.setCallback(this);
 
         deviceInfoProfile.requestDeviceInfo(builder);
@@ -101,6 +120,23 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         deviceInfoProfile.enableNotify(builder, true);
 
         // ... custom initialization logic ...
+
+
+        Ble.ble_msg.Builder bleBuilder = Ble.ble_msg.newBuilder();
+        bleBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_BLE);
+        bleBuilder.setBleOperateType(Ble.BLE_OPERATE_TYPE.enum_BLE_OPERATE_TYPE_BOND_INFO);
+        byte[] bleBondData = craftData((byte) bleBuilder.getServiceType().getNumber(), (byte) 0xFF, (byte)bleBuilder.getBleOperateType().getNumber(), bleBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, bleBondData);
+        builder.wait(200);
+
+        Factory.factory_msg.Builder factoryBuilder = Factory.factory_msg.newBuilder();
+        factoryBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY);
+        factoryBuilder.setFactoryOperateType(Factory.FACTORY_OPERATE_TYPE.enum_FACTORY_OPERATE_TYPE_SN_GET);
+        byte[] factoryGetSNdata = craftData((byte)factoryBuilder.getServiceType().getNumber(), (byte)0xff, (byte)factoryBuilder.getFactoryOperateType().getNumber(), factoryBuilder.build().toByteArray());
+
+        builder.write(writeCharacteristic, factoryGetSNdata);
+        builder.wait(200);
+
 
         // set device firmware to prevent the following error when you (later) try to save data to database and
         // device firmware has not been set yet
@@ -113,6 +149,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         return builder;
     }
 
+    @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
                                            BluetoothGattCharacteristic characteristic) {
         super.onCharacteristicChanged(gatt, characteristic);
@@ -123,6 +160,25 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
         LOG.info("Characteristic changed value: " + characteristic.getValue());
         return false;
+    }
+
+    public static byte[] craftData(byte mainService, byte secondService, byte command, byte[] data) {
+        // 010C14FF02FFFF00064A 01FFFFFFFFFFFFFFFFF0 080C10141802
+        byte[] result = new byte[IGPSportConstants.DATA_TEMPLATE.length + data.length];
+        System.arraycopy(IGPSportConstants.DATA_TEMPLATE, 0, result, 0, IGPSportConstants.DATA_TEMPLATE.length);
+        result[1] = (byte) mainService;
+        result[2] = (byte) secondService;
+        result[4] = command;
+
+        result[7] = (byte) ((data.length >> 8) & 0xff);
+        result[8] = (byte) (data.length & 0xff);
+        result[9] = (byte) CheckSums.getCRC8(data);
+        byte[] header = Arrays.copyOfRange(result, 0, 19);
+        result[19] = (byte)CheckSums.getCRC8(header);
+        System.arraycopy(data, 0, result, 20, data.length);
+        //debug
+        LOG.info(GB.hexdump(result), "crafted packet");
+        return result;
     }
 
 
