@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,10 +140,10 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         Factory.factory_msg.Builder factoryBuilder = Factory.factory_msg.newBuilder();
         factoryBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY);
-        factoryBuilder.setFactoryOperateType(Factory.FACTORY_OPERATE_TYPE.enum_FACTORY_OPERATE_TYPE_SN_GET);
-        byte[] factoryGetSNdata = craftData((byte)factoryBuilder.getServiceType().getNumber(), (byte)0xff, (byte)factoryBuilder.getFactoryOperateType().getNumber(), factoryBuilder.build().toByteArray());
+        factoryBuilder.setFactoryOperateType(Factory.FACTORY_OPERATE_TYPE.enum_FACTORY_OPERATE_TYPE_BATTARY_GET);
+        byte[] factoryGetBatterydata = craftData((byte)factoryBuilder.getServiceType().getNumber(), (byte)0xff, (byte)factoryBuilder.getFactoryOperateType().getNumber(), factoryBuilder.build().toByteArray());
 
-        builder.write(writeCharacteristic, factoryGetSNdata);
+        builder.write(writeCharacteristic, factoryGetBatterydata);
 
 
 
@@ -166,8 +168,56 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
         LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
+
+        byte[] data = characteristic.getValue();
+        if (data[0] != IGPSportConstants.DATA_HEADER) {
+            LOG.info("FitPro, packet not starting with 0x01: " + data[0] + "other message types not implemented yet");
+            return false;
+        }
+        if (data != null && data.length > 20) {
+            byte mainService = data[1];
+            byte mainOperation = data[4];
+            int dataSize =  data[8] + (data[7] << 8);
+
+            byte[] pbData = new byte[dataSize];
+            System.arraycopy(data, 20, pbData, 0, dataSize);
+
+
+            try {
+                switch (mainService) {
+                    case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
+                        handleFactoryData(pbData);
+                        break;
+                    case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
+                        handleFirmwareData(pbData);
+                        break;
+                }
+            } catch (InvalidProtocolBufferException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         return false;
     }
+
+    public void handleFactoryData(byte[] data) throws InvalidProtocolBufferException {
+        Factory.factory_msg factoryMsg = Factory.factory_msg.parseFrom(data);
+        if (factoryMsg.hasBattaryMsg()) {
+            gbDevice.setBatteryLevel(factoryMsg.getBattaryMsg().getPowerPercent());
+        }
+    }
+
+    public void handleFirmwareData(byte[] data) throws InvalidProtocolBufferException {
+        Firmware.firmware_msg firmwareMsg = Firmware.firmware_msg.parseFrom(data);
+        if (firmwareMsg.hasFirmwareDataMsg()) {
+            Firmware.firmware_data_message fwDataMsg = firmwareMsg.getFirmwareDataMsg();
+            if (fwDataMsg.hasBleBootFirmwareVer()) {
+                gbDevice.setFirmwareVersion2(String.valueOf(fwDataMsg.getBleBootFirmwareVer()));
+            }
+        }
+    }
+
 
     public static byte[] craftData(byte mainService, byte secondService, byte command, byte[] data) {
         // 010C14FF02FFFF00064A 01FFFFFFFFFFFFFFFFF0 080C10141802
