@@ -5,11 +5,14 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 
+import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -17,8 +20,12 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInf
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -128,20 +135,20 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         Ble.ble_msg.Builder bleBuilder = Ble.ble_msg.newBuilder();
         bleBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_BLE);
         bleBuilder.setBleOperateType(Ble.BLE_OPERATE_TYPE.enum_BLE_OPERATE_TYPE_BOND_INFO);
-        byte[] bleBondData = craftData((byte) bleBuilder.getServiceType().getNumber(), (byte) 0xFF, (byte)bleBuilder.getBleOperateType().getNumber(), bleBuilder.build().toByteArray());
+        byte[] bleBondData = craftData(bleBuilder.getServiceType().getNumber(), 0xFF, bleBuilder.getBleOperateType().getNumber(), bleBuilder.build().toByteArray());
         builder.write(writeCharacteristic, bleBondData);
 
 
         Firmware.firmware_msg.Builder firmwareBuilder = Firmware.firmware_msg.newBuilder();
         firmwareBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE);
         firmwareBuilder.setFirmwareOperateType(Firmware.FIRMWARE_OPERATE_TYPE.enum_FIRMWARE_OPERATE_TYPE_GET_VERSION);
-        byte[] firmwareGetVersionData = craftData((byte)firmwareBuilder.getServiceType().getNumber(), (byte)0xff,(byte)firmwareBuilder.getFirmwareOperateType().getNumber(), firmwareBuilder.build().toByteArray());
+        byte[] firmwareGetVersionData = craftData(firmwareBuilder.getServiceType().getNumber(), 0xff,firmwareBuilder.getFirmwareOperateType().getNumber(), firmwareBuilder.build().toByteArray());
         builder.write(writeCharacteristic, firmwareGetVersionData);
 
         Factory.factory_msg.Builder factoryBuilder = Factory.factory_msg.newBuilder();
         factoryBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY);
         factoryBuilder.setFactoryOperateType(Factory.FACTORY_OPERATE_TYPE.enum_FACTORY_OPERATE_TYPE_BATTARY_GET);
-        byte[] factoryGetBatterydata = craftData((byte)factoryBuilder.getServiceType().getNumber(), (byte)0xff, (byte)factoryBuilder.getFactoryOperateType().getNumber(), factoryBuilder.build().toByteArray());
+        byte[] factoryGetBatterydata = craftData(factoryBuilder.getServiceType().getNumber(), 0xff, factoryBuilder.getFactoryOperateType().getNumber(), factoryBuilder.build().toByteArray());
 
         builder.write(writeCharacteristic, factoryGetBatterydata);
 
@@ -219,13 +226,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
 
-    public static byte[] craftData(byte mainService, byte secondService, byte command, byte[] data) {
+    public static byte[] craftData(int mainService, int secondService, int command, byte[] data) {
         // 010C14FF02FFFF00064A 01FFFFFFFFFFFFFFFFF0 080C10141802
         byte[] result = new byte[IGPSportConstants.DATA_TEMPLATE.length + data.length];
         System.arraycopy(IGPSportConstants.DATA_TEMPLATE, 0, result, 0, IGPSportConstants.DATA_TEMPLATE.length);
         result[1] = (byte) mainService;
         result[2] = (byte) secondService;
-        result[4] = command;
+        result[4] = (byte) command;
 
         result[7] = (byte) ((data.length >> 8) & 0xff);
         result[8] = (byte) (data.length & 0xff);
@@ -236,6 +243,65 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         //debug
         LOG.info(GB.hexdump(result), "crafted packet");
         return result;
+    }
+
+    @Override
+    public void onNotification(NotificationSpec notificationSpec) {
+        LOG.debug("iGPSport notification: " + notificationSpec.type);
+        TransactionBuilder builder = new TransactionBuilder("notification");
+
+        Ins.ins_msg.Builder insMsgBuilder = Ins.ins_msg.newBuilder();
+        insMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_INS);
+        insMsgBuilder.setInsServiceType(Ins.INS_SERVICE_TYPE.enum_INS_SERVICE_TYPE_NOTE);
+        insMsgBuilder.setInsOperateType(Ins.INS_OPERATE_TYPE.enum_INS_OPERATE_TYPE_INCOMING_NOTE);
+        Ins.ins_data_message.Builder insDataMsgBuilder = Ins.ins_data_message.newBuilder();
+        if (notificationSpec.type == NotificationType.GENERIC_SMS) {
+            insDataMsgBuilder.setIsApp(0);
+        } else {
+            insDataMsgBuilder.setIsApp(1);
+            insDataMsgBuilder.setAppName(notificationSpec.sourceName);
+        }
+
+        if (notificationSpec.phoneNumber != null)
+            insDataMsgBuilder.setTelNum(ByteString.copyFromUtf8(notificationSpec.phoneNumber));
+        if (notificationSpec.title != null)
+            insDataMsgBuilder.setName(notificationSpec.title);
+        if (notificationSpec.body != null)
+            insDataMsgBuilder.setContent(notificationSpec.body);
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date());
+        insDataMsgBuilder.setTime(timeStamp);
+        insMsgBuilder.setInsDataMsg(insDataMsgBuilder);
+        byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, callData);
+        builder.queue(getQueue());
+    }
+
+    @Override
+    public void onSetCallState(CallSpec callSpec) {
+        LOG.debug("iGPSport send call notification");
+        TransactionBuilder builder = new TransactionBuilder("CALL");
+        Ins.ins_msg.Builder insMsgBuilder = Ins.ins_msg.newBuilder();
+        insMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_INS);
+        insMsgBuilder.setInsServiceType(Ins.INS_SERVICE_TYPE.enum_INS_SERVICE_TYPE_CALL);
+        if (callSpec.command == CallSpec.CALL_INCOMING) {
+            insMsgBuilder.setInsOperateType(Ins.INS_OPERATE_TYPE.enum_INS_OPERATE_TYPE_INCOMING_CALL);
+        } else if (callSpec.command == CallSpec.CALL_ACCEPT ||
+                callSpec.command == CallSpec.CALL_START ||
+                callSpec.command == CallSpec.CALL_END) {
+            insMsgBuilder.setInsOperateType(Ins.INS_OPERATE_TYPE.enum_INS_OPERATE_TYPE_ANSWER_CALL);
+        } else if (callSpec.command == CallSpec.CALL_REJECT) {
+            insMsgBuilder.setInsOperateType(Ins.INS_OPERATE_TYPE.enum_INS_OPERATE_TYPE_REJECT_CALL);
+        }
+
+        Ins.ins_data_message.Builder insDataMsgBuilder = Ins.ins_data_message.newBuilder();
+        insDataMsgBuilder.setTelNum(ByteString.copyFromUtf8(callSpec.number));
+        insDataMsgBuilder.setName(callSpec.name);
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date());
+        insDataMsgBuilder.setTime(timeStamp);
+        insMsgBuilder.setInsDataMsg(insDataMsgBuilder);
+        byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, callData);
+        builder.queue(getQueue());
     }
 
 
