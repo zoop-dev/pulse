@@ -9,16 +9,16 @@ public class IGPSportConstants {
     public static final UUID UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
     public static final UUID UUID_IGPSPORT_CHARACTERISTIC_SECOND_SERVICE = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca8e");
-    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca8e");
-    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_SECOND_TX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca8e");
+    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_SECOND_TX = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca8e");
+    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca8e");
 
     public static final UUID UUID_IGPSPORT_CHARACTERISTIC_THIRD_SERVICE = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca7e");
-    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca7e");
-    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_THIRD_TX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca7e");
+    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_THIRD_TX = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca7e");
+    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca7e");
 
     public static final UUID UUID_IGPSPORT_CHARACTERISTIC_FORTH_SERVICE = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca6e");
-    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_FOURTH_RX = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca6e");
-    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_FORTH_TX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca6e");
+    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_FOURTH_TX = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca6e");
+    public static final UUID UUID_IGPSPORT_CHARACTERISTIC_FOURTH_RX = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca6e");
 
 
     public static final byte DATA_HEADER = (byte) 0x01;

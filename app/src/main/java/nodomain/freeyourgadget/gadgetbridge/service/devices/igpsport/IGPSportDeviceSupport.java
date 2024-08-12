@@ -16,6 +16,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInf
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -127,7 +128,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         bleBuilder.setBleOperateType(Ble.BLE_OPERATE_TYPE.enum_BLE_OPERATE_TYPE_BOND_INFO);
         byte[] bleBondData = craftData((byte) bleBuilder.getServiceType().getNumber(), (byte) 0xFF, (byte)bleBuilder.getBleOperateType().getNumber(), bleBuilder.build().toByteArray());
         builder.write(writeCharacteristic, bleBondData);
-        builder.wait(200);
+
+
+        Firmware.firmware_msg.Builder firmwareBuilder = Firmware.firmware_msg.newBuilder();
+        firmwareBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE);
+        firmwareBuilder.setFirmwareOperateType(Firmware.FIRMWARE_OPERATE_TYPE.enum_FIRMWARE_OPERATE_TYPE_GET_VERSION);
+        byte[] firmwareGetVersionData = craftData((byte)firmwareBuilder.getServiceType().getNumber(), (byte)0xff,(byte)firmwareBuilder.getFirmwareOperateType().getNumber(), firmwareBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, firmwareGetVersionData);
 
         Factory.factory_msg.Builder factoryBuilder = Factory.factory_msg.newBuilder();
         factoryBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY);
@@ -135,7 +142,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         byte[] factoryGetSNdata = craftData((byte)factoryBuilder.getServiceType().getNumber(), (byte)0xff, (byte)factoryBuilder.getFactoryOperateType().getNumber(), factoryBuilder.build().toByteArray());
 
         builder.write(writeCharacteristic, factoryGetSNdata);
-        builder.wait(200);
+
 
 
         // set device firmware to prevent the following error when you (later) try to save data to database and
@@ -158,7 +165,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         byte[] value = characteristic.getValue();
 
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
-        LOG.info("Characteristic changed value: " + characteristic.getValue());
+        LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
         return false;
     }
 
