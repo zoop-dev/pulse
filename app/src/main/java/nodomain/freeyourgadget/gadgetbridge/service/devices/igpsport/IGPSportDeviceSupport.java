@@ -11,6 +11,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -24,6 +25,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Config;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
@@ -45,6 +48,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(IGPSportDeviceSupport.class);
     public BluetoothGattCharacteristic readCharacteristic;
     public BluetoothGattCharacteristic writeCharacteristic;
+    public BluetoothGattCharacteristic writeCharacteristicThird;
     public final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
     public final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     public final DeviceInfoProfile<IGPSportDeviceSupport> deviceInfoProfile;
@@ -116,6 +120,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
         readCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX);
         writeCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_TX);
+        writeCharacteristicThird = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_TX);
 
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX), true);
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX), true);
@@ -152,8 +157,6 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         builder.write(writeCharacteristic, factoryGetBatterydata);
 
-
-
         // set device firmware to prevent the following error when you (later) try to save data to database and
         // device firmware has not been set yet
         // Error executing 'the bind value at index 2 is null'java.lang.IllegalArgumentException: the bind value at index 2 is null
@@ -184,11 +187,10 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         if (data != null && data.length > 20) {
             byte mainService = data[1];
             byte mainOperation = data[4];
-            int dataSize =  data[8] + (data[7] << 8);
+            int dataSize = ByteBuffer.wrap(data, 7,2).getShort();
 
             byte[] pbData = new byte[dataSize];
             System.arraycopy(data, 20, pbData, 0, dataSize);
-
 
             try {
                 switch (mainService) {
@@ -225,13 +227,21 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-
     public static byte[] craftData(int mainService, int secondService, int command, byte[] data) {
+        return craftData(mainService, secondService, command, data, false);
+    }
+
+    public static byte[] craftData(int mainService, int secondService, int command, byte[] data, boolean fileoperation) {
         // 010C14FF02FFFF00064A 01FFFFFFFFFFFFFFFFF0 080C10141802
         byte[] result = new byte[IGPSportConstants.DATA_TEMPLATE.length + data.length];
         System.arraycopy(IGPSportConstants.DATA_TEMPLATE, 0, result, 0, IGPSportConstants.DATA_TEMPLATE.length);
         result[1] = (byte) mainService;
         result[2] = (byte) secondService;
+        if (fileoperation) {
+            result[3] = (byte) 0x55;
+        } else {
+            result[3] = (byte) 0xff;
+        }
         result[4] = (byte) command;
 
         result[7] = (byte) ((data.length >> 8) & 0xff);
@@ -302,6 +312,24 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
         builder.write(writeCharacteristic, callData);
         builder.queue(getQueue());
+    }
+
+    @Override
+    public void onFetchRecordedData(int dataTypes) {
+        TransactionBuilder builder = this.createTransactionBuilder("onfetchfitness");
+        CyclingData.cycling_data_msg.Builder cycleDataMsg = CyclingData.cycling_data_msg.newBuilder();
+        cycleDataMsg.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA);
+//        cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_LIST_GET);
+//        cycleDataMsg.setListMsg(Common.file_list_get_message.newBuilder().setFileIndexStart(0).setFileIndexEnd(11) );
+        cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_GET);
+        cycleDataMsg.addCyclingDataFileFlagMsg( CyclingData.cycling_data_file_flag_message.newBuilder().setTimestamp(1092299406) ); //FIXME: hardcoded value from commented request above
+
+
+        byte[] cycleDataMsgBytes = craftData(cycleDataMsg.getServiceType().getNumber(), 0xff, cycleDataMsg.getCyclingDataOperateType().getNumber(), cycleDataMsg.build().toByteArray(), true);
+
+        builder.write(writeCharacteristicThird, cycleDataMsgBytes);
+        builder.queue(getQueue());
+
     }
 
 

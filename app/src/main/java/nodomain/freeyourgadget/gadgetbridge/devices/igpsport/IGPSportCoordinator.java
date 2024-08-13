@@ -58,4 +58,9 @@ public class IGPSportCoordinator extends AbstractBLEDeviceCoordinator {
 //        qb.where(IGPSportSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
+    @Override
+    public boolean supportsActivityDataFetching() {
+        return true;
+    }
+
 }

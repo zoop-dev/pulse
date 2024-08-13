@@ -28,7 +28,7 @@ public class IGPSportConstants {
             (byte) DATA_HEADER, // header
             (byte) 0xFF, // main service byte
             (byte) 0xFF, // second service byte
-            (byte) 0xFF, // byte3 - FF in common operations, has some value in files operations
+            (byte) 0xFF, // byte3 - FF in common operations, 0x55 in file operatons
             (byte) 0xFF, // main command byte
             (byte) 0xFF, // second common byte
             (byte) 0xFF, // always FF
