@@ -4,6 +4,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -11,16 +12,22 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
@@ -332,5 +339,72 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
     }
 
+    @Override
+    public void onSendConfiguration(String config) {
 
+        LOG.debug("iGPSport on send config: " + config);
+        try {
+            TransactionBuilder builder = performInitialized("sendConfiguration");
+            switch (config) {
+                case ActivityUser.PREF_USER_WEIGHT_KG:
+                case ActivityUser.PREF_USER_GENDER:
+                case ActivityUser.PREF_USER_HEIGHT_CM:
+                case ActivityUser.PREF_USER_YEAR_OF_BIRTH:
+                    setUserData(builder);
+                    break;
+                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                    setMeasurementSystem(builder);
+                    break;
+            }
+            builder.queue(getQueue());
+        } catch (IOException e) {
+            GB.toast(getContext(), "Error sending configuration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+        }
+    }
+
+    private void setMeasurementSystem(TransactionBuilder builder) {
+        Config.config_msg.Builder configMsgBuilder = Config.config_msg.newBuilder();
+        configMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CONFIG);
+        configMsgBuilder.setConfigSeviceType(Config.CONFIG_SERVICE_TYPE.enum_CONFIG_SERVICE_TYPE_UNIT);
+
+        Config.unit_msg.Builder unitMsgBuilder = Config.unit_msg.newBuilder();
+
+        //unitMsgBuilder.setUnitItem()  ??? need all unit items?
+        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+            unitMsgBuilder.setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH);
+        } else {
+            unitMsgBuilder.setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC);
+        }
+        configMsgBuilder.addUnitMessage(unitMsgBuilder);
+        byte[] confMsgBytes = craftData(configMsgBuilder.getServiceType().getNumber(),
+                configMsgBuilder.getConfigSeviceType().getNumber(),
+                configMsgBuilder.getConfigOperateType().getNumber(),
+                configMsgBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, confMsgBytes);
+
+    }
+
+    private void setUserData(TransactionBuilder builder) {
+        Config.config_msg.Builder configMsgBuilder = Config.config_msg.newBuilder();
+        configMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CONFIG);
+        configMsgBuilder.setConfigSeviceType(Config.CONFIG_SERVICE_TYPE.enum_CONFIG_SERVICE_TYPE_USER);
+        configMsgBuilder.setConfigOperateType(Config.CONFIG_OPERATE_TYPE.enum_CONFIG_OPERATE_TYPE_SEND);
+
+        Config.user_data_msg.Builder userDataMsgBuilder = Config.user_data_msg.newBuilder();
+
+        ActivityUser user = new ActivityUser();
+        userDataMsgBuilder.setAge(user.getAge());
+        userDataMsgBuilder.setHeight(user.getHeightCm());
+        userDataMsgBuilder.setWeight(user.getWeightKg()*10);
+        userDataMsgBuilder.setSex(user.getGender()); // matches GB 0 - female, 1 - male
+        configMsgBuilder.setUserDataMessage(userDataMsgBuilder);
+        byte[] confMsgBytes = craftData(configMsgBuilder.getServiceType().getNumber(),
+                configMsgBuilder.getConfigSeviceType().getNumber(),
+                configMsgBuilder.getConfigOperateType().getNumber(),
+                configMsgBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, confMsgBytes);
+
+
+    }
 }
