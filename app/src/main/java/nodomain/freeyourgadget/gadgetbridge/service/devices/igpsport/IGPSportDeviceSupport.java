@@ -262,6 +262,31 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         return result;
     }
 
+    public static byte[] craftFileData(int mainService, int secondService, int command, byte[] data, byte[] fileData) {
+        // 0115ffaa03ffff00000001ffffffffffffffff57 0000001f 08151003180220c71628e6ea44320b7465737420616b6164656d3a03636e78 efbbbf3c3f786d6c2076657273696f6e3d22312e302220656e...
+        byte[] result = new byte[IGPSportConstants.DATA_TEMPLATE.length + data.length + 4 + fileData.length];
+        System.arraycopy(IGPSportConstants.DATA_TEMPLATE, 0, result, 0, IGPSportConstants.DATA_TEMPLATE.length);
+        result[1] = (byte) mainService;
+        result[2] = (byte) secondService;
+        result[3] = (byte) 0xaa;
+        result[4] = (byte) command;
+
+        result[7] = (byte) 0x00;
+        result[8] = (byte) 0x00;
+        result[9] = (byte) 0x00;
+        byte[] header = Arrays.copyOfRange(result, 0, 19);
+        result[19] = (byte)CheckSums.getCRC8(header);
+
+        ByteBuffer buf = ByteBuffer.wrap(result, 20,4);
+        buf.putInt(fileData.length);
+
+        System.arraycopy(data, 0, result, 24, data.length);
+        System.arraycopy(fileData, 0, result, 24+data.length, fileData.length);
+        //debug
+        LOG.info(GB.hexdump(result), "crafted fileData packet");
+        return result;
+    }
+
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
         LOG.debug("iGPSport notification: " + notificationSpec.type);
