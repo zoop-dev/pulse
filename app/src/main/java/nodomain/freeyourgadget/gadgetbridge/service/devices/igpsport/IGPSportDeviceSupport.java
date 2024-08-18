@@ -4,6 +4,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.Toast;
 
 import com.google.protobuf.ByteString;
@@ -14,17 +15,18 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Random;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
+import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
@@ -35,7 +37,9 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Config;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.GeneralFileOperation;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.RoutePlan;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -56,6 +60,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     public BluetoothGattCharacteristic readCharacteristic;
     public BluetoothGattCharacteristic writeCharacteristic;
     public BluetoothGattCharacteristic writeCharacteristicThird;
+    public BluetoothGattCharacteristic writeCharacteristicFourth;
     public final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
     public final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     public final DeviceInfoProfile<IGPSportDeviceSupport> deviceInfoProfile;
@@ -128,6 +133,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         readCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX);
         writeCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_TX);
         writeCharacteristicThird = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_TX);
+        writeCharacteristicFourth = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FOURTH_TX);
 
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX), true);
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX), true);
@@ -187,31 +193,44 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
 
         byte[] data = characteristic.getValue();
-        if (data[0] != IGPSportConstants.DATA_HEADER) {
-            LOG.info("FitPro, packet not starting with 0x01: " + data[0] + "other message types not implemented yet");
-            return false;
+        if (data[0] == IGPSportConstants.DATA_HEADER) {
+
+            if (data != null && data.length > 20) {
+                byte mainService = data[1];
+                byte mainOperation = data[4];
+                int dataSize = ByteBuffer.wrap(data, 7, 2).getShort();
+
+                byte[] pbData = new byte[dataSize];
+                System.arraycopy(data, 20, pbData, 0, dataSize);
+
+                try {
+                    switch (mainService) {
+                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
+                            handleFactoryData(pbData);
+                            break;
+                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
+                            handleFirmwareData(pbData);
+                            break;
+                    }
+                } catch (InvalidProtocolBufferException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
         }
-        if (data != null && data.length > 20) {
+
+        if (data[0] == 0x02) {
+            //0215FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFF55
             byte mainService = data[1];
             byte mainOperation = data[4];
-            int dataSize = ByteBuffer.wrap(data, 7,2).getShort();
-
-            byte[] pbData = new byte[dataSize];
-            System.arraycopy(data, 20, pbData, 0, dataSize);
-
-            try {
-                switch (mainService) {
-                    case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
-                        handleFactoryData(pbData);
-                        break;
-                    case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
-                        handleFirmwareData(pbData);
-                        break;
-                }
-            } catch (InvalidProtocolBufferException e) {
-                throw new RuntimeException(e);
+            byte result = data[7];
+            switch (mainService) {
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
+                    if(mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
+                        gbDevice.unsetBusyTask();
+                    }
+                    break;
             }
-
         }
 
         return false;
@@ -431,5 +450,59 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         builder.write(writeCharacteristic, confMsgBytes);
 
 
+    }
+
+    @Override
+    public void onInstallApp(Uri uri) {
+        //final IGPSportGpxRouteInstallHandler gpxRouteHandler = new IGPSportGpxRouteInstallHandler(uri, getContext());
+        final IGPSportRouteInstallHandler routeHandler = new IGPSportRouteInstallHandler(uri, getContext());
+        if (routeHandler.isValid()) {
+            try {
+                TransactionBuilder builder = performInitialized("prepare upload gpx");
+
+//                RoutePlan.route_plan_data_msg.Builder routePlanBuilder = RoutePlan.route_plan_data_msg.newBuilder();
+//                routePlanBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
+//                routePlanBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET);
+//                byte[] routePlanBytes = craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
+//                builder.write(writeCharacteristicFourth, routePlanBytes);
+//                builder.wait(1000);
+//
+//                RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
+//                routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
+//                routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
+//                routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(0));
+//                byte[] routePlan2ndBytes = craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
+//                builder.write(writeCharacteristicFourth, routePlan2ndBytes);
+//                builder.wait(1000);
+//
+//                builder.write(writeCharacteristicFourth, routePlanBytes);
+//                builder.wait(1000);
+
+                Random random = new Random();
+                int ran = random.nextInt();
+                GeneralFileOperation.general_file_operation.Builder fileOperationbuilder = GeneralFileOperation.general_file_operation.newBuilder();
+                fileOperationbuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION)
+                        .setOperateType(Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD)
+                        .setFileType(GeneralFileOperation.file_operation_type.enum_FILE_TYPE_ROUTE_PLAN)
+                        .setFileId(ran)
+                        .setFileExtension(routeHandler.getExtension())
+                        .setFileName(routeHandler.getFilename())
+                        .setFileSize(routeHandler.getSize());
+
+                byte[] fileOperationBytes = craftFileData(fileOperationbuilder.getServiceType().getNumber(),
+                        0xff,
+                        fileOperationbuilder.getOperateType().getNumber(),
+                        fileOperationbuilder.build().toByteArray(),
+                        routeHandler.getBytes());
+                builder.writeChunkedData(writeCharacteristicFourth, fileOperationBytes, getMTU());
+                gbDevice.setBusyTask("Installing route");
+                builder.queue(getQueue());
+
+            } catch (final Exception e) {
+                GB.toast(getContext(), "Gpx install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            }
+
+            return;
+        }
     }
 }

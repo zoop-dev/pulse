@@ -1,16 +1,20 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.igpsport;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.MakibesHR3ActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.IGPSportDeviceSupport;
@@ -62,5 +66,33 @@ public class IGPSportCoordinator extends AbstractBLEDeviceCoordinator {
     public boolean supportsActivityDataFetching() {
         return true;
     }
+
+    @Override
+    public boolean supportsAppsManagement(final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public Class<? extends Activity> getAppsManagementActivity() {
+        return AppManagerActivity.class;
+    }
+
+
+    @Override
+    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+
+//        final IGPSportAgpsInstallHandler agpsInstallHandler = new IGPSportAgpsInstallHandler(uri, context);
+//        if (agpsInstallHandler.isValid()) {
+//            return agpsInstallHandler;
+//        }
+
+        final IGPSportRouteInstallHandler routeInstallHandler = new IGPSportRouteInstallHandler(uri, context);
+        if (routeInstallHandler.isValid()) {
+            return routeInstallHandler;
+        }
+
+        return null;
+    }
+
 
 }
