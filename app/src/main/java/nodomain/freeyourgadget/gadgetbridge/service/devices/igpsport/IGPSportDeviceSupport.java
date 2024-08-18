@@ -278,7 +278,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         result[19] = (byte)CheckSums.getCRC8(header);
 
         ByteBuffer buf = ByteBuffer.wrap(result, 20,4);
-        buf.putInt(fileData.length);
+        buf.putInt(data.length);
 
         System.arraycopy(data, 0, result, 24, data.length);
         System.arraycopy(fileData, 0, result, 24+data.length, fileData.length);
