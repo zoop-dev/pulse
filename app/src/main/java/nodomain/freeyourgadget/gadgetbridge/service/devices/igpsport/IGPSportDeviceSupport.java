@@ -25,6 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
@@ -183,11 +184,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
+
                                            BluetoothGattCharacteristic characteristic, byte[] value) {
-        super.onCharacteristicChanged(gatt, characteristic, value);
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
+            return true;
+        }
 
         UUID characteristicUUID = characteristic.getUuid();
-
 
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
         LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
@@ -225,9 +228,29 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             byte mainOperation = data[4];
             byte result = data[7];
             switch (mainService) {
-                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION_VALUE:
                     if(mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
                         gbDevice.unsetBusyTask();
+                        gbDevice.sendDeviceUpdateIntent(getContext());
+                        TransactionBuilder builder = new TransactionBuilder("Route  upload finished");
+                        if (result == 0) {
+                            builder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction(
+                                    "Route upload completed",
+                                    false,
+                                    100,
+                                    getContext()
+                            ));
+                            handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Route upload completed", Toast.LENGTH_LONG, GB.INFO));
+                        } else {
+                            builder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction(
+                                    "Route upload failed",
+                                    false,
+                                    0,
+                                    getContext()
+                            ));
+                            handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Failed to upload route", Toast.LENGTH_LONG, GB.ERROR));
+                        }
+                        builder.queue(getQueue());
                     }
                     break;
             }
@@ -496,6 +519,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                         routeHandler.getBytes());
                 builder.writeChunkedData(writeCharacteristicFourth, fileOperationBytes, getMTU());
                 gbDevice.setBusyTask("Installing route");
+                gbDevice.sendDeviceUpdateIntent(getContext());
                 builder.queue(getQueue());
 
             } catch (final Exception e) {
