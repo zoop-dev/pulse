@@ -559,7 +559,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                 TransactionBuilder builder = performInitialized("prepare upload gpx");
 
                 Random random = new Random();
-                int ran = random.nextInt();
+                int ran = random.nextInt() & Integer.MAX_VALUE;
                 GeneralFileOperation.general_file_operation.Builder fileOperationbuilder = GeneralFileOperation.general_file_operation.newBuilder();
                 fileOperationbuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION)
                         .setOperateType(Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD)
