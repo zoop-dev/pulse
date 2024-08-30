@@ -72,11 +72,14 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     public final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     public final DeviceInfoProfile<IGPSportDeviceSupport> deviceInfoProfile;
     public final BatteryInfoProfile<IGPSportDeviceSupport> batteryInfoProfile;
+    private IGPSportRoutesManager routeManager;
 
 
     private int mtuSize=247; //FIXME use actual device mtu
     public IGPSportDeviceSupport() {
         super(LOG);
+
+        routeManager = new IGPSportRoutesManager(this);
 
         addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
         addSupportedService(GattService.UUID_SERVICE_BATTERY_SERVICE);
@@ -222,9 +225,9 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                             break;
                         case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
                             if(mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET_VALUE) {
-                                handleRouteNumber(pbData);
+                                routeManager.handleRouteNumber(pbData);
                             } else if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_SEND_VALUE) {
-                                handleRouteList(pbData);
+                                routeManager.handleRouteList(pbData);
                             }
                             break;
                     }
@@ -272,67 +275,6 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         return false;
     }
 
-    public static UUID toRouteUUID(final String id) {
-        // Watchface IDs are numbers as strings - pad them to the right with F
-        // and encode as UUID
-        final String padded = String.format("%-32s", id).replace(' ', 'F');
-        return UUID.fromString(
-                padded.substring(0, 8) + "-" +
-                        padded.substring(8, 12) + "-" +
-                        padded.substring(12, 16) + "-" +
-                        padded.substring(16, 20) + "-" +
-                        padded.substring(20, 32)
-        );
-    }
-
-    public static String toRouteId(final UUID uuid) {
-        return uuid.toString()
-                .replaceAll("-", "")
-                .replaceAll("f", "")
-                .replaceAll("F", "");
-    }
-
-    private void handleRouteList(byte[] pbData) throws InvalidProtocolBufferException {
-        RoutePlan.route_plan_data_msg routeplatMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
-
-        List<RoutePlan.route_plan_info_message> routeList = routeplatMsg.getRoutePlanInfoMsgList();
-
-        final List<GBDeviceApp> gbDeviceApps = new ArrayList<>();
-
-        for (final RoutePlan.route_plan_info_message routeMsg : routeList) {
-            final UUID uuid = toRouteUUID(String.valueOf(routeMsg.getId()));
-            GBDeviceApp gbDeviceApp = new GBDeviceApp(
-                    uuid,
-                    routeMsg.getName(),
-                    "",
-                    "",
-                    GBDeviceApp.Type.APP_GENERIC
-            );
-            gbDeviceApps.add(gbDeviceApp);
-        }
-
-        final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
-        appInfoCmd.apps = gbDeviceApps.toArray(new GBDeviceApp[0]);
-        evaluateGBDeviceEvent(appInfoCmd);
-
-    }
-
-    private void handleRouteNumber(byte[] pbData) throws InvalidProtocolBufferException {
-        RoutePlan.route_plan_data_msg routeplatMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
-        int fileNumber = 0;
-        if (routeplatMsg.getRouteListGetMsg().getFileNum() > 0)
-            fileNumber = routeplatMsg.getRouteListGetMsg().getFileNum();
-
-        TransactionBuilder builder = new TransactionBuilder("get files list");
-        RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
-        routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
-        routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
-        routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(fileNumber));
-        byte[] routePlan2ndBytes = craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
-        builder.write(writeCharacteristicFourth, routePlan2ndBytes);
-        builder.queue(getQueue());
-        
-    }
 
     public void handleFactoryData(byte[] data) throws InvalidProtocolBufferException {
         Factory.factory_msg factoryMsg = Factory.factory_msg.parseFrom(data);
@@ -555,57 +497,29 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         //final IGPSportGpxRouteInstallHandler gpxRouteHandler = new IGPSportGpxRouteInstallHandler(uri, getContext());
         final IGPSportRouteInstallHandler routeHandler = new IGPSportRouteInstallHandler(uri, getContext());
         if (routeHandler.isValid()) {
-            try {
-                TransactionBuilder builder = performInitialized("prepare upload gpx");
 
-                Random random = new Random();
-                int ran = random.nextInt() & Integer.MAX_VALUE;
-                GeneralFileOperation.general_file_operation.Builder fileOperationbuilder = GeneralFileOperation.general_file_operation.newBuilder();
-                fileOperationbuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION)
-                        .setOperateType(Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD)
-                        .setFileType(GeneralFileOperation.file_operation_type.enum_FILE_TYPE_ROUTE_PLAN)
-                        .setFileId(ran)
-                        .setFileExtension(routeHandler.getExtension())
-                        .setFileName(routeHandler.getFilename())
-                        .setFileSize(routeHandler.getSize());
+            routeManager.uploadRoute(routeHandler);
 
-                byte[] fileOperationBytes = craftFileData(fileOperationbuilder.getServiceType().getNumber(),
-                        0xff,
-                        fileOperationbuilder.getOperateType().getNumber(),
-                        fileOperationbuilder.build().toByteArray(),
-                        routeHandler.getBytes());
-                builder.writeChunkedData(writeCharacteristicFourth, fileOperationBytes, getMTU());
-                gbDevice.setBusyTask("Installing route");
-                gbDevice.sendDeviceUpdateIntent(getContext());
-                builder.queue(getQueue());
-
-            } catch (final Exception e) {
-                GB.toast(getContext(), "Gpx install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-            }
-
-            return;
         }
+        return;
     }
 
     @Override
     public void onAppInfoReq() {
-        try {
-            TransactionBuilder builder = performInitialized("get gpx routes");
-
-            RoutePlan.route_plan_data_msg.Builder routePlanBuilder = RoutePlan.route_plan_data_msg.newBuilder();
-            routePlanBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
-            routePlanBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET);
-            byte[] routePlanBytes = craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
-            builder.write(writeCharacteristicFourth, routePlanBytes);
-
-            builder.queue(getQueue());
-
-        } catch (IOException e) {
-            GB.toast(getContext(), "Gpx get list error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-        }
-
+            routeManager.requestRouteList();
     }
 
+    @Override
+    public void onAppStart(final UUID uuid, boolean start) {
+        if (start) {
+           routeManager.activateRoute(uuid);
+        }
+    }
+
+    @Override
+    public void onAppDelete(final UUID uuid) {
+        routeManager.deleteRoute(uuid);
+    }
 
     @Override
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
