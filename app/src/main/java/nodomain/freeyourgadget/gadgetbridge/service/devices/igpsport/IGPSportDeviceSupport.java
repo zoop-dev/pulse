@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
@@ -34,6 +35,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Back;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Config;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
@@ -483,24 +486,6 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             try {
                 TransactionBuilder builder = performInitialized("prepare upload gpx");
 
-//                RoutePlan.route_plan_data_msg.Builder routePlanBuilder = RoutePlan.route_plan_data_msg.newBuilder();
-//                routePlanBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
-//                routePlanBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET);
-//                byte[] routePlanBytes = craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
-//                builder.write(writeCharacteristicFourth, routePlanBytes);
-//                builder.wait(1000);
-//
-//                RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
-//                routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
-//                routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
-//                routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(0));
-//                byte[] routePlan2ndBytes = craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
-//                builder.write(writeCharacteristicFourth, routePlan2ndBytes);
-//                builder.wait(1000);
-//
-//                builder.write(writeCharacteristicFourth, routePlanBytes);
-//                builder.wait(1000);
-
                 Random random = new Random();
                 int ran = random.nextInt();
                 GeneralFileOperation.general_file_operation.Builder fileOperationbuilder = GeneralFileOperation.general_file_operation.newBuilder();
@@ -529,4 +514,65 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             return;
         }
     }
+
+    @Override
+    public void onAppInfoReq() {
+        try {
+            TransactionBuilder builder = performInitialized("get gpx routes");
+
+                RoutePlan.route_plan_data_msg.Builder routePlanBuilder = RoutePlan.route_plan_data_msg.newBuilder();
+                routePlanBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
+                routePlanBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET);
+                byte[] routePlanBytes = craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
+                builder.write(writeCharacteristicFourth, routePlanBytes);
+
+                RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
+                routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
+                routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
+                routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(0));
+                byte[] routePlan2ndBytes = craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
+                builder.write(writeCharacteristicFourth, routePlan2ndBytes);
+
+                builder.queue(getQueue());
+
+        } catch (IOException e) {
+            GB.toast(getContext(), "Gpx get list error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+        }
+
+    }
+
+
+    @Override
+    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
+        WeatherSpec weatherSpec = weatherSpecs.get(0);
+
+        try {
+            TransactionBuilder builder = performInitialized("set weather");
+            Back.back_msg.Builder weatherMsg = Back.back_msg.newBuilder();
+            Back.weather_current_data_message.Builder currentWeatherMsg =Back.weather_current_data_message.newBuilder();
+            currentWeatherMsg.setCurDayMinTemp(weatherSpec.todayMinTemp-273);
+            currentWeatherMsg.setCurDayMaxTemp(weatherSpec.todayMaxTemp-273);
+            currentWeatherMsg.setCurTemperature(weatherSpec.currentTemp-273);
+            currentWeatherMsg.setCurWeather(weatherSpec.currentConditionCode);
+            currentWeatherMsg.setWindDeg(String.valueOf(weatherSpec.windDirection));
+            currentWeatherMsg.setWindSpd(String.valueOf(weatherSpec.windSpeed));
+            weatherMsg.setCurMsg(currentWeatherMsg);
+            weatherMsg.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_BACK);
+            weatherMsg.setBackOperateType(Back.BACK_OPERATE_TYPE.enum_BACK_OPERATE_TYPE_SEND);
+            weatherMsg.setBackServiceType(Back.BACK_SERVICE_TYPE.enum_BACK_SERVICE_TYPE_WEATHER);
+
+
+            byte[] weatherBytes = craftData(weatherMsg.getServiceType().getNumber(),
+                    weatherMsg.getBackServiceType().getNumber(),
+                    weatherMsg.getBackOperateType().getNumber(),
+                    weatherMsg.build().toByteArray());
+            builder.writeChunkedData(writeCharacteristicFourth, weatherBytes, getMTU());
+            builder.queue(getQueue());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

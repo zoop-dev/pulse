@@ -49,7 +49,7 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public boolean supportsActivityDataFetching() {
+    public boolean supportsActivityTracks() {
         return true;
     }
 

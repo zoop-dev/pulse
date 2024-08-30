@@ -19,4 +19,9 @@ public class IGPSportiGS630Coordinator extends IGPSportAbstractCoordinator {
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("iGS630");
     }
+
+    @Override
+    public boolean supportsWeather() {
+        return true;
+    }
 }
