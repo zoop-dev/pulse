@@ -79,7 +79,7 @@ public class IGPSportRouteInstallHandler implements InstallHandler {
         }
 
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!(coordinator instanceof IGPSportCoordinator)) {
+        if (!(coordinator instanceof IGPSportAbstractCoordinator)) {
             LOG.warn("Coordinator is not a IGPSportCoordinator: {}", coordinator.getClass());
             installActivity.setInfoText(mContext.getString(R.string.fwapp_install_device_not_supported));
             installActivity.setInstallEnabled(false);

@@ -183,11 +183,11 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] value = characteristic.getValue();
+
 
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
         LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
@@ -393,7 +393,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                 case ActivityUser.PREF_USER_WEIGHT_KG:
                 case ActivityUser.PREF_USER_GENDER:
                 case ActivityUser.PREF_USER_HEIGHT_CM:
-                case ActivityUser.PREF_USER_YEAR_OF_BIRTH:
+                case ActivityUser.PREF_USER_DATE_OF_BIRTH:
                     setUserData(builder);
                     break;
                 case SettingsActivity.PREF_MEASUREMENT_SYSTEM:

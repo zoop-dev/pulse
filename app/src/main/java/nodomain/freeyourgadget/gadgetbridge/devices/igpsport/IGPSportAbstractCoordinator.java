@@ -19,12 +19,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.IGPSportDeviceSupport;
 
-public class IGPSportCoordinator extends AbstractBLEDeviceCoordinator {
-    @Override
-    public int getDeviceNameResource() {
-        return R.string.devicetype_igpsport_bsc200;
-    }
-
+public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_default;
@@ -44,15 +39,6 @@ public class IGPSportCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getBondingStyle(){
         return BONDING_STYLE_ASK;
-    }
-
-    @Override
-    protected Pattern getSupportedDeviceName() {
-        /* return Pattern.compile("Amazfit T-Rex", Pattern.CASE_INSENSITIVE); */
-        /* return Pattern.compile("Xiaomi Smart Band 7.*");  */
-      /* return Pattern.compile("Bangle\\.js.*|Pixl\\.js.*|Puck\\.js.*|MDBT42Q.*|Espruino.*"); /*
-      /* return Pattern.compile("M6.*|M4.*|LH716|Sunset 6|Watch7|Fit1900"); */
-        return Pattern.compile("BSC200");
     }
 
     @Override
