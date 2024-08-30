@@ -59,6 +59,11 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
+    public boolean supportsAppListFetching() {
+        return true;
+    }
+
+    @Override
     public Class<? extends Activity> getAppsManagementActivity() {
         return AppManagerActivity.class;
     }

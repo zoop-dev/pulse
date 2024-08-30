@@ -19,18 +19,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
@@ -217,6 +220,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                         case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
                             handleFirmwareData(pbData);
                             break;
+                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
+                            if(mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET_VALUE) {
+                                handleRouteNumber(pbData);
+                            } else if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_SEND_VALUE) {
+                                handleRouteList(pbData);
+                            }
+                            break;
                     }
                 } catch (InvalidProtocolBufferException e) {
                     throw new RuntimeException(e);
@@ -260,6 +270,68 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         }
 
         return false;
+    }
+
+    public static UUID toRouteUUID(final String id) {
+        // Watchface IDs are numbers as strings - pad them to the right with F
+        // and encode as UUID
+        final String padded = String.format("%-32s", id).replace(' ', 'F');
+        return UUID.fromString(
+                padded.substring(0, 8) + "-" +
+                        padded.substring(8, 12) + "-" +
+                        padded.substring(12, 16) + "-" +
+                        padded.substring(16, 20) + "-" +
+                        padded.substring(20, 32)
+        );
+    }
+
+    public static String toRouteId(final UUID uuid) {
+        return uuid.toString()
+                .replaceAll("-", "")
+                .replaceAll("f", "")
+                .replaceAll("F", "");
+    }
+
+    private void handleRouteList(byte[] pbData) throws InvalidProtocolBufferException {
+        RoutePlan.route_plan_data_msg routeplatMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
+
+        List<RoutePlan.route_plan_info_message> routeList = routeplatMsg.getRoutePlanInfoMsgList();
+
+        final List<GBDeviceApp> gbDeviceApps = new ArrayList<>();
+
+        for (final RoutePlan.route_plan_info_message routeMsg : routeList) {
+            final UUID uuid = toRouteUUID(String.valueOf(routeMsg.getId()));
+            GBDeviceApp gbDeviceApp = new GBDeviceApp(
+                    uuid,
+                    routeMsg.getName(),
+                    "",
+                    "",
+                    GBDeviceApp.Type.APP_GENERIC
+            );
+            gbDeviceApps.add(gbDeviceApp);
+        }
+
+        final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
+        appInfoCmd.apps = gbDeviceApps.toArray(new GBDeviceApp[0]);
+        evaluateGBDeviceEvent(appInfoCmd);
+
+    }
+
+    private void handleRouteNumber(byte[] pbData) throws InvalidProtocolBufferException {
+        RoutePlan.route_plan_data_msg routeplatMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
+        int fileNumber = 0;
+        if (routeplatMsg.getRouteListGetMsg().getFileNum() > 0)
+            fileNumber = routeplatMsg.getRouteListGetMsg().getFileNum();
+
+        TransactionBuilder builder = new TransactionBuilder("get files list");
+        RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
+        routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
+        routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
+        routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(fileNumber));
+        byte[] routePlan2ndBytes = craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
+        builder.write(writeCharacteristicFourth, routePlan2ndBytes);
+        builder.queue(getQueue());
+        
     }
 
     public void handleFactoryData(byte[] data) throws InvalidProtocolBufferException {
@@ -520,20 +592,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("get gpx routes");
 
-                RoutePlan.route_plan_data_msg.Builder routePlanBuilder = RoutePlan.route_plan_data_msg.newBuilder();
-                routePlanBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
-                routePlanBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET);
-                byte[] routePlanBytes = craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
-                builder.write(writeCharacteristicFourth, routePlanBytes);
+            RoutePlan.route_plan_data_msg.Builder routePlanBuilder = RoutePlan.route_plan_data_msg.newBuilder();
+            routePlanBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
+            routePlanBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET);
+            byte[] routePlanBytes = craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
+            builder.write(writeCharacteristicFourth, routePlanBytes);
 
-                RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
-                routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
-                routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
-                routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(0));
-                byte[] routePlan2ndBytes = craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
-                builder.write(writeCharacteristicFourth, routePlan2ndBytes);
-
-                builder.queue(getQueue());
+            builder.queue(getQueue());
 
         } catch (IOException e) {
             GB.toast(getContext(), "Gpx get list error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
