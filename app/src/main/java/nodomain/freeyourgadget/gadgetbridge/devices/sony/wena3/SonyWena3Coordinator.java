@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Wena3Vo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -142,6 +143,11 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsBodyEnergy(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
         return new SonyWena3ActivitySampleProvider(device, session);
     }
@@ -149,6 +155,11 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public TimeSampleProvider<? extends HeartRateSample> getHeartRateRestingSampleProvider(GBDevice device, DaoSession session) {
         return new SonyWena3HeartRateSampleProvider(device, session);
+    }
+
+    @Override
+    public TimeSampleProvider<? extends BodyEnergySample> getBodyEnergySampleProvider(GBDevice device, DaoSession session) {
+        return new SonyWena3EnergySampleProvider(device, session);
     }
 
     @Override
