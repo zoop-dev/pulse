@@ -450,11 +450,6 @@
     <string name="pref_title_stable_connection">Stable Connection</string>
     <string name="pref_watch_face">Watch face</string>
     <string name="pref_device_version">Device version</string>
-    <string name="pref_sedentary_reminder">Sedentary reminder</string>
-    <string name="pref_sedentary_reminder_period">Time period (minutes)</string>
-    <string name="pref_sedentary_reminder_steps">Minimum steps</string>
-    <string name="pref_sedentary_reminder_start">Start time (hour)</string>
-    <string name="pref_sedentary_reminder_end">End time (hour)</string>
     <!-- HPlus Preferences -->
     <string name="pref_title_unit_system">Units</string>
     <string name="pref_title_timeformat">Time format</string>
