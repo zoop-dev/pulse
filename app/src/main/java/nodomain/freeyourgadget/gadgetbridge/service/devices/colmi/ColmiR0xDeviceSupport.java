@@ -34,6 +34,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -43,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
+import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiLiveActivityContext;
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiR0xConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiR0xPacketHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiHeartRateSampleProvider;
@@ -78,6 +82,9 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
     private int bigDataPacketSize;
     private ByteBuffer bigDataPacket;
 
+    private static final int LIVE_ACTIVITY_BUFFER_INTERVAL = 2000;
+    private final ColmiLiveActivityContext liveActivityContext = new ColmiLiveActivityContext();
+
     public ColmiR0xDeviceSupport() {
         super(LOG);
         addSupportedService(ColmiR0xConstants.CHARACTERISTIC_SERVICE_V1);
@@ -99,6 +106,12 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     public void dispose() {
         backgroundTasksHandler.removeCallbacksAndMessages(null);
+
+        LOG.info("Stopping live activity timeout scheduler");
+        if(liveActivityContext.getRealtimeStepsScheduler() != null) {
+            liveActivityContext.getRealtimeStepsScheduler().shutdown();
+            liveActivityContext.setRealtimeStepsScheduler(null);
+        }
 
         super.dispose();
     }
@@ -315,6 +328,20 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
                 case ColmiR0xConstants.CMD_MANUAL_HEART_RATE:
                     ColmiR0xPacketHandler.liveHeartRate(getDevice(), getContext(), value);
                     break;
+                case ColmiR0xConstants.CMD_REALTIME_HEART_RATE:
+                    ColmiR0xPacketHandler.realtimeHeartRate(getDevice(), getContext(), liveActivityContext, value);
+
+                    // The realtime measurement has a timeout of 60 seconds.
+                    // Send a "continue" command every 30 packets (= every 30 seconds)
+                    liveActivityContext.setRealtimeHrmPacketCount((liveActivityContext.getRealtimeHrmPacketCount()+1) % 30);
+
+                    if(liveActivityContext.isRealtimeHrm() && liveActivityContext.getRealtimeHrmPacketCount() == 0) {
+                        byte[] measureHeartRatePacket = buildPacket(new byte[]{ColmiR0xConstants.CMD_REALTIME_HEART_RATE, 0x03});
+                        LOG.info("Continue realtime HRM request sent: {}", StringUtils.bytesToHex(measureHeartRatePacket));
+                        sendWrite("continueRealtimeHRMRequest", measureHeartRatePacket);
+                    }
+
+                    break;
                 case ColmiR0xConstants.CMD_NOTIFICATION:
                     switch (value[1]) {
                         case ColmiR0xConstants.NOTIFICATION_NEW_HR_DATA:
@@ -334,7 +361,7 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
                             evaluateGBDeviceEvent(batteryNotifEvent);
                             break;
                         case ColmiR0xConstants.NOTIFICATION_LIVE_ACTIVITY:
-                            ColmiR0xPacketHandler.liveActivity(value);
+                            ColmiR0xPacketHandler.liveActivity(getDevice(), getContext(), liveActivityContext, value);
                             break;
                         default:
                             LOG.info("Received unrecognized notification: {}", StringUtils.bytesToHex(value));
@@ -623,6 +650,42 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
         byte[] measureHeartRatePacket = buildPacket(new byte[]{ColmiR0xConstants.CMD_MANUAL_HEART_RATE, 0x01});
         LOG.info("Measure HR request sent: {}", StringUtils.bytesToHex(measureHeartRatePacket));
         sendWrite("measureHRRequest", measureHeartRatePacket);
+    }
+
+    @Override
+    public void onEnableRealtimeHeartRateMeasurement(boolean enable) {
+        if (enable == liveActivityContext.isRealtimeHrm()) return;
+        liveActivityContext.setRealtimeHrm(enable);
+        liveActivityContext.setRealtimeHrmPacketCount(0);
+
+        byte enableByte;
+        if(enable) enableByte = 0x01;
+        else enableByte = 0x02;
+
+        byte[] measureHeartRatePacket = buildPacket(new byte[]{ColmiR0xConstants.CMD_REALTIME_HEART_RATE, enableByte});
+        LOG.info("Enable realtime HRM request sent: {}", StringUtils.bytesToHex(measureHeartRatePacket));
+        sendWrite("enableRealtimeHRMRequest", measureHeartRatePacket);
+    }
+
+    @Override
+    public void onEnableRealtimeSteps(boolean enable) {
+        if (enable == liveActivityContext.isRealtimeSteps()) return;
+        liveActivityContext.setRealtimeSteps(enable);
+
+        if(enable) {
+            liveActivityContext.setBufferedSteps(0);
+            liveActivityContext.setBufferedCalories(0);
+            liveActivityContext.setBufferedDistance(0);
+
+            LOG.info("Starting live activity timeout scheduler");
+            ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+            service.scheduleWithFixedDelay(ColmiR0xPacketHandler.liveActivityPulse(getDevice(), getContext(), liveActivityContext), 0, LIVE_ACTIVITY_BUFFER_INTERVAL, TimeUnit.MILLISECONDS);
+            liveActivityContext.setRealtimeStepsScheduler(service);
+        } else {
+            LOG.info("Stopping live activity timeout scheduler");
+            liveActivityContext.getRealtimeStepsScheduler().shutdown();
+            liveActivityContext.setRealtimeStepsScheduler(null);
+        }
     }
 
     @Override

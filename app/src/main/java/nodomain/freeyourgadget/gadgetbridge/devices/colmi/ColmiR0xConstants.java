@@ -33,6 +33,7 @@ public class ColmiR0xConstants {
     public static final byte CMD_PREFERENCES = 0x0a;
     public static final byte CMD_SYNC_HEART_RATE = 0x15;
     public static final byte CMD_AUTO_HR_PREF = 0x16;
+    public static final byte CMD_REALTIME_HEART_RATE = 0x1e;
     public static final byte CMD_GOALS = 0x21;
     public static final byte CMD_AUTO_SPO2_PREF = 0x2c;
     public static final byte CMD_PACKET_SIZE = 0x2f;

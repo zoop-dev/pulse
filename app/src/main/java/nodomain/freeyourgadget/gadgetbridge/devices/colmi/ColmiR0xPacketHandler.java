@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -174,11 +175,115 @@ public class ColmiR0xPacketHandler {
         }
     }
 
-    public static void liveActivity(byte[] value) {
+    public static void realtimeHeartRate(GBDevice device, Context context, ColmiLiveActivityContext hrmContext, byte[] value) {
+        int hrResponse = value[1] & 0xff;
+        LOG.info("Received realtime heart rate response: {} bpm", hrResponse);
+
+        // Ignore realtime heart rate data if it arrives too fast
+        Calendar calendar = Calendar.getInstance();
+        int sampleTimestamp = (int)(calendar.getTimeInMillis() / 1000);
+        if (sampleTimestamp <= hrmContext.getLastRealtimeHeartRateTimestamp()) {
+            LOG.info("Ignoring realtime heart rate data with same timestamp as last packet");
+            return;
+        }
+
+        hrmContext.setLastRealtimeHeartRateTimestamp(sampleTimestamp);
+
+        if (hrResponse > 0) {
+            // Build sample object, send intent and save in database
+            try (DBHandler db = GBApplication.acquireDB()) {
+                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
+                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
+                
+                // Build heart rate sample object and save in database
+                ColmiHeartRateSampleProvider heartRateSampleProvider = new ColmiHeartRateSampleProvider(device, db.getDaoSession());
+                ColmiHeartRateSample heartRateSample = heartRateSampleProvider.createSample();
+                heartRateSample.setDeviceId(deviceId);
+                heartRateSample.setUserId(userId);
+                heartRateSample.setTimestamp(calendar.getTimeInMillis());
+                heartRateSample.setHeartRate(hrResponse);
+
+                // Send local intent with sample for listeners like the live activity tab
+                Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
+                        .putExtra(GBDevice.EXTRA_DEVICE, device)
+                        .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, heartRateSample);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                // Save heart rate sample to the database
+                heartRateSampleProvider.addSample(heartRateSample);
+            } catch (Exception e) {
+                LOG.error("Error acquiring database for recording heart rate samples", e);
+            }
+        }
+    }
+
+    public static void liveActivity(GBDevice device, Context context, ColmiLiveActivityContext liveActivityContext, byte[] value) {
+        // Live activity will report cumulative values over the day
         int steps = BLETypeConversions.toUint32(value[4], value[3], value[2], (byte) 0);
         int calories = BLETypeConversions.toUint32(value[7], value[6], value[5], (byte) 0) / 10;
         int distance = BLETypeConversions.toUint32(value[10], value[9], value[8], (byte) 0);
         LOG.info("Received live activity notification: {} steps, {} calories, {}m distance", steps, calories, distance);
+
+
+        // Calculate difference to last values
+        if (liveActivityContext.getLastTotalSteps() == 0) liveActivityContext.setLastTotalSteps(steps);
+        if (liveActivityContext.getLastTotalCalories() == 0) liveActivityContext.setLastTotalCalories(calories);
+        if (liveActivityContext.getLastTotalDistance() == 0) liveActivityContext.setLastTotalDistance(distance);
+
+        int deltaSteps = steps - liveActivityContext.getLastTotalSteps();
+        int deltaCalories = calories - liveActivityContext.getLastTotalCalories();
+        int deltaDistance = distance - liveActivityContext.getLastTotalDistance();
+
+        liveActivityContext.setLastTotalSteps(steps);
+        liveActivityContext.setLastTotalCalories(calories);
+        liveActivityContext.setLastTotalDistance(distance);
+
+
+        // Buffer live activity data
+        liveActivityContext.setBufferedSteps(liveActivityContext.getBufferedSteps() + deltaSteps);
+        liveActivityContext.setBufferedCalories(liveActivityContext.getBufferedCalories() + deltaCalories);
+        liveActivityContext.setBufferedDistance(liveActivityContext.getBufferedDistance() + deltaDistance);
+
+        LOG.info("Buffered live activity data: {} steps (+{}), {} calories (+{}), {}m distance (+{})", liveActivityContext.getBufferedSteps(), deltaSteps, liveActivityContext.getBufferedCalories(), deltaCalories, liveActivityContext.getBufferedDistance(), deltaDistance);
+    }
+
+    @NonNull
+    public static Runnable liveActivityPulse(GBDevice device, Context context, ColmiLiveActivityContext liveActivityContext) {
+        return () -> {
+            Calendar calendar = Calendar.getInstance();
+            int sampleTimestamp = (int) (calendar.getTimeInMillis() / 1000);
+
+            try (DBHandler db = GBApplication.acquireDB()) {
+                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
+                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
+
+                // Build activity sample object
+                ColmiActivitySampleProvider sampleProvider = new ColmiActivitySampleProvider(device, db.getDaoSession());
+                ColmiActivitySample activitySample = sampleProvider.createActivitySample();
+                activitySample.setProvider(sampleProvider);
+                activitySample.setDeviceId(deviceId);
+                activitySample.setUserId(userId);
+                activitySample.setRawKind(ActivityKind.ACTIVITY.getCode());
+                activitySample.setTimestamp(sampleTimestamp);
+                activitySample.setCalories(liveActivityContext.getBufferedCalories());
+                activitySample.setSteps(liveActivityContext.getBufferedSteps());
+                activitySample.setDistance(liveActivityContext.getBufferedDistance());
+
+                // Send local intent with sample for listeners like the live activity tab
+                Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
+                        .putExtra(GBDevice.EXTRA_DEVICE, device)
+                        .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, activitySample);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                LOG.info("Sent live activity notification: {} steps, {} calories, {}m distance", liveActivityContext.getBufferedSteps(), liveActivityContext.getBufferedCalories(), liveActivityContext.getBufferedDistance());
+
+                // Reset buffered data
+                liveActivityContext.setBufferedSteps(0);
+                liveActivityContext.setBufferedCalories(0);
+                liveActivityContext.setBufferedDistance(0);
+            } catch (Exception e) {
+                LOG.error("Error acquiring database for recording activity samples", e);
+            }
+        };
     }
 
     public static void historicalActivity(GBDevice device, Context context, byte[] value) {

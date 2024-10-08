@@ -47,7 +47,7 @@ import com.github.mikephil.charting.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -65,6 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
+import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsData> {
@@ -166,21 +167,33 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
             String action = intent.getAction();
             switch (action) {
                 case DeviceService.ACTION_REALTIME_SAMPLES: {
-                    ActivitySample sample = (ActivitySample) intent.getSerializableExtra(DeviceService.EXTRA_REALTIME_SAMPLE);
-                    addSample(sample);
+                    addSample(intent.getSerializableExtra(DeviceService.EXTRA_REALTIME_SAMPLE));
                     break;
                 }
             }
         }
     };
 
-    private void addSample(ActivitySample sample) {
-        int heartRate = sample.getHeartRate();
-        int timestamp = tsTranslation.shorten(sample.getTimestamp());
+    private void addSample(Serializable serializedSample) {
+        int heartRate = 0;
+        int timestamp = 0;
+        int steps = 0;
+
+        if (serializedSample instanceof ActivitySample) {
+            ActivitySample activitySample = (ActivitySample) serializedSample;
+            heartRate = activitySample.getHeartRate();
+            timestamp = tsTranslation.shorten(activitySample.getTimestamp());
+            steps = activitySample.getSteps();
+        }
+        if (serializedSample instanceof HeartRateSample) {
+            HeartRateSample heartRateSample = (HeartRateSample) serializedSample;
+            heartRate = heartRateSample.getHeartRate();
+            timestamp = tsTranslation.shorten((int)(heartRateSample.getTimestamp() / 1000));
+        }
+
         if (HeartRateUtils.getInstance().isValidHeartRateValue(heartRate)) {
             setCurrentHeartRate(heartRate, timestamp);
         }
-        int steps = sample.getSteps();
         if (steps > 0) {
             addEntries(steps, timestamp);
         }

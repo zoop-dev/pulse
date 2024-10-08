@@ -240,4 +240,9 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
         }
         return deviceSpecificSettings;
     }
+
+    @Override
+    public int getLiveActivityFragmentPulseInterval() {
+        return 2000;
+    }
 }
