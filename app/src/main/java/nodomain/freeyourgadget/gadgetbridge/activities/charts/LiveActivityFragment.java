@@ -158,6 +158,11 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            final GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+            if (device == null || !device.equals(getChartsHost().getDevice())) {
+                return;
+            }
+
             String action = intent.getAction();
             switch (action) {
                 case DeviceService.ACTION_REALTIME_SAMPLES: {
