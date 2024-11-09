@@ -8,21 +8,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControlButtonMode;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.AbstractSoundcoreProtocol;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.SoundcorePacket;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class SoundcoreLibertyProtocol extends GBDeviceProtocol {
+public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
 
     private static final Logger LOG = LoggerFactory.getLogger(SoundcoreLibertyProtocol.class);
 
@@ -34,25 +31,6 @@ public class SoundcoreLibertyProtocol extends GBDeviceProtocol {
         super(device);
     }
 
-    private GBDeviceEventBatteryInfo buildBatteryInfo(int batteryIndex, int level) {
-        GBDeviceEventBatteryInfo info = new GBDeviceEventBatteryInfo();
-        info.batteryIndex = batteryIndex;
-        info.level = level;
-        return info;
-    }
-
-    private GBDeviceEventVersionInfo buildVersionInfo(String firmware1, String firmware2, String serialNumber) {
-        GBDeviceEventVersionInfo info = new GBDeviceEventVersionInfo();
-        info.hwVersion = serialNumber;
-        info.fwVersion = firmware1;
-        info.fwVersion2 = firmware2;
-        return info;
-    }
-
-    private String readString(byte[] data, int position, int size) {
-        if (position + size > data.length) throw new IllegalStateException();
-        return new String(data, position, size, StandardCharsets.UTF_8);
-    }
     @Override
     public GBDeviceEvent[] decodeResponse(byte[] responseData) {
         ByteBuffer buf = ByteBuffer.wrap(responseData);
@@ -208,10 +186,6 @@ public class SoundcoreLibertyProtocol extends GBDeviceProtocol {
         return super.encodeSendConfiguration(config);
     }
 
-    byte[] encodeDeviceInfoRequest() {
-        return new SoundcorePacket((short) 0x0101).encode();
-    }
-
     byte[] encodeMysteryDataRequest1() {
         byte[] payload = new byte[]{0x00};
         return new SoundcorePacket((short) 0x8d01, payload).encode();
@@ -341,8 +315,4 @@ public class SoundcoreLibertyProtocol extends GBDeviceProtocol {
         return new SoundcorePacket((short) 0x8206, new byte[] {ambientModes}).encode();
     }
 
-    private byte encodeBoolean(boolean bool) {
-        if (bool) return 0x01;
-        else return 0x00;
-    }
 }
