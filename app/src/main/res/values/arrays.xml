@@ -3762,6 +3762,18 @@
         <item>game_mode</item>
     </string-array>
 
+    <string-array name="soundcore_anc_mode_names">
+        <item>@string/prefs_active_noise_cancelling_transport</item>
+        <item>@string/prefs_active_noise_cancelling_indoor</item>
+        <item>@string/prefs_active_noise_cancelling_outdoor</item>
+    </string-array>
+
+    <string-array name="soundcore_anc_mode_values">
+        <item>transport</item>
+        <item>indoor</item>
+        <item>outdoor</item>
+    </string-array>
+
     <string-array name="soundcore_button_function_names">
         <item>@string/pref_media_volumedown</item>
         <item>@string/pref_media_volumeup</item>

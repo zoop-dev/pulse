@@ -411,6 +411,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING = "pref_adaptive_noise_cancelling";
     public static final String PREF_SOUNDCORE_WIND_NOISE_REDUCTION= "pref_soundcore_wind_noise_reduction";
     public static final String PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE = "pref_soundcore_transparency_vocal_mode";
+    public static final String PREF_SOUNDCORE_ANC_MODE = "pref_soundcore_anc_mode";
     public static final String PREF_SOUNDCORE_WEARING_DETECTION = "pref_soundcore_wearing_detection";
     public static final String PREF_SOUNDCORE_WEARING_TONE = "pref_soundcore_wearing_tone";
     public static final String PREF_SOUNDCORE_TOUCH_TONE = "pref_soundcore_touch_tone";

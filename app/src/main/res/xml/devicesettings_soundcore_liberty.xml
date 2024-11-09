@@ -48,8 +48,6 @@
 
     </PreferenceCategory>
 
-
-
     <PreferenceCategory
         android:key="pref_key_header_soundcore_other"
         android:title="@string/pref_header_other">

@@ -76,15 +76,15 @@ public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
     private void decodeAudioMode(byte[] payload) {
         SharedPreferences prefs = getDevicePrefs().getPreferences();
         SharedPreferences.Editor editor = prefs.edit();
-        String soundmode = "off";
+        String ambient_sound_mode = "off";
         int anc_strength = 0;
 
         if (payload[0] == 0x00) {
-            soundmode = "noise_cancelling";
+            ambient_sound_mode = "noise_cancelling";
         } else if (payload[0] == 0x01) {
-            soundmode = "ambient_sound";
+            ambient_sound_mode = "ambient_sound";
         } else if (payload[0] == 0x02) {
-            soundmode = "off";
+            ambient_sound_mode = "off";
         }
 
         if (payload[1] == 0x10) {
@@ -99,7 +99,7 @@ public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
         boolean adaptive_anc = (payload[3] == 0x01);
         boolean windnoiseReduction = (payload[4] == 0x01);
 
-        editor.putString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL, soundmode);
+        editor.putString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL, ambient_sound_mode);
         editor.putInt(DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_LEVEL, anc_strength);
         editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE, vocal_mode);
         editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING, adaptive_anc);
@@ -210,19 +210,19 @@ public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
     private byte[] encodeAudioMode() {
         Prefs prefs = getDevicePrefs();
 
-        byte anc_mode;
+        byte ambient_sound_mode;
         switch (prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL, "off")) {
             case "noise_cancelling":
-                anc_mode = 0x00;
+                ambient_sound_mode = 0x00;
                 break;
             case "ambient_sound":
-                anc_mode = 0x01;
+                ambient_sound_mode = 0x01;
                 break;
             case "off":
-                anc_mode = 0x02;
+                ambient_sound_mode = 0x02;
                 break;
             default:
-                LOG.error("Invalid Audio Mode selected");
+                LOG.error("Invalid Ambient Mode selected");
                 return null;
         }
 
@@ -246,7 +246,7 @@ public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
         byte vocal_mode = encodeBoolean(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE, false));
         byte windnoise_reduction = encodeBoolean(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_WIND_NOISE_REDUCTION, false));
 
-        byte[] payload = new byte[]{anc_mode, anc_strength, vocal_mode, adaptive_anc, windnoise_reduction, 0x01};
+        byte[] payload = new byte[]{ambient_sound_mode, anc_strength, vocal_mode, adaptive_anc, windnoise_reduction, 0x01};
         return new SoundcorePacket((short) 0x8106, payload).encode();
     }
 

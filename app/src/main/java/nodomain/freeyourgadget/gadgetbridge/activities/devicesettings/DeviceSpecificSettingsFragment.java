@@ -747,6 +747,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDCORE_WIND_NOISE_REDUCTION);
         addPreferenceHandlerFor(PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING);
+        addPreferenceHandlerFor(PREF_SOUNDCORE_ANC_MODE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_TOUCH_TONE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_WEARING_TONE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_WEARING_DETECTION);

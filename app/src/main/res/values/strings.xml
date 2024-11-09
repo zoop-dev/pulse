@@ -1860,6 +1860,7 @@
     <string name="devicetype_soundcore_liberty3_pro">Soundcore Liberty 3 Pro</string>
     <string name="devicetype_soundcore_liberty4_nc">Soundcore Liberty 4 NC</string>
     <string name="devicetype_soundcore_motion300">Soundcore Motion 300</string>
+    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
     <string name="devicetype_moondrop_space_travel">Moondrop Space Travel</string>
     <string name="devicetype_binary_sensor">Binary sensor</string>
     <string name="devicetype_honor_band3">Honor Band 3</string>
@@ -2580,6 +2581,9 @@
     <string name="prefs_active_noise_cancelling_level_high">High</string>
     <string name="prefs_active_noise_cancelling_level_low">Low</string>
     <string name="prefs_active_noise_cancelling_summary">Block noises of the surroundings</string>
+    <string name="prefs_active_noise_cancelling_transport">Transport</string>
+    <string name="prefs_active_noise_cancelling_indoor">Indoor</string>
+    <string name="prefs_active_noise_cancelling_outdoor">Outdoor</string>
     <string name="prefs_pressure_relief">Pressure relief with ambient sound</string>
     <string name="pressure_relief_summary">Prevent feeling of pressure in ears when not using Active Noise Cancelling</string>
     <string name="prefs_left">Left</string>
