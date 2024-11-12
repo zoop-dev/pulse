@@ -44,6 +44,8 @@ public class SoundcoreQ30Protocol extends AbstractSoundcoreProtocol {
             String firmware2 = "";
             String serialNumber = readString(payload, 44, 16);
             devEvts.add(buildVersionInfo(firmware1, firmware2, serialNumber));
+
+            decodeEqualizer(payload); // payload[2] bis payload[11]
         } else if (cmd == (short) 0x0106) { // ANC Mode Updated by Button
             decodeAudioMode(payload);
         } else if (cmd == (short) 0x0301) { // Battery Update
@@ -153,5 +155,39 @@ public class SoundcoreQ30Protocol extends AbstractSoundcoreProtocol {
         editor.putString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL, ambient_sound_mode);
         editor.putString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ANC_MODE, anc_mode);
         editor.apply();
+    }
+
+    private byte[] encodeEqualizer() {
+        // example payload for a plain eq (all frequencies the same strength):
+        // plain eq: fe fe 78 78 78 78 78 78 78 78
+
+        byte band1 = 0x78;
+        byte band2 = 0x78;
+        byte band3 = 0x78;
+        byte band4 = 0x78;
+        byte band5 = 0x78;
+        byte band6 = 0x78;
+        byte band7 = 0x78;
+        byte band8 = 0x78;
+
+        byte[] payload = new byte[]{(byte) 0xfe, (byte) 0xfe, band1, band2, band3, band4, band5, band6, band7, band8};
+        return new SoundcorePacket((short) 0x8102, payload).encode();
+    }
+
+    private void decodeEqualizer(byte[] payload) {
+        // payload[2] und payload[3] immer 0xfe ?
+        int band1 = Byte.toUnsignedInt(payload[4]);
+        int band2 = Byte.toUnsignedInt(payload[5]);
+        int band3 = Byte.toUnsignedInt(payload[6]);
+        int band4 = Byte.toUnsignedInt(payload[7]);
+        int band5 = Byte.toUnsignedInt(payload[8]);
+        int band6 = Byte.toUnsignedInt(payload[9]);
+        int band7 = Byte.toUnsignedInt(payload[10]);
+        int band8 = Byte.toUnsignedInt(payload[11]);
+    }
+
+
+    byte[] encodeMysteryDataRequest2() {
+        return new SoundcorePacket((short) 0x0105).encode();
     }
 }
