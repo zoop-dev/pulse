@@ -55,7 +55,7 @@ public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
             LOG.debug("Unknown incoming message - command: " + cmd + ", dump: " + hexdump(responseData));
         } else if (cmd == (short) 0x0105) {
             LOG.debug("Unknown incoming message - command: " + cmd + ", dump: " + hexdump(responseData));
-        } else if (cmd == (short) 0x0106) { //Sound Mode Update
+        } else if (cmd == (short) 0x0106) { // ANC Mode Update
             decodeAudioMode(payload);
         } else if (cmd == (short) 0x0301) { // Battery Update
             int batteryLeft = payload[0] * 20;

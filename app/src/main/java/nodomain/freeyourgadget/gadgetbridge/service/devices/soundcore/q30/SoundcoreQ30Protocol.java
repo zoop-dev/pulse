@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -39,18 +40,24 @@ public class SoundcoreQ30Protocol extends AbstractSoundcoreProtocol {
         byte[] payload = packet.getPayload();
 
         if (cmd == (short) 0x0101) {
-            // a lot of other data is in here, anything interesting?
+            int battery = payload[0] * 20; // only 20% steps available here
+            devEvts.add(buildBatteryInfo(0, battery));
+
+            byte[] eq_data = Arrays.copyOfRange(payload, 2, 12);
+            decodeEqualizer(eq_data);
+
+            // a lot of zeros is in range 12 - 34
+
+            byte[] anc_data = Arrays.copyOfRange(payload, 35, 39);
+            decodeAudioMode(anc_data);
+
             String firmware1 = readString(payload, 39, 5);
             String firmware2 = "";
             String serialNumber = readString(payload, 44, 16);
             devEvts.add(buildVersionInfo(firmware1, firmware2, serialNumber));
 
-            decodeEqualizer(payload); // payload[2] bis payload[11]
         } else if (cmd == (short) 0x0106) { // ANC Mode Updated by Button
             decodeAudioMode(payload);
-        } else if (cmd == (short) 0x0301) { // Battery Update
-            int battery = payload[0] * 20; // untested
-            devEvts.add(buildBatteryInfo(0, battery));
         } else if (cmd == (short) 0x8106) {
             // Acknowledgement for changed Ambient Mode
             // empty payload
@@ -175,15 +182,15 @@ public class SoundcoreQ30Protocol extends AbstractSoundcoreProtocol {
     }
 
     private void decodeEqualizer(byte[] payload) {
-        // payload[2] und payload[3] immer 0xfe ?
-        int band1 = Byte.toUnsignedInt(payload[4]);
-        int band2 = Byte.toUnsignedInt(payload[5]);
-        int band3 = Byte.toUnsignedInt(payload[6]);
-        int band4 = Byte.toUnsignedInt(payload[7]);
-        int band5 = Byte.toUnsignedInt(payload[8]);
-        int band6 = Byte.toUnsignedInt(payload[9]);
-        int band7 = Byte.toUnsignedInt(payload[10]);
-        int band8 = Byte.toUnsignedInt(payload[11]);
+        // payload[0] und payload[1] immer 0xfe ?
+        int band1 = Byte.toUnsignedInt(payload[2]);
+        int band2 = Byte.toUnsignedInt(payload[3]);
+        int band3 = Byte.toUnsignedInt(payload[4]);
+        int band4 = Byte.toUnsignedInt(payload[5]);
+        int band5 = Byte.toUnsignedInt(payload[6]);
+        int band6 = Byte.toUnsignedInt(payload[7]);
+        int band7 = Byte.toUnsignedInt(payload[8]);
+        int band8 = Byte.toUnsignedInt(payload[9]);
     }
 
 
