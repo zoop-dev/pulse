@@ -26,6 +26,7 @@ public final class HuaweiConstants {
     public static final UUID UUID_CHARACTERISTIC_HUAWEI_WRITE = UUID.fromString(String.format(BASE_UUID, "FE01"));
     public static final UUID UUID_CHARACTERISTIC_HUAWEI_READ = UUID.fromString(String.format(BASE_UUID, "FE02"));
     public static final UUID UUID_SERVICE_HUAWEI_SDP = UUID.fromString("82FF3820-8411-400C-B85A-55BDB32CF060");
+    public static final UUID UUID_SERVICE_HONOR_SDP = UUID.fromString("C9770A18-4C3D-453A-8AAF-D7EC7BBD2785");
 
     public static final String GROUP_ID = "7B0BC0CBCE474F6C238D9661C63400B797B166EA7849B3A370FC73A9A236E989";
     public static final byte[] KEY_TYPE = new byte[]{0x00, 0x07};
@@ -52,6 +53,8 @@ public final class HuaweiConstants {
     public static final String HO_MAGICWATCH2_NAME = "honor magicwatch 2-";
     public static final String HO_WATCHGS3_NAME = "honor watch gs 3-";
     public static final String HO_WATCHGSPRO_NAME = "honor watch gs pro-";
+    public static final String HO_WATCH4_NAME = "honor watch 4-";
+    public static final String HO_WATCH4PRO_NAME = "honor watch 4 pro-";
     public static final String HU_BAND3E_NAME = "huawei band 3e-";
     public static final String HU_BAND4E_NAME = "huawei band 4e-";
     public static final String HU_BAND6_NAME = "huawei band 6-";
