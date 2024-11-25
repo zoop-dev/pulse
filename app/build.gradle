@@ -289,6 +289,9 @@ dependencies {
 
     // Needed for Armenian transliteration
     implementation 'org.ahocorasick:ahocorasick:0.6.3'
+
+    // Needed for Emoji transliteration
+    implementation 'net.fellbaum:jemoji:1.6.0'
 }
 
 preBuild.dependsOn(":GBDaoGenerator:genSources")
