@@ -184,9 +184,19 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_garmin_realtime_settings);
         }
 
+        if (supportsCalendarEvents()){
+            deviceSpecificSettings.addRootScreen(
+                    DeviceSpecificSettingsScreen.CALENDAR,
+                    R.xml.devicesettings_header_calendar,
+                    R.xml.devicesettings_sync_calendar
+            );
+        }
+
         final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
 
         notifications.add(R.xml.devicesettings_send_app_notifications);
+
+        notifications.add(R.xml.devicesettings_transliteration);
 
         if (getCannedRepliesSlotCount(device) > 0) {
             notifications.add(R.xml.devicesettings_canned_reply_16);
@@ -215,6 +225,11 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(GBDevice device) {
         return new GarminSettingsCustomizer();
+    }
+
+    @Override
+    public boolean supportsCalendarEvents() {
+        return true;
     }
 
     @Override
