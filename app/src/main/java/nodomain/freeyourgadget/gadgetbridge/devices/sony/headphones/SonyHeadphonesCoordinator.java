@@ -119,6 +119,8 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
         if (supports(SonyHeadphonesCapabilities.AmbientSoundControl) || supports(SonyHeadphonesCapabilities.AmbientSoundControl2)) {
             if (supports(SonyHeadphonesCapabilities.WindNoiseReduction)) {
                 deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_ambient_sound_control_wind_noise_reduction);
+            } else if (supports(SonyHeadphonesCapabilities.NoNoiseCancelling)) {
+                deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_ambient_sound_control_no_noise_cancelling);
             } else {
                 deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_ambient_sound_control);
             }

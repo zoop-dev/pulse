@@ -545,17 +545,18 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
     @Override
     public List<? extends GBDeviceEvent> handleAmbientSoundControl(final byte[] payload) {
-        if (payload.length != 8 && payload.length != 7) {
+        if (payload.length < 6 || payload.length > 8) {
             LOG.warn("Unexpected payload length {}", payload.length);
             return Collections.emptyList();
         }
 
-        if (payload[1] != 0x15 && payload[1] != 0x17) {
+        if (payload[1] != 0x15 && payload[1] != 0x17 && payload[1] != 0x22) {
             LOG.warn("Not ambient sound control, ignoring {}", payload[1]);
             return Collections.emptyList();
         }
 
         final boolean includesWindNoiseReduction = payload[1] == 0x17 && payload.length > 7;
+        final boolean noNoiseCancelling = payload[1] == 0x22;
 
         AmbientSoundControl.Mode mode = null;
 
@@ -574,6 +575,8 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                         mode = AmbientSoundControl.Mode.AMBIENT_SOUND;
                     }
                 }
+            } else if (noNoiseCancelling) {
+                mode = AmbientSoundControl.Mode.AMBIENT_SOUND;
             } else {
                 if (payload[4] == (byte) 0x00) {
                     mode = AmbientSoundControl.Mode.NOISE_CANCELLING;
@@ -588,7 +591,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             return Collections.emptyList();
         }
 
-        int i = includesWindNoiseReduction ? 6 : 5;
+        int i = payload.length - 2;
         final Boolean focusOnVoice = booleanFromByte(payload[i]);
         if (focusOnVoice == null) {
             LOG.warn("Unknown focus on voice mode {}", String.format("%02x", payload[i]));
@@ -1078,7 +1081,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             case OFF:
                 return (byte) 0xff;
             case AMBIENT_SOUND_CONTROL:
-                return (byte) (supportsWindNoiseCancelling() ? 0x35 : 0x00); // Seems to be the only one that differs?
+                return (byte) (supportsWindNoiseCancelling() || getCoordinator().supports(SonyHeadphonesCapabilities.NoNoiseCancelling) ? 0x35 : 0x00); // Seems to be the only one that differs?
             case PLAYBACK_CONTROL:
                 return (byte) 0x20;
             case VOLUME_CONTROL:

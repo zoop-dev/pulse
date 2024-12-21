@@ -3560,6 +3560,16 @@
         <item>ambient_sound</item>
     </string-array>
 
+    <string-array name="sony_ambient_sound_control_no_noise_cancelling_names">
+        <item>@string/sony_ambient_sound_off</item>
+        <item>@string/sony_ambient_sound_ambient_sound</item>
+    </string-array>
+
+    <string-array name="sony_ambient_sound_control_no_noise_cancelling_values">
+        <item>off</item>
+        <item>ambient_sound</item>
+    </string-array>
+
     <string-array name="sony_protocol_version_names">
         <item>@string/automatic</item>
         <item>@string/sony_protocol_v1</item>
