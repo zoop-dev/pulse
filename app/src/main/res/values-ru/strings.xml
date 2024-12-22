@@ -1184,7 +1184,7 @@
     <string name="calendar_two_weeks">Две недели</string>
     <string name="calendar_week">Неделя</string>
     <string name="calendar_day">День</string>
-    <string name="battery_level">Уровень заряда батареи</string>
+    <string name="battery_level">Уровень заряда аккумулятора</string>
     <string name="show_ongoing_activity">Показать всплывающее окно с текущей активностью</string>
     <string name="dialog_hide">Скрыть</string>
     <string name="fossil_hr_warning_firmware_too_new">Некоторые функции отключены, потому что прошивка часов слишком новая</string>
@@ -2689,7 +2689,7 @@
     <string name="huawei_ignore_wakeup_status_end_description">Может помочь исправить распознание сна. Сразу видимо в обзоре дневных активностей.</string>
     <string name="huawei_reparse_workout_data_description">Эта опция повлияет на что-то после некоторых обновлений</string>
     <string name="pref_summary_general_reconnectonlytoconnected">Переподключаться только к подключенным устройствам, а не ко всем подряд</string>
-    <string name="updatefirmwareoperation_updateproblem_low_battery">Заряд батареи слишком низок</string>
+    <string name="updatefirmwareoperation_updateproblem_low_battery">Заряд аккумулятора слишком низок</string>
     <string name="menuitem_buzzer_intensity">Мощность звукоизлучателя</string>
     <string name="prefs_password_4_digits_0_to_9_summary">Пароль должен состоять из 4 цифр</string>
     <string name="devicetype_xiaomi_watch_s1_pro">Xiaomi Watch S1 Pro</string>
@@ -3035,7 +3035,7 @@
     <string name="unsupported">Не поддерживается</string>
     <string name="max_val">Максимум: %d</string>
     <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
-    <string name="notif_battery_full_title">Батарея заряжена!</string>
+    <string name="notif_battery_full_title">Аккумулятор заряжен!</string>
     <string name="notif_battery_full">%1$s батарея заряжена</string>
     <string name="authentication_failed_check_key">Аутентификация не удалась, проверьте ключ</string>
     <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
@@ -3677,4 +3677,21 @@
     <string name="first_start_open_source_text">Gadgetbridge - это приложение с открытым исходным кодом. Оно разрабатывается сообществом для сообщества.\n\nЛюбой желающий может внести свой вклад в создание кода, документации, тестирование и пожертвования.\n\nGadgetbridge не содержит рекламы и слежения. Он хранит ваши данные локально на вашем Android-устройстве, поэтому он на 100% безопасен для конфиденциальности.\n\nПосетите наш сайт, чтобы получить дополнительную информацию, документацию и ссылки на наши каналы связи.</string>
     <string name="label_distance_total">Итого: %.1f км</string>
     <string name="label_distance_trip_mph">Поездка: %.1f миль</string>
+    <string name="stepRateMax">Макс. частота шагов</string>
+    <string name="jumps_minute">прыжков в мин</string>
+    <string name="Jumps">Прыжки</string>
+    <string name="avgJumpRate">Средняя частота прыжков</string>
+    <string name="battery_discharge_intervals">Периоды разряда аккумулятора</string>
+    <string name="discharge_interval_1">Период разряда 1</string>
+    <string name="discharge_interval_2">Период разряда 2</string>
+    <string name="discharge_interval_5">Период разряда 5</string>
+    <string name="power_w">Электричество в Вт</string>
+    <string name="summary_battery_discharge_intervals_set">Отправьте настройки ниже на устройство</string>
+    <string name="battery_allow_pass_through">Сквозная передача электричества</string>
+    <string name="discharge_interval_4">Период разряда 4</string>
+    <string name="battery_allow_pass_though_summary">Даёт возможность отдачи электричества при зарядке</string>
+    <string name="weekly_total">Всего за неделю</string>
+    <string name="discharge_interval_3">Период разряда 3</string>
+    <string name="totalJumps">Всего прыжков</string>
+    <string name="maxJumpRate">Макс. частота прыжков</string>
 </resources>
