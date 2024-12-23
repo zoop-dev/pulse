@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -15,11 +17,13 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
@@ -198,6 +202,20 @@ public class ProtocolBufferHandler implements MessageHandler {
     private GdiSmartProto.Smart processProtobufCalendarRequest(GdiCalendarService.CalendarService calendarService) {
         if (calendarService.hasCalendarRequest()) {
             GdiCalendarService.CalendarService.CalendarServiceRequest calendarServiceRequest = calendarService.getCalendarRequest();
+
+            final boolean syncEnabled = GBApplication.getDeviceSpecificSharedPrefs(deviceSupport.getDevice().getAddress())
+                    .getBoolean(PREF_SYNC_CALENDAR, false);
+
+            if (!syncEnabled) {
+                LOG.warn("Got calendar request, but calendar sync is disabled");
+                return GdiSmartProto.Smart.newBuilder().setCalendarService(
+                        GdiCalendarService.CalendarService.newBuilder().setCalendarResponse(
+                                GdiCalendarService.CalendarService.CalendarServiceResponse.newBuilder()
+                                        .addAllCalendarEvent(Collections.emptyList())
+                                        .setStatus(GdiCalendarService.CalendarService.CalendarServiceResponse.ResponseStatus.OK)
+                        )
+                ).build();
+            }
 
             CalendarManager upcomingEvents = new CalendarManager(deviceSupport.getContext(), deviceSupport.getDevice().getAddress());
             List<CalendarEvent> mEvents = upcomingEvents.getCalendarEventList();
