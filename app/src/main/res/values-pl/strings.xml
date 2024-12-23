@@ -1157,9 +1157,7 @@
     <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
     <string name="dbmanagementactivity_export_confirmation">Czy naprawdę wyeksportować dane\? Wyeksportowane wcześniej dane o aktywnościach (jeśli takie istnieją) i ustawienia zostaną nadpisane.</string>
     <string name="dbmanagementactivity_export_data_title">Wyeksportować dane\?</string>
-    <string name="activity_db_management_clean_export_directory_text">Eksportowane pliki w katalogu eksportu/importu dostępne są dla każdej aplikacji na tym urządzeniu. Możesz chcieć usunąć te dane po synchronizacji lub utworzeniu kopii zapasowej. Upewnij się, że posiadasz kopię zapasową tych danych przed ich usunięciem. Pliki GPX, podkatalogi i automatycznie wyeksportowane pliki bazy danych (jeśli istnieją) nie zostaną usunięte.
-\n
-\nŚcieżka do katalogu eksportu/importu:</string>
+    <string name="activity_db_management_clean_export_directory_text">Eksportowane pliki w katalogu eksportu/importu dostępne są dla każdej aplikacji na tym urządzeniu. Możesz chcieć usunąć te dane po synchronizacji lub utworzeniu kopii zapasowej. Upewnij się, że posiadasz kopię zapasową tych danych przed ich usunięciem. Pliki GPX, podkatalogi i automatycznie wyeksportowane pliki bazy danych (jeśli istnieją) nie zostaną usunięte. Ścieżka do katalogu eksportu/importu:</string>
     <string name="activity_db_management_clean_export_directory_label">Usuwanie plików z katalogu eksportu/importu</string>
     <string name="dbmanagementactivity_export_finished">Usuwanie ukończone</string>
     <string name="activity_DB_clean_export_directory_warning_message">Czy na pewno usunąć pliki z katalogu eksportu/importu\?</string>
