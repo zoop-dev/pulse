@@ -268,9 +268,7 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
         movementIntensityTextWrapper.setVisibility(intensityTotal > 0 ? View.VISIBLE : View.GONE);
         dummyTile.setVisibility(intensityTotal > 0 ? View.VISIBLE : View.GONE);
 
-        if (!CHARTS_SLEEP_RANGE_24H
-                && supportsHeartrate(getChartsHost().getDevice())
-                && SHOW_CHARTS_AVERAGE) {
+        if (supportsHeartrate(getChartsHost().getDevice()) && SHOW_CHARTS_AVERAGE) {
             if (mcd.getHeartRateAxisMax() != 0 || mcd.getHeartRateAxisMin() != 0) {
                 mActivityChart.getAxisRight().setAxisMaximum(mcd.getHeartRateAxisMax() + (mcd.getHeartRateAxisMin() / 2f));
                 mActivityChart.getAxisRight().setAxisMinimum(mcd.getHeartRateAxisMin() / 2f);
@@ -292,7 +290,7 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
         List<Integer> heartRateValues = new ArrayList<>();
         HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
         for (ActivitySample sample : samples) {
-            if (sample.getKind() == ActivityKind.LIGHT_SLEEP || sample.getKind() == ActivityKind.DEEP_SLEEP) {
+            if (ActivityKind.isSleep(sample.getKind())) {
                 int heartRate = sample.getHeartRate();
                 if (heartRateUtilsInstance.isValidHeartRateValue(heartRate)) {
                     heartRateValues.add(heartRate);
@@ -490,7 +488,7 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
             hrEntry.label = HEARTRATE_LABEL;
             hrEntry.formColor = HEARTRATE_COLOR;
             legendEntries.add(hrEntry);
-            if (!CHARTS_SLEEP_RANGE_24H && SHOW_CHARTS_AVERAGE) {
+            if (SHOW_CHARTS_AVERAGE) {
                 LegendEntry hrAverageEntry = new LegendEntry();
                 hrAverageEntry.label = HEARTRATE_AVERAGE_LABEL;
                 hrAverageEntry.formColor = Color.RED;
