@@ -52,6 +52,7 @@ public class MiBand5FirmwareInfo extends HuamiFirmwareInfo {
 
         // font
         crcToVersion.put(31978, "1");
+        crcToVersion.put(55332, "2 (beta)");
     }
 
     public MiBand5FirmwareInfo(byte[] bytes) {
