@@ -127,7 +127,7 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 45;
+    private static final int CURRENT_PREFS_VERSION = 46;
 
     private static final LimitedQueue<Integer, String> mIDSenderLookup = new LimitedQueue<>(16);
     private static GBPrefs prefs;
@@ -1917,6 +1917,25 @@ public class GBApplication extends Application {
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Failed to migrate prefs to version 45", e);
+            }
+        }
+
+        if (oldVersion < 46) {
+            // Enable calendar sync on Garmin devices by default
+            try (DBHandler db = acquireDB()) {
+                final DaoSession daoSession = db.getDaoSession();
+                final List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+
+                for (Device dbDevice : activeDevices) {
+                    if (dbDevice.getTypeName().startsWith("GARMIN")) {
+                        final SharedPreferences deviceSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                        final SharedPreferences.Editor deviceSharedPrefsEdit = deviceSharedPrefs.edit();
+                        deviceSharedPrefsEdit.putBoolean("sync_calendar", true);
+                        deviceSharedPrefsEdit.apply();
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to migrate prefs to version 46", e);
             }
         }
 
