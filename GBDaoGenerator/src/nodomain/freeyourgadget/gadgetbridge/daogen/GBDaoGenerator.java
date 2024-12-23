@@ -54,7 +54,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(92, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(93, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -150,6 +150,7 @@ public class GBDaoGenerator {
         addColmiSleepStageSample(schema, user, device);
         addColmiHrvValueSample(schema, user, device);
         addColmiHrvSummarySample(schema, user, device);
+        addColmiTemperatureSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
 
@@ -589,6 +590,13 @@ public class GBDaoGenerator {
         hrvSummarySample.addIntProperty(SAMPLE_HRV_BASELINE_BALANCED_UPPER).codeBeforeGetter(OVERRIDE);
         hrvSummarySample.addIntProperty(SAMPLE_HRV_STATUS_NUM).codeBeforeGetter(OVERRIDE);
         return hrvSummarySample;
+    }
+
+    private static Entity addColmiTemperatureSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "ColmiTemperatureSample");
+        addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
+        addTemperatureProperties(sample);
+        return sample;
     }
 
     private static void addHeartRateProperties(Entity activitySample) {

@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSleepSess
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiStressSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSample;
@@ -49,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepSessionSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSpo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiStressSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
@@ -485,6 +487,64 @@ public class ColmiR0xPacketHandler {
             if (hrvPacketNr == 4) {
                 device.unsetBusyTask();
                 device.sendDeviceUpdateIntent(context);
+            }
+        }
+    }
+
+    public static void historicalTemperature(GBDevice device, byte[] value) {
+        ArrayList<ColmiTemperatureSample> temperatureSamples = new ArrayList<>();
+        int length = BLETypeConversions.toUint16(value[2], value[3]);
+        int index = 6; // start of data (day nr, followed by values)
+        int days_ago = -1;
+        while (days_ago != 0 && index - 6 < length) {
+            days_ago = value[index];
+            Calendar syncingDay = Calendar.getInstance();
+            syncingDay.add(Calendar.DAY_OF_MONTH, 0 - days_ago);
+            syncingDay.set(Calendar.MINUTE, 0);
+            syncingDay.set(Calendar.SECOND, 0);
+            syncingDay.set(Calendar.MILLISECOND, 0);
+            index++;
+            index++;  // Skip one extra unknown byte (so far always observed to be 0x1e)
+            for (int hour=0; hour<=23; hour++) {
+                syncingDay.set(Calendar.HOUR_OF_DAY, hour);
+                syncingDay.set(Calendar.MINUTE, 0);
+                float temp_00 = value[index];
+                index++;
+                float temp_30 = value[index];
+                index++;
+                if (temp_00 > 0) {
+                    LOG.info("Received temperature data from {} days ago at {}:00: {} °C", days_ago, hour, temp_00);
+                    ColmiTemperatureSample temperatureSample = new ColmiTemperatureSample();
+                    temperatureSample.setTimestamp(syncingDay.getTimeInMillis());
+                    temperatureSample.setTemperature((temp_00 / 10) + 20);
+                    temperatureSamples.add(temperatureSample);
+                }
+                syncingDay.set(Calendar.MINUTE, 30);
+                if (temp_30 > 0) {
+                    LOG.info("Received temperature data from {} days ago at {}:30: {} °C", days_ago, hour, temp_30);
+                    ColmiTemperatureSample temperatureSample = new ColmiTemperatureSample();
+                    temperatureSample.setTimestamp(syncingDay.getTimeInMillis());
+                    temperatureSample.setTemperature((temp_30 / 10) + 20);
+                    temperatureSamples.add(temperatureSample);
+                }
+                if (index - 6 >= length) {
+                    break;
+                }
+            }
+        }
+        if (!temperatureSamples.isEmpty()) {
+            try (DBHandler db = GBApplication.acquireDB()) {
+                ColmiTemperatureSampleProvider sampleProvider = new ColmiTemperatureSampleProvider(device, db.getDaoSession());
+                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
+                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
+                for (final ColmiTemperatureSample sample : temperatureSamples) {
+                    sample.setDeviceId(deviceId);
+                    sample.setUserId(userId);
+                }
+                LOG.info("Will persist {} temperature samples", temperatureSamples.size());
+                sampleProvider.addSamples(temperatureSamples);
+            } catch (Exception e) {
+                LOG.error("Error acquiring database for recording temperature samples", e);
             }
         }
     }

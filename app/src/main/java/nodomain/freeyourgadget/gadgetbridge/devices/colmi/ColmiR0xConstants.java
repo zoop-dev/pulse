@@ -57,6 +57,7 @@ public class ColmiR0xConstants {
     public static final byte NOTIFICATION_BATTERY_LEVEL = 0x0c;
     public static final byte NOTIFICATION_LIVE_ACTIVITY = 0x12;
 
+    public static final byte BIG_DATA_TYPE_TEMPERATURE = 0x25;
     public static final byte BIG_DATA_TYPE_SLEEP = 0x27;
     public static final byte BIG_DATA_TYPE_SPO2 = 0x2a;
 

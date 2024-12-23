@@ -22,6 +22,12 @@ import org.slf4j.LoggerFactory;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiStressSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiTemperatureSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class ColmiR09Coordinator extends AbstractColmiR0xCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(ColmiR09Coordinator.class);
@@ -34,5 +40,15 @@ public class ColmiR09Coordinator extends AbstractColmiR0xCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_colmi_r09;
+    }
+
+    @Override
+    public boolean supportsTemperatureMeasurement() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsContinuousTemperature() {
+        return true;
     }
 }
