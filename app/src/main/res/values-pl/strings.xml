@@ -3715,4 +3715,6 @@
     <string name="devicetype_marstek_b2500">Marstek B2500</string>
     <string name="battery_discharge_intervals">Interwały rozładowywania akumulatora</string>
     <string name="battery_allow_pass_through">Zezwalaj na przepustowość baterii</string>
+    <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
+    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
 </resources>
