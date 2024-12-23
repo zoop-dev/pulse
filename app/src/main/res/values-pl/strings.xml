@@ -279,7 +279,7 @@
     <string name="pref_title_minimize_priority">Ukryj powiadomienia Gadgetbridge</string>
     <string name="pref_summary_minimize_priority_off">Ikona na pasku stanu i powiadomienia będą wyświetlane na zablokowanym ekranie</string>
     <string name="pref_summary_minimize_priority_on">Ikona na pasku stanu i powiadomienia będą ukrywane na zablokowanym ekranie</string>
-    <string name="pref_summary_notification_filter">Blokuj wszystkie powiadomienia, gdy tryb \"Nie przeszkadzać\" jest włączony w telefonie</string>
+    <string name="pref_summary_notification_filter">Zablokuj wszystkie powiadomienia, gdy w telefonie włączona jest funkcja Nie przeszkadzać</string>
     <string name="pref_title_transliteration">Transliteracja</string>
     <string name="pref_summary_transliteration">Włącz tę opcję, jeśli twoje urządzenie nie obsługuje czcionki twojego języka</string>
     <string name="pref_header_privacy">Prywatność</string>
@@ -1417,7 +1417,7 @@
     <string name="reminder_time_every_year">%1$s, każdego roku</string>
     <string name="reminder_no_free_slots_title">Brak wolnych slotów</string>
     <string name="miband_prefs_reserve_reminder_calendar">Przypomnienia na nadchodzące wydarzenia</string>
-    <string name="mi2_prefs_do_not_disturb_lift_wrist">Aktywacja wyświetlacza po podniesieniu podczas \"Nie przeszkadzać\"</string>
+    <string name="mi2_prefs_do_not_disturb_lift_wrist">Aktywuj wyświetlacz po podniesieniu w trybie Nie przeszkadzać</string>
     <string name="pref_title_equalizer_normal">Normalny</string>
     <string name="prefs_pressure_relief">Odciążenie ciśnieniowe z dźwiękiem otoczenia</string>
     <string name="spm">kroki/min</string>
@@ -1886,9 +1886,7 @@
     <string name="permission_notification_listener">%1$s potrzebuje dostępu do powiadomień, aby móc je wyświetlać na zegarku, gdy ekran telefonu jest wyłączony.
 \n
 \nProszę dotknąć \'%2$s\', a następnie \'%1$s\' i włączyć \'Pozwól na dostęp do powiadomień\', a następnie dotknąć \'Wróć\', aby powrócić do %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s potrzebuje dostępu do ustawień Nie przeszkadzać, aby móc je honorować na zegarku, gdy ekran telefonu jest wyłączony.
-\n
-\nProszę dotknąć \"%2$s\", a następnie \"%1$s\" i włączyć \"Pozwól na zmianę ustawień trybu Nie Przeszkadzać\", a następnie dotknąć \"Wróć\", aby powrócić do %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s potrzebuje dostępu do ustawień Nie przeszkadzać, aby móc je honorować na zegarku, gdy ekran telefonu jest wyłączony. \n \nProszę dotknąć \'%2$s\' a następnie \'%1$s\' i włączyć ozwól na zmianę ustawień trybu Nie Przeszkadzać a następnie dotknąć róć aby powrócić do %1$s.</string>
     <string name="pref_title_touch_volume">Głośność</string>
     <string name="pref_switch_controls_anc_off">Tłumienie hałasu ←→ Wyłączone</string>
     <string name="sensitive">Wrażliwy</string>
@@ -2239,7 +2237,7 @@
 \n
 \nKONTYNUUJ NA WŁASNE RYZYKO!</string>
     <string name="pref_summary_notification_cache_while_disconnected">Wysyłanie nieodebranych powiadomień, gdy urządzenie połączy się ponownie po utracie zasięgu</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. \"Amazfit GTR 4 - AFC8\").</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. mazfit GTR 4 - AFC8</string>
     <string name="pref_canned_message">Wiadomość</string>
     <string name="pref_pair_bluetooth_calls_help_title">Jak odbierać połączenia bluetooth</string>
     <string name="sony_button_mode_help_title">Tryby przycisków - Pomoc</string>
@@ -3443,7 +3441,7 @@
     <string name="pref_voice_passthrough_enabled_summary">Pozwól, aby dźwięki zewnętrzne docierały do Twoich uszu</string>
     <string name="mijia_lywsd_comfort_lower">Dolna granica</string>
     <string name="pref_summary_sync_birthdays">Synchronizuj urodziny kontaktów z wydarzeniami w kalendarzu</string>
-    <string name="music_upload_info">Zamierzasz przesłać następujący plik muzyczny:\n%1$s\nTytuł utworu: %2$s\nAlbum: %3$s\n</string>
+    <string name="music_upload_info">Zamierzasz przesłać następujący plik muzyczny:\n\n%1$s\nTytuł utworu: %2$s\nAlbum: %3$s\n</string>
     <string name="authentication_failed_negotiation">Negocjowanie klucza uwierzytelniającego nie powiodło się</string>
     <string name="stepRateSum">Suma szybkości kroku</string>
     <string name="idasen_pref_value_warning">Wartość musi mieścić się w przedziale 62–126 cm</string>
