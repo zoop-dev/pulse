@@ -23,28 +23,14 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class RedmiBuds5ProCoordinator extends AbstractRedmiBudsCoordinator {
+public class RedmiBuds4ActiveCoordinator extends AbstractRedmiBudsCoordinator {
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_redmi_buds_5_pro;
+        return R.string.devicetype_redmi_buds_4_active;
     }
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("Redmi Buds 5 Pro");
-    }
-
-    @Override
-    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
-        final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds5pro_headphones);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds5pro_gestures);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds5pro_sound);
-        return deviceSpecificSettings;
-    }
-
-    @Override
-    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
-        return new RedmiBuds5ProSettingsCustomizer(device);
+        return Pattern.compile("Redmi Buds 4 Active");
     }
 }
