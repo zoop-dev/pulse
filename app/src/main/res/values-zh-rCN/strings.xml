@@ -3692,4 +3692,5 @@
     <string name="devicetype_marstek_b2500">储比特 B2500</string>
     <string name="discharge_interval_5">放电间隔 5</string>
     <string name="battery_minimum_charge">最低电池电量（%）</string>
+    <string name="devicetype_redmi_buds_4_active">红米 Buds 4 运动版</string>
 </resources>
