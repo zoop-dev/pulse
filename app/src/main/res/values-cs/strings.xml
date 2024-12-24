@@ -3696,4 +3696,6 @@
     <string name="about_build_details_copied_to_clipboard">Podrobnosti o sestavení zkopírovány do schránky</string>
     <string name="discharge_interval_5">Interval vybíjení 5</string>
     <string name="manual_discharge_summary">pokud je vypnuto, předpokládá se inteligentní vybíjení řízené externím měřičem spotřeby (není podporováno aplikací Gadgetbridge)</string>
+    <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
+    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
 </resources>
