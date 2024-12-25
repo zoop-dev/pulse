@@ -70,9 +70,9 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                     int output2_watt = extras.getInt(EXTRA_OUTPUT2_WATT);
                     updateWidget("battery", battery_pct + "%", (float) (battery_pct / 100.0));
                     updateWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
-                    updateWidget("panel2", panel2_watt + "W", (float) (panel1_watt / 380.0));
+                    updateWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
                     updateWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
-                    updateWidget("output2", output2_watt + "W", (float) (output1_watt / 400.0));
+                    updateWidget("output2", output2_watt + "W", (float) (output2_watt / 400.0));
 
                     swipeLayout.setRefreshing(false);
                 }

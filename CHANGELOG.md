@@ -1,5 +1,8 @@
 ### Changelog
 
+#### Next
+* Marstek B2500: Fix wrong gauge display for panel 2 and output 2
+
 #### 0.83.0
 * Add first start onboarding screen
 * Initial support for Bowers and Wilkins P Series
