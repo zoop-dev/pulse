@@ -2909,7 +2909,7 @@
     <string name="steps_streaks_total_days_hint_totals">A célt elért napok százalékos aránya az összes lépéssel töltött naphoz viszonyítva</string>
     <string name="prefs_hourly_chime_summary">Az óra óránként egyszer csipogni fog</string>
     <string name="wifi_hotspot_stop_summary">A Wi-Fi hotspot leállítása az órán</string>
-    <string name="debug_companion_show_associated">Kapcsolódó társított eszközök megjelenítése</string>
+    <string name="debug_companion_show_associated">Társeszközök megjelenítése</string>
     <string name="contact_missing_name">A név üres</string>
     <string name="voice_service_class_title">Hangszolgáltatás-osztály</string>
     <string name="loyalty_cards_catima_not_installed">Catima szükséges a hűségkártyák kezeléséhez</string>
