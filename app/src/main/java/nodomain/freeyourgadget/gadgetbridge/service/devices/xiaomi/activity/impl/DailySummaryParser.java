@@ -44,6 +44,9 @@ public class DailySummaryParser extends XiaomiActivityParser {
         final int version = fileId.getVersion();
         final int headerSize;
         switch (version) {
+            case 3:  // for Smart Band 8 Active
+                headerSize = 3;
+                break;
             case 5:
                 headerSize = 4;
                 break;
@@ -69,16 +72,16 @@ public class DailySummaryParser extends XiaomiActivityParser {
         sample.setTimezone(fileId.getTimezone());
 
         sample.setSteps(buf.getInt());
-        final int unk1 = buf.get() & 0xff; // 0
-        final int unk2 = buf.get() & 0xff; // 0
-        final int unk3 = buf.get() & 0xff; // 0
-        sample.setHrResting(buf.get() & 0xff);
+        final int unk1 = buf.get() & 0xff; // 0; v3: calories (duplicate)
+        final int unk2 = buf.get() & 0xff; // 0; v3: calories (duplicate)
+        final int unk3 = buf.get() & 0xff; // 0; v3: last measured HR or Resting HR?
+        sample.setHrResting(buf.get() & 0xff); // v3: 0 or unknown?
         sample.setHrMax(buf.get() & 0xff);
         sample.setHrMaxTs(buf.getInt());
         sample.setHrMin(buf.get() & 0xff);
         sample.setHrMinTs(buf.getInt());
         sample.setHrAvg(buf.get() & 0xff);
-        sample.setStressAvg(buf.get() & 0xff);
+        sample.setStressAvg(buf.get() & 0xff); // v3: last measured stress level?
         sample.setStressMax(buf.get() & 0xff);
         sample.setStressMin(buf.get() & 0xff);
         final byte[] standingArr = new byte[3];
@@ -95,14 +98,16 @@ public class DailySummaryParser extends XiaomiActivityParser {
         sample.setSpo2MaxTs(buf.getInt());
         sample.setSpo2Min(buf.get() & 0xff);
         sample.setSpo2MinTs(buf.getInt());
-        sample.setSpo2Avg(buf.get() & 0xff);
-        sample.setTrainingLoadDay((int) buf.getShort());
-        sample.setTrainingLoadWeek((int) buf.getShort());
-        sample.setTrainingLoadLevel(buf.get() & 0xff); // TODO confirm - 1 for low training load level?
-        sample.setVitalityIncreaseLight(buf.get() & 0xff);
-        sample.setVitalityIncreaseModerate(buf.get() & 0xff);
-        sample.setVitalityIncreaseHigh(buf.get() & 0xff);
-        sample.setVitalityCurrent((int) buf.getShort());
+        sample.setSpo2Avg(buf.get() & 0xff); // v3: 0 or unknown?
+        if (version > 3) {
+            sample.setTrainingLoadDay((int) buf.getShort());
+            sample.setTrainingLoadWeek((int) buf.getShort());
+            sample.setTrainingLoadLevel(buf.get() & 0xff); // TODO confirm - 1 for low training load level?
+            sample.setVitalityIncreaseLight(buf.get() & 0xff);
+            sample.setVitalityIncreaseModerate(buf.get() & 0xff);
+            sample.setVitalityIncreaseHigh(buf.get() & 0xff);
+            sample.setVitalityCurrent((int) buf.getShort());
+        }
 
         LOG.debug("Persisting 1 daily summary sample");
 
