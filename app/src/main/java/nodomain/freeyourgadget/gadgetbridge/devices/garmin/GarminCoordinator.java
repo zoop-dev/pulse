@@ -373,6 +373,11 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsMusicInfo() {
+        return true;
+    }
+
+    @Override
     public int getCannedRepliesSlotCount(final GBDevice device) {
         if (getPrefs(device).getBoolean(GarminPreferences.PREF_FEAT_CANNED_MESSAGES, false)) {
             return 16;
