@@ -3713,4 +3713,6 @@
     <string name="battery_allow_pass_through">Zezwalaj na przepustowość baterii</string>
     <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
     <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
+    <string name="activity_type_upper_body">Trening góra</string>
+    <string name="activity_type_lower_body">Trening dół</string>
 </resources>
