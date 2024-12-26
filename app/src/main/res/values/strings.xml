@@ -1623,6 +1623,8 @@
     <string name="activity_type_biathlon">Biathlon</string>
     <string name="activity_type_bungee_jumping">Bungee jumping</string>
     <string name="activity_type_orienteering">Orienteering</string>
+    <string name="activity_type_upper_body">Upper body</string>
+    <string name="activity_type_lower_body">Lower body</string>
     <string name="activity_summaries">Sport Activities</string>
     <string name="activity_summary_detail">Sport Activity Detail</string>
     <string name="activity_summary_edit_name_title">Edit label</string>

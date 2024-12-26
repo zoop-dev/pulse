@@ -295,6 +295,8 @@ public enum ActivityKind {
     ORIENTEERING(0x040000f0, R.string.activity_type_orienteering),
     TREKKING(0x040000f1, R.string.activity_type_trekking, R.drawable.ic_activity_hiking),
     TRAIL_RUN(0x040000f2, R.string.activity_type_trail_run, R.drawable.ic_activity_trail_run),
+    UPPER_BODY(0x040000f3, R.string.activity_type_upper_body),
+    LOWER_BODY(0x040000ff, R.string.activity_type_lower_body),
     ;
 
     private final int code;
