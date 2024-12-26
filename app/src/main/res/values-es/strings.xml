@@ -3707,4 +3707,7 @@
     <string name="manual_discharge_summary">Cuando está desactivada, se supone que la descarga inteligente está controlada por un medidor de energía externo (no compatible con Gadgetbridge)</string>
     <string name="summary_battery_discharge_intervals_set">Enviar la siguiente configuración al dispositivo</string>
     <string name="battery_minimum_charge">Carga mínima de la batería en %</string>
+    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
+    <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
+    <string name="battery_allow_pass_through">Permitir el paso de la batería</string>
 </resources>
