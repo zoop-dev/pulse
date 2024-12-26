@@ -48,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static String ACTION_SEND_SOLAR_EQUIPMENT_STATUS = "send_solar_equipment_status";
     public static String EXTRA_BATTERY_PCT = "battery_pct";
+    public static String EXTRA_BATTERY_WH = "battery_wh";
     public static String EXTRA_PANEL1_WATT = "panel1_watt";
     public static String EXTRA_PANEL2_WATT = "panel2_watt";
     public static String EXTRA_OUTPUT1_WATT = "output1_watt";
@@ -64,11 +65,12 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                 Bundle extras = intent.getExtras();
                 if (extras != null) {
                     int battery_pct = extras.getInt(EXTRA_BATTERY_PCT);
+                    int battery_wh = extras.getInt(EXTRA_BATTERY_WH);
                     int panel1_watt = extras.getInt(EXTRA_PANEL1_WATT);
                     int panel2_watt = extras.getInt(EXTRA_PANEL2_WATT);
                     int output1_watt = extras.getInt(EXTRA_OUTPUT1_WATT);
                     int output2_watt = extras.getInt(EXTRA_OUTPUT2_WATT);
-                    updateWidget("battery", battery_pct + "%", (float) (battery_pct / 100.0));
+                    updateWidget("battery", battery_pct + "%\n" + battery_wh + "Wh", (float) (battery_pct / 100.0));
                     updateWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
                     updateWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
                     updateWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
