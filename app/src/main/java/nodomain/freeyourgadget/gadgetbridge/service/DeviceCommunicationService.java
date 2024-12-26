@@ -84,6 +84,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.SMSReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.SilentModeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TinyWeatherForecastGermanyReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.VolumeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidReceiver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -258,6 +259,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private SilentModeReceiver mSilentModeReceiver = null;
     private GBAutoFetchReceiver mGBAutoFetchReceiver = null;
     private AutoConnectIntervalReceiver mAutoConnectInvervalReceiver = null;
+
+    private VolumeChangeReceiver mVolumeChangeReceiver = null;
 
     private AlarmReceiver mAlarmReceiver = null;
     private final List<CalendarReceiver> mCalendarReceiver = new ArrayList<>();
@@ -1359,6 +1362,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
                 ContextCompat.registerReceiver(this, mMusicPlaybackReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
             }
+            if (mVolumeChangeReceiver ==  null && features.supportsMusicInfo()) {
+                mVolumeChangeReceiver = new VolumeChangeReceiver();
+                mVolumeChangeReceiver.registerReceiver(this);
+            }
             if (mTimeChangeReceiver == null) {
                 mTimeChangeReceiver = new TimeChangeReceiver();
                 IntentFilter filter = new IntentFilter();
@@ -1460,6 +1467,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (mMusicPlaybackReceiver != null) {
                 unregisterReceiver(mMusicPlaybackReceiver);
                 mMusicPlaybackReceiver = null;
+            }
+            if (mVolumeChangeReceiver != null) {
+                mVolumeChangeReceiver.unregisterReceiver();
+                mVolumeChangeReceiver = null;
             }
             if (mTimeChangeReceiver != null) {
                 unregisterReceiver(mTimeChangeReceiver);
