@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next
+#### 0.83.1
 * Initial support for Garmin Fenix 6X Pro Solar
 * Initial support for Redmi Buds 4 Active
 * Colmi R09: Add support for temperature data

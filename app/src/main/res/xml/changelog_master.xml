@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.83.1" versioncode="236">
+        <change>Initial support for Garmin Fenix 6X Pro Solar</change>
+        <change>Initial support for Redmi Buds 4 Active</change>
+        <change>Colmi R09: Add support for temperature data</change>
+        <change>Garmin: Enable calendar sync setting</change>
+        <change>Garmin: Enable transliteration setting</change>
+        <change>Garmin: Prevent double initialization</change>
+        <change>Marstek B2500: Display current battery change level in Wh, not only percentage</change>
+        <change>Marstek B2500: Fix wrong gauge display for panel 2 and output 2</change>
+        <change>Xiaomi-protobuf: Improve activity and workout parsing</change>
+        <change>Display sleep HR average in past 24h mode</change>
+        <change>Send phone volume changes to devices</change>
+    </release>
     <release version="0.83.0" versioncode="235">
         <change>Add first start onboarding screen</change>
         <change>Initial support for Bowers and Wilkins P Series</change>
