@@ -1,8 +1,17 @@
 ### Changelog
 
 #### Next
+* Initial support for Garmin Fenix 6X Pro Solar
+* Initial support for Redmi Buds 4 Active
+* Colmi R09: Add support for temperature data
+* Garmin: Enable calendar sync setting
+* Garmin: Enable transliteration setting
+* Garmin: Prevent double initialization
+* Marstek B2500: Display current battery change level in Wh, not only percentage
 * Marstek B2500: Fix wrong gauge display for panel 2 and output 2
-* Marstek B2500: also display current battery change level in Wh, not only percentage
+* Xiaomi-protobuf: Improve activity and workout parsing
+* Display sleep HR average in past 24h mode
+* Send phone volume changes to devices
 
 #### 0.83.0
 * Add first start onboarding screen
