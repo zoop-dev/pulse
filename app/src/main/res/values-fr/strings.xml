@@ -3660,4 +3660,7 @@ Temps de sommeil préféré en heures</string>
     <string name="permission_query_all_packages_title">Interroger tous les paquets</string>
     <string name="permission_external_storage_summary">Utilisation d’images, de sonneries, de fichiers d’applications et plus encore</string>
     <string name="permission_query_all_packages_summary">Lecture des noms et icônes de toutes les applications installées</string>
+    <string name="sleep_avg">Moy. endormi</string>
+    <string name="sleep_score">Score sommeil</string>
+    <string name="sleep_score_value">Score: %1d</string>
 </resources>
