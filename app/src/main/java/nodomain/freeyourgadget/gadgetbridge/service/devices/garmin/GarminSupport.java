@@ -164,8 +164,6 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
             communicator = communicatorV1;
         }
 
-        communicator.initializeDevice(builder);
-
         return builder;
     }
 
