@@ -3693,4 +3693,7 @@
     <string name="discharge_interval_5">放电间隔 5</string>
     <string name="battery_minimum_charge">最低电池电量（%）</string>
     <string name="devicetype_redmi_buds_4_active">红米 Buds 4 运动版</string>
+    <string name="activity_type_lower_body">下半身</string>
+    <string name="activity_type_upper_body">上半身</string>
+    <string name="devicetype_garmin_fenix_6x_pro_solar">佳明 Fenix 6X Pro Solar</string>
 </resources>
