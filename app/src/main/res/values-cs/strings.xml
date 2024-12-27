@@ -3698,4 +3698,6 @@
     <string name="manual_discharge_summary">pokud je vypnuto, předpokládá se inteligentní vybíjení řízené externím měřičem spotřeby (není podporováno aplikací Gadgetbridge)</string>
     <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
     <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
+    <string name="activity_type_lower_body">Dolní část těla</string>
+    <string name="activity_type_upper_body">Horní část těla</string>
 </resources>
