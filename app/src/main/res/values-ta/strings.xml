@@ -621,7 +621,6 @@
     <string name="prefs_wena3_home_icon_name_pedometer">படி எண்ணிக்கை</string>
     <string name="widget_screen_no_free_slots_description">சாதனத்தில் விட்செட் திரைகளுக்கு இலவச இடங்கள் இல்லை (மொத்த இடங்கள்: %1$s)</string>
     <string name="pref_dashboard_first_summary">சாதனங்களின் திரைக்கு பதிலாக கேசெட் பிரிட்ச் தொடங்கும் போது டாச்போர்டைக் காட்டு</string>
-    <string name="garmin_agps_url_i">AGPS %$ 1 டி முகவரி</string>
     <string name="url">முகவரி</string>
     <string name="pref_fetch_unknown_files_summary">கடிகாரத்திலிருந்து அறியப்படாத செயல்பாட்டு கோப்புகளைப் பெறுங்கள். அவை செயலாக்கப்படாது, ஆனால் தொலைபேசியில் சேமிக்கப்படும்.</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">தற்போதைய நேர காட்டி</string>
@@ -1594,7 +1593,7 @@
     <string name="prefs_title_gatt_client_api_package">BLE பநிஇ தொகுப்பு</string>
     <string name="activity_db_management_backup_restore_label">காப்புப்பிரதி மற்றும் மீட்டமை</string>
     <string name="backup_restore_exporting">சிப்பிற்கு ஏற்றுமதி…</string>
-    <string name="contact_birthday">%1 களின் பிறந்த நாள்</string>
+    <string name="contact_birthday">%1s களின் பிறந்த நாள்</string>
     <string name="pref_dashboard_widget_today_yesterday_data_summary">தற்போதைய நேரத்திற்கும் நள்ளிரவுக்கும் இடையில் நேற்றிலிருந்து தரவைக் காட்டு</string>
     <string name="inactivity_warnings_minimum_steps_summary">வாசல் நிமிடங்களில் எடுக்க வேண்டிய குறைந்தபட்ச நடவடிக்கைகள்</string>
     <string name="pref_music_management_summary">கடிகாரத்தில் இசையை நிர்வகிக்கவும்</string>
@@ -1854,7 +1853,6 @@
     <string name="widget_settings_select_device_title">சாதனத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">விட்செட்டைச் சேர்க்கவும்</string>
-    <string name="appwidget_setting_alarm">%1 $ 02D க்கு அலாரம் அமைத்தல்: %2 $ 02D</string>
     <string name="qhybrid_vibration_strength">அதிர்வு வலிமை:</string>
     <string name="pref_show_changelog">தொடக்கத்தில் சேஞ்ச்லாக் காட்டு</string>
     <string name="discover_unsupported_devices">ஆதரிக்கப்படாத சாதனங்களைக் கண்டறியவும்</string>
@@ -1888,7 +1886,7 @@
     <string name="widget_layout_top_wide_bot_large">மேலே அகலமானது, கீழே பெரியது</string>
     <string name="pref_developer_add_test_activities_title">சோதனை நடவடிக்கைகளைச் சேர்க்கவும்</string>
     <string name="backup_restore_restart_title">மறுதொடக்கம்</string>
-    <string name="label_distance_trip">பயணம்: %.1 எஃப் கி.மீ.</string>
+    <string name="label_distance_trip">பயணம்: %.1f எஃப் கி.மீ.</string>
     <string name="label_distance_total">மொத்தம்: %.1f kmm</string>
     <string name="label_distance_trip_mph">பயணம்: %.1f மைல்</string>
     <string name="menuitem_workout">பயிற்சி</string>
@@ -1943,7 +1941,6 @@
     <string name="prefs_voice_detect_duration">அமைதியாக பிறகு முடிக்கவும்:</string>
     <string name="pai_total">மொத்தம்</string>
     <string name="pai_day">நாள் அதிகரிப்பு</string>
-    <string name="weight_lbs">%1 $ .2f பவுண்ட்</string>
     <string name="sony_ambient_sound">பயன்முறை</string>
     <string name="sony_ambient_sound_off">அணை</string>
     <string name="sony_anc_optimize_title">மேம்படுத்தவும்</string>
@@ -2939,7 +2936,6 @@
     <string name="permission_notification_listener">உங்கள் தொலைபேசியின் திரை முடக்கப்படும்போது அவற்றை உங்கள் கடிகாரத்தில் காண்பிப்பதற்காக %1$s அறிவிப்புகளுக்கான அணுகல் தேவை.\n\n தயவுசெய்து \'%2$s\' பின்னர் \'%1$s\' ஐத் தட்டவும், \'அறிவிப்பு அணுகலை அனுமதிக்கவும்\' என்பதை இயக்கவும், பின்னர்%1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
     <string name="permission_notification_policy_access">உங்கள் தொலைபேசியின் திரை முடக்கப்பட்டிருக்கும் போது உங்கள் கடிகாரத்தில் அவர்களை மதிக்க அமைப்புகளைத் தொந்தரவு செய்யாத 1 $ s அணுகல் தேவை.\n\n தயவுசெய்து \'%2$s\' பின்னர் \'%1$s\' ஐத் தட்டவும், \'தொந்தரவு செய்ய வேண்டாம்\' என்று இயக்கவும், பின்னர்%1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
     <string name="permission_location">உங்கள் திரை முடக்கப்பட்டிருந்தாலும் கூட உங்கள் கடிகாரத்துடன் இணைக்க அனுமதிக்க, பின்னணியில் உங்கள் இருப்பிடத்தை அணுக 1 $ S கள் தேவை.\n\n பின்வரும் திரையில் \' %2$s\' ஐத் தேர்வுசெய்து, %1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
-    <string name="error_version_check_extreme_caution">எச்சரிக்கை: பதிப்பு தகவல்களைச் சரிபார்க்கும்போது பிழை! நீங்கள் தொடரக்கூடாது! சா பதிப்பு பெயர் எச் \\</string>
     <string name="pref_check_permission_status_summary">உடனடியாக தேவையில்லை என்றாலும் கூட காணாமல் போன அனுமதிகளைக் கேளுங்கள். இந்த அம்சங்களில் எதையும் உங்கள் சாதனங்கள் உண்மையில் ஆதரிக்கவில்லை என்றால் மட்டுமே இதை முடக்கு. இசைவு வழங்காதது சிக்கல்களை ஏற்படுத்தக்கூடும்!</string>
     <string name="sonyswr12_settings_low_vibration_summary">கைக்கடிகாரத்தில் அதிர்வுகளின் குறைந்த தீவிரத்தை இயக்கவும்</string>
     <string name="sonyswr12_settings_stamina">ஆற்றல் சேமிப்பு முறை</string>
@@ -3024,7 +3020,6 @@
     <string name="prefs_voice_detect">குரல் கண்டறிதல்</string>
     <string name="pref_header_heartrate_sleep">தூங்கு</string>
     <string name="stress_mild">லேசான</string>
-    <string name="weight_kg">%1 $ .2f கிலோ</string>
     <string name="redmi_buds_5_pro_equalizer_band_16k">16 கிலோஎர்ட்ச்</string>
     <string name="redmi_buds_5_pro_equalizer_neg4">-4 டி.பி.</string>
     <string name="redmi_buds_5_pro_adaptive_sound_description">காது வடிவம் மற்றும் சூழலுக்கு ஏற்ப ஒலியை சரிசெய்கிறது</string>
