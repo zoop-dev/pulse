@@ -28,7 +28,7 @@ public class SonyWFC700NCoordinator extends SonyHeadphonesCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile(".*WF-C700N.*");
+        return Pattern.compile("WF-C700N");
     }
 
     @Override

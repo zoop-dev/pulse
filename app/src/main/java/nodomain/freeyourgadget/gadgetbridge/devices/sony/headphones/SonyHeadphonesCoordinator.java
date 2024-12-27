@@ -97,16 +97,16 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
         final List<BatteryConfig> batteries = new ArrayList<>(3);
 
         if (supports(SonyHeadphonesCapabilities.BatterySingle)) {
-            batteries.add(new BatteryConfig(batteries.size()));
+            batteries.add(new BatteryConfig(batteries.size(), GBDevice.BATTERY_ICON_DEFAULT, GBDevice.BATTERY_LABEL_DEFAULT, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
         }
 
         if (supports(SonyHeadphonesCapabilities.BatteryCase)) {
-            batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_tws_case, R.string.battery_case));
+            batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_tws_case, R.string.battery_case, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
         }
 
         if (supports(SonyHeadphonesCapabilities.BatteryDual) || supports(SonyHeadphonesCapabilities.BatteryDual2)) {
-            batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_galaxy_buds_l, R.string.left_earbud));
-            batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_galaxy_buds_r, R.string.right_earbud));
+            batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_galaxy_buds_l, R.string.left_earbud, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
+            batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_galaxy_buds_r, R.string.right_earbud, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
         }
 
         return batteries.toArray(new BatteryConfig[0]);
@@ -214,6 +214,14 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
 
     public boolean preferServiceV2() {
         return false;
+    }
+
+    public int getBatteryDefaultLowThreshold() {
+        return 20;
+    }
+
+    public int getBatteryDefaultFullThreshold() {
+        return 100;
     }
 
     @NonNull
