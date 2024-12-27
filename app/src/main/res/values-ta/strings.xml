@@ -319,7 +319,6 @@
     <string name="pref_sleepasandroid_feat_alarms">அலாரங்கள்</string>
     <string name="prefs_title_gatt_client_notification_intents">BLE INTENT பநிஇ மூலம் GATT அறிவிப்பு நோக்கங்களை ஒளிபரப்பவும்</string>
     <string name="minutes_20">20 நிமிடங்கள்</string>
-    <string name="mi2_enable_text_notifications_summary">&lt;!</string>
     <string name="pref_header_audio">ஆடியோ</string>
     <string name="pref_header_display">காட்சி</string>
     <string name="pref_header_generic">பொதுவான</string>
@@ -1992,7 +1991,7 @@
     <string name="sleep_score_value">ச்கோர்: %1d</string>
     <string name="miband_fwinstaller_incompatible_version">பொருந்தாத ஃபார்ம்வேர்</string>
     <string name="fwinstaller_firmware_not_compatible_to_device">இந்த ஃபார்ம்வேர் சாதனத்துடன் பொருந்தாது</string>
-    <string name="dateformat_date_time">&lt;! [சிடிஏடா [நேரம் &amp; தேதி]]&gt;</string>
+    <string name="dateformat_date_time"><![CDATA[நேரம் & தேதி]]></string>
     <string name="prefs_disconnect_notification">அறிவிப்பைத் துண்டிக்கவும்</string>
     <string name="mi2_prefs_button_actions">பொத்தான் செயல்கள்</string>
     <string name="mi2_prefs_button_press_broadcast">அனுப்ப செய்தி ஒளிபரப்பு</string>
