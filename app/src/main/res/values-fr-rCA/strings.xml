@@ -795,7 +795,7 @@
 \nVotre base de données (ou celle que vous souhaitez importer) se trouvera ici :</string>
     <string name="title_activity_db_management">Gestion de base de données</string>
     <string name="action_db_management">Gestion de base de données</string>
-    <string name="pref_summary_pebble_health_store_raw">Si coché, les données « brutes » sont stockées pour une interprétation ultérieure, augmentant la taille de la base de données.</string>
+    <string name="pref_summary_pebble_health_store_raw">Si coché, les données « brutes » sont stockées pour une interprétation ultérieure, augmentant la taille de la base de données.</string>
     <string name="title_activity_fw_app_insaller">Installateur d\'applications/firmware</string>
     <string name="title_activity_calblacklist">Calendriers sur liste noire</string>
     <string name="app_move_to_top">Haut de page</string>
