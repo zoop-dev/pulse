@@ -1295,6 +1295,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             case SINGLE:
                 return 0x00;
             case DUAL:
+            case DUAL2: // FIXME this is a workaround to fix the initialization - DUAL2 is not supported by V1
                 return 0x01;
             case CASE:
                 return 0x02;
