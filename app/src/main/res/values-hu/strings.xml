@@ -73,7 +73,7 @@
     <string name="pref_title_notifications_generic">Általános értesítéstámogatás</string>
     <string name="pref_title_whenscreenon">… és amikor a kijelző be van kapcsolva</string>
     <string name="pref_title_notification_filter">Ne zavarjanak mód</string>
-    <string name="pref_summary_notification_filter">Összes értesítés blokkolása, amikor a telefon ne zavarjanak módban van</string>
+    <string name="pref_summary_notification_filter">Összes értesítés tiltása, amikor a telefon Ne zavarjanak módban van</string>
     <string name="pref_title_transliteration">Transzliteráció</string>
     <string name="pref_summary_transliteration">Engedélyezze ezt, ha az eszköz nem támogatja nyelvének a betűtípusát</string>
     <string name="always">Mindig</string>
@@ -81,9 +81,9 @@
     <string name="never">Soha</string>
     <string name="pref_header_privacy">Adatvédelem</string>
     <string name="pref_title_call_privacy_mode">Hívás adatvédelmi mód</string>
-    <string name="pref_call_privacy_mode_off">Név és szám megfelenítése</string>
-    <string name="pref_call_privacy_mode_name">Név rejtése, de a szám megfelenítése</string>
-    <string name="pref_call_privacy_mode_number">Szám elrejtése, de a név megfelenítése</string>
+    <string name="pref_call_privacy_mode_off">Név és szám megjelenítése</string>
+    <string name="pref_call_privacy_mode_name">Név elrejtése, de a szám megjelenítése</string>
+    <string name="pref_call_privacy_mode_number">Szám elrejtése, de a név megjelenítése</string>
     <string name="pref_call_privacy_mode_complete">Név és szám elrejtése</string>
     <string name="pref_header_cannned_messages">Előre beállított üzenetek</string>
     <string name="pref_title_canned_replies">Válaszok</string>
@@ -113,16 +113,16 @@
     <string name="pref_pebble_privacy_mode_off">Normál értesítések</string>
     <string name="pref_pebble_privacy_mode_content">Az értesítés szövegének a képernyőről történő áthelyezése</string>
     <string name="pref_pebble_privacy_mode_complete">Csak az értesítési ikon megjelenítése</string>
-    <string name="pref_header_location">Helyszín</string>
-    <string name="pref_title_location_aquire">Helyszín meghatározása</string>
+    <string name="pref_header_location">Tartózkodási hely</string>
+    <string name="pref_title_location_aquire">Tartózkodási hely meghatározása</string>
     <string name="pref_title_location_latitude">Szélesség</string>
     <string name="pref_title_location_longitude">Hosszúság</string>
-    <string name="pref_title_location_keep_uptodate">Helyszín frissen tartása</string>
-    <string name="pref_summary_location_keep_uptodate">Aktuális helyszín meghatározásának megpróbálása futásidőben, hiba esetén az eltárolt helyszín használata</string>
-    <string name="toast_enable_networklocationprovider">Kérem, engedélyezze a hálózati helyszín-meghatározást</string>
-    <string name="toast_aqurired_networklocation">helyszín meghatározva</string>
-    <string name="pref_title_pebble_forceprotocol">Értesítési protokoll erőltetése</string>
-    <string name="pref_summary_pebble_forceprotocol">Ez az opció a legfrissebb értesítési protokollt erőlteti a firmware verziótól függően. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
+    <string name="pref_title_location_keep_uptodate">Tartózkodási hely frissen tartása</string>
+    <string name="pref_summary_location_keep_uptodate">Aktuális tartózkodási hely meghatározásának megpróbálása futásidőben, hiba esetén az eltárolt helyszín használata</string>
+    <string name="toast_enable_networklocationprovider">Engedélyezze a hálózati helymeghatározást</string>
+    <string name="toast_aqurired_networklocation">Tartózkodási hely meghatározva</string>
+    <string name="pref_title_pebble_forceprotocol">Értesítési protokoll kényszerítése</string>
+    <string name="pref_summary_pebble_forceprotocol">Ez az beállítás a legfrissebb értesítési protokollt kényszeríti a firmware verziótól függően. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
     <string name="pref_title_pebble_forceuntested">Nem tesztelt funkciók engedélyezése</string>
     <string name="pref_summary_pebble_forceuntested">Nem tesztelt funkciók engedélyezése. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
     <string name="pref_title_pebble_forcele">BLE preferálása mindig</string>
@@ -325,7 +325,7 @@
     <string name="mi2_prefs_do_not_disturb_end">Vége</string>
     <string name="FetchActivityOperation_about_to_transfer_since">Adatátvitelre készül: %1$s óta</string>
     <string name="waiting_for_reconnect">Várakozás az újrakapcsolódásra</string>
-    <string name="activity_prefs_about_you">Önről</string>
+    <string name="activity_prefs_about_you">Saját névjegy</string>
     <string name="activity_prefs_year_birth">Születési év</string>
     <string name="activity_prefs_gender">Nem</string>
     <string name="activity_prefs_height_cm">Magasság cm-ben</string>
@@ -392,7 +392,7 @@
     <string name="off">Ki</string>
     <string name="mi2_dnd_off">Ki</string>
     <string name="mi2_dnd_automatic">Automatikus (alvásérzékelés)</string>
-    <string name="mi2_dnd_scheduled">Időzített (idő intervallum)</string>
+    <string name="mi2_dnd_scheduled">Időzített (időköz)</string>
     <string name="discovery_attempting_to_pair">Párosítás megkísérlése ezzel: %1$s</string>
     <string name="discovery_bonding_failed_immediately">A párosítás a(z) %1$s eszközzel váratlanul megszakadt.</string>
     <string name="discovery_trying_to_connect_to">Csatlakozás megkísérlése ezzel: %1$s</string>
@@ -502,10 +502,10 @@
     <string name="sonyswr12_settings_title">Sony SWR12 beállítások</string>
     <string name="sonyswr12_settings_low_vibration">Alacsony rezgés engedélyezve</string>
     <string name="sonyswr12_settings_stamina">Az energiatakarékos üzemmód be van kapcsolva</string>
-    <string name="sonyswr12_settings_alarm_interval">Intelligens riasztásintervallum percekben</string>
+    <string name="sonyswr12_settings_alarm_interval">Intelligens riasztási időköz percekben</string>
     <string name="sonyswr12_settings_low_vibration_summary">Engedélyezze a rezgés alacsony intenzitását a karkötőn</string>
     <string name="sonyswr12_settings_stamina_summary">Az energiatakarékos üzemmód kikapcsolja a pulzusszám időszakonkénti automatikus mérését, így növeli az üzemidőt</string>
-    <string name="sonyswr12_settings_alarm_interval_summary">Az intelligens riasztásintervallum a telepített riasztás előtti intervallum. Ebben az intervallumban az eszköz megpróbálja észlelni az alvás legkönnyebb fázisát a felhasználó felébresztésére</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">Az intelligens riasztási időköz a telepített riasztás előtti időköz. Ebben az időközben az eszköz megpróbálja észlelni az alvás legkönnyebb fázisát a felhasználó felébresztésére</string>
     <string name="find_lost_device_message">%1$s keresése\?</string>
     <string name="controlcenter_power_off">Kikapcsolás</string>
     <string name="controlcenter_power_off_confirm_title">Kikapcsolás</string>
@@ -939,7 +939,7 @@
     <string name="devicetype_q8">Q8</string>
     <string name="activity_type_badminton">Tollaslabda</string>
     <string name="pref_screen_vibration_patterns_title">Rezgésminták</string>
-    <string name="filter_mode_blacklist">Blokkolja, amikor ezeket a szavakat tartalmazza</string>
+    <string name="filter_mode_blacklist">Tiltsa le, amikor ezeket a szavakat tartalmazza</string>
     <string name="pref_crown_vibration">Koronarezgés</string>
     <string name="mi3_prefs_night_mode">Éjszakai mód</string>
     <string name="busy_task_fetch_pai_data">PAI adatok lekérdezése</string>
@@ -1278,9 +1278,9 @@
     <string name="heartrate_bpm_120">120 bpm</string>
     <string name="zetime_heart_rate_alarm_enable">Pulzusszámriasztás engedélyezése</string>
     <string name="heartrate_bpm_50">50 bpm</string>
-    <string name="require_location_provider">A helyszín-meghatározásnak engedélyezve kell lennie</string>
+    <string name="require_location_provider">A tartózkodási helynek engedélyezve kell lennie</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Hálózat használata csak a helyszín meghatározásához</string>
-    <string name="notification_gps_text">GPS helyszín küldése %1$d eszközökre</string>
+    <string name="notification_gps_text">GPS-helyzet küldése %1$d eszközökre</string>
     <string name="zepp_os_watchface_pure_white">Tiszta fehér</string>
     <string name="charts_legend_heartrate_average">Átlagos pulzusszám</string>
     <string name="pref_summary_authkey">Módosítsa a hitelesítési kulcsot egy közös kulcsra az összes olyan Android-eszközén, amelyről csatlakozni szeretne. A korábbi alapértelmezett kulcs minden eszközön: 0123456789@ABCDE</string>
@@ -1367,7 +1367,7 @@
     <string name="silent_mode_normal_silent">Normál / néma</string>
     <string name="prefs_wena3_vibration_warning">Figyelmeztetés</string>
     <string name="fossil_hr_auth_failed">A hitelesítés sikertelen, korlátozott funkcionalitás</string>
-    <string name="pref_explanation_authkey_new_protocol">Ha az alkalmazás legújabb verzióra frissítése üzenet jelenik meg a sávon, ellenőrizze a \new Auth Protocol fenti beállításait. További részletekért koppintson ide a wikiben.</string>
+    <string name="pref_explanation_authkey_new_protocol">Ha a „Frissítse az alkalmazást a legújabb verzióra” üzenet jelenik meg a karkötőn, ellenőrizze a fenti „Új hitelesítési protokoll” lehetőséget. A wikiben található további részletekért koppintson ide.</string>
     <string name="prefs_wena3_vibration_none">Nincs rezgés</string>
     <string name="prefs_wena3_vibration_strength_item_strong">Erős</string>
     <string name="prefs_wena3_vibration_triple">Háromszor</string>
@@ -1682,7 +1682,7 @@
     <string name="pref_summary_notifications_and_calls_title_reject">Ki – figyelmen kívül hagyás, Be – elutasítás</string>
     <string name="prefs_notifications_and_calls_shake_reject">Csuklórázás, figyelmen kívül hagyja/elutasítja a hívást</string>
     <string name="pref_summary_notifications_and_calls_title_shake_reject">Megkettőzi az óragomb műveletét</string>
-    <string name="pref_title_device_spec_settings_force_time">Kényszerített időszinkronizálás</string>
+    <string name="pref_title_device_spec_settings_force_time">Időszinkronizálás kényszerítése</string>
     <string name="pref_header_sensors_calibration">Érzékelő kalibrálása</string>
     <string name="pref_sensors_bp_calibration_low">DIASZTOLÉS vérnyomás (alacsony)</string>
     <string name="pref_sensors_bp_calibration_high">SZISZTOLÉS vérnyomás (magas)</string>
@@ -1770,10 +1770,10 @@
     <string name="prefs_device_name">Eszköz neve</string>
     <string name="prefs_password_6_digits_0_to_9_summary">A jelszónak 6 számjegyűnek kell lennie, csak számokat használva</string>
     <string name="do_not_disturb_lift_wrist_summary">Csak akkor, ha a kijelző aktiválása emeléskor engedélyezve van</string>
-    <string name="lefun_prefs_hydration_reminder_interval_title">Hidratálási emlékeztető intervallum (percben)</string>
+    <string name="lefun_prefs_hydration_reminder_interval_title">Hidratálási emlékeztető időköz (percben)</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Szünet hossza a tevékenységek elkülönítéséhez (perc)</string>
     <string name="dbmanagementactivity_export_confirmation">Valóban exportálni kívánja az adatokat? A korábban exportált tevékenységadatok (ha vannak) és beállítások felülíródnak.</string>
-    <string name="activity_db_management_autoexport_location">A helyszín nem értelmezhető. Valószínűleg az újabb Android engedélyezési rendszer problémája. Valószínűbb, hogy az automatikus exportálás jelenleg nem működik.</string>
+    <string name="activity_db_management_autoexport_location">A tartózkodási hely nem értelmezhető. Valószínűleg az újabb Android engedélyezési rendszer problémája. Valószínűbb, hogy az automatikus exportálás jelenleg nem működik.</string>
     <string name="dnd_all_day">Egész nap</string>
     <string name="activity_type_free_training">Szabadedzés</string>
     <string name="activity_type_indoor_running">Beltéri futás</string>
@@ -1899,7 +1899,7 @@
     <string name="miband_prefs_reserve_reminder_calendar">Emlékeztetők a közelgő eseményekre való foglaláshoz</string>
     <string name="pref_sleep_breathing_quality_monitoring">Alvási légzés minőségének ellenőrzése</string>
     <string name="prefs_disconnect_notification_summary">Értesítés az eszközön a BT-ról való leválasztáskor.</string>
-    <string name="hydration_dnd_summary">Kapcsolja ki a hidratálási figyelmeztetéseket egy bizonyos időintervallumra</string>
+    <string name="hydration_dnd_summary">Tiltsa le a hidratálási figyelmeztetéseket bizonyos időközönként</string>
     <string name="prefs_always_on_display">Mindig megjelenítve</string>
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Aktiválja a kijelzőt emeléskor a Ne zavarjanak módban</string>
     <string name="pref_do_not_disturb_not_wear">Ne zavarja, ha nem viseli</string>
@@ -2133,7 +2133,7 @@
     <string name="pref_title_upper_button_function_short">Felső gomb röviden</string>
     <string name="pref_title_lower_button_function_double">Alsó gomb duplán</string>
     <string name="prefs_button_variable_actions">Részletes gombnyomás beállítások</string>
-    <string name="error_no_location_access">Ahhoz, hogy a szkennelés megfelelően működjön, meg kell adni és engedélyezni kell a helyszínhozzáférést</string>
+    <string name="error_no_location_access">Ahhoz, hogy a beolvasás megfelelően működjön, meg kell adni és engedélyezni kell a helyhozzáférést</string>
     <string name="error_no_bluetooth_connect">A keresés megfelelő működéséhez engedélyezni kell a Bluetooth-kapcsolathoz való hozzáférést</string>
     <string name="pref_qhybrid_title_widget_draw_circles">Modulkörök rajzolása</string>
     <string name="pref_qhybrid_save_raw_activity_files">Nyers tevékenységfájlok mentése</string>
@@ -2170,7 +2170,7 @@
     <string name="error_no_bluetooth_scan">A Bluetooth-keresési hozzáférést engedélyezni kell, és be kell kapcsolni, hogy a keresés megfelelően működjön</string>
     <string name="permission_request">A(z) %1$s engedélyezi, hogy üzeneteket és egyéb adatokat küldjön Androidról az eszközére. Ehhez engedélyre van szüksége az adatokhoz való hozzáféréshez, és e nélkül előfordulhat, hogy nem működik megfelelően. \n \nMost megjelenik néhány Android párbeszédpanel, amelyek ezeket az engedélyeket kérik. \n \nA folytatáshoz érintse meg a(z) „%2$s” elemet.</string>
     <string name="permission_notification_listener">A(z) %1$s-nek hozzáférésre van szüksége az értesítésekhez, hogy megjeleníthesse azokat az óráján, amikor a telefon képernyője ki van kapcsolva. \n \nKoppintson a(z) „%2$s”, majd a(z) „%1$s” elemre, és engedélyezze az „Értesítési hozzáférés engedélyezése” beállítást, majd koppintson a „Vissza” elemre a(z) %1$s oldalra való visszatéréshez.</string>
-    <string name="permission_location">A(z) %1$s-nek hozzáférésre van szüksége az tartózkodási helyszínéhez a háttérben, hogy akkor is kapcsolatban maradhasson az órájával, amikor a képernyője ki van kapcsolva. \n \nVálassza a(z) „%2$s” lehetőséget a következő képernyőn, majd koppintson a „Vissza” gombra, hogy visszatérjen a %1$s oldalra.</string>
+    <string name="permission_location">A(z) %1$s-nek hozzáférésre van szüksége az tartózkodási helyhez a háttérben, hogy akkor is kapcsolatban maradhasson az órájával, amikor a képernyője ki van kapcsolva. \n \nVálassza a(z) „%2$s” lehetőséget a következő képernyőn, majd koppintson a „Vissza” gombra, hogy visszatérjen a %1$s oldalra.</string>
     <string name="permission_display_over_other_apps">A(z) %1$s-nek engedélyre van szüksége a más alkalmazások feletti megjelenítéshez, hogy a Bangle.js órák tevékenységeket indíthassanak intenten keresztül, amikor a(z) %1$s a háttérben van. \n \nEz használható egy zenei alkalmazás elindítására és egy dal lejátszására, és sok más dologra. \n \nKoppintson a(z) „%2$s”, majd a(z) „%1$s” elemre, és engedélyezze a „Megjelenítés engedélyezése más alkalmazások felett” beállítást, majd koppintson a „Vissza” elemre a(z) %1$s elemhez való visszatéréshez. \n \nAz engedélyek kérésének leállításához a %1$s menjen a \'Beállítások\' menüpontba, és törölje a \'Jogosultsági állapot ellenőrzése\' jelölőnégyzetet. \n \nGyőződjön meg róla, hogy a %1$s megkapja az elvárt működéshez szükséges engedélyeket.</string>
     <string name="text_receiver_activity_title">Szöveg küldése az eszközre</string>
     <string name="pref_title_upper_button_function_double">Felső gomb duplán</string>
@@ -2228,7 +2228,7 @@
     <string name="minCadence">Min. ütem</string>
     <string name="elevationLoss">Magasságvesztés</string>
     <string name="averageStrokeDistance">Átlagos lökettávolság</string>
-    <string name="alarm_smart_wakeup_interval">Intelligens ébresztési intervallum:</string>
+    <string name="alarm_smart_wakeup_interval">Intelligens ébresztés időköze:</string>
     <string name="alarm_smart_wakeup_interval_default">5 perc</string>
     <string name="maxStride">Max. lépésszám</string>
     <string name="swolfIndex">SWOLF</string>
@@ -2422,7 +2422,7 @@
     <string name="sony_warn_sbc_codec">Figyelmeztetés: A hangszínszabályzó, a hangpozíció és a környezeti beállítások csak az SBC audio codec esetében működnek.</string>
     <string name="sony_equalizer_preset_vocal">Ének</string>
     <string name="watchface_widget_type_custom">Egyéni modul</string>
-    <string name="pref_force_wear_location">Viselt eszköz helyszín-meghatározó szolgáltatás kényszerítése</string>
+    <string name="pref_force_wear_location">Viselt eszköz tartózkodási hely szolgáltatásának kényszerítése</string>
     <string name="sony_equalizer_preset_bass_boost">Basszuserősítés</string>
     <string name="sony_equalizer_preset_treble_boost">Magas hangok erősítése</string>
     <string name="watchface_dialog_widget_timeout_show_circle">Kör mutatása időtúllépéskor</string>
@@ -2432,12 +2432,12 @@
     <string name="pref_header_sony_equalizer_preset_custom_1">Egyéni előbeállítás 1</string>
     <string name="pref_header_sony_equalizer_preset_custom_2">Egyéni előbeállítás 2</string>
     <string name="watchface_dialog_widget_timezone_duration">Az óra láthatóságának időtartama (másodpercben)</string>
-    <string name="pref_force_wear_location_summary">Viselt eszköz helyszín-meghatározó szolgáltatás kényszerítése. \nCSAK SAJÁT FELELŐSSÉGRE</string>
+    <string name="pref_force_wear_location_summary">Viselt eszköz tartózkodási hely szolgáltatásának kényszerítése. \nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="watchface_dialog_pre_setting_position">előre beállított pozíció ehhez: %s</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Állítsa össze az egyéni menühöz az órafelületet</string>
     <string name="uploading_watchface">Órafelület feltöltése…</string>
     <string name="uploadwatchfaceoperation_in_progress">Órafelület feltöltése</string>
-    <string name="pref_device_action_phone_gps_location_listener_stop">GPS helyszín-meghatározás figyelő megállítása</string>
+    <string name="pref_device_action_phone_gps_location_listener_stop">GPS-helyzetfigyelő megállítása</string>
     <string name="watchface_setting_light_up_on_notification">Új értesítéskor világít</string>
     <string name="watchface_dialog_widget_update_timeout">Frissítési időkorlát percben</string>
     <string name="watchface_dialog_widget_timeout_hide_text">Szöveg elrejtése időtúllépéskor</string>
@@ -2467,12 +2467,12 @@
     <string name="search">Keresés</string>
     <string name="pref_title_nagivation_apps">Navigációs applikációk</string>
     <string name="pref_header_external_integrations">Külső integrációk</string>
-    <string name="pref_header_automations">Autómatizáció</string>
+    <string name="pref_header_automations">Automatizációk</string>
     <string name="pref_description_general">Rendszerindítás, nyelv, régió, tartózkodási hely</string>
     <string name="pref_description_about_you">Születésnap, nem, magasság, súly, célok</string>
     <string name="pref_description_notifications">Alkalmazásértesítések, engedélyezési lista/tiltólista</string>
     <string name="pref_description_user_interface">Téma, főképernyő</string>
-    <string name="pref_description_automations">Automatikus exportálás, Automatikus lekérdezés</string>
+    <string name="pref_description_automations">Automatikus exportálás, automatikus lekérdezés</string>
     <string name="pref_description_developer_options">Naplók, Intent API</string>
     <string name="pref_description_deprecated_functionalities">Jövőbeli verziókban eltávolítandó beállítások</string>
     <string name="pref_header_main_screen">Főképernyő</string>
@@ -2659,7 +2659,7 @@
     <string name="devicetype_sony_wi_c100">Sony WI-C100</string>
     <string name="devicetype_sony_wf_c700n">Sony WF-C700N</string>
     <string name="pref_dashboard_widget_double_size_summary">Engedélyezi, hogy a modul két oszlopot foglaljon el a műszerfalon</string>
-    <string name="pref_dashboard_widget_today_hr_interval_title">Pulzusszám-intervallum</string>
+    <string name="pref_dashboard_widget_today_hr_interval_title">Pulzusszám időköze</string>
     <string name="ftp_server_status">FTP-kiszolgáló állapota</string>
     <string name="widget_missing_parts">Válassza ki az összes modult</string>
     <string name="ftp_server_summary">Az FTP-kiszolgáló vezérlése az órán</string>
@@ -2708,7 +2708,7 @@
     <string name="miscale_weight_unit_chinese">Kínai (jin)</string>
     <string name="protocol_version">Protokollverzió</string>
     <string name="pref_title_fossil_hr_navigation_instructions">Navigációs utasítások</string>
-    <string name="pref_force_connection_type_title">Kényszerített csatlakozás típusa</string>
+    <string name="pref_force_connection_type_title">Csatlakozás típusának kényszerítése</string>
     <string name="pref_summary_cycling_persistence_interval">Az az időköz másodpercben, amikor az aktuális kerékpározási adatokat az adatbázisba kell írni</string>
     <string name="folder">Mappa</string>
     <string name="pref_sleepasandroid_features_summary">A támogatás eszközönként eltérő</string>
@@ -2732,7 +2732,7 @@
     <string name="pref_device_action_fitness_app_control_stop">Fitneszalkalmazás-követés leállítása</string>
     <string name="idasen_control_button_mid">MID</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="pref_force_enable_heartrate_support_summary">Engedélyezi a pulzusszám-támogatás kikényszerítését.\nCSAK SAJÁT FELELŐSSÉGRE</string>
+    <string name="pref_force_enable_heartrate_support_summary">Engedélyezi a pulzusszám-támogatás kényszerítését.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="intent_api_broadcast_activity_sync_summary">Szándék közvetítése, amikor a tevékenység szinkronizálása befejeződik bármely eszköz esetében</string>
     <string name="intent_api_allow_debug_commands_title">Engedélyezze a hibakeresési parancsokat</string>
     <string name="loyalty_cards_sync_groups_only">Csak bizonyos csoportok szinkronizálása</string>
@@ -2835,7 +2835,7 @@
     <string name="sony_notification_voice_guide">Értesítések és hangutasítás</string>
     <string name="sony_button_mode_ambient_sound_control">Környezeti hangszabályozás</string>
     <string name="soundcore_equalizer_preset">Előbeállítás</string>
-    <string name="pref_force_enable_spo2_support_summary">Engedélyezi az SpO2-támogatás kikényszerítését.\nCSAK SAJÁT FELELŐSSÉGRE</string>
+    <string name="pref_force_enable_spo2_support_summary">Engedélyezi az SpO2-támogatás kényszerítését.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="step_streaks_achievements_sharing_message">A napi lépéseim eredményei!</string>
     <string name="loyalty_cards_sync_summary">A kártyák szinkronizálásához koppintson az órára</string>
     <string name="prefs_wena3_item_rich_design">Használjon látványos kinézetet</string>
@@ -2963,7 +2963,7 @@
     <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
     <string name="pref_adaptive_noise_cancelling_title">Adaptív ANC</string>
     <string name="soundcore_equalizer_band8">8. sáv</string>
-    <string name="pref_force_dnd_support_summary">Ne zavarjanak támogatás kikényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
+    <string name="pref_force_dnd_support_summary">Ne zavarjanak mód támogatásának kényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="huawei_ignore_wakeup_status_end">Az ébresztés végállapotának figyelmen kívül hagyása</string>
     <string name="huawei_ignore_wakeup_status_start_description">Segíthet a megfelelő alvásérzékelésben. Azonnal látható a napi tevékenységek nézetben.</string>
     <string name="wifi_hotspot_summary">A Wi-Fi hotspot vezérlése az órán</string>
@@ -3068,7 +3068,7 @@
     <string name="sony_ambient_sound_control_button_mode_nc_off">Zajszűrés, Ki</string>
     <string name="soundcore_equalizer_preset_signature">soundcore Signature</string>
     <string name="soundcore_equalizer_band3">3. sáv</string>
-    <string name="pref_force_smart_alarm_summary">Intelligens riasztások támogatásának kikényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
+    <string name="pref_force_smart_alarm_summary">Intelligens riasztások támogatásának kényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="loyalty_cards_catima">Catima</string>
     <string name="device_state_waiting_scan">Várakozás a készülék beolvasására</string>
     <string name="error_scan_failed">A beolvasás sikertelen: %d</string>
@@ -3342,7 +3342,7 @@
     <string name="pref_vitality_score_7_day_title">7 napos fejlődés</string>
     <string name="pref_vitality_score_daily_title">Napi fejlődés</string>
     <string name="pref_summary_fossil_hr_nav_vibrate">Az óra rezegjen-e minden új vagy módosított navigációs utasításnál (csak akkor, ha az alkalmazás előtérben van)</string>
-    <string name="pref_force_connection_type_description">Megpróbálhatja kikényszeríteni a kapcsolat típusát, ha az eszköz nem reagál a Gadgetbridge-nek</string>
+    <string name="pref_force_connection_type_description">Megpróbálhatja kényszeríteni a csatlakozás típusát, ha az eszköz nem reagál a Gadgetbridge-nek</string>
     <string name="pref_force_connection_type_auto">Automatikus</string>
     <string name="pref_dashboard_all_devices_summary">Kombinálja az összes hozzáadott eszköz tevékenységadatot a műszerfalon megjelenő összegek számára</string>
     <string name="pref_auto_reply_calls_delay_title">Automatikus válaszkésleltetés</string>
@@ -3479,7 +3479,7 @@
     <string name="pref_device_action_fitness_app_control_start">Fitneszalkalmazás-követés indítása</string>
     <string name="distance_format_miles">###.#mi</string>
     <string name="distance_format_feet">###ft</string>
-    <string name="pref_force_dnd_support">Ne zavarjanak támogatás kikényszerítése</string>
+    <string name="pref_force_dnd_support">Ne zavarjanak mód támogatásának kényszerítése</string>
     <string name="voice_service_class_summary">Teljes körű szolgáltatási útvonal hangparancsok kezeléséhez</string>
     <string name="drag_handle">húzófogantyú</string>
     <string name="error_menu_companion_not_installed">A „HR Menu Companion” valószínűleg nincs telepítve</string>
@@ -3569,7 +3569,7 @@
     <string name="activity_type_hip_hop">Hip-hop</string>
     <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
     <string name="menuitem_stress_segmented">Stressz (szegmentált)</string>
-    <string name="pref_force_enable_spo2_support">SpO2-támogatás kikényszerítése</string>
+    <string name="pref_force_enable_spo2_support">SpO2-támogatás kényszerítése</string>
     <string name="wifi_hotspot_start_summary">A Wi-Fi hotspot elindítása az órán</string>
     <string name="white">Fehér</string>
     <string name="folder_is_empty">A mappa üres</string>
@@ -3642,4 +3642,7 @@
     <string name="pref_summary_bottom_navigation_bar_on">Váltás a főképernyők között a navigációs sáv vagy a vízszintes lapozás segítségével</string>
     <string name="activity_type_upper_body">Felsőtest</string>
     <string name="activity_type_lower_body">Alsótest</string>
+    <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
+    <string name="pref_override_features_summary">Egyes eszközfunkciók engedélyezése vagy letiltása. Ez problémákat okozhat és/vagy az eszközt helytelenül működteti</string>
+    <string name="pref_override_features_title">Támogatott funkciók felülírása</string>
 </resources>
