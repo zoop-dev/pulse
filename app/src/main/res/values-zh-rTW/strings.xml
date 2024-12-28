@@ -3368,7 +3368,7 @@
     <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f 磅</string>
     <string name="pref_header_heartrate_allday">全天監測</string>
     <string name="hrZoneThreshold">閾值</string>
-    <string name="pref_voice_passthrough_enabled"></string>
+    <string name="pref_voice_passthrough_enabled"/>
     <string name="music_upload_info">您將要上傳以下音樂檔案\n\n%1$s\n歌曲標題：%2$s\n專輯：%3$s\n</string>
     <string name="hrv_status_unit">%1$d 毫秒</string>
     <string name="min_respiration_rate">最小呼吸頻率</string>
