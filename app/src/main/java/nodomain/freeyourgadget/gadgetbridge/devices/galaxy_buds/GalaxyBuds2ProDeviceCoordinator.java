@@ -39,7 +39,7 @@ public class GalaxyBuds2ProDeviceCoordinator extends GalaxyBudsGenericCoordinato
     }
 
     @Override
-    public int getBatteryCount() {
+    public int getBatteryCount(final GBDevice device) {
         return 3;
     }
 

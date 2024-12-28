@@ -114,7 +114,7 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public boolean supportsPowerOff() {
+    public boolean supportsPowerOff(final GBDevice device) {
         return true;
     }
 

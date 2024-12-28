@@ -486,6 +486,9 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SONY_ADAPTIVE_VOLUME_CONTROL = "pref_adaptive_volume_control";
     public static final String PREF_SONY_WIDE_AREA_TAP = "pref_wide_area_tap";
 
+    public static final String PREF_OVERRIDE_FEATURES_ENABLED = "override_features_enabled";
+    public static final String PREF_OVERRIDE_FEATURES_LIST = "override_features_list";
+
     public static final String PREF_MOONDROP_EQUALIZER_PRESET = "pref_moondrop_equalizer_preset";
     public static final String PREF_MOONDROP_TOUCH_PLAY_PAUSE_EARBUD = "pref_moondrop_touch_play_pause_earbud";
     public static final String PREF_MOONDROP_TOUCH_PLAY_PAUSE_TRIGGER = "pref_moondrop_touch_play_pause_trigger";

@@ -39,7 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDevi
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCapabilities;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AdaptiveVolumeControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControlButtonMode;
@@ -627,8 +626,6 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     }
 
     public List<? extends GBDeviceEvent> handleInitResponse(final byte[] payload) {
-        final SonyHeadphonesCoordinator coordinator = getCoordinator();
-
         // Populate the init requests
         final List<Request> capabilityRequests = new ArrayList<>();
 
@@ -664,7 +661,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
         }};
 
         for (Map.Entry<SonyHeadphonesCapabilities, Request> capabilityEntry : capabilityRequestMap.entrySet()) {
-            if (coordinator.supports(capabilityEntry.getKey())) {
+            if (supports(capabilityEntry.getKey())) {
                 capabilityRequests.add(capabilityEntry.getValue());
             }
         }
@@ -945,7 +942,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             // Dual Battery (L / R)
             LOG.debug("Battery Level: {}: L: {}, R: {}", batteryType, payload[2], payload[4]);
 
-            boolean hasCaseBattery = getCoordinator().supports(SonyHeadphonesCapabilities.BatteryCase);
+            boolean hasCaseBattery = supports(SonyHeadphonesCapabilities.BatteryCase);
 
             if (payload[2] != 0) {
                 final GBDeviceEventBatteryInfo gbDeviceEventBatteryInfoLeft = new GBDeviceEventBatteryInfo();
@@ -1277,9 +1274,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     }
 
     protected boolean supportsWindNoiseCancelling() {
-        final SonyHeadphonesCoordinator coordinator = getCoordinator();
-
-        return coordinator.supports(SonyHeadphonesCapabilities.WindNoiseReduction);
+        return supports(SonyHeadphonesCapabilities.WindNoiseReduction);
     }
 
     protected BatteryType decodeBatteryType(final byte b) {

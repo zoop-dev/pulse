@@ -16,10 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators;
 
-import androidx.annotation.NonNull;
-
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -44,8 +43,8 @@ public class SonyWFSP800NCoordinator extends SonyHeadphonesCoordinator {
     }
 
     @Override
-    public List<SonyHeadphonesCapabilities> getCapabilities() {
-        return Arrays.asList(
+    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+        return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual,
                 SonyHeadphonesCapabilities.BatteryCase,
                 SonyHeadphonesCapabilities.PowerOffFromPhone,
@@ -56,7 +55,7 @@ public class SonyWFSP800NCoordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff,
                 SonyHeadphonesCapabilities.VoiceNotifications,
                 SonyHeadphonesCapabilities.Volume
-        );
+        ));
     }
 
 

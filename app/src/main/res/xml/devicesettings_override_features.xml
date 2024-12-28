@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_developer_mode"
+        android:key="override_features_enabled"
+        android:summary="@string/pref_override_features_summary"
+        android:title="@string/pref_override_features_title" />
+
+    <!-- the values should be populated by the DeviceSpecificSettingsCustomizer -->
+    <MultiSelectListPreference
+        android:defaultValue="@array/empty_array"
+        android:dependency="override_features_enabled"
+        android:entries="@array/empty_array"
+        android:entryValues="@array/empty_array"
+        android:icon="@drawable/ic_developer_mode"
+        android:key="override_features_list"
+        android:summary="@string/pref_test_features_summary"
+        android:title="@string/pref_test_features_title" />
+</androidx.preference.PreferenceScreen>

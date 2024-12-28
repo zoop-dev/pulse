@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_OVERRIDE_FEATURES_LIST;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_CONTROL;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_LEVEL;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SONY_AUDIO_CODEC;
@@ -40,8 +41,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Parcel;
 
+import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -75,7 +78,7 @@ public class SonyHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
         // Disable equalizer, sound position and surround mode if not in SBC codec, for WH-1000XM3
         // TODO: Should the coordinator be responsible for this compatibility check?
         if (preference.getKey().equals(PREF_SONY_AUDIO_CODEC) && device.getType().equals(DeviceType.SONY_WH_1000XM3)) {
-            final boolean isSbcCodec = ((EditTextPreference) preference).getText().equalsIgnoreCase("sbc");
+            final boolean isSbcCodec = "sbc".equalsIgnoreCase(((EditTextPreference) preference).getText());
 
             final List<Preference> prefsToDisable = Arrays.asList(
                     handler.findPreference(PREF_SONY_EQUALIZER),
@@ -146,53 +149,80 @@ public class SonyHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
         final Preference ancOptimizer = handler.findPreference("pref_sony_anc_optimizer");
 
         if (ancOptimizer != null) {
-            ancOptimizer.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(final Preference preference) {
-                    if (ancOptimizerProgressDialog != null) {
-                        // Already optimizing
-                        return true;
-                    }
-
-                    final Context context = preference.getContext();
-
-                    new MaterialAlertDialogBuilder(context)
-                            .setTitle(R.string.sony_anc_optimize_confirmation_title)
-                            .setMessage(R.string.sony_anc_optimize_confirmation_description)
-                            .setIcon(R.drawable.ic_hearing)
-                            .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
-                                public void onClick(final DialogInterface dialog, final int whichButton) {
-                                    handler.notifyPreferenceChanged(PREF_SONY_NOISE_OPTIMIZER_START);
-
-                                    ancOptimizerProgressDialog = new ProgressDialog(context);
-                                    ancOptimizerProgressDialog.setCancelable(false);
-                                    ancOptimizerProgressDialog.setMessage(context.getString(R.string.sony_anc_optimizer_status_starting));
-                                    ancOptimizerProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                    ancOptimizerProgressDialog.setProgress(0);
-                                    ancOptimizerProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.Cancel), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(final DialogInterface dialog, final int which) {
-                                            dialog.dismiss();
-                                            ancOptimizerProgressDialog = null;
-                                            handler.notifyPreferenceChanged(PREF_SONY_NOISE_OPTIMIZER_CANCEL);
-                                        }
-                                    });
-
-                                    ancOptimizerProgressDialog.show();
-                                }
-                            })
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .show();
-
+            ancOptimizer.setOnPreferenceClickListener(preference -> {
+                if (ancOptimizerProgressDialog != null) {
+                    // Already optimizing
                     return true;
                 }
+
+                final Context context = preference.getContext();
+
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.sony_anc_optimize_confirmation_title)
+                        .setMessage(R.string.sony_anc_optimize_confirmation_description)
+                        .setIcon(R.drawable.ic_hearing)
+                        .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int whichButton) {
+                                handler.notifyPreferenceChanged(PREF_SONY_NOISE_OPTIMIZER_START);
+
+                                ancOptimizerProgressDialog = new ProgressDialog(context);
+                                ancOptimizerProgressDialog.setCancelable(false);
+                                ancOptimizerProgressDialog.setMessage(context.getString(R.string.sony_anc_optimizer_status_starting));
+                                ancOptimizerProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                ancOptimizerProgressDialog.setProgress(0);
+                                ancOptimizerProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.Cancel), (dialog1, which) -> {
+                                    dialog1.dismiss();
+                                    ancOptimizerProgressDialog = null;
+                                    handler.notifyPreferenceChanged(PREF_SONY_NOISE_OPTIMIZER_CANCEL);
+                                });
+
+                                ancOptimizerProgressDialog.show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show();
+
+                return true;
             });
         }
 
         // Hide unsupported preferences
         final Preference speakToChatFocusVoice = handler.findPreference(PREF_SONY_SPEAK_TO_CHAT_FOCUS_ON_VOICE);
-        if (speakToChatFocusVoice != null && !coordinator.supports(SonyHeadphonesCapabilities.SpeakToChatFocusOnVoice)) {
+        if (speakToChatFocusVoice != null && !coordinator.supports(device, SonyHeadphonesCapabilities.SpeakToChatFocusOnVoice)) {
             speakToChatFocusVoice.setVisible(false);
+        }
+
+        // Override features
+        final MultiSelectListPreference overrideFeaturesList = handler.findPreference(PREF_OVERRIDE_FEATURES_LIST);
+        if (overrideFeaturesList != null) {
+            final Set<SonyHeadphonesCapabilities> defaultCapabilities = coordinator.getCapabilities();
+
+            // Populate the preference directly from the enum
+            final CharSequence[] entries = new CharSequence[SonyHeadphonesCapabilities.values().length];
+            final CharSequence[] values = new CharSequence[SonyHeadphonesCapabilities.values().length];
+            int i = 0;
+            for (SonyHeadphonesCapabilities capability : SonyHeadphonesCapabilities.values()) {
+                // Defaults first
+                if (defaultCapabilities.contains(capability)) {
+                    entries[i] = "*" + capability.name();
+                    values[i] = capability.name();
+                    i++;
+                }
+            }
+            for (SonyHeadphonesCapabilities capability : SonyHeadphonesCapabilities.values()) {
+                if (!defaultCapabilities.contains(capability)) {
+                    entries[i] = capability.name();
+                    values[i] = capability.name();
+                    i++;
+                }
+            }
+            overrideFeaturesList.setEntries(entries);
+            overrideFeaturesList.setEntryValues(values);
+
+            overrideFeaturesList.setOnPreferenceClickListener(preference -> {
+                device.sendDeviceUpdateIntent(handler.getContext());
+                return false;
+            });
         }
     }
 

@@ -798,14 +798,14 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public int getBatteryCount() {
+    public int getBatteryCount(final GBDevice device) {
         return 1;
     } //multiple battery support, default is 1, maximum is 3, 0 will disable the battery in UI
 
     @Override
     public BatteryConfig[] getBatteryConfig(final GBDevice device) {
-        final BatteryConfig[] batteryConfigs = new BatteryConfig[getBatteryCount()];
-        for (int i = 0; i < getBatteryCount(); i++) {
+        final BatteryConfig[] batteryConfigs = new BatteryConfig[getBatteryCount(device)];
+        for (int i = 0; i < getBatteryCount(device); i++) {
             batteryConfigs[i] = new BatteryConfig(i);
         }
         return batteryConfigs;
@@ -817,7 +817,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsPowerOff() {
+    public boolean supportsPowerOff(final GBDevice device) {
         return false;
     }
 

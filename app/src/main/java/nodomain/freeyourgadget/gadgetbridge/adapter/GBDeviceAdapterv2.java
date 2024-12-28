@@ -353,15 +353,15 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         // multiple battery support: at this point we support up to three batteries
         // to support more batteries, the battery UI would need to be extended
 
-        holder.batteryStatusBox0.setVisibility(coordinator.getBatteryCount() > 0 ? View.VISIBLE : View.GONE);
-        holder.batteryStatusBox1.setVisibility(coordinator.getBatteryCount() > 1 ? View.VISIBLE : View.GONE);
-        holder.batteryStatusBox2.setVisibility(coordinator.getBatteryCount() > 2 ? View.VISIBLE : View.GONE);
+        holder.batteryStatusBox0.setVisibility(coordinator.getBatteryCount(device) > 0 ? View.VISIBLE : View.GONE);
+        holder.batteryStatusBox1.setVisibility(coordinator.getBatteryCount(device) > 1 ? View.VISIBLE : View.GONE);
+        holder.batteryStatusBox2.setVisibility(coordinator.getBatteryCount(device) > 2 ? View.VISIBLE : View.GONE);
 
         LinearLayout[] batteryStatusBoxes = {holder.batteryStatusBox0, holder.batteryStatusBox1, holder.batteryStatusBox2};
         TextView[] batteryStatusLabels = {holder.batteryStatusLabel0, holder.batteryStatusLabel1, holder.batteryStatusLabel2};
         ImageView[] batteryIcons = {holder.batteryIcon0, holder.batteryIcon1, holder.batteryIcon2};
 
-        for (int batteryIndex = 0; batteryIndex < coordinator.getBatteryCount(); batteryIndex++) {
+        for (int batteryIndex = 0; batteryIndex < coordinator.getBatteryCount(device); batteryIndex++) {
 
             int batteryLevel = device.getBatteryLevel(batteryIndex);
             float batteryVoltage = device.getBatteryVoltage(batteryIndex);
@@ -823,7 +823,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         }
 
         holder.powerOff.setVisibility(View.GONE);
-        if (device.isInitialized() && coordinator.supportsPowerOff()) {
+        if (device.isInitialized() && coordinator.supportsPowerOff(device)) {
             holder.powerOff.setVisibility(View.VISIBLE);
             holder.powerOff.setOnClickListener(new View.OnClickListener() {
                 @Override

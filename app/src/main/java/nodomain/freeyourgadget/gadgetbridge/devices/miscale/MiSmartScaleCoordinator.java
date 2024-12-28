@@ -62,7 +62,7 @@ public class MiSmartScaleCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getBatteryCount() {
+    public int getBatteryCount(final GBDevice device) {
         return 0;
     }
 

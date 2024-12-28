@@ -53,7 +53,7 @@ public class SoundcoreLiberty3ProCoordinator extends AbstractDeviceCoordinator {
 
 
     @Override
-    public int getBatteryCount() {
+    public int getBatteryCount(final GBDevice device) {
         return 3;
     }
 

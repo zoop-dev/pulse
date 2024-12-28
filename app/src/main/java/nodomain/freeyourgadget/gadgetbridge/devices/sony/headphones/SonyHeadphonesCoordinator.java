@@ -26,9 +26,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
@@ -39,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.SonyHeadphonesSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
@@ -61,31 +65,31 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
     }
 
     @Override
-    public boolean supportsPowerOff() {
-        return supports(SonyHeadphonesCapabilities.PowerOffFromPhone);
+    public boolean supportsPowerOff(final GBDevice device) {
+        return supports(device, SonyHeadphonesCapabilities.PowerOffFromPhone);
     }
 
     @Override
-    public int getBatteryCount() {
-        if (supports(SonyHeadphonesCapabilities.BatterySingle)) {
-            if (supports(SonyHeadphonesCapabilities.BatteryDual) || supports(SonyHeadphonesCapabilities.BatteryDual2)) {
+    public int getBatteryCount(final GBDevice device) {
+        if (supports(device, SonyHeadphonesCapabilities.BatterySingle)) {
+            if (supports(device, SonyHeadphonesCapabilities.BatteryDual) || supports(device, SonyHeadphonesCapabilities.BatteryDual2)) {
                 throw new IllegalStateException("A device can't have both single and dual battery");
-            } else if (supports(SonyHeadphonesCapabilities.BatteryCase)) {
+            } else if (supports(device, SonyHeadphonesCapabilities.BatteryCase)) {
                 throw new IllegalStateException("Devices with single battery + case are not supported by the protocol");
             }
         }
 
         int batteryCount = 0;
 
-        if (supports(SonyHeadphonesCapabilities.BatterySingle)) {
+        if (supports(device, SonyHeadphonesCapabilities.BatterySingle)) {
             batteryCount += 1;
         }
 
-        if (supports(SonyHeadphonesCapabilities.BatteryCase)) {
+        if (supports(device, SonyHeadphonesCapabilities.BatteryCase)) {
             batteryCount += 1;
         }
 
-        if (supports(SonyHeadphonesCapabilities.BatteryDual) || supports(SonyHeadphonesCapabilities.BatteryDual2)) {
+        if (supports(device, SonyHeadphonesCapabilities.BatteryDual) || supports(device, SonyHeadphonesCapabilities.BatteryDual2)) {
             batteryCount += 2;
         }
 
@@ -96,15 +100,15 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
     public BatteryConfig[] getBatteryConfig(final GBDevice device) {
         final List<BatteryConfig> batteries = new ArrayList<>(3);
 
-        if (supports(SonyHeadphonesCapabilities.BatterySingle)) {
+        if (supports(device, SonyHeadphonesCapabilities.BatterySingle)) {
             batteries.add(new BatteryConfig(batteries.size(), GBDevice.BATTERY_ICON_DEFAULT, GBDevice.BATTERY_LABEL_DEFAULT, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
         }
 
-        if (supports(SonyHeadphonesCapabilities.BatteryCase)) {
+        if (supports(device, SonyHeadphonesCapabilities.BatteryCase)) {
             batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_tws_case, R.string.battery_case, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
         }
 
-        if (supports(SonyHeadphonesCapabilities.BatteryDual) || supports(SonyHeadphonesCapabilities.BatteryDual2)) {
+        if (supports(device, SonyHeadphonesCapabilities.BatteryDual) || supports(device, SonyHeadphonesCapabilities.BatteryDual2)) {
             batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_galaxy_buds_l, R.string.left_earbud, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
             batteries.add(new BatteryConfig(batteries.size(), R.drawable.ic_galaxy_buds_r, R.string.right_earbud, getBatteryDefaultLowThreshold(), getBatteryDefaultFullThreshold()));
         }
@@ -116,31 +120,31 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 
-        if (supports(SonyHeadphonesCapabilities.AmbientSoundControl) || supports(SonyHeadphonesCapabilities.AmbientSoundControl2)) {
-            if (supports(SonyHeadphonesCapabilities.WindNoiseReduction)) {
+        if (supports(device, SonyHeadphonesCapabilities.AmbientSoundControl) || supports(device, SonyHeadphonesCapabilities.AmbientSoundControl2)) {
+            if (supports(device, SonyHeadphonesCapabilities.WindNoiseReduction)) {
                 deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_ambient_sound_control_wind_noise_reduction);
-            } else if (supports(SonyHeadphonesCapabilities.NoNoiseCancelling)) {
+            } else if (supports(device, SonyHeadphonesCapabilities.NoNoiseCancelling)) {
                 deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_ambient_sound_control_no_noise_cancelling);
             } else {
                 deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_ambient_sound_control);
             }
 
-            if (supports(SonyHeadphonesCapabilities.AncOptimizer)) {
+            if (supports(device, SonyHeadphonesCapabilities.AncOptimizer)) {
                 deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_anc_optimizer);
             }
         }
 
-        if (supports(SonyHeadphonesCapabilities.AdaptiveVolumeControl)) {
+        if (supports(device, SonyHeadphonesCapabilities.AdaptiveVolumeControl)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_adaptive_volume_control);
         }
 
-        if (supports(SonyHeadphonesCapabilities.SpeakToChatConfig)) {
+        if (supports(device, SonyHeadphonesCapabilities.SpeakToChatConfig)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_speak_to_chat_with_settings);
-        } else if (supports(SonyHeadphonesCapabilities.SpeakToChatEnabled)) {
+        } else if (supports(device, SonyHeadphonesCapabilities.SpeakToChatEnabled)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_speak_to_chat_simple);
         }
 
-        addSettingsUnderHeader(deviceSpecificSettings, R.xml.devicesettings_header_other, new LinkedHashMap<SonyHeadphonesCapabilities, Integer>() {{
+        addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_other, new LinkedHashMap<SonyHeadphonesCapabilities, Integer>() {{
             put(SonyHeadphonesCapabilities.AudioSettingsOnlyOnSbcCodec, R.xml.devicesettings_sony_warning_wh1000xm3);
             put(SonyHeadphonesCapabilities.EqualizerSimple, R.xml.devicesettings_sony_headphones_equalizer);
             put(SonyHeadphonesCapabilities.EqualizerWithCustomBands, R.xml.devicesettings_sony_headphones_equalizer_with_custom_bands);
@@ -153,7 +157,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
         final List<Integer> callsAndNotif = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         callsAndNotif.add(R.xml.devicesettings_headphones);
 
-        addSettingsUnderHeader(deviceSpecificSettings, R.xml.devicesettings_header_system, new LinkedHashMap<SonyHeadphonesCapabilities, Integer>() {{
+        addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_system, new LinkedHashMap<SonyHeadphonesCapabilities, Integer>() {{
             put(SonyHeadphonesCapabilities.WideAreaTap, R.xml.devicesettings_sony_headphones_wide_area_tap);
             put(SonyHeadphonesCapabilities.ButtonModesLeftRight, R.xml.devicesettings_sony_headphones_button_modes_left_right);
             put(SonyHeadphonesCapabilities.AmbientSoundControlButtonMode, R.xml.devicesettings_sony_headphones_ambient_sound_control_button_modes);
@@ -165,20 +169,30 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
             put(SonyHeadphonesCapabilities.VoiceNotifications, R.xml.devicesettings_sony_headphones_notifications_voice_guide);
         }});
 
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_header_developer);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_protocol_version);
-
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_device_info);
+        final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+        developer.add(R.xml.devicesettings_override_features);
+        developer.add(R.xml.devicesettings_sony_headphones_protocol_version);
+        developer.add(R.xml.devicesettings_sony_headphones_device_info);
 
         return deviceSpecificSettings;
     }
 
-    public List<SonyHeadphonesCapabilities> getCapabilities() {
-        return Collections.emptyList();
+    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+        return Collections.emptySet();
     }
 
-    public boolean supports(final SonyHeadphonesCapabilities capability) {
-        return getCapabilities().contains(capability);
+    public Set<SonyHeadphonesCapabilities> getCapabilities(final GBDevice device) {
+        DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+        final boolean overrideFeatures = devicePrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_OVERRIDE_FEATURES_ENABLED, false);
+        if (overrideFeatures) {
+            final Set<String> stringList = devicePrefs.getStringSet(DeviceSettingsPreferenceConst.PREF_OVERRIDE_FEATURES_LIST, Collections.emptySet());
+            return stringList.stream().map(SonyHeadphonesCapabilities::valueOf).collect(Collectors.toSet());
+        }
+        return getCapabilities();
+    }
+
+    public boolean supports(final GBDevice device, final SonyHeadphonesCapabilities capability) {
+        return getCapabilities(device).contains(capability);
     }
 
     /**
@@ -189,11 +203,12 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
      * @param capabilities           the map of capability to preference screen
      */
     private void addSettingsUnderHeader(final DeviceSpecificSettings deviceSpecificSettings,
+                                        final GBDevice device,
                                         final int header,
                                         final Map<SonyHeadphonesCapabilities, Integer> capabilities) {
         final Set<SonyHeadphonesCapabilities> supportedCapabilities = new HashSet<>(capabilities.keySet());
         for (SonyHeadphonesCapabilities capability : capabilities.keySet()) {
-            if (!supports(capability)) {
+            if (!supports(device, capability)) {
                 supportedCapabilities.remove(capability);
             }
         }
@@ -206,7 +221,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
         deviceSpecificSettings.addRootScreen(header);
 
         for (Map.Entry<SonyHeadphonesCapabilities, Integer> capabilitiesSetting : capabilities.entrySet()) {
-            if (supports(capabilitiesSetting.getKey())) {
+            if (supports(device, capabilitiesSetting.getKey())) {
                 deviceSpecificSettings.addRootScreen(capabilitiesSetting.getValue());
             }
         }

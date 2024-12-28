@@ -17,7 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -31,8 +32,8 @@ public class SonyLinkBudsSCoordinator extends SonyHeadphonesCoordinator {
     }
 
     @Override
-    public List<SonyHeadphonesCapabilities> getCapabilities() {
-        return Arrays.asList(
+    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+        return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual,
                 SonyHeadphonesCapabilities.BatteryCase,
                 SonyHeadphonesCapabilities.AmbientSoundControl,
@@ -47,7 +48,7 @@ public class SonyLinkBudsSCoordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.SpeakToChatConfig,
                 SonyHeadphonesCapabilities.VoiceNotifications,
                 SonyHeadphonesCapabilities.EqualizerWithCustomBands
-        );
+        ));
     }
 
     @Override

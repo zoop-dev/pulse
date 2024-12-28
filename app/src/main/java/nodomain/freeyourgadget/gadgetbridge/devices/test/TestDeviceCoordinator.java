@@ -552,19 +552,19 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getBatteryCount() {
+    public int getBatteryCount(final GBDevice device) {
         return supports(getTestDevice(), TestFeature.BATTERIES_MULTIPLE) ? 3 : 1;
     }
 
     @Override
     public BatteryConfig[] getBatteryConfig(final GBDevice device) {
-        if (getBatteryCount() == 1) {
+        if (getBatteryCount(device) == 1) {
             return super.getBatteryConfig(device);
         }
 
-        final BatteryConfig[] ret = new BatteryConfig[getBatteryCount()];
+        final BatteryConfig[] ret = new BatteryConfig[getBatteryCount(device)];
 
-        for (int i = 0; i < getBatteryCount(); i++) {
+        for (int i = 0; i < getBatteryCount(device); i++) {
             ret[i] = new BatteryConfig(i, R.drawable.ic_battery_full, R.string.battery);
         }
 
@@ -572,7 +572,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsPowerOff() {
+    public boolean supportsPowerOff(final GBDevice device) {
         return supports(getTestDevice(), TestFeature.POWER_OFF);
     }
 

@@ -69,7 +69,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                 PayloadTypeV1.AMBIENT_SOUND_CONTROL_GET.getMessageType(),
                 new byte[]{
                         PayloadTypeV1.AMBIENT_SOUND_CONTROL_GET.getCode(),
-                        (byte) (supportsWindNoiseCancelling() || getCoordinator().supports(SonyHeadphonesCapabilities.AmbientSoundControl2) ? 0x17 : 0x15)
+                        (byte) (supportsWindNoiseCancelling() || supports(SonyHeadphonesCapabilities.AmbientSoundControl2) ? 0x17 : 0x15)
                 }
         );
     }
@@ -79,7 +79,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
         final ByteBuffer buf = ByteBuffer.allocate(supportsWindNoiseCancelling() ? 8 : 7);
 
         buf.put(PayloadTypeV1.AMBIENT_SOUND_CONTROL_SET.getCode());
-        buf.put((byte) (supportsWindNoiseCancelling() || getCoordinator().supports(SonyHeadphonesCapabilities.AmbientSoundControl2) ? 0x17 : 0x15));
+        buf.put((byte) (supportsWindNoiseCancelling() || supports(SonyHeadphonesCapabilities.AmbientSoundControl2) ? 0x17 : 0x15));
         buf.put((byte) 0x01); // 0x00 while dragging the slider?
 
         if (AmbientSoundControl.Mode.OFF.equals(ambientSoundControl.getMode())) {
@@ -352,7 +352,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                         PayloadTypeV2.AMBIENT_SOUND_CONTROL_BUTTON_MODE_SET.getCode(),
                         (byte) 0x03,
                         (byte) 0x01,
-                        (byte) (getCoordinator().supports(SonyHeadphonesCapabilities.AmbientSoundControl2) ? 0x00 : 0x35),
+                        (byte) (supports(SonyHeadphonesCapabilities.AmbientSoundControl2) ? 0x00 : 0x35),
                         (byte) 0x01,
                         (byte) 0x00,
                         ambientSoundControlButtonMode.getCode()
@@ -1081,7 +1081,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             case OFF:
                 return (byte) 0xff;
             case AMBIENT_SOUND_CONTROL:
-                return (byte) (supportsWindNoiseCancelling() || getCoordinator().supports(SonyHeadphonesCapabilities.NoNoiseCancelling) ? 0x35 : 0x00); // Seems to be the only one that differs?
+                return (byte) (supportsWindNoiseCancelling() || supports(SonyHeadphonesCapabilities.NoNoiseCancelling) ? 0x35 : 0x00); // Seems to be the only one that differs?
             case PLAYBACK_CONTROL:
                 return (byte) 0x20;
             case VOLUME_CONTROL:

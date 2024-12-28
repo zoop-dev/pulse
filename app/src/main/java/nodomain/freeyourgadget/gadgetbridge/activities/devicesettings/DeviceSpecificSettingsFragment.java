@@ -1382,7 +1382,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                     coordinator.getSupportedDeviceSpecificConnectionSettings()
             );
 
-            if (coordinator.getBatteryCount() > 0) {
+            if (coordinator.getBatteryCount(device) > 0) {
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.BATTERY
                 );
@@ -1398,6 +1398,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
             deviceSpecificSettings.addRootScreen(
                     DeviceSpecificSettingsScreen.DEVELOPER,
+                    R.xml.devicesettings_header_intent_api,
                     R.xml.devicesettings_settings_third_party_apps
             );
             if (coordinator.getConnectionType().usesBluetoothLE()) {

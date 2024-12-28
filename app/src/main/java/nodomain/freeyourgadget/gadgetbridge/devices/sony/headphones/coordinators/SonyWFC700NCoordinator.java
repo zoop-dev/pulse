@@ -17,7 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -32,8 +33,8 @@ public class SonyWFC700NCoordinator extends SonyHeadphonesCoordinator {
     }
 
     @Override
-    public List<SonyHeadphonesCapabilities> getCapabilities() {
-        return Arrays.asList(
+    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+        return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual2,
                 SonyHeadphonesCapabilities.BatteryCase,
                 SonyHeadphonesCapabilities.AmbientSoundControl2,
@@ -46,7 +47,7 @@ public class SonyWFC700NCoordinator extends SonyHeadphonesCoordinator {
                 // AutoOff is supported, but current Payload is incorrect.
                 // Available options in Sony App: 15min, 30min, 1h, 3h, off
                 // TODO: SonyHeadphonesCapabilities.AutomaticPowerOffByTime
-        );
+        ));
     }
 
     @Override

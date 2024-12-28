@@ -745,13 +745,13 @@ public interface DeviceCoordinator {
      * 1 is default, 3 is maximum at the moment (as per UI layout)
      * 0 will disable the battery from the UI
      */
-    int getBatteryCount();
+    int getBatteryCount(GBDevice device);
 
     BatteryConfig[] getBatteryConfig(GBDevice device);
 
     boolean addBatteryPollingSettings();
 
-    boolean supportsPowerOff();
+    boolean supportsPowerOff(GBDevice device);
 
     PasswordCapabilityImpl.Mode getPasswordCapability();
 

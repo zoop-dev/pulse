@@ -17,7 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -36,8 +37,8 @@ public class SonyWH1000XM4Coordinator extends SonyHeadphonesCoordinator {
     }
 
     @Override
-    public List<SonyHeadphonesCapabilities> getCapabilities() {
-        return Arrays.asList(
+    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+        return new HashSet<>(Arrays.asList(
                 // TODO: Function of [CUSTOM] button
                 // TODO R.xml.devicesettings_connect_two_devices,
                 SonyHeadphonesCapabilities.BatterySingle,
@@ -53,6 +54,6 @@ public class SonyWH1000XM4Coordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
                 SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff,
                 SonyHeadphonesCapabilities.VoiceNotifications
-        );
+        ));
     }
 }

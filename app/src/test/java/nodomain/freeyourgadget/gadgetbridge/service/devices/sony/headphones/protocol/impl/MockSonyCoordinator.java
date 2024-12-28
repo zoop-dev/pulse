@@ -16,10 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.impl;
 
-import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCapabilities;
@@ -30,9 +28,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
     private final DeviceType deviceType = DeviceType.SONY_WH_1000XM3;
 
-    private final List<SonyHeadphonesCapabilities> capabilities = new ArrayList<>();
+    private final Set<SonyHeadphonesCapabilities> capabilities = new LinkedHashSet<>();
 
-    @NonNull
     @Override
     public boolean supports(final GBDeviceCandidate candidate) {
         return true;
@@ -47,7 +44,7 @@ public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
         capabilities.add(capability);
     }
 
-    public List<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getCapabilities() {
         return capabilities;
     }
 }

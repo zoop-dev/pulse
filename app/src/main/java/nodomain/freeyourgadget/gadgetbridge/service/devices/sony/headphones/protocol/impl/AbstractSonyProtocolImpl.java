@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.pro
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCapabilities;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AdaptiveVolumeControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControl;
@@ -142,4 +143,8 @@ public abstract class AbstractSonyProtocolImpl {
     public abstract Request setVolume(final int volume);
 
     public abstract List<? extends GBDeviceEvent> handlePayload(final MessageType messageType, final byte[] payload);
+
+    protected boolean supports(final SonyHeadphonesCapabilities capability) {
+        return getCoordinator().supports(device, capability);
+    }
 }
