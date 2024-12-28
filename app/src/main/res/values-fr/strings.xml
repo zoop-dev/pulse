@@ -347,7 +347,7 @@ Temps de sommeil préféré en heures</string>
     <string name="charts_legend_heartrate">Fréquence cardiaque</string>
     <string name="live_activity_heart_rate">Fréquence cardiaque</string>
     <string name="pref_title_pebble_health_store_raw">Stockez les enregistrements brut dans la base de données</string>
-    <string name="pref_summary_pebble_health_store_raw">Si coché, les données « brutes » sont stockées pour une interprétation ultérieure, augmentant la taille de la base de données.</string>
+    <string name="pref_summary_pebble_health_store_raw">Si coché, les données « brutes » sont stockées pour une interprétation ultérieure, augmentant la taille de la base de données.</string>
     <string name="action_db_management">Gestion des données</string>
     <string name="title_activity_db_management">Gestion des données</string>
     <string name="activity_db_management_import_export_explanation">Les opérations d\'Import/Export utilisent le répertoire suivant (voir ci-dessous) sur votre appareil. Ce répertoire est accessible à d\'autres applications Android et depuis votre ordinateur. Merci de prendre note que ce répertoire et tout son contenu seront effacés si vous désinstallez Gadgetbridge. Cela inclut :
@@ -683,15 +683,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_title_authkey">Clé d\'autorisation</string>
     <string name="pref_summary_authkey">Changez la clé d\'autorisation pour une clé commune à tous vos appareils Android sur lesquels vous souhaitez vous connecter. La précédente clé par défaut est 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. 
-\n 
-\nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du .fw. 
-\n 
-\nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. 
-\n 
-\nCONTINUEZ À VOS RISQUES ET PÉRILS ! 
-\n 
-\nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST « Amazfit Band 2 »</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST « Amazfit Band 2 »</string>
     <string name="dutch">Néerlandais</string>
     <string name="turkish">Turc</string>
     <string name="ukrainian">Ukrainien</string>
