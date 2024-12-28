@@ -645,7 +645,7 @@
     <string name="quick_alarm">Gyors riasztás</string>
     <string name="sony_automatic_power_off_1_hour">1 óra</string>
     <string name="activity_prefs_goal_fat_burn_time_minutes">Napi cél: zsírégetés ideje percben</string>
-    <string name="title_activity_controlcenter_main_nightly">Korai hozzáférésű Gadgetbridge kiadás</string>
+    <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
     <string name="sony_automatic_power_off_5_min">5 perc</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Automatikus</string>
     <string name="reminder_time_every_day">%1$s, minden nap</string>
@@ -658,7 +658,7 @@
     <string name="pref_workout_keep_screen_on_title">Képernyő bekapcsolva tartása edzés közben</string>
     <string name="activity_summary_yesterday">Tegnap</string>
     <string name="devicetype_miband3">Mi Band 3</string>
-    <string name="title_activity_controlcenter_main_nopebble">Korai hozzáférésű Gadgetbiridge kiadás, Pebble szolgáltató nélkül</string>
+    <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly (Pebble szolgáltató nélkül)</string>
     <string name="pref_workout_send_gps_title">GPS küldése edzés közben</string>
     <string name="menuitem_total_workout">Összes edzés</string>
     <string name="sony_equalizer_band_6300">6.3k</string>
@@ -666,7 +666,7 @@
     <string name="appwidget_sleep_alarm_widget_label">Alvásriasztás</string>
     <string name="menuitem_workout">Edzés</string>
     <string name="pref_show_changelog_summary">A Gadgetbridge frissítése utáni változásnapló megjelenítése az utolsó verzió óta</string>
-    <string name="about_activity_title_main_nopebble">Korai hozzáférésű Gadgetbiridge kiadás, Pebble szolgáltató nélkül névjegye</string>
+    <string name="about_activity_title_main_nopebble">A Gadgetbiridge Nightly (Pebble szolgáltató nélkül) névjegye</string>
     <string name="activity_prefs_goal_standing_time_minutes">Napi cél: állásidő percben</string>
     <string name="automatic">Automatikus</string>
     <string name="title_activity_LenovoWatch_calibration">Watch X Plus kalibráció</string>
@@ -683,7 +683,7 @@
         <item quantity="one">%d óra</item>
         <item quantity="other">%d óra</item>
     </plurals>
-    <string name="about_activity_title_main_nightly">A korai hozzáférésű Gadgetbridge kiadás névjegye</string>
+    <string name="about_activity_title_main_nightly">A Gadgetbridge Nightly névjegye</string>
     <string name="single_band">Egysávos</string>
     <string name="menuitem_last_workout">Utolsó edzés</string>
     <string name="pref_show_changelog">Változásnapló megjelenítése induláskor</string>
@@ -1075,7 +1075,7 @@
     <string name="devicetype_um25">UM-25</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (korai hozzáférésű kiadás)</string>
-    <string name="application_name_main_nightly">Gadgetbridge (korai hozzáférésű kiadás)</string>
+    <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="Steps">Lépések</string>
     <string name="activity_type_climbing">Mászás</string>
     <string name="activity_list_summary_distance">Távolság</string>
@@ -1377,9 +1377,9 @@
 \nA Google Play Áruház szabályzata miatt nem engedélyezzük az adományozási hivatkozást magában az alkalmazásban, de ha tetszik az alkalmazás, fontolja meg az adományozást az alábbi Gadgetbridge honlapon keresztül.</string>
     <string name="sony_quick_access_triple_tap">Gyors elérés (három érintés)</string>
     <string name="devicetype_sony_wh_1000xm2">Sony WH-1000XM2</string>
-    <string name="gadgetbridge_running_main_nightly">Korai hozzáférésű Gadgetbridge kiadás fut</string>
-    <string name="application_name_main_nopebble">Gadgetbridge (korai hozzáférésű kiadás, Pebble szolgáltató nélkül)</string>
-    <string name="gadgetbridge_running_main_nopebble">Korai verziójú Pebble nélküli Gadgetbridge fut</string>
+    <string name="gadgetbridge_running_main_nightly">A Gadgetbridge Nightly fut</string>
+    <string name="application_name_main_nopebble">Gadgetbridge (Nightly, Pebble szolgáltató nélkül)</string>
+    <string name="gadgetbridge_running_main_nopebble">A Pebble nélküli Gadgetbridge Nightly fut</string>
     <string name="activity_type_indoor_cycling">Beltéri kerékpározás</string>
     <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5</string>
     <string name="gadgetbridge_running_banglejs_nightly">Korai hozzáférésű Bangle.js kiadás fut</string>
@@ -3099,7 +3099,7 @@
     <string name="idasen_pref_mid_height">Középhelyzet magassága (centiméterben)</string>
     <string name="idasen_pref_sit_height">Ülőhelyzet magassága (centiméterben)</string>
     <string name="pref_deprecated_media_control_summary">A médiavezérlő parancsok küldése a médiavezérlő helyett kulcseseményként.</string>
-    <string name="first_start_overview_dashboard">A műszerfal lehetővé teszi, hogy gyors képet kapjon arról, hogyan teljesít ma. A naptárnézet egy teljes hónapra vonatkozóan mutatja a céljaid állapotát.</string>
+    <string name="first_start_overview_dashboard">A műszerfal lehetővé teszi, hogy gyors képet kapjon arról, hogyan teljesít aznap. A naptárnézet egy teljes hónapra vonatkozóan mutatja a céljai állapotát.</string>
     <string name="first_start_open_source_title">Nyílt forráskód</string>
     <string name="first_start_get_started_desc">A kezdéshez adja hozzá az első eszközt közvetlenül erről a képernyőről, állítson vissza egy biztonsági másolatot, vagy kezdje egy tiszta adatbázissal.</string>
     <string name="first_start_get_started_add_first_device_button">Első eszköz hozzáadása</string>
@@ -3176,7 +3176,7 @@
     <string name="devicetype_ble_gatt_client">Általános BLE GATT kliens</string>
     <string name="prefs_title_gatt_client_notification_intents">GATT értesítési szándékok továbbítása BLE Intent API-n keresztül</string>
     <string name="activity_db_management_backup_restore_explanation">Az importálás/exportálás műveletek engedélyezik a Gadgetbridge összes beállításának, eszközének és adatának migrálását vagy biztonsági mentését egy zip-fájlba és egy zip-fájlból.\n\nA fájl importálása eltávolítja az összes meglévő adatot, eszközt és beállítást, és teljesen a biztonsági mentéssel helyettesíti azokat.</string>
-    <string name="first_start_overview_desc">A Gadgetbridge két fő nézetből áll, mindegyiknek megvan a maga célja.</string>
+    <string name="first_start_overview_desc">A Gadgetbridge két fő nézetből áll, melyeknek megvan a maguk célja.</string>
     <string name="first_start_overview_devices">Az eszközök nézete megjeleníti az összes konfigurált eszközt és azok állapotát, és hozzáférést biztosít az eszközökre vonatkozó specifikus funkciókhoz, mint például a részletes diagramok, beállítások, alkalmazások és riasztások.</string>
     <string name="permission_contacts_summary">Névjegyek küldése a kütyükre</string>
     <string name="permission_send_sms_title">SMS küldése</string>
