@@ -3090,4 +3090,9 @@
     <string name="miscale_weight_unit_summary">הגדרת יחידת משקל למדידות שמוצגות</string>
     <string name="miscale_weight_unit_imperial">אימפריאלי (ליברות)</string>
     <string name="miscale_small_objects_summary">אחסון משקלים של פריטים מתחת ל־10 ק״ג</string>
+    <string name="discharge_interval_3">הפרש פריקה 3</string>
+    <string name="discharge_interval_2">הפרש פריקה 2</string>
+    <string name="discharge_interval_4">הפרש פריקה 4</string>
+    <string name="discharge_interval_5">הפרש פריקה 5</string>
+    <string name="power_w">עוצמה בוואט/W</string>
 </resources>
