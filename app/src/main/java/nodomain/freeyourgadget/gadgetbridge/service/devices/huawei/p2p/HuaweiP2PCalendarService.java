@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiP2PManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiUploadManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFileUploadInfo;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 
@@ -182,6 +183,17 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
 
         String eventUUID = prepareEventUUID(calendarEvent.getId(), calendarEvent.getBegin());
 
+        long startDate;
+        long endDate;
+
+        if (calendarEvent.isAllDay()) {
+            startDate = DateTimeUtils.utcDateTimeToLocal(calendarEvent.getBegin());
+            endDate = DateTimeUtils.utcDateTimeToLocal(calendarEvent.getEnd());
+        } else {
+            startDate = calendarEvent.getBegin();
+            endDate = calendarEvent.getEnd();
+        }
+
         ret.addProperty("account_name", truncateToHexBytes(calendarEvent.getCalAccountName(), 64));
         ret.addProperty("account_type", truncateToHexBytes(calendarEvent.getCalAccountType(), 64));
         ret.addProperty("all_day", calendarEvent.isAllDay() ? 1 : 0);
@@ -189,8 +201,8 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         ret.addProperty("calendar_displayName", truncateToHexBytes(calendarEvent.getCalName(), 64));
         ret.addProperty("calendar_id", valueOrEmpty(calendarEvent.getCalendarId(), "0"));
         ret.addProperty("description", truncateToHexBytes(calendarEvent.getDescription(), 512));
-        ret.addProperty("dtend", calendarEvent.getEnd());
-        ret.addProperty("dtstart", calendarEvent.getBegin());
+        ret.addProperty("dtend", endDate);
+        ret.addProperty("dtstart", startDate);
         ret.addProperty("event_id", String.valueOf(calendarEvent.getId()));
         ret.addProperty("event_location", truncateToHexBytes(calendarEvent.getLocation(), 256));
         ret.addProperty("event_uuid", eventUUID);
@@ -231,9 +243,13 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         return ret;
     }
 
-    private JsonArray getFullCalendarData() {
+    private List<CalendarEvent> getCalendarEventList() {
         final CalendarManager upcomingEvents = new CalendarManager(manager.getSupportProvider().getContext(), manager.getSupportProvider().getDevice().getAddress());
-        final List<CalendarEvent> calendarEvents = upcomingEvents.getCalendarEventList();
+        return upcomingEvents.getCalendarEventList();
+    }
+
+    private JsonArray getFullCalendarData() {
+        final List<CalendarEvent> calendarEvents = getCalendarEventList();
 
         JsonArray events = new JsonArray();
         for (final CalendarEvent calendarEvent : calendarEvents) {
@@ -245,8 +261,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     }
 
     private JsonArray getUpdateCalendarData() {
-        final CalendarManager upcomingEvents = new CalendarManager(manager.getSupportProvider().getContext(), manager.getSupportProvider().getDevice().getAddress());
-        final List<CalendarEvent> calendarEvents = upcomingEvents.getCalendarEventList();
+        final List<CalendarEvent> calendarEvents = getCalendarEventList();
 
         List<CalendarEvent> newEvents = new ArrayList<>();
         List<CalendarEvent> updatedEvents = new ArrayList<>();
