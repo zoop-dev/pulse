@@ -320,7 +320,7 @@
     <string name="charts_legend_heartrate">Srdeční tep</string>
     <string name="live_activity_heart_rate">Srdeční tep</string>
     <string name="pref_title_pebble_health_store_raw">Uložit hrubý záznam do databáze</string>
-    <string name="pref_summary_pebble_health_store_raw">Ukládá data v původní podobě, takže je databáze větší, ale umožňuje to pozdější vyhodnocení.</string>
+    <string name="pref_summary_pebble_health_store_raw">Ukládá data v původní podobě, takže je databáze větší, ale umožňuje pozdější vyhodnocení.</string>
     <string name="action_db_management">Správa dat</string>
     <string name="title_activity_db_management">Správa dat</string>
     <string name="activity_db_management_import_export_explanation">Operace s databází použijí následující cestu (viz níže) ke složce v zařízení. Tato složka je dostupná pro ostatní aplikace Androidu a váš počítač. Nezapomeňte, že tato složka a její obsah jsou vymazány při odinstalaci Gadgetbridge. Soubory obsahují:
@@ -680,7 +680,7 @@
     <string name="pref_title_authkey">Autentizační klíč</string>
     <string name="pref_summary_authkey">Nastavte stejný klíč na všech Vašich zařízeních s Androidem, ze kterých se budete připojovat. Výchozí klíč pro všechna zařízení je 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Chystáte se nainstalovat firmware %s na váš Amazfit Cor 2. \n \nNainstalujte nejprve soubor .fw a poté soubor .res. Váš náramek se po instalaci souboru .fw restartuje. \n \nPoznámka: soubor .res nemusíte instalovat, pokud je totožný s již dříve nainstalovaným. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ! \n \nNENÍ VŮBEC OTESTOVÁNO, POKUD JE NÁZEV VAŠEHO ZAŘÍZENÍ „Amazfit Band 2“, NEJSPÍŠE MUSÍTE FLASHNOUT FIRMWAER BEATS_W</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Chystáte se nainstalovat firmware %s na váš Amazfit Cor 2. \n \nNainstalujte nejprve soubor .fw a poté soubor .res. Váš náramek se po instalaci souboru .fw restartuje. \n \nPoznámka: soubor .res nemusíte instalovat, pokud je totožný s již dříve nainstalovaným. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ! \n \nNENÍ VŮBEC OTESTOVÁNO, POKUD JE NÁZEV VAŠEHO ZAŘÍZENÍ „Amazfit Band 2“, NEJSPÍŠE MUSÍTE FLASHNOUT FIRMWARE BEATS_W</string>
     <string name="dutch">Nizozemština</string>
     <string name="turkish">Turečtina</string>
     <string name="ukrainian">Ukrajinština</string>
@@ -3700,4 +3700,7 @@
     <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
     <string name="activity_type_lower_body">Dolní část těla</string>
     <string name="activity_type_upper_body">Horní část těla</string>
+    <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
+    <string name="pref_override_features_title">Přepsat podporované funkce</string>
+    <string name="pref_override_features_summary">Povolit/zakázat specifické funkce zařízení. Může způsobit problémy a/nebo to, že vaše zařízení přestane správně fungovat</string>
 </resources>
