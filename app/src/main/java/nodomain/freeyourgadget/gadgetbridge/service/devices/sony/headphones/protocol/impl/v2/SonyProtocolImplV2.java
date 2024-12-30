@@ -668,7 +668,7 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
         final AutomaticPowerOff mode = AutomaticPowerOff.fromCode(payload[2], payload[3]);
         if (mode == null) {
-            LOG.warn("Unknown automatic power off codes {}", String.format("%02x %02x", payload[3], payload[4]));
+            LOG.warn("Unknown automatic power off codes {}", String.format("%02x %02x", payload[2], payload[3]));
             return Collections.emptyList();
         }
 
