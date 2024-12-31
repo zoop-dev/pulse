@@ -231,6 +231,8 @@ public class RedmiBuds5ProProtocol extends GBDeviceProtocol {
     }
 
     public void decodeGetConfig(byte[] configPayload) {
+        if(configPayload.length < 3)
+            return;
 
         SharedPreferences preferences = getDevicePrefs().getPreferences();
         Editor editor = preferences.edit();
