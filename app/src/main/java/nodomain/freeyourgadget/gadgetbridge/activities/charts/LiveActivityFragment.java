@@ -308,7 +308,7 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
         enableRealtimeTracking(true);
     }
 
-    private ScheduledExecutorService startActivityPulse() {
+    private ScheduledExecutorService startActivityPulse(int interval) {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -323,7 +323,7 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
                     });
                 }
             }
-        }, 0, getPulseIntervalMillis(), TimeUnit.MILLISECONDS);
+        }, 0, interval, TimeUnit.MILLISECONDS);
         return service;
     }
 
@@ -356,10 +356,6 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
         GBApplication.deviceService(getChartsHost().getDevice()).onEnableRealtimeHeartRateMeasurement(true);
     }
 
-    private int getPulseIntervalMillis() {
-        return 1000;
-    }
-
     @Override
     protected void onMadeVisibleInActivity() {
         super.onMadeVisibleInActivity();
@@ -385,7 +381,7 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
             if (getActivity() != null) {
                 getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
-            pulseScheduler = startActivityPulse();
+            pulseScheduler = startActivityPulse(getChartsHost().getDevice().getDeviceCoordinator().getLiveActivityFragmentPulseInterval());
         } else {
             stopActivityPulse();
             if (getActivity() != null) {

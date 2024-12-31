@@ -177,6 +177,8 @@ public interface DeviceCoordinator {
     @Nullable
     Class<? extends Activity> getCalibrationActivity();
 
+    int getLiveActivityFragmentPulseInterval();
+
     /**
      * Returns true if activity data fetching is supported by the device
      * (with this coordinator).

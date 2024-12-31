@@ -906,6 +906,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public int getLiveActivityFragmentPulseInterval() {
+        return 1000;
+    }
+
+    @Override
     public boolean validateAuthKey(final String authKey) {
         return !(authKey.getBytes().length < 34 || !authKey.startsWith("0x"));
     }
