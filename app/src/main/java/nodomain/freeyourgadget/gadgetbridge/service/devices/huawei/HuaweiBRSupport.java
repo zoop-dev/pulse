@@ -103,6 +103,11 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
     }
 
     @Override
+    public void onDeleteNotification(int id) {
+        supportProvider.onDeleteNotification(id);
+    }
+
+    @Override
     public void onSetTime() {
         supportProvider.onSetTime();
     }

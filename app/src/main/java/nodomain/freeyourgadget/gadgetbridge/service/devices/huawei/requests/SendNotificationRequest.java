@@ -66,6 +66,18 @@ public class SendNotificationRequest extends Request {
             body = notificationSpec.body.substring(0x0, supportProvider.getHuaweiCoordinator().getContentLength() - 0xD);
             body += "...";
         }
+        Notifications.NotificationActionRequest.AdditionalParams params = new Notifications.NotificationActionRequest.AdditionalParams();
+
+        params.supportsSyncKey = supportProvider.getHuaweiCoordinator().supportsNotificationsSyncKey();
+        params.supportsRepeatedNotify = supportProvider.getHuaweiCoordinator().supportsNotificationsRepeatedNotify();
+        params.supportsRemoveSingle = supportProvider.getHuaweiCoordinator().supportsNotificationsRemoveSingle();
+        params.supportsReply = supportProvider.getHuaweiCoordinator().supportsNotificationsReply();
+        params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsTimestamp();
+
+        params.notificationId = notificationSpec.getId();
+        params.notificationKey = notificationSpec.key;
+
+
         this.packet = new Notifications.NotificationActionRequest(
                 paramsProvider,
                 supportProvider.getNotificationId(),
@@ -74,7 +86,8 @@ public class SendNotificationRequest extends Request {
                 title,
                 notificationSpec.sender,
                 body,
-                notificationSpec.sourceAppId
+                notificationSpec.sourceAppId,
+                params
         );
     }
 
@@ -88,6 +101,7 @@ public class SendNotificationRequest extends Request {
                 callSpec.name,
                 callSpec.name,
                 callSpec.name,
+                null,
                 null
         );
     }

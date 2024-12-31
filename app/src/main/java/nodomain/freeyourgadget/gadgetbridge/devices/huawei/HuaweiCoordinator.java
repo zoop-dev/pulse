@@ -654,6 +654,36 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsNotificationsTimestamp() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(77);
+        return false;
+    }
+
+    public boolean supportsNotificationsReply() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(73);
+        return false;
+    }
+
+    public boolean supportsNotificationsRepeatedNotify() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(94);
+        return false;
+    }
+
+    public boolean supportsNotificationsSyncKey() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(89);
+        return false;
+    }
+    public boolean supportsNotificationsRemoveSingle() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(120);
+        return false;
+    }
+
+
 
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition

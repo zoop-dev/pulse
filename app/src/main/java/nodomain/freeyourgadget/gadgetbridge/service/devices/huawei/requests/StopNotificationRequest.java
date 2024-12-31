@@ -41,6 +41,7 @@ public class StopNotificationRequest extends Request {
                     null,
                     null,
                     null,
+                    null,
                     null
             ).serialize();
         } catch (HuaweiPacket.CryptoException e) {

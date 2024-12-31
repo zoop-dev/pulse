@@ -245,8 +245,11 @@ public class HuaweiSupportProvider {
 
     protected HuaweiMusicManager huaweiMusicManager = new HuaweiMusicManager(this);
 
+    protected HuaweiNotificationsManager huaweiNotificationsManager = new HuaweiNotificationsManager(this);
+
     //TODO: we need only one instance of manager and all it services.
     protected HuaweiP2PManager huaweiP2PManager = new HuaweiP2PManager(this);
+
 
     public HuaweiCoordinatorSupplier getCoordinator() {
         return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
@@ -274,6 +277,10 @@ public class HuaweiSupportProvider {
 
     public HuaweiEphemerisManager getHuaweiEphemerisManager() {
         return huaweiEphemerisManager;
+    }
+
+    public HuaweiNotificationsManager getHuaweiNotificationsManager() {
+        return huaweiNotificationsManager;
     }
 
     public HuaweiMusicManager getHuaweiMusicManager() {
@@ -1408,21 +1415,17 @@ public class HuaweiSupportProvider {
         }
         return msgId;
     }
-
     public void onNotification(NotificationSpec notificationSpec) {
         if (!GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()).getBoolean(DeviceSettingsPreferenceConst.PREF_NOTIFICATION_ENABLE, false)) {
             // Don't send notifications when they are disabled
             LOG.info("Stopped notification as they are disabled.");
             return;
         }
+        huaweiNotificationsManager.onNotification(notificationSpec);
+    }
 
-        SendNotificationRequest sendNotificationReq = new SendNotificationRequest(this);
-        try {
-            sendNotificationReq.buildNotificationTLVFromNotificationSpec(notificationSpec);
-            sendNotificationReq.doPerform();
-        } catch (IOException e) {
-            LOG.error("Sending notification failed", e);
-        }
+    public void onDeleteNotification(int id) {
+        huaweiNotificationsManager.onDeleteNotification(id);
     }
 
     public void setDateFormat() {

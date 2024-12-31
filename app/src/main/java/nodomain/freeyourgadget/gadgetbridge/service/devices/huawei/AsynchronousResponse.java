@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Menstrual;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.MusicControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileUpload;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Watchface;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
@@ -127,6 +128,7 @@ public class AsynchronousResponse {
             handleEphemeris(response);
             handleEphemerisUploadService(response);
             handleAsyncBattery(response);
+            handleNotifications(response);
         } catch (Request.ResponseParseException e) {
             LOG.error("Response parse exception", e);
         }
@@ -723,6 +725,16 @@ public class AsynchronousResponse {
                     LOG.error("Failed to start the battery polling");
                 }
             }
+        }
+    }
+
+    private void handleNotifications(HuaweiPacket response) {
+        if (response.serviceId == Notifications.id && response.commandId == Notifications.NotificationReply.id) {
+            if (!(response instanceof Notifications.NotificationReply.ReplyResponse)) {
+                return;
+            }
+            LOG.info("Notification response");
+            support.getHuaweiNotificationsManager().onReplyResponse((Notifications.NotificationReply.ReplyResponse) response);
         }
     }
 }

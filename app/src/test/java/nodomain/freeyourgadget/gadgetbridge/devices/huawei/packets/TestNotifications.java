@@ -106,7 +106,8 @@ public class TestNotifications {
                 titleContent,
                 senderContent,
                 bodyContent,
-                sourceAppId
+                sourceAppId,
+                null
         );
 
         Assert.assertEquals(0x02, request.serviceId);
