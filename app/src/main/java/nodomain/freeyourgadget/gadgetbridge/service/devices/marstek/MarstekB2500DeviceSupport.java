@@ -16,9 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.marstek;
 
-import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_ALLOW_PASS_THOUGH;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_ALLOW_PASS_THROUGH;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_DISCHARGE_INTERVALS_SET;
-import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_DISCHARGE_MANAUAL;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_DISCHARGE_MANUAL;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
 
 import android.bluetooth.BluetoothGatt;
@@ -157,7 +157,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
         switch (config) {
             case PREF_BATTERY_DISCHARGE_INTERVALS_SET:
-                if (devicePrefs.getBoolean(PREF_BATTERY_DISCHARGE_MANAUAL, true)) {
+                if (devicePrefs.getBoolean(PREF_BATTERY_DISCHARGE_MANUAL, true)) {
                     sendCommand("set discharge intervals", encodeDischargeIntervalsFromPreferences());
                 } else {
                     sendCommand("set dynamic discharge", COMMAND_SET_AUTO_DISCHARGE);
@@ -167,8 +167,8 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
             case PREF_BATTERY_MINIMUM_CHARGE:
                 sendCommand("set minimum charge", encodeMinimumChargeFromPreferences());
                 return;
-            case PREF_BATTERY_ALLOW_PASS_THOUGH:
-                if (devicePrefs.getBoolean(PREF_BATTERY_ALLOW_PASS_THOUGH, true)) {
+            case PREF_BATTERY_ALLOW_PASS_THROUGH:
+                if (devicePrefs.getBoolean(PREF_BATTERY_ALLOW_PASS_THROUGH, true)) {
                     sendCommand("set allow pass-though", COMMAND_SET_BATTERY_ALLOW_PASS_THOUGH);
                 } else {
                     sendCommand("set disallow pass-though", COMMAND_SET_BATTERY_DISALLOW_PASS_THOUGH);
@@ -189,18 +189,29 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         boolean p2_active = buf.get() != 0x00;
         int p1_watt = buf.getShort();
         int p2_watt = buf.getShort();
-        buf.position(buf.position() + 2); // unknown;
-
+        int battery_pct = buf.getShort() / 10;
         firmwareVersion = buf.get() & 0xff;
         boolean battery_allow_passthrough = buf.get() != 0x01;
         boolean battery_manual_discharge_intervals = buf.get() != 0x01;
-        buf.position(buf.position() + 3); // skip unknown
+        buf.position(buf.position() + 1); // skip unknown
+        boolean output1_active = buf.get() != 0x00;
+        boolean output2_active = buf.get() != 0x00;
         byte battery_max_use_pct = buf.get();
         int output_to_inverter_target = buf.getShort();
-        buf.position(buf.position() + 1); // skip unknown
+        int light_condition = buf.get(); // 1 = low light or none, 2 = some light, 0 = good light condition (?)
         int battery_wh = buf.getShort();
         int output_to_inverter_1_watt = buf.getShort();
         int output_to_inverter_2_watt = buf.getShort();
+        buf.position(buf.position() + 3); // skip unknown
+        int hour_utc = buf.get();
+        int minute_utc = buf.get();
+        int temperature_sensor_1 = buf.getShort();
+        int temperature_sensor_2 = buf.getShort();
+        buf.position(buf.position() + 3); // skip unknown
+        int battery_charging_wh_24h = buf.getInt();
+        int battery_discharging_wh_24h = buf.getInt();
+        int input_wh_last_24h = buf.getInt();
+        int output_wh_last_24h = buf.getInt();
 
         int battery_minimum_charge_pct = 100 - battery_max_use_pct;
         int output_to_inverter_sum_watt = output_to_inverter_1_watt + output_to_inverter_2_watt;
@@ -212,12 +223,11 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         getDevice().sendDeviceUpdateIntent(getContext());
 
         devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(battery_minimum_charge_pct));
-        devicePrefsEdit.putBoolean(PREF_BATTERY_DISCHARGE_MANAUAL, battery_manual_discharge_intervals);
-        devicePrefsEdit.putBoolean(PREF_BATTERY_ALLOW_PASS_THOUGH, battery_allow_passthrough);
+        devicePrefsEdit.putBoolean(PREF_BATTERY_DISCHARGE_MANUAL, battery_manual_discharge_intervals);
+        devicePrefsEdit.putBoolean(PREF_BATTERY_ALLOW_PASS_THROUGH, battery_allow_passthrough);
         devicePrefsEdit.apply();
         devicePrefsEdit.commit();
 
-        int battery_pct = (int) Math.ceil((battery_wh / 2240.0f) * 100);
         getDevice().setBatteryLevel(battery_pct);
         getDevice().sendDeviceUpdateIntent(getContext());
 
@@ -226,6 +236,8 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_BATTERY_PCT, battery_pct);
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL1_WATT, p1_watt);
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL2_WATT, p2_watt);
+        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP1, temperature_sensor_1);
+        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP2, temperature_sensor_2);
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT1_WATT, output_to_inverter_1_watt);
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, output_to_inverter_2_watt);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
@@ -307,7 +319,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
 
     private byte[] encodeDischargeIntervalsFromPreferences() {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
-        if (devicePrefs.getBoolean(PREF_BATTERY_DISCHARGE_MANAUAL, true)) {
+        if (devicePrefs.getBoolean(PREF_BATTERY_DISCHARGE_MANUAL, true)) {
             int nr_invervals = (firmwareVersion >= 220) ? 5 : 3; // old firmware V210 only had 3 intervals it seems, so set only 3
             int length = 5 + nr_invervals * 7;
 

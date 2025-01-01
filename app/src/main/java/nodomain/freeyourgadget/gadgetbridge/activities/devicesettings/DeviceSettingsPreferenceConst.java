@@ -599,7 +599,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_BATTERY_DISCHARGE_INTERVAL4_WATT = "battery_discharge_interval4_watt";
     public static final String PREF_BATTERY_DISCHARGE_INTERVAL5_WATT = "battery_discharge_interval5_watt";
     public static final String PREF_BATTERY_DISCHARGE_INTERVALS_SET = "battery_discharge_intervals_set";
-    public static final String PREF_BATTERY_DISCHARGE_MANAUAL = "battery_discharge_manual";
+    public static final String PREF_BATTERY_DISCHARGE_MANUAL = "battery_discharge_manual";
     public static final String PREF_BATTERY_MINIMUM_CHARGE = "battery_minimum_charge";
-    public static final String PREF_BATTERY_ALLOW_PASS_THOUGH = "battery_allow_pass_though";
+    public static final String PREF_BATTERY_ALLOW_PASS_THROUGH = "battery_allow_pass_though";
 }

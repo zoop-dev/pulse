@@ -42,7 +42,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.InputType;
 
-import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
@@ -884,7 +883,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor("lock");
 
         addPreferenceHandlerFor(PREF_BATTERY_MINIMUM_CHARGE);
-        addPreferenceHandlerFor(PREF_BATTERY_ALLOW_PASS_THOUGH);
+        addPreferenceHandlerFor(PREF_BATTERY_ALLOW_PASS_THROUGH);
 
         final Preference dischargeIntervalsSet = findPreference(PREF_BATTERY_DISCHARGE_INTERVALS_SET);
         if (dischargeIntervalsSet != null) {

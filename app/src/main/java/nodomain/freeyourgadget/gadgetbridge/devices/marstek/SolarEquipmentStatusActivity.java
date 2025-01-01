@@ -53,6 +53,8 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static String EXTRA_PANEL2_WATT = "panel2_watt";
     public static String EXTRA_OUTPUT1_WATT = "output1_watt";
     public static String EXTRA_OUTPUT2_WATT = "output2_watt";
+    public static String EXTRA_TEMP1 = "temp1";
+    public static String EXTRA_TEMP2 = "temp2";
 
     private final Map<String, View> widgetMap = new HashMap<>();
     private GridLayout gridLayout;
@@ -68,11 +70,15 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                     int battery_wh = extras.getInt(EXTRA_BATTERY_WH);
                     int panel1_watt = extras.getInt(EXTRA_PANEL1_WATT);
                     int panel2_watt = extras.getInt(EXTRA_PANEL2_WATT);
+                    int temp1 = extras.getInt(EXTRA_TEMP1);
+                    int temp2 = extras.getInt(EXTRA_TEMP2);
                     int output1_watt = extras.getInt(EXTRA_OUTPUT1_WATT);
                     int output2_watt = extras.getInt(EXTRA_OUTPUT2_WATT);
                     updateWidget("battery", battery_pct + "%\n" + battery_wh + "Wh", (float) (battery_pct / 100.0));
                     updateWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
                     updateWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
+                    updateWidget("temp1", temp1 + "°C", (float) ((temp1 + 20) / 100.0));
+                    updateWidget("temp2", temp2 + "°C", (float) ((temp2 + 20) / 100.0));
                     updateWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
                     updateWidget("output2", output2_watt + "W", (float) (output2_watt / 400.0));
 
@@ -89,6 +95,16 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_poor_color),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_fair_color),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_good_color),
+        };
+    }
+
+    public static int[] getColorsTemp() {
+        return new int[]{
+                ContextCompat.getColor(GBApplication.getContext(), R.color.calories_resting_color),
+                ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_excellent_color),
+                ContextCompat.getColor(GBApplication.getContext(), R.color.body_energy_level_color),
+                ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_fair_color),
+                ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_poor_color),
         };
     }
 
@@ -110,6 +126,16 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         };
     }
 
+    public static float[] getSegmentsTemp() {
+        return new float[]{
+                0.2f,
+                0.1f,
+                0.2f,
+                0.3f,
+                0.2f,
+        };
+    }
+
     public static float[] getSegmentsOutput() {
         return new float[]{
                 0.01f,
@@ -126,7 +152,13 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
             gaugeValue.setText(value);
             GaugeDrawer gaugeDrawer = new GaugeDrawer();
             ImageView gaugeBar = view.findViewById(R.id.gauge_bar);
-            gaugeDrawer.drawSegmentedGauge(gaugeBar, name.startsWith("output") ? getColorsOutput() : getColors(), name.startsWith("output") ? getSegmentsOutput() : getSegments(), gaugeFill, true, false);
+            if (name.startsWith("output")) {
+                gaugeDrawer.drawSegmentedGauge(gaugeBar, getColorsOutput(), getSegmentsOutput(), gaugeFill, true, false);
+            } else if (name.startsWith("temp")) {
+                gaugeDrawer.drawSegmentedGauge(gaugeBar, getColorsTemp(), getSegmentsTemp(), gaugeFill, true, false);
+            } else {
+                gaugeDrawer.drawSegmentedGauge(gaugeBar, getColors(), getSegments(), gaugeFill, true, false);
+            }
         }
     }
 
@@ -142,6 +174,8 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         createWidget("panel1", "Panel 1", 1);
         createWidget("panel2", "Panel 2", 1);
         createWidget("battery", "Battery", 2);
+        createWidget("temp1", "Temp 1", 1);
+        createWidget("temp2", "Temp 2", 1);
         createWidget("output1", "Output 1", 1);
         createWidget("output2", "Output 2", 1);
 
