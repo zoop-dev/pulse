@@ -3645,4 +3645,5 @@
     <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
     <string name="pref_override_features_summary">Egyes eszközfunkciók engedélyezése vagy letiltása. Ez problémákat okozhat és/vagy az eszközt helytelenül működteti</string>
     <string name="pref_override_features_title">Támogatott funkciók felülírása</string>
+    <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
 </resources>
