@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds;
 
 import android.os.Parcel;
 
@@ -33,11 +33,11 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class RedmiBuds5ProSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
+public class RedmiBudsSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
 
     final GBDevice device;
 
-    public RedmiBuds5ProSettingsCustomizer(final GBDevice device) {
+    public RedmiBudsSettingsCustomizer(final GBDevice device) {
         this.device = device;
     }
 
@@ -146,16 +146,16 @@ public class RedmiBuds5ProSettingsCustomizer implements DeviceSpecificSettingsCu
         parcel.writeParcelable(device, 0);
     }
 
-    public static final Creator<RedmiBuds5ProSettingsCustomizer> CREATOR = new Creator<RedmiBuds5ProSettingsCustomizer>() {
+    public static final Creator<RedmiBudsSettingsCustomizer> CREATOR = new Creator<RedmiBudsSettingsCustomizer>() {
         @Override
-        public RedmiBuds5ProSettingsCustomizer createFromParcel(final Parcel in) {
-            final GBDevice device = in.readParcelable(RedmiBuds5ProSettingsCustomizer.class.getClassLoader());
-            return new RedmiBuds5ProSettingsCustomizer(device);
+        public RedmiBudsSettingsCustomizer createFromParcel(final Parcel in) {
+            final GBDevice device = in.readParcelable(RedmiBudsSettingsCustomizer.class.getClassLoader());
+            return new RedmiBudsSettingsCustomizer(device);
         }
 
         @Override
-        public RedmiBuds5ProSettingsCustomizer[] newArray(final int size) {
-            return new RedmiBuds5ProSettingsCustomizer[size];
+        public RedmiBudsSettingsCustomizer[] newArray(final int size) {
+            return new RedmiBudsSettingsCustomizer[size];
         }
     };
 }

@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro.prefs;
+package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs;
 
 public class Configuration {
 

@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds;
 
 import java.util.regex.Pattern;
 

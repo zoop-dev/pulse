@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol;
 
 public enum Opcode {
     GET_DEVICE_INFO(0x02),

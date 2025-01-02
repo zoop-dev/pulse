@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.hexdump;
@@ -37,28 +37,28 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInf
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSendBytes;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDeviceState;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro.prefs.Configuration.Config;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro.prefs.Configuration.StrengthTarget;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro.prefs.Gestures.InteractionType;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro.prefs.Gestures.Position;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Configuration.Config;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Configuration.StrengthTarget;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Gestures.InteractionType;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Gestures.Position;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol.Authentication;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol.Message;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol.MessageType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol.Opcode;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol.Authentication;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol.Message;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol.MessageType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol.Opcode;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class RedmiBuds5ProProtocol extends GBDeviceProtocol {
+public class RedmiBudsProtocol extends GBDeviceProtocol {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RedmiBuds5ProProtocol.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RedmiBudsProtocol.class);
     final UUID UUID_DEVICE_CTRL = UUID.fromString("0000fd2d-0000-1000-8000-00805f9b34fb");
 
     private byte sequenceNumber = 0;
 
-    protected RedmiBuds5ProProtocol(GBDevice device) {
+    protected RedmiBudsProtocol(GBDevice device) {
         super(device);
     }
 

@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds;
 
 import java.util.regex.Pattern;
 
@@ -45,6 +45,6 @@ public class RedmiBuds5ProCoordinator extends AbstractRedmiBudsCoordinator {
 
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
-        return new RedmiBuds5ProSettingsCustomizer(device);
+        return new RedmiBudsSettingsCustomizer(device);
     }
 }

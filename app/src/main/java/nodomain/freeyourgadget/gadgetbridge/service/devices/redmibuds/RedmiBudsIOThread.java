@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds;
 
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.hexdump;
 
@@ -35,11 +35,11 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btclassic.BtClassicIoThread;
 
-public class RedmiBuds5ProIOThread extends BtClassicIoThread {
-    private static final Logger LOG = LoggerFactory.getLogger(RedmiBuds5ProIOThread.class);
-    private final RedmiBuds5ProProtocol redmiProtocol;
+public class RedmiBudsIOThread extends BtClassicIoThread {
+    private static final Logger LOG = LoggerFactory.getLogger(RedmiBudsIOThread.class);
+    private final RedmiBudsProtocol redmiProtocol;
 
-    public RedmiBuds5ProIOThread(GBDevice gbDevice, Context context, RedmiBuds5ProProtocol redmiProtocol, RedmiBuds5ProDeviceSupport deviceSupport, BluetoothAdapter btAdapter) {
+    public RedmiBudsIOThread(GBDevice gbDevice, Context context, RedmiBudsProtocol redmiProtocol, RedmiBudsDeviceSupport deviceSupport, BluetoothAdapter btAdapter) {
         super(gbDevice, context, redmiProtocol, deviceSupport, btAdapter);
         this.redmiProtocol = redmiProtocol;
     }

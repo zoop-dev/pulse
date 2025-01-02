@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol;
 
 class AuthData {
 

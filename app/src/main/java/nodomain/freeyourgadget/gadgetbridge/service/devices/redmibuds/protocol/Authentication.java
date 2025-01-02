@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.protocol;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.protocol;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;

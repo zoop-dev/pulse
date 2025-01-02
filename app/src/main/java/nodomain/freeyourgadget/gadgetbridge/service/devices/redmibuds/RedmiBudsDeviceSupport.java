@@ -14,23 +14,23 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds;
 
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class RedmiBuds5ProDeviceSupport extends AbstractSerialDeviceSupport {
+public class RedmiBudsDeviceSupport extends AbstractSerialDeviceSupport {
     @Override
     protected GBDeviceProtocol createDeviceProtocol() {
-        return new RedmiBuds5ProProtocol(getDevice());
+        return new RedmiBudsProtocol(getDevice());
     }
 
     @Override
     protected GBDeviceIoThread createDeviceIOThread() {
-        return new RedmiBuds5ProIOThread(getDevice(), getContext(),
-                (RedmiBuds5ProProtocol) getDeviceProtocol(),
-                RedmiBuds5ProDeviceSupport.this, getBluetoothAdapter());
+        return new RedmiBudsIOThread(getDevice(), getContext(),
+                (RedmiBudsProtocol) getDeviceProtocol(),
+                RedmiBudsDeviceSupport.this, getBluetoothAdapter());
     }
 
     @Override

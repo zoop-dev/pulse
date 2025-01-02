@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds5pro;
+package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds;
 
 import androidx.annotation.NonNull;
 
@@ -26,7 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds5pro.RedmiBuds5ProDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.RedmiBudsDeviceSupport;
 
 public abstract class AbstractRedmiBudsCoordinator extends AbstractDeviceCoordinator {
     @Override
@@ -42,7 +42,7 @@ public abstract class AbstractRedmiBudsCoordinator extends AbstractDeviceCoordin
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass() {
-        return RedmiBuds5ProDeviceSupport.class;
+        return RedmiBudsDeviceSupport.class;
     }
 
     @Override
