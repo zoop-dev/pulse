@@ -1,5 +1,9 @@
 ### Changelog
 
+#### NEXT
+* Marstek B2500: Fix setting pass-though mode
+* Marstek B2500: Display sensor temperature in Status Activity
+
 #### 0.83.1
 * Initial support for Garmin Fenix 6X Pro Solar
 * Initial support for Redmi Buds 4 Active
