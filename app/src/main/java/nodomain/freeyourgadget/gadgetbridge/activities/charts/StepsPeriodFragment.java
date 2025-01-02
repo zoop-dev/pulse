@@ -19,7 +19,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueForm
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.StepsData> {
     protected static final Logger LOG = LoggerFactory.getLogger(StepsPeriodFragment.class);
@@ -164,12 +164,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
 
     @Override
     protected void updateChartsnUIThread(StepsData stepsData) {
-        Date to = new Date((long) getTSEnd() * 1000);
-        Date from = DateUtils.addDays(to, -(TOTAL_DAYS - 1));
-        String toFormattedDate = new SimpleDateFormat("E, MMM dd").format(to);
-        String fromFormattedDate = new SimpleDateFormat("E, MMM dd").format(from);
-        mDateView.setText(fromFormattedDate + " - " + toFormattedDate);
-
+        mDateView.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
         stepsChart.setData(null);
 
         List<BarEntry> entries = new ArrayList<>();

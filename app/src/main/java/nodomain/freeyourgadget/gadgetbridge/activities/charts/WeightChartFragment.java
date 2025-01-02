@@ -126,14 +126,9 @@ public class WeightChartFragment extends AbstractChartFragment<WeightChartFragme
         chart.getXAxis().setValueFormatter(chartsData.getXValueFormatter());
         chart.getXAxis().setAvoidFirstLastClipping(true);
         chart.setData(chartsData.getData());
+        textTimeSpan.setText(DateTimeUtils.formatDaysUntil(totalDays, getTSEnd()));
 
-        Date dateStart = DateTimeUtils.parseTimeStamp(getTSStart());
-        Date dateEnd = DateTimeUtils.parseTimeStamp(getTSEnd());
-        SimpleDateFormat format = new SimpleDateFormat("E, MMM dd");
         WeightSample latestSample = chartsData.getLatestSample();
-
-        textTimeSpan.setText(format.format(dateStart) + " - " + format.format(dateEnd));
-
         if (latestSample != null)
             textWeightLatest.setText(formatWeight(weightFromKg(latestSample.getWeightKg())));
 

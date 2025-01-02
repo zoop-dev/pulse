@@ -319,4 +319,12 @@ public class DateTimeUtils {
 
         return context.getString(R.string.unknown);
     }
+
+    public static String formatDaysUntil(int days, int endTs) {
+        Date to = new Date((long) endTs * 1000);
+        Date from = org.apache.commons.lang3.time.DateUtils.addDays(to, - (days - 1));
+        String toFormattedDate = new SimpleDateFormat("E, MMM dd").format(to);
+        String fromFormattedDate = new SimpleDateFormat("E, MMM dd").format(from);
+        return fromFormattedDate + " - " + toFormattedDate;
+    }
 }

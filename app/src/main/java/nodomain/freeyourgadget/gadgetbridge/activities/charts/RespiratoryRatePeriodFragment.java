@@ -33,6 +33,7 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<RespiratoryRatePeriodFragment.RespiratoryRateData> {
     protected static final Logger LOG = LoggerFactory.getLogger(RespiratoryRatePeriodFragment.class);
@@ -121,10 +122,8 @@ public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<Respi
     protected RespiratoryRateData refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device) {
         Calendar day = Calendar.getInstance();
         Date to = new Date((long) this.getTSEnd() * 1000);
-        Date from = DateUtils.addDays(to,-(TOTAL_DAYS - 1));
-        String toFormattedDate = new SimpleDateFormat("E, MMM dd").format(to);
-        String fromFormattedDate = new SimpleDateFormat("E, MMM dd").format(from);
-        mDateView.setText(fromFormattedDate + " - " + toFormattedDate);
+        mDateView.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
+
         day.setTime(to);
         List<RespiratoryRateDay> respiratoryRateDaysData = getMyRespiratoryRateDaysData(db, day, device);
         return new RespiratoryRateData(respiratoryRateDaysData);

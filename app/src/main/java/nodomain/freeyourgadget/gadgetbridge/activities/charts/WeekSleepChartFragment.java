@@ -37,7 +37,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -221,11 +220,7 @@ public class WeekSleepChartFragment extends AbstractWeekChartFragment {
             awakeSleepTimeTextWrapper.setVisibility(View.GONE);
         }
 
-        Date to = new Date((long) this.getTSEnd() * 1000);
-        Date from = DateUtils.addDays(to,-(TOTAL_DAYS - 1));
-        String toFormattedDate = new SimpleDateFormat("E, MMM dd").format(to);
-        String fromFormattedDate = new SimpleDateFormat("E, MMM dd").format(from);
-        sleepDatesText.setText(fromFormattedDate + " - " + toFormattedDate);
+        sleepDatesText.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
 
         mBalanceView.setText(mcd.getWeekBeforeData().getBalanceMessage());
     }
