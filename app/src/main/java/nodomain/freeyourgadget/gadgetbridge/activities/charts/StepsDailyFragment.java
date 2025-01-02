@@ -45,7 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 
 public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsData> {
-    protected static final Logger LOG = LoggerFactory.getLogger(BodyEnergyFragment.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(StepsDailyFragment.class);
 
     private TextView mDateView;
     private ImageView stepsGauge;

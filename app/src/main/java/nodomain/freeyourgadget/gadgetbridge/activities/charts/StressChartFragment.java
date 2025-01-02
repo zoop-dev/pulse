@@ -71,7 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class StressChartFragment extends AbstractChartFragment<StressChartFragment.StressChartsData> {
-    protected static final Logger LOG = LoggerFactory.getLogger(ActivitySleepChartFragment.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(StressChartFragment.class);
 
     private LineChart mStressChart;
     private PieChart mStressLevelsPieChart;

@@ -21,7 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 
 abstract class StepsFragment<T extends ChartsData> extends AbstractChartFragment<T> {
-    protected static final Logger LOG = LoggerFactory.getLogger(StepsDailyFragment.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(StepsFragment.class);
 
     protected int CHART_TEXT_COLOR;
     protected int TEXT_COLOR;

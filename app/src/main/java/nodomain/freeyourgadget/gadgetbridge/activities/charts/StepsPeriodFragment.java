@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 
 public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.StepsData> {
-    protected static final Logger LOG = LoggerFactory.getLogger(BodyEnergyFragment.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(StepsPeriodFragment.class);
 
     private TextView mDateView;
     private TextView stepsAvg;

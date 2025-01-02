@@ -35,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<RespiratoryRatePeriodFragment.RespiratoryRateData> {
-    protected static final Logger LOG = LoggerFactory.getLogger(BodyEnergyFragment.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(RespiratoryRatePeriodFragment.class);
 
     private TextView mDateView;
     private TextView sleepAvg;
