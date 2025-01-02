@@ -390,13 +390,11 @@ public class SleepDetailsParser extends XiaomiActivityParser {
 
     private static boolean readStagePacketHeader(final ByteBuffer buffer) {
         while (buffer.remaining() >= 17) {
-            if (buffer.getInt() != 0xfffcfafb) {
-                // rollback to second byte of header
-                buffer.position(buffer.position() - 3);
-                continue;
+            if (buffer.getInt() == 0xfffcfafb) {
+                return true;
             }
-
-            return true;
+            // rollback to second byte of header
+            buffer.position(buffer.position() - 3);
         }
         return false;
     }
