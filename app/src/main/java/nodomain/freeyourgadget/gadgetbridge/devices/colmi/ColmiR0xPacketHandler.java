@@ -512,9 +512,9 @@ public class ColmiR0xPacketHandler {
             for (int hour=0; hour<=23; hour++) {
                 syncingDay.set(Calendar.HOUR_OF_DAY, hour);
                 syncingDay.set(Calendar.MINUTE, 0);
-                float temp_00 = value[index];
+                float temp_00 = value[index] & 0xff;
                 index++;
-                float temp_30 = value[index];
+                float temp_30 = value[index] & 0xff;
                 index++;
                 if (temp_00 > 0) {
                     LOG.info("Received temperature data from {} days ago at {}:00: {} °C", days_ago, hour, temp_00);
