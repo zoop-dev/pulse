@@ -21,6 +21,9 @@
     <color name="chart_heartrate" type="color">#ffab40</color>
     <color name="chart_heartrate_alternative" type="color">#8B0000</color>
     <color name="chart_heartrate_fill" type="color">#fadab1</color>
+    <color name="chart_heartrate_minimum" type="color">#3F84E5</color>
+    <color name="chart_heartrate_resting" type="color">#01796F</color>
+    <color name="chart_heartrate_maximum" type="color">#F42C04</color>
 
     <color name="chart_deep_sleep_light" type="color">#0054a3</color>
     <color name="chart_deep_sleep_dark" type="color">#0054a3</color>

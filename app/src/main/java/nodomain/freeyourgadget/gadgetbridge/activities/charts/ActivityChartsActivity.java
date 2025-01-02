@@ -170,7 +170,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
                 case "sleep":
                     return SleepCollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "heartrate":
-                    return new HeartRateDailyFragment();
+                    return HeartRateCollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "hrvstatus":
                     return new HRVStatusFragment();
                 case "bodyenergy":
