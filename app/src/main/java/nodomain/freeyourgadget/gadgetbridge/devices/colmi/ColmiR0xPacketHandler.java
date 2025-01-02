@@ -494,6 +494,10 @@ public class ColmiR0xPacketHandler {
     public static void historicalTemperature(GBDevice device, byte[] value) {
         ArrayList<ColmiTemperatureSample> temperatureSamples = new ArrayList<>();
         int length = BLETypeConversions.toUint16(value[2], value[3]);
+        if (length < 50) {
+            LOG.info("Received temperature data packet with length {} while expecting 50. Will not try to parse it.", length);
+            return;
+        }
         int index = 6; // start of data (day nr, followed by values)
         int days_ago = -1;
         while (days_ago != 0 && index - 6 < length) {
