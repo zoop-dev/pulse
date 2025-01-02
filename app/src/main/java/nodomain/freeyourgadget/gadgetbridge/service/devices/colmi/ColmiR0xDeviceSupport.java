@@ -270,6 +270,11 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
                 case ColmiR0xConstants.CMD_AUTO_HRV_PREF:
                     ColmiR0xPacketHandler.hrvSettings(this, value);
                     break;
+                case ColmiR0xConstants.CMD_AUTO_TEMP_PREF:
+                    if (value[1] == 0x03) {  // so far always observed to be 0x03
+                        ColmiR0xPacketHandler.tempSettings(this, value);
+                    }
+                    break;
                 case ColmiR0xConstants.CMD_SYNC_STRESS:
                     ColmiR0xPacketHandler.historicalStress(getDevice(), getContext(), value);
                     if (!getDevice().isBusy()) {
@@ -511,6 +516,12 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
                 LOG.info("HRV preference request sent: {}", StringUtils.bytesToHex(hrvPrefsPacket));
                 sendWrite("hrvPreferenceRequest", hrvPrefsPacket);
                 break;
+            case DeviceSettingsPreferenceConst.PREF_TEMPERATURE_ALL_DAY_MONITORING:
+                final boolean tempEnabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_TEMPERATURE_ALL_DAY_MONITORING, false);
+                byte[] tempPrefsPacket = buildPacket(new byte[]{ColmiR0xConstants.CMD_AUTO_TEMP_PREF, 0x03, ColmiR0xConstants.PREF_WRITE, (byte) (tempEnabled ? 0x01 : 0x00)});
+                LOG.info("Temperature preference request sent: {}", StringUtils.bytesToHex(tempPrefsPacket));
+                sendWrite("tempPreferenceRequest", tempPrefsPacket);
+                break;
         }
     }
 
@@ -574,6 +585,9 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
         request = buildPacket(new byte[]{ColmiR0xConstants.CMD_AUTO_HRV_PREF, ColmiR0xConstants.PREF_READ});
         LOG.info("Request HRV measurement setting from ring: {}", StringUtils.bytesToHex(request));
         sendWrite("hrvSettingRequest", request);
+        request = buildPacket(new byte[]{ColmiR0xConstants.CMD_AUTO_TEMP_PREF, 0x03, ColmiR0xConstants.PREF_READ});
+        LOG.info("Request temperature measurement setting from ring: {}", StringUtils.bytesToHex(request));
+        sendWrite("tempSettingRequest", request);
         request = buildPacket(new byte[]{ColmiR0xConstants.CMD_GOALS, ColmiR0xConstants.PREF_READ});
         LOG.info("Request goals from ring: {}", StringUtils.bytesToHex(request));
         sendWrite("goalsSettingRequest", request);

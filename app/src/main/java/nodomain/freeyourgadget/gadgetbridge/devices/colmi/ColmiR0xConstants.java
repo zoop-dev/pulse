@@ -40,6 +40,7 @@ public class ColmiR0xConstants {
     public static final byte CMD_SYNC_STRESS = 0x37;
     public static final byte CMD_AUTO_HRV_PREF = 0x38;
     public static final byte CMD_SYNC_HRV = 0x39;
+    public static final byte CMD_AUTO_TEMP_PREF = 0x3a;
     public static final byte CMD_SYNC_ACTIVITY = 0x43;
     public static final byte CMD_FIND_DEVICE = 0x50;
     public static final byte CMD_MANUAL_HEART_RATE = 0x69;
