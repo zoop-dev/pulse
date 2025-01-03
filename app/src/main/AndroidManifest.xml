@@ -38,6 +38,13 @@
     <!-- Take wake locks (e.g. for time sync) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!--
+        Necessary for asking the user to disable battery optimizations.
+        GB falls under the acceptable use cases documented here:
+        https://developer.android.com/training/monitoring-device-state/doze-standby.html#exemption-cases
+    -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
     <!-- Read loyalty cards from Catima -->
     <uses-permission android:name="me.hackerchick.catima.READ_CARDS"/>
     <uses-permission android:name="me.hackerchick.catima.debug.READ_CARDS"/>

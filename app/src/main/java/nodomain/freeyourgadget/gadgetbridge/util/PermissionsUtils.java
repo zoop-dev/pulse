@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
@@ -28,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -52,11 +54,15 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 public class PermissionsUtils {
     private static final Logger LOG = LoggerFactory.getLogger(PermissionsUtils.class);
 
+    public static final String CUSTOM_PERM_IGNORE_BATT_OPTIM = "custom_perm_ignore_battery_optimization";
     public static final String CUSTOM_PERM_NOTIFICATION_LISTENER = "custom_perm_notifications_listener";
     public static final String CUSTOM_PERM_NOTIFICATION_SERVICE = "custom_perm_notifications_service";
     public static final String CUSTOM_PERM_DISPLAY_OVER = "custom_perm_display_over";
 
     public static final List<String> specialPermissions = new ArrayList<String>() {{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            add(CUSTOM_PERM_IGNORE_BATT_OPTIM);
+        }
         add(CUSTOM_PERM_NOTIFICATION_LISTENER);
         add(CUSTOM_PERM_NOTIFICATION_SERVICE);
         add(CUSTOM_PERM_DISPLAY_OVER);
@@ -68,6 +74,12 @@ public class PermissionsUtils {
 
     public static ArrayList<PermissionDetails> getRequiredPermissionsList(Activity activity) {
         ArrayList<PermissionDetails> permissionsList = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            permissionsList.add(new PermissionDetails(
+                    CUSTOM_PERM_IGNORE_BATT_OPTIM,
+                    activity.getString(R.string.permission_disable_doze_title),
+                    activity.getString(R.string.permission_disable_doze_summary)));
+        }
         permissionsList.add(new PermissionDetails(
                 CUSTOM_PERM_NOTIFICATION_LISTENER,
                 activity.getString(R.string.menuitem_notifications),
@@ -189,6 +201,9 @@ public class PermissionsUtils {
             return ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).isNotificationPolicyAccessGranted();
         } else if (permission.equals(CUSTOM_PERM_DISPLAY_OVER) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return Settings.canDrawOverlays(context);
+        } else if (permission.equals(CUSTOM_PERM_IGNORE_BATT_OPTIM) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            return pm.isIgnoringBatteryOptimizations(context.getApplicationContext().getPackageName());
         } else {
             return ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_DENIED;
         }
@@ -205,7 +220,9 @@ public class PermissionsUtils {
     }
 
     public static void requestPermission(Activity activity, String permission) {
-        if (permission.equals(CUSTOM_PERM_NOTIFICATION_LISTENER)) {
+        if (permission.equals(CUSTOM_PERM_IGNORE_BATT_OPTIM)) {
+            showRequestIgnoreBatteryOptimizationDialog(activity);
+        } else if (permission.equals(CUSTOM_PERM_NOTIFICATION_LISTENER)) {
             showNotifyListenerPermissionsDialog(activity);
         } else if (permission.equals(CUSTOM_PERM_NOTIFICATION_SERVICE) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
             showNotifyPolicyPermissionsDialog(activity);
@@ -240,6 +257,14 @@ public class PermissionsUtils {
         public String getSummary() {
             return summary;
         }
+    }
+
+    @SuppressLint("BatteryLife")
+    private static void showRequestIgnoreBatteryOptimizationDialog(Activity activity) {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+        intent.setData(Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
+        activity.startActivity(intent);
     }
 
     private static void showNotifyListenerPermissionsDialog(Activity activity) {
