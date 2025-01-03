@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.asteroidos;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 
@@ -274,9 +275,10 @@ public class AsteroidOSDeviceSupport extends AbstractBTLEDeviceSupport {
      */
     public void handleMediaCommand (BluetoothGattCharacteristic characteristic) {
         LOG.info("handle media command");
-        AsteroidOSMediaCommand command = new AsteroidOSMediaCommand(characteristic.getValue()[0]);
+        AsteroidOSMediaCommand command = new AsteroidOSMediaCommand(characteristic.getValue(), getContext());
         GBDeviceEventMusicControl event = command.toMusicControlEvent();
-        evaluateGBDeviceEvent(event);
+        if (event != null)
+            evaluateGBDeviceEvent(event);
     }
 
     @Override

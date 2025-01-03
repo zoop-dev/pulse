@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.asteroidos;
 
+import android.content.Context;
+import android.media.AudioManager;
+
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 
 /**
@@ -29,12 +32,18 @@ public class AsteroidOSMediaCommand {
     public static final byte COMMAND_VOLUME = 0x4;
 
     public byte command;
-    public AsteroidOSMediaCommand(byte value) {
-        command = value;
+    public byte[] raw_values;
+    public Context context;
+
+    public AsteroidOSMediaCommand(byte[] values, Context device_context) {
+        command = values[0];
+        raw_values = values;
+        context = device_context;
     }
 
     /**
      * Convert the MediaCommand to a music control event
+     *
      * @return the matching music control event
      */
     public GBDeviceEventMusicControl toMusicControlEvent() {
@@ -53,9 +62,21 @@ public class AsteroidOSMediaCommand {
                 event.event = GBDeviceEventMusicControl.Event.PAUSE;
                 break;
             case COMMAND_VOLUME:
+                setVolume(raw_values[1]);
+                event = null;
+                break;
             default:
                 event.event = GBDeviceEventMusicControl.Event.UNKNOWN;
         }
         return event;
+    }
+
+    private void setVolume(byte volume) {
+        final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        final int volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        final int finalVol = (int) Math.round((volume * volumeMax) / 100f);
+        if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != finalVol)
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int) Math.round((volume * volumeMax) / 100f), AudioManager.FLAG_SHOW_UI);
     }
 }
