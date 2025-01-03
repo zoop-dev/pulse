@@ -864,6 +864,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 notificationSpec.iconId = intentCopy.getIntExtra(EXTRA_NOTIFICATION_ICONID, 0);
                 notificationSpec.picturePath = intent.getStringExtra(NOTIFICATION_PICTURE_PATH);
                 notificationSpec.dndSuppressed = intentCopy.getIntExtra(EXTRA_NOTIFICATION_DNDSUPPRESSED, 0);
+                notificationSpec.channelId = intentCopy.getStringExtra(EXTRA_NOTIFICATION_CHANNEL_ID);
+                notificationSpec.category = intentCopy.getStringExtra(EXTRA_NOTIFICATION_CATEGORY);
 
                 if (notificationSpec.type == NotificationType.GENERIC_SMS && notificationSpec.phoneNumber != null) {
                     GBApplication.getIDSenderLookup().add(notificationSpec.getId(), notificationSpec.phoneNumber);

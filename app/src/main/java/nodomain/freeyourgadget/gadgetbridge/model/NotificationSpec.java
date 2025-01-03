@@ -34,6 +34,8 @@ public class NotificationSpec {
     public String body;
     public NotificationType type;
     public String sourceName;
+    public String channelId;
+    public String category;
     public String[] cannedReplies;
     /**
      * Wearable actions that were attached to the incoming notifications and will be passed to the gadget (includes the "reply" action)

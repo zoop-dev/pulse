@@ -35,6 +35,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -382,6 +383,12 @@ public class NotificationListener extends NotificationListenerService {
         notificationSpec.iconId = notification.icon;
 
         notificationSpec.type = AppNotificationType.getInstance().get(source);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationSpec.channelId = notification.getChannelId();
+        }
+
+        notificationSpec.category = notification.category;
 
         //FIXME: some quirks lookup table would be the minor evil here
         if (source.startsWith("com.fsck.k9")) {

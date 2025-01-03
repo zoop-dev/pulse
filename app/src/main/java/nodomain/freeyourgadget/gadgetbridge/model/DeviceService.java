@@ -101,6 +101,8 @@ public interface DeviceService extends EventHandler {
     String EXTRA_NOTIFICATION_ICONID = "notification_iconid";
     String NOTIFICATION_PICTURE_PATH = "notification_picture_path";
     String EXTRA_NOTIFICATION_DNDSUPPRESSED = "notification_dndsuppressed";
+    String EXTRA_NOTIFICATION_CHANNEL_ID = "notification_channel_id";
+    String EXTRA_NOTIFICATION_CATEGORY = "notification_category";
     String EXTRA_FIND_START = "find_start";
     String EXTRA_VIBRATION_INTENSITY = "vibration_intensity";
     String EXTRA_CALL_COMMAND = "call_command";
