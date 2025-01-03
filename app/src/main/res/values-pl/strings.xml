@@ -3718,4 +3718,5 @@
     <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
     <string name="pref_override_features_title">Zastąp obsługiwane funkcje</string>
     <string name="pref_override_features_summary">Włącz/wyłącz określone funkcje urządzenia. Może to powodować problemy i/lub sprawić, że urządzenie będzie działać nieprawidłowo</string>
+    <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
 </resources>
