@@ -125,12 +125,14 @@ public class Notifications {
                 this.tlv.put(0x11, sourceAppId);
 
             if(addParams != null) {
-                if (addParams.supportsSyncKey)
-                    this.tlv.put(0x18, (addParams.notificationKey != null) ? addParams.notificationKey : "");
+
 
                 if(!TextUtils.isEmpty(addParams.category)) { //TODO: device type >=34
                     this.tlv.put(0x12, addParams.category); // "imcall" also possible value, not standard for android
                 }
+
+                if (addParams.supportsSyncKey)
+                    this.tlv.put(0x18, (addParams.notificationKey != null) ? addParams.notificationKey : "");
 
                 //if(addParams.repeatedNotifySupports) {
                 //    this.tlv.put(0x13, 0); // 0x13 - reminder 15 = vibrate, 0 - default
@@ -388,7 +390,7 @@ public class Notifications {
             public ReplyResponse(ParamsProvider paramsProvider) {
                 super(paramsProvider);
 
-                this.serviceId = MusicControl.id;
+                this.serviceId = Notifications.id;
                 this.commandId = id;
             }
 
@@ -427,9 +429,5 @@ public class Notifications {
                 this.complete = true;
             }
         }
-
     }
-
-
-
 }

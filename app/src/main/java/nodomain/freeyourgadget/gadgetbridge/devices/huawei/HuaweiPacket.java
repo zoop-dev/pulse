@@ -463,6 +463,8 @@ public class HuaweiPacket {
                         return new DeviceConfig.ActivityType.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.SettingRelated.id:
                         return new DeviceConfig.SettingRelated.Response(paramsProvider).fromPacket(this);
+                    case DeviceConfig.PermissionCheck.id:
+                        return new DeviceConfig.PermissionCheck.PermissionCheckRequest(paramsProvider).fromPacket(this);
                     case DeviceConfig.SecurityNegotiation.id:
                         return new DeviceConfig.SecurityNegotiation.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.WearStatus.id:

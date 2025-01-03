@@ -18,17 +18,10 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TreeMap;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1683,6 +1676,48 @@ public class DeviceConfig {
             @Override
             public void parseTlv() throws ParseException {
                this.expandCapabilities = this.tlv.getBytes(0x01);
+            }
+        }
+
+    }
+
+    public static class PermissionCheck {
+        public static final byte id = 0x38;
+        // NOTE: request from the watch
+        public static class PermissionCheckRequest extends HuaweiPacket {
+            public short permission = 0;
+
+            public PermissionCheckRequest(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                if (this.tlv.contains(0x01))
+                    this.permission = this.tlv.getShort(0x01);
+            }
+        }
+
+        public static class PermissionCheckResponse extends HuaweiPacket {
+
+            public PermissionCheckResponse(
+                    ParamsProvider paramsProvider,
+                    short permission,
+                    short status
+            ) {
+                super(paramsProvider);
+
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, permission)
+                        .put(0x02, status);
+
+                this.complete = true;
             }
         }
 

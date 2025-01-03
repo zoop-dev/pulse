@@ -63,14 +63,15 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Watchface;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetBatteryLevelRequest;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetPhoneInfoRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFileUploadComplete;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendGpsStatusRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendMenstrualModifyTimeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFileUploadAck;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFileUploadChunk;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFileUploadHash;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendPermissionCheckResponse;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWatchfaceConfirm;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWatchfaceOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetMusicStatusRequest;
@@ -129,6 +130,7 @@ public class AsynchronousResponse {
             handleEphemerisUploadService(response);
             handleAsyncBattery(response);
             handleNotifications(response);
+            handlePermissionCheck(response);
         } catch (Request.ResponseParseException e) {
             LOG.error("Response parse exception", e);
         }
@@ -735,6 +737,31 @@ public class AsynchronousResponse {
             }
             LOG.info("Notification response");
             support.getHuaweiNotificationsManager().onReplyResponse((Notifications.NotificationReply.ReplyResponse) response);
+        }
+    }
+
+    private void handlePermissionCheck(HuaweiPacket response) {
+        if (response.serviceId == DeviceConfig.id && response.commandId == DeviceConfig.PermissionCheck.id) {
+            if (!(response instanceof DeviceConfig.PermissionCheck.PermissionCheckRequest)) {
+                return;
+            }
+            DeviceConfig.PermissionCheck.PermissionCheckRequest permissionCheckResp = (DeviceConfig.PermissionCheck.PermissionCheckRequest) response;
+
+//            short status = 1;
+//            // TODO: we should check ability to perform specific action. I do not know which action can be here,
+//            //    1 is SMS permission
+//            if(permissionCheckResp.permission == 1) {
+//                status = 0;
+//            }
+            // TODO: return no permission for now. Return status 1 for activate call reject replies. Something should be set on notification to enable processing.
+            //    Currently watch does not send call reject to the GB. Additional research required.
+            short status = 0;
+            SendPermissionCheckResponse getPhoneInfoReq = new SendPermissionCheckResponse(this.support, permissionCheckResp.permission, status);
+            try {
+                getPhoneInfoReq.doPerform();
+            } catch (IOException e) {
+                LOG.error("Failed to send permission check ACK", e);
+            }
         }
     }
 }
