@@ -282,10 +282,14 @@ public class HuaweiCoordinator {
         // Notifications
         final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.NOTIFICATIONS);
         notifications.add(R.xml.devicesettings_notifications_enable);
+        if (supportsNotificationsRepeatedNotify() || supportsNotificationsRemoveSingle()){
+            notifications.add(R.xml.devicesettings_autoremove_notifications);
+        }
         if (supportsNotificationOnBluetoothLoss())
             notifications.add(R.xml.devicesettings_disconnectnotification_noshed);
         if (supportsDoNotDisturb(device))
             notifications.add(R.xml.devicesettings_donotdisturb_allday_liftwirst_notwear);
+
 
         // Workout
         if (supportsSendingGps())

@@ -76,6 +76,8 @@ public class SendNotificationRequest extends Request {
 
         params.notificationId = notificationSpec.getId();
         params.notificationKey = notificationSpec.key;
+        params.channelId = notificationSpec.channelId;
+        params.category = notificationSpec.category;
 
 
         this.packet = new Notifications.NotificationActionRequest(
@@ -92,7 +94,6 @@ public class SendNotificationRequest extends Request {
     }
 
     public void buildNotificationTLVFromCallSpec(CallSpec callSpec) {
-
         this.packet = new Notifications.NotificationActionRequest(
                 paramsProvider,
                 supportProvider.getNotificationId(),

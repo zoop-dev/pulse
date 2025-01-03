@@ -48,8 +48,7 @@ public class Notifications {
             public String channelId = "";
             public byte subscriptionId = 0;
             public String address = "";
-
-
+            public String category = "";
         }
 
         // TODO: support other types of notifications
@@ -129,7 +128,9 @@ public class Notifications {
                 if (addParams.supportsSyncKey)
                     this.tlv.put(0x18, (addParams.notificationKey != null) ? addParams.notificationKey : "");
 
-                //this.tlv.put(0x12, "msg"); //"msg" or "imcall", maybe other - category, if not empty and productType>=34
+                if(!TextUtils.isEmpty(addParams.category)) { //TODO: device type >=34
+                    this.tlv.put(0x12, addParams.category); // "imcall" also possible value, not standard for android
+                }
 
                 //if(addParams.repeatedNotifySupports) {
                 //    this.tlv.put(0x13, 0); // 0x13 - reminder 15 = vibrate, 0 - default
@@ -142,8 +143,8 @@ public class Notifications {
 
                 if (addParams.supportsRepeatedNotify || addParams.supportsRemoveSingle) {
                     this.tlv.put(0x19, (addParams.notificationKey != null) ? addParams.notificationKey : "");
-                    this.tlv.put(0x20, addParams.notificationId);
-                    this.tlv.put(0x1d, (addParams.channelId != null) ? addParams.channelId : "");
+                    this.tlv.put(0x1a, addParams.notificationId);
+                    this.tlv.put(0x1b, (addParams.channelId != null) ? addParams.channelId : "");
                 }
 
                 if (addParams.supportsTimestamp) {
@@ -347,8 +348,8 @@ public class Notifications {
                     .put(0x03, notificationKey)
                     .put(0x04, notificationId)
                     .put(0x05, notificationChannelId);
-            if (notificationCategory != null && !TextUtils.isEmpty(notificationCategory))
-                this.tlv.put(0x06, notificationCategory); // category
+            if (!TextUtils.isEmpty(notificationCategory))
+                this.tlv.put(0x06, notificationCategory);
 
             this.complete = true;
         }

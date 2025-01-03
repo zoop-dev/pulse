@@ -81,8 +81,8 @@ public class HuaweiNotificationsManager {
                     notificationSpec.sourceAppId,
                     notificationSpec.key,
                     id,
-                    "", // TODO:
-                    null);
+                    notificationSpec.channelId,
+                    notificationSpec.category);
             sendNotificationReq.doPerform();
         } catch (IOException e) {
             LOG.error("Sending notification remove failed", e);
