@@ -543,7 +543,7 @@
     <string name="notif_battery_low">Nízký stav baterie %1$s</string>
     <string name="notif_battery_low_extended">Baterie %1$s je vybitá: %2$s</string>
     <string name="lack_of_sleep">Nedostatek spánku: %1$s</string>
-    <string name="overslept">Spánku nad plán: %1$s</string>
+    <string name="overslept">Příliš dlouhý spánek: %1$s</string>
     <string name="no_limit">Bez omezení</string>
     <string name="seconds_5">5 vteřin</string>
     <string name="seconds_10">10 vteřin</string>
@@ -3704,4 +3704,9 @@
     <string name="pref_override_features_title">Přepsat podporované funkce</string>
     <string name="pref_override_features_summary">Povolit/zakázat specifické funkce zařízení. Může způsobit problémy a/nebo to, že vaše zařízení přestane správně fungovat</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
+    <string name="charts_show_balance_steps_title">Zobrazit rovnováhu kroků</string>
+    <string name="charts_show_balance_steps_summary">Zobrazit nadbytek / nedostatek kroků v týdenních a měsíčních grafech</string>
+    <string name="charts_show_balance_sleep_title">Zobrazit rovnováhu spánku</string>
+    <string name="charts_show_balance_sleep_summary">Zobrazit nadbytek / nedostatek spánku v týdenních a měsíčních grafech</string>
+    <string name="canned_replies_not_empty">Měla by existovat alespoň jedna odpověď.</string>
 </resources>
