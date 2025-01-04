@@ -37,12 +37,13 @@ public class Notifications {
 
         public static class AdditionalParams {
 
-            public boolean supportsSyncKey = false;
+            public boolean supportsReply = false;
             public boolean supportsRepeatedNotify = false;
             public boolean supportsRemoveSingle = false;
-            public boolean supportsReply = false;
+            public boolean supportsReplyActions = false;
             public boolean supportsTimestamp = false;
 
+            public String replyKey = "";
             public String notificationKey = "";
             public int notificationId = -1;
             public String channelId = "";
@@ -126,31 +127,23 @@ public class Notifications {
 
             if(addParams != null) {
 
-
-                if(!TextUtils.isEmpty(addParams.category)) { //TODO: device type >=34
+                if(!TextUtils.isEmpty(addParams.category)) { // type >= 34
                     this.tlv.put(0x12, addParams.category); // "imcall" also possible value, not standard for android
                 }
-
-                if (addParams.supportsSyncKey)
-                    this.tlv.put(0x18, (addParams.notificationKey != null) ? addParams.notificationKey : "");
-
-                //if(addParams.repeatedNotifySupports) {
-                //    this.tlv.put(0x13, 0); // 0x13 - reminder 15 = vibrate, 0 - default
-                //}
-
-                if (addParams.supportsReply && notificationType == NotificationType.sms) {
+                if (addParams.supportsReply) {
+                    this.tlv.put(0x18, (addParams.replyKey != null) ? addParams.replyKey : "");
+                }
+                if (addParams.supportsReplyActions && notificationType == NotificationType.sms) {
                     this.tlv.put(0x14, addParams.subscriptionId);
                     this.tlv.put(0x17, addParams.address);
                 }
-
+                if (addParams.supportsTimestamp) {
+                    this.tlv.put(0x15, (int) (System.currentTimeMillis() / 1000));
+                }
                 if (addParams.supportsRepeatedNotify || addParams.supportsRemoveSingle) {
                     this.tlv.put(0x19, (addParams.notificationKey != null) ? addParams.notificationKey : "");
                     this.tlv.put(0x1a, addParams.notificationId);
                     this.tlv.put(0x1b, (addParams.channelId != null) ? addParams.channelId : "");
-                }
-
-                if (addParams.supportsTimestamp) {
-                    this.tlv.put(0x15, (int) (System.currentTimeMillis() / 1000));
                 }
             }
 

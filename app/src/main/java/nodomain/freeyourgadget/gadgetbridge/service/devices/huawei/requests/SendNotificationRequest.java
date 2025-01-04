@@ -66,16 +66,31 @@ public class SendNotificationRequest extends Request {
             body = notificationSpec.body.substring(0x0, supportProvider.getHuaweiCoordinator().getContentLength() - 0xD);
             body += "...";
         }
+
+        String replyKey = "";
+        final boolean hasActions = (null != notificationSpec.attachedActions && !notificationSpec.attachedActions.isEmpty());
+        if (hasActions) {
+            for (int i = 0; i < notificationSpec.attachedActions.size(); i++) {
+                final NotificationSpec.Action action = notificationSpec.attachedActions.get(i);
+                if (action.type == NotificationSpec.Action.TYPE_WEARABLE_REPLY || action.type == NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
+                    //NOTE: store notification key instead action key. The watch returns this key so it is more easier to find action by notification key
+                    replyKey = notificationSpec.key;
+                    break;
+                }
+            }
+        }
+
         Notifications.NotificationActionRequest.AdditionalParams params = new Notifications.NotificationActionRequest.AdditionalParams();
 
-        params.supportsSyncKey = supportProvider.getHuaweiCoordinator().supportsNotificationsSyncKey();
+        params.supportsReply = supportProvider.getHuaweiCoordinator().supportsNotificationsReply();
         params.supportsRepeatedNotify = supportProvider.getHuaweiCoordinator().supportsNotificationsRepeatedNotify();
         params.supportsRemoveSingle = supportProvider.getHuaweiCoordinator().supportsNotificationsRemoveSingle();
-        params.supportsReply = supportProvider.getHuaweiCoordinator().supportsNotificationsReply();
+        params.supportsReplyActions = supportProvider.getHuaweiCoordinator().supportsNotificationsReplyActions();
         params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsTimestamp();
 
         params.notificationId = notificationSpec.getId();
         params.notificationKey = notificationSpec.key;
+        params.replyKey = replyKey;
         params.channelId = notificationSpec.channelId;
         params.category = notificationSpec.category;
 

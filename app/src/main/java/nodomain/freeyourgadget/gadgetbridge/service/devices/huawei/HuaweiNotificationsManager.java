@@ -91,7 +91,7 @@ public class HuaweiNotificationsManager {
 
     void onReplyResponse(Notifications.NotificationReply.ReplyResponse response) {
         LOG.info(" KEY: {}, Text: {}", response.key, response.text);
-        if(!this.support.getHuaweiCoordinator().supportsNotificationsReply()) {
+        if(!this.support.getHuaweiCoordinator().supportsNotificationsReplyActions()) {
             LOG.info("Reply is not supported");
             return;
         }
@@ -131,7 +131,6 @@ public class HuaweiNotificationsManager {
                     }
                 }
             }
-
         }
         this.support.evaluateGBDeviceEvent(deviceEvtNotificationControl);
         //TODO: maybe should be send reply. Service: 0x2, command: 0x10, tlv 7 and/or 1, type byte, 7f on error

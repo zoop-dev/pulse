@@ -664,7 +664,7 @@ public class HuaweiCoordinator {
         return false;
     }
 
-    public boolean supportsNotificationsReply() {
+    public boolean supportsNotificationsReplyActions() {
         if (supportsExpandCapability())
             return supportsExpandCapability(73);
         return false;
@@ -676,7 +676,7 @@ public class HuaweiCoordinator {
         return false;
     }
 
-    public boolean supportsNotificationsSyncKey() {
+    public boolean supportsNotificationsReply() {
         if (supportsExpandCapability())
             return supportsExpandCapability(89);
         return false;
