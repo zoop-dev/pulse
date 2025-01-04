@@ -16,7 +16,7 @@
     <string name="controlcenter_navigation_drawer_close">Navigációs fiók bezárása</string>
     <string name="controlcenter_snackbar_need_longpress">Nyomja hosszan a kártya leválasztáshoz</string>
     <string name="controlcenter_snackbar_disconnecting">Leválasztás</string>
-    <string name="controlcenter_snackbar_connecting">Csatlakozás…</string>
+    <string name="controlcenter_snackbar_connecting">Kapcsolódás…</string>
     <string name="controlcenter_snackbar_requested_screenshot">Képernyőkép készítése az eszközről</string>
     <string name="title_activity_debug">Hibakeresés</string>
     <!--Strings related to AppManager-->
@@ -140,7 +140,7 @@
     <string name="prefs_title_all_day_heart_rate">Egész napos pulzusszámmérés</string>
     <string name="preferences_hplus_settings">HPlus/Makibes beállítások</string>
     <string name="not_connected">Nincs kapcsolódva</string>
-    <string name="connecting">Csatlakozás</string>
+    <string name="connecting">Kapcsolódás</string>
     <string name="connected">Kapcsolódva</string>
     <string name="unknown_state">Ismeretlen állapot</string>
     <string name="_unknown_">(ismeretlen)</string>
@@ -182,7 +182,7 @@
     <string name="pairing_creating_bond_with">Párosítás ezzel: %1$s (%2$s)</string>
     <string name="pairing_unable_to_pair_with">Nem sikerült párosítani ezzel: %1$s (%2$s)</string>
     <string name="pairing_in_progress">Párosítás folyamatban ezzel: %1$s (%2$s)</string>
-    <string name="pairing_already_bonded">Már párosítva van ezzel: %1$s (%2$s), csatlakozás…</string>
+    <string name="pairing_already_bonded">Már párosítva van ezzel: %1$s (%2$s), kapcsolódás…</string>
     <string name="message_cannot_pair_no_mac">Nincs átadott MAC-cím, nem lehet párosítani.</string>
     <string name="preferences_category_device_specific_settings">Eszközspecifikus beállítások</string>
     <string name="preferences_miband_settings">MI Band / Amazfit beállítások</string>
@@ -377,7 +377,7 @@
     <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelennie az Android eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
     <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble készülékén. \n \nItt nincs szükség konfigurációra. \n \nA Pebble rendszer időjárás applikációját az alkalmazáskezelésből engedélyezheti. \n \nA támogatott órafelületek automatikusan megjelenítik az időjárást.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth-párosítás engedélyezése</string>
-    <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a csatlakozással</string>
+    <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
     <string name="unit_metric">Metrikus</string>
     <string name="unit_imperial">Birodalmi</string>
     <string name="timeformat_24h">24H</string>
@@ -1290,7 +1290,7 @@
     <string name="watchface_dialog_widget_cat_2nd_tz_widget">Második időzóna felületi eleme</string>
     <string name="pref_cache_weather">Időjárás-információ gyorsítótárazása</string>
     <string name="prefs_wena3_vibration_short">Rövid</string>
-    <string name="devicestatus_connecting">Az eszköz csatlakozik</string>
+    <string name="devicestatus_connecting">Az eszköz kapcsolódik</string>
     <string name="pref_title_chart_heartrate_color">Pulzusszám színe</string>
     <string name="discovery_bluetooth_scan">Bluetooth-keresés:</string>
     <string name="zepp_os_watchface_free_combination">Szabad kombináció</string>
@@ -1308,7 +1308,7 @@
     <string name="fossil_hr_connection_not_confirmed">A kapcsolódás nincs megerősítve az órán, hitelesítés nélküli mód használata</string>
     <string name="zepp_os_watchface_vibrant">Élénk</string>
     <string name="activity_db_management_autoexport_scheduled_no">Az automatikus exportálás nincs időzítve.</string>
-    <string name="activity_db_management_clean_export_directory_text">Az exportált fájlok az exportálás/importálás könyvtárban bármilyen alkalmazás számára elérhetőek az eszközén. Lehet, hogy törölni szeretné ezeket a fájlokat szinkronizálás vagy biztonsági mentés után. Győződjön meg, hogy van mentése, mielőtt törli őket. A GPX fájlok, az alkönyvtárak és az automatikusan exportált adatbázis-fájlok (ha léteznek) nem lesznek törölve. Az exportálás/importálás könyvtár útvonala:</string>
+    <string name="activity_db_management_clean_export_directory_text">Az exportált fájlok az exportálás/importálás könyvtárban bármilyen alkalmazás számára elérhetőek az eszközén. Lehet, hogy törölni szeretné ezeket a fájlokat szinkronizálás vagy biztonsági mentés után. Győződjön meg róla, hogy van mentése, mielőtt törli őket. A GPX fájlok, az alkönyvtárak és az automatikusan exportált adatbázis-fájlok (ha léteznek) nem lesznek törölve. Az exportálás/importálás könyvtár útvonala:</string>
     <string name="prefs_wena3_vibration_strength_item_weak">Gyenge</string>
     <string name="activity_db_management_autoexport_enabled_no">Az automatikus exportálás nincs engedélyezve.</string>
     <string name="pref_screen_vibration_patterns_summary">Rezgésminták beállítása a különböző értesítésekhez</string>
@@ -1546,7 +1546,7 @@
 \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="open_fw_installer_info_text">A Firmware/Órafelület/Alkalmazás/Fájl telepítő lehetővé teszi a támogatott fájlok (firmware, számlapok, alkalmazások, GPS, erőforrások, betűtípusok...) feltöltését/telepítését a készülékre. További információt a wikiben talál: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_connect_maximum_one_device">CSAK EGY olyan eszközt párosítson, amelyre el szeretné küldeni a fájlt.</string>
-    <string name="pref_summary_general_reconnectonlytoconnected">Újracsatlakozás csak a párosított eszközökhöz, ahelyett, hogy az összes eszközzel újracsatlakozna</string>
+    <string name="pref_summary_general_reconnectonlytoconnected">Újrakapcsolódás csak a párosított eszközökhöz, ahelyett, hogy az összes eszközzel újracsatlakozna</string>
     <string name="pref_display_caller_summary">Bejövő hívások telefonszámának vagy nevének megjelenítése</string>
     <string name="open_fw_installer_ensure_device_connected">Győződjön meg róla, hogy a(z) %s eszköz csatlakoztatva van</string>
     <string name="pref_title_notification_prefer_long_text">Hosszú értesítési szöveg előnyben részesítése</string>
@@ -1559,7 +1559,7 @@
     <string name="open_fw_installer_connect_minimum_one_device">Párosítson LEGALÁBB EGY olyan eszközt, amelyre el szeretné küldeni a fájlt.</string>
     <string name="open_fw_installer_select_file">Válassza ki a készülékre feltölteni kívánt fájlt: %s</string>
     <string name="open_fw_installer_getting_files_title">A firmware/alkalmazásfájl megszerzése</string>
-    <string name="pref_title_general_reconnectonlytoconnected">Újracsatlakozás csak a csatlakoztatott eszközökhöz</string>
+    <string name="pref_title_general_reconnectonlytoconnected">Újrakapcsolódás csak a csatlakoztatott eszközökhöz</string>
     <string name="pref_title_notifications_ignore_low_priority">Alacsony prioritású értesítések figyelmen kívül hagyása</string>
     <string name="pref_summary_notifications_ignore_work_profile">Ne küldjön értesítéseket a munkaprofilban lévő alkalmazásokból az órára</string>
     <string name="pref_summary_banglejs_text_bitmap">Ha egy szó nem jeleníthető meg az óra betűtípusával, jelenítse meg bittérképként a Gadgetbridge-ben, és jelenítse meg a bitképet az órán</string>
@@ -2560,7 +2560,7 @@
     <string name="distance_total">Összes távolság</string>
     <string name="devicetype_scannable">Felderíthető eszköz</string>
     <string name="pref_dashboard_select_devices_title">Eszközök kiválasztása...</string>
-    <string name="pref_dashboard_widget_goals_chart_title">Célok grafikon</string>
+    <string name="pref_dashboard_widget_goals_chart_title">Célok grafikonja</string>
     <string name="info_connected_count">%d eszköz csatlakoztatva</string>
     <string name="pref_dashboard_first_summary">Indítás után a Műszerfal megjelenítése az Eszközök helyett</string>
     <string name="pref_title_calendar_lookahead">Hátralévő napok száma</string>
@@ -3075,7 +3075,7 @@
     <string name="music_multiselect_limit">Elérte az egynél több elem kiválasztásának határát</string>
     <string name="first_start_intro_tag_line">Szabaduljon meg a készülékgyártók saját alkalmazásai és felhőszolgáltatásai alól.</string>
     <string name="permission_notifications_summary">Értesítések továbbítása csatlakoztatott kütyükre</string>
-    <string name="permission_bluetooth_connect_summary">Csatlakozás a már párosított Bluetooth-eszközökhöz</string>
+    <string name="permission_bluetooth_connect_summary">Kapcsolódás a már párosított Bluetooth-eszközökhöz</string>
     <string name="permission_post_notification_title">Értesítések közzététele</string>
     <string name="permission_call_phone_summary">Telefonhívások kezdeményezése a kütyükről</string>
     <string name="permission_process_outgoing_calls_title">Kimenő hívások feldolgozása</string>
@@ -3175,7 +3175,7 @@
     <string name="file_already_exists">A fájl már létezik</string>
     <string name="devicetype_ble_gatt_client">Általános BLE GATT kliens</string>
     <string name="prefs_title_gatt_client_notification_intents">GATT értesítési szándékok továbbítása BLE Intent API-n keresztül</string>
-    <string name="activity_db_management_backup_restore_explanation">Az importálás/exportálás műveletek engedélyezik a Gadgetbridge összes beállításának, eszközének és adatának migrálását vagy biztonsági mentését egy zip-fájlba és egy zip-fájlból.\n\nA fájl importálása eltávolítja az összes meglévő adatot, eszközt és beállítást, és teljesen a biztonsági mentéssel helyettesíti azokat.</string>
+    <string name="activity_db_management_backup_restore_explanation">Az importálás/exportálás műveletek engedélyezik a Gadgetbridge összes beállításának, eszközének és adatának átköltöztetését vagy biztonsági mentését egy zip-fájlba és egy zip-fájlból.\n\nA fájl importálása eltávolítja az összes meglévő adatot, eszközt és beállítást, és teljesen a biztonsági mentéssel helyettesíti azokat.</string>
     <string name="first_start_overview_desc">A Gadgetbridge két fő nézetből áll, melyeknek megvan a maguk célja.</string>
     <string name="first_start_overview_devices">Az eszközök nézete megjeleníti az összes konfigurált eszközt és azok állapotát, és hozzáférést biztosít az eszközökre vonatkozó specifikus funkciókhoz, mint például a részletes diagramok, beállítások, alkalmazások és riasztások.</string>
     <string name="permission_contacts_summary">Névjegyek küldése a kütyükre</string>
@@ -3492,7 +3492,7 @@
     <string name="prefs_title_gatt_client_allow_gatt_interactions">GATT interakció engedélyezése a BLE Intent API-n keresztül</string>
     <string name="prefs_title_gatt_client_api_package">BLE API csomag</string>
     <string name="permission_background_location_summary">Bluetooth-eszközök keresése a háttérben, és a helymeghatározás elküldése bizonyos kütyüknek</string>
-    <string name="permission_bluetooth_summary">Csatlakozás Bluetooth-eszközökhöz</string>
+    <string name="permission_bluetooth_summary">Kapcsolódás Bluetooth-eszközökhöz</string>
     <string name="prefs_summary_gatt_client_api_package">A BLE Intent API kommunikáció korlátozása erre a csomagra</string>
     <string name="backup_restore_exporting">Exportálás zip formátumba…</string>
     <string name="backup_restore_error_import">Importálás zip formátumba sikertelen</string>
