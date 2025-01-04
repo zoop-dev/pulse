@@ -254,7 +254,7 @@ dependencies {
     //implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
 
     // Android SDK bundles org.json, but we need an actual implementation to replace the stubs in tests
-    testImplementation 'org.json:json:20240303'
+    testImplementation 'org.json:json:20241224'
 
     // Fix Duplicate class build error for conflicting kotlin-stdlib versions
     // does not seem to be currently needed, as it uses the latest across all transitive
