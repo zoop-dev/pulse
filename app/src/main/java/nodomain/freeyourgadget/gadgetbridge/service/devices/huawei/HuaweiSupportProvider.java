@@ -98,6 +98,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
@@ -108,6 +109,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDataDictionarySyncService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.AcceptAgreementsRequest;
@@ -863,6 +865,12 @@ public class HuaweiSupportProvider {
                             if (HuaweiP2PTrackService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PTrackService trackService = new HuaweiP2PTrackService(huaweiP2PManager);
                                 trackService.register();
+                            }
+                        }
+                        if (getHuaweiCoordinator().supportsCannedReplies()) {
+                            if (HuaweiP2PCannedRepliesService.getRegisteredInstance(huaweiP2PManager) == null) {
+                                HuaweiP2PCannedRepliesService cannedRepliesService = new HuaweiP2PCannedRepliesService(huaweiP2PManager);
+                                cannedRepliesService.register();
                             }
                         }
                         if (HuaweiP2PDataDictionarySyncService.getRegisteredInstance(huaweiP2PManager) == null) {
@@ -2513,5 +2521,24 @@ public class HuaweiSupportProvider {
 
     public void onMusicOperation(int operation, int playlistIndex, String playlistName, ArrayList<Integer> musicIds) {
         getHuaweiMusicManager().onMusicOperation(operation, playlistIndex, playlistName,  musicIds);
+    }
+
+    public void onSetCannedMessages(final CannedMessagesSpec cannedMessagesSpec) {
+        if (cannedMessagesSpec.type != CannedMessagesSpec.TYPE_GENERIC) {
+            LOG.warn("Got unsupported canned messages type: {}", cannedMessagesSpec.type);
+            return;
+        }
+
+        if(cannedMessagesSpec.cannedMessages.length == 0) {
+            GB.toast(context, HuaweiSupportProvider.this.getContext().getString(R.string.canned_replies_not_empty), Toast.LENGTH_SHORT, GB.WARN);
+            LOG.warn(HuaweiSupportProvider.this.getContext().getString(R.string.canned_replies_not_empty));
+        }
+
+        HuaweiP2PCannedRepliesService cannedRepliesService = HuaweiP2PCannedRepliesService.getRegisteredInstance(huaweiP2PManager);
+        if(cannedRepliesService == null) {
+            LOG.warn("P2P canned replies service is not registered");
+            return;
+        }
+        cannedRepliesService.sendReplies(cannedMessagesSpec.cannedMessages);
     }
 }

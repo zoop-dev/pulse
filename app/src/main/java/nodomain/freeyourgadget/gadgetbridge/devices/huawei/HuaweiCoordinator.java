@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
@@ -284,6 +285,9 @@ public class HuaweiCoordinator {
         notifications.add(R.xml.devicesettings_notifications_enable);
         if (supportsNotificationsRepeatedNotify() || supportsNotificationsRemoveSingle()){
             notifications.add(R.xml.devicesettings_autoremove_notifications);
+        }
+        if (getCannedRepliesSlotCount(device) > 0) {
+            notifications.add(R.xml.devicesettings_canned_reply_16);
         }
         if (supportsNotificationOnBluetoothLoss())
             notifications.add(R.xml.devicesettings_disconnectnotification_noshed);
@@ -681,13 +685,18 @@ public class HuaweiCoordinator {
             return supportsExpandCapability(89);
         return false;
     }
+
     public boolean supportsNotificationsRemoveSingle() {
         if (supportsExpandCapability())
             return supportsExpandCapability(120);
         return false;
     }
 
-
+    public boolean supportsCannedReplies() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(82);
+        return false;
+    }
 
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
@@ -756,6 +765,11 @@ public class HuaweiCoordinator {
 
     public int getContactsSlotCount(GBDevice device) {
         return supportsContacts()?maxContactsCount:0;
+    }
+
+    public int getCannedRepliesSlotCount(GBDevice device) {
+        // TODO: find proper count
+        return supportsCannedReplies()?10:0;
     }
 
     public void setTransactionCrypted(boolean crypted) {

@@ -3579,4 +3579,5 @@
     <string name="battery_minimum_charge">Minimum battery charge in %</string>
     <string name="battery_allow_pass_though_summary">When enabled, the battery can be charged while discharging</string>
     <string name="battery_allow_pass_through">Allow battery pass-through</string>
+    <string name="canned_replies_not_empty">There should be at least one canned reply.</string>
 </resources>

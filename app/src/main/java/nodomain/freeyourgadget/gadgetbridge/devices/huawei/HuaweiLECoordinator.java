@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -160,6 +161,11 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     @Override
     public int getContactsSlotCount(GBDevice device) {
         return huaweiCoordinator.getContactsSlotCount(device);
+    }
+
+    @Override
+    public int getCannedRepliesSlotCount(GBDevice device) {
+        return huaweiCoordinator.getCannedRepliesSlotCount(device);
     }
 
     @Override

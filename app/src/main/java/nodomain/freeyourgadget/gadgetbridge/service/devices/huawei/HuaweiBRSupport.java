@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
@@ -214,5 +215,10 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
     @Override
     public void onMusicOperation(int operation, int playlistIndex, String playlistName, ArrayList<Integer> musicIds) {
         supportProvider.onMusicOperation(operation, playlistIndex, playlistName, musicIds);
+    }
+
+    @Override
+    public void onSetCannedMessages(final CannedMessagesSpec cannedMessagesSpec) {
+        supportProvider.onSetCannedMessages(cannedMessagesSpec);
     }
 }

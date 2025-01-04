@@ -91,14 +91,14 @@ public abstract class HuaweiBaseP2PService {
     }
 
     public void handlePacket(P2P.P2PCommand.Response packet) {
-        LOG.info("HuaweiP2PCalendarService handlePacket: {} Code: {}", packet.cmdId, packet.respCode);
+        LOG.info("HuaweiBaseP2PService handlePacket: {} Code: {}", packet.cmdId, packet.respCode);
         if (waitPackets.containsKey(packet.sequenceId)) {
-            LOG.info("HuaweiP2PCalendarService handlePacket find handler");
+            LOG.info("HuaweiBaseP2PService handlePacket find handler");
             HuaweiP2PCallback handle = waitPackets.remove(packet.sequenceId);
             if(handle != null) {
                 handle.onResponse(packet.respCode, packet.respData);
             } else {
-                LOG.error("HuaweiP2PCalendarService handler is null");
+                LOG.error("HuaweiBaseP2PService handler is null");
             }
         } else {
 
