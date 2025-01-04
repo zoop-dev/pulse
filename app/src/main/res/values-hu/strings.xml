@@ -3031,7 +3031,7 @@
     <string name="prefs_wena3_day_start_hour_item">A nap kezdete</string>
     <string name="prefs_wena3_auto_power_off_item">Automatikus kikapcsolás</string>
     <string name="permission_manage_dnd_title">Ne zavarjanak mód kezelése</string>
-    <string name="permission_send_sms_summary">SMS küldése (konzervált válasz) a kütyükből</string>
+    <string name="permission_send_sms_summary">SMS küldése (előre beállított válasz) a kütyükből</string>
     <string name="respiratoryrate">Légzésszám</string>
     <string name="activity_type_gateball">Kapulabda</string>
     <string name="activity_type_e_bike">Elektromos kerékpár</string>
@@ -3646,4 +3646,5 @@
     <string name="pref_override_features_summary">Egyes eszközfunkciók engedélyezése vagy letiltása. Ez problémákat okozhat és/vagy az eszközt helytelenül működteti</string>
     <string name="pref_override_features_title">Támogatott funkciók felülírása</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
+    <string name="canned_replies_not_empty">Legalább egy előre beállított válasznak kell lennie.</string>
 </resources>
