@@ -1,8 +1,23 @@
 ### Changelog
 
 #### NEXT
-* Marstek B2500: Fix setting pass-though mode
+* Initial support for Redmi Buds 6 Active
+* Initial support for Sony WF-C510
+* AsteroidOS: Add volume control
+* Colmi R09: Add preference to toggle temperature measurements
+* Colmi R09: Fix temperature data parsing
+* Colmi R0x: Add support for realtime heart rate meassurements and live activity tracking
+* Huawei: Add support to set and use canned replies
+* Huawei: Fix calendar event updates
+* Huawei: match midnight on the user's timezone for all day events
+* Huawei: Remove notifications from watch
 * Marstek B2500: Display sensor temperature in Status Activity
+* Marstek B2500: Fix setting pass-though mode
+* Sony Headphones: Allow overriding supported features
+* Sony Headphones: Fix initialization for some devices
+* Sony Headphones: Update default low battery threshold
+* Recognize Fossify SMS as SMS
+* Limit live activity to just the current device
 
 #### 0.83.1
 * Initial support for Garmin Fenix 6X Pro Solar
