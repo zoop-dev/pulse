@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 
+import android.text.TextUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,6 +95,7 @@ public class SendNotificationRequest extends Request {
         params.replyKey = replyKey;
         params.channelId = notificationSpec.channelId;
         params.category = notificationSpec.category;
+        params.address = notificationSpec.phoneNumber;
 
 
         this.packet = new Notifications.NotificationActionRequest(
