@@ -3647,4 +3647,8 @@
     <string name="pref_override_features_title">Támogatott funkciók felülírása</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
     <string name="canned_replies_not_empty">Legalább egy előre beállított válasznak kell lennie.</string>
+    <string name="charts_show_balance_sleep_summary">Az alvások többletének / hiányának megjelenítése heti és havi grafikonokon</string>
+    <string name="charts_show_balance_steps_title">Lépések egyenlegének megjelenítése</string>
+    <string name="charts_show_balance_steps_summary">A lépések többletének / hiányának megjelenítése heti és havi grafikonokon</string>
+    <string name="charts_show_balance_sleep_title">Alvásegyensúly megjelenítése</string>
 </resources>
