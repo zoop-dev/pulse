@@ -22,6 +22,7 @@ import java.util.Set;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCapabilities;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
@@ -44,7 +45,13 @@ public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
         capabilities.add(capability);
     }
 
+    @Override
     public Set<SonyHeadphonesCapabilities> getCapabilities() {
         return capabilities;
+    }
+
+    @Override
+    public Set<SonyHeadphonesCapabilities> getCapabilities(final GBDevice device) {
+        return getCapabilities();
     }
 }
