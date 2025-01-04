@@ -65,4 +65,14 @@ public class ColmiI28UltraCoordinator extends AbstractMoyoungDeviceCoordinator {
     public int getAlarmSlotCount(GBDevice device) {
         return 8;
     }
+
+    @Override
+    public int getWorldClocksSlotCount() {
+        return 6;
+    }
+
+    @Override
+    public int getWorldClocksLabelLength() {
+        return 30;
+    }
 }

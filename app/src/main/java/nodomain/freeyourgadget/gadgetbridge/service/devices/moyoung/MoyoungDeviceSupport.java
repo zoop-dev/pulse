@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import de.greenrobot.dao.query.QueryBuilder;
@@ -489,12 +490,6 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_DAGPT)
-        {
-            LOG.info("Da GPT started on watch");
-            return true;
-        }
-
         if (packetType == MoyoungConstants.CMD_FIND_MY_PHONE)
         {
             LOG.info("Find my phone started on watch");
@@ -838,7 +833,36 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onSetWorldClocks(ArrayList<? extends WorldClock> clocks) {
-        // TODO
+        final TimeZone localTZ = Calendar.getInstance().getTimeZone();
+        try {
+            TransactionBuilder builder = performInitialized("sendWorldClocks");
+            for (byte i=1; i<getDevice().getDeviceCoordinator().getWorldClocksSlotCount(); i++) {
+                LOG.info("Deleting world clock " + i);
+                ByteBuffer payload = ByteBuffer.allocate(3);
+                payload.put((byte) 0x00);
+                payload.put((byte) 0x03); // Delete clock
+                payload.put(i);
+                sendPacket(builder, MoyoungPacketOut.buildPacket(mtu, MoyoungConstants.CMD_ADVANCED_CMD, payload.array()));
+            }
+            byte currentNr = 1;
+            for (WorldClock clock : clocks) {
+                LOG.info("Sending world clock " + currentNr);
+                TimeZone timezone = TimeZone.getTimeZone(clock.getTimeZoneId());
+                ByteBuffer payload = ByteBuffer.allocate(19 + clock.getLabel().getBytes().length).order(ByteOrder.LITTLE_ENDIAN);
+                payload.put((byte) 0x00);
+                payload.put((byte) 0x02); // Set/edit clock
+                payload.put(currentNr);
+                payload.putInt(timezone.getOffset(System.currentTimeMillis()) / 1000); // Offset in secs vs UTC
+                payload.putLong(0); // 8 unidentified bytes, but using 0x00 works
+                payload.putInt((timezone.getOffset(System.currentTimeMillis()) - localTZ.getOffset(System.currentTimeMillis())) / 1000); // Offset in secs vs local timezone
+                payload.put(clock.getLabel().getBytes());
+                sendPacket(builder, MoyoungPacketOut.buildPacket(mtu, MoyoungConstants.CMD_ADVANCED_CMD, payload.array()));
+                currentNr++;
+            }
+            builder.queue(getQueue());
+        } catch (IOException e) {
+            LOG.error("Error sending world clocks: ", e);
+        }
     }
 
     @Override
