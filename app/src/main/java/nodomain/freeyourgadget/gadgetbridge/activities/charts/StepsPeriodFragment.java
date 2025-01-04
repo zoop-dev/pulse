@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
     private TextView distanceTotal;
     private BarChart stepsChart;
 
+    private TextView mBalanceView;
+
     protected int CHART_TEXT_COLOR;
     protected int TEXT_COLOR;
     protected int STEPS_GOAL;
@@ -53,7 +56,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
 
-    public static StepsPeriodFragment newInstance ( int totalDays ) {
+    public static StepsPeriodFragment newInstance(int totalDays) {
         StepsPeriodFragment fragmentFirst = new StepsPeriodFragment();
         Bundle args = new Bundle();
         args.putInt("totalDays", totalDays);
@@ -84,6 +87,9 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         stepsTotal = rootView.findViewById(R.id.steps_total);
         distanceTotal = rootView.findViewById(R.id.distance_total);
         STEPS_GOAL = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
+
+        mBalanceView = rootView.findViewById(R.id.balance);
+
         setupStepsChart();
         refresh();
 
@@ -126,7 +132,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         yAxisRight.setDrawAxisLine(true);
     }
 
-        @Override
+    @Override
     public String getTitle() {
         return getString(R.string.steps);
     }
@@ -151,7 +157,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
     @Override
     protected void updateChartsnUIThread(StepsData stepsData) {
         Date to = new Date((long) getTSEnd() * 1000);
-        Date from = DateUtils.addDays(to,-(TOTAL_DAYS - 1));
+        Date from = DateUtils.addDays(to, -(TOTAL_DAYS - 1));
         String toFormattedDate = new SimpleDateFormat("E, MMM dd").format(to);
         String fromFormattedDate = new SimpleDateFormat("E, MMM dd").format(from);
         mDateView.setText(fromFormattedDate + " - " + toFormattedDate);
@@ -160,7 +166,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
 
         List<BarEntry> entries = new ArrayList<>();
         int counter = 0;
-        for(StepsDay day : stepsData.days) {
+        for (StepsDay day : stepsData.days) {
             entries.add(new BarEntry(counter, day.steps));
             counter++;
         }
@@ -183,6 +189,8 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         distanceAvg.setText(valueFormatter.formatValue(stepsData.distanceDailyAvg, "km"));
         stepsTotal.setText(String.format(String.valueOf(stepsData.totalSteps)));
         distanceTotal.setText(valueFormatter.formatValue(stepsData.totalDistance, "km"));
+
+        mBalanceView.setText(stepsData.getBalanceMessage(getContext(), STEPS_GOAL));
     }
 
     ValueFormatter getStepsChartDayValueFormatter(StepsPeriodFragment.StepsData stepsData) {
@@ -202,7 +210,8 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         stepsChart.invalidate();
     }
 
-    protected void setupLegend(Chart<?> chart) {}
+    protected void setupLegend(Chart<?> chart) {
+    }
 
     protected static class StepsData extends ChartsData {
         List<StepsDay> days;
@@ -211,10 +220,11 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         long totalSteps = 0;
         double totalDistance = 0;
         StepsDay todayStepsDay;
+
         protected StepsData(List<StepsDay> days) {
             this.days = days;
             int daysCounter = 0;
-            for(StepsDay day : days) {
+            for (StepsDay day : days) {
                 this.totalSteps += day.steps;
                 this.totalDistance += day.distance;
                 if (day.steps > 0) {
@@ -226,6 +236,20 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
                 this.distanceDailyAvg = this.totalDistance / daysCounter;
             }
             this.todayStepsDay = days.get(days.size() - 1);
+        }
+
+        protected String getBalanceMessage(final Context context, final int targetValue) {
+            if (totalSteps == 0) {
+                return context.getString(R.string.no_data);
+            }
+
+            final long totalBalance = totalSteps - ((long) targetValue * days.size());
+            if (totalBalance > 0) {
+                return context.getString(R.string.overstep, Math.abs(totalBalance));
+            } else {
+                return context.getString(R.string.lack_of_step, Math.abs(totalBalance));
+
+            }
         }
     }
 }

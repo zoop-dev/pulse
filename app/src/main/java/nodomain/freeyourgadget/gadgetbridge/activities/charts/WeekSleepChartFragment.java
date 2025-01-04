@@ -67,6 +67,8 @@ public class WeekSleepChartFragment extends AbstractWeekChartFragment {
     private LinearLayout sleepScoreWrapper;
     private LineChart sleepScoreChart;
 
+    private TextView mBalanceView;
+
     public static WeekSleepChartFragment newInstance ( int totalDays ) {
         WeekSleepChartFragment fragmentFirst = new WeekSleepChartFragment();
         Bundle args = new Bundle();

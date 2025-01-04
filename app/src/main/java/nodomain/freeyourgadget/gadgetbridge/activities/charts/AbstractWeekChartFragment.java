@@ -19,12 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -68,9 +62,8 @@ public abstract class AbstractWeekChartFragment extends AbstractActivityChartFra
     protected int mTargetValue = 0;
 
     protected BarChart mWeekChart;
-    protected TextView mBalanceView;
 
-    private int mOffsetHours = getOffsetHours();
+    private final int mOffsetHours = getOffsetHours();
 
     protected String getWeeksChartsLabel(Calendar day){
         if (TOTAL_DAYS > 7) {
@@ -209,35 +202,6 @@ public abstract class AbstractWeekChartFragment extends AbstractActivityChartFra
         });
         return lineDataSet;
     };
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mLocale = getResources().getConfiguration().locale;
-
-        View rootView = inflater.inflate(R.layout.fragment_weeksteps_chart, container, false);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                getChartsHost().enableSwipeRefresh(scrollY == 0);
-            });
-        }
-
-        final int goal = getGoal();
-        if (goal >= 0) {
-            mTargetValue = goal;
-        }
-
-        mWeekChart = rootView.findViewById(R.id.weekstepschart);
-        mBalanceView = rootView.findViewById(R.id.balance);
-
-        setupWeekChart();
-
-        // refresh immediately instead of use refreshIfVisible(), for perceived performance
-        refresh();
-
-        return rootView;
-    }
 
     protected void setupWeekChart() {
         mWeekChart.setBackgroundColor(BACKGROUND_COLOR);
