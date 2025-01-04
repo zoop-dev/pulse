@@ -960,7 +960,8 @@ public class NotificationListener extends NotificationListenerService {
                 source.equals("com.android.mms") ||
                 source.equals("com.sonyericsson.conversations") ||
                 source.equals("com.android.messaging") ||
-                source.equals("org.smssecure.smssecure")) {
+                source.equals("org.smssecure.smssecure") ||
+                source.equals("org.fossify.messages")) {
             if (!"never".equals(prefs.getString("notification_mode_sms", "when_screen_off"))) {
                 LOG.info("Ignoring notification, it's an sms notification");
                 return true;
