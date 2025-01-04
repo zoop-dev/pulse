@@ -888,6 +888,10 @@
     <string name="activity_list_summary_activities">Activities</string>
     <string name="dialog_hide">Hide</string>
     <string name="show_ongoing_activity">Show ongoing activity popup</string>
+    <string name="charts_show_balance_sleep_title">Show sleep balance</string>
+    <string name="charts_show_balance_sleep_summary">Show excess / lack of sleep in weekly and monthly charts</string>
+    <string name="charts_show_balance_steps_title">Show steps balance</string>
+    <string name="charts_show_balance_steps_summary">Show excess / lack of steps in weekly and monthly charts</string>
     <string name="lack_of_sleep">Lack of sleep: %1$s</string>
     <string name="overslept">Overslept: %1$s</string>
     <string name="prefs_sounds">Sounds</string>

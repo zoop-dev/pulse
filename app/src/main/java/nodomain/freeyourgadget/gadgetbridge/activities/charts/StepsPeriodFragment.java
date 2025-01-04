@@ -52,6 +52,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
     protected int CHART_TEXT_COLOR;
     protected int TEXT_COLOR;
     protected int STEPS_GOAL;
+    protected boolean SHOW_BALANCE;
 
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
@@ -89,6 +90,13 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         STEPS_GOAL = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
 
         mBalanceView = rootView.findViewById(R.id.balance);
+
+        SHOW_BALANCE = GBApplication.getPrefs().getBoolean("charts_show_balance_steps", true);
+        if (SHOW_BALANCE) {
+            mBalanceView.setVisibility(View.VISIBLE);
+        } else {
+            mBalanceView.setVisibility(View.GONE);
+        }
 
         setupStepsChart();
         refresh();

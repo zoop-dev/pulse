@@ -80,6 +80,22 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            android:key="charts_show_balance_sleep"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/charts_show_balance_sleep_summary"
+            android:title="@string/charts_show_balance_sleep_title"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="charts_show_balance_steps"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/charts_show_balance_steps_summary"
+            android:title="@string/charts_show_balance_steps_title"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
             android:key="charts_show_ongoing_activity"
             android:layout="@layout/preference_checkbox"
             android:title="@string/show_ongoing_activity"

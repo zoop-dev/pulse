@@ -69,6 +69,8 @@ public class WeekSleepChartFragment extends AbstractWeekChartFragment {
 
     private TextView mBalanceView;
 
+    protected boolean SHOW_BALANCE;
+
     public static WeekSleepChartFragment newInstance ( int totalDays ) {
         WeekSleepChartFragment fragmentFirst = new WeekSleepChartFragment();
         Bundle args = new Bundle();
@@ -144,6 +146,13 @@ public class WeekSleepChartFragment extends AbstractWeekChartFragment {
         sleepDatesText = rootView.findViewById(R.id.sleep_dates);
 
         mBalanceView = rootView.findViewById(R.id.balance);
+
+        SHOW_BALANCE = GBApplication.getPrefs().getBoolean("charts_show_balance_sleep", true);
+        if (SHOW_BALANCE) {
+            mBalanceView.setVisibility(View.VISIBLE);
+        } else {
+            mBalanceView.setVisibility(View.GONE);
+        }
 
         if (!supportsSleepScore()) {
             sleepScoreWrapper.setVisibility(View.GONE);
