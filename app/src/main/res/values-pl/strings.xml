@@ -3719,4 +3719,9 @@
     <string name="pref_override_features_title">Zastąp obsługiwane funkcje</string>
     <string name="pref_override_features_summary">Włącz/wyłącz określone funkcje urządzenia. Może to powodować problemy i/lub sprawić, że urządzenie będzie działać nieprawidłowo</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
+    <string name="canned_replies_not_empty">Powinna być co najmniej jedna gotowa odpowiedź.</string>
+    <string name="charts_show_balance_steps_summary">Pokaż nadmiar/brak kroków na wykresach tygodniowych i miesięcznych</string>
+    <string name="charts_show_balance_sleep_title">Pokaż równowagę snu</string>
+    <string name="charts_show_balance_sleep_summary">Pokaż nadmiar/brak snu na wykresach tygodniowych i miesięcznych</string>
+    <string name="charts_show_balance_steps_title">Pokaż równowagę kroków</string>
 </resources>
