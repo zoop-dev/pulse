@@ -42,6 +42,12 @@ public class HuaweiNotificationsManager {
         notificationSpecCache.offer(notificationSpec);
     }
 
+    public static String getNotificationKey(NotificationSpec notificationSpec) {
+        if(!TextUtils.isEmpty(notificationSpec.key)) {
+            return notificationSpec.key;
+        }
+        return "0|" + notificationSpec.sourceAppId + "|" + notificationSpec.getId() + "||0";
+    }
 
     public void onNotification(NotificationSpec notificationSpec) {
 
@@ -79,7 +85,7 @@ public class HuaweiNotificationsManager {
             SendNotificationRemoveRequest sendNotificationReq = new SendNotificationRemoveRequest(this.support,
                     SendNotificationRequest.getNotificationType(notificationSpec.type), // notificationType
                     notificationSpec.sourceAppId,
-                    notificationSpec.key,
+                    getNotificationKey(notificationSpec),
                     id,
                     notificationSpec.channelId,
                     notificationSpec.category);
@@ -105,8 +111,8 @@ public class HuaweiNotificationsManager {
         }
         NotificationSpec notificationSpec = null;
         for (NotificationSpec spec : notificationSpecCache) {
-            notificationSpec = spec;
-            if (notificationSpec.key.equals(response.key)) {
+            if (getNotificationKey(spec).equals(response.key)) {
+                notificationSpec = spec;
                 break;
             }
         }

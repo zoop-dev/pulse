@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 
-import android.text.TextUtils;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiNotificationsManager.getNotificationKey;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SendNotificationRequest extends Request {
-
     private static final Logger LOG = LoggerFactory.getLogger(SendNotificationRequest.class);
 
     private HuaweiPacket packet;
@@ -54,8 +53,7 @@ public class SendNotificationRequest extends Request {
                 return Notifications.NotificationType.sms;
         }
     }
-
-
+    
     public void buildNotificationTLVFromNotificationSpec(NotificationSpec notificationSpec) {
         String title;
         if (notificationSpec.title != null)
@@ -76,7 +74,7 @@ public class SendNotificationRequest extends Request {
                 final NotificationSpec.Action action = notificationSpec.attachedActions.get(i);
                 if (action.type == NotificationSpec.Action.TYPE_WEARABLE_REPLY || action.type == NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
                     //NOTE: store notification key instead action key. The watch returns this key so it is more easier to find action by notification key
-                    replyKey = notificationSpec.key;
+                    replyKey = getNotificationKey(notificationSpec);
                     break;
                 }
             }
@@ -91,7 +89,7 @@ public class SendNotificationRequest extends Request {
         params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsTimestamp();
 
         params.notificationId = notificationSpec.getId();
-        params.notificationKey = notificationSpec.key;
+        params.notificationKey = getNotificationKey(notificationSpec);
         params.replyKey = replyKey;
         params.channelId = notificationSpec.channelId;
         params.category = notificationSpec.category;
