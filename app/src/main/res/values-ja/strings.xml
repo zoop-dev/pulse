@@ -2704,4 +2704,26 @@
     <string name="devicetype_garmin_fenix_7_pro">Garmin Fenix 7 Pro</string>
     <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
     <string name="devicetype_garmin_forerunner_255">Garmin Forerunner 255</string>
+    <string name="pref_title_notification_times_enabled">通知の時間</string>
+    <string name="search">探す</string>
+    <string name="gps_glonass">GPS + GLONASS</string>
+    <string name="title_activity_musicmanager">ミュージック マネージャー</string>
+    <string name="prefs_activity_in_device_card_title_summary">歩数、移動距離、睡眠情報をデバイスカードに表示する</string>
+    <string name="proprietary_app_warning">この機能にはプロプライエタリなアプリのインストールが必要です</string>
+    <string name="pref_header_sound">サウンド</string>
+    <string name="pref_description_user_interface">テーマ、メイン画面</string>
+    <string name="pref_description_dashboard">ウィジェット、統合するデバイスの選択</string>
+    <string name="pref_description_automations">自動エクスポート、自動取得</string>
+    <string name="pref_description_deprecated_functionalities">将来的に削除される予定の設定</string>
+    <string name="pref_header_main_screen">メイン画面</string>
+    <string name="pref_title_user_interface">ユーザーインターフェース</string>
+    <string name="pref_description_about_you">誕生日、性別、身長、体重、目標</string>
+    <string name="pref_description_developer_options">ログ、Intent API</string>
+    <string name="pref_header_external_integrations">外部アプリとの連携</string>
+    <string name="pref_header_automations">オートメーション</string>
+    <string name="pref_description_general">スタートアップ、言語、地域、位置情報</string>
+    <string name="pref_description_notifications">アプリの通知、ホワイトリスト/ブラックリスト</string>
+    <string name="pref_title_nagivation_apps">ナビゲーションアプリ</string>
+    <string name="pref_summary_notification_times_enabled">設定した時刻の間にのみ通知を送信します</string>
+    <string name="pref_time_sync">時刻の自動同期</string>
 </resources>
