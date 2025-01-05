@@ -853,4 +853,21 @@
     <string name="sonyswr12_settings_low_vibration_summary">Luba madala vibratsiooni intensiivsus ribal</string>
     <string name="sonyswr12_settings_stamina_summary">Energiasäästurežiim lülitab südame löögisageduse perioodilise automaatse mõõtmise välja, pikendades seega tööaega</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Nutika häire intervall on intervall enne installitud alarmi. Selles intervallis üritab seade kasutaja ärkamiseks tuvastada une kergemat faasi</string>
+    <string name="weekly_total">Nädala kokkuvõte</string>
+    <string name="prefs_wena3_title_activity">Aktiivsuse seaded</string>
+    <string name="white">Valge</string>
+    <string name="watchface_widget_type_weather">Ilm</string>
+    <string name="appmanager_app_edit">Muuda</string>
+    <string name="watchface_dialog_widget_cat_generic">Üldine</string>
+    <string name="prefs_wena3_title_screen">Ekraaniseaded</string>
+    <string name="notif_battery_full_title">Vidina aku on täis!</string>
+    <string name="watchface_widget_type_date">Kuupäev</string>
+    <string name="watchface_dialog_widget_cat_position">Positsioon</string>
+    <string name="appmanager_app_start">Käivita</string>
+    <string name="appmanager_app_share">Jaga</string>
+    <string name="watchface_widget_type_steps">Samme</string>
+    <string name="button_watchface_save_apply">Salvesta ja rakenda</string>
+    <string name="appmanager_app_download">Lae vahemällu</string>
+    <string name="watchface_widget_type_heart_rate">Pulsisagedus</string>
+    <string name="button_watchface_preview">Eelvaata kellast</string>
 </resources>
