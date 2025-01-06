@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets;
 import android.text.TextUtils;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
@@ -376,13 +378,12 @@ public class Notifications {
             public int type = 0;
             public int encoding = 0; // 3 - "utf-16"
             public int subId = 0;
-            public String sender;
             public String key;
+            public String addData;
             public String text;
 
             public ReplyResponse(ParamsProvider paramsProvider) {
                 super(paramsProvider);
-
                 this.serviceId = Notifications.id;
                 this.commandId = id;
             }
@@ -398,9 +399,14 @@ public class Notifications {
                 if (this.tlv.contains(0x04))
                     this.key = this.tlv.getString(0x04);
                 if (this.tlv.contains(0x05))
-                    this.sender = this.tlv.getString(0x05);
-                if (this.tlv.contains(0x06))
-                    this.text = this.tlv.getString(0x06);
+                    this.addData = this.tlv.getString(0x05);
+                if (this.tlv.contains(0x06)) {
+                    if(this.encoding == 3) {
+                        this.text = new String(this.tlv.getBytes(0x06), StandardCharsets.UTF_16);
+                    } else {
+                        this.text = this.tlv.getString(0x06);
+                    }
+                }
             }
         }
 
