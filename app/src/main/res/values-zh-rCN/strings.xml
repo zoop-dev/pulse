@@ -3705,4 +3705,6 @@
     <string name="charts_show_balance_sleep_summary">在周和月图表中显示睡眠过多/不足</string>
     <string name="charts_show_balance_steps_summary">在周线和月线图表中显示多余/缺乏步数</string>
     <string name="charts_show_balance_steps_title">显示步数平衡周期</string>
+    <string name="permission_disable_doze_title">忽略电池优化</string>
+    <string name="permission_disable_doze_summary">允许在后台运行，不受 Android 电池优化的阻碍</string>
 </resources>
