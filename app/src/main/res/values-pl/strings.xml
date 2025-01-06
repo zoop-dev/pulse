@@ -3724,4 +3724,6 @@
     <string name="charts_show_balance_sleep_title">Pokaż równowagę snu</string>
     <string name="charts_show_balance_sleep_summary">Pokaż nadmiar/brak snu na wykresach tygodniowych i miesięcznych</string>
     <string name="charts_show_balance_steps_title">Pokaż równowagę kroków</string>
+    <string name="permission_disable_doze_title">Zignoruj optymalizację baterii</string>
+    <string name="permission_disable_doze_summary">Umożliwia pracę w tle bez ograniczeń optymalizacji baterii w systemie Android</string>
 </resources>
