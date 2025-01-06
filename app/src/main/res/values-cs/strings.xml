@@ -3709,4 +3709,6 @@
     <string name="charts_show_balance_sleep_title">Zobrazit rovnováhu spánku</string>
     <string name="charts_show_balance_sleep_summary">Zobrazit nadbytek / nedostatek spánku v týdenních a měsíčních grafech</string>
     <string name="canned_replies_not_empty">Měla by existovat alespoň jedna odpověď.</string>
+    <string name="permission_disable_doze_title">Ignorovat optimalizaci baterie</string>
+    <string name="permission_disable_doze_summary">Umožňuje běh na pozadí bez zásahu optimalizacemi baterie v systému Android</string>
 </resources>
