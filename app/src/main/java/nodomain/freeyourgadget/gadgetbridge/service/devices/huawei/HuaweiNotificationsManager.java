@@ -16,6 +16,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotificationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotificationRemoveRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSMSReplyAck;
 
 public class HuaweiNotificationsManager {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiNotificationsManager.class);
@@ -105,16 +106,25 @@ public class HuaweiNotificationsManager {
             LOG.info("Reply is empty");
             return;
         }
-        if(response.type != 1 && response.type != 2) {
-            LOG.info("Reply: only type 1 and 2 supported");
-            return;
-        }
+
         NotificationSpec notificationSpec = null;
-        for (NotificationSpec spec : notificationSpecCache) {
-            if (getNotificationKey(spec).equals(response.key)) {
-                notificationSpec = spec;
-                break;
+        if(response.type == 1) { // generic SMS notification reply. Find by phone number
+            for (NotificationSpec spec : notificationSpecCache) {
+                if (spec.phoneNumber.equals(response.key)) {
+                    notificationSpec = spec;
+                    break;
+                }
             }
+        } else if(response.type == 2) {
+            for (NotificationSpec spec : notificationSpecCache) {
+                if (getNotificationKey(spec).equals(response.key)) {
+                    notificationSpec = spec;
+                    break;
+                }
+            }
+        } else {
+            LOG.info("Reply type {} is not supported", response.type);
+            return;
         }
         if (notificationSpec == null) {
             LOG.info("Notification for reply is not found");
@@ -139,7 +149,21 @@ public class HuaweiNotificationsManager {
             }
         }
         this.support.evaluateGBDeviceEvent(deviceEvtNotificationControl);
-        //TODO: maybe should be send reply. Service: 0x2, command: 0x10, tlv 7 and/or 1, type byte, 7f on error
+        if(response.type == 1) {
+            // NOTE: send response only for SMS reply
+            try {
+                // 0xff - OK
+                // 0x7f - error
+                // TODO: get response from SMSManager. Send pending intent result.
+                //    result can be one of the RESULT_ERROR_* from SmsManager. Not sure, need to check.
+                //    currently always send OK.
+                byte resultCode = (byte)0xff;
+                SendSMSReplyAck sendNotificationReq = new SendSMSReplyAck(this.support, resultCode);
+                sendNotificationReq.doPerform();
+            } catch (IOException e) {
+                LOG.error("Sending sns reply ACK", e);
+            }
+        }
     }
 
 }

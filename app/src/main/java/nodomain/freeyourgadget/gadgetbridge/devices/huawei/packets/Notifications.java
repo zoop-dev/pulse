@@ -404,7 +404,6 @@ public class Notifications {
             }
         }
 
-        //TODO: send ack if required, 7f on error.
         public static class ReplyAck extends HuaweiPacket {
 
             public ReplyAck(
