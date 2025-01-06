@@ -83,6 +83,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner255SMusicCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner265Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner265SCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner45Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner55Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner620Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner955Coordinator;
@@ -457,6 +458,7 @@ public enum DeviceType {
     GARMIN_FENIX_7X(GarminFenix7XCoordinator.class),
     GARMIN_FENIX_7_PRO(GarminFenix7ProCoordinator.class),
     GARMIN_FENIX_8(GarminFenix8Coordinator.class),
+    GARMIN_FORERUNNER_45(GarminForerunner45Coordinator.class),
     GARMIN_FORERUNNER_55(GarminForerunner55Coordinator.class),
     GARMIN_FORERUNNER_165(GarminForerunner165Coordinator.class),
     GARMIN_FORERUNNER_235(GarminForerunner235Coordinator.class),
