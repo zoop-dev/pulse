@@ -3653,4 +3653,5 @@
     <string name="charts_show_balance_sleep_title">Alvásegyensúly megjelenítése</string>
     <string name="permission_disable_doze_title">Akkumulátor-optimalizálás figyelmen kívül hagyása</string>
     <string name="permission_disable_doze_summary">Lehetővé teszi a háttérben történő futtatást az Android akkumulátor-optimalizálásai által akadálytalanul</string>
+    <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
 </resources>
