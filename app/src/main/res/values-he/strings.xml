@@ -3095,4 +3095,12 @@
     <string name="discharge_interval_4">הפרש פריקה 4</string>
     <string name="discharge_interval_5">הפרש פריקה 5</string>
     <string name="power_w">עוצמה בוואט/W</string>
+    <string name="permission_disable_doze_title">התעלמות ממיטובי סוללה</string>
+    <string name="battery_discharge_intervals">הפרשי פריקות סוללה</string>
+    <string name="canned_replies_not_empty">אמורה להיות לפחות תגובה אחת מוגדרת מראש.</string>
+    <string name="battery_minimum_charge">אחוז הטעינה המזערי ב־%</string>
+    <string name="battery_allow_pass_though_summary">כשהאפשרות פעילה, אפשר להטעין את הסוללה תוך כדי פריקה</string>
+    <string name="discharge_interval_1">הפרש פריקה 1</string>
+    <string name="manual_discharge">הפרשי פריקה ידניים</string>
+    <string name="permission_disable_doze_summary">לאפשר לרוץ ברקע ללא הטרדות מצד מיטובי הסוללה של Android</string>
 </resources>
