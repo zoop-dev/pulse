@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -41,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
@@ -74,6 +76,7 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
     public static final int ACTIVITY_SLEEP_RESTFUL = 17;
     public static final int ACTIVITY_SLEEP_START = 18;
     public static final int ACTIVITY_SLEEP_END = 19;
+    public static final int ACTIVITY_SLEEP_REM = 20;
 
     public MoyoungActivitySampleProvider(GBDevice device, DaoSession session) {
         super(device, session);
@@ -115,6 +118,8 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
             return ActivityKind.LIGHT_SLEEP;
         else if (rawType == ACTIVITY_SLEEP_RESTFUL)
             return ActivityKind.DEEP_SLEEP;
+        else if (rawType == ACTIVITY_SLEEP_REM)
+            return ActivityKind.REM_SLEEP;
         else if (rawType == ACTIVITY_SLEEP_START || rawType == ACTIVITY_SLEEP_END)
             return ActivityKind.NOT_MEASURED;
         else if (rawType == ACTIVITY_TRAINING_WALK)
@@ -142,10 +147,27 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
             return ACTIVITY_SLEEP_LIGHT;
         else if (activityKind == ActivityKind.DEEP_SLEEP)
             return ACTIVITY_SLEEP_RESTFUL;
+        else if (activityKind == ActivityKind.REM_SLEEP)
+            return ACTIVITY_SLEEP_REM;
         else if (activityKind == ActivityKind.ACTIVITY)
             return ACTIVITY_NOT_MEASURED; // TODO: ?
         else
             throw new IllegalArgumentException("Invalid Gadgetbridge activity kind: " + activityKind);
+    }
+
+    final ActivityKind sleepStageToActivityKind(final int sleepStage) {
+        switch (sleepStage) {
+            case MoyoungConstants.SLEEP_LIGHT:
+                return ActivityKind.LIGHT_SLEEP;
+            case MoyoungConstants.SLEEP_RESTFUL:
+                return ActivityKind.DEEP_SLEEP;
+            case MoyoungConstants.SLEEP_REM:
+                return ActivityKind.REM_SLEEP;
+            case MoyoungConstants.SLEEP_SOBER:
+                return ActivityKind.AWAKE_SLEEP;
+            default:
+                return ActivityKind.UNKNOWN;
+        }
     }
 
     @Override
@@ -177,23 +199,10 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
         }
 
         overlayHeartRate(sampleByTs, timestamp_from, timestamp_to);
-//        overlaySleep(sampleByTs, timestamp_from, timestamp_to);
-
-        // Add empty dummy samples every 5 min to make sure the charts and stats aren't too malformed
-        // This is necessary due to the Colmi rings just reporting steps/calories/distance aggregates per hour
-//        for (int i=timestamp_from; i<=timestamp_to; i+=300) {
-//            MoyoungActivitySample sample = sampleByTs.get(i);
-//            if (sample == null) {
-//                sample = new MoyoungActivitySample();
-//                sample.setTimestamp(i);
-//                sample.setProvider(this);
-//                sample.setRawKind(ActivitySample.NOT_MEASURED);
-//                sampleByTs.put(i, sample);
-//            }
-//        }
+        overlaySleep(sampleByTs, timestamp_from, timestamp_to);
 
         final List<MoyoungActivitySample> finalSamples = new ArrayList<>(sampleByTs.values());
-        Collections.sort(finalSamples, (a, b) -> Integer.compare(a.getTimestamp(), b.getTimestamp()));
+        Collections.sort(finalSamples, Comparator.comparingInt(MoyoungActivitySample::getTimestamp));
 
         final long nanoEnd = System.nanoTime();
         final long executionTime = (nanoEnd - nanoStart) / 1000000;
@@ -218,6 +227,64 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
             }
 
             sample.setHeartRate(hrSample.getHeartRate());
+        }
+    }
+
+    private void overlaySleep(final Map<Integer, MoyoungActivitySample> sampleByTs, final int timestamp_from, final int timestamp_to) {
+        final MoyoungSleepStageSampleProvider sleepStageSampleProvider = new MoyoungSleepStageSampleProvider(getDevice(), getSession());
+        final List<MoyoungSleepStageSample> sleepStageSamples = sleepStageSampleProvider.getAllSamples(timestamp_from * 1000L, timestamp_to * 1000L);
+
+        // Retrieve the last stage before this time range, as the user could have been asleep during
+        // the range transition
+        final MoyoungSleepStageSample lastSleepStageBeforeRange = sleepStageSampleProvider.getLastSampleBefore(timestamp_from * 1000L);
+        if (lastSleepStageBeforeRange != null && lastSleepStageBeforeRange.getStage() != MoyoungConstants.SLEEP_SOBER) {
+            LOG.debug("Last sleep stage before range: ts={}, stage={}", lastSleepStageBeforeRange.getTimestamp(), lastSleepStageBeforeRange.getStage());
+            sleepStageSamples.add(0, lastSleepStageBeforeRange);
+        }
+        // Retrieve the next sample after the time range, as the last stage could exceed it
+        final MoyoungSleepStageSample nextSleepStageAfterRange = sleepStageSampleProvider.getNextSampleAfter(timestamp_to * 1000L);
+        if (nextSleepStageAfterRange != null) {
+            LOG.debug("Next sleep stage after range: ts={}, stage={}", nextSleepStageAfterRange.getTimestamp(), nextSleepStageAfterRange.getStage());
+            sleepStageSamples.add(nextSleepStageAfterRange);
+        }
+
+        if (sleepStageSamples.size() > 1) {
+            LOG.debug("Overlaying with data from {} sleep stage samples", sleepStageSamples.size());
+        } else {
+            LOG.warn("Not overlaying sleep data because more than 1 sleep stage sample is required");
+            return;
+        }
+
+        MoyoungSleepStageSample prevSample = null;
+        for (final MoyoungSleepStageSample sleepStageSample : sleepStageSamples) {
+            if (prevSample == null) {
+                prevSample = sleepStageSample;
+                continue;
+            }
+            final ActivityKind sleepRawKind = sleepStageToActivityKind(prevSample.getStage());
+            if (sleepRawKind.equals(ActivityKind.AWAKE_SLEEP)) {
+                prevSample = sleepStageSample;
+                continue;
+            }
+            // round to the nearest minute, we don't need per-second granularity
+            final int tsSecondsPrev = (int) ((prevSample.getTimestamp() / 1000) / 60) * 60;
+            final int tsSecondsCur = (int) ((sleepStageSample.getTimestamp() / 1000) / 60) * 60;
+            for (int i = tsSecondsPrev; i < tsSecondsCur; i += 60) {
+                if (i < timestamp_from || i > timestamp_to) continue;
+                MoyoungActivitySample sample = sampleByTs.get(i);
+                if (sample == null) {
+                    sample = new MoyoungActivitySample();
+                    sample.setTimestamp(i);
+                    sample.setProvider(this);
+                    sampleByTs.put(i, sample);
+                }
+                sample.setRawKind(toRawActivityKind(sleepRawKind));
+                sample.setRawIntensity(ActivitySample.NOT_MEASURED);
+            }
+            prevSample = sleepStageSample;
+        }
+        if (prevSample != null && !sleepStageToActivityKind(prevSample.getStage()).equals(ActivityKind.AWAKE_SLEEP)) {
+            LOG.warn("Last sleep stage sample was not of type awake");
         }
     }
 

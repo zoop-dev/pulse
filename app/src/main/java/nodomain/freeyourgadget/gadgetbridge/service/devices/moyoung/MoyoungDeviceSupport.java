@@ -72,6 +72,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungWeatherToday;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungBloodPressureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumDeviceVersion;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumLanguage;
@@ -87,6 +88,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungBloodPressureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSpo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -1186,126 +1188,49 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         if (data.length % 3 != 0)
             throw new IllegalArgumentException();
 
-        int prevActivityType = MoyoungActivitySampleProvider.ACTIVITY_SLEEP_START;
-        int prevSampleTimestamp = -1;
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            MoyoungSleepStageSampleProvider provider = new MoyoungSleepStageSampleProvider(getDevice(), dbHandler.getDaoSession());
 
-        for(int i = 0; i < data.length / 3; i++)
-        {
-            int type = data[3*i];
-            int start_h = data[3*i + 1];
-            int start_m = data[3*i + 2];
+            User user = DBHelper.getUser(dbHandler.getDaoSession());
+            Device device = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession());
 
-            LOG.info("sleep[" + daysAgo + "][" + i + "] type=" + type + ", start_h=" + start_h + ", start_m=" + start_m);
+            List<MoyoungSleepStageSample> samples = new ArrayList<>();
 
-            // SleepAnalysis measures sleep fragment type by marking the END of the fragment.
-            // The watch provides data by marking the START of the fragment.
+            for(int i = 0; i < data.length / 3; i++)
+            {
+                int type = data[3*i];
+                int start_h = data[3*i + 1];
+                int start_m = data[3*i + 2];
 
-            // Additionally, ActivityAnalysis (used by the weekly view...) does AVERAGING when
-            // adjacent samples are not of the same type..
-
-            // FIXME: The way Gadgetbridge does it seems kinda broken...
-
-            // This means that we have to convert the data when importing. Each sample gets
-            // converted to two samples - one marking the beginning of the segment, and another
-            // marking the end.
-
-            // Watch:           SLEEP_LIGHT       ...       SLEEP_DEEP       ...      SLEEP_LIGHT        ...       SLEEP_SOBER
-            // Gadgetbridge: ANYTHING,SLEEP_LIGHT ... SLEEP_LIGHT,SLEEP_DEEP ... SLEEP_DEEP,SLEEP_LIGHT  ... SLEEP_LIGHT,ANYTHING
-            //                       ^     ^- this is important, it MUST be sleep, to ensure proper detection
-            //  Time since the last -|        of sleepStart, see SleepAnalysis.calculateSleepSessions
-            //  sample must be 0
-            //  (otherwise SleepAnalysis will include this fragment...)
-
-            // This means that when inserting samples:
-            // * every sample is converted to (previous_sample_type, current_sample_type) happening
-            //   roughly at the same time (but in this order)
-            // * the first sample is prefixed by unspecified activity
-            // * the last sample (SOBER) is converted to unspecified activity
-
-            try (DBHandler dbHandler = GBApplication.acquireDB()) {
-                User user = DBHelper.getUser(dbHandler.getDaoSession());
-                Device device = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession());
-
-                MoyoungActivitySampleProvider provider = new MoyoungActivitySampleProvider(getDevice(), dbHandler.getDaoSession());
+                LOG.info("sleep[" + daysAgo + "][" + i + "] type=" + type + ", start_h=" + start_h + ", start_m=" + start_m);
 
                 Calendar thisSample = Calendar.getInstance();
-                thisSample.add(Calendar.HOUR_OF_DAY, 4); // the clock assumes the sleep day changes at 20:00, so move the time forward to make the day correct
-                thisSample.set(Calendar.MINUTE, 0);
-                thisSample.add(Calendar.DATE, -daysAgo);
-
+                thisSample.add(Calendar.DAY_OF_MONTH, -daysAgo);
                 thisSample.set(Calendar.HOUR_OF_DAY, start_h);
                 thisSample.set(Calendar.MINUTE, start_m);
                 thisSample.set(Calendar.SECOND, 0);
                 thisSample.set(Calendar.MILLISECOND, 0);
-                int thisSampleTimestamp = (int) (thisSample.getTimeInMillis() / 1000);
+                if (start_h >= 20) {
+                    // Evening sleep is considered to be a day earlier
+                    thisSample.add(Calendar.MINUTE, -1440);
+                }
 
-                int activityType;
-                if (type == MoyoungConstants.SLEEP_SOBER)
-                    activityType = MoyoungActivitySampleProvider.ACTIVITY_SLEEP_END;
-                else if (type == MoyoungConstants.SLEEP_LIGHT)
-                    activityType = MoyoungActivitySampleProvider.ACTIVITY_SLEEP_LIGHT;
-                else if (type == MoyoungConstants.SLEEP_RESTFUL)
-                    activityType = MoyoungActivitySampleProvider.ACTIVITY_SLEEP_RESTFUL;
-                else
-                    throw new IllegalArgumentException("Invalid sleep type");
+                MoyoungSleepStageSample currentSample = new MoyoungSleepStageSample();
+                currentSample.setDevice(device);
+                currentSample.setUser(user);
+                currentSample.setStage(type);
+                currentSample.setTimestamp(thisSample.getTimeInMillis());
+                samples.add(currentSample);
 
-                // Insert the end of previous segment sample
-                MoyoungActivitySample prevSegmentSample = new MoyoungActivitySample();
-                prevSegmentSample.setDevice(device);
-                prevSegmentSample.setUser(user);
-                prevSegmentSample.setProvider(provider);
-                prevSegmentSample.setTimestamp(thisSampleTimestamp - 1);
-
-                prevSegmentSample.setRawKind(prevActivityType);
-                prevSegmentSample.setDataSource(MoyoungActivitySampleProvider.SOURCE_SLEEP_SUMMARY);
-
-//                prevSegmentSample.setBatteryLevel(ActivitySample.NOT_MEASURED);
-                prevSegmentSample.setSteps(ActivitySample.NOT_MEASURED);
-                prevSegmentSample.setDistanceMeters(ActivitySample.NOT_MEASURED);
-                prevSegmentSample.setCaloriesBurnt(ActivitySample.NOT_MEASURED);
-
-                prevSegmentSample.setHeartRate(ActivitySample.NOT_MEASURED);
-//                prevSegmentSample.setBloodPressureSystolic(ActivitySample.NOT_MEASURED);
-//                prevSegmentSample.setBloodPressureDiastolic(ActivitySample.NOT_MEASURED);
-//                prevSegmentSample.setBloodOxidation(ActivitySample.NOT_MEASURED);
-
-//                addGBActivitySampleIfNotExists(provider, prevSegmentSample);
-
-                // Insert the start of new segment sample
-                MoyoungActivitySample nextSegmentSample = new MoyoungActivitySample();
-                nextSegmentSample.setDevice(device);
-                nextSegmentSample.setUser(user);
-                nextSegmentSample.setProvider(provider);
-                nextSegmentSample.setTimestamp(thisSampleTimestamp);
-
-                nextSegmentSample.setRawKind(activityType);
-                nextSegmentSample.setDataSource(MoyoungActivitySampleProvider.SOURCE_SLEEP_SUMMARY);
-
-//                nextSegmentSample.setBatteryLevel(ActivitySample.NOT_MEASURED);
-                nextSegmentSample.setSteps(ActivitySample.NOT_MEASURED);
-                nextSegmentSample.setDistanceMeters(ActivitySample.NOT_MEASURED);
-                nextSegmentSample.setCaloriesBurnt(ActivitySample.NOT_MEASURED);
-
-                nextSegmentSample.setHeartRate(ActivitySample.NOT_MEASURED);
-//                nextSegmentSample.setBloodPressureSystolic(ActivitySample.NOT_MEASURED);
-//                nextSegmentSample.setBloodPressureDiastolic(ActivitySample.NOT_MEASURED);
-//                nextSegmentSample.setBloodOxidation(ActivitySample.NOT_MEASURED);
-
-//                addGBActivitySampleIfNotExists(provider, nextSegmentSample);
-
-                // Set the activity type on all samples in this time period
-                if (prevActivityType != MoyoungActivitySampleProvider.ACTIVITY_SLEEP_START)
-//                    provider.updateActivityInRange(prevSampleTimestamp, thisSampleTimestamp, prevActivityType);
-
-                prevActivityType = activityType;
-                if (prevActivityType == MoyoungActivitySampleProvider.ACTIVITY_SLEEP_END)
-                    prevActivityType = MoyoungActivitySampleProvider.ACTIVITY_SLEEP_START;
-                prevSampleTimestamp = thisSampleTimestamp;
-            } catch (Exception ex) {
-                LOG.error("Error saving samples: ", ex);
-                GB.toast(getContext(), "Error saving samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
-                GB.updateTransferNotification(null, "Data transfer failed", false, 0, getContext());
+                LOG.debug("Adding sleep stage sample: ts={} stage={}", thisSample.getTime(), type);
             }
+
+            LOG.debug("Will persist {} sleep stage samples", samples.size());
+            provider.addSamples(samples);
+        } catch (Exception ex) {
+            LOG.error("Error saving sleep stage samples: ", ex);
+            GB.toast(getContext(), "Error saving sleep stage samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.updateTransferNotification(null, "Data transfer failed", false, 0, getContext());
         }
     }
 

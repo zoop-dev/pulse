@@ -75,4 +75,9 @@ public class ColmiI28UltraCoordinator extends AbstractMoyoungDeviceCoordinator {
     public int getWorldClocksLabelLength() {
         return 30;
     }
+
+    @Override
+    public boolean supportsRemSleep() {
+        return true;
+    }
 }

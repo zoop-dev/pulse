@@ -164,6 +164,7 @@ public class GBDaoGenerator {
         addMoyoungHeartRateSample(schema, user, device);
         addMoyoungSpo2Sample(schema, user, device);
         addMoyoungBloodPressureSample(schema, user, device);
+        addMoyoungSleepStageSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
         addHuaweiStressSample(schema, user, device);
@@ -1137,6 +1138,13 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractBloodPressureSample", bpSample, user, device);
         addBloodPressureProperies(bpSample);
         return bpSample;
+    }
+
+    private static Entity addMoyoungSleepStageSample(Schema schema, Entity user, Entity device) {
+        Entity sleepStageSample = addEntity(schema, "MoyoungSleepStageSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sleepStageSample, user, device);
+        sleepStageSample.addIntProperty("stage").notNull();
+        return sleepStageSample;
     }
 
     private static void addCommonActivitySampleProperties(String superClass, Entity activitySample, Entity user, Entity device) {

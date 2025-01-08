@@ -173,6 +173,7 @@ public class MoyoungConstants {
     public static final byte SLEEP_SOBER = 0;
     public static final byte SLEEP_LIGHT = 1;
     public static final byte SLEEP_RESTFUL = 2;
+    public static final byte SLEEP_REM = 3;
 
     public static final byte CMD_QUERY_SLEEP_ACTION = 58;                           // (*) {i} -> {hour, x[60]}
 
