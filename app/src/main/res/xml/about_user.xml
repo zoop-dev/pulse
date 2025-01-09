@@ -15,6 +15,7 @@
 
         <nodomain.freeyourgadget.gadgetbridge.util.XDatePreference
             app:iconSpaceReserved="false"
+            android:defaultValue="2000-01-01"
             android:key="activity_user_date_of_birth"
             android:title="@string/activity_prefs_date_birth" />
 

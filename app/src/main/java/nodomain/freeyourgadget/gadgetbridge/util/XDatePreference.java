@@ -27,9 +27,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class XDatePreference extends DialogPreference {
-    private int year;
-    private int month;
-    private int day;
+    private int year = 1970;
+    private int month = 1;
+    private int day = 1;
     private long minDate; // TODO actually read minDate
     private long maxDate; // TODO actually read maxDate
 

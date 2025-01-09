@@ -51,7 +51,7 @@ public class ActivityUser {
 
     private static final String defaultUserName = "gadgetbridge-user";
     public static final int defaultUserGender = GENDER_FEMALE;
-    public static final String defaultUserDateOfBirth = "1970-01-01";
+    public static final String defaultUserDateOfBirth = "2000-01-01";
     public static final int defaultUserAge = 0;
     public static final int defaultUserHeightCm = 175;
     public static final int defaultUserWeightKg = 70;
