@@ -55,6 +55,7 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static String EXTRA_OUTPUT2_WATT = "output2_watt";
     public static String EXTRA_TEMP1 = "temp1";
     public static String EXTRA_TEMP2 = "temp2";
+    public static String EXTRA_DEBUG = "debug";
 
     private final Map<String, View> widgetMap = new HashMap<>();
     private GridLayout gridLayout;
@@ -74,14 +75,15 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                     int temp2 = extras.getInt(EXTRA_TEMP2);
                     int output1_watt = extras.getInt(EXTRA_OUTPUT1_WATT);
                     int output2_watt = extras.getInt(EXTRA_OUTPUT2_WATT);
-                    updateWidget("battery", battery_pct + "%\n" + battery_wh + "Wh", (float) (battery_pct / 100.0));
-                    updateWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
-                    updateWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
-                    updateWidget("temp1", temp1 + "°C", (float) ((temp1 + 20) / 100.0));
-                    updateWidget("temp2", temp2 + "°C", (float) ((temp2 + 20) / 100.0));
-                    updateWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
-                    updateWidget("output2", output2_watt + "W", (float) (output2_watt / 400.0));
-
+                    String debug = extras.getString(EXTRA_DEBUG);
+                    updateGaugeWidget("battery", battery_pct + "%\n" + battery_wh + "Wh", (float) (battery_pct / 100.0));
+                    updateGaugeWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
+                    updateGaugeWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
+                    updateGaugeWidget("temp1", temp1 + "°C", (float) ((temp1 + 20) / 100.0));
+                    updateGaugeWidget("temp2", temp2 + "°C", (float) ((temp2 + 20) / 100.0));
+                    updateGaugeWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
+                    updateGaugeWidget("output2", output2_watt + "W", (float) (output2_watt / 400.0));
+                    updateTextWidget("debug",debug);
                     swipeLayout.setRefreshing(false);
                 }
             }
@@ -94,7 +96,7 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_stress_unknown),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_poor_color),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_fair_color),
-                ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_good_color),
+                ContextCompat.getColor(GBApplication.getContext(), R.color.body_energy_level_color),
         };
     }
 
@@ -111,7 +113,7 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static int[] getColorsOutput() {
         return new int[]{
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_stress_unknown),
-                ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_good_color),
+                ContextCompat.getColor(GBApplication.getContext(), R.color.body_energy_level_color),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_fair_color),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.vo2max_value_poor_color),
         };
@@ -145,7 +147,15 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         };
     }
 
-    private void updateWidget(String name, String value, float gaugeFill) {
+    private void updateTextWidget(String name, String value) {
+        View view = widgetMap.get(name);
+        if (view != null) {
+            TextView debugValue = view.findViewById(R.id.text_value);
+            debugValue.setText(value);
+        }
+    }
+
+    private void updateGaugeWidget(String name, String value, float gaugeFill) {
         View view = widgetMap.get(name);
         if (view != null) {
             TextView gaugeValue = view.findViewById(R.id.gauge_value);
@@ -178,6 +188,7 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         createWidget("temp2", "Temp 2", 1);
         createWidget("output1", "Output 1", 1);
         createWidget("output2", "Output 2", 1);
+        createWidget("debug", "Debug", 2);
 
         // Set pull-down-to-refresh action
         swipeLayout = findViewById(R.id.solarequipmentview_swipe_layout);
@@ -214,12 +225,16 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         card.setLayoutParams(layoutParams);
         LayoutInflater inflater = getLayoutInflater();
 
-        final View gaugeView = inflater.inflate(R.layout.dashboard_widget_generic_gauge, card, false);
-        final TextView gaugeLabel = gaugeView.findViewById(R.id.gauge_label);
-        gaugeLabel.setText(label);
-
-        card.addView(gaugeView);
-        widgetMap.put(name, gaugeView);
+        View view;
+        if (name.equals("debug")) {
+            view = inflater.inflate(R.layout.dashboard_widget_text, card, false);
+        } else {
+            view = inflater.inflate(R.layout.dashboard_widget_generic_gauge, card, false);
+            final TextView gaugeLabel = view.findViewById(R.id.gauge_label);
+            gaugeLabel.setText(label);
+        }
+        card.addView(view);
+        widgetMap.put(name, view);
         gridLayout.addView(card);
     }
 

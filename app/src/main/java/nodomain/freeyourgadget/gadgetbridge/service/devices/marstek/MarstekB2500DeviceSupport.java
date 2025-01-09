@@ -66,8 +66,8 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
     private static final byte[] COMMAND_SET_BATTERY_ALLOW_PASS_THOUGH = new byte[]{COMMAND_PREFIX, 0x06, COMMAND, 0x0d, 0x00, 0x5b};
     private static final byte[] COMMAND_SET_BATTERY_DISALLOW_PASS_THOUGH = new byte[]{COMMAND_PREFIX, 0x06, COMMAND, 0x0d, 0x01, 0x5a};
     private static final Logger LOG = LoggerFactory.getLogger(MarstekB2500DeviceSupport.class);
+    public int firmware_major;
     private boolean is_initialized = false;
-    private int firmwareVersion;
 
     public MarstekB2500DeviceSupport() {
         super(LOG);
@@ -190,10 +190,10 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         int p1_watt = buf.getShort();
         int p2_watt = buf.getShort();
         int battery_pct = buf.getShort() / 10;
-        firmwareVersion = buf.get() & 0xff;
+        firmware_major = buf.get() & 0xff;
         boolean battery_allow_passthrough = buf.get() != 0x01;
         boolean battery_manual_discharge_intervals = buf.get() != 0x01;
-        buf.position(buf.position() + 1); // skip unknown
+        int network_status = buf.get() & 0x0ff; // bit 0 wifi, bit 1 mqtt
         boolean output1_active = buf.get() != 0x00;
         boolean output2_active = buf.get() != 0x00;
         byte battery_max_use_pct = buf.get();
@@ -202,24 +202,40 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         int battery_wh = buf.getShort();
         int output_to_inverter_1_watt = buf.getShort();
         int output_to_inverter_2_watt = buf.getShort();
-        buf.position(buf.position() + 3); // skip unknown
+        boolean expansion_battery_1_present = buf.get() != 0x00;
+        boolean expansion_battery_2_present = buf.get() != 0x00;
+        int region_code = buf.get();
         int hour_utc = buf.get();
         int minute_utc = buf.get();
         int temperature_sensor_1 = buf.getShort();
         int temperature_sensor_2 = buf.getShort();
-        buf.position(buf.position() + 3); // skip unknown
+        buf.position(buf.position() + 2); // skip unknown
+        int firmware_minor = buf.get() & 0xff;
         int battery_charging_wh_24h = buf.getInt();
         int battery_discharging_wh_24h = buf.getInt();
-        int input_wh_last_24h = buf.getInt();
-        int output_wh_last_24h = buf.getInt();
+        int input_wh_24h = buf.getInt();
+        int output_wh_24h = buf.getInt();
 
         int battery_minimum_charge_pct = 100 - battery_max_use_pct;
-        int output_to_inverter_sum_watt = output_to_inverter_1_watt + output_to_inverter_2_watt;
 
-        LOG.info("p1_active: {}, p2_active: {}, p1_watt: {}W, p2_watt: {}W, battery_wh: {}Wh, battery_minimum_charge_pct: {}%, battery_allow_passthrough: {}, battery_manual_discharge_intervals: {}, output_to_inverter_target: {}W, output_to_inverter: {}W+{}W={}W, firmwareVersion: V{}, ",
-                p1_active, p2_active, p1_watt, p2_watt, battery_wh, battery_minimum_charge_pct, battery_allow_passthrough, battery_manual_discharge_intervals, output_to_inverter_target, output_to_inverter_1_watt, output_to_inverter_2_watt, output_to_inverter_sum_watt, firmwareVersion);
+        String firmwareVersion = "V" + firmware_major + "." + firmware_minor;
+        String debug = "p1_active: " + p1_active + "\n" +
+                "p2_active: " + p2_active + "\n" +
+                "output1_active: " + output1_active + "\n" +
+                "output2_active: " + output2_active + "\n" +
+                "output_to_inverter_target: " + output_to_inverter_target + " W\n" +
+                "light_condition: " + (light_condition == 0 ? "good" : (light_condition == 1 ? "bad" : "fair")) + "\n" +
+                "battery_charging_24h: " + battery_charging_wh_24h + " Wh\n" +
+                "battery_discharging_24h: " + battery_discharging_wh_24h + " Wh\n" +
+                "input_24h: " + input_wh_24h + " Wh\n" +
+                "output_24h: " + output_wh_24h + " Wh\n" +
+                "time_utc: " + DateTimeUtils.formatTime(hour_utc, minute_utc) + "\n" +
+                "region: " + (region_code == 0 ? "EU" : (region_code == 1 ? "CN" : (region_code == 2 ? "OTHER" : "UNKNOWN"))) + "\n" +
+                "network_status: " + (network_status == 0 ? "connected" : "disconnected") + "\n" +
+                "expansion_battery1: " + expansion_battery_1_present + "\n" +
+                "expansion_battery2: " + expansion_battery_2_present;
 
-        getDevice().setFirmwareVersion("V" + firmwareVersion);
+        getDevice().setFirmwareVersion(firmwareVersion);
         getDevice().sendDeviceUpdateIntent(getContext());
 
         devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(battery_minimum_charge_pct));
@@ -240,6 +256,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP2, temperature_sensor_2);
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT1_WATT, output_to_inverter_1_watt);
         intent.putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, output_to_inverter_2_watt);
+        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_DEBUG, debug);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getContext().sendBroadcast(intent);
     }
@@ -320,7 +337,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
     private byte[] encodeDischargeIntervalsFromPreferences() {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
         if (devicePrefs.getBoolean(PREF_BATTERY_DISCHARGE_MANUAL, true)) {
-            int nr_invervals = (firmwareVersion >= 220) ? 5 : 3; // old firmware V210 only had 3 intervals it seems, so set only 3
+            int nr_invervals = (firmware_major >= 218) ? 5 : 3;
             int length = 5 + nr_invervals * 7;
 
             ByteBuffer buf = ByteBuffer.allocate(length);
