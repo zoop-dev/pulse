@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
 import org.junit.Test;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.NotificationFilterActivit
 import nodomain.freeyourgadget.gadgetbridge.entities.NotificationFilter;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 
+import static nodomain.freeyourgadget.gadgetbridge.util.GB.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -107,5 +109,64 @@ public class NotificationListenerTest extends TestBase {
         NotificationFilter filter = new NotificationFilter();
         filter.setNotificationFilterMode(NotificationFilterActivity.NOTIFICATION_FILTER_MODE_NONE);
         assertTrue(mNotificationListener.shouldContinueAfterFilter(body, wordList, filter));
+    }
+
+    @Test
+    public void isOutsideNotificationTimes_samedayWindow_tooEarly_MustReturnTrue() {
+        assertTrue(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(6, 0),
+            /* start= */ LocalTime.of(7, 0),
+            /* end= */ LocalTime.of(20, 0)
+        ));
+    }
+
+    @Test
+    public void isOutsideNotificationTimes_samedayWindow_withinWindow_MustReturnFalse() {
+        assertFalse(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(10, 0),
+            /* start= */ LocalTime.of(7, 0),
+            /* end= */ LocalTime.of(20, 0)
+        ));
+    }
+
+    @Test
+    public void isOutsideNotificationTimes_samedayWindow_tooLate_MustReturnTrue() {
+        assertTrue(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(21, 0),
+            /* start= */ LocalTime.of(7, 0),
+            /* end= */ LocalTime.of(20, 0)
+        ));
+    }
+
+    @Test
+    public void isOutsideNotificationTimes_crossMidnightWindow_tooEarly_MustReturnTrue() {
+        assertTrue(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(18, 0),
+            /* start= */ LocalTime.of(20, 0),
+            /* end= */ LocalTime.of(7, 0)
+        ));
+    }
+
+    @Test
+    public void isOutsideNotificationTimes_crossMidnightWindow_withinWindow_MustReturnFalse() {
+        assertFalse(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(21, 0),
+            /* start= */ LocalTime.of(20, 0),
+            /* end= */ LocalTime.of(7, 0)
+        ));
+        assertFalse(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(6, 0),
+            /* start= */ LocalTime.of(20, 0),
+            /* end= */ LocalTime.of(7, 0)
+        ));
+    }
+
+    @Test
+    public void isOutsideNotificationTimes_crossMidnightWindow_tooLate_MustReturnTrue() {
+        assertTrue(NotificationListener.isOutsideNotificationTimes(
+            /* now= */ LocalTime.of(8, 0),
+            /* start= */ LocalTime.of(20, 0),
+            /* end= */ LocalTime.of(7, 0)
+        ));
     }
 }

@@ -543,6 +543,16 @@ public class NotificationListener extends NotificationListenerService {
         GBApplication.deviceService().onNotification(notificationSpec);
     }
 
+    static boolean isOutsideNotificationTimes(final LocalTime now, final LocalTime start, final LocalTime end) {
+        if (start.isBefore(end)) {
+            // eg. 06:00 -> 22:00
+            return now.isBefore(start) || now.isAfter(end);
+        } else {
+            // goes past midnight, eg. 22:00 -> 06:00
+            return now.isBefore(start) && now.isAfter(end);
+        }
+    }
+
     private static boolean isOutsideNotificationTimes(final GBPrefs prefs) {
         if (!prefs.getNotificationTimesEnabled()) {
             return false;
@@ -551,14 +561,7 @@ public class NotificationListener extends NotificationListenerService {
         final LocalTime now = LocalTime.now();
         final LocalTime start = prefs.getNotificationTimesStart();
         final LocalTime end = prefs.getNotificationTimesEnd();
-        final boolean shouldIgnore;
-        if (start.isBefore(end)) {
-            // eg. 06:00 -> 22:00
-            shouldIgnore = now.isAfter(start) && now.isBefore(end);
-        } else {
-            // goes past midnight, eg. 22:00 -> 06:00
-            shouldIgnore = now.isAfter(start) || now.isBefore(end);
-        }
+        final boolean shouldIgnore = isOutsideNotificationTimes(now, start, end);
 
         if (shouldIgnore) {
             LOG.debug("Ignoring notification outside of notification times {}/{}", start, end);

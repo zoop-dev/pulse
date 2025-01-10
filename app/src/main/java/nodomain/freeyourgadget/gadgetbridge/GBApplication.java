@@ -127,7 +127,7 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 47;
+    private static final int CURRENT_PREFS_VERSION = 48;
 
     private static final LimitedQueue<Integer, String> mIDSenderLookup = new LimitedQueue<>(16);
     private static GBPrefs prefs;
@@ -1943,6 +1943,16 @@ public class GBApplication extends Application {
             if (prefs.contains("activity_user_goal_standing_time_minutes")) {
                 editor.putString("activity_user_goal_standing_hours", prefs.getString("activity_user_goal_standing_time_minutes", "12"));
                 editor.remove("activity_user_goal_standing_time_minutes");
+            }
+        }
+
+        if (oldVersion < 48) {
+            // Fix the reversed notification time prefs
+            if (prefs.getNotificationTimesEnabled()) {
+                final String start = prefs.getString("notification_times_start", "08:00");
+                final String end = prefs.getString("notification_times_end", "22:00");
+                editor.putString("notification_times_start", end);
+                editor.putString("notification_times_end", start);
             }
         }
 
