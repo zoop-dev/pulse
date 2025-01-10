@@ -3708,4 +3708,16 @@
     <string name="permission_contacts_summary">Contactpersonen doorsturen naar gadgets</string>
     <string name="permission_read_call_log_summary">Oproepenlijst doorsturen naar gadgets</string>
     <string name="permission_external_storage_summary">Openen van afbeeldingen, ringtones, app-bestanden en meer</string>
+    <string name="pref_override_features_summary">Schakel specifieke apparaatfuncties in/uit. Dit kan zorgen voor problemen en kan de werking van uw apparaat negatief beïnvloeden</string>
+    <string name="pref_override_features_title">Negeer ondersteunde functies</string>
+    <string name="permission_disable_doze_title">Negeer batterijoptimalisatie</string>
+    <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
+    <string name="charts_show_balance_sleep_title">Toon slaapbalans</string>
+    <string name="charts_show_balance_sleep_summary">Toon te veel / te weinig slaap in wekelijkse en maandelijkse grafieken</string>
+    <string name="charts_show_balance_steps_title">Toon stappenbalans</string>
+    <string name="charts_show_balance_steps_summary">Toon te veel / te weinig stappen in wekelijkse en maandelijkse grafieken</string>
+    <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
+    <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
+    <string name="canned_replies_not_empty">Er moet minimaal één voorgedefinieerd bericht zijn.</string>
+    <string name="permission_disable_doze_summary">Maakt het mogelijk om in de achtergrond te werken zonder dat de batterij-optimalisaties van Android dit belemmeren</string>
 </resources>
