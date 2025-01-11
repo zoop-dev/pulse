@@ -32,14 +32,14 @@
       "description": "solarpositioning v2 needs java 17, we need to stay on v0",
       "allowedVersions": "<2.0",
       "matchPackageNames": [
-        "net.e175.klaus:solarpositioning:*"
+        "net.e175.klaus:solarpositioning"
       ]
     },
     {
       "description": "We're running a fork of the greendao v2 generator, so we must always use the corresponding core lib",
       "allowedVersions": "<3.0",
       "matchPackageNames": [
-        "org.greenrobot:greendao:*"
+        "org.greenrobot:greendao"
       ]
     }
   ]
