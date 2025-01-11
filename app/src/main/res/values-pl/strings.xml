@@ -3727,4 +3727,5 @@
     <string name="permission_disable_doze_title">Zignoruj optymalizację baterii</string>
     <string name="permission_disable_doze_summary">Umożliwia pracę w tle bez ograniczeń optymalizacji baterii w systemie Android</string>
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
+    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
 </resources>
