@@ -3712,4 +3712,5 @@
     <string name="permission_disable_doze_title">Ignorovat optimalizaci baterie</string>
     <string name="permission_disable_doze_summary">Umožňuje běh na pozadí bez zásahu optimalizacemi baterie v systému Android</string>
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
+    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
 </resources>
