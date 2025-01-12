@@ -460,7 +460,7 @@ public class NotificationListener extends NotificationListenerService {
 
         // DISMISS action
         NotificationSpec.Action dismissAction = new NotificationSpec.Action();
-        dismissAction.title = "Dismiss";
+        dismissAction.title = getString(R.string.dismiss);
         dismissAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS;
         notificationSpec.attachedActions.add(dismissAction);
 

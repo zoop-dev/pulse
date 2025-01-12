@@ -31,6 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -77,13 +78,13 @@ public class SMSReceiver extends BroadcastReceiver {
 
                         // REPLY action
                         NotificationSpec.Action replyAction = new NotificationSpec.Action();
-                        replyAction.title = "Reply";
+                        replyAction.title = context.getString(R.string._pebble_watch_reply);
                         replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
                         notificationSpec.attachedActions.add(replyAction);
 
                         // DISMISS ALL action
                         NotificationSpec.Action dismissAllAction = new NotificationSpec.Action();
-                        dismissAllAction.title = "Dismiss All";
+                        dismissAllAction.title = context.getString(R.string.notifications_dismiss_all);
                         dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS_ALL;
                         notificationSpec.attachedActions.add(dismissAllAction);
 

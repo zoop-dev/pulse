@@ -1295,6 +1295,7 @@
     <string name="Delete">Delete</string>
     <string name="ok">OK</string>
     <string name="dismiss">Dismiss</string>
+    <string name="notifications_dismiss_all">Dismiss All</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="status">Status</string>

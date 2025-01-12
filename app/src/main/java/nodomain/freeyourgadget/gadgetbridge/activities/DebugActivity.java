@@ -219,20 +219,20 @@ public class DebugActivity extends AbstractGBActivity {
 
                 // DISMISS action
                 NotificationSpec.Action dismissAction = new NotificationSpec.Action();
-                dismissAction.title = "Dismiss";
+                dismissAction.title = getString(R.string.dismiss);
                 dismissAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS;
                 notificationSpec.attachedActions.add(dismissAction);
 
                 if (notificationSpec.type == NotificationType.GENERIC_SMS) {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();
-                    replyAction.title = "Reply";
+                    replyAction.title = getString(R.string._pebble_watch_reply);
                     replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
                     notificationSpec.attachedActions.add(replyAction);
                 } else if (notificationSpec.type == NotificationType.CONVERSATIONS) {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();
-                    replyAction.title = "Reply";
+                    replyAction.title = getString(R.string._pebble_watch_reply);
                     replyAction.type = NotificationSpec.Action.TYPE_WEARABLE_REPLY;
                     notificationSpec.attachedActions.add(replyAction);
                 }

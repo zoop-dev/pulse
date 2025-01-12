@@ -24,6 +24,7 @@ import android.content.Intent;
 import java.util.ArrayList;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 
@@ -55,15 +56,15 @@ public class AlarmClockReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (ALARM_ALERT_ACTION.equals(action) || GOOGLE_CLOCK_ALARM_ALERT_ACTION.equals(action)) {
-            sendAlarm(true);
+            sendAlarm(context, true);
         } else if (ALARM_DONE_ACTION.equals(action) || GOOGLE_CLOCK_ALARM_DONE_ACTION.equals(action)) {
-            sendAlarm(false);
+            sendAlarm(context, false);
         }
     }
 
 
 
-    private synchronized void sendAlarm(boolean on) {
+    private synchronized void sendAlarm(Context context, boolean on) {
         dismissLastAlarm();
         if (on) {
             NotificationSpec notificationSpec = new NotificationSpec();
@@ -75,7 +76,7 @@ public class AlarmClockReceiver extends BroadcastReceiver {
 
             // DISMISS ALL action
             NotificationSpec.Action dismissAllAction = new NotificationSpec.Action();
-            dismissAllAction.title = "Dismiss All";
+            dismissAllAction.title = context.getString(R.string.notifications_dismiss_all);
             dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS_ALL;
             notificationSpec.attachedActions.add(dismissAllAction);
 

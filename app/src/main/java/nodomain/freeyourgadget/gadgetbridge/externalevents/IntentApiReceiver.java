@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
@@ -148,7 +149,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 if (notificationSpec.type == NotificationType.GENERIC_SMS) {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();
-                    replyAction.title = "Reply";
+                    replyAction.title = context.getString(R.string._pebble_watch_reply);
                     replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
                     notificationSpec.attachedActions.add(replyAction);
                 }
