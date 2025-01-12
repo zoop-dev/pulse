@@ -25,9 +25,11 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.mijia_lywsd.MijiaLywsdSupport;
 
@@ -74,6 +76,46 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
         // nothing to delete, yet
+    }
+
+    @Override
+    public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
+        return new MijiaLywsdRealtimeSampleProvider(device, session);
+    }
+
+    @Override
+    public boolean supportsTemperatureMeasurement() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsContinuousTemperature() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsActivityTracking() {
+        return false; // FIXME: Enable this once temperature fetching is enabled
+    }
+
+    @Override
+    public boolean supportsSleepMeasurement() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsStepCounter() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSpeedzones() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsActivityTabs() {
+        return false;
     }
 
     public abstract boolean supportsSetTime();

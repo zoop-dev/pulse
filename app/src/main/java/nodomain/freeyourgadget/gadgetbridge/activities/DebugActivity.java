@@ -954,6 +954,12 @@ public class DebugActivity extends AbstractGBActivity {
 
     private void testNewFunctionality() {
         GBApplication.deviceService().onTestNewFunction();
+
+        //try (DBHandler db = GBApplication.acquireDB()) {
+        //    db.getDatabase().execSQL("DROP TABLE IF EXISTS TABLE_NAME_TO_DROP_HERE");
+        //} catch (final Exception e) {
+        //    GB.log("Error accessing database", GB.ERROR, e);
+        //}
     }
 
     private void shareLog() {

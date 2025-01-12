@@ -54,7 +54,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(93, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(94, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -141,6 +141,8 @@ public class GBDaoGenerator {
         addWena3Vo2Sample(schema, user, device);
         addWena3StressSample(schema, user, device);
         addFemometerVinca2TemperatureSample(schema, user, device);
+        addMijiaLywsdRealtimeSample(schema, user, device);
+        addMijiaLywsdHistoricSample(schema, user, device);
         addMiScaleWeightSample(schema, user, device);
         addColmiActivitySample(schema, user, device);
         addColmiHeartRateSample(schema, user, device);
@@ -1587,6 +1589,24 @@ public class GBDaoGenerator {
         Entity sample = addEntity(schema, "FemometerVinca2TemperatureSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
         addTemperatureProperties(sample);
+        return sample;
+    }
+
+    private static Entity addMijiaLywsdRealtimeSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "MijiaLywsdRealtimeSample");
+        addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
+        addTemperatureProperties(sample);
+        sample.addIntProperty("humidity").notNull();
+        return sample;
+    }
+
+    private static Entity addMijiaLywsdHistoricSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "MijiaLywsdHistoricSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addFloatProperty("minTemperature").notNull();
+        sample.addFloatProperty("maxTemperature").notNull();
+        sample.addIntProperty("minHumidity").notNull();
+        sample.addIntProperty("maxHumidity").notNull();
         return sample;
     }
 

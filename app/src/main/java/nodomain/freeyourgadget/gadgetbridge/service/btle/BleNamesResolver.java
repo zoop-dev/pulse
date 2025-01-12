@@ -199,6 +199,14 @@ public class BleNamesResolver {
 		//mCharacteristics.put("0000fff2-0000-1000-8000-00805f9b34fb", "(Propr: Nothing CMF Command Write");
 		//mCharacteristics.put("02f00000-0000-0000-0000-00000000ffe1", "(Propr: Nothing CMF Data Write");
 		//mCharacteristics.put("02f00000-0000-0000-0000-00000000ffe2", "(Propr: Nothing CMF Data Read");
+		//mCharacteristics.put("00010203-0405-0607-0809-0a0b0c0d2b12", "(Propr: Telink OTA Write)");
+		//mCharacteristics.put("ebe0ccb7-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd TIME)");
+		//mCharacteristics.put("ebe0ccc4-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd BATTERY)");
+		//mCharacteristics.put("ebe0ccbe-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd TEMPERATURE_UNIT)");
+		//mCharacteristics.put("ebe0ccd8-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd CONN_INTERVAL)");
+		//mCharacteristics.put("ebe0ccbc-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd HISTORY)");
+		//mCharacteristics.put("ebe0ccc1-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd LIVE_DATA)");
+		//mCharacteristics.put("ebe0ccba-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd HISTORY_LAST_ID)");
 
 		mValueFormats.put(Integer.valueOf(52), "32bit float");
 		mValueFormats.put(Integer.valueOf(50), "16bit float");
