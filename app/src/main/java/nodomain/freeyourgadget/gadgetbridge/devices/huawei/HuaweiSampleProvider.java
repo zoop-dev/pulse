@@ -114,6 +114,11 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
     }
 
     @NonNull
+    protected Property getOthertimestampSampleProperty() {
+        return HuaweiActivitySampleDao.Properties.OtherTimestamp;
+    }
+
+    @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
         return HuaweiActivitySampleDao.Properties.DeviceId;
@@ -248,13 +253,14 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
     private List<HuaweiActivitySample> getRawOrderedActivitySamples(int timestampFrom, int timestampTo) {
         QueryBuilder<HuaweiActivitySample> qb = getSampleDao().queryBuilder();
         Property timestampProperty = getTimestampSampleProperty();
+        Property otherTimestampProperty = getOthertimestampSampleProperty();
         Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
         if (dbDevice == null) {
             // no device, no samples
             return Collections.emptyList();
         }
         Property deviceProperty = getDeviceIdentifierSampleProperty();
-        qb.where(deviceProperty.eq(dbDevice.getId()), timestampProperty.ge(timestampFrom))
+        qb.where(deviceProperty.eq(dbDevice.getId()), otherTimestampProperty.ge(timestampFrom))
                 .where(timestampProperty.le(timestampTo))
                 .orderAsc(timestampProperty);
         List<HuaweiActivitySample> samples = qb.build().list();
