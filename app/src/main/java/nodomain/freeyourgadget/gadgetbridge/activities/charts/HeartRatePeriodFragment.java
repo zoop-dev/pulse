@@ -345,8 +345,9 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
                 continue;
             }
             final int ts = sample.getTimestamp();
+            final int shortTs = tsTranslation.shorten(ts);
             if (lastTs == 0 || (ts - lastTs) <= 60 * HeartRateUtils.MAX_HR_MEASUREMENTS_GAP_MINUTES) {
-                lineEntries.add(new Entry(tsTranslation.shorten(ts), sample.getHeartRate()));
+                lineEntries.add(new Entry(shortTs, sample.getHeartRate()));
             } else {
                 if (!lineEntries.isEmpty()) {
                     List<Entry> clone = new ArrayList<>(lineEntries.size());
@@ -354,7 +355,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
                     lineDataSets.add(createHeartRateDataSet(clone, HEARTRATE_COLOR));
                     lineEntries.clear();
                 }
-                lineEntries.add(new Entry(ts, sample.getHeartRate()));
+                lineEntries.add(new Entry(shortTs, sample.getHeartRate()));
             }
             lastTs = ts;
         }
