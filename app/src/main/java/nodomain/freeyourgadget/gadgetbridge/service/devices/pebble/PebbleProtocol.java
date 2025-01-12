@@ -840,7 +840,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
             for (Action act : attachedActions) {
                 actions_count++;
                 actions_length += (short) (ACTION_LENGTH_MIN + act.title.getBytes().length);
-                if (act.type == Action.TYPE_WEARABLE_REPLY || act.type == Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
+                if (act.isReply()) {
                     actions_length += (short) replies_length + 3;  // 3 = attribute id (byte) + length(short)
                 }
             }
@@ -955,7 +955,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
                         buf.put((byte) (0x05 + ai));
                 }
 
-                if (act.type == Action.TYPE_WEARABLE_REPLY || act.type == Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
+                if (act.isReply()) {
                     buf.put((byte) 0x03); // reply action
                     buf.put((byte) 0x02); // number attributes
                 } else {
@@ -970,7 +970,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 buf.put((byte) 0x01); // attribute id (title)
                 buf.putShort((short) act.title.getBytes().length);
                 buf.put(act.title.getBytes());
-                if (act.type == Action.TYPE_WEARABLE_REPLY || act.type == Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
+                if (act.isReply()) {
                     buf.put((byte) 0x08); // canned replies
                     buf.putShort((short) replies_length);
                     if (cannedReplies != null && cannedReplies.length > 0) {

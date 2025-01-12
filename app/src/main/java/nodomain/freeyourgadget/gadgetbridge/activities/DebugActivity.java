@@ -217,6 +217,12 @@ public class DebugActivity extends AbstractGBActivity {
                 notificationSpec.pebbleColor = notificationSpec.type.color;
                 notificationSpec.attachedActions = new ArrayList<>();
 
+                // DISMISS action
+                NotificationSpec.Action dismissAction = new NotificationSpec.Action();
+                dismissAction.title = "Dismiss";
+                dismissAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS;
+                notificationSpec.attachedActions.add(dismissAction);
+
                 if (notificationSpec.type == NotificationType.GENERIC_SMS) {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();

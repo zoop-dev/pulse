@@ -72,7 +72,7 @@ public class SendNotificationRequest extends Request {
         if (hasActions) {
             for (int i = 0; i < notificationSpec.attachedActions.size(); i++) {
                 final NotificationSpec.Action action = notificationSpec.attachedActions.get(i);
-                if (action.type == NotificationSpec.Action.TYPE_WEARABLE_REPLY || action.type == NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
+                if (action.isReply()) {
                     //NOTE: store notification key instead action key. The watch returns this key so it is more easier to find action by notification key
                     replyKey = getNotificationKey(notificationSpec);
                     break;

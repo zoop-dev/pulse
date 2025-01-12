@@ -83,9 +83,15 @@ public class NotificationSpec {
         public static final int TYPE_SYNTECTIC_DISMISS_ALL = 4;
         public static final int TYPE_SYNTECTIC_MUTE = 5;
         public static final int TYPE_SYNTECTIC_OPEN = 6;
+        public static final int TYPE_CUSTOM_SIMPLE = 7;
+        public static final int TYPE_CUSTOM_REPLY = 8;
 
         public int type = TYPE_UNDEFINED;
         public long handle;
         public String title;
+
+        public boolean isReply() {
+            return type == TYPE_WEARABLE_REPLY || type == TYPE_SYNTECTIC_REPLY_PHONENR || type == TYPE_CUSTOM_REPLY;
+        }
     }
 }

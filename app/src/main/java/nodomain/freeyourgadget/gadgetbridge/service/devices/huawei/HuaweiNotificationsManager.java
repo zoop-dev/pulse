@@ -141,7 +141,7 @@ public class HuaweiNotificationsManager {
             if (hasActions) {
                 for (int i = 0; i < notificationSpec.attachedActions.size(); i++) {
                     final NotificationSpec.Action action = notificationSpec.attachedActions.get(i);
-                    if (action.type == NotificationSpec.Action.TYPE_WEARABLE_REPLY || action.type == NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR) {
+                    if (action.isReply()) {
                         deviceEvtNotificationControl.handle = action.handle; //handle of wearable action is needed
                         break;
                     }

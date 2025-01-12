@@ -22,6 +22,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
+import android.app.ActivityOptions;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -46,6 +47,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -114,7 +116,7 @@ public class NotificationListener extends NotificationListenerService {
     public static final String ACTION_REPLY
             = "nodomain.freeyourgadget.gadgetbridge.notificationlistener.action.reply";
 
-    private final LimitedQueue<Integer, NotificationCompat.Action> mActionLookup = new LimitedQueue<>(32);
+    private final LimitedQueue<Integer, NotificationAction> mActionLookup = new LimitedQueue<>(128);
     private final LimitedQueue<Integer, String> mPackageLookup = new LimitedQueue<>(64);
     private final LimitedQueue<Integer, Long> mNotificationHandleLookup = new LimitedQueue<>(128);
 
@@ -220,31 +222,43 @@ public class NotificationListener extends NotificationListenerService {
                     NotificationListener.this.cancelAllNotifications();
                     break;
                 case ACTION_REPLY:
-                    NotificationCompat.Action wearableAction = mActionLookup.lookup(handle);
+                    NotificationAction wearableAction = mActionLookup.lookup(handle);
                     String reply = intent.getStringExtra("reply");
                     if (wearableAction != null) {
-                        PendingIntent actionIntent = wearableAction.getActionIntent();
+                        PendingIntent actionIntent = wearableAction.getIntent();
                         if (actionIntent == null) {
                             LOG.warn("Action intent is null");
                             break;
                         }
-                        Intent localIntent = new Intent();
-                        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        if (wearableAction.getRemoteInputs() != null && wearableAction.getRemoteInputs().length > 0) {
-                            RemoteInput[] remoteInputs = wearableAction.getRemoteInputs();
-                            Bundle extras = new Bundle();
-                            extras.putCharSequence(remoteInputs[0].getResultKey(), reply);
-                            RemoteInput.addResultsToIntent(remoteInputs, localIntent, extras);
-                        }
+
+                        final RemoteInput remoteInput = wearableAction.getRemoteInput();
+
                         try {
-                            LOG.info("will send exec intent to remote application");
-                            actionIntent.send(context, 0, localIntent);
+                            LOG.info("Will send exec intent to remote application");
+
+                            if (remoteInput != null) {
+                                final Intent localIntent = new Intent();
+                                localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                final Bundle extras = new Bundle();
+                                extras.putCharSequence(remoteInput.getResultKey(), reply);
+                                RemoteInput.addResultsToIntent(new RemoteInput[]{remoteInput}, localIntent, extras);
+                                actionIntent.send(context, 0, localIntent);
+                            } else {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                                    final ActivityOptions activityOptions = ActivityOptions.makeBasic();
+                                    final Bundle bundle = activityOptions.setPendingIntentBackgroundActivityStartMode(ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED)
+                                            .toBundle();
+                                    actionIntent.send(bundle);
+                                } else {
+                                    actionIntent.send();
+                                }
+                            }
                             mActionLookup.remove(handle);
                         } catch (final PendingIntent.CanceledException e) {
                             LOG.warn("replyToLastNotification error", e);
                         }
                     } else {
-                        LOG.warn("Received ACTION_REPLY but cannot find the corresponding wearableAction");
+                        LOG.warn("Received ACTION_REPLY for handle {}, but cannot find the corresponding wearableAction", handle);
                     }
                     break;
             }
@@ -431,11 +445,11 @@ public class NotificationListener extends NotificationListenerService {
         }
 
         NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender(notification);
-        List<NotificationCompat.Action> actions = wearableExtender.getActions();
+        List<NotificationCompat.Action> wearableActions = wearableExtender.getActions();
 
         // Some apps such as Telegram send both a group + normal notifications, which would get sent in duplicate to the devices
         // Others only send the group summary, so they need to be whitelisted
-        if (actions.isEmpty() && NotificationCompat.isGroupSummary(notification)
+        if (wearableActions.isEmpty() && NotificationCompat.isGroupSummary(notification)
                 && !GROUP_SUMMARY_WHITELIST.contains(source)) { //this could cause #395 to come back
             LOG.info("Not forwarding notification, FLAG_GROUP_SUMMARY is set and no wearable action present. Notification flags: " + notification.flags);
             return;
@@ -450,19 +464,51 @@ public class NotificationListener extends NotificationListenerService {
         dismissAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS;
         notificationSpec.attachedActions.add(dismissAction);
 
-        for (NotificationCompat.Action act : actions) {
+        boolean hasWearableActions = false;
+        for (NotificationCompat.Action act : wearableActions) {
             if (act != null) {
                 NotificationSpec.Action wearableAction = new NotificationSpec.Action();
-                wearableAction.title = act.getTitle().toString();
+                wearableAction.title = String.valueOf(act.getTitle());
+                final RemoteInput remoteInput;
                 if (act.getRemoteInputs() != null && act.getRemoteInputs().length > 0) {
                     wearableAction.type = NotificationSpec.Action.TYPE_WEARABLE_REPLY;
+                    remoteInput = act.getRemoteInputs()[0];
                 } else {
                     wearableAction.type = NotificationSpec.Action.TYPE_WEARABLE_SIMPLE;
+                    remoteInput = null;
                 }
                 notificationSpec.attachedActions.add(wearableAction);
-                wearableAction.handle = (notificationSpec.getId() << 4) + notificationSpec.attachedActions.size();
-                mActionLookup.add((int)wearableAction.handle, act);
-                LOG.info("Found wearable action: {} - {}  {}", notificationSpec.attachedActions.size(), act.getTitle(), sbn.getTag());
+                wearableAction.handle = ((long) notificationSpec.getId() << 4) + notificationSpec.attachedActions.size();
+                mActionLookup.add((int) wearableAction.handle, new NotificationAction(act.getActionIntent(), remoteInput));
+                LOG.debug("Found wearable action {}: {} - {}  {}", notificationSpec.attachedActions.size(), (int) wearableAction.handle, act.getTitle(), sbn.getTag());
+                hasWearableActions = true;
+            }
+        }
+
+        if (!hasWearableActions && notification.actions != null) {
+            // If no wearable actions are sent, fallback to normal custom actions
+            for (final Notification.Action act : notification.actions) {
+                final NotificationSpec.Action customAction = new NotificationSpec.Action();
+                customAction.title = String.valueOf(act.title);
+                final RemoteInput remoteInput;
+                if (act.getRemoteInputs() != null && act.getRemoteInputs().length > 0) {
+                    customAction.type = NotificationSpec.Action.TYPE_CUSTOM_REPLY;
+                    android.app.RemoteInput ri = act.getRemoteInputs()[0];
+                    // FIXME this is not very clean
+                    remoteInput = new RemoteInput.Builder(ri.getResultKey())
+                            .setLabel(ri.getLabel())
+                            .setChoices(ri.getChoices())
+                            .setAllowFreeFormInput(ri.getAllowFreeFormInput())
+                            .addExtras(ri.getExtras())
+                            .build();
+                } else {
+                    customAction.type = NotificationSpec.Action.TYPE_CUSTOM_SIMPLE;
+                    remoteInput = null;
+                }
+                notificationSpec.attachedActions.add(customAction);
+                customAction.handle = ((long) notificationSpec.getId() << 4) + notificationSpec.attachedActions.size();
+                mActionLookup.add((int) customAction.handle, new NotificationAction(act.actionIntent, remoteInput));
+                LOG.info("Found custom action {}: {} - {}", notificationSpec.attachedActions.size(), (int) customAction.handle, act.title);
             }
         }
 
@@ -1117,5 +1163,24 @@ public class NotificationListener extends NotificationListenerService {
                 .getVibrantColor(Color.parseColor("#aa0000"));
 
         return PebbleUtils.getPebbleColor(iconPrimaryColor);
+    }
+
+    private static class NotificationAction {
+        private final PendingIntent intent;
+        @Nullable
+        private final RemoteInput remoteInput;
+
+        private NotificationAction(final PendingIntent pendingIntent, @Nullable final RemoteInput remoteInput) {
+            this.intent = pendingIntent;
+            this.remoteInput = remoteInput;
+        }
+
+        public PendingIntent getIntent() {
+            return intent;
+        }
+
+        public RemoteInput getRemoteInput() {
+            return remoteInput;
+        }
     }
 }

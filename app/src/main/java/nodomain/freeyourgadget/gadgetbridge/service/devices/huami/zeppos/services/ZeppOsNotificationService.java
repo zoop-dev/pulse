@@ -343,14 +343,10 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                 for (int i = 0; i < notificationSpec.attachedActions.size(); i++) {
                     final NotificationSpec.Action action = notificationSpec.attachedActions.get(i);
 
-                    switch (action.type) {
-                        case NotificationSpec.Action.TYPE_WEARABLE_REPLY:
-                        case NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR:
-                            hasReply = true;
-                            mNotificationReplyAction.add(notificationSpec.getId(), action.handle);
-                            break;
-                        default:
-                            break;
+                    if (action.isReply()) {
+                        hasReply = true;
+                        mNotificationReplyAction.add(notificationSpec.getId(), action.handle);
+                        break;
                     }
                 }
             }
