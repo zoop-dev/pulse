@@ -174,7 +174,7 @@
     <string name="title_activity_discovery">Scanner les appareils</string>
     <string name="discovery_stop_scanning">Arrêter le scan</string>
     <string name="discovery_start_scanning">Démarrer le scan</string>
-    <string name="action_discover">Connecter un nouvel appareil</string>
+    <string name="action_discover">Connecter nouvel appareil</string>
     <string name="device_with_rssi">%1$s (%2$s)</string>
     <string name="title_activity_android_pairing">Appairer l\'appareil</string>
     <string name="android_pairing_hint">Utiliser l\'appairage Bluetooth d\'Android pour jumeler l\'appareil.</string>
@@ -1331,7 +1331,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_applications_settings">Liste des applications</string>
     <string name="toast_app_must_be_selected">L\'app doit être sélectionnée pour être configurée</string>
     <string name="pref_title_notification_use_as_allow">Autoriser les notifications des apps sélectionnées</string>
-    <string name="title_activity_notification_management">Configuration des notifications</string>
+    <string name="title_activity_notification_management">Configuration notifications</string>
     <string name="pref_header_notification_application_settings">Réglages par application</string>
     <string name="toast_app_must_not_be_selected">L\'app ne doit pas être sélectionnée pour être configurée</string>
     <string name="prefs_equalizer_preset">Préréglage d\'égalisation</string>
@@ -1566,7 +1566,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_summary_opentracks_packagename">Utilisé pour démarrer/arrêter l\'enregistrement GPS dans une app. de fitness externe.</string>
     <string name="pref_device_action_fitness_app_control_start">Démarrage de l\'enregistrement dans l\'app Fitness</string>
     <string name="pref_device_action_fitness_app_control_stop">Arrêt de l\'enregistrement dans l\'app Fitness</string>
-    <string name="pref_title_notifications_generic_settings">Configuration des notifications Android</string>
+    <string name="pref_title_notifications_generic_settings">Configuration notifications Android</string>
     <string name="autoExport_lastTime_label">Dernier export automatique : %1$s</string>
     <string name="activity_db_management_autoexport_enabled_yes">L\'export automatique est activé.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">L\'export automatique a été (initialement) réglé pour %1$s</string>
@@ -2144,7 +2144,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_morning_updates_categories_title">Les catégories de mises à jour du matin</string>
     <string name="pref_morning_updates_categories_summary">Liste des catégories à afficher tous les matins</string>
     <string name="bluetooth_calls_pairing">Pairage pour les appels Bluetooth</string>
-    <string name="bluetooth_calls_settings">Configuration des appels Bluetooth</string>
+    <string name="bluetooth_calls_settings">Configuration appels Bluetooth</string>
     <string name="pref_display_caller_title">Afficher les informations du contact</string>
     <string name="pref_display_caller_summary">Afficher le numéro ou le nom pour les appels entrants</string>
     <string name="pref_pair_bluetooth_calls_summary">Appuyer ici pour commencer le processus de pairage</string>
@@ -3682,4 +3682,5 @@ Temps de sommeil préféré en heures</string>
     <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
     <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
+    <string name="charts_show_balance_sleep_title">Afficher équilibre sommeil</string>
 </resources>
