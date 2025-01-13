@@ -3709,4 +3709,5 @@
     <string name="permission_disable_doze_summary">允许在后台运行，不受 Android 电池优化的阻碍</string>
     <string name="devicetype_garmin_forerunner_45">佳明 Forerunner 45</string>
     <string name="devicetype_garmin_fenix_7s_pro">佳明 Fenix 7S Pro</string>
+    <string name="notifications_dismiss_all">全部取消</string>
 </resources>
