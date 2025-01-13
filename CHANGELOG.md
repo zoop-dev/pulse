@@ -1,23 +1,36 @@
 ### Changelog
 
 #### NEXT
+* Initial support for Garmin Fenix 7S Pro / Forerunner 45
 * Initial support for Redmi Buds 6 Active
 * Initial support for Sony WF-C510
 * AsteroidOS: Add volume control
+* AsteroidOS: Fix missing sender notification attribute
+* Charts: Add heart rate weekly and monthly tabs
+* Charts: Add option to hide sleep and steps balance
+* Charts: Restore steps balance on weekly and monthly charts
 * Colmi R09: Add preference to toggle temperature measurements
 * Colmi R09: Fix temperature data parsing
 * Colmi R0x: Add support for realtime heart rate meassurements and live activity tracking
+* Garmin: Add custom notification actions
 * Huawei: Add support to set and use canned replies
 * Huawei: Fix calendar event updates
-* Huawei: match midnight on the user's timezone for all day events
+* Huawei: Fix all day events timezone
 * Huawei: Remove notifications from watch
+* Marstek B2500: Decode more values, add debug section
 * Marstek B2500: Display sensor temperature in Status Activity
 * Marstek B2500: Fix setting pass-though mode
 * Sony Headphones: Allow overriding supported features
 * Sony Headphones: Fix initialization for some devices
 * Sony Headphones: Update default low battery threshold
-* Recognize Fossify SMS as SMS
+* Xiaomi-protobuf: Improve workout parsing
+* Add disabling battery optimizations to permissions screen
+* Fix default date of birth
+* Fix workout parser from incorrect devices being used sometimes
+* Intent API: Allow filtering of BLE characteristics
 * Limit live activity to just the current device
+* Localize notification actions
+* Recognize Fossify SMS / Quik as SMS
 
 #### 0.83.1
 * Initial support for Garmin Fenix 6X Pro Solar
