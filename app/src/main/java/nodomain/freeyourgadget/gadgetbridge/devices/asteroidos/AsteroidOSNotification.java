@@ -26,6 +26,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * An adapter for notifications on AsteroidOS
  */
@@ -62,7 +64,7 @@ public class AsteroidOSNotification {
     public AsteroidOSNotification(NotificationSpec spec) {
         this.body = spec.body;
         this.applicationName = spec.sourceName;
-        this.summary = spec.subject;
+        this.summary = StringUtils.firstNonBlank(spec.sender, spec.title, spec.subject);
         this.id = spec.getId();
         this.packageName = spec.sourceAppId;
         this.icon = this.gbNotificationTypeToIcon(spec.type);
