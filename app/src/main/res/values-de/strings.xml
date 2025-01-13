@@ -3724,4 +3724,6 @@
     <string name="redmi_buds_5_pro_adaptive_sound">Adaptiver Klang</string>
     <string name="redmi_buds_5_pro_equalizer_preset_custom">Benutzerdefiniert</string>
     <string name="redmi_buds_5_pro_equalizer_preset_voice">Stimme verstärken</string>
+    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
+    <string name="notifications_dismiss_all">Alle löschen</string>
 </resources>
