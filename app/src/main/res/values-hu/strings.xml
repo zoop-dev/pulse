@@ -94,7 +94,7 @@
     <string name="pref_title_development_miaddr">Mi Band cím</string>
     <string name="pref_title_pebble_settings">Pebble beállítások</string>
     <string name="pref_header_activitytrackers">Tevékenységmérők</string>
-    <string name="pref_title_pebble_activitytracker">Preferált tevékenységmérő</string>
+    <string name="pref_title_pebble_activitytracker">Előnyben részesített tevékenységmérő</string>
     <string name="pref_title_pebble_sync_health">Pebble Health szinkronizálása</string>
     <string name="pref_title_pebble_sync_misfit">Misfit szinkronizálása</string>
     <string name="pref_title_pebble_sync_morpheuz">Morpheuz szinkronizálása</string>
@@ -125,7 +125,7 @@
     <string name="pref_summary_pebble_forceprotocol">Ez az beállítás a legfrissebb értesítési protokollt kényszeríti a firmware verziótól függően. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
     <string name="pref_title_pebble_forceuntested">Nem tesztelt funkciók engedélyezése</string>
     <string name="pref_summary_pebble_forceuntested">Nem tesztelt funkciók engedélyezése. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
-    <string name="pref_title_pebble_forcele">BLE előnyben részesítése mindig</string>
+    <string name="pref_title_pebble_forcele">Mindig a BLE-t részesítse előnyben</string>
     <string name="pref_summary_pebble_forcele">Kísérleti Pebble LE-támogatás használata minden Pebble esetében, a BT classic helyett. Ehhez először a nem LE, majd a Pebble LE párosítása szükséges</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU határérték</string>
     <string name="pref_summary_pebble_mtu_limit">Ha a Pebble 2/Pebble LE nem működik elvártan, próbálja beállítani az MTU határértéket (az érvényes tartomány: 20–512)</string>
@@ -171,7 +171,7 @@
     <string name="initialized">inicializált</string>
     <string name="appversion_by_creator">%1$s , készítő: %2$s</string>
     <string name="title_activity_discovery">Eszköz felderítése</string>
-    <string name="discovery_stop_scanning">Keresés leállítása</string>
+    <string name="discovery_stop_scanning">Beolvasás leállítása</string>
     <string name="discovery_start_scanning">Felderítés indítása</string>
     <string name="action_discover">Új eszköz csatlakoztatása</string>
     <string name="device_with_rssi">%1$s (%2$s)</string>
@@ -287,7 +287,7 @@
     <string name="pref_title_dont_ack_transfer">Ne erősítse meg a tevékenységadatok átvitelét</string>
     <string name="pref_summary_dont_ack_transfers">Ha az eszköz nem kap megerősítést, az tevékenységadatok nem törlődnek. Hasznos, ha a GB-t más alkalmazásokkal együtt használják.</string>
     <string name="pref_summary_keep_data_on_device">A szinkronizálás után is megtartja a tevékenységadatokat az eszközön. Hasznos, ha a GB-t más alkalmazásokkal együtt használják. Ez azt okozhatja, hogy az óra kifogy a helyből és/vagy leáll a megfelelő szinkronizálás.</string>
-    <string name="pref_title_low_latency_fw_update">Használja a low-latency módot a firmware telepítésnél</string>
+    <string name="pref_title_low_latency_fw_update">Alacsony késleltetésű mód használata a firmware frissítéshez</string>
     <string name="pref_summary_low_latency_fw_update">Ez segíthet azon az eszközökön, ahol a firmware telepítése nem sikerül.</string>
     <string name="live_activity_steps_history">Lépéselőzmények</string>
     <string name="live_activity_current_steps_per_minute">Jelenlegi lépés/perc</string>
@@ -334,7 +334,7 @@
     <string name="authentication_required">Hitelesítés szükséges</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Modul hozzáadása</string>
-    <string name="activity_prefs_sleep_duration">Preferált alvásidő órában</string>
+    <string name="activity_prefs_sleep_duration">Előnyben részesített alvásidő órában</string>
     <string name="appwidget_setting_alarm">Riasztás beállítva: %1$02d:%2$02d</string>
     <string name="device_hw">Hardververzió: %1$s</string>
     <string name="device_fw">Firmware verzió: %1$s</string>
@@ -376,7 +376,7 @@
     <string name="title_activity_pebble_pairing">Pebble párosítása</string>
     <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelennie az Android eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
     <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble készülékén. \n \nItt nincs szükség konfigurációra. \n \nA Pebble rendszer időjárás applikációját az alkalmazáskezelésből engedélyezheti. \n \nA támogatott órafelületek automatikusan megjelenítik az időjárást.</string>
-    <string name="pref_title_setup_bt_pairing">Bluetooth-párosítás engedélyezése</string>
+    <string name="pref_title_setup_bt_pairing">Bluetooth párosítás engedélyezése</string>
     <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
     <string name="unit_metric">Metrikus</string>
     <string name="unit_imperial">Birodalmi</string>
@@ -410,7 +410,7 @@
     <string name="vertical">Függőleges</string>
     <string name="controlcenter_change_led_color">LED színének változtatása</string>
     <string name="controlcenter_change_fm_frequency">FM frekvencia változtatása</string>
-    <string name="pref_title_rtl">Jobbról-balra</string>
+    <string name="pref_title_rtl">Jobbról balra</string>
     <string name="debugactivity_really_factoryreset_title">Biztosan vissza szeretné állítani a gyári beállításokat?</string>
     <string name="zetime_analog_mode">Analóg mód</string>
     <string name="zetime_handmove_display_summary">Forgassa a csuklóját, hogy be- és kikapcsolja képernyőt.</string>
@@ -535,7 +535,7 @@
     <string name="prefs_activity_in_device_card_sleep_title">Alvás</string>
     <string name="prefs_activity_in_device_card_sleep_title_summary">Az alvás időtartamának megjelenítése</string>
     <string name="prefs_activity_in_device_card_distance_title_summary">A távolságot a lépések és a lépéshossz alapján számítja ki (beállítható a Beállítások - Önról menüpontban)</string>
-    <string name="battery_detail_activity_title">Akkumulátor-információ</string>
+    <string name="battery_detail_activity_title">Akkumulátor információ</string>
     <string name="calendar_day">Nap</string>
     <string name="calendar_week">Hét</string>
     <string name="calendar_two_weeks">Két hét</string>
@@ -555,8 +555,8 @@
     <string name="about_contributors">Közreműködők</string>
     <string name="open_fw_installer_info_text_title">Fájltelepítő</string>
     <string name="about_additional_device_support">További eszköztámogatás</string>
-    <string name="pref_rtl_max_line_length">Jobbról-balra maximális sorhossz</string>
-    <string name="pref_summary_rtl">Engedélyezze, ha az eszköze nem jeleníti meg rendesen a jobbról-balra nyelveket</string>
+    <string name="pref_rtl_max_line_length">Jobbról balra maximális sorhossz</string>
+    <string name="pref_summary_rtl">Engedélyezze, ha az eszköze nem jeleníti meg rendesen a jobbról balra nyelveket</string>
     <string name="about_version">Verzió: %s</string>
     <string name="watchface_setting_button_toggle_backlight">Háttérvilágítás bekapcsolása</string>
     <string name="pref_world_clocks_title">Világórák</string>
@@ -1131,7 +1131,7 @@
     <string name="activity_summaries_all_devices">Összes eszköz</string>
     <string name="devicetype_amazfit_neo">Amazfit Neo</string>
     <string name="stress_mild">Enyhe</string>
-    <string name="menuitem_brightness">Fényesség</string>
+    <string name="menuitem_brightness">Fényerő</string>
     <string name="description">Leírás</string>
     <string name="sony_equalizer_preset_custom_2">Egyéni 2</string>
     <string name="pref_title_developer_settings">Fejlesztői beállítások</string>
@@ -1292,7 +1292,7 @@
     <string name="prefs_wena3_vibration_short">Rövid</string>
     <string name="devicestatus_connecting">Az eszköz kapcsolódik</string>
     <string name="pref_title_chart_heartrate_color">Pulzusszám színe</string>
-    <string name="discovery_bluetooth_scan">Bluetooth-keresés:</string>
+    <string name="discovery_bluetooth_scan">Bluetooth beolvasás:</string>
     <string name="zepp_os_watchface_free_combination">Szabad kombináció</string>
     <string name="activity_db_management_autoexport_enabled_yes">Az automatikus exportálás engedélyezve van.</string>
     <string name="activity_db_management_clean_export_directory_label">Fájlok törlése az exportálás/importálás könyvtárból</string>
@@ -1340,7 +1340,7 @@
     <string name="pref_title_huami_force_new_protocol">Új hitelesítési protokoll</string>
     <string name="qhybrid_title_watchface">Órafelület beállítása</string>
     <string name="pref_title_notification_cache_while_disconnected">Gyorsítótárazás, amíg hatótávon kívül van</string>
-    <string name="discovery_bluetooth_le_scan">Bluetooth LE keresés:</string>
+    <string name="discovery_bluetooth_le_scan">Bluetooth LE beolvasás:</string>
     <string name="devicestatus_disconnected">Az eszköz leválasztódott!</string>
     <string name="controlcenter_get_heartrate_measurement">Pulzusszámmérés elvégzése</string>
     <string name="zepp_os_watchface_lightning_flash">Villámlás</string>
@@ -1553,7 +1553,7 @@
     <string name="pref_title_notification_use_as_deny">Értesítések letiltása kiválasztott alkalmazásokból</string>
     <string name="pref_title_notification_delay_calls">Hívás értesítési késleltetés</string>
     <string name="pref_summary_notification_delay_calls">A bejövő hívásokról szóló értesítések eszközre küldésének késleltetése másodpercben.</string>
-    <string name="pref_pair_bluetooth_calls_title">Párosítás bluetooth-hívásokhoz</string>
+    <string name="pref_pair_bluetooth_calls_title">Párosítás bluetooth hívásokhoz</string>
     <string name="pref_summary_notification_prefer_long_text">Ha elérhető, küldje el a hosszú értesítési szöveget az eszközre</string>
     <string name="pref_title_notification_use_as_allow">Értesítések engedélyezése a kiválasztott alkalmazásokból</string>
     <string name="open_fw_installer_connect_minimum_one_device">Párosítson LEGALÁBB EGY olyan eszközt, amelyre el szeretné küldeni a fájlt.</string>
@@ -1572,26 +1572,26 @@
     <string name="open_fw_installer_getting_files_text">Mivel a firmware fájlokat nem áll módunkban terjeszteni, a fájlokat saját magának kell beszereznie. Ez azt jelenti, hogy meg kell keresnie a fájlokat az apk fájlokban, az interneten, a fórumokon, az Amazfitwatchfaces-en (Miband/Amazfit készülékek esetében) stb.</string>
     <string name="pref_header_equalizer">Hangszínszabályzó</string>
     <string name="pref_pair_bluetooth_calls_summary">Kattintson ide a párosítási folyamat elindításához</string>
-    <string name="pref_pair_bluetooth_calls_help_title">Hogyan fogadhat bluetooth-hívásokat</string>
+    <string name="pref_pair_bluetooth_calls_help_title">Hogyan fogadhat bluetooth hívásokat</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Lépjen be a telefonja Bluetooth beállításaiba, és párosítsa az új eszközt, amely megjelenik (hasonló névvel, mint a jelenlegi órája, de egy utótaggal, pl. \"Amazfit GTR 4 - AFC8\".</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Ahhoz, hogy bluetooth-hívásokat fogadhasson, párosítania kell a telefonját az óra egy második példányával.</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Ahhoz, hogy bluetooth hívásokat fogadhasson, párosítania kell a telefonját az óra egy második példányával.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Érintse meg az alábbi gombot a párosítási folyamat elindításához.</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Engedélyezze az alábbi Bluetooth-hívások beállítását.</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Engedélyezze az alábbi Bluetooth hívások beállítását.</string>
     <string name="pref_title_notifications_generic_settings">Android értesítési beállítások</string>
     <string name="pref_summary_notifications_ignore_low_priority">Ne küldjön alacsony és minimális prioritású értesítéseket az órára</string>
     <string name="pref_title_notification_media_ignores_application_list">A médiaértesítések mellőzik az alkalmazáslistát</string>
     <string name="pref_summary_notification_media_ignores_application_list">A médiaértesítések feldolgozása az alkalmazáslista előtt. Ha ez a beállítás nincs bejelölve, a médiaalkalmazásoknak engedélyezve kell lenniük az alkalmazáslistában ahhoz, hogy a médiavezérlők működjenek az eszközön.</string>
     <string name="pref_title_notification_use_as">Használja az Alkalmazások listáját…</string>
-    <string name="bluetooth_calls">Bluetooth-hívások</string>
+    <string name="bluetooth_calls">Bluetooth hívások</string>
     <string name="pref_title_mb_intents">Közvetlen média közvetítés gomb</string>
     <string name="pref_summary_mb_intents">Engedélyezés, ha az eszköz médiavezérlése nem működik bizonyos alkalmazásoknál</string>
-    <string name="bluetooth_calls_pairing">Bluetooth-hívások párosítása</string>
+    <string name="bluetooth_calls_pairing">Bluetooth hívások párosítása</string>
     <string name="pref_theme_black_background">Használjon fekete hátteret a sötét témában</string>
     <string name="pref_summary_receive_calls_watch">Hívások kezdeményezése és fogadása közvetlenül az órán</string>
-    <string name="bluetooth_calls_settings">Bluetooth-hívások beállításai</string>
+    <string name="bluetooth_calls_settings">Bluetooth hívások beállításai</string>
     <string name="pref_display_caller_title">Névjegy adatainak megjelenítése</string>
     <string name="pref_title_banglejs_text_bitmap">Szöveg bittérképként</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">FIGYELMEZTETÉS: Ha engedélyezi a bluetooth-hívásokat a második példány párosítása nélkül, előfordulhat, hogy a hívásértesítések nem a megfelelő módon fognak működni.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">FIGYELMEZTETÉS: Ha engedélyezi a bluetooth hívásokat a második példány párosítása nélkül, előfordulhat, hogy a hívásértesítések nem a megfelelő módon fognak működni.</string>
     <string name="pref_title_notifications_ignore_work_profile">Munkaprofil-értesítések mellőzése</string>
     <string name="pref_title_banglejs_phone_gps_enbale">Telefonos GPS-adatok használata</string>
     <string name="pref_title_banglejs_webview_url">Alkalmazásbetöltő webcím</string>
@@ -1614,7 +1614,7 @@
     <string name="pref_blacklist_calendars_summary">A tiltólistán szereplő naptárak nem lesznek szinkronizálva az eszközzel</string>
     <string name="intent_api_allow_activity_sync_title">Engedélyezze a tevékenység szinkronizálásának kiváltását</string>
     <string name="intent_api_allow_activity_sync_summary">Tevékenységszinkronizálás indításának engedélyezése Intent API-n keresztül</string>
-    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Bluetooth-kapcsolat vezérlésének engedélyezése Intent API-n keresztül</string>
+    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Bluetooth kapcsolat vezérlésének engedélyezése Intent API-n keresztül</string>
     <string name="pref_title_ping_tone">Csengőhang</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Szöveg Bitkép mérete</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">A bittérképes szövegmegjelenítéshez használható méret</string>
@@ -1653,7 +1653,7 @@
     <string name="pref_gps_mode_preset">GPS mód</string>
     <string name="pref_agps_expiry_reminder_time">AGPS lejárati emlékeztető ideje</string>
     <string name="pref_camera_remote_title">Kamera távvezérlés</string>
-    <string name="pref_workout_start_on_phone_summary">Fitneszalkalmazás-követés elindítása/leállítása a telefonon, amikor a GPS-edzés elindul a karkötőn</string>
+    <string name="pref_workout_start_on_phone_summary">Fitnesz alkalmazás nyomon követés elindítása/leállítása a telefonon, amikor a GPS-edzés elindul a karkötőn</string>
     <string name="pref_workout_detection_categories_summary">Automatikusan felismerhető edzéskategóriák</string>
     <string name="pref_workout_detection_time_summary">Az edzés percek számainak folyamatban kell lennie, mielőtt észlelné</string>
     <string name="pref_sleep_mode_sleep_screen_summary">Jelenítse meg az alvó képernyőt, amikor alvó üzemmódban felébreszti a képernyőt, hogy csökkentse a zavaró tényezőket</string>
@@ -1665,7 +1665,7 @@
     <string name="pref_summary_device_intents">Engedélyezze a Bangle.js óraalkalmazások számára az Android Intentek küldését, és az Androidon futó egyéb alkalmazások (például a Tasker) számára, hogy adatokat küldjenek a Bangle.js részére a com.banglejs.uart.tx Intentel. A háttérben való működéshez engedélyre van szüksége a többi alkalmazás feletti megjelenítéshez.</string>
     <string name="reminder_time_once">%1$s, egyszer</string>
     <string name="pref_workout_detection_alert_summary">Értesítés, ha egy edzés észlelve lett</string>
-    <string name="pref_disable_new_ble_scanning">Az új BLE-beolvasás letiltása</string>
+    <string name="pref_disable_new_ble_scanning">Az új BLE beolvasás letiltása</string>
     <string name="contact_delete_confirm_description">Biztosan törölni szeretné a következőt: „%1$s”?</string>
     <string name="pref_screen_notification_idle_alerts">Üresjárati riasztások</string>
     <string name="pref_notifications_and_calls_enable_misscall">Értesítés a nem fogadott hívásról</string>
@@ -1713,7 +1713,7 @@
     <string name="offline_voice_response_during_screen_lighting">Válaszoljon a képernyő megvilágítása közben</string>
     <string name="pref_morning_updates_title">Reggeli frissítések</string>
     <string name="pref_morning_updates_summary">Frissítések megjelenítése minden reggel</string>
-    <string name="pref_workout_start_on_phone_title">Fitneszalkalmazás-követés</string>
+    <string name="pref_workout_start_on_phone_title">Fitnesz alkalmazás nyomon követés</string>
     <string name="pref_workout_send_gps_summary">Edzés közben küldje el az aktuális GPS-pozíciót a karkötőnek</string>
     <string name="pref_workout_keep_screen_on_summary">A képernyő bekapcsolva marad az edzés alatt, és a fényerőt a rendszer úgy állítja be, hogy folyamatosan megjelenítse a valós idejű edzésadatokat</string>
     <string name="pref_workout_detection_summary">Az edzés automatikus felismerése</string>
@@ -2134,7 +2134,7 @@
     <string name="pref_title_lower_button_function_double">Alsó gomb duplán</string>
     <string name="prefs_button_variable_actions">Részletes gombnyomás beállítások</string>
     <string name="error_no_location_access">Ahhoz, hogy a beolvasás megfelelően működjön, meg kell adni és engedélyezni kell a helyhozzáférést</string>
-    <string name="error_no_bluetooth_connect">A keresés megfelelő működéséhez engedélyezni kell a Bluetooth-kapcsolathoz való hozzáférést</string>
+    <string name="error_no_bluetooth_connect">A Bluetooth kapcsolat engedélyezése és aktiválása szükséges a beolvasás megfelelő működéséhez</string>
     <string name="pref_qhybrid_title_widget_draw_circles">Modulkörök rajzolása</string>
     <string name="pref_qhybrid_save_raw_activity_files">Nyers tevékenységfájlok mentése</string>
     <string name="permission_granting_mandatory">Mindezek az engedélyek szükségesek, és ha nem adják meg őket, instabilitás léphet fel</string>
@@ -2167,7 +2167,7 @@
     <string name="pref_title_upper_button_long_press_action">Felső gomb hosszú megnyomású művelet</string>
     <string name="pref_title_lower_button_function_long">Alsó gomb hosszan</string>
     <string name="pref_title_middle_button_function_double">Középső gomb duplán</string>
-    <string name="error_no_bluetooth_scan">A Bluetooth-keresési hozzáférést engedélyezni kell, és be kell kapcsolni, hogy a keresés megfelelően működjön</string>
+    <string name="error_no_bluetooth_scan">A Bluetooth beolvasás engedélyezése és aktiválása szükséges a megfelelő működéshez</string>
     <string name="permission_request">A(z) %1$s engedélyezi, hogy üzeneteket és egyéb adatokat küldjön Androidról az eszközére. Ehhez engedélyre van szüksége az adatokhoz való hozzáféréshez, és e nélkül előfordulhat, hogy nem működik megfelelően. \n \nMost megjelenik néhány Android párbeszédpanel, amelyek ezeket az engedélyeket kérik. \n \nA folytatáshoz érintse meg a(z) „%2$s” elemet.</string>
     <string name="permission_notification_listener">A(z) %1$s-nek hozzáférésre van szüksége az értesítésekhez, hogy megjeleníthesse azokat az óráján, amikor a telefon képernyője ki van kapcsolva. \n \nKoppintson a(z) „%2$s”, majd a(z) „%1$s” elemre, és engedélyezze az „Értesítési hozzáférés engedélyezése” beállítást, majd koppintson a „Vissza” elemre a(z) %1$s oldalra való visszatéréshez.</string>
     <string name="permission_location">A(z) %1$s-nek hozzáférésre van szüksége az tartózkodási helyhez a háttérben, hogy akkor is kapcsolatban maradhasson az órájával, amikor a képernyője ki van kapcsolva. \n \nVálassza a(z) „%2$s” lehetőséget a következő képernyőn, majd koppintson a „Vissza” gombra, hogy visszatérjen a %1$s oldalra.</string>
@@ -2208,7 +2208,7 @@
     <string name="averageKMPaceSeconds">Tempó</string>
     <string name="hrZoneNa">N/A</string>
     <string name="device_requires_key">KULCS SZÜKSÉGES, A BELÉPÉSHEZ HOSSZAN NYOMJA MEG</string>
-    <string name="error_location_enabled_mandatory">Az eszközök kereséséhez be kell kapcsolni a helymeghatározást</string>
+    <string name="error_location_enabled_mandatory">Az eszközök beolvasásához be kell kapcsolni a helymeghatározást</string>
     <string name="error_exporting_device_preferences">Hiba az eszközspecifikus beállítások exportálásában</string>
     <string name="flatDistance">Sík távolság</string>
     <string name="elevationGain">Magasságnövekedés</string>
@@ -2222,7 +2222,7 @@
     <string name="strokes">Teljes löketszám</string>
     <string name="averageLapPace">Átlagos körtempó</string>
     <string name="yard">yard</string>
-    <string name="discover_unsupported_devices_description">Ha engedélyezi ezt a beállítást, az összes felfedezett Bluetooth-eszköz megjelenik a keresés során. A rövid érintéssel a vágólapra másolja az eszköz nevét és MAC-címét. Hosszú érintéssel elindul a `Teszteszköz hozzáadása` párbeszédpanel. Lehetséges, hogy az alkalmazás lefagyását okozza.</string>
+    <string name="discover_unsupported_devices_description">Ha engedélyezi ezt a beállítást, az összes felfedezett Bluetooth eszköz megjelenik a beolvasás során. A rövid érintéssel a vágólapra másolja az eszköz nevét és MAC-címét. Hosszú érintéssel elindul a `Teszteszköz hozzáadása` párbeszédpanel. Lehetséges, hogy az alkalmazás lefagyását okozza.</string>
     <string name="ascentDistance">Emelkedő távolság</string>
     <string name="descentDistance">Lejtő távolság</string>
     <string name="minCadence">Min. ütem</string>
@@ -2496,7 +2496,7 @@
     <string name="pref_dashboard_widget_today_24h_title">24 órás mód</string>
     <string name="pref_dashboard_widget_double_size_title">Dupla méret</string>
     <string name="minutes_60">60 perc</string>
-    <string name="scan_scanning_all_devices">Minden eszköz keresése</string>
+    <string name="scan_scanning_all_devices">Minden eszköz beolvasása</string>
     <string name="single_tap">Koppintás</string>
     <string name="pref_continuous_skin_temperature_measurement_description">A hőmérséklet lekérdezése jelenleg nem támogatott. Ez a beállítás csak az eszközön történő folyamatos mérést kapcsolja be.</string>
     <string name="distance_avg">Távolság ÁTL</string>
@@ -2534,8 +2534,8 @@
     <string name="huawei_trusleep_summary">Valós időben figyeli az alvásminőséget és a légzést.\nAlváselemzés és 6 féle alvási probléma pontos diagnosztizálása.</string>
     <string name="companion_pairing_request_title">Társeszköz</string>
     <string name="companion_pairing_request_description">Társeszközként párosítja ezt az eszközt?\n\nAjánlott néhány funkció használatához, mint például az eszköz megtalálása, illetve jobb csatlakozást eredményez.</string>
-    <string name="scan_scanning_single_device">1 eszköz keresése</string>
-    <string name="scan_scanning_multiple_devices">%d eszköz keresése</string>
+    <string name="scan_scanning_single_device">1 eszköz beolvasása</string>
+    <string name="scan_scanning_multiple_devices">%d eszköz beolvasása</string>
     <string name="unbind_before_pair_message">Ezt az eszközt az Android beállításokon belül már összekapcsolta, amely párosítási hibához vezethet egyes eszközöknél.\n\nHa az eszköz hozzáadása sikertelen, törölje az Android beállításokon belül és próbálja újra.</string>
     <string name="devicesetting_scannable_debounce_summary">A beolvasás után az eszköz beolvasottként marad meg, és a megadott ideig mellőzi</string>
     <string name="pref_dashboard_all_devices_title">Minden eszköz</string>
@@ -2638,8 +2638,8 @@
     <string name="pref_summary_opentracks_packagename">GPS útvonal rögzítésének indítása/leállítása külső fitneszalkalmazásban.</string>
     <string name="step_streak_days_hint">Egymást követő napok száma, amelyeken sikerült elérni a lépéscélt</string>
     <string name="controlcenter_connected_fraction">Csatlakoztatva: %d/%d</string>
-    <string name="connection_over_ble">Csatlakozás BLE-n keresztül</string>
-    <string name="connection_over_bt_classic">Klasszikus Bluetooth-csatlakozás</string>
+    <string name="connection_over_ble">Kapcsolat BLE-n keresztül</string>
+    <string name="connection_over_bt_classic">Kapcsolat Bluetooth classic módon</string>
     <string name="autoconnect_from_device_title">Csatlakozás az eszköztől jövő kérelemre</string>
     <string name="pref_disable_find_phone_with_dnd">Telefon megtalálásának kikapcsolása Ne zavarjanak módban</string>
     <string name="steps_streaks_hint">Megszakítás nélküli, egymást követő napok sorozata, amelyeken sikerült elérni a meghatározott lépésszámot</string>
@@ -2686,10 +2686,10 @@
     <string name="sony_pause_when_taken_off">Szünet a fejhallgató levételekor</string>
     <string name="first_start_get_started_restore_button">Biztonsági mentés visszaállítása</string>
     <string name="first_start_get_started_go_to_app_button">Lépjen az alkalmazásba</string>
-    <string name="permission_fine_location_summary">Bluetooth-eszközök keresése</string>
+    <string name="permission_fine_location_summary">Bluetooth eszközök beolvasása</string>
     <string name="permission_background_location_title">Háttérhelyzet</string>
     <string name="permission_bluetooth_admin_title">Bluetooth admin</string>
-    <string name="permission_bluetooth_connect_title">Bluetooth-csatlakozás</string>
+    <string name="permission_bluetooth_connect_title">Bluetooth csatlakozás</string>
     <string name="permission_contacts_title">Névjegyek</string>
     <string name="huawei_ignore_wakeup_status_start">Ébresztési állapot mellőzése</string>
     <string name="prefs_wena3_home_icon_name_wena_pay">Wena Pay</string>
@@ -2702,7 +2702,7 @@
     <string name="mijia_lywsd_comfort_humidity_summary">Ajánlott tartomány: 20 - 85</string>
     <string name="devicesetting_scannable_minimum_unseen">Minimális nem látott idő (másodpercekben)</string>
     <string name="soundcore_voice_prompts">Hangutasítások</string>
-    <string name="soundcore_button_brightness">Gomb fényerősség</string>
+    <string name="soundcore_button_brightness">Gomb fényereje</string>
     <string name="soundcore_button_brightness_low">Alacsony</string>
     <string name="soundcore_ldac_mode_summary">Az LDAC engedélyezése csökkenti az akkumulátor élettartamát, és a kapcsolat instabilitásához vezethet</string>
     <string name="miscale_weight_unit_chinese">Kínai (jin)</string>
@@ -2825,7 +2825,7 @@
     <string name="mijia_lywsd_comfort_temperature_summary">Ajánlott tartomány: 19 - 27</string>
     <string name="label_distance_total">Összesen: %.1f km</string>
     <string name="yellow">Sárga</string>
-    <string name="prefs_summary_gatt_client_allow_gatt_interactions">Engedélyezi a BLE jellemző olvasási/írási és csatlakozási parancsok küldését</string>
+    <string name="prefs_summary_gatt_client_allow_gatt_interactions">Engedélyezi a BLE jellemzők olvasási/írási és csatlakozási parancsok küldését</string>
     <string name="activity_type_indoor_push_walk_speed">Beltéri nyomás - Gyaloglási sebesség</string>
     <string name="activity_type_push_run_speed">Nyomás - Futósebesség</string>
     <string name="devicetype_redmi_buds_5_pro">Redmi Buds 5 Pro</string>
@@ -2842,7 +2842,7 @@
     <string name="prefs_wena3_home_icon_name_pedometer">Lépésszámláló</string>
     <string name="prefs_wena3_vibration_step_up">Emelés</string>
     <string name="temperature_scale_fahrenheit">Fahrenheit</string>
-    <string name="auto_reconnect_ble_scan_title">Újracsatlakozás BLE-olvasással</string>
+    <string name="auto_reconnect_ble_scan_title">Újrakapcsolódás BLE-beolvasással</string>
     <string name="devicesetting_scannable_debounce">Beolvasható jelzésszűrés időtúllépés (másodpercekben)</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d nap</item>
@@ -2949,8 +2949,8 @@
     <string name="pref_title_wheel_diameter">Kerékátmérő</string>
     <string name="first_start_overview_title">Áttekintés</string>
     <string name="permission_bluetooth_title">Bluetooth</string>
-    <string name="permission_bluetooth_admin_summary">Bluetooth-eszközök felderítése és párosítása</string>
-    <string name="permission_bluetooth_scan_title">Bluetooth-keresés</string>
+    <string name="permission_bluetooth_admin_summary">Bluetooth eszközök felderítése és párosítása</string>
+    <string name="permission_bluetooth_scan_title">Bluetooth beolvasás</string>
     <string name="permission_post_notification_summary">Folyamatos értesítés küldése, amely fenntartja a szolgáltatás működését</string>
     <string name="permission_internet_access_title">Internet-hozzáférés</string>
     <string name="permission_process_outgoing_calls_summary">A kimenő hívás számának olvasása, hogy megjelenítse azt a kütyün</string>
@@ -3075,7 +3075,7 @@
     <string name="music_multiselect_limit">Elérte az egynél több elem kiválasztásának határát</string>
     <string name="first_start_intro_tag_line">Szabaduljon meg a készülékgyártók saját alkalmazásai és felhőszolgáltatásai alól.</string>
     <string name="permission_notifications_summary">Értesítések továbbítása csatlakoztatott kütyükre</string>
-    <string name="permission_bluetooth_connect_summary">Kapcsolódás a már párosított Bluetooth-eszközökhöz</string>
+    <string name="permission_bluetooth_connect_summary">Kapcsolódás a már párosított Bluetooth eszközökhöz</string>
     <string name="permission_post_notification_title">Értesítések közzététele</string>
     <string name="permission_call_phone_summary">Telefonhívások kezdeményezése a kütyükről</string>
     <string name="permission_process_outgoing_calls_title">Kimenő hívások feldolgozása</string>
@@ -3386,7 +3386,7 @@
     <string name="music_new_playlist">Új lejátszási lista</string>
     <string name="music_error">Hiba történt</string>
     <string name="first_start_open_source_text">A Gadgetbridge egy nyílt forráskódú alkalmazás. Egy közösség által fejlesztve a közösség számára.\n\nBárki hozzájárulhat a kóddal, dokumentációval, teszteléssel és adományokkal.\n\nA Gadgetbridge nem tartalmaz hirdetéseket és nem végez követést. Az adatokat helyben, az Android eszközén tárolja, így 100%-ban adatvédelmi szempontból barátságos.\n\nLátogasson el weboldalunkra további információkért, dokumentációért és a kommunikációs csatornáinkra mutató hivatkozásokért.</string>
-    <string name="permission_bluetooth_scan_summary">Új Bluetooth-eszközök keresése</string>
+    <string name="permission_bluetooth_scan_summary">Új Bluetooth eszközök beolvasása</string>
     <string name="permission_read_call_log_title">Híváslista olvasása</string>
     <string name="permission_read_call_log_summary">Hívásnapló továbbítása a kütyükre</string>
     <string name="permission_call_phone_title">Telefon</string>
@@ -3491,8 +3491,8 @@
     <string name="pref_header_deprecated_functionalities_warning">A következő funkciókat már nem használjuk, és hamarosan eltávolítjuk őket a szoftverből.\nHa az alábbi beállítások valamelyikét szeretné engedélyezni, mindenképpen vegye fel a kapcsolatot a projektcsapattal.</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">GATT interakció engedélyezése a BLE Intent API-n keresztül</string>
     <string name="prefs_title_gatt_client_api_package">BLE API csomag</string>
-    <string name="permission_background_location_summary">Bluetooth-eszközök keresése a háttérben, és a helymeghatározás elküldése bizonyos kütyüknek</string>
-    <string name="permission_bluetooth_summary">Kapcsolódás Bluetooth-eszközökhöz</string>
+    <string name="permission_background_location_summary">Bluetooth eszközök beolvasása a háttérben, és a helymeghatározás elküldése bizonyos kütyüknek</string>
+    <string name="permission_bluetooth_summary">Kapcsolódás Bluetooth eszközökhöz</string>
     <string name="prefs_summary_gatt_client_api_package">A BLE Intent API kommunikáció korlátozása erre a csomagra</string>
     <string name="backup_restore_exporting">Exportálás zip formátumba…</string>
     <string name="backup_restore_error_import">Importálás zip formátumba sikertelen</string>
@@ -3656,6 +3656,6 @@
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="notifications_dismiss_all">Összes elutasítása</string>
-    <string name="prefs_title_gatt_client_filter_char">BLE jellemző</string>
+    <string name="prefs_title_gatt_client_filter_char">BLE jellemzők</string>
     <string name="prefs_summary_gatt_client_filter_char">Szűrés bizonyos BLE jellemzőkre, vesszővel elválasztva</string>
 </resources>
