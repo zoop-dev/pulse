@@ -3713,4 +3713,7 @@
     <string name="permission_disable_doze_summary">Umožňuje běh na pozadí bez zásahu optimalizacemi baterie v systému Android</string>
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
+    <string name="notifications_dismiss_all">Zavřít vše</string>
+    <string name="prefs_summary_gatt_client_filter_char">Filtr specifických charakteristik BLE, oddělený čárkou</string>
+    <string name="prefs_title_gatt_client_filter_char">Charakteristika BLE</string>
 </resources>
