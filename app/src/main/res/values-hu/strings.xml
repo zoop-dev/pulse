@@ -3655,4 +3655,5 @@
     <string name="permission_disable_doze_summary">Lehetővé teszi a háttérben történő futtatást az Android akkumulátor-optimalizálásai által akadálytalanul</string>
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
+    <string name="notifications_dismiss_all">Összes elutasítása</string>
 </resources>
