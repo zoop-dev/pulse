@@ -125,7 +125,7 @@
     <string name="pref_summary_pebble_forceprotocol">Ez az beállítás a legfrissebb értesítési protokollt kényszeríti a firmware verziótól függően. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
     <string name="pref_title_pebble_forceuntested">Nem tesztelt funkciók engedélyezése</string>
     <string name="pref_summary_pebble_forceuntested">Nem tesztelt funkciók engedélyezése. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
-    <string name="pref_title_pebble_forcele">BLE preferálása mindig</string>
+    <string name="pref_title_pebble_forcele">BLE előnyben részesítése mindig</string>
     <string name="pref_summary_pebble_forcele">Kísérleti Pebble LE-támogatás használata minden Pebble esetében, a BT classic helyett. Ehhez először a nem LE, majd a Pebble LE párosítása szükséges</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU határérték</string>
     <string name="pref_summary_pebble_mtu_limit">Ha a Pebble 2/Pebble LE nem működik elvártan, próbálja beállítani az MTU határértéket (az érvényes tartomány: 20–512)</string>
@@ -1665,7 +1665,7 @@
     <string name="pref_summary_device_intents">Engedélyezze a Bangle.js óraalkalmazások számára az Android Intentek küldését, és az Androidon futó egyéb alkalmazások (például a Tasker) számára, hogy adatokat küldjenek a Bangle.js részére a com.banglejs.uart.tx Intentel. A háttérben való működéshez engedélyre van szüksége a többi alkalmazás feletti megjelenítéshez.</string>
     <string name="reminder_time_once">%1$s, egyszer</string>
     <string name="pref_workout_detection_alert_summary">Értesítés, ha egy edzés észlelve lett</string>
-    <string name="pref_disable_new_ble_scanning">Az új BLE szkennelés letiltása</string>
+    <string name="pref_disable_new_ble_scanning">Az új BLE-beolvasás letiltása</string>
     <string name="contact_delete_confirm_description">Biztosan törölni szeretné a következőt: „%1$s”?</string>
     <string name="pref_screen_notification_idle_alerts">Üresjárati riasztások</string>
     <string name="pref_notifications_and_calls_enable_misscall">Értesítés a nem fogadott hívásról</string>
@@ -1813,7 +1813,7 @@
     <string name="activity_type_ice_hockey">Jégkorong</string>
     <string name="activity_type_cross_country_skiing">Sífutás</string>
     <string name="norwegian_bokmal">Norvég Bokmål</string>
-    <string name="prefs_always_on_display_summary">Tartsd folyamatosan bekapcsolva a karkötő kijelzőjét</string>
+    <string name="prefs_always_on_display_summary">Tartsa folyamatosan bekapcsolva a karkötő kijelzőjét</string>
     <string name="prefs_password_summary">Zárja le a karkötőt jelszóval, amikor eltávolítja a csuklójáról</string>
     <string name="prefs_shortcut_cards_summary">Jobbra húzáskor az órafelületen láthatóvá válnak a gyorsbillentyűkártyák. Ha egy alkalmazás fut, az automatikusan generált kártyákat ez a beállítás nem érinti.</string>
     <string name="prefs_control_center">Vezérlőközpont</string>
@@ -3656,4 +3656,6 @@
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="notifications_dismiss_all">Összes elutasítása</string>
+    <string name="prefs_title_gatt_client_filter_char">BLE jellemző</string>
+    <string name="prefs_summary_gatt_client_filter_char">Szűrés bizonyos BLE jellemzőkre, vesszővel elválasztva</string>
 </resources>
