@@ -562,7 +562,7 @@
     <string name="watch9_calibration_button">Калибровка</string>
     <string name="title_activity_watch9_pairing">Сопряжение Watch 9</string>
     <string name="title_activity_watch9_calibration">Калибровка Watch 9</string>
-    <string name="mi3_prefs_band_screen_unlock">Разблокировка экрана</string>
+    <string name="mi3_prefs_band_screen_unlock">Разблокировка экрана\"</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Смахните вверх для разблокировки экрана браслета</string>
     <string name="german">Немецкий</string>
     <string name="italian">Итальянский</string>
@@ -3694,4 +3694,10 @@
     <string name="discharge_interval_3">Период разряда 3</string>
     <string name="totalJumps">Всего прыжков</string>
     <string name="maxJumpRate">Макс. частота прыжков</string>
+    <string name="notifications_dismiss_all">Отказаться от всех</string>
+    <string name="activity_type_upper_body">Верхняя часть тела</string>
+    <string name="charts_show_balance_sleep_title">Соблюдайте баланс сна</string>
+    <string name="charts_show_balance_sleep_summary">Покажите избыток/недостаток сна на еженедельных и ежемесячных графиках</string>
+    <string name="charts_show_balance_steps_title">Показать баланс шагов</string>
+    <string name="charts_show_balance_steps_summary">Покажите избыток/недостаток шагов на недельных и месячных графиках</string>
 </resources>
