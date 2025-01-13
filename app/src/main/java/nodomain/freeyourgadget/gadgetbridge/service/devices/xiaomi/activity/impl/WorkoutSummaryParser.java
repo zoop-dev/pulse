@@ -711,6 +711,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 4:
                 headerSize = 4;
                 break;
+            case 7:
+                headerSize = 5;
+                break;
             default:
                 LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
                 return null;
@@ -726,6 +729,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addByte(HR_MAX, UNIT_BPM);
         builder.addByte(HR_MIN, UNIT_BPM);
         builder.addUnknown(7);
+        if (version > 4) {
+            builder.addUnknown(1);
+        }
         builder.addInt(HR_ZONE_EXTREME, UNIT_SECONDS);
         builder.addInt(HR_ZONE_ANAEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_AEROBIC, UNIT_SECONDS);
@@ -735,7 +741,6 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addInt(STROKES, UNIT_STROKES);
         builder.addInt(STROKE_RATE_AVG, UNIT_STROKES_PER_MINUTE);
         builder.addUnknown(4);   // STROKE_RATE_MAX, UNIT_STROKES_PER_MINUTE
-        builder.addUnknown(31);
         return builder.build();
     }    
     
