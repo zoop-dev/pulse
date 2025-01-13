@@ -3448,7 +3448,9 @@
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Allow GATT interaction through BLE Intent API</string>
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">Allow to send BLE characteristic read/write and connect commands</string>
     <string name="prefs_summary_gatt_client_device_state_updates">Receive BLE connection state changes via Intents</string>
+    <string name="prefs_title_gatt_client_filter_char">BLE Characteristics</string>
     <string name="prefs_title_gatt_client_api_package">BLE API package</string>
+    <string name="prefs_summary_gatt_client_filter_char">Filter for specific BLE characteristics, split by a comma</string>
     <string name="prefs_summary_gatt_client_api_package">Restrict BLE Intent API communication to this package</string>
     <string name="prefs_title_ble_intent_api">BLE Intent API</string>
     <string name="activity_db_management_backup_restore_label">Backup and Restore</string>

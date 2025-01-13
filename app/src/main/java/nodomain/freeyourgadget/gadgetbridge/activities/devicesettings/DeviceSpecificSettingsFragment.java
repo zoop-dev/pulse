@@ -879,6 +879,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREFS_KEY_DEVICE_BLE_API_DEVICE_STATE);
         addPreferenceHandlerFor(PREFS_KEY_DEVICE_BLE_API_DEVICE_READ_WRITE);
         addPreferenceHandlerFor(PREFS_KEY_DEVICE_BLE_API_DEVICE_NOTIFY);
+        addPreferenceHandlerFor(PREFS_KEY_DEVICE_BLE_API_CHARACTERISTIC);
         addPreferenceHandlerFor(PREFS_KEY_DEVICE_BLE_API_PACKAGE);
 
         addPreferenceHandlerFor("lock");

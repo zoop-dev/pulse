@@ -20,6 +20,11 @@
         android:defaultValue="false" />
 
     <EditTextPreference
+        android:key="prefs_device_ble_api_filter_char"
+        android:title="@string/prefs_title_gatt_client_filter_char"
+        android:summary="@string/prefs_summary_gatt_client_filter_char" />
+
+    <EditTextPreference
         android:key="prefs_device_ble_api_package"
         android:title="@string/prefs_title_gatt_client_api_package"
         android:summary="@string/prefs_summary_gatt_client_api_package" />

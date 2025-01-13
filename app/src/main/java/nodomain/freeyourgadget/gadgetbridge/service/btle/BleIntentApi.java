@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREFS_KEY_DEVICE_BLE_API_CHARACTERISTIC;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREFS_KEY_DEVICE_BLE_API_DEVICE_NOTIFY;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREFS_KEY_DEVICE_BLE_API_DEVICE_READ_WRITE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREFS_KEY_DEVICE_BLE_API_DEVICE_STATE;
@@ -20,8 +21,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -39,6 +43,7 @@ public class BleIntentApi {
     private boolean intentApiEnabledDeviceState = false;
     private boolean intentApiEnabledReadWrite= false;
     private boolean intentApiEnabledNotifications= false;
+    private List<String> intentApiCharacteristicFilter = new ArrayList<>();
     private String intentApiPackage = "";
     private boolean intentApiCharacteristicReceiverRegistered = false;
     private boolean intentApiDeviceStateReceiverRegistered = false;
@@ -122,6 +127,9 @@ public class BleIntentApi {
         if(!intentApiEnabledNotifications) {
             return;
         }
+        if(!intentApiCharacteristicFilter.isEmpty() && !intentApiCharacteristicFilter.contains(characteristic.getUuid().toString())) {
+            return;
+        }
         Intent intent = getBleApiIntent(BLE_API_EVENT_CHARACTERISTIC_CHANGED);
         if(!StringUtils.isNullOrEmpty(intentApiPackage)) {
             intent.setPackage(intentApiPackage);
@@ -135,7 +143,14 @@ public class BleIntentApi {
     public void initializeDevice(TransactionBuilder builder) {
         if(intentApiEnabledNotifications) {
             for (BluetoothGattCharacteristic characteristic : characteristics.values()) {
-                builder.notify(characteristic, true);
+                if (intentApiCharacteristicFilter.isEmpty()) {
+                    builder.notify(characteristic, true);
+                    logger.info("Subscribed to {}", characteristic.getUuid());
+                }
+                else if(intentApiCharacteristicFilter.contains(characteristic.getUuid().toString())) {
+                    builder.notify(characteristic, true);
+                    logger.info("Subscribed to filtered {}", characteristic.getUuid());
+                }
             }
         }
     }
@@ -204,6 +219,8 @@ public class BleIntentApi {
         this.intentApiEnabledReadWrite = devicePrefs.getBoolean(PREFS_KEY_DEVICE_BLE_API_DEVICE_READ_WRITE, false);
         this.intentApiEnabledNotifications = devicePrefs.getBoolean(PREFS_KEY_DEVICE_BLE_API_DEVICE_NOTIFY, false);
         this.intentApiEnabledDeviceState = devicePrefs.getBoolean(PREFS_KEY_DEVICE_BLE_API_DEVICE_STATE, false);
+        // Also trim whitespace from the list of UUIDs
+        this.intentApiCharacteristicFilter = devicePrefs.getList(PREFS_KEY_DEVICE_BLE_API_CHARACTERISTIC, Collections.emptyList()).stream().map(String::trim).collect(Collectors.toList());
         this.intentApiPackage = devicePrefs.getString(PREFS_KEY_DEVICE_BLE_API_PACKAGE, "");
 
         registerBleApiCharacteristicReceivers(this.intentApiEnabledReadWrite);
