@@ -27,24 +27,23 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.DatePicker;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.Serializable;
@@ -72,6 +71,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 
 public class ActivitySummariesActivity extends AbstractListActivity<BaseActivitySummary> {
+    private static final Logger LOG = LoggerFactory.getLogger(ActivitySummariesActivity.class);
+
     static final int ACTIVITY_FILTER = 1;
     static final int ACTIVITY_DETAIL = 11;
     HashMap<String, ActivityKind> activityKindMap = new HashMap<>(0);
@@ -93,7 +94,13 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
             switch (Objects.requireNonNull(action)) {
                 case GBDevice.ACTION_DEVICE_CHANGED:
                     GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-                    mGBDevice = device;
+                    if (device == null) {
+                        LOG.error("Got device changed without device");
+                        return;
+                    }
+                    if (!device.equals(mGBDevice)) {
+                        return;
+                    }
                     if (device.isBusy()) {
                         swipeLayout.setRefreshing(true);
                     } else {
@@ -107,7 +114,6 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
             }
         }
     };
-    private int subtrackDashboard = 0;
 
     public static int getBackgroundColor(Context context) {
         TypedValue typedValue = new TypedValue();
