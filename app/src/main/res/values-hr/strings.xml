@@ -201,7 +201,7 @@
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
     <string name="updatefirmwareoperation_update_complete_rebooting">Instalacija firmwarea dovršena, ponovno pokretanje uređaja…</string>
     <string name="updatefirmwareoperation_write_failed">Flashanje firmvera nije uspjelo</string>
-    <string name="pref_summary_keep_data_on_device">Zadržat će podatke o aktivnostima na uređaju čak i nakon sinkronizacije. Korisno ako se GB koristi zajedno s drugim aplikacijama.</string>
+    <string name="pref_summary_keep_data_on_device">Zadržat će podatke o aktivnostima na uređaju čak i nakon sinkronizacije. Korisno ako se GB koristi zajedno s drugim aplikacijama. To može prouzročiti da satu ponestane mjesta i/ili da se prestane ispravno sinkronizirati.</string>
     <string name="prefs_find_phone_summary">Upotrijebite svoj bend za reprodukciju melodije zvona na telefonu.</string>
     <string name="mi2_prefs_inactivity_warnings_summary">Band će vibrirati kada ste neko vrijeme bili neaktivni</string>
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Onemogući upozorenja o neaktivnosti za vremenski interval</string>
