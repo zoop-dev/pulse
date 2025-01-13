@@ -68,8 +68,8 @@
     <string name="sonyswr12_settings_title">Sony SWR12 postavke</string>
     <string name="sonyswr12_settings_low_vibration">Omogućena slaba vibracija</string>
     <string name="find_lost_device_message">Tražiti %1$s\?</string>
-    <string name="controlcenter_power_off">Isključivanje</string>
-    <string name="controlcenter_power_off_confirm_title">Isključivanje</string>
+    <string name="controlcenter_power_off">Isključi</string>
+    <string name="controlcenter_power_off_confirm_title">Isključi</string>
     <string name="battery_level">Razina baterija</string>
     <string name="calendar_week">Tjedan</string>
     <string name="calendar_month">Mjesec</string>
@@ -96,7 +96,7 @@
     <string name="prefs_activity_in_device_card_sleep_title_summary">Prikaži trajanje spavanja</string>
     <string name="prefs_activity_in_device_card_distance_title_summary">Udaljenost se izračunava iz koraka i duljine koraka (podesivo u Postavkama - O vama)</string>
     <string name="prefs_activity_in_device_card_steps_title_summary">Prikaži ukupan broj koraka</string>
-    <string name="controlcenter_power_off_confirm_description">Jeste li sigurni da želite isključiti uređaj\?</string>
+    <string name="controlcenter_power_off_confirm_description">Stvarno želiš isključiti uređaj?</string>
     <string name="pref_media_previous">Prethodna pjesma</string>
     <string name="distance_format_meters">###m</string>
     <string name="pref_device_action_broadcast">Pošalji emitiranje</string>
@@ -1606,4 +1606,18 @@
     <string name="hr_resting">Odmaranje</string>
     <string name="hr_maximum">Maksimum</string>
     <string name="hr_minimum">Minimum</string>
+    <string name="loyalty_cards_sync_groups">Grupe za sinkronizaciju</string>
+    <string name="title">Naslov</string>
+    <string name="description">Opis</string>
+    <string name="loyalty_cards_sync_groups_only">Sinkroniziraj samo određene grupe</string>
+    <string name="preview_image">Slika pregleda</string>
+    <string name="status_icon">Ikona stanja</string>
+    <string name="changelog_title">Što je novo</string>
+    <string name="changelog_ok_button">U redu</string>
+    <string name="changelog_full_title">Dnevnik promjena</string>
+    <string name="changelog_show_full">Više …</string>
+    <string name="loyalty_cards_catima_package">Ime Catima paketa</string>
+    <string name="loyalty_cards_install">Instaliraj Catima</string>
+    <string name="action_changelog">Dnevnik promjena</string>
+    <string name="search">Traži</string>
 </resources>
