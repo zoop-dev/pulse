@@ -179,11 +179,11 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
         boolean normalClock = DateFormat.is24HourFormat(GBApplication.getContext());
         Map<Integer, String> hours = new HashMap<Integer, String>() {
             {
-                put(0, normalClock ? (mode_24h ? "0" : "12") : "12pm");
+                put(0, normalClock ? (mode_24h ? "0" : "12") : (mode_24h ? "12am" : "12pm"));
                 put(3, "3");
                 put(6, normalClock ? "6" : "6am");
                 put(9, "9");
-                put(12, normalClock ? (mode_24h ? "12" : "0") : "12am");
+                put(12, normalClock ? (mode_24h ? "12" : "0") : (mode_24h ? "12pm" : "12am"));
                 put(15, normalClock ? "15" : "3");
                 put(18, normalClock ? "18" : "6pm");
                 put(21, normalClock ? "21" : "9");
