@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiWatch5ActiveCoordinator extends XiaomiCoordinator {
 
@@ -52,4 +53,7 @@ public class RedmiWatch5ActiveCoordinator extends XiaomiCoordinator {
     public int getDisabledIconResource() {
         return R.drawable.ic_device_amazfit_bip_disabled;
     }
+
+    @Override
+    public int getContactsSlotCount(final GBDevice device) { return 10; }
 }

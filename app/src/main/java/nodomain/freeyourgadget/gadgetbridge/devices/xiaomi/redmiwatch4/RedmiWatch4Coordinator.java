@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiWatch4Coordinator extends XiaomiCoordinator {
     @Override
@@ -58,4 +59,7 @@ public class RedmiWatch4Coordinator extends XiaomiCoordinator {
     public int getWorldClocksSlotCount() {
         return 20;
     }
+
+    @Override
+    public int getContactsSlotCount(final GBDevice device) { return 10; }
 }
