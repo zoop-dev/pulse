@@ -3726,4 +3726,6 @@
     <string name="redmi_buds_5_pro_equalizer_preset_voice">Stimme verstärken</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="notifications_dismiss_all">Alle löschen</string>
+    <string name="prefs_summary_gatt_client_filter_char">Filter für bestimmte BLE Eigenschaften, geteilt durch ein Komma</string>
+    <string name="prefs_title_gatt_client_filter_char">BLE Eigenschaften</string>
 </resources>
