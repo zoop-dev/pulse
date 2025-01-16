@@ -459,7 +459,7 @@
     <string name="zetime_prefs_inactivity_tu">Tiistai</string>
     <string name="pref_screen_notification_profile_calendar">Kalenteri-ilmoitus</string>
     <string name="activity_detail_duration_label">Kesto</string>
-    <string name="watchface_setting_wrist_flick_duration">Kesto (ms):</string>
+    <string name="watchface_setting_wrist_flick_duration">Kesto (ms:ina)</string>
     <string name="sleep_activity_date_range">Alkaen %1$s päättyen %2$s</string>
     <string name="weekstepschart_steps_a_week">Askeleita viikossa</string>
     <string name="title_activity_device_specific_settings">Laitekohtaiset asetukset</string>
@@ -471,8 +471,8 @@
     <string name="distance_format_kilometers">###.#km</string>
     <string name="distance_format_meters">###m</string>
     <string name="devicetype_vesc">VESC</string>
-    <string name="watchface_dialog_widget_width">Leveys:</string>
-    <string name="watchface_dialog_widget_timezone">Aikavyöhyke:</string>
+    <string name="watchface_dialog_widget_width">Vimpaimen leveys (pikseleinä)</string>
+    <string name="watchface_dialog_widget_timezone">Aikavyöhyke</string>
     <string name="pref_activity_recognition_mode_auto">automaattinen</string>
     <string name="pref_activity_recognize_rowing">tunnista soutaminen</string>
     <string name="pref_activity_recognize_running">tunnista juokseminen</string>
