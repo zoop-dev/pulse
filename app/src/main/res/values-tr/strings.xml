@@ -274,15 +274,7 @@
 \nNot: Daha önce kurulanla tamamen aynıysa .res dosyasını kurmanız gerekmez.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">AmazFit Core 2 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
-\n
-\nLütfen önce .fw dosyasını, sonra .res dosyasını kurun. Bilekliğiniz .fw dosyasını kurduktan sonra yeniden başlatılacak.
-\n
-\nNot: Daha önce kurulanla tamamen aynıysa .res dosyasını kurmanız gerekmez.
-\n
-\nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!
-\n
-\nTAM OLARAK TEST EDİLMEMİŞTİR, AYGITINIZIN ADI \"Amazfit Band 2\" İSE BEATS_W ÜRÜN YAZILIMINI KURMANIZ GEREKEBİLİR</string>
+    <string name="fw_upgrade_notice_amazfitcor2">AmazFit Core 2 aygıtınıza %s ürün yazılımını kurmak üzeresiniz. \n \nLütfen önce .fw dosyasını, sonra .res dosyasını kurun. Bilekliğiniz .fw dosyasını kurduktan sonra yeniden başlatılacak. \n \nNot: Daha önce kurulanla tamamen aynıysa .res dosyasını kurmanız gerekmez. \n \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR! \n \nTAM OLARAK TEST EDİLMEMİŞTİR, AYGITINIZIN ADI \"Amazfit Band 2\" İSE BEATS_W ÜRÜN YAZILIMINI KURMANIZ GEREKEBİLİR</string>
     <string name="fw_upgrade_notice_amazfitgtr">AmazFit GTR aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nLütfen önce .fw dosyasını, sonra .res dosyasını, ve son olarak .gps dosyasını kurun. Saatiniz .fw dosyasını kurduktan sonra yeniden başlatılacak.
