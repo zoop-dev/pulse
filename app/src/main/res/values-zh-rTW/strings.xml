@@ -1057,15 +1057,7 @@
 \n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。
 \n
 \n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfitcor2">您即將在您的 Amazfit Cor 2 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。
-\n
-\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。
-\n
-\n請自行承擔風險！
-\n
-\n完全未經測試，若您的設備名稱為 \"Amazfit Band 2\"，可能需要閃存 BEATS_W 韌體。</string>
+    <string name="fw_upgrade_notice_amazfitcor2">您即將在您的 Amazfit Cor 2 上安裝 %s 韌體。 \n \n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。 \n \n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。 \n \n請自行承擔風險！ \n \n完全未經測試，若您的設備名稱為 \"Amazfit Band 2\"，可能需要閃存 BEATS_W 韌體。</string>
     <string name="fw_upgrade_notice_amazfitcor">您即將在您的 Amazfit Cor 上安裝 %s 韌體。
 \n
 \n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。
