@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS;
+
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -108,6 +110,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
@@ -252,6 +255,10 @@ public class HuaweiSupportProvider {
     //TODO: we need only one instance of manager and all it services.
     protected HuaweiP2PManager huaweiP2PManager = new HuaweiP2PManager(this);
 
+    protected HuaweiDataSyncManager huaweiDataSyncManager = new HuaweiDataSyncManager(this);
+
+
+    private HuaweiDataSyncGoals huaweiDataSyncTreeCircleGoals = null;
 
     public HuaweiCoordinatorSupplier getCoordinator() {
         return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
@@ -287,6 +294,10 @@ public class HuaweiSupportProvider {
 
     public HuaweiMusicManager getHuaweiMusicManager() {
         return huaweiMusicManager;
+    }
+
+    public HuaweiDataSyncManager getHuaweiDataSyncManager() {
+        return huaweiDataSyncManager;
     }
 
     public HuaweiSupportProvider(HuaweiBRSupport support) {
@@ -652,6 +663,8 @@ public class HuaweiSupportProvider {
             }
 
             huaweiP2PManager.unregisterAllService();
+            huaweiDataSyncManager.unregisterAll();
+            this.huaweiDataSyncTreeCircleGoals = null;
             stopBatteryRunnerDelayed();
             GetBatteryLevelRequest batteryLevelReq = new GetBatteryLevelRequest(this);
             batteryLevelReq.setFinalizeReq(new RequestCallback() {
@@ -877,7 +890,10 @@ public class HuaweiSupportProvider {
                             HuaweiP2PDataDictionarySyncService trackService = new HuaweiP2PDataDictionarySyncService(huaweiP2PManager);
                             trackService.register();
                         }
+                    }
 
+                    if(getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {
+                        huaweiDataSyncTreeCircleGoals = new HuaweiDataSyncGoals(HuaweiSupportProvider.this);
                     }
                 }
             });
@@ -1094,7 +1110,16 @@ public class HuaweiSupportProvider {
                     sendDebugRequest();
                     break;
                 case ActivityUser.PREF_USER_STEPS_GOAL:
-                    new SendFitnessGoalRequest(this).doPerform();
+                    setStepsGoal();
+                    break;
+                case ActivityUser.PREF_USER_CALORIES_BURNT:
+                    setCaloriesBurntGoal();
+                    break;
+                case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES:
+                    setFatBurnTime();
+                    break;
+                case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
+                    setStandingTime();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE:
                     if (GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE, false)) {
@@ -1131,6 +1156,58 @@ public class HuaweiSupportProvider {
         } catch (IOException e) {
             GB.toast(context, "Configuration of Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("Configuration of Huawei device failed", e);
+        }
+    }
+
+    public void setStepsGoal() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            int stepGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
+            huaweiDataSyncTreeCircleGoals.sendStepsGoal(stepGoal);
+        } else {
+            try {
+                new SendFitnessGoalRequest(this).doPerform();
+            } catch (IOException e) {
+                LOG.error("SendFitnessGoalRequest failed", e);
+            }
+        }
+    }
+
+    public void setCaloriesBurntGoal() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            int caloriesBurntGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
+            huaweiDataSyncTreeCircleGoals.sendCaloriesBurntGoal(caloriesBurntGoal);
+        } else {
+            try {
+                new SendFitnessGoalRequest(this).doPerform();
+            } catch (IOException e) {
+                LOG.error("SendFitnessGoalRequest failed", e);
+            }
+        }
+    }
+
+    public void setFatBurnTime() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            int fatBurnTimeGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, ActivityUser.defaultUserFatBurnTimeMinutes);
+            huaweiDataSyncTreeCircleGoals.sendExerciseGoal(fatBurnTimeGoal);
+        } else {
+            try {
+                new SendFitnessGoalRequest(this).doPerform();
+            } catch (IOException e) {
+                LOG.error("SendFitnessGoalRequest failed", e);
+            }
+        }
+    }
+
+    public void setStandingTime() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            int standingTimeGoal = GBApplication.getPrefs().getInt(PREF_USER_GOAL_STANDING_TIME_HOURS, ActivityUser.defaultUserGoalStandingTimeHours);
+            huaweiDataSyncTreeCircleGoals.sendStandGoal(standingTimeGoal);
+        } else {
+            try {
+                new SendFitnessGoalRequest(this).doPerform();
+            } catch (IOException e) {
+                LOG.error("SendFitnessGoalRequest failed", e);
+            }
         }
     }
 
@@ -2316,6 +2393,8 @@ public class HuaweiSupportProvider {
         stopBatteryRunnerDelayed();
         huaweiFileDownloadManager.dispose();
         huaweiP2PManager.unregisterAllService();
+        huaweiDataSyncManager.unregisterAll();
+        this.huaweiDataSyncTreeCircleGoals = null;
     }
 
     public boolean downloadTruSleepData(int start, int end) {

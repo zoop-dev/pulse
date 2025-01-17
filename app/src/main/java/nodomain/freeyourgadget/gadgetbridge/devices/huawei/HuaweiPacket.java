@@ -35,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.App;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Calls;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Contacts;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DataSync;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Earphones;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.EphemerisFileUpload;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService0A;
@@ -721,6 +722,20 @@ public class HuaweiPacket {
                         return new EphemerisFileUpload.UploadData.UploadDataResponse(paramsProvider).fromPacket(this);
                     case EphemerisFileUpload.UploadDone.id:
                         return new EphemerisFileUpload.UploadDone.UploadDoneIncomingRequest(paramsProvider).fromPacket(this);
+                    default:
+                        this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
+                        return this;
+                }
+            case DataSync.id:
+                switch (this.commandId) {
+                    case DataSync.ConfigCommand.id:
+                        return new DataSync.ConfigCommand.Response(paramsProvider).fromPacket(this);
+                    case DataSync.EventCommand.id:
+                        return new DataSync.EventCommand.Response(paramsProvider).fromPacket(this);
+                    case DataSync.DataCommand.id:
+                        return new DataSync.DataCommand.Response(paramsProvider).fromPacket(this);
+                    case DataSync.DictDataCommand.id:
+                        return new DataSync.DictDataCommand.Response(paramsProvider).fromPacket(this);
                     default:
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;

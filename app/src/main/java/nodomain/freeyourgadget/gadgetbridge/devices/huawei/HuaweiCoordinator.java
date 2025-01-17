@@ -55,7 +55,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
@@ -695,6 +694,43 @@ public class HuaweiCoordinator {
     public boolean supportsCannedReplies() {
         if (supportsExpandCapability())
             return supportsExpandCapability(82);
+        return false;
+    }
+
+    public boolean supportsDeviceCommandConfig() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(83);
+        return false;
+    }
+
+
+    public boolean supportsDeviceCommandEvent() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(84);
+        return false;
+    }
+
+    public boolean supportsDeviceCommandData() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(85);
+        return false;
+    }
+
+    public boolean supportsDeviceCommandDictData() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(173);
+        return false;
+    }
+
+    public boolean supportsThreeCircle() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(154);
+        return false;
+    }
+
+    public boolean supportsThreeCircleLite() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(156);
         return false;
     }
 

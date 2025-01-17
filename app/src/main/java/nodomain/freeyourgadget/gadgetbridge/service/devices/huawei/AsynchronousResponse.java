@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.App;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Calls;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DataSync;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DeviceConfig;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Ephemeris;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.EphemerisFileUpload;
@@ -131,6 +132,7 @@ public class AsynchronousResponse {
             handleAsyncBattery(response);
             handleNotifications(response);
             handlePermissionCheck(response);
+            handleDataSyncCommands(response);
         } catch (Request.ResponseParseException e) {
             LOG.error("Response parse exception", e);
         }
@@ -764,4 +766,35 @@ public class AsynchronousResponse {
             }
         }
     }
+
+    private void handleDataSyncCommands(HuaweiPacket response) throws Request.ResponseTypeMismatchException {
+        if (response.serviceId == DataSync.id) {
+            if (response.commandId == DataSync.ConfigCommand.id) {
+                if (!(response instanceof DataSync.ConfigCommand.Response)) {
+                    throw new Request.ResponseTypeMismatchException(response, DataSync.ConfigCommand.class);
+                }
+                DataSync.ConfigCommand.Response resp = (DataSync.ConfigCommand.Response) response;
+                support.getHuaweiDataSyncManager().handleConfigCommandResponse(resp.srcPackage, resp.dstPackage, resp.data);
+            } else if (response.commandId == DataSync.EventCommand.id) {
+                if (!(response instanceof DataSync.EventCommand.Response)) {
+                    throw new Request.ResponseTypeMismatchException(response, DataSync.EventCommand.class);
+                }
+                DataSync.EventCommand.Response resp = (DataSync.EventCommand.Response) response;
+                support.getHuaweiDataSyncManager().handleEventCommandResponse(resp.srcPackage, resp.dstPackage, resp.data);
+            } else if (response.commandId == DataSync.DataCommand.id) {
+                if (!(response instanceof DataSync.DataCommand.Response)) {
+                    throw new Request.ResponseTypeMismatchException(response, DataSync.EventCommand.class);
+                }
+                DataSync.DataCommand.Response resp = (DataSync.DataCommand.Response) response;
+                support.getHuaweiDataSyncManager().handleDataCommandResponse(resp.srcPackage, resp.dstPackage, resp.data);
+            } else if (response.commandId == DataSync.DictDataCommand.id) {
+                if (!(response instanceof DataSync.DictDataCommand.Response)) {
+                    throw new Request.ResponseTypeMismatchException(response, DataSync.EventCommand.class);
+                }
+                DataSync.DictDataCommand.Response resp = (DataSync.DictDataCommand.Response) response;
+                support.getHuaweiDataSyncManager().handleDictDataCommandResponse(resp.srcPackage, resp.dstPackage, resp.data);
+            }
+        }
+    }
+
 }

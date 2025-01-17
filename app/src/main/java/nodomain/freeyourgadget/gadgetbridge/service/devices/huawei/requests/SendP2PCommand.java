@@ -5,24 +5,21 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.AccountRelated;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SendP2PCommand extends Request {
-    private static final Logger LOG = LoggerFactory.getLogger(SendAccountRequest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SendP2PCommand.class);
 
-    private byte cmdId;
-    private short sequenceId;
-    private String srcPackage;
-    private String dstPackage;
-    private String srcFingerprint = null;
-    private String dstFingerprint = null;
-    private byte[] sendData = null;
-    private int sendCode = 0;
+    private final byte cmdId;
+    private final short sequenceId;
+    private final String srcPackage;
+    private final String dstPackage;
+    private final String srcFingerprint;
+    private final String dstFingerprint;
+    private final byte[] sendData;
+    private final int sendCode;
 
     public SendP2PCommand(HuaweiSupportProvider support,
                           byte cmdId,
