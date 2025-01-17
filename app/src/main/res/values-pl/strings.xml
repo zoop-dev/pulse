@@ -3731,4 +3731,8 @@
     <string name="notifications_dismiss_all">Odrzuć wszystko</string>
     <string name="prefs_title_gatt_client_filter_char">Charakterystyka BLE</string>
     <string name="prefs_summary_gatt_client_filter_char">Filtruj według określonych cech BLE, rozdzielonych przecinkiem</string>
+    <string name="prefs_active_noise_cancelling_transport">Transport</string>
+    <string name="prefs_active_noise_cancelling_indoor">Wewnątrz</string>
+    <string name="prefs_active_noise_cancelling_outdoor">Na wolnym powietrzu</string>
+    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
 </resources>
