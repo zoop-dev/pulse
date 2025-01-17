@@ -127,7 +127,7 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 46;
+    private static final int CURRENT_PREFS_VERSION = 47;
 
     private static final LimitedQueue<Integer, String> mIDSenderLookup = new LimitedQueue<>(16);
     private static GBPrefs prefs;
@@ -1936,6 +1936,13 @@ public class GBApplication extends Application {
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Failed to migrate prefs to version 46", e);
+            }
+        }
+
+        if (oldVersion < 47) {
+            if (prefs.contains("activity_user_goal_standing_time_minutes")) {
+                editor.putString("activity_user_goal_standing_hours", prefs.getString("activity_user_goal_standing_time_minutes", "12"));
+                editor.remove("activity_user_goal_standing_time_minutes");
             }
         }
 

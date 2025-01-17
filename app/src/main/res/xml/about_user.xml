@@ -116,9 +116,9 @@
             app:iconSpaceReserved="false"
             android:defaultValue="12"
             android:inputType="number"
-            android:key="activity_user_goal_standing_time_minutes"
+            android:key="activity_user_goal_standing_hours"
             android:maxLength="2"
-            android:title="@string/activity_prefs_goal_standing_time_minutes"
+            android:title="@string/activity_prefs_goal_standing_hours"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference

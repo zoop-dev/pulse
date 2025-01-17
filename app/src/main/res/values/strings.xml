@@ -1242,6 +1242,7 @@
     <string name="activity_prefs_calories_burnt">Daily target: calories burnt</string>
     <string name="activity_prefs_distance_meters">Daily target: distance in meters</string>
     <string name="activity_prefs_activetime_minutes">Daily target: active time in minutes</string>
+    <string name="activity_prefs_goal_standing_hours">Daily target: standing hours</string>
     <string name="activity_prefs_goal_standing_time_minutes">Daily target: standing time in minutes</string>
     <string name="activity_prefs_goal_fat_burn_time_minutes">Daily target: fat burn time in minutes</string>
     <string name="activity_prefs_goal_active_calories_burnt">Daily target: active calories burnt</string>

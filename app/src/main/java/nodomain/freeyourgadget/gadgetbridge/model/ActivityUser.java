@@ -77,7 +77,7 @@ public class ActivityUser {
     public static final String PREF_USER_ACTIVETIME_MINUTES = "activity_user_activetime_minutes";
     public static final String PREF_USER_STEP_LENGTH_CM = "activity_user_step_length_cm";
     public static final String PREF_USER_GOAL_WEIGHT_KG = "activity_user_goal_weight_kg";
-    public static final String PREF_USER_GOAL_STANDING_TIME_HOURS = "activity_user_goal_standing_time_minutes";
+    public static final String PREF_USER_GOAL_STANDING_TIME_HOURS = "activity_user_goal_standing_hours";
     public static final String PREF_USER_GOAL_FAT_BURN_TIME_MINUTES = "activity_user_goal_fat_burn_time_minutes";
 
     public ActivityUser() {
