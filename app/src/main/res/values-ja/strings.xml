@@ -625,15 +625,7 @@
     <string name="mode_configuration">モード設定</string>
     <string name="save_configuration">設定を保存</string>
     <string name="appwidget_not_connected">接続されていないためアラームは設定されません。</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Amazfit Cor 2 に %s ファームウェアをインストールしようとしています。
-\n 
-\n.fw ファイルをインストールしてから、.res ファイルをインストールしてください。 .fw ファイルをインストールした後、バンドが再起動します。
-\n 
-\n注: .res ファイルが前回にインストールしたものと同じ場合、新たに.res ファイルをインストールする必要はありません。
-\n 
-\n自己責任の下で行ってください！
-\n 
-\n完全にはテストされていません。デバイス名が \"Amazfit Band 2\" の場合、おそらく BEATS_W ファームウェアをフラッシュする必要があります</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Amazfit Cor 2 に %s ファームウェアをインストールしようとしています。 \n \n.fw ファイルをインストールしてから、.res ファイルをインストールしてください。 .fw ファイルをインストールした後、バンドが再起動します。 \n \n注: .res ファイルが前回にインストールしたものと同じ場合、新たに.res ファイルをインストールする必要はありません。 \n \n自己責任の下で行ってください！ \n \n完全にはテストされていません。デバイス名が \"Amazfit Band 2\" の場合、おそらく BEATS_W ファームウェアをフラッシュする必要があります</string>
     <string name="pref_title_support_voip_calls">VoIP アプリの通話を有効にする</string>
     <string name="fw_upgrade_notice_miband4">Mi Band 4 に %s ファームウェアをインストールしようとしています。
 \n
