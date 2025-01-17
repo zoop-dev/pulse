@@ -66,6 +66,8 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
     private final Set<XiaomiProto.WeatherLocation> cachedWeatherLocations = new HashSet<>();
 
+    private boolean locationsInitialized = false;
+
     public XiaomiWeatherService(final XiaomiSupport support) {
         super(support);
     }
@@ -493,6 +495,13 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
     }
 
     private void onConditionRequestReceived(final XiaomiProto.Command command) {
+
+        if (!locationsInitialized) {
+            LOG.debug("Received request from device but multi location weather support still isn't initialized");
+            getSupport().sendCommand("get weather locations", COMMAND_TYPE, CMD_GET_LOCATIONS);
+            locationsInitialized = true; // remind only once
+        }
+
         if (command.hasStatus() && command.getStatus() != 0) {
             LOG.warn("Received request for conditions with unexpected status code {}", command.getStatus());
             return;
@@ -552,6 +561,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
         if (cmd.hasStatus() && cmd.getStatus() == 1) {
             LOG.warn("Multiple weather locations not supported by this device");
             getSupport().setFeatureSupported(XiaomiPreferences.FEAT_MULTIPLE_WEATHER_LOCATIONS, false);
+            locationsInitialized = true;
 
             // now that the feature flag has been updated, send cached weather
             onSendWeather(Weather.getInstance().getWeatherSpecs());
@@ -565,6 +575,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
         }
 
         getSupport().setFeatureSupported(XiaomiPreferences.FEAT_MULTIPLE_WEATHER_LOCATIONS, true);
+        locationsInitialized = true;
 
         if (!cmd.hasWeather() || !cmd.getWeather().hasLocations()) {
             LOG.warn("Received unexpected payload in response to configured weather locations request");
