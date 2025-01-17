@@ -3658,4 +3658,8 @@
     <string name="notifications_dismiss_all">Összes elutasítása</string>
     <string name="prefs_title_gatt_client_filter_char">BLE jellemzők</string>
     <string name="prefs_summary_gatt_client_filter_char">Szűrés bizonyos BLE jellemzőkre, vesszővel elválasztva</string>
+    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
+    <string name="prefs_active_noise_cancelling_transport">Közlekedés</string>
+    <string name="prefs_active_noise_cancelling_indoor">Beltér</string>
+    <string name="prefs_active_noise_cancelling_outdoor">Kültér</string>
 </resources>
