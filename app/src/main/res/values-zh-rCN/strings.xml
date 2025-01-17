@@ -3712,4 +3712,8 @@
     <string name="notifications_dismiss_all">全部取消</string>
     <string name="prefs_title_gatt_client_filter_char">低功耗蓝牙特征</string>
     <string name="prefs_summary_gatt_client_filter_char">筛选特定低功耗蓝牙特征，逗号分隔</string>
+    <string name="prefs_active_noise_cancelling_outdoor">室外</string>
+    <string name="devicetype_soundcore_q30">声阔 Q30</string>
+    <string name="prefs_active_noise_cancelling_transport">通透</string>
+    <string name="prefs_active_noise_cancelling_indoor">室内</string>
 </resources>
