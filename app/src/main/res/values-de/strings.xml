@@ -692,15 +692,7 @@
     <string name="pref_title_authkey">Authentifizierungsschlüssel</string>
     <string name="pref_summary_authkey">Ändere den Authentifizierungsschlüssel in einen gemeinsamen Schlüssel auf all deinen Android-Geräten, von denen aus du eine Verbindung herstellen möchtet. Der bisherige Standardschlüssel für alle Geräte ist 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Du bist dabei, die %s-Firmware auf deine Amazfit Cor 2 zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw-Datei und danach die .res-Datei installierst. Dein Band wird nach der Installation der .fw-Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte.
-\n
-\nAUF EIGENE GEFAHR!
-\n
-\nVOLLSTÄNDIG UNGETESTET, WAHRSCHEINLICH MUSST DU EINE BEATS_W FIRMWARE FLASHEN, WENN DEIN GERÄTENAME \"Amazfit Band 2\" IST</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Du bist dabei, die %s-Firmware auf deine Amazfit Cor 2 zu installieren. \n \nBitte stelle sicher, dass du die .fw-Datei und danach die .res-Datei installierst. Dein Band wird nach der Installation der .fw-Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte. \n \nAUF EIGENE GEFAHR! \n \nVOLLSTÄNDIG UNGETESTET, WAHRSCHEINLICH MUSST DU EINE BEATS_W FIRMWARE FLASHEN, WENN DEIN GERÄTENAME \"Amazfit Band 2\" IST</string>
     <string name="dutch">Niederländisch</string>
     <string name="turkish">Türkisch</string>
     <string name="ukrainian">Ukrainisch</string>
