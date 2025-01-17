@@ -682,15 +682,7 @@
     <string name="pref_title_authkey">Authenticatiesleutel</string>
     <string name="pref_summary_authkey">Wijzig de authenticatiesleutel in een algemene sleutel op al uw Android-apparaten waarmee u verbinding wilt maken. De vorige standaardsleutel voor alle apparaten is 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
-    <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2.
-\n
-\nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand.
-\n
-\nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd.
-\n
-\nGA VERDER OP EIGEN RISICO!
-\n
-\nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM \"Amazfit Band 2\" IS</string>
+    <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2. \n \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand. \n \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. \n \nGA VERDER OP EIGEN RISICO! \n \nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM \"Amazfit Band 2\" IS</string>
     <string name="dutch">Nederlands</string>
     <string name="turkish">Turks</string>
     <string name="ukrainian">Oekraïens</string>
