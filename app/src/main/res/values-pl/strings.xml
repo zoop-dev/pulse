@@ -3735,4 +3735,5 @@
     <string name="prefs_active_noise_cancelling_indoor">Wewnątrz</string>
     <string name="prefs_active_noise_cancelling_outdoor">Na wolnym powietrzu</string>
     <string name="devicetype_soundcore_q30">Soundcore Q30</string>
+    <string name="activity_prefs_goal_standing_hours">Cel dzienny: godziny stania</string>
 </resources>
