@@ -3716,4 +3716,9 @@
     <string name="notifications_dismiss_all">Zavřít vše</string>
     <string name="prefs_summary_gatt_client_filter_char">Filtr specifických charakteristik BLE, oddělený čárkou</string>
     <string name="prefs_title_gatt_client_filter_char">Charakteristika BLE</string>
+    <string name="activity_prefs_goal_standing_hours">Denní cíl: hodiny ve stoje</string>
+    <string name="prefs_active_noise_cancelling_transport">V dopravě</string>
+    <string name="prefs_active_noise_cancelling_indoor">Uvnitř</string>
+    <string name="prefs_active_noise_cancelling_outdoor">Venku</string>
+    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
 </resources>
