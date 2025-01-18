@@ -2162,7 +2162,7 @@
     <string name="prefs_button_triple_press_action_selection_title">3. esemény művelet</string>
     <string name="gpx_receiver_activity_title">GPX-vevő Gadgetbridge</string>
     <string name="gpx_receiver_overwrite_some_files">Néhány fájl már létezik. Felülírja?</string>
-    <string name="error_version_check_extreme_caution">FIGYELEM: Hiba a verzióinformáció ellenőrzésénél! Nem szabad folytatni! \"%s\" verziónév láttam</string>
+    <string name="error_version_check_extreme_caution">FIGYELEM: Hiba a verzióinformáció ellenőrzésénél! Nem szabad folytatni! \"%s\\ verzió nevét láttam</string>
     <string name="share_log_warning">Ne feledje, hogy a Gadgetbridge olyan fájlokat naplóz, amelyek sok személyes adatot tartalmazhatnak, többek között egészségügyi adatokat, egyedi azonosítókat (például az eszköz MAC-címét), zenei beállításokat stb. Fontolja meg a fájl szerkesztését és ezen információk eltávolítását, mielőtt elküldi a fájlt egy nyilvános hibajelentésre.</string>
     <string name="pref_title_upper_button_long_press_action">Felső gomb hosszú megnyomású művelet</string>
     <string name="pref_title_lower_button_function_long">Alsó gomb hosszan</string>
@@ -3662,4 +3662,5 @@
     <string name="prefs_active_noise_cancelling_transport">Közlekedés</string>
     <string name="prefs_active_noise_cancelling_indoor">Beltér</string>
     <string name="prefs_active_noise_cancelling_outdoor">Kültér</string>
+    <string name="activity_prefs_goal_standing_hours">Napi cél: állásidők</string>
 </resources>
