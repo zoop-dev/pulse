@@ -123,6 +123,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.hplus.MakibesF68Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hplus.Q8Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hplus.SG2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitactive.AmazfitActiveCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitactive2.AmazfitActive2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitactiveedge.AmazfitActiveEdgeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbalance.AmazfitBalanceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitband5.AmazfitBand5Coordinator;
@@ -400,6 +401,7 @@ public enum DeviceType {
     AMAZFITFALCON(AmazfitFalconCoordinator.class),
     AMAZFITBALANCE(AmazfitBalanceCoordinator.class),
     AMAZFITACTIVE(AmazfitActiveCoordinator.class),
+    AMAZFITACTIVE2(AmazfitActive2Coordinator.class),
     AMAZFITACTIVEEDGE(AmazfitActiveEdgeCoordinator.class),
     HPLUS(HPlusCoordinator.class),
     MAKIBESF68(MakibesF68Coordinator.class),
