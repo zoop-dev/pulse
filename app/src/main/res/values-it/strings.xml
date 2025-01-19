@@ -875,7 +875,7 @@
     <string name="about_contributors">Contributori</string>
     <string name="about_core_team_title">Team principale (ordinati in base al primo contributo di codice)</string>
     <string name="about_description_generic">Un\'alternativa gratuita, libera e senza cloud alle applicazioni Android a sorgente chiusa del tuo dispositivo.</string>
-    <string name="about_activity_title_generic">Su Gadgetbridge</string>
+    <string name="about_activity_title_generic">Riguardo a Gadgetbridge</string>
     <string name="about_title">Informazioni</string>
     <string name="hr_widget_last_notification">Ultima notifica</string>
     <string name="pref_qhybrid_save_raw_activity_files">Salva i dati raw (grezzi) delle attività</string>
