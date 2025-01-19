@@ -688,7 +688,7 @@
 \n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。 
 \n 
 \n過程中的風險請自負！</string>
-    <string name="watchface_setting_light_up_on_notification">新通知时亮起</string>
+    <string name="watchface_setting_light_up_on_notification">新通知時亮起</string>
     <string name="fw_upgrade_notice_amazfitneo">您將要在Amazfit Neo上安裝%s固件。
 \n
 \n安裝 .fw 檔後，您的手環將重新啟動。
@@ -734,12 +734,11 @@
     <string name="menuitem_events">事件</string>
     <string name="pref_invalid_frequency_message">請輸入一個介於87.5和108.0之間的頻率</string>
     <string name="pref_title_equalizer_bass_boost">重低音增強</string>
-    <string name="sony_equalizer_band_6300">6.3千</string>
+    <string name="sony_equalizer_band_6300">6.3k</string>
     <string name="long_press">長按</string>
     <string name="continue_pressing">繼續按壓</string>
     <string name="step_streak_total">總計</string>
-    <string name="steps_streaks_average_steps">平均
-\n步數</string>
+    <string name="steps_streaks_average_steps">平均\n步數</string>
     <string name="prefs_wena3_item_background_sync">背景活動數據同步</string>
     <string name="pref_header_vibration_count">振動計數</string>
     <string name="watch9_pairing_tap_hint">當你的手錶震動時，搖動設備或按下其按鈕。</string>
@@ -1057,7 +1056,7 @@
 \n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。
 \n
 \n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfitcor2">您即將在您的 Amazfit Cor 2 上安裝 %s 韌體。 \n \n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。 \n \n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。 \n \n請自行承擔風險！ \n \n完全未經測試，若您的設備名稱為 \"Amazfit Band 2\"，可能需要閃存 BEATS_W 韌體。</string>
+    <string name="fw_upgrade_notice_amazfitcor2">您即將在您的 Amazfit Cor 2 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。\n\n請自行承擔風險！\n\n完全未經測試，若您的設備名稱為 \"Amazfit Band 2\"，可能需要閃存 BEATS_W 韌體。</string>
     <string name="fw_upgrade_notice_amazfitcor">您即將在您的 Amazfit Cor 上安裝 %s 韌體。
 \n
 \n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。
@@ -1189,7 +1188,7 @@
     <string name="pref_pebble_privacy_mode_off">正常通知</string>
     <string name="pref_pebble_privacy_mode_content">將通知文本移至螢幕外</string>
     <string name="pref_pebble_privacy_mode_complete">僅顯示通知圖示</string>
-    <string name="pref_summary_pebble_forcele">對所有 Pebble 使用實驗性的 Pebble LE 支援，而不是 BT 傳統。這需要先配對到非 LE，然後再配對 Pebble LE。</string>
+    <string name="pref_summary_pebble_forcele">對所有 Pebble 使用實驗性的 Pebble LE 支援，而不是 BT 傳統。這需要先配對到非 LE，然後再配對 Pebble LE</string>
     <string name="pref_summary_pebble_mtu_limit">如果您的 Pebble 2/Pebble LE 沒有如預期般運作，請嘗試這個設置來限制 MTU（有效範圍 20–512）</string>
     <string name="pref_summary_pebble_gatt_clientonly">這僅適用於 Pebble 2 並且是實驗性的，如果您遇到連接問題，請嘗試這個</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU 限制</string>
@@ -1252,7 +1251,7 @@
     <string name="pref_workout_start_on_phone_summary">當手環開始GPS運動時，在手機上啟動/停止健身應用程式追蹤</string>
     <string name="pref_workout_send_gps_summary">在鍛煉期間將當前的 GPS 位置發送給樂隊</string>
     <string name="pref_workout_keep_screen_on_title">在運動期間保持螢幕開啟</string>
-    <string name="pref_workout_keep_screen_on_summary">在運動過程中，螢幕將保持開啟，亮度將自動調整以持續顯示實時運動數據。</string>
+    <string name="pref_workout_keep_screen_on_summary">在運動過程中，螢幕將保持開啟，亮度將自動調整以持續顯示實時運動數據</string>
     <string name="pref_workout_detection_alert_summary">當檢測到運動時通知</string>
     <string name="pref_workout_detection_enabled">檢測已啟用</string>
     <string name="pref_workout_detection_enabled_summary">啟用自動檢測此運動</string>
@@ -1278,7 +1277,7 @@
     <string name="buttons_on_right">右側的按鈕</string>
     <string name="discovery_entered_invalid_authkey">您輸入的秘密授權金鑰無效！長按設備以進行編輯。</string>
     <string name="pref_cache_weather">快取天氣資訊</string>
-    <string name="pref_cache_weather_summary">#ERROR!</string>
+    <string name="pref_cache_weather_summary">應用程式重啟後，天氣資訊將被快取。</string>
     <string name="pref_write_logfiles_not_available">檔案日誌初始化失敗，當前無法寫入日誌檔案。請重新啟動應用程式以再次嘗試初始化日誌檔案。</string>
     <string name="busy_task_fetch_sports_summaries">獲取體育摘要</string>
     <string name="busy_task_fetch_sports_details">獲取運動詳情</string>
@@ -1337,7 +1336,7 @@
     <string name="pref_title_low_latency_fw_update">使用低延遲模式進行韌體燒錄</string>
     <string name="pref_summary_low_latency_fw_update">這可能對固件燒錄失敗的設備有所幫助。</string>
     <string name="pref_title_third_party_app_device_settings">允許第三方應用程式更改設定</string>
-    <string name="live_activity_steps_history">步驟歷史</string>
+    <string name="live_activity_steps_history">步數歷史</string>
     <string name="live_activity_start_your_activity">開始您的活動</string>
     <string name="abstract_chart_fragment_kind_awake_sleep">醒著</string>
     <string name="sleep_colored_stats_deep">深</string>
@@ -1439,7 +1438,7 @@
     <string name="activity_type_beach_soccer">沙灘足球</string>
     <string name="activity_type_beach_volleyball">沙灘排球</string>
     <string name="activity_type_gateball">門球</string>
-    <string name="activity_type_sepak_takraw">Sepak Takraw</string>
+    <string name="activity_type_sepak_takraw">踢藤球</string>
     <string name="activity_type_parachuting">跳傘</string>
     <string name="activity_type_parkour">跑酷</string>
     <string name="activity_type_parallel_bar">雙槓</string>
@@ -1769,11 +1768,11 @@
     <string name="unknownDataEncountered">遇到未知數據</string>
     <string name="cyclingPowerAverage">平均騎乘功率</string>
     <string name="cyclingPowerMin">最小騎行功率</string>
-    <string name="yard">院子</string>
+    <string name="yard">碼</string>
     <string name="cyclingPowerMax">最大騎行功率</string>
     <string name="workout_set_i">設置 %1d</string>
     <string name="meters_second">米/秒</string>
-    <string name="km_h">公里每小時</string>
+    <string name="km_h">公里/小時</string>
     <string name="mi_h">米/小時</string>
     <string name="swim_style">游泳風格</string>
     <string name="laps_unit">圈</string>
@@ -1914,7 +1913,7 @@
     <string name="sony_equalizer_preset_custom_2">自訂 2</string>
     <string name="pref_header_sony_equalizer_bands">樂隊</string>
     <string name="pref_header_sony_equalizer_preset_custom_2">自訂預設 2</string>
-    <string name="sony_equalizer_band_2500">2.5千</string>
+    <string name="sony_equalizer_band_2500">2.5k</string>
     <string name="sony_equalizer_band_16000">16k</string>
     <string name="sony_equalizer_clear_bass">清晰低音</string>
     <string name="sony_audio_upsampling">音頻升頻</string>
@@ -2048,7 +2047,7 @@
     <string name="steps_streaks">步驟條紋</string>
     <string name="steps_streaks_hint">連續幾天不間斷地達成步數目標</string>
     <string name="step_streak_longest">最長</string>
-    <string name="steps_streaks_achievement_rate">成就率</string>
+    <string name="steps_streaks_achievement_rate">成就\n率</string>
     <string name="steps_streaks_since_date">自 %s</string>
     <string name="step_streak_average_steps_hint">每日平均步數</string>
     <string name="prefs_hourly_chime">每小時報時</string>
@@ -2118,7 +2117,7 @@
     <string name="prefs_wena3_vibration_basic">基本</string>
     <string name="prefs_wena3_vibration_rapid">快速</string>
     <string name="prefs_wena3_vibration_triple">三重</string>
-    <string name="pref_call_rejection_method_summary">當來電從手錶被拒絕時，會採取什麼行動？</string>
+    <string name="pref_call_rejection_method_summary">當手錶拒絕來電時會採取什麼操作</string>
     <string name="devicetype_mi_watch_color_sport">米家運動手錶</string>
     <string name="devicetype_pixoo">Pixoo</string>
     <string name="not_set">未設定</string>
@@ -2368,7 +2367,7 @@
     <string name="soundcore_adaptive_direction_summary">根據設備方向自動調整均衡器預設</string>
     <string name="soundcore_equalizer_preset">預設</string>
     <string name="soundcore_equalizer_reset_summary">將所有均衡器頻段恢復為默認設置</string>
-    <string name="strokes_unit">字串</string>
+    <string name="strokes_unit">strokes</string>
     <string name="Elevation">海拔</string>
     <string name="loyalty_cards_open_catima">開放 Catima</string>
     <string name="body_energy_gained">獲得</string>
@@ -2536,7 +2535,7 @@
     <string name="activity_type_orienteering">定向越野</string>
     <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
     <string name="eversionAngleAvg">平均外翻角</string>
-    <string name="strokes_minute">字串/分鐘</string>
+    <string name="strokes_minute">strokes/分鐘</string>
     <string name="soundcore_equalizer_band7">七級</string>
     <string name="pref_title_mb_intents">直接廣播媒體按鈕意圖</string>
     <string name="prefs_notifications_and_calls_continious_ring">電話鈴聲期間的通知</string>
@@ -2920,8 +2919,8 @@
     <string name="pref_heartrate_automatic_enable">啟用自動心率測量</string>
     <string name="controlcenter_toggle_details">切換詳情</string>
     <string name="controlcenter_unset_folder">未設定的資料夾</string>
-    <string name="steps_streaks_total_steps">總步數</string>
-    <string name="steps_streaks_streak_days">連續天數</string>
+    <string name="steps_streaks_total_steps">總\n步數</string>
+    <string name="steps_streaks_streak_days">連續\n天數</string>
     <string name="pref_summary_debug">向華為設備發送調試請求</string>
     <string name="wifi_ssid">SSID</string>
     <string name="username">用戶名</string>
@@ -3127,7 +3126,7 @@
     <string name="devicetype_garmin_forerunner_255s_music">Garmin Forerunner 255S 音樂</string>
     <string name="devicetype_hplus">HPlus</string>
     <string name="menuitem_dnd">DND</string>
-    <string name="ft">ft</string>
+    <string name="ft">英呎</string>
     <string name="mi">我</string>
     <string name="activity_info">活動資訊</string>
     <string name="devicetype_garmin_forerunner_955">Garmin Forerunner 955</string>
@@ -3146,12 +3145,12 @@
     <string name="quick_alarm">快速警報</string>
     <string name="quick_alarm_description">小工具的警報</string>
     <string name="qhybrid_time_shift">時間轉移</string>
-    <string name="permission_granting_mandatory">所有這些權限都是必需的，如果不授予可能會發生不穩定。</string>
+    <string name="permission_granting_mandatory">所有這些權限都是必需的，如果不授予可能會發生不穩定</string>
     <string name="require_location_provider">必須啟用位置</string>
     <string name="error_location_enabled_mandatory">必須開啟位置才能掃描設備</string>
     <string name="descentMeters">下坡</string>
     <string name="minutes_mi">分鐘/英里</string>
-    <string name="strokes_second">字串/字串</string>
+    <string name="strokes_second">strokes/秒</string>
     <string name="seconds">秒</string>
     <string name="milliseconds">毫秒</string>
     <string name="swolf_index">swolf 指數</string>
@@ -3400,4 +3399,10 @@
     <string name="hrZoneMaximum">最大</string>
     <string name="workout_set_reps">重複次數</string>
     <string name="fossil_hr_auth_failed">驗證失敗，功能受限</string>
+    <string name="jumps_minute">跳遠/分鐘</string>
+    <string name="jumps_unit">跳遠</string>
+    <string name="pref_invalid_frequency_title">頻率無效</string>
+    <string name="workout_set_repetitions">%1d x</string>
+    <string name="sony_equalizer_band_1000">1k</string>
+    <string name="prefs_game_mode_summary">當您的手機支援遊戲模式時</string>
 </resources>
