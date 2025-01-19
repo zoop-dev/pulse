@@ -2334,7 +2334,7 @@
     <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge potrzebuje uprawnień do odczytu kart Catima, aby je zsynchronizować. Dotknij tego przycisku, aby je przyznać.</string>
     <string name="zepp_os_watchface_red_fantasy">Czerwona fantazja</string>
     <string name="prefs_shortcut_cards">Karty skrótów</string>
-    <string name="temperature_scale_celsius">Skala Celciusza</string>
+    <string name="temperature_scale_celsius">Skala Celsjusza</string>
     <string name="prefs_wena3_vibration_step_up">Zwiększające się</string>
     <string name="prefs_home_icon_right_item">Do prawej</string>
     <string name="title_activity_set_contacts">Konfiguracja kontaktów</string>
