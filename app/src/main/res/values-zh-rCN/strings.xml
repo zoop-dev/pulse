@@ -2504,7 +2504,7 @@
     <string name="menuitem_thermometer">温度计</string>
     <string name="avgStrokeRate">平均击球距离</string>
     <string name="yard">码</string>
-    <string name="strokes_minute">直线/分钟</string>
+    <string name="strokes_minute">str/分钟</string>
     <string name="maxStrokeRate">最大击球距离</string>
     <string name="laneLength">道路长度</string>
     <string name="strokes">总计击球</string>
