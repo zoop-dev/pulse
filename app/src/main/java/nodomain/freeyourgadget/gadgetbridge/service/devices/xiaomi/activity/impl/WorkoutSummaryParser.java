@@ -255,6 +255,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 5:   // for Smart Band 8 Active
                 headerSize = 3;
                 break;
+            case 7:
+                headerSize = 5;
+                break;
             case 8:
             case 9:
             case 10:
@@ -274,15 +277,15 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addByte(HR_AVG, UNIT_BPM);
         builder.addByte(HR_MAX, UNIT_BPM);
         builder.addByte(HR_MIN, UNIT_BPM);
-        if (version == 5) {
-            builder.addUnknown(7); // probably training effect aerobic and recovery time?
-        } else {
+        if (version > 5) {
             builder.addUnknown(6);
-            builder.addFloat(TRAINING_EFFECT_AEROBIC, UNIT_NONE);
-            builder.addUnknown(1);
-            builder.addUnknown(1);
-            builder.addShort(RECOVERY_TIME, UNIT_HOURS);
         }
+        builder.addFloat(TRAINING_EFFECT_AEROBIC, UNIT_NONE);
+        if (version > 6) {
+            builder.addUnknown(1);
+        }
+        builder.addUnknown(1);
+        builder.addShort(RECOVERY_TIME, UNIT_HOURS);
         builder.addInt(HR_ZONE_EXTREME, UNIT_SECONDS);
         builder.addInt(HR_ZONE_ANAEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_AEROBIC, UNIT_SECONDS);
@@ -305,7 +308,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             builder.addShort("configuredCaloriesGoal", UNIT_KCAL);
             builder.addShort(WORKOUT_LOAD, UNIT_NONE);
             builder.addUnknown(1);
-            builder.addByte("vitality_gain", UNIT_NONE);
+            if (version > 7) {
+                builder.addByte("vitality_gain", UNIT_NONE);
+            }
         }
         return builder.build();
     }
@@ -663,6 +668,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         final int headerSize;
         switch (version) {
             case 3:
+            case 4:
                 headerSize = 4;
                 break;
             default:
@@ -682,12 +688,14 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addByte(HR_MAX, UNIT_BPM);
         builder.addByte(HR_MIN, UNIT_BPM);
         builder.addUnknown(7);
+        if (version >= 4) {
+            builder.addUnknown(1);
+        }
         builder.addInt(HR_ZONE_EXTREME, UNIT_SECONDS);
         builder.addInt(HR_ZONE_ANAEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_AEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_FAT_BURN, UNIT_SECONDS);
         builder.addInt(HR_ZONE_WARM_UP, UNIT_SECONDS);
-        builder.addUnknown(20);
 
         return builder.build();
     }
