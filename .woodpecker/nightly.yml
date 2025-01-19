@@ -7,8 +7,9 @@ clone:
 steps:
   check-if-released:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:33.0.0
-    secrets: 
-      - hc_url_nightly_deploy
+    environment:
+      HC_URL_NIGHTLY_DEPLOY:
+        from_secret: hc_url_nightly_deploy
     commands: |
       curl -fsS -m 10 --retry 5 "$${HC_URL_NIGHTLY_DEPLOY}/start"
 
@@ -34,7 +35,13 @@ steps:
       - ./gradlew assembleMainlineNightly -Dnightly_store_file="keystore.p12" -Dnightly_store_password="$${KEYSTOREPASS}" -Dnightly_key_alias="gadgetbridge" -Dnightly_key_password="$${KEYPASS}"
       - ./gradlew assembleMainlineNopebble -Dnightly_store_file="keystore.p12" -Dnightly_store_password="$${KEYSTOREPASS}" -Dnightly_key_alias="gadgetbridge" -Dnightly_key_password="$${KEYPASS}"
       - ./gradlew assembleBanglejsNightly -Dnightly_store_file="keystore.p12" -Dnightly_store_password="$${KEYSTOREPASS}" -Dnightly_key_alias="gadgetbridge" -Dnightly_key_password="$${KEYPASS}"
-    secrets: [ signing_key, keystorepass, keypass ]
+    environment:
+      SIGNING_KEY:
+        from_secret: signing_key
+      KEYSTOREPASS:
+        from_secret: keystorepass
+      KEYPASS:
+        from_secret: keypass
 
   pull-repo-config:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:33.0.0
@@ -47,7 +54,9 @@ steps:
       - pwd
       - git clone --depth 1 https://codeberg.org/Freeyourgadget/fdroid-repo-config.git
       - ./fdroid-repo-config/repoconfig/copy_files_to_repo_config.sh
-    secrets: [ commit_token ]
+    environment:
+      COMMIT_TOKEN:
+        from_secret: commit_token
 
   pull-pages:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:33.0.0
@@ -86,7 +95,13 @@ steps:
       - sed -i -e "/LISTING/r listing.html" -e '//d' ./repo/index.html
       - fdroid deploy
       - ls -laR repo
-    secrets: [ signing_key, keystorepass, keypass ]
+    environment:
+      SIGNING_KEY:
+        from_secret: signing_key
+      KEYSTOREPASS:
+        from_secret: keystorepass
+      KEYPASS:
+        from_secret: keypass
 
   push-pages-update-repo:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:33.0.0
@@ -107,7 +122,9 @@ steps:
       - ls -la
       - ./repoconfig/fdroid-repo-config/repoconfig/hyperlink.sh https://freeyourgadget.codeberg.page/fdroid/repo/
         # bump
-    secrets: [ commit_token ]
+    environment:
+      COMMIT_TOKEN:
+        from_secret: commit_token
 
   on-success:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:33.0.0
@@ -115,8 +132,9 @@ steps:
       - curl -fsS -m 10 --retry 5 "$${HC_URL_NIGHTLY_DEPLOY}"
     when:
       status: success
-    secrets: 
-      - hc_url_nightly_deploy
+    environment:
+      HC_URL_NIGHTLY_DEPLOY:
+        from_secret: hc_url_nightly_deploy
 
   on-error:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:33.0.0
@@ -129,9 +147,11 @@ steps:
       - ./fdroid-repo-config/repoconfig/create_issue_comment.sh "CI failed"
     when:
       status: failure
-    secrets: 
-      - hc_url_nightly_deploy
-      - commit_token
+    environment:
+      HC_URL_NIGHTLY_DEPLOY:
+        from_secret: hc_url_nightly_deploy
+      COMMIT_TOKEN:
+        from_secret: commit_token
 
 when:
   - event: cron
