@@ -105,13 +105,16 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
                 final int ts = buf.getInt();
                 final float longitude = buf.getFloat();
                 final float latitude = buf.getFloat();
-                final int unk1 = buf.getInt(); // 0
+                final float hdop = buf.getFloat() / 4.8f;
                 final float speed = (buf.getShort() >> 2) / 10.0f;
 
                 final ActivityPoint ap = new ActivityPoint(new Date(ts * 1000L));
-                ap.setLocation(new GPSCoordinate(longitude, latitude, 0));
+                final GPSCoordinate gpsc = new GPSCoordinate(longitude, latitude);
+                gpsc.setHdop(hdop);
+                ap.setLocation(gpsc);
+
                 activityTrack.addTrackPoint(ap);
-                LOG.trace("ActivityPoint: ts={} lon={} lat={} unk1={} speed={}", ts, longitude, latitude, unk1, speed);
+                LOG.trace("ActivityPoint: ts={} lon={} lat={} hdop={} speed={}", ts, longitude, latitude, hdop, speed);
             }
         }
 

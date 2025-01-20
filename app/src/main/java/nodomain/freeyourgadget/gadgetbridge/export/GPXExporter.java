@@ -154,6 +154,15 @@ public class GPXExporter implements ActivityTrackExporter {
             ser.startTag(NS_GPX_URI, "desc").text(description).endTag(NS_GPX_URI, "desc");
         }
         //ser.startTag(NS_GPX_URI, "src").text(source).endTag(NS_GPX_URI, "src");
+        if (location.hasHdop()) {
+            ser.startTag(NS_GPX_URI, "hdop").text(formatDouble(location.getHdop())).endTag(NS_GPX_URI, "hdop");
+        }
+        if (location.hasVdop()) {
+            ser.startTag(NS_GPX_URI, "vdop").text(formatDouble(location.getVdop())).endTag(NS_GPX_URI, "vdop");
+        }
+        if (location.hasPdop()) {
+            ser.startTag(NS_GPX_URI, "pdop").text(formatDouble(location.getPdop())).endTag(NS_GPX_URI, "pdop");
+        }
 
         exportTrackpointExtensions(ser, point, trackPoints);
 
