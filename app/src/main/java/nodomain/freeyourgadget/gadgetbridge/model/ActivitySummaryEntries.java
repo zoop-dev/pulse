@@ -16,6 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
+
 public class ActivitySummaryEntries {
     public static final String STATUS = "status";
     public static final String TYPE = "watchface_dialog_widget_type"; // TODO: change this?
@@ -180,4 +185,16 @@ public class ActivitySummaryEntries {
      * FIXME: We should have a cleaner way of doing this.
      */
     public static final String INTERNAL_HAS_GPS = "internal_hasGps";
+
+    public static final Map<String, Integer> HR_ZONES = new LinkedHashMap<String, Integer>() {{
+            put(HR_ZONE_NA, 0);
+            put(HR_ZONE_WARM_UP, R.color.hr_zone_warm_up_color);
+            put(HR_ZONE_EASY, R.color.hr_zone_easy_color);
+            put(HR_ZONE_FAT_BURN, R.color.hr_zone_easy_color);
+            put(HR_ZONE_AEROBIC, R.color.hr_zone_aerobic_color);
+            put(HR_ZONE_ANAEROBIC, R.color.hr_zone_threshold_color);
+            put(HR_ZONE_THRESHOLD, R.color.hr_zone_threshold_color);
+            put(HR_ZONE_EXTREME, R.color.hr_zone_maximum_color);
+            put(HR_ZONE_MAXIMUM, R.color.hr_zone_maximum_color);
+    }};
 }

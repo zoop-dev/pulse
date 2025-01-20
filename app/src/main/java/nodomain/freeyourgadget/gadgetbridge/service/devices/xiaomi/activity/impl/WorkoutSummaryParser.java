@@ -364,21 +364,21 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addUnknown(24);
         builder.addByte("configuredSets", UNIT_NONE);
         builder.addUnknown(13);
-        builder.addInt("startTime2", UNIT_SECONDS);
-        builder.addInt("endTime2", UNIT_SECONDS);
-        builder.addInt("goal", UNIT_NONE); // TODO match against goalType
-        builder.addInt("duration2", UNIT_SECONDS);
-        builder.addInt("intervalTime", UNIT_SECONDS);
-        builder.addUnknown(56);
-        builder.addInt("hrZoneExtreme2", UNIT_SECONDS);
-        builder.addInt("hrZoneAnaerobic2", UNIT_SECONDS);
-        builder.addInt("hrZoneAerobic2", UNIT_SECONDS);
-        builder.addInt("hrZoneFatBurn2", UNIT_SECONDS);
-        builder.addInt("hrZoneWarmUp2", UNIT_SECONDS);
-        builder.addUnknown(16);
-        builder.addShort("vitality_gain", UNIT_NONE);
-        builder.addShort("training_load2", UNIT_NONE);
-        builder.addShort("recovery_time2", UNIT_HOURS);
+        //builder.addInt("startTime2", UNIT_SECONDS);
+        //builder.addInt("endTime2", UNIT_SECONDS);
+        //builder.addInt("goal", UNIT_NONE); // TODO match against goalType
+        //builder.addInt("duration2", UNIT_SECONDS);
+        //builder.addInt("intervalTime", UNIT_SECONDS);
+        //builder.addUnknown(56);
+        //builder.addInt("hrZoneExtreme2", UNIT_SECONDS);
+        //builder.addInt("hrZoneAnaerobic2", UNIT_SECONDS);
+        //builder.addInt("hrZoneAerobic2", UNIT_SECONDS);
+        //builder.addInt("hrZoneFatBurn2", UNIT_SECONDS);
+        //builder.addInt("hrZoneWarmUp2", UNIT_SECONDS);
+        //builder.addUnknown(16);
+        //builder.addShort("vitality_gain", UNIT_NONE);
+        //builder.addShort("training_load2", UNIT_NONE);
+        //builder.addShort("recovery_time2", UNIT_HOURS);
 
         return builder.build();
     }
@@ -422,7 +422,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addInt(HR_ZONE_AEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_FAT_BURN, UNIT_SECONDS);
         builder.addInt(HR_ZONE_WARM_UP, UNIT_SECONDS);
-        builder.addInt("configured_time_goal", UNIT_SECONDS);
+        builder.addInt("configuredTimeGoal", UNIT_SECONDS);
 
         return builder.build();
     }

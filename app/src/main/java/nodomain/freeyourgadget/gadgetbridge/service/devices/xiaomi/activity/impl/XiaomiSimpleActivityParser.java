@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.imp
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SWIM_STYLE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TIME_END;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TIME_START;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_UNIX_EPOCH_SECONDS;
 
 import org.slf4j.Logger;
@@ -27,11 +28,17 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class XiaomiSimpleActivityParser {
@@ -54,6 +61,8 @@ public class XiaomiSimpleActivityParser {
         buf.get(header);
 
         LOG.debug("Header: {}", GB.hexdump(header));
+
+        final Map<String, Number> hrZones = new HashMap<>(5);
 
         for (int i = 0; i < dataEntries.size(); i++) {
             final XiaomiSimpleDataEntry dataEntry = dataEntries.get(i);
@@ -217,8 +226,35 @@ public class XiaomiSimpleActivityParser {
                     default:
                         summary.setActivityKind(ActivityKind.UNKNOWN.getCode());
                 }
+            } else if (ActivitySummaryEntries.HR_ZONES.containsKey(dataEntry.getKey())) {
+                // Save the HR zones so we can add them later in order
+                hrZones.put(dataEntry.getKey(), value);
             } else {
                 summaryData.add(dataEntry.getKey(), value.floatValue(), dataEntry.getUnit());
+            }
+        }
+
+        if (!hrZones.isEmpty()) {
+            final int totalTime = hrZones.values().stream().mapToInt(Number::intValue).sum();
+            if (totalTime != 0) {
+                for (Map.Entry<String, Integer> zone : ActivitySummaryEntries.HR_ZONES.entrySet()) {
+                    final String zoneKey = zone.getKey();
+                    if (!hrZones.containsKey(zoneKey)) {
+                        continue;
+                    }
+                    final int zoneColor = zone.getValue();
+                    final int zoneTime = Objects.requireNonNull(hrZones.get(zoneKey)).intValue();
+
+                    summaryData.add(
+                            zoneKey,
+                            new ActivitySummaryProgressEntry(
+                                    zoneTime,
+                                    UNIT_SECONDS,
+                                    ((100 * zoneTime) / totalTime),
+                                    zoneColor != 0 ? GBApplication.getContext().getResources().getColor(zoneColor) : 0
+                            )
+                    );
+                }
             }
         }
 
