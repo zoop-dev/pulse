@@ -3717,4 +3717,5 @@
     <string name="prefs_active_noise_cancelling_transport">通透</string>
     <string name="prefs_active_noise_cancelling_indoor">室内</string>
     <string name="activity_prefs_goal_standing_hours">每日目标：站立时间</string>
+    <string name="devicetype_amazfit_active_2">华米 Active 2</string>
 </resources>
