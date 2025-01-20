@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.imp
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SWIM_STYLE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TIME_END;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TIME_START;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NONE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_UNIX_EPOCH_SECONDS;
 
@@ -35,6 +36,7 @@ import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiWorkoutType;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
@@ -108,123 +110,10 @@ public class XiaomiSimpleActivityParser {
 
                 summaryData.add(dataEntry.getKey(), swimStyleName);
             } else if (dataEntry.getKey().equals(XIAOMI_WORKOUT_TYPE)) {
-                switch (value.intValue()) {
-                    case 1:
-                        summary.setActivityKind(ActivityKind.OUTDOOR_RUNNING.getCode());
-                        break;
-                    case 2:
-                        summary.setActivityKind(ActivityKind.WALKING.getCode());
-                        break;
-                    case 4:
-                        summary.setActivityKind(ActivityKind.TREKKING.getCode());
-                        break;
-                    case 5:
-                        summary.setActivityKind(ActivityKind.TRAIL_RUN.getCode());
-                        break;
-                    case 6:
-                        summary.setActivityKind(ActivityKind.OUTDOOR_CYCLING.getCode());
-                        break;
-                    case 7:   // indoor cycling   0x0007
-                        summary.setActivityKind(ActivityKind.INDOOR_CYCLING.getCode());
-                        break;
-                    case 8:   // freestyle        0x0008
-                        summary.setActivityKind(ActivityKind.FREE_TRAINING.getCode());
-                        break;
-                    case 12:  // yoga             0x000c
-                        summary.setActivityKind(ActivityKind.YOGA.getCode());
-                        break;
-                    case 15:
-                        summary.setActivityKind(ActivityKind.OUTDOOR_WALKING.getCode());
-                        break;
-                    case 16:  // HIIT             0x0010
-                        summary.setActivityKind(ActivityKind.HIIT.getCode());
-                        break;
-                    case 201: // skateboard       0x00c9
-                        summary.setActivityKind(ActivityKind.SKATEBOARDING.getCode());
-                        break;
-                    case 202: // roller skating   0x00ca
-                        summary.setActivityKind(ActivityKind.ROLLER_SKATING.getCode());
-                        break;
-                    case 301: // stair climbing   0x012d
-                        summary.setActivityKind(ActivityKind.STAIRS.getCode());
-                        break;
-                    case 303: // core training    0x012f
-                        summary.setActivityKind(ActivityKind.CORE_TRAINING.getCode());
-                        break;
-                    case 304: // flexibility      0x0130
-                        summary.setActivityKind(ActivityKind.FLEXIBILITY.getCode());
-                        break;
-                    case 305: // pilates          0x0131
-                        summary.setActivityKind(ActivityKind.PILATES.getCode());
-                        break;
-                    case 307: // stretching       0x0133
-                        summary.setActivityKind(ActivityKind.STRETCHING.getCode());
-                        break;
-                    case 308: // strength         0x0134
-                        summary.setActivityKind(ActivityKind.STRENGTH_TRAINING.getCode());
-                        break;
-                    case 310: // aerobics         0x0136
-                        summary.setActivityKind(ActivityKind.AEROBICS.getCode());
-                        break;
-                    case 311: // physical training
-                        summary.setActivityKind(ActivityKind.PHYSICAL_TRAINING.getCode());
-                        break;
-                    case 313: // dumbbell
-                        summary.setActivityKind(ActivityKind.DUMBBELL.getCode());
-                        break;
-                    case 314: // barbell
-                        summary.setActivityKind(ActivityKind.BARBELL.getCode());
-                        break;
-                    case 318: // sit-ups
-                        summary.setActivityKind(ActivityKind.SIT_UPS.getCode());
-                        break;
-                    case 320: // upper body       0x0140
-                        summary.setActivityKind(ActivityKind.UPPER_BODY.getCode());
-                        break;
-                    case 321: // lower body       0x0141
-                        summary.setActivityKind(ActivityKind.LOWER_BODY.getCode());
-                        break;
-                    case 399: // indoor-Fitness   0x018f
-                        summary.setActivityKind(ActivityKind.INDOOR_FITNESS.getCode());
-                        break;
-                    case 499: // dancing          0x01f3
-                        summary.setActivityKind(ActivityKind.DANCE.getCode());
-                        break;
-                    case 600: // Soccer           0x0258
-                        summary.setActivityKind(ActivityKind.SOCCER.getCode());
-                        break;
-                    case 601: // basketball       0x0259
-                        summary.setActivityKind(ActivityKind.BASKETBALL.getCode());
-                        break;
-                    case 607: // table tennis     0x025f
-                        summary.setActivityKind(ActivityKind.TABLE_TENNIS.getCode());
-                        break;
-                    case 608: // badminton        0x0260
-                        summary.setActivityKind(ActivityKind.BADMINTON.getCode());
-                        break;
-                    case 609: // tennis           0x0261
-                        summary.setActivityKind(ActivityKind.TENNIS.getCode());
-                        break;
-                    case 614: // billiard          0x0266
-                        summary.setActivityKind(ActivityKind.BILLIARDS.getCode());
-                        break;
-                    case 619: // golf             0x026b
-                        summary.setActivityKind(ActivityKind.GOLF.getCode());
-                        break;
-                    case 700: // ice skating      0x02bc
-                        summary.setActivityKind(ActivityKind.ICE_SKATING.getCode());
-                        break;
-                    case 708: // snowboard        0x02c4
-                        summary.setActivityKind(ActivityKind.SNOWBOARDING.getCode());
-                        break;
-                    case 709: // skiing           0x02c5
-                        summary.setActivityKind(ActivityKind.SKIING.getCode());
-                        break;
-                    case 808: // shuttlecock      0x0328
-                        summary.setActivityKind(ActivityKind.SHUTTLECOCK.getCode());
-                        break;
-                    default:
-                        summary.setActivityKind(ActivityKind.UNKNOWN.getCode());
+                final ActivityKind activityKind = XiaomiWorkoutType.fromCode(value.intValue());
+                summary.setActivityKind(activityKind.getCode());
+                if (activityKind == ActivityKind.UNKNOWN) {
+                    summaryData.add(dataEntry.getKey(), value, UNIT_NONE);
                 }
             } else if (ActivitySummaryEntries.HR_ZONES.containsKey(dataEntry.getKey())) {
                 // Save the HR zones so we can add them later in order
