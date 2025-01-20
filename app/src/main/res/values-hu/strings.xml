@@ -3663,4 +3663,5 @@
     <string name="prefs_active_noise_cancelling_indoor">Beltér</string>
     <string name="prefs_active_noise_cancelling_outdoor">Kültér</string>
     <string name="activity_prefs_goal_standing_hours">Napi cél: állásidők</string>
+    <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
 </resources>
