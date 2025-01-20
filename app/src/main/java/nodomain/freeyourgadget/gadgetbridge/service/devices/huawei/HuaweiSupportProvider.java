@@ -562,10 +562,11 @@ public class HuaweiSupportProvider {
         public void timeout(Request request) {
             LOG.error("Authentication timed out");
             GB.toast(context, R.string.authentication_failed_negotiation, Toast.LENGTH_LONG, GB.ERROR);
-            // Disconnect as no communication can succeed after this point
+            // Reconnect as no communication can succeed after this point
             final GBDevice device = getDevice();
             if (device != null) {
-                GBApplication.deviceService(device).disconnect();
+                device.setState(GBDevice.State.WAITING_FOR_RECONNECT);
+                device.sendDeviceUpdateIntent(getContext());
             }
         }
 
