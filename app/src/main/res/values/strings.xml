@@ -1410,6 +1410,7 @@
     <string name="activity_type_high_jump">High jump</string>
     <string name="activity_type_trampoline">Trampoline</string>
     <string name="activity_type_dumbbell">Dumbbell</string>
+    <string name="activity_type_barbell">Barbell</string>
     <string name="activity_type_belly_dance">Belly dance</string>
     <string name="activity_type_jazz_dance">Jazz dance</string>
     <string name="activity_type_latin_dance">Latin dance</string>

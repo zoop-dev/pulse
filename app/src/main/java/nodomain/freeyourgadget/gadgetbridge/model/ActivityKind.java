@@ -156,7 +156,7 @@ public enum ActivityKind {
     FITNESS_EXERCISES(0x04000061, R.string.activity_type_fitness_exercises),
     CROSSFIT(0x04000062, R.string.activity_type_crossfit),
     FUNCTIONAL_TRAINING(0x04000063, R.string.activity_type_functional_training),
-    PHYSICAL_TRAINING(0x04000064, R.string.activity_type_physical_training),
+    PHYSICAL_TRAINING(0x04000064, R.string.activity_type_physical_training, R.drawable.ic_activity_free_training),
     TAEKWONDO(0x04000065, R.string.activity_type_taekwondo),
     TAE_BO(0x04000066, R.string.activity_type_tae_bo),
     CROSS_COUNTRY_RUNNING(0x04000067, R.string.activity_type_cross_country_running),
@@ -184,7 +184,7 @@ public enum ActivityKind {
     LONG_JUMP(0x0400007d, R.string.activity_type_long_jump),
     HIGH_JUMP(0x0400007e, R.string.activity_type_high_jump),
     TRAMPOLINE(0x0400007f, R.string.activity_type_trampoline),
-    DUMBBELL(0x04000080, R.string.activity_type_dumbbell),
+    DUMBBELL(0x04000080, R.string.activity_type_dumbbell, R.drawable.ic_activity_dumbbell),
     BELLY_DANCE(0x04000081, R.string.activity_type_belly_dance),
     JAZZ_DANCE(0x04000082, R.string.activity_type_jazz_dance),
     LATIN_DANCE(0x04000083, R.string.activity_type_latin_dance),
@@ -297,6 +297,7 @@ public enum ActivityKind {
     TRAIL_RUN(0x040000f2, R.string.activity_type_trail_run, R.drawable.ic_activity_trail_run),
     UPPER_BODY(0x040000f3, R.string.activity_type_upper_body),
     LOWER_BODY(0x040000ff, R.string.activity_type_lower_body),
+    BARBELL(0x04000100, R.string.activity_type_barbell, R.drawable.ic_activity_barbell),
     ;
 
     private final int code;

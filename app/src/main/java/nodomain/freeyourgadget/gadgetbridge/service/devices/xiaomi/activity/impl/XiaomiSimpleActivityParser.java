@@ -157,6 +157,18 @@ public class XiaomiSimpleActivityParser {
                     case 310: // aerobics         0x0136
                         summary.setActivityKind(ActivityKind.AEROBICS.getCode());
                         break;
+                    case 311: // physical training
+                        summary.setActivityKind(ActivityKind.PHYSICAL_TRAINING.getCode());
+                        break;
+                    case 313: // dumbbell
+                        summary.setActivityKind(ActivityKind.DUMBBELL.getCode());
+                        break;
+                    case 314: // barbell
+                        summary.setActivityKind(ActivityKind.BARBELL.getCode());
+                        break;
+                    case 318: // sit-ups
+                        summary.setActivityKind(ActivityKind.SIT_UPS.getCode());
+                        break;
                     case 320: // upper body       0x0140
                         summary.setActivityKind(ActivityKind.UPPER_BODY.getCode());
                         break;
