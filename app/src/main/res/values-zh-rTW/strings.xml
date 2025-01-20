@@ -850,7 +850,7 @@
     <string name="pref_media_previous">上一曲</string>
     <string name="pref_media_volumeup">音量增加</string>
     <string name="pref_media_forward">跳過</string>
-    <string name="huawei_alarm_event_description">請勿勾選智能喚醒選項</string>
+    <string name="huawei_alarm_event_description">請勿勾選智能喚醒選項。</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
     <string name="huawei_trusleep_summary_light">改善的睡眠監測</string>
     <string name="huawei_trusleep_warning">警告：啟用此選項將使所有睡眠顯示為輕度睡眠在 Gadgetbridge 中！如果您接受此條件，請點擊這裡。</string>
@@ -2135,7 +2135,7 @@
     <string name="uploadwatchfaceoperation_complete">錶面安裝完成</string>
     <string name="uploadwatchfaceoperation_failed">表面安裝失敗</string>
     <string name="pref_force_connection_type_title">強制連接類型</string>
-    <string name="pref_force_connection_type_description">如果您的設備對 Gadgetbridge 沒有反應，您可以嘗試強制設置連接類型。</string>
+    <string name="pref_force_connection_type_description">如果您的設備對 Gadgetbridge 沒有反應，您可以嘗試強制設置連接類型</string>
     <string name="auto_reconnect_ble_scan_summary">等待裝置掃描，而不是盲目的連接嘗試</string>
     <string name="prompt_restart_gadgetbridge">請重新啟動GB以使其生效。</string>
     <string name="waiting_for_bluetooth">等待藍牙…</string>
@@ -2147,7 +2147,7 @@
     <string name="state_scanned">掃描</string>
     <string name="devicesetting_scannable_debounce">可掃描的去彈跳超時（秒）</string>
     <string name="devicesetting_scannable_debounce_summary">在掃描後，該設備將在指定的時間內保持為掃描狀態並被忽略</string>
-    <string name="devicesetting_scannable_minimum_unseen_summary">在被掃描後，該設備必須在這段時間內保持不可見，然後才能再次註冊。</string>
+    <string name="devicesetting_scannable_minimum_unseen_summary">在被掃描後，該設備必須在這段時間內保持不可見，然後才能再次註冊</string>
     <string name="error_showing_changelog">顯示變更紀錄時出錯</string>
     <string name="activity_type_worn">佩戴</string>
     <string name="dashboard_settings">儀表板設定</string>
@@ -3405,4 +3405,7 @@
     <string name="workout_set_repetitions">%1d x</string>
     <string name="sony_equalizer_band_1000">1k</string>
     <string name="prefs_game_mode_summary">當您的手機支援遊戲模式時</string>
+    <string name="device_with_rssi">%1$s (%2$s)</string>
+    <string name="charts_show_balance_sleep_title">顯示睡眠平衡</string>
+    <string name="pai_plus_num">+%d</string>
 </resources>
