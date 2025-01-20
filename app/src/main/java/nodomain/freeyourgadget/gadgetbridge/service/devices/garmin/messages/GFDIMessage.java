@@ -36,8 +36,12 @@ public abstract class GFDIMessage {
     public static GFDIMessage parseIncoming(byte[] message) {
         final MessageReader messageReader = new MessageReader(message);
 
-        final int messageType = messageReader.readShort();
+        int messageType = messageReader.readShort();
         try {
+            if ((messageType & 0x8000) != 0) {
+                // final int sequenceNumber = (messageType >> 8) & 0x7f;
+                messageType = (messageType & 0xff) + 5000;
+            }
             final GarminMessage garminMessage = GarminMessage.fromId(messageType);
             if (garminMessage == null) {
                 LOG.warn("Unknown message type {}, message {}", messageType, message);
