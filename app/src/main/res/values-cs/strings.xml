@@ -3721,4 +3721,5 @@
     <string name="prefs_active_noise_cancelling_indoor">Uvnitř</string>
     <string name="prefs_active_noise_cancelling_outdoor">Venku</string>
     <string name="devicetype_soundcore_q30">Soundcore Q30</string>
+    <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
 </resources>
