@@ -3715,11 +3715,13 @@
     <string name="notifications_dismiss_all">Alles afwijzen</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="prefs_active_noise_cancelling_transport">Transport</string>
-    <string name="prefs_active_noise_cancelling_indoor">Binnenhuis</string>
+    <string name="prefs_active_noise_cancelling_indoor">Binnen</string>
     <string name="activity_prefs_goal_standing_hours">Dagelijks doel: uren staand</string>
-    <string name="prefs_summary_gatt_client_filter_char">Filter voor specifieke BLE karakteristieken, verdeeld door een comma</string>
-    <string name="prefs_active_noise_cancelling_outdoor">Buitenshuis</string>
+    <string name="prefs_summary_gatt_client_filter_char">Filter voor specifieke BLE-karakteristieken, gescheiden door komma\'s</string>
+    <string name="prefs_active_noise_cancelling_outdoor">Buiten</string>
     <string name="devicetype_soundcore_q30">Soundcore Q30</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
-    <string name="prefs_title_gatt_client_filter_char">BLE karakteristieken</string>
+    <string name="prefs_title_gatt_client_filter_char">BLE-karakteristieken</string>
+    <string name="activity_type_barbell">Barbell</string>
+    <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
 </resources>
