@@ -565,6 +565,7 @@
     <string name="agps_status_pending">Pending</string>
     <string name="agps_status_current">Current</string>
     <string name="agps_status_error">Error</string>
+    <string name="remote_control">Remote control</string>
     <string name="pref_camera_remote_title">Camera Remote</string>
     <string name="pref_camera_remote_summary">Allows the watch to trigger the phone\'s camera</string>
     <string name="pref_morning_updates_title">Morning Updates</string>
