@@ -113,6 +113,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -846,6 +847,35 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         holder.cardViewActivityCardLayout.setVisibility(coordinator.supportsActivityTracking() ? View.VISIBLE : View.GONE);
         holder.cardViewActivityCardLayout.setMinimumWidth(coordinator.supportsActivityTracking() ? View.VISIBLE : View.GONE);
 
+        // custom actions
+        final List<DeviceCardAction> customActions = coordinator.getCustomActions();
+        if (customActions.size() > holder.customActions.length) {
+            LOG.error("{} has more than {} actions!", device, holder.customActions.length);
+        }
+        for (int i = 0; i < Math.min(customActions.size(), holder.customActions.length); i++) {
+            final DeviceCardAction action = customActions.get(i);
+            holder.customActions[i].layout.setVisibility(action.isVisible(device) ? View.VISIBLE : View.GONE);
+            holder.customActions[i].image.setImageResource(action.getIcon(device));
+            final String description = action.getDescription(device, context);
+            holder.customActions[i].layout.setContentDescription(description);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                holder.customActions[i].layout.setTooltipText(description);
+            }
+
+            final String label = action.getLabel(device, context);
+            if (!StringUtils.isEmpty(label)) {
+                holder.customActions[i].label.setVisibility(View.VISIBLE);
+                holder.customActions[i].label.setText(label);
+            } else {
+                holder.customActions[i].label.setVisibility(View.GONE);
+            }
+
+            holder.customActions[i].layout.setOnClickListener(v -> action.onClick(device, context));
+        }
+        for (int i = Math.min(customActions.size(), holder.customActions.length); i < holder.customActions.length; i++) {
+            holder.customActions[i].layout.setVisibility(View.GONE);
+        }
+
         if (coordinator.supportsActivityTracking()) {
             setActivityCard(holder, device, dailyTotals);
         }
@@ -1206,6 +1236,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         ImageView ledColor;
         ImageView powerOff;
 
+        // Custom actions
+        CustomActionHolder[] customActions;
+
         //activity card
         LinearLayout cardViewActivityCardLayout;
         PieChart TotalStepsChart;
@@ -1262,6 +1295,13 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             heartRateIcon = view.findViewById(R.id.device_heart_rate_status);
             infoIcons = view.findViewById(R.id.device_info_icons);
 
+            customActions = new CustomActionHolder[1];
+            customActions[0] = new CustomActionHolder(
+                    view.findViewById(R.id.device_custom_action_0_box),
+                    view.findViewById(R.id.device_custom_action_0_image),
+                    view.findViewById(R.id.device_custom_action_0_label)
+            );
+
             cardViewActivityCardLayout = view.findViewById(R.id.card_view_activity_card_layout);
 
             TotalStepsChart = view.findViewById(R.id.activity_dashboard_piechart1);
@@ -1269,6 +1309,17 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             SleepTimeChart = view.findViewById(R.id.activity_dashboard_piechart3);
         }
 
+        static class CustomActionHolder {
+            private final LinearLayout layout;
+            private final ImageView image;
+            private final TextView label;
+
+            CustomActionHolder(final LinearLayout layout, final ImageView image, final TextView label) {
+                this.layout = layout;
+                this.image = image;
+                this.label = label;
+            }
+        }
     }
 
     private void justifyListViewHeightBasedOnChildren(ListView listView) {

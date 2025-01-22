@@ -817,4 +817,6 @@ public interface DeviceCoordinator {
     AbstractNotificationPattern[] getNotificationLedPatterns();
 
     boolean validateAuthKey(String authKey);
+
+    List<DeviceCardAction> getCustomActions();
 }

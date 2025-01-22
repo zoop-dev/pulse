@@ -491,6 +491,36 @@
                     card_view:srcCompat="@drawable/ic_power_settings_new"
                     card_view:tint="@color/secondarytext" />
 
+                <LinearLayout
+                    android:id="@+id/device_custom_action_0_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/device_image"
+                    android:contentDescription=""
+                    android:tooltipText=""
+                    android:layout_margin="3dp"
+                    android:layout_toEndOf="@id/device_action_power_off"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/device_custom_action_0_image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="3dp"
+                        android:scaleType="fitXY"
+                        card_view:srcCompat="@drawable/ic_device_unknown"
+                        card_view:tint="@color/secondarytext" />
+
+                    <TextView
+                        android:id="@+id/device_custom_action_0_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:minWidth="36dp"
+                        android:textColor="@color/secondarytext"
+                        android:textStyle="bold"
+                        tools:text="" />
+                </LinearLayout>
             </com.google.android.flexbox.FlexboxLayout>
 
             <LinearLayout

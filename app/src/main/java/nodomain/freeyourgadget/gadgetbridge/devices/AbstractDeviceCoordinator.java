@@ -914,4 +914,9 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     public boolean validateAuthKey(final String authKey) {
         return !(authKey.getBytes().length < 34 || !authKey.startsWith("0x"));
     }
+
+    @Override
+    public List<DeviceCardAction> getCustomActions() {
+        return Collections.emptyList();
+    }
 }
