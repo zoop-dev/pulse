@@ -3720,4 +3720,5 @@
     <string name="devicetype_amazfit_active_2">华米 Active 2</string>
     <string name="activity_type_barbell">杠铃</string>
     <string name="devicetype_garmin_instinct_e">佳明 Instinct E</string>
+    <string name="remote_control">远程控制</string>
 </resources>
