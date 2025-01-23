@@ -53,5 +53,8 @@ public class GetProductInformationRequest extends Request {
         getDevice().setFirmwareVersion(((DeviceConfig.ProductInfo.Response) receivedPacket).softwareVersion);
         getDevice().setFirmwareVersion2(((DeviceConfig.ProductInfo.Response) receivedPacket).hardwareVersion);
         getDevice().setModel(((DeviceConfig.ProductInfo.Response) receivedPacket).productModel);
+
+        supportProvider.getHuaweiCoordinator().setOtaSoftwareVersion(((DeviceConfig.ProductInfo.Response) receivedPacket).softwareVersion);
+        supportProvider.getHuaweiCoordinator().setOtaSignatureLength(((DeviceConfig.ProductInfo.Response) receivedPacket).otaSignatureLength);
    }
 }

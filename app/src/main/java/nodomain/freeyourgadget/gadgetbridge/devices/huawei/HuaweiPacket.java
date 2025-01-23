@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.EphemerisFile
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService0A;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService2C;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.OTA;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Watchface;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
@@ -740,6 +741,36 @@ public class HuaweiPacket {
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;
                 }
+            case OTA.id:
+                switch (this.commandId) {
+                    case OTA.StartQuery.id:
+                        return new OTA.StartQuery.Response(paramsProvider).fromPacket(this);
+                    case OTA.DataParams.id:
+                        return new OTA.DataParams.Response(paramsProvider).fromPacket(this);
+                    case OTA.DataChunkRequest.id:
+                        return new OTA.DataChunkRequest.Response(paramsProvider).fromPacket(this);
+                    case OTA.SizeReport.id:
+                        return new OTA.SizeReport.Response(paramsProvider).fromPacket(this);
+                    case OTA.UpdateResult.id:
+                        return new OTA.UpdateResult.Response(paramsProvider).fromPacket(this);
+                    case OTA.DeviceError.id:
+                        return new OTA.DeviceError.Response(paramsProvider).fromPacket(this);
+                    case OTA.SetAutoUpdate.id:
+                        return new OTA.SetAutoUpdate.Response(paramsProvider).fromPacket(this);
+                    case OTA.NotifyNewVersion.id:
+                        return new OTA.NotifyNewVersion.Response(paramsProvider).fromPacket(this);
+                    case OTA.DeviceRequest.id:
+                        return new OTA.DeviceRequest.Response(paramsProvider).fromPacket(this);
+                    case OTA.GetMode.id:
+                        return new OTA.GetMode.Response(paramsProvider).fromPacket(this);
+                    case OTA.SetChangeLog.id:
+                        return new OTA.SetChangeLog.Response(paramsProvider).fromPacket(this);
+                    case OTA.GetChangeLog.id:
+                        return new OTA.GetChangeLog.Response(paramsProvider).fromPacket(this);
+                    default:
+                        this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
+                        return this;
+                }
             default:
                 this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                 return this;
@@ -865,6 +896,11 @@ public class HuaweiPacket {
         return retv;
     }
 
+    protected List<byte[]> serializeOTAGetMode() {
+        byte[] serializedTLV = { 0x01, 0x01};
+        return isSliced?serializeSliced(serializedTLV):serializeUnsliced(serializedTLV);
+    }
+
     public List<byte[]> serializeFileChunk(byte[] fileChunk, int uploadPosition, int unitSize, byte fileId, boolean isEncrypted) throws SerializeException {
         List<byte[]> retv = new ArrayList<>();
         final int subHeaderLength = 6;
@@ -944,6 +980,53 @@ public class HuaweiPacket {
             } else {
                 retv.addAll(serializeUnsliced(new_payload));
             }
+        }
+        return retv;
+    }
+
+    public List<byte[]> serializeOTAChunk(byte[] fileChunk, int offset, int unitSize, boolean addOffset, List<Integer> bitmap) throws SerializeException {
+        List<byte[]> retv = new ArrayList<>();
+
+        int maxUnitSize = unitSize - 9;
+        int packetCount = (int) Math.ceil(((double) fileChunk.length) / (double) maxUnitSize);
+
+        ByteBuffer buffer = ByteBuffer.wrap(fileChunk);
+        int sliceStart = offset;
+        int chunkIdx = 0;
+        for (int i = 0; i < packetCount; i++) {
+
+            if (chunkIdx > 0xff) {
+                chunkIdx = 0;
+            }
+
+            int contentSize = Math.min(maxUnitSize, buffer.remaining());
+
+            if ((bitmap != null) && (bitmap.size() > i)) {
+                // NOTE: skip already delivered parts
+                if (bitmap.get(i) != 0) {
+                    byte[] packetContent = new byte[contentSize];
+                    buffer.get(packetContent);
+                    sliceStart += maxUnitSize;
+                    chunkIdx++;
+                    continue;
+                }
+            }
+            ByteBuffer payload;
+            if (addOffset) {
+                payload = ByteBuffer.allocate(contentSize + 4 + 1);
+                payload.putInt(sliceStart);
+            } else {
+                payload = ByteBuffer.allocate(contentSize + 1);
+            }
+            payload.put((byte)chunkIdx);
+            byte[] packetContent = new byte[contentSize];
+            buffer.get(packetContent);
+            payload.put(packetContent);
+            retv.addAll(serializeSliced(payload.array()));
+
+            sliceStart += maxUnitSize;
+            chunkIdx++;
+
         }
         return retv;
     }

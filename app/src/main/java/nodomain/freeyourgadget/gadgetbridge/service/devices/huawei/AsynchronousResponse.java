@@ -59,6 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Menstrual;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.MusicControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileUpload;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.OTA;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Watchface;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
@@ -133,6 +134,8 @@ public class AsynchronousResponse {
             handleNotifications(response);
             handlePermissionCheck(response);
             handleDataSyncCommands(response);
+            handleOTA(response);
+
         } catch (Request.ResponseParseException e) {
             LOG.error("Response parse exception", e);
         }
@@ -415,7 +418,7 @@ public class AsynchronousResponse {
             try {
                 getPhoneInfoReq.doPerform();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error("Error send GetPhoneInfoRequest", e);
             }
         }
     }
@@ -431,7 +434,7 @@ public class AsynchronousResponse {
             try {
                 sendMenstrualModifyTimeReq.doPerform();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error("Error send SendMenstrualModifyTimeRequest", e);
             }
 
         }
@@ -797,4 +800,35 @@ public class AsynchronousResponse {
         }
     }
 
+    private void handleOTA(HuaweiPacket response) throws Request.ResponseTypeMismatchException {
+        if (response.serviceId != OTA.id)
+            return;
+        if (response.commandId == OTA.DeviceRequest.id) {
+            if (!(response instanceof OTA.DeviceRequest.Response)) {
+                throw new Request.ResponseTypeMismatchException(response, OTA.DeviceRequest.class);
+            }
+            OTA.DeviceRequest.Response resp = (OTA.DeviceRequest.Response) response;
+            support.getHuaweiOTAManager().handleDeviceRequest(resp.unkn1);
+        } else  if (response.commandId == OTA.DataChunkRequest.id) {
+            if (!(response instanceof OTA.DataChunkRequest.Response)) {
+                throw new Request.ResponseTypeMismatchException(response, OTA.DataChunkRequest.class);
+            }
+            support.getHuaweiOTAManager().handleDataChunkRequest((OTA.DataChunkRequest.Response) response);
+        } else  if (response.commandId == OTA.SizeReport.id) {
+            if (!(response instanceof OTA.SizeReport.Response)) {
+                throw new Request.ResponseTypeMismatchException(response, OTA.SizeReport.class);
+            }
+            support.getHuaweiOTAManager().handleSizeReport(((OTA.SizeReport.Response) response).size, ((OTA.SizeReport.Response) response).current);
+        } else  if (response.commandId == OTA.UpdateResult.id) {
+            if (!(response instanceof OTA.UpdateResult.Response)) {
+                throw new Request.ResponseTypeMismatchException(response, OTA.UpdateResult.class);
+            }
+            support.getHuaweiOTAManager().handleUploadResult(((OTA.UpdateResult.Response) response).resultCode);
+        } else  if (response.commandId == OTA.DeviceError.id) {
+            if (!(response instanceof OTA.DeviceError.Response)) {
+                throw new Request.ResponseTypeMismatchException(response, OTA.DeviceError.class);
+            }
+            support.getHuaweiOTAManager().handleDeviceError(((OTA.DeviceError.Response) response).errorCode);
+        }
+    }
 }

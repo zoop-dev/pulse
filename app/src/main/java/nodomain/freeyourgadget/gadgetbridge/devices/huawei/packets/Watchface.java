@@ -212,8 +212,8 @@ public class Watchface {
         }
 
         public static class Response extends HuaweiPacket {
-            public static byte reportType = 0;
-            public static String fileName;
+            public byte reportType = 0;
+            public String fileName;
             public Response (ParamsProvider paramsProvider) {
                 super(paramsProvider);
             }

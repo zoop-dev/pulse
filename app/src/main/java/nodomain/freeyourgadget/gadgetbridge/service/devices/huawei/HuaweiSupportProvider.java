@@ -123,6 +123,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetG
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetExtendedMusicInfoParams;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetMusicInfoParams;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetNotificationConstraintsRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetOTAChangeLog;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSmartAlarmList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWatchfaceParams;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCameraRemoteSetupEvent;
@@ -132,6 +133,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendGpsDataRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFileUploadInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendHeartRateZonesConfig;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendOTASetAutoUpdate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendRunPaceConfigRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSetContactsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotifyHeartRateCapabilityRequest;
@@ -257,8 +259,10 @@ public class HuaweiSupportProvider {
 
     protected HuaweiDataSyncManager huaweiDataSyncManager = new HuaweiDataSyncManager(this);
 
-
     private HuaweiDataSyncGoals huaweiDataSyncTreeCircleGoals = null;
+
+    protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
+
 
     public HuaweiCoordinatorSupplier getCoordinator() {
         return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
@@ -298,6 +302,10 @@ public class HuaweiSupportProvider {
 
     public HuaweiDataSyncManager getHuaweiDataSyncManager() {
         return huaweiDataSyncManager;
+    }
+
+    public HuaweiOTAManager getHuaweiOTAManager() {
+        return huaweiOTAManager;
     }
 
     public HuaweiSupportProvider(HuaweiBRSupport support) {
@@ -844,8 +852,11 @@ public class HuaweiSupportProvider {
             initRequestQueue.add(new SetActivityReminderRequest(this));
             initRequestQueue.add(new SetTruSleepRequest(this));
             initRequestQueue.add(new GetContactsCount(this));
+            initRequestQueue.add(new SendOTASetAutoUpdate(this));
+            initRequestQueue.add(new GetOTAChangeLog(this));
             initRequestQueue.add(new GetEventAlarmList(this));
             initRequestQueue.add(new GetSmartAlarmList(this));
+
 
             // Setup the alarms if necessary
             if (!getHuaweiCoordinator().supportsChangingAlarm() && firstConnection)
@@ -2190,6 +2201,11 @@ public class HuaweiSupportProvider {
     public void onInstallApp(Uri uri) {
         LOG.info("enter onAppInstall uri: {}", uri);
         HuaweiFwHelper huaweiFwHelper = new HuaweiFwHelper(uri, getContext());
+
+        if(huaweiFwHelper.isFirmware) {
+            huaweiOTAManager.startFwUpdate(huaweiFwHelper.fwInfo, uri);
+            return;
+        }
 
         HuaweiUploadManager.FileUploadInfo fileInfo = new HuaweiUploadManager.FileUploadInfo();
 

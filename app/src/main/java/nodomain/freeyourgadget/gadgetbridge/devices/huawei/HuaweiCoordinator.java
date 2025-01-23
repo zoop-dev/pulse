@@ -88,6 +88,9 @@ public class HuaweiCoordinator {
 
     private int maxContactsCount = 0;
 
+    private String otaSoftwareVersion = null;
+    private int otaSignatureLength = 256;
+
     public HuaweiCoordinator(HuaweiCoordinatorSupplier parent) {
         this.parent = parent;
 
@@ -619,6 +622,23 @@ public class HuaweiCoordinator {
         return supportsCommandForService(0x34, 0x1);
     }
 
+    public boolean supportsOTAUpdate() {
+        return supportsCommandForService(0x09, 0x01);
+    }
+
+    public boolean supportsOTAAutoUpdate() {
+        return supportsCommandForService(0x09, 0x0c);
+    }
+
+    public boolean supportsOTANotify() {
+        return supportsCommandForService(0x09, 0x0e);
+    }
+
+    public boolean supportsOTADeviceRequest() {
+        return supportsCommandForService(0x09, 0x0f);
+    }
+
+
     public boolean supportsExternalCalendarService() {
         if (supportsExpandCapability())
             return supportsExpandCapability(184);
@@ -696,14 +716,13 @@ public class HuaweiCoordinator {
             return supportsExpandCapability(82);
         return false;
     }
-
+    
     public boolean supportsDeviceCommandConfig() {
         if (supportsExpandCapability())
             return supportsExpandCapability(83);
         return false;
     }
-
-
+    
     public boolean supportsDeviceCommandEvent() {
         if (supportsExpandCapability())
             return supportsExpandCapability(84);
@@ -733,7 +752,24 @@ public class HuaweiCoordinator {
             return supportsExpandCapability(156);
         return false;
     }
+    
+    public boolean supportsOTAChangelog() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(52);
+        return false;
+    }
+    public boolean supportsOTASignature() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(144);
+        return false;
+    }
 
+    public boolean supportsWiFiDirect() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(147);
+        return false;
+    }
+    
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
 //                  if (deviceType == 10 && deviceVersion == 73617766697368 && deviceSoftVersion == 372E312E31) -> leo device
@@ -923,5 +959,21 @@ public class HuaweiCoordinator {
 
     public void setSupportsGpsNewSync(boolean supportsGpsNewSync) {
         this.supportsGpsNewSync = supportsGpsNewSync;
+    }
+
+    public String getOtaSoftwareVersion() {
+        return otaSoftwareVersion;
+    }
+
+    public void setOtaSoftwareVersion(String otaSoftwareVersion) {
+        this.otaSoftwareVersion = otaSoftwareVersion;
+    }
+
+    public int getOtaSignatureLength() {
+        return otaSignatureLength;
+    }
+
+    public void setOtaSignatureLength(int otaSignatureLength) {
+        this.otaSignatureLength = otaSignatureLength;
     }
 }

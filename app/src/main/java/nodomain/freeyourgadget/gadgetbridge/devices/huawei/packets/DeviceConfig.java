@@ -453,6 +453,7 @@ public class DeviceConfig {
             public String hardwareVersion;
             public String softwareVersion;
             public String productModel;
+            public int otaSignatureLength = 256;
 
             public Response(ParamsProvider paramsProvider) {
                 super(paramsProvider);
@@ -467,6 +468,9 @@ public class DeviceConfig {
                     this.hardwareVersion = this.tlv.getString(0x03);
                 this.softwareVersion = this.tlv.getString(0x07);
                 this.productModel = this.tlv.getString(0x0A).trim();
+
+                if(this.tlv.contains(0x27))
+                    this.otaSignatureLength = this.tlv.getAsInteger(0x27);
             }
         }
 
@@ -811,7 +815,7 @@ public class DeviceConfig {
                         case 0x13: // Force buildOsEnable to 0x00
                         case 0x14: // Force buildOSApiVersion to 0x00
                         default:
-                            this.tlv.put(b, (byte)00);
+                            this.tlv.put(b, (byte)0);
                     }
                 }
                 this.complete = true;

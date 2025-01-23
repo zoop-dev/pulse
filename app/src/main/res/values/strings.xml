@@ -3600,4 +3600,6 @@
     <string name="canned_replies_not_empty">There should be at least one canned reply.</string>
     <string name="permission_disable_doze_title">Ignore battery optimizations</string>
     <string name="permission_disable_doze_summary">Allows running in the background unhindered by Android\'s battery optimizations</string>
+    <string name="update_firmware_operation_check_in_progress">Checking firmware</string>
+    <string name="update_firmware_operation_check_failed">Firmware check failed</string>
 </resources>

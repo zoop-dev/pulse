@@ -116,6 +116,46 @@ public class HuaweiInstallHandler implements InstallHandler {
             return;
         }
 
+        if(helper.isFirmware) {
+            this.valid = true; //NOTE: nothing to verify for now
+
+            installActivity.setInstallEnabled(true);
+
+            GenericItem installItem = new GenericItem();
+
+            installItem.setName(helper.fwInfo.versionName);
+            installActivity.setInstallItem(installItem);
+            if (device.isBusy()) {
+                LOG.error("Firmware cannot be uploaded (device busy)");
+                installActivity.setInfoText("Firmware cannot be uploaded (device busy)");
+                installActivity.setInfoText(device.getBusyTask());
+                installActivity.setInstallEnabled(false);
+                return;
+            }
+
+            if (!device.isConnected()) {
+                LOG.error("Firmware cannot be uploaded(not connected or wrong device)");
+                installActivity.setInfoText("Firmware cannot be uploaded (not connected or wrong device)");
+                installActivity.setInstallEnabled(false);
+                return;
+            }
+
+            if (!this.valid) {
+                LOG.error("Firmware cannot be uploaded");
+                installActivity.setInstallEnabled(false);
+                return;
+            }
+
+            //installItem.setDetails(config.version);
+
+            installItem.setIcon(R.drawable.ic_firmware);
+
+            //installActivity.setInfoText(context.getString(R.string.app_install_info, installItem.getName(), config.version, config.vendor));
+
+            LOG.debug("Initialized HuaweiInstallHandler: Firmware");
+            return;
+        }
+
         if (helper.isWatchface()) {
             final HuaweiCoordinatorSupplier huaweiCoordinatorSupplier = (HuaweiCoordinatorSupplier) coordinator;
 

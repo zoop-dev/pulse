@@ -24,7 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaExtractor;
 import android.media.MediaMetadataRetriever;
-import  	android.media.MediaFormat;
+import android.media.MediaFormat;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
@@ -37,8 +37,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiBinAppParser;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ota.HuaweiOTAFileList;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileUpload;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBZipFile;
@@ -55,12 +58,15 @@ public class HuaweiFwHelper {
     private byte fileType = 0;
     String fileName = "";
 
+
     Bitmap previewBitmap;
     HuaweiWatchfaceManager.WatchfaceDescription watchfaceDescription;
     HuaweiAppManager.AppConfig appConfig;
     HuaweiMusicManager.AudioInfo musicInfo;
     Context mContext;
 
+    public boolean isFirmware = false;
+    public HuaweiOTAFileList.OTAFileInfo fwInfo = null;
 
 
     public HuaweiFwHelper(final Uri uri, final Context context) {
@@ -79,7 +85,9 @@ public class HuaweiFwHelper {
     }
 
     private void parseFile() {
-        if (parseAsMusic()) {
+        if (parseAsFirmware()) {
+            isFirmware = true;
+        } else if (parseAsMusic()) {
             fileType = FileUpload.Filetype.music;
         } else if (parseAsApp()) {
             assert appConfig.bundleName != null;
@@ -91,8 +99,67 @@ public class HuaweiFwHelper {
         }
     }
 
+    private boolean parseAsFirmware() {
+        try {
+            final UriHelper uriHelper = UriHelper.get(uri, this.mContext);
+
+            ZipInputStream stream = new ZipInputStream(uriHelper.openInputStream());
+            byte[] fileListXml = null;
+            ZipEntry entry;
+            while ((entry = stream.getNextEntry()) != null) {
+                if (entry.getName().equals("filelist.xml")) {
+                    fileListXml = GBZipFile.readAllBytes(stream);
+                    break;
+                }
+            }
+            stream.close();
+
+            if (fileListXml == null) {
+                LOG.info("Firmware: filelist.xml not found");
+                return false;
+            }
+
+            HuaweiOTAFileList fileList = HuaweiOTAFileList.getFileList(new String(fileListXml));
+            if (fileList == null) {
+                LOG.error("Firmware: filelist.xml is invalid");
+                return false;
+            }
+
+            LOG.info("Firmware: {}", fileList.component.name);
+
+            for (HuaweiOTAFileList.OTAFileInfo info : fileList.files) {
+                LOG.info("Firmware: file {}", info.dpath);
+                if (info.dpath.endsWith(".bin.apk")) {
+                    fwInfo = info;
+                }
+            }
+
+            if (fwInfo == null) {
+                LOG.error("Firmware: required files not found");
+                return false;
+            }
+
+            boolean valid = false;
+            stream = new ZipInputStream(uriHelper.openInputStream());
+            while ((entry = stream.getNextEntry()) != null) {
+                if (entry.getName().equals(fwInfo.dpath)) {
+                    valid = true;
+                    break;
+                }
+            }
+            stream.close();
+
+            LOG.info("Firmware: valid: {}", valid);
+            return valid;
+        } catch (Exception e) {
+            LOG.error("Firmware: error occurred", e);
+        }
+
+        return false;
+    }
+
     private String getNameWithoutExtension(String fileName) {
-        return fileName.indexOf(".") > 0?fileName.substring(0, fileName.lastIndexOf(".")): fileName;
+        return fileName.indexOf(".") > 0 ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
     }
 
     private String getExtension(String fileName) {
@@ -111,7 +178,7 @@ public class HuaweiFwHelper {
         String[] filePathColumn = {OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
 
         Cursor cursor = contentResolver.query(selectedUri, filePathColumn, null, null, null);
-        if(cursor == null)
+        if (cursor == null)
             return null;
         cursor.moveToFirst();
 
@@ -127,10 +194,10 @@ public class HuaweiFwHelper {
         String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
 
-        if(TextUtils.isEmpty(title)) {
+        if (TextUtils.isEmpty(title)) {
             title = getNameWithoutExtension(fileName);
         }
-        if(TextUtils.isEmpty(artist)) {
+        if (TextUtils.isEmpty(artist)) {
             artist = "Unknown";
         }
 
@@ -145,13 +212,13 @@ public class HuaweiFwHelper {
         int channels = mf.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
         long duration = mf.getLong(MediaFormat.KEY_DURATION);
 
-        LOG.info("bitRate: " + bitrate);
-        LOG.info("sampleRate: " + sampleRate);
-        LOG.info("channelCount: " + channels);
-        LOG.info("duration: " + duration);
+        LOG.info("bitRate: {}", bitrate);
+        LOG.info("sampleRate: {}", sampleRate);
+        LOG.info("channelCount: {}", channels);
+        LOG.info("duration: {}", duration);
 
         String extension = getExtension(fileName);
-        if(!TextUtils.isEmpty(extension)) {
+        if (!TextUtils.isEmpty(extension)) {
             extension = extension.toLowerCase();
         }
 
@@ -182,11 +249,11 @@ public class HuaweiFwHelper {
             String mimeType = mContext.getContentResolver().getType(uri);
             LOG.info("File mime type: {}", mimeType);
 
-            if(mimeType == null || !mimeType.startsWith("audio/"))
+            if (mimeType == null || !mimeType.startsWith("audio/"))
                 return false;
 
             musicInfo = getAudioInfo(uri);
-            if(musicInfo == null)
+            if (musicInfo == null)
                 return false;
 
             musicInfo.setMimeType(mimeType);
@@ -323,7 +390,7 @@ public class HuaweiFwHelper {
     }
 
     public boolean isValid() {
-        return isWatchface() || isAPP() || isMusic();
+        return isWatchface() || isAPP() || isMusic() || isFirmware;
     }
 
     public Bitmap getPreviewBitmap() {
