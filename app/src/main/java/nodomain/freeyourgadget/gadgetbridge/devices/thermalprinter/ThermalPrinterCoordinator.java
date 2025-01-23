@@ -7,9 +7,13 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Collections;
+import java.util.List;
+
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -78,4 +82,31 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
         return null;
     }
 
+
+    @Override
+    public List<DeviceCardAction> getCustomActions() {
+        return Collections.singletonList(new ControlDeviceCardAction());
+    }
+
+    private static final class ControlDeviceCardAction implements DeviceCardAction {
+
+        @Override
+        public int getIcon(GBDevice device) {
+            return R.drawable.ic_file_upload;
+        }
+
+        @Override
+        public String getDescription(final GBDevice device, final Context context) {
+            return context.getString(R.string.activity_print__image_print_button);
+        }
+
+        @Override
+        public void onClick(final GBDevice device, final Context context) {
+
+            final Intent startIntent = new Intent(context, SendToPrinterActivity.class);
+            startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            context.startActivity(startIntent);
+        }
+
+    }
 }
