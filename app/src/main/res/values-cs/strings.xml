@@ -3725,4 +3725,6 @@
     <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
     <string name="activity_type_barbell">Činka</string>
     <string name="remote_control">Vzdálené ovládání</string>
+    <string name="update_firmware_operation_check_failed">Kontrola firmware selhala</string>
+    <string name="update_firmware_operation_check_in_progress">Kontroluji firmware</string>
 </resources>
