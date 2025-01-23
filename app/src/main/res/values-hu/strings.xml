@@ -3666,4 +3666,5 @@
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
     <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
     <string name="activity_type_barbell">Súlyzózás</string>
+    <string name="remote_control">Távvezérlés</string>
 </resources>
