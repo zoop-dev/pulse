@@ -3742,4 +3742,5 @@
     <string name="remote_control">Zdalne sterowanie</string>
     <string name="update_firmware_operation_check_in_progress">Sprawdzanie oprogramowania sprzętowego</string>
     <string name="update_firmware_operation_check_failed">Niepowodzenie kontroli oprogramowania sprzętowego</string>
+    <string name="fw_upgrade_notice_huawei">Zamierzasz przesłać oprogramowanie układowe %s na %s.\n\nTwoje obecne oprogramowanie układowe to %s\n\nUrządzenie zostanie ponownie uruchomione po przesłaniu.\n\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
 </resources>
