@@ -896,15 +896,26 @@ public class HuaweiPacket {
         return retv;
     }
 
+    private byte[] encryptIfRequired(byte[] payload, boolean encrypt) throws SerializeException {
+        if(encrypt) {
+            try {
+                HuaweiTLV encryptedTlv = HuaweiTLV.encryptRaw(this.paramsProvider, payload);
+                return encryptedTlv.serialize();
+            } catch (HuaweiCrypto.CryptoException e) {
+                throw new HuaweiPacket.SerializeException("Error to encrypt TLV");
+            }
+        }
+        return payload;
+    }
+
     protected List<byte[]> serializeOTAGetMode() {
         byte[] serializedTLV = { 0x01, 0x01};
         return isSliced?serializeSliced(serializedTLV):serializeUnsliced(serializedTLV);
     }
 
-    public List<byte[]> serializeFileChunk(byte[] fileChunk, int uploadPosition, int unitSize, byte fileId, boolean isEncrypted) throws SerializeException {
+    public List<byte[]> serializeFileChunk(byte[] fileChunk, int uploadPosition, int unitSize, byte fileId, boolean useEncryption) throws SerializeException {
         List<byte[]> retv = new ArrayList<>();
         final int subHeaderLength = 6;
-        final int packageHeaderAndFooterLength = 6;
 
         int packetCount = (int) Math.ceil(((double) fileChunk.length) / (double) unitSize);
 
@@ -925,28 +936,13 @@ public class HuaweiPacket {
             buffer.get(packetContent);
             payload.put(packetContent);
 
-
-            byte[] new_payload = null;
-            if(isEncrypted) {
-                try {
-                    HuaweiTLV encryptedTlv = HuaweiTLV.encryptRaw(this.paramsProvider, payload.array());
-                    new_payload = encryptedTlv.serialize();
-                } catch (HuaweiCrypto.CryptoException e) {
-                    throw new HuaweiPacket.SerializeException("Error to encrypt TLV");
-                }
-            } else {
-                new_payload = payload.array();
-            }
+            byte[] new_payload = encryptIfRequired(payload.array(), useEncryption);
 
             if (new_payload == null) {
                 throw new HuaweiPacket.SerializeException("new payload is null");
             }
 
-            if ((new_payload.length + packageHeaderAndFooterLength) > paramsProvider.getSliceSize()) {
-                retv.addAll(serializeSliced(new_payload));
-            } else {
-                retv.addAll(serializeUnsliced(new_payload));
-            }
+            retv.addAll(serializeSliced(new_payload)); // this function has code to determine sliced and unsliced send type should be used
 
             sliceStart += contentSize;
 
@@ -958,7 +954,6 @@ public class HuaweiPacket {
         List<byte[]> retv = new ArrayList<>();
 
         final int subHeaderLength = 1;
-        final int packageHeaderAndFooterLength = 6;
 
         ByteBuffer buffer = ByteBuffer.wrap(fileChunk);
 
@@ -973,13 +968,13 @@ public class HuaweiPacket {
             buffer.get(packetContent);
             payload.put(packetContent);
 
-            byte[] new_payload = payload.array();
+            byte[] new_payload = encryptIfRequired(payload.array(), isEncrypted);
 
-            if ((new_payload.length + packageHeaderAndFooterLength) > paramsProvider.getSliceSize()) {
-                retv.addAll(serializeSliced(new_payload));
-            } else {
-                retv.addAll(serializeUnsliced(new_payload));
+            if (new_payload == null) {
+                throw new HuaweiPacket.SerializeException("new payload is null");
             }
+
+            retv.addAll(serializeSliced(new_payload)); // this function has code to determine sliced and unsliced send type should be used
         }
         return retv;
     }
@@ -1030,8 +1025,6 @@ public class HuaweiPacket {
         }
         return retv;
     }
-
-
 
     public List<byte[]> serialize() throws CryptoException {
         // TODO: necessary for this to work:

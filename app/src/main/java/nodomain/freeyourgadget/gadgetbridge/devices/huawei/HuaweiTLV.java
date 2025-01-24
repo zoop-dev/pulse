@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.CryptoTags;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +75,7 @@ public class HuaweiTLV {
                     .array();
         }
 
+        @NonNull
         public String toString() {
             return "{tag: " + Integer.toHexString(tag & 0xFF) + " - Value: " + StringUtils.bytesToHex(value) + "} - ";
         }
@@ -348,6 +351,7 @@ public class HuaweiTLV {
      * Get string representation of HuaweiTLV, "Empty" when no elements are present
      * @return String
      */
+    @NonNull
     public String toString() {
         if (valueMap.isEmpty())
             return "Empty";
@@ -404,6 +408,7 @@ final class VarInt {
         this.size = this.eValue.length;
     }
 
+    @NonNull
     public String toString() {
         return "VarInt(dValue: " + this.dValue + ", size: " + this.size + ", eValue: " + StringUtils.bytesToHex(this.eValue) + ")";
     }

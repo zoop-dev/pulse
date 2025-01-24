@@ -82,16 +82,16 @@ public class HuaweiEphemerisManager {
     }
 
     public static class RequestInfo {
-        private int tagVersion = -1;
-        private String tagUUID = null;
-        private List<String> tagFiles = null;
+        private final int tagVersion;
+        private final String tagUUID;
+        private final List<String> tagFiles;
 
         private byte[] currentFileData = null;
         private String currentFileName = null;
 
-        UploadParameters uploadParameters = null;
+        private UploadParameters uploadParameters = null;
 
-        private List<String> processedFiles = new ArrayList<>();
+        private final List<String> processedFiles = new ArrayList<>();
 
         public RequestInfo(int tagVersion, String tagUUID, List<String> tagFiles) {
             this.tagVersion = tagVersion;
@@ -141,7 +141,7 @@ public class HuaweiEphemerisManager {
 
         public boolean isAllProcessed() {
             LOG.info("Ephemeris tagFiles: {}", tagFiles.toString());
-            LOG.info("Ephemeris processed: {}", processedFiles.toString());
+            LOG.info("Ephemeris processed: {}", processedFiles);
             return processedFiles.size() == tagFiles.size() && new HashSet<>(processedFiles).containsAll(tagFiles);
         }
     }
@@ -324,7 +324,7 @@ public class HuaweiEphemerisManager {
             return;
         }
 
-        String fileList = "";
+        StringBuilder fileList = new StringBuilder();
         int responseCode = 0;
 
         if(fileType == 0) {
@@ -338,11 +338,11 @@ public class HuaweiEphemerisManager {
             } else if (currentRequest.getTagVersion() == 1 || currentRequest.getTagVersion() == 2 || currentRequest.getTagVersion() == 3){
                 int i = 0;
                 while (i < currentRequest.getTagFiles().size()) {
-                    fileList += currentRequest.getTagFiles().get(i);
+                    fileList.append(currentRequest.getTagFiles().get(i));
                     if (i == currentRequest.getTagFiles().size() - 1) {
                         break;
                     }
-                    fileList += ";";
+                    fileList.append(";");
                     i++;
                 }
             } else {
@@ -352,13 +352,13 @@ public class HuaweiEphemerisManager {
             LOG.error("Unknown file id");
         }
 
-        if(TextUtils.isEmpty(fileList)) {
+        if(TextUtils.isEmpty(fileList.toString())) {
             responseCode = 100001;
             cleanupUpload(true);
         }
 
         try {
-            SendEphemerisFileListResponse sendEphemerisFileListResponse = new SendEphemerisFileListResponse(this.support, responseCode, fileList);
+            SendEphemerisFileListResponse sendEphemerisFileListResponse = new SendEphemerisFileListResponse(this.support, responseCode, fileList.toString());
             sendEphemerisFileListResponse.doPerform();
         } catch (IOException e) {
             LOG.error("Error to send SendEphemerisFileListResponse");
