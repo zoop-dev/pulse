@@ -3721,4 +3721,6 @@
     <string name="activity_type_barbell">杠铃</string>
     <string name="devicetype_garmin_instinct_e">佳明 Instinct E</string>
     <string name="remote_control">远程控制</string>
+    <string name="update_firmware_operation_check_failed">检查固件失败</string>
+    <string name="update_firmware_operation_check_in_progress">正在检查固件</string>
 </resources>
