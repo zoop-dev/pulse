@@ -28,6 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSession;
@@ -47,6 +48,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private FitSport sport = null;
     private FitPhysiologicalMetrics physiologicalMetrics = null;
     private final List<FitSet> sets = new ArrayList<>();
+    private final List<FitLap> laps = new ArrayList<>();
 
     public GarminWorkoutParser(final Context context) {
         this.context = context;
@@ -102,6 +104,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         sport = null;
         physiologicalMetrics = null;
         sets.clear();
+        laps.clear();
     }
 
     public boolean handleRecord(final RecordData record) {
@@ -132,6 +135,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         } else if (record instanceof FitSet) {
             LOG.trace("Set: {}", record);
             sets.add((FitSet) record);
+        } else if (record instanceof FitLap) {
+            LOG.trace("Lap: {}", record);
+            laps.add((FitLap) record);
         } else {
             return false;
         }
@@ -165,6 +171,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
         if (session.getTotalDistance() != null) {
             summaryData.add(DISTANCE_METERS, session.getTotalDistance() / 100f, UNIT_METERS);
+        }
+        if (session.getPoolLength() != null) {
+            summaryData.add(POOL_LENGTH, session.getPoolLength(), UNIT_METERS);
+        }
+        if (session.getAvgSwolf() != null) {
+            summaryData.add(SWOLF_AVG, session.getAvgSwolf(), UNIT_NONE);
         }
         if (session.getTotalSteps() != null) {
             summaryData.add(STEPS, session.getTotalSteps(), UNIT_STEPS);
@@ -213,6 +225,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
         if (session.getTotalDescent() != null) {
             summaryData.add(DESCENT_DISTANCE, session.getTotalDescent(), UNIT_METERS);
+        }
+        if (session.getAvgSwimCadence() != null) {
+            summaryData.add(SWIM_AVG_CADENCE, session.getAvgSwimCadence(), UNIT_STROKES_PER_LENGTH);
         }
 
         if (session.getEnhancedAvgSpeed() != null) {
@@ -341,6 +356,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                     i++;
                 }
             }
+        }
+
+        if (!laps.isEmpty()) {
+            final boolean anySwolf = laps.stream().anyMatch(l -> l.getAvgSwolf() != null);
         }
 
         summaryData.add(

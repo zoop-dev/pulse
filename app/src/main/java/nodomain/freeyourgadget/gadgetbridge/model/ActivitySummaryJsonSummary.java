@@ -190,6 +190,7 @@ public class ActivitySummaryJsonSummary {
                     JUMPS, JUMP_RATE_AVG, JUMP_RATE_MAX
             ));
             put(GROUP_SWIMMING, Arrays.asList(
+                    POOL_LENGTH, SWIM_AVG_CADENCE,
                     SWOLF_INDEX, SWOLF_AVG, SWOLF_MAX, SWOLF_MIN, SWIM_STYLE
             ));
             put(GROUP_TRAINING_EFFECT, Arrays.asList(

@@ -141,6 +141,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getNumLengths() {
+        return (Integer) getFieldByNumber(33);
+    }
+
+    @Nullable
     public Double getEndLatitude() {
         return (Double) getFieldByNumber(38);
     }
@@ -148,6 +153,26 @@ public class FitSession extends RecordData {
     @Nullable
     public Double getEndLongitude() {
         return (Double) getFieldByNumber(39);
+    }
+
+    @Nullable
+    public Float getPoolLength() {
+        return (Float) getFieldByNumber(44);
+    }
+
+    @Nullable
+    public Integer getNumActiveLengths() {
+        return (Integer) getFieldByNumber(47);
+    }
+
+    @Nullable
+    public Float getAvgSwimCadence() {
+        return (Float) getFieldByNumber(79);
+    }
+
+    @Nullable
+    public Integer getAvgSwolf() {
+        return (Integer) getFieldByNumber(80);
     }
 
     @Nullable
@@ -186,6 +211,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getPrimaryBenefit() {
+        return (Integer) getFieldByNumber(188);
+    }
+
+    @Nullable
     public Integer getAvgSpo2() {
         return (Integer) getFieldByNumber(194);
     }
@@ -193,6 +223,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Integer getAvgStress() {
         return (Integer) getFieldByNumber(195);
+    }
+
+    @Nullable
+    public Integer getRestingCalories() {
+        return (Integer) getFieldByNumber(196);
     }
 
     @Nullable

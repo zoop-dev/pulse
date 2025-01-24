@@ -41,6 +41,8 @@ public class FitRecordDataFactory {
                 return new FitWorkout(recordDefinition, recordHeader);
             case 31:
                 return new FitCourse(recordDefinition, recordHeader);
+            case 34:
+                return new FitActivity(recordDefinition, recordHeader);
             case 49:
                 return new FitFileCreator(recordDefinition, recordHeader);
             case 55:

@@ -67,6 +67,7 @@ public class ActivitySummaryEntries {
     public static final String EVERSION_ANGLE_MAX = "eversionAngleMax";
 
     public static final String DISTANCE_METERS = "distanceMeters";
+    public static final String POOL_LENGTH = "poolLength";
     public static final String ELEVATION_GAIN = "elevationGain";
     public static final String ELEVATION_LOSS = "elevationLoss";
 
@@ -119,6 +120,7 @@ public class ActivitySummaryEntries {
     public static final String SWOLF_AVG = "swolfAvg";
     public static final String SWOLF_MAX = "swolfMax";
     public static final String SWOLF_MIN = "swolfMin";
+    public static final String SWIM_AVG_CADENCE = "swim_avg_cadence";
 
     public static final String CALORIES_BURNT = "caloriesBurnt";
     public static final String TRAINING_EFFECT_AEROBIC = "aerobicTrainingEffect";
@@ -159,6 +161,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_STROKES = "strokes_unit";
     public static final String UNIT_STROKES_PER_MINUTE = "strokes_minute";
     public static final String UNIT_STROKES_PER_SECOND = "strokes_second";
+    public static final String UNIT_STROKES_PER_LENGTH = "strokes_per_length";
     public static final String UNIT_JUMPS = "jumps_unit";
     public static final String UNIT_JUMPS_PER_MINUTE = "jumps_minute";
     public static final String UNIT_YARD = "yard";

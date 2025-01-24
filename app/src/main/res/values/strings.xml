@@ -2208,6 +2208,9 @@
     <string name="sonyswr12_settings_alarm_interval_summary">Smart alarm interval is interval before of installed alarm. In this interval device is trying to detect lightest phase of sleep to awake user</string>
     <!-- activity summary labels-->
     <string name="distanceMeters">Distance</string>
+    <string name="poolLength">Pool length</string>
+    <string name="swim_avg_cadence">Avg Swim Cadence</string>
+    <string name="strokes_per_length">strokes/length</string>
     <string name="ascentMeters">Uphill</string>
     <string name="descentMeters">Downhill</string>
     <string name="ascentDistance">Uphill distance</string>
