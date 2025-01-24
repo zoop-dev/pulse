@@ -136,6 +136,8 @@ public class ActivitySummaryEntries {
     public static final String CYCLING_POWER_MAX = "cyclingPowerMax";
 
     public static final String SETS = "workoutSets";
+    public static final String REPETITIONS = "workout_repetitions";
+    public static final String REVOLUTIONS = "workout_revolutions";
 
     public static final String UNIT_BPM = "bpm";
     public static final String UNIT_BREATHS_PER_MIN = "breaths_per_min";
@@ -163,7 +165,11 @@ public class ActivitySummaryEntries {
     public static final String UNIT_STROKES_PER_SECOND = "strokes_second";
     public static final String UNIT_STROKES_PER_LENGTH = "strokes_per_length";
     public static final String UNIT_JUMPS = "jumps_unit";
+    public static final String UNIT_REPS = "unit_repetitions";
+    public static final String UNIT_REVS = "unit_revolutions";
     public static final String UNIT_JUMPS_PER_MINUTE = "jumps_minute";
+    public static final String UNIT_REPS_PER_MINUTE = "unit_repetitions_per_minute";
+    public static final String UNIT_REVS_PER_MINUTE = "unit_revolutions_per_minute";
     public static final String UNIT_YARD = "yard";
     public static final String UNIT_DEGREES = "degrees";
     public static final String UNIT_STRING = "string";

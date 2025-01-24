@@ -360,4 +360,84 @@ public enum ActivityKind {
                 activityKind.name().contains("TREADMILL") || activityKind.name().contains("WALK");
     }
 
+    public static CycleUnit getCycleUnit(final ActivityKind activityKind) {
+        switch (activityKind) {
+            case BUNGEE_JUMPING:
+            case JUMP_ROPING:
+            case JUMPMASTER:
+            case TRAMPOLINE:
+                return CycleUnit.JUMPS;
+            case BIKE_COMMUTE:
+            case CYCLING:
+            case E_BIKE:
+            case HANDCYCLING:
+            case HANDCYCLING_INDOOR:
+            case INDOOR_CYCLING:
+            case OUTDOOR_CYCLING:
+            case SPINNING:
+                return CycleUnit.REVOLUTIONS;
+            case FLEXIBILITY:
+            case BARBELL:
+            case BATTLE_ROPE:
+            case CORE_TRAINING:
+            case CROSSFIT:
+            case DUMBBELL:
+            case FITNESS_EXERCISES:
+            case FUNCTIONAL_TRAINING:
+            case PILATES:
+            case PLANK:
+            case PULL_UPS:
+            case PUSH_UPS:
+            case SIT_UPS:
+            case SMITH_MACHINE:
+            case STRENGTH_TRAINING:
+            case YOGA:
+                return CycleUnit.REPS;
+            case ARTISTIC_SWIMMING:
+            case KAYAKING:
+            case KITESURFING:
+            case PADDLING:
+            case POOL_SWIM:
+            case RAFTING:
+            case ROWING:
+            case ROWING_MACHINE:
+            case STAND_UP_PADDLEBOARDING:
+            case SURFING:
+            case SWIMMING:
+            case SWIMMING_OPENWATER:
+            case WAKEBOARDING:
+            case WATER_SKIING:
+            case WINDSURFING:
+                return CycleUnit.STROKES;
+            case BADMINTON:
+            case GOLF:
+            case HOCKEY:
+            case LACROSSE:
+            case PICKLEBALL:
+            case PINGPONG:
+            case RACKET:
+            case RACQUETBALL:
+            case SHUTTLECOCK:
+            case SQUASH:
+            case TABLE_TENNIS:
+            case TENNIS:
+            case BASEBALL:
+            case CRICKET:
+            case SOFTBALL:
+                return CycleUnit.SWINGS;
+        }
+
+        return CycleUnit.STEPS;
+    }
+
+    public enum CycleUnit {
+        NONE,
+        UNKNOWN,
+        STEPS,
+        STROKES,
+        JUMPS,
+        REPS,
+        REVOLUTIONS,
+        SWINGS,
+    }
 }

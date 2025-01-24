@@ -71,7 +71,7 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
-    public Long getTotalSteps() {
+    public Long getTotalCycles() {
         return (Long) getFieldByNumber(10);
     }
 

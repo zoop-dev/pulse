@@ -2333,6 +2333,12 @@
     <string name="strokes_unit">str</string>
     <string name="jumps_minute">jumps/min</string>
     <string name="jumps_unit">jumps</string>
+    <string name="unit_repetitions">reps</string>
+    <string name="unit_revolutions">revs</string>
+    <string name="unit_repetitions_per_minute">reps/min</string>
+    <string name="unit_revolutions_per_minute">revs/min</string>
+    <string name="workout_repetitions">Repetitions</string>
+    <string name="workout_revolutions">Revolutions</string>
     <string name="seconds">sec</string>
     <string name="milliseconds">milliseconds</string>
     <string name="milliseconds_ms">ms</string>

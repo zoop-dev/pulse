@@ -161,4 +161,61 @@ public class ActivitySummaryData {
     public String toJson() {
         return GSON.toJson(entries);
     }
+
+    public void addTotal(final Number value, final ActivityKind.CycleUnit unit) {
+        switch (unit) {
+            case STROKES:
+                add(ActivitySummaryEntries.STROKES, value, ActivitySummaryEntries.UNIT_STROKES);
+                break;
+            case JUMPS:
+                add(ActivitySummaryEntries.JUMPS, value, ActivitySummaryEntries.UNIT_JUMPS);
+                break;
+            case REPS:
+                add(ActivitySummaryEntries.REPETITIONS, value, ActivitySummaryEntries.UNIT_REPS);
+                break;
+            case REVOLUTIONS:
+                add(ActivitySummaryEntries.REVOLUTIONS, value, ActivitySummaryEntries.UNIT_REVS);
+                break;
+            default:
+                add(ActivitySummaryEntries.STEPS, value, ActivitySummaryEntries.UNIT_STEPS);
+        }
+    }
+
+    public void addCadenceAvg(final Number value, final ActivityKind.CycleUnit unit) {
+        switch (unit) {
+            case STROKES:
+                add(ActivitySummaryEntries.STROKE_RATE_AVG, value, ActivitySummaryEntries.UNIT_STROKES_PER_MINUTE);
+                break;
+            case JUMPS:
+                add(ActivitySummaryEntries.JUMP_RATE_AVG, value, ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE);
+                break;
+            case REPS:
+                add(ActivitySummaryEntries.CADENCE_AVG, value, ActivitySummaryEntries.UNIT_REPS_PER_MINUTE);
+                break;
+            case REVOLUTIONS:
+                add(ActivitySummaryEntries.CADENCE_AVG, value, ActivitySummaryEntries.UNIT_REVS_PER_MINUTE);
+                break;
+            default:
+                add(ActivitySummaryEntries.CADENCE_AVG, value, ActivitySummaryEntries.UNIT_SPM);
+        }
+    }
+
+    public void addCadenceMax(final Number value, final ActivityKind.CycleUnit unit) {
+        switch (unit) {
+            case STROKES:
+                add(ActivitySummaryEntries.STROKE_RATE_MAX, value, ActivitySummaryEntries.UNIT_STROKES_PER_MINUTE);
+                break;
+            case JUMPS:
+                add(ActivitySummaryEntries.JUMP_RATE_MAX, value, ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE);
+                break;
+            case REPS:
+                add(ActivitySummaryEntries.CADENCE_MAX, value, ActivitySummaryEntries.UNIT_REPS_PER_MINUTE);
+                break;
+            case REVOLUTIONS:
+                add(ActivitySummaryEntries.CADENCE_MAX, value, ActivitySummaryEntries.UNIT_REVS_PER_MINUTE);
+                break;
+            default:
+                add(ActivitySummaryEntries.CADENCE_MAX, value, ActivitySummaryEntries.UNIT_SPM);
+        }
+    }
 }
