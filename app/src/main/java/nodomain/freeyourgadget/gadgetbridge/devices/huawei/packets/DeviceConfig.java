@@ -806,7 +806,7 @@ public class DeviceConfig {
                         case 0xf:
                             break;
                         case 0x11:
-                            this.tlv.put(b, 1400106310); // Force AppVersion to 14.1.6.310
+                            this.tlv.put(b, 1500012300); // Force AppVersion to 15.0.12.300
                             break;
                         case 0x15:
                             this.tlv.put(b); // Force buildOSPlatformVersion to ""
