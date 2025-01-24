@@ -176,6 +176,7 @@
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
+    <string name="fw_upgrade_notice_huawei">You are about to upload the %s firmware on your %s.\n\nYour current firmware is %s\n\nYour device will reboot after uploading.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with Gadgetbridge.</string>
     <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with Gadgetbridge.\n\nYou are DISCOURAGED from flashing it!"</string>
     <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>

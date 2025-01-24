@@ -29,6 +29,7 @@ public class HuaweiOTAFileList {
         public long size;
         public String packageName;
         public String versionName;
+        public String osVersion;
         public int versionCode;
     }
 
@@ -70,6 +71,10 @@ public class HuaweiOTAFileList {
                         info.size = Long.parseLong(elem.getElementsByTagName("size").item(0).getTextContent());
                         info.packageName = elem.getElementsByTagName("packageName").item(0).getTextContent();
                         info.versionName = elem.getElementsByTagName("versionName").item(0).getTextContent();
+                        NodeList osVerNodes = elem.getElementsByTagName("osVersion");
+                        if(osVerNodes.getLength() > 0) {
+                            info.osVersion = osVerNodes.item(0).getTextContent();
+                        }
                         info.versionCode = Integer.parseInt(elem.getElementsByTagName("versionCode").item(0).getTextContent());
 
                         ret.files.add(info);

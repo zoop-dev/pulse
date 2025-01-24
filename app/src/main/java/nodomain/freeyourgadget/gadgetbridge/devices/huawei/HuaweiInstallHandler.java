@@ -54,11 +54,11 @@ public class HuaweiInstallHandler implements InstallHandler {
 
     private HuaweiMusicUtils.FormatRestrictions getRestriction(HuaweiMusicUtils.MusicCapabilities capabilities, String ext) {
         List<HuaweiMusicUtils.FormatRestrictions> restrictions = capabilities.formatsRestrictions;
-        if(restrictions == null)
+        if (restrictions == null)
             return null;
 
-        for(HuaweiMusicUtils.FormatRestrictions r: restrictions) {
-            if(ext.equals(r.getName())) {
+        for (HuaweiMusicUtils.FormatRestrictions r : restrictions) {
+            if (ext.equals(r.getName())) {
                 return r;
             }
         }
@@ -67,24 +67,24 @@ public class HuaweiInstallHandler implements InstallHandler {
 
     //TODO: add proper checks
     private boolean checkMediaCompatibility(HuaweiMusicUtils.MusicCapabilities capabilities, HuaweiMusicManager.AudioInfo currentMusicInfo) {
-        if(capabilities == null) {
+        if (capabilities == null) {
             LOG.error("No media info from device");
             return false;
         }
         String ext = currentMusicInfo.getExtension();
 
         List<String> supportedFormats = capabilities.supportedFormats;
-        if(supportedFormats == null) {
+        if (supportedFormats == null) {
             LOG.error("Format not supported {}", ext);
             return false;
         }
-        if(!supportedFormats.contains(ext)) {
+        if (!supportedFormats.contains(ext)) {
             LOG.error("Format not supported {}", ext);
             return false;
         }
 
         HuaweiMusicUtils.FormatRestrictions restrictions = getRestriction(capabilities, ext);
-        if(restrictions == null) {
+        if (restrictions == null) {
             LOG.info("no restriction for: {}", ext);
             return true;
         }
@@ -95,7 +95,7 @@ public class HuaweiInstallHandler implements InstallHandler {
         LOG.info("sampleRate {}", Arrays.toString(restrictions.sampleRates));
         LOG.info("unknownBitrate {}", restrictions.unknownBitrate);
 
-        if(currentMusicInfo.getChannels() > restrictions.channels) {
+        if (currentMusicInfo.getChannels() > restrictions.channels) {
             LOG.error("Not supported channels count {} > {}", currentMusicInfo.getChannels(), restrictions.channels);
             return false;
         }
@@ -116,24 +116,17 @@ public class HuaweiInstallHandler implements InstallHandler {
             return;
         }
 
-        if(helper.isFirmware) {
+        if (helper.isFirmware) {
             this.valid = true; //NOTE: nothing to verify for now
 
-            installActivity.setInstallEnabled(true);
-
-            GenericItem installItem = new GenericItem();
-
-            installItem.setName(helper.fwInfo.versionName);
-            installActivity.setInstallItem(installItem);
             if (device.isBusy()) {
                 LOG.error("Firmware cannot be uploaded (device busy)");
                 installActivity.setInfoText("Firmware cannot be uploaded (device busy)");
-                installActivity.setInfoText(device.getBusyTask());
                 installActivity.setInstallEnabled(false);
                 return;
             }
 
-            if (!device.isConnected()) {
+            if (!device.isConnected() || !device.isInitialized()) {
                 LOG.error("Firmware cannot be uploaded(not connected or wrong device)");
                 installActivity.setInfoText("Firmware cannot be uploaded (not connected or wrong device)");
                 installActivity.setInstallEnabled(false);
@@ -146,11 +139,20 @@ public class HuaweiInstallHandler implements InstallHandler {
                 return;
             }
 
-            //installItem.setDetails(config.version);
+            GenericItem installItem = new GenericItem();
+
+            installItem.setName(helper.fwInfo.versionName);
+
+            installItem.setDetails(helper.fwInfo.osVersion);
 
             installItem.setIcon(R.drawable.ic_firmware);
 
-            //installActivity.setInfoText(context.getString(R.string.app_install_info, installItem.getName(), config.version, config.vendor));
+            installActivity.setInstallItem(installItem);
+
+            installActivity.setInfoText(context.getString(R.string.fw_upgrade_notice_huawei, helper.fwInfo.versionName, device.getAliasOrName(), device.getFirmwareVersion()));
+
+            installActivity.setInstallEnabled(true);
+
 
             LOG.debug("Initialized HuaweiInstallHandler: Firmware");
             return;
@@ -252,7 +254,7 @@ public class HuaweiInstallHandler implements InstallHandler {
             final HuaweiCoordinatorSupplier huaweiCoordinatorSupplier = (HuaweiCoordinatorSupplier) coordinator;
 
             HuaweiMusicUtils.MusicCapabilities capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getExtendedMusicInfoParams();
-            if(capabilities == null) {
+            if (capabilities == null) {
                 capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getMusicInfoParams();
             }
             HuaweiMusicManager.AudioInfo currentMusicInfo = helper.getMusicInfo();
