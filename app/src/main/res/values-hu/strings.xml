@@ -3540,4 +3540,8 @@
     <string name="swim_avg_cadence">ÁTL úszótempó</string>
     <string name="uploading">Feltöltés…</string>
     <string name="strokes_per_length">löket/hosszúság</string>
+    <string name="fit_file_viewer">FIT Fájl megtekintő</string>
+    <string name="activity_detail_inspect_file">Fájl megfigyelése</string>
+    <string name="view_file">Megtekintés</string>
+    <string name="reset">Visszaállítás</string>
 </resources>
