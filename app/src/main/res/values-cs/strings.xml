@@ -3728,4 +3728,18 @@
     <string name="update_firmware_operation_check_failed">Kontrola firmware selhala</string>
     <string name="update_firmware_operation_check_in_progress">Kontroluji firmware</string>
     <string name="fw_upgrade_notice_huawei">Chystáte se nahrát firmware %s na vaše zařízení %s. \n\nVáš aktuální firmware je %s.\n\nVaše zařízení se po nahrání restartuje.\n\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="uploading">Nahrávání…</string>
+    <string name="view_file">Zobrazit</string>
+    <string name="activity_detail_inspect_file">Prozkoumat soubor</string>
+    <string name="reset">Resetovat</string>
+    <string name="fit_file_viewer">Prohlížeč souborů FIT</string>
+    <string name="unit_repetitions">opakování</string>
+    <string name="unit_repetitions_per_minute">opakování/min</string>
+    <string name="unit_revolutions">otočky</string>
+    <string name="workout_repetitions">Opakování</string>
+    <string name="unit_revolutions_per_minute">otočky/min</string>
+    <string name="workout_revolutions">Otočky</string>
+    <string name="poolLength">Délka bazénu</string>
+    <string name="swim_avg_cadence">Průměrná kadence plavání</string>
+    <string name="strokes_per_length">záběry/délka</string>
 </resources>
