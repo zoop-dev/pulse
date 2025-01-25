@@ -181,7 +181,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             summaryData.add(SWOLF_AVG, session.getAvgSwolf(), UNIT_NONE);
         }
         if (session.getTotalCycles() != null) {
-            summaryData.addTotal(session.getTotalCycles(), cycleUnit);
+            if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
+                summaryData.addTotal(session.getTotalCycles() * 2, cycleUnit);
+            } else {
+                // FIXME some of the rest might also need adjusting...
+                summaryData.addTotal(session.getTotalCycles(), cycleUnit);
+            }
         }
         if (session.getTotalCalories() != null) {
             summaryData.add(CALORIES_BURNT, session.getTotalCalories(), UNIT_KCAL);
@@ -217,10 +222,20 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             summaryData.add(STRESS_AVG, session.getAvgStress(), UNIT_NONE);
         }
         if (session.getAverageCadence() != null) {
-            summaryData.addCadenceAvg(session.getAverageCadence(), cycleUnit);
+            if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
+                summaryData.addCadenceAvg(session.getAverageCadence() * 2, cycleUnit);
+            } else {
+                // FIXME some of the rest might also need adjusting...
+                summaryData.addCadenceAvg(session.getAverageCadence(), cycleUnit);
+            }
         }
         if (session.getMaxCadence() != null) {
-            summaryData.addCadenceMax(session.getMaxCadence(), cycleUnit);
+            if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
+                summaryData.addCadenceMax(session.getMaxCadence() * 2, cycleUnit);
+            } else {
+                // FIXME some of the rest might also need adjusting...
+                summaryData.addCadenceMax(session.getMaxCadence(), cycleUnit);
+            }
         }
         if (session.getTotalAscent() != null) {
             summaryData.add(ASCENT_DISTANCE, session.getTotalAscent(), UNIT_METERS);
