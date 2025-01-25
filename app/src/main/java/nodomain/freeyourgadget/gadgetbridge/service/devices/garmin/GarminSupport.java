@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -36,15 +37,18 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.PendingFileProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminFitFileInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminGpxRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPrgFileInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
@@ -55,6 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCore;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiDeviceStatus;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFindMyWatch;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiInstalledAppsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
@@ -102,6 +107,8 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
     private MediaManager mediaManager;
     private boolean mFirstConnect = false;
     private boolean isBusyFetching;
+
+    final Map<UUID, GdiInstalledAppsService.InstalledAppsService.InstalledApp> installedApps = new HashMap<>();
 
     public GarminSupport() {
         super(LOG);
@@ -356,6 +363,87 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
     @Override
     public void onDeleteNotification(int id) {
         sendOutgoingMessage("delete notification " + id, notificationsHandler.onDeleteNotification(id));
+    }
+
+    @Override
+    public void onAppInfoReq() {
+        sendOutgoingMessage(
+                "request apps",
+                protocolBufferHandler.prepareProtobufRequest(
+                        GdiSmartProto.Smart.newBuilder().setInstalledAppsService(
+                                GdiInstalledAppsService.InstalledAppsService.newBuilder().setGetInstalledAppsRequest(
+                                        GdiInstalledAppsService.InstalledAppsService.GetInstalledAppsRequest.newBuilder()
+                                                .setAppType(GdiInstalledAppsService.InstalledAppsService.AppType.ALL)
+                                )
+                        ).build()
+                )
+        );
+    }
+
+    @Override
+    public void onAppStart(final UUID uuid, final boolean start) {
+
+    }
+
+    @Override
+    public void onAppDelete(final UUID uuid) {
+        final GdiInstalledAppsService.InstalledAppsService.InstalledApp app = installedApps.get(uuid);
+
+        if (app == null) {
+            LOG.warn("Unknown app {}", uuid);
+            return;
+        }
+
+        sendOutgoingMessage(
+                "delete app",
+                protocolBufferHandler.prepareProtobufRequest(
+                        GdiSmartProto.Smart.newBuilder().setInstalledAppsService(
+                                GdiInstalledAppsService.InstalledAppsService.newBuilder().setDeleteAppRequest(
+                                        GdiInstalledAppsService.InstalledAppsService.DeleteAppRequest.newBuilder()
+                                                .setStoreAppId(app.getStoreAppId())
+                                                .setAppType(app.getType())
+                                )
+                        ).build()
+                )
+        );
+    }
+
+    public void onAppListReceived(final List<GdiInstalledAppsService.InstalledAppsService.InstalledApp> apps) {
+        installedApps.clear();
+
+        final List<GBDeviceApp> gbApps = new ArrayList<>(apps.size());
+
+        for (final GdiInstalledAppsService.InstalledAppsService.InstalledApp installedApp : apps) {
+            GBDeviceApp.Type type;
+
+            switch (installedApp.getType()) {
+                case WATCH_FACE:
+                    type = GBDeviceApp.Type.WATCHFACE;
+                    break;
+                case DATA_FIELD:
+                case ACTIVITY:
+                    type = GBDeviceApp.Type.APP_ACTIVITYTRACKER;
+                    break;
+                default:
+                    // FIXME we set everything else as app generic otherwise they get filtered, add new types
+                    type = GBDeviceApp.Type.APP_GENERIC;
+            }
+
+            final UUID uuid = UUID.nameUUIDFromBytes(installedApp.getStoreAppId().toByteArray());
+            installedApps.put(uuid, installedApp);
+            gbApps.add(new GBDeviceApp(
+                    uuid,
+                    installedApp.getName() + " (" + installedApp.getType() + ")",
+                    "",
+                    String.valueOf(installedApp.getVersion()),
+                    type
+            ));
+            gbApps.sort(Comparator.comparing(GBDeviceApp::getName));
+        }
+
+        final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
+        appInfoCmd.apps = gbApps.toArray(new GBDeviceApp[0]);
+        evaluateGBDeviceEvent(appInfoCmd);
     }
 
     @Override
@@ -856,6 +944,17 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
         final GarminGpxRouteInstallHandler garminGpxRouteInstallHandler = new GarminGpxRouteInstallHandler(uri, getContext());
         if (garminGpxRouteInstallHandler.isValid()) {
             communicator.sendMessage("upload course file", fileTransferHandler.initiateUpload(garminGpxRouteInstallHandler.getGpxRouteFileConverter().getConvertedFile().getOutgoingMessage(), FileType.FILETYPE.DOWNLOAD_COURSE).getOutgoingMessage());
+        }
+
+        final GarminPrgFileInstallHandler prgFileInstallHandler = new GarminPrgFileInstallHandler(uri, getContext());
+        if (prgFileInstallHandler.isValid()) {
+            communicator.sendMessage(
+                    "upload prg file",
+                    fileTransferHandler.initiateUpload(
+                            prgFileInstallHandler.getRawBytes(),
+                            FileType.FILETYPE.PRG
+                    ).getOutgoingMessage()
+            );
         }
     }
 

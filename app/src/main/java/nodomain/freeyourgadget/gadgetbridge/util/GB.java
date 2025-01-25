@@ -106,6 +106,7 @@ public class GB {
     public static final String PROGRESS_BAR_PROGRESS = "progress";
     public static final String ACTION_SET_PROGRESS_TEXT = "GB_Set_Progress_Text";
     public static final String ACTION_SET_INFO_TEXT = "GB_Set_Info_Text";
+    public static final String ACTION_SET_FINISHED = "GB_Set_Finished";
 
     private static boolean notificationChannelsCreated;
 

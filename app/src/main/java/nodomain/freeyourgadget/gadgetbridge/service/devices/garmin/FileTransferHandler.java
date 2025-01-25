@@ -1,6 +1,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.FileDownloadedDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.CreateFileMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.DownloadRequestMessage;
@@ -28,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.stat
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.FileTransferDataStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.UploadRequestStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FileTransferHandler implements MessageHandler {
     private static final Logger LOG = LoggerFactory.getLogger(FileTransferHandler.class);
@@ -188,12 +194,41 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
         }
     }
 
-    public static class Upload {
+    private void updateUploadProgress(final int percentage) {
+        final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(GBApplication.getContext());
+
+        if (percentage < 0) {
+            // Failure
+            GB.updateInstallNotification(GBApplication.getContext().getString(R.string.installation_failed_), false, 100, GBApplication.getContext());
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_INFO_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, ""));
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, GBApplication.getContext().getString(R.string.installation_failed_)));
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_FINISHED));
+        } else if (percentage >= 100) {
+            // Success
+            GB.updateInstallNotification(GBApplication.getContext().getString(R.string.installation_successful), false, 100, GBApplication.getContext());
+
+            deviceSupport.getDevice().sendDeviceUpdateIntent(deviceSupport.getContext());
+
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_INFO_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, ""));
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, GBApplication.getContext().getString(R.string.installation_successful)));
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_FINISHED));
+        } else {
+            // In Progress
+            GB.updateInstallNotification(GBApplication.getContext().getString(R.string.uploading), true, percentage, GBApplication.getContext());
+
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_INFO_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, ""));
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, GBApplication.getContext().getString(R.string.uploading)));
+            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_PROGRESS, percentage));
+        }
+    }
+
+    public class Upload {
         private FileFragment currentlyUploading;
 
         private UploadRequestMessage setCreateFileStatusMessage(CreateFileStatusMessage createFileStatusMessage) {
             if (createFileStatusMessage.canProceed()) {
                 LOG.info("SENDING UPLOAD FILE");
+                updateUploadProgress(0);
                 return new UploadRequestMessage(createFileStatusMessage.getFileIndex(), currentlyUploading.getDataSize());
             } else {
                 LOG.warn("Cannot proceed with upload");
@@ -211,6 +246,7 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
                 return currentlyUploading.take();
             } else {
                 LOG.warn("Cannot proceed with upload");
+                updateUploadProgress(-1);
                 this.currentlyUploading = null;
             }
             return null;
@@ -220,16 +256,19 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
             if (currentlyUploading.getDataSize() <= fileTransferDataStatusMessage.getDataOffset()) {
                 this.currentlyUploading = null;
                 LOG.info("SENDING SYNC COMPLETE!!!");
+                updateUploadProgress(100);
 
                 return new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0);
             } else {
                 if (fileTransferDataStatusMessage.canProceed()) {
                     LOG.info("SENDING NEXT CHUNK!!!");
+                    updateUploadProgress((100 * currentlyUploading.dataHolder.position()) / currentlyUploading.dataHolder.limit());
                     if (fileTransferDataStatusMessage.getDataOffset() != currentlyUploading.dataHolder.position())
                         throw new IllegalStateException("Received file transfer status with unaligned offset");
                     return currentlyUploading.take();
                 } else {
                     LOG.warn("Cannot proceed with upload");
+                    updateUploadProgress(-1);
                     this.currentlyUploading = null;
                 }
 

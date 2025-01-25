@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
 import android.content.Context;
 import android.net.Uri;
+import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
@@ -66,7 +68,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
         deleteAllActivityData(device, session);
     }
 
-    public void deleteAllActivityData(@NonNull final Device device, @NonNull final DaoSession session) throws GBException {
+    public void deleteAllActivityData(@NonNull final Device device, @NonNull final DaoSession session) {
         final Long deviceId = device.getId();
 
         final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
@@ -404,6 +406,28 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
         return true;
     }
 
+    @Override
+    public boolean supportsAppsManagement(final GBDevice device) {
+        // FIXME: disabled until better polished
+        //return supports(device, GarminCapability.CONNECTIQ_APP_MANAGEMENT);
+        return false;
+    }
+
+    @Override
+    public boolean supportsCachedAppManagement(final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public Class<? extends Activity> getAppsManagementActivity() {
+        return AppManagerActivity.class;
+    }
+
+    @Override
+    public boolean supportsAppListFetching() {
+        return true;
+    }
+
     public boolean supportsAgpsUpdates(final GBDevice device) {
         return !getPrefs(device).getString(GarminPreferences.PREF_AGPS_KNOWN_URLS, "").isEmpty();
     }
@@ -428,6 +452,10 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
         final GarminGpxRouteInstallHandler garminGpxRouteInstallHandler = new GarminGpxRouteInstallHandler(uri, context);
         if (garminGpxRouteInstallHandler.isValid())
             return garminGpxRouteInstallHandler;
+
+        final GarminPrgFileInstallHandler prgFileInstallHandler = new GarminPrgFileInstallHandler(uri, context);
+        if (prgFileInstallHandler.isValid())
+            return prgFileInstallHandler;
 
         return null;
     }

@@ -65,6 +65,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
     private TextView fwAppInstallTextView;
     private ImageView previewImage;
     private Button installButton;
+    private Button closeButton;
     private Uri uri;
     private GBDevice device;
     private InstallHandler installHandler;
@@ -121,6 +122,10 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
                 String message = intent.getStringExtra(GB.DISPLAY_MESSAGE_MESSAGE);
                 int severity = intent.getIntExtra(GB.DISPLAY_MESSAGE_SEVERITY, GB.INFO);
                 addMessage(message, severity);
+            } else if (GB.ACTION_SET_FINISHED.equals(action)) {
+                setProgressBarVisibility(false);
+                setInstallEnabled(false);
+                setCloseEnabled(true);
             }
         }
     };
@@ -185,6 +190,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         fwAppInstallTextView = findViewById(R.id.infoTextView);
         previewImage = findViewById(R.id.previewImage);
         installButton = findViewById(R.id.installButton);
+        closeButton = findViewById(R.id.closeButton);
         progressBar = findViewById(R.id.installProgressBar);
         progressText = findViewById(R.id.installProgressText);
         detailsListView = findViewById(R.id.detailsListView);
@@ -199,6 +205,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         filter.addAction(GB.ACTION_SET_PROGRESS_BAR);
         filter.addAction(GB.ACTION_SET_PROGRESS_TEXT);
         filter.addAction(GB.ACTION_SET_INFO_TEXT);
+        filter.addAction(GB.ACTION_SET_FINISHED);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
         installButton.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +216,8 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
                 GBApplication.deviceService(device).onInstallApp(uri);
             }
         });
+
+        closeButton.setOnClickListener(v -> finish());
 
         uri = getIntent().getData();
         if (uri == null) { // For "share" intent
@@ -329,6 +338,15 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         boolean enabled = device != null && device.isConnected() && enable;
         installButton.setEnabled(enabled);
         installButton.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        if (enabled) {
+            setCloseEnabled(false);
+        }
+    }
+
+    @Override
+    public void setCloseEnabled(boolean enable) {
+        closeButton.setEnabled(enable);
+        closeButton.setVisibility(enable ? View.VISIBLE : View.GONE);
     }
 
     @Override

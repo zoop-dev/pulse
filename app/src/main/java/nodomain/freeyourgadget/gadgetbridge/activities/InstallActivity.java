@@ -31,6 +31,8 @@ public interface InstallActivity {
 
     void setInstallEnabled(boolean enable);
 
+    void setCloseEnabled(boolean enable);
+
     void clearInstallItems();
 
     void setInstallItem(ItemWithDetails item);

@@ -80,6 +80,7 @@ public class FileType {
 
         // Other files
         DOWNLOAD_COURSE(255, 4),
+        PRG(255, 17),
         ERROR_SHUTDOWN_REPORTS(255, 245),
         IQ_ERROR_REPORTS(255, 244),
         ULF_LOGS(255, 247),

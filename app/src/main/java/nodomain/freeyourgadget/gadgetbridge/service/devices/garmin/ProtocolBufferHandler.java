@@ -40,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFindMyWatch;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiNotificationsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiInstalledAppsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmsNotification;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.DataTransferHandler;
@@ -138,6 +139,32 @@ public class ProtocolBufferHandler implements MessageHandler {
             }
             if (smart.hasNotificationsService()) {
                 return prepareProtobufResponse(processProtobufNotificationsServiceMessage(smart.getNotificationsService()), message.getRequestId());
+            }
+            if (smart.hasInstalledAppsService()) {
+                final GdiInstalledAppsService.InstalledAppsService installedAppsService = smart.getInstalledAppsService();
+
+                if (installedAppsService.hasGetInstalledAppsResponse()) {
+                    processed = true;
+
+                    final List<GdiInstalledAppsService.InstalledAppsService.InstalledApp> installedAppsList = installedAppsService
+                            .getGetInstalledAppsResponse()
+                            .getInstalledAppsList();
+
+                    LOG.info("Got app list with {} apps", installedAppsList.size());
+
+                    deviceSupport.onAppListReceived(installedAppsList);
+                } else if (installedAppsService.hasDeleteAppResponse()) {
+                    processed = true;
+
+                    final GdiInstalledAppsService.InstalledAppsService.DeleteAppResponse.Status status = installedAppsService.getDeleteAppResponse().getStatus();
+
+                    LOG.info("Got app delete response, status = {}", status);
+
+                    // Refresh app list
+                    if (status == GdiInstalledAppsService.InstalledAppsService.DeleteAppResponse.Status.OK) {
+                        deviceSupport.onAppInfoReq();
+                    }
+                }
             }
             if (processed) {
                 message.setStatusMessage(new ProtobufStatusMessage(
