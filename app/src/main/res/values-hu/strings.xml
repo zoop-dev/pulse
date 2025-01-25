@@ -40,7 +40,7 @@
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">FW/alkalmazás telepítő</string>
     <string name="fw_upgrade_notice">A(z) %s firmware-t kívánja telepíteni.</string>
-    <string name="fw_multi_upgrade_notice">A(z) %1$s és a(z) %2$s firmware-változatokat kívánja telepíteni az Mi készülékére a mostani helyett.</string>
+    <string name="fw_multi_upgrade_notice">A(z) %1$s és a(z) %2$s firmware-változatokat kívánja telepíteni az Mi Band eszközére a mostani helyett.</string>
     <string name="miband_firmware_known">Ez a firmware tesztelt és kompatibilis a Gadgetbridge-dzsel.</string>
     <string name="miband_firmware_unknown_warning">Ez a firmware nincs tesztelve, lehetséges, hogy nem kompatibilis a Gadgetbridge-dzsel.
 \n
@@ -120,7 +120,7 @@
     <string name="pref_title_location_keep_uptodate">Tartózkodási hely frissen tartása</string>
     <string name="pref_summary_location_keep_uptodate">Aktuális tartózkodási hely meghatározásának megpróbálása futásidőben, hiba esetén az eltárolt helyszín használata</string>
     <string name="toast_enable_networklocationprovider">Engedélyezze a hálózati helymeghatározást</string>
-    <string name="toast_aqurired_networklocation">Tartózkodási hely meghatározva</string>
+    <string name="toast_aqurired_networklocation">tartózkodási hely meghatározva</string>
     <string name="pref_title_pebble_forceprotocol">Értesítési protokoll kényszerítése</string>
     <string name="pref_summary_pebble_forceprotocol">Ez az beállítás a legfrissebb értesítési protokollt kényszeríti a firmware verziótól függően. CSAK AKKOR ENGEDÉLYEZZE, HA TUDJA MIT CSINÁL!</string>
     <string name="pref_title_pebble_forceuntested">Nem tesztelt funkciók engedélyezése</string>
@@ -375,7 +375,7 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble párosítása</string>
     <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelennie az Android eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
-    <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble készülékén. \n \nItt nincs szükség konfigurációra. \n \nA Pebble rendszer időjárás applikációját az alkalmazáskezelésből engedélyezheti. \n \nA támogatott órafelületek automatikusan megjelenítik az időjárást.</string>
+    <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble eszközén. \n \nItt nincs szükség beállításra. \n \nA Pebble rendszer időjárás alkalmazását az alkalmazáskezelésből engedélyezheti. \n \nA támogatott órafelületek automatikusan megjelenítik az időjárást.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth párosítás engedélyezése</string>
     <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
     <string name="unit_metric">Metrikus</string>
@@ -457,14 +457,8 @@
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="prefs_title_heartrate_measurement_interval">Egész napos pulzusmérés</string>
     <string name="prefs_screen_orientation">Képernyő tájolása</string>
-    <string name="pref_summary_sync_calendar">Naptár értesítések bekapcsolása, akkor is, ha a készülék le van választva a telefonról</string>
-    <string name="fw_upgrade_notice_amazfitcor">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="pref_summary_sync_calendar">Naptár értesítések bekapcsolása akkor is, ha az eszköz le van választva a telefonról</string>
+    <string name="fw_upgrade_notice_amazfitcor">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="interval_forty_five_minutes">45 percenként</string>
     <string name="interval_fifteen_minutes">15 percenként</string>
     <string name="find_my_phone_notification">Találd meg a telefonom</string>
@@ -515,26 +509,14 @@
     <string name="activity_prefs_step_length_cm">Lépés hossza cm-ben</string>
     <string name="prefs_activity_in_device_card_steps_title_summary">Összes lépésszám megjelenítése</string>
     <string name="title_activity_notification_management">Értesítési beállítások</string>
-    <string name="fw_upgrade_notice_amazfitbip">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfitbip_lite">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip Lite készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitbip">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip Lite eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="calendar_three_months">3 hónap</string>
     <string name="device_card_activity_card_title_summary">Válassza ki, hogy mely tevékenységek részletei jelenjenek meg az eszközlapon</string>
     <string name="prefs_activity_in_device_card_title">Tevékenységinformációk megjelenítése az eszközlapon</string>
     <string name="prefs_activity_in_device_card_sleep_title">Alvás</string>
     <string name="prefs_activity_in_device_card_sleep_title_summary">Az alvás időtartamának megjelenítése</string>
-    <string name="prefs_activity_in_device_card_distance_title_summary">A távolságot a lépések és a lépéshossz alapján számítja ki (beállítható a Beállítások - Önról menüpontban)</string>
+    <string name="prefs_activity_in_device_card_distance_title_summary">A távolságot a lépések és a lépéshossz alapján számítja ki (beállítható a Beállítások - Saját névjegy menüpontban)</string>
     <string name="battery_detail_activity_title">Akkumulátor információ</string>
     <string name="calendar_day">Nap</string>
     <string name="calendar_week">Hét</string>
@@ -1409,142 +1391,30 @@
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="sony_surround_mode_outdoor_stage">Kültéri színpad</string>
     <string name="notif_export_failed_title">Az adatbázis exportálása meghiúsult! Ellenőrizze a beállításait.</string>
-    <string name="fw_upgrade_notice_amazfitcor2">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor 2 készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!
-\n
-\nTELJESEN TESZTELETLEN, VÉLEMÉNYESEN BEATS_W FIRMWARE-T KELL TELEPÍTENIE, HA A KÉSZÜLÉK NEVE \"Amazfit Band 2\"</string>
-    <string name="fw_upgrade_notice_amazfitgts">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfitvergel">A(z) %s firmware-t kívánja telepíteni az Amazfit Verge Lite készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_gts4">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 4 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_miband5">A(z) %s firmware-t kívánja telepíteni az Mi Band 5 készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_miband6">A(z) %s firmware-t kívánja telepíteni az Mi Band 6 készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_gts3">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 3 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3_pro">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 3 Pro készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_gtr4">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 4 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_trex2">A(z) %s firmware-t kívánja telepíteni az Amazfit T-Rex 2 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfitbip3pro">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 Pro készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfitx">A(z) %s firmware-t kívánja telepíteni az Amazfit X készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitcor2">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor 2 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA! \n \nTELJESEN TESZTELETLEN, VÉLEMÉNYESEN BEATS_W FIRMWARE-T KELL TELEPÍTENIE, HA A KÉSZÜLÉK NEVE \"Amazfit Band 2\\</string>
+    <string name="fw_upgrade_notice_amazfitgts">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitvergel">A(z) %s firmware-t kívánja telepíteni az Amazfit Verge Lite eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_gts4">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 4 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_miband5">A(z) %s firmware-t kívánja telepíteni az Mi Band 5 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_miband6">A(z) %s firmware-t kívánja telepíteni az Mi Band 6 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 3 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3_pro">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 3 Pro eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr4">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 4 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_trex2">A(z) %s firmware-t kívánja telepíteni az Amazfit T-Rex 2 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitbip3pro">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 Pro eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitx">A(z) %s firmware-t kívánja telepíteni az Amazfit X eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. Az eszköz az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="gps_galileo">GPS + GALILEO</string>
-    <string name="fw_upgrade_notice_miband3">A(z) %s firmware-t kívánja telepíteni az Mi Band 3 készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfitgtr">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_trex">A(z) %s firmware-t kívánja telepíteni az Amazfit T-Rex készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_miband4">A(z) %s firmware-t kívánja telepíteni az Mi Band 4 készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_miband7">A(z) %s firmware-t kívánja telepíteni a Xiaomi Smart Band 7 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_gts4_mini">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 4 Mini készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 3 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_band7">A(z) %s firmware-t kívánja telepíteni az Amazfit Band 7 készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_amazfit_cheetah_pro">A(z) %s firmware-t kívánja telepíteni az Amazfit Cheetah Pro készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_zepp_os">A(z) %s firmware-t kívánja telepíteni a(z) %s készülékére.
-\n
-\nA .zip fájl telepítése után a készüléke újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="open_fw_installer_info_text">A Firmware/Órafelület/Alkalmazás/Fájl telepítő lehetővé teszi a támogatott fájlok (firmware, számlapok, alkalmazások, GPS, erőforrások, betűtípusok...) feltöltését/telepítését a készülékre. További információt a wikiben talál: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="fw_upgrade_notice_miband3">A(z) %s firmware-t kívánja telepíteni az Mi Band 3 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfitgtr">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_trex">A(z) %s firmware-t kívánja telepíteni az Amazfit T-Rex eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_miband4">A(z) %s firmware-t kívánja telepíteni az Mi Band 4 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_miband7">A(z) %s firmware-t kívánja telepíteni a Xiaomi Smart Band 7 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_gts4_mini">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 4 Mini eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 3 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_band7">A(z) %s firmware-t kívánja telepíteni az Amazfit Band 7 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_amazfit_cheetah_pro">A(z) %s firmware-t kívánja telepíteni az Amazfit Cheetah Pro eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_zepp_os">A(z) %s firmware-t kívánja telepíteni a(z) %s eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="open_fw_installer_info_text">A Firmware/Órafelület/Alkalmazás/Fájl telepítő lehetővé teszi a támogatott fájlok (firmware, számlapok, alkalmazások, GPS, erőforrások, betűtípusok...) feltöltését/telepítését az eszközre. További információt a wikiben talál: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_connect_maximum_one_device">CSAK EGY olyan eszközt párosítson, amelyre el szeretné küldeni a fájlt.</string>
     <string name="pref_summary_general_reconnectonlytoconnected">Újrakapcsolódás csak a párosított eszközökhöz, ahelyett, hogy az összes eszközzel újracsatlakozna</string>
     <string name="pref_display_caller_summary">Bejövő hívások telefonszámának vagy nevének megjelenítése</string>
@@ -1557,19 +1427,15 @@
     <string name="pref_summary_notification_prefer_long_text">Ha elérhető, küldje el a hosszú értesítési szöveget az eszközre</string>
     <string name="pref_title_notification_use_as_allow">Értesítések engedélyezése a kiválasztott alkalmazásokból</string>
     <string name="open_fw_installer_connect_minimum_one_device">Párosítson LEGALÁBB EGY olyan eszközt, amelyre el szeretné küldeni a fájlt.</string>
-    <string name="open_fw_installer_select_file">Válassza ki a készülékre feltölteni kívánt fájlt: %s</string>
+    <string name="open_fw_installer_select_file">Válassza ki az eszközre feltölteni kívánt fájlt: %s</string>
     <string name="open_fw_installer_getting_files_title">A firmware/alkalmazásfájl megszerzése</string>
     <string name="pref_title_general_reconnectonlytoconnected">Újrakapcsolódás csak a csatlakoztatott eszközökhöz</string>
     <string name="pref_title_notifications_ignore_low_priority">Alacsony prioritású értesítések mellőzése</string>
     <string name="pref_summary_notifications_ignore_work_profile">Ne küldjön értesítéseket a munkaprofilban lévő alkalmazásokból az órára</string>
     <string name="pref_summary_banglejs_text_bitmap">Ha egy szó nem jeleníthető meg az óra betűtípusával, jelenítse meg bittérképként a Gadgetbridge-ben, és jelenítse meg a bitképet az órán</string>
-    <string name="fw_upgrade_notice_amazfitneo">A(z) %s firmware-t kívánja telepíteni az Amazfit Neo készülékére.
-\n
-\nA .fw fájl telepítése után a karkötője újraindul.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="open_fw_installer_warning_text">Ez a funkció képes tönkretenni a készüléket. Ez azonban még soha nem történt meg egyik fejlesztővel sem a telepítés során, de ne feledje, hogy ezt saját felelősségére teszi.</string>
-    <string name="open_fw_installer_getting_files_text">Mivel a firmware fájlokat nem áll módunkban terjeszteni, a fájlokat saját magának kell beszereznie. Ez azt jelenti, hogy meg kell keresnie a fájlokat az apk fájlokban, az interneten, a fórumokon, az Amazfitwatchfaces-en (Miband/Amazfit készülékek esetében) stb.</string>
+    <string name="fw_upgrade_notice_amazfitneo">A(z) %s firmware-t kívánja telepíteni az Amazfit Neo eszközre. \n \nA .fw fájl telepítése után a karkötője újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="open_fw_installer_warning_text">Ez a funkció képes tönkretenni az eszközét. Ez azonban még soha nem történt meg egyik fejlesztővel sem a telepítés során, de ne feledje, hogy ezt saját felelősségére teszi.</string>
+    <string name="open_fw_installer_getting_files_text">Mivel a firmware fájlokat nem áll módunkban terjeszteni, a fájlokat saját magának kell beszereznie. Ez azt jelenti, hogy meg kell keresnie a fájlokat az apk fájlokban, az interneten, a fórumokon, az Amazfitwatchfaces-en (Miband/Amazfit eszközök esetében) stb.</string>
     <string name="pref_header_equalizer">Hangszínszabályzó</string>
     <string name="pref_pair_bluetooth_calls_summary">Kattintson ide a párosítási folyamat elindításához</string>
     <string name="pref_pair_bluetooth_calls_help_title">Hogyan fogadhat bluetooth hívásokat</string>
@@ -1614,7 +1480,7 @@
     <string name="pref_blacklist_calendars_summary">A tiltólistán szereplő naptárak nem lesznek szinkronizálva az eszközzel</string>
     <string name="intent_api_allow_activity_sync_title">Engedélyezze a tevékenység szinkronizálásának kiváltását</string>
     <string name="intent_api_allow_activity_sync_summary">Tevékenységszinkronizálás indításának engedélyezése Intent API-n keresztül</string>
-    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Bluetooth kapcsolat vezérlésének engedélyezése Intent API-n keresztül</string>
+    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Bluetooth-kapcsolat vezérlésének engedélyezése Intent API-n keresztül</string>
     <string name="pref_title_ping_tone">Csengőhang</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Szöveg Bitkép mérete</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">A bittérképes szövegmegjelenítéshez használható méret</string>
@@ -1643,7 +1509,7 @@
     <string name="pref_summary_use_custom_font">Engedélyezze ezt, ha eszköze egyéni betűtípus-firmware-rel rendelkezik a hangulatjelek támogatásához</string>
     <string name="pref_title_device_internet_access">Internet-hozzáférés engedélyezése</string>
     <string name="pref_summary_send_app_notifications">Alkalmazásértesítések küldése az eszközre</string>
-    <string name="pref_title_relax_firmware_checks">Engedélyezze ezt, ha olyan firmware-t szeretne flashelni, amely nem az Ön készülékéhez készült (saját felelősségére)</string>
+    <string name="pref_title_relax_firmware_checks">Engedélyezze ezt, ha olyan firmware-t szeretne flashelni, amely nem az Ön eszközéhez készült (saját felelősségére)</string>
     <string name="pref_summary_huami_force_new_protocol">Engedélyezés, ha az eszköz már nem csatlakozik a firmware-frissítés után</string>
     <string name="pref_title_goal_secondary">Másodlagos cél</string>
     <string name="pref_summary_notifications_and_calls_enable_misscall">Percenkénti ismétlődés</string>
@@ -1838,7 +1704,7 @@
     <string name="show_ongoing_activity">Folyamatban lévő tevékenység felugró ablakának megjelenítése</string>
     <string name="prefs_charts_tabs_summary">Látható diagram fülek</string>
     <string name="charts_activity_list">Tevékenységlista</string>
-    <string name="prefs_sounds_summary">A készülék hangjelzésének beállítása</string>
+    <string name="prefs_sounds_summary">Az eszköz hangjelzésének beállítása</string>
     <string name="fwapp_install_device_not_supported">A fájl nem telepíthető, az eszköz nem támogatott.</string>
     <string name="seconds_6">6 másodperc</string>
     <string name="seconds_8">8 másodperc</string>
@@ -2134,7 +2000,7 @@
     <string name="pref_title_lower_button_function_double">Alsó gomb duplán</string>
     <string name="prefs_button_variable_actions">Részletes gombnyomás beállítások</string>
     <string name="error_no_location_access">Ahhoz, hogy a beolvasás megfelelően működjön, meg kell adni és engedélyezni kell a helyhozzáférést</string>
-    <string name="error_no_bluetooth_connect">A Bluetooth kapcsolat engedélyezése és aktiválása szükséges a beolvasás megfelelő működéséhez</string>
+    <string name="error_no_bluetooth_connect">A Bluetooth-kapcsolat engedélyezése és aktiválása szükséges a beolvasás megfelelő működéséhez</string>
     <string name="pref_qhybrid_title_widget_draw_circles">Modulkörök rajzolása</string>
     <string name="pref_qhybrid_save_raw_activity_files">Nyers tevékenységfájlok mentése</string>
     <string name="permission_granting_mandatory">Mindezek az engedélyek szükségesek, és ha nem adják meg őket, instabilitás léphet fel</string>
@@ -2222,7 +2088,7 @@
     <string name="strokes">Teljes löketszám</string>
     <string name="averageLapPace">Átlagos körtempó</string>
     <string name="yard">yard</string>
-    <string name="discover_unsupported_devices_description">Ha engedélyezi ezt a beállítást, az összes felfedezett Bluetooth eszköz megjelenik a beolvasás során. A rövid érintéssel a vágólapra másolja az eszköz nevét és MAC-címét. Hosszú érintéssel elindul a `Teszteszköz hozzáadása` párbeszédpanel. Lehetséges, hogy az alkalmazás lefagyását okozza.</string>
+    <string name="discover_unsupported_devices_description">Ha engedélyezi ezt a beállítást, az összes felfedezett Bluetooth-eszköz megjelenik a beolvasás során. A rövid érintéssel a vágólapra másolja az eszköz nevét és MAC-címét. Hosszú érintéssel elindul a `Teszteszköz hozzáadása` párbeszédpanel. Lehetséges, hogy az alkalmazás lefagyását okozza.</string>
     <string name="ascentDistance">Emelkedő távolság</string>
     <string name="descentDistance">Lejtő távolság</string>
     <string name="minCadence">Min. ütem</string>
@@ -2306,14 +2172,8 @@
     <string name="armenian">Örmény</string>
     <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="Strokes">Leütések</string>
-    <string name="fw_upgrade_notice_amazfitbip3">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 készülékére.
-\n
-\nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul.
-\n
-\nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel.
-\n
-\nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="pref_summary_notification_wake_on_open">Ébressze fel és oldja fel az Android készüléket, ha a kütyü OPEN választ küld vissza. Az eszköznek megbízható állapotban kell lennie.</string>
+    <string name="fw_upgrade_notice_amazfitbip3">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="pref_summary_notification_wake_on_open">Ébressze fel és oldja fel az Android eszközt, ha a kütyü OPEN választ küld vissza. Az eszköznek megbízható állapotban kell lennie.</string>
     <string name="busy_task_fetch_sports_details_interrupted">A sportadatok lekérése megszakadt</string>
     <string name="swolfAvg">Átlagos swolf</string>
     <string name="swolfMax">Maximum swolf</string>
@@ -2443,7 +2303,7 @@
     <string name="watchface_dialog_widget_timeout_hide_text">Szöveg elrejtése időtúllépéskor</string>
     <string name="uploadwatchfaceoperation_failed">Az órafelület telepítése sikertelen</string>
     <string name="uploadwatchfaceoperation_complete">Az órafelület telepítése kész</string>
-    <string name="prefs_events_forwarding_summary">Készülék-események használata akciók és Android adások indításához</string>
+    <string name="prefs_events_forwarding_summary">Eszköz-események használata műveletek és Android közvetítések indításához</string>
     <string name="agps_status_pending">Függőben</string>
     <string name="proprietary_app_warning">Ez a funkció egy zárt forráskódú alkalmazás telepítését igényli</string>
     <string name="agps_status_error">Hiba</string>
@@ -2465,7 +2325,7 @@
     <string name="pref_header_sound">Hang</string>
     <string name="pref_time_sync">Automatikus időszinkronizálás</string>
     <string name="search">Keresés</string>
-    <string name="pref_title_nagivation_apps">Navigációs applikációk</string>
+    <string name="pref_title_nagivation_apps">Navigációs alkalmazások</string>
     <string name="pref_header_external_integrations">Külső integrációk</string>
     <string name="pref_header_automations">Automatizációk</string>
     <string name="pref_description_general">Rendszerindítás, nyelv, régió, tartózkodási hely</string>
@@ -2520,14 +2380,14 @@
     <string name="pref_media_play">Médialejátszás</string>
     <string name="qhybrid_title_on_device_confirmation">A párosítás megerősítésének engedélyezése az eszközön</string>
     <string name="debug_companion_pair_current">Eszköz párosítása társeszközként</string>
-    <string name="dashboard_calendar_month_goals_reached_title">A lépéscélok %-ában elért cél</string>
+    <string name="dashboard_calendar_month_goals_reached_title">A lépések céljának teljesítése (%)</string>
     <string name="pref_dashboard_first_title">A Műszerfal megjelenítése elsőként</string>
     <string name="pref_dashboard_widget_today_24h_summary">A tevékenység megjelenítése két 12 órás kör helyett egyetlen 24 órás körben</string>
     <string name="bottom_nav_dashboard">Műszerfal</string>
     <string name="serbian">Szerb</string>
     <string name="idasen_pref_value_warning">Az értéknek 62 - 126 cm közé kell esnie</string>
     <string name="steps_total">Összes lépésszám</string>
-    <string name="pref_wear_sensor_summary">Érzékeli, ha a készüléket nem viselik</string>
+    <string name="pref_wear_sensor_summary">Érzékeli, ha az eszközt nem viselik</string>
     <string name="info_no_devices_connected">Nincs csatlakoztatott eszköz</string>
     <string name="auto_reconnect_ble_title">Automatikus újracsatlakozás az eszközhöz</string>
     <string name="bottom_nav_devices">Eszközök</string>
@@ -2590,7 +2450,7 @@
     <string name="pref_activity_recognition_mode_none">nincs</string>
     <string name="huawei_trusleep_summary_light">Fejlesztett alvásfigyelés</string>
     <string name="huawei_trusleep_warning">Figyelem: aktiválás után minden alvásadat könnyű alvásként jelenik meg a Gadgetbridge-ben! Koppintson ide, ha ezt elfogadja.</string>
-    <string name="pref_summary_navigation_forward">A navigációs applikációk utasításainak továbbítása az órára</string>
+    <string name="pref_summary_navigation_forward">A navigációs alkalmazások utasításainak továbbítása az órára</string>
     <string name="error_deleting_device">Hiba az eszköz törlése során: %s</string>
     <string name="fossil_hr_confirmation_skipped">Eszközön történő jóváhagyás kihagyása</string>
     <string name="hrv">Szívfrekvencia-variabilitás</string>
@@ -2639,7 +2499,7 @@
     <string name="step_streak_days_hint">Egymást követő napok száma, amelyeken sikerült elérni a lépéscélt</string>
     <string name="controlcenter_connected_fraction">Csatlakoztatva: %d/%d</string>
     <string name="connection_over_ble">Kapcsolat BLE-n keresztül</string>
-    <string name="connection_over_bt_classic">Kapcsolat Bluetooth classic módon</string>
+    <string name="connection_over_bt_classic">Kapcsolódás Bluetooth classic segítségével</string>
     <string name="autoconnect_from_device_title">Csatlakozás az eszköztől jövő kérelemre</string>
     <string name="pref_disable_find_phone_with_dnd">Telefon megtalálásának kikapcsolása Ne zavarjanak módban</string>
     <string name="steps_streaks_hint">Megszakítás nélküli, egymást követő napok sorozata, amelyeken sikerült elérni a meghatározott lépésszámot</string>
@@ -2686,7 +2546,7 @@
     <string name="sony_pause_when_taken_off">Szünet a fejhallgató levételekor</string>
     <string name="first_start_get_started_restore_button">Biztonsági mentés visszaállítása</string>
     <string name="first_start_get_started_go_to_app_button">Lépjen az alkalmazásba</string>
-    <string name="permission_fine_location_summary">Bluetooth eszközök beolvasása</string>
+    <string name="permission_fine_location_summary">Bluetooth-eszközök beolvasása</string>
     <string name="permission_background_location_title">Háttérhelyzet</string>
     <string name="permission_bluetooth_admin_title">Bluetooth admin</string>
     <string name="permission_bluetooth_connect_title">Bluetooth csatlakozás</string>
@@ -2949,7 +2809,7 @@
     <string name="pref_title_wheel_diameter">Kerékátmérő</string>
     <string name="first_start_overview_title">Áttekintés</string>
     <string name="permission_bluetooth_title">Bluetooth</string>
-    <string name="permission_bluetooth_admin_summary">Bluetooth eszközök felderítése és párosítása</string>
+    <string name="permission_bluetooth_admin_summary">Bluetooth-eszközök felderítése és párosítása</string>
     <string name="permission_bluetooth_scan_title">Bluetooth beolvasás</string>
     <string name="permission_post_notification_summary">Folyamatos értesítés küldése, amely fenntartja a szolgáltatás működését</string>
     <string name="permission_internet_access_title">Internet-hozzáférés</string>
@@ -3070,12 +2930,12 @@
     <string name="soundcore_equalizer_band3">3. sáv</string>
     <string name="pref_force_smart_alarm_summary">Intelligens riasztások támogatásának kényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="loyalty_cards_catima">Catima</string>
-    <string name="device_state_waiting_scan">Várakozás a készülék beolvasására</string>
+    <string name="device_state_waiting_scan">Várakozás az eszköz beolvasására</string>
     <string name="error_scan_failed">A beolvasás sikertelen: %d</string>
     <string name="music_multiselect_limit">Elérte az egynél több elem kiválasztásának határát</string>
     <string name="first_start_intro_tag_line">Szabaduljon meg a készülékgyártók saját alkalmazásai és felhőszolgáltatásai alól.</string>
     <string name="permission_notifications_summary">Értesítések továbbítása csatlakoztatott kütyükre</string>
-    <string name="permission_bluetooth_connect_summary">Kapcsolódás a már párosított Bluetooth eszközökhöz</string>
+    <string name="permission_bluetooth_connect_summary">Kapcsolódás a már párosított Bluetooth-eszközökhöz</string>
     <string name="permission_post_notification_title">Értesítések közzététele</string>
     <string name="permission_call_phone_summary">Telefonhívások kezdeményezése a kütyükről</string>
     <string name="permission_process_outgoing_calls_title">Kimenő hívások feldolgozása</string>
@@ -3375,7 +3235,7 @@
     <string name="label_distance_trip_mph">Utazás: %.1f mérföld</string>
     <string name="contact_birthday">%1s születésnapja</string>
     <string name="birthdays">Születésnapok</string>
-    <string name="pref_dnd_follow_phone_summary">Amikor a telefonon engedélyezve vagy letiltva van a DND mód, automatikusan kapcsolja be vagy ki ugyanazon a készüléken is</string>
+    <string name="pref_dnd_follow_phone_summary">Amikor a telefonon engedélyezve vagy le van tiltva a DND mód, akkor automatikusan kapcsolja az eszközön is</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">A tegnapi nap adatai</string>
     <string name="pref_dashboard_widget_today_yesterday_data_summary">A tegnapi adatok megjelenítése az aktuális idő és éjfél között tompítva</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Aktuális idő jelzője</string>
@@ -3386,7 +3246,7 @@
     <string name="music_new_playlist">Új lejátszási lista</string>
     <string name="music_error">Hiba történt</string>
     <string name="first_start_open_source_text">A Gadgetbridge egy nyílt forráskódú alkalmazás. Egy közösség által fejlesztve a közösség számára.\n\nBárki hozzájárulhat a kóddal, dokumentációval, teszteléssel és adományokkal.\n\nA Gadgetbridge nem tartalmaz hirdetéseket és nem végez követést. Az adatokat helyben, az Android eszközén tárolja, így 100%-ban adatvédelmi szempontból barátságos.\n\nLátogasson el weboldalunkra további információkért, dokumentációért és a kommunikációs csatornáinkra mutató hivatkozásokért.</string>
-    <string name="permission_bluetooth_scan_summary">Új Bluetooth eszközök beolvasása</string>
+    <string name="permission_bluetooth_scan_summary">Új Bluetooth-eszközök beolvasása</string>
     <string name="permission_read_call_log_title">Híváslista olvasása</string>
     <string name="permission_read_call_log_summary">Hívásnapló továbbítása a kütyükre</string>
     <string name="permission_call_phone_title">Telefon</string>
@@ -3491,8 +3351,8 @@
     <string name="pref_header_deprecated_functionalities_warning">A következő funkciókat már nem használjuk, és hamarosan eltávolítjuk őket a szoftverből.\nHa az alábbi beállítások valamelyikét szeretné engedélyezni, mindenképpen vegye fel a kapcsolatot a projektcsapattal.</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">GATT interakció engedélyezése a BLE Intent API-n keresztül</string>
     <string name="prefs_title_gatt_client_api_package">BLE API csomag</string>
-    <string name="permission_background_location_summary">Bluetooth eszközök beolvasása a háttérben, és a helymeghatározás elküldése bizonyos kütyüknek</string>
-    <string name="permission_bluetooth_summary">Kapcsolódás Bluetooth eszközökhöz</string>
+    <string name="permission_background_location_summary">Bluetooth-eszközök beolvasása a háttérben, és a helymeghatározás elküldése bizonyos kütyüknek</string>
+    <string name="permission_bluetooth_summary">Kapcsolódás Bluetooth-eszközökhöz</string>
     <string name="prefs_summary_gatt_client_api_package">A BLE Intent API kommunikáció korlátozása erre a csomagra</string>
     <string name="backup_restore_exporting">Exportálás zip formátumba…</string>
     <string name="backup_restore_error_import">Importálás zip formátumba sikertelen</string>
@@ -3669,4 +3529,15 @@
     <string name="remote_control">Távvezérlés</string>
     <string name="update_firmware_operation_check_failed">Firmware-ellenőrzés sikertelen</string>
     <string name="update_firmware_operation_check_in_progress">Firmware-ellenőrzés</string>
+    <string name="unit_repetitions">ismétlések</string>
+    <string name="unit_revolutions">fordulatok</string>
+    <string name="unit_repetitions_per_minute">ismétlés/perc</string>
+    <string name="unit_revolutions_per_minute">fordulat/perc</string>
+    <string name="workout_repetitions">Ismétlések</string>
+    <string name="workout_revolutions">Forradalmi edzés</string>
+    <string name="fw_upgrade_notice_huawei">A(z) %s firmware-t kívánja feltölteni a %s firmware-hez.\n\nA jelenlegi firmware a következő: %s\n\nAz eszköz a feltöltés után újraindul.\n\nCSAK SAJÁT FELELŐSSÉGRE FOLYTASSA!</string>
+    <string name="poolLength">Medencehossz</string>
+    <string name="swim_avg_cadence">ÁTL úszótempó</string>
+    <string name="uploading">Feltöltés…</string>
+    <string name="strokes_per_length">löket/hosszúság</string>
 </resources>
