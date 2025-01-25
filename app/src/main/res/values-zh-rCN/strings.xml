@@ -3723,4 +3723,15 @@
     <string name="remote_control">远程控制</string>
     <string name="update_firmware_operation_check_failed">检查固件失败</string>
     <string name="update_firmware_operation_check_in_progress">正在检查固件</string>
+    <string name="poolLength">泳池长度</string>
+    <string name="uploading">上传中…</string>
+    <string name="unit_repetitions">次数</string>
+    <string name="unit_revolutions">转速</string>
+    <string name="unit_repetitions_per_minute">次数/每分钟</string>
+    <string name="unit_revolutions_per_minute">旋转/每分钟</string>
+    <string name="workout_repetitions">重复</string>
+    <string name="workout_revolutions">旋转</string>
+    <string name="swim_avg_cadence">平均游泳节奏</string>
+    <string name="strokes_per_length">划动/长度</string>
+    <string name="fw_upgrade_notice_huawei">您即将在您的 %s 上上传 %s 固件。\n\n您当前的固件是 %s\n\n上传后您的设备将重新启动。\n\n风险自担！</string>
 </resources>
