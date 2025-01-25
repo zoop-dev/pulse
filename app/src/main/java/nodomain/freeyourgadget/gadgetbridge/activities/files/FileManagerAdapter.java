@@ -40,8 +40,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -94,6 +96,7 @@ public class FileManagerAdapter extends RecyclerView.Adapter<FileManagerAdapter.
             holder.menu.setOnClickListener(view -> {
                 final PopupMenu menu = new PopupMenu(mContext, holder.menu);
                 menu.inflate(R.menu.file_manager_file);
+                menu.getMenu().findItem(R.id.file_manager_file_menu_view).setVisible(file.getPath().toLowerCase(Locale.ROOT).endsWith(".fit"));
                 menu.setOnMenuItemClickListener(item -> {
                     final int itemId = item.getItemId();
                     if (itemId == R.id.file_manager_file_menu_share) {
@@ -102,6 +105,12 @@ public class FileManagerAdapter extends RecyclerView.Adapter<FileManagerAdapter.
                         } catch (final IOException e) {
                             GB.toast("Failed to share file", Toast.LENGTH_LONG, GB.ERROR, e);
                         }
+                        return true;
+                    }
+                    if (itemId == R.id.file_manager_file_menu_view) {
+                        final Intent inspectFileIntent = new Intent(mContext, FitViewerActivity.class);
+                        inspectFileIntent.putExtra(FitViewerActivity.EXTRA_PATH, file.getPath());
+                        mContext.startActivity(inspectFileIntent);
                         return true;
                     }
 

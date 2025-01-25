@@ -1669,6 +1669,7 @@
     <string name="activity_error_share_failed">Sharing file failed.</string>
     <string name="select_all">Select all</string>
     <string name="share">Share</string>
+    <string name="view_file">View</string>
     <string name="share_screenshot">Share screenshot</string>
     <string name="screenshot_taken">Screenshot taken</string>
     <string name="reset_index">Reset fetch date</string>
@@ -2371,6 +2372,7 @@
     <string name="activity_detail_duration_label">Duration</string>
     <string name="activity_detail_show_gps_label">Show GPS Track</string>
     <string name="activity_detail_share_gps_label">Share GPS Track</string>
+    <string name="activity_detail_inspect_file">Inspect file</string>
     <string name="activity_detail_share_raw_summary">Share Raw Summary</string>
     <string name="activity_detail_share_raw_details">Share Raw Details</string>
     <string name="activity_detail_share_json_details">Share JSON Details</string>
@@ -3096,6 +3098,8 @@
     <string name="changelog_full_title">Changelog</string>
     <string name="changelog_show_full">More…</string>
     <string name="changelog_ok_button">OK</string>
+    <string name="fit_file_viewer">FIT File Viewer</string>
+    <string name="reset">Reset</string>
     <string name="changelog_title">What\'s New</string>
     <string name="loyalty_cards_catima_package">Catima package name</string>
     <string name="loyalty_cards_install">Install Catima</string>

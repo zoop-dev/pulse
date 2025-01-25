@@ -79,6 +79,10 @@ public class RecordData {
         return recordDefinition;
     }
 
+    public List<FieldData> getFieldDataList() {
+        return fieldDataList;
+    }
+
     public Long parseDataMessage(final GarminByteBufferReader garminByteBufferReader, final Long currentTimestamp) {
         garminByteBufferReader.setByteOrder(valueHolder.order());
         computedTimestamp = currentTimestamp;
@@ -196,7 +200,7 @@ public class RecordData {
         return tsb.build();
     }
 
-    private class FieldData {
+    public class FieldData {
         private final FieldDefinition fieldDefinition;
         private final int position;
         private final int size;
@@ -209,11 +213,11 @@ public class RecordData {
             this.baseSize = fieldDefinition.getBaseType().getSize();
         }
 
-        private String getName() {
+        public String getName() {
             return fieldDefinition.getName();
         }
 
-        private int getNumber() {
+        public int getNumber() {
             return fieldDefinition.getNumber();
         }
 
@@ -263,7 +267,7 @@ public class RecordData {
             }
         }
 
-        private Object decode() {
+        public Object decode() {
             goToPosition();
             if (STRING.equals(fieldDefinition.getBaseType())) {
                 final byte[] bytes = new byte[size];

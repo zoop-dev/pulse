@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity">
+    <item
+        android:id="@+id/fit_viewer_filter"
+        android:icon="@drawable/ic_filter_alt"
+        android:title="@string/filter_mode"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="always" />
+</menu>

@@ -30,7 +30,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -75,11 +74,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueFormatter;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry;
@@ -448,6 +449,11 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         } else if (itemId == R.id.activity_action_share_gpx) {
             shareGpxTrack(ActivitySummaryDetail.this);
             return true;
+        } else if (itemId == R.id.activity_action_dev_inspect_file) {
+            final Intent inspectFileIntent = new Intent(ActivitySummaryDetail.this, FitViewerActivity.class);
+            inspectFileIntent.putExtra(FitViewerActivity.EXTRA_PATH, currentItem.getRawDetailsPath());
+            startActivity(inspectFileIntent);
+            return true;
         } else if (itemId == R.id.activity_action_dev_share_raw_summary) {
             shareRawSummary(ActivitySummaryDetail.this, currentItem);
             return true;
@@ -665,6 +671,7 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
             if (overflowMenu != null) {
                 overflowMenu.findItem(R.id.activity_action_show_gpx).setVisible(hasGpx);
                 overflowMenu.findItem(R.id.activity_action_share_gpx).setVisible(hasGpx);
+                overflowMenu.findItem(R.id.activity_action_dev_inspect_file).setVisible(hasRawDetails && currentItem.getRawDetailsPath().toLowerCase(Locale.ROOT).endsWith(".fit"));
                 overflowMenu.findItem(R.id.activity_action_dev_share_raw_summary).setVisible(hasRawSummary);
                 overflowMenu.findItem(R.id.activity_action_dev_share_raw_details).setVisible(hasRawDetails);
                 final MenuItem devToolsMenu = overflowMenu.findItem(R.id.activity_action_dev_tools);
