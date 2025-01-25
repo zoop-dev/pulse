@@ -3753,4 +3753,8 @@
     <string name="workout_repetitions">Powtórzenia</string>
     <string name="poolLength">Długość basenu</string>
     <string name="swim_avg_cadence">Średnia kadencja pływania</string>
+    <string name="reset">Resetuj</string>
+    <string name="fit_file_viewer">Przeglądarka plików FIT</string>
+    <string name="view_file">Wyświetl</string>
+    <string name="activity_detail_inspect_file">Sprawdź plik</string>
 </resources>
