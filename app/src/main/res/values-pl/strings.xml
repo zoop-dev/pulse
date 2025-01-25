@@ -992,8 +992,8 @@
     <string name="no">Nie</string>
     <string name="yes">Tak</string>
     <string name="activity_detail_start_label">Początek</string>
-    <string name="seconds_m">sek/m</string>
-    <string name="seconds_km">sek/km</string>
+    <string name="seconds_m">s/m</string>
+    <string name="seconds_km">s/km</string>
     <string name="seconds">sek</string>
     <string name="averageSpeed">Średnia prędkość</string>
     <string name="activeSeconds">Czas aktywności</string>
@@ -1086,7 +1086,7 @@
     <string name="devicestatus_disconnected">Urządzenie zostało rozłączone!</string>
     <string name="devicestatus_connected">Urządzenie jest połączone</string>
     <string name="devicestatus_connecting">Urządzenie się łączy</string>
-    <string name="strokes_second">ruchy/s</string>
+    <string name="strokes_second">uderzeń/s</string>
     <string name="swolfIndex">SWOLF</string>
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="activity_summaries_all_devices">Wszystkie urządzenia</string>
@@ -1095,7 +1095,7 @@
     <string name="sports_activity_quick_filter_last_week">Poprzedni tydzień</string>
     <string name="sports_activity_quick_filter_this_week">Ten tydzień</string>
     <string name="activity_summaries_all_activities">Wszystkie aktywności</string>
-    <string name="Strokes">Ruchy</string>
+    <string name="Strokes">Uderzenia</string>
     <string name="swolf_index">indeks swolf</string>
     <string name="lefun_prefs_hydration_reminder_title">Przypomnienie o nawodnieniu</string>
     <string name="about_version">Wersja %s</string>
@@ -3743,4 +3743,14 @@
     <string name="update_firmware_operation_check_in_progress">Sprawdzanie oprogramowania sprzętowego</string>
     <string name="update_firmware_operation_check_failed">Niepowodzenie kontroli oprogramowania sprzętowego</string>
     <string name="fw_upgrade_notice_huawei">Zamierzasz przesłać oprogramowanie układowe %s na %s.\n\nTwoje obecne oprogramowanie układowe to %s\n\nUrządzenie zostanie ponownie uruchomione po przesłaniu.\n\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
+    <string name="unit_repetitions">powtórzenia</string>
+    <string name="unit_revolutions">obroty</string>
+    <string name="unit_repetitions_per_minute">powtórzeń/min</string>
+    <string name="workout_revolutions">Przewroty</string>
+    <string name="uploading">Przesyłanie…</string>
+    <string name="strokes_per_length">pociągnięcia/długość</string>
+    <string name="unit_revolutions_per_minute">obr./min</string>
+    <string name="workout_repetitions">Powtórzenia</string>
+    <string name="poolLength">Długość basenu</string>
+    <string name="swim_avg_cadence">Średnia kadencja pływania</string>
 </resources>
