@@ -148,6 +148,11 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
     }
 
     @Override
+    public GarminPrefs getDevicePrefs() {
+        return new GarminPrefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()), gbDevice);
+    }
+
+    @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
 

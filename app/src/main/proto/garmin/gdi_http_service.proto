@@ -31,6 +31,7 @@ message HttpService {
     optional Method method = 3;
     repeated Header header = 5;
     optional bool useDataXfer = 6;
+    optional bytes rawBody = 7;
   }
 
   message RawResponse {

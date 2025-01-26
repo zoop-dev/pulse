@@ -11,6 +11,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -32,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRealtimeSetting
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationProviderType;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiAuthenticationService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCore;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiDataTransferService;
@@ -53,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class ProtocolBufferHandler implements MessageHandler {
 
@@ -136,6 +140,27 @@ public class ProtocolBufferHandler implements MessageHandler {
             if (smart.hasSettingsService()) {
                 processed = true;
                 processProtobufSettingsService(smart.getSettingsService());
+            }
+            if (smart.hasAuthenticationService() && smart.getAuthenticationService().hasOauthRequest()) {
+                LOG.debug("Got OAuth request");
+                final GarminPrefs devicePrefs = deviceSupport.getDevicePrefs();
+                if (!devicePrefs.fakeOauthEnabled()) {
+                    LOG.warn("Got OAuth request, but fake OAuth is disabled");
+                } else {
+                    final GdiAuthenticationService.OAuthResponse oauthResponse = GdiAuthenticationService.OAuthResponse.newBuilder()
+                            .setKeys(GdiAuthenticationService.OAuthKeys.newBuilder()
+                                    .setConsumerKey(UUID.randomUUID().toString())
+                                    .setConsumerSecret(RandomStringUtils.insecure().next(35, true, true))
+                                    .setOauthToken(UUID.randomUUID().toString())
+                                    .setOauthSecret(RandomStringUtils.insecure().next(35, true, true))
+                                    .build()
+                            ).setUnk2(0).build();
+
+                    return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setAuthenticationService(
+                            GdiAuthenticationService.AuthenticationService.newBuilder()
+                                    .setOauthResponse(oauthResponse)
+                    ).build(), message.getRequestId());
+                }
             }
             if (smart.hasNotificationsService()) {
                 return prepareProtobufResponse(processProtobufNotificationsServiceMessage(smart.getNotificationsService()), message.getRequestId());

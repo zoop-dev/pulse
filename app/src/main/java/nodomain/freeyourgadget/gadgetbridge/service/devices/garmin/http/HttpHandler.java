@@ -20,10 +20,12 @@ public class HttpHandler {
 
     private final AgpsHandler agpsHandler;
     private final ContactsHandler contactsHandler;
+    private final OauthHandler oauthHandler;
 
     public HttpHandler(GarminSupport deviceSupport) {
         agpsHandler = new AgpsHandler(deviceSupport);
         contactsHandler = new ContactsHandler(deviceSupport);
+        oauthHandler = new OauthHandler(deviceSupport);
     }
 
     public GdiHttpService.HttpService handle(final GdiHttpService.HttpService httpService) {
@@ -57,6 +59,9 @@ public class HttpHandler {
         } else if (request.getPath().startsWith("/device-gateway/usercontact/")) {
             LOG.info("Got contacts request for {}", request.getPath());
             response = contactsHandler.handleRequest(request);
+        } else if (request.getPath().startsWith("/api/oauth") || request.getPath().startsWith("/oauthTokenExchangeService")) {
+            LOG.info("Got OAuth request for {}", request.getPath());
+            response = oauthHandler.handleRequest(request);
         } else {
             LOG.warn("Unhandled path {}", request.getPath());
             response = null;

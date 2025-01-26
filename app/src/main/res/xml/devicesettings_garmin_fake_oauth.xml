@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_warning"
+        android:key="garmin_fake_oauth_warning"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_garmin_fake_oauth_warning"
+        android:title="@string/warning" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="garmin_fake_oauth_warning"
+        android:icon="@drawable/ic_vpn_key"
+        android:key="garmin_fake_oauth_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_garmin_fake_oauth_summary"
+        android:title="@string/pref_garmin_fake_oauth_title" />
+</androidx.preference.PreferenceScreen>

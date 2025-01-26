@@ -3617,4 +3617,7 @@
     <string name="permission_disable_doze_summary">Allows running in the background unhindered by Android\'s battery optimizations</string>
     <string name="update_firmware_operation_check_in_progress">Checking firmware</string>
     <string name="update_firmware_operation_check_failed">Firmware check failed</string>
+    <string name="pref_garmin_fake_oauth_warning">Do not enable this if you plan to use the official app or connect the watch to the internet. After enabling this setting, you may need to factory reset the watch to authenticate again.</string>
+    <string name="pref_garmin_fake_oauth_title">Send fake OAuth responses</string>
+    <string name="pref_garmin_fake_oauth_summary">Fixes some functions such as weather and AGPS updates without connecting to the official app every 90 days.</string>
 </resources>
