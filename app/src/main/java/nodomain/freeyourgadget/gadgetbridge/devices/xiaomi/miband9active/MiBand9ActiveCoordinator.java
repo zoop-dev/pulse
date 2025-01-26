@@ -40,7 +40,8 @@ public class MiBand9ActiveCoordinator extends XiaomiCoordinator {
 
     @Override
     public ConnectionType getConnectionType() {
-        return ConnectionType.BT_CLASSIC;
+        // Unconfirmed - but actually looks like SPPv2 packets over BLE?
+        return ConnectionType.BOTH;
     }
 
     @Override
