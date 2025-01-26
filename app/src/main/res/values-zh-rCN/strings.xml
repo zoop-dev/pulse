@@ -3734,4 +3734,8 @@
     <string name="swim_avg_cadence">平均游泳节奏</string>
     <string name="strokes_per_length">划动/长度</string>
     <string name="fw_upgrade_notice_huawei">您即将在您的 %s 上上传 %s 固件。\n\n您当前的固件是 %s\n\n上传后您的设备将重新启动。\n\n风险自担！</string>
+    <string name="view_file">查看</string>
+    <string name="reset">重置</string>
+    <string name="activity_detail_inspect_file">检查文件</string>
+    <string name="fit_file_viewer">FIT 文件查看器</string>
 </resources>
