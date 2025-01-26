@@ -3544,4 +3544,8 @@
     <string name="activity_detail_inspect_file">Fájl megfigyelése</string>
     <string name="view_file">Megtekintés</string>
     <string name="reset">Visszaállítás</string>
+    <string name="pref_garmin_fake_oauth_title">Hamis OAuth-válaszok küldése</string>
+    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
+    <string name="pref_garmin_fake_oauth_summary">Ez javít néhány funkciót, például az időjárás- és AGPS-frissítéseket anélkül, hogy 90 naponként csatlakozna a hivatalos alkalmazáshoz.</string>
+    <string name="pref_garmin_fake_oauth_warning">Ne engedélyezze ezt a funkciót, ha a hivatalos alkalmazást kívánja használni, vagy ha az órát az internethez kívánja csatlakoztatni. A beállítás engedélyezése után előfordulhat, hogy az óra gyári alaphelyzetbe állítására lesz szükség az újbóli hitelesítéshez.</string>
 </resources>
