@@ -3742,4 +3742,8 @@
     <string name="poolLength">Délka bazénu</string>
     <string name="swim_avg_cadence">Průměrná kadence plavání</string>
     <string name="strokes_per_length">záběry/délka</string>
+    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
+    <string name="pref_garmin_fake_oauth_title">Posílat falešné odpovědi OAuth</string>
+    <string name="pref_garmin_fake_oauth_summary">Opraví některé funkcí, jako jsou aktualizace počasí a AGPS, bez nutnosti připojení k oficiální aplikaci každých 90 dní.</string>
+    <string name="pref_garmin_fake_oauth_warning">Pokud plánujete používat oficiální aplikaci nebo připojit hodinky k internetu, tuto funkci nepovolujte. Po povolení tohoto nastavení bude možná nutné hodinky obnovit do továrního nastavení, aby se znovu ověřily.</string>
 </resources>
