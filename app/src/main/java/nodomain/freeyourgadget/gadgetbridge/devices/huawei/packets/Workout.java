@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets;
 
+import androidx.annotation.NonNull;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +62,7 @@ public class Workout {
                 public short dataCount;
                 public short paceCount;
                 public short segmentsCount = 0;
+                public short spO2Count = 0;
 
             }
 
@@ -89,6 +92,9 @@ public class Workout {
                     workoutNumber.paceCount = subContainerTlv.getShort(0x08);
                     if(subContainerTlv.contains(0x09)) {
                         workoutNumber.segmentsCount = subContainerTlv.getShort(0x09);
+                    }
+                    if(subContainerTlv.contains(0x0c)) {
+                        workoutNumber.spO2Count = subContainerTlv.getShort(0x0c);
                     }
                     this.workoutNumbers.add(workoutNumber);
                 }
@@ -714,6 +720,77 @@ public class Workout {
                     if (blockTlv.contains(0x0d))
                         block.time= blockTlv.getInteger(0x0d);
 
+                    blocks.add(block);
+                }
+            }
+        }
+    }
+
+    public static class WorkoutSpO2 {
+        public static final int id = 0x14;
+
+        public static class Request extends HuaweiPacket {
+
+            public Request(
+                    ParamsProvider paramsProvider,
+                    short workoutNumber,
+                    short spO2Number
+            ) {
+                super(paramsProvider);
+
+                this.serviceId = Workout.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, workoutNumber)
+                        .put(0x02, spO2Number)
+                        .put(0x03);
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public static class Block {
+                public int interval = -1;
+                public int value = -1;
+
+                @NonNull
+                @Override
+                public String toString() {
+                    final StringBuffer sb = new StringBuffer("Block{");
+                    sb.append("interval=").append(interval);
+                    sb.append(", value=").append(value);
+                    sb.append('}');
+                    return sb.toString();
+                }
+            }
+
+            public short spO2Number1; //TODO: meaning of this field
+            public short spO2Number2; //TODO: meaning of this field
+            public List<Block> blocks;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+
+
+                this.spO2Number1 = this.tlv.getShort(0x01);
+                this.spO2Number2 = this.tlv.getShort(0x02);
+
+                HuaweiTLV container = this.tlv.getObject(0x83);
+
+                this.blocks = new ArrayList<>();
+                for (HuaweiTLV blockTlv : container.getObjects(0x84)) {
+                    Block block = new Block();
+
+                    if (blockTlv.contains(0x05))
+                        block.interval = blockTlv.getAsInteger(0x05);
+                    if (blockTlv.contains(0x06))
+                        block.value = blockTlv.getAsInteger(0x06);
                     blocks.add(block);
                 }
             }

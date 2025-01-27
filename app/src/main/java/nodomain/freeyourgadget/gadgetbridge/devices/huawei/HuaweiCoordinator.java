@@ -51,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
@@ -134,6 +135,10 @@ public class HuaweiCoordinator {
 
             session.getHuaweiWorkoutSwimSegmentsSampleDao().queryBuilder().where(
                     HuaweiWorkoutSwimSegmentsSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
+            ).buildDelete().executeDeleteWithoutDetachingEntities();
+
+            session.getHuaweiWorkoutSpO2SampleDao().queryBuilder().where(
+                    HuaweiWorkoutSpO2SampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
             ).buildDelete().executeDeleteWithoutDetachingEntities();
         }
 

@@ -35,9 +35,10 @@ public class GetWorkoutTotalsRequest extends Request {
 
     /**
      * Request to get workout totals
-     * @param support The support
+     *
+     * @param support        The support
      * @param workoutNumbers The numbers of the current workout
-     * @param remainder The numbers of the remainder of the workouts to get
+     * @param remainder      The numbers of the remainder of the workouts to get
      */
     public GetWorkoutTotalsRequest(HuaweiSupportProvider support, Workout.WorkoutCount.Response.WorkoutNumbers workoutNumbers, List<Workout.WorkoutCount.Response.WorkoutNumbers> remainder) {
         super(support);
@@ -69,16 +70,16 @@ public class GetWorkoutTotalsRequest extends Request {
             throw new WorkoutParseException("Incorrect workout number!");
 
         LOG.info("Workout {} totals:", this.workoutNumbers.workoutNumber);
-        LOG.info("Number  : " + packet.number);
-        LOG.info("Status  : " + packet.status);
-        LOG.info("Start   : " + packet.startTime);
-        LOG.info("End     : " + packet.endTime);
-        LOG.info("Calories: " + packet.calories);
-        LOG.info("Distance: " + packet.distance);
-        LOG.info("Steps   : " + packet.stepCount);
-        LOG.info("Time    : " + packet.totalTime);
-        LOG.info("Duration: " + packet.duration);
-        LOG.info("Type    : " + packet.type);
+        LOG.info("Number  : {}", packet.number);
+        LOG.info("Status  : {}", packet.status);
+        LOG.info("Start   : {}", packet.startTime);
+        LOG.info("End     : {}", packet.endTime);
+        LOG.info("Calories: {}", packet.calories);
+        LOG.info("Distance: {}", packet.distance);
+        LOG.info("Steps   : {}", packet.stepCount);
+        LOG.info("Time    : {}", packet.totalTime);
+        LOG.info("Duration: {}", packet.duration);
+        LOG.info("Type    : {}", packet.type);
 
         Long databaseId = this.supportProvider.addWorkoutTotalsData(packet);
 
@@ -113,7 +114,17 @@ public class GetWorkoutTotalsRequest extends Request {
             );
             nextRequest.setFinalizeReq(this.finalizeReq);
             this.nextRequest(nextRequest);
-        }  else {
+        } else if (this.workoutNumbers.spO2Count > 0) {
+            GetWorkoutSpO2Request nextRequest = new GetWorkoutSpO2Request(
+                    this.supportProvider,
+                    this.workoutNumbers,
+                    this.remainder,
+                    (short) 0,
+                    databaseId
+            );
+            nextRequest.setFinalizeReq(this.finalizeReq);
+            this.nextRequest(nextRequest);
+        } else {
             new HuaweiWorkoutGbParser(getDevice(), getContext()).parseWorkout(databaseId);
             supportProvider.downloadWorkoutGpsFiles(this.workoutNumbers.workoutNumber, databaseId, new Runnable() {
                 @Override

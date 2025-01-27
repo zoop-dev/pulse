@@ -12,19 +12,19 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
 
-public class GetWorkoutSwimSegmentsRequest extends Request {
-    private static final Logger LOG = LoggerFactory.getLogger(GetWorkoutSwimSegmentsRequest.class);
+public class GetWorkoutSpO2Request extends Request {
+    private static final Logger LOG = LoggerFactory.getLogger(GetWorkoutSpO2Request.class);
 
     Workout.WorkoutCount.Response.WorkoutNumbers workoutNumbers;
     List<Workout.WorkoutCount.Response.WorkoutNumbers> remainder;
     short number;
     Long databaseId;
 
-    public GetWorkoutSwimSegmentsRequest(HuaweiSupportProvider support, Workout.WorkoutCount.Response.WorkoutNumbers workoutNumbers, List<Workout.WorkoutCount.Response.WorkoutNumbers> remainder, short number, Long databaseId) {
+    public GetWorkoutSpO2Request(HuaweiSupportProvider support, Workout.WorkoutCount.Response.WorkoutNumbers workoutNumbers, List<Workout.WorkoutCount.Response.WorkoutNumbers> remainder, short number, Long databaseId) {
         super(support);
 
         this.serviceId = Workout.id;
-        this.commandId = Workout.WorkoutSwimSegments.id;
+        this.commandId = Workout.WorkoutSpO2.id;
 
         this.workoutNumbers = workoutNumbers;
         this.remainder = remainder;
@@ -36,7 +36,7 @@ public class GetWorkoutSwimSegmentsRequest extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            return new Workout.WorkoutSwimSegments.Request(paramsProvider, this.workoutNumbers.workoutNumber, this.number).serialize();
+            return new Workout.WorkoutSpO2.Request(paramsProvider, this.workoutNumbers.workoutNumber, this.number).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }
@@ -44,41 +44,26 @@ public class GetWorkoutSwimSegmentsRequest extends Request {
 
     @Override
     protected void processResponse() throws ResponseParseException {
-        if (!(receivedPacket instanceof Workout.WorkoutSwimSegments.Response))
+        if (!(receivedPacket instanceof Workout.WorkoutSpO2.Response))
             throw new ResponseTypeMismatchException(receivedPacket, Workout.WorkoutSwimSegments.Response.class);
 
-        Workout.WorkoutSwimSegments.Response packet = (Workout.WorkoutSwimSegments.Response) receivedPacket;
+        Workout.WorkoutSpO2.Response packet = (Workout.WorkoutSpO2.Response) receivedPacket;
 
-        if (packet.workoutNumber != this.workoutNumbers.workoutNumber)
-            throw new WorkoutParseException("Incorrect workout number!");
 
-        if (packet.segmentNumber != this.number)
-            throw new WorkoutParseException("Incorrect pace number!");
+        LOG.info("Workout {} current {}:", this.workoutNumbers.workoutNumber, this.number);
+        LOG.info("spO2Number1: {}", packet.spO2Number1);
+        LOG.info("spO2Number2: {}", packet.spO2Number2);
+        LOG.info("Block num  : {}", packet.blocks.size());
+        LOG.info("Blocks     : {}", Arrays.toString(packet.blocks.toArray()));
 
-        LOG.info("Workout {} segment {}:", this.workoutNumbers.workoutNumber, this.number);
-        LOG.info("Workout  : {}", packet.workoutNumber);
-        LOG.info("Segments : {}", packet.segmentNumber);
-        LOG.info("Block num: {}", packet.blocks.size());
-        LOG.info("Blocks   : {}", Arrays.toString(packet.blocks.toArray()));
+        supportProvider.addWorkoutSpO2Data(this.databaseId, packet.blocks, this.number);
 
-        supportProvider.addWorkoutSwimSegmentsData(this.databaseId, packet.blocks, packet.segmentNumber);
-
-        if (this.workoutNumbers.segmentsCount > this.number + 1) {
-            GetWorkoutSwimSegmentsRequest nextRequest = new GetWorkoutSwimSegmentsRequest(
-                    this.supportProvider,
-                    this.workoutNumbers,
-                    this.remainder,
-                    (short) (this.number + 1),
-                    this.databaseId
-            );
-            nextRequest.setFinalizeReq(this.finalizeReq);
-            this.nextRequest(nextRequest);
-        } else if (this.workoutNumbers.spO2Count > 0) {
+        if (this.workoutNumbers.spO2Count > this.number + 1) {
             GetWorkoutSpO2Request nextRequest = new GetWorkoutSpO2Request(
                     this.supportProvider,
                     this.workoutNumbers,
                     this.remainder,
-                    (short) 0,
+                    (short) (this.number + 1),
                     this.databaseId
             );
             nextRequest.setFinalizeReq(this.finalizeReq);
@@ -90,11 +75,11 @@ public class GetWorkoutSwimSegmentsRequest extends Request {
                 public void run() {
                     if (!remainder.isEmpty()) {
                         GetWorkoutTotalsRequest nextRequest = new GetWorkoutTotalsRequest(
-                                GetWorkoutSwimSegmentsRequest.this.supportProvider,
+                                GetWorkoutSpO2Request.this.supportProvider,
                                 remainder.remove(0),
                                 remainder
                         );
-                        nextRequest.setFinalizeReq(GetWorkoutSwimSegmentsRequest.this.finalizeReq);
+                        nextRequest.setFinalizeReq(GetWorkoutSpO2Request.this.finalizeReq);
                         // Cannot do this with nextRequest because it's in a callback
                         try {
                             nextRequest.doPerform();

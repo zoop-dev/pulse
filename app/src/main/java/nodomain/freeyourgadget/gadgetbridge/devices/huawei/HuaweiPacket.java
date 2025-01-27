@@ -580,6 +580,8 @@ public class HuaweiPacket {
                         return new Workout.WorkoutPace.Response(paramsProvider).fromPacket(this);
                     case Workout.WorkoutSwimSegments.id:
                         return new Workout.WorkoutSwimSegments.Response(paramsProvider).fromPacket(this);
+                    case Workout.WorkoutSpO2.id:
+                        return new Workout.WorkoutSpO2.Response(paramsProvider).fromPacket(this);
                     default:
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;

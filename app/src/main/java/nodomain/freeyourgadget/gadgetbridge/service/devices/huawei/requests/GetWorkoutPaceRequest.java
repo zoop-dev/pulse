@@ -52,7 +52,7 @@ public class GetWorkoutPaceRequest extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            return new Workout.WorkoutPace.Request(paramsProvider,this.workoutNumbers.workoutNumber, this.number).serialize();
+            return new Workout.WorkoutPace.Request(paramsProvider, this.workoutNumbers.workoutNumber, this.number).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }
@@ -72,10 +72,10 @@ public class GetWorkoutPaceRequest extends Request {
             throw new WorkoutParseException("Incorrect pace number!");
 
         LOG.info("Workout {} pace {}:", this.workoutNumbers.workoutNumber, this.number);
-        LOG.info("Workout  : " + packet.workoutNumber);
-        LOG.info("Pace     : " + packet.paceNumber);
-        LOG.info("Block num: " + packet.blocks.size());
-        LOG.info("Blocks   : " + Arrays.toString(packet.blocks.toArray()));
+        LOG.info("Workout  : {}", packet.workoutNumber);
+        LOG.info("Pace     : {}", packet.paceNumber);
+        LOG.info("Block num: {}", packet.blocks.size());
+        LOG.info("Blocks   : {}", Arrays.toString(packet.blocks.toArray()));
 
         supportProvider.addWorkoutPaceData(this.databaseId, packet.blocks, packet.paceNumber);
 
@@ -99,7 +99,17 @@ public class GetWorkoutPaceRequest extends Request {
             );
             nextRequest.setFinalizeReq(this.finalizeReq);
             this.nextRequest(nextRequest);
-        }  else {
+        } else if (this.workoutNumbers.spO2Count > 0) {
+            GetWorkoutSpO2Request nextRequest = new GetWorkoutSpO2Request(
+                    this.supportProvider,
+                    this.workoutNumbers,
+                    this.remainder,
+                    (short) 0,
+                    this.databaseId
+            );
+            nextRequest.setFinalizeReq(this.finalizeReq);
+            this.nextRequest(nextRequest);
+        } else {
             new HuaweiWorkoutGbParser(getDevice(), getContext()).parseWorkout(this.databaseId);
             supportProvider.downloadWorkoutGpsFiles(this.workoutNumbers.workoutNumber, this.databaseId, new Runnable() {
                 @Override

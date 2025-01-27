@@ -80,6 +80,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2Sample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSample;
@@ -1896,6 +1898,33 @@ public class HuaweiSupportProvider {
             }
         } catch (Exception e) {
             LOG.error("Failed to add workout swim section data to database", e);
+        }
+    }
+
+    public void addWorkoutSpO2Data(Long workoutId, List<Workout.WorkoutSpO2.Response.Block> spO2List, short number) {
+        if (workoutId == null)
+            return;
+
+        try (DBHandler db = GBApplication.acquireDB()) {
+            HuaweiWorkoutSpO2SampleDao dao = db.getDaoSession().getHuaweiWorkoutSpO2SampleDao();
+
+            if (number == 0) {
+                final DeleteQuery<HuaweiWorkoutSpO2Sample> tableDeleteQuery = dao.queryBuilder()
+                        .where(HuaweiWorkoutSpO2SampleDao.Properties.WorkoutId.eq(workoutId))
+                        .buildDelete();
+                tableDeleteQuery.executeDeleteWithoutDetachingEntities();
+            }
+
+            for (Workout.WorkoutSpO2.Response.Block block : spO2List) {
+                HuaweiWorkoutSpO2Sample spO2Sample = new HuaweiWorkoutSpO2Sample(
+                        workoutId,
+                        block.interval,
+                        block.value
+                );
+                dao.insertOrReplace(spO2Sample);
+            }
+        } catch (Exception e) {
+            LOG.error("Failed to add workout SpO2 data to database", e);
         }
     }
 
