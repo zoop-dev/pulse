@@ -94,7 +94,10 @@ public abstract class AbstractItemAdapter<T> extends ArrayAdapter<T> {
         detailsView.setText(getDetails(item));
         iconView.setImageResource(getIcon(item));
         iconView.setBackgroundColor(backgroundColor);
-        previewView.setImageBitmap(getPreview(item));
+        final Bitmap preview = getPreview(item);
+        if (preview != null) {
+            previewView.setImageBitmap(preview);
+        }
 
         return view;
     }
