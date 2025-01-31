@@ -3717,4 +3717,16 @@ Temps de sommeil préféré en heures</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
+    <string name="redmi_buds_5_pro_transparency_regular">Régulier/ère</string>
+    <string name="redmi_buds_5_pro_adaptive_sound">Son adaptatif</string>
+    <string name="discharge_interval_1">Intervalle de décharge 1</string>
+    <string name="battery_discharge_intervals">Intervalles de décharge de la batterie</string>
+    <string name="discharge_interval_2">Intervalle de décharge 2</string>
+    <string name="discharge_interval_3">Intervalle de décharge 3</string>
+    <string name="battery_minimum_charge">Charge minimale de la batterie en %</string>
+    <string name="battery_allow_pass_though_summary">Lorsqu\'elle est activée, la batterie peut être chargée tout en se déchargeant</string>
+    <string name="pref_override_features_summary">Activer/désactiver des fonctionnalités spécifiques de l\'appareil. Cela peut entraîner des problèmes et/ou un dysfonctionnement de votre appareil</string>
+    <string name="discharge_interval_5">Intervalle de décharge 5</string>
+    <string name="discharge_interval_4">Intervalle de décharge 4</string>
+    <string name="manual_discharge_summary">lorsqu\'il est désactivé, cela suppose une décharge intelligente contrôlée par un wattmètre externe (non pris en charge par Gadgetbridge)</string>
 </resources>
