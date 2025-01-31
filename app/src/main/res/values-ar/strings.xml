@@ -902,7 +902,7 @@
     <string name="pref_check_permission_status_summary">تحقق واطلب الأذونات المفقودة حتى عندما لا تكون هناك حاجة إليها على الفور. قم بتعطيل هذا فقط إذا كانت أجهزتك لا تدعم بالفعل أيًا من هذه الميزات. قد يؤدي عدم منح الإذن إلى حدوث مشكلات!</string>
     <string name="prefs_heartrate_alert_experimental_description">اهتزاز النطاق عندما يتجاوز معدل نبضات القلب عتبة ، دون أي نشاط بدني واضح في الدقائق العشر الماضية. هذه الميزة تجريبية ولم يتم اختبارها على نطاق واسع.</string>
     <string name="discovery_scanning_intensity_warning">إذا واجهت تجميدًا أو عدم استجابة ، فحاول ضبط كثافة المسح على مستوى أقل. إذا لم يتم اكتشاف جهازك ، فحاول ضبط كثافة المسح على مستوى أعلى.</string>
-    <string name="permission_location">يحتاج %1$s إلى الوصول إلى موقعك في الخلفية للسماح له بالبقاء على اتصال بساعتك حتى عندما تكون الشاشة مغلقة. \n \nالرجاء النقر على \"%2$s\" للموافقة.</string>
+    <string name="permission_location">%1$s يَحتاجُ وصولاً إلى موقعِكَ في الخلفيةِ لتَسْمحُ له للبَقاء متصل بساعتِكَ حتى عندما تكون الشاشةِ مغلقة.\n\nرجاءً إخترْ \' %2$s في الشاشةِ التاليةِ، ثمّ اضغط \' رجوع للعَودة إلى %1$s.</string>
     <string name="firmware_install_warning">أنت تحاول تثبيت برنامج ثابت ، تابع على مسؤوليتك الخاصة.
 \n
 \n
@@ -3545,4 +3545,21 @@
     <string name="pref_voice_passthrough_level">مستوى تمرير الصوت</string>
     <string name="pref_developer_add_test_activities_summary">ملء قاعدة البيانات بأنشطة اختبار وهمية</string>
     <string name="pref_developer_add_test_activities_title">إضافة أنشطة الاختبار</string>
+    <string name="remote_control">التحكم عن بعد</string>
+    <string name="charts_show_balance_steps_title">إظهار رصيد الخطوات</string>
+    <string name="active_calories">السعرات الحرارية النشطة</string>
+    <string name="active_calories_short">نشط</string>
+    <string name="active_calories_goal">الهدف النشط</string>
+    <string name="total_calories_burnt">المجموع المحروق</string>
+    <string name="lowest">منخفض</string>
+    <string name="highest">الأعلى</string>
+    <string name="sleep_score">نقطة النوم</string>
+    <string name="sleep_score_value">النتيجة: %1d</string>
+    <string name="charts_show_balance_sleep_title">إظهار توازن النوم</string>
+    <string name="charts_show_balance_sleep_summary">إظهار النوم الزائد / قلة النوم في الرسوم البيانية الأسبوعية والشهرية</string>
+    <string name="respiratoryrate">المعدل التنفسي</string>
+    <string name="sleep_avg">متوسط النوم</string>
+    <string name="activity_prefs_goal_standing_hours">الهدف اليومي: ساعات الوقوف</string>
+    <string name="fw_upgrade_notice_huawei">أنت على وشك تحميل البرنامج الثابت %s على%s الخاص بك.\n\nالبرنامج الثابت الحالي هو %s\n\nسيتم إعادة تشغيل جهازك بعد التحميل.\n\nتابع على مسؤوليتك الخاصة!</string>
+    <string name="charts_show_balance_steps_summary">إظهار الزيادة / عدم وجود خطوات في الرسوم البيانية الأسبوعية والشهرية</string>
 </resources>
