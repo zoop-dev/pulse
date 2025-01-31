@@ -75,6 +75,8 @@ public class HuaweiCoordinator {
     private boolean supportsTruSleepNewSync = false;
     private boolean supportsGpsNewSync = false;
 
+    private boolean supportsWorkoutNewSteps = false;
+
     private Watchface.WatchfaceDeviceParams watchfaceDeviceParams;
 
     private App.AppDeviceParams appDeviceParams;
@@ -585,6 +587,10 @@ public class HuaweiCoordinator {
         return supportsCommandForService(0x17, 0x01);
     }
 
+    public boolean supportsWorkoutCapability() {
+        return supportsCommandForService(0x17, 0x15);
+    }
+
     public boolean supportsWorkoutsTrustHeartRate() {
         return supportsCommandForService(0x17, 0x17);
     }
@@ -964,6 +970,14 @@ public class HuaweiCoordinator {
 
     public void setSupportsGpsNewSync(boolean supportsGpsNewSync) {
         this.supportsGpsNewSync = supportsGpsNewSync;
+    }
+
+    public boolean isSupportsWorkoutNewSteps() {
+        return supportsWorkoutNewSteps;
+    }
+
+    public void setSupportsWorkoutNewSteps(boolean supportsWorkoutNewSteps) {
+        this.supportsWorkoutNewSteps = supportsWorkoutNewSteps;
     }
 
     public String getOtaSoftwareVersion() {

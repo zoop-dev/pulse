@@ -301,7 +301,18 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                             responseData.calories,
                             responseData.cyclingPower,
                             responseData.frequency,
-                            responseData.altitude
+                            responseData.altitude,
+                            responseData.hangTime,
+                            responseData.impactHangRate,
+                            responseData.rideCadence,
+                            responseData.ap,
+                            responseData.vo,
+                            responseData.gtb,
+                            responseData.vr,
+                            responseData.ceiling,
+                            responseData.temp,
+                            responseData.spo2,
+                            responseData.cns
                     );
 
                     dbHandler.getDaoSession().getHuaweiWorkoutDataSampleDao().insertOrReplace(dataSample);

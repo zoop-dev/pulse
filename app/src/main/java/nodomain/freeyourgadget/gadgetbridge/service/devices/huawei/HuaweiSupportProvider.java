@@ -80,6 +80,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSectionsSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSectionsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
@@ -128,6 +130,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetN
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetOTAChangeLog;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSmartAlarmList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWatchfaceParams;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutCapability;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCameraRemoteSetupEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDeviceReportThreshold;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendExtendedAccountRequest;
@@ -856,6 +859,7 @@ public class HuaweiSupportProvider {
             initRequestQueue.add(new GetContactsCount(this));
             initRequestQueue.add(new SendOTASetAutoUpdate(this));
             initRequestQueue.add(new GetOTAChangeLog(this));
+            //initRequestQueue.add(new GetWorkoutCapability(this)); // TODO: in current stage I don't understand how to parse new steps.
             initRequestQueue.add(new GetEventAlarmList(this));
             initRequestQueue.add(new GetSmartAlarmList(this));
 
@@ -1821,7 +1825,18 @@ public class HuaweiSupportProvider {
                         data.calories,
                         data.cyclingPower,
                         data.frequency,
-                        data.altitude
+                        data.altitude,
+                        data.hangTime,
+                        data.impactHangRate,
+                        data.rideCadence,
+                        data.ap,
+                        data.vo,
+                        data.gtb,
+                        data.vr,
+                        data.ceiling,
+                        data.temp,
+                        data.spo2,
+                        data.cns
                 );
                 dao.insertOrReplace(dataSample);
             }
@@ -1925,6 +1940,54 @@ public class HuaweiSupportProvider {
             }
         } catch (Exception e) {
             LOG.error("Failed to add workout SpO2 data to database", e);
+        }
+    }
+
+    public void addWorkoutSectionsData(Long workoutId, List<Workout.WorkoutSections.Response.Block> spO2List, short number) {
+        if (workoutId == null)
+            return;
+
+        // NOTE: All fields of this data is optional. At this point I don't all workouts that this data used.
+        // I decided to add two additional fields dataIdx and rowIdx as primary keys that should identify each row
+        try (DBHandler db = GBApplication.acquireDB()) {
+            HuaweiWorkoutSectionsSampleDao dao = db.getDaoSession().getHuaweiWorkoutSectionsSampleDao();
+
+            if (number == 0) {
+                final DeleteQuery<HuaweiWorkoutSectionsSample> tableDeleteQuery = dao.queryBuilder()
+                        .where(HuaweiWorkoutSectionsSampleDao.Properties.WorkoutId.eq(workoutId))
+                        .buildDelete();
+                tableDeleteQuery.executeDeleteWithoutDetachingEntities();
+            }
+
+            int i = 0;
+            for (Workout.WorkoutSections.Response.Block block : spO2List) {
+                HuaweiWorkoutSectionsSample huaweiWorkoutSectionsSample = new HuaweiWorkoutSectionsSample(
+                        workoutId,
+                        number,
+                        i++,
+                        block.num,
+                        block.time,
+                        block.distance,
+                        block.pace,
+                        block.heartRate,
+                        block.cadence,
+                        block.stepLength,
+                        block.totalRise,
+                        block.totalDescend,
+                        block.groundContactTime,
+                        block.groundImpact,
+                        block.swingAngle,
+                        block.eversion,
+                        block.avgCadence,
+                        block.divingUnderwaterTime,
+                        block.divingMaxDepth,
+                        block.divingUnderwaterTime,
+                        block.divingBreakTime
+                );
+                dao.insertOrReplace(huaweiWorkoutSectionsSample);
+            }
+        } catch (Exception e) {
+            LOG.error("Failed to add workout sections data to database", e);
         }
     }
 

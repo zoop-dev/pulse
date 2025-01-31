@@ -60,7 +60,7 @@ public class GetWorkoutDataRequest extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            return new Workout.WorkoutData.Request(paramsProvider, workoutNumbers.workoutNumber, this.number).serialize();
+            return new Workout.WorkoutData.Request(paramsProvider, workoutNumbers.workoutNumber, this.number, supportProvider.getHuaweiCoordinator().isSupportsWorkoutNewSteps()).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }
@@ -125,6 +125,16 @@ public class GetWorkoutDataRequest extends Request {
             this.nextRequest(nextRequest);
         } else if (this.workoutNumbers.spO2Count > 0) {
             GetWorkoutSpO2Request nextRequest = new GetWorkoutSpO2Request(
+                    this.supportProvider,
+                    this.workoutNumbers,
+                    this.remainder,
+                    (short) 0,
+                    this.databaseId
+            );
+            nextRequest.setFinalizeReq(this.finalizeReq);
+            this.nextRequest(nextRequest);
+        } else if (this.workoutNumbers.sectionsCount > 0) {
+            GetWorkoutSectionsRequest nextRequest = new GetWorkoutSectionsRequest(
                     this.supportProvider,
                     this.workoutNumbers,
                     this.remainder,

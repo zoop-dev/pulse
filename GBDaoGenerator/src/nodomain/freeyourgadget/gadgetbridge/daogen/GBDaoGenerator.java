@@ -54,7 +54,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(95, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(96, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -161,6 +161,7 @@ public class GBDaoGenerator {
         addHuaweiWorkoutPaceSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutSwimSegmentsSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutSpO2Sample(schema, huaweiWorkoutSummary);
+        addHuaweiWorkoutSectionsSample(schema, huaweiWorkoutSummary);
 
         Entity huaweiDictData = addHuaweiDictData(schema, user, device);
         addHuaweiDictDataValues(schema, huaweiDictData);
@@ -1502,6 +1503,18 @@ public class GBDaoGenerator {
         workoutDataSample.addShortProperty("frequency").notNull();
         workoutDataSample.addIntProperty("altitude");
 
+        workoutDataSample.addShortProperty("hangTime").notNull();
+        workoutDataSample.addShortProperty("impactHangRate").notNull();
+        workoutDataSample.addByteProperty("rideCadence").notNull();
+        workoutDataSample.addFloatProperty("ap").notNull();
+        workoutDataSample.addFloatProperty("vo").notNull();
+        workoutDataSample.addFloatProperty("gtb").notNull();
+        workoutDataSample.addFloatProperty("vr").notNull();
+        workoutDataSample.addByteProperty("ceiling").notNull();
+        workoutDataSample.addByteProperty("temp").notNull();
+        workoutDataSample.addByteProperty("spo2").notNull();
+        workoutDataSample.addShortProperty("cns").notNull();
+
         return workoutDataSample;
     }
 
@@ -1557,6 +1570,39 @@ public class GBDaoGenerator {
         workoutSwimSegmentsSample.addIntProperty("value").notNull();
 
         return workoutSwimSegmentsSample;
+    }
+
+    private static Entity addHuaweiWorkoutSectionsSample(Schema schema, Entity summaryEntity) {
+        Entity workoutSectionsSample = addEntity(schema, "HuaweiWorkoutSectionsSample");
+
+        workoutSectionsSample.setJavaDoc("Contains Huawei Workout Section data samples");
+
+        Property id = workoutSectionsSample.addLongProperty("workoutId").primaryKey().notNull().getProperty();
+        workoutSectionsSample.addToOne(summaryEntity, id);
+
+        workoutSectionsSample.addIntProperty("dataIdx").notNull().primaryKey();
+        workoutSectionsSample.addIntProperty("rowIdx").notNull().primaryKey();
+
+        workoutSectionsSample.addIntProperty("num").notNull();
+        workoutSectionsSample.addLongProperty("time").notNull();
+        workoutSectionsSample.addLongProperty("distance").notNull();
+        workoutSectionsSample.addIntProperty("pace").notNull();
+        workoutSectionsSample.addIntProperty("heartRate").notNull();
+        workoutSectionsSample.addIntProperty("cadence").notNull();
+        workoutSectionsSample.addIntProperty("stepLength").notNull();
+        workoutSectionsSample.addLongProperty("totalRise").notNull();
+        workoutSectionsSample.addLongProperty("totalDescend").notNull();
+        workoutSectionsSample.addIntProperty("groundContactTime").notNull();
+        workoutSectionsSample.addIntProperty("groundImpact").notNull();
+        workoutSectionsSample.addIntProperty("swingAngle").notNull();
+        workoutSectionsSample.addIntProperty("eversion").notNull();
+        workoutSectionsSample.addIntProperty("avgCadence").notNull();
+        workoutSectionsSample.addIntProperty("intervalTrainingType").notNull();
+        workoutSectionsSample.addIntProperty("divingMaxDepth").notNull();
+        workoutSectionsSample.addIntProperty("divingUnderwaterTime").notNull();
+        workoutSectionsSample.addIntProperty("divingBreakTime").notNull();
+
+        return workoutSectionsSample;
     }
 
     private static Entity addHuaweiDictData(Schema schema, Entity user, Entity device) {
