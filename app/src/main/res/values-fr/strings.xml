@@ -3685,4 +3685,5 @@ Temps de sommeil préféré en heures</string>
     <string name="charts_show_balance_sleep_title">Afficher équilibre sommeil</string>
     <string name="fw_upgrade_notice_huawei">Vous êtes sur le point de télécharger le micrologiciel %s sur votre %s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
     <string name="remote_control">Commande à distance</string>
+    <string name="charts_show_balance_sleep_summary">Afficher excès/manque de sommeil dans graphiques hebdomadaires et mensuels</string>
 </resources>
