@@ -3761,4 +3761,6 @@
     <string name="pref_garmin_fake_oauth_warning">Nie włączaj tej opcji, jeśli planujesz używać oficjalnej aplikacji lub podłączyć zegarek do Internetu. Po włączeniu tego ustawienia może być konieczne przywrócenie ustawień fabrycznych zegarka w celu ponownego uwierzytelnienia.</string>
     <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="pref_garmin_fake_oauth_summary">Naprawia niektóre funkcje, takie jak pogoda i aktualizacje AGPS, bez konieczności łączenia się z oficjalną aplikacją co 90 dni.</string>
+    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
+    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
 </resources>
