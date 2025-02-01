@@ -3738,4 +3738,10 @@
     <string name="reset">重置</string>
     <string name="activity_detail_inspect_file">检查文件</string>
     <string name="fit_file_viewer">FIT 文件查看器</string>
+    <string name="pref_garmin_fake_oauth_summary">修复了一些功能，例如天气和AGP的更新，而无需每90天连接到官方应用程序。</string>
+    <string name="devicetype_miband9active">小米智能手环9 活动版</string>
+    <string name="pref_garmin_fake_oauth_title">发送假的OAuth回复</string>
+    <string name="devicetype_sony_wh_ult900n">索尼 WH-ULT900N</string>
+    <string name="devicetype_garmin_lily_2_active">佳明 Lily 2 活动版</string>
+    <string name="pref_garmin_fake_oauth_warning">如果您打算使用官方应用程序或将手表连接到Internet，请不要启用此功能。启用此设置后，您可能需要将手表恢复至出厂设置以再次验证。</string>
 </resources>
