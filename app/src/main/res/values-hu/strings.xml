@@ -56,7 +56,7 @@
     <string name="pref_default">Alapértelmezett</string>
     <string name="pref_header_datetime">Dátum és idő</string>
     <string name="pref_title_datetime_syctimeonconnect">Idő szinkronizálása</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Csatlakozáskor szinkronizálja az időt a Gadgetbridge eszköz(ök)kel, amikor az idő vagy az időzóna megváltozik az Android eszközön és időszakosan</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Csatlakozáskor szinkronizálja az időt a Gadgetbridge eszköz(ök)kel, amikor az idő vagy az időzóna megváltozik az Android-eszközön és időszakosan</string>
     <string name="pref_title_theme">Téma</string>
     <string name="pref_theme_light">Világos</string>
     <string name="pref_theme_dark">Sötét</string>
@@ -374,7 +374,7 @@
     <string name="title_activity_vibration">Rezgés</string>
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble párosítása</string>
-    <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelennie az Android eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
+    <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelenni az Android-eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
     <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble eszközén. \n \nItt nincs szükség beállításra. \n \nA Pebble rendszer időjárás alkalmazását az alkalmazáskezelésből engedélyezheti. \n \nA támogatott órafelületek automatikusan megjelenítik az időjárást.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth párosítás engedélyezése</string>
     <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
@@ -484,7 +484,7 @@
     <string name="pref_display_add_device_fab">Új eszköz csatlakoztatása gomb</string>
     <string name="pref_title_vibration_strength">Rezgés erőssége</string>
     <string name="pref_title_sync_caldendar">Naptár események szinkronizálása</string>
-    <string name="pref_summary_allow_high_mtu">Növeli az adatátvitel sebességét, de egyes Android eszközökön nem támogatott.</string>
+    <string name="pref_summary_allow_high_mtu">Növeli az adatátvitel sebességét, de egyes Android-eszközökön nem támogatott.</string>
     <string name="pref_title_allow_high_mtu">Magas MTU engedélyezése</string>
     <string name="pref_title_use_custom_font">Egyéni betűtípus használata</string>
     <string name="pref_summary_expose_hr">Engedélyezi, hogy más alkalmazások valós időben hozzáférjenek a HR adatokhoz amíg a Gadgetbridge kapcsolódva van</string>
@@ -1265,7 +1265,7 @@
     <string name="notification_gps_text">GPS-helyzet küldése %1$d eszközökre</string>
     <string name="zepp_os_watchface_pure_white">Tiszta fehér</string>
     <string name="charts_legend_heartrate_average">Átlagos pulzusszám</string>
-    <string name="pref_summary_authkey">Módosítsa a hitelesítési kulcsot egy közös kulcsra az összes olyan Android-eszközén, amelyről csatlakozni szeretne. A korábbi alapértelmezett kulcs minden eszközön: 0123456789@ABCDE</string>
+    <string name="pref_summary_authkey">Módosítja a hitelesítési kulcsot egy közös kulcsra az összes olyan Android-eszközön, amelyről csatlakozni szeretne. A korábbi alapértelmezett kulcs minden eszközön: 0123456789@ABCDE</string>
     <string name="prefs_wena3_notification_vibration_repetition_3">Háromszor</string>
     <string name="zepp_os_watchface_city_of_speed">Sebesség városa</string>
     <string name="prefs_phone_silent_mode">Telefon néma mód</string>
@@ -1385,7 +1385,7 @@
 \n
 \nA Google Play Áruház szabályzata miatt nem engedélyezzük az adományozási hivatkozást magában az alkalmazásban, de ha tetszik az alkalmazás, fontolja meg az adományozást az alábbi Gadgetbridge honlapon keresztül.</string>
     <string name="activity_type_outdoor_running">Kültéri futás</string>
-    <string name="_pebble_watch_open_on_phone">Megnyitás Android eszközön</string>
+    <string name="_pebble_watch_open_on_phone">Megnyitás az Android-eszközön</string>
     <string name="activity_type_outdoor_cycling">Kültéri kerékpározás</string>
     <string name="pref_title_pebble_enable_bgjs">Háttérbeli JS engedélyezése</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
@@ -2173,7 +2173,7 @@
     <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="Strokes">Leütések</string>
     <string name="fw_upgrade_notice_amazfitbip3">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A készüléke az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="pref_summary_notification_wake_on_open">Ébressze fel és oldja fel az Android eszközt, ha a kütyü OPEN választ küld vissza. Az eszköznek megbízható állapotban kell lennie.</string>
+    <string name="pref_summary_notification_wake_on_open">Ébressze fel és oldja fel az Android-eszközt, ha a kütyü OPEN választ küld vissza. Az eszköznek megbízható állapotban kell lennie.</string>
     <string name="busy_task_fetch_sports_details_interrupted">A sportadatok lekérése megszakadt</string>
     <string name="swolfAvg">Átlagos swolf</string>
     <string name="swolfMax">Maximum swolf</string>
@@ -3245,7 +3245,7 @@
     <string name="music_add_to_playlist">Hozzáadás a lejátszási listához</string>
     <string name="music_new_playlist">Új lejátszási lista</string>
     <string name="music_error">Hiba történt</string>
-    <string name="first_start_open_source_text">A Gadgetbridge egy nyílt forráskódú alkalmazás. Egy közösség által fejlesztve a közösség számára.\n\nBárki hozzájárulhat a kóddal, dokumentációval, teszteléssel és adományokkal.\n\nA Gadgetbridge nem tartalmaz hirdetéseket és nem végez követést. Az adatokat helyben, az Android eszközén tárolja, így 100%-ban adatvédelmi szempontból barátságos.\n\nLátogasson el weboldalunkra további információkért, dokumentációért és a kommunikációs csatornáinkra mutató hivatkozásokért.</string>
+    <string name="first_start_open_source_text">A Gadgetbridge egy nyílt forráskódú alkalmazás. Egy közösség által fejlesztve a közösség számára.\n\nBárki hozzájárulhat a kóddal, dokumentációval, teszteléssel és adományokkal.\n\nA Gadgetbridge nem tartalmaz hirdetéseket és nem végez követést. Az adatokat helyben, az Android-eszközén tárolja, így 100%-ban adatvédelmi szempontból barátságos.\n\nLátogasson el weboldalunkra további információkért, dokumentációért és a kommunikációs csatornáinkra mutató hivatkozásokért.</string>
     <string name="permission_bluetooth_scan_summary">Új Bluetooth-eszközök beolvasása</string>
     <string name="permission_read_call_log_title">Híváslista olvasása</string>
     <string name="permission_read_call_log_summary">Hívásnapló továbbítása a kütyükre</string>
@@ -3550,4 +3550,11 @@
     <string name="pref_garmin_fake_oauth_warning">Ne engedélyezze ezt a funkciót, ha a hivatalos alkalmazást kívánja használni, vagy ha az órát az internethez kívánja csatlakoztatni. A beállítás engedélyezése után előfordulhat, hogy az óra gyári alaphelyzetbe állítására lesz szükség az újbóli hitelesítéshez.</string>
     <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="title_activity_even_realities_g1_pairing">Even G1 párosítás</string>
+    <string name="pairing_even_realities_g1_working">Párosítás a következővel: %1s...</string>
+    <string name="pairing_even_realities_g1_find_both_fail">Nem sikerült megtalálni a jobb és a bal lencsét. Indítsa el újra a beolvasást.</string>
+    <string name="pairing_even_realities_g1_invalid_device">Even G1 eszköz helytelenül formázott: %1$s.</string>
+    <string name="pairing_even_realities_g1_bottom_hint">Az Android-eszközön több párosítási párbeszédpanel is megjelenik. Ha mégsem, akkor nézze meg az értesítési fiókot, és fogadja el a párosítási kérelmet. A bal és a jobb oldali lencsét is párosítani szükséges.</string>
+    <string name="devicetype_even_realities_g1">Even Realities G1</string>
+    <string name="pairing_even_realities_g1_select_next_lens">%1$s lencse kiválasztva a párosításhoz. Több jelölt is található a(z) %2$s lencséhez. Válassza ki a(z) %2$s lencsét az alábbi listából.</string>
 </resources>
