@@ -109,6 +109,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
         MenuProvider {
     private static final Logger LOG = LoggerFactory.getLogger(DiscoveryActivityV2.class);
 
+    private static final int CHILD_RESULT = 0x826983; // "RES" as ASCII hex
     private final Handler handler = new Handler();
 
     private static final long SCAN_DURATION = 30000; // 30s
@@ -144,7 +145,13 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        BondingUtil.handleActivityResult(this, requestCode, resultCode, data);
+        if (requestCode == CHILD_RESULT && resultCode == RESULT_OK) {
+            // A device with a custom pairing activity has finished and indicated that the discovery activity should be
+            // closed.
+            finish();
+        } else {
+            BondingUtil.handleActivityResult(this, requestCode, resultCode, data);
+        }
     }
 
     @Nullable
@@ -655,7 +662,8 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
         if (pairingActivity != null) {
             final Intent intent = new Intent(this, pairingActivity);
             intent.putExtra(DeviceCoordinator.EXTRA_DEVICE_CANDIDATE, deviceCandidate);
-            startActivity(intent);
+            intent.putParcelableArrayListExtra(DeviceCoordinator.EXTRA_DEVICE_ALL_CANDIDATES, deviceCandidates);
+            startActivityForResult(intent, CHILD_RESULT);
         } else {
             if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_NONE ||
                     coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_LAZY) {

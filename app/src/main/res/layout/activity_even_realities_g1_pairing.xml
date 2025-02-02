@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2">
+
+    <TextView
+        android:id="@+id/even_g1_pairing_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/pairing_even_realities_g1_select_next_lens"
+        android:textIsSelectable="true"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/pairing_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1" />
+
+    <ListView
+        android:id="@+id/next_lens_candidates_list"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom|top"
+        android:layout_weight="1">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/even_g1_discovery_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|bottom"
+        android:text="@string/discovery_note"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/secondarytext"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/even_g1_pairing_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="@string/pairing_even_realities_g1_bottom_hint"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/secondarytext"
+        android:textIsSelectable="true" />
+
+</LinearLayout>

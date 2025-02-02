@@ -78,6 +78,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
  */
 public interface DeviceCoordinator {
     String EXTRA_DEVICE_CANDIDATE = "nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate.EXTRA_DEVICE_CANDIDATE";
+    String EXTRA_DEVICE_ALL_CANDIDATES =
+        "nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate.EXTRA_DEVICE_ALL_CANDIDATES";
     /**
      * Do not attempt to bond after discovery.
      */
