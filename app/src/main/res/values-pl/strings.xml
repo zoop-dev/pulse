@@ -3763,4 +3763,11 @@
     <string name="pref_garmin_fake_oauth_summary">Naprawia niektóre funkcje, takie jak pogoda i aktualizacje AGPS, bez konieczności łączenia się z oficjalną aplikacją co 90 dni.</string>
     <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="pairing_even_realities_g1_working">Parowanie z %1s...</string>
+    <string name="pairing_even_realities_g1_find_both_fail">Nie udało się znaleźć ani prawej, ani lewej soczewki. Proszę zeskanować ponownie.</string>
+    <string name="pairing_even_realities_g1_invalid_device">Urządzenie Even G1 jest uszkodzone: %1$s.</string>
+    <string name="devicetype_even_realities_g1">Even Realities G1</string>
+    <string name="title_activity_even_realities_g1_pairing">Parowanie Even G1</string>
+    <string name="pairing_even_realities_g1_select_next_lens">Wybrano %1$s soczewkę do sparowania. Znaleziono wielu kandydatów dla %2$s soczewki. Wybierz %2$s soczewkę z poniższej listy.</string>
+    <string name="pairing_even_realities_g1_bottom_hint">Na urządzeniu z systemem Android pojawi się kilka okien dialogowych parowania. Jeśli nie, sprawdź w szufladzie powiadomień i zaakceptuj prośbę o parowanie. Zarówno lewy, jak i prawy obiektyw będą musiały zostać sparowane.</string>
 </resources>
