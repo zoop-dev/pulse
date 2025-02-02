@@ -95,6 +95,20 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
             ((HuamiActivityDetailsParser) detailsParser).setSkipCounterByte(false); // is already stripped
         }
 
+        // Start by persisting the raw bytes right away - they can always be re-processed later if needed
+        try {
+            final String rawBytesPath = saveRawBytes();
+            if (rawBytesPath != null) {
+                try (DBHandler dbHandler = GBApplication.acquireDB()) {
+                    summary.setRawDetailsPath(rawBytesPath);
+                    dbHandler.getDaoSession().getBaseActivitySummaryDao().update(summary);
+                }
+            }
+        } catch (final Exception e) {
+            GB.toast(getContext(), "Error saving raw bytes: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            return false;
+        }
+
         try {
             final ActivityTrack track = detailsParser.parse(buffer.toByteArray());
             final ActivityTrackExporter exporter = new GPXExporter();
@@ -123,8 +137,6 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
                     break;
             }
 
-            final String rawBytesPath = saveRawBytes();
-
             final String fileName = FileUtils.makeValidFileName("gadgetbridge-" + trackType.toLowerCase() + "-" + DateTimeUtils.formatIso8601(summary.getStartTime()) + ".gpx");
             final File targetFile = new File(FileUtils.getExternalFilesDir(), fileName);
 
@@ -139,14 +151,12 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
                 if (exportGpxSuccess) {
                     summary.setGpxTrack(targetFile.getAbsolutePath());
                 }
-                if (rawBytesPath != null) {
-                    summary.setRawDetailsPath(rawBytesPath);
-                }
                 dbHandler.getDaoSession().getBaseActivitySummaryDao().update(summary);
             }
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving activity details: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-            return false;
+            // #4549 - we do not return false here, since this might cause the same activity to be fetched over and over again
+            // the raw details are persisted above, we can always re-process if needed
         }
 
         // Always increment the sync timestamp on success, even if we did not get data

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 José Rebelo
+/*  Copyright (C) 2022-2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -77,13 +77,24 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         // Keep track of unknown type codes so we can print them without spamming the logs
         final Map<Byte, Integer> unknownTypeCodes = new HashMap<>();
-        
+
         while (buf.position() < buf.limit()) {
-            final byte typeCode = buf.get();
-            final byte length = buf.get();
+            byte typeCode = buf.get();
+            // FIXME: This is probably not right, but type 31 makes the parser get out of sync otherwise
+            if (typeCode == 31) {
+                typeCode = buf.get();
+            }
+            byte lengthByte = buf.get();
+            if (lengthByte == -127) {
+                lengthByte = buf.get();
+            }
+            final int length = lengthByte & 0xff;
             final int initialPosition = buf.position();
 
             final Type type = Type.fromCode(typeCode);
+
+            //trace("Read typeCode={}, type={}, length={}, initialPosition={}", typeCode, type, length, initialPosition);
+
             if (type == null) {
                 if (!unknownTypeCodes.containsKey(typeCode)) {
                     unknownTypeCodes.put(typeCode, 0);
@@ -181,7 +192,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         consumeTimestampOffset(buf);
         final short longitudeDelta = buf.getShort();
         final short latitudeDelta = buf.getShort();
-        buf.getShort(); // ? seems to always be 2
+        final short two = buf.getShort(); // ? seems to always be 2
 
         this.longitude += longitudeDelta;
         this.latitude += latitudeDelta;
@@ -194,7 +205,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         addNewGpsCoordinates();
 
-        //trace("Consumed GPS delta: {} {}", longitudeDelta, latitudeDelta);
+        //trace("Consumed GPS delta: {} {} {}", longitudeDelta, latitudeDelta, two);
     }
 
     private void consumeStatus(final ByteBuffer buf) {
@@ -236,7 +247,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         // TODO integrate into gpx
 
-        //trace("Consumed speed: cadence={}, stride={}, ?={}", cadence, stride, );
+        //trace("Consumed speed: cadence={}, stride={}, pace={}", cadence, stride, pace);
     }
 
     private void consumeAltitude(final ByteBuffer buf) {
