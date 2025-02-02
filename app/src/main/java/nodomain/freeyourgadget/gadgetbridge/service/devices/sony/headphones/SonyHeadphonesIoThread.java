@@ -89,6 +89,12 @@ public class SonyHeadphonesIoThread extends BtClassicIoThread {
     }
 
     @Override
+    public void quit() {
+        handler.removeCallbacksAndMessages(null);
+        super.quit();
+    }
+
+    @Override
     public synchronized void write(final byte[] bytes) {
         // Log the human-readable message, for debugging
         LOG.info("Writing {}", Message.fromBytes(bytes));

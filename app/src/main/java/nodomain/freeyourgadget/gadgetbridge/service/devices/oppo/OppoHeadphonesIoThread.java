@@ -20,6 +20,7 @@ import static nodomain.freeyourgadget.gadgetbridge.util.GB.hexdump;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.os.Handler;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.btclassic.BtClassicIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 
@@ -40,6 +42,34 @@ public class OppoHeadphonesIoThread extends BtClassicIoThread {
     private static final Logger LOG = LoggerFactory.getLogger(OppoHeadphonesIoThread.class);
 
     private final OppoHeadphonesProtocol mProtocol;
+
+    private final Handler handler = new Handler();
+
+    // Some devices will not reply to the first battery request, so we need to retry a few times
+    private int batteryRetries = 0;
+    private final Runnable batteryReqRunnable = new Runnable() {
+        public void run() {
+            final int batteryCount = getDevice().getDeviceCoordinator().getBatteryCount(getDevice());
+            boolean knownBattery = false;
+            for (int i = 0; i < batteryCount; i++) {
+                if (getDevice().getBatteryState(i) != BatteryState.UNKNOWN) {
+                    knownBattery = true;
+                    break;
+                }
+            }
+            if (!knownBattery) {
+                if (batteryRetries++ < 2) {
+                    LOG.warn("Battery request retry {}", batteryRetries);
+
+                    write(mProtocol.encodeBatteryReq());
+                    scheduleBatteryRequestRetry();
+                } else {
+                    LOG.error("Failed to get battery after {} tries", batteryRetries);
+                    // Since this is not fatal, we stay connected
+                }
+            }
+        }
+    };
 
     public OppoHeadphonesIoThread(final GBDevice gbDevice,
                                   final Context context,
@@ -61,7 +91,14 @@ public class OppoHeadphonesIoThread extends BtClassicIoThread {
         write(mProtocol.encodeFirmwareVersionReq());
         write(mProtocol.encodeConfigurationReq());
         write(mProtocol.encodeBatteryReq());
+        scheduleBatteryRequestRetry();
         setUpdateState(GBDevice.State.INITIALIZED);
+    }
+
+    @Override
+    public void quit() {
+        handler.removeCallbacksAndMessages(null);
+        super.quit();
     }
 
     @Override
@@ -71,5 +108,11 @@ public class OppoHeadphonesIoThread extends BtClassicIoThread {
         // FIXME: We should buffer this and handle partial commands
         LOG.debug("Read {} bytes: {}", bytes, hexdump(buffer, 0, bytes));
         return Arrays.copyOf(buffer, bytes);
+    }
+
+    private void scheduleBatteryRequestRetry() {
+        LOG.info("Scheduling battery request retry");
+
+        handler.postDelayed(batteryReqRunnable, 2000);
     }
 }
