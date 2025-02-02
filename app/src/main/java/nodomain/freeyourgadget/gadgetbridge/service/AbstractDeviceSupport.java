@@ -550,7 +550,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
         Context context = getContext();
         LOG.info("Got BATTERY_INFO device event");
         gbDevice.setBatteryLevel(deviceEvent.level, deviceEvent.batteryIndex);
-        gbDevice.setBatteryState(deviceEvent.state);
+        gbDevice.setBatteryState(deviceEvent.state, deviceEvent.batteryIndex);
         gbDevice.setBatteryVoltage(deviceEvent.voltage, deviceEvent.batteryIndex);
 
         final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(gbDevice);
