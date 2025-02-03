@@ -264,6 +264,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiSmartScaleCoordina
 import nodomain.freeyourgadget.gadgetbridge.devices.moondrop.MoondropSpaceTravelCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.C20Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiI28UltraCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.KsixVentureCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MisirunC17Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.no1f1.No1F1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBudsPro2Coordinator;
@@ -676,6 +677,7 @@ public enum DeviceType {
     COLMI_I28_ULTRA(ColmiI28UltraCoordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
     C20(C20Coordinator.class),
+    KSIX_VENTURE(KsixVentureCoordinator.class),
     B_AND_W_P_SERIES(BandWPSeriesDeviceCoordinator.class),
     EARFUN_AIR_S(EarFunAirSCoordinator.class),
     EARFUN_AIR_PRO_4(EarFunAirPro4Coordinator.class),
