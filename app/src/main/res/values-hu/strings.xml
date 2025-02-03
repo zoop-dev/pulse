@@ -23,7 +23,7 @@
     <string name="title_activity_appmanager">Alkalmazáskezelő</string>
     <string name="appmanager_cached_watchapps_watchfaces">Gyorsítótárazott alkalmazások</string>
     <string name="appmanager_installed_watchapps">Telepített alkalmazások</string>
-    <string name="appmanager_installed_watchfaces">Telepített órafelületek</string>
+    <string name="appmanager_installed_watchfaces">Telepített számlapok</string>
     <string name="appmananger_app_delete">Törlés</string>
     <string name="appmananger_app_delete_cache">Törlés és eltávolítás a gyorsítótárból</string>
     <string name="appmananger_app_reinstall">Újratelepítés</string>
@@ -375,7 +375,7 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble párosítása</string>
     <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelenni az Android-eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
-    <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble eszközén. \n \nItt nincs szükség beállításra. \n \nA Pebble rendszer időjárás alkalmazását az alkalmazáskezelésből engedélyezheti. \n \nA támogatott órafelületek automatikusan megjelenítik az időjárást.</string>
+    <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble eszközén. \n \nItt nincs szükség beállításra. \n \nA Pebble rendszer időjárás alkalmazását az alkalmazáskezelésből engedélyezheti. \n \nA támogatott számlapok automatikusan megjelenítik az időjárást.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth párosítás engedélyezése</string>
     <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
     <string name="unit_metric">Metrikus</string>
@@ -432,7 +432,7 @@
     <string name="title_activity_device_specific_settings">Eszközspecifikus beállítások</string>
     <string name="controlcenter_calibrate_device">Eszköz kalibrálása</string>
     <string name="mi2_prefs_button_press_count">Gombnyomások száma</string>
-    <string name="pref_summary_pebble_enable_bgjs">Ha engedélyezve van, akkor lehetővé teszi, hogy az órafelületek időjárási, akkumulátor-információkat és egyebeket jelenítsenek meg.</string>
+    <string name="pref_summary_pebble_enable_bgjs">Ha engedélyezve van, akkor lehetővé teszi, hogy a számlapok időjárási, akkumulátor-információkat és egyebeket jelenítsenek meg.</string>
     <string name="interval_one_minute">percenként</string>
     <string name="interval_five_minutes">5 percenként</string>
     <string name="interval_ten_minutes">10 percenként</string>
@@ -767,7 +767,7 @@
     <string name="meters">m</string>
     <string name="hr_widget_heart_rate">Pulzusszám</string>
     <string name="activity_type_yoga">Jóga</string>
-    <string name="kind_watchface">Órafelület</string>
+    <string name="kind_watchface">Számlap</string>
     <string name="watch9_time_minutes">Perc:</string>
     <string name="menuitem_music">Zene</string>
     <string name="prefs_find_phone">Telefon keresése</string>
@@ -1280,7 +1280,7 @@
     <string name="activity_db_management_clean_export_directory_label">Fájlok törlése az exportálás/importálás könyvtárból</string>
     <string name="prefs_wena3_vibration_smart_item">Okos rezgés</string>
     <string name="zepp_os_watchface_business_style">Üzleti stílus</string>
-    <string name="watchface_cache_confirm_overwrite">Egy órafelület ezzel a névvel már létezik a gyorsítótárban. Szeretné felülírni?</string>
+    <string name="watchface_cache_confirm_overwrite">Egy számlap ezzel a névvel már létezik a gyorsítótárban. Szeretné felülírni?</string>
     <string name="prefs_wena3_vibration_strength_item_medium">Közepes</string>
     <string name="zepp_os_watchface_emerald_moonlight">Smaragd holdfény</string>
     <string name="activity_data_management_directory_content_title">Exportálás/importálás könyvtár tartalma</string>
@@ -1320,7 +1320,7 @@
     <string name="autoExport_lastTime_label">Utolsó automatikus exportálás: %1$s</string>
     <string name="zepp_os_watchface_simplicity_data">Egyszerű adatok</string>
     <string name="pref_title_huami_force_new_protocol">Új hitelesítési protokoll</string>
-    <string name="qhybrid_title_watchface">Órafelület beállítása</string>
+    <string name="qhybrid_title_watchface">Számlap beállítása</string>
     <string name="pref_title_notification_cache_while_disconnected">Gyorsítótárazás, amíg hatótávon kívül van</string>
     <string name="discovery_bluetooth_le_scan">Bluetooth LE beolvasás:</string>
     <string name="devicestatus_disconnected">Az eszköz leválasztódott!</string>
@@ -1414,7 +1414,7 @@
     <string name="fw_upgrade_notice_amazfit_band7">A(z) %s firmware-t kívánja telepíteni az Amazfit Band 7 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">A(z) %s firmware-t kívánja telepíteni az Amazfit Cheetah Pro eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_zepp_os">A(z) %s firmware-t kívánja telepíteni a(z) %s eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="open_fw_installer_info_text">A Firmware/Órafelület/Alkalmazás/Fájl telepítő lehetővé teszi a támogatott fájlok (firmware, számlapok, alkalmazások, GPS, erőforrások, betűtípusok...) feltöltését/telepítését az eszközre. További információt a wikiben talál: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">A Firmware/Számlap/Alkalmazás/Fájl telepítő lehetővé teszi a támogatott fájlok (firmware, számlapok, alkalmazások, GPS, erőforrások, betűtípusok...) feltöltését/telepítését az eszközre. További információt a wikiben talál: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_connect_maximum_one_device">CSAK EGY olyan eszközt párosítson, amelyre el szeretné küldeni a fájlt.</string>
     <string name="pref_summary_general_reconnectonlytoconnected">Újrakapcsolódás csak a párosított eszközökhöz, ahelyett, hogy az összes eszközzel újracsatlakozna</string>
     <string name="pref_display_caller_summary">Bejövő hívások telefonszámának vagy nevének megjelenítése</string>
@@ -1571,7 +1571,7 @@
     <string name="pref_workout_detection_title">Edzésérzékelés</string>
     <string name="reminder_time_every_year">%1$s, minden évben</string>
     <string name="prefs_heartrate_alert_experimental_title">Pulzusszámriasztás (kísérleti)</string>
-    <string name="watchface_install_info">A következő órafelületet készül telepíteni: \n \n%1$s \nVerzió: %2$s, készítő: %3$s\n</string>
+    <string name="watchface_install_info">A következő számlapot készül telepíteni: \n \n%1$s \nVerzió: %2$s, készítő: %3$s\n</string>
     <string name="clap_hands_to_wakeup_device">A képernyő felélesztéséhez tapsoljon a kezével</string>
     <string name="clap_hands_to_wakeup_device_summary">Az újbóli tapsolás kikapcsolja a képernyőt</string>
     <string name="pixoo_power_saving_summary">A képernyő kikapcsol, ha a mikrofon egy ideig csendet észlel</string>
@@ -1619,7 +1619,7 @@
     <string name="title_activity_contact_details">Névjegy adatok</string>
     <string name="prefs_relaxation_reminder_description">A karkötő rezgésével értesítse, ha a feszültség értéke meghaladja a 80-at</string>
     <string name="devicestatus_upload_failed">A feltöltés nem sikerült</string>
-    <string name="prefs_always_on_display_follow_watchface">A stílus követi az órafelületet</string>
+    <string name="prefs_always_on_display_follow_watchface">A stílus követi a számlapot</string>
     <string name="prefs_heartrate_alert_low_threshold">Alacsony pulzusszámriasztás küszöb</string>
     <string name="pref_title_expose_hr">Harmadik fél általi valós idejű HR hozzáférése</string>
     <string name="prefs_heartrate_alert_high_threshold">Magas pulzusszámriasztás küszöb</string>
@@ -1681,7 +1681,7 @@
     <string name="norwegian_bokmal">Norvég Bokmål</string>
     <string name="prefs_always_on_display_summary">Tartsa folyamatosan bekapcsolva a karkötő kijelzőjét</string>
     <string name="prefs_password_summary">Zárja le a karkötőt jelszóval, amikor eltávolítja a csuklójáról</string>
-    <string name="prefs_shortcut_cards_summary">Jobbra húzáskor az órafelületen láthatóvá válnak a gyorsbillentyűkártyák. Ha egy alkalmazás fut, az automatikusan generált kártyákat ez a beállítás nem érinti.</string>
+    <string name="prefs_shortcut_cards_summary">Jobbra húzáskor a számlapon láthatóvá válnak a gyorsbillentyűkártyák. Ha egy alkalmazás fut, az automatikusan generált kártyákat ez a beállítás nem érinti.</string>
     <string name="prefs_control_center">Vezérlőközpont</string>
     <string name="activity_type_swimming_openwater">Úszás (nyílt vízen)</string>
     <string name="extended_ascii">Kibővített ASCII</string>
@@ -2116,12 +2116,12 @@
     <string name="devicetype_galaxybuds_pro">Galaxy Buds Pro</string>
     <string name="enable_notifications_summary">Hívás, üzenet és egyéb értesítések</string>
     <string name="devicetype_sony_linkbuds">Sony LinkBuds</string>
-    <string name="watchface_dialog_title_settings">Órafelület beállítások</string>
+    <string name="watchface_dialog_title_settings">Számlap beállítások</string>
     <string name="pref_switch_controls_anc_off">Zajszűrés ←→ Ki</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
     <string name="activity_filter_reset_filter">Szűrők törlése</string>
-    <string name="watchface_dialog_title_set_name">Órafelület elnevezése</string>
-    <string name="watchface_upload_failed">Az órafelületet nem sikerült feltölteni. Próbáld újra.</string>
+    <string name="watchface_dialog_title_set_name">Számlap elnevezése</string>
+    <string name="watchface_upload_failed">A számlapot nem sikerült feltölteni. Próbálja újra.</string>
     <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
     <string name="prefs_active_noise_cancelling_light">Alacsony aktív zajszűrés</string>
     <string name="left_earbud">Bal oldali fülhallgató</string>
@@ -2191,7 +2191,7 @@
     <string name="pressure_relief_summary">Megakadályozza a nyomásérzést a fülben, amikor az aktív zajszűrés nincs használatban</string>
     <string name="pref_summary_physical_buttons">Az óra fizikai gombjainak beállítása</string>
     <string name="qhybrid_pref_title_actions">Műveletek</string>
-    <string name="button_watchface_settings">Órafelület beállítások</string>
+    <string name="button_watchface_settings">Számlap beállítások</string>
     <string name="stepRateSum">Lépésszám összege</string>
     <string name="impactMax">Maximum hatás</string>
     <string name="impactAvg">Hatás átlag</string>
@@ -2254,8 +2254,8 @@
     <string name="prefs_ambient_volume_right">Hangáteresztés hangereje (jobb)</string>
     <string name="prefs_ambient_mode">Környezeti hang mód</string>
     <string name="prefs_events_forwarding_broadcast_title">Üzenet közvetítése</string>
-    <string name="qhybrid_watchface_configuration_old_firmware">Órafelület beállítások Dn1.0.2.19r és régebbi firmwarrel rendelkező eszközökhöz</string>
-    <string name="qhybrid_title_watchface_designer">Órafelület-tervező</string>
+    <string name="qhybrid_watchface_configuration_old_firmware">Számlap beállítások Dn1.0.2.19r és régebbi firmwarrel rendelkező eszközökhöz</string>
+    <string name="qhybrid_title_watchface_designer">Számlaptervező</string>
     <string name="watchface_setting_title_wrist_flick">Csukló mozgás</string>
     <string name="watchface_setting_wrist_flick_hour">Óra mutató</string>
     <string name="prefs_active_noise_cancelling_transparency">Átlátszóság</string>
@@ -2278,7 +2278,7 @@
     <string name="sony_equalizer">Hangszínszabályzó</string>
     <string name="sony_equalizer_preset_bright">Élénk</string>
     <string name="sony_equalizer_preset_mellow">Mélabús</string>
-    <string name="fossil_hr_button_config_info">Egyes gombok nem konfigurálhatóak, mert funkciójukat az óra firmware-je keményen kódolja. \n \nFigyelem: a felső gomb hosszú megnyomásával, amikor a hivatalos Fossil alkalmazásból származó órafelület van telepítve, a modulok megjelenítése/elrejtése között is váltani fog.</string>
+    <string name="fossil_hr_button_config_info">Egyes gombok nem konfigurálhatóak, mert funkciójukat az óra firmware-je keményen kódolja. \n \nFigyelem: a felső gomb hosszú megnyomásával, amikor a hivatalos Fossil alkalmazásból származó számlap van telepítve, a modulok megjelenítése/elrejtése között is váltani fog.</string>
     <string name="sony_warn_sbc_codec">Figyelmeztetés: A hangszínszabályzó, a hangpozíció és a környezeti beállítások csak az SBC audio codec esetében működnek.</string>
     <string name="sony_equalizer_preset_vocal">Ének</string>
     <string name="watchface_widget_type_custom">Egyéni modul</string>
@@ -2294,15 +2294,15 @@
     <string name="watchface_dialog_widget_timezone_duration">Az óra láthatóságának időtartama (másodpercben)</string>
     <string name="pref_force_wear_location_summary">Viselt eszköz tartózkodási hely szolgáltatásának kényszerítése. \nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="watchface_dialog_pre_setting_position">előre beállított pozíció ehhez: %s</string>
-    <string name="info_fossil_rebuild_watchface_custom_menu">Állítsa össze az egyéni menühöz az órafelületet</string>
-    <string name="uploading_watchface">Órafelület feltöltése…</string>
-    <string name="uploadwatchfaceoperation_in_progress">Órafelület feltöltése</string>
+    <string name="info_fossil_rebuild_watchface_custom_menu">Állítsa össze az egyéni menühöz a számlapot</string>
+    <string name="uploading_watchface">Számlap feltöltése…</string>
+    <string name="uploadwatchfaceoperation_in_progress">Számlap feltöltése</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">GPS-helyzetfigyelő megállítása</string>
     <string name="watchface_setting_light_up_on_notification">Új értesítéskor világít</string>
     <string name="watchface_dialog_widget_update_timeout">Frissítési időkorlát percben</string>
     <string name="watchface_dialog_widget_timeout_hide_text">Szöveg elrejtése időtúllépéskor</string>
-    <string name="uploadwatchfaceoperation_failed">Az órafelület telepítése sikertelen</string>
-    <string name="uploadwatchfaceoperation_complete">Az órafelület telepítése kész</string>
+    <string name="uploadwatchfaceoperation_failed">A számlap telepítése sikertelen</string>
+    <string name="uploadwatchfaceoperation_complete">Az számlap telepítése kész</string>
     <string name="prefs_events_forwarding_summary">Eszköz-események használata műveletek és Android közvetítések indításához</string>
     <string name="agps_status_pending">Függőben</string>
     <string name="proprietary_app_warning">Ez a funkció egy zárt forráskódú alkalmazás telepítését igényli</string>
@@ -2380,7 +2380,7 @@
     <string name="pref_media_play">Médialejátszás</string>
     <string name="qhybrid_title_on_device_confirmation">A párosítás megerősítésének engedélyezése az eszközön</string>
     <string name="debug_companion_pair_current">Eszköz párosítása társeszközként</string>
-    <string name="dashboard_calendar_month_goals_reached_title">A lépések céljának teljesítése (%)</string>
+    <string name="dashboard_calendar_month_goals_reached_title">A lépések %-ában elért cél</string>
     <string name="pref_dashboard_first_title">A Műszerfal megjelenítése elsőként</string>
     <string name="pref_dashboard_widget_today_24h_summary">A tevékenység megjelenítése két 12 órás kör helyett egyetlen 24 órás körben</string>
     <string name="bottom_nav_dashboard">Műszerfal</string>
@@ -2511,8 +2511,8 @@
     <string name="controlcenter_unset_folder">Nincs megadott mappa</string>
     <string name="pref_force_options">Beállítások kényszerítése</string>
     <string name="steps_streaks_total_steps">Összes\nlépés</string>
-    <string name="cannot_upload_watchface_too_many_watchfaces_installed">Nem lehet órafelületet feltölteni, túl sok órafelület van telepítve</string>
-    <string name="watchface_resolution_doesnt_match">Az órafelület felbontása nem egyezik az eszköz képernyőjével. Az órafelület felbontása %1$s, az eszköz képernyője %2$s</string>
+    <string name="cannot_upload_watchface_too_many_watchfaces_installed">Nem lehet számlapot feltölteni, túl sok számlap van telepítve</string>
+    <string name="watchface_resolution_doesnt_match">A számlap felbontása nem egyezik az eszköz képernyőjével. A számlap felbontása %1$s, az eszköz képernyője %2$s</string>
     <string name="ftp_server_start_summary">Az FTP-kiszolgáló elindítása az órán</string>
     <string name="widget_layout_two">2 modul</string>
     <string name="devicetype_sony_wf_c500">Sony WF-C500</string>
