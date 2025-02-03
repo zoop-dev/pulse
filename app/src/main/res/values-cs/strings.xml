@@ -3748,4 +3748,11 @@
     <string name="pref_garmin_fake_oauth_warning">Pokud plánujete používat oficiální aplikaci nebo připojit hodinky k internetu, tuto funkci nepovolujte. Po povolení tohoto nastavení bude možná nutné hodinky obnovit do továrního nastavení, aby se znovu ověřily.</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
     <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
+    <string name="pairing_even_realities_g1_find_both_fail">Nepodařilo se najít pravý ani levý objektiv. Proveďte prosím sken znovu.</string>
+    <string name="devicetype_even_realities_g1">Even Realities G1</string>
+    <string name="pairing_even_realities_g1_working">Párování s objektivem %1s…</string>
+    <string name="title_activity_even_realities_g1_pairing">Párování Even G1</string>
+    <string name="pairing_even_realities_g1_select_next_lens">Vybráno %1$s objektivů k párování. Nalezeno několik kandidátů pro objektiv %2$s. Vyberte prosím objektiv %2$s ze seznamu níže.</string>
+    <string name="pairing_even_realities_g1_invalid_device">Zařízení Even G1 poškozeno: %1$s.</string>
+    <string name="pairing_even_realities_g1_bottom_hint">Na vašem zařízení se objeví několik dialogů o párování. Pokud ne, podívejte se do oznamovací nabídky a přijměte žádost o párování. Je třeba spárovat levý i pravý objektiv.</string>
 </resources>
