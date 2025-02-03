@@ -951,6 +951,10 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean getSupportsFlashing() {
+        return true;
+    }
+
     public InstallHandler getInstallHandler(Uri uri, Context context) {
         HuaweiInstallHandler handler = new HuaweiInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
