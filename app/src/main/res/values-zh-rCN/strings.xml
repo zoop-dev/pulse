@@ -3744,4 +3744,11 @@
     <string name="devicetype_sony_wh_ult900n">索尼 WH-ULT900N</string>
     <string name="devicetype_garmin_lily_2_active">佳明 Lily 2 活动版</string>
     <string name="pref_garmin_fake_oauth_warning">如果您打算使用官方应用程序或将手表连接到Internet，请不要启用此功能。启用此设置后，您可能需要将手表恢复至出厂设置以再次验证。</string>
+    <string name="title_activity_even_realities_g1_pairing">Even G1 配对中</string>
+    <string name="pairing_even_realities_g1_working">正在与 %1s 进行配对…</string>
+    <string name="pairing_even_realities_g1_find_both_fail">未能找到左右镜片。请再次扫描。</string>
+    <string name="pairing_even_realities_g1_bottom_hint">您的安卓设备上会弹出多个配对对话框。如果没有，请在推送通知中查找并接受蓝牙配对请求。需要配对左、右两个镜片。</string>
+    <string name="pairing_even_realities_g1_select_next_lens">已为配对选择 %1$s 镜片。找到适合 %2$s 镜片的多个候选。请从下方列表中选择 %2$s 镜片。</string>
+    <string name="pairing_even_realities_g1_invalid_device">Even G1 设备畸变：%1$s。</string>
+    <string name="devicetype_even_realities_g1">Even Realities G1</string>
 </resources>
