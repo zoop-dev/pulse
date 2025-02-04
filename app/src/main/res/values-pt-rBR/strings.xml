@@ -2326,7 +2326,7 @@
     <string name="pref_summary_wheel_diameter">Diâmetro da roda em polegadas. Normalmente 29, 27,5 ou 26.</string>
     <string name="intent_api_allow_trigger_export_summary">Permitir o acionamento da exportação do banco de dados por meio da API de Intenção</string>
     <string name="intent_api_broadcast_export_title">Anunciar na exportação do banco de dados</string>
-    <string name="intent_api_broadcast_export_summary">Anunciar uma intenção quando a exportação do banco dados finalizar</string>
+    <string name="intent_api_broadcast_export_summary">Anunciar uma intenção quando a exportação do banco de dados finalizar</string>
     <string name="prefs_wena3_item_background_sync">Sincronização de dados de atividade em segundo plano</string>
     <string name="intent_api_broadcast_activity_sync_title">Anunciar no término da sincronização da atividade</string>
     <string name="withings_bt_calibration_previous">Anterior</string>
@@ -2539,4 +2539,8 @@
     <string name="devicetype_garmin_venu_sq">Garmin Venu Sq</string>
     <string name="smart_ring_measurement_error_unknown">Erro de medição desconhecido %d recebido do anel</string>
     <string name="smart_ring_measurement_error_worn_incorrectly">Erro de medição. Os sensores do anel estão orientados corretamente?</string>
+    <string name="pref_summary_sync_birthdays">Sincronize os aniversários dos contatos com os eventos do calendário</string>
+    <string name="pref_title_sync_birthdays">Sincronizar aniversários</string>
+    <string name="auto_reconnect_ble_summary">Proativamente tente se conectar ao dispositivo periodicamente</string>
+    <string name="activity_prefs_goal_active_calories_burnt">Meta diária: calorias ativas queimadas</string>
 </resources>
