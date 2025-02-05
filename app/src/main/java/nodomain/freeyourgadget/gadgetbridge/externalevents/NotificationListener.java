@@ -34,8 +34,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
+import android.media.session.PlaybackState;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -807,12 +809,14 @@ public class NotificationListener extends NotificationListenerService {
     public boolean handleMediaSessionNotification(MediaSession.Token mediaSession) {
         try {
             final MediaController c = new MediaController(getApplicationContext(), mediaSession);
-            if (c.getMetadata() == null) {
+            final PlaybackState playbackState = c.getPlaybackState();
+            final MediaMetadata metadata = c.getMetadata();
+            if (metadata == null) {
                 return false;
             }
 
-            final MusicStateSpec stateSpec = MediaManager.extractMusicStateSpec(c.getPlaybackState());
-            final MusicSpec musicSpec = MediaManager.extractMusicSpec(c.getMetadata());
+            final MusicStateSpec stateSpec = MediaManager.extractMusicStateSpec(playbackState);
+            final MusicSpec musicSpec = MediaManager.extractMusicSpec(metadata);
 
             // finally, tell the device about it
             if (mSetMusicInfoRunnable != null) {
