@@ -190,6 +190,8 @@ public class MoyoungConstants {
 
     public static final byte CMD_GSENSOR_CALIBRATION = 82;                          // (?) {}
 
+    public static final byte CMD_RETURN_PRINCIPAL_SCREEN = 83;                      // (?) {}
+
     public static final byte CMD_QUERY_STEPS_CATEGORY = 89;                         // (*) {i} -> {0, data:uint16[*]}, {1}, {2, data:uint16[*]}, {3}, query 0+1 together and 2+3 together
     //public static final byte ARG_QUERY_STEPS_CATEGORY_TODAY_STEPS = 0;
     //public static final byte ARG_QUERY_STEPS_CATEGORY_YESTERDAY_STEPS = 2;

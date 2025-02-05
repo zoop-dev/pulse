@@ -61,6 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
@@ -153,6 +154,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private boolean realTimeHeartRate;
     private boolean findMyPhoneActive = false;
+    private boolean takePhotoActive = false;
     private final Set<CalendarEvent> lastSync = new HashSet<>();
 
     public int getMtu() {
@@ -263,6 +265,15 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private boolean handlePacket(byte packetType, byte[] payload)
     {
+        if (packetType == MoyoungConstants.CMD_RETURN_PRINCIPAL_SCREEN) {  // 83
+            LOG.info("Return to a principal screen...");
+            if (takePhotoActive) {
+                handleCameraRemote(GBDeviceEventCameraRemote.Event.CLOSE_CAMERA);
+                takePhotoActive = false;
+            }
+            return true;
+        }
+
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE)
         {
             int heartRate = payload[0];
@@ -418,13 +429,15 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-
         }
 
-        if (packetType == MoyoungConstants.CMD_SWITCH_CAMERA_VIEW)
-        {
-            // TODO: trigger camera photo
-            LOG.info("Camera shutter triggered from watch");
+        if (packetType == MoyoungConstants.CMD_SWITCH_CAMERA_VIEW) {
+            if (!takePhotoActive) {
+                handleCameraRemote(GBDeviceEventCameraRemote.Event.OPEN_CAMERA);
+                takePhotoActive = true;
+            } else {
+                handleCameraRemote(GBDeviceEventCameraRemote.Event.TAKE_PICTURE);
+            }
             return true;
         }
 
@@ -535,6 +548,16 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         batteryCmd.level = (short) info.getPercentCharged();
         if (batteryCmd.state == BatteryState.UNKNOWN) batteryCmd.state = BatteryState.BATTERY_NORMAL;
         handleGBDeviceEvent(batteryCmd);
+    }
+
+    private void handleCameraRemote(GBDeviceEventCameraRemote.Event eventType) {
+        Prefs prefs = getDevicePrefs();
+        if (!prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE, false))
+            return;
+
+        final GBDeviceEventCameraRemote event = new GBDeviceEventCameraRemote();
+        event.event = eventType;
+        evaluateGBDeviceEvent(event);
     }
 
     @Override
