@@ -44,10 +44,16 @@ public class SoundcoreLibertyProtocol extends AbstractSoundcoreProtocol {
         byte[] payload = packet.getPayload();
 
         if (cmd == (short) 0x0101) {
-            // a lot of other data is in here, anything interesting?
+            int batteryLeft = payload[2] * 20;
+            int batteryRight = payload[3] * 20;
+
             String firmware1 = readString(payload, 6, 5);
             String firmware2 = readString(payload, 11, 5);
             String serialNumber = readString(payload, 16, 16);
+
+            // todo: Initializing Battery for battery_case not implemented
+            devEvts.add(buildBatteryInfo(battery_earphone_left, batteryLeft));
+            devEvts.add(buildBatteryInfo(battery_earphone_right, batteryRight));
             devEvts.add(buildVersionInfo(firmware1, firmware2, serialNumber));
         } else if (cmd == (short) 0x8d01) {
             LOG.debug("Unknown incoming message - command: " + cmd + ", dump: " + hexdump(responseData));
