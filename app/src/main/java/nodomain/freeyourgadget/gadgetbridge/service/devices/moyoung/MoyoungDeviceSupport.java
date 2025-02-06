@@ -83,6 +83,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSett
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingEnum;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingRemindersToMove;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingTimeRange;
+import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -92,6 +93,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSpo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksController;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
@@ -276,7 +278,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE)
         {
-            int heartRate = payload[0];
+            int heartRate = payload[0] & 0xff;
             LOG.info("Measure heart rate finished: " + heartRate + " BPM");
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
@@ -303,7 +305,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_OXYGEN)
         {
-            int percent = payload[0];
+            int percent = payload[0] & 0xff;
             LOG.info("Measure blood oxygen finished: " + percent + "%");
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
@@ -327,9 +329,9 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_PRESSURE)
         {
-            int dataUnknown = payload[0];
-            int data1 = payload[1];
-            int data2 = payload[2];
+            int dataUnknown = payload[0] & 0xff;
+            int data1 = payload[1] & 0xff;
+            int data2 = payload[2] & 0xff;
             LOG.info("Measure blood pressure finished: " + data1 + "/" + data2 + " (" + dataUnknown + ")");
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
@@ -353,6 +355,25 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
+        if (packetType == MoyoungConstants.CMD_START_STOP_MEASURE_DYNAMIC_RATE) {
+            final boolean startOnPhone = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_WORKOUT_START_ON_PHONE, false);
+            // Training on the watch started or finished
+            int type = payload[0] & 0xff;
+            if (type == 0xff) {
+                LOG.info("Training on the watch stopped");
+                if (startOnPhone) {
+                    OpenTracksController.stopRecording(getContext());
+                }
+            } else {
+                final ActivityKind activityKind = MoyoungConstants.WORKOUT_TYPES_TO_ACTIVITY_KIND.getOrDefault(payload[0], ActivityKind.ACTIVITY);
+                LOG.info("Training on the watch started (type {} = {})", type, getContext().getString(activityKind.getLabel()));
+                if (startOnPhone) {
+                    OpenTracksController.startRecording(getContext(), activityKind);
+                }
+            }
+            return true;
+        }
+
         if (packetType == MoyoungConstants.CMD_QUERY_LAST_DYNAMIC_RATE)
         {
             // Training on the watch just finished and it wants us to fetch the details
@@ -362,6 +383,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             } catch (IOException e) {
                 LOG.error("TrainingFinishedDataOperation failed: ", e);
             }
+            return true;
         }
 
         if (packetType == MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1)
@@ -1309,26 +1331,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                     summary.setUser(user);
 
                     ActivityKind gbType = provider.normalizeType(type);
-                    String name;
-                    if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_ROPE)
-                        name = "Rope";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_BADMINTON)
-                        name = "Badminton";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_BASKETBALL)
-                        name = "Basketball";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_FOOTBALL)
-                        name = "Football";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_MOUNTAINEERING)
-                        name = "Mountaineering";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_TENNIS)
-                        name = "Tennis";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_RUGBY)
-                        name = "Rugby";
-                    else if (type == MoyoungActivitySampleProvider.ACTIVITY_TRAINING_GOLF)
-                        name = "Golf";
-                    else
-                        name = gbType.name();
-                    summary.setName(name);
+                    summary.setName(gbType.name());
                     summary.setActivityKind(gbType.getCode());
 
                     summary.setStartTime(startTime);

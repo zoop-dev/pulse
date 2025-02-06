@@ -60,18 +60,6 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
     public static final int SOURCE_BATTERY = 7;            // battery report
 
     public static final int ACTIVITY_NOT_MEASURED = -1;
-    public static final int ACTIVITY_TRAINING_WALK = MoyoungConstants.TRAINING_TYPE_WALK;
-    public static final int ACTIVITY_TRAINING_RUN = MoyoungConstants.TRAINING_TYPE_RUN;
-    public static final int ACTIVITY_TRAINING_BIKING = MoyoungConstants.TRAINING_TYPE_BIKING;
-    public static final int ACTIVITY_TRAINING_ROPE = MoyoungConstants.TRAINING_TYPE_ROPE;
-    public static final int ACTIVITY_TRAINING_BADMINTON = MoyoungConstants.TRAINING_TYPE_BADMINTON;
-    public static final int ACTIVITY_TRAINING_BASKETBALL = MoyoungConstants.TRAINING_TYPE_BASKETBALL;
-    public static final int ACTIVITY_TRAINING_FOOTBALL = MoyoungConstants.TRAINING_TYPE_FOOTBALL;
-    public static final int ACTIVITY_TRAINING_SWIM = MoyoungConstants.TRAINING_TYPE_SWIM;
-    public static final int ACTIVITY_TRAINING_MOUNTAINEERING = MoyoungConstants.TRAINING_TYPE_MOUNTAINEERING;
-    public static final int ACTIVITY_TRAINING_TENNIS = MoyoungConstants.TRAINING_TYPE_TENNIS;
-    public static final int ACTIVITY_TRAINING_RUGBY = MoyoungConstants.TRAINING_TYPE_RUGBY;
-    public static final int ACTIVITY_TRAINING_GOLF = MoyoungConstants.TRAINING_TYPE_GOLF;
     public static final int ACTIVITY_SLEEP_LIGHT = 16;
     public static final int ACTIVITY_SLEEP_RESTFUL = 17;
     public static final int ACTIVITY_SLEEP_START = 18;
@@ -122,21 +110,8 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
             return ActivityKind.REM_SLEEP;
         else if (rawType == ACTIVITY_SLEEP_START || rawType == ACTIVITY_SLEEP_END)
             return ActivityKind.NOT_MEASURED;
-        else if (rawType == ACTIVITY_TRAINING_WALK)
-            return ActivityKind.WALKING;
-        else if (rawType == ACTIVITY_TRAINING_RUN)
-            return ActivityKind.RUNNING;
-        else if (rawType == ACTIVITY_TRAINING_BIKING)
-            return ActivityKind.CYCLING;
-        else if (rawType == ACTIVITY_TRAINING_SWIM)
-            return ActivityKind.SWIMMING;
-        else if (rawType == ACTIVITY_TRAINING_ROPE || rawType == ACTIVITY_TRAINING_BADMINTON ||
-            rawType == ACTIVITY_TRAINING_BASKETBALL || rawType == ACTIVITY_TRAINING_FOOTBALL ||
-            rawType == ACTIVITY_TRAINING_MOUNTAINEERING || rawType == ACTIVITY_TRAINING_TENNIS ||
-            rawType == ACTIVITY_TRAINING_RUGBY || rawType == ACTIVITY_TRAINING_GOLF)
-            return ActivityKind.EXERCISE;
         else
-            return ActivityKind.ACTIVITY;
+            return MoyoungConstants.WORKOUT_TYPES_TO_ACTIVITY_KIND.getOrDefault((byte) rawType, ActivityKind.ACTIVITY);
     }
 
     @Override

@@ -19,9 +19,12 @@ package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 
@@ -320,6 +323,39 @@ public class MoyoungConstants {
     public static final byte TRAINING_TYPE_TENNIS = 9;
     public static final byte TRAINING_TYPE_RUGBY = 10;
     public static final byte TRAINING_TYPE_GOLF = 11;
+    public static final byte TRAINING_TYPE_YOGA = 12;
+    public static final byte TRAINING_TYPE_FITNESS = 13;
+    public static final byte TRAINING_TYPE_DANCING = 14;
+    public static final byte TRAINING_TYPE_BASEBALL = 15;
+    public static final byte TRAINING_TYPE_ELLIPTICAL = 16;
+    public static final byte TRAINING_TYPE_INDOOR_CYCLING = 17;
+    public static final byte TRAINING_TYPE_FREE_EXERCISE = 18;
+    public static final byte TRAINING_TYPE_ROWING_MACHINE = 19;
+
+    public static Map<Byte, ActivityKind> WORKOUT_TYPES_TO_ACTIVITY_KIND = new HashMap<Byte, ActivityKind>() {
+        {
+            put(TRAINING_TYPE_WALK, ActivityKind.WALKING);
+            put(TRAINING_TYPE_RUN, ActivityKind.RUNNING);
+            put(TRAINING_TYPE_BIKING, ActivityKind.CYCLING);
+            put(TRAINING_TYPE_ROPE, ActivityKind.JUMP_ROPING);
+            put(TRAINING_TYPE_BADMINTON, ActivityKind.BADMINTON);
+            put(TRAINING_TYPE_BASKETBALL, ActivityKind.BASKETBALL);
+            put(TRAINING_TYPE_FOOTBALL, ActivityKind.SOCCER);
+            put(TRAINING_TYPE_SWIM, ActivityKind.SWIMMING);
+            put(TRAINING_TYPE_MOUNTAINEERING, ActivityKind.MOUNTAINEERING);
+            put(TRAINING_TYPE_TENNIS, ActivityKind.TENNIS);
+            put(TRAINING_TYPE_RUGBY, ActivityKind.RUGBY);
+            put(TRAINING_TYPE_GOLF, ActivityKind.GOLF);
+            put(TRAINING_TYPE_YOGA, ActivityKind.YOGA);
+            put(TRAINING_TYPE_FITNESS, ActivityKind.FITNESS_EXERCISES);
+            put(TRAINING_TYPE_DANCING, ActivityKind.DANCE);
+            put(TRAINING_TYPE_BASEBALL, ActivityKind.BASEBALL);
+            put(TRAINING_TYPE_ELLIPTICAL, ActivityKind.ELLIPTICAL_TRAINER);
+            put(TRAINING_TYPE_INDOOR_CYCLING, ActivityKind.INDOOR_CYCLING);
+            put(TRAINING_TYPE_FREE_EXERCISE, ActivityKind.FREE_TRAINING);
+            put(TRAINING_TYPE_ROWING_MACHINE, ActivityKind.ROWING_MACHINE);
+        }
+    };
 
     // The watch stores all dates in GMT+8 time zone with seconds resolution
     // These helper functions convert between the watch time representation and local system representation
