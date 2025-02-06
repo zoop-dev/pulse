@@ -1024,6 +1024,15 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 LOG.error("Error fetching data: ", e);
             }
         }
+        if ((dataTypes & RecordedDataTypes.TYPE_GPS_TRACKS) != 0)
+        {
+            LOG.info("Fetching workouts from watch");
+            try {
+                new FetchWorkoutsV2Operation(this).perform();
+            } catch (IOException e) {
+                LOG.error("Error fetching workouts: ", e);
+            }
+        }
     }
 
     private Runnable updateIdleStepsRunnable = new Runnable() {
@@ -1281,25 +1290,55 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     public void handleTrainingData(byte[] data)
     {
-        if (data.length % 24 != 0)
-            throw new IllegalArgumentException();
+        int protocolVersion = 0;
+        int trainingBytesLength = 24;
+        if (data.length % 24 == 0) {
+            protocolVersion = 1;
+        } else if (data.length % 26 == 0) {
+            protocolVersion = 2;
+            trainingBytesLength = 26;
+        }
+        if (protocolVersion == 0) {
+            LOG.error("Invalid training data received");
+            return;
+        }
 
-        for(int i = 0; i < data.length / 24; i++)
-        {
-            if (ArrayUtils.isAllZeros(data, 24*i, 24)) // no data recorded in this slot
+        for(int i = 0; i < data.length / trainingBytesLength; i++) {
+            if (protocolVersion == 1 && ArrayUtils.isAllZeros(data, trainingBytesLength * i, trainingBytesLength)) {
+                LOG.info("Skipping empty workout details packet");
                 continue;
+            }
+            if (protocolVersion == 2 && ArrayUtils.isAllZeros(data, 2, trainingBytesLength - 2)) {
+                LOG.info("Skipping empty workout details packet");
+                continue;
+            }
 
-            ByteBuffer buffer = ByteBuffer.wrap(data, 24 * i, 24);
+            ByteBuffer buffer = ByteBuffer.wrap(data, trainingBytesLength * i, trainingBytesLength);
             buffer.order(ByteOrder.LITTLE_ENDIAN);
+            byte num = 0;
+            byte avgHR = 0;
+            if (protocolVersion == 2) {
+                buffer.get();  // skip packet subtype
+                num = buffer.get();
+            }
             Date startTime = MoyoungConstants.WatchTimeToLocalTime(buffer.getInt());
             Date endTime = MoyoungConstants.WatchTimeToLocalTime(buffer.getInt());
             int validTime = buffer.getShort();
-            byte num = buffer.get(); // == i
+            if (protocolVersion == 1) {
+                num = buffer.get(); // == i
+            } else {
+                avgHR = buffer.get();
+            }
             byte type = buffer.get();
             int steps = buffer.getInt();
             int distance = buffer.getInt();
-            int calories = buffer.getShort();
-            LOG.info("Training data: start=" + startTime + " end=" + endTime + " totalTimeWithoutPause=" + validTime + " num=" + num + " type=" + type + " steps=" + steps + " distance=" + distance + " calories=" + calories);
+            int calories;
+            if (protocolVersion == 1) {
+                calories = buffer.getShort();
+            } else {
+                calories = buffer.getInt();
+            }
+            LOG.info("Training data: start=" + startTime + " end=" + endTime + " totalTimeWithoutPause=" + validTime + " num=" + num + " type=" + type + " steps=" + steps + " avgHR=" + avgHR + " distance=" + distance + " calories=" + calories);
 
             // NOTE: We are ignoring the step/distance/calories data here
             // If we had the phone connected, the realtime data is already stored anyway, and I'm
@@ -1336,6 +1375,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
                     summary.setStartTime(startTime);
                     summary.setEndTime(endTime);
+
+                    summary.setRawSummaryData(data);
 
                     summaryDao.insert(summary);
 

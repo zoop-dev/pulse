@@ -138,6 +138,12 @@ public class MoyoungConstants {
     public static final byte CMD_QUERY_PAST_HEART_RATE_2 = 54;                      // (*) An array built of 20 packets. The packet takes the index as input. i.e. {x} -> {data[N*x], data[N*x+1], ..., data[N*x+N-1]} for x in 0-19   -- todayHeartRate(2). Sampled every 1 minute.
     public static final byte CMD_QUERY_MOVEMENT_HEART_RATE = 55;                    //     {} -> One packet with 3 entries of 24 bytes each {startTime:uint32, endTime:uint32, validTime:uint16, entry_number:uint8, type:uint8, steps:uint32, distance:uint32, calories:uint16}, everything little endian
 
+    public static final byte CMD_QUERY_V2_WORKOUT = (byte) 0xb2;
+    public static final byte CMD_QUERY_V2_WORKOUT_LIST_REQUEST = 0x00;
+    public static final byte CMD_QUERY_V2_WORKOUT_LIST_RESPONSE = 0x01;
+    public static final byte CMD_QUERY_V2_WORKOUT_DETAIL_REQUEST = 0x02;
+    public static final byte CMD_QUERY_V2_WORKOUT_DETAIL_RESPONSE = 0x03;
+
     // first byte for CMD_QUERY_LAST_DYNAMIC_RATE packets
     public static final byte ARG_TRANSMISSION_FIRST = 0;
     public static final byte ARG_TRANSMISSION_NEXT = 1;
