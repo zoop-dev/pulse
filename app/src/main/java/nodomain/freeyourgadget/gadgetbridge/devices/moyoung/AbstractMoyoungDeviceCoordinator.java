@@ -18,10 +18,12 @@ package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
 import android.annotation.TargetApi;
 import android.bluetooth.le.ScanFilter;
+import android.content.Context;
 import android.os.Build;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,6 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSpo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.moyoung.MoyoungDeviceSupport;
@@ -158,6 +161,12 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     @Override
     public boolean supportsActivityTracks() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
+        return new MoyoungWorkoutSummaryParser(device);
     }
 
     @Override
