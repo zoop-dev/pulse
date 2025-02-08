@@ -143,6 +143,8 @@ public class MoyoungConstants {
     public static final byte CMD_QUERY_V2_WORKOUT_LIST_RESPONSE = 0x01;
     public static final byte CMD_QUERY_V2_WORKOUT_DETAIL_REQUEST = 0x02;
     public static final byte CMD_QUERY_V2_WORKOUT_DETAIL_RESPONSE = 0x03;
+    public static final byte CMD_QUERY_V2_WORKOUT_HR_REQUEST = 0x04;
+    public static final byte CMD_QUERY_V2_WORKOUT_HR_RESPONSE = 0x05;
 
     // first byte for CMD_QUERY_LAST_DYNAMIC_RATE packets
     public static final byte ARG_TRANSMISSION_FIRST = 0;

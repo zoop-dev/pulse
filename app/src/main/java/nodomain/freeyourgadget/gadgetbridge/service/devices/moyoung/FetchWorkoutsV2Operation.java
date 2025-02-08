@@ -24,11 +24,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.Logging;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
@@ -40,6 +49,7 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
 
     private int totalWorkouts = 0;
     private int receivedWorkouts = 0;
+    private final Calendar currentTimestamp = Calendar.getInstance();
 
     private MoyoungPacketIn packetIn = new MoyoungPacketIn();
 
@@ -56,7 +66,7 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
     @Override
     protected void doPerform() throws IOException {
         TransactionBuilder builder = performInitialized("FetchWorkoutsV2Operation");
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_V2_WORKOUT, new byte[] { MoyoungConstants.CMD_QUERY_V2_WORKOUT_LIST_REQUEST }));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_V2_WORKOUT, new byte[]{MoyoungConstants.CMD_QUERY_V2_WORKOUT_LIST_REQUEST}));
         builder.queue(getQueue());
 
         updateProgressAndCheckFinish();
@@ -96,6 +106,9 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
                 case MoyoungConstants.CMD_QUERY_V2_WORKOUT_DETAIL_RESPONSE:
                     decodeWorkoutDetails(payload);
                     break;
+                case MoyoungConstants.CMD_QUERY_V2_WORKOUT_HR_RESPONSE:
+                    decodeWorkoutHR(payload);
+                    break;
             }
             return true;
         }
@@ -111,10 +124,61 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
     private void decodeWorkoutDetails(byte[] data) {
         LOG.info("Decoding workout details packet");
         getSupport().handleTrainingData(data);
-        receivedWorkouts++;
+
+        ByteBuffer buffer = ByteBuffer.wrap(data);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.position(2);  // skip packet subtype and workoutNR to get to the workout start timestamp
+        int workoutStartTS = (buffer.getInt() / 10) * 10;  // round to nearest 10 seconds
+        currentTimestamp.setTime(MoyoungConstants.WatchTimeToLocalTime(workoutStartTS));
+        currentTimestamp.set(Calendar.MILLISECOND, 0);
+
         updateProgressAndCheckFinish();
         if (receivedWorkouts < totalWorkouts) {
-            requestWorkoutDetails(receivedWorkouts);
+            requestWorkoutHR(receivedWorkouts, 0);
+        }
+    }
+
+    private void decodeWorkoutHR(byte[] data) {
+        LOG.info("Decoding workout HR packet");
+        ByteBuffer buf = ByteBuffer.wrap(data);
+        buf.get();  // packet subtype (0x05)
+        buf.get();  // workout nr
+        int index = buf.getShort() & 0xffff;
+        final ArrayList<MoyoungHeartRateSample> hrSamples = new ArrayList<>();
+        while (buf.hasRemaining()) {
+            int hr = buf.get() & 0xff;
+            if (HeartRateUtils.getInstance().isValidHeartRateValue(hr)) {
+                MoyoungHeartRateSample sample = new MoyoungHeartRateSample();
+                sample.setTimestamp(currentTimestamp.getTimeInMillis());
+                sample.setHeartRate(hr);
+                hrSamples.add(sample);
+            }
+            currentTimestamp.add(Calendar.SECOND, 10);
+        }
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            MoyoungHeartRateSampleProvider sampleProvider = new MoyoungHeartRateSampleProvider(getDevice(), dbHandler.getDaoSession());
+            Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
+            Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
+
+            for (MoyoungHeartRateSample sample : hrSamples) {
+                sample.setDeviceId(deviceId);
+                sample.setUserId(userId);
+            }
+
+            sampleProvider.addSamples(hrSamples);
+        } catch (Exception e) {
+            LOG.error("Error acquiring database for recording heart rate samples", e);
+        }
+        if (index == 0xffff) {
+            // Last HR packet for this workout
+            receivedWorkouts++;
+            updateProgressAndCheckFinish();
+            if (receivedWorkouts < totalWorkouts) {
+                requestWorkoutDetails(receivedWorkouts);
+            }
+        } else {
+            // More data remaining
+            requestWorkoutHR(receivedWorkouts, index);
         }
     }
 
@@ -129,6 +193,20 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Error while sending workout details request: ", e);
+        }
+    }
+
+    private void requestWorkoutHR(int workoutId, int index) {
+        try {
+            TransactionBuilder builder = performInitialized("FetchWorkoutsV2Operation");
+            ByteBuffer payload = ByteBuffer.allocate(4);
+            payload.put(MoyoungConstants.CMD_QUERY_V2_WORKOUT_HR_REQUEST);
+            payload.put((byte) workoutId);
+            payload.putShort((short) index);
+            getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_V2_WORKOUT, payload.array()));
+            builder.queue(getQueue());
+        } catch (IOException e) {
+            LOG.error("Error while sending workout HR request: ", e);
         }
     }
 
