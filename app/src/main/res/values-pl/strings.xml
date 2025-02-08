@@ -3770,4 +3770,5 @@
     <string name="title_activity_even_realities_g1_pairing">Parowanie Even G1</string>
     <string name="pairing_even_realities_g1_select_next_lens">Wybrano %1$s soczewkę do sparowania. Znaleziono wielu kandydatów dla %2$s soczewki. Wybierz %2$s soczewkę z poniższej listy.</string>
     <string name="pairing_even_realities_g1_bottom_hint">Na urządzeniu z systemem Android pojawi się kilka okien dialogowych parowania. Jeśli nie, sprawdź w szufladzie powiadomień i zaakceptuj prośbę o parowanie. Zarówno lewy, jak i prawy obiektyw będą musiały zostać sparowane.</string>
+    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
 </resources>
