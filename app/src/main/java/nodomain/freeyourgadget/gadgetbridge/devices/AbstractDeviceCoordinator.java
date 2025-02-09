@@ -63,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevelDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CyclingSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributes;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributesDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
@@ -135,13 +136,37 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return Collections.emptyList();
     }
 
-    @Override
-    public GBDevice createDevice(GBDeviceCandidate candidate, DeviceType deviceType) {
-        GBDevice gbDevice = new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), null, null, deviceType);
+    protected void setBatteryConfigOnDevice(GBDevice gbDevice) {
         for (BatteryConfig batteryConfig : getBatteryConfig(gbDevice)) {
             gbDevice.setBatteryIcon(batteryConfig.getBatteryIcon(), batteryConfig.getBatteryIndex());
             gbDevice.setBatteryLabel(batteryConfig.getBatteryLabel(), batteryConfig.getBatteryIndex());
         }
+    }
+
+    @Override
+    public GBDevice createDevice(GBDeviceCandidate candidate, DeviceType deviceType) {
+        GBDevice gbDevice = new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), null, null, deviceType);
+        setBatteryConfigOnDevice(gbDevice);
+        return gbDevice;
+    }
+
+    @Override
+    public GBDevice createDevice(Device dbDevice, DeviceType deviceType) {
+        GBDevice gbDevice =
+                new GBDevice(dbDevice.getIdentifier(), dbDevice.getName(), dbDevice.getAlias(),
+                             dbDevice.getParentFolder(), deviceType);
+
+        setBatteryConfigOnDevice(gbDevice);
+
+        List<DeviceAttributes> deviceAttributesList = dbDevice.getDeviceAttributesList();
+        if (!deviceAttributesList.isEmpty()) {
+            gbDevice.setModel(dbDevice.getModel());
+            DeviceAttributes attrs = deviceAttributesList.get(0);
+            gbDevice.setFirmwareVersion(attrs.getFirmwareVersion1());
+            gbDevice.setFirmwareVersion2(attrs.getFirmwareVersion2());
+            gbDevice.setVolatileAddress(attrs.getVolatileIdentifier());
+        }
+
         return gbDevice;
     }
 

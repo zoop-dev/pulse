@@ -138,8 +138,8 @@ public class BondingUtil {
         new Handler(mainLooper).postDelayed(new Runnable() {
             @Override
             public void run() {
-                GBApplication.deviceService().disconnect();
                 GBDevice device = DeviceHelper.getInstance().toSupportedDevice(candidate);
+                GBApplication.deviceService(device).disconnect();
                 connectToGBDevice(device);
             }
         }, DELAY_AFTER_BONDING);

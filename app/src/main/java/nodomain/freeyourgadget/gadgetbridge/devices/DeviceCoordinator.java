@@ -24,17 +24,17 @@ import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabi
 import nodomain.freeyourgadget.gadgetbridge.capabilities.widgets.WidgetManager;
 import nodomain.freeyourgadget.gadgetbridge.entities.CyclingSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
@@ -158,7 +159,25 @@ public interface DeviceCoordinator {
     @NonNull
     Collection<? extends ScanFilter> createBLEScanFilters();
 
+    /**
+     * Creates a GBDevice from a candidate device. This is used to create a device based on the
+     * results of a device scan (bluetooth or otherwise).
+     *
+     * @param candidate - The candidate that should be converted to a GBDevice.
+     * @param type      - The type of the device.
+     * @return - The constructed GBDevice.
+     */
     GBDevice createDevice(GBDeviceCandidate candidate, DeviceType type);
+
+    /**
+     * Creates a GBDevice from a database device. This is used to deserialize the device from the
+     * persistent storage.
+     *
+     * @param dbDevice - The device object pulled from persistent storage.
+     * @param type     - The type of the device.
+     * @return - The constructed GBDevice.
+     */
+    GBDevice createDevice(Device dbDevice, DeviceType type);
 
     /**
      * Deletes all information, including all related database content about the

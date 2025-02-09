@@ -50,12 +50,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributes;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class DeviceHelper {
@@ -180,23 +177,7 @@ public class DeviceHelper {
      */
     public GBDevice toGBDevice(Device dbDevice) {
         DeviceType deviceType = DeviceType.fromName(dbDevice.getTypeName());
-        GBDevice gbDevice = new GBDevice(dbDevice.getIdentifier(), dbDevice.getName(), dbDevice.getAlias(), dbDevice.getParentFolder(), deviceType);
-        DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
-        for (BatteryConfig batteryConfig : coordinator.getBatteryConfig(gbDevice)) {
-            gbDevice.setBatteryIcon(batteryConfig.getBatteryIcon(), batteryConfig.getBatteryIndex());
-            gbDevice.setBatteryLabel(batteryConfig.getBatteryLabel(), batteryConfig.getBatteryIndex());
-        }
-
-        List<DeviceAttributes> deviceAttributesList = dbDevice.getDeviceAttributesList();
-        if (deviceAttributesList.size() > 0) {
-            gbDevice.setModel(dbDevice.getModel());
-            DeviceAttributes attrs = deviceAttributesList.get(0);
-            gbDevice.setFirmwareVersion(attrs.getFirmwareVersion1());
-            gbDevice.setFirmwareVersion2(attrs.getFirmwareVersion2());
-            gbDevice.setVolatileAddress(attrs.getVolatileIdentifier());
-        }
-
-        return gbDevice;
+        return deviceType.getDeviceCoordinator().createDevice(dbDevice, deviceType);
     }
 
     /**
