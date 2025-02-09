@@ -648,6 +648,10 @@
             android:label="@string/title_activity_even_realities_g1_pairing"
             android:parentActivityName=".activities.discovery.DiscoveryActivityV2" />
         <activity
+            android:name=".devices.gree.GreeAcPairingActivity"
+            android:label="@string/devicetype_gree_ac"
+            android:parentActivityName=".activities.discovery.DiscoveryActivityV2" />
+        <activity
             android:name=".devices.watch9.Watch9PairingActivity"
             android:label="@string/title_activity_watch9_pairing" />
         <activity

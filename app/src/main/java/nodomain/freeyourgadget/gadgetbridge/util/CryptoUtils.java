@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -68,6 +69,20 @@ public class CryptoUtils {
         SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
         AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, paramSpec);
+        return cipher.doFinal(data);
+    }
+
+    public static byte[] encryptAES_ECB_Pad(byte[] data, byte[] key) throws GeneralSecurityException {
+        final Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        final SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+        return cipher.doFinal(data);
+    }
+
+    public static byte[] decryptAES_ECB_Pad(byte[] data, byte[] key) throws GeneralSecurityException {
+        final Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        final SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         return cipher.doFinal(data);
     }
 

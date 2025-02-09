@@ -72,6 +72,7 @@
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
+-keep class nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.** {*; }
 # Somehow the rule above was not enough for some
 -keep class nodomain.freeyourgadget.gadgetbridge.devices.pinetime.InfiniTimeDFU* { *; }
 

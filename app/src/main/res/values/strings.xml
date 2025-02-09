@@ -1358,6 +1358,7 @@
     <string name="discovery_successfully_bonded">Bound to %1$s.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
     <string name="discovery_pair_question">Select Pair to pair your devices. If this fails, try again without pairing.</string>
+    <string name="copy_to_clipboard">Copy</string>
     <string name="discovery_yes_pair">Pair</string>
     <string name="discovery_dont_pair">Don\'t Pair</string>
     <!-- strings sent to pebble watches for quick actions -->
@@ -1814,6 +1815,7 @@
     <string name="devicetype_garmin_vivoactive_5">Garmin Vívoactive 5</string>
     <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
     <string name="devicetype_garmin_vivosport">Garmin Vívosport</string>
+    <string name="devicetype_gree_ac">Gree Air Conditioner</string>
     <string name="devicetype_vibratissimo">Vibratissimo</string>
     <string name="devicetype_um25">UM-25</string>
     <string name="devicetype_liveview">LiveView</string>
@@ -3631,4 +3633,9 @@
     <string name="pref_garmin_fake_oauth_warning">Do not enable this if you plan to use the official app or connect the watch to the internet. After enabling this setting, you may need to factory reset the watch to authenticate again.</string>
     <string name="pref_garmin_fake_oauth_title">Send fake OAuth responses</string>
     <string name="pref_garmin_fake_oauth_summary">Fixes some functions such as weather and AGPS updates without connecting to the official app every 90 days.</string>
+    <string name="gree_controller_host">Host</string>
+    <string name="gree_pair_info">You are about to pair with %s (%s). Please enter the Wi-Fi and host server information for pairing. See the website for more information.</string>
+    <string name="gree_pair_status_success">Pairing success.\n\nBind key: %s</string>
+    <string name="gree_pair_status_failure">Pairing failed: %s</string>
+    <string name="gree_pair_clipboard">Device name: %s\nMac address: %s\nBind key: %s</string>
 </resources>
