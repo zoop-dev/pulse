@@ -68,6 +68,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class PebbleProtocol extends GBDeviceProtocol {
@@ -555,7 +556,17 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 attributes.add(new Pair<>(11, (Object) calendarEventSpec.location));
         }
 
-        return encodeTimelinePin(new UUID(GB_UUID_MASK | calendarEventSpec.type, id), calendarEventSpec.timestamp, (short) (calendarEventSpec.durationInSeconds / 60), iconId, attributes);
+
+        int startTimestamp = calendarEventSpec.timestamp;
+        if (calendarEventSpec.allDay) {
+            // For all-day events, Pebble expects the start date to match the midnight boundaries
+            // in the user's timezone. However, the calendar event will have them in the UTC timezone,
+            // so we need to convert it
+            long startTimestampMs = ((long)startTimestamp) * 1000;
+            startTimestamp = (int) (DateTimeUtils.utcDateTimeToLocal(startTimestampMs) / 1000);
+        }
+
+        return encodeTimelinePin(new UUID(GB_UUID_MASK | calendarEventSpec.type, id), startTimestamp, (short) (calendarEventSpec.durationInSeconds / 60), iconId, attributes);
     }
 
     @Override
