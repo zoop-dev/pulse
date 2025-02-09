@@ -298,6 +298,21 @@ public enum ActivityKind {
     UPPER_BODY(0x040000f3, R.string.activity_type_upper_body),
     LOWER_BODY(0x040000ff, R.string.activity_type_lower_body),
     BARBELL(0x04000100, R.string.activity_type_barbell, R.drawable.ic_activity_barbell),
+    TRIATHLON(0x04000101, R.string.activity_type_triathlon),
+    OTHER_WATER_SPORTS(0x04000102, R.string.activity_type_other_water_sports),
+    OTHER_WINTER_SPORTS(0x04000103, R.string.activity_type_other_winter_sports),
+    POWERBOATING(0x04000104, R.string.activity_type_powerboating),
+    DIVING(0x04000105, R.string.activity_type_diving),
+    ATV(0x04000106, R.string.activity_type_atv),
+    PARAGLIDING(0x04000107, R.string.activity_type_paragliding),
+    WEIGHTLIFTING(0x04000109, R.string.activity_type_weightlifting),
+    DEADLIFT(0x0400010a, R.string.activity_type_deadlift),
+    BURPEE(0x0400010b, R.string.activity_type_burpee),
+    ABS(0x0400010c, R.string.activity_type_abs),
+    BACK(0x0400010d, R.string.activity_type_back),
+    STEP_AEROBICS(0x0400010e, R.string.activity_type_step_aerobics),
+    EQUESTRIAN(0x0400010f, R.string.activity_type_equestrian),
+    ATHLETICS(0x04000110, R.string.activity_type_athletics),
     ;
 
     private final int code;
