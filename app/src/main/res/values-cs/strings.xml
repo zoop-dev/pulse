@@ -3756,4 +3756,11 @@
     <string name="pairing_even_realities_g1_invalid_device">Zařízení Even G1 poškozeno: %1$s.</string>
     <string name="pairing_even_realities_g1_bottom_hint">Na vašem zařízení se objeví několik dialogů o párování. Pokud ne, podívejte se do oznamovací nabídky a přijměte žádost o párování. Je třeba spárovat levý i pravý objektiv.</string>
     <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
+    <string name="gree_pair_status_success">Párování bylo úspěšné.\n\nPárovací klíč: %s</string>
+    <string name="gree_pair_status_failure">Párování selhalo: %s</string>
+    <string name="gree_pair_clipboard">Název zařízení: %s\nMac adresa: %s\nPárovací klíč: %s</string>
+    <string name="devicetype_gree_ac">Gree Air Conditioner</string>
+    <string name="copy_to_clipboard">Kopírovat</string>
+    <string name="gree_controller_host">Hostitel</string>
+    <string name="gree_pair_info">Chystáte se provést spárování s %s (%s). Zadejte prosím informace o Wi-Fi a hostitelském serveru pro párování. Více informací najdete na webových stránkách.</string>
 </resources>
