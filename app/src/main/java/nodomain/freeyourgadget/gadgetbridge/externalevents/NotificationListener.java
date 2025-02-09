@@ -24,6 +24,8 @@ package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
 import android.app.ActivityOptions;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -1127,9 +1129,30 @@ public class NotificationListener extends NotificationListenerService {
             }
         }
 
-        if (sbn.getNotification().priority < Notification.PRIORITY_DEFAULT) {
-            if (prefs.getBoolean("notifications_ignore_low_priority", true)) {
-                LOG.info("Ignoring low priority notification");
+        if (prefs.getBoolean("notifications_ignore_low_priority", true)) {
+            Boolean isImportant = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notification.getChannelId() != null) {
+                String channel_id = notification.getChannelId();
+                try {
+                    List<NotificationChannel> channels = getNotificationChannels(sbn.getPackageName(), Process.myUserHandle());
+                    NotificationChannel channel = null;
+                    for (NotificationChannel c : channels) {
+                        if (channel_id.equals(c.getId())) {
+                            channel = c;
+                            break;
+                        }
+                    }
+                    if (channel != null) {
+                        isImportant = channel.getImportance() >= NotificationManager.IMPORTANCE_DEFAULT;
+                    }
+                } catch (SecurityException ignored) {
+                    LOG.warn("Can't call getNotificationChannels, Gadgetbridge needs to be registered as a companion app");
+                }
+            }
+            if (isImportant == null) {
+                isImportant = notification.priority >= Notification.PRIORITY_DEFAULT;
+            }
+            if (!isImportant) {
                 return true;
             }
         }
