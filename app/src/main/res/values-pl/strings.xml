@@ -3771,4 +3771,11 @@
     <string name="pairing_even_realities_g1_select_next_lens">Wybrano %1$s soczewkę do sparowania. Znaleziono wielu kandydatów dla %2$s soczewki. Wybierz %2$s soczewkę z poniższej listy.</string>
     <string name="pairing_even_realities_g1_bottom_hint">Na urządzeniu z systemem Android pojawi się kilka okien dialogowych parowania. Jeśli nie, sprawdź w szufladzie powiadomień i zaakceptuj prośbę o parowanie. Zarówno lewy, jak i prawy obiektyw będą musiały zostać sparowane.</string>
     <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
+    <string name="devicetype_gree_ac">Klimatyzator Gree</string>
+    <string name="gree_pair_status_success">Parowanie powiodło się.\n\nKlucz powiązania: %s</string>
+    <string name="gree_pair_status_failure">Parowanie nie powiodło się: %s</string>
+    <string name="gree_pair_clipboard">Nazwa urządzenia: %s\nAdres MAC: %s\nKlucz powiązania: %s</string>
+    <string name="copy_to_clipboard">Kopiuj</string>
+    <string name="gree_controller_host">Host</string>
+    <string name="gree_pair_info">Zamierzasz sparować z %s (%s). Wprowadź informacje o Wi-Fi i serwerze hosta w celu sparowania. Więcej informacji znajdziesz na stronie internetowej.</string>
 </resources>
