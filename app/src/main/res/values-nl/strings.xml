@@ -3755,4 +3755,12 @@
     <string name="copy_to_clipboard">Kopieer</string>
     <string name="update_firmware_operation_check_failed">Firmware-controle mislukt</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="pref_garmin_fake_oauth_summary">Herstelt enkele functies zoals het weerbericht en AGPS-updates zonder elke 90 dagen te moeten verbinden met de officiële app.</string>
+    <string name="pref_garmin_fake_oauth_title">Stuur nagemaakte OAuth-antwoorden</string>
+    <string name="pref_garmin_fake_oauth_warning">Schakel dit niet in als u van plan bent de officiële app te gebruiken of het horloge met het internet te verbinden. Na het inschakelen van deze instelling moet u het horloge naar fabrieksinstellingen terugzetten om opnieuw te kunnen authenticeren.</string>
+    <string name="gree_controller_host">Server</string>
+    <string name="gree_pair_status_success">Koppelen succesvol.\n\nKoppelingssleutel: %s</string>
+    <string name="gree_pair_status_failure">Koppelen mislukt: %s</string>
+    <string name="gree_pair_clipboard">Apparaatnaam: %s\nMac-addres: %s\nKoppelingssleutel: %s</string>
+    <string name="gree_pair_info">U staat op het punt te koppelen met %s (%s). Geef de Wi-Fi- en serverinformatie op voor het koppelen. Zie onze website voor meer informatie.</string>
 </resources>
