@@ -3751,4 +3751,5 @@
     <string name="pairing_even_realities_g1_select_next_lens">已为配对选择 %1$s 镜片。找到适合 %2$s 镜片的多个候选。请从下方列表中选择 %2$s 镜片。</string>
     <string name="pairing_even_realities_g1_invalid_device">Even G1 设备畸变：%1$s。</string>
     <string name="devicetype_even_realities_g1">Even Realities G1</string>
+    <string name="devicetype_garmin_forerunner_735xt">佳明 Forerunner 735XT</string>
 </resources>
