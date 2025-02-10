@@ -122,7 +122,7 @@
     <string name="mi2_dnd_off">გამორთვა</string>
     <string name="off">გამორთვა</string>
     <string name="on">ჩართვა</string>
-    <string name="mi2_enable_text_notifications_summary">სჭირდება დაინსტალირებული firmware &gt;= 1.0.1.28 და Mili_pro.ft*.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[სჭირდება დაყენებული მიკროკოდი >= 1.0.1.28 და Mili_pro.ft*.]]></string>
     <string name="mi2_enable_text_notifications">ტექსტური შეტყობინებები</string>
     <string name="mi2_fw_installhandler_fw53_hint">ამ firmware-ის ინსტალაციამდე უნდა დააყენოთ %1$s ვერსია!</string>
     <string name="miband2_prefs_timeformat">Mi2: დროის ფორმატი</string>
