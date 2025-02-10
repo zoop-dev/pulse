@@ -27,12 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AmazfitBip5UnityCoordinator extends ZeppOsCoordinator {
     @Override
-    public boolean isExperimental() {
-        // untested device
-        return true;
-    }
-
-    @Override
     public String getDeviceBluetoothName() {
         return HuamiConst.AMAZFIT_BIP5_UNITY_NAME;
     }
