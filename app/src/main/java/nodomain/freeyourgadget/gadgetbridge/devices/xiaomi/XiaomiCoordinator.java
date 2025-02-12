@@ -461,6 +461,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
         final List<Integer> workout = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT);
         workout.add(R.xml.devicesettings_workout_start_on_phone);
         workout.add(R.xml.devicesettings_workout_send_gps_to_band);
+        workout.add(R.xml.devicesettings_workout_send_gps_to_band_timeout);
 
         //
         // Notifications

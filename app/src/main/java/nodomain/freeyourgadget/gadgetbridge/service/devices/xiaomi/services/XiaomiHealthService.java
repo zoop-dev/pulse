@@ -672,6 +672,7 @@ public class XiaomiHealthService extends AbstractXiaomiService {
             GBLocationService.start(getSupport().getContext(), getSupport().getDevice(), GBLocationProviderType.GPS, 1000);
         }
 
+        final int timeout = getDevicePrefs().getInt(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND_TIMEOUT, 5000);
         gpsTimeoutHandler.removeCallbacksAndMessages(null);
         // Timeout if the watch stops sending workout open
         gpsTimeoutHandler.postDelayed(() -> {
@@ -679,7 +680,7 @@ public class XiaomiHealthService extends AbstractXiaomiService {
             gpsStarted = false;
             gpsFixAcquired = false;
             GBLocationService.stop(getSupport().getContext(), getSupport().getDevice());
-        }, 5000);
+        }, timeout);
     }
 
     private void handleWorkoutStatus(final XiaomiProto.WorkoutStatusWatch workoutStatus) {

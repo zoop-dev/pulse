@@ -242,6 +242,7 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_WORKOUT_START_ON_PHONE = "workout_start_on_phone";
     public static final String PREF_WORKOUT_SEND_GPS_TO_BAND = "workout_send_gps_to_band";
+    public static final String PREF_WORKOUT_SEND_GPS_TO_BAND_TIMEOUT = "workout_send_gps_to_band_timeout";
     public static final String PREF_WORKOUT_DETECTION_CATEGORIES = "workout_detection_categories";
     public static final String PREF_WORKOUT_DETECTION_ALERT = "workout_detection_alert";
     public static final String PREF_WORKOUT_DETECTION_SENSITIVITY = "workout_detection_sensitivity";
