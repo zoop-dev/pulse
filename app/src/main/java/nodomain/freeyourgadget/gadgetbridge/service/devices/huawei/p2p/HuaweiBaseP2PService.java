@@ -81,15 +81,6 @@ public abstract class HuaweiBaseP2PService {
         }
     }
 
-    public void sendAck(short sequence, String srcPackage, String dstPackage, int code) {
-        try {
-            SendP2PCommand test = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 3, sequence, srcPackage, dstPackage, null, null, null, code);
-            test.doPerform();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void handlePacket(P2P.P2PCommand.Response packet) {
         LOG.info("HuaweiBaseP2PService handlePacket: {} Code: {}", packet.cmdId, packet.respCode);
         if (waitPackets.containsKey(packet.sequenceId)) {
@@ -101,14 +92,17 @@ public abstract class HuaweiBaseP2PService {
                 LOG.error("HuaweiBaseP2PService handler is null");
             }
         } else {
-
             if (packet.cmdId == 1) { //Ping
-                sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, 0xca);
+                manager.sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, 0xcf);
             } else if (packet.cmdId == 2) {
+                manager.sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, 0xcf);
                 handleData(packet.respData);
-                sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, 0xca);
             }
         }
+    }
+
+    public void handleFile(String filename, byte[] data) {
+
     }
 
 }

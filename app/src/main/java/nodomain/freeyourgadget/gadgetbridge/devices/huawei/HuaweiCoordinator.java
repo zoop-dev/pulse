@@ -649,6 +649,9 @@ public class HuaweiCoordinator {
         return supportsCommandForService(0x09, 0x0f);
     }
 
+    public boolean supportDefaultSwitch() {
+        return supportsCommandForService(0x01, 0x21);
+    }
 
     public boolean supportsExternalCalendarService() {
         if (supportsExpandCapability())
@@ -780,7 +783,13 @@ public class HuaweiCoordinator {
             return supportsExpandCapability(147);
         return false;
     }
-    
+
+    public boolean supportsReverseCapabilities() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(182);
+        return false;
+    }
+
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
 //                  if (deviceType == 10 && deviceVersion == 73617766697368 && deviceSoftVersion == 372E312E31) -> leo device

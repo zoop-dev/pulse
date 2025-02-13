@@ -53,6 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DataSync;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DeviceConfig;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Ephemeris;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.EphemerisFileUpload;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService2C;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FindPhone;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Menstrual;
@@ -135,6 +136,7 @@ public class AsynchronousResponse {
             handlePermissionCheck(response);
             handleDataSyncCommands(response);
             handleOTA(response);
+            handleFileDownload(response);
 
         } catch (Request.ResponseParseException e) {
             LOG.error("Response parse exception", e);
@@ -829,6 +831,18 @@ public class AsynchronousResponse {
                 throw new Request.ResponseTypeMismatchException(response, OTA.DeviceError.class);
             }
             support.getHuaweiOTAManager().handleDeviceError(((OTA.DeviceError.Response) response).errorCode);
+        }
+    }
+
+    void handleFileDownload(HuaweiPacket response) throws Request.ResponseTypeMismatchException {
+        if (response.serviceId != FileDownloadService2C.id)
+            return;
+        if (response.commandId == FileDownloadService2C.IncomingInitRequest.id) {
+            if (!(response instanceof FileDownloadService2C.IncomingInitRequest.Response)) {
+                throw new Request.ResponseTypeMismatchException(response, FileDownloadService2C.IncomingInitRequest.class);
+            }
+            FileDownloadService2C.IncomingInitRequest.Response resp = (FileDownloadService2C.IncomingInitRequest.Response) response;
+            support.deviceFileDownloadRequest(resp.filename, resp.fileType, resp.fileId, resp.fileSize, resp.srcPackage, resp.dstPackage, resp.srcFingerprint, resp.dstFingerprint);
         }
     }
 }

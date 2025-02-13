@@ -27,8 +27,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupport
 public class GetFileDownloadCompleteRequest extends Request {
 
     private final HuaweiFileDownloadManager.FileRequest request;
+    private final byte status;
 
-    public GetFileDownloadCompleteRequest(HuaweiSupportProvider support, HuaweiFileDownloadManager.FileRequest request) {
+    public GetFileDownloadCompleteRequest(HuaweiSupportProvider support, HuaweiFileDownloadManager.FileRequest request, byte status) {
         super(support);
         if (request.isNewSync()) {
             this.serviceId = FileDownloadService2C.id;
@@ -38,13 +39,14 @@ public class GetFileDownloadCompleteRequest extends Request {
             this.commandId = FileDownloadService0A.FileDownloadCompleteRequest.id;
         }
         this.request = request;
+        this.status = status;
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
             if (request.isNewSync())
-                return new FileDownloadService2C.FileDownloadCompleteRequest(paramsProvider, this.request.getFileId()).serialize();
+                return new FileDownloadService2C.FileDownloadCompleteRequest(paramsProvider, this.request.getFileId(), status).serialize();
             else
                 return new FileDownloadService0A.FileDownloadCompleteRequest(paramsProvider).serialize();
         } catch (HuaweiPacket.CryptoException e) {

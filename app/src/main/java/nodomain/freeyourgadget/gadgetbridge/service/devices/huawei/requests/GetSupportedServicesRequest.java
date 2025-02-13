@@ -56,6 +56,7 @@ public class GetSupportedServicesRequest extends Request {
 
         byte[] supportedServices = ((DeviceConfig.SupportedServices.Response) receivedPacket).supportedServices;
         List<Byte> activatedServices = new ArrayList<>();
+        activatedServices.add((byte) 0x01); // device always support 1 service. add it
         for (int i = 0; i < supportedServices.length; i++) {
             if (supportedServices[i] == 1) {
                 activatedServices.add(knownSupportedServices[i]);

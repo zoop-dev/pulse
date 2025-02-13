@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.HUAWEI_MAGIC;
 
+import androidx.annotation.NonNull;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -455,6 +457,8 @@ public class HuaweiPacket {
                         return new DeviceConfig.DeviceStatus.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.DndLiftWristType.id:
                         return new DeviceConfig.DndLiftWristType.Response(paramsProvider).fromPacket(this);
+                    case DeviceConfig.GetDefaultSwitch.id:
+                        return new DeviceConfig.GetDefaultSwitch.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.HiChain.id:
                         return new DeviceConfig.HiChain.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.PinCode.id:
@@ -471,6 +475,8 @@ public class HuaweiPacket {
                         return new DeviceConfig.SecurityNegotiation.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.WearStatus.id:
                         return new DeviceConfig.WearStatus.Response(paramsProvider).fromPacket(this);
+                    case DeviceConfig.ReverseCapabilities.id:
+                        return new DeviceConfig.ReverseCapabilities.Response(paramsProvider).fromPacket(this);
 
                     // Camera remote has same ID as DeviceConfig
                     case CameraRemote.CameraRemoteStatus.id:
@@ -677,10 +683,14 @@ public class HuaweiPacket {
                 switch (this.commandId) {
                     case FileDownloadService2C.FileDownloadInit.id:
                         return new FileDownloadService2C.FileDownloadInit.Response(paramsProvider).fromPacket(this);
+                    case FileDownloadService2C.FileRequestHash.id:
+                        return new FileDownloadService2C.FileRequestHash.Response(paramsProvider).fromPacket(this);
                     case FileDownloadService2C.FileInfo.id:
                         return new FileDownloadService2C.FileInfo.Response(paramsProvider).fromPacket(this);
                     case FileDownloadService2C.BlockResponse.id:
                         return new FileDownloadService2C.BlockResponse(paramsProvider).fromPacket(this);
+                    case FileDownloadService2C.IncomingInitRequest.id:
+                        return new FileDownloadService2C.IncomingInitRequest.Response(paramsProvider).fromPacket(this);
                     default:
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;
@@ -1090,6 +1100,7 @@ public class HuaweiPacket {
         return Objects.equals(tlv, that.tlv);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "HuaweiPacket{" +

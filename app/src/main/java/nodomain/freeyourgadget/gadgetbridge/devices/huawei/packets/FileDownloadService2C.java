@@ -104,6 +104,40 @@ public class FileDownloadService2C {
         }
     }
 
+    public static class FileRequestHash {
+        public static final int id = 0x02;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, byte fileId) {
+                super(paramsProvider);
+
+                this.serviceId = FileDownloadService2C.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, fileId)
+                        .put(0x02, (byte) 0x01);
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public byte fileId;
+            public byte[] fileHash;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                fileId = this.tlv.getByte(0x01);
+                fileHash = this.tlv.getBytes(0x03);
+            }
+        }
+    }
+
     public static class FileInfo {
         public static final int id = 0x03;
 
@@ -207,7 +241,7 @@ public class FileDownloadService2C {
     public static class FileDownloadCompleteRequest extends HuaweiPacket {
         public static final int id = 0x06;
 
-        public FileDownloadCompleteRequest(ParamsProvider paramsProvider, byte fileId) {
+        public FileDownloadCompleteRequest(ParamsProvider paramsProvider, byte fileId, byte status) {
             super(paramsProvider);
 
             this.serviceId = FileDownloadService2C.id;
@@ -215,9 +249,72 @@ public class FileDownloadService2C {
 
             this.tlv = new HuaweiTLV()
                     .put(0x01, fileId)
-                    .put(0x02, (byte) 1);
+                    .put(0x02, status);
 
             this.complete = true;
+        }
+    }
+
+    public static class IncomingInitRequest {
+        public static final int id = 0x07;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, String filename, byte fileType, byte fileId, int fileSize, String srcPackage, String dstPackage, String srcFingerprint, String dstFingerprint, byte status) {
+                super(paramsProvider);
+
+                this.serviceId = FileDownloadService2C.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, filename)
+                        .put(0x02, fileType)
+                        .put(0x03, fileId)
+                        .put(0x04, fileSize);
+
+                if (srcPackage != null && dstPackage != null) {
+                    this.tlv.put(0x08, srcPackage)
+                            .put(0x09, dstPackage)
+                            .put(0x0a, srcFingerprint)
+                            .put(0x0b, dstFingerprint);
+                }
+
+                this.tlv.put(0x0d, status);
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public String filename;
+            public byte fileType;
+            public byte fileId;
+            public int fileSize;
+            public String description;
+            public String srcPackage;
+            public String dstPackage;
+            public String srcFingerprint = null;
+            public String dstFingerprint = null;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                filename = this.tlv.getString(0x01);
+                fileType = this.tlv.getByte(0x02);
+                fileId = this.tlv.getByte(0x03);
+                fileSize = this.tlv.getAsInteger(0x4);
+
+                description = this.tlv.getString(0x07);
+                srcPackage = this.tlv.getString(0x08);
+                dstPackage = this.tlv.getString(0x09);
+                if (this.tlv.contains(0x0a))
+                    srcFingerprint = this.tlv.getString(0x0a);
+                if (this.tlv.contains(0x0b))
+                    dstFingerprint = this.tlv.getString(0x0b);
+
+            }
         }
     }
 }

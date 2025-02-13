@@ -96,7 +96,7 @@ public class DeviceConfig {
                     this.interval = this.tlv.getShort(0x04);
 
                 System.arraycopy(this.tlv.getBytes(0x05), 2, this.serverNonce, 0, 16);
-                this.authVersion = (byte)this.tlv.getBytes(0x05)[1];
+                this.authVersion = this.tlv.getBytes(0x05)[1];
 
                 if (this.tlv.contains(0x07))
                     this.deviceSupportType = this.tlv.getByte(0x07);
@@ -116,15 +116,17 @@ public class DeviceConfig {
     public static class SupportedServices {
         public static final byte id = 0x02;
 
+        // device should always support service 0x01
 	    // notDeviceCapabilities = 0x1C, 0x1E, 0x1F, 0x28, 0x29, 0x2C, 0x2F, 0x31
         // but services = 0x1E, 0x28, 0x2C, 0x31
         // service 0x21 depends on MiddleWear support
+
         public static final byte[] knownSupportedServices = new byte[] {
-            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A,
-            0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14,
-            0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1D, 0x20,
-            0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x2A, 0x2B, 0x2D, 0x2E,
-            0x30, 0x32, 0x33, 0x34, 0x35
+                0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A,
+                0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14,
+                0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1D, 0x20,
+                0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x2A, 0x2B, 0x2D, 0x2E,
+                0x30, 0x32, 0x33, 0x34, 0x35
         };
 
         public static class Request extends HuaweiPacket {
@@ -803,6 +805,15 @@ public class DeviceConfig {
                     switch (b) {
                         case 0x0:
                             break;
+                        case 0x2:
+                            this.tlv.put(b); // Force phone manufactures to ""
+                            break;
+                        case 0x4:
+                            this.tlv.put(b); // Force phone model to ""
+                            break;
+                        case 0x8:
+                            this.tlv.put(b, "14"); // Force android version to "14"
+                            break;
                         case 0xf:
                             break;
                         case 0x11:
@@ -963,6 +974,35 @@ public class DeviceConfig {
 
     // TODO: set (earphone) double tap action 0x1f
     // TODO: get (earphone) double tap action 0x20
+
+    public static class GetDefaultSwitch {
+        public static final int id = 0x21;
+
+        public static class Request extends HuaweiPacket {
+            public Request(HuaweiPacket.ParamsProvider paramsProvider) {
+                super(paramsProvider);
+
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+
+            }
+        }
+    }
 
     public static class HiChain {
         public static final int id = 0x28;
@@ -1467,28 +1507,27 @@ public class DeviceConfig {
                 this.serviceId = DeviceConfig.id;
                 this.commandId = id;
 
-                int timestamp = (int) (System.currentTimeMillis() / 1000);
+                long timestamp = System.currentTimeMillis();
 
                 HuaweiTLV software = new HuaweiTLV()
                                 .put(0x03, "software_update_service_statement")
-                                .put(0x04, 0x01)
+                                .put(0x04, (byte)0x01)
                                 .put(0x05, "20230508-20230508-0-0")
-                                .put(0x06, timestamp);
+                                .put(0x06, String.valueOf(timestamp));
                 HuaweiTLV device_information = new HuaweiTLV()
                                 .put(0x03, "device_information_management")
-                                .put(0x04,0x01)
+                                .put(0x04,(byte)0x01)
                                 .put(0x05, "20230508-20230508-0-0")
-                                .put(0x06,timestamp);
-
+                                .put(0x06,String.valueOf(timestamp));
                 HuaweiTLV user_license = new HuaweiTLV()
                                 .put(0x03, "user_license_agreement")
-                                .put(0x04,0x01)
+                                .put(0x04,(byte)0x01)
                                 .put(0x05, "20230508-20230508-0-0")
-                                .put(0x06,timestamp);
+                                .put(0x06,String.valueOf(timestamp));
                 HuaweiTLV tlvList = new HuaweiTLV()
                         .put(0x82, software)
-                        .put(0x82,device_information)
-                        .put(0x82,user_license);
+                        .put(0x82, device_information)
+                        .put(0x82, user_license);
                 this.tlv = new HuaweiTLV()
                         .put(0x81, tlvList);
             }
@@ -1773,6 +1812,39 @@ public class DeviceConfig {
                 .put(0x03, (byte)0x00);
 
             this.complete = true;
+        }
+    }
+
+    public static class ReverseCapabilities {
+        public static final int id = 0x3f;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+
+                // Bits like ext capabilities
+                byte[] capabilities = {(byte) 0xFD, 0x17};
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, capabilities);
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+            }
         }
     }
 
