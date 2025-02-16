@@ -3103,4 +3103,5 @@
     <string name="discharge_interval_1">הפרש פריקה 1</string>
     <string name="manual_discharge">הפרשי פריקה ידניים</string>
     <string name="permission_disable_doze_summary">לאפשר לרוץ ברקע ללא הטרדות מצד מיטובי הסוללה של Android</string>
+    <string name="first_start_permissions_title">הרשאות</string>
 </resources>
