@@ -3729,4 +3729,23 @@ Temps de sommeil préféré en heures</string>
     <string name="discharge_interval_5">Intervalle de décharge 5</string>
     <string name="discharge_interval_4">Intervalle de décharge 4</string>
     <string name="manual_discharge_summary">lorsqu\'il est désactivé, cela suppose une décharge intelligente contrôlée par un wattmètre externe (non pris en charge par Gadgetbridge)</string>
+    <string name="fit_file_viewer">Visionneuse de fichiers FIT</string>
+    <string name="update_firmware_operation_check_failed">Vérification du micrologiciel échouée</string>
+    <string name="pref_garmin_fake_oauth_title">Envoyer de fausses réponses OAuth</string>
+    <string name="pref_garmin_fake_oauth_warning">Ne pas activer cette option si vous prévoyez d’utiliser l’application officielle ou de connecter la montre à Internet. Après avoir activé ce paramètre, vous devrez peut-être réinitialiser la montre aux valeurs d’usine pour l’authentifier à nouveau.</string>
+    <string name="permission_read_phone_state_summary">État de lecture des appels en cours</string>
+    <string name="update_firmware_operation_check_in_progress">Vérification micrologiciel</string>
+    <string name="canned_replies_not_empty">Il devrait y avoir au moins une réponse prédéfinie.</string>
+    <string name="manual_discharge">Intervalles de déchargement manuel</string>
+    <string name="permission_bluetooth_admin_title">Admin Bluetooth</string>
+    <string name="permission_post_notification_summary">Affichage d’un avis continu qui maintient le service en cours</string>
+    <string name="about_build_details_copied_to_clipboard">Détails de la compilation copiés dans le presse-papiers</string>
+    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
+    <string name="copy_to_clipboard">Copier</string>
+    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
+    <string name="devicetype_even_realities_g1">Even Realities G1</string>
+    <string name="gree_pair_clipboard">Nom du périphérique : %s\nAdresse Mac : %s\nLier la clé : %s</string>
+    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="gree_controller_host">Hôte</string>
+    <string name="pref_garmin_fake_oauth_summary">Corrige certaines fonctions telles que la météo et les mises à jour AGPS sans se connecter à l’application officielle tous les 90 jours.</string>
 </resources>
