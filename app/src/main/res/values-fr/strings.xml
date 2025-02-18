@@ -3654,7 +3654,7 @@ Temps de sommeil préféré en heures</string>
     <string name="permission_query_all_packages_summary">Lecture des noms et icônes de toutes les applications installées</string>
     <string name="sleep_avg">Moy. endormi</string>
     <string name="sleep_score">Score sommeil</string>
-    <string name="sleep_score_value">Score: %1d</string>
+    <string name="sleep_score_value">Score : %1d</string>
     <string name="first_start_intro_welcome_to">Bienvenue dans</string>
     <string name="first_start_intro_tag_line">Libérez-vous des applications propriétaire et des services cloud des fournisseurs de gadgets.</string>
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
@@ -3748,4 +3748,8 @@ Temps de sommeil préféré en heures</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
     <string name="gree_controller_host">Hôte</string>
     <string name="pref_garmin_fake_oauth_summary">Corrige certaines fonctions telles que la météo et les mises à jour AGPS sans se connecter à l’application officielle tous les 90 jours.</string>
+    <string name="permission_manage_dnd_summary">Modification de la politique du MDN (DND) sur les avis (notifications)</string>
+    <string name="permission_fine_location_title">Bon emplacement</string>
+    <string name="redmi_buds_5_pro_transparency_strength">Force de la transparence</string>
+    <string name="music_multiselect_limit">Limite pour la sélection de plus d’un élément atteinte</string>
 </resources>
