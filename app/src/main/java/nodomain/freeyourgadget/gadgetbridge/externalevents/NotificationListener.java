@@ -628,6 +628,7 @@ public class NotificationListener extends NotificationListenerService {
         String app = sbn.getPackageName();
         LOG.debug("got call from: {}", app);
         if (PHONE_CALL_APPS.contains(app)) {
+            LOG.debug("Ignoring non-voip call");
             return;
         }
         Notification noti = sbn.getNotification();
