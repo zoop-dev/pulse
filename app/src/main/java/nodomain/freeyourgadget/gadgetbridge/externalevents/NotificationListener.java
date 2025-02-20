@@ -131,6 +131,15 @@ public class NotificationListener extends NotificationListenerService {
         add("mikado.bizcalpro");
     }};
 
+    private static final Set<String> PHONE_CALL_APPS = new HashSet<String>() {{
+            add("com.android.dialer");
+            add("com.android.incallui");
+            add("com.asus.asusincallui");
+            add("com.google.android.dialer");
+            add("com.samsung.android.incallui");
+            add("org.fossify.phone");
+    }};
+
     public static final ArrayList<String> notificationStack = new ArrayList<>();
     private static final ArrayList<Integer> notificationsActive = new ArrayList<>();
 
@@ -617,9 +626,8 @@ public class NotificationListener extends NotificationListenerService {
 
     private void handleCallNotification(StatusBarNotification sbn) {
         String app = sbn.getPackageName();
-        LOG.debug("got call from: " + app);
-        if (app.equals("com.android.dialer") || app.equals("com.android.incallui") || app.equals("com.google.android.dialer") || app.equals("com.asus.asusincallui") || app.equals("com.samsung.android.incallui")) {
-            LOG.debug("Ignoring non-voip call");
+        LOG.debug("got call from: {}", app);
+        if (PHONE_CALL_APPS.contains(app)) {
             return;
         }
         Notification noti = sbn.getNotification();
