@@ -3752,4 +3752,8 @@ Temps de sommeil préféré en heures</string>
     <string name="permission_fine_location_title">Bon emplacement</string>
     <string name="redmi_buds_5_pro_transparency_strength">Force de la transparence</string>
     <string name="music_multiselect_limit">Limite pour la sélection de plus d’un élément atteinte</string>
+    <string name="title_activity_even_realities_g1_pairing">Même jumelage de G1</string>
+    <string name="pairing_even_realities_g1_working">Jumelage avec %1s...</string>
+    <string name="pairing_even_realities_g1_find_both_fail">Échec pour trouver les lentilles droites et gauches. Veuillez scanner à nouveau.</string>
+    <string name="pairing_even_realities_g1_select_next_lens">%1$s Critère sélectionné pour l\'appariement. Plusieurs candidats pour l\'objectif %2$s trouvé. Veuillez sélectionner l\'objectif %2$s dans la liste ci-dessous.</string>
 </resources>
