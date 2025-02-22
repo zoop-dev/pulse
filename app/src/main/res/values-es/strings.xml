@@ -3746,4 +3746,7 @@
     <string name="prefs_active_noise_cancelling_outdoor">Exterior</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="charts_show_balance_steps_summary">Mostrar exceso / falta de pasos en gráficas semanales y mensuales</string>
+    <string name="activity_type_barbell">Pesas</string>
+    <string name="charts_show_balance_sleep_summary">Mostrar exceso / falta de sueño en gráficas semanales y mensuales</string>
 </resources>
