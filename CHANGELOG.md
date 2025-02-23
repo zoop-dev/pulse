@@ -1,6 +1,6 @@
 ### Changelog
 
-#### NEXT
+#### 0.84.0
 * Initial support for Garmin Fenix 7S Pro / Forerunner 45
 * Initial support for Redmi Buds 6 Active
 * Initial support for Sony WF-C510

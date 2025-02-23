@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.84.0" versioncode="237">
+        <change>Initial support for Garmin Fenix 7S Pro / Forerunner 45</change>
+        <change>Initial support for Redmi Buds 6 Active</change>
+        <change>Initial support for Sony WF-C510</change>
+        <change>AsteroidOS: Add volume control</change>
+        <change>AsteroidOS: Fix missing sender notification attribute</change>
+        <change>Charts: Add heart rate weekly and monthly tabs</change>
+        <change>Charts: Add option to hide sleep and steps balance</change>
+        <change>Charts: Restore steps balance on weekly and monthly charts</change>
+        <change>Colmi R09: Add preference to toggle temperature measurements</change>
+        <change>Colmi R09: Fix temperature data parsing</change>
+        <change>Colmi R0x: Add support for realtime heart rate meassurements and live activity tracking</change>
+        <change>Garmin: Add custom notification actions</change>
+        <change>Huawei: Add support to set and use canned replies</change>
+        <change>Huawei: Fix calendar event updates</change>
+        <change>Huawei: Fix all day events timezone</change>
+        <change>Huawei: Remove notifications from watch</change>
+        <change>Marstek B2500: Decode more values, add debug section</change>
+        <change>Marstek B2500: Display sensor temperature in Status Activity</change>
+        <change>Marstek B2500: Fix setting pass-though mode</change>
+        <change>Sony Headphones: Allow overriding supported features</change>
+        <change>Sony Headphones: Fix initialization for some devices</change>
+        <change>Sony Headphones: Update default low battery threshold</change>
+        <change>Xiaomi-protobuf: Improve workout parsing</change>
+        <change>Add disabling battery optimizations to permissions screen</change>
+        <change>Fix default date of birth</change>
+        <change>Fix workout parser from incorrect devices being used sometimes</change>
+        <change>Intent API: Allow filtering of BLE characteristics</change>
+        <change>Limit live activity to just the current device</change>
+        <change>Localize notification actions</change>
+        <change>Recognize Fossify SMS / Quik as SMS</change>
+    </release>
     <release version="0.83.1" versioncode="236">
         <change>Initial support for Garmin Fenix 6X Pro Solar</change>
         <change>Initial support for Redmi Buds 4 Active</change>
