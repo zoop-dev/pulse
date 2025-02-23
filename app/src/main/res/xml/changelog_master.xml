@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release version="0.84.0" versioncode="237">
-        <change>Initial support for Garmin Fenix 7S Pro / Forerunner 45</change>
+        <change>Initial support for Even G1 Smart Glasses</change>
+        <change>Initial support for Garmin Fenix 7S Pro, Forerunner 45 / 735XT, Instinct E / Lily 2 Active</change>
+        <change>Initial support for Gree Air Conditioner units</change>
         <change>Initial support for Redmi Buds 6 Active</change>
-        <change>Initial support for Sony WF-C510</change>
+        <change>Initial support for Sony WH-ULT900N, WF-C510</change>
+        <change>Initial support for Soundcore Q30</change>
+        <change>Experimental support for Amazfit Active 2</change>
+        <change>Amazfit Neo: Fix sound options</change>
         <change>AsteroidOS: Add volume control</change>
         <change>AsteroidOS: Fix missing sender notification attribute</change>
         <change>Charts: Add heart rate weekly and monthly tabs</change>
@@ -12,20 +17,41 @@
         <change>Colmi R09: Add preference to toggle temperature measurements</change>
         <change>Colmi R09: Fix temperature data parsing</change>
         <change>Colmi R0x: Add support for realtime heart rate meassurements and live activity tracking</change>
+        <change>Garmin: Add basic fit file viewer</change>
         <change>Garmin: Add custom notification actions</change>
+        <change>Garmin: Allow fake OAuth</change>
+        <change>Garmin: Allow PRG file upload</change>
+        <change>Garmin: Fix connection to newer firmware versions</change>
+        <change>Garmin: Improve workout parsing</change>
+        <change>Huawei: Add firmware update support</change>
+        <change>Huawei: Add screenshots support</change>
         <change>Huawei: Add support to set and use canned replies</change>
-        <change>Huawei: Fix calendar event updates</change>
         <change>Huawei: Fix all day events timezone</change>
+        <change>Huawei: Fix calendar event updates</change>
+        <change>Huawei: Fix sleep phases in dashboard</change>
+        <change>Huawei: Improve reconnection when device goes out of range</change>
+        <change>Huawei: Improve workout parsing</change>
         <change>Huawei: Remove notifications from watch</change>
+        <change>Huawei: Set basic goals</change>
         <change>Marstek B2500: Decode more values, add debug section</change>
         <change>Marstek B2500: Display sensor temperature in Status Activity</change>
         <change>Marstek B2500: Fix setting pass-though mode</change>
+        <change>Oppo Headphones: Fix missing battery on some devices</change>
+        <change>Pebble: Fix pairing on Android 14+</change>
         <change>Sony Headphones: Allow overriding supported features</change>
         <change>Sony Headphones: Fix initialization for some devices</change>
         <change>Sony Headphones: Update default low battery threshold</change>
+        <change>Xiaomi-protobuf: Add HDOP data and remove elevation zero in GPX exports</change>
+        <change>Xiaomi-protobuf: Enable contacts configuration for Redmi Watch 4 / 5 active / 5 lite</change>
+        <change>Xiaomi-protobuf: Fix multi location weather support on some devices</change>
         <change>Xiaomi-protobuf: Improve workout parsing</change>
+        <change>Zepp OS: Fix activity details parsing getting stuck</change>
         <change>Add disabling battery optimizations to permissions screen</change>
+        <change>Dashboard: Fix AM and PM labels for 24h mode in the dashboard activity chart</change>
+        <change>Fix a crash when media session changes</change>
         <change>Fix default date of birth</change>
+        <change>Fix inverted logic for notification times</change>
+        <change>Fix phone calls with Fossify Phone</change>
         <change>Fix workout parser from incorrect devices being used sometimes</change>
         <change>Intent API: Allow filtering of BLE characteristics</change>
         <change>Limit live activity to just the current device</change>

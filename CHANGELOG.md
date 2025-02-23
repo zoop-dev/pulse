@@ -1,9 +1,14 @@
 ### Changelog
 
 #### 0.84.0
-* Initial support for Garmin Fenix 7S Pro / Forerunner 45
+* Initial support for Even G1 Smart Glasses
+* Initial support for Garmin Fenix 7S Pro, Forerunner 45 / 735XT, Instinct E / Lily 2 Active
+* Initial support for Gree Air Conditioner units
 * Initial support for Redmi Buds 6 Active
-* Initial support for Sony WF-C510
+* Initial support for Sony WH-ULT900N, WF-C510
+* Initial support for Soundcore Q30
+* Experimental support for Amazfit Active 2
+* Amazfit Neo: Fix sound options
 * AsteroidOS: Add volume control
 * AsteroidOS: Fix missing sender notification attribute
 * Charts: Add heart rate weekly and monthly tabs
@@ -12,20 +17,41 @@
 * Colmi R09: Add preference to toggle temperature measurements
 * Colmi R09: Fix temperature data parsing
 * Colmi R0x: Add support for realtime heart rate meassurements and live activity tracking
+* Garmin: Add basic fit file viewer
 * Garmin: Add custom notification actions
+* Garmin: Allow fake OAuth
+* Garmin: Allow PRG file upload
+* Garmin: Fix connection to newer firmware versions
+* Garmin: Improve workout parsing
+* Huawei: Add firmware update support
+* Huawei: Add screenshots support
 * Huawei: Add support to set and use canned replies
-* Huawei: Fix calendar event updates
 * Huawei: Fix all day events timezone
+* Huawei: Fix calendar event updates
+* Huawei: Fix sleep phases in dashboard
+* Huawei: Improve reconnection when device goes out of range
+* Huawei: Improve workout parsing
 * Huawei: Remove notifications from watch
+* Huawei: Set basic goals
 * Marstek B2500: Decode more values, add debug section
 * Marstek B2500: Display sensor temperature in Status Activity
 * Marstek B2500: Fix setting pass-though mode
+* Oppo Headphones: Fix missing battery on some devices
+* Pebble: Fix pairing on Android 14+
 * Sony Headphones: Allow overriding supported features
 * Sony Headphones: Fix initialization for some devices
 * Sony Headphones: Update default low battery threshold
+* Xiaomi-protobuf: Add HDOP data and remove elevation zero in GPX exports
+* Xiaomi-protobuf: Enable contacts configuration for Redmi Watch 4 / 5 Active / 5 Lite
+* Xiaomi-protobuf: Fix multi location weather support on some devices
 * Xiaomi-protobuf: Improve workout parsing
+* Zepp OS: Fix activity details parsing getting stuck
 * Add disabling battery optimizations to permissions screen
+* Dashboard: Fix AM and PM labels for 24h mode in the dashboard activity chart
+* Fix a crash when media session changes
 * Fix default date of birth
+* Fix inverted logic for notification times
+* Fix phone calls with Fossify Phone
 * Fix workout parser from incorrect devices being used sometimes
 * Intent API: Allow filtering of BLE characteristics
 * Limit live activity to just the current device
