@@ -106,6 +106,11 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getEnhancedRespirationRate() {
+        return (Integer) getFieldByNumber(108);
+    }
+
+    @Nullable
     public Integer getWristHeartRate() {
         return (Integer) getFieldByNumber(136);
     }

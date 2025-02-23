@@ -10,7 +10,9 @@ import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 
-/** @noinspection ArraysAsListWithZeroOrOneArgument*/
+/**
+ * @noinspection ArraysAsListWithZeroOrOneArgument
+ */
 public class GlobalFITMessage {
     public static GlobalFITMessage FILE_ID = new GlobalFITMessage(0, "FILE_ID", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "type", FieldDefinitionFactory.FIELD.FILE_TYPE),
@@ -103,10 +105,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(11, BaseType.UINT16, "total_calories"),
             new FieldDefinitionPrimitive(16, BaseType.UINT8, "average_heart_rate"),
             new FieldDefinitionPrimitive(17, BaseType.UINT8, "max_heart_rate"),
-            new FieldDefinitionPrimitive(18, BaseType.UINT8, "average_cadence"),
-            new FieldDefinitionPrimitive(19, BaseType.UINT8, "max_cadence"),
+            new FieldDefinitionPrimitive(18, BaseType.UINT8, "avg_cadence"), // rpm
+            new FieldDefinitionPrimitive(19, BaseType.UINT8, "max_cadence"), // rpm
+            new FieldDefinitionPrimitive(20, BaseType.UINT16, "avg_power"), // watt
+            new FieldDefinitionPrimitive(21, BaseType.UINT16, "max_power"), // watt
             new FieldDefinitionPrimitive(22, BaseType.UINT16, "total_ascent"),
             new FieldDefinitionPrimitive(23, BaseType.UINT16, "total_descent"),
+            new FieldDefinitionPrimitive(24, BaseType.UINT8, "total_training_effect", 10, 0),
             new FieldDefinitionPrimitive(25, BaseType.UINT16, "first_lap_index"),
             new FieldDefinitionPrimitive(26, BaseType.UINT16, "num_laps"),
             new FieldDefinitionPrimitive(29, BaseType.SINT32, "nec_latitude", FieldDefinitionFactory.FIELD.COORDINATE),
@@ -114,19 +119,53 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(31, BaseType.SINT32, "swc_latitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(32, BaseType.SINT32, "swc_longitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(33, BaseType.UINT16, "num_lengths"),
+            new FieldDefinitionPrimitive(34, BaseType.UINT16, "normalized_power"), // watt
+            new FieldDefinitionPrimitive(35, BaseType.UINT16, "training_stress_score", 10, 0), // tss
+            new FieldDefinitionPrimitive(36, BaseType.UINT16, "intensity_factor", 1000, 0), // if
+            new FieldDefinitionPrimitive(37, BaseType.UINT16, "left_right_balance"),
             new FieldDefinitionPrimitive(38, BaseType.SINT32, "end_latitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(39, BaseType.SINT32, "end_longitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(44, BaseType.UINT16, "pool_length", 100, 0), // m
+            new FieldDefinitionPrimitive(45, BaseType.UINT16, "threshold_power"), // watt
             new FieldDefinitionPrimitive(47, BaseType.UINT16, "num_active_lengths"),
+            new FieldDefinitionPrimitive(48, BaseType.UINT32, "total_work"), // joule
             new FieldDefinitionPrimitive(79, BaseType.UINT16, "avg_swim_cadence", 10, 0), // rpm
             new FieldDefinitionPrimitive(80, BaseType.UINT16, "avg_swolf"),
+            new FieldDefinitionPrimitive(89, BaseType.UINT16, "avg_vertical_oscillation", 10, 0), // mm
+            new FieldDefinitionPrimitive(90, BaseType.UINT16, "avg_stance_time_percent", 100, 0), // %
+            new FieldDefinitionPrimitive(91, BaseType.UINT16, "avg_stance_time", 10, 0), // ms
+            new FieldDefinitionPrimitive(92, BaseType.UINT8, "avg_fractional_cadence", 128, 0), // rpm
+            new FieldDefinitionPrimitive(93, BaseType.UINT8, "max_fractional_cadence", 128, 0), // rpm
+            new FieldDefinitionPrimitive(101, BaseType.UINT8, "avg_left_torque_effectiveness", 2, 0), // %
+            new FieldDefinitionPrimitive(102, BaseType.UINT8, "avg_right_torque_effectiveness", 2, 0), // %
+            new FieldDefinitionPrimitive(103, BaseType.UINT8, "avg_left_pedal_smoothness", 2, 0), // %
+            new FieldDefinitionPrimitive(104, BaseType.UINT8, "avg_right_pedal_smoothness", 2, 0), // %
+            new FieldDefinitionPrimitive(107, BaseType.UINT16, "front_shifts"),
+            new FieldDefinitionPrimitive(108, BaseType.UINT16, "rear_shifts"),
             new FieldDefinitionPrimitive(110, BaseType.STRING, 64, "sport_profile_name"),
+            new FieldDefinitionPrimitive(112, BaseType.UINT32, "stand_time"), // s
+            new FieldDefinitionPrimitive(113, BaseType.UINT16, "stand_count"),
+            new FieldDefinitionPrimitive(114, BaseType.SINT8, "avg_left_pco"), // mm
+            new FieldDefinitionPrimitive(115, BaseType.SINT8, "avg_right_pco"), // mm
+            new FieldDefinitionPrimitive(116, BaseType.UINT8, "avg_left_power_phase", FieldDefinitionFactory.FIELD.ARRAY), // degrees (start angle, end angle, arc length, center)
+            new FieldDefinitionPrimitive(117, BaseType.UINT8, "avg_left_power_phase_peak", FieldDefinitionFactory.FIELD.ARRAY), // degrees (start angle, end angle, arc length, center)
+            new FieldDefinitionPrimitive(118, BaseType.UINT8, "avg_right_power_phase", FieldDefinitionFactory.FIELD.ARRAY), // degrees (start angle, end angle, arc length, center)
+            new FieldDefinitionPrimitive(119, BaseType.UINT8, "avg_right_power_phase_peak", FieldDefinitionFactory.FIELD.ARRAY), // degrees (start angle, end angle, arc length, center)
+            new FieldDefinitionPrimitive(120, BaseType.UINT16, "avg_power_position", FieldDefinitionFactory.FIELD.ARRAY), // watt, 2 items (seat / stand)
+            new FieldDefinitionPrimitive(121, BaseType.UINT16, "max_power_position", FieldDefinitionFactory.FIELD.ARRAY), // watt, 2 items (seat / stand)
+            new FieldDefinitionPrimitive(122, BaseType.UINT8, "avg_cadence_position", FieldDefinitionFactory.FIELD.ARRAY), // watt, 2 items (seat / stand)
+            new FieldDefinitionPrimitive(123, BaseType.UINT8, "max_cadence_position", FieldDefinitionFactory.FIELD.ARRAY), // watt, 2 items (seat / stand)
             new FieldDefinitionPrimitive(124, BaseType.UINT32, "enhanced_avg_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(125, BaseType.UINT32, "enhanced_max_speed", 1000, 0), // m/s
-            new FieldDefinitionPrimitive(169, BaseType.UINT16, "enhanced_avg_respiration_rate", 100, 0  ), // breaths/min
-            new FieldDefinitionPrimitive(170, BaseType.UINT16, "enhanced_max_respiration_rate", 100, 0  ), // breaths/min
+            new FieldDefinitionPrimitive(132, BaseType.UINT16, "avg_vertical_ratio", 100, 0), // %
+            new FieldDefinitionPrimitive(133, BaseType.UINT16, "avg_stance_time_balance", 100, 0), // %
+            new FieldDefinitionPrimitive(134, BaseType.UINT16, "avg_step_length", 10, 0), // mm
+            new FieldDefinitionPrimitive(137, BaseType.UINT8, "total_anaerobic_training_effect", 10, 0),
+            new FieldDefinitionPrimitive(168, BaseType.SINT32, "training_load_peak", 65536, 0),
+            new FieldDefinitionPrimitive(169, BaseType.UINT16, "enhanced_avg_respiration_rate", 100, 0), // breaths/min
+            new FieldDefinitionPrimitive(170, BaseType.UINT16, "enhanced_max_respiration_rate", 100, 0), // breaths/min
             new FieldDefinitionPrimitive(178, BaseType.UINT16, "estimated_sweat_loss"), // ml
-            new FieldDefinitionPrimitive(180, BaseType.UINT16, "enhanced_min_respiration_rate", 100, 0  ), // breaths/min
+            new FieldDefinitionPrimitive(180, BaseType.UINT16, "enhanced_min_respiration_rate", 100, 0), // breaths/min
             new FieldDefinitionPrimitive(188, BaseType.ENUM, "primary_benefit"), // 1 recovery
             new FieldDefinitionPrimitive(194, BaseType.UINT8, "avg_spo2"),
             new FieldDefinitionPrimitive(195, BaseType.UINT8, "avg_stress"),
@@ -185,6 +224,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(78, BaseType.UINT32, "enhanced_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(83, BaseType.UINT16, "vertical_ratio", 100, 0), // %
             new FieldDefinitionPrimitive(85, BaseType.UINT16, "step_length", 10, 0), // mm
+            new FieldDefinitionPrimitive(108, BaseType.UINT16, "enhanced_respiration_rate"),
             new FieldDefinitionPrimitive(136, BaseType.UINT8, "wrist_heart_rate"),
             new FieldDefinitionPrimitive(143, BaseType.UINT8, "body_battery"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)

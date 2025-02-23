@@ -5,6 +5,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_M;
 
@@ -67,6 +68,17 @@ public class WorkoutValueFormatter {
 
         if (!show_raw_data) {
             //special casing here + imperial units handling
+
+            if (UNIT_MM.equals(unit)) {
+                if (value > 1000) {
+                    unit = UNIT_METERS;
+                    value /= 1000d;
+                } else if (value > 100) {
+                    unit = UNIT_CM;
+                    value /= 10d;
+                }
+            }
+
             switch (unit) {
                 case UNIT_KG:
                     if (units.equals(UNIT_IMPERIAL)) {

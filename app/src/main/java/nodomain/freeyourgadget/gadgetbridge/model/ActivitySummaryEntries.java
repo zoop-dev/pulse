@@ -66,6 +66,39 @@ public class ActivitySummaryEntries {
     public static final String EVERSION_ANGLE_AVG = "eversionAngleAvg";
     public static final String EVERSION_ANGLE_MAX = "eversionAngleMax";
 
+    public static final String TRAINING_LOAD = "training_load";
+    public static final String STANDING_TIME = "standing_time";
+    public static final String STANDING_COUNT = "standing_count";
+    public static final String AVG_LEFT_PCO = "average_left_platform_center_offset";
+    public static final String AVG_RIGHT_PCO = "average_right_platform_center_offset";
+    public static final String AVG_LEFT_POWER_PHASE = "average_left_power_phase";
+    public static final String AVG_LEFT_POWER_PHASE_PEAK = "average_left_power_phase_peak";
+    public static final String AVG_RIGHT_POWER_PHASE = "average_right_power_phase";
+    public static final String AVG_RIGHT_POWER_PHASE_PEAK = "average_right_power_phase_peak";
+    public static final String AVG_POWER = "average_power";
+    public static final String AVG_POWER_SEATING = "average_power_sitting";
+    public static final String AVG_POWER_STANDING = "average_power_standing";
+    public static final String AVG_CADENCE_SEATING = "average_cadence_sitting";
+    public static final String AVG_CADENCE_STANDING = "average_cadence_standing";
+    public static final String MAX_POWER = "max_power";
+    public static final String MAX_POWER_SEATING = "max_power_sitting";
+    public static final String MAX_POWER_STANDING = "max_power_standing";
+    public static final String MAX_CADENCE_SEATING = "max_cadence_sitting";
+    public static final String MAX_CADENCE_STANDING = "max_cadence_standing";
+    public static final String NORMALIZED_POWER = "normalized_power";
+    public static final String INTENSITY_FACTOR = "intensity_factor";
+    public static final String TRAINING_STRESS_SCORE = "training_stress_score";
+    public static final String LEFT_RIGHT_BALANCE = "left_right_balance";
+    public static final String AVG_PEDAL_SMOOTHNESS = "average_pedal_smoothness";
+    public static final String AVG_TORQUE_EFFECTIVENESS = "average_torque_effectiveness";
+    public static final String FRONT_GEAR_SHIFTS = "front_gear_shifts";
+    public static final String REAR_GEAR_SHIFTS = "rear_gear_shifts";
+
+    public static final String AVG_VERTICAL_OSCILLATION = "vertical_oscillation";
+    public static final String AVG_GROUND_CONTACT_TIME = "ground_contact_time";
+    public static final String AVG_VERTICAL_RATIO = "vertical_ratio";
+    public static final String AVG_GROUND_CONTACT_TIME_BALANCE = "ground_contact_time_balance";
+
     public static final String DISTANCE_METERS = "distanceMeters";
     public static final String POOL_LENGTH = "poolLength";
     public static final String ELEVATION_GAIN = "elevationGain";
@@ -175,6 +208,10 @@ public class ActivitySummaryEntries {
     public static final String UNIT_STRING = "string";
     public static final String UNIT_RAW_STRING = "raw_string";
     public static final String UNIT_KG = "kg";
+    public static final String UNIT_RPM = "unit_rpm";
+    public static final String UNIT_MM = "unit_millimeter";
+    public static final String UNIT_WATT = "unit_watt";
+    public static final String UNIT_JOULE = "unit_joule";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
@@ -183,6 +220,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_HEART_RATE_ZONES = "HeartRateZones";
     public static final String GROUP_STROKES = "Strokes";
     public static final String GROUP_JUMPS = "Jumps";
+    public static final String GROUP_CYCLING = "cycling";
     public static final String GROUP_SWIMMING = "Swimming";
     public static final String GROUP_TRAINING_EFFECT = "TrainingEffect";
     public static final String GROUP_LAPS = "laps";

@@ -91,13 +91,23 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
-    public Integer getAverageCadence() {
+    public Integer getAvgCadence() {
         return (Integer) getFieldByNumber(18);
     }
 
     @Nullable
     public Integer getMaxCadence() {
         return (Integer) getFieldByNumber(19);
+    }
+
+    @Nullable
+    public Integer getAvgPower() {
+        return (Integer) getFieldByNumber(20);
+    }
+
+    @Nullable
+    public Integer getMaxPower() {
+        return (Integer) getFieldByNumber(21);
     }
 
     @Nullable
@@ -108,6 +118,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Integer getTotalDescent() {
         return (Integer) getFieldByNumber(23);
+    }
+
+    @Nullable
+    public Float getTotalTrainingEffect() {
+        return (Float) getFieldByNumber(24);
     }
 
     @Nullable
@@ -146,6 +161,26 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getNormalizedPower() {
+        return (Integer) getFieldByNumber(34);
+    }
+
+    @Nullable
+    public Float getTrainingStressScore() {
+        return (Float) getFieldByNumber(35);
+    }
+
+    @Nullable
+    public Float getIntensityFactor() {
+        return (Float) getFieldByNumber(36);
+    }
+
+    @Nullable
+    public Integer getLeftRightBalance() {
+        return (Integer) getFieldByNumber(37);
+    }
+
+    @Nullable
     public Double getEndLatitude() {
         return (Double) getFieldByNumber(38);
     }
@@ -161,8 +196,18 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getThresholdPower() {
+        return (Integer) getFieldByNumber(45);
+    }
+
+    @Nullable
     public Integer getNumActiveLengths() {
         return (Integer) getFieldByNumber(47);
+    }
+
+    @Nullable
+    public Long getTotalWork() {
+        return (Long) getFieldByNumber(48);
     }
 
     @Nullable
@@ -176,8 +221,163 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Float getAvgVerticalOscillation() {
+        return (Float) getFieldByNumber(89);
+    }
+
+    @Nullable
+    public Float getAvgStanceTimePercent() {
+        return (Float) getFieldByNumber(90);
+    }
+
+    @Nullable
+    public Float getAvgStanceTime() {
+        return (Float) getFieldByNumber(91);
+    }
+
+    @Nullable
+    public Float getAvgFractionalCadence() {
+        return (Float) getFieldByNumber(92);
+    }
+
+    @Nullable
+    public Float getMaxFractionalCadence() {
+        return (Float) getFieldByNumber(93);
+    }
+
+    @Nullable
+    public Float getAvgLeftTorqueEffectiveness() {
+        return (Float) getFieldByNumber(101);
+    }
+
+    @Nullable
+    public Float getAvgRightTorqueEffectiveness() {
+        return (Float) getFieldByNumber(102);
+    }
+
+    @Nullable
+    public Float getAvgLeftPedalSmoothness() {
+        return (Float) getFieldByNumber(103);
+    }
+
+    @Nullable
+    public Float getAvgRightPedalSmoothness() {
+        return (Float) getFieldByNumber(104);
+    }
+
+    @Nullable
+    public Integer getFrontShifts() {
+        return (Integer) getFieldByNumber(107);
+    }
+
+    @Nullable
+    public Integer getRearShifts() {
+        return (Integer) getFieldByNumber(108);
+    }
+
+    @Nullable
     public String getSportProfileName() {
         return (String) getFieldByNumber(110);
+    }
+
+    @Nullable
+    public Long getStandTime() {
+        return (Long) getFieldByNumber(112);
+    }
+
+    @Nullable
+    public Integer getStandCount() {
+        return (Integer) getFieldByNumber(113);
+    }
+
+    @Nullable
+    public Integer getAvgLeftPco() {
+        return (Integer) getFieldByNumber(114);
+    }
+
+    @Nullable
+    public Integer getAvgRightPco() {
+        return (Integer) getFieldByNumber(115);
+    }
+
+    @Nullable
+    public Number[] getAvgLeftPowerPhase() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(116);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgLeftPowerPhasePeak() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(117);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgRightPowerPhase() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(118);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgRightPowerPhasePeak() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(119);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgPowerPosition() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(120);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxPowerPosition() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(121);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgCadencePosition() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(122);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxCadencePosition() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(123);
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -188,6 +388,31 @@ public class FitSession extends RecordData {
     @Nullable
     public Double getEnhancedMaxSpeed() {
         return (Double) getFieldByNumber(125);
+    }
+
+    @Nullable
+    public Float getAvgVerticalRatio() {
+        return (Float) getFieldByNumber(132);
+    }
+
+    @Nullable
+    public Float getAvgStanceTimeBalance() {
+        return (Float) getFieldByNumber(133);
+    }
+
+    @Nullable
+    public Float getAvgStepLength() {
+        return (Float) getFieldByNumber(134);
+    }
+
+    @Nullable
+    public Float getTotalAnaerobicTrainingEffect() {
+        return (Float) getFieldByNumber(137);
+    }
+
+    @Nullable
+    public Double getTrainingLoadPeak() {
+        return (Double) getFieldByNumber(168);
     }
 
     @Nullable

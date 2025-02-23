@@ -188,6 +188,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.addTotal(session.getTotalCycles(), cycleUnit);
             }
         }
+        summaryData.add(STEP_LENGTH_AVG, session.getAvgStepLength(), UNIT_MM);
         if (session.getTotalCalories() != null) {
             summaryData.add(CALORIES_BURNT, session.getTotalCalories(), UNIT_KCAL);
         }
@@ -221,12 +222,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (session.getAvgStress() != null) {
             summaryData.add(STRESS_AVG, session.getAvgStress(), UNIT_NONE);
         }
-        if (session.getAverageCadence() != null) {
+        if (session.getAvgCadence() != null) {
             if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
-                summaryData.addCadenceAvg(session.getAverageCadence() * 2, cycleUnit);
+                summaryData.addCadenceAvg(session.getAvgCadence() * 2, cycleUnit);
             } else {
                 // FIXME some of the rest might also need adjusting...
-                summaryData.addCadenceAvg(session.getAverageCadence(), cycleUnit);
+                summaryData.addCadenceAvg(session.getAvgCadence(), cycleUnit);
             }
         }
         if (session.getMaxCadence() != null) {
@@ -261,6 +262,141 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             } else {
                 summaryData.add(SPEED_MAX, Math.round((session.getEnhancedMaxSpeed() * 3600 / 1000) * 100.0) / 100.0, UNIT_KMPH);
             }
+        }
+
+        summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
+        summaryData.add(AVG_POWER, session.getAvgPower(), UNIT_WATT);
+        summaryData.add(MAX_POWER, session.getMaxPower(), UNIT_WATT);
+        summaryData.add(NORMALIZED_POWER, session.getNormalizedPower(), UNIT_WATT);
+
+        if (session.getStandTime() != null) {
+            summaryData.add(STANDING_TIME, session.getStandTime() / 1000, UNIT_SECONDS);
+        }
+        summaryData.add(STANDING_COUNT, session.getStandCount(), UNIT_NONE);
+        summaryData.add(AVG_LEFT_PCO, session.getAvgLeftPco(), UNIT_MM);
+        summaryData.add(AVG_RIGHT_PCO, session.getAvgRightPco(), UNIT_MM);
+
+        summaryData.add(AVG_VERTICAL_OSCILLATION, session.getAvgVerticalOscillation(), UNIT_MM);
+        summaryData.add(AVG_GROUND_CONTACT_TIME, session.getAvgStanceTime(), UNIT_MILLISECONDS);
+        summaryData.add(AVG_VERTICAL_RATIO, session.getAvgVerticalRatio(), UNIT_PERCENTAGE);
+        summaryData.add(AVG_GROUND_CONTACT_TIME_BALANCE, session.getAvgStanceTimeBalance(), UNIT_PERCENTAGE);
+
+        final Number[] avgLeftPowerPhase = session.getAvgLeftPowerPhase();
+        if (avgLeftPowerPhase != null && avgLeftPowerPhase.length == 4) {
+            final Number startAngle = avgLeftPowerPhase[0];
+            final Number endAngle = avgLeftPowerPhase[1];
+            if (startAngle != null && endAngle != null) {
+                summaryData.add(
+                        AVG_LEFT_POWER_PHASE,
+                        context.getString(
+                                R.string.range_degrees,
+                                Math.round(startAngle.floatValue() / 0.7111111),
+                                Math.round(endAngle.floatValue() / 0.7111111)
+                        )
+                );
+            }
+        }
+
+        final Number[] avgRightPowerPhase = session.getAvgRightPowerPhase();
+        if (avgRightPowerPhase != null && avgRightPowerPhase.length == 4) {
+            final Number startAngle = avgRightPowerPhase[0];
+            final Number endAngle = avgRightPowerPhase[1];
+            if (startAngle != null && endAngle != null) {
+                summaryData.add(
+                        AVG_RIGHT_POWER_PHASE,
+                        context.getString(
+                                R.string.range_degrees,
+                                Math.round(startAngle.floatValue() / 0.7111111),
+                                Math.round(endAngle.floatValue() / 0.7111111)
+                        )
+                );
+            }
+        }
+
+        final Number[] avgLeftPowerPhasePeak = session.getAvgLeftPowerPhasePeak();
+        if (avgLeftPowerPhasePeak != null && avgLeftPowerPhasePeak.length == 4) {
+            final Number startAngle = avgLeftPowerPhasePeak[0];
+            final Number endAngle = avgLeftPowerPhasePeak[1];
+            if (startAngle != null && endAngle != null) {
+                summaryData.add(
+                        AVG_LEFT_POWER_PHASE_PEAK,
+                        context.getString(
+                                R.string.range_degrees,
+                                Math.round(startAngle.floatValue() / 0.7111111),
+                                Math.round(endAngle.floatValue() / 0.7111111)
+                        )
+                );
+            }
+        }
+
+        final Number[] avgRightPowerPhasePeak = session.getAvgRightPowerPhasePeak();
+        if (avgRightPowerPhasePeak != null && avgRightPowerPhasePeak.length == 4) {
+            final Number startAngle = avgRightPowerPhasePeak[0];
+            final Number endAngle = avgRightPowerPhasePeak[1];
+            if (startAngle != null && endAngle != null) {
+                summaryData.add(
+                        AVG_RIGHT_POWER_PHASE_PEAK,
+                        context.getString(
+                                R.string.range_degrees,
+                                Math.round(startAngle.floatValue() / 0.7111111),
+                                Math.round(endAngle.floatValue() / 0.7111111)
+                        )
+                );
+            }
+        }
+
+        final Number[] avgPowerPosition = session.getAvgPowerPosition();
+        if (avgPowerPosition != null && avgPowerPosition.length == 2) {
+            summaryData.add(AVG_POWER_SEATING, avgPowerPosition[0], UNIT_WATT);
+            summaryData.add(AVG_POWER_STANDING, avgPowerPosition[1], UNIT_WATT);
+        }
+
+        final Number[] maxPowerPosition = session.getMaxPowerPosition();
+        if (maxPowerPosition != null && maxPowerPosition.length == 2) {
+            summaryData.add(MAX_POWER_SEATING, maxPowerPosition[0], UNIT_WATT);
+            summaryData.add(MAX_POWER_STANDING, maxPowerPosition[1], UNIT_WATT);
+        }
+
+        final Number[] avgCadencePosition = session.getAvgCadencePosition();
+        if (avgCadencePosition != null && avgCadencePosition.length == 2) {
+            summaryData.add(AVG_CADENCE_SEATING, avgCadencePosition[0], UNIT_RPM);
+            summaryData.add(AVG_CADENCE_STANDING, avgCadencePosition[1], UNIT_RPM);
+        }
+
+        final Number[] maxCadencePosition = session.getMaxCadencePosition();
+        if (maxCadencePosition != null && maxCadencePosition.length == 2) {
+            summaryData.add(MAX_CADENCE_SEATING, maxCadencePosition[0], UNIT_RPM);
+            summaryData.add(MAX_CADENCE_STANDING, maxCadencePosition[1], UNIT_RPM);
+        }
+
+        summaryData.add(FRONT_GEAR_SHIFTS, session.getFrontShifts(), UNIT_NONE);
+        summaryData.add(REAR_GEAR_SHIFTS, session.getRearShifts(), UNIT_NONE);
+
+        final Integer balance = session.getLeftRightBalance();
+        if (balance != null) {
+            summaryData.add(
+                    LEFT_RIGHT_BALANCE,
+                    (balance & 0x3fff) / 100f,
+                    UNIT_PERCENTAGE
+            );
+        }
+
+        final Float avgLeftPedalSmoothness = session.getAvgLeftPedalSmoothness();
+        final Float avgRightPedalSmoothness = session.getAvgRightPedalSmoothness();
+        if (avgLeftPedalSmoothness != null && avgRightPedalSmoothness != null) {
+            summaryData.add(
+                    AVG_PEDAL_SMOOTHNESS,
+                    context.getString(R.string.range_percentage, Math.round(avgLeftPedalSmoothness), Math.round(avgRightPedalSmoothness))
+            );
+        }
+
+        final Float avgLeftTorqueEffectiveness = session.getAvgLeftTorqueEffectiveness();
+        final Float avgRightTorqueEffectiveness = session.getAvgRightTorqueEffectiveness();
+        if (avgLeftTorqueEffectiveness != null && avgRightTorqueEffectiveness != null) {
+            summaryData.add(
+                    AVG_TORQUE_EFFECTIVENESS,
+                    context.getString(R.string.range_percentage, Math.round(avgLeftTorqueEffectiveness), Math.round(avgRightTorqueEffectiveness))
+            );
         }
 
         for (final FitTimeInZone fitTimeInZone : timesInZone) {
@@ -320,6 +456,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.add(LACTATE_THRESHOLD_HR, physiologicalMetrics.getLactateThresholdHeartRate(), UNIT_BPM);
             }
         }
+
+        summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
+        summaryData.add(INTENSITY_FACTOR, session.getIntensityFactor(), UNIT_NONE);
+        summaryData.add(TRAINING_STRESS_SCORE, session.getTrainingStressScore(), UNIT_NONE);
 
         if (!sets.isEmpty()) {
             final boolean anyReps = sets.stream().anyMatch(s -> s.getRepetitions() != null);
@@ -385,6 +525,14 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         );
 
         summary.setSummaryData(summaryData.toString());
+    }
+
+    public Number safeRound(final Number number) {
+        if (number == null) {
+            return null;
+        }
+
+        return Math.round(number.doubleValue());
     }
 
     private static ActivityKind getActivityKind(final Integer sport, final Integer subsport) {

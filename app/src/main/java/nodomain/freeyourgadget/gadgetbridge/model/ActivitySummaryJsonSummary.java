@@ -170,7 +170,9 @@ public class ActivitySummaryJsonSummary {
             put(GROUP_ACTIVITY, Arrays.asList(
                     DISTANCE_METERS, STEPS, STEP_RATE_SUM, ACTIVE_SECONDS, CALORIES_BURNT,
                     STRIDE_TOTAL, HR_AVG, HR_MAX, HR_MIN, STRIDE_AVG, STRIDE_MAX, STRIDE_MIN,
-                    STEP_LENGTH_AVG
+                    STEP_LENGTH_AVG,
+                    STANDING_TIME, STANDING_COUNT,
+                    AVG_POWER, MAX_POWER, NORMALIZED_POWER
             ));
             put(GROUP_SPEED, Arrays.asList(
                     SPEED_AVG, SPEED_MAX, SPEED_MIN, PACE_AVG_SECONDS_KM, PACE_MIN,
@@ -193,8 +195,21 @@ public class ActivitySummaryJsonSummary {
                     POOL_LENGTH, SWIM_AVG_CADENCE,
                     SWOLF_INDEX, SWOLF_AVG, SWOLF_MAX, SWOLF_MIN, SWIM_STYLE
             ));
+            put(GROUP_CYCLING, Arrays.asList(
+                    LEFT_RIGHT_BALANCE,
+                    AVG_PEDAL_SMOOTHNESS, AVG_TORQUE_EFFECTIVENESS,
+                    AVG_LEFT_PCO, AVG_LEFT_POWER_PHASE, AVG_LEFT_POWER_PHASE_PEAK,
+                    AVG_RIGHT_PCO, AVG_RIGHT_POWER_PHASE, AVG_RIGHT_POWER_PHASE_PEAK,
+                    AVG_POWER_STANDING, MAX_POWER_STANDING,
+                    AVG_POWER_SEATING, MAX_POWER_SEATING,
+                    AVG_CADENCE_STANDING, AVG_CADENCE_SEATING,
+                    MAX_CADENCE_STANDING, MAX_CADENCE_SEATING,
+                    FRONT_GEAR_SHIFTS, REAR_GEAR_SHIFTS
+            ));
             put(GROUP_TRAINING_EFFECT, Arrays.asList(
                     TRAINING_EFFECT_AEROBIC, TRAINING_EFFECT_ANAEROBIC, WORKOUT_LOAD,
+                    TRAINING_LOAD,
+                    INTENSITY_FACTOR, TRAINING_STRESS_SCORE,
                     MAXIMUM_OXYGEN_UPTAKE, RECOVERY_TIME, LACTATE_THRESHOLD_HR
             ));
             put(GROUP_LAPS, Arrays.asList(
