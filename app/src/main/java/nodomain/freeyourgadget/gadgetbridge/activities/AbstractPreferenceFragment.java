@@ -171,7 +171,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
         for (int i = 0; i < preferenceGroup.getPreferenceCount(); i++) {
             final Preference preference = preferenceGroup.getPreference(i);
 
-            LOG.debug("Reloading {}", preference.getKey());
+            LOG.trace("Reloading {}", preference.getKey());
 
             if (preference instanceof PreferenceCategory) {
                 reloadPreferences(sharedPreferences, (PreferenceCategory) preference);
@@ -188,7 +188,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
     private class SharedPreferencesChangeHandler implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
-            LOG.debug("Preference changed: {}", key);
+            LOG.trace("Preference changed: {}", key);
 
             if (key == null) {
                 LOG.warn("Preference null, ignoring");
@@ -214,8 +214,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
             } else if (preference instanceof EditTextPreference) {
                 final EditTextPreference editTextPreference = (EditTextPreference) preference;
                 editTextPreference.setText(prefs.getString(key, editTextPreference.getText()));
-            } else if (preference instanceof PreferenceScreen) {
-                // Ignoring
+            } else if (preference instanceof PreferenceScreen || Preference.class.equals(preference.getClass())) {
+                LOG.trace("Unknown preference class {} for {}, ignoring", preference.getClass(), key);
             } else {
                 LOG.warn("Unknown preference class {} for {}, ignoring", preference.getClass(), key);
             }
