@@ -3613,7 +3613,7 @@
     <string name="permission_query_all_packages_summary">Yüklü tüm uygulamaların adlarını ve simgelerini okur</string>
     <string name="manual_discharge_summary">devre dışı bırakıldığında (Gadgetbridge tarafından desteklenmeyen) harici bir güç ölçücü tarafından kontrol edildiği varsayılır</string>
     <string name="summary_battery_discharge_intervals_set">Aşağıdaki yapılandırmayı cihaza gönder</string>
-    <string name="battery_minimum_charge">% cinsinden minimum pil seviyesi</string>
+    <string name="battery_minimum_charge">%% cinsinden minimum pil seviyesi</string>
     <string name="permission_disable_doze_summary">Android pil optimizasyonları tarafından engellenmeden arka planda çalışmaya izin verir</string>
     <string name="devicetype_casioecbs100">Casio ECB-S100</string>
     <string name="devicetype_sony_wi_c100">Sony WI-C100</string>
