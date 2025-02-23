@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SortedMap;
@@ -78,6 +81,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitStressLevel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FitImporter {
@@ -329,12 +333,41 @@ public class FitImporter {
             return;
         }
 
+        // If the file is not yet on the export directory (eg. we're importing from phone storage), copy it
+        File finalExportFile = file;
+        try {
+            final File exportDirectory = gbDevice.getDeviceCoordinator().getWritableExportDirectory(gbDevice);
+            if (!file.getAbsolutePath().startsWith(exportDirectory.getAbsolutePath())) {
+                final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
+                final StringBuilder sb = new StringBuilder(fileId.getType().name());
+                if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
+                    sb.append("_").append(SDF.format(new Date(fileId.getTimeCreated() * 1000L)));
+                }
+                sb.append(".fit");
+
+                final File exportFile = new File(exportDirectory, sb.toString());
+                if (exportFile.isFile()) {
+                    // Prevent overwrite
+                    LOG.warn("Fit file {} already exists as {}", file, exportFile);
+                } else {
+                    LOG.debug("Copying {} to {}", file, exportFile);
+
+                    FileUtils.copyFile(file, exportFile);
+                    exportFile.setLastModified(file.lastModified());
+                }
+
+                finalExportFile = exportFile;
+            }
+        } catch (final Exception e) {
+            LOG.error("Failed to copy file to export directory", e);
+        }
+
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
 
             switch (fileId.getType()) {
                 case ACTIVITY:
-                    persistWorkout(file, session);
+                    persistWorkout(finalExportFile, session);
                     break;
                 case MONITOR:
                     persistActivitySamples(session);

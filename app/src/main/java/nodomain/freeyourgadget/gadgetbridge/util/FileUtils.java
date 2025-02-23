@@ -144,7 +144,6 @@ public class FileUtils {
         }
         try (InputStream fin = new BufferedInputStream(in)) {
             copyStreamToFile(fin, destFile);
-            fin.close();
         }
     }
 

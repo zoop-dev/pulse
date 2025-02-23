@@ -22,7 +22,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -35,9 +38,12 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.agps.GarminAgpsStatus;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitAsyncProcessor;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -58,6 +64,64 @@ public class GarminSettingsCustomizer implements DeviceSpecificSettingsCustomize
                 final Intent intent = new Intent(handler.getContext(), GarminRealtimeSettingsActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
                 handler.getContext().startActivity(intent);
+                return true;
+            });
+        }
+
+        final Preference prefImportActivityFiles = handler.findPreference("import_activity_files");
+        if (prefImportActivityFiles != null) {
+            final ActivityResultLauncher<String[]> activityFileChooser = handler.registerForActivityResult(
+                    new ActivityResultContracts.OpenMultipleDocuments(),
+                    localUris -> {
+                        LOG.info("Files to import: {}", localUris);
+                        if (localUris != null) {
+                            final List<File> filesToProcess = new ArrayList<>(localUris.size());
+
+                            final Context context = handler.getContext();
+                            for (final Uri uri : localUris) {
+                                final File file;
+                                try {
+                                    file = File.createTempFile("activity-files-import", ".bin", context.getCacheDir());
+                                    file.deleteOnExit();
+                                    FileUtils.copyURItoFile(context, uri, file);
+                                    filesToProcess.add(file);
+                                } catch (final IOException e) {
+                                    LOG.error("Failed to create temp file for activity file", e);
+                                }
+                            }
+
+                            if (filesToProcess.isEmpty()) {
+                                return;
+                            }
+
+                            final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(context, handler.getDevice());
+                            final long[] lastNotificationUpdateTs = new long[]{System.currentTimeMillis()};
+                            fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
+                                @Override
+                                public void onProgress(final int i) {
+                                    final long now = System.currentTimeMillis();
+                                    if (now - lastNotificationUpdateTs[0] > 1500L) {
+                                        lastNotificationUpdateTs[0] = now;
+                                        GB.updateTransferNotification(
+                                                "Parsing fit files", "File " + i + " of " + filesToProcess.size(),
+                                                true,
+                                                (i * 100) / filesToProcess.size(), context
+                                        );
+                                    }
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    GB.updateTransferNotification("", "", false, 100, context);
+                                    GB.toast("Parsed " + filesToProcess.size() + " files", Toast.LENGTH_SHORT, GB.INFO);
+                                    handler.getDevice().sendDeviceUpdateIntent(context);
+                                }
+                            });
+                        }
+                    }
+            );
+            prefImportActivityFiles.setOnPreferenceClickListener(preference -> {
+                activityFileChooser.launch(new String[]{"*/*"});
                 return true;
             });
         }

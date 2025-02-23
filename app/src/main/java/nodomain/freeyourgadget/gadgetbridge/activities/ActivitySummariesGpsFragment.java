@@ -93,6 +93,9 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
 
     public static List<ActivityPoint> getActivityPoints(final File trackFile) {
         final List<ActivityPoint> points = new ArrayList<>();
+        if (trackFile == null) {
+            return points;
+        }
         if (trackFile.getName().endsWith(".gpx")) {
             try (FileInputStream inputStream = new FileInputStream(trackFile)) {
                 final GpxParser gpxParser = new GpxParser(inputStream);

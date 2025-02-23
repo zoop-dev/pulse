@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/ic_file_upload"
+        android:key="import_activity_files"
+        android:summary="@string/pref_import_activity_files_summary"
+        android:title="@string/pref_import_activity_files_title" />
+</androidx.preference.PreferenceScreen>
