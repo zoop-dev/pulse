@@ -231,7 +231,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
                 "output_24h: " + output_wh_24h + " Wh\n" +
                 "time_utc: " + DateTimeUtils.formatTime(hour_utc, minute_utc) + "\n" +
                 "region: " + (region_code == 0 ? "EU" : (region_code == 1 ? "CN" : (region_code == 2 ? "OTHER" : "UNKNOWN"))) + "\n" +
-                "network_status: " + (network_status == 0 ? "connected" : "disconnected") + "\n" +
+                "network_status: " + (network_status != 0 ? "connected" : "disconnected") + "\n" +
                 "expansion_battery1: " + expansion_battery_1_present + "\n" +
                 "expansion_battery2: " + expansion_battery_2_present;
 
