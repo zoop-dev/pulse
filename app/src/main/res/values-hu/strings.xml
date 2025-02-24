@@ -11,7 +11,7 @@
     <string name="controlcenter_disconnect">Leválasztás</string>
     <string name="controlcenter_delete_device">Eszköz törlése</string>
     <string name="controlcenter_delete_device_name">%1$s törlése</string>
-    <string name="controlcenter_delete_device_dialogmessage">Az eszköz és az összes hozzátartozó adat törlésre kerül!</string>
+    <string name="controlcenter_delete_device_dialogmessage">Az eszköz és az összes hozzátartozó adat törölve lesz!</string>
     <string name="controlcenter_navigation_drawer_open">Navigációs fiók megnyitása</string>
     <string name="controlcenter_navigation_drawer_close">Navigációs fiók bezárása</string>
     <string name="controlcenter_snackbar_need_longpress">Nyomja hosszan a kártya leválasztáshoz</string>
@@ -240,7 +240,7 @@
     <string name="alarm_fri_short">Pén</string>
     <string name="alarm_sat_short">Szo</string>
     <string name="alarm_smart_wakeup">Okos ébresztés</string>
-    <string name="user_feedback_miband_set_alarms_failed">Hiba történt a riasztások beállításakor, próbálja újra.</string>
+    <string name="user_feedback_miband_set_alarms_failed">Hiba történt a riasztások beállításakor, próbálja meg újra.</string>
     <string name="user_feedback_miband_set_alarms_ok">Riasztások elküldve az eszközre.</string>
     <string name="chart_no_data_synchronize">Nincs adat. Szinkronizálja az eszközt\?</string>
     <string name="user_feedback_miband_activity_data_transfer">%1$s adat átvitele %2$s-től kezdve</string>
@@ -345,7 +345,7 @@
     <string name="charts_legend_heartrate">Pulzusszám</string>
     <string name="live_activity_heart_rate">Pulzusszám</string>
     <string name="pref_title_pebble_health_store_raw">Nyers adatok tárolása az adatbázisban</string>
-    <string name="pref_summary_pebble_health_store_raw">Az adatokat eredeti formában tárolja, növelve az adatbázis-használatot a későbbi feldolgozás lehetővé tétele érdekében.</string>
+    <string name="pref_summary_pebble_health_store_raw">Az adatokat „eredeti formában tárolja”, növelve az adatbázis-használatot a későbbi feldolgozás lehetővé tétele érdekében.</string>
     <string name="action_db_management">Adatkezelés</string>
     <string name="title_activity_db_management">Adatkezelés</string>
     <string name="activity_db_management_import_export_explanation">Az exportálás/importálás műveletek a következő könyvtár útvonalát (lásd lentebb) használják az eszközén. Ez a könyvtár elérhető más Android alkalmazások és a számítógépe számára. Jegyezze meg, hogy ez a könyvár és az összes tartalmazott fájl törölve lesz, ha eltávolítja a Gadgetbridge-et. Az adatok tartalmazzák: \n Export_preference - globális beállítások \n Export_preference_MAC - eszközspecifikus beállítások \n Gadgetbridge - eszköz- és tevékenység-adatbázis \n Gadgetbridge_date - egy dátumon exportált adatbázis \n *.gpx - GPS feljegyzések \n *.log - naplófájlok \nVárhatóan itt megtalálja az exportált fájlokat (vagy helyezze ide az importálandó fájlokat):</string>
@@ -1391,7 +1391,7 @@
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="sony_surround_mode_outdoor_stage">Kültéri színpad</string>
     <string name="notif_export_failed_title">Az adatbázis exportálása meghiúsult! Ellenőrizze a beállításait.</string>
-    <string name="fw_upgrade_notice_amazfitcor2">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor 2 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A karkötő az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA! \n \nTELJESEN TESZTELETLEN, VÉLEMÉNYESEN BEATS_W FIRMWARE-T KELL TELEPÍTENIE, HA AZ ESZKÖZ NEVE \"Amazfit Band 2\\</string>
+    <string name="fw_upgrade_notice_amazfitcor2">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor 2 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A karkötő az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA! \n \nTELJESEN TESZTELETLEN, VÉLEMÉNYESEN BEATS_W FIRMWARE-T KELL TELEPÍTENIE, HA AZ ESZKÖZ NEVE „Amazfit Band 2”</string>
     <string name="fw_upgrade_notice_amazfitgts">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfitvergel">A(z) %s firmware-t kívánja telepíteni az Amazfit Verge Lite eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfit_gts4">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS 4 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
@@ -1439,7 +1439,7 @@
     <string name="pref_header_equalizer">Hangszínszabályzó</string>
     <string name="pref_pair_bluetooth_calls_summary">Kattintson ide a párosítási folyamat elindításához</string>
     <string name="pref_pair_bluetooth_calls_help_title">Hogyan fogadhat bluetooth hívásokat</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Lépjen be a telefonja Bluetooth beállításaiba, és párosítsa az új eszközt, amely megjelenik (hasonló névvel, mint a jelenlegi órája, de egy utótaggal, pl. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Lépjen be a telefonja bluetooth beállításaiba, és párosítsa az új eszközt, amely megjelenik (hasonló névvel, mint a jelenlegi órája, de egy utótaggal, pl. „Amazfit GTR 4 - AFC8”.</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Ahhoz, hogy bluetooth hívásokat fogadhasson, párosítania kell a telefonját az óra egy második példányával.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Érintse meg az alábbi gombot a párosítási folyamat elindításához.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Engedélyezze az alábbi Bluetooth hívások beállítását.</string>
@@ -1467,7 +1467,7 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">GPS adatfrissítési időköz</string>
     <string name="pref_summary_banglejs_webview_url">Ha egyéni alkalmazásbetöltőt szeretne, adja meg https://…/android.html webcímét ide. Ellenkező esetben hagyja üresen a https://banglejs.com/apps mezőt</string>
     <string name="pref_title_message_privacy_mode">Üzenet adatvédelmi mód</string>
-    <string name="pref_title_weather_summary">A LineageOS időjárás-szolgáltatóhoz használatos más Android verzióknak olyan alkalmazást kell használniuk, mint az \"Időjárás értesítés\". További információkat a Gadgetbridge wikiben talál.</string>
+    <string name="pref_title_weather_summary">A LineageOS időjárás-szolgáltatóhoz használatos más Android verzióknak olyan alkalmazást kell használniuk, mint az „Időjárás értesítés”. További információkat a Gadgetbridge wikiben talál.</string>
     <string name="pref_title_device_intents">Intentek engedélyezése</string>
     <string name="pref_title_preview_message_in_title">Az üzenet előnézetének megjelenítése a címben</string>
     <string name="pref_summary_preview_message_in_title">Megjeleníti az üzenet előnézetét az értesítés címében, ahogy azt az eszköz engedélyezi</string>
@@ -1661,7 +1661,7 @@
     <string name="prefs_heartrate_alert_experimental_description">Rázza meg a karkötőt, ha a pulzusszám túllép egy küszöbértéket, anélkül, hogy az elmúlt 10 percben bármilyen nyilvánvaló fizikai tevékenységet végzett volna. Ez a funkció kísérleti jellegű, és nem lett alaposan tesztelve.</string>
     <string name="prefs_stress_monitoring_title">Stresszfigyelés</string>
     <string name="prefs_heartrate_alert_threshold">Pulzusszámriasztás küszöbértéke</string>
-    <string name="prefs_charts_tabs">Diagramok fülek</string>
+    <string name="prefs_charts_tabs">Diagram fülek</string>
     <string name="devicestatus_upload_completed">A feltöltés befejeződött</string>
     <string name="devicestatus_upload_validating">A feltöltés ellenőrzése folyamatban van</string>
     <string name="devicestatus_upload_aborted">A feltöltés megszakadt!</string>
@@ -1713,7 +1713,7 @@
     <string name="prefs_find_phone_summary">Használja karkötőjét a telefon csengőhangjának lejátszásához.</string>
     <string name="mi2_prefs_button_press_count_summary">A gombnyomások száma az 1. esemény elindításához. Ugyanannyi további megnyomással létrejön a 2. esemény és így tovább.</string>
     <string name="mi2_prefs_button_press_broadcast">Küldendő üzenet közvetítése</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Az eseménnyel együtt közvetített üzenet. A \"button_id\" paraméter automatikusan hozzáadódik minden üzenethez.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Az eseménnyel együtt közvetített üzenet. A „button_id” paraméter automatikusan hozzáadódik minden üzenethez.</string>
     <string name="mi2_prefs_button_action_vibrate_summary">Sávrezgés engedélyezése a gombművelet aktiválásakor</string>
     <string name="prefs_password_enabled">Jelszó engedélyezve</string>
     <string name="prefs_password_4_digits_1_to_4_summary">A jelszónak 4 számjegyűnek kell lennie, 1-4 számjegyeket használva</string>
@@ -2028,7 +2028,7 @@
     <string name="prefs_button_triple_press_action_selection_title">3. esemény művelet</string>
     <string name="gpx_receiver_activity_title">GPX-vevő Gadgetbridge</string>
     <string name="gpx_receiver_overwrite_some_files">Néhány fájl már létezik. Felülírja?</string>
-    <string name="error_version_check_extreme_caution">FIGYELEM: Hiba a verzióinformáció ellenőrzésénél! Nem szabad folytatni! \"%s\\ verzió nevét láttam</string>
+    <string name="error_version_check_extreme_caution">FIGYELEM: Hiba a verzióinformáció ellenőrzésénél! Nem szabad folytatni! „%s” verzió nevét láttam</string>
     <string name="share_log_warning">Ne feledje, hogy a Gadgetbridge olyan fájlokat naplóz, amelyek sok személyes adatot tartalmazhatnak, többek között egészségügyi adatokat, egyedi azonosítókat (például az eszköz MAC-címét), zenei beállításokat stb. Fontolja meg a fájl szerkesztését és ezen információk eltávolítását, mielőtt elküldi a fájlt egy nyilvános hibajelentésre.</string>
     <string name="pref_title_upper_button_long_press_action">Felső gomb hosszú megnyomású művelet</string>
     <string name="pref_title_lower_button_function_long">Alsó gomb hosszan</string>
@@ -2121,7 +2121,7 @@
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
     <string name="activity_filter_reset_filter">Szűrők törlése</string>
     <string name="watchface_dialog_title_set_name">Óraszámlap elnevezése</string>
-    <string name="watchface_upload_failed">Az óraszámlapot nem sikerült feltölteni. Próbálja újra.</string>
+    <string name="watchface_upload_failed">Az óraszámlapot nem sikerült feltölteni. Próbálja meg újra.</string>
     <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
     <string name="prefs_active_noise_cancelling_light">Alacsony aktív zajszűrés</string>
     <string name="left_earbud">Bal oldali fülhallgató</string>
@@ -2396,7 +2396,7 @@
     <string name="companion_pairing_request_description">Társeszközként párosítja ezt az eszközt?\n\nAjánlott néhány funkció használatához, mint például az eszköz megtalálása, illetve jobb csatlakozást eredményez.</string>
     <string name="scan_scanning_single_device">1 eszköz beolvasása</string>
     <string name="scan_scanning_multiple_devices">%d eszköz beolvasása</string>
-    <string name="unbind_before_pair_message">Ezt az eszközt az Android beállításokon belül már összekapcsolta, amely párosítási hibához vezethet egyes eszközöknél.\n\nHa az eszköz hozzáadása sikertelen, törölje az Android beállításokon belül és próbálja újra.</string>
+    <string name="unbind_before_pair_message">Ezt az eszközt az Android beállításokon belül már összekapcsolta, amely párosítási hibához vezethet egyes eszközöknél.\n\nHa az eszköz hozzáadása sikertelen, törölje az Android beállításokon belül és próbálja meg újra.</string>
     <string name="devicesetting_scannable_debounce_summary">A beolvasás után az eszköz beolvasottként marad meg, és a megadott ideig mellőzi</string>
     <string name="pref_dashboard_all_devices_title">Minden eszköz</string>
     <string name="busy_task_fetch_hrv_data">HRV adat lekérdezése</string>
@@ -2752,7 +2752,7 @@
     <string name="prefs_wena3_home_icon_name_clock">Jelenlegi idő</string>
     <string name="prefs_wena3_menu_icon_hint">A Beállítások ikon mindig a végén jelenik meg</string>
     <string name="call_rejection_method_reject">Elutasítás</string>
-    <string name="pref_call_rejection_method_summary">Milyen műveletre kerül sor, ha egy bejövő hívás elutasításra kerül az óráról</string>
+    <string name="pref_call_rejection_method_summary">Milyen műveletre kerül sor, ha egy bejövő hívás el lesz utasítva az óráról</string>
     <string name="menuitem_alerts">Riasztások</string>
     <string name="wake_up_time">Ébredés</string>
     <string name="devicetype_mi_watch_color_sport">Mi Watch Color Sport</string>
@@ -3031,7 +3031,7 @@
     <string name="pref_sleepasandroid_feat_alarms">Riasztások</string>
     <string name="pref_sleepasandroid_slot_summary">Hogy mely riasztásrekeszt kell használni a riasztások beállításakor</string>
     <string name="toast_setting_requires_reconnect">Ez a beállítás az újracsatlakozás után lép hatályba</string>
-    <string name="pref_fetch_unknown_files_summary">Ismeretlen tevékenységfájlok lekérése az óráról. Ezek nem kerülnek feldolgozásra, de mentésre kerülnek a telefonon.</string>
+    <string name="pref_fetch_unknown_files_summary">Ismeretlen tevékenységfájlok lekérése az óráról. Ezek nem kerülnek feldolgozásra, de el lesznek mentve a telefonon.</string>
     <string name="file_already_exists">A fájl már létezik</string>
     <string name="devicetype_ble_gatt_client">Általános BLE GATT kliens</string>
     <string name="prefs_title_gatt_client_notification_intents">GATT értesítési szándékok továbbítása BLE Intent API-n keresztül</string>
@@ -3356,7 +3356,7 @@
     <string name="prefs_summary_gatt_client_api_package">A BLE Intent API kommunikáció korlátozása erre a csomagra</string>
     <string name="backup_restore_exporting">Exportálás zip formátumba…</string>
     <string name="backup_restore_error_import">Importálás zip formátumba sikertelen</string>
-    <string name="music_delete_multiple_confirm_description">Biztosan törölni szeretné a(z) „%1$d\" dalokat?</string>
+    <string name="music_delete_multiple_confirm_description">Biztosan törölni szeretné a(z) „%1$d” dalokat?</string>
     <string name="permission_internet_access_summary">Szinkronizálás online forrásokkal</string>
     <string name="permission_calendar_summary">Naptár küldése a kütyükre</string>
     <string name="permission_receive_sms_title">SMS fogadása</string>
