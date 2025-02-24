@@ -3723,4 +3723,25 @@
     <string name="devicetype_soundcore_q30">Soundcore Q30</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
     <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
+    <string name="pairing_even_realities_g1_working">Kopple mit %1s...</string>
+    <string name="pairing_even_realities_g1_invalid_device">Fehlerhaftes G1 Gerät: %1$s.</string>
+    <string name="activity_type_barbell">Langhantel</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %s auf dein %s zu installieren.\n \nDeine aktuelle Firmware ist %s\n \nDein Gerät wird nach dem Hochladen neustarten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="update_firmware_operation_check_failed">Firmware Überprüfung fehlgeschlagen</string>
+    <string name="update_firmware_operation_check_in_progress">Überprüfe Firmware</string>
+    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
+    <string name="uploading">Lade hoch…</string>
+    <string name="gree_pair_info">Sie sind dabei, sich mit %s (%s) zu verbinden. Bitte geben Sie die Wi-Fi- und Hostserver-Informationen für die Kopplung ein. Weitere Informationen finden Sie auf der Website.</string>
+    <string name="gree_pair_status_failure">Kopplung fehlgeschlagen: %s</string>
+    <string name="copy_to_clipboard">Kopieren</string>
+    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
+    <string name="pref_garmin_fake_oauth_summary">Behebt einige Funktionen wie Wetter- und AGPS-Updates ohne Verbindung zur offiziellen App alle 90 Tage.</string>
+    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
+    <string name="activity_prefs_goal_standing_hours">Tagesziel: Stehzeiten</string>
+    <string name="poolLength">Pool länge</string>
+    <string name="swim_avg_cadence">Durchschnittliche Schwimmkadenz</string>
+    <string name="unit_revolutions_per_minute"></string>
+    <string name="unit_repetitions_per_minute">Wiederholungen/min</string>
+    <string name="unit_repetitions">Wiederholungen</string>
 </resources>
