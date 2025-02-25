@@ -1165,7 +1165,7 @@
     <string name="status">Állapot</string>
     <string name="pref_header_stress">Stressz</string>
     <string name="stress_relaxed">Nyugodt</string>
-    <string name="averageSpeed">Átlagos sebesség</string>
+    <string name="averageSpeed">Átlagsebesség</string>
     <string name="activity_summary_edit_name_title">Címke szerkesztése</string>
     <string name="battery_case">Akkumulátortok</string>
     <string name="devicetype_amazfit_x">Amazfit X</string>
@@ -2175,7 +2175,7 @@
     <string name="fw_upgrade_notice_amazfitbip3">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="pref_summary_notification_wake_on_open">Ébressze fel és oldja fel az Android-eszközt, ha a kütyü OPEN választ küld vissza. Az eszköznek megbízható állapotban kell lennie.</string>
     <string name="busy_task_fetch_sports_details_interrupted">A sportadatok lekérése megszakadt</string>
-    <string name="swolfAvg">Átlagos swolf</string>
+    <string name="swolfAvg">Úszási hatékonyság átlag</string>
     <string name="swolfMax">Maximum swolf</string>
     <string name="swolfMin">Minimum swolf</string>
     <string name="milliseconds">ezredmásodperc</string>
@@ -2194,13 +2194,13 @@
     <string name="button_watchface_settings">Óraszámlap beállítások</string>
     <string name="stepRateSum">Lépésszám összege</string>
     <string name="impactMax">Maximum hatás</string>
-    <string name="impactAvg">Hatás átlag</string>
-    <string name="swingAngleAvg">Lengésszög átlag</string>
+    <string name="impactAvg">Ütközésátlag</string>
+    <string name="swingAngleAvg">Lengésszögátlag</string>
     <string name="eversionAngleAvg">Kifordulási szög átlag</string>
     <string name="fmtPaceDistance">Ütem %d távolság</string>
     <string name="stepRateAvg">Lépésszám átlag</string>
     <string name="stepLengthAvg">Lépéshossz átlag</string>
-    <string name="groundContactTimeAvg">Talajjal való érintkezési idő átlag</string>
+    <string name="groundContactTimeAvg">Talajkontakt-idő átlag</string>
     <string name="foreFootLandings">Lábfej leérkezés</string>
     <string name="backFootLandings">Lábsarok leérkezés</string>
     <string name="activity_detail_share_raw_summary">Nyers összefoglaló megosztása</string>
@@ -3537,7 +3537,7 @@
     <string name="workout_revolutions">Forradalmi edzés</string>
     <string name="fw_upgrade_notice_huawei">A(z) %s firmware-t kívánja feltölteni a %s firmware-hez.\n\nA jelenlegi firmware a következő: %s\n\nAz eszköz a feltöltés után újraindul.\n\nCSAK SAJÁT FELELŐSSÉGRE FOLYTASSA!</string>
     <string name="poolLength">Medencehossz</string>
-    <string name="swim_avg_cadence">ÁTL úszótempó</string>
+    <string name="swim_avg_cadence">Úszási kadenciaátlag</string>
     <string name="uploading">Feltöltés…</string>
     <string name="strokes_per_length">löket/hosszúság</string>
     <string name="fit_file_viewer">FIT Fájl megtekintő</string>
@@ -3569,15 +3569,15 @@
     <string name="unit_joule">Joule</string>
     <string name="training_load">Edzésterhelés</string>
     <string name="standing_count">Álló számolás</string>
-    <string name="average_left_platform_center_offset">Átl. bal oldali peronközéppont-eltolódás</string>
-    <string name="average_left_power_phase">Átl. bal oldali teljesítményfázis</string>
-    <string name="average_left_power_phase_peak">Átl. bal oldali teljesítményfázis csúcs</string>
-    <string name="average_right_power_phase">Átl. jobb oldali teljesítményfázis</string>
-    <string name="average_right_power_phase_peak">Átl. jobb oldali teljesítményfázis csúcs</string>
+    <string name="average_left_platform_center_offset">Bal oldali peronközéppont-eltolódás átlag</string>
+    <string name="average_left_power_phase">Bal oldali teljesítményfázis átlag</string>
+    <string name="average_left_power_phase_peak">Bal oldali teljesítményfázis csúcsátlag</string>
+    <string name="average_right_power_phase">Jobb oldali teljesítményfázis átlag</string>
+    <string name="average_right_power_phase_peak">Jobb oldali teljesítményfázis csúcsátlag</string>
     <string name="average_power">Átlagteljesítmény</string>
-    <string name="average_power_sitting">Átl. teljesítmény (ülő helyzetben)</string>
-    <string name="average_cadence_sitting">Átl. pedálozási frekvencia (ülő helyzetben)</string>
-    <string name="average_cadence_standing">Átl. pedálozási frekvencia (álló helyzetben)</string>
+    <string name="average_power_sitting">Átlagteljesítmény (ülő helyzetben)</string>
+    <string name="average_cadence_sitting">Átlag pedálozási frekvencia (ülő helyzetben)</string>
+    <string name="average_cadence_standing">Átlag pedálozási frekvencia (álló helyzetben)</string>
     <string name="max_power">Maximális teljesítmény</string>
     <string name="intensity_factor">Intenzitási tényező (IF)</string>
     <string name="training_stress_score">Edzési stresszpontszám (TSS)</string>
@@ -3591,7 +3591,7 @@
     <string name="vertical_ratio">Függőleges arány</string>
     <string name="ground_contact_time_balance">Talajkontakt-idő egyensúly</string>
     <string name="pref_import_activity_files_summary">Tevékenységfájlok saját kezű importálása a telefon tárhelyéről</string>
-    <string name="average_right_platform_center_offset">Átl. jobb oldali peronközéppont-eltolódás</string>
+    <string name="average_right_platform_center_offset">Jobb oldali peronközéppont-eltolódás átlag</string>
     <string name="max_power_sitting">Maximális teljesítmény (ülő helyzetben)</string>
     <string name="unit_watt">Watt</string>
     <string name="max_cadence_standing">Maximális pedálozási frekvencia (álló helyzetben)</string>
@@ -3603,5 +3603,5 @@
     <string name="normalized_power">Normalizált teljesítmény</string>
     <string name="max_cadence_sitting">Maximális pedálozási frekvencia (ülő helyzetben)</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
-    <string name="average_power_standing">Átl. teljesítmény (álló helyzetben)</string>
+    <string name="average_power_standing">Átlagteljesítmény (álló helyzetben)</string>
 </resources>
