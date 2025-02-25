@@ -3593,7 +3593,7 @@
     <string name="devicetype_redmi_buds_5_pro">Redmi Buds 5 Pro</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
     <string name="maxJumpRate">Maksimum Zıplama Oranı</string>
-    <string name="pref_override_features_summary">Belirli cihaz özelliklerini etkinleştirin/devre dışı bırakın. Bu, sorunlara ve/veya cihazınızın yanlış çalışmasına neden olabilir</string>
+    <string name="pref_override_features_summary">Belirli aygıt özelliklerini etkinleştirin/devre dışı bırakın. Bu, sorunlara ve/veya aygıtınızın yanlış çalışmasına neden olabilir</string>
     <string name="music_delete_confirm_description">\'%1$s\' ses dosyasını silmek istediğinize emin misiniz?</string>
     <string name="permission_bluetooth_scan_title">Bluetooth taraması</string>
     <string name="permission_bluetooth_admin_summary">Bluetooth cihazlarını bulma ve eşleştirmeyi sağlar</string>
@@ -3637,7 +3637,7 @@
     <string name="prefs_active_noise_cancelling_outdoor">Açık alan</string>
     <string name="pref_voice_passthrough_level">Doğrudan aktarma seviyesi</string>
     <string name="redmi_buds_5_pro_transparency_strength">Şeffaflık Şiddeti</string>
-    <string name="pref_wear_sensor_summary">Cihaz takılı değilken algıla</string>
+    <string name="pref_wear_sensor_summary">Aygıt takılı değilken algıla</string>
     <string name="pref_wear_sensor_title">Takma Sensörü</string>
     <string name="redmi_buds_5_pro_combo_anc_transparency">ANC / Şeffaflık</string>
     <string name="redmi_buds_5_pro_adaptive_sound">Adaptif Ses</string>
@@ -3706,7 +3706,7 @@
     <string name="prefs_summary_gatt_client_filter_char">Virgülle ayırarak belirli BLE özelliklerini filtrele</string>
     <string name="redmi_buds_5_pro_equalizer_2">2 dB</string>
     <string name="music_multiselect_limit">Birden fazla öğe seçme sınırına ulaşıldı</string>
-    <string name="first_start_intro_tag_line">Cihaz satıcılarının ticari uygulamalarından ve bulut hizmetlerinden kurtulun.</string>
+    <string name="first_start_intro_tag_line">Aygıt satıcılarının ticari uygulamalarından ve bulut hizmetlerinden kurtulun.</string>
     <string name="update_firmware_operation_check_in_progress">Ürün yazılımı kontrol ediliyor</string>
     <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
     <string name="devicetype_realme_buds_t110">Realme Buds T110</string>
@@ -3740,7 +3740,7 @@
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
     <string name="devicetype_soundcore_q30">Soundcore Q30</string>
-    <string name="view_file"></string>
+    <string name="view_file"/>
     <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="reset">Sıfırla</string>
     <string name="pairing_even_realities_g1_working">%1s ile eşleştirme...</string>
@@ -3760,4 +3760,8 @@
     <string name="unit_millimeter">mm</string>
     <string name="pref_import_activity_files_title">Etkinlik dosyalarını içe aktar</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="pairing_even_realities_g1_bottom_hint">Android aygıtınızda birkaç eşleştirme iletişim kutusu açılacaktır. Açılmazsa, bildirim çekmecesine bakın ve eşleştirme isteğini kabul edin. Hem sol hem de sağ lensin eşleştirilmesi gerekecektir.</string>
+    <string name="gree_pair_status_failure">Eşleştirme başarısız: %s</string>
+    <string name="gree_pair_status_success">Başarı eşleştirme.\n\nBağlanma anahtarı: %s</string>
+    <string name="pref_garmin_fake_oauth_warning">Resmi uygulamayı kullanmayı veya saati internete bağlamayı planlıyorsanız bunu etkinleştirmeyin. Bu ayarı etkinleştirdikten sonra, tekrar kimliği doğrulamak için fabrika ayarlarına sıfırlamanız gerekebilir.</string>
 </resources>
