@@ -244,10 +244,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
                     summary = prefs.getString(key, preference.getSummary() != null ? preference.getSummary().toString() : "");
                 }
 
-                if (preference.getSummaryProvider() != null) {
+                if (preference.getSummaryProvider() == null) {
                     try {
                         preference.setSummary(summary);
-                    } catch (final IllegalStateException e) {
+                    } catch (final Exception e) {
                         LOG.error("Failed to set preference summary for {}", key, e);
                     }
                 }
