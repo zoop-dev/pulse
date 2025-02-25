@@ -701,6 +701,67 @@ public class FitnessData {
         }
     }
 
+    public static class EnableRealtimeHeartRate {
+        public static final byte id = 0x1c;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enableRealtimeHeartRate) {
+                super(paramsProvider);
+
+                this.serviceId = FitnessData.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, enableRealtimeHeartRate);
+
+                this.isEncrypted = true;
+                this.complete = true;
+            }
+        }
+    }
+
+    public static class HighHeartRateAlert {
+        public static final byte id = 0x1d;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled, byte highHeartRateAlert) {
+                super(paramsProvider);
+
+                this.serviceId = FitnessData.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, enabled);
+                if(enabled)
+                        this.tlv.put(0x02, highHeartRateAlert);
+
+                this.isEncrypted = true;
+                this.complete = true;
+            }
+        }
+    }
+
+    public static class LowHeartRateAlert {
+        public static final byte id = 0x22;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled, byte lowHeartRateAlert) {
+                super(paramsProvider);
+
+                this.serviceId = FitnessData.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, enabled);
+                if(enabled)
+                    this.tlv.put(0x02, lowHeartRateAlert);
+
+                this.isEncrypted = true;
+                this.complete = true;
+            }
+        }
+    }
+
     public static class NotifyRestHeartRate {
         public static final byte id = 0x23;
 
@@ -731,6 +792,27 @@ public class FitnessData {
 
                 this.tlv = new HuaweiTLV()
                         .put(0x01, enableAutomaticSpo);
+
+                this.isEncrypted = true;
+                this.complete = true;
+            }
+        }
+    }
+
+    public static class LowSpoAlert {
+        public static final byte id = 0x25;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled, byte lowHeartRateAlert) {
+                super(paramsProvider);
+
+                this.serviceId = FitnessData.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, enabled);
+                if(enabled)
+                    this.tlv.put(0x02, lowHeartRateAlert);
 
                 this.isEncrypted = true;
                 this.complete = true;

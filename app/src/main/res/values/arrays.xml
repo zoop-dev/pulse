@@ -4509,4 +4509,57 @@
         <item>transparency</item>
         <item>off</item>
     </string-array>
+
+
+    <string-array name="prefs_huawei_heart_rate_high_alert_names">
+        <item name="0">@string/off</item>
+        <item name="100">@string/heartrate_bpm_100</item>
+        <item name="110">@string/heartrate_bpm_110</item>
+        <item name="120">@string/heartrate_bpm_120</item>
+        <item name="130">@string/heartrate_bpm_130</item>
+        <item name="140">@string/heartrate_bpm_140</item>
+        <item name="150">@string/heartrate_bpm_150</item>
+    </string-array>
+
+    <string-array name="prefs_huawei_heart_rate_high_alert_values">
+        <item>0</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+        <item>130</item>
+        <item>140</item>
+        <item>150</item>
+    </string-array>
+
+
+    <string-array name="prefs_huawei_heart_rate_low_alert_names">
+        <item name="0">@string/off</item>
+        <item name="40">@string/heartrate_bpm_40</item>
+        <item name="45">@string/heartrate_bpm_45</item>
+        <item name="50">@string/heartrate_bpm_50</item>
+    </string-array>
+
+    <string-array name="prefs_huawei_heart_rate_low_alert_values">
+        <item>0</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="prefs_huawei_spo_low_alert_names">
+        <item name="0">@string/spo2_off</item>
+        <item name="75">@string/spo2_perc_75</item>
+        <item name="80">@string/spo2_perc_80</item>
+        <item name="85">@string/spo2_perc_85</item>
+        <item name="90">@string/spo2_perc_90</item>
+    </string-array>
+
+    <string-array name="prefs_huawei_spo_low_alert_values">
+        <item>0</item>
+        <item>75</item>
+        <item>80</item>
+        <item>85</item>
+        <item>90</item>
+    </string-array>
+
 </resources>

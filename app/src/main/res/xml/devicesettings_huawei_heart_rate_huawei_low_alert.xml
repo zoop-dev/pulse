@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:dependency="heartrate_automatic_enable"
+        android:entries="@array/prefs_huawei_heart_rate_low_alert_names"
+        android:entryValues="@array/prefs_huawei_heart_rate_low_alert_values"
+        android:icon="@drawable/ic_heartrate"
+        android:defaultValue="0"
+        android:key="pref_huawei_heart_rate_low_alert"
+        android:summary="%s"
+        android:title="@string/pref_heart_rate_low_alert" />
+</androidx.preference.PreferenceScreen>

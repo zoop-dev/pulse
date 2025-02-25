@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_HIGH_ALERT;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_LOW_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS;
 
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -147,8 +149,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAutomaticHeartrateRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAutomaticSpoRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetDisconnectNotification;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetHeartRateHighAlert;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetHeartRateLowAlert;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetMediumToStrengthThresholdRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetSkinTemperatureMeasurement;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetSpO2LowAlert;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetTemperatureUnitSetting;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.StopFindPhoneRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.StopNotificationRequest;
@@ -1119,10 +1124,20 @@ public class HuaweiSupportProvider {
                     setDisconnectNotification();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_HEARTRATE_AUTOMATIC_ENABLE:
+                case HuaweiConstants.PREF_HUAWEI_HEART_RATE_REALTIME_MODE:
                     setHeartrateAutomatic();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_HEART_RATE_LOW_ALERT:
+                    setHeartRateLowAlert();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_HEART_RATE_HIGH_ALERT:
+                    setHeartRateHighAlert();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_SPO_AUTOMATIC_ENABLE:
                     setSpoAutomatic();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_SPO_LOW_ALERT:
+                    setSpoLowAlert();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_FORCE_ENABLE_SMART_ALARM:
                     getAlarms();
@@ -2220,6 +2235,26 @@ public class HuaweiSupportProvider {
         }
     }
 
+    private void setHeartRateLowAlert() {
+        try {
+            SetHeartRateLowAlert req = new SetHeartRateLowAlert(this);
+            req.doPerform();
+        } catch (IOException e) {
+            GB.toast(context, "Failed to set heart rate low alert", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("Failed to set heart rate low alert", e);
+        }
+    }
+
+    private void setHeartRateHighAlert() {
+        try {
+            SetHeartRateHighAlert req = new SetHeartRateHighAlert(this);
+            req.doPerform();
+        } catch (IOException e) {
+            GB.toast(context, "Failed to set heart rate high alert", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("Failed to set heart rate high alert", e);
+        }
+    }
+
     private void setSpoAutomatic() {
         try {
             SetAutomaticSpoRequest req = new SetAutomaticSpoRequest(this);
@@ -2227,6 +2262,16 @@ public class HuaweiSupportProvider {
         } catch (IOException e) {
             GB.toast(context, "Failed to set automatic SpO", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("Failed to set automatic SpO", e);
+        }
+    }
+
+    private void setSpoLowAlert() {
+        try {
+            SetSpO2LowAlert req = new SetSpO2LowAlert(this);
+            req.doPerform();
+        } catch (IOException e) {
+            GB.toast(context, "Failed to set spo low alert", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("Failed to set spo low alert", e);
         }
     }
 

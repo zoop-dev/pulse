@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_heartrate"
+        android:dependency="heartrate_automatic_enable"
+        android:key="pref_huawei_heart_rate_realtime_mode"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/pref_heart_rate_realtime_mode"
+        android:summary="@string/pref_heart_rate_realtime_mode_summary"/>
+</androidx.preference.PreferenceScreen>

@@ -774,6 +774,7 @@
     <string name="heartrate_bpm_185">185 bpm</string>
     <string name="heartrate_bpm_195">195 bpm</string>
     <string name="heartrate_bpm_205">205 bpm</string>
+    <string name="spo2_perc_75">75%</string>
     <string name="spo2_perc_80">80%</string>
     <string name="spo2_perc_85">85%</string>
     <string name="spo2_perc_90">90%</string>
@@ -3033,8 +3034,16 @@
 
     <string name="pref_disable_find_phone_with_dnd">Disable find my phone when do not disturb is active</string>
 
-    <string name="pref_heartrate_automatic_enable">Enable automatic heartrate measuring</string>
+    <string name="pref_heartrate_automatic_enable">Enable automatic heart rate measuring</string>
     <string name="pref_spo_automatic_enable">Enable automatic SpO2 measuring</string>
+
+    <string name="pref_heart_rate_realtime_mode">Real-time automatic heart rate measuring mode</string>
+    <string name="pref_heart_rate_realtime_mode_summary">If enabled, uses real-time mode, otherwise uses smart mode. This mode consume more power.</string>
+
+    <string name="pref_heart_rate_high_alert">High heart rate alert</string>
+    <string name="pref_heart_rate_low_alert">Low heart rate alert</string>
+
+    <string name="pref_spo_low_alert">Low SpO2 alert</string>
 
     <string name="pref_force_options">Force options</string>
     <string name="pref_force_options_summary">Some devices falsely claim not to have support for some options. This settings can be used to enable them anyway.\nUSE AT YOUR OWN RISK\nRead the wiki</string>

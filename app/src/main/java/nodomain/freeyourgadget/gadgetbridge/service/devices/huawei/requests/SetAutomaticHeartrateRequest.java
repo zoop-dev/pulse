@@ -23,6 +23,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FitnessData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
@@ -39,17 +40,28 @@ public class SetAutomaticHeartrateRequest extends Request {
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
-        boolean automaticHeartrateEnabled = GBApplication
+        boolean automaticHeartRateEnabled = GBApplication
                 .getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress())
                 .getBoolean(DeviceSettingsPreferenceConst.PREF_HEARTRATE_AUTOMATIC_ENABLE, false);
-        if (automaticHeartrateEnabled)
-            LOG.info("Attempting to enable automatic heartrate");
+        boolean realtimeHeartRateEnabled = GBApplication
+                .getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress())
+                .getBoolean(HuaweiConstants.PREF_HUAWEI_HEART_RATE_REALTIME_MODE, false);
+        if (automaticHeartRateEnabled)
+            LOG.info("Attempting to enable automatic heart rate");
         else
-            LOG.info("Attempting to disable automatic heartrate");
-        try {
-            return new FitnessData.EnableAutomaticHeartrate.Request(paramsProvider, automaticHeartrateEnabled).serialize();
-        } catch (HuaweiPacket.CryptoException e) {
-            throw new RequestCreationException(e);
+            LOG.info("Attempting to disable automatic heart rate");
+        if(realtimeHeartRateEnabled && this.supportProvider.getHuaweiCoordinator().supportsRealtimeHeartRate()) {
+            try {
+                return new FitnessData.EnableRealtimeHeartRate.Request(paramsProvider, automaticHeartRateEnabled).serialize();
+            } catch (HuaweiPacket.CryptoException e) {
+                throw new RequestCreationException(e);
+            }
+        } else {
+            try {
+                return new FitnessData.EnableAutomaticHeartrate.Request(paramsProvider, automaticHeartRateEnabled).serialize();
+            } catch (HuaweiPacket.CryptoException e) {
+                throw new RequestCreationException(e);
+            }
         }
     }
 }

@@ -94,6 +94,10 @@ public final class HuaweiConstants {
     public static final String PREF_HUAWEI_DND_LIFT_WRIST_TYPE = "dnd_lift_wrist_type"; // SharedPref for 0x01 0x1D
     public static final String PREF_HUAWEI_DEBUG_REQUEST = "debug_huawei_request";
     public static final String PREF_HUAWEI_CONTINUOUS_SKIN_TEMPERATURE_MEASUREMENT = "continuous_skin_temperature_measurement";
+    public static final String PREF_HUAWEI_HEART_RATE_REALTIME_MODE = "pref_huawei_heart_rate_realtime_mode";
+    public static final String PREF_HUAWEI_HEART_RATE_LOW_ALERT = "pref_huawei_heart_rate_low_alert";
+    public static final String PREF_HUAWEI_HEART_RATE_HIGH_ALERT= "pref_huawei_heart_rate_high_alert";
+    public static final String PREF_HUAWEI_SPO_LOW_ALERT= "pref_huawei_spo_low_alert";
 
     public static final String PKG_NAME = "com.huawei.devicegroupmanage";
 }

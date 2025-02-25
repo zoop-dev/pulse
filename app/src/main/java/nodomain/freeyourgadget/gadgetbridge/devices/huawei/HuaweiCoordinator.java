@@ -281,10 +281,22 @@ public class HuaweiCoordinator {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_inactivity_sheduled);
         if (supportsTruSleep())
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_trusleep);
-        if (supportsHeartRate())
+        if (supportsHeartRate()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_heartrate_automatic_enable);
-        if (supportsSPo2())
+            if (supportsRealtimeHeartRate())
+                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_heart_rate_realtime);
+            if(supportsHighHeartRateAlert())
+                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_heart_rate_huawei_high_alert);
+            if(supportsLowHeartRateAlert())
+                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_heart_rate_huawei_low_alert);
+
+
+        }
+        if (supportsSPo2()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_spo_automatic_enable);
+            if(supportsLowSPo2Alert())
+                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_spo_low_alert);
+        }
         if(supportsTemperature()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_temperature_automatic_enable);
         }
@@ -470,6 +482,18 @@ public class HuaweiCoordinator {
         return supportsHeartRate() || getForceOption(gbDevice, PREF_FORCE_ENABLE_HEARTRATE_SUPPORT);
     }
 
+    public boolean supportsRealtimeHeartRate() {
+        return supportsCommandForService(0x07, 0x1c);
+    }
+
+    public boolean supportsHighHeartRateAlert() {
+        return supportsCommandForService(0x07, 0x1d);
+    }
+
+    public boolean supportsLowHeartRateAlert() {
+        return supportsCommandForService(0x07, 0x22);
+    }
+
     public boolean supportsHeartRateZones() {
         return supportsCommandForService(0x07, 0x13);
     }
@@ -488,6 +512,10 @@ public class HuaweiCoordinator {
 
     public boolean supportsSPo2(GBDevice gbDevice) {
         return supportsSPo2() || getForceOption(gbDevice, PREF_FORCE_ENABLE_SPO2_SUPPORT);
+    }
+
+    public boolean supportsLowSPo2Alert() {
+        return supportsCommandForService(0x07, 0x25);
     }
 
     public boolean supportsRunPaceConfig() {
