@@ -3800,4 +3800,21 @@
     <string name="unit_millimeter">mm</string>
     <string name="average_left_platform_center_offset">Średnie przesunięcie środka lewej platformy</string>
     <string name="max_power_standing">Maksymalna moc (stojąca)</string>
+    <string name="max_cadence_sitting">Maksymalna kadencja (siedzący)</string>
+    <string name="max_cadence_standing">Maksymalna kadencja (stojący)</string>
+    <string name="normalized_power">Znormalizowana moc</string>
+    <string name="intensity_factor">Współczynnik intensywności (IF)</string>
+    <string name="training_stress_score">Wynik stresu treningowego (TSS)</string>
+    <string name="left_right_balance">Balans</string>
+    <string name="standing_count">Czas na stojąco</string>
+    <string name="front_gear_shifts">Zmiany przednie</string>
+    <string name="rear_gear_shifts">Zmiana biegów z tyłu</string>
+    <string name="vertical_oscillation">Oscylacja pionowa</string>
+    <string name="ground_contact_time">Czas kontaktu z podłożem</string>
+    <string name="vertical_ratio">Proporcje pionowe</string>
+    <string name="pref_import_activity_files_summary">Ręczne importowanie plików aktywności z pamięci telefonu</string>
+    <string name="average_pedal_smoothness">Płynność</string>
+    <string name="average_torque_effectiveness">Skuteczność momentu obrotowego</string>
+    <string name="ground_contact_time_balance">Równowaga czasu kontaktu z podłożem</string>
+    <string name="pref_import_activity_files_title">Importuj pliki aktywności</string>
 </resources>
