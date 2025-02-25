@@ -3778,4 +3778,26 @@
     <string name="copy_to_clipboard">Kopiuj</string>
     <string name="gree_controller_host">Host</string>
     <string name="gree_pair_info">Zamierzasz sparować z %s (%s). Wprowadź informacje o Wi-Fi i serwerze hosta w celu sparowania. Więcej informacji znajdziesz na stronie internetowej.</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="unit_watt">Wat</string>
+    <string name="unit_joule">Dżul</string>
+    <string name="training_load">Obciążenie treningowe</string>
+    <string name="average_right_platform_center_offset">Średnie przesunięcie środka prawej platformy</string>
+    <string name="average_left_power_phase">Średnia lewa faza mocy</string>
+    <string name="average_left_power_phase_peak">Średnia lewa faza mocy szczytowej</string>
+    <string name="average_right_power_phase">Średnia prawa faza mocy</string>
+    <string name="average_right_power_phase_peak">Średnia szczytowa faza mocy prawej</string>
+    <string name="average_power">Średnia moc</string>
+    <string name="average_power_sitting">Średnia moc (siedząca)</string>
+    <string name="average_cadence_sitting">Średnia kadencja (siedzenie)</string>
+    <string name="average_cadence_standing">Średnia kadencja (stojąca)</string>
+    <string name="max_power">Maksymalna moc</string>
+    <string name="max_power_sitting">Maksymalna moc (siedząca)</string>
+    <string name="unit_rpm">obr./min</string>
+    <string name="cycling">Kolarstwo</string>
+    <string name="average_power_standing">Średnia moc (stojąca)</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="unit_millimeter">mm</string>
+    <string name="average_left_platform_center_offset">Średnie przesunięcie środka lewej platformy</string>
+    <string name="max_power_standing">Maksymalna moc (stojąca)</string>
 </resources>
