@@ -138,7 +138,7 @@
     <string name="controlcenter_connect">Bağlan…</string>
     <string name="controlcenter_delete_device">Aygıtı Sil</string>
     <string name="controlcenter_delete_device_dialogmessage">Aygıt ve tüm ilişkili verileri silinecek!</string>
-    <string name="controlcenter_delete_device_name">%1$s Sil</string>
+    <string name="controlcenter_delete_device_name">%1$s sil</string>
     <string name="controlcenter_disconnect">Bağlantıyı Kes</string>
     <string name="controlcenter_fetch_activity_data">Eşzamanla</string>
     <string name="controlcenter_find_device">Kayıp aygıtı bul</string>
@@ -411,7 +411,7 @@
     <string name="mi2_prefs_inactivity_warnings_threshold">Hareketsizlik sınırı (dakika olarak)</string>
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Bilgileri değiştirmek için bileği döndür</string>
     <string name="mi3_night_mode_sunset">Gün batımında</string>
-    <string name="mi3_prefs_band_screen_unlock">Bileklik ekran kilidini açma</string>
+    <string name="mi3_prefs_band_screen_unlock">Bileklik ekran kilidini açma\"</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Bileklik ekran kilidini açmak için yukarı kaydır</string>
     <string name="mi3_prefs_night_mode">Gece modu</string>
     <string name="mi3_prefs_night_mode_summary">Geceleri bilekliğin ekran parlaklığını otomatik olarak azalt</string>
@@ -1446,7 +1446,7 @@
     <string name="prefs_activity_in_device_card_title_summary">Aygıt kartında geçerli adımları, mesafeyi veya uykuyu göster</string>
     <string name="prefs_activity_in_device_card_sleep_title">Uyku</string>
     <string name="prefs_activity_in_device_card_sleep_title_summary">Uyku süresini göster</string>
-    <string name="prefs_activity_in_device_card_steps_title_summary">Toplam adımları göster</string>
+    <string name="prefs_activity_in_device_card_steps_title_summary">Toplam adımı göster</string>
     <string name="device_card_activity_card_title">Aygıt kartındaki etkinlik bilgileri</string>
     <string name="device_card_activity_card_title_summary">Aygıt kartında hangi etkinlik ayrıntılarının görüntüleneceğini seçin</string>
     <string name="prefs_activity_in_device_card_title">Aygıt kartında etkinlik bilgilerini göster</string>
@@ -3740,4 +3740,24 @@
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
     <string name="devicetype_soundcore_q30">Soundcore Q30</string>
+    <string name="view_file"></string>
+    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
+    <string name="reset">Sıfırla</string>
+    <string name="pairing_even_realities_g1_working">%1s ile eşleştirme...</string>
+    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
+    <string name="copy_to_clipboard">Kopyala</string>
+    <string name="unit_rpm">rpm</string>
+    <string name="average_power">Ortalama güç</string>
+    <string name="max_power">En yüksek güç</string>
+    <string name="left_right_balance">Denge</string>
+    <string name="workout_revolutions">Devir</string>
+    <string name="pref_garmin_fake_oauth_title">Sahte OAuth yanıtları gönderin</string>
+    <string name="gree_pair_clipboard">Cihaz adı: %s\nMAC adresi: %s\nBağlanma anahtarı: %s</string>
+    <string name="vertical_ratio">Dikey oran</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
+    <string name="unit_millimeter">mm</string>
+    <string name="pref_import_activity_files_title">Etkinlik dosyalarını içe aktar</string>
+    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
 </resources>
