@@ -1981,7 +1981,7 @@
     <string name="menuitem_body_composition">Test felépítés</string>
     <string name="devicetype_redmi_watch_2_lite">Redmi Watch 2 Lite</string>
     <string name="notification_channel_low_battery_name">Alacsony akkumulátor töltöttség</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid beállítások</string>
+    <string name="preferences_qhybrid_settings">Q Hybrid-beállítások</string>
     <string name="devicetype_huawei_watchfit">Huawei Watch Fit</string>
     <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite</string>
     <string name="menuitem_zepp_pay">Zepp Pay</string>
