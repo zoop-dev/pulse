@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_graphic_eq"
+        android:key="pref_earfun_6_band_equalizer"
+        android:persistent="false"
+        android:title="@string/pref_header_equalizer">
+
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_earfun_equalizer_band_63"
+            android:max="6"
+            app:min="-6"
+            app:showSeekBarValue="true"
+            android:title="63 Hz" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_earfun_equalizer_band_180"
+            android:max="6"
+            app:min="-6"
+            app:showSeekBarValue="true"
+            android:title="180 Hz" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_earfun_equalizer_band_500"
+            android:max="6"
+            app:min="-6"
+            app:showSeekBarValue="true"
+            android:title="500 Hz" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_earfun_equalizer_band_1000"
+            android:max="6"
+            app:min="-6"
+            app:showSeekBarValue="true"
+            android:title="1 kHz" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_earfun_equalizer_band_8000"
+            android:max="6"
+            app:min="-6"
+            app:showSeekBarValue="true"
+            android:title="8 kHz" />
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_earfun_equalizer_band_15000"
+            android:max="6"
+            app:min="-6"
+            app:showSeekBarValue="true"
+            android:title="15 kHz" />
+    </PreferenceScreen>
+
+</androidx.preference.PreferenceScreen>

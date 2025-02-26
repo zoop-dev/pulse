@@ -3534,6 +3534,100 @@
         <item>6</item>
     </string-array>
 
+    <string-array name="earfun_ambient_sound_control_names">
+        <item>@string/sony_ambient_sound_off</item>
+        <item>@string/sony_ambient_sound_noise_cancelling</item>
+        <item>@string/prefs_active_noise_cancelling_transparency</item>
+    </string-array>
+
+    <string-array name="earfun_ambient_sound_control_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="earfun_transparency_mode_names">
+        <item>@string/pref_default</item>
+        <item>@string/earfun_transparency_mode_natural</item>
+    </string-array>
+
+    <string-array name="earfun_transparency_mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="earfun_anc_mode_names">
+        <item>@string/earfun_anc_mode_strong</item>
+        <item>@string/earfun_anc_mode_balanced</item>
+        <item>@string/earfun_anc_mode_ai_environment_adaptive</item>
+        <item>@string/earfun_anc_mode_ai_ear_adaptive</item>
+        <item>@string/earfun_anc_mode_wind_noise_cancelling</item>
+    </string-array>
+
+    <string-array name="earfun_anc_mode_values">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="earfun_air_s_tap_action_names">
+        <item>@string/none</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/prefs_game_mode</item>
+        <item>@string/pref_title_touch_voice_assistant</item>
+        <item>@string/prefs_ambient_mode</item>
+    </string-array>
+
+    <string-array name="earfun_air_s_tap_action_values">
+        <item>16</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>4</item>
+        <item>1</item>
+        <item>7</item>
+        <item>6</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="earfun_air_pro_4_tap_action_names">
+        <item>@string/none</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/prefs_game_mode</item>
+        <item>@string/pref_title_touch_voice_assistant</item>
+        <item>@string/earfun_tap_action_noise_control_all_modes</item>
+        <item>@string/earfun_tap_action_noise_control_normal_wind</item>
+        <item>@string/earfun_tap_action_noise_control_normal_ambient</item>
+        <item>@string/earfun_tap_action_noise_control_wind_ambient</item>
+        <item>@string/earfun_tap_action_redial</item>
+    </string-array>
+
+    <string-array name="earfun_air_pro_4_tap_action_values">
+        <item>16</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>4</item>
+        <item>1</item>
+        <item>7</item>
+        <item>6</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>13</item>
+    </string-array>
+
     <string-array name="sony_ambient_sound_control_wind_noise_reduction_names">
         <item>@string/sony_ambient_sound_off</item>
         <item>@string/sony_ambient_sound_noise_cancelling</item>

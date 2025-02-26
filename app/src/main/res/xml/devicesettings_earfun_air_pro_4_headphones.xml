@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="pref_header_earfun_air_pro_4_ambient_sound_control"
+        android:title="@string/pref_header_sony_sound_control">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/earfun_ambient_sound_control_names"
+            android:entryValues="@array/earfun_ambient_sound_control_values"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_earfun_ambient_sound_control"
+            android:summary="%s"
+            android:title="@string/pref_header_sony_ambient_sound_control" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/earfun_transparency_mode_names"
+            android:entryValues="@array/earfun_transparency_mode_values"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_earfun_transparency_mode"
+            android:summary="%s"
+            android:title="@string/earfun_transparency_mode" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/earfun_anc_mode_names"
+            android:entryValues="@array/earfun_anc_mode_values"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_earfun_anc_mode"
+            android:summary="%s"
+            android:title="@string/earfun_anc_mode" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_videogame"
+            android:key="pref_earfun_game_mode"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_game_mode_summary"
+            android:title="@string/prefs_game_mode" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

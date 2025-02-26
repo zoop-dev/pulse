@@ -48,6 +48,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiR10Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cycling_sensor.coordinator.CyclingSensorCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.divoom.PixooCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.domyos.DomyosT540Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunAirPro4Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunAirSCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.evenrealities.G1DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.femometer.FemometerVinca2DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.fitpro.FitProDeviceCoordinator;
@@ -611,6 +613,8 @@ public enum DeviceType {
     COLMI_R09(ColmiR09Coordinator.class),
     COLMI_R10(ColmiR10Coordinator.class),
     B_AND_W_P_SERIES(BandWPSeriesDeviceCoordinator.class),
+    EARFUN_AIR_S(EarFunAirSCoordinator.class),
+    EARFUN_AIR_PRO_4(EarFunAirPro4Coordinator.class),
     SCANNABLE(ScannableDeviceCoordinator.class),
     CYCLING_SENSOR(CyclingSensorCoordinator.class),
     BLE_GATT_CLIENT(BleGattClientCoordinator.class),

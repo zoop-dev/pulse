@@ -1956,6 +1956,8 @@
     <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="devicetype_colmi_r10">Colmi R10</string>
     <string name="devicetype_bandw_pseries">Bowers and Wilkins P series</string>
+    <string name="devicetype_earfun_air_s">EarFun Air S</string>
+    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
     <string name="choose_auto_export_location">Choose export location</string>
     <string name="notification_channel_name">General</string>
     <string name="notification_channel_high_priority_name">High-priority</string>
@@ -3703,4 +3705,17 @@
     <string name="gree_pair_status_success">Pairing success.\n\nBind key: %s</string>
     <string name="gree_pair_status_failure">Pairing failed: %s</string>
     <string name="gree_pair_clipboard">Device name: %s\nMac address: %s\nBind key: %s</string>
+    <string name="earfun_transparency_mode">Transparency mode</string>
+    <string name="earfun_transparency_mode_natural">Natural</string>
+    <string name="earfun_anc_mode">ANC mode</string>
+    <string name="earfun_anc_mode_strong">Strong ANC</string>
+    <string name="earfun_anc_mode_balanced">Balanced ANC</string>
+    <string name="earfun_anc_mode_ai_environment_adaptive">AI Environment Adaptive ANC</string>
+    <string name="earfun_anc_mode_ai_ear_adaptive">AI Ear Adaptive ANC</string>
+    <string name="earfun_anc_mode_wind_noise_cancelling">Wind Noise Cancelling</string>
+    <string name="earfun_tap_action_noise_control_all_modes">Noise Control (All Modes)</string>
+    <string name="earfun_tap_action_noise_control_normal_wind">Noise Control (Normal, Wind Noise)</string>
+    <string name="earfun_tap_action_noise_control_normal_ambient">Noise Control (Normal, Ambient Sound)</string>
+    <string name="earfun_tap_action_noise_control_wind_ambient">Noise Control (Wind Noise, Ambient Sound)</string>
+    <string name="earfun_tap_action_redial">Redial</string>
 </resources>
