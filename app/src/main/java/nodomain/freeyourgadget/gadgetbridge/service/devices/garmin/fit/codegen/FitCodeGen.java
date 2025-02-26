@@ -195,6 +195,8 @@ public class FitCodeGen {
                 // FIXME this should be refactored...
                 final String simpleTypeName = fieldTypeName.replace("[]", "");
                 sb.append("        final Object[] objectsArray = (Object[]) getFieldByNumber(").append(primitive.getNumber()).append(");\n");
+                sb.append("        if (objectsArray == null)\n");
+                sb.append("            return null;\n");
                 sb.append("        final ").append(fieldTypeName).append(" ret = new ").append(simpleTypeName).append("[objectsArray.length];\n");
                 sb.append("        for (int i = 0; i < objectsArray.length; i++) {\n");
                 sb.append("            ret[i] = (").append(simpleTypeName).append(") objectsArray[i];\n");

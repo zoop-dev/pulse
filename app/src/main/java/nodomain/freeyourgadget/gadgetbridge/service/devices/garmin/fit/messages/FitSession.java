@@ -303,6 +303,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getAvgLeftPowerPhase() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(116);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -313,6 +315,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getAvgLeftPowerPhasePeak() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(117);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -323,6 +327,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getAvgRightPowerPhase() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(118);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -333,6 +339,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getAvgRightPowerPhasePeak() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(119);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -343,6 +351,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getAvgPowerPosition() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(120);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -353,6 +363,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getMaxPowerPosition() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(121);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -363,6 +375,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getAvgCadencePosition() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(122);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -373,6 +387,8 @@ public class FitSession extends RecordData {
     @Nullable
     public Number[] getMaxCadencePosition() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(123);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];

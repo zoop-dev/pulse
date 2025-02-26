@@ -28,6 +28,8 @@ public class FitMonitoringInfo extends RecordData {
     @Nullable
     public Number[] getActivityType() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(1);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -38,6 +40,8 @@ public class FitMonitoringInfo extends RecordData {
     @Nullable
     public Number[] getStepsToDistance() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(3);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -48,6 +52,8 @@ public class FitMonitoringInfo extends RecordData {
     @Nullable
     public Number[] getStepsToCalories() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(4);
+        if (objectsArray == null)
+            return null;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
