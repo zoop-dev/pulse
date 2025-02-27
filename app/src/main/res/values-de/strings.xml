@@ -3741,7 +3741,7 @@
     <string name="activity_prefs_goal_standing_hours">Tagesziel: Stehzeiten</string>
     <string name="poolLength">Pool länge</string>
     <string name="swim_avg_cadence">Durchschnittliche Schwimmkadenz</string>
-    <string name="unit_revolutions_per_minute"></string>
+    <string name="unit_revolutions_per_minute"/>
     <string name="unit_repetitions_per_minute">Wiederholungen/min</string>
     <string name="unit_repetitions">Wiederholungen</string>
 </resources>
