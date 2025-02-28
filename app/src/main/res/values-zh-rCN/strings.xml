@@ -3798,4 +3798,18 @@
     <string name="training_stress_score">训练应力得分（TSS）</string>
     <string name="rear_gear_shifts">后移</string>
     <string name="pref_import_activity_files_title">导入活动文件</string>
+    <string name="activity_type_powerboating">动力划船</string>
+    <string name="activity_type_diving">潜水</string>
+    <string name="activity_type_atv">全地形车</string>
+    <string name="activity_type_deadlift">硬拉</string>
+    <string name="activity_type_abs">腹肌</string>
+    <string name="activity_type_back">后退</string>
+    <string name="activity_type_equestrian">马术运动员</string>
+    <string name="activity_type_athletics">竞技</string>
+    <string name="activity_type_triathlon">铁人三项</string>
+    <string name="activity_type_other_water_sports">其他水上运动</string>
+    <string name="activity_type_other_winter_sports">其他冬季运动</string>
+    <string name="activity_type_paragliding">滑翔伞</string>
+    <string name="activity_type_burpee">波比运动</string>
+    <string name="activity_type_step_aerobics">步骤有氧运动</string>
 </resources>
