@@ -3817,4 +3817,18 @@
     <string name="average_torque_effectiveness">Skuteczność momentu obrotowego</string>
     <string name="ground_contact_time_balance">Równowaga czasu kontaktu z podłożem</string>
     <string name="pref_import_activity_files_title">Importuj pliki aktywności</string>
+    <string name="activity_type_step_aerobics">Step aerobik</string>
+    <string name="activity_type_powerboating">Pływanie łodzią motorową</string>
+    <string name="activity_type_back">Plecy</string>
+    <string name="activity_type_triathlon">Triatlon</string>
+    <string name="activity_type_other_water_sports">Inne sporty wodne</string>
+    <string name="activity_type_other_winter_sports">Inne sporty zimowe</string>
+    <string name="activity_type_diving">Nurkowanie</string>
+    <string name="activity_type_atv">Quad</string>
+    <string name="activity_type_paragliding">Paralotniarstwo</string>
+    <string name="activity_type_deadlift">Martwy ciąg</string>
+    <string name="activity_type_burpee">Burpee</string>
+    <string name="activity_type_abs">Brzuch</string>
+    <string name="activity_type_equestrian">Jeździectwo</string>
+    <string name="activity_type_athletics">Lekkoatletyka</string>
 </resources>
