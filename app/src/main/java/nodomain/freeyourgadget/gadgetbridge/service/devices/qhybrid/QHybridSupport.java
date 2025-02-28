@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
@@ -849,5 +850,15 @@ public class QHybridSupport extends QHybridBaseSupport {
     @Override
     public void onSetNavigationInfo(NavigationInfoSpec navigationInfoSpec) {
         ((FossilHRWatchAdapter) watchAdapter).onSetNavigationInfo(navigationInfoSpec);
+    }
+
+    @Override
+    public void onAddCalendarEvent(CalendarEventSpec calendarEventSpec) {
+        ((FossilHRWatchAdapter) watchAdapter).onSendCalendar();
+    }
+
+    @Override
+    public void onDeleteCalendarEvent(byte type, long id) {
+        ((FossilHRWatchAdapter) watchAdapter).onSendCalendar();
     }
 }

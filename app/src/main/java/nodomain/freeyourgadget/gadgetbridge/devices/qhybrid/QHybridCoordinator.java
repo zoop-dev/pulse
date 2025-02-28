@@ -228,6 +228,11 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsCalendarEvents() {
+        return isHybridHR();
+    }
+
+    @Override
     public BatteryConfig[] getBatteryConfig(final GBDevice device) {
         return new BatteryConfig[]{
                 new BatteryConfig(
@@ -260,6 +265,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
         // Settings applicable to all firmware versions
         generic.add(R.xml.devicesettings_fossilhybridhr_calibration);
         generic.add(R.xml.devicesettings_fossilhybridhr_navigation);
+        generic.add(R.xml.devicesettings_sync_calendar);
         final List<Integer> health = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH);
         health.add(R.xml.devicesettings_fossilhybridhr_workout_detection);
         health.add(R.xml.devicesettings_inactivity);

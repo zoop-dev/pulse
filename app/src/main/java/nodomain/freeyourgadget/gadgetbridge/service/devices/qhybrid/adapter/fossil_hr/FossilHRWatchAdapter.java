@@ -78,7 +78,10 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -105,9 +108,9 @@ import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySamp
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationHRConfiguration;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRSpo2Sample;
+import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
@@ -181,9 +184,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
+import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
+import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 
 public class FossilHRWatchAdapter extends FossilWatchAdapter {
     public static final int MESSAGE_WHAT_VOICE_DATA_RECEIVED = 0;
+    private static final int MAX_CALENDAR_ITEMS = 10;
 
     private byte[] phoneRandomNumber;
     private byte[] watchRandomNumber;
@@ -214,6 +220,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     Messenger voiceMessenger = null;
 
     private Version cleanFirmwareVersion = null;
+
+    private final Set<CalendarEvent> lastSync = new HashSet<>();
 
     ServiceConnection voiceServiceConnection = new ServiceConnection() {
         @Override
@@ -492,6 +500,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         // dunno if there is any point in doing this at start since when no watch is connected the QHybridSupport will not receive any intents anyway
 
         updateBuiltinAppsInCache();
+
+        onSendCalendar();
 
         queueWrite(new SetDeviceStateRequest(GBDevice.State.INITIALIZED));
     }
@@ -1605,6 +1615,68 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             queueWrite(new JsonPutRequest(rainObject, this));
         } catch (JSONException e) {
             LOG.error("JSON exception: ", e);
+        }
+    }
+
+    public void onSendCalendar() {
+        if (!getDeviceSpecificPreferences().getBoolean("sync_calendar", false)) {
+            LOG.debug("Ignoring calendar sync request, sync is disabled");
+            return;
+        }
+
+        final CalendarManager upcomingEvents = new CalendarManager(getContext(), getDeviceSupport().getDevice().getAddress());
+        final List<CalendarEvent> calendarEvents = upcomingEvents.getCalendarEventList();
+
+        final Set<CalendarEvent> thisSync = new HashSet<>();
+        int nEvents = 0;
+
+        for (final CalendarEvent calendarEvent : calendarEvents) {
+            if (++nEvents > MAX_CALENDAR_ITEMS) {
+                LOG.warn("Syncing only first {} events of {}", MAX_CALENDAR_ITEMS, calendarEvents.size());
+                break;
+            }
+            thisSync.add(calendarEvent);
+        }
+
+        if (thisSync.equals(lastSync)) {
+            LOG.debug("Already synced this set of events, won't send to device");
+            return;
+        }
+
+        lastSync.clear();
+        lastSync.addAll(thisSync);
+
+        List<CalendarEvent> sortedEventList = new ArrayList<>(thisSync);
+        Collections.sort(sortedEventList, Comparator.comparingLong(CalendarEvent::getBegin));
+
+        LOG.debug("Syncing {} calendar events", sortedEventList.size());
+
+        try {
+            JSONArray items = new JSONArray();
+            for(CalendarEvent event : sortedEventList) {
+                JSONArray reminders = new JSONArray();
+                for (long reminder : event.getRemindersAbsoluteTs()) {
+                    reminders.put(reminder / 1000);
+                }
+                items.put(new JSONObject()
+                        .put("id", event.getId())
+                        .put("title", event.getTitle())
+                        .put("desc", event.getDescription())
+                        .put("start", event.getBeginSeconds())
+                        .put("end", event.getEndSeconds())
+                        .put("reminders", reminders)
+                );
+            }
+            JSONObject calendarObj = new JSONObject()
+                    .put("res", new JSONObject()
+                            .put("set", new JSONObject()
+                                    .put("calendarApp._.config.events", items)
+                            )
+                    );
+
+            queueWrite(new JsonPutRequest(calendarObj, this));
+        } catch (JSONException e) {
+            LOG.error("Error sending calendar events: ", e);
         }
     }
 
