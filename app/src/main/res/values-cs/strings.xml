@@ -3802,4 +3802,24 @@
     <string name="pref_import_activity_files_title">Importovat soubory aktivit</string>
     <string name="pref_import_activity_files_summary">Ručně importovat soubory aktivit z úložiště telefonu</string>
     <string name="max_cadence_standing">Max. kadence (vestoje)</string>
+    <string name="pref_heart_rate_realtime_mode">Režim automatického měření srdečního tepu v reálném čase</string>
+    <string name="pref_heart_rate_high_alert">Upozornění na vysoký srdeční tep</string>
+    <string name="activity_type_triathlon">Triatlon</string>
+    <string name="activity_type_other_winter_sports">Jiné zimní sporty</string>
+    <string name="activity_type_powerboating">Powerboating</string>
+    <string name="activity_type_diving">Potápění</string>
+    <string name="activity_type_atv">ATV</string>
+    <string name="activity_type_athletics">Atletika</string>
+    <string name="activity_type_other_water_sports">Jiné vodní sporty</string>
+    <string name="pref_spo_low_alert">Upozornění na nízké SpO2</string>
+    <string name="activity_type_equestrian">Jezdectví</string>
+    <string name="pref_heart_rate_low_alert">Upozornění na nízký srdeční tep</string>
+    <string name="spo2_perc_75">75 %</string>
+    <string name="pref_heart_rate_realtime_mode_summary">Pokud je povoleno, bude se používat režim reálného času, v opačném případě bude použit automatický. Tento režim je náročnější na baterii.</string>
+    <string name="activity_type_deadlift">Deadlifting</string>
+    <string name="activity_type_burpee">Burpee</string>
+    <string name="activity_type_back">Záda</string>
+    <string name="activity_type_step_aerobics">Step aerobik</string>
+    <string name="activity_type_paragliding">Paragliding</string>
+    <string name="activity_type_abs">Břišní svaly</string>
 </resources>
