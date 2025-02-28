@@ -1727,7 +1727,7 @@
     <string name="pref_title_charts_range">Grafikonok tartománya</string>
     <string name="pref_chart_sleep_lines_limit">Hány alvási munkamenet sort jelenítsen meg a görgetés előtt</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Alvástartomány</string>
-    <string name="activity_type_kitesurfing">Kite szörfözés</string>
+    <string name="activity_type_kitesurfing">Sárkányszörf</string>
     <string name="activity_type_freestyle">Szabad stílus</string>
     <string name="common_symbols">Közös szimbólumok</string>
     <string name="french_ca">Francia (Kanada)</string>
@@ -1786,7 +1786,7 @@
     <string name="activity_type_aerobic_exercise">Aerobic edzés</string>
     <string name="activity_type_rolling">Gurítás</string>
     <string name="activity_type_flexibility">Rugalmasság</string>
-    <string name="activity_type_track_and_field">Atlétika</string>
+    <string name="activity_type_track_and_field">Pályaatlétika</string>
     <string name="activity_type_push_ups">Fekvőtámasz</string>
     <string name="activity_type_battle_rope">Funkcionális kötél</string>
     <string name="activity_type_plank">Plankelés</string>
@@ -1804,7 +1804,7 @@
     <string name="activity_type_darts">Darts</string>
     <string name="activity_type_archery">Íjászat</string>
     <string name="activity_type_horse_riding">Lovaglás</string>
-    <string name="activity_type_kite_flying">Sárkányrepülés</string>
+    <string name="activity_type_kite_flying">Papírsárkány repítés</string>
     <string name="activity_type_swing">Hintázás</string>
     <string name="activity_type_stairs">Lépcsőzés</string>
     <string name="activity_type_fishing">Horgászat</string>
@@ -3084,7 +3084,7 @@
     <string name="highest">Legmagasabb</string>
     <string name="activity_type_indoor_track">Fedett pálya</string>
     <string name="activity_type_handcycling_indoor">Fedett pályás kézi kerékpározás</string>
-    <string name="activity_type_snowshoe">Hóicipő</string>
+    <string name="activity_type_snowshoe">Hótalp</string>
     <string name="activity_type_tactical">Taktikai</string>
     <string name="activity_type_breaking">Breaktánc</string>
     <string name="activity_type_dragon_boat">Sárkányhajózás</string>
@@ -3361,7 +3361,7 @@
     <string name="smart_ring_measurement_error_unknown">Ismeretlen mérési hiba %d a gyűrűből</string>
     <string name="title_activity_musicmanager">Zenekezelő</string>
     <string name="activity_type_inline_skating">Roller korcsolyázás</string>
-    <string name="activity_type_hang_gliding">Siklóernyőzés</string>
+    <string name="activity_type_hang_gliding">Sárkányrepülés</string>
     <string name="activity_type_floor_climbing">Padlómászás</string>
     <string name="activity_type_bridge">Bridzs</string>
     <string name="activity_type_cardio_combat">Cardio combat</string>
@@ -3597,4 +3597,18 @@
     <string name="max_cadence_sitting">Maximális pedálozási frekvencia (ülő helyzetben)</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="average_power_standing">Átlagteljesítmény (álló helyzetben)</string>
+    <string name="activity_type_other_water_sports">Egyéb vízi sportok</string>
+    <string name="activity_type_triathlon">Triatlon</string>
+    <string name="activity_type_athletics">Atlétika</string>
+    <string name="activity_type_paragliding">Sárkányrepülés</string>
+    <string name="activity_type_other_winter_sports">Egyéb téli sportok</string>
+    <string name="activity_type_powerboating">Motorcsónakázás</string>
+    <string name="activity_type_diving">Búvárkodás</string>
+    <string name="activity_type_atv">ATV</string>
+    <string name="activity_type_deadlift">Felhúzás</string>
+    <string name="activity_type_burpee">Burpee</string>
+    <string name="activity_type_abs">Abs</string>
+    <string name="activity_type_back">Háti edzés</string>
+    <string name="activity_type_step_aerobics">Lépcsős aerobik</string>
+    <string name="activity_type_equestrian">Lóverseny</string>
 </resources>
