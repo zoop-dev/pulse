@@ -3831,4 +3831,13 @@
     <string name="activity_type_abs">Brzuch</string>
     <string name="activity_type_equestrian">Jeździectwo</string>
     <string name="activity_type_athletics">Lekkoatletyka</string>
+    <string name="pref_heart_rate_realtime_mode_summary">Jeśli ta opcja jest włączona, używa trybu czasu rzeczywistego, w przeciwnym razie używa trybu inteligentnego. Ten tryb zużywa więcej energii.</string>
+    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
+    <string name="pref_workout_send_gps_timeout_title">Wyślij limit czasu GPS</string>
+    <string name="pref_heart_rate_high_alert">Ostrzeżenie o wysokim tętnie</string>
+    <string name="pref_heart_rate_low_alert">Ostrzeżenie o niskim tętnie</string>
+    <string name="pref_spo_low_alert">Ostrzeżenie o niskim poziomie SpO2</string>
+    <string name="pref_heart_rate_realtime_mode">Tryb automatycznego pomiaru tętna w czasie rzeczywistym</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="pref_workout_send_gps_timeout_summary">Zatrzymaj wysyłanie GPS, gdy urządzenie nie wysyła treningu (milisekundy)</string>
 </resources>
