@@ -3812,4 +3812,11 @@
     <string name="activity_type_paragliding">滑翔伞</string>
     <string name="activity_type_burpee">波比运动</string>
     <string name="activity_type_step_aerobics">步骤有氧运动</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="pref_heart_rate_realtime_mode">实时自动心率测量模式</string>
+    <string name="pref_heart_rate_high_alert">高心率警报</string>
+    <string name="pref_workout_send_gps_timeout_summary">当设备未发送锻炼数据时停止发送 GPS（毫秒）</string>
+    <string name="devicetype_garmin_instinct_3">佳明 Instinct 3</string>
+    <string name="pref_heart_rate_realtime_mode_summary">如果启用，请使用实时模式，否则使用智能模式。此模式消耗更多的电能。</string>
+    <string name="pref_workout_send_gps_timeout_title">发送 GPS 超时</string>
 </resources>
