@@ -3,7 +3,7 @@
     <EditTextPreference
         android:icon="@drawable/ic_vpn_key"
         android:key="huawei_account"
-        android:maxLength="17"
+        android:maxLength="19"
         android:summary="@string/pref_summary_huawei_account"
         android:title="@string/pref_title_huawei_account" />
 </androidx.preference.PreferenceScreen>
