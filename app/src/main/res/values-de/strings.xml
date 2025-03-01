@@ -3744,4 +3744,13 @@
     <string name="unit_revolutions_per_minute"/>
     <string name="unit_repetitions_per_minute">Wiederholungen/min</string>
     <string name="unit_repetitions">Wiederholungen</string>
+    <string name="devicetype_even_realities_g1">Even Realities G1</string>
+    <string name="unit_millimeter">mm</string>
+    <string name="unit_watt">Watt</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="activity_type_triathlon">Triathlon</string>
+    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
+    <string name="devicetype_gree_ac">GREE Klimaanlage</string>
+    <string name="remote_control">Fernsteuerung</string>
+    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
 </resources>
