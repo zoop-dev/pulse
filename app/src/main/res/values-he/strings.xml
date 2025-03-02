@@ -3104,4 +3104,8 @@
     <string name="manual_discharge">הפרשי פריקה ידניים</string>
     <string name="permission_disable_doze_summary">לאפשר לרוץ ברקע ללא הטרדות מצד מיטובי הסוללה של Android</string>
     <string name="first_start_permissions_title">הרשאות</string>
+    <string name="remote_control">שלט רחוק</string>
+    <string name="pref_workout_send_gps_timeout_title">שליחת תום זמן נווטן/GPS</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
 </resources>
