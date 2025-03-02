@@ -12,8 +12,8 @@
     <string name="controlcenter_delete_device">Eszköz törlése</string>
     <string name="controlcenter_delete_device_name">%1$s törlése</string>
     <string name="controlcenter_delete_device_dialogmessage">Az eszköz és az összes hozzátartozó adat törölve lesz!</string>
-    <string name="controlcenter_navigation_drawer_open">Navigációs fiók megnyitása</string>
-    <string name="controlcenter_navigation_drawer_close">Navigációs fiók bezárása</string>
+    <string name="controlcenter_navigation_drawer_open">Navigációs csúszómenü megnyitása</string>
+    <string name="controlcenter_navigation_drawer_close">Navigációs csúszómenü bezárása</string>
     <string name="controlcenter_snackbar_need_longpress">Nyomja hosszan a kártya leválasztáshoz</string>
     <string name="controlcenter_snackbar_disconnecting">Leválasztás</string>
     <string name="controlcenter_snackbar_connecting">Kapcsolódás…</string>
@@ -100,8 +100,8 @@
     <string name="pref_title_pebble_sync_morpheuz">Morpheuz szinkronizálása</string>
     <string name="pref_title_enable_outgoing_call">Kimenő hívások támogatása</string>
     <string name="pref_summary_enable_outgoing_call">Ennek a letiltásával a kimenő hívás rezgését is letiltja a Pebble 2/LE eszközön</string>
-    <string name="pref_title_enable_pebblekit">Harmadik féltől származó Androidos alkalmazás-hozzáférés</string>
-    <string name="pref_summary_enable_pebblekit">Kísérleti támogatás engedélyezése a PebbleKit-et használó Android alkalmazások számára</string>
+    <string name="pref_title_enable_pebblekit">Hozzáférés engedélyezése a harmadik féltől származó Android-alkalmazásokhoz</string>
+    <string name="pref_summary_enable_pebblekit">Kísérleti támogatás engedélyezése a PebbleKit-et használó Android-alkalmazások számára</string>
     <string name="pref_header_pebble_timeline">Pebble Idővonal</string>
     <string name="pref_title_sunrise_sunset">Napkelte és napnyugta</string>
     <string name="pref_summary_sunrise_sunset">A napkelte és napnyugta idejének küldése a Pebble idővonalra a helyszín alapján</string>
@@ -345,7 +345,7 @@
     <string name="pref_summary_pebble_health_store_raw">Az adatokat „eredeti formában tárolja”, növelve az adatbázis-használatot a későbbi feldolgozás lehetővé tétele érdekében.</string>
     <string name="action_db_management">Adatkezelés</string>
     <string name="title_activity_db_management">Adatkezelés</string>
-    <string name="activity_db_management_import_export_explanation">Az exportálás/importálás műveletek a következő könyvtár útvonalát (lásd lentebb) használják az eszközén. Ez a könyvtár elérhető más Android alkalmazások és a számítógépe számára. Jegyezze meg, hogy ez a könyvár és az összes tartalmazott fájl törölve lesz, ha eltávolítja a Gadgetbridge-et. Az adatok tartalmazzák: \n Export_preference - globális beállítások \n Export_preference_MAC - eszközspecifikus beállítások \n Gadgetbridge - eszköz- és tevékenység-adatbázis \n Gadgetbridge_date - egy dátumon exportált adatbázis \n *.gpx - GPS feljegyzések \n *.log - naplófájlok \nVárhatóan itt megtalálja az exportált fájlokat (vagy helyezze ide az importálandó fájlokat):</string>
+    <string name="activity_db_management_import_export_explanation">Az exportálás/importálás műveletek a következő könyvtár útvonalát (lásd lentebb) használják az eszközén. Ez a könyvtár elérhető más Android- alkalmazások és a számítógépe számára. Jegyezze meg, hogy ez a könyvár és az összes tartalmazott fájl törölve lesz, ha eltávolítja a Gadgetbridge-et. Az adatok tartalmazzák: \n Export_preference - globális beállítások \n Export_preference_MAC - eszközspecifikus beállítások \n Gadgetbridge - eszköz- és tevékenység-adatbázis \n Gadgetbridge_date - egy dátumon exportált adatbázis \n *.gpx - GPS feljegyzések \n *.log - naplófájlok \nVárhatóan itt megtalálja az exportált fájlokat (vagy helyezze ide az importálandó fájlokat):</string>
     <string name="activity_db_management_merge_old_title">Régi adatbázis törlése</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Nem érhető el az exportálási útvonal. Vegye fel a kapcsolatot a fejlesztőkkel.</string>
     <string name="dbmanagementactivity_exported_to">Exportálva ide: %1$s</string>
@@ -429,7 +429,7 @@
     <string name="title_activity_device_specific_settings">Eszközspecifikus beállítások</string>
     <string name="controlcenter_calibrate_device">Eszköz kalibrálása</string>
     <string name="mi2_prefs_button_press_count">Gombnyomások száma</string>
-    <string name="pref_summary_pebble_enable_bgjs">Ha engedélyezve van, akkor lehetővé teszi, hogy a számlapok időjárási, akkumulátor-információkat és egyebeket jelenítsenek meg.</string>
+    <string name="pref_summary_pebble_enable_bgjs">Ha engedélyezve van, akkor lehetővé teszi, hogy a számlapok időjárási, akkumulátor-információkat és egyéb információkat jelenítsenek meg.</string>
     <string name="interval_one_minute">percenként</string>
     <string name="interval_five_minutes">5 percenként</string>
     <string name="interval_ten_minutes">10 percenként</string>
@@ -482,7 +482,7 @@
     <string name="pref_title_vibration_strength">Rezgés erőssége</string>
     <string name="pref_title_sync_caldendar">Naptár események szinkronizálása</string>
     <string name="pref_summary_allow_high_mtu">Növeli az adatátvitel sebességét, de egyes Android-eszközökön nem támogatott.</string>
-    <string name="pref_title_allow_high_mtu">Magas MTU</string>
+    <string name="pref_title_allow_high_mtu">Magas MTU engedélyezése</string>
     <string name="pref_title_use_custom_font">Egyéni betűtípus használata</string>
     <string name="pref_summary_expose_hr">Lehetővé teszi, hogy más alkalmazások valós időben hozzáférjenek a HR-adatokhoz, miközben a Gadgetbridge kapcsolódva van</string>
     <string name="pref_title_pebble_gatt_clientonly">Csak GATT kliens</string>
@@ -559,7 +559,7 @@
     <string name="watchface_dialog_widget_width">Modul szélessége (pixelben)</string>
     <string name="zetime_analog_mode_hands">Csak kezek</string>
     <string name="share_log">Napló megosztása</string>
-    <string name="about_description_generic">Felhőmentes és szabad forráskódú kiadás, amely helyettesíti a gyártók zárt forráskódon alapuló Androidos kütyüalkalmazásait.</string>
+    <string name="about_description_generic">Felhőmentes, szerzői jogmentes, szabad szoftveres alternatíva a zárt forráskódú Android-kütyüalkalmazások helyett, amelyeket a gyártók kínálnak.</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">A Bangle.js Gadgetbridge névjegye</string>
@@ -1262,7 +1262,7 @@
     <string name="notification_gps_text">GPS-helyzet küldése %1$d eszközökre</string>
     <string name="zepp_os_watchface_pure_white">Tiszta fehér</string>
     <string name="charts_legend_heartrate_average">Átlagos pulzusszám</string>
-    <string name="pref_summary_authkey">Módosítja a hitelesítési kulcsot egy közös kulcsra az összes olyan Android-eszközön, amelyről kapcsolódni szeretne. A korábbi alapértelmezett kulcs minden eszközön: 0123456789@ABCDE</string>
+    <string name="pref_summary_authkey">Módosítja a hitelesítési kulcsot egy közös kulcsra az összes olyan Android-eszközön, amelyről kapcsolódni szeretne. A korábbi alapértelmezett kulcs minden eszközön a következő: 0123456789@ABCDE</string>
     <string name="prefs_wena3_notification_vibration_repetition_3">Háromszor</string>
     <string name="zepp_os_watchface_city_of_speed">Sebesség városa</string>
     <string name="prefs_phone_silent_mode">Telefon néma mód</string>
@@ -1313,7 +1313,7 @@
     <string name="prefs_wena3_notification_default_call_vibration">Rezgés bejövő híváskor</string>
     <string name="pref_cache_weather_summary">Az időjárás-információ gyorsítótárazva lesz az alkalmazás-újraindítások között.</string>
     <string name="zepp_os_watchface_vast_sky">Hatalmas ég</string>
-    <string name="about_description_main_nopebble">Felhőmentes és szabad forráskódú kiadás, amely helyettesíti a gyártók zárt forráskódon alapuló Androidos kütyüalkalmazásait. A Gadgetbridge korai hozzáférésű kiadása. Ebben a verzióban a Pebble szolgáltatót átnevezték az ütközések elkerülése érdekében, így egyes Pebble eszközökkel kapcsolatos integrációk nem működnek, de telepíthető a meglévő Gadgetbridge-telepítés mellé.</string>
+    <string name="about_description_main_nopebble">Felhőmentes, szerzői jogmentes, szabad szoftveres alternatíva a zárt forráskódú Android-kütyüalkalmazások helyett, amelyeket a gyártók kínálnak. A Gadgetbridge korai hozzáférésű kiadása. Ebben a verzióban a Pebble szolgáltatót átnevezték az ütközések elkerülése érdekében, így egyes Pebble eszközökkel kapcsolatos integrációk nem működnek, de telepíthető a meglévő Gadgetbridge-telepítés mellé.</string>
     <string name="autoExport_lastTime_label">Utolsó automatikus exportálás: %1$s</string>
     <string name="zepp_os_watchface_simplicity_data">Egyszerű adatok</string>
     <string name="pref_title_huami_force_new_protocol">Új hitelesítési protokoll</string>
@@ -1336,7 +1336,7 @@
     <string name="zetime_title_heart_rate_alarm_summary">Az óra figyelmeztetni fog, amikor a pulzusszám átlépi a határokat.</string>
     <string name="lefun_prefs_antilost_summary">A karkötő rezegni fog, ha a telefon leválasztódik a karkötőről</string>
     <string name="zepp_os_watchface_multiple_data">Sok adat</string>
-    <string name="about_description_main_nightly">Felhőmentes és szabad forráskódú kiadás, amely helyettesíti a gyártók zárt forráskódon alapuló Androidos kütyüalkalmazásait. A Gadgetbridge korai hozzáférésű kiadásai. Nem telepíthető, ha már telepítve van a Gadgetbridge vagy a Pebble alkalmazás, a Pebble szolgáltató ütközése miatt.</string>
+    <string name="about_description_main_nightly">Felhőmentes, szerzői jogmentes, szabad szoftveres alternatíva a zárt forráskódú Android-kütyüalkalmazások helyett, amelyeket a gyártók kínálnak. A Gadgetbridge korai hozzáférésű kiadásai. Nem telepíthető, ha már telepítve van a Gadgetbridge vagy a Pebble alkalmazás, a Pebble szolgáltató ütközése miatt.</string>
     <string name="ignore_bonded_devices">Összeköttetett eszközök ignorálása</string>
     <string name="prefs_wena3_notification_default_vibration_repetition">Értesítés rezgés ismétlés</string>
     <string name="zepp_os_watchface_rotating_earth">Forgó föld</string>
@@ -1351,7 +1351,7 @@
     <string name="prefs_wena3_vibration_strength_item_strong">Erős</string>
     <string name="prefs_wena3_vibration_triple">Háromszor</string>
     <string name="pref_explanation_authkey">Néhány eszköznek szüksége van egy különleges párosítási kulcsra az első alkalommal. Koppintson ide a további részletekért a wikin.</string>
-    <string name="about_description_banglejs_main">A Gadgetbridge projektre épülő Androidos társalkalmazás a Bangle.js számára, hozzáadott internet-hozzáféréssel. \n \nA Google Play Áruház szabályzata miatt nem engedélyezzük az adományozási hivatkozást magában az alkalmazásban, de ha tetszik az alkalmazás, fontolja meg az adományozást az alábbi Gadgetbridge honlapon keresztül.</string>
+    <string name="about_description_banglejs_main">A Gadgetbridge projektre épülő Android társalkalmazás a Bangle.js számára, hozzáadott internet-hozzáféréssel. \n \nA Google Play Áruház szabályzata miatt nem engedélyezzük az adományozási hivatkozást magában az alkalmazásban, de ha tetszik az alkalmazás, fontolja meg az adományozást az alábbi Gadgetbridge honlapon keresztül.</string>
     <string name="sony_quick_access_triple_tap">Gyors elérés (három érintés)</string>
     <string name="devicetype_sony_wh_1000xm2">Sony WH-1000XM2</string>
     <string name="gadgetbridge_running_main_nightly">A Gadgetbridge Nightly fut</string>
@@ -1376,7 +1376,7 @@
     <string name="wearmode_pebble">Pebble (cipőcsat)</string>
     <string name="pref_summary_pebble_gatt_clientonly">Ez csak a Pebble 2 számára készült és kísérleti verzió, próbálja ki ezt, ha kapcsolódási problémái vannak</string>
     <string name="pref_activity_recognize_running">futás felismerése</string>
-    <string name="about_description_banglejs_nightly">A Gadgetbridge projektre épülő Androidos társalkalmazás a Bangle.js számára, hozzáadott internet-hozzáféréssel. \n \nA Google Play Áruház szabályzata miatt nem engedélyezzük az adományozási hivatkozást magában az alkalmazásban, de ha tetszik az alkalmazás, fontolja meg az adományozást az alábbi Gadgetbridge honlapon keresztül.</string>
+    <string name="about_description_banglejs_nightly">A Gadgetbridge projektre épülő Android-társalkalmazás a Bangle.js számára, hozzáadott internet-hozzáféréssel. \n \nA Google Play Áruház szabályzata miatt nem engedélyezzük az adományozási hivatkozást magában az alkalmazásban, de ha tetszik az alkalmazás, fontolja meg az adományozást az alábbi Gadgetbridge honlapon keresztül.</string>
     <string name="activity_type_outdoor_running">Kültéri futás</string>
     <string name="_pebble_watch_open_on_phone">Megnyitás az Android-eszközön</string>
     <string name="activity_type_outdoor_cycling">Kültéri kerékpározás</string>
@@ -1418,7 +1418,7 @@
     <string name="pref_summary_notification_delay_calls">A bejövő hívásokról szóló értesítések eszközre küldésének késleltetése másodpercben.</string>
     <string name="pref_pair_bluetooth_calls_title">Párosítás bluetooth hívásokhoz</string>
     <string name="pref_summary_notification_prefer_long_text">Ha elérhető, küldje el a hosszú értesítési szöveget az eszközre</string>
-    <string name="pref_title_notification_use_as_allow">Értesítések a kiválasztott alkalmazásokból</string>
+    <string name="pref_title_notification_use_as_allow">Értesítések engedélyezése a kiválasztott alkalmazásokból</string>
     <string name="open_fw_installer_connect_minimum_one_device">Párosítson LEGALÁBB EGY olyan eszközt, amelyre el szeretné küldeni a fájlt.</string>
     <string name="open_fw_installer_select_file">Válassza ki az eszközre feltöltendő fájlt: %s</string>
     <string name="open_fw_installer_getting_files_title">A firmware/alkalmazásfájl megszerzése</string>
@@ -1454,14 +1454,14 @@
     <string name="pref_title_notifications_ignore_work_profile">Munkaprofil-értesítések mellőzése</string>
     <string name="pref_title_banglejs_phone_gps_enbale">Telefonos GPS-adatok használata</string>
     <string name="pref_title_banglejs_webview_url">Alkalmazásbetöltő webcím</string>
-    <string name="pref_summary_custom_deviceicon">Kapcsolódáskor egy eszközspecifikus Androidos értesítési ikont jelenítsen meg a Gadgetbridge ikon helyett</string>
+    <string name="pref_summary_custom_deviceicon">Kapcsolódáskor egy eszközspecifikus Android értesítési ikont jelenítsen meg a Gadgetbridge ikon helyett</string>
     <string name="pref_title_screen_on_on_notifications">Bekapcsolt kijelző az Értesítések-nél</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Csak a hálózati szolgáltató használata a helyszín meghatározásához. Ez csökkenti az energiafogyasztást a pontosság rovására. Újrakapcsolódás szükséges.</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">GPS adatfrissítési időköz</string>
     <string name="pref_summary_banglejs_webview_url">Ha egyéni alkalmazásbetöltőt szeretne, adja meg https://…/android.html webcímét ide. Ellenkező esetben hagyja üresen a https://banglejs.com/apps mezőt</string>
     <string name="pref_title_message_privacy_mode">Üzenet adatvédelmi mód</string>
-    <string name="pref_title_weather_summary">A LineageOS időjárás-szolgáltatóhoz használatos más Android verzióknak olyan alkalmazást kell használniuk, mint az „Időjárás értesítés”. További információkat a Gadgetbridge wikiben talál.</string>
-    <string name="pref_title_device_intents">Intentek</string>
+    <string name="pref_title_weather_summary">A LineageOS időjárás-szolgáltatóhoz használatos más Android verzióknak olyan alkalmazást kell használniuk, mint az „Időjárás-értesítés”. További információkat a Gadgetbridge wikiben talál.</string>
+    <string name="pref_title_device_intents">Intentek engedélyezése</string>
     <string name="pref_title_preview_message_in_title">Az üzenet előnézetének megjelenítése a címben</string>
     <string name="pref_summary_preview_message_in_title">Megjeleníti az üzenet előnézetét az értesítés címében, ahogy azt az eszköz engedélyezi</string>
     <string name="pref_title_casio_alert_calendar">Riasztás a naptári értesítéseknél</string>
@@ -1471,7 +1471,7 @@
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent API</string>
     <string name="pref_message_privacy_mode_bodyonly">Csak az üzenet szövegének elrejtése</string>
     <string name="pref_blacklist_calendars_summary">A tiltólistán szereplő naptárak nem lesznek szinkronizálva az eszközzel</string>
-    <string name="intent_api_allow_activity_sync_title">Tevékenység szinkronizálásának kiváltása</string>
+    <string name="intent_api_allow_activity_sync_title">Engedélyezze a tevékenységszinkronizálás kiváltását</string>
     <string name="intent_api_allow_activity_sync_summary">Lehetővé teszi a tevékenységszinkronizálás indítását Intent API-n keresztül</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">Lehetővé teszi a Bluetooth-kapcsolat vezérlését Intent API-n keresztül</string>
     <string name="pref_title_ping_tone">Csengőhang</string>
@@ -1489,7 +1489,7 @@
     <string name="pref_summary_banglejs_phone_gps_update_interval">A GPS pozíció frissítésének gyakorisága mp-ben</string>
     <string name="pref_header_intent_api">Intent API</string>
     <string name="intent_api_broadcast_export_summary">Intent közvetítése, amikor az adatbázis exportálása befejeződik</string>
-    <string name="intent_api_allow_trigger_export_title">Adatbázisexport</string>
+    <string name="intent_api_allow_trigger_export_title">Engedélyezze az adatbázisexportot</string>
     <string name="intent_api_allow_trigger_export_summary">Lehetővé teszi az adatbázisexport kiváltását Intent API-n keresztül</string>
     <string name="femometer_measurement_mode_normal">Normál mód (60-90s)</string>
     <string name="femometer_measurement_mode_precise">Precíz mód (3 perc)</string>
@@ -1500,7 +1500,7 @@
     <string name="world_clock_no_free_slots_title">Nincs szabad hely</string>
     <string name="pref_summary_connected_advertisement">Felfedezhetővé teszi az eszközt Bluetooth-on keresztül, még akkor is, ha csatlakoztatva van</string>
     <string name="pref_summary_use_custom_font">Engedélyezze ezt, ha eszköze egyéni betűtípus-firmware-rel rendelkezik a hangulatjelek támogatásához</string>
-    <string name="pref_title_device_internet_access">Internet-hozzáférés</string>
+    <string name="pref_title_device_internet_access">Internet-hozzáférés engedélyezése</string>
     <string name="pref_summary_send_app_notifications">Alkalmazásértesítések küldése az eszközre</string>
     <string name="pref_title_relax_firmware_checks">Engedélyezze ezt, ha olyan firmware-t szeretne flashelni, amely nem az Ön eszközéhez készült (saját felelősségére)</string>
     <string name="pref_summary_huami_force_new_protocol">Engedélyezés, ha az eszköz már nem kapcsolódik a firmware-frissítés után</string>
@@ -1662,8 +1662,8 @@
 \n%1d%% %.2fkbps sebességgel (átlag %.2fkbps)
 \n%1d rész %1d-ből</string>
     <string name="updatefirmwareoperation_failed_low_mtu">A %1$d jelenlegi MTU-értéke túl alacsony, engedélyezze a magas MTU-értéket az eszköz beállításaiban, és válassza az eszköz leválasztását/csatlakozását.</string>
-    <string name="pref_title_third_party_app_device_settings">Harmadik féltől származó alkalmazások beállításainak módosítása</string>
-    <string name="pref_summary_third_party_app_device_settings">Lehetővé teszi máshonnan telepített harmadik féltől származó alkalmazások számára az eszközbeállítások intenteken keresztül történő beállítását.</string>
+    <string name="pref_title_third_party_app_device_settings">Engedélyezze a harmadik féltől származó alkalmazások beállításainak módosítását</string>
+    <string name="pref_summary_third_party_app_device_settings">Lehetővé teszi a más telepített harmadik féltől származó alkalmazásoknak, hogy beállításokat állítsanak az eszközön intentek segítségével.</string>
     <string name="activity_type_hand_cycling">Kézi kerékpározás</string>
     <string name="activity_type_skating">Korcsolyázás</string>
     <string name="activity_type_curling">Curling</string>
@@ -2027,7 +2027,7 @@
     <string name="pref_title_lower_button_function_long">Alsó gomb hosszan</string>
     <string name="pref_title_middle_button_function_double">Középső gomb duplán</string>
     <string name="error_no_bluetooth_scan">A Bluetooth beolvasás engedélyezése és aktiválása szükséges a megfelelő működéshez</string>
-    <string name="permission_request">A(z) %1$s engedélyezi, hogy üzeneteket és egyéb adatokat küldjön Androidról az eszközére. Ehhez engedélyre van szüksége az adatokhoz való hozzáféréshez, és e nélkül előfordulhat, hogy nem működik megfelelően. \n \nMost megjelenik néhány Android párbeszédpanel, amelyek ezeket az engedélyeket kérik. \n \nA folytatáshoz érintse meg a(z) „%2$s” elemet.</string>
+    <string name="permission_request">A(z) %1$s engedélyezi, hogy üzeneteket és egyéb adatokat küldjön Android-eszközére. Ehhez engedélyre van szüksége az adatokhoz való hozzáféréshez, és e nélkül előfordulhat, hogy nem működik megfelelően. \n \nMost megjelenik néhány Android párbeszédpanel, amelyek ezeket az engedélyeket kérik. \n \nA folytatáshoz érintse meg a(z) „%2$s” elemet.</string>
     <string name="permission_notification_listener">A(z) %1$s-nek hozzáférésre van szüksége az értesítésekhez, hogy megjeleníthesse azokat az óráján, amikor a telefon képernyője ki van kapcsolva. \n \nKoppintson a(z) „%2$s”, majd a(z) „%1$s” elemre, és engedélyezze az „Értesítési hozzáférés engedélyezése” beállítást, majd koppintson a „Vissza” elemre a(z) %1$s oldalra való visszatéréshez.</string>
     <string name="permission_location">A(z) %1$s-nek hozzáférésre van szüksége az tartózkodási helyhez a háttérben, hogy akkor is kapcsolatban maradhasson az órájával, amikor a képernyője ki van kapcsolva. \n \nVálassza a(z) „%2$s” lehetőséget a következő képernyőn, majd koppintson a „Vissza” gombra, hogy visszatérjen a(z) %1$s oldalra.</string>
     <string name="permission_display_over_other_apps">A(z) %1$s-nek engedélyre van szüksége a más alkalmazások feletti megjelenítéshez, hogy a Bangle.js órák tevékenységeket indíthassanak intenten keresztül, amikor a(z) %1$s a háttérben van. \n \nEz használható egy zenei alkalmazás elindítására és egy dal lejátszására, és sok más dologra. \n \nKoppintson a(z) „%2$s”, majd a(z) „%1$s” elemre, és engedélyezze a „Megjelenítés engedélyezése más alkalmazások felett” beállítást, majd koppintson a „Vissza” elemre a(z) %1$s elemhez való visszatéréshez. \n \nAz engedélyek kérésének leállításához a %1$s menjen a \'Beállítások\' menüpontba, és törölje a \'Jogosultsági állapot ellenőrzése\' jelölőnégyzetet. \n \nGyőződjön meg róla, hogy a %1$s megkapja az elvárt működéshez szükséges engedélyeket.</string>
@@ -2130,7 +2130,7 @@
     <string name="addto_filter">Szűrő hozzáadása</string>
     <string name="prefs_autoremove_message">SMS értesítések automatikus törlése</string>
     <string name="breaststroke">Mellúszás</string>
-    <string name="qhybrid_pref_summary_external_intents">Lehetővé teszi más Androidos alkalmazások számára, hogy fájlokat töltsenek fel/írjanak felül</string>
+    <string name="qhybrid_pref_summary_external_intents">Lehetővé teszi más Android-alkalmazások számára, hogy fájlokat töltsenek fel/írjanak felül</string>
     <string name="button_watchface_preview">Villámnézet az órán</string>
     <string name="watchface_dialog_widget_cat_position">Helyzet</string>
     <string name="watchface_setting_title_custom_events">Egyéni események</string>
@@ -2227,7 +2227,7 @@
     <string name="watchface_dialog_widget_presets">Alapértelmezett pozíciók</string>
     <string name="prefs_events_forwarding_startnonwear">Levételnél</string>
     <string name="prefs_events_forwarding_wokeup">Ébredésnél</string>
-    <string name="qhybrid_pref_title_external_intents">Veszélyes külső intentek</string>
+    <string name="qhybrid_pref_title_external_intents">Engedélyezze a veszélyes külső intenteket</string>
     <string name="devicetype_nothingear2">Nothing Ear (2)</string>
     <string name="prefs_dolby_summary">Dolby-előbeállítás a hangszínszabályzóhoz</string>
     <string name="prefs_touch_lock_buds2">Érintő funkciók</string>
@@ -2296,7 +2296,7 @@
     <string name="watchface_dialog_widget_timeout_hide_text">Szöveg elrejtése időtúllépéskor</string>
     <string name="uploadwatchfaceoperation_failed">A számlap telepítése sikertelen</string>
     <string name="uploadwatchfaceoperation_complete">A számlap telepítése kész</string>
-    <string name="prefs_events_forwarding_summary">Eszköz-események használata műveletek és Android közvetítések indításához</string>
+    <string name="prefs_events_forwarding_summary">Eszközesemények használata a műveletek és az Android üzenetszórásainak kiváltásához</string>
     <string name="agps_status_pending">Függőben</string>
     <string name="proprietary_app_warning">Ez a funkció egy zárt forráskódú alkalmazás telepítését igényli</string>
     <string name="agps_status_error">Hiba</string>
@@ -2373,7 +2373,7 @@
     <string name="pref_media_play">Médialejátszás</string>
     <string name="qhybrid_title_on_device_confirmation">A párosítás megerősítésének engedélyezése az eszközön</string>
     <string name="debug_companion_pair_current">Eszköz párosítása társeszközként</string>
-    <string name="dashboard_calendar_month_goals_reached_title">Teljesített lépéscélok megjelenítése %%-ban</string>
+    <string name="dashboard_calendar_month_goals_reached_title">Teljesített lépéscélok %</string>
     <string name="pref_dashboard_first_title">A Műszerfal megjelenítése elsőként</string>
     <string name="pref_dashboard_widget_today_24h_summary">A tevékenység megjelenítése két 12 órás kör helyett egyetlen 24 órás körben</string>
     <string name="bottom_nav_dashboard">Műszerfal</string>
@@ -2481,7 +2481,7 @@
     <string name="pref_title_opentracks_packagename">OpenTracks csomag neve</string>
     <string name="pref_spo_automatic_enable">Automatikus SpO2-mérés bekapcsolása</string>
     <string name="pref_force_smart_alarm">Okos riasztás kényszerítése</string>
-    <string name="pref_heartrate_automatic_enable">Automatikus pulzusmérés bekapcsolása</string>
+    <string name="pref_heartrate_automatic_enable">Automatikus pulzusszámmérés engedélyezése</string>
     <string name="pref_title_navigation_forward">Navigáció küldése órára</string>
     <string name="pref_enable_call_reject">Hívások visszautasításának engedélyezése</string>
     <string name="controlcenter_set_folder_title">Új mappa megadása vagy létrehozása</string>
@@ -2587,7 +2587,7 @@
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
     <string name="pref_force_enable_heartrate_support_summary">Engedélyezi a pulzusszám-támogatás kényszerítését.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="intent_api_broadcast_activity_sync_summary">Szándék közvetítése, amikor a tevékenység szinkronizálása befejeződik bármely eszköz esetében</string>
-    <string name="intent_api_allow_debug_commands_title">Hibakeresési parancsok</string>
+    <string name="intent_api_allow_debug_commands_title">Engedélyezze a hibakeresési parancsokat</string>
     <string name="loyalty_cards_sync_groups_only">Csak bizonyos csoportok szinkronizálása</string>
     <string name="loyalty_cards_sync_groups">Szinkronizálandó csoportok</string>
     <string name="prefs_wena3_smart_alarm_margin_item">Intelligens riasztási margó</string>
@@ -3505,7 +3505,7 @@
     <string name="charts_show_balance_steps_summary">A lépések többletének / hiányának megjelenítése heti és havi grafikonokon</string>
     <string name="charts_show_balance_sleep_title">Alvásegyensúly megjelenítése</string>
     <string name="permission_disable_doze_title">Akkumulátor-optimalizálás mellőzése</string>
-    <string name="permission_disable_doze_summary">Lehetővé teszi a háttérben történő akadálymentes futtatást az Androidos akkumulátor-optimalizálás által</string>
+    <string name="permission_disable_doze_summary">Lehetővé teszi a háttérben való futást anélkül, hogy az Android akkumulátor-optimalizálásai megakadályoznák</string>
     <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
     <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="notifications_dismiss_all">Összes elutasítása</string>
@@ -3611,4 +3611,13 @@
     <string name="activity_type_back">Háti edzés</string>
     <string name="activity_type_step_aerobics">Lépcsős aerobik</string>
     <string name="activity_type_equestrian">Lóverseny</string>
+    <string name="pref_workout_send_gps_timeout_title">GPS időtúllépés küldése</string>
+    <string name="pref_workout_send_gps_timeout_summary">GPS küldés leállítása, ha az eszköz nem küldi az edzésadatokat a szabadtéri edzés során (milliszekundumok)</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="pref_heart_rate_high_alert">Magas pulzusszámriasztás</string>
+    <string name="pref_heart_rate_low_alert">Alacsony pulzusszámriasztás</string>
+    <string name="pref_spo_low_alert">Alacsony SpO2 riasztás</string>
+    <string name="pref_heart_rate_realtime_mode">Valós idejű automatikus pulzusszámmérő-üzemmód</string>
+    <string name="pref_heart_rate_realtime_mode_summary">Ha engedélyezve van, akkor valós idejű üzemmódot használ, egyébként az intelligens üzemmód marad érvényben. Ez az üzemmód több energiát fogyaszt.</string>
+    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
 </resources>
