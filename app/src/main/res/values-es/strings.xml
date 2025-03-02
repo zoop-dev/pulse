@@ -181,7 +181,7 @@
     <string name="device_with_rssi">%1$s (%2$s)</string>
     <string name="title_activity_android_pairing">Emparejar dispositivo</string>
     <string name="android_pairing_hint">Usar el menú de emparejamiento Bluetooth de Android para vincular el dispositivo.</string>
-    <string name="title_activity_mi_band_pairing">Empareje la Mi Band</string>
+    <string name="title_activity_mi_band_pairing">Emparejar tu Mi Band</string>
     <string name="pairing">Emparejando con %s…</string>
     <string name="pairing_creating_bond_with">Creando emparejamiento con %1$s (%2$s)</string>
     <string name="pairing_unable_to_pair_with">No se ha podido emparejar con %1$s (%2$s)</string>
@@ -196,9 +196,9 @@
     <string name="left">Izquierda</string>
     <string name="right">Derecha</string>
     <string name="miband_pairing_using_dummy_userdata">No se proporcionaron datos de usuario válidos. Por ahora se emplearán datos ficticios.</string>
-    <string name="miband_pairing_tap_hint">Cuando su MiBand vibre y parpadee, púlsela repetidas veces.</string>
+    <string name="miband_pairing_tap_hint">Cuando tu MiBand vibre y parpadee, púlsala repetidas veces.</string>
     <string name="appinstaller_install">Instalar</string>
-    <string name="discovery_connected_devices_hint">Haga su dispositivo detectable. Los dispositivos conectados no serán detectables. En Android 6 o superior, necesita activar la localización (ej. GPS). Desactive Privacy Guard para Gadgetbridge, debido a que podría detener y reiniciar su teléfono. Si su dispositivo no aparece en dos minutos, vuelva a intentarlo tras reiniciar su teléfono.</string>
+    <string name="discovery_connected_devices_hint">Haz tu dispositivo visible. Los dispositivos ya conectados no aparecerán. En Android 6 o superior, necesitas activar la localización (ej. GPS). Desactiva Privacy Guard para Gadgetbridge, puesto que podría detener y reiniciar tu teléfono. Si tu dispositivo no aparece en dos minutos, vuelve a intentarlo tras reiniciar tu teléfono.</string>
     <string name="discovery_note">Nota:</string>
     <string name="candidate_item_device_image">Imagen del dispositivo</string>
     <string name="miband_prefs_alias">Nombre/Apodo</string>
@@ -366,7 +366,7 @@
     <string name="dbmanagementactivity_error_exporting_db">Error de exportación de la base de datos: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_shared">Error de exportación de las preferencias: %1$s</string>
     <string name="dbmanagementactivity_import_data_title">¿Importar Datos?</string>
-    <string name="dbmanagementactivity_overwrite_database_confirmation">¿Realmente se sobrescriben los datos actuales? Se sobrescribirán todos tus datos de actividad actuales (si los tienes), dispositivos y preferencias.</string>
+    <string name="dbmanagementactivity_overwrite_database_confirmation">¿Realmente quieres sobrescribir los datos actuales? Se sobrescribirán todos tus datos de actividad actuales (si los tienes), dispositivos y preferencias.</string>
     <string name="dbmanagementactivity_import_successful">Importado.</string>
     <string name="dbmanagementactivity_error_importing_db">Error de importación de la base de datos: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">Error de importación de las preferencias: %1$s</string>
@@ -385,7 +385,7 @@
     <string name="title_activity_vibration">Vibración</string>
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Emparejamiento con Pebble</string>
-    <string name="pebble_pairing_hint">Aparecerá un diálogo de emparejamiento en el dispositivo Android. Si no, busque la notificación en el cajón y acepte la solicitud. Posteriormente, acéptela también en el Pebble.</string>
+    <string name="pebble_pairing_hint">Aparecerá un diálogo de emparejamiento en el dispositivo Android. Si no, busca la notificación en el cajón y acepta la solicitud. Posteriormente, acéptala también en el Pebble.</string>
     <string name="weather_notification_label">Cerciórese de que esta máscara esté activada en la aplicación Notificación del tiempo para obtener información meteorológica en el Pebble.
 \n
 \nNo hace falta configurar nada aquí.
@@ -849,7 +849,7 @@
     <string name="pref_notifications_and_calls_enable_misscall">Notificar llamada perdida</string>
     <string name="prefs_notifications_and_calls_continious_ring">Notificaciones durante llamada entrante</string>
     <string name="pref_title_notifications_and_calls_repeat_on_call">Repetir notificación de la llamada</string>
-    <string name="pref_header_notifications_and_calls">Notificaciones y Llamadas</string>
+    <string name="pref_header_notifications_and_calls">llamadNotificaciones y Llamadas</string>
     <string name="title_activity_LenovoWatch_calibration">Calibración Watch X Plus</string>
     <string name="controlcenter_set_alias">Establecer alias</string>
     <string name="sonyswr12_settings_title">Configuración de Sony SWR12</string>
@@ -937,7 +937,7 @@
     <string name="power_mode_watch">Solo reloj</string>
     <string name="power_mode_saving">Ahorro de energía</string>
     <string name="power_mode_normal">Normal</string>
-    <string name="prefs_sensors_button_bp_calibration_sum">Presione aquí para empezar la calibración</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">Pulsa aquí para iniciar la calibración</string>
     <string name="prefs_sensors_button_bp_calibration">Calibración</string>
     <string name="prefs_notifications_and_calls_shake_reject">Agitar la muñeca para ignorar/rechazar llamada</string>
     <string name="pref_summary_notifications_and_calls_title_shake_reject">Duplica la acción del botón de reloj</string>
@@ -988,8 +988,8 @@
     <string name="prefs_events_forwarding_action_title">Ejecutar acción</string>
     <string name="prefs_events_forwarding_broadcast_title">Mensaje de difusión</string>
     <string name="prefs_events_forwarding_startnonwear">Al No Usar</string>
-    <string name="prefs_events_forwarding_wokeup">Al Despertarse</string>
-    <string name="prefs_events_forwarding_fellsleep">Al Dormirse</string>
+    <string name="prefs_events_forwarding_wokeup">Al despertarse</string>
+    <string name="prefs_events_forwarding_fellsleep">Al dormirse</string>
     <string name="prefs_events_forwarding_title">Acciones del dispositivo</string>
     <string name="prefs_events_forwarding_summary">Usar eventos del dispositivo para desencadenar acciones y emisiones de Android</string>
     <string name="gps_track">Seguimiento de GPS</string>
@@ -1025,7 +1025,7 @@
     <string name="activity_prefs_chart_min_session_length">Duración mínima de la actividad (minutos)</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Duración de la pausa para separar las actividades (minutos)</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Pasos mínimos por minuto para detectar la actividad</string>
-    <string name="activity_prefs_chart_min_steps_per_minute_for_run">Pasos mínimos por minuto para detectar la corrida</string>
+    <string name="activity_prefs_chart_min_steps_per_minute_for_run">Pasos mínimos por minuto para detectar la carrera</string>
     <string name="pref_summary_connected_advertisement">Hace que el dispositivo sea visible por Bluetooth incluso cuando está conectado</string>
     <string name="prefs_autoremove_message">Eliminar automáticamente las notificaciones por SMS</string>
     <string name="prefs_fake_ring_duration">Falso timbre continuo</string>
@@ -1071,7 +1071,7 @@
     <string name="pref_check_permission_status_summary">Comprueba y pide los permisos que faltan, incluso cuando pueden no ser necesarios al instante. Desactiva esto solo si tus dispositivos no soportan ninguna de estas características. ¡No conceder un permiso puede causar problemas!</string>
     <string name="pref_check_permission_status">Comprobar el estado de los permisos</string>
     <string name="error_background_service_reason">El inicio del servicio en segundo plano falló debido a una excepción - haga clic aquí para obtener más información.\n\nError:</string>
-    <string name="device_requires_key">CLAVE REQUERIDA, PULSACIÓN LARGA PARA ENTRAR</string>
+    <string name="device_requires_key">CLAVE REQUERIDA, MANTÉN PULSADO PARA ENTRAR</string>
     <string name="device_is_currently_bonded">YA SE HA HECHO EL ENLACE</string>
     <string name="error_background_service_reason_truncated">El inicio del servicio en segundo plano falló porque…</string>
     <string name="error_background_service">Fallo al iniciar el servicio en segundo plano</string>
@@ -1150,7 +1150,7 @@
     <string name="dbmanagementactivity_export_data_title">¿Exportar datos\?</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Error al borrar archivos del directorio de exportación %1$s</string>
     <string name="prefs_charts_tabs_summary">Pestañas visibles del gráfico</string>
-    <string name="discovery_entered_invalid_authkey">¡La clave secreta de autentificación que ha introducido no es válida! Haga una pulsación larga en el dispositivo para editarla.</string>
+    <string name="discovery_entered_invalid_authkey">¡La clave secreta de autentificación que has introducido no es válida! Mantén pulsado sobre el dispositivo para editarlo.</string>
     <string name="pref_title_connected_advertisement">Visible mientras está conectado</string>
     <string name="fw_upgrade_notice_amazfitvergel">Estás a punto de instalar el firmware %s en tu Amazfit Verge Lite.
 \n
@@ -1492,9 +1492,7 @@
     <string name="pref_activity_recognition_mode_ask">preguntar</string>
     <string name="pref_activity_recognition_mode_auto">automático</string>
     <string name="menuitem_menu">Menú</string>
-    <string name="fossil_hr_button_config_info">Algunos botones no se pueden configurar porque sus funciones están codificadas en el firmware del reloj.
-\n
-\nAdvertencia: si se pulsa prolongadamente el botón superior cuando se instala una esfera de reloj de la aplicación oficial de Fossil, también se alternará entre mostrar y ocultar los widgets.</string>
+    <string name="fossil_hr_button_config_info">Algunos botones no se pueden configurar porque sus funciones están codificadas en el firmware del reloj.\n\nAdvertencia: si se pulsa prolongadamente el botón superior al instalar una esfera de reloj de la aplicación oficial de Fossil, también se alternará entre mostrar y ocultar los widgets.</string>
     <string name="controlcenter_power_off">Apagar</string>
     <string name="controlcenter_power_off_confirm_title">Apagar</string>
     <string name="controlcenter_power_off_confirm_description">¿Seguro que quiere apagar el dispositivo?</string>
@@ -1628,7 +1626,7 @@
     <string name="pref_header_workout">Entrenamiento</string>
     <string name="pref_title_screen_on_on_notifications">Pantalla encendida en las notificaciones</string>
     <string name="pref_summary_screen_on_on_notifications">Encender la pantalla de la pulsera cuando llegue una notificación</string>
-    <string name="pref_explanation_authkey">Algunos dispositivos requieren una clave de emparejamiento especial para el primer inicio del dispositivo. Pulse aquí para obtener más detalles en la wiki.</string>
+    <string name="pref_explanation_authkey">Algunos dispositivos requieren una clave de emparejamiento especial para el primer inicio del dispositivo. Pulsa aquí para obtener más detalles en la wiki.</string>
     <string name="appmanager_watchface_activate">Activar</string>
     <string name="appmanager_app_start">Iniciar</string>
     <string name="appmanager_app_download">Descargar a caché</string>
@@ -1751,9 +1749,7 @@
     <string name="czech">Checo</string>
     <string name="menuitem_personal_activity_intelligence">Actividad personal inteligente</string>
     <string name="menuitem_female_health">Salud femenina</string>
-    <string name="permission_notification_listener">%1$s necesita acceder a las notificaciones para mostrarlas en el reloj cuando la pantalla del teléfono está apagada.
-\n
-\nPulse \'%2$s\' y después \'%1$s\' active \'Permitir acceso a notificaciones\' y a continuación, pulse \'Atrás\' para volver a %1$s.</string>
+    <string name="permission_notification_listener">%1$s necesita acceder a las notificaciones para mostrarlas en el reloj cuando la pantalla del teléfono está apagada.\n\nPor favor, pulsa \'%2$s\' después \'%1$s\' y habilita \'Permitir acceso a notificaciones\', a continuación pulsa \'Atrás\' para volver a %1$s.</string>
     <string name="permission_location">%1$s necesita acceder a su ubicación en segundo plano para poder seguir conectado a su reloj aunque la pantalla esté apagada.\n\nPor favor, seleccione \"%2$s\" en la siguiente pantalla y, a continuación, pulse \"Atrás\" para volver a %1$s.</string>
     <string name="hrZoneNa">N/D</string>
     <string name="elevationGain">Aumento de la altitud</string>
@@ -1913,9 +1909,7 @@
     <string name="steps_streaks_total_steps_average_hint">Media total de pasos al día %d</string>
     <string name="currentWorkoutLoad">Carga de entrenamiento</string>
     <string name="heartrate_bpm_40">40 ppm</string>
-    <string name="permission_notification_policy_access">%1$s necesita acceder a los ajustes de No molestar para poder utilizarlos en su reloj cuando la pantalla de su teléfono esté apagada.
-\n
-\nPulse \'%2$s\' y a continuación \'%1$s\' active \'Permitir no molestar\' y a continuación, pulse \'Atrás\' para volver a %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s necesita acceder a los ajustes de No molestar para poder utilizarlos en tu reloj cuando la pantalla de tu teléfono esté apagada.\n\nPor favor, pulsa \'%2$s\' después \'%1$s\' y habilita \'Permitir no molestar\', después pulsa \'Atrás\' para volver a %1$s.</string>
     <string name="pref_voice_detect_duration_15">15 segundos</string>
     <string name="controlcenter_connected_fraction">Conectado: %d/%d</string>
     <string name="heartrate_bpm_50">50 ppm</string>
@@ -2092,15 +2086,7 @@
     <string name="elevationLoss">Pérdida de altitud</string>
     <string name="buttons_on_left">Botones a la izquierda</string>
     <string name="menuitem_eject_water">Expulsar el agua</string>
-    <string name="permission_display_over_other_apps">%1$s necesita permiso para mostrarse sobre otras apps para permitir que Bangle.js inicie actividades en los relojes a través de intents cuando %1$s está en segundo plano.
-\n
-\nEsto se puede utilizar para iniciar una aplicación de música, reproducir una canción y muchas otras cosas.
-\n
-\nPor favor, pulse \'%2$s\' y luego \'%1$s\' active \'Permitir visualización sobre otras apps\', después pulse \'Atrás\' para volver a %1$s.
-\n
-\nPara que %1$s deje de pedir permisos, vaya a \'Ajustes\' y desactive \'Comprobar estado de permisos\'.
-\n
-\nAsegúrese de conceder a %1$s los permisos necesarios para funcionar como espera.</string>
+    <string name="permission_display_over_other_apps">%1$s necesita permiso para mostrarse sobre otras apps para permitir que Bangle.js inicie actividades en los relojes a través de intents cuando %1$s está en segundo plano.\n\nEsto se puede utilizar para iniciar una aplicación de música, reproducir una canción y muchas otras cosas.\n\nPor favor, pulsa \'%2$s\' después \'%1$s\' y habilita \'Permitir visualización sobre otras apps\'. Después pulsa \'Atrás\' para volver a %1$s.\n\nPara que %1$s deje de pedir permisos, ve a \'Ajustes\' y desactiva \'Comprobar estado de permisos\'.\n\nAsegúrate de conceder a %1$s los permisos necesarios para funcionar como esperas.</string>
     <string name="maximumOxygenUptake">Consumo máximo de oxígeno</string>
     <string name="aerobicTrainingEffect">Eficacia aeróbica</string>
     <string name="anaerobicTrainingEffect">Eficacia anaeróbica</string>
@@ -2156,12 +2142,12 @@
     <string name="pref_display_caller_title">Mostrar información del contacto</string>
     <string name="pref_display_caller_summary">Mostrar el número de teléfono o el nombre de las llamadas entrantes</string>
     <string name="pref_pair_bluetooth_calls_title">Emparejar para llamadas bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_summary">Pulse aquí para iniciar el proceso de emparejamiento</string>
+    <string name="pref_pair_bluetooth_calls_summary">Pulsa aquí para iniciar el proceso de emparejamiento</string>
     <string name="pref_pair_bluetooth_calls_help_title">Cómo recibir llamadas por bluetooth</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas por Bluetooth, debe emparejar su teléfono con una segunda instancia del reloj.</string>
-    <string name="pref_pair_bluetooth_calls_help_1">1. Pulse el botón de abajo para iniciar el proceso de emparejamiento.</string>
+    <string name="pref_pair_bluetooth_calls_help_1">1. Pulsa el botón de abajo para iniciar el proceso de emparejamiento.</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Vaya a los ajustes de Bluetooth de su teléfono y empareje con el nuevo dispositivo que aparecerá (con un nombre similar al de su reloj actual, pero con un sufijo, por ejemplo, \'Amazfit GTR 4 - AFC8\').</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: Si activa las llamadas bluetooth sin emparejar con la segunda instancia, es posible que las notificaciones de llamadas no funcionen como se espera.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: Si activas las llamadas bluetooth sin emparejar con la segunda instancia, es posible que las notificaciones de llamadas no funcionen como se espera.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Habilite la configuración de llamadas por Bluetooth a continuación.</string>
     <string name="pref_summary_notification_cache_while_disconnected">Enviar notificaciones perdidas cuando un dispositivo se vuelve a conectar después de estar fuera de cobertura</string>
     <string name="pref_title_notification_cache_while_disconnected">Caché mientras está fuera de cobertura</string>
@@ -2686,9 +2672,7 @@
     <string name="do_not_disturb_lift_wrist_summary">Sólo si se activa la visualización al subir</string>
     <string name="devicetype_huawei_band_aw70">Huawei Band (AW70)</string>
     <string name="huawei_alarm_event_description">No marque la casilla de activación inteligente.</string>
-    <string name="pref_force_options_summary">Algunos dispositivos afirman falsamente no ser compatibles con algunas opciones. Esta configuración se puede utilizar para habilitarlos de todos modos.
-\nUTILÍZALO BAJO TU PROPIA RESPONSABILIDAD
-\nLea la wiki</string>
+    <string name="pref_force_options_summary">Algunos dispositivos afirman falsamente no ser compatibles con algunas opciones. Esta configuración se puede utilizar para habilitarlos de todos modos.\nUTILÍZALO BAJO TU PROPIA RESPONSABILIDAD\nLee la wiki</string>
     <string name="pref_force_smart_alarm_summary">Forzar el soporte de alarmas inteligentes.
 \nUSO BAJO SU PROPIA RESPONSABILIDAD</string>
     <string name="huawei_ignore_wakeup_status_end_description">Puede ayudar a detectar correctamente el sueño. Visible inmediatamente en la vista de actividades diarias.</string>
@@ -2928,7 +2912,7 @@
     <string name="widget_layout_top_large_bot_wide">Grande arriba, ancho abajo</string>
     <string name="pref_speak_notifications_aloud_summary">Las notificaciones se leerán en voz alta a través de los auriculares</string>
     <string name="pref_speak_notifications_aloud_title">Decir las notificaciones con volumen alto</string>
-    <string name="pref_header_calls_and_notifications">llamadas y notificaciones</string>
+    <string name="pref_header_calls_and_notifications">Llamadas y notificaciones</string>
     <string name="pref_title_bottom_navigation_bar">Barra de navegación inferior</string>
     <string name="pref_summary_bottom_navigation_bar_off">Cambiar entre pantallas principales solo deslizando el dedo horizontalmente</string>
     <string name="widget_name_colored_tile">%1$s (mosaico de color)</string>
@@ -3047,7 +3031,7 @@
     <string name="battery_low_notify_enabled">Aviso de batería baja</string>
     <string name="notification_channel_full_battery_name">Batería llena</string>
     <string name="notif_battery_full">%1$s batería llena</string>
-    <string name="show_in_notification">Mostrar en la notificación</string>
+    <string name="show_in_notification">Mostrar en notificaciones</string>
     <string name="battery_full_notify_enabled">Notificar si la batería está llena</string>
     <string name="battery_full_threshold">Umbral de batería llena</string>
     <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
@@ -3523,7 +3507,7 @@
     <string name="idasen_pref_mid_height">Altura de posición media (en centímetros)</string>
     <string name="idasen_pref_stand_height">Altura de la posición de pie (en centímetros)</string>
     <string name="milliseconds_ms">ms</string>
-    <string name="music_upload_info">Está a punto de cargar el siguiente archivo de música:\n\n%1$s\nTítulo de la canción: %2$s\nÁlbum: %3$s\n</string>
+    <string name="music_upload_info">Estás a punto de cargar el siguiente archivo de música:\n\n%1$s\nTítulo de la canción: %2$s\nÁlbum: %3$s\n</string>
     <string name="file_already_exists">El archivo ya existe</string>
     <string name="devicetype_garmin_fenix_7">Garmin Fenix 7</string>
     <string name="devicetype_garmin_forerunner_235">Garmin Forerunner 235</string>
@@ -3749,4 +3733,27 @@
     <string name="charts_show_balance_steps_summary">Mostrar exceso / falta de pasos en gráficas semanales y mensuales</string>
     <string name="activity_type_barbell">Pesas</string>
     <string name="charts_show_balance_sleep_summary">Mostrar exceso / falta de sueño en gráficas semanales y mensuales</string>
+    <string name="pref_garmin_fake_oauth_title">Enviar respuestas falsas de OAuth</string>
+    <string name="activity_type_step_aerobics">Step</string>
+    <string name="activity_type_equestrian">Equitación</string>
+    <string name="activity_type_other_winter_sports">Otros deportes de invierno</string>
+    <string name="charts_show_balance_sleep_title">Mostrar resumen del sueño</string>
+    <string name="cycling">Ciclismo</string>
+    <string name="activity_type_triathlon">Triatlón</string>
+    <string name="title_activity_even_realities_g1_pairing">Emparejamiento de Even G1</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="charts_show_balance_steps_title">Mostrar resumen de pasos</string>
+    <string name="activity_type_other_water_sports">Otros deportes acuáticos</string>
+    <string name="activity_type_diving">Buceo</string>
+    <string name="activity_type_paragliding">Parapente</string>
+    <string name="activity_type_deadlift">Peso muerto</string>
+    <string name="activity_type_burpee">Burpee</string>
+    <string name="activity_type_abs">Abdominales</string>
+    <string name="activity_type_back">Espalda</string>
+    <string name="activity_type_athletics">Atletismo</string>
+    <string name="pref_garmin_fake_oauth_summary">Soluciona problemas en algunas funciones, como la actualización del clima y del AGPS, sin necesidad de conectarse a la aplicación oficial cada 90 días.</string>
+    <string name="gree_pair_info">Estás a punto de emparejar con %s (%s). Por favor, introduce la información del Wi-Fi y del servidor host para el emparejamiento. Consulta el sitio web para obtener más información.</string>
+    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
 </resources>
