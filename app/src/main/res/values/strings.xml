@@ -697,6 +697,7 @@
     <string name="title_activity_even_realities_g1_pairing">Even G1 Pairing</string>
     <string name="pairing_even_realities_g1_select_next_lens">%1$s lens selected for pairing. Multiple candidates for the %2$s lens found. Please select the %2$s lens from the list below.</string>
     <string name="pairing_even_realities_g1_working">Pairing with %1s...</string>
+    <string name="pairing_even_realities_g1_final_connect">Setting up devices, please wait...</string>
     <string name="pairing_even_realities_g1_find_both_fail">Failed to find both the right and left lens. Please scan again.</string>
     <string name="pairing_even_realities_g1_invalid_device">Even G1 Device Malformed: %1$s.</string>
     <string name="pairing_even_realities_g1_bottom_hint">Several pairing dialogs will pop up on your Android device. If not, look in the notification drawer and accept the pairing request. Both the left and right lens will need to be paired.</string>

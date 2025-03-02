@@ -2,7 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
 import java.util.UUID;
 
-public class G1DeviceConstants {
+public class G1Constants {
     public static final UUID UUID_SERVICE_NORDIC_UART =
             UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
     public static final UUID UUID_CHARACTERISTIC_NORDIC_UART_TX =
@@ -10,6 +10,9 @@ public class G1DeviceConstants {
     public static final UUID UUID_CHARACTERISTIC_NORDIC_UART_RX =
             UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
     public static final int MTU = 251;
+    public static final int HEART_BEAT_DELAY_MS = 28000;
+    public static final int DEFAULT_COMMAND_TIMEOUT_MS = 5000;
+    public static final int DEFAULT_RETRY_COUNT = 5;
 
     // Extract the L or R at the end of the device prefix.
     public static Side getSideFromFullName(String deviceName) {
@@ -39,33 +42,65 @@ public class G1DeviceConstants {
     }
 
     public enum Side {
-        LEFT,
-        RIGHT;
+        INVALID(-1, ""),
+        LEFT(0, "left"),
+        RIGHT(1, "right");
+
+        private final int deviceIndex;
+        private final String stringPrefix;
+
+        Side(int deviceIndex, String stringPrefix) {
+            this.deviceIndex = deviceIndex;
+            this.stringPrefix = stringPrefix;
+        }
+
+        public int getDeviceIndex() {
+            return deviceIndex;
+        }
+
+        public static String getIndexKey() {
+            return "device_index";
+        }
+
+        public String getAddressKey() {
+            return stringPrefix + "_address";
+        }
+
+        public String getNameKey() {
+            return stringPrefix + "_name";
+        }
     }
 
 
     // TODO: Lifted these from a different project, some of them are wrong.
     public enum CommandId {
-        BATTERY_LEVEL((byte) 0x2C),
-        WEATHER_AND_TIME((byte) 0x06),
-        START_AI((byte) 0xF5),
-        OPEN_MIC((byte) 0x0E),
-        MIC_RESPONSE((byte) 0x0E),
-        RECEIVE_MIC_DATA((byte) 0xF1),
-        INIT((byte) 0x4D),
-        HEARTBEAT((byte) 0x25),
-        SEND_RESULT((byte) 0x4E),
-        QUICK_NOTE((byte) 0x21),
+        SILENT_MODE((byte) 0x03),
+        NOTIFICATION_CONFIG((byte) 0x04),
+
+        DASHBOARD_CONFIG((byte) 0x06),
         DASHBOARD((byte) 0x22),
-        NOTIFICATION((byte) 0x4B),
-        BMP((byte) 0x15),
         FW_INFO_REQUEST((byte) 0x23),
-        FW_INFO_RESPONSE((byte) 0x6E),
-        CRC((byte) 0x16);
+        HEARTBEAT((byte) 0x25),
+        BATTERY_LEVEL((byte) 0x2C),
+        INIT((byte) 0x4D),
+        NOTIFICATION((byte) 0x4B),
+        FW_INFO_RESPONSE((byte) 0x6E);
 
         final public byte id;
 
         CommandId(byte id) {
+            this.id = id;
+        }
+    }
+
+    public enum DashboardConfigSubCommand {
+        SET_MODE((byte) 0x07),
+        UNKNOWN_1((byte) 0x0C),
+        SET_TIME_AND_WEATHER((byte) 0x15);
+
+        final public byte id;
+
+        DashboardConfigSubCommand(byte id) {
             this.id = id;
         }
     }

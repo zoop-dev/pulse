@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.evenrealities;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -10,14 +11,22 @@ import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
+import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
+import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities.G1Constants;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities.G1DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 /**
  * Coordinator for the Even Realities G1 smart glasses. Describes the supported capabilities of the
@@ -75,13 +84,94 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
         return BONDING_STYLE_LAZY;
     }
 
+    private int getDeviceIndexForAddress(String address) {
+        return GBApplication.getDeviceSpecificSharedPrefs(address)
+                            .getInt(G1Constants.Side.getIndexKey(),
+                                    G1Constants.Side.INVALID.getDeviceIndex());
+    }
+
+    private GBDevice createDevice(String address, String name, String alias, String parentFolder,
+                                  DeviceType deviceType) {
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(address);
+        int deviceIndex = getDeviceIndexForAddress(address);
+        if (deviceIndex == G1Constants.Side.INVALID.getDeviceIndex()) {
+            // Still bonding, the devices have not been linked up. Just use the device directly.
+            return new GBDevice(address, name, null, parentFolder, deviceType);
+        } else if (deviceIndex == G1Constants.Side.RIGHT.getDeviceIndex()) {
+            return null;
+        }
+
+        // Pull the right side info out of the prefs.
+        String rightName = prefs.getString(G1Constants.Side.RIGHT.getNameKey(), "");
+        String rightAddress = prefs.getString(G1Constants.Side.RIGHT.getAddressKey(), "");
+
+        // Create the device with the left name and address.
+        GBDevice gbDevice = new GBDevice(address, name, alias, parentFolder, deviceType);
+
+        // Put the information of the right device into the left device. This will allow the multi
+        // BLE device to manage both connections.
+        gbDevice.addDeviceInfo(
+                new GenericItem(G1Constants.Side.RIGHT.getNameKey(), rightName));
+        gbDevice.addDeviceInfo(
+                new GenericItem(G1Constants.Side.RIGHT.getAddressKey(), rightAddress));
+
+        for (BatteryConfig batteryConfig : getBatteryConfig(gbDevice)) {
+            gbDevice.setBatteryIcon(batteryConfig.getBatteryIcon(),
+                                    batteryConfig.getBatteryIndex());
+            gbDevice.setBatteryLabel(batteryConfig.getBatteryLabel(),
+                                     batteryConfig.getBatteryIndex());
+        }
+        return gbDevice;
+    }
+
+    @Override
+    public GBDevice createDevice(GBDeviceCandidate candidate, DeviceType deviceType) {
+        return createDevice(candidate.getMacAddress(), candidate.getName(),
+                            G1Constants.getNameFromFullName(candidate.getName()), null,
+                            deviceType);
+    }
+
+    @Override
+    public GBDevice createDevice(Device dbDevice, DeviceType deviceType) {
+        return createDevice(dbDevice.getIdentifier(), dbDevice.getName(), dbDevice.getAlias(),
+                            dbDevice.getParentFolder(), deviceType);
+    }
+
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device,
                                 @NonNull DaoSession session) throws GBException {
+        // The main device is bonded as the left. Pull out the right device and delete it too if it
+        // is present.
+        ItemWithDetails right_name =
+                gbDevice.getDeviceInfo(G1Constants.Side.RIGHT.getNameKey());
+        ItemWithDetails right_address =
+                gbDevice.getDeviceInfo(G1Constants.Side.RIGHT.getAddressKey());
+        if (right_name != null && !right_name.getDetails().isEmpty() && right_address != null &&
+            !right_address.getDetails().isEmpty()) {
+            GBDevice rightDevice =
+                    new GBDevice(right_address.getDetails(), right_name.getDetails(), null,
+                                 gbDevice.getParentFolder(), gbDevice.getType());
+            super.deleteDevice(rightDevice);
+            DeviceHelper.getInstance().removeBond(rightDevice);
+        }
     }
 
     @Override
     public boolean addBatteryPollingSettings() {
         return true;
+    }
+
+    @Override
+    public int getBatteryCount(final GBDevice device) {
+        ItemWithDetails right_name =
+                device.getDeviceInfo(G1Constants.Side.RIGHT.getNameKey());
+        ItemWithDetails right_address =
+                device.getDeviceInfo(G1Constants.Side.RIGHT.getAddressKey());
+        if (right_name != null && !right_name.getDetails().isEmpty() && right_address != null &&
+            !right_address.getDetails().isEmpty()) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 }

@@ -298,6 +298,30 @@ public class BLETypeConversions {
         array[offset + 7] = (byte) (value >> 56);
     }
 
+    public static void writeUint16BE(byte[] array, int offset, int value) {
+        array[offset + 1] = (byte) value;
+        array[offset] = (byte) (value >> 8);
+    }
+
+    public static void writeUint32BE(byte[] array, int offset, int value) {
+        array[offset + 3] = (byte) value;
+        array[offset + 2] = (byte) (value >> 8);
+        array[offset + 1] = (byte) (value >> 16);
+        array[offset] = (byte) (value >> 24);
+    }
+
+    public static void writeUint64BE(byte[] array, int offset, long value) {
+        array[offset + 7] = (byte) value;
+        array[offset + 6] = (byte) (value >> 8);
+        array[offset + 5] = (byte) (value >> 16);
+        array[offset + 4] = (byte) (value >> 24);
+        array[offset + 3] = (byte) (value >> 32);
+        array[offset + 2] = (byte) (value >> 40);
+        array[offset + 1] = (byte) (value >> 48);
+        array[offset] = (byte) (value >> 56);
+    }
+
+
     /**
      * Creates a calendar object representing the current date and time.
      */

@@ -1,7 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
+import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
@@ -9,55 +13,100 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.Logging;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.devices.jyou.BFH16Constants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEMultiDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
  * Support class for the Even Realities G1. This sends and receives commands to and from the device.
- * The Protocol is mostly defined in G1Constants.java right now. In the future the protocol will be
- * broken out to a different class.
+ * The Protocol is defined in G1SideManager.
  * One interesting point about this device is that it requires a constant BLE connection which is
  * contrary to the way BLE is supposed to work. Unfortunately the device will show the disconnected
  * icon and stop displaying any information when it is in the disconnected state. Because of this,
  * we need to send a heartbeat ever 30 seconds, otherwise the device will disconnect and reconnect
  * every 32 seconds per the BLE spec.
  */
-public class G1DeviceSupport extends AbstractBTLEDeviceSupport {
+public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(G1DeviceSupport.class);
     private final Handler backgroundTasksHandler = new Handler(Looper.getMainLooper());
-    private BluetoothGattCharacteristic rxCharacteristic;
-    private BluetoothGattCharacteristic txCharacteristic;
-    private int heartBeatSequence;
+    private G1SideManager leftSide;
+    private G1SideManager rightSide;
+    private final Object sendTimeLock = new Object();
 
     public G1DeviceSupport() {
         this(LOG);
     }
 
     public G1DeviceSupport(Logger logger) {
-        super(logger);
-        addSupportedService(G1DeviceConstants.UUID_SERVICE_NORDIC_UART);
+        super(logger, 2);
+        addSupportedService(G1Constants.UUID_SERVICE_NORDIC_UART,
+                            G1Constants.Side.LEFT.getDeviceIndex());
+        addSupportedService(BFH16Constants.BFH16_GENERIC_ACCESS_SERVICE,
+                            G1Constants.Side.LEFT.getDeviceIndex());
+        addSupportedService(BFH16Constants.BFH16_GENERIC_ATTRIBUTE_SERVICE,
+                            G1Constants.Side.LEFT.getDeviceIndex());
+
+        addSupportedService(G1Constants.UUID_SERVICE_NORDIC_UART,
+                            G1Constants.Side.RIGHT.getDeviceIndex());
+        addSupportedService(BFH16Constants.BFH16_GENERIC_ACCESS_SERVICE,
+                            G1Constants.Side.RIGHT.getDeviceIndex());
+        addSupportedService(BFH16Constants.BFH16_GENERIC_ATTRIBUTE_SERVICE,
+                            G1Constants.Side.RIGHT.getDeviceIndex());
     }
 
     @Override
-    protected TransactionBuilder initializeDevice(TransactionBuilder builder) {//}, int deviceIdx) {
-        this.heartBeatSequence = 0;
-        builder.add(
-                new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+    public void setContext(GBDevice device, BluetoothAdapter btAdapter, Context context) {
+        // Determine the left and right names based on if this is the parent device or not.
+        // Ignore any context sets from non-left devices.
+        G1Constants.Side side = G1Constants.getSideFromFullName(device.getName());
+        if (side == G1Constants.Side.LEFT) {
+            ItemWithDetails right_name =
+                    device.getDeviceInfo(G1Constants.Side.RIGHT.getNameKey());
+            ItemWithDetails right_address =
+                    device.getDeviceInfo(G1Constants.Side.RIGHT.getAddressKey());
+            if (right_name != null && !right_name.getDetails().isEmpty() && right_address != null &&
+                !right_address.getDetails().isEmpty()) {
+                GBDevice rightDevice =
+                        new GBDevice(right_address.getDetails(), right_name.getDetails(), null,
+                                     device.getParentFolder(), device.getType());
+                super.setDevice(rightDevice, 1);
+            } else {
+                super.setDevice(null, 1);
+            }
 
-        rxCharacteristic = getCharacteristic(G1DeviceConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX);
-        txCharacteristic = getCharacteristic(G1DeviceConstants.UUID_CHARACTERISTIC_NORDIC_UART_TX);
-        builder.requestMtu(G1DeviceConstants.MTU);
+            // The left device acts as the parent device
+            super.setContext(device, btAdapter, context);
+        } else {
+            // This should only happen during pairing. Once the devices are linked by the
+            // entries for right and left devices in the device specific preferences, this will
+            // never be called on the right device again. BUT we need this to connect to the right
+            // device before the devices are linked.
+            super.setContext(device, btAdapter, context);
+        }
+    }
 
-        if (rxCharacteristic == null || txCharacteristic == null) {
+    @Override
+    protected TransactionBuilder initializeDevice(TransactionBuilder builder, int deviceIdx) {
+        // Verify that the characteristics are present for the current device.
+        BluetoothGattCharacteristic rx =
+                getCharacteristic(G1Constants.UUID_CHARACTERISTIC_NORDIC_UART_RX, deviceIdx);
+        BluetoothGattCharacteristic tx =
+                getCharacteristic(G1Constants.UUID_CHARACTERISTIC_NORDIC_UART_TX, deviceIdx);
+        if (rx == null || tx == null) {
             // If the characteristics are not received from the device reconnect and try again.
             LOG.warn("RX/TX characteristics are null, will attempt to reconnect");
             builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT,
@@ -67,51 +116,123 @@ public class G1DeviceSupport extends AbstractBTLEDeviceSupport {
             return builder;
         }
 
-        // Register callbacks for this device.
-        builder.setCallback(this);
-        builder.notify(rxCharacteristic, true);
-
-        // Send the command to fetch FW version.
-        byte[] packet = new byte[2];
-        packet[0] = G1DeviceConstants.CommandId.FW_INFO_REQUEST.id;
-        packet[1] = 0x74;
-        builder.write(txCharacteristic, packet);
-
-        // Send the command to fetch battery info.
-        packet = new byte[2];
-        packet[0] = G1DeviceConstants.CommandId.BATTERY_LEVEL.id;
-        packet[1] = 0x01;
-        builder.write(txCharacteristic, packet);
-
-        if (getDevice().getFirmwareVersion() == null) {
-            getDevice().setFirmwareVersion("N/A");
-            getDevice().setFirmwareVersion2("N/A");
+        // Create either the left or right side depending on which device is initialized.
+        G1SideManager side;
+        synchronized (this) {
+            side = getSideFromIndex(deviceIdx);
+            if (side == null) {
+                side = createSideFromIndex(deviceIdx, rx, tx);
+            }
         }
 
-        // The glasses will auto disconnect after 30 seconds of no data on the wire.
-        // Schedule a heartbeat task. If this is not enabled, button presses on the glasses will not
-        // be sent to the phone, so realtime interactions won't work.
-        scheduleHeatBeat();
+        // Paranoid protection from a bad index being passed in.
+        if (side == null) {
+            LOG.error("Device index is not left or right: {}", deviceIdx);
+            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT,
+                                                 getContext()));
+            GB.toast(getContext(), "Unable to manage connection to device.", Toast.LENGTH_LONG,
+                     GB.ERROR);
+            return builder;
+        }
 
-        // Schedule the battery polling.
-        scheduleBatteryPolling();
+        // The glasses expect a specific MTU, set that now.
+        builder.requestMtu(G1Constants.MTU);
 
-        // Device is ready for use.
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        // Register callbacks for this device.
+        builder.setCallback(this);
+        builder.notify(rx, true);
+
+        // If the manager is initializing, then the whole device is initializing as well.
+        if (side.getState() == GBDevice.State.CONNECTED) {
+            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING,
+                                                 getContext()));
+            side.initialize();
+        }
+
+        // Both sides are initialized. The whole device is initialized.
+        synchronized (this) {
+            if (leftSide != null && leftSide.getState() == GBDevice.State.INITIALIZED &&
+                rightSide != null && rightSide.getState() == GBDevice.State.INITIALIZED) {
+                builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED,
+                                                     getContext()));
+                // This means that both sides have been connected to and basic info has been collected.
+                // These next steps require that both sides are ready which is why they are done post
+                // individual initialization. We don't know what thread we are handling the update state
+                // event on, so to be safe, schedule these as a background task.
+                backgroundTasksHandler.postDelayed(() -> {
+                    leftSide.postInitialize();
+                    rightSide.postInitialize();
+                    onSetTime();
+                }, 200);
+            }
+        }
+
+        getDevice().sendDeviceUpdateIntent(getContext());
         return builder;
     }
 
     @Override
     public void dispose() {
-        // Remove all callbacks
+        // Remove all background tasks.
         backgroundTasksHandler.removeCallbacksAndMessages(null);
+
+        // Kill both sides.
+        leftSide = null;
+        rightSide = null;
+
         super.dispose();
     }
 
     @Override
     public boolean useAutoConnect() {
-        return false;
+        // Only allow reconnection if both devices are present. When devices are being bonded, if
+        // the auto connect kicks in at the wrong 1ime, it can fragment the devices and break
+        // things.
+        return getDevice(G1Constants.Side.LEFT.getDeviceIndex()) != null &&
+               getDevice(G1Constants.Side.RIGHT.getDeviceIndex()) != null;
     }
+
+    private G1SideManager createSideFromIndex(int deviceIdx, BluetoothGattCharacteristic rx,
+                                              BluetoothGattCharacteristic tx) {
+        // Package some of the DeviceSupport functions as callbacks here. We deliberately skip
+        // passing in "this" because we don't want to forward ALL functionality of the device
+        // support and we don't want a hard dependency on G1DeviceSupport in G1SideManager.
+        Callable<BtLEQueue> getQueue = () -> this.getQueue(deviceIdx);
+        Function<GBDeviceEvent, Void> handleEvent = (GBDeviceEvent event) -> {
+            this.evaluateGBDeviceEvent(event);
+            return null;
+        };
+
+        // Create the desired side.
+        if (deviceIdx == G1Constants.Side.LEFT.getDeviceIndex()) {
+            leftSide =
+                    new G1SideManager(G1Constants.Side.LEFT, backgroundTasksHandler, getQueue,
+                                      handleEvent, this::getDevicePrefs, rx, tx);
+            return leftSide;
+        } else if (deviceIdx == G1Constants.Side.RIGHT.getDeviceIndex()) {
+            rightSide = new G1SideManager(G1Constants.Side.RIGHT, backgroundTasksHandler,
+                                          getQueue, handleEvent, this::getDevicePrefs,
+                                          rx, tx);
+            return rightSide;
+        }
+
+        // Return null under an unexpected index.
+        return null;
+    }
+
+    private G1SideManager getSideFromIndex(int deviceIdx) {
+        if (deviceIdx == G1Constants.Side.LEFT.getDeviceIndex()) {
+            return leftSide;
+        } else if (deviceIdx == G1Constants.Side.RIGHT.getDeviceIndex()) {
+            return rightSide;
+        }
+        return null;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // Below are all the onXXX() handlers overridden from the base class. //
+    ////////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
@@ -122,26 +243,29 @@ public class G1DeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        // If this is the correct UART RX message, parse it.
-        if (G1DeviceConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX.equals(characteristic.getUuid())) {
-            if (payload[0] == G1DeviceConstants.CommandId.BATTERY_LEVEL.id) {
-                GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
-                batteryInfo.state = BatteryState.BATTERY_NORMAL;
-                batteryInfo.level = payload[2];
-                handleGBDeviceEvent(batteryInfo);
-            } else if (payload[0] == G1DeviceConstants.CommandId.FW_INFO_RESPONSE.id) {
-                // FW info string
-                String fwInfo = new String(payload, StandardCharsets.US_ASCII).trim();
-                LOG.debug("Got FW: " + fwInfo);
-                int versionStart = fwInfo.lastIndexOf(" ver ") + " ver ".length();
-                int versionEnd = fwInfo.indexOf(',', versionStart);
-                if (versionStart > -1 && versionEnd > versionStart) {
-                    String version = fwInfo.substring(versionStart, versionEnd);
-                    LOG.debug("Parsed fw version: " + version);
-                    getDevice().setFirmwareVersion(version);
+        // If this is the correct UART RX message, forward to the correct side based on the BLE
+        // address.
+        if (characteristic.getUuid().equals(G1Constants.UUID_CHARACTERISTIC_NORDIC_UART_RX)) {
+            String address = gatt.getDevice().getAddress();
+            if (getDevice(G1Constants.Side.LEFT.getDeviceIndex()) != null) {
+                String leftAddress =
+                        getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getAddress();
+                if (address.equals(leftAddress) && leftSide != null) {
+                    return leftSide.handlePayload(characteristic.getValue());
+                }
+            }
+
+            if (getDevice(G1Constants.Side.RIGHT.getDeviceIndex()) != null) {
+                String rightAddress =
+                        getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getAddress();
+                if (address.equals(rightAddress) && rightSide != null) {
+                    return rightSide.handlePayload(characteristic.getValue());
                 }
             }
         }
+
+        // Not handled by either side.
+        LOG.debug("Unhandled payload: {}", Logging.formatBytes(characteristic.getValue()));
         return false;
     }
 
@@ -153,61 +277,43 @@ public class G1DeviceSupport extends AbstractBTLEDeviceSupport {
      */
     @Override
     public void onSendConfiguration(String config) {
-        switch (config) {
-            // Reschedule battery polling. The new schedule may be disabled.
-            case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
-            case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_INTERVAL:
-                scheduleBatteryPolling();
-                break;
+        // Forward to both sides.
+        if (leftSide != null) leftSide.onSendConfiguration(config);
+        if (rightSide != null) rightSide.onSendConfiguration(config);
+    }
+
+    @Override
+    public void onSetTime() {
+        if (leftSide == null || rightSide == null) return;
+
+        boolean use12HourFormat = getDevicePrefs().getTimeFormat().equals(
+                DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_12H);
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        long timeMilliseconds = c.getTimeInMillis();
+        long tzOffset = TimeZone.getDefault().getOffset(timeMilliseconds);
+        timeMilliseconds += tzOffset;
+
+        // Check if the GB settings are set to metric, if not, set the temp to use Fahrenheit.
+        String metricString = GBApplication.getContext().getString(R.string.p_unit_metric);
+        boolean useFahrenheit = !GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, metricString).equals(metricString);
+
+        // This block is synchronized. We do not want two calls to overlap, otherwise the lenses
+        // could get skewed with different values.
+        synchronized (sendTimeLock) {
+            // Send the left the time synchronously, then once a response is received, send the right.
+            // The glasses will ignore the command on the right lens if it arrives before the left.
+            G1Communications.CommandHandler leftCommandHandler =
+                    new G1Communications.CommandTimeAndWeather(
+                            timeMilliseconds, use12HourFormat, /*weatherInfo=*/ null, useFahrenheit);
+            leftSide.send(leftCommandHandler);
+            if (!leftCommandHandler.waitForResponsePayload()) {
+                LOG.error("Set time on left lens timed out");
+                getDevice().setState(GBDevice.State.WAITING_FOR_RECONNECT);
+                getDevice().sendDeviceUpdateIntent(getContext());
+            }
+
+            rightSide.send(new G1Communications.CommandTimeAndWeather(
+                        timeMilliseconds, use12HourFormat, /*weatherInfo=*/ null, useFahrenheit));
         }
     }
-
-    private void scheduleHeatBeat() {
-        backgroundTasksHandler.removeCallbacksAndMessages(heartBeatRunner);
-        backgroundTasksHandler.postDelayed(heartBeatRunner, 30 * 1000);
-    }
-
-    private void scheduleBatteryPolling() {
-        backgroundTasksHandler.removeCallbacksAndMessages(batteryRunner);
-        if (GBApplication.getDevicePrefs(gbDevice).getBatteryPollingEnabled()) {
-            int interval_minutes =
-                    GBApplication.getDevicePrefs(gbDevice).getBatteryPollingIntervalMinutes();
-            int interval = interval_minutes * 60 * 1000;
-            LOG.debug("Starting battery runner delayed by {} ({} minutes)", interval,
-                      interval_minutes);
-            backgroundTasksHandler.postDelayed(batteryRunner, interval);
-        }
-    }
-
-    private final Runnable batteryRunner = () -> {
-        TransactionBuilder builder = new TransactionBuilder("battery_request");
-        byte[] packet = new byte[2];
-        packet[0] = G1DeviceConstants.CommandId.BATTERY_LEVEL.id;
-        packet[1] = 0x01;
-        builder.write(txCharacteristic, packet);
-        builder.queue(getQueue());
-
-        // Schedule the next check.
-        scheduleBatteryPolling();
-    };
-
-
-    private final Runnable heartBeatRunner = () -> {
-        TransactionBuilder builder = new TransactionBuilder("heart_beat");
-        int length = 6;
-        byte[] packet = new byte[length];
-        packet[0] = G1DeviceConstants.CommandId.HEARTBEAT.id;
-        packet[1] = (byte) (length & 0xFF);
-        packet[2] = 0x00; //(byte)((length >> 8) & 0xFF);
-        packet[3] = (byte) (heartBeatSequence % 0xFF);
-        packet[4] = 0x04;
-        packet[5] = (byte) (heartBeatSequence % 0xFF);
-        builder.write(txCharacteristic, packet);
-        builder.queue(getQueue());
-
-        // Schedule the next heartbeat.
-        scheduleHeatBeat();
-    };
-
-
 }
