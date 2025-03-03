@@ -323,14 +323,7 @@
     <string name="pref_summary_pebble_health_store_raw">Ukládá data v původní podobě, takže je databáze větší, ale umožňuje pozdější vyhodnocení.</string>
     <string name="action_db_management">Správa dat</string>
     <string name="title_activity_db_management">Správa dat</string>
-    <string name="activity_db_management_import_export_explanation">Operace s databází použijí následující cestu (viz níže) ke složce v zařízení. Tato složka je dostupná pro ostatní aplikace Androidu a váš počítač. Nezapomeňte, že tato složka a její obsah jsou vymazány při odinstalaci Gadgetbridge. Soubory obsahují:
-\n Export_preference - globální nastavení
-\n Export_preference_MAC - nastavení specifická pro zařízení
-\n Gadgetbridge - databáze zařízení a aktivit
-\n Gadgetbridge_date - databáze exportovaní ke datu
-\n *.gpx - GPS záznamy
-\n *.log - log soubory
-\nExportovaná data (nebo místo pro import dat) naleznete zde:</string>
+    <string name="activity_db_management_import_export_explanation">Operace s databází použijí následující cestu (viz níže) ke složce v zařízení. Tato složka je dostupná pro ostatní aplikace Androidu a váš počítač. Nezapomeňte, že tato složka a její obsah jsou vymazány při odinstalaci Gadgetbridge. Soubory obsahují:\n Export_preference - globální nastavení\n Export_preference_MAC - nastavení specifická pro zařízení\n Gadgetbridge - databáze zařízení a aktivit\n Gadgetbridge_date - databáze exportována k datu\n *.gpx - GPS záznamy\n *.log - log soubory\nExportovaná data (nebo místo pro import dat) naleznete zde:</string>
     <string name="activity_db_management_merge_old_title">Smazat původní databázi</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Nelze přistoupit na zadanou cestu. Kontaktujte vývojáře.</string>
     <string name="dbmanagementactivity_exported_to">Exportováno do: %1$s</string>
