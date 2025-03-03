@@ -15,7 +15,7 @@
     <string name="controlcenter_delete_device_dialogmessage">¡Esta acción eliminará el dispositivo y toda la información asociada!</string>
     <string name="controlcenter_navigation_drawer_open">Abrir el cajón de navegación</string>
     <string name="controlcenter_navigation_drawer_close">Cerrar el cajón de navegación</string>
-    <string name="controlcenter_snackbar_need_longpress">Mantenga pulsado el icono para desconectar</string>
+    <string name="controlcenter_snackbar_need_longpress">Mantén pulsado el icono para desconectar</string>
     <string name="controlcenter_snackbar_disconnecting">Desconectando</string>
     <string name="controlcenter_snackbar_connecting">Conectando…</string>
     <string name="controlcenter_snackbar_requested_screenshot">Realizando una captura de pantalla del dispositivo</string>
@@ -42,8 +42,8 @@
     <string name="title_activity_calblacklist">Calendarios en lista negra</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">Instalador de FW/App</string>
-    <string name="fw_upgrade_notice">Está a punto de instalar el %s.</string>
-    <string name="fw_multi_upgrade_notice">Está a punto de instalar el firmware %1$s y %2$s en sustitución de los que hay actualmente en su Mi Band.</string>
+    <string name="fw_upgrade_notice">Estás a punto de instalar el %s.</string>
+    <string name="fw_multi_upgrade_notice">Estás a punto de instalar el firmware %1$s y %2$s en sustitución de los que hay actualmente en tu Mi Band.</string>
     <string name="miband_firmware_known">Este firmware ha sido probado y se sabe que es compatible con Gadgetbridge.</string>
     <string name="miband_firmware_unknown_warning">Este firmware no ha sido probado y puede que no sea compatible con Gadgetbridge. 
 \n 
@@ -78,7 +78,7 @@
     <string name="pref_title_notification_filter">No molestar</string>
     <string name="pref_summary_notification_filter">Bloquear todas las notificaciones cuando está activado el modo \"No molestar\" en el teléfono</string>
     <string name="pref_title_transliteration">Transliteración</string>
-    <string name="pref_summary_transliteration">Activar en caso de que su dispositivo no soporte la fuente de su idioma</string>
+    <string name="pref_summary_transliteration">Activar en caso de que tu dispositivo no soporte la fuente de tu idioma</string>
     <string name="always">Siempre</string>
     <string name="when_screen_off">Cuando la pantalla está apagada</string>
     <string name="never">Nunca</string>
@@ -94,7 +94,7 @@
     <string name="pref_title_canned_reply_suffix">Sufijo habitual</string>
     <string name="pref_title_canned_messages_dismisscall">Rechazar llamada</string>
     <string name="pref_title_canned_messages_set">Actualizar en el dispositivo</string>
-    <string name="pref_header_development">Opciones de desarrollador</string>
+    <string name="pref_header_development">Opciones para desarrolladores</string>
     <string name="pref_title_development_miaddr">Dirección de Mi Band</string>
     <string name="pref_title_pebble_settings">Ajustes de Pebble</string>
     <string name="pref_header_activitytrackers">Rastreadores de actividad</string>
@@ -166,17 +166,13 @@
 \n
 \n
 \n Este firmware es para la revisión de HW: %s</string>
-    <string name="app_install_info">Estás a punto de instalar la siguiente app:
-\n
-\n%1$s
-\nVersión %2$s de %3$s
-\n</string>
+    <string name="app_install_info">Estás a punto de instalar la siguiente app:\n\n%1$s\nVersión %2$s por %3$s\n</string>
     <string name="n_a">N/A</string>
     <string name="initialized">iniciado</string>
     <string name="appversion_by_creator">%1$s de %2$s</string>
     <string name="title_activity_discovery">Detección de dispositivos</string>
     <string name="discovery_stop_scanning">Detener el escaneo</string>
-    <string name="discovery_start_scanning">Empezar la detección</string>
+    <string name="discovery_start_scanning">Iniciar detección</string>
     <string name="action_discover">Conectar un nuevo dispositivo</string>
     <string name="device_with_rssi">%1$s (%2$s)</string>
     <string name="title_activity_android_pairing">Emparejar dispositivo</string>
@@ -245,18 +241,18 @@
     <string name="alarm_sat_short">Sáb</string>
     <string name="alarm_smart_wakeup">Alarma inteligente</string>
     <string name="user_feedback_miband_set_alarms_failed">Se produjo un error al fijar las alarmas. Inténtelo de nuevo.</string>
-    <string name="user_feedback_miband_set_alarms_ok">Se enviaron las alarmas al dispositivo.</string>
+    <string name="user_feedback_miband_set_alarms_ok">Alarmas enviadas al dispositivo.</string>
     <string name="chart_no_data_synchronize">Sin datos. ¿Sincronizar dispositivo?</string>
     <string name="user_feedback_miband_activity_data_transfer">A punto de transferir %1$s de datos desde %2$s</string>
     <string name="miband_prefs_fitness_goal">Objetivo de pasos diarios</string>
     <string name="dbaccess_error_executing">Error al ejecutar «%1$s»</string>
-    <string name="controlcenter_start_activitymonitor">Su actividad</string>
+    <string name="controlcenter_start_activitymonitor">Tu actividad</string>
     <string name="cannot_connect">No se puede conectar: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">No se ha podido encontrar un controlador para instalar este archivo.</string>
     <string name="pbw_install_handler_unable_to_install">No se pudo instalar el archivo indicado: %1$s</string>
     <string name="pbw_install_handler_hw_revision_mismatch">No se puede instalar el «firmware» indicado: no coincide con la revisión de «hardware» del Pebble.</string>
     <string name="installer_activity_wait_while_determining_status">Por favor, espera mientras se determina el estado de la instalación…</string>
-    <string name="notif_battery_low_title">¡Batería baja del Gadget!</string>
+    <string name="notif_battery_low_title">¡Batería del Gadget baja!</string>
     <string name="notif_battery_low_percent">A %1$s le queda: %2$s%% batería</string>
     <string name="notif_battery_low_bigtext_last_charge_time">Última carga: %s \n</string>
     <string name="notif_battery_low_bigtext_number_of_charges">Número de cargas: %s</string>
@@ -361,7 +357,7 @@
 \n *.log - archivos de registro
 \nEspera encontrar sus archivos exportados (o coloca los archivos que deseas importar) allí:</string>
     <string name="activity_db_management_merge_old_title">Borrar la base de datos antigua</string>
-    <string name="dbmanagementactivvity_cannot_access_export_path">No se puede acceder a la ruta para exportar . Por favor, contacta con los desarrolladores.</string>
+    <string name="dbmanagementactivvity_cannot_access_export_path">No se puede acceder a la ruta de exportación. Por favor, contacta con los desarrolladores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado a: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Error de exportación de la base de datos: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_shared">Error de exportación de las preferencias: %1$s</string>
@@ -419,13 +415,7 @@
     <string name="discovery_pair_question">Selecciona Emparejar para emparejar tus dispositivos. Si esto falla, prueba de nuevo sin emparejar.</string>
     <string name="discovery_yes_pair">Emparejar</string>
     <string name="discovery_dont_pair">No emparejar</string>
-    <string name="fw_upgrade_notice_amazfitbip">Está a punto de instalar el «firmware» %s en su Amazfit Bip.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Su reloj se reiniciará tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar los archivos .res y .gps si son idénticos a los instalados previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitbip">Estás a punto de instalar el firmware %s en tu Amazfit Bip.\n\nAsegúrate de instalar el archivo .fw, el archivo .res, y finalmente el archivo .gps. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar los archivos .res y .gps si son idénticos a los previamente instalados.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="mi2_prefs_button_actions">Acciones del botón</string>
     <string name="mi2_prefs_button_actions_summary">Especifique acciones al presionar botones</string>
     <string name="mi2_prefs_button_press_count">Número de presiones</string>
@@ -445,13 +435,7 @@
     <string name="pref_summary_pebble_enable_bgjs">Permite a las watchfaces mostrar el tiempo, información de batería, etc.</string>
     <string name="activity_web_view">Vista de actividad web</string>
     <string name="controlcenter_connect">Conectar…</string>
-    <string name="fw_upgrade_notice_amazfitcor">Está a punto de instalar el «firmware» %s en su Amazfit Cor.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Se reiniciará la pulsera tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar el archivo .res si es idéntico al instalado previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitcor">Estás a punto de instalar el firmware %s en tu Amazfit Cor.\n\nAsegúrate de instalar el archivo .fw y, a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_title_charts_swipe">Permitir deslizar hacia izquierda/derecha en los gráficos de actividad</string>
     <string name="automatic">Automático</string>
     <string name="simplified_chinese">Chino simplificado</string>
@@ -520,19 +504,13 @@
     <string name="watch9_calibration_button">Calibrar</string>
     <string name="watch9_pairing_tap_hint">Cuando el dispositivo vibre, agítelo o pulse un botón.</string>
     <string name="debugactivity_really_factoryreset_title">¿Confirmar restablecimiento de fábrica?</string>
-    <string name="debugactivity_really_factoryreset">Al hacer un restablecimiento de fábrica se eliminarán todos los datos del dispositivo conectado (si se admite). Los dispositivos Xiaomi / Huami también cambian la dirección MAC de Bluetooth, por lo que aparecen como nuevos dispositivos para Gadgetbridge.</string>
+    <string name="debugactivity_really_factoryreset">Al hacer un restablecimiento de fábrica se eliminarán todos los datos del dispositivo conectado (si se admite). Los dispositivos Xiaomi o Huami también cambian la dirección MAC de Bluetooth, por lo que aparecen como nuevos dispositivos para Gadgetbridge.</string>
     <string name="blacklist_all_for_notifications">Lista negra para todas las notificaciones</string>
     <string name="whitelist_all_for_notifications">Lista blanca para todas las notificaciones</string>
-    <string name="fw_upgrade_notice_miband3">Está a punto de instalar el «firmware» %s en su Mi Band 3.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Se reiniciará la pulsera tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar el archivo .res si es idéntico al instalado previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_miband3">Estás a punto de instalar el firmware %s en tu Mi Band 3.\n\nAsegúrate de instalar el archivo .fw, y a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_title_notifications_timeout">Tiempo mínimo entre notificaciones</string>
     <string name="pref_title_rtl">Derecha a Izquierda</string>
-    <string name="pref_summary_rtl">Activar si su dispositivo no puede mostrar idiomas de derecha a izquierda</string>
+    <string name="pref_summary_rtl">Activar si tu dispositivo no puede mostrar idiomas de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length">Longitud de línea máxima de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length_summary">Alarga o acorta las líneas de texto de derecha a izquierda si contiene separaciones</string>
     <string name="pref_title_pebble_gatt_clientonly">Sólo cliente GATT</string>
@@ -578,7 +556,7 @@
     <string name="ok">Aceptar</string>
     <string name="on">Encendido</string>
     <string name="mi3_night_mode_sunset">Al atardecer</string>
-    <string name="controlcenter_start_activity_tracks">Sus pistas de actividad</string>
+    <string name="controlcenter_start_activity_tracks">Tus registros de actividad</string>
     <string name="activity_type_not_measured">No medido</string>
     <string name="activity_type_activity">Actividad</string>
     <string name="activity_type_not_worn">Dispositivo no usado</string>
@@ -603,8 +581,8 @@
     <string name="menuitem_status">Estado</string>
     <string name="menuitem_activity">Historial del entrenamiento</string>
     <string name="menuitem_alipay">Alipay</string>
-    <string name="watch9_calibration_hint">Establezca la hora que su dispositivo le está mostrando en este momento.</string>
-    <string name="share_log_warning">Tenga en cuenta que Gadgetbridge registra archivos que pueden contener mucha información personal, incluidos, entre otros, datos de salud, identificadores únicos (como la dirección MAC de un dispositivo), preferencias de música, etc. Considere editar el archivo y eliminar esta información antes de enviar el archivo a un informe público.</string>
+    <string name="watch9_calibration_hint">Establece la hora que tu dispositivo te está mostrando en este momento.</string>
+    <string name="share_log_warning">Ten en cuenta que Gadgetbridge registra archivos que pueden contener mucha información personal, incluidos, entre otros, datos de salud, identificadores únicos (como la dirección MAC de un dispositivo), preferencias de música, etc. Considera editar el archivo y eliminar esta información antes de enviarlo a un informe público.</string>
     <string name="no_data">No hay datos</string>
     <string name="preferences_led_color">Color de LED</string>
     <string name="preferences_fm_frequency">Frecuencia FM</string>
@@ -633,7 +611,7 @@
     <string name="zetime_title_heartrate">Configuración de frecuencia cardíaca</string>
     <string name="zetime_title_screentime">Duración de encendido de pantalla en segundos</string>
     <string name="zetime_title_heart_rate_alarm">Alarma de frecuencia cardíaca</string>
-    <string name="zetime_title_heart_rate_alarm_summary">El reloj le avisará cuando su frecuencia cardíaca exceda los límites.</string>
+    <string name="zetime_title_heart_rate_alarm_summary">El reloj te avisará cuando tu frecuencia cardíaca exceda los límites.</string>
     <string name="zetime_heart_rate_alarm_enable">Activar alarma de frecuencia cardíaca</string>
     <string name="activity_prefs_alarm_max_heart_rate">Frecuencia cardíaca máxima</string>
     <string name="activity_prefs_alarm_min_heart_rate">Frecuencia cardíaca mínima</string>
@@ -672,22 +650,8 @@
     <string name="title_activity_device_specific_settings">Configuraciones específicas del dispositivo</string>
     <string name="pref_title_authkey">Clave de autenticación</string>
     <string name="pref_summary_authkey">Cambie la clave de autenticación a una clave común en todos sus dispositivos Android desde los que desea conectarse. La clave predeterminada anterior para todos los dispositivos es 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Está a punto de instalar el firmware %s en su Amazfit Cor 2. 
-\n 
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. La pulsera se reiniciará despues de instalar el archivo .fw. 
-\n 
-\nNota: no es necesario instalar el archivo .res si es idéntico al instalado previamente. 
-\n 
-\nPROCEDA BAJO SU PROPIO RIESGO. 
-\n 
-\nNO SE HA REALIZADO NINGUNA PRUEBA. QUIZÁ NECESITE INSTALAR UN FIRMWARE BEATS_W SI EL NOMBRE DE SU DISPOSITIVO ES \"Amazfit Band 2\"</string>
-    <string name="fw_upgrade_notice_miband4">Está a punto de instalar el «firmware» %s en su Mi Band 4.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Se reiniciará la pulsera tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar el archivo .res si es idéntico al instalado previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Estás a punto de instalar el firmware %s en tu Amazfit Cor 2.\n\nAsegúrate de instalar el archivo .fw y, a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!\n\nNO SE HA PROBADO. QUIZÁ NECESITES INSTALAR UN FIRMWARE BEATS_W SI EL NOMBRE DE TU DISPOSITIVO ES \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_miband4">Estás a punto de instalar el firmware %s en tu Mi Band 4.\n\nAsegúrate de instalar el archivo .fw, y a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="prefs_hr_alarm_activity">Alarma de frecuencia cardíaca durante actividad deportiva</string>
     <string name="prefs_hr_alarm_low">Límite bajo</string>
     <string name="prefs_hr_alarm_high">Límite alto</string>
@@ -729,7 +693,7 @@
     <string name="pref_summary_expose_hr">Permite a otras aplicaciones acceder a los datos de frecuencia cardíaca en tiempo real mientras Gadgetbridge está conectado</string>
     <string name="pref_title_expose_hr">Acceso terceros frec. cardíaca</string>
     <string name="pref_title_use_custom_font">Utilizar tipo de letra personalizado</string>
-    <string name="pref_summary_use_custom_font">Actívelo si su dispositivo incluye «firmware» de tipo de letra personalizado para admitir emojis</string>
+    <string name="pref_summary_use_custom_font">Activa esto si tu dispositivo incluye firmware con tipografía personalizada para admitir emojis</string>
     <string name="activity_db_management_autoexport_explanation">La ubicación de exportación automática se definió en:</string>
     <string name="activity_db_management_autoexport_label">Exportación automática</string>
     <string name="activity_DB_ExportButton">Exportar datos</string>
@@ -758,24 +722,12 @@
     <string name="preferences_makibes_hr3_settings">Configuración de Makibes HR3</string>
     <string name="prefs_find_phone">Encontrar teléfono</string>
     <string name="prefs_enable_find_phone">Activar \"Encontrar teléfono\"</string>
-    <string name="prefs_find_phone_summary">Utilice su pulsera para reproducir el tono del teléfono.</string>
+    <string name="prefs_find_phone_summary">Usa tu pulsera para reproducir el tono del teléfono.</string>
     <string name="prefs_find_phone_duration">Duración del tono en segundos</string>
     <string name="maximum_duration">Duración</string>
-    <string name="discovery_need_to_enter_authkey">Este dispositivo necesita una clave de autenticación secreta. Mantenga presionado el dispositivo para introducirla. Consulte el wiki.</string>
-    <string name="fw_upgrade_notice_amazfitbip_lite">Está a punto de instalar el «firmware» %s en su Amazfit Bip Lite.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Se reiniciará el reloj tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar el archivo .res si es idéntico al instalado previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
-    <string name="fw_upgrade_notice_amazfitgtr">Está a punto de instalar el «firmware» %s en su Amazfit GTR.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Se reiniciará el reloj tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar los archivos .res y .gps si son idénticos a los instalados previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="discovery_need_to_enter_authkey">Este dispositivo necesita una clave de autenticación secreta. Mantén presionado el dispositivo para introducirla. Consulta la wiki.</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">Estás a punto de instalar el firmware %s en tu Amazfit Bip Lite.\n\nAsegúrate de instalar el archivo .fw y, a continuación, el archivo .res. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitgtr">Estás a punto de instalar el firmware %s en tu Amazfit GTR.\n\nAsegúrate de instalar el archivo .fw, a continuación, el archivo .res, y finalmente el archivo .gps. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar los archivos .res y .gps si son idénticos a los ya instalados.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_chart_heartrate_color_red">Rojo</string>
     <string name="pref_chart_heartrate_color_orange">Naranja</string>
     <string name="pref_title_chart_heartrate_color">Color de frecuencia cardíaca</string>
@@ -788,13 +740,7 @@
     <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="devicetype_amazfit_gts">Amazfit GTS</string>
-    <string name="fw_upgrade_notice_amazfitgts">Está a punto de instalar el firmware %s en su Amazfit GTS.
-\n
-\nPor favor, asegúrese de instalar el archivo .fw primero, el archivo .res a continuación y por ultimo el archivo .gps. Su reloj se reiniciara después de instalar el archivo .fw.
-\n
-\nNota: No hace falta instalar los archivos .res y .gps si los archivos son idénticos a los previamente instalados.
-\n
-\n¡PROCEDE BAJO TU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitgts">Estás a punto de instalar el firmware %s en tu Amazfit GTS.\n\nAsegúrate de instalar el archivo .fw, a continuación, el archivo .res, y finalmente el archivo .gps. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar los archivos .res y .gps si son idénticos a los ya instalados.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="watch_not_connected">Reloj no conectado</string>
     <string name="qhybrid_vibration_strength">Intensidad de la vibración:</string>
     <string name="qhybrid_goal_in_steps">Objetivo en pasos</string>
@@ -806,7 +752,7 @@
     <string name="qhybrid_offset_timezone">compensar huso horario por</string>
     <string name="qhybrid_changes_delay_prompt">El cambio puede demorar varios segundos…</string>
     <string name="qhybrid_offset_time_by">tiempo compensado por</string>
-    <string name="pref_summary_disable_new_ble_scanning">Marque esta opción si su dispositivo no es encontrado durante el descubrimiento</string>
+    <string name="pref_summary_disable_new_ble_scanning">Marca esta opción si tu dispositivo no es encontrado durante el descubrimiento</string>
     <string name="pref_summary_allow_high_mtu">Incrementa la velocidad de transferencia, pero puede no funcionar en algunos dispositivos Android.</string>
     <string name="pref_summary_sync_calendar">Activa las alertas del calendario, incluso cuando se encuentre desconectado</string>
     <string name="pref_title_sync_caldendar">Sincronizar eventos del calendario</string>
@@ -838,7 +784,7 @@
     <string name="pref_summary_force_white_color_scheme">Útil si tu reloj tiene manecillas oscuras</string>
     <string name="find_my_phone_notification">Encuentra mi teléfono</string>
     <string name="pref_title_vibration_strength">Intensidad de la vibración</string>
-    <string name="pref_title_relax_firmware_checks">Activar si desea instalar un firmware no destinado a su dispositivo (bajo su propio riesgo)</string>
+    <string name="pref_title_relax_firmware_checks">Activa esto si quieres instalar un firmware no destinado a tu dispositivo (bajo tu propio riesgo)</string>
     <string name="pref_summary_relax_firmware_checks">Relajar las comprobaciones de firmware</string>
     <string name="pref_title_allow_high_mtu">Permitir MTU alta</string>
     <string name="pref_summary_custom_deviceicon">Mostrar un icono de notificación de Android específico del dispositivo en lugar del icono de Gadgetbridge cuando esté conectado</string>
@@ -888,8 +834,7 @@
     <string name="devicestatus_connected">El dispositivo está conectado</string>
     <string name="devicestatus_connecting">El dispositivo se está conectando</string>
     <string name="activity_list_summary_activities">Actividades</string>
-    <string name="activity_list_summary_intensity">Movimiento
-\nIntensidad</string>
+    <string name="activity_list_summary_intensity">Intensidad de\nmovimiento</string>
     <string name="activity_list_summary_active_time">Tiempo activo</string>
     <string name="activity_list_summary_distance">Distancia</string>
     <string name="activity_list_summary_active_steps">Pasos activos</string>
@@ -903,20 +848,8 @@
     <string name="prefs_notifications_and_calls_reject">Botón ignorar/rechazar llamada</string>
     <string name="pref_header_notifications_and_calls_callhandling">Gestión de llamadas</string>
     <string name="pref_title_weather_summary">Usado para el proveedor del clima de LineageOS, otras versiones de Android necesitan usar una aplicación como \"Weather notification\". Encuentra más información en la wiki de Gadgetbridge.</string>
-    <string name="fw_upgrade_notice_miband5">Estás a punto de instalar el firmware %s en tu Mi Band 5.
-\n
-\nPor favor, asegúrate de instalar el archivo .fw, luego el archivo .res. Tu banda se reiniciará después de instalar el archivo .fw.
-\n
-\nNota: No es necesario instalar el archivo .res si es exactamente igual al instalado anteriormente.
-\n
-\nPROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="fw_upgrade_notice_amazfit_trex">Estás a punto de instalar el firmware %s en tu Amazfit T-Rex.
-\n
-\nPor favor asegúrate de instalar el archivo .fw, luego el .res y finalmente el archivo .gps. Tu reloj se reiniciará después de instalar el archivo .fw.
-\n
-\nNota: No es necesario instalar los archivos .res y .gps si son exactamente iguales a los instalados anteriormente.
-\n
-\nPROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_miband5">Estás a punto de instalar el firmware %s en tu Mi Band 5.\n\nAsegúrate de instalar el archivo .fw, y a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_trex">Estás a punto de instalar el firmware %s en tu Amazfit T-Rex.\n\nAsegúrate de instalar el archivo .fw y, a continuación, el archivo .res. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="find_lost_device_message">¿Buscar %1$s?</string>
     <string name="pref_sensors_bp_calibration_low">Presión arterial DIASTÓLICA (baja)</string>
     <string name="pref_header_sensors_calibration">Calibración del sensor</string>
@@ -928,7 +861,7 @@
     <string name="baseAltitude">Altitud base</string>
     <string name="averageStrokesPerSecond">Promedio brazada</string>
     <string name="averageStrokeDistance">Distancia promedio de brazada</string>
-    <string name="averageStride">Promedio de avance</string>
+    <string name="averageStride">Zancada promedio</string>
     <string name="distanceMeters">Distancia</string>
     <string name="permission_granting_mandatory">Todos estos permisos son necesarios y podría producirse inestabilidad si no se conceden</string>
     <string name="power_mode_title">Modo de energía del reloj</string>
@@ -952,7 +885,7 @@
     <string name="descentMeters">Cuesta abajo</string>
     <string name="ascentMeters">Cuesta arriba</string>
     <string name="averageHR">Frecuencia cardíaca</string>
-    <string name="totalStride">Avance total</string>
+    <string name="totalStride">Total de zancadas</string>
     <string name="qhybrid_calibration_align_hint">Usa los botones de abajo para alinear las manecillas del reloj a las 12:00.</string>
     <string name="devicetype_nut_mini">Nut Mini</string>
     <string name="medley">Medley</string>
@@ -966,7 +899,7 @@
     <string name="sports_activity_quick_filter_30days">30 días</string>
     <string name="sports_activity_quick_filter_7days">7 días</string>
     <string name="sports_activity_quick_filter_last_month">El mes anterior</string>
-    <string name="sports_activity_quick_filter_this_month">Este Mes</string>
+    <string name="sports_activity_quick_filter_this_month">Este mes</string>
     <string name="sports_activity_quick_filter_last_week">La semana anterior</string>
     <string name="sports_activity_quick_filter_this_week">Esta semana</string>
     <string name="activity_summaries_all_activities">Todas las actividades</string>
@@ -975,10 +908,10 @@
     <string name="yes">Sí</string>
     <string name="activity_filter_individual_items">Elementos seleccionados individualmente</string>
     <string name="addto_filter">Añadir a filtro</string>
-    <string name="activity_filter_apply_filter">Aplicar Filtro</string>
+    <string name="activity_filter_apply_filter">Aplicar filtro</string>
     <string name="activity_filter_name_contains">Etiquetar</string>
     <string name="activity_filter_filter_title">Filtrar</string>
-    <string name="activity_filter_reset_filter">Reiniciar filtro</string>
+    <string name="activity_filter_reset_filter">Restablecer filtro</string>
     <string name="activity_filter_date_to">Hasta</string>
     <string name="activity_filter_date_from">Desde</string>
     <string name="pref_header_statistics">Estadísticas de actividades deportivas</string>
@@ -1077,11 +1010,11 @@
     <string name="require_location_provider">La ubicación debe estar activada</string>
     <string name="error_version_check_extreme_caution">ATENCIÓN: ¡Error al comprobar la información de la versión! ¡No debes continuar! Nombre de la versión visto \"%s\"</string>
     <string name="about_links">Enlaces</string>
-    <string name="about_additional_contributions">Muchas gracias a todos los colaboradores no incluidos en la lista por aportar código, traducciones, apoyo, ideas, motivación, informes de errores, dinero… ✊</string>
-    <string name="about_additional_device_support">Soporte de dispositivos adicionales</string>
+    <string name="about_additional_contributions">Muchas gracias a todos los colaboradores no mencionados por sus contribuciones en código, traducciones, apoyo, ideas, motivación, informes de errores, donaciones… ✊</string>
+    <string name="about_additional_device_support">Compatibilidad con dispositivos adicionales</string>
     <string name="about_contributors">Colaboradores</string>
     <string name="about_core_team_title">Equipo principal (por orden de primera contribución de código)</string>
-    <string name="about_description_generic">Una aplicación de Android gratuita, de código abierto y sin conexión para reemplazar las aplicaciones de código cerrado de los fabricantes de relojes inteligentes.</string>
+    <string name="about_description_generic">Alternativa libre y de código abierto, sin conexión a la nube, para aplicaciones propietarias de gadgets Android.</string>
     <string name="about_activity_title_generic">Acerca de Gadgetbridge</string>
     <string name="about_version">Versión %s</string>
     <string name="about_title">Acerca de</string>
@@ -1138,7 +1071,7 @@
     <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="devicetype_miband5">Mi Band 5</string>
     <string name="dbmanagementactivity_export_finished">Eliminación finalizada</string>
-    <string name="activity_db_management_clean_export_directory_text">Los archivos exportados en el directorio de Exportación/Importación son accesibles por cualquier aplicación de su dispositivo. Es posible que desees eliminar estos archivos después de la sincronización o la copia de seguridad. Asegúrate de tener una copia de seguridad antes de eliminarlos. Los archivos GPX, los subdirectorios y el archivo de base de datos autoexportado (si existe) no se eliminarán. La ruta del directorio de exportación/importación es:</string>
+    <string name="activity_db_management_clean_export_directory_text">Los archivos exportados en el directorio de Exportación/Importación son accesibles por cualquier aplicación de tu dispositivo. Es posible que quieras eliminar estos archivos después de una sincronización o copia de seguridad. Asegúrate de tener una copia de seguridad antes de eliminarlos. Los archivos GPX, los subdirectorios y el archivo de base de datos autoexportado (si existe) no se eliminarán. La ruta del directorio de exportación/importación es:</string>
     <string name="activity_DB_clean_export_directory_warning_title">¿Eliminar archivos en el directorio de exportación/importación\?</string>
     <string name="activity_DB_clean_export_directory_warning_message">¿Eliminar realmente los archivos del directorio de exportación/importación\?</string>
     <string name="activity_db_management_clean_export_directory_label">Eliminar archivos en el directorio de exportación/importación</string>
@@ -1150,13 +1083,7 @@
     <string name="prefs_charts_tabs_summary">Pestañas visibles del gráfico</string>
     <string name="discovery_entered_invalid_authkey">¡La clave secreta de autentificación que has introducido no es válida! Mantén pulsado sobre el dispositivo para editarlo.</string>
     <string name="pref_title_connected_advertisement">Visible mientras está conectado</string>
-    <string name="fw_upgrade_notice_amazfitvergel">Estás a punto de instalar el firmware %s en tu Amazfit Verge Lite.
-\n
-\nPor favor, asegúrate de instalar el archivo .fw, luego el archivo .res y finalmente el archivo .gps. Su reloj se reiniciará después de instalar el archivo .fw.
-\n
-\nNota: No es necesario instalar los archivos .res y .gps si estos archivos son exactamente los mismos que los instalados anteriormente.
-\n
-\n¡PROCEDE BAJO TU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitvergel">Estás a punto de instalar el firmware %s en tu Amazfit Verge Lite.\n\nAsegúrate de instalar el archivo .fw, el archivo .res y finalmente el archivo .gps. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar los archivos .res y .gps si son idénticos a los ya instalados.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="minutes_mi">min/mi</string>
     <string name="ft">ft</string>
     <string name="fossil_hr_auth_failed">Autenticación fallida, funcionalidad limitada</string>
@@ -1174,13 +1101,7 @@
     <string name="activity_type_strength_training">Entrenamiento de fuerza</string>
     <string name="show_ongoing_activity">Mostrar ventana emergente de actividad en curso</string>
     <string name="dialog_hide">Ocultar</string>
-    <string name="fw_upgrade_notice_amazfitx">Estás a punto de instalar el firmware %s en tu Amazfit X.
-\n
-\nPor favor, asegúrese de instalar el archivo .fw, y después el archivo .res. Su banda se reiniciará después de instalar el archivo .fw.
-\n
-\nNota: No es necesario instalar .res si es exactamente el mismo que el instalado anteriormente.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitx">Estás a punto de instalar el firmware %s en tu Amazfit X.\n\nAsegúrate de instalar el archivo .fw, y a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="calendar_year">Año</string>
     <string name="calendar_six_months">6 meses</string>
     <string name="calendar_three_months">3 meses</string>
@@ -1191,7 +1112,7 @@
     <string name="battery_level">Nivel de la batería</string>
     <string name="battery_detail_activity_title">Información de la batería</string>
     <string name="pref_summary_canned_messages_dismisscall">Descartar llamadas desde el reloj con un mensaje SMS</string>
-    <string name="pref_summary_canned_messages_set">Envíe los mensajes configurados a continuación a su dispositivo</string>
+    <string name="pref_summary_canned_messages_set">Envía a tu dispositivo los mensajes configurados a continuación</string>
     <string name="qhybrid_summary_calibration">Calibrar las agujas del reloj</string>
     <string name="qhybrid_summary_file_management">Subir y descargar archivos</string>
     <string name="pref_summary_physical_buttons">Configurar la funcionalidad de los botones físicos del reloj</string>
@@ -1210,21 +1131,11 @@
     <string name="kind_agps_bundle">Paquete AGPS</string>
     <string name="prefs_sounds_summary">Configurar cuándo el dispositivo emitirá un pitido</string>
     <string name="prefs_sounds">Sonidos</string>
-    <string name="fw_upgrade_notice_amazfitneo">Está a punto de instalar el firmware %s en su Amazfit Neo.
-\n
-\nSu banda se reiniciará después de instalar el archivo .fw.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="fw_upgrade_notice_miband6">Está a punto de instalar el «firmware» %s en su Mi Band 6.
-\n
-\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Se reiniciará la pulsera tras instalar el archivo .fw.
-\n
-\nNota: no es necesario instalar el archivo .res si es idéntico al instalado previamente.
-\n
-\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitneo">Estás a punto de instalar el firmware %s en tu Amazfit Neo.\n\nTu pulsera se reiniciará tras instalar el archivo .fw.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_miband6">Estás a punto de instalar el firmware %s en tu Mi Band 6.\n\nAsegúrate de instalar el archivo .fw, y a continuación, el archivo .res. Tu pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivos .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="qhybrid_pref_title_external_intents">Permitir intents externos peligrosos</string>
     <string name="pref_summary_developer_settings">Ajustes y funcionalidades utilizadas por los desarrolladores</string>
-    <string name="pref_title_developer_settings">Configuración de los desarrolladores</string>
+    <string name="pref_title_developer_settings">Configuración para desarrolladores</string>
     <string name="qhybrid_pref_title_actions">Acciones</string>
     <string name="qhybrid_calibration_100_steps">100 pasos</string>
     <string name="qhybrid_calibration_10_steps">10 pasos</string>
@@ -1233,15 +1144,11 @@
     <string name="fossil_hr_new_action_cancel">cancelar</string>
     <string name="fossil_hr_edit_action">Editar acción</string>
     <string name="fossil_hr_edit_action_delete">borrar</string>
-    <string name="fossil_hr_commute_actions_explanation">Las acciones configuradas aquí aparecerán en la app Commute de su reloj. Lea la wiki para obtener información sobre cómo manejar los Intents producidos por estas acciones.</string>
+    <string name="fossil_hr_commute_actions_explanation">Las acciones configuradas aquí aparecerán en la app Commute de tu reloj. Lee la wiki para obtener información sobre cómo manejar los Intents producidos por estas acciones.</string>
     <string name="qhybrid_title_watchface">Configuración de Watchface</string>
     <string name="notification_channel_low_battery_name">Batería baja</string>
     <string name="notification_channel_transfer_name">Transferencia de datos</string>
-    <string name="watchface_install_info">Está a punto de instalar el siguiente watchface:
-\n
-\n%1$s
-\nVersión %2$s por %3$s
-\n</string>
+    <string name="watchface_install_info">Estás a punto de instalar la siguiente esfera:\n\n%1$s\nVersión %2$s por %3$s\n</string>
     <string name="watchface_setting_power_saving_hands">Desactivar el movimiento de las manos mientras esté fuera de la muñeca</string>
     <string name="watchface_setting_power_saving_display">Desactivar las actualizaciones de la pantalla mientras esté fuera de la muñeca</string>
     <string name="watchface_setting_title_power_saving">Ahorro de energía</string>
@@ -1256,7 +1163,7 @@
     <string name="watchface_setting_wrist_flick_minute">Manecilla de los minutos (-360 a 360)</string>
     <string name="watchface_setting_wrist_flick_hour">Manecilla del reloj (-360 a 360)</string>
     <string name="watchface_setting_wrist_flick_move_relative">Mover las manecillas en relación con el tiempo</string>
-    <string name="watchface_setting_desc_wrist_flick">(para desactivar por completo, active el movimiento relativo y ponga todos los valores a 0)</string>
+    <string name="watchface_setting_desc_wrist_flick">(para desactivar por completo, activa el movimiento relativo y pon todos los valores a 0)</string>
     <string name="watchface_setting_title_wrist_flick">Golpe de muñeca</string>
     <string name="watchface_setting_display_refresh_partial">Refresco parcial (en minutos)</string>
     <string name="watchface_setting_display_refresh_full">Refresco total (en minutos)</string>
@@ -1307,7 +1214,7 @@
     <string name="getting_heart_rate">Medición</string>
     <string name="blood_pressure">Presión arterial</string>
     <string name="pref_theme_black_background">Usar fondo negro en el tema oscuro</string>
-    <string name="pref_summary_huami_force_new_protocol">Activar si su dispositivo ya no se conecta después de una actualización de firmware</string>
+    <string name="pref_summary_huami_force_new_protocol">Activar si tu dispositivo ya no se conecta después de una actualización de firmware</string>
     <string name="pref_title_huami_force_new_protocol">Nuevo protocolo de autenticación</string>
     <string name="menuitem_flashlight">Linterna</string>
     <string name="enable_vibrations_summary">Vibración para llamadas, mensajes, notificaciones y más</string>
@@ -1358,7 +1265,7 @@
     <string name="prefs_equalizer_summary">Activar o desactivar el ecualizador</string>
     <string name="prefs_dolby_summary">Preajuste Dolby para el ecualizador</string>
     <string name="prefs_game_mode">Modo juego</string>
-    <string name="prefs_game_mode_summary">Sólo si su teléfono es compatible con el modo juego</string>
+    <string name="prefs_game_mode_summary">Sólo si tu teléfono es compatible con el modo juego</string>
     <string name="prefs_touch_lock">Bloqueo táctil</string>
     <string name="prefs_touch_lock_summary">Desactivar eventos táctiles</string>
     <string name="prefs_galaxy_buds_experimental">Experimental</string>
@@ -1464,7 +1371,7 @@
     <string name="reminder_time_every_day">%1$s, todos los días</string>
     <string name="reminder_every_week">Cada semana</string>
     <string name="reminder_every_day">Cada día</string>
-    <string name="reminder_delete_confirm_description">¿Está seguro de que quiere eliminar el recordatorio\?</string>
+    <string name="reminder_delete_confirm_description">¿Seguro que quieres eliminar el recordatorio?</string>
     <string name="reminder_no_free_slots_description">El dispositivo no tiene espacios libres para recordatorios (total de espacios: %1$s)</string>
     <string name="miband_prefs_reserve_reminder_calendar">Recordatorios para reservar para los próximos eventos</string>
     <string name="prefs_reserve_reminder_calendar_summary">Número de eventos del calendario que se sincronizarán</string>
@@ -1527,7 +1434,7 @@
     <string name="distance_format_meters">### m</string>
     <string name="distance_format_miles">###.# mi</string>
     <string name="discover_unsupported_devices">Detectar dispositivos no compatibles</string>
-    <string name="about_hash">Confirmar %s</string>
+    <string name="about_hash">Revisión %s</string>
     <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="sony_speak_to_chat_focus_on_voice">Centrarse en la voz</string>
     <string name="sony_speak_to_chat_timeout_off">Apagada</string>
@@ -1585,9 +1492,7 @@
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">Acerca de Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_main">Aplicación complementaria de Android para Bangle.js, basada en el proyecto Gadgetbridge, con acceso adicional a Internet.
-\n
-\nDebido a las políticas de Google Play Store, no podemos incluir un enlace de donación en la aplicación, pero si te gusta esta aplicación, considera hacer una donación a través de la página de inicio de Gadgetbridge que aparece a continuación.</string>
+    <string name="about_description_banglejs_main">Aplicación complementaria de Android para Bangle.js, basada en el proyecto Gadgetbridge, con acceso a Internet añadido.\n\nDebido a las políticas de Google Play Store, no podemos incluir un enlace de donación dentro de la aplicación. Sin embargo, si te gusta esta app, considera hacer una donación a través de la página de Gadgetbridge que encontrarás a continuación.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js ejecutándose</string>
     <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
@@ -1607,7 +1512,7 @@
     <string name="pref_world_clocks_title">Relojes mundiales</string>
     <string name="pref_world_clocks_summary">Configurar los relojes para otras zonas horarias</string>
     <string name="world_clock_delete_confirm_title">Eliminar \'%1$s\'</string>
-    <string name="world_clock_delete_confirm_description">¿Está seguro de que quiere eliminar el reloj mundial\?</string>
+    <string name="world_clock_delete_confirm_description">¿Seguro que quieres eliminar el reloj mundial?</string>
     <string name="pref_title_banglejs_text_bitmap">Texto como mapa de bits</string>
     <string name="pref_summary_banglejs_text_bitmap">Si una palabra no puede ser reproducida con la fuente del reloj, la convierte en un mapa de bits en Gadgetbridge y la muestra en el reloj</string>
     <string name="pref_title_device_internet_access">Permitir acceso a Internet</string>
@@ -1615,11 +1520,7 @@
     <string name="pref_title_device_intents">Permitir Intents</string>
     <string name="low_power_gps">GPS de bajo consumo</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="fw_upgrade_notice_amazfit_gts4">Está a punto de instalar el firmware %s en su Amazfit GTS 4.
-\n
-\nSu reloj se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_gts4">Estás a punto de instalar el firmware %s en tu Amazfit GTS 4.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="pref_header_workout">Entrenamiento</string>
     <string name="pref_title_screen_on_on_notifications">Pantalla encendida en las notificaciones</string>
@@ -1631,28 +1532,16 @@
     <string name="appmanager_download_started">Se ha iniciado la descarga de la aplicación</string>
     <string name="appmanager_downloaded_to_cache">%s descargado a la caché</string>
     <string name="appmanager_download_app_error">Error al descargar la aplicación</string>
-    <string name="fw_upgrade_notice_amazfit_gts4_mini">Está a punto de instalar el firmware %s en su Amazfit GTS 4 Mini.
-\n
-\nSu reloj se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3">Está a punto de instalar el firmware %s en su Amazfit GTR 3.
-\n
-\nSu pulsera se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="fw_upgrade_notice_amazfit_band7">Está a punto de instalar el firmware %s en su Amazfit Band 7.
-\n
-\nSu pulsera se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_gts4_mini">Estás a punto de instalar el firmware %s en tu Amazfit GTS 4 Mini.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">Estás a punto de instalar el firmware %s en tu Amazfit GTR 3.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_band7">Estás a punto de instalar el firmware %s en tu Amazfit Band 7.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="open_fw_installer_pick_file">Seleccionar archivo</string>
     <string name="open_fw_installer_info_text_title">Instalador de archivos</string>
     <string name="pref_header_connection">Conexión</string>
     <string name="pref_header_sound_vibration">Sonido y vibración</string>
     <string name="pref_header_offline_voice">Voz sin conexión</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Tamaño de los mapas de bits de texto</string>
-    <string name="pref_explanation_authkey_new_protocol">Si aparece el mensaje \"Actualizar la aplicación a la última versión\" en la pulsera, asegúrese de comprobar el \"Nuevo protocolo de autentificación\" más arriba. Pulse aquí para obtener más detalles en la wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Si aparece el mensaje \"Actualizar la aplicación a la última versión\" en la pulsera, asegúrate de comprobar el \"Nuevo protocolo de autenticación\" más arriba. Pulsa aquí para obtener más detalles en la wiki.</string>
     <string name="pref_gps_header">GPS</string>
     <string name="pref_gps_mode_preset">Modo GPS</string>
     <string name="pref_gps_band">Banda GPS</string>
@@ -1679,44 +1568,30 @@
     <string name="dual_band">Banda dual</string>
     <string name="single_band">Banda única</string>
     <string name="speed_first">Priorizar velocidad</string>
-    <string name="fw_upgrade_notice_miband7">Está a punto de instalar el firmware %s en su Xiaomi Smart Band 7.
-\n
-\nSu Band se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="open_fw_installer_select_file">Seleccione el archivo que desea cargar en el dispositivo: %s</string>
+    <string name="fw_upgrade_notice_miband7">Estás a punto de instalar el firmware %s en tu Xiaomi Smart Band 7.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="open_fw_installer_select_file">Selecciona el archivo que quieres cargar en el dispositivo: %s</string>
     <string name="pref_header_calendar">Calendario</string>
     <string name="open_fw_installer_warning_title">Aviso</string>
-    <string name="fw_upgrade_notice_amazfit_gts3">Está a punto de instalar el firmware %s en su Amazfit GTS 3.
-\n
-\nSu reloj se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="open_fw_installer_getting_files_text">Dado que no podemos distribuir los archivos de firmware, tendrá que conseguirlos usted mismo. Esto significa que tendrá que buscar los archivos apk, en línea, en foros, en Amazfitwatchfaces (para dispositivos Miband/Amazfit) y así sucesivamente.</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">Estás a punto de instalar el firmware %s en tu Amazfit GTS 3.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="open_fw_installer_getting_files_text">Dado que no podemos distribuir los archivos de firmware, tendrás que conseguirlos por tu cuenta. Esto significa que tendrás que buscarlos en archivos apk, en línea, en foros, en Amazfitwatchfaces (para dispositivos Miband/Amazfit) y así sucesivamente.</string>
     <string name="pref_title_notification_prefer_long_text">Preferir un texto de notificación largo</string>
     <string name="pref_summary_notification_prefer_long_text">Si está disponible, envía el texto de notificación largo al dispositivo</string>
     <string name="controlcenter_get_heartrate_measurement">Medición de la frecuencia cardiaca</string>
-    <string name="open_fw_installer_warning_text">Esta función puede bloquear el dispositivo. Dicho lo cual, esto nunca ha sucedido a ninguno de los desarrolladores a través del flasheo, pero recuerde que usted está haciendo esto bajo su propio riesgo.</string>
+    <string name="open_fw_installer_warning_text">Esta función podría dejar tu dispositivo inservible. No obstante, ninguno de los desarrolladores ha experimentado este problema al realizar el flasheo. Aun así, recuerda que lo haces bajo tu propio riesgo.</string>
     <string name="open_fw_installer_getting_files_title">Obteniendo el archivo de firmware/app</string>
-    <string name="about_description_banglejs_nightly">Aplicación complementaria de Android para Bangle.js construida sobre el proyecto Gadgetbridge, con acceso a Internet añadido.
-\n
-\nDebido a las políticas de Google Play Store, no se nos permite un enlace de donación en la propia aplicación, pero si le gusta esta aplicación por favor considere donar a través de la página de inicio de Gadgetbridge a continuación.</string>
+    <string name="about_description_banglejs_nightly">Aplicación complementaria de Android para Bangle.js, basada en el proyecto Gadgetbridge, con acceso a Internet añadido.\n\nDebido a las políticas de Google Play Store, no podemos incluir un enlace de donación dentro de la aplicación. Sin embargo, si te gusta esta app, considera hacer una donación a través de la página de Gadgetbridge que encontrarás a continuación.</string>
     <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
     <string name="about_activity_title_banglejs_nightly">Acerca de Bangle.js Gadgetbridge (Nightly)</string>
     <string name="gadgetbridge_running_banglejs_nightly">Bangle.js Nightly ejecutándose</string>
-    <string name="fw_upgrade_notice_amazfit_trex2">Está a punto de instalar el firmware %s en su Amazfit T-Rex 2.
-\n
-\nSu pulsera se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
-    <string name="open_fw_installer_info_text">El Instalador de Firmware/Watchface/App/Archivos le permite cargar/instalar archivos compatibles (firmware, watchfaces, aplicaciones, GPS, recursos, fuentes...) en el dispositivo. Más información en la wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="fw_upgrade_notice_amazfit_trex2">Estás a punto de instalar el firmware %s en tu Amazfit T-Rex 2.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="open_fw_installer_info_text">El Instalador de Firmware/Esferas/Aplicaciones/Archivos te permite cargar/instalar archivos compatibles (firmware, esferas, aplicaciones, GPS, recursos, fuentes...) en el dispositivo. Más información en la wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_connect_minimum_one_device">Conecte AL MENOS UN dispositivo al que desee enviar el archivo.</string>
     <string name="pref_summary_notification_delay_calls">Retraso antes de enviar notificaciones de llamadas entrantes al dispositivo, en segundos.</string>
     <string name="pref_summary_notification_media_ignores_application_list">Procesar las notificaciones multimedia antes que la lista de aplicaciones. Si esta preferencia no está marcada, las aplicaciones multimedia deben estar permitidas en la lista de aplicaciones para que los controles multimedia funcionen en el dispositivo.</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Tamaño a utilizar para la representación de texto en mapa de bits</string>
     <string name="pref_title_banglejs_webview_url">URL del cargador de Apps</string>
-    <string name="pref_summary_banglejs_webview_url">Si quiere un cargador de aplicaciones personalizado ponga aquí su URL https://.../android.html. De lo contrario, deje en blanco https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">Si quieres un cargador de aplicaciones personalizado pon aquí tu URL https://.../android.html. De lo contrario, deja en blanco https://banglejs.com/apps</string>
     <string name="pref_blacklist_calendars_summary">Los calendarios de la lista negra no se sincronizarán con el dispositivo</string>
     <string name="pref_summary_canned_replies">Responder desde el reloj con mensajes predefinidos</string>
     <string name="pref_header_intent_api">Intent API</string>
@@ -1735,11 +1610,7 @@
     <string name="open_fw_installer_ensure_device_connected">Asegúrese de que el dispositivo %s está conectado</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">¿Eliminar preferencias del dispositivo?</string>
     <string name="debugactivity_confirm_remove_device_preferences">Esto restablecerá las preferencias del dispositivo para todos los dispositivos conectados. ¿Está seguro\?</string>
-    <string name="fw_upgrade_notice_amazfit_gtr4">Está a punto de instalar el firmware %s en su Amazfit GTR 4.
-\n
-\nSu pulsera se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr4">Estás a punto de instalar el firmware %s en tu Amazfit GTR 4.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_title_notification_delay_calls">Retardo de notificación de llamada</string>
     <string name="pref_title_notifications_ignore_low_priority">Ignorar las notificaciones de baja prioridad</string>
     <string name="pref_summary_notifications_ignore_low_priority">No enviar notificaciones de prioridad baja y mínima al reloj</string>
@@ -1748,7 +1619,7 @@
     <string name="menuitem_personal_activity_intelligence">Actividad personal inteligente</string>
     <string name="menuitem_female_health">Salud femenina</string>
     <string name="permission_notification_listener">%1$s necesita acceder a las notificaciones para mostrarlas en el reloj cuando la pantalla del teléfono está apagada.\n\nPor favor, pulsa \'%2$s\' después \'%1$s\' y habilita \'Permitir acceso a notificaciones\', a continuación pulsa \'Atrás\' para volver a %1$s.</string>
-    <string name="permission_location">%1$s necesita acceder a su ubicación en segundo plano para poder seguir conectado a su reloj aunque la pantalla esté apagada.\n\nPor favor, seleccione \"%2$s\" en la siguiente pantalla y, a continuación, pulse \"Atrás\" para volver a %1$s.</string>
+    <string name="permission_location">%1$s necesita acceder a tu ubicación en segundo plano para poder seguir conectado a tu reloj aunque la pantalla esté apagada.\n\nPor favor, selecciona \"%2$s\" en la siguiente pantalla y, a continuación, pulsa \"Atrás\" para volver a %1$s.</string>
     <string name="hrZoneNa">N/D</string>
     <string name="elevationGain">Aumento de la altitud</string>
     <string name="watchface_dialog_widget_cat_custom_widget">Personalizar widget</string>
@@ -1894,7 +1765,7 @@
     <string name="hrZoneAnaerobic">Anaeróbico</string>
     <string name="hybridhr_widget_bg_thin_circle">Círculo estrecho</string>
     <string name="error_setting_parent_folder">Error al establecer la carpeta principal: %s</string>
-    <string name="error_deleting_device">Error borrando el dispositivo: %s</string>
+    <string name="error_deleting_device">Error al eliminar el dispositivo: %s</string>
     <string name="controlcenter_unset_folder">Carpeta sin configurar</string>
     <string name="step_streaks_achievements_sharing_title">Progresos realizados</string>
     <string name="steps_streaks_total_steps_hint_totals">Número total de pasos registrados</string>
@@ -1905,7 +1776,7 @@
     <string name="hybridhr_widget_bg_double_circle">Círculo doble</string>
     <string name="watchface_dialog_widget_timezone_duration">Duración de la visibilidad del reloj (en segundos)</string>
     <string name="steps_streaks_total_steps_average_hint">Media total de pasos al día %d</string>
-    <string name="currentWorkoutLoad">Carga de entrenamiento</string>
+    <string name="currentWorkoutLoad">Carga de ejercicio</string>
     <string name="heartrate_bpm_40">40 ppm</string>
     <string name="permission_notification_policy_access">%1$s necesita acceder a los ajustes de No molestar para poder utilizarlos en tu reloj cuando la pantalla de tu teléfono esté apagada.\n\nPor favor, pulsa \'%2$s\' después \'%1$s\' y habilita \'Permitir no molestar\', después pulsa \'Atrás\' para volver a %1$s.</string>
     <string name="pref_voice_detect_duration_15">15 segundos</string>
@@ -1998,7 +1869,7 @@
     <string name="pref_title_touch_spotify_official_app">Spotify (sólo aplicación oficial)</string>
     <string name="pref_title_touch_spotify_galaxy_app">Spotify (sólo aplicación Galaxy Wearable)</string>
     <string name="pref_ambient_sound_tone_summary">De suave a nítido</string>
-    <string name="controlcenter_toggle_details">Cambiar detalles</string>
+    <string name="controlcenter_toggle_details">Alternar detalles</string>
     <string name="controlcenter_add_new_folder">Añadir nueva carpeta</string>
     <string name="auto_reconnect_ble_summary">Intenta conectarse al dispositivo de forma proactiva periódicamente</string>
     <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
@@ -2016,7 +1887,7 @@
     <string name="prefs_seamless_connection_switch_title">Conmutador de conexión continua</string>
     <string name="prefs_customize_ambient_sound_summary">Personalizar el sonido ambiente</string>
     <string name="prefs_ambient_sound_during_call_title">Sonido ambiente durante la llamada</string>
-    <string name="prefs_ambient_sound_during_call_summary">Escuchar claramente su propia voz durante las llamadas</string>
+    <string name="prefs_ambient_sound_during_call_summary">Escuchar claramente tu propia voz durante las llamadas</string>
     <string name="prefs_ambient_settings_title">Opciones de sonido ambiente</string>
     <string name="prefs_active_noise_cancelling_level">Nivel de cancelación activa del ruido</string>
     <string name="pref_title_touch_anc">Cancelación activa del ruido</string>
@@ -2088,13 +1959,13 @@
     <string name="maximumOxygenUptake">Consumo máximo de oxígeno</string>
     <string name="aerobicTrainingEffect">Eficacia aeróbica</string>
     <string name="anaerobicTrainingEffect">Eficacia anaeróbica</string>
-    <string name="sports_activity_confirm_delete_title">Borrar actividades %d</string>
-    <string name="sports_activity_confirm_delete_description">¿Está seguro de que quiere borrar estas actividades %d\?</string>
+    <string name="sports_activity_confirm_delete_title">Eliminar %d actividades</string>
+    <string name="sports_activity_confirm_delete_description">¿Seguro que quieres eliminar %d actividades?</string>
     <string name="prefs_switch_control_right">Botones de control a la derecha</string>
     <string name="prefs_heartrate_alert_low_threshold">Umbral de alerta de frecuencia cardiaca baja</string>
     <string name="prefs_stress_monitoring_title">Control del estrés</string>
     <string name="estonian">Estonio</string>
-    <string name="activity_prefs_goal_standing_time_minutes">Objetivo diario: tiempo de reposo en minutos</string>
+    <string name="activity_prefs_goal_standing_time_minutes">Objetivo diario: tiempo de pie en minutos</string>
     <string name="sony_speak_to_chat_sensitivity_standard">Estándar</string>
     <string name="prefs_control_center">Centro de control</string>
     <string name="devicetype_sony_wf_1000xm4">Sony WF-1000XM4</string>
@@ -2142,9 +2013,9 @@
     <string name="pref_pair_bluetooth_calls_title">Emparejar para llamadas bluetooth</string>
     <string name="pref_pair_bluetooth_calls_summary">Pulsa aquí para iniciar el proceso de emparejamiento</string>
     <string name="pref_pair_bluetooth_calls_help_title">Cómo recibir llamadas por bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas por Bluetooth, debe emparejar su teléfono con una segunda instancia del reloj.</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas por Bluetooth, debes emparejar tu teléfono con una segunda instancia del reloj.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Pulsa el botón de abajo para iniciar el proceso de emparejamiento.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Vaya a los ajustes de Bluetooth de su teléfono y empareje con el nuevo dispositivo que aparecerá (con un nombre similar al de su reloj actual, pero con un sufijo, por ejemplo, \'Amazfit GTR 4 - AFC8\').</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Ve a los ajustes de Bluetooth de tu teléfono y empareja con el nuevo dispositivo que aparecerá (con un nombre similar al de tu reloj actual, pero con un sufijo, por ejemplo, \'Amazfit GTR 4 - AFC8\').</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: Si activas las llamadas bluetooth sin emparejar con la segunda instancia, es posible que las notificaciones de llamadas no funcionen como se espera.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Habilite la configuración de llamadas por Bluetooth a continuación.</string>
     <string name="pref_summary_notification_cache_while_disconnected">Enviar notificaciones perdidas cuando un dispositivo se vuelve a conectar después de estar fuera de cobertura</string>
@@ -2179,13 +2050,9 @@
     <string name="zepp_os_watchface_emerald_moonlight">Luz de luna esmeralda</string>
     <string name="menuitem_aqi">Índice de la calidad del aire</string>
     <string name="devicetype_amazfit_gtr3_pro">Amazfit GTR 3 Pro</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3_pro">Estás a punto de instalar el firmware %s en su Amazfit GTR 3 Pro.
-\n
-\nSu reloj se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3_pro">Estás a punto de instalar el firmware %s en tu Amazfit GTR 3 Pro.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5</string>
-    <string name="fossil_hr_confirm_connection">Por favor, confírmelo en su reloj</string>
+    <string name="fossil_hr_confirm_connection">Por favor, confírmalo desde tu reloj</string>
     <string name="fossil_hr_pairing_successful">Emparejamiento con el reloj correcto</string>
     <string name="fossil_hr_pairing_failed">Falló el emparejamiento con el reloj</string>
     <string name="fossil_hr_confirmation_timeout">Tiempo límite de confirmación, continuando</string>
@@ -2209,7 +2076,7 @@
     <string name="pref_contacts_summary">Configurar los contactos del reloj</string>
     <string name="contact_delete_confirm_title">Borrar contacto</string>
     <string name="contact_phone_number">Número de teléfono</string>
-    <string name="contact_delete_confirm_description">¿Seguro que quiere borrar \'%1$s\'\?</string>
+    <string name="contact_delete_confirm_description">¿Seguro que quieres eliminar \'%1$s\'?</string>
     <string name="title_activity_set_contacts">Configurar contactos</string>
     <string name="contact_missing_number">El número de contacto está vacío</string>
     <string name="contact_missing_name">El nombre del contacto está vacío</string>
@@ -2233,7 +2100,7 @@
     <string name="stress_mild">Leve</string>
     <string name="stress_moderate">Moderado</string>
     <string name="stress_high">Alto</string>
-    <string name="charts_legend_stress_average">Promedio del estrés</string>
+    <string name="charts_legend_stress_average">Estrés (promedio)</string>
     <string name="stress_relaxed">Relajado</string>
     <string name="watchface_widget_type_uv_index">Índice UV</string>
     <string name="action_changelog">Registro de cambios</string>
@@ -2241,7 +2108,7 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">Intervalo de actualización de datos GPS</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">Utiliza los datos GPS del teléfono móvil para sobrescribir los datos GPS del dispositivo de pulsera</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">El intervalo de actualización de la posición GPS, en ms</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Utiliza los datos GPS de su teléfono</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Utiliza los datos GPS de tu teléfono</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Utiliza sólo el proveedor de red para determinar la ubicación. Esto reduce el consumo de energía a costa de la precisión. Es necesaria una reconexión.</string>
     <string name="description">Descripción</string>
     <string name="preview_image">Vista previa de la imagen</string>
@@ -2314,7 +2181,7 @@
     <string name="activity_type_golf">Golf</string>
     <string name="withings_calibration_text_hours">Utilice el dial de abajo para alinear la aguja de las horas con las 12.</string>
     <string name="withings_calibration_text_minutes">Ahora utilice el dial para alinear el minutero con las 12.</string>
-    <string name="withings_calibration_text_activity_target">Por último, alinee la manecilla de actividad al 100%. Tenga en cuenta que esta manecilla sólo se mueve en el sentido de las agujas del reloj.</string>
+    <string name="withings_calibration_text_activity_target">Por último, alinea la manecilla de actividad al 100%. Ten en cuenta que esta manecilla sólo se mueve en el sentido de las agujas del reloj.</string>
     <string name="withings_bt_calibration_next">Siguiente</string>
     <string name="withings_steel_hr">Withings Steel HR</string>
     <string name="activity_type_football">Fútbol</string>
@@ -2338,31 +2205,17 @@
     <string name="pref_theme_dynamic_colors_not_available_warning">Los colores dinámicos no están disponibles en tu dispositivo, solo Android 12 o posterior soporta esta funcionalidad. Gadgetbridge utilizará los colores por defecto de Material 3.</string>
     <string name="pref_theme_dynamic_colors_explanation">Nota: para el tema de colores dinámicos, debe activar Colores de fondo de pantalla o Paleta de colores en los ajustes de apariencia de Android 12+. Si no lo hace, Gadgetbridge utilizará los colores por defecto de Material 3.</string>
     <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
-    <string name="fw_upgrade_notice_amazfitbip3pro">Estás a punto de instalar el firmware %s en tu Amazfit Bip 3 Pro.
-\n
-\nPor favor, asegúrate de instalar el archivo .fw, y después el archivo .res. Tu reloj se reiniciará después de instalar el archivo .fw.
-\n
-\nNota: No es necesario instalar el archivo .res si es exactamente el mismo que ya tienes instalado.
-\n
-\n¡CONTINUA BAJO TU PROPIA RESPONSABILIDAD!</string>
-    <string name="fw_upgrade_notice_amazfit_cheetah_pro">Está a punto de instalar el firmware %s en su Amazfit Cheetah Pro.
-\n
-\nSu band se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDE BAJO TU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitbip3pro">Estás a punto de instalar el firmware %s en tu Amazfit Bip 3 Pro.\n\nAsegúrate de instalar el archivo .fw y, a continuación, el archivo .res. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfit_cheetah_pro">Estás a punto de instalar el firmware %s en tu Amazfit Cheetah Pro.\n\nTu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
-    <string name="fw_upgrade_notice_zepp_os">Está a punto de instalar el firmware %s en su %s.
-\n
-\nSu reloj se reiniciará después de instalar el archivo .zip.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Estás a punto de instalar el firmware %s en tu %s.\n\nTu reloj se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="info_menu_structure_set">Estructura del menú JSON en GB</string>
     <string name="error_invalid_menu_structure">Estructura de menú JSON no válida</string>
     <string name="button_open_menu_companion">Abrir el menú de la aplicación complementaria</string>
     <string name="button_reset_menu_structure">Restablecer la estructura del menú</string>
     <string name="error_menu_companion_not_installed">Es probable que \"HR Menu Companion\" no esté instalado</string>
     <string name="info_menu_structure_contents">Estructura del menú: %s</string>
-    <string name="info_fossil_rebuild_watchface_custom_menu">Por favor, reconstruya su watchface para el menú personalizado</string>
+    <string name="info_fossil_rebuild_watchface_custom_menu">Por favor, reconstruye tu esfera para el menú personalizado</string>
     <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Cuadrado)</string>
     <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (Redondo)</string>
@@ -2422,7 +2275,7 @@
     <string name="prefs_wena3_home_icon_name_energy">Body Energy</string>
     <string name="prefs_wena3_notification_vibration_repetition_2">Dos veces</string>
     <string name="prefs_wena3_auto_power_off_hint">El dispositivo se apagará y encenderá automáticamente en el horario especificado</string>
-    <string name="prefs_wena3_hint_lift_wrist">Enciende la pantalla cuando mira su muñeca</string>
+    <string name="prefs_wena3_hint_lift_wrist">Enciende la pantalla cuando miras tu muñeca</string>
     <string name="prefs_wena3_hint_large_font">Aumenta el tamaño de letra en el calendario, las notificaciones, etc.</string>
     <string name="prefs_wena3_button_action_item_double">Doble pulsación</string>
     <string name="prefs_wena3_vibration_rapid">Rápida</string>
@@ -2562,11 +2415,11 @@
     <string name="not_set">No fijado</string>
     <string name="pref_device_action_dnd_off">No molestar - Desactivado</string>
     <string name="pref_title_goal_secondary">Objetivo secundario</string>
-    <string name="standing_time">tiempo de reposo</string>
+    <string name="standing_time">Tiempo de pie</string>
     <string name="active_time">Tiempo activo</string>
     <string name="pref_vitality_score_daily_title">Avances diarios</string>
     <string name="pref_vitality_score_7_day_title">Progreso en 7 días</string>
-    <string name="pref_vitality_score_7_day_summary">Recibir una notificación cuando su puntuación de vitalidad alcance 30, 60 o 100 en los últimos 7 días</string>
+    <string name="pref_vitality_score_7_day_summary">Recibir una notificación cuando tu puntuación de vitalidad alcance 30, 60 o 100 en los últimos 7 días</string>
     <string name="pref_vitality_score_title">Nivel de vitalidad</string>
     <string name="pref_vitality_score_daily_summary">Recibir una notificación cuando alcances el número máximo de puntos de vitalidad del día</string>
     <string name="prefs_phone_silent_mode">Modo silencio del teléfono</string>
@@ -2583,7 +2436,7 @@
     <string name="widget_screen_no_free_slots_description">El dispositivo no tiene espacio libre para pantallas con widgets (espacio total: %1$s)</string>
     <string name="widget_unknown_workout">Entrenamiento desconocido - %s</string>
     <string name="widget_move_up">Subir</string>
-    <string name="widget_screen_delete_confirm_description">¿Seguro que quieres borrar \'%1$s\'?</string>
+    <string name="widget_screen_delete_confirm_description">¿Seguro que quieres eliminar \'%1$s\'?</string>
     <string name="activity_type_trekking">Senderismo</string>
     <string name="widget_layout_two">2 widgets</string>
     <string name="widget_screen_delete_confirm_title">Eliminar la pantalla de widgets</string>
@@ -2622,7 +2475,7 @@
     <string name="pref_do_not_disturb_not_wear">No molestar cuando no lo use</string>
     <string name="manual">Manual</string>
     <string name="pref_force_dnd_support">Forzar la función No molestar</string>
-    <string name="pref_force_dnd_support_summary">Forzar el soporte de No Molestar.\nÚSALO BAJO TU PROPIA RESPONSABILIDAD</string>
+    <string name="pref_force_dnd_support_summary">Forzar compatibilidad con No Molestar.\nÚSALO BAJO TU CUENTA Y RIESGO</string>
     <string name="huawei_ignore_wakeup_status_start">Ignorar el estado de inicio del despertador</string>
     <string name="huawei_ignore_wakeup_status_start_description">Puede ayudar a detectar correctamente el sueño. Visible inmediatamente en la vista de actividades diarias.</string>
     <string name="huawei_ignore_wakeup_status_end">Ignorar estado de fin de despertador</string>
@@ -2645,8 +2498,7 @@
     <string name="prefs_workmode">Modo de trabajo</string>
     <string name="huawei_alarm_smart_description">No desmarque la casilla de activación inteligente.</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="huawei_trusleep_summary">Monitorice la calidad de su sueño y su patrón respiratorio en tiempo real.
-\nAnaliza tus patrones de sueño y diagnostica con precisión 6 tipos de problemas de sueño.</string>
+    <string name="huawei_trusleep_summary">Monitoriza la calidad de tu sueño y patrón respiratorio en tiempo real.\nAnaliza tus patrones de sueño y diagnostica con precisión 6 tipos de problemas de sueño.</string>
     <string name="huawei_trusleep_summary_light">Control del sueño mejorado</string>
     <string name="pref_enable_call_accept">Permitir aceptar llamadas</string>
     <string name="pref_enable_call_accept_summary">Activar la aceptación de llamadas desde el dispositivo</string>
@@ -2658,8 +2510,7 @@
     <string name="pref_force_options">Opción obligatoria</string>
     <string name="pref_force_smart_alarm">Forzar la alarma inteligente</string>
     <string name="pref_force_wear_location">Lugar de desgaste de la fuerza</string>
-    <string name="pref_force_wear_location_summary">Soporte de localización de desgaste forzoso.
-\nUSO BAJO SU PROPIA RESPONSABILIDAD</string>
+    <string name="pref_force_wear_location_summary">Soporte de localización de desgaste forzoso. \nÚSALO BAJO TU CUENTA Y RIESGO</string>
     <string name="huawei_reparse_workout_data">Reparar datos de entrenamiento</string>
     <string name="huawei_reparse_workout_data_description">Esto sólo hará algo después de ciertas actualizaciones</string>
     <string name="pref_summary_debug">Enviar una solicitud de depuración al dispositivo Huawei</string>
@@ -2670,8 +2521,7 @@
     <string name="devicetype_huawei_band_aw70">Huawei Band (AW70)</string>
     <string name="huawei_alarm_event_description">No marque la casilla de activación inteligente.</string>
     <string name="pref_force_options_summary">Algunos dispositivos afirman falsamente no ser compatibles con algunas opciones. Esta configuración se puede utilizar para habilitarlos de todos modos.\nUTILÍZALO BAJO TU PROPIA RESPONSABILIDAD\nLee la wiki</string>
-    <string name="pref_force_smart_alarm_summary">Forzar el soporte de alarmas inteligentes.
-\nUSO BAJO SU PROPIA RESPONSABILIDAD</string>
+    <string name="pref_force_smart_alarm_summary">Forzar compatibilidad con alarmas inteligentes.\nÚSALO BAJO TU CUENTA Y RIESGO</string>
     <string name="huawei_ignore_wakeup_status_end_description">Puede ayudar a detectar correctamente el sueño. Visible inmediatamente en la vista de actividades diarias.</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">La batería del dispositivo está demasiado baja</string>
     <string name="menuitem_buzzer_intensity">Intensidad del zumbador</string>
@@ -2811,13 +2661,7 @@
     <string name="pref_wide_area_tap_title">Huella de amplio alcance</string>
     <string name="pref_adaptive_volume_control_summary">Sube el volumen automáticamente cuando el sonido ambiente sea alto</string>
     <string name="pref_adaptive_volume_control_title">Control adaptativo del volumen</string>
-    <string name="fw_upgrade_notice_amazfitbip3">Estás a punto de instalar el firmware %s en tu Amazfit Bip 3.
-\n
-\nPor favor, asegúrate de instalar el archivo .fw, y después el archivo .res. Tu reloj se reiniciará después de instalar el archivo .fw.
-\n
-\nNota: No es necesario instalar el archivo .res si es exactamente el mismo que el instalado anteriormente.
-\n
-\n¡PROCEDA BAJO SU PROPIO RIESGO!</string>
+    <string name="fw_upgrade_notice_amazfitbip3">Estás a punto de instalar el firmware %s en tu Amazfit Bip 3.\n\nAsegúrate de instalar el archivo .fw y, a continuación, el archivo .res. Tu reloj se reiniciará tras instalar el archivo .fw.\n\nNota: No es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDE BAJO TU PROPIA CUENTA Y RIESGO!</string>
     <string name="weekstepschart_steps_a_week_or_month">Pasos a la semana/al mes</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Horas de sueño por semana/mes</string>
     <string name="devicetype_huawei_watchgt4">Huawei Watch GT 4</string>
@@ -2865,11 +2709,9 @@
     <string name="RunningForm">Forma de ejecución</string>
     <string name="Pace">Ritmo</string>
     <string name="pref_force_enable_heartrate_support">Forzar soporte de frecuencia cardíaca</string>
-    <string name="pref_force_enable_heartrate_support_summary">Forzar habilitar el soporte de frecuencia cardíaca.
-\nÚSELO BAJO SU PROPIO RIESGO</string>
-    <string name="pref_force_enable_spo2_support">Forzar el soporte de SpO2</string>
-    <string name="pref_force_enable_spo2_support_summary">Forzar la habilitación del soporte de SpO2.
-\nÚSELO BAJO SU PROPIO RIESGO</string>
+    <string name="pref_force_enable_heartrate_support_summary">Forzar la activación de la compatibilidad con la frecuencia cardíaca.\nÚSALO BAJO TU CUENTA Y RIESGO</string>
+    <string name="pref_force_enable_spo2_support">Forzar compatibilidad con SpO2</string>
+    <string name="pref_force_enable_spo2_support_summary">Forzar la activación de la compatibilidad con SpO2.\nÚSALO BAJO TU CUENTA Y RIESGO</string>
     <string name="error_showing_changelog">Error al mostrar el registro de cambios</string>
     <string name="dashboard_settings">Ajustes del panel de control</string>
     <string name="bottom_nav_dashboard">Panel de control</string>
@@ -2918,7 +2760,7 @@
     <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="pref_dashboard_widget_today_upside_down_title">Medianoche en el fondo</string>
     <string name="pref_dashboard_widget_today_upside_down_summary">En el modo 24h, mostrar la medianoche en la parte inferior y el mediodía en la parte superior del gráfico</string>
-    <string name="sleepasandroid_settings">Sleep As Android</string>
+    <string name="sleepasandroid_settings">Sleep as Android</string>
     <string name="pref_sleepasandroid_enable_summary">Habilitar la integración con Sleep As Android</string>
     <string name="pref_sleepasandroid_device_summary">Usar el dispositivo como fuente de datos para Sleep As Android</string>
     <string name="pref_sleepasandroid_slot_summary">Qué espacio usar al configurar alarmas</string>
@@ -2936,7 +2778,7 @@
     <string name="pref_title_huawei_account">Cuenta Huawei</string>
     <string name="pref_summary_huawei_account">Cuenta de Huawei utilizada en el proceso de emparejamiento. Configurarlo permite el emparejamiento sin restablecimiento de fábrica.</string>
     <string name="serbian">Serbio</string>
-    <string name="watchface_resolution_doesnt_match">La resolución de la esfera del reloj no coincide con la pantalla del dispositivo. La esfera del reloj es de %1$s y la pantalla del dispositivo está en %2$s</string>
+    <string name="watchface_resolution_doesnt_match">La resolución de la esfera del reloj no coincide con la pantalla del dispositivo. La esfera es de %1$s y la pantalla del dispositivo es de %2$s</string>
     <string name="cyclingPowerMin">Potencia mínima del ciclo</string>
     <string name="devicetype_huawei_watchfit2">Huawei Watch Fit 2</string>
     <string name="cyclingPowerAverage">Potencia media de ciclo</string>
@@ -2966,7 +2808,7 @@
     <string name="pref_summary_cycling_persistence_interval">Intervalo en segundos en el que los datos de ciclismo actuales deben escribirse en la base de datos</string>
     <string name="toast_setting_requires_reconnect">Este ajuste tendrá efecto después de reconectar</string>
     <string name="toast_camera_permission_required">Se necesita permiso de cámara para esta función.</string>
-    <string name="toast_camera_support_required">Para esta función se requiere soporte de cámara.</string>
+    <string name="toast_camera_support_required">Para esta función se requiere compatibilidad con cámara.</string>
     <string name="toast_camera_photo_taken">La foto ha sido tomada y guardada en: %s</string>
     <string name="open_camera">Abrir cámara</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Pausar el audio de otras aplicaciones</string>
@@ -3034,7 +2876,7 @@
     <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
     <string name="authentication_failed_check_key">Error de autenticación, verifique la clave de autenticación</string>
     <string name="devicetype_garmin_forerunner_255">Garmin Forerunner 255</string>
-    <string name="dashboard_calendar_month_goals_reached_title">% del objetivo de paso alcanzado</string>
+    <string name="dashboard_calendar_month_goals_reached_title">% del objetivo de pasos alcanzado</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d día</item>
         <item quantity="many">%d días</item>
@@ -3178,7 +3020,7 @@
     <string name="activity_type_e_bike">Bicicleta eléctrica</string>
     <string name="activity_type_platform_tennis">Pádel</string>
     <string name="activity_type_american_football">Fútbol americano</string>
-    <string name="activity_type_breathwork">Breathwork</string>
+    <string name="activity_type_breathwork">Ejercicios de respiración</string>
     <string name="activity_type_xc_classic_ski">Esquí de fondo</string>
     <string name="activity_type_mountaineering">Montañismo</string>
     <string name="activity_type_multisport">Varios deportes</string>
@@ -3357,8 +3199,7 @@
     <string name="search">Buscar</string>
     <string name="pref_deprecated_media_control_title">Control multimedia obsoleto</string>
     <string name="pref_header_deprecated_functionalities">Funciones obsoletas</string>
-    <string name="pref_header_deprecated_functionalities_warning">Las siguientes funcionalidades han quedado obsoletas y se eliminarán pronto del software.
-\nSi necesitas activar alguna de las siguientes opciones, póngate en contacto con el equipo del proyecto.</string>
+    <string name="pref_header_deprecated_functionalities_warning">Las siguientes funcionalidades han quedado obsoletas y pronto se eliminarán del software.\nSi necesitas activar alguna de las siguientes opciones, ponte en contacto con el equipo del proyecto.</string>
     <string name="pref_deprecated_media_control_summary">Enviar comandos de control de medios como eventos clave en lugar del controlador de medios.</string>
     <string name="pref_title_nagivation_apps">Aplicaciones de navegación</string>
     <string name="pref_header_external_integrations">Integraciones externas</string>
@@ -3440,7 +3281,7 @@
     <string name="devicetype_miband9">Xiaomi Smart Band 9</string>
     <string name="vo2max_running">VO₂ Máx. en carrera</string>
     <string name="vo2max_cycling">VO₂ máx. en ciclismo</string>
-    <string name="thirty_days_timeline">Cronograma de 30 días</string>
+    <string name="thirty_days_timeline">Historial de 30 días</string>
     <string name="devicetype_huawei_watchgt5">Huawei Watch GT 5 (Pro)</string>
     <string name="pref_summary_sync_birthdays">Sincroniza los cumpleaños de los contactos con los eventos del calendario</string>
     <string name="pref_title_sync_birthdays">Sincronizar los cumpleaños</string>
@@ -3530,7 +3371,7 @@
     <string name="music_rename_playlist">Renombrar la lista de reproducción</string>
     <string name="title_activity_musicmanager">Gestor de música</string>
     <string name="music_error">Ocurrió un error</string>
-    <string name="music_delete_confirm_description">¿Estás seguro de que deseas eliminar \' %1$s \'?</string>
+    <string name="music_delete_confirm_description">¿Seguro que quieres eliminar \'%1$s\'?</string>
     <string name="music_delete">Borrar la canción</string>
     <string name="music_new_playlist">Nueva lista de reproducción</string>
     <string name="music_huawei_device_info">Formatos soportados: %1$s\nAlmacenamiento del reloj : %2$d MB</string>
@@ -3654,7 +3495,7 @@
     <string name="lowest">Más bajo</string>
     <string name="music_multiselect_limit">Se alcanzó el límite para seleccionar más de un elemento</string>
     <string name="highest">Más alto</string>
-    <string name="music_delete_multiple_confirm_description">¿Estás seguro de que quieres borrar \'%1$d\' canciones?</string>
+    <string name="music_delete_multiple_confirm_description">¿Seguro que quieres eliminar \'%1$d\' canciones?</string>
     <string name="sleep_avg">Sueño (promedio)</string>
     <string name="watchface_widget_type_sp02">Saturación de oxígeno</string>
     <string name="devicetype_colmi_r09">Colmi R09</string>
@@ -3816,6 +3657,6 @@
     <string name="unit_joule">Julio</string>
     <string name="training_load">Carga de entrenamiento</string>
     <string name="standing_count">Cantidad de veces de pie</string>
-    <string name="pairing_even_realities_g1_invalid_device">Even G1 malformado: %1$s.</string>
+    <string name="pairing_even_realities_g1_invalid_device">Dispositivo Even G1 malformado: %1$s.</string>
     <string name="activity_prefs_goal_standing_hours">Objetivo diario: horas de pie</string>
 </resources>
