@@ -348,14 +348,7 @@
     <string name="pref_summary_pebble_health_store_raw">Almacena los datos en su forma original, por lo que la base de datos es más grande, pero permite una evaluación posterior.</string>
     <string name="action_db_management">Administración de datos</string>
     <string name="title_activity_db_management">Administración de datos</string>
-    <string name="activity_db_management_import_export_explanation">Las operaciones de exportación/importación utilizan la siguiente ruta (véase más abajo) a un directorio de su dispositivo. Este directorio es accesible a otras aplicaciones Android y a su ordenador. Ten en cuenta que este directorio y todos los archivos que contiene se eliminan si desinstala Gadgetbridge. Los datos incluyen:
-\n Exportar_preferencia - ajustes globales
-\n Exportar_preferencia_MAC - ajustes específicos del dispositivo
-\n Gadgetbridge - base de datos de dispositivos y actividades
-\n Gadgetbridge_fecha - base de datos exportada en una fecha
-\n *.gpx - grabaciones GPS
-\n *.log - archivos de registro
-\nEspera encontrar sus archivos exportados (o coloca los archivos que deseas importar) allí:</string>
+    <string name="activity_db_management_import_export_explanation">Las operaciones de exportación/importación utilizan la siguiente ruta (véase más abajo) a un directorio de tu dispositivo. Este directorio es accesible a otras aplicaciones Android y a tu ordenador. Ten en cuenta que este directorio y todos los archivos que contiene se eliminan si desinstalas Gadgetbridge. Los datos incluyen:\n· Export_preference - ajustes globales\n· Export_preference_MAC - ajustes específicos del dispositivo\n· Gadgetbridge - base de datos de dispositivos y actividades\n· Gadgetbridge_date - base de datos exportada en una fecha\n· *.gpx - grabaciones GPS\n· *.log - archivos de registro\nEspera encontrar tus archivos exportados (o coloca los archivos que deseas importar) en:</string>
     <string name="activity_db_management_merge_old_title">Borrar la base de datos antigua</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">No se puede acceder a la ruta de exportación. Por favor, contacta con los desarrolladores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado a: %1$s</string>
@@ -514,7 +507,7 @@
     <string name="pref_rtl_max_line_length">Longitud de línea máxima de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length_summary">Alarga o acorta las líneas de texto de derecha a izquierda si contiene separaciones</string>
     <string name="pref_title_pebble_gatt_clientonly">Sólo cliente GATT</string>
-    <string name="pref_summary_pebble_gatt_clientonly">Esto es solo para Pebble 2 y experimental, pruebe esto si tiene problemas de conectividad</string>
+    <string name="pref_summary_pebble_gatt_clientonly">Esto es solo para Pebble 2 y es experimental, pruébalo si tienes problemas de conectividad</string>
     <string name="prefs_screen_orientation">Orientación de pantalla</string>
     <string name="pref_auto_fetch_summary">La recuperación funciona luego de desbloquear la pantalla. ¡Sólo funciona si se ha definido un mecanismo de bloqueo!</string>
     <string name="horizontal">Horizontal</string>
@@ -1073,7 +1066,7 @@
     <string name="dbmanagementactivity_export_finished">Eliminación finalizada</string>
     <string name="activity_db_management_clean_export_directory_text">Los archivos exportados en el directorio de Exportación/Importación son accesibles por cualquier aplicación de tu dispositivo. Es posible que quieras eliminar estos archivos después de una sincronización o copia de seguridad. Asegúrate de tener una copia de seguridad antes de eliminarlos. Los archivos GPX, los subdirectorios y el archivo de base de datos autoexportado (si existe) no se eliminarán. La ruta del directorio de exportación/importación es:</string>
     <string name="activity_DB_clean_export_directory_warning_title">¿Eliminar archivos en el directorio de exportación/importación\?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">¿Eliminar realmente los archivos del directorio de exportación/importación\?</string>
+    <string name="activity_DB_clean_export_directory_warning_message">¿Seguro que quieres eliminar los archivos del directorio de exportación/importación?</string>
     <string name="activity_db_management_clean_export_directory_label">Eliminar archivos en el directorio de exportación/importación</string>
     <string name="activity_DB_ShowContentButton">Mostrar el contenido del directorio de exportación/importación</string>
     <string name="activity_data_management_directory_content_title">Exportar/Importar el contenido del directorio</string>
@@ -2736,7 +2729,7 @@
     <string name="pref_dashboard_all_devices_summary">Combinar los datos de la actividad de todos los dispositivos añadidos para los totales del panel de control</string>
     <string name="pref_dashboard_select_devices_summary">Combinar los datos de actividad de dispositivos específicos para los totales del panel de control</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">Intervalo de frecuencia cardíaca</string>
-    <string name="activity_type_worn">Usada</string>
+    <string name="activity_type_worn">En uso</string>
     <string name="pref_dashboard_widget_today_hr_interval_summary">La cantidad de minutos que el gráfico muestra \"usado\" después de cada medición correcta de la frecuencia cardíaca</string>
     <string name="pref_auto_reply_calls_summary">El teléfono descolgará automáticamente las llamadas entrantes</string>
     <string name="pref_auto_reply_calls_delay_summary">Número de segundos tras los cuales se descuelga automáticamente la llamada</string>
@@ -2945,14 +2938,14 @@
     <string name="hrv_status_unit">%1$d ms</string>
     <string name="hrv_status_baseline">%1$d-%2$d ms</string>
     <string name="hrv_status_baseline_label">Base</string>
-    <string name="hrv_status">Estado de la VFC</string>
+    <string name="hrv_status">Estado de VFC</string>
     <string name="sleep_colored_stats_deep">Profundo</string>
     <string name="stats_highest_hr">Frec. cardíaca más alta</string>
     <string name="hrv_status_day_avg">Promedio diario</string>
     <string name="sleep_colored_stats_light">Ligero</string>
     <string name="hrv_status_day_avg_legend">Promedio diario (ms)</string>
     <string name="hrv_status_seven_days_avg">Media de 7 días</string>
-    <string name="pref_header_hrv_status">Estado de la VFC</string>
+    <string name="pref_header_hrv_status">Estado de VFC</string>
     <string name="hrv_status_seven_days_avg_status">Estado</string>
     <string name="hrv_status_balanced">Equilibrado</string>
     <string name="sleep_colored_stats_deep_avg">Profundo (promedio)</string>
@@ -3068,7 +3061,7 @@
     <string name="activity_type_bocce">Bochas</string>
     <string name="activity_type_breaking">Breakdance</string>
     <string name="activity_type_judo">Judo</string>
-    <string name="hrv">HRV</string>
+    <string name="hrv">VFC</string>
     <string name="activity_type_meditation">Meditación</string>
     <string name="activity_type_disc_golf">Disc Golf</string>
     <string name="activity_type_team_sport">Deporte de equipo</string>
@@ -3193,7 +3186,7 @@
     <string name="choose_device">Elegir un dispositivo</string>
     <string name="no_supported_devices_found">No se encontraron dispositivos compatibles</string>
     <string name="menuitem_stress_simple">Estrés (sencillo)</string>
-    <string name="menuitem_stress_breakdown">Estrés (crisis nerviosa)</string>
+    <string name="menuitem_stress_breakdown">Estrés (desglose)</string>
     <string name="menuitem_stress_segmented">Estrés (segmentado)</string>
     <string name="devicetype_soundcore_liberty4_nc">Soundcore Liberty 4 NC</string>
     <string name="search">Buscar</string>
@@ -3227,26 +3220,24 @@
     <string name="prefs_title_gatt_client_notification_intents">Transmitir la intención de notificación del GATT a través de la API interna de Bluetooth Low Energy</string>
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">Permite enviar comandos de lectura/escritura y conexión característicos de BLE</string>
     <string name="prefs_summary_gatt_client_api_package">Restringir la comunicación de la API BLE Intent a este paquete</string>
-    <string name="activity_db_management_export_to_zip">Exportar a un .zip</string>
-    <string name="activity_db_management_import_from_zip">Importar desde un zip</string>
-    <string name="backup_restore_exporting">Exportando a un zip…</string>
+    <string name="activity_db_management_export_to_zip">Exportar zip</string>
+    <string name="activity_db_management_import_from_zip">Importar zip</string>
+    <string name="backup_restore_exporting">Exportando a zip…</string>
     <string name="backup_restore_exporting_preferences">Exportando preferencias…</string>
     <string name="backup_restore_exporting_database">Exportar base de datos…</string>
     <string name="backup_restore_exporting_files">Exportar archivos…</string>
     <string name="backup_restore_exporting_files_i_of_n">Exportando archivos... %1d de %2d</string>
-    <string name="backup_restore_error_import">Error al importar desde el zip</string>
+    <string name="backup_restore_error_import">Error al importar desde zip</string>
     <string name="backup_restore_abort_title">Abortar</string>
-    <string name="backup_restore_abort_export_confirmation">¿Abortar la exportación? Se eliminará el archivo zip parcial.</string>
+    <string name="backup_restore_abort_export_confirmation">¿Abortar exportación? El archivo zip incompleto se eliminará.</string>
     <string name="backup_restore_abort_import_confirmation">¿Abortar la importación? Esto puede dar lugar a una base de datos corrupta o incoherente.</string>
     <string name="backup_restore_restart_title">Reiniciar</string>
     <string name="backup_restore_restart_summary">%1s se reiniciará ahora.</string>
     <string name="activity_db_management_backup_restore_label">Copia de seguridad y restauración</string>
-    <string name="activity_db_management_backup_restore_explanation">Las operaciones de importación/exportación te permiten migrar o hacer una copia de seguridad de todos los ajustes, dispositivos y datos de Gadgetbridge a y desde un archivo zip.
-\n
-\nAl importar un archivo se eliminarán todos los datos, dispositivos y preferencias existentes, sustituyéndolos completamente por la copia de seguridad.</string>
+    <string name="activity_db_management_backup_restore_explanation">Las operaciones de importación/exportación te permiten migrar o hacer una copia de seguridad de todos los ajustes, dispositivos y datos de Gadgetbridge a y desde un archivo zip.\n\nAl importar un archivo se eliminarán todos los datos, dispositivos y preferencias existentes, sustituyéndolos completamente por la copia de seguridad.</string>
     <string name="backup_restore_exporting_finishing">Terminando la exportación…</string>
     <string name="backup_restore_importing_validating">Validando el archivo…</string>
-    <string name="backup_restore_importing">Importando desde un zip…</string>
+    <string name="backup_restore_importing">Importando desde zip…</string>
     <string name="backup_restore_do_not_exit">%s por favor, mantén esta pantalla abierta hasta que finalice la operación.</string>
     <string name="backup_restore_importing_loading">Cargando el archivo…</string>
     <string name="backup_restore_importing_files_i_of_n">Importando archivos... %1d de %2d</string>
@@ -3256,7 +3247,7 @@
     <string name="backup_restore_warning_files">%1d archivos no pudieron ser restaurados:
 \n%2s</string>
     <string name="backup_restore_import_complete">Importación finalizada</string>
-    <string name="backup_restore_error_export">Falló la exportación a un zip</string>
+    <string name="backup_restore_error_export">Falló la exportación a zip</string>
     <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
     <string name="devicetype_amazfit_trex_3">Amazfit T-Rex 3</string>
     <string name="menuitem_map">Mapa</string>
@@ -3323,10 +3314,10 @@
     <string name="pref_dnd_follow_phone_title">Siga la configuración DND del teléfono</string>
     <string name="inactivity_warnings_minimum_steps_title">Cantidad mínima de pasos</string>
     <string name="inactivity_warnings_minimum_steps_summary">Cantidad mínima de pasos que se deben realizar durante los minutos límite</string>
-    <string name="prefs_hrv_monitoring_title">Monitoreo del ritmo cardíaco</string>
+    <string name="prefs_hrv_monitoring_title">Monitoreo de VFC</string>
     <string name="busy_task_fetch_hrv_data">Recuperando datos HRV</string>
     <string name="pref_dnd_follow_phone_summary">Cuando DND está habilitado o deshabilitado en el teléfono, también se activa automáticamente en el dispositivo</string>
-    <string name="prefs_hrv_monitoring_description">Monitoriza automáticamente la frecuencia cardíaca a lo largo del día</string>
+    <string name="prefs_hrv_monitoring_description">Monitoriza automáticamente la variabilidad de la frecuencia cardíaca a lo largo del día</string>
     <string name="fmtPaceAverage">Ritmo promedio</string>
     <string name="devicetype_huawei_watchd2">Huawei Watch D2</string>
     <string name="average_respiration_rate">Frecuencia de la respiración</string>
@@ -3340,7 +3331,7 @@
     <string name="devicetype_colmi_r10">Colmi R10</string>
     <string name="idasen_control_button_mid">MEDIO</string>
     <string name="max_respiration_rate">Frecuencia máxima de la respiración</string>
-    <string name="hrv_rmssd">RMSSD de la variación del ritmo cardíaco</string>
+    <string name="hrv_rmssd">VFC RMSSD</string>
     <string name="idasen_pref_sit_height">Altura de la posición sentado (en centímetros)</string>
     <string name="idasen_pref_mid_height">Altura de posición media (en centímetros)</string>
     <string name="idasen_pref_stand_height">Altura de la posición de pie (en centímetros)</string>
@@ -3378,7 +3369,7 @@
     <string name="devicetype_realme_buds_t110">Realme Buds T110</string>
     <string name="devicetype_garmin_instinct_2">Garmin Instinct 2</string>
     <string name="menuitem_calories_active_goal">Objetivo de calorías (activo)</string>
-    <string name="active_calories">Calorias activas</string>
+    <string name="active_calories">Calorías activas</string>
     <string name="active_calories_short">Activo</string>
     <string name="total_calories_burnt">Total quemadas</string>
     <string name="activity_prefs_goal_active_calories_burnt">Objetivo diario: calorías activas quemadas</string>
@@ -3499,7 +3490,7 @@
     <string name="sleep_avg">Sueño (promedio)</string>
     <string name="watchface_widget_type_sp02">Saturación de oxígeno</string>
     <string name="devicetype_colmi_r09">Colmi R09</string>
-    <string name="sleep_score">Resultados del sueño</string>
+    <string name="sleep_score">Puntuación de sueño</string>
     <string name="sleep_score_value">Resultado: %1d</string>
     <string name="devicetype_huawei_band2pro">Huawei Band 2 (Pro)</string>
     <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
