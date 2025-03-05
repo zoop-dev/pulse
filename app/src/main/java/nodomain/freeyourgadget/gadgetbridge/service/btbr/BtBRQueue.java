@@ -130,6 +130,9 @@ public final class BtBRQueue {
                         } catch (IOException e) {
                             LOG.error("IO exception while establishing socket connection: ", e);
                             setDeviceConnectionState(GBDevice.State.NOT_CONNECTED);
+                        } catch (SecurityException e) {
+                            LOG.error("Security exception while establishing socket connection: ", e);
+                            setDeviceConnectionState(GBDevice.State.NOT_CONNECTED);
                         }
 
                         return;
