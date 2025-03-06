@@ -886,6 +886,14 @@
         <item>@string/zepp_os_watchface_city_of_speed</item>
         <item>@string/zepp_os_watchface_starry_sky</item>
         <item>@string/zepp_os_watchface_the_ultima</item>
+        <!-- Active 2 -->
+        <item>@string/zepp_os_watchface_elegant</item>
+        <item>@string/zepp_os_watchface_deep_space</item>
+        <item>@string/zepp_os_watchface_silver_shadows</item>
+        <item>@string/zepp_os_watchface_rhythm</item>
+        <item>@string/zepp_os_watchface_digital_wraith</item>
+        <item>@string/zepp_os_watchface_vital_orange</item>
+        <item>@string/zepp_os_watchface_vital</item>
 
     </string-array>
 
@@ -901,6 +909,7 @@
         <item>emerald_moonlight</item>
         <item>rotating_earth</item>
         <item>superposition</item>
+        <!-- Balance -->
         <item>vast_sky</item>
         <item>lightning_flash</item>
         <item>free_combination</item>
@@ -909,6 +918,14 @@
         <item>city_of_speed</item>
         <item>starry_sky</item>
         <item>the_ultima</item>
+        <!-- Active 2 -->
+        <item>elegant</item>
+        <item>deep_space</item>
+        <item>silver_shadows</item>
+        <item>rhythm</item>
+        <item>digital_wraith</item>
+        <item>vital_orange</item>
+        <item>vital</item>
     </string-array>
 
     <string-array name="pref_zepp_os_apps">

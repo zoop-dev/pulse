@@ -100,7 +100,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         // *However*, some devices broadcast a 2nd bluetooth device with "-XXXX" suffix, which I believe
         // is only used for calls, and Gadgetbridge can't use for pairing, but I was not yet able to
         // fully confirm this, so we still recognize them.
-        return Pattern.compile("^" + getDeviceBluetoothName() + "([- ][A-Z0-9]{4})?$");
+        return Pattern.compile("^" + Pattern.quote(getDeviceBluetoothName()) + "([- ][A-Z0-9]{4})?$");
     }
 
     @NonNull

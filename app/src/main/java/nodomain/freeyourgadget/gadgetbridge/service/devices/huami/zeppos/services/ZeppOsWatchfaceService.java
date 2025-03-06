@@ -79,6 +79,15 @@ public class ZeppOsWatchfaceService extends AbstractZeppOsService {
         CITY_OF_SPEED(0x00002DBC, R.string.zepp_os_watchface_city_of_speed),
         STARRY_SKY(0x00002DBD, R.string.zepp_os_watchface_starry_sky),
         THE_ULTIMA(0x00002DBE, R.string.zepp_os_watchface_the_ultima),
+
+        // Codes are from Active 2
+        ELEGANT(0x00002DE4, R.string.zepp_os_watchface_elegant),
+        DEEP_SPACE(0x00002DE5, R.string.zepp_os_watchface_deep_space),
+        SILVER_SHADOWS(0x00002DE6, R.string.zepp_os_watchface_silver_shadows),
+        RHYTHM(0x00002DE7, R.string.zepp_os_watchface_rhythm),
+        DIGITAL_WRAITH(0x00002DE8, R.string.zepp_os_watchface_digital_wraith),
+        VITAL_ORANGE(0x00002DE9, R.string.zepp_os_watchface_vital_orange),
+        VITAL(0x00002DEA, R.string.zepp_os_watchface_vital),
         ;
 
         private final int code;

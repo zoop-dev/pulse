@@ -2083,6 +2083,13 @@
     <string name="zepp_os_watchface_city_of_speed">City of speed</string>
     <string name="zepp_os_watchface_starry_sky">Starry sky</string>
     <string name="zepp_os_watchface_the_ultima">The ultima</string>
+    <string name="zepp_os_watchface_elegant">Elegant</string>
+    <string name="zepp_os_watchface_deep_space">Deep space</string>
+    <string name="zepp_os_watchface_silver_shadows">Silver Shadows</string>
+    <string name="zepp_os_watchface_rhythm">Rhythm</string>
+    <string name="zepp_os_watchface_digital_wraith">Digital Wraith</string>
+    <string name="zepp_os_watchface_vital_orange">Vital Orange</string>
+    <string name="zepp_os_watchface_vital">Vital</string>
     <string name="yesterdays_activity">Yesterday\'s Activity</string>
     <string name="watch9_time_minutes">Minutes:</string>
     <string name="watch9_time_hours">Hours:</string>

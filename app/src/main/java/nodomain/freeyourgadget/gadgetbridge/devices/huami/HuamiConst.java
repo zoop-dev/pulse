@@ -54,7 +54,7 @@ public class HuamiConst {
     public static final String MI_BAND5_NAME = "Mi Smart Band 5";
     public static final String MI_BAND6_NAME = "Mi Smart Band 6";
     public static final String AMAZFIT_ACTIVE_NAME = "Amazfit Active";
-    public static final String AMAZFIT_ACTIVE_2_NAME = "Amazfit Active 2";
+    public static final String AMAZFIT_ACTIVE_2_NAME = "Active 2 (Round)";
     public static final String AMAZFIT_ACTIVE_EDGE_NAME = "Amazfit Active Edge";
     public static final String AMAZFIT_BALANCE_NAME = "Amazfit Balance";
     public static final String AMAZFIT_BAND5_NAME = "Amazfit Band 5";

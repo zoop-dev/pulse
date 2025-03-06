@@ -27,12 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
     @Override
-    public boolean isExperimental() {
-        // Untested device
-        return true;
-    }
-
-    @Override
     public String getDeviceBluetoothName() {
         return HuamiConst.AMAZFIT_ACTIVE_2_NAME;
     }
@@ -73,17 +67,12 @@ public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
     }
 
     @Override
+    public boolean supportsScreenshots(final GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsToDoList() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsWifiHotspot(final GBDevice device) {
-        return true;
-    }
-
-    @Override
-    public boolean supportsFtpServer(final GBDevice device) {
         return true;
     }
 
