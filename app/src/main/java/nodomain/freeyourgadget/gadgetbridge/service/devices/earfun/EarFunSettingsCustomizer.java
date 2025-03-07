@@ -3,24 +3,31 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.earfun;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.prefs.EarFunSettingsPreferenceConst.*;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.text.InputFilter;
-import android.text.Spanned;
 
 import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.SeekBarPreference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.prefs.Equalizer;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
@@ -47,29 +54,6 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
 
     @Override
     public void onPreferenceChange(Preference preference, DeviceSpecificSettingsHandler handler) {
-        if (preference.getKey().equals(PREF_EARFUN_AMBIENT_SOUND_CONTROL)) {
-            ListPreference listPreferenceAmbientSound = handler.findPreference(PREF_EARFUN_AMBIENT_SOUND_CONTROL);
-            ListPreference listPreferenceTransparencyMode = handler.findPreference(PREF_EARFUN_TRANSPARENCY_MODE);
-            ListPreference listPreferenceAncMode = handler.findPreference(PREF_EARFUN_ANC_MODE);
-
-            if (listPreferenceAmbientSound == null || listPreferenceTransparencyMode == null || listPreferenceAncMode == null) {
-                return;
-            }
-
-            switch (listPreferenceAmbientSound.getValue()) {
-                case "1": // noise cancelling
-                    listPreferenceTransparencyMode.setVisible(false);
-                    listPreferenceAncMode.setVisible(true);
-                    break;
-                case "2": // transparency
-                    listPreferenceTransparencyMode.setVisible(true);
-                    listPreferenceAncMode.setVisible(false);
-                    break;
-                default:
-                    listPreferenceTransparencyMode.setVisible(false);
-                    listPreferenceAncMode.setVisible(false);
-            }
-        }
     }
 
     @Override
@@ -103,11 +87,88 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
         EditTextPreference editTextDeviceName = handler.findPreference(PREF_EARFUN_DEVICE_NAME);
         if (editTextDeviceName != null) {
             editTextDeviceName.setOnBindEditTextListener(editText -> {
-                InputFilter[] filters = new InputFilter[]{new InputFilterLength(25)};
-                editText.setFilters(filters);
+                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
             });
             editTextDeviceName.setText(device.getName());
         }
+    }
+
+    protected void initializeEqualizerPresetListPreference(DeviceSpecificSettingsHandler handler,
+                                                           Equalizer.EqualizerPreset[] equalizerPresets) {
+        ListPreference equalizerPresetListPreference = handler.findPreference(PREF_EARFUN_EQUALIZER_PRESET);
+        if (equalizerPresetListPreference != null) {
+            List<CharSequence> entries = Arrays.stream(equalizerPresets)
+                    .map(preset -> localizedPresetName(preset, handler.getContext())).collect(Collectors.toList());
+            // add an additional element for user set custom band adjustments
+            entries.add(handler.getContext().getString(R.string.redmi_buds_5_pro_equalizer_preset_custom));
+
+            CharSequence[] entryValues = IntStream.rangeClosed(0, equalizerPresets.length)
+                    .mapToObj(Integer::toString).toArray(String[]::new);
+
+            equalizerPresetListPreference.setEntries(entries.toArray(new CharSequence[0]));
+            equalizerPresetListPreference.setEntryValues(entryValues);
+        }
+    }
+
+    private String localizedPresetName(Equalizer.EqualizerPreset preset, Context context) {
+        if (preset.getLocalizedPresetName() != -1) {
+            return context.getString(preset.getLocalizedPresetName());
+        } else {
+            return preset.getPresetName();
+        }
+    }
+
+    protected static void onPreferenceChangeEqualizerPreset(DeviceSpecificSettingsHandler handler,
+                                                            Equalizer.BandConfig[] equalizerBands,
+                                                            Equalizer.EqualizerPreset[] equalizerPresets) {
+        ListPreference listPreferenceEqualizerPreset = handler.findPreference(PREF_EARFUN_EQUALIZER_PRESET);
+        if (listPreferenceEqualizerPreset == null) {
+            return;
+        }
+        try {
+            int selectedOption = Integer.parseInt(listPreferenceEqualizerPreset.getValue());
+            if (selectedOption >= equalizerPresets.length || selectedOption < 0) {
+                return;
+            }
+            Equalizer.EqualizerPreset preset = equalizerPresets[selectedOption];
+
+            IntStream.range(0, preset.getSettings().length).forEach(index -> {
+                String key = equalizerBands[index].getKey();
+                if (key == null) {
+                    return;
+                }
+                SeekBarPreference seekBarPreferenceEqualizerBand = handler.findPreference(key);
+                if (seekBarPreferenceEqualizerBand == null) {
+                    return;
+                }
+                int gain = (int) Math.round(preset.getSettings()[index]);
+                seekBarPreferenceEqualizerBand.setValue(gain);
+                // call the change listener after setting last band to send new values to the device
+                if (index == preset.getSettings().length - 1) {
+                    seekBarPreferenceEqualizerBand.callChangeListener(gain);
+                }
+            });
+        } catch (NumberFormatException ignored) {
+        }
+    }
+
+    protected static int getSelectedPresetFromEqualizerBands(DeviceSpecificSettingsHandler handler,
+                                                             Equalizer.BandConfig[] equalizerBands,
+                                                             Equalizer.EqualizerPreset[] equalizerPresets) {
+        double[] equalizerConfig = Arrays.stream(equalizerBands)
+                .filter(bandConfig -> bandConfig.getKey() != null)
+                .map(bandConfig -> {
+                    SeekBarPreference bandSeekBarPreference = handler.findPreference(bandConfig.getKey());
+                    return bandSeekBarPreference.getValue();
+                })
+                .mapToDouble(Integer::doubleValue)
+                .toArray();
+
+        return IntStream.range(0, equalizerPresets.length)
+                .filter(i -> Arrays.equals(equalizerPresets[i].getSettings(), equalizerConfig))
+                .findFirst()
+                // if filter settings do not match a preset, select the "custom" preset
+                .orElse(equalizerPresets.length);
     }
 
     @Override
@@ -122,25 +183,5 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
 
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
-    }
-
-    private static class InputFilterLength implements InputFilter {
-        private final int maxLength;
-
-        public InputFilterLength(int maxLength) {
-            this.maxLength = maxLength;
-        }
-
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            int keep = maxLength - (dest.length() - (dend - dstart));
-            if (keep <= 0) {
-                return "";
-            } else if (keep >= end - start) {
-                return null;
-            } else {
-                return source.subSequence(start, start + keep);
-            }
-        }
     }
 }

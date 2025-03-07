@@ -63,6 +63,9 @@ public class EarFunProtocol extends GBDeviceProtocol {
                 case REQUEST_RESPONSE_TOUCH_ACTION:
                     events.add(handleTouchActionInfo(payload));
                     break;
+                // do nothing with these, they are returned after each EQ set operation and always return 01
+                case RESPONSE_EQUALIZER_BAND:
+                    break;
                 default:
                     LOG.error("no handler for packet type {}", packet.getCommand().name());
             }
@@ -92,11 +95,6 @@ public class EarFunProtocol extends GBDeviceProtocol {
 
     @Override
     public byte[] encodeSendConfiguration(String config) {
-        byte[] customConfiguration = encodeSendConfigurationCustomizer(config);
-        if (customConfiguration != null) {
-            return customConfiguration;
-        }
-
         Prefs prefs = getDevicePrefs();
         switch (config) {
             case PREF_EARFUN_AMBIENT_SOUND_CONTROL:
@@ -134,15 +132,6 @@ public class EarFunProtocol extends GBDeviceProtocol {
             default:
                 LOG.error("unhandled send configuration {}", config);
         }
-        return null;
-    }
-
-    /**
-     * Overwrite this in derived classes to do some device specific custom handling of configurations
-     *
-     * @return the config, encoded  as byte array
-     */
-    public byte[] encodeSendConfigurationCustomizer(String config) {
         return null;
     }
 

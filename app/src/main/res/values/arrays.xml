@@ -3548,7 +3548,7 @@
 
     <string-array name="earfun_transparency_mode_names">
         <item>@string/pref_default</item>
-        <item>@string/earfun_transparency_mode_natural</item>
+        <item>@string/pref_title_equalizer_natural</item>
     </string-array>
 
     <string-array name="earfun_transparency_mode_values">

@@ -10,11 +10,13 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.airs.EarFunAirSDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.airs.EarFunAirSSettingsCustomizer;
 
 public class EarFunAirSCoordinator extends AbstractEarFunCoordinator {
 
@@ -34,12 +36,19 @@ public class EarFunAirSCoordinator extends AbstractEarFunCoordinator {
 
         // can't only check with name, because the device name can be changed
         // via the device settings, so we use some of the UUIDs available on the device
-        // an the mac address prefix to hopefully detect this model reliable
-        String UUID_SUFFIX = "-0000-1000-8000-00805f9b34fb";
-        String[] uuidPrefixes = {"00001101", "0000111e", "0000110b", "0000110e", "00000000"};
+        // and the mac address prefix to hopefully detect this model reliably
+        String[] uuids = {
+                "00001101-0000-1000-8000-00805f9b34fb",
+                "0000111e-0000-1000-8000-00805f9b34fb",
+                "0000110b-0000-1000-8000-00805f9b34fb",
+                "0000110e-0000-1000-8000-00805f9b34fb",
+                "0000eb04-d102-11e1-9b23-00025b00a5a5",
+                "0000eb06-d102-11e1-9b23-00025b00a5a5",
+                "0000eb07-d102-11e1-9b23-00025b00a5a5",
+                "0000eb05-d102-11e1-9b23-00025b00a5a5"};
 
-        boolean allServicesSupported = Arrays.stream(uuidPrefixes)
-                .map(uuidPrefix -> UUID.fromString(uuidPrefix + UUID_SUFFIX))
+        boolean allServicesSupported = Arrays.stream(uuids)
+                .map(UUID::fromString)
                 .map(candidate::supportsService).allMatch(b -> b);
 
         boolean macAddressMatches = candidate.getMacAddress().toUpperCase().startsWith("A8:99:DC");
@@ -69,9 +78,14 @@ public class EarFunAirSCoordinator extends AbstractEarFunCoordinator {
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_headphones);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_6_band_equalizer);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_gestures);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_device_name);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_6_band_equalizer);
         return deviceSpecificSettings;
+    }
+
+    @Override
+    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
+        return new EarFunAirSSettingsCustomizer(device);
     }
 }

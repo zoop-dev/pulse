@@ -4,14 +4,12 @@ import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.EarFunDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.EarFunSettingsCustomizer;
 
 public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinator {
     @Override
@@ -23,6 +21,11 @@ public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinato
         return "EarFun";
     }
 
+    @Override
+    public ConnectionType getConnectionType() {
+        return ConnectionType.BT_CLASSIC;
+    }
+
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass() {
@@ -30,7 +33,7 @@ public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinato
     }
 
     @Override
-    public int getBondingStyle(){
+    public int getBondingStyle() {
         return BONDING_STYLE_BOND;
     }
 
@@ -42,10 +45,5 @@ public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinato
     @Override
     public int getDisabledIconResource() {
         return R.drawable.ic_device_nothingear_disabled;
-    }
-
-    @Override
-    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
-        return new EarFunSettingsCustomizer(device);
     }
 }

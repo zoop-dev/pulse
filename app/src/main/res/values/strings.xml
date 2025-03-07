@@ -2638,6 +2638,7 @@
     <string name="pref_title_equalizer_dynamic">Dynamic</string>
     <string name="pref_title_equalizer_clear">Clear</string>
     <string name="pref_title_equalizer_trebble">Treble boost</string>
+    <string name="pref_title_equalizer_natural">Natural</string>
     <string name="prefs_dolby_mode">Dolby Mode</string>
     <string name="prefs_equalizer">Equalizer</string>
     <string name="prefs_equalizer_summary">Enable or disable equalizer</string>
@@ -3706,7 +3707,6 @@
     <string name="gree_pair_status_failure">Pairing failed: %s</string>
     <string name="gree_pair_clipboard">Device name: %s\nMac address: %s\nBind key: %s</string>
     <string name="earfun_transparency_mode">Transparency mode</string>
-    <string name="earfun_transparency_mode_natural">Natural</string>
     <string name="earfun_anc_mode">ANC mode</string>
     <string name="earfun_anc_mode_strong">Strong ANC</string>
     <string name="earfun_anc_mode_balanced">Balanced ANC</string>

@@ -26,4 +26,5 @@ public class EarFunSettingsPreferenceConst {
     public static final String PREF_EARFUN_EQUALIZER_BAND_8000 = "pref_earfun_equalizer_band_8000";
     public static final String PREF_EARFUN_EQUALIZER_BAND_15000 = "pref_earfun_equalizer_band_15000";
     public static final String PREF_EARFUN_EQUALIZER_BAND_16000 = "pref_earfun_equalizer_band_16000";
+    public static final String PREF_EARFUN_EQUALIZER_PRESET = "pref_earfun_equalizer_preset";
 }

@@ -98,7 +98,7 @@ public class EarFunPacket {
         UNIDENTIFIED_0350((short) 0x0350), // 0001 Pro 4
         SET_EQUALIZER_BAND((short) 0x0E01, OTHER_VENDOR_ID), // answers with UNIDENTIFIED_0F81
         UNIDENTIFIED_0E80((short) 0x0E80, OTHER_VENDOR_ID), // 01
-        UNIDENTIFIED_0F81((short) 0x0F81, OTHER_VENDOR_ID), // After setting EQ Band 01
+        RESPONSE_EQUALIZER_BAND((short) 0x0F81, OTHER_VENDOR_ID),
         UNIDENTIFIED_1080((short) 0x1080, OTHER_VENDOR_ID),  // 0100 -> 0101 if ANC not off
         UNIDENTIFIED_1081((short) 0x1081, OTHER_VENDOR_ID),  // 01010000 <- otherwise, 0A010000 <- ANC Transparent
         UNIDENTIFIED_1082((short) 0x1082, OTHER_VENDOR_ID),  // 01010000 -> 01014646

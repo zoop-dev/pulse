@@ -16,6 +16,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class EarFunPacketEncoder {
     private static final Logger LOG = LoggerFactory.getLogger(EarFunPacketEncoder.class);
+    // the factor to converting equalizer gain between preference value and
+    // payload byte (int) value
+    // Gaia uses a factor of 60 to convert to dB and EarFun projects 6 dBs on a slider scale of 10
+    private static final double EQUALIZER_GAIN_FACTOR = 60 * 0.6;
 
     public static byte[] encodeBatteryReq() {
         return joinPackets(
@@ -76,7 +80,7 @@ public class EarFunPacketEncoder {
     }
 
     public static byte[] encodeSetEqualizerBand(double gainValue, Equalizer.Band band) {
-        short gain = (short) ((int) Math.round(gainValue * 60) & 0xFFFF);
+        short gain = (short) ((int) Math.round(gainValue * EQUALIZER_GAIN_FACTOR) & 0xFFFF);
         ByteBuffer buf = ByteBuffer.allocate(9);
         buf.put(band.bandId);
         buf.put((byte) 0xFF);

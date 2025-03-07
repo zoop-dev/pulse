@@ -2,6 +2,11 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.prefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.prefs.EarFunSettingsPreferenceConst.*;
 
+import java.util.Arrays;
+import java.util.Objects;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
+
 public class Equalizer {
     public enum Band {
         SIX_BAND_63((byte) 0xA1, (short) 0x00BD, (short) 0x0B33),
@@ -42,12 +47,36 @@ public class Equalizer {
             this.qFactor = qFactor;
             this.defaultGain = defaultGain;
         }
+
+        public byte getBandId() {
+            return bandId;
+        }
+
+        public short getFrequency() {
+            return frequency;
+        }
+
+        public short getqFactor() {
+            return qFactor;
+        }
+
+        public double getDefaultGain() {
+            return defaultGain;
+        }
     }
 
     public static class BandConfig {
         public BandConfig(Band band, String key) {
             this.band = band;
             this.key = key;
+        }
+
+        public Band getBand() {
+            return band;
+        }
+
+        public String getKey() {
+            return key;
         }
 
         public Band band;
@@ -78,5 +107,151 @@ public class Equalizer {
             new BandConfig(Band.TEN_BAND_4000, PREF_EARFUN_EQUALIZER_BAND_4000),
             new BandConfig(Band.TEN_BAND_8000, PREF_EARFUN_EQUALIZER_BAND_8000),
             new BandConfig(Band.TEN_BAND_16000, PREF_EARFUN_EQUALIZER_BAND_16000),
+    };
+
+    public interface EqualizerPreset {
+        String getPresetName();
+
+        int getLocalizedPresetName();
+
+        double[] getSettings();
+
+        default String getFormattedSettings() {
+            return Arrays.toString(getSettings());
+        }
+
+        static void printAllPresets(EqualizerPreset[] presets) {
+            for (EqualizerPreset preset : presets) {
+                System.out.println(preset.getPresetName() + ": " + preset.getFormattedSettings());
+            }
+        }
+    }
+
+    public enum SixBandPreset implements EqualizerPreset {
+        // Default: Keeps all bands at their default values
+        DEFAULT(R.string.pref_title_equalizer_normal, new double[]{0, 0, 0, 0, 0, 0}),
+        // Natural: Balanced and natural sound profile that reproduces audio without any coloration
+        NATURAL(R.string.pref_title_equalizer_natural, new double[]{0, 0, 1, 1, 2, 3}),
+        // Bass Boost: Emphasizes the low frequencies for a deep, powerful bass
+        BASS_BOOST(R.string.pref_title_equalizer_bass_boost, new double[]{8, 3, 2, 0, 0, 0}),
+        // Treble Boost: Enhances the high frequencies for a crisp and bright sound
+        TREBLE_BOOST(R.string.pref_title_equalizer_trebble, new double[]{0, 0, 0, 2, 3, 5}),
+        // Soft: Creates a gentle, smooth, and mellow sound
+        SOFT(R.string.pref_title_equalizer_soft, new double[]{-5, -2, +2, +3, 0, -3}),
+        // Dynamic: Produces a lively and energetic sound with well-defined bass and crisp highs
+        DYNAMIC(R.string.pref_title_equalizer_dynamic, new double[]{+7, +3, +2, +3, +5, +7}),
+        // Clear: Achieves a balanced and transparent sound, ideal for detailed audio work
+        CLEAR(R.string.pref_title_equalizer_clear, new double[]{+2, 0, +3, +5, +3, +5}),
+        // Relaxed: Produces a calming and soothing sound, perfect for unwinding
+        RELAXED(R.string.sony_equalizer_preset_relaxed, new double[]{+2, +1, 0, -1, -3, -5}),
+        // Vocal: Enhances the mid-range frequencies for clear and prominent vocals
+        VOCAL(R.string.sony_equalizer_preset_vocal, new double[]{-2, 0, +4, +5, +2, -1});
+
+        public final String presetName;
+        public final int localizedPresetName;
+        public final double[] settings;
+
+        SixBandPreset(String name, double[] settings) {
+            this.presetName = name;
+            this.localizedPresetName = -1;
+            this.settings = settings;
+        }
+
+        SixBandPreset(int localizedName, double[] settings) {
+            this.presetName = "";
+            this.localizedPresetName = localizedName;
+            this.settings = settings;
+        }
+
+        public String getPresetName() {
+            return presetName;
+        }
+
+        public int getLocalizedPresetName() {
+            return localizedPresetName;
+        }
+
+        public double[] getSettings() {
+            return settings;
+        }
+    }
+
+    public enum TenBandPreset implements EqualizerPreset {
+        // Default: Keeps all bands at their default values
+        DEFAULT(R.string.pref_title_equalizer_normal, new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
+        // Natural: Balanced and natural sound profile that reproduces audio without any coloration
+        NATURAL(R.string.pref_title_equalizer_natural, new double[]{0, 0, 1, 2, 2, -1, -1, -1, -2, 1}),
+        // Bass Boost: Emphasizes the low frequencies for a deep, powerful bass
+        BASS_BOOST(R.string.pref_title_equalizer_bass_boost, new double[]{+8, +6, +4, +2, 0, 0, 0, 0, 0, 0}),
+        // Treble Boost: Enhances the high frequencies for a crisp and bright sound
+        TREBLE_BOOST(R.string.pref_title_equalizer_trebble, new double[]{0, 0, 0, 0, 0, 0, +2, +2, +3, +4}),
+        // Soft: Creates a gentle, smooth, and mellow sound
+        SOFT(R.string.pref_title_equalizer_soft, new double[]{-5, -4, -2, 0, +2, +3, 0, -2, -3, -5}),
+        // Dynamic: Produces a lively and energetic sound with well-defined bass and crisp highs
+        DYNAMIC(R.string.pref_title_equalizer_dynamic, new double[]{+6, +6, +4, +2, +2, +3, +4, +5, +6, +7}),
+        // Clear: Achieves a balanced and transparent sound, ideal for detailed audio work
+        CLEAR(R.string.pref_title_equalizer_clear, new double[]{+3, +2, +2, +2, +3, +5, +3, +3, +4, +5}),
+        // Relaxed: Produces a calming and soothing sound, perfect for unwinding
+        RELAXED(R.string.sony_equalizer_preset_relaxed, new double[]{+2, +1, 0, 0, 0, -1, -2, -3, -4, -5}),
+        // Vocal: Enhances the mid-range frequencies for clear and prominent vocals
+        VOCAL(R.string.sony_equalizer_preset_vocal, new double[]{-3, -2, 0, +2, +3, +5, +3, +2, 0, -1});
+
+        public final String presetName;
+        public final int localizedPresetName;
+        public final double[] settings;
+
+
+        TenBandPreset(String name, double[] settings) {
+            this.presetName = name;
+            this.localizedPresetName = -1;
+            this.settings = settings;
+        }
+
+        TenBandPreset(int localizedName, double[] settings) {
+            this.presetName = "";
+            this.localizedPresetName = localizedName;
+            this.settings = settings;
+        }
+
+        public String getPresetName() {
+            return presetName;
+        }
+
+        public int getLocalizedPresetName() {
+            return localizedPresetName;
+        }
+
+        public double[] getSettings() {
+            return settings;
+        }
+    }
+
+    public static boolean containsKey(Equalizer.BandConfig[] array, String key) {
+        return Arrays.stream(array)
+                .anyMatch(element -> Objects.equals(element.key, key));
+    }
+
+    public static EqualizerPreset[] SixBandEqualizerPresets = {
+            SixBandPreset.DEFAULT,
+            SixBandPreset.NATURAL,
+            SixBandPreset.BASS_BOOST,
+            SixBandPreset.TREBLE_BOOST,
+            SixBandPreset.SOFT,
+            SixBandPreset.DYNAMIC,
+            SixBandPreset.CLEAR,
+            SixBandPreset.RELAXED,
+            SixBandPreset.VOCAL
+    };
+
+    public static EqualizerPreset[] TenBandEqualizerPresets = {
+            TenBandPreset.DEFAULT,
+            TenBandPreset.NATURAL,
+            TenBandPreset.BASS_BOOST,
+            TenBandPreset.TREBLE_BOOST,
+            TenBandPreset.SOFT,
+            TenBandPreset.DYNAMIC,
+            TenBandPreset.CLEAR,
+            TenBandPreset.RELAXED,
+            TenBandPreset.VOCAL
     };
 }
