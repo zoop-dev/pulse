@@ -1,5 +1,28 @@
 ### Changelog
 
+#### Next version (WIP)
+
+* Initial support for EarFun Air S and Air Pro 4 headphones
+* Initial support for Garmin Instinct 3
+* Amazfit GTR2e: Enable PAI support
+* Even G1: Pair both sides as a single device
+* Fossil/Skagen Hybrids: Fix hidden upload button in app manager
+* Garmin: Add nap support
+* Garmin: Allow manual import of activity files
+* Garmin: Fix fit file checksum computation
+* Garmin: Parse extended running and cycling workout data
+* Garmin: Resolve names for services and characteristics
+* Huawei: Fix delete notifications for LE devices
+* Huawei: Increase user ID length to 19 characters
+* Huawei: Real-time heart rate mode and low/high alerts
+* Pebble: Fix all day events timezone
+* Xiaomi-protobuf: Make GPS timeout configurable
+* Xiaomi-protobuf: Map some missing workout types
+* Fix app crash when switching between Android user profiles
+* Fix ignoring low priority notifications on Android 13+
+* Fix some preference summaries not getting updated
+* Reduce log spam from browsing preferences
+
 #### 0.84.0
 * Initial support for Even G1 Smart Glasses
 * Initial support for Garmin Fenix 7S Pro, Forerunner 45 / 735XT, Instinct E / Lily 2 Active
