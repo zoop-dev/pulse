@@ -6,11 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
@@ -81,6 +83,8 @@ public class EarFunAirSCoordinator extends AbstractEarFunCoordinator {
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_6_band_equalizer);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_gestures);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_device_name);
+        final List<Integer> callsAndNotif = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
+        callsAndNotif.add(R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }
 
