@@ -2150,7 +2150,7 @@
     <string name="pref_title_touch_spotify_official_app">Spotify (csak a hivatalos alkalmazás)</string>
     <string name="pref_switch_controls_ambient_off">Környezet ←→ Ki</string>
     <string name="pref_switch_controls_anc_ambient">Zajszűrés ←→ Környezet</string>
-    <string name="prefs_voice_detect_summary">Környezeti hangok engedélyezése és a médialejátszás lehalkítása beszédérzékeléskor</string>
+    <string name="prefs_voice_detect_summary">Környezeti hang engedélyezése és a médialejátszás lehalkítása beszédérzékeléskor</string>
     <string name="sony_speak_to_chat_timeout_long">Hosszú (1 p)</string>
     <string name="sony_speak_to_chat_sensitivity_standard">Alapértelmezett</string>
     <string name="freestyle">Szabadstílus</string>
@@ -2178,7 +2178,7 @@
     <string name="RunningForm">Futóforma</string>
     <string name="prefs_touch_lock">Érintőképernyő zárolása</string>
     <string name="sony_connect_two_devices">Kapcsolódás 2 eszközhöz párhuzamosan</string>
-    <string name="pref_title_touch_ambient">Környezeti hangok</string>
+    <string name="pref_title_touch_ambient">Környezeti hang</string>
     <string name="prefs_equalizer_preset">Hangszínszabályzó-előbeállítás</string>
     <string name="prefs_active_noise_cancelling_summary">Környezeti zajok szűrése</string>
     <string name="pressure_relief_summary">Megakadályozza a nyomásérzést a fülben, amikor az aktív zajszűrés nincs használatban</string>
@@ -2222,7 +2222,7 @@
     <string name="watchface_widget_type_chance_rain">Eső valószínűsége</string>
     <string name="prefs_sleep_time_summary">Idő pontosítása elalváskor</string>
     <string name="prefs_ambient_volume">Hangáteresztés hangereje</string>
-    <string name="pref_title_touch_quick_ambient">Gyors hangáteresztés</string>
+    <string name="pref_title_touch_quick_ambient">Gyors környezeti hang</string>
     <string name="pref_title_equalizer_trebble">Magas hang kiemelése</string>
     <string name="watchface_dialog_widget_presets">Alapértelmezett pozíciók</string>
     <string name="prefs_events_forwarding_startnonwear">Levételnél</string>
@@ -2252,7 +2252,7 @@
     <string name="watchface_setting_title_wrist_flick">Csukló mozgás</string>
     <string name="watchface_setting_wrist_flick_hour">Óra mutató (-360 és 360 között)</string>
     <string name="prefs_active_noise_cancelling_transparency">Átlátszóság</string>
-    <string name="prefs_pressure_relief">Nyomáscsökkentés hangáteresztéssel</string>
+    <string name="prefs_pressure_relief">Vérnyomás csökkentése környezeti hangokkal</string>
     <string name="prefs_galaxy_touch_options">Érintési beállítások</string>
     <string name="pref_title_touch_spotify_galaxy_app">Spotify (kizárólag Galaxy Wearable)</string>
     <string name="pref_ambient_sound_tone_summary">Lágyból tisztába</string>
@@ -2265,7 +2265,7 @@
     <string name="devicetype_nothingearstick">Nothing Ear (Stick)</string>
     <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro</string>
     <string name="prefs_ambient_voice_summary">Beszédhang kiemelése</string>
-    <string name="pref_ambient_sound_tone">Hangáteresztés-tónus</string>
+    <string name="pref_ambient_sound_tone">Környezeti hangszín</string>
     <string name="watchface_setting_button_move_hands">Mutatók mozgatása</string>
     <string name="prefs_events_forwarding_action_title">Futtatás</string>
     <string name="sony_equalizer">Hangszínszabályzó</string>
@@ -3006,7 +3006,7 @@
     <string name="menuitem_calories_active_goal">Kalóriacél (aktív)</string>
     <string name="app_crash_share_stacktrace">Hiba megosztása</string>
     <string name="redmi_buds_5_pro_equalizer_band_2k">2 kHz</string>
-    <string name="sony_ambient_sound_ambient_sound">Környezeti hangok</string>
+    <string name="sony_ambient_sound_ambient_sound">Környezeti hang</string>
     <string name="quick_attention">Gyors figyelem</string>
     <string name="pref_force_enable_heartrate_support">Pulzusszám-támogatás kikényszerítése</string>
     <string name="huawei_ignore_wakeup_status_end_description">Segíthet a megfelelő alvásérzékelésben. Azonnal látható a napi tevékenységek nézetben.</string>
@@ -3319,7 +3319,7 @@
     <string name="redmi_buds_5_pro_equalizer_neg5">-5 dB</string>
     <string name="redmi_buds_5_pro_equalizer_zero">0 dB</string>
     <string name="redmi_buds_5_pro_equalizer_1">1 dB</string>
-    <string name="sony_ambient_sound_level">Környezeti hangok szintje</string>
+    <string name="sony_ambient_sound_level">Környezeti hang szintje</string>
     <string name="sony_anc_optimize_confirmation_description">Használja a fejhallgatót a szokásos módon. Ha a viselési körülmények vagy a légköri nyomás megváltozik, futtassa le újra az optimalizálót.</string>
     <string name="sony_sound_position_front_right">Jobb első</string>
     <string name="pref_header_sony_anc_optimizer">Zajszűrés-optimalizáló</string>
@@ -3480,7 +3480,7 @@
     <string name="workoutSets">Sorozatok</string>
     <string name="cyclingPowerAverage">Átlagos kerékpáros teljesítmény</string>
     <string name="sony_touch_sensor">Érintésérzékelős vezérlés</string>
-    <string name="pref_adaptive_noise_cancelling_summary">Az ANC erősségének automatikus beállítása a környezeti hangok függvényében</string>
+    <string name="pref_adaptive_noise_cancelling_summary">Az ANC erősségének automatikus beállítása a környezeti hang függvényében</string>
     <string name="sony_speak_to_chat">Speak-to-chat</string>
     <string name="prefs_wena3_led_none">LED nélkül</string>
     <string name="widget_layout_top_wide_bot_large">Széles felül, nagy alul</string>
