@@ -85,6 +85,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitStressLevel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitUserProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -265,6 +266,8 @@ public class FitImporter {
             } else if (record instanceof FitSport) {
                 // handled in workout parser
             } else if (record instanceof FitTimeInZone) {
+                // handled in workout parser
+            } else if (record instanceof FitUserProfile) {
                 // handled in workout parser
             } else if (record instanceof FitHrvSummary) {
                 final FitHrvSummary hrvSummary = (FitHrvSummary) record;

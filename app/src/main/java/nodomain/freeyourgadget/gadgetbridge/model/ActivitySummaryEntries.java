@@ -208,6 +208,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_STRING = "string";
     public static final String UNIT_RAW_STRING = "raw_string";
     public static final String UNIT_KG = "kg";
+    public static final String UNIT_LB = "lb";
     public static final String UNIT_RPM = "unit_rpm";
     public static final String UNIT_MM = "unit_millimeter";
     public static final String UNIT_WATT = "unit_watt";

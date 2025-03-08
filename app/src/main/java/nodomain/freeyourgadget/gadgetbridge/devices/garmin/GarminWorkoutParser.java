@@ -29,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
@@ -36,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSet;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitUserProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class GarminWorkoutParser implements ActivitySummaryParser {
@@ -47,6 +49,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private final List<ActivityPoint> activityPoints = new ArrayList<>();
     private FitSession session = null;
     private FitSport sport = null;
+    private FitUserProfile userProfile = null;
     private FitPhysiologicalMetrics physiologicalMetrics = null;
     private final List<FitSet> sets = new ArrayList<>();
     private final List<FitLap> laps = new ArrayList<>();
@@ -103,6 +106,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         activityPoints.clear();
         session = null;
         sport = null;
+        userProfile = null;
         physiologicalMetrics = null;
         sets.clear();
         laps.clear();
@@ -139,6 +143,14 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         } else if (record instanceof FitLap) {
             LOG.trace("Lap: {}", record);
             laps.add((FitLap) record);
+        } else if (record instanceof FitUserProfile) {
+            LOG.trace("User Profile: {}", record);
+            if (userProfile != null) {
+                LOG.warn("Got multiple user profiles - NOT SUPPORTED: {}", record);
+            } else {
+                // We only support 1 user profile
+                userProfile = (FitUserProfile) record;
+            }
         } else {
             return false;
         }
@@ -162,6 +174,13 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             activityKind = getActivityKind(session.getSport(), session.getSubSport());
         }
         final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
+
+        final String weightUnit;
+        if (userProfile != null && userProfile.getWeightSetting() != null) {
+            weightUnit = FieldDefinitionMeasurementSystem.Type.metric.equals(userProfile.getWeightSetting()) ? UNIT_KG : UNIT_LB;
+        } else {
+            weightUnit = UNIT_KG;
+        }
 
         summary.setActivityKind(activityKind.getCode());
 
@@ -495,7 +514,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                     }
 
                     if (set.getWeight() != null) {
-                        columns.add(new ActivitySummaryValue(set.getWeight(), UNIT_KG));
+                        columns.add(new ActivitySummaryValue(set.getWeight(), weightUnit));
                     } else {
                         columns.add(new ActivitySummaryValue("stats_empty_value"));
                     }

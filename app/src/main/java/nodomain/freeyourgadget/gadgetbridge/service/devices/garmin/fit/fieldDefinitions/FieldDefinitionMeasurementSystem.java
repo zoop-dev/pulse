@@ -29,6 +29,7 @@ public class FieldDefinitionMeasurementSystem extends FieldDefinition {
 
     public enum Type {
         metric,
+        imperial,
         ;
 
         public static Type fromId(int id) {

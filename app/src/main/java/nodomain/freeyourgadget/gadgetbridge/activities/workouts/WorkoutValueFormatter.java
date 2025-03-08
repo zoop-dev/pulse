@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.workouts;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_LB;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
@@ -30,11 +31,13 @@ public class WorkoutValueFormatter {
 
     private final String units;
     private final String UNIT_IMPERIAL;
+    private final String UNIT_METRIC;
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     public WorkoutValueFormatter() {
         this.units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         this.UNIT_IMPERIAL = GBApplication.getContext().getString(R.string.p_unit_imperial);
+        this.UNIT_METRIC = GBApplication.getContext().getString(R.string.p_unit_metric);
     }
 
     public void toggleRawData() {
@@ -83,7 +86,13 @@ public class WorkoutValueFormatter {
                 case UNIT_KG:
                     if (units.equals(UNIT_IMPERIAL)) {
                         value = value * 2.2046226f;
-                        unit = "lb";
+                        unit = UNIT_LB;
+                    }
+                    break;
+                case UNIT_LB:
+                    if (units.equals(UNIT_METRIC)) {
+                        value = value / 2.2046226f;
+                        unit = UNIT_KG;
                     }
                     break;
                 case UNIT_CM:
