@@ -3818,4 +3818,26 @@
     <string name="pref_workout_send_gps_timeout_title">Časový limit pro odesílání polohy</string>
     <string name="pref_workout_send_gps_timeout_summary">Přestat odesílat polohu, když zařízení neposílá aktivitu (v milisekundách)</string>
     <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
+    <string name="devicetype_earfun_air_s">EarFun Air S</string>
+    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
+    <string name="earfun_transparency_mode">Režim průchodnosti</string>
+    <string name="earfun_anc_mode_ai_environment_adaptive">AI ANC adaptivní na prostředí</string>
+    <string name="earfun_anc_mode_ai_ear_adaptive">AI ANC adaptivní na ucho</string>
+    <string name="earfun_anc_mode_wind_noise_cancelling">Potlačení hluku větru</string>
+    <string name="earfun_tap_action_noise_control_wind_ambient">Potlačení hluku (hluk větru, ambientní zvuk)</string>
+    <string name="earfun_tap_action_redial">Opětovné vytočení</string>
+    <string name="earfun_anc_mode_balanced">Vyvážené ANC</string>
+    <string name="zepp_os_watchface_vital">Vital</string>
+    <string name="zepp_os_watchface_elegant">Elegant</string>
+    <string name="earfun_tap_action_noise_control_all_modes">Potlačení hluku (všechny režimy)</string>
+    <string name="zepp_os_watchface_digital_wraith">Digital Wraith</string>
+    <string name="earfun_tap_action_noise_control_normal_ambient">Potlačení hluku (normální, ambientní zvuk)</string>
+    <string name="earfun_anc_mode_strong">Silné ANC</string>
+    <string name="zepp_os_watchface_silver_shadows">Silver Shadows</string>
+    <string name="zepp_os_watchface_deep_space">Deep space</string>
+    <string name="earfun_anc_mode">Režim ANC</string>
+    <string name="zepp_os_watchface_rhythm">Rhythm</string>
+    <string name="earfun_tap_action_noise_control_normal_wind">Potlačení hluku (normální, hluk větru)</string>
+    <string name="zepp_os_watchface_vital_orange">Vital Orange</string>
+    <string name="pref_title_equalizer_natural">Přirozený</string>
 </resources>
