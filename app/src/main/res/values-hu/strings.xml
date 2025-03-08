@@ -2212,7 +2212,7 @@
     <string name="pref_header_filter">Sportok szűrése</string>
     <string name="prefs_fake_ring_duration">Hamis folyamatos csengés</string>
     <string name="hybridhr_widget_bg_double_circle">Dupla kör</string>
-    <string name="prefs_ambient_sound">Hangáteresztés</string>
+    <string name="prefs_ambient_sound">Környezeti hang</string>
     <string name="prefs_key_vibration">Gomb vibráció</string>
     <string name="activity_filter_individual_items">Egyénileg kijelölt elemek</string>
     <string name="hybridhr_widget_bg_dashed_circle">Szaggatott kör</string>
@@ -2233,9 +2233,9 @@
     <string name="prefs_touch_lock_buds2">Érintő funkciók</string>
     <string name="prefs_touch_lock_summary">Érintő kijelző kikapcsolása</string>
     <string name="prefs_ambient_volume_left">Hangáteresztés hangereje (bal)</string>
-    <string name="prefs_customize_ambient_sound_summary">Hangáteresztés testreszabása</string>
-    <string name="prefs_ambient_sound_during_call_title">Hangáteresztés hívás közben</string>
-    <string name="prefs_ambient_settings_title">Hangáteresztési beállítások</string>
+    <string name="prefs_customize_ambient_sound_summary">Környezeti hang testreszabása</string>
+    <string name="prefs_ambient_sound_during_call_title">Környezeti hang hívás közben</string>
+    <string name="prefs_ambient_settings_title">Környezeti hangbeállítások</string>
     <string name="watchface_setting_wrist_flick_minute">Percmutató (-360 és 360 között)</string>
     <string name="fossil_hr_warning_firmware_too_new">Egyes funkciók le vannak tiltva, mert az óra firmware-je túl új</string>
     <string name="qhybrid_calibration_align_hint">Az alábbi gombok segítségével igazítsa az óra mutatóit 12:00-ra.</string>
@@ -2244,8 +2244,8 @@
     <string name="nothing_prefs_audiomode_title">Értesítés mód</string>
     <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="prefs_seamless_connection_switch_title">Zökkenőmentes átkapcsolás</string>
-    <string name="prefs_ambient_volume_right">Hangáteresztés hangereje (jobb)</string>
-    <string name="prefs_ambient_mode">Környezeti hang mód</string>
+    <string name="prefs_ambient_volume_right">Környezet hangereje (jobb)</string>
+    <string name="prefs_ambient_mode">Környezeti mód</string>
     <string name="prefs_events_forwarding_broadcast_title">Üzenet közvetítése</string>
     <string name="qhybrid_watchface_configuration_old_firmware">Számlapbeállítások Dn1.0.2.19r és régebbi firmwarrel rendelkező eszközökhöz</string>
     <string name="qhybrid_title_watchface_designer">Számlap-tervező</string>
@@ -2917,8 +2917,8 @@
     <string name="sony_ambient_sound_noise_cancelling">Zajszűrés</string>
     <string name="sony_ambient_sound_wind_noise_reduction">Szélzajcsökkentés</string>
     <string name="sony_anc_optimizer_status_atmospheric_pressure">Légköri nyomás mérése…</string>
-    <string name="sony_ambient_sound_control_button_modes">Környezeti hang gomb üzemmódok</string>
-    <string name="sony_ambient_sound_control_button_mode_nc_off">Zajszűrés, Ki</string>
+    <string name="sony_ambient_sound_control_button_modes">Környezeti hangszabályzógomb módjai</string>
+    <string name="sony_ambient_sound_control_button_mode_nc_off">Zajszűrés, ki</string>
     <string name="soundcore_equalizer_preset_signature">soundcore Signature</string>
     <string name="soundcore_equalizer_band3">3. sáv</string>
     <string name="pref_force_smart_alarm_summary">Intelligens riasztások támogatásának kényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
@@ -3140,7 +3140,7 @@
     <string name="sony_anc_optimizer_status_wearing_condition">A viselési állapot mérése…</string>
     <string name="pref_wide_area_tap_title">Széles területű érintés</string>
     <string name="pref_adaptive_volume_control_title">Adaptív hangerőszabályozás</string>
-    <string name="sony_ambient_sound_control_button_mode_nc_as_off">Zajszűrés, Környezeti hangok, Ki</string>
+    <string name="sony_ambient_sound_control_button_mode_nc_as_off">Zajszűrés, környezeti hang, ki</string>
     <string name="moondrop_equalizer_preset_basshead">Mélyhang kedvelő</string>
     <string name="moondrop_equalizer_preset_monitor">Monitor</string>
     <string name="moondrop_touch_earbud">Fülhallgató</string>
@@ -3323,8 +3323,8 @@
     <string name="sony_anc_optimize_confirmation_description">Használja a fejhallgatót a szokásos módon. Ha a viselési körülmények vagy a légköri nyomás megváltozik, futtassa le újra az optimalizálót.</string>
     <string name="sony_sound_position_front_right">Jobb első</string>
     <string name="pref_header_sony_anc_optimizer">Zajszűrés-optimalizáló</string>
-    <string name="sony_ambient_sound_control_button_mode_nc_as">Zajszűrés, Környezeti hangok</string>
-    <string name="sony_ambient_sound_control_button_mode_as_off">Környezeti hangok, Ki</string>
+    <string name="sony_ambient_sound_control_button_mode_nc_as">Zajszűrés, környezeti hang</string>
+    <string name="sony_ambient_sound_control_button_mode_as_off">Környezeti hang, ki</string>
     <string name="soundcore_equalizer_preset_balanced">Kiegyensúlyozott</string>
     <string name="soundcore_equalizer_band2">2. sáv</string>
     <string name="soundcore_equalizer_band4">4. sáv</string>
@@ -3635,4 +3635,11 @@
     <string name="earfun_anc_mode_strong">Erős aktív zajszűrés</string>
     <string name="earfun_tap_action_noise_control_all_modes">Zajvédelem (minden üzemmódban)</string>
     <string name="earfun_tap_action_noise_control_normal_wind">Zajszabályozás (normál, szélzaj)</string>
+    <string name="zepp_os_watchface_silver_shadows">Ezüst árnyékok</string>
+    <string name="zepp_os_watchface_elegant">Elegáns</string>
+    <string name="zepp_os_watchface_digital_wraith">Digitális lidérc</string>
+    <string name="zepp_os_watchface_vital_orange">Életerős narancs</string>
+    <string name="zepp_os_watchface_deep_space">Mély űr</string>
+    <string name="zepp_os_watchface_rhythm">Ritmus</string>
+    <string name="zepp_os_watchface_vital">Életerős</string>
 </resources>
