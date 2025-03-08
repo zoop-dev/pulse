@@ -187,6 +187,10 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
                 if (!FILE_TYPES_TO_PROCESS.contains(directoryEntry.filetype) && !fetchUnknownFiles) {
                     continue;
                 }
+                if (fileIndex == 0 && fileDataType == 0 && fileSubType == 0 && fileNumber == 0 && specificFlags == 0 && fileFlags == 0 && fileSize == 0) {
+                    LOG.warn("Ignoring {} to avoid infinite loop", directoryEntry);
+                    continue;
+                }
                 LOG.debug("Queueing {} for download", directoryEntry);
                 deviceSupport.addFileToDownloadList(directoryEntry);
             }
