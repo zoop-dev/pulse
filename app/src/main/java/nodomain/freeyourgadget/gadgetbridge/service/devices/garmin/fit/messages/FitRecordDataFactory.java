@@ -95,6 +95,8 @@ public class FitRecordDataFactory {
                 return new FitSkinTempRaw(recordDefinition, recordHeader);
             case 398:
                 return new FitSkinTempOvernight(recordDefinition, recordHeader);
+            case 412:
+                return new FitNap(recordDefinition, recordHeader);
         }
 
         return new RecordData(recordDefinition, recordHeader);

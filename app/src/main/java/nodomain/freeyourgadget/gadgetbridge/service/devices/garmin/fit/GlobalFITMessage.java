@@ -490,6 +490,17 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage NAP = new GlobalFITMessage(412, "NAP", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT32, "start_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(1, BaseType.SINT16, "unknown_1"), // 0
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "end_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(3, BaseType.SINT16, "unknown_3"), // 0
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "unknown_4"), // 8
+            new FieldDefinitionPrimitive(6, BaseType.ENUM, "unknown_6"), // 0
+            new FieldDefinitionPrimitive(7, BaseType.UINT32, "timestamp_7", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     public static Map<Integer, GlobalFITMessage> KNOWN_MESSAGES = new HashMap<Integer, GlobalFITMessage>() {{
         put(0, FILE_ID);
         put(2, DEVICE_SETTINGS);
@@ -531,6 +542,7 @@ public class GlobalFITMessage {
         put(371, HRV_VALUE);
         put(397, SKIN_TEMP_RAW);
         put(398, SKIN_TEMP_OVERNIGHT);
+        put(412, NAP);
     }};
 
     private final int number;

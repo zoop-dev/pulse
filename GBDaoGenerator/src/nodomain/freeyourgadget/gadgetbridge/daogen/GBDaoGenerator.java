@@ -54,7 +54,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(96, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(97, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -132,6 +132,7 @@ public class GBDaoGenerator {
         addGarminRestingMetabolicRateSample(schema, user, device);
         addGarminSleepStatsSample(schema, user, device);
         addGarminIntensityMinutesSample(schema, user, device);
+        addGarminNapSample(schema, user, device);
         addPendingFile(schema, user, device);
         addWena3EnergySample(schema, user, device);
         addWena3BehaviorSample(schema, user, device);
@@ -922,6 +923,13 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
         sample.addIntProperty("moderate");
         sample.addIntProperty("vigorous");
+        return sample;
+    }
+
+    private static Entity addGarminNapSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GarminNapSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addLongProperty("endTimestamp").notNull();
         return sample;
     }
 

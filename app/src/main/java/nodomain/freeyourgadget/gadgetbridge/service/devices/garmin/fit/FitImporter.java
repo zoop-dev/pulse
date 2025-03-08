@@ -30,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminHeartRateRestin
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminHrvSummarySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminIntensityMinutesSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminNapSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRespiratoryRateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRestingMetabolicRateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminSleepStatsSampleProvider;
@@ -46,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GarminBodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminEventSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminHeartRateRestingSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminIntensityMinutesSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GarminNapSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminRestingMetabolicRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminHrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminHrvValueSample;
@@ -70,6 +72,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitMonitoring;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitMonitoringHrData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitMonitoringInfo;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitNap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRespirationRate;
@@ -100,6 +103,7 @@ public class FitImporter {
     private final List<GarminEventSample> events = new ArrayList<>();
     private final List<GarminSleepStatsSample> sleepStatsSamples = new ArrayList<>();
     private final List<GarminSleepStageSample> sleepStageSamples = new ArrayList<>();
+    private final List<GarminNapSample> napSamples = new ArrayList<>();
     private final List<GarminHrvSummarySample> hrvSummarySamples = new ArrayList<>();
     private final List<GarminHrvValueSample> hrvValueSamples = new ArrayList<>();
     private final List<GarminRestingMetabolicRateSample> restingMetabolicRateSamples = new ArrayList<>();
@@ -194,6 +198,16 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setStage(stage.getId());
                 sleepStageSamples.add(sample);
+            } else if (record instanceof FitNap) {
+                final FitNap nap = (FitNap) record;
+                if (nap.getStartTimestamp() == null || nap.getEndTimestamp() == null) {
+                    continue;
+                }
+                LOG.trace("Nap at {}: from {} to {}", ts, nap.getStartTimestamp(), nap.getEndTimestamp());
+                final GarminNapSample sample = new GarminNapSample();
+                sample.setTimestamp(nap.getStartTimestamp() * 1000L);
+                sample.setEndTimestamp(nap.getEndTimestamp() * 1000L);
+                napSamples.add(sample);
             } else if (record instanceof FitMonitoring) {
                 LOG.trace("Monitoring at {}: {}", ts, record);
                 final FitMonitoring monitoringRecord = (FitMonitoring) record;
@@ -382,6 +396,7 @@ public class FitImporter {
                 case SLEEP:
                     persistAbstractSamples(events, new GarminEventSampleProvider(gbDevice, session));
                     persistAbstractSamples(sleepStatsSamples, new GarminSleepStatsSampleProvider(gbDevice, session));
+                    persistAbstractSamples(napSamples, new GarminNapSampleProvider(gbDevice, session));
 
                     // We may have samples, but not sleep samples - #4048
                     // 0 unmeasurable, 1 awake
@@ -453,6 +468,7 @@ public class FitImporter {
         events.clear();
         sleepStatsSamples.clear();
         sleepStageSamples.clear();
+        napSamples.clear();
         hrvSummarySamples.clear();
         hrvValueSamples.clear();
         restingMetabolicRateSamples.clear();

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
@@ -31,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminEventSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GarminNapSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -180,6 +182,22 @@ public class GarminActivitySampleProvider extends AbstractSampleProvider<GarminA
             for (final GarminSleepStageSample stageSample : stageSamples) {
                 stagesMap.put(stageSample.getTimestamp(), toActivityKind(stageSample));
             }
+        }
+
+        // Overlap nap samples as light sleep
+        // TODO: Dedicated nap support in Gb?
+        final GarminNapSampleProvider napSampleProvider = new GarminNapSampleProvider(getDevice(), getSession());
+        final List<GarminNapSample> napSamples = new ArrayList<>(napSampleProvider.getAllSamples(
+                timestamp_from * 1000L,
+                timestamp_to * 1000L
+        ));
+        final GarminNapSample lastNapSample = napSampleProvider.getLastSampleBefore(timestamp_from * 1000L);
+        if (lastNapSample != null) {
+            napSamples.add(lastNapSample);
+        }
+        for (final GarminNapSample napSample : napSamples) {
+            stagesMap.put(napSample.getTimestamp(), ActivityKind.UNKNOWN);
+            stagesMap.put(napSample.getEndTimestamp(), ActivityKind.LIGHT_SLEEP);
         }
 
         if (!stagesMap.isEmpty()) {
