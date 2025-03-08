@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitCourse;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitWorkout;
@@ -50,6 +51,7 @@ public class GarminFitFileInstallHandler implements InstallHandler {
     private byte[] rawBytes;
     private FitFile fitFile;
     private FileType.FILETYPE fileType;
+    private FitParseException fitParseException;
 
     public GarminFitFileInstallHandler(final Uri uri, final Context context) {
         this.mContext = context;
@@ -99,6 +101,9 @@ public class GarminFitFileInstallHandler implements InstallHandler {
             }
 
             fileType = fitFileId.getType();
+        } catch (final FitParseException e) {
+            LOG.error("Fit file is corrupted", e);
+            fitParseException = e;
         } catch (final Exception e) {
             LOG.error("Failed to read fit file", e);
         }
@@ -106,11 +111,18 @@ public class GarminFitFileInstallHandler implements InstallHandler {
 
     @Override
     public boolean isValid() {
-        return fitFile != null && fileType != null;
+        // If we got a fitParseException, the file is "valid" (a fit file) for this handler, but corrupted
+        return fitParseException != null || (fitFile != null && fileType != null);
     }
 
     @Override
     public void validateInstallation(final InstallActivity installActivity, final GBDevice device) {
+        if (fitParseException != null) {
+            installActivity.setInfoText(fitParseException.getLocalizedMessage());
+            installActivity.setInstallEnabled(false);
+            return;
+        }
+
         if (fitFile == null || fileType == null) {
             return;
         }

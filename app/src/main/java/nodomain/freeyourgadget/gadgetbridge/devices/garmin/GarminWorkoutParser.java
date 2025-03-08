@@ -28,6 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
@@ -79,7 +80,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         final FitFile fitFile;
         try {
             fitFile = FitFile.parseIncoming(file);
-        } catch (final IOException e) {
+        } catch (final IOException | FitParseException e) {
             LOG.error("Failed to parse fit file", e);
             return summary;
         }

@@ -60,6 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitEvent;
@@ -118,7 +119,7 @@ public class FitImporter {
     /**
      * @noinspection StatementWithEmptyBody
      */
-    public void importFile(final File file) throws IOException {
+    public void importFile(final File file) throws IOException, FitParseException {
         reset();
 
         final FitFile fitFile = FitFile.parseIncoming(file);

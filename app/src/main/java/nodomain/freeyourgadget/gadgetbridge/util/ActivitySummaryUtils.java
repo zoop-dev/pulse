@@ -17,6 +17,7 @@ import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
 
 public final class ActivitySummaryUtils {
@@ -61,7 +62,7 @@ public final class ActivitySummaryUtils {
         return null;
     }
 
-    private static File convertFitToGpx(final BaseActivitySummary summary, final File file) throws IOException, ActivityTrackExporter.GPXTrackEmptyException {
+    private static File convertFitToGpx(final BaseActivitySummary summary, final File file) throws IOException, ActivityTrackExporter.GPXTrackEmptyException, FitParseException {
         final FitFile fitFile = FitFile.parseIncoming(file);
         final List<ActivityPoint> activityPoints = fitFile.getRecords().stream()
                 .filter(r -> r instanceof FitRecord)

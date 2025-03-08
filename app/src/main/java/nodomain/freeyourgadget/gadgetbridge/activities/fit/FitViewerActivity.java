@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FitViewerActivity extends AbstractGBActivity implements MenuProvider {
@@ -85,7 +86,7 @@ public class FitViewerActivity extends AbstractGBActivity implements MenuProvide
 
         try {
             fitFile = FitFile.parseIncoming(fitPath);
-        } catch (final IOException e) {
+        } catch (final IOException | FitParseException e) {
             GB.toast("Failed to parse fit file", Toast.LENGTH_LONG, GB.ERROR);
             LOG.error("Failed to parse fit file", e);
             finish();

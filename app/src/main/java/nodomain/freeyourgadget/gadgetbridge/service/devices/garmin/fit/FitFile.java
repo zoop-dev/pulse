@@ -18,6 +18,7 @@ import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.ChecksumCalculator;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminByteBufferReader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecordDataFactory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MessageWriter;
 
@@ -50,12 +51,12 @@ public class FitFile {
         }
     }
 
-    public static FitFile parseIncoming(File file) throws IOException {
+    public static FitFile parseIncoming(File file) throws IOException, FitParseException {
         return parseIncoming(readFileToByteArray(file));
     }
 
     //TODO: process file in chunks??
-    public static FitFile parseIncoming(byte[] fileContents) {
+    public static FitFile parseIncoming(byte[] fileContents) throws FitParseException {
 
         final GarminByteBufferReader garminByteBufferReader = new GarminByteBufferReader(fileContents);
         garminByteBufferReader.setByteOrder(ByteOrder.LITTLE_ENDIAN);
@@ -73,7 +74,7 @@ public class FitFile {
             final Integer timeOffset = recordHeader.getTimeOffset();
             if (timeOffset != null) {
                 if (referenceTimestamp == null) {
-                    throw new IllegalArgumentException("Got compressed timestamp without knowing current timestamp");
+                    throw new FitParseException("Got compressed timestamp without knowing current timestamp");
                 }
 
                 if (timeOffset >= (referenceTimestamp & 0x1FL)) {
@@ -104,9 +105,10 @@ public class FitFile {
             }
         }
         garminByteBufferReader.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-        int fileCrc = garminByteBufferReader.readShort();
-        if (fileCrc != ChecksumCalculator.computeCrc(fileContents, header.getHeaderSize(), fileContents.length - header.getHeaderSize() - 2)) {
-            throw new IllegalArgumentException("Wrong CRC for FIT file");
+        final int fileCrc = garminByteBufferReader.readShort();
+        final int actualCrc = ChecksumCalculator.computeCrc(fileContents, 0, fileContents.length - 2);
+        if (fileCrc != actualCrc) {
+            throw new FitParseException("Wrong CRC for FIT file: got " + actualCrc + " expected " + fileCrc);
         }
         return new FitFile(header, dataRecords);
     }

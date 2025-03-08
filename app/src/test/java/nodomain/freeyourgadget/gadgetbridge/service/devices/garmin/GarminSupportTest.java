@@ -15,6 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDat
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -270,7 +271,7 @@ public class GarminSupportTest extends TestBase {
     }
 
     @Test
-    public void TestFitFileSettings2() {
+    public void TestFitFileSettings2() throws FitParseException {
 
         byte[] fileContents = GB.hexStringToByteArray("0e101405b90600002e464954b18b40000000000603048c04048601028402" +
                 "028405028400010000ed2adce7ffffffff01001906ffff02410000310002" +
@@ -356,7 +357,7 @@ public class GarminSupportTest extends TestBase {
     }
 
     @Test
-    public void TestFitFileDevelopersField() {
+    public void TestFitFileDevelopersField() throws FitParseException {
         byte[] fileContents = GB.hexStringToByteArray("0e206806a20000002e464954bed040000100000401028400010002028403048c00000f042329000006a540000100cf0201100d030102000101020305080d1522375990e97962db0040000100ce05000102010102020102031107080a0700000001646f7567686e7574735f6561726e656400646f7567686e7574730060000100140403010204010205048606028401000100008c580000c738b98001008f5a00032c808e400200905c0005a9388a1003d39e");//https://github.com/polyvertex/fitdecode/blob/48b6554d8a3baf33f8b5b9b2fd079fcbe9ac8ce2/tests/files/DeveloperData.fit
 
         String expectedOutput = "[" +
