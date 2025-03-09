@@ -3840,4 +3840,26 @@
     <string name="pref_heart_rate_realtime_mode">Tryb automatycznego pomiaru tętna w czasie rzeczywistym</string>
     <string name="spo2_perc_75">75%</string>
     <string name="pref_workout_send_gps_timeout_summary">Zatrzymaj wysyłanie GPS, gdy urządzenie nie wysyła treningu (milisekundy)</string>
+    <string name="devicetype_earfun_air_s">EarFun Air S</string>
+    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
+    <string name="zepp_os_watchface_deep_space">Głęboka przestrzeń</string>
+    <string name="zepp_os_watchface_rhythm">Rytm</string>
+    <string name="zepp_os_watchface_digital_wraith">Cyfrowe Widmo</string>
+    <string name="zepp_os_watchface_vital_orange">Witalna Pomarańcza</string>
+    <string name="zepp_os_watchface_vital">Niezbędny</string>
+    <string name="earfun_anc_mode_ai_environment_adaptive">AI Adaptacyjne środowisko ANC</string>
+    <string name="earfun_anc_mode_ai_ear_adaptive">Adaptacyjny system ANC w uchu</string>
+    <string name="earfun_tap_action_redial">Ponowne wybieranie</string>
+    <string name="zepp_os_watchface_elegant">Elegancki</string>
+    <string name="earfun_tap_action_noise_control_wind_ambient">Kontrola hałasu (szum wiatru, dźwięki otoczenia)</string>
+    <string name="earfun_anc_mode">Tryb ANC</string>
+    <string name="earfun_anc_mode_balanced">Zrównoważony ANC</string>
+    <string name="earfun_tap_action_noise_control_normal_wind">Kontrola hałasu (Normalny, Hałas wiatru)</string>
+    <string name="earfun_tap_action_noise_control_normal_ambient">Kontrola hałasu (normalny, dźwięk otoczenia)</string>
+    <string name="pref_title_equalizer_natural">Naturalny</string>
+    <string name="earfun_anc_mode_wind_noise_cancelling">Redukcja szumu wiatru</string>
+    <string name="zepp_os_watchface_silver_shadows">Srebrne Cienie</string>
+    <string name="earfun_transparency_mode">Tryb przezroczystości</string>
+    <string name="earfun_anc_mode_strong">Silny ANC</string>
+    <string name="earfun_tap_action_noise_control_all_modes">Kontrola hałasu (wszystkie tryby)</string>
 </resources>
