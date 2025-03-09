@@ -3821,4 +3821,26 @@
     <string name="pref_workout_send_gps_timeout_title">发送 GPS 超时</string>
     <string name="pref_spo_low_alert">低血氧警告</string>
     <string name="pref_heart_rate_low_alert">低心率警报</string>
+    <string name="earfun_transparency_mode">通透模式</string>
+    <string name="earfun_anc_mode_strong">强力降噪</string>
+    <string name="earfun_tap_action_noise_control_normal_ambient">噪音控制（普通，环境声）</string>
+    <string name="earfun_tap_action_redial">重拨</string>
+    <string name="zepp_os_watchface_elegant">简洁</string>
+    <string name="zepp_os_watchface_deep_space">深空</string>
+    <string name="zepp_os_watchface_rhythm">韵律</string>
+    <string name="zepp_os_watchface_vital_orange">活力橙</string>
+    <string name="zepp_os_watchface_vital">活力</string>
+    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
+    <string name="pref_title_equalizer_natural">自然</string>
+    <string name="devicetype_earfun_air_s">EarFun Air S</string>
+    <string name="zepp_os_watchface_silver_shadows">影银</string>
+    <string name="zepp_os_watchface_digital_wraith">电子幽灵</string>
+    <string name="earfun_anc_mode">降噪模式</string>
+    <string name="earfun_anc_mode_ai_environment_adaptive">AI环境自适应降噪</string>
+    <string name="earfun_anc_mode_balanced">平衡降噪</string>
+    <string name="earfun_tap_action_noise_control_all_modes">噪音控制（所有模式）</string>
+    <string name="earfun_anc_mode_ai_ear_adaptive">AI耳朵自适应降噪</string>
+    <string name="earfun_anc_mode_wind_noise_cancelling">风噪抵消</string>
+    <string name="earfun_tap_action_noise_control_wind_ambient">噪音控制（风噪，环境声）</string>
+    <string name="earfun_tap_action_noise_control_normal_wind">噪音控制（普通，风噪）</string>
 </resources>
