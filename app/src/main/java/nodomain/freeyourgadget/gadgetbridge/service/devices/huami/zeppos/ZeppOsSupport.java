@@ -79,6 +79,7 @@ import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
@@ -259,11 +260,18 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             case ActivityUser.PREF_USER_SLEEP_DURATION:
             case ActivityUser.PREF_USER_GOAL_WEIGHT_KG:
             case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
-            case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES:
+            case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES: {
                 final TransactionBuilder builder = createTransactionBuilder("set fitness goal");
                 setFitnessGoal(builder);
                 builder.queue(getQueue());
                 return;
+            }
+            case SettingsActivity.PREF_MEASUREMENT_SYSTEM: {
+                final TransactionBuilder builder = createTransactionBuilder("set measurement system");
+                setMeasurementSystem(builder);
+                builder.queue(getQueue());
+                return;
+            }
         }
 
         // Check if any of the services handles this config
@@ -445,6 +453,32 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 .write(builder);
 
         return this;
+    }
+
+    protected void setMeasurementSystem(final TransactionBuilder builder) {
+        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+        LOG.info("Setting measurement system to {}", measurementSystem);
+
+        final byte distanceUnit;
+        final byte temperatureUnit;
+        final byte weightUnit;
+
+        // FIXME we should be able to configure these separately
+        if ("metric".equals(measurementSystem)) {
+            distanceUnit = 0;
+            temperatureUnit = 0;
+            weightUnit = 0;
+        } else {
+            distanceUnit = 1;
+            temperatureUnit = 1;
+            weightUnit = 2;
+        }
+
+        configService.newSetter()
+                .setByte(ZeppOsConfigService.ConfigArg.DISTANCE_UNIT, distanceUnit)
+                .setByte(TEMPERATURE_UNIT, temperatureUnit)
+                .setByte(ZeppOsConfigService.ConfigArg.WEIGHT_UNIT, weightUnit)
+                .write(builder);
     }
 
     @Override
