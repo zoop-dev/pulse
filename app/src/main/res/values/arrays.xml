@@ -3397,6 +3397,44 @@
         <item>3</item>
     </string-array>
 
+    <string-array name="redmi_buds_3_pro_equalizer_presets_names">
+        <item>@string/redmi_buds_5_pro_equalizer_preset_standard</item>
+        <item>@string/redmi_buds_5_pro_equalizer_preset_treble</item>
+        <item>@string/redmi_buds_5_pro_equalizer_preset_bass</item>
+        <item>@string/redmi_buds_5_pro_equalizer_preset_voice</item>
+    </string-array>
+
+    <string-array name="redmi_buds_3_pro_equalizer_presets_values">
+        <item>0</item>
+        <item>6</item>
+        <item>5</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="redmi_buds_3_pro_noise_cancelling_strength_names">
+        <item>@string/redmi_buds_5_pro_anc_balanced</item>
+        <item>@string/redmi_buds_5_pro_anc_light</item>
+        <item>@string/redmi_buds_5_pro_anc_deep</item>
+        <item>@string/pref_adaptive_noise_cancelling_title</item>
+    </string-array>
+
+    <string-array name="redmi_buds_3_pro_noise_cancelling_strength_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="redmi_buds_3_pro_transparency_strength_names">
+        <item>@string/redmi_buds_5_pro_transparency_regular</item>
+        <item>@string/redmi_buds_5_pro_transparency_voice</item>
+    </string-array>
+
+    <string-array name="redmi_buds_3_pro_transparency_strength_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
     <string-array name="redmi_buds_5_pro_ambient_sound_control_names">
         <item>@string/sony_ambient_sound_off</item>
         <item>@string/sony_ambient_sound_noise_cancelling</item>
