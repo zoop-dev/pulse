@@ -1435,9 +1435,7 @@
     <string name="about_description_main_nightly">\"Безоблачная\" свободная альтернатива закрытым приложениям от производителей гаджетов. \"Ночные\" сборки Gadgetbridge. Ночные сборки Gadgetbridge. Их нельзя установить, если приложение Gadgetbridge или Pebble уже установлено, из-за конфликта провайдера Pebble.</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Ночной без Pebble</string>
     <string name="about_description_main_nopebble">\"Безоблачная\" свободная альтернатива закрытым приложениям от производителей гаджетов. \"Ночные\" сборки Gadgetbridge. В этой версии провайдер Pebble переименован для предотвращения конфликтов, так что некоторые из интеграций с Pebble работать не будут, зато её можно установить рядом с уже имеющимися установками Gadgetbridge.</string>
-    <string name="about_description_banglejs_main">Приложение-компаньон для Bangle.js построено на основе проекта Gadgetbridge, с добавленным доступом в Интернет.
-\n
-\nВ соответствии с политикой Google Play Store, мы не можем разместить ссылку для пожертвований в самом приложении, но если вам нравится это приложение, пожалуйста, рассмотрите возможность пожертвования через домашнюю страницу Gadgetbridge ниже.</string>
+    <string name="about_description_banglejs_main">Приложение-компаньон для Bangle.js построено на основе проекта Gadgetbridge с добавленным доступом в Интернет. \n \nВ соответствии с политикой магазина Google Play, мы не можем разместить ссылку для пожертвований в самом приложении, но если вам нравится это приложение, пожалуйста, рассмотрите возможность пожертвования через домашнюю страницу Gadgetbridge ниже.</string>
     <string name="about_activity_title_banglejs_main">О Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js выполняется</string>
     <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
@@ -2871,7 +2869,7 @@
     <string name="open_camera">Открыть камеру</string>
     <string name="toast_camera_support_required">Для этой возможности требуется поддержка камеры.</string>
     <string name="toast_camera_photo_taken">Снимок был сделан и сохранён в %s</string>
-    <string name="activity_type_cross_trainer">Кросс-тренажер</string>
+    <string name="activity_type_cross_trainer">Кросс-тренажёр</string>
     <string name="activity_type_stair_stepper">Лестничный шагомер</string>
     <string name="activity_type_crossfit">Кроссфит</string>
     <string name="activity_type_darts">Дротики</string>
@@ -3725,4 +3723,33 @@
     <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
     <string name="pref_override_features_title">Переопределение поддерживаемых функций</string>
     <string name="about_build_details_copied_to_clipboard">Детали сборки копируются в буфер обмена</string>
+    <string name="workout_revolutions">Обороты</string>
+    <string name="left_right_balance">Баланс</string>
+    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
+    <string name="unit_repetitions">повторений</string>
+    <string name="pairing_even_realities_g1_working">Сопряжение с %1s...</string>
+    <string name="pref_workout_send_gps_timeout_title">Тайм-аут отправки GPS-координат</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="activity_type_deadlift">Становая тяга</string>
+    <string name="activity_type_paragliding">Парапланеризм</string>
+    <string name="activity_type_back">Спина</string>
+    <string name="activity_type_athletics">Лёгкая атлетика</string>
+    <string name="activity_type_burpee">Бёрпи</string>
+    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
+    <string name="unit_millimeter">мм</string>
+    <string name="unit_watt">Ватт</string>
+    <string name="unit_joule">Джоуль</string>
+    <string name="unit_rpm">об/мин</string>
+    <string name="workout_repetitions">Повторения</string>
+    <string name="activity_type_other_winter_sports">Другой зимний спорт</string>
+    <string name="activity_type_triathlon">Триатлон</string>
+    <string name="activity_type_diving">Дайвинг</string>
+    <string name="activity_type_powerboating">Водно-моторный спорт</string>
+    <string name="activity_type_equestrian">Конный спорт</string>
+    <string name="fw_upgrade_notice_huawei">"Вы собираетесь обновить ПО до версии %s  Ваших  %s.\n\nТекущая версия ПО: %s.\n\nПосле обновления устройство будет перезагружено.\n\nПРОДОЛЖАЙТЕ НА СВОЙ СТРАХ И РИСК!"</string>
+    <string name="activity_type_other_water_sports">Другой водный спорт</string>
+    <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
+    <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
+    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
+    <string name="copy_to_clipboard">Скопировать</string>
 </resources>
