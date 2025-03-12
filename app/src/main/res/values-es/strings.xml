@@ -3644,4 +3644,13 @@
     <string name="standing_count">Cantidad de veces de pie</string>
     <string name="pairing_even_realities_g1_invalid_device">Dispositivo Even G1 malformado: %1$s.</string>
     <string name="activity_prefs_goal_standing_hours">Objetivo diario: horas de pie</string>
+    <string name="zepp_os_watchface_elegant">Elegante</string>
+    <string name="zepp_os_watchface_deep_space">Espacio profundo</string>
+    <string name="zepp_os_watchface_silver_shadows">Sombras plateadas</string>
+    <string name="zepp_os_watchface_rhythm">Ritmo</string>
+    <string name="zepp_os_watchface_vital_orange">Naranja vital</string>
+    <string name="zepp_os_watchface_vital">Vital</string>
+    <string name="pref_title_equalizer_natural">Natural</string>
+    <string name="devicetype_earfun_air_s">EarFun Air S</string>
+    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
 </resources>
