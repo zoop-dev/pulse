@@ -2814,7 +2814,7 @@
     <string name="Jumps">Ugrások</string>
     <string name="redmi_buds_5_pro_anc_light">Könnyű</string>
     <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
-    <string name="pref_adaptive_noise_cancelling_title">Adaptív ANC</string>
+    <string name="pref_adaptive_noise_cancelling_title">Adaptív aktív zajszűrés</string>
     <string name="soundcore_equalizer_band8">8. sáv</string>
     <string name="pref_force_dnd_support_summary">Ne zavarjanak mód támogatásának kényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="huawei_ignore_wakeup_status_end">Az ébresztés végállapotának mellőzése</string>
@@ -3480,7 +3480,7 @@
     <string name="workoutSets">Sorozatok</string>
     <string name="cyclingPowerAverage">Átlagos kerékpáros teljesítmény</string>
     <string name="sony_touch_sensor">Érintésérzékelős vezérlés</string>
-    <string name="pref_adaptive_noise_cancelling_summary">Az ANC erősségének automatikus beállítása a környezeti hang függvényében</string>
+    <string name="pref_adaptive_noise_cancelling_summary">Az aktív zajszűrés erősségének automatikus beállítása a környezeti hang függvényében</string>
     <string name="sony_speak_to_chat">Speak-to-chat</string>
     <string name="prefs_wena3_led_none">LED nélkül</string>
     <string name="widget_layout_top_wide_bot_large">Széles felül, nagy alul</string>
