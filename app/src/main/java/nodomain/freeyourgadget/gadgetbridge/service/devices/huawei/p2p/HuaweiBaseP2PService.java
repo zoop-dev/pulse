@@ -64,7 +64,7 @@ public abstract class HuaweiBaseP2PService {
             }
             test.doPerform();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to send p2p command", e);
         }
     }
 
@@ -77,7 +77,7 @@ public abstract class HuaweiBaseP2PService {
             }
             test.doPerform();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to send ping", e);
         }
     }
 

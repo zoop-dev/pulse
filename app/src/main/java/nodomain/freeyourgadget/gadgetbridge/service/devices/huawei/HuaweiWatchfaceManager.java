@@ -236,7 +236,7 @@ public class HuaweiWatchfaceManager
             getWatchfacesList.setFinalizeReq(finalizeReq);
             getWatchfacesList.doPerform();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to get watchfaces list", e);
         }
 
     };

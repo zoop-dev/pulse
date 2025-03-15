@@ -431,7 +431,7 @@ public class NotificationsHandler implements MessageHandler {
                 }
                 return byteArrayOutputStream.toString();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("this should never happen", e);
             }
 
         }

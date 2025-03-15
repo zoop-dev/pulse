@@ -132,7 +132,7 @@ public class HuaweiP2PCannedRepliesService extends HuaweiBaseP2PService {
                 }
             }
         } catch (HuaweiPacket.MissingTagException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to handle p2p canned replies", e);
         }
     }
 }

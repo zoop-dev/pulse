@@ -2,6 +2,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync;
 
 import android.content.SharedPreferences;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class HuaweiDataSyncGoals implements HuaweiDataSyncCommon.DataCallback {
+    private final Logger LOG = LoggerFactory.getLogger(HuaweiDataSyncGoals.class);
 
     private final HuaweiSupportProvider support;
 
@@ -105,7 +109,7 @@ public class HuaweiDataSyncGoals implements HuaweiDataSyncCommon.DataCallback {
             } break;
         }
         } catch (HuaweiPacket.MissingTagException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to handle data sync goals config command", e);
         }
     }
 
