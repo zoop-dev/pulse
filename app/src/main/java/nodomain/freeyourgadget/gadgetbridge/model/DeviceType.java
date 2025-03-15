@@ -186,6 +186,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.miband6.MiBand6Coordin
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.miband7.MiBand7Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppe.ZeppECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.freebuds5i.HuaweiFreebuds5iCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.freebudspro.HuaweiFreebudsProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband3.HonorBand3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband4.HonorBand4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband5.HonorBand5Coordinator;
@@ -593,6 +594,7 @@ public enum DeviceType {
     HUAWEIWATCH3(HuaweiWatch3Coordinator.class),
     HUAWEIWATCH4PRO(HuaweiWatch4ProCoordinator.class),
     HUAWEI_FREEBUDS5I(HuaweiFreebuds5iCoordinator.class),
+    HUAWEI_FREEBUDS_PRO(HuaweiFreebudsProCoordinator.class),
     VESC(VescCoordinator.class),
     BINARY_SENSOR(BinarySensorCoordinator.class),
     FLIPPER_ZERO(FlipperZeroCoordinator.class),

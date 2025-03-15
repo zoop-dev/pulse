@@ -4,6 +4,7 @@
 
 * Initial support for EarFun Air S and Air Pro 4 headphones
 * Initial support for Garmin Instinct 3
+* Initial support for Huawei Freebuds Pro
 * Amazfit Active 2: Fix device discovery
 * Amazfit GTR2e: Enable PAI support
 * Fossil/Skagen Hybrids: Fix hidden upload button in app manager
