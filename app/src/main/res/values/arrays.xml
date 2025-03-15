@@ -3397,6 +3397,18 @@
         <item>3</item>
     </string-array>
 
+    <string-array name="onemore_noise_control_modes">
+        <item>@string/off</item>
+        <item>@string/prefs_active_noise_cancelling</item>
+        <item>@string/prefs_active_noise_cancelling_transparency</item>
+    </string-array>
+
+    <string-array name="onemore_noise_control_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <string-array name="redmi_buds_3_pro_equalizer_presets_names">
         <item>@string/redmi_buds_5_pro_equalizer_preset_standard</item>
         <item>@string/redmi_buds_5_pro_equalizer_preset_treble</item>

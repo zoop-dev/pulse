@@ -614,6 +614,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SLEEP_MODE_SMART_ENABLE);
 
         addPreferenceHandlerFor(PREF_ACTIVE_NOISE_CANCELLING_TOGGLE);
+        addPreferenceHandlerFor(PREF_NOISE_CONTROL_SELECTOR);
         addPreferenceHandlerFor(PREF_WEAR_SENSOR_TOGGLE);
         addPreferenceHandlerFor(PREF_BANDW_PSERIES_GUI_VPT_LEVEL);
 
@@ -816,6 +817,9 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_FEMOMETER_MEASUREMENT_MODE);
 
         addPreferenceHandlerFor(PREF_QC35_NOISE_CANCELLING_LEVEL);
+
+        addPreferenceHandlerFor(PREF_DUAL_DEVICE_SUPPORT);
+
         addPreferenceHandlerFor(PREF_USER_FITNESS_GOAL);
         addPreferenceHandlerFor(PREF_USER_FITNESS_GOAL_NOTIFICATION);
         addPreferenceHandlerFor(PREF_USER_FITNESS_GOAL_SECONDARY);

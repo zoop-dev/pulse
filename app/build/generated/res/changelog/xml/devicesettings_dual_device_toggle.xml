@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_devices_other"
+        android:key="dual_device_support"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/dual_device_mode_title"
+        android:summary="@string/dual_device_mode_summary" />
+</androidx.preference.PreferenceScreen>

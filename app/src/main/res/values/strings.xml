@@ -2979,6 +2979,7 @@
     <string name="qhybrid_summary_on_device_confirmation">On-device pairing confirmations can get annoying. Disabling them might lose you functionality.</string>
     <string name="devicetype_vesc">VESC</string>
     <string name="devicetype_bose_qc35">Bose QC35</string>
+    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="withings_steel_hr">Withings Steel HR</string>
     <string name="pref_button_action_disabled">Disabled</string>
@@ -3241,6 +3242,9 @@
     <string name="blue">Blue</string>
     <string name="purple">Purple</string>
     <string name="white">White</string>
+
+    <string name="dual_device_mode_title">Dual device mode</string>
+    <string name="dual_device_mode_summary">Allow connecting headphones to two devices simultaneously</string>
 
     <string name="prefs_wena3_title_screen">Display Settings</string>
     <string name="prefs_wena3_title_activity">Activity Settings</string>
