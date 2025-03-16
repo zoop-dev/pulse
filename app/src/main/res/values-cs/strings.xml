@@ -3841,4 +3841,8 @@
     <string name="zepp_os_watchface_vital_orange">Vital Orange</string>
     <string name="pref_title_equalizer_natural">Přirozený</string>
     <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
+    <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
+    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
+    <string name="dual_device_mode_summary">Umožnit připojení sluchátek ke dvěma zařízením současně</string>
+    <string name="dual_device_mode_title">Režim duálních zařízení</string>
 </resources>
