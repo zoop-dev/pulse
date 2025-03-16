@@ -3867,4 +3867,5 @@
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="dual_device_mode_title">Tryb podwójnego urządzenia</string>
     <string name="dual_device_mode_summary">Zezwalaj na podłączanie słuchawek do dwóch urządzeń jednocześnie</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
 </resources>
