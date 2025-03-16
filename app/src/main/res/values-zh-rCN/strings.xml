@@ -3843,4 +3843,9 @@
     <string name="earfun_anc_mode_wind_noise_cancelling">风噪抵消</string>
     <string name="earfun_tap_action_noise_control_wind_ambient">噪音控制（风噪，环境声）</string>
     <string name="earfun_tap_action_noise_control_normal_wind">噪音控制（普通，风噪）</string>
+    <string name="devicetype_huawei_freebuds_pro">华为 FreeBuds Pro</string>
+    <string name="dual_device_mode_summary">允许同时将耳机连接到两个设备</string>
+    <string name="devicetype_redmi_buds_3_pro">红米 Buds 3 Pro</string>
+    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
+    <string name="dual_device_mode_title">双设备模式</string>
 </resources>
