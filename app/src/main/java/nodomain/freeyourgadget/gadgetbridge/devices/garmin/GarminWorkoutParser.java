@@ -299,7 +299,16 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(AVG_VERTICAL_OSCILLATION, session.getAvgVerticalOscillation(), UNIT_MM);
         summaryData.add(AVG_GROUND_CONTACT_TIME, session.getAvgStanceTime(), UNIT_MILLISECONDS);
         summaryData.add(AVG_VERTICAL_RATIO, session.getAvgVerticalRatio(), UNIT_PERCENTAGE);
-        summaryData.add(AVG_GROUND_CONTACT_TIME_BALANCE, session.getAvgStanceTimeBalance(), UNIT_PERCENTAGE);
+        if (session.getAvgStanceTimeBalance() != null) {
+            summaryData.add(
+                    AVG_GROUND_CONTACT_TIME_BALANCE,
+                    context.getString(
+                            R.string.range_percentage_float,
+                            session.getAvgStanceTimeBalance(),
+                            100f  - session.getAvgStanceTimeBalance()
+                    )
+            );
+        }
 
         final Number[] avgLeftPowerPhase = session.getAvgLeftPowerPhase();
         if (avgLeftPowerPhase != null && avgLeftPowerPhase.length == 4) {
@@ -394,10 +403,24 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         final Integer balance = session.getLeftRightBalance();
         if (balance != null) {
+            final float balancePercentage = (balance & 0x3fff) / 100f;
+            final boolean isRight = (balance & 0x8000) != 0;
+            final float balanceL;
+            final float balanceR;
+            if (isRight) {
+                balanceL = 100f - balancePercentage;
+                balanceR = balancePercentage;
+            } else {
+                balanceL = balancePercentage;
+                balanceR = 100f - balancePercentage;
+            }
             summaryData.add(
                     LEFT_RIGHT_BALANCE,
-                    (balance & 0x3fff) / 100f,
-                    UNIT_PERCENTAGE
+                    context.getString(
+                            R.string.range_percentage_float,
+                            balanceL,
+                            balanceR
+                    )
             );
         }
 

@@ -40,6 +40,7 @@
     <string name="search">Search</string>
     <string name="find_lost_device_message">Search for %1$s?</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="controlcenter_take_screenshot">Take Screenshot</string>
     <string name="controlcenter_power_off">Power Off</string>
