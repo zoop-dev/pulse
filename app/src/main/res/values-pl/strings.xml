@@ -3864,4 +3864,7 @@
     <string name="earfun_tap_action_noise_control_all_modes">Kontrola hałasu (wszystkie tryby)</string>
     <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
     <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
+    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
+    <string name="dual_device_mode_title">Tryb podwójnego urządzenia</string>
+    <string name="dual_device_mode_summary">Zezwalaj na podłączanie słuchawek do dwóch urządzeń jednocześnie</string>
 </resources>
