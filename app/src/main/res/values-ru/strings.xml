@@ -3802,4 +3802,10 @@
     <string name="range_percentage">%1$d%% - %2$d%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="activity_prefs_goal_standing_hours">Ежедневная цель: часы стояния</string>
+    <string name="unit_revolutions_per_minute">об/мин</string>
+    <string name="reset">Перезагрузить</string>
+    <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
+    <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
+    <string name="unit_repetitions_per_minute">повторений/мин</string>
+    <string name="unit_revolutions">обороты</string>
 </resources>
