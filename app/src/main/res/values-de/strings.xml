@@ -3783,10 +3783,11 @@
     <string name="earfun_anc_mode_wind_noise_cancelling">Windgeräuschunterdrückung</string>
     <string name="earfun_tap_action_noise_control_normal_ambient">Geräuschkontrolle (Normal, Transparenz)</string>
     <string name="activity_type_deadlift">Kreuzheben</string>
-    <string name="activity_type_burpee"></string>
+    <string name="activity_type_burpee"/>
     <string name="activity_type_abs">Bauchmuskeln</string>
     <string name="activity_type_back">Rücken</string>
     <string name="cycling">Radfahren</string>
     <string name="prefs_active_noise_cancelling_transport">Reisen</string>
     <string name="prefs_active_noise_cancelling_indoor">Drinnen</string>
+    <string name="unit_rpm">U/min</string>
 </resources>
