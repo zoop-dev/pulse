@@ -2,9 +2,11 @@
 
 #### Next version (WIP)
 
+* Initial support for 1MORE SonoFlow headphones
 * Initial support for EarFun Air S and Air Pro 4 headphones
 * Initial support for Garmin Instinct 3
-* Initial support for Huawei Freebuds Pro
+* Initial support for Huawei FreeBuds Pro
+* Initial support for Redmi Buds 3 Pro
 * Amazfit Active 2: Fix device discovery
 * Amazfit GTR2e: Enable PAI support
 * Fossil/Skagen Hybrids: Fix hidden upload button in app manager
@@ -15,6 +17,7 @@
 * Garmin: Parse extended running and cycling workout data
 * Garmin: Resolve names for services and characteristics
 * Huawei: Fix delete notifications for LE devices
+* Huawei: Fix some crashes
 * Huawei: Increase user ID length to 19 characters
 * Huawei: Real-time heart rate mode and low/high alerts
 * Pebble: Fix all day events timezone
@@ -22,6 +25,7 @@
 * Xiaomi-protobuf: Map some missing workout types
 * Zepp OS: Fix temperature and distance unit configuration
 * Fix app crash when switching between Android user profiles
+* Fix icon on low battery level
 * Fix ignoring low priority notifications on Android 13+
 * Fix some preference summaries not getting updated
 * Reduce log spam from browsing preferences
