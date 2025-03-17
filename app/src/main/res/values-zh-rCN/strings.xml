@@ -3848,4 +3848,5 @@
     <string name="devicetype_redmi_buds_3_pro">红米 Buds 3 Pro</string>
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="dual_device_mode_title">双设备模式</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
 </resources>
