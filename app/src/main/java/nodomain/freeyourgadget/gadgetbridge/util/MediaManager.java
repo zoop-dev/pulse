@@ -21,8 +21,10 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
+import android.media.session.MediaSession;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
+import android.os.Build;
 
 import androidx.annotation.Nullable;
 
@@ -92,11 +94,29 @@ public class MediaManager {
             final List<MediaController> controllers = mediaSessionManager.getActiveSessions(
                     new ComponentName(context, NotificationListener.class)
             );
+            final MediaController controller;
             if (controllers.isEmpty()) {
-                LOG.debug("No media controller available");
-                return;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    // Fallback to the one that would handle the media key event, if any
+                    final MediaSession.Token mediaKeyEventSession = mediaSessionManager.getMediaKeyEventSession();
+                    if (mediaKeyEventSession != null) {
+                        LOG.debug("Got media key event session controller");
+                        controller = new MediaController(context, mediaKeyEventSession);
+                    } else {
+                        LOG.debug("No fallback media controller available");
+                        bufferMusicSpec = null;
+                        bufferMusicStateSpec = null;
+                        return;
+                    }
+                } else {
+                    LOG.debug("No active media controller available");
+                    bufferMusicSpec = null;
+                    bufferMusicStateSpec = null;
+                    return;
+                }
+            } else {
+                controller = controllers.get(0);
             }
-            final MediaController controller = controllers.get(0);
 
             bufferMusicSpec = extractMusicSpec(controller.getMetadata());
             bufferMusicStateSpec = extractMusicStateSpec(controller.getPlaybackState());
