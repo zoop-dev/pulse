@@ -1178,4 +1178,19 @@
     <string name="prefs_stress_monitoring_description">Monitorizarea nivelului de stres în timpul odihnei</string>
     <string name="prefs_relaxation_reminder_title">Memento de relaxare</string>
     <string name="pref_dashboard_widget_today_24h_summary">Afișează activitatea într-un singur cerc de 24 de ore în loc de un cerc dublu de 12 ore</string>
+    <string name="sports_activity_quick_filter_last_week">Săptămăna precedentă</string>
+    <string name="purple">Violet</string>
+    <string name="Speed">Viteză</string>
+    <string name="preview_image">Previzualizare imagine</string>
+    <string name="active_calories_goal">Țintă curentă</string>
+    <string name="total_calories_burnt">Total consumate</string>
+    <string name="cyan">Cyan</string>
+    <string name="qhybrid_vibration_strength">Intensitate vibrații:</string>
+    <string name="green">Verde</string>
+    <string name="white">Alb</string>
+    <string name="prefs_wena3_hint_lift_wrist">Pornește ecranul când privești la încheietură</string>
+    <string name="gree_controller_host">Gazdă</string>
+    <string name="blue">Albastru</string>
+    <string name="prefs_wena3_title_screen">Reglaje ecran</string>
+    <string name="dual_device_mode_summary">Permite conectarea căștilor la două dispozitive simultan</string>
 </resources>
