@@ -242,7 +242,7 @@
     <string name="chart_no_data_synchronize">Nincs adat. Szinkronizálja az eszközt\?</string>
     <string name="user_feedback_miband_activity_data_transfer">%1$s adat átvitele %2$s-től kezdve</string>
     <string name="miband_prefs_fitness_goal">Napi lépéscél</string>
-    <string name="dbaccess_error_executing">Hiba a(z) „%1$s” végrehajtása közben</string>
+    <string name="dbaccess_error_executing">Hiba történt a(z) „%1$s” végrehajtása közben</string>
     <string name="controlcenter_start_activitymonitor">Tevékenységei</string>
     <string name="cannot_connect">Nem lehet kapcsolódni a következőhöz: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">A telepítéshez szükséges segédfájl nem található.</string>
@@ -335,7 +335,7 @@
     <string name="appwidget_setting_alarm">Riasztás beállítva: %1$02d:%2$02d</string>
     <string name="device_hw">Hardververzió: %1$s</string>
     <string name="device_fw">Firmware verzió: %1$s</string>
-    <string name="error_creating_directory_for_logfiles">Hiba a könyvtár létrehozásakor a naplófájlok számára: %1$s</string>
+    <string name="error_creating_directory_for_logfiles">Hiba történt a könyvtár létrehozásakor a naplófájlok számára: %1$s</string>
     <string name="DEVINFO_HR_VER">"HR: "</string>
     <string name="updatefirmwareoperation_update_in_progress">Firmware telepítése</string>
     <string name="updatefirmwareoperation_firmware_not_sent">Nem küldött firmware</string>
@@ -349,13 +349,13 @@
     <string name="activity_db_management_merge_old_title">Régi adatbázis törlése</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Nem érhető el az exportálási útvonal. Vegye fel a kapcsolatot a fejlesztőkkel.</string>
     <string name="dbmanagementactivity_exported_to">Exportálva ide: %1$s</string>
-    <string name="dbmanagementactivity_error_exporting_db">Hiba az adatbázis exportálásakor: %1$s</string>
-    <string name="dbmanagementactivity_error_exporting_shared">Hiba a beállítások exportálásakor: %1$s</string>
+    <string name="dbmanagementactivity_error_exporting_db">Hiba történt az adatbázis exportálásakor: %1$s</string>
+    <string name="dbmanagementactivity_error_exporting_shared">Hiba történt a beállítások exportálásakor: %1$s</string>
     <string name="dbmanagementactivity_import_data_title">Adatok importálása?</string>
     <string name="dbmanagementactivity_overwrite_database_confirmation">Biztosan felül szeretné írni a jelenlegi adatokat? Az összes jelenlegi tevékenységadat (ha van) el fog veszni.</string>
     <string name="dbmanagementactivity_import_successful">Importálva.</string>
-    <string name="dbmanagementactivity_error_importing_db">Hiba az adatbázis importálásakor: %1$s</string>
-    <string name="dbmanagementactivity_error_importing_shared">Hiba a beállítások importálásakor: %1$s</string>
+    <string name="dbmanagementactivity_error_importing_db">Hiba történt az adatbázis importálásakor: %1$s</string>
+    <string name="dbmanagementactivity_error_importing_shared">Hiba történt a beállítások importálásakor: %1$s</string>
     <string name="dbmanagementactivity_delete_activity_data_title">Törli az tevékenységadatokat?</string>
     <string name="dbmanagementactivity_really_delete_entire_db">Biztosan törölni szeretné az egész adatbázist? Minden tevékenységadat és az Önről tárolt információ el fog veszni.</string>
     <string name="dbmanagementactivity_database_successfully_deleted">Adatok törölve.</string>
@@ -578,7 +578,7 @@
     <string name="watchface_dialog_title_widget">Modulbeállítások</string>
     <string name="watchface_dialog_widget_cat_custom_widget">Egyéni modul</string>
     <string name="watchface_dialog_widget_type">Típus</string>
-    <string name="error_setting_parent_folder">Hiba a szülőmappa beállításakor: %s</string>
+    <string name="error_setting_parent_folder">Hiba történt a szülőmappa beállításakor: %s</string>
     <string name="preferences_led_color">LED szín</string>
     <string name="controlcenter_set_preferences">Eszközbeállítások</string>
     <string name="reminder_message">Üzenet</string>
@@ -888,7 +888,7 @@
     <string name="reset_index">Lekérdezési dátum visszaállítása</string>
     <string name="pref_vibrate_for_alert">Rezgés ébresztéskor</string>
     <string name="activity_type_pingpong">Asztalitenisz</string>
-    <string name="qhybrid_buttons_overwrite_error">Hiba a gombok felülírásakor</string>
+    <string name="qhybrid_buttons_overwrite_error">Hiba történt a gombok felülírásakor</string>
     <string name="qhybrid_vibration_strength">rezgés erőssége:</string>
     <string name="title_activity_notification_filter">Értesítésszűrő</string>
     <string name="abstract_chart_fragment_kind_rem_sleep">REM alvás</string>
@@ -1046,7 +1046,7 @@
     <string name="appmanager_downloaded_to_cache">%s letöltve gyorsítótárba</string>
     <string name="sony_surround_mode_off">Ki</string>
     <string name="pref_header_display">Kijelző</string>
-    <string name="appmanager_download_app_error">Hiba az alkalmazás letöltésekor</string>
+    <string name="appmanager_download_app_error">Hiba történt az alkalmazás letöltésekor</string>
     <string name="activity_list_summary_activities">Tevékenységek</string>
     <string name="custom">Egyéni</string>
     <string name="menuitem_nothing">Semmi</string>
@@ -1686,7 +1686,7 @@
     <string name="gpx_route_upload_complete">Gpx útvonal feltöltése befejeződött</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">A lehívási művelet időbélyegzőinek csonkítása</string>
     <string name="portuguese_br">Portugál (Brazília)</string>
-    <string name="dbmanagementactivity_error_cleaning_export_directory">Hiba az exportkönyvtárban található fájlok törlésekor: %1$s</string>
+    <string name="dbmanagementactivity_error_cleaning_export_directory">Hiba történt az exportkönyvtárban található fájlok törlésekor: %1$s</string>
     <string name="activity_type_hiit">Magas intenzitású intervall edzés</string>
     <string name="prefs_password_4_digits_0_to_9_summary">A jelszónak 4 számjegyűnek kell lennie, csak számokat használva</string>
     <string name="activity_web_view">Webes nézet tevékenység</string>
@@ -2021,7 +2021,7 @@
     <string name="prefs_button_triple_press_action_selection_title">3. esemény művelet</string>
     <string name="gpx_receiver_activity_title">GPX-vevő Gadgetbridge</string>
     <string name="gpx_receiver_overwrite_some_files">Néhány fájl már létezik. Felülírja?</string>
-    <string name="error_version_check_extreme_caution">FIGYELEM: Hiba a verzióinformáció ellenőrzésénél! Nem szabad folytatni! „%s” verzió nevét láttam</string>
+    <string name="error_version_check_extreme_caution">FIGYELEM: Hiba történt a verzióinformáció ellenőrzésénél! Nem szabad folytatni! „%s” verzió nevét láttam</string>
     <string name="share_log_warning">Ne feledje, hogy a Gadgetbridge olyan fájlokat naplóz, amelyek sok személyes adatot tartalmazhatnak, többek között egészségügyi adatokat, egyedi azonosítókat (például az eszköz MAC-címét), zenei beállításokat stb. Fontolja meg a fájl szerkesztését és ezen információk eltávolítását, mielőtt elküldi a fájlt egy nyilvános hibajelentésre.</string>
     <string name="pref_title_upper_button_long_press_action">Felső gomb hosszú megnyomású művelet</string>
     <string name="pref_title_lower_button_function_long">Alsó gomb hosszan</string>
@@ -2036,7 +2036,7 @@
     <string name="companiondevice_pairing">Társeszköz párosítás</string>
     <string name="qhybrid_time_shift">időeltolódás</string>
     <string name="baseAltitude">Bázismagasság</string>
-    <string name="error_retrieving_devices_database">Hiba az eszközök adatbázisból való lekérésekor</string>
+    <string name="error_retrieving_devices_database">Hiba történt az eszközök adatbázisból való lekérésekor</string>
     <string name="error_background_service">Nem sikerült elindítani a háttérszolgáltatást</string>
     <string name="error_background_service_reason_truncated">A háttérszolgáltatás indítása sikertelen, mert…</string>
     <string name="aerobicTrainingEffect">Aerobic hatás</string>
@@ -2049,7 +2049,7 @@
     <string name="mi_h">mérföld/óra</string>
     <string name="minutes_mi">perc/mi</string>
     <string name="error_background_service_reason">A háttérszolgáltatás indítása egy kivétel miatt nem sikerült - további információkért kattintson ide.\n\nHiba:</string>
-    <string name="error_setting_alias">Hiba az álnév beállításakor:</string>
+    <string name="error_setting_alias">Hiba történt az álnév beállításakor:</string>
     <string name="discover_unsupported_devices">Nem támogatott eszközök felfedezése</string>
     <string name="swolf_index">swolf index</string>
     <string name="spm">lépés/perc</string>
@@ -2068,7 +2068,7 @@
     <string name="hrZoneNa">N/A</string>
     <string name="device_requires_key">KULCS SZÜKSÉGES, A BELÉPÉSHEZ HOSSZAN NYOMJA MEG</string>
     <string name="error_location_enabled_mandatory">Az eszközök beolvasásához be kell kapcsolni a helymeghatározást</string>
-    <string name="error_exporting_device_preferences">Hiba az eszközspecifikus beállítások exportálásakor</string>
+    <string name="error_exporting_device_preferences">Hiba történt az eszközspecifikus beállítások exportálásakor</string>
     <string name="flatDistance">Sík távolság</string>
     <string name="elevationGain">Magasságnövekedés</string>
     <string name="maxPace">Leggyorsabb tempó</string>
@@ -2233,7 +2233,7 @@
     <string name="prefs_touch_lock_buds2">Érintő funkciók</string>
     <string name="prefs_touch_lock_summary">Érintő kijelző kikapcsolása</string>
     <string name="prefs_ambient_volume_left">Környezeti hangerő (bal)</string>
-    <string name="prefs_customize_ambient_sound_summary">Környezeti hang testreszabása</string>
+    <string name="prefs_customize_ambient_sound_summary">Környezeti hang személyre szabása</string>
     <string name="prefs_ambient_sound_during_call_title">Környezeti hang hívás közben</string>
     <string name="prefs_ambient_settings_title">Környezeti hangbeállítások</string>
     <string name="watchface_setting_wrist_flick_minute">Percmutató (-360 és 360 között)</string>
@@ -2444,7 +2444,7 @@
     <string name="huawei_trusleep_summary_light">Fejlesztett alvásfigyelés</string>
     <string name="huawei_trusleep_warning">Figyelem: aktiválás után minden alvásadat könnyű alvásként jelenik meg a Gadgetbridge-ben! Koppintson ide, ha ezt elfogadja.</string>
     <string name="pref_summary_navigation_forward">A navigációs alkalmazások utasításainak továbbítása az órára</string>
-    <string name="error_deleting_device">Hiba az eszköz törlésekor: %s</string>
+    <string name="error_deleting_device">Hiba történt az eszköz törlésekor: %s</string>
     <string name="fossil_hr_confirmation_skipped">Eszközön történő jóváhagyás kihagyása</string>
     <string name="hrv">Szívfrekvencia-variabilitás</string>
     <string name="triple_tap">Tripla koppintás</string>
@@ -2547,7 +2547,7 @@
     <string name="huawei_ignore_wakeup_status_start">Ébresztési állapot mellőzése</string>
     <string name="prefs_wena3_home_icon_name_wena_pay">Wena Pay</string>
     <string name="devicetype_colmi_r10">Colmi R10</string>
-    <string name="error_showing_changelog">Hiba a változásnapló megjelenítésekor</string>
+    <string name="error_showing_changelog">Hiba történt a változásnapló megjelenítésekor</string>
     <string name="devicetype_huawei_watchd2">Huawei Watch D2</string>
     <string name="devicetype_huawei_watch3">Huawei Watch 3 (Pro)</string>
     <string name="hrv_rmssd">HRV RMSSD</string>
@@ -2840,7 +2840,7 @@
     <string name="moondrop_touch_action_call_pick_hang">Felvesz/Hang hívás</string>
     <string name="moondrop_touch_action_call_start">Hívás indítása</string>
     <string name="soundcore_equalizer_preset_xtra_bass">Extra Bass</string>
-    <string name="soundcore_equalizer_custom_title">Testreszabás…</string>
+    <string name="soundcore_equalizer_custom_title">Személyre szabás…</string>
     <string name="miscale_weight_unit_title">Súlyegység</string>
     <string name="qhybrid_summary_on_device_confirmation">Az eszközön történő párosítás megerősítése bosszantó lehet. Ha letiltja őket, elveszítheti a funkcionalitását.</string>
     <string name="blue">Kék</string>
