@@ -147,6 +147,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MusicControlEntityUpdateMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -1621,6 +1622,19 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             o.put("c", musicSpec.trackCount);
             o.put("n", musicSpec.trackNr);
             uartTxJSON("onSetMusicInfo", o);
+        } catch (JSONException e) {
+            LOG.info("JSONException: " + e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void onSetPhoneVolume(float volume) {
+        LOG.info("BangleJSDeviceSupport.onSetPhoneVolume volume:\n" + volume);
+        try {
+            JSONObject o = new JSONObject();
+            o.put("t", "audio");
+            o.put("v", volume);
+            uartTxJSON("onSetPhoneVolume", o);
         } catch (JSONException e) {
             LOG.info("JSONException: " + e.getLocalizedMessage());
         }
