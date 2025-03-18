@@ -1193,4 +1193,22 @@
     <string name="blue">Albastru</string>
     <string name="prefs_wena3_title_screen">Reglaje ecran</string>
     <string name="dual_device_mode_summary">Permite conectarea căștilor la două dispozitive simultan</string>
+    <string name="pref_description_general">Pornire, limbă, regiune, locație</string>
+    <string name="pref_description_deprecated_functionalities">Setări care vor fi eliminate într-o versiune ulterioară</string>
+    <string name="fw_upgrade_notice_huawei">Urmează să instalezi firmware-ul %s pe %s.\n\nFirmware-ul actual este %s.\n\nDispozitivul tău va reporni după instalarea noului firmware.\n\nCONTINUĂ PE PROPRIA RĂSPUNDERE!</string>
+    <string name="pref_description_user_interface">Tema, ecran principal</string>
+    <string name="pref_description_about_you">Data nașterii, gen, înălțime, greutate, obiective</string>
+    <string name="pref_title_pebble_always_ack_pebblekit">Confirmare prematură PebbleKit</string>
+    <string name="pref_title_calendar_lookahead">Numărul de zile în avans</string>
+    <string name="fw_upgrade_notice_miband6">Urmează să instalezi firmware-ul %s pe Mi Band 6.\n\nTe rugăm să te asiguri că instalezi mai întâi fișierul .fw, iar apoi fișierul .res. Brățara ta va reporni după instalarea fișierului .fw.\n\nNotă: Nu trebuie să instalezi fișierul .res dacă este exact același cu cel instalat anterior.\n\nCONTINUĂ PE PROPRIA RĂSPUNDERE!</string>
+    <string name="pref_description_automations">Export automat, preluare automată</string>
+    <string name="pref_title_user_interface">Interfață utilizator</string>
+    <string name="title_activity_musicmanager">Managerul de muzică</string>
+    <string name="pref_title_nagivation_apps">Aplicații de navigare</string>
+    <string name="pref_summary_pebble_enable_applogs">Jurnalele din aplicațiile ceasului vor fi înregistrate de Gadgetbridge (necesită reconectare)</string>
+    <string name="fw_upgrade_notice_amazfitx">Urmează să instalezi firmware-ul %s pe Amazfit X.\n\nTe rugăm să te asiguri că instalezi mai întâi fișierul .fw, iar apoi fișierul .res. Brățara ta va reporni după instalarea fișierului .fw.\n\nNotă: Nu trebuie să instalezi fișierul .res dacă este exact același cu cel instalat anterior.\n\nCONTINUĂ PE PROPRIA RĂSPUNDERE!</string>
+    <string name="pref_header_external_integrations">Integrări externe</string>
+    <string name="pref_header_automations">Automatizări</string>
+    <string name="pref_header_main_screen">Ecran principal</string>
+    <string name="search">Caută</string>
 </resources>
