@@ -39,7 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class CmfPreferences {
@@ -108,7 +107,9 @@ public class CmfPreferences {
             case HuamiConst.PREF_WORKOUT_ACTIVITY_TYPES_SORTABLE:
                 setActivityTypes();
                 return;
-            // TODO call reminders
+            case DeviceSettingsPreferenceConst.PREF_BLUETOOTH_CALLS_ENABLED:
+                setCallReminders();
+                return;
         }
 
         LOG.warn("Unknown config changed: {}", config);
@@ -335,6 +336,17 @@ public class CmfPreferences {
         }
 
         mSupport.sendCommand("set hydration reminders", CmfCommand.WATER_REMINDER_SET, buf.array());
+    }
+
+    private void setCallReminders() {
+        final Prefs prefs = mSupport.getDevicePrefs();
+        final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_BLUETOOTH_CALLS_ENABLED, false);
+
+        final TransactionBuilder builder = mSupport.createTransactionBuilder("set call reminders = " + enabled);
+
+        mSupport.sendCommand(builder, CmfCommand.CALL_REMINDER_REQUEST, new byte[]{0x01, (byte) (enabled ? 0x01 : 0x00)});
+
+        builder.queue(mSupport.getQueue());
     }
 
     private void setActivityTypes() {

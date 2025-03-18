@@ -323,6 +323,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
 
         settings.add(R.xml.devicesettings_header_notifications);
         settings.add(R.xml.devicesettings_send_app_notifications);
+        settings.add(R.xml.devicesettings_bluetooth_calls);
         settings.add(R.xml.devicesettings_transliteration);
 
         settings.add(R.xml.devicesettings_header_other);

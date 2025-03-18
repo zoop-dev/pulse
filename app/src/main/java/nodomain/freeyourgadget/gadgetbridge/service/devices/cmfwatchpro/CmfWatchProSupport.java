@@ -345,6 +345,7 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
                 //sendCommand(phase2builder, CmfCommand.WATER_REMINDER_GET);
                 //sendCommand(phase2builder, CmfCommand.CONTACTS_GET);
                 //sendCommand(phase2builder, CmfCommand.ALARMS_GET);
+                //sendCommand(phase2builder, CmfCommand.CALL_REMINDER_REQUEST, 0x00);
                 // TODO premature to mark as initialized?
                 phase2builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
                 phase2builder.queue(getQueue());
@@ -390,6 +391,12 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
                 }
                 evaluateGBDeviceEvent(findPhoneEvent);
                 return;
+            case CALL_REMINDER_RESPONSE:
+                LOG.debug("Got call reminder response: {}", GB.hexdump(payload));
+                // 00 -> ack set
+                // 01:00 -> disabled
+                // 01:01 -> enabled
+                break;
             case MUSIC_INFO_ACK:
                 LOG.debug("Got music info ack");
                 break;
