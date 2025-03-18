@@ -3,16 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreferenceCompat
         android:defaultValue="true"
-        android:icon="@drawable/ic_extension"
+        android:icon="@drawable/ic_ear_sound"
         android:key="pref_freebuds_inear_detection"
         android:layout="@layout/preference_checkbox"
         android:summary="@string/nothing_prefs_inear_summary"
         android:title="@string/nothing_prefs_inear_title" />
-    <ListPreference
-        android:entries="@array/huawei_freebuds_audio_mode_names"
-        android:entryValues="@array/huawei_freebuds_audio_mode_values"
-        android:icon="@drawable/ic_extension"
-        android:key="pref_freebuds_audiomode"
-        android:summary="%s"
-        android:title="@string/nothing_prefs_audiomode_title" />
 </androidx.preference.PreferenceScreen>

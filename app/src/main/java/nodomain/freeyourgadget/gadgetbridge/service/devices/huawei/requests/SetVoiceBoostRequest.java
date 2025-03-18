@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024-2025 Martin.JM, Ilya Nikitenkov
+/*  Copyright (C) 2025 Ilya Nikitenkov
 
     This file is part of Gadgetbridge.
 
@@ -27,40 +27,49 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Earphones;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
-public class SetAudioModeRequest extends Request {
+public class SetVoiceBoostRequest extends Request {
 
-    public enum AudioMode {
-        OFF((byte) 0x00),
-        ANC((byte) 0x01),
-        TRANSPARENCY((byte) 0x02);
+    public enum VoiceBoostMode {
+        OFF((byte) 0x02, false),
+        ON((byte) 0x01, true);
 
         private final byte code;
+        private final boolean state;
 
-        AudioMode(final byte code) {
+        VoiceBoostMode(final byte code, final boolean state) {
             this.code = code;
+            this.state = state;
         }
 
         public byte getCode() {
             return this.code;
         }
 
-        public static AudioMode fromPreferences(final SharedPreferences prefs) {
-            return AudioMode.valueOf(prefs.getString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_AUDIOMODE, OFF.name().toLowerCase()).toUpperCase());
+        private boolean getState() {
+            return this.state;
+        }
+
+        private static VoiceBoostMode fromBoolean(boolean state) {
+            return state ? ON : OFF;
+        }
+
+        public static VoiceBoostMode fromPreferences(final SharedPreferences prefs) {
+            return VoiceBoostMode.fromBoolean(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_VOICE_BOOST, OFF.getState()));
         }
     }
 
-    public SetAudioModeRequest(HuaweiSupportProvider supportProvider) {
+    public SetVoiceBoostRequest(HuaweiSupportProvider supportProvider) {
         super(supportProvider);
         this.serviceId = Earphones.id;
-        this.commandId = Earphones.SetAudioModeRequest.id;
+        this.commandId = Earphones.SetANCModeRequest.id;
         this.addToResponse = false; // Response with different command ID
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            AudioMode audioMode = AudioMode.fromPreferences(GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress()));
-            return new Earphones.SetAudioModeRequest(this.paramsProvider, audioMode).serialize();
+            VoiceBoostMode clearVoiceMode = VoiceBoostMode.fromPreferences(GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress()));
+            return new Earphones.SetVoiceBoostRequest(this.paramsProvider, clearVoiceMode).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }

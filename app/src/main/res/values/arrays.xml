@@ -4750,6 +4750,20 @@
         <item>off</item>
     </string-array>
 
+    <string-array name="huawei_freebuds_anc_mode_names">
+        <item>@string/prefs_active_noise_cancelling_level_normal</item>
+        <item>@string/prefs_active_noise_cancelling_level_comfort</item>
+        <item>@string/prefs_active_noise_cancelling_level_ultra</item>
+        <item>@string/prefs_active_noise_cancelling_level_dynamic</item>
+    </string-array>
+
+    <string-array name="huawei_freebuds_anc_mode_values">
+        <item>normal</item>
+        <item>comfort</item>
+        <item>ultra</item>
+        <item>dynamic</item>
+    </string-array>
+
 
     <string-array name="prefs_huawei_heart_rate_high_alert_names">
         <item name="0">@string/off</item>

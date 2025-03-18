@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:entries="@array/huawei_freebuds_anc_mode_names"
+        android:entryValues="@array/huawei_freebuds_anc_mode_values"
+        android:icon="@drawable/ic_noise_control_on"
+        android:key="pref_freebuds_anc_mode"
+        android:summary="%s"
+        android:title="@string/earfun_anc_mode" />
+</androidx.preference.PreferenceScreen>

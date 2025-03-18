@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<SwitchPreferenceCompat
+    android:defaultValue="false"
+    android:icon="@drawable/ic_voice"
+    android:key="pref_freebuds_voice_boost"
+    android:layout="@layout/preference_checkbox"
+    android:title="@string/huawei_voice_boost" />
+</androidx.preference.PreferenceScreen>

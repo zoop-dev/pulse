@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024-2025 Martin.JM, Ilya Nikitenkov
+/*  Copyright (C) 2025 Ilya Nikitenkov
 
     This file is part of Gadgetbridge.
 
@@ -27,16 +27,17 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Earphones;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
-public class SetAudioModeRequest extends Request {
+public class SetANCModeRequest extends Request {
 
-    public enum AudioMode {
-        OFF((byte) 0x00),
-        ANC((byte) 0x01),
-        TRANSPARENCY((byte) 0x02);
+    public enum ANCMode {
+        NORMAL((byte) 0x00),
+        COMFORT((byte) 0x01),
+        ULTRA((byte) 0x02),
+        DYNAMIC((byte) 0x03);
 
         private final byte code;
 
-        AudioMode(final byte code) {
+        ANCMode(final byte code) {
             this.code = code;
         }
 
@@ -44,23 +45,23 @@ public class SetAudioModeRequest extends Request {
             return this.code;
         }
 
-        public static AudioMode fromPreferences(final SharedPreferences prefs) {
-            return AudioMode.valueOf(prefs.getString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_AUDIOMODE, OFF.name().toLowerCase()).toUpperCase());
+        public static ANCMode fromPreferences(final SharedPreferences prefs) {
+            return ANCMode.valueOf(prefs.getString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_ANC_MODE, NORMAL.name().toLowerCase()).toUpperCase());
         }
     }
 
-    public SetAudioModeRequest(HuaweiSupportProvider supportProvider) {
+    public SetANCModeRequest(HuaweiSupportProvider supportProvider) {
         super(supportProvider);
         this.serviceId = Earphones.id;
-        this.commandId = Earphones.SetAudioModeRequest.id;
+        this.commandId = Earphones.SetANCModeRequest.id;
         this.addToResponse = false; // Response with different command ID
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            AudioMode audioMode = AudioMode.fromPreferences(GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress()));
-            return new Earphones.SetAudioModeRequest(this.paramsProvider, audioMode).serialize();
+            ANCMode ancMode = SetANCModeRequest.ANCMode.fromPreferences(GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress()));
+            return new Earphones.SetANCModeRequest(this.paramsProvider, ancMode).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }

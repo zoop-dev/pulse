@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Martin.JM
+/*  Copyright (C) 2024-2025 Martin.JM, Ilya Nikitenkov
 
     This file is part of Gadgetbridge.
 
@@ -19,11 +19,15 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAudioModeRequest.AudioMode;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetANCModeRequest.ANCMode;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest.VoiceBoostMode;
 
 // Information from:
 // https://mmk.pw/en/posts/freebuds-4i-proto/ and
 // https://github.com/TheLastGimbus/FreeBuddy/blob/master/notes/mbb-protocol-wiki.md and
 // https://codeberg.org/Freeyourgadget/Gadgetbridge/pulls/4325/
+// https://github.com/melianmiko/OpenFreebuds/blob/dcaf7c95bde5ca68175ffb1748eeabaa49cb53c9/docs/research.ods
 
 public class Earphones {
     public static final byte id = 0x2b;
@@ -51,13 +55,12 @@ public class Earphones {
     public static class SetAudioModeRequest extends HuaweiPacket {
         public static final byte id = 0x04;
 
-        // TODO: enum for new state
-        public SetAudioModeRequest(ParamsProvider paramsProvider, byte newState) {
+        public SetAudioModeRequest(ParamsProvider paramsProvider, AudioMode newState) {
             super(paramsProvider);
             this.serviceId = Earphones.id;
             this.commandId = id;
 
-            byte[] data = {newState, newState == 0 ? 0x00 : (byte) 0xff};
+            byte[] data = {newState.getCode(), newState == AudioMode.OFF ? 0x00 : (byte) 0xff};
 
             this.tlv = new HuaweiTLV().put(0x01, data);
 
@@ -75,6 +78,38 @@ public class Earphones {
             this.commandId = id;
 
             this.tlv = new HuaweiTLV().put(0x01, newState);
+
+            this.complete = true;
+        }
+    }
+
+    public static class SetANCModeRequest extends HuaweiPacket {
+        public static final byte id = 0x04;
+
+        public SetANCModeRequest(ParamsProvider paramsProvider, ANCMode newState) {
+            super(paramsProvider);
+            this.serviceId = Earphones.id;
+            this.commandId = id;
+
+            byte[] data = {AudioMode.ANC.getCode(), newState.getCode()};
+
+            this.tlv = new HuaweiTLV().put(0x02, data);
+
+            this.complete = true;
+        }
+    }
+
+    public static class SetVoiceBoostRequest extends HuaweiPacket {
+        public static final byte id = 0x04;
+
+        public SetVoiceBoostRequest(ParamsProvider paramsProvider, VoiceBoostMode newState) {
+            super(paramsProvider);
+            this.serviceId = Earphones.id;
+            this.commandId = id;
+
+            byte[] data = {AudioMode.TRANSPARENCY.getCode(), newState.getCode()};
+
+            this.tlv = new HuaweiTLV().put(0x02, data);
 
             this.complete = true;
         }
