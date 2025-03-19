@@ -217,7 +217,11 @@ public class ZeppOsFwHelper {
 
     private void processZipFile(final ZipFile zipFile) {
         // Attempt to handle as a firmware
-        final byte[] firmwareBin = getFileFromZip(zipFile, "META/firmware.bin");
+        byte[] firmwareBin;
+        firmwareBin = getFileFromZip(zipFile, "META/firmware.bin");
+        if (firmwareBin == null) {
+            firmwareBin = getFileFromZip(zipFile, "META/firmware_sign.bin");
+        }
         if (firmwareBin != null) {
             if (isCompatibleFirmwareBin(firmwareBin)) {
                 firmwareType = HuamiFirmwareType.FIRMWARE;

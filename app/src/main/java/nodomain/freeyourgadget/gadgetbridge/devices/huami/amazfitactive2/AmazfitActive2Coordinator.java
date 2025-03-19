@@ -37,7 +37,11 @@ public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
                 8913152, // chinese mainland version
                 8913153,
                 8913155, // chinese mainland version
-                8913159
+                8913159,
+                10092800,
+                10092801,
+                10092803,
+                10092807
         ));
     }
 
