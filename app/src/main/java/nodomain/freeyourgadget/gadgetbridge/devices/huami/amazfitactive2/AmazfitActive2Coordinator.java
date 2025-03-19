@@ -57,7 +57,7 @@ public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
 
     @Override
     public boolean mainMenuHasMoreSection() {
-        return true;
+        return false;
     }
 
     @Override

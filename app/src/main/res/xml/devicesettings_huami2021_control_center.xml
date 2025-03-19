@@ -2,7 +2,7 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <com.mobeta.android.dslv.DragSortListPreference
         android:defaultValue="@array/pref_huami2021_empty_array"
-        android:dialogTitle="@string/bip_prefs_shortcuts"
+        android:dialogTitle="@string/prefs_control_center"
         android:entries="@array/pref_huami2021_control_center"
         android:entryValues="@array/pref_huami2021_control_center_values"
         android:icon="@drawable/ic_menu"

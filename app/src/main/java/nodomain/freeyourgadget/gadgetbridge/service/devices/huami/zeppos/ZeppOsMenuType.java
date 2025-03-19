@@ -74,6 +74,7 @@ public class ZeppOsMenuType {
         put("00000100", "alexa");
         put("00000101", "offline_voice");
         put("00000102", "flashlight");
+        put("000FFD39", "hrv");
     }};
 
     public static final Map<String, String> shortcutsNameLookup = new HashMap<String, String>() {{
@@ -128,6 +129,7 @@ public class ZeppOsMenuType {
         put("0000000A", "bluetooth");
         put("0000000B", "wifi");
         put("0000000D", "calendar");
+        put("00000010", "music");
         put("00000012", "alarm");
         put("00000013", "settings");
         put("00000014", "buzzer_intensity");
@@ -138,5 +140,6 @@ public class ZeppOsMenuType {
         put("00000019", "eject_water");
         put("0000001A", "headphone");
         put("0000001B", "night_display");
+        put("0000001C", "always_on_display");
     }};
 }
