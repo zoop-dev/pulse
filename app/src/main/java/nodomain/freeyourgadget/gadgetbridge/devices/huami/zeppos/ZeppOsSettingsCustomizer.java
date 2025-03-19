@@ -244,6 +244,11 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
 
         setupGpsPreference(handler, prefs);
         setupButtonClickPreferences(handler);
+
+        final Preference languagePref = handler.findPreference("language");
+        if (languagePref != null) {
+            DeviceSettingsUtils.sortListPreference((ListPreference) languagePref);
+        }
     }
 
     @Override

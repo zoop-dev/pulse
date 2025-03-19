@@ -28,6 +28,8 @@ import androidx.preference.Preference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -186,6 +188,36 @@ public final class DeviceSettingsUtils {
             p.setFilters(new InputFilter[]{new MinMaxInputFilter(minValue, maxValue)});
             p.setSelection(p.getText().length());
         });
+    }
+
+    public static void sortListPreference(final ListPreference listPreference) {
+        final CharSequence[] entries = listPreference.getEntries();
+        final CharSequence[] entryValues = listPreference.getEntryValues();
+
+        if (entries == null || entryValues == null || entries.length != entryValues.length) {
+            LOG.warn("Invalid entries or values to sort");
+            return;
+        }
+
+        final int length = entries.length;
+        final String[][] combined = new String[length][2];
+
+        for (int i = 0; i < length; i++) {
+            combined[i][0] = entries[i].toString();
+            combined[i][1] = entryValues[i].toString();
+        }
+
+        // Sort, keeping "auto" at the top
+        Arrays.sort(combined, 1, length, Comparator.comparing(o -> o[0]));
+
+        // Reassign sorted values
+        for (int i = 0; i < length; i++) {
+            entries[i] = combined[i][0];
+            entryValues[i] = combined[i][1];
+        }
+
+        listPreference.setEntries(entries);
+        listPreference.setEntryValues(entryValues);
     }
 
     public static final class MinMaxInputFilter implements InputFilter {

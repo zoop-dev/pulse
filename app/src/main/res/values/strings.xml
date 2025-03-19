@@ -1199,6 +1199,10 @@
     <string name="swedish">Swedish</string>
     <string name="czesh">Czech</string>
     <string name="danish">Danish</string>
+    <string name="serbian_latin">Serbian (Latin)</string>
+    <string name="catalan">Catalan</string>
+    <string name="finnish">Finnish</string>
+    <string name="bahasa_melayu">Bahasa Melayu</string>
     <string name="FetchActivityOperation_about_to_transfer_since">About to transfer data since %1$s</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
     <string name="activity_prefs_about_you">About you</string>

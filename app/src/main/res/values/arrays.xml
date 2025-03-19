@@ -2569,6 +2569,11 @@
         <item name="nb_NO">@string/norwegian_bokmal</item>
         <item name="ro_RO">@string/romanian</item>
         <item name="sv_SE">@string/swedish</item>
+        <item name="sh_SP">@string/serbian_latin</item>
+        <item name="ca_ES">@string/catalan</item>
+        <item name="fi_FI">@string/finnish</item>
+        <item name="hu_HU">@string/hungarian</item>
+        <item name="ms_MY">@string/bahasa_melayu</item>
     </string-array>
 
     <string-array name="pref_language_all_values">
@@ -2607,6 +2612,11 @@
         <item>nb_NO</item>
         <item>ro_RO</item>
         <item>sv_SE</item>
+        <item>sh_SP</item>
+        <item>ca_ES</item>
+        <item>fi_FI</item>
+        <item>hu_HU</item>
+        <item>ms_MY</item>
     </string-array>
 
     <string-array name="pref_amazfitbip_language">

@@ -1204,7 +1204,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                             final List<String> possibleLanguages = new ArrayList<>();
                             possibleLanguages.add("auto");
                             for (final byte possibleValue : value.getPossibleValues()) {
-                                possibleLanguages.add(languageByteToLocale(possibleValue));
+                                final String languageCode = languageByteToLocale(possibleValue);
+                                if (languageCode == null) {
+                                    LOG.warn("Unknown language byte {}", String.format("0x%02x", possibleValue));
+                                    possibleLanguages.add(String.format("0x%x", possibleValue));
+                                } else {
+                                    possibleLanguages.add(languageCode);
+                                }
                             }
                             possibleLanguages.removeAll(Collections.singleton(null));
                             prefs.put(DeviceSettingsUtils.getPrefPossibleValuesKey(configArg.getPrefKey()), TextUtils.join(",", possibleLanguages));
@@ -1691,6 +1697,12 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     public static Byte languageLocaleToByte(final String locale) {
         if (HuamiLanguageType.idLookup.containsKey(locale)) {
             return (byte) (int) HuamiLanguageType.idLookup.get(locale);
+        }
+
+        // value doesn't match a known language, attempt to parse it as hex
+        final Matcher matcher = Pattern.compile("^0[xX]([0-9a-fA-F]{1,2})$").matcher(locale);
+        if (matcher.find()) {
+            return (byte) Integer.parseInt(matcher.group(1), 16);
         }
 
         return null;

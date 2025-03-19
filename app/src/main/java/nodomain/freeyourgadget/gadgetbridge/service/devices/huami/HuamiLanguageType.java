@@ -40,13 +40,25 @@ public class HuamiLanguageType {
         put("it_IT", 0x0a);
         put("ja_JP", 0x0b);
         put("th_TH", 0x0c);
+        put("ar_SA", 0x0d);
         put("vi_VN", 0x0e);
         put("pt_PT", 0x0f);
         put("nl_NL", 0x10);
         put("tr_TR", 0x11);
         put("uk_UA", 0x12);
+        put("he_IL", 0x13);
         put("pt_BR", 0x14);
+        put("ro_RO", 0x15);
         put("cs_CZ", 0x16);
         put("el_GR", 0x17);
+        put("sh_SP", 0x18);
+        put("ca_ES", 0x19);
+        put("fi_FI", 0x1a);
+        put("nb_NO", 0x1b);
+        put("da_DK", 0x1c);
+        put("sv_SE", 0x1d);
+        put("hu_HU", 0x1e);
+        put("ms_MY", 0x1f);
+        // FIXME put("pt_BR", 0x22);
     }};
 }
