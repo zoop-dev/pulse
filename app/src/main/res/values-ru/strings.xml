@@ -3808,4 +3808,18 @@
     <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
     <string name="unit_repetitions_per_minute">повторений/мин</string>
     <string name="unit_revolutions">обороты</string>
+    <string name="pref_vibration_intensity">Интенсивность вибрации</string>
+    <string name="catalan">Каталанский</string>
+    <string name="finnish">Финский</string>
+    <string name="bahasa_melayu">Малайский</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
+    <string name="ultrahuman_airplane_mode_title">режим полёта</string>
+    <string name="ultrahuman_airplane_mode_on_charger">кольцо заряжается – режим полёта НЕ активирован</string>
+    <string name="serbian_latin">Сербский (латиница)</string>
+    <string name="pref_import_activity_files_summary">Ручной импорт файлов активности из памяти телефона</string>
+    <string name="ultrahuman_airplane_mode_activated">режим полёта активирован</string>
+    <string name="ultrahuman_airplane_mode_too_full">кольцо полностью заряжено – режим полёта НЕ активирован</string>
+    <string name="ultrahuman_airplane_mode_unknown">неизвестная ошибка – режим полёта НЕ активирован</string>
+    <string name="ultrahuman_airplane_mode_question">Активировать режим полёта?</string>
+    <string name="pref_import_activity_files_title">Импорт файлов активности</string>
 </resources>
