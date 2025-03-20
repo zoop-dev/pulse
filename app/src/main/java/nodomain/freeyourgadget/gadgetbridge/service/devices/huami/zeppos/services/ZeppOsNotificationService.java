@@ -47,7 +47,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -126,15 +125,22 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                     LOG.warn("Unsupported notification service version {}", version);
                 }
                 if (version >= 4) {
+                    // GTR 4:    02 05 64:00 01 01 05 00:01:02:03:04:05 01 01
+                    // Active 2: 02 05 64:00 01 00                      01 01 01
                     final short unk1 = buf.getShort(); // 100
                     final byte unk2 = buf.get(); // 1
-                    final byte unk3 = buf.get(); // 1
-                    final short unk4count = buf.getShort();
-                    buf.get(new byte[unk4count]);
+                    final byte hastList = buf.get(); // 0/1
+                    if (hastList != 0) {
+                        final short numItems = buf.getShort();
+                        buf.get(new byte[numItems]);
+                    }
                 }
                 if (version >= 5) {
                     supportsPictures = buf.get() != 0;
                     supportsNotificationKey = buf.get() != 0;
+                    if (buf.hasRemaining()) {
+                        final byte unk3 = buf.get();
+                    }
                 }
                 LOG.info("Notification service version={}, supportsPictures={}", version, supportsPictures);
                 break;

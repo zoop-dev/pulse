@@ -59,7 +59,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.GpsCapability;
@@ -1310,12 +1309,8 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
         private Map<String, Object> singletonMap(final String key, final Object value) {
             if (key == null) {
-                LOG.error("Null key in prefs update");
-                if (BuildConfig.DEBUG) {
-                    // Crash
-                    throw new IllegalStateException("Null key in prefs update");
-                }
-                return Collections.emptyMap();
+                LOG.warn("Null key in prefs update, val = {}", value);
+                return new HashMap<>();
             }
 
             return new HashMap<String, Object>() {{
