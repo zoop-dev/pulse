@@ -46,6 +46,8 @@ public class GBDaoGenerator {
     private static final String SAMPLE_HRV_BASELINE_BALANCED_UPPER = "baselineBalancedUpper";
     private static final String SAMPLE_HRV_STATUS_NUM = "statusNum";
     private static final String SAMPLE_HRV_VALUE = "value";
+    private static final String SAMPLE_SPO2 = "spo2";
+    private static final String SAMPLE_STRESS = "stress";
     private static final String SAMPLE_TEMPERATURE = "temperature";
     private static final String SAMPLE_TEMPERATURE_TYPE = "temperatureType";
     private static final String SAMPLE_WEIGHT_KG = "weightKg";
@@ -54,7 +56,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(97, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(98, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -157,6 +159,9 @@ public class GBDaoGenerator {
 
         addHuaweiActivitySample(schema, user, device);
 
+        addUltrahumanActivitySample(schema, user, device);
+        addUltrahumanDeviceStateSample(schema, user, device);
+
         Entity huaweiWorkoutSummary = addHuaweiWorkoutSummarySample(schema, user, device);
         addHuaweiWorkoutDataSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutPaceSample(schema, huaweiWorkoutSummary);
@@ -181,6 +186,13 @@ public class GBDaoGenerator {
 
         addActivitySummary(schema, user, device);
         addBatteryLevel(schema, device);
+
+        addGenericHeartRateSample(schema, user, device);
+        addGenericSpo2Sample(schema, user, device);
+        addGenericStressSample(schema, user, device);
+        addGenericHrvValueSample(schema, user, device);
+        addGenericTemperatureSample(schema, user, device);
+
         new DaoGenerator().generateAll(schema, "app/src/main/java");
     }
 
@@ -328,7 +340,7 @@ public class GBDaoGenerator {
         Entity stressSample = addEntity(schema, "HuamiStressSample");
         addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
         stressSample.addIntProperty("typeNum").notNull().codeBeforeGetter(OVERRIDE);
-        stressSample.addIntProperty("stress").notNull().codeBeforeGetter(OVERRIDE);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
         return stressSample;
     }
 
@@ -336,7 +348,7 @@ public class GBDaoGenerator {
         Entity spo2sample = addEntity(schema, "HuamiSpo2Sample");
         addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
         spo2sample.addIntProperty("typeNum").notNull().codeBeforeGetter(OVERRIDE);
-        spo2sample.addIntProperty("spo2").notNull().codeBeforeGetter(OVERRIDE);
+        spo2sample.addIntProperty(SAMPLE_SPO2).notNull().codeBeforeGetter(OVERRIDE);
         return spo2sample;
     }
 
@@ -400,8 +412,8 @@ public class GBDaoGenerator {
         activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         addHeartRateProperties(activitySample);
-        activitySample.addIntProperty("stress");
-        activitySample.addIntProperty("spo2");
+        activitySample.addIntProperty(SAMPLE_STRESS);
+        activitySample.addIntProperty(SAMPLE_SPO2);
         return activitySample;
     }
 
@@ -486,14 +498,14 @@ public class GBDaoGenerator {
     private static Entity addCmfStressSample(Schema schema, Entity user, Entity device) {
         Entity stressSample = addEntity(schema, "CmfStressSample");
         addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
-        stressSample.addIntProperty("stress").notNull().codeBeforeGetter(OVERRIDE);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
         return stressSample;
     }
 
     private static Entity addCmfSpo2Sample(Schema schema, Entity user, Entity device) {
         Entity spo2sample = addEntity(schema, "CmfSpo2Sample");
         addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
-        spo2sample.addIntProperty("spo2").notNull().codeBeforeGetter(OVERRIDE);
+        spo2sample.addIntProperty(SAMPLE_SPO2).notNull().codeBeforeGetter(OVERRIDE);
         return spo2sample;
     }
 
@@ -551,14 +563,14 @@ public class GBDaoGenerator {
     private static Entity addColmiStressSample(Schema schema, Entity user, Entity device) {
         Entity stressSample = addEntity(schema, "ColmiStressSample");
         addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
-        stressSample.addIntProperty("stress").notNull().codeBeforeGetter(OVERRIDE);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
         return stressSample;
     }
 
     private static Entity addColmiSpo2Sample(Schema schema, Entity user, Entity device) {
         Entity spo2sample = addEntity(schema, "ColmiSpo2Sample");
         addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
-        spo2sample.addIntProperty("spo2").notNull().codeBeforeGetter(OVERRIDE);
+        spo2sample.addIntProperty(SAMPLE_SPO2).notNull().codeBeforeGetter(OVERRIDE);
         return spo2sample;
     }
 
@@ -759,7 +771,7 @@ public class GBDaoGenerator {
     private static Entity addHybridHRSpo2Sample(Schema schema, Entity user, Entity device) {
         Entity spo2sample = addEntity(schema, "HybridHRSpo2Sample");
         addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
-        spo2sample.addIntProperty("spo2").notNull().codeBeforeGetter(OVERRIDE);
+        spo2sample.addIntProperty(SAMPLE_SPO2).notNull().codeBeforeGetter(OVERRIDE);
         return spo2sample;
     }
 
@@ -834,7 +846,7 @@ public class GBDaoGenerator {
     private static Entity addGarminStressSample(Schema schema, Entity user, Entity device) {
         Entity stressSample = addEntity(schema, "GarminStressSample");
         addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
-        stressSample.addIntProperty("stress").notNull().codeBeforeGetter(OVERRIDE);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
         return stressSample;
     }
 
@@ -848,7 +860,7 @@ public class GBDaoGenerator {
     private static Entity addGarminSpo2Sample(Schema schema, Entity user, Entity device) {
         Entity spo2sample = addEntity(schema, "GarminSpo2Sample");
         addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
-        spo2sample.addIntProperty("spo2").notNull().codeBeforeGetter(OVERRIDE);
+        spo2sample.addIntProperty(SAMPLE_SPO2).notNull().codeBeforeGetter(OVERRIDE);
         return spo2sample;
     }
 
@@ -1337,7 +1349,7 @@ public class GBDaoGenerator {
         Entity stressSample = addEntity(schema, "Wena3StressSample");
         addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
         stressSample.addIntProperty("typeNum").notNull().codeBeforeGetter(OVERRIDE);
-        stressSample.addIntProperty("stress").notNull().codeBeforeGetter(OVERRIDE);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
         return stressSample;
     }
 
@@ -1613,6 +1625,31 @@ public class GBDaoGenerator {
         return workoutSectionsSample;
     }
 
+    private static Entity addUltrahumanActivitySample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "UltrahumanActivitySample");
+
+        addCommonActivitySampleProperties("AbstractUltrahumanActivitySample", sample, user, device);
+        sample.addIntProperty(SAMPLE_RAW_KIND).notNull();
+        sample.addIntProperty(SAMPLE_HEART_RATE).notNull();
+        sample.addIntProperty(SAMPLE_RAW_INTENSITY).notNull();
+        sample.addIntProperty(SAMPLE_STEPS).notNull();
+
+        return sample;
+    }
+
+    private static Entity addUltrahumanDeviceStateSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "UltrahumanDeviceStateSample");
+
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addByteArrayProperty(SAMPLE_RAW_KIND).notNull();
+
+        sample.addIntProperty("batteryLevel");
+        sample.addIntProperty("deviceState");
+        sample.addIntProperty("deviceTemperature");
+
+        return sample;
+    }
+
     private static Entity addHuaweiDictData(Schema schema, Entity user, Entity device) {
         Entity dictData = addEntity(schema, "HuaweiDictData");
 
@@ -1684,5 +1721,41 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractWeightSample", sample, user, device);
         sample.addFloatProperty(SAMPLE_WEIGHT_KG).notNull().codeBeforeGetter(OVERRIDE);
         return sample;
+    }
+
+    private static Entity addGenericHeartRateSample(Schema schema, Entity user, Entity device) {
+        Entity heartRateSample = addEntity(schema, "GenericHeartRateSample");
+        addCommonTimeSampleProperties("AbstractHeartRateSample", heartRateSample, user, device);
+        heartRateSample.addIntProperty(SAMPLE_HEART_RATE).notNull();
+        return heartRateSample;
+    }
+
+    private static Entity addGenericHrvValueSample(Schema schema, Entity user, Entity device) {
+        Entity hrvValueSample = addEntity(schema, "GenericHrvValueSample");
+        addCommonTimeSampleProperties("AbstractHrvValueSample", hrvValueSample, user, device);
+        hrvValueSample.addIntProperty(SAMPLE_HRV_VALUE).notNull();
+        return hrvValueSample;
+    }
+
+    private static Entity addGenericSpo2Sample(Schema schema, Entity user, Entity device) {
+        Entity spo2sample = addEntity(schema, "GenericSpo2Sample");
+        addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
+        spo2sample.addIntProperty(SAMPLE_SPO2).notNull();
+        return spo2sample;
+    }
+
+    private static Entity addGenericStressSample(Schema schema, Entity user, Entity device) {
+        Entity stressSample = addEntity(schema, "GenericStressSample");
+        addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull();
+        return stressSample;
+    }
+
+    private static Entity addGenericTemperatureSample(Schema schema, Entity user, Entity device) {
+        Entity temperatureSample = addEntity(schema, "GenericTemperatureSample");
+        addCommonTimeSampleProperties("AbstractTemperatureSample", temperatureSample, user, device);
+        temperatureSample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
+        temperatureSample.addIntProperty(SAMPLE_TEMPERATURE_TYPE).notNull();
+        return temperatureSample;
     }
 }

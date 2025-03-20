@@ -284,6 +284,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.soundcore.q30.SoundcoreQ30Co
 import nodomain.freeyourgadget.gadgetbridge.devices.supercars.SuperCarsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.tlw64.TLW64Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.um25.Coordinator.UM25Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.vesc.VescCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.vibratissimo.VibratissimoCoordinator;
@@ -625,7 +626,8 @@ public enum DeviceType {
     CYCLING_SENSOR(CyclingSensorCoordinator.class),
     BLE_GATT_CLIENT(BleGattClientCoordinator.class),
     MARSTEK_B2500(MarstekB2500DeviceCoordinator.class),
-    TEST(TestDeviceCoordinator.class);
+    TEST(TestDeviceCoordinator.class),
+    ULTRAHUMAN_RING_AIR(UltrahumanDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;
 

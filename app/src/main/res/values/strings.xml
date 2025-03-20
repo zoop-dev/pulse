@@ -1964,6 +1964,7 @@
     <string name="devicetype_colmi_r06">Colmi R06</string>
     <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="devicetype_colmi_r10">Colmi R10</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="devicetype_bandw_pseries">Bowers and Wilkins P series</string>
     <string name="devicetype_earfun_air_s">EarFun Air S</string>
     <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
@@ -3738,4 +3739,11 @@
     <string name="earfun_tap_action_noise_control_normal_ambient">Noise Control (Normal, Ambient Sound)</string>
     <string name="earfun_tap_action_noise_control_wind_ambient">Noise Control (Wind Noise, Ambient Sound)</string>
     <string name="earfun_tap_action_redial">Redial</string>
+    <string name="ultrahuman_airplane_mode_activated">airplane mode activated</string>
+    <string name="ultrahuman_airplane_mode_on_charger">ring is charging - airplane mode NOT activated</string>
+    <string name="ultrahuman_airplane_mode_too_full">ring is fully charged - airplane mode NOT activated</string>
+    <string name="ultrahuman_airplane_mode_unknown">unknown error - airplane mode NOT activated</string>
+    <string name="ultrahuman_airplane_mode_question">Activate airplane mode?</string>
+    <string name="ultrahuman_airplane_mode_title">airplane mode</string>
+    <string name="ultrahuman_unhandled_error_response">received unhandled response code 0x%x for operation 0x%x</string>
 </resources>
