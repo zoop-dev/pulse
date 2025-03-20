@@ -3852,4 +3852,12 @@
     <string name="serbian_latin">Srbština (latinka)</string>
     <string name="catalan">Katalánština</string>
     <string name="enhanced">Vylepšené</string>
+    <string name="ultrahuman_airplane_mode_on_charger">prsten se nabíjí - režim letadlo NEBYL aktivován</string>
+    <string name="ultrahuman_airplane_mode_question">Aktivovat režim letadlo?</string>
+    <string name="ultrahuman_airplane_mode_title">režim letadlo</string>
+    <string name="ultrahuman_airplane_mode_too_full">prsten je plně nabit - režim letadlo NEBYL aktivován</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
+    <string name="ultrahuman_airplane_mode_activated">režim letadlo aktivován</string>
+    <string name="ultrahuman_airplane_mode_unknown">neznámá chyba - režim letadlo NEBYL aktivován</string>
+    <string name="ultrahuman_unhandled_error_response">obdržel neznámý kód odpovědi 0x%x pro operaci 0x%x</string>
 </resources>
