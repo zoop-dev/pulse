@@ -158,6 +158,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_ALERT_TONE = "alert_tone";
     public static final String PREF_COVER_TO_MUTE = "cover_to_mute";
     public static final String PREF_VIBRATE_FOR_ALERT = "vibrate_for_alert";
+    public static final String PREF_VIBRATION_INTENSITY = "vibration_intensity";
     public static final String PREF_TEXT_TO_SPEECH = "text_to_speech";
 
     public static final String PREF_OFFLINE_VOICE_RESPOND_TURN_WRIST = "offline_voice_respond_turn_wrist";

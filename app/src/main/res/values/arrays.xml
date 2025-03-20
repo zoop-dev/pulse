@@ -867,6 +867,15 @@
         <item>low</item>
     </string-array>
 
+    <string-array name="vibration_intensity">
+        <item>@string/normal</item>
+        <item>@string/enhanced</item>
+    </string-array>
+    <string-array name="vibration_intensity_values">
+        <item>normal</item>
+        <item>enhanced</item>
+    </string-array>
+
     <string-array name="pref_zepp_os_watchfaces">
         <!-- GTR 4 -->
         <item>@string/zepp_os_watchface_red_fantasy</item>

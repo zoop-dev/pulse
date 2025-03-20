@@ -41,6 +41,14 @@
             android:layout="@layout/preference_checkbox"
             android:title="@string/pref_vibrate_for_alert" />
 
+        <ListPreference
+            android:defaultValue="normal"
+            android:entries="@array/vibration_intensity"
+            android:entryValues="@array/vibration_intensity_values"
+            android:key="vibration_intensity"
+            android:summary="%s"
+            android:title="@string/pref_vibration_intensity" />
+
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/ic_voice"

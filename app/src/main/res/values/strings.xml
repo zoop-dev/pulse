@@ -555,6 +555,7 @@
     <string name="pref_wearing_tone_summary">Plays a tone when the earbud is inserted</string>
     <string name="pref_cover_to_mute">Cover to Mute</string>
     <string name="pref_vibrate_for_alert">Vibrate for Alert</string>
+    <string name="pref_vibration_intensity">Vibration intensity</string>
     <string name="pref_text_to_speech">Text to Speech</string>
     <string name="offline_voice_respond_turn_wrist">Respond when turning the wrist</string>
     <string name="offline_voice_respond_screen_on">Respond when screen on</string>
@@ -1354,6 +1355,7 @@
     <string name="off">Off</string>
     <string name="normal">Normal</string>
     <string name="sensitive">Sensitive</string>
+    <string name="enhanced">Enhanced</string>
     <string name="mi2_dnd_off">Off</string>
     <string name="mi2_dnd_always">Always</string>
     <string name="mi3_night_mode_sunset">At sunset</string>

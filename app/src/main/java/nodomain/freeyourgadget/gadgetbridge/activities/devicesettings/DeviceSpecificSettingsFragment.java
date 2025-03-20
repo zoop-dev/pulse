@@ -853,6 +853,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_ALERT_TONE);
         addPreferenceHandlerFor(PREF_COVER_TO_MUTE);
         addPreferenceHandlerFor(PREF_VIBRATE_FOR_ALERT);
+        addPreferenceHandlerFor(PREF_VIBRATION_INTENSITY);
         addPreferenceHandlerFor(PREF_TEXT_TO_SPEECH);
 
         addPreferenceHandlerFor(PREF_OFFLINE_VOICE_RESPOND_TURN_WRIST);

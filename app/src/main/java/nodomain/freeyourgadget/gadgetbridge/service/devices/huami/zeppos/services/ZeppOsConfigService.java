@@ -361,6 +361,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         COVER_TO_MUTE(ConfigGroup.SOUND_AND_VIBRATION, ConfigType.BOOL, 0x08, PREF_COVER_TO_MUTE),
         VIBRATE_FOR_ALERT(ConfigGroup.SOUND_AND_VIBRATION, ConfigType.BOOL, 0x09, PREF_VIBRATE_FOR_ALERT),
         TEXT_TO_SPEECH(ConfigGroup.SOUND_AND_VIBRATION, ConfigType.BOOL, 0x0a, PREF_TEXT_TO_SPEECH),
+        VIBRATION_INTENSITY(ConfigGroup.SOUND_AND_VIBRATION, ConfigType.BYTE, 0x12, PREF_VIBRATION_INTENSITY),
 
         // Wearing Direction
         WEARING_DIRECTION_BUTTONS(ConfigGroup.WEARING_DIRECTION, ConfigType.BYTE, 0x02, PREF_WEARDIRECTION),
@@ -664,6 +665,8 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 return encodeEnum(WORKOUT_DETECTION_CATEGORY_MAP, value);
             case WORKOUT_DETECTION_SENSITIVITY:
                 return encodeEnum(WORKOUT_DETECTION_SENSITIVITY_MAP, value);
+            case VIBRATION_INTENSITY:
+                return encodeString(VIBRATION_INTENSITY_MAP, value);
         }
 
         LOG.error("No encoder for {}", configArg);
@@ -1260,6 +1263,9 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 case WORKOUT_DETECTION_SENSITIVITY:
                     decoder = b -> decodeEnum(WORKOUT_DETECTION_SENSITIVITY_MAP, b);
                     break;
+                case VIBRATION_INTENSITY:
+                    decoder = b -> decodeString(VIBRATION_INTENSITY_MAP, b);
+                    break;
                 default:
                     decoder = null;
             }
@@ -1827,6 +1833,11 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         put((byte) 0x00, WorkoutDetectionCapability.Sensitivity.HIGH);
         put((byte) 0x01, WorkoutDetectionCapability.Sensitivity.STANDARD);
         put((byte) 0x02, WorkoutDetectionCapability.Sensitivity.LOW);
+    }};
+
+    private static final Map<Byte, String> VIBRATION_INTENSITY_MAP = new HashMap<Byte, String>() {{
+        put((byte) 0x00, "normal");
+        put((byte) 0x01, "enhanced");
     }};
 
     public static String decodeEnum(final Map<Byte, Enum<?>> map, final byte b) {
