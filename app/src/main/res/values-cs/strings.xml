@@ -3846,4 +3846,10 @@
     <string name="dual_device_mode_summary">Umožnit připojení sluchátek ke dvěma zařízením současně</string>
     <string name="dual_device_mode_title">Režim duálních zařízení</string>
     <string name="range_percentage_float">%.1f%% – %.1f%%</string>
+    <string name="finnish">Finština</string>
+    <string name="bahasa_melayu">Malajština</string>
+    <string name="pref_vibration_intensity">Intenzita vibrací</string>
+    <string name="serbian_latin">Srbština (latinka)</string>
+    <string name="catalan">Katalánština</string>
+    <string name="enhanced">Vylepšené</string>
 </resources>
