@@ -3648,4 +3648,10 @@
     <string name="dual_device_mode_title">Két eszköz üzemmód</string>
     <string name="dual_device_mode_summary">Lehetővé teszi a fejhallgató egyidejű csatlakoztatását két eszközhöz</string>
     <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="bahasa_melayu">Maláj nyelv</string>
+    <string name="pref_vibration_intensity">Rezgésintenzitás</string>
+    <string name="serbian_latin">Szerb (latin)</string>
+    <string name="catalan">Katalán</string>
+    <string name="finnish">Finn</string>
+    <string name="enhanced">Továbbfejlesztett</string>
 </resources>
