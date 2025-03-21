@@ -3874,4 +3874,12 @@
     <string name="pref_vibration_intensity">Intensywność wibracji</string>
     <string name="serbian_latin">Serbski (łaciński)</string>
     <string name="enhanced">Rozszerzone</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
+    <string name="ultrahuman_airplane_mode_activated">tryb samolotowy włączony</string>
+    <string name="ultrahuman_airplane_mode_question">Aktywować tryb samolotowy?</string>
+    <string name="ultrahuman_unhandled_error_response">otrzymał nieobsługiwany kod odpowiedzi 0x%x dla operacji 0x%x</string>
+    <string name="ultrahuman_airplane_mode_title">tryb samolotowy</string>
+    <string name="ultrahuman_airplane_mode_on_charger">pierścień ładuje się - tryb samolotowy NIE jest włączony</string>
+    <string name="ultrahuman_airplane_mode_unknown">nieznany błąd - tryb samolotu NIE aktywowany</string>
+    <string name="ultrahuman_airplane_mode_too_full">pierścień jest w pełni naładowany - tryb samolotowy NIE jest włączony</string>
 </resources>
