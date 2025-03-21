@@ -3654,4 +3654,12 @@
     <string name="catalan">Katalán</string>
     <string name="finnish">Finn</string>
     <string name="enhanced">Továbbfejlesztett</string>
+    <string name="ultrahuman_airplane_mode_unknown">ismeretlen hiba - repülős üzemmód NINCS aktiválva</string>
+    <string name="ultrahuman_airplane_mode_title">repülős üzemmód</string>
+    <string name="ultrahuman_unhandled_error_response">0x%x kezeletlen válaszkódot kapott a(z) 0x%x művelethez</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
+    <string name="ultrahuman_airplane_mode_activated">repülős üzemmód aktiválva</string>
+    <string name="ultrahuman_airplane_mode_on_charger">a gyűrű töltődik - repülős üzemmód NINCS aktiválva</string>
+    <string name="ultrahuman_airplane_mode_too_full">a gyűrű teljesen feltöltve - repülős üzemmód NINCS aktiválva</string>
+    <string name="ultrahuman_airplane_mode_question">Aktiválja a repülős üzemmódot?</string>
 </resources>
