@@ -221,4 +221,12 @@
 \nیادداشت: درصورتی که فایل با فرمت .res شما دقیقا مشابه فایلِ از پیش نصب شده می‌باشد نیازی به نصب مجدد آن نیست.
 \n
 \nبا مسئولیت خودتان ادامه دهید!</string>
+    <string name="gadgetbridge_running_generic">اجرای گجت‌بریج</string>
+    <string name="application_name_banglejs_main">Bangle.js گجت‌بریج</string>
+    <string name="title_activity_controlcenter_banglejs_main">Bangle.js گجت‌بریج</string>
+    <string name="about_activity_title_banglejs_main">درباره Bangle.js گجت‌بریج</string>
+    <string name="gadgetbridge_running_banglejs_main">Bangle.js در حال اجرا</string>
+    <string name="about_description_banglejs_main">برنامه همراه اندروید برای Bangle.js که بر پایه پروژه گجت‌بریج ساخته شده است، با دسترسی اضافه شده به اینترنت.\n\nبه دلیل سیاست‌های فروشگاه Google Play، ما اجازه قرار دادن لینک کمک مالی در خود برنامه را نداریم، اما اگر این برنامه را دوست دارید، لطفاً از طریق صفحه اصلی گجت‌بریج که در زیر آمده است، کمک مالی را در نظر بگیرید.</string>
+    <string name="about_activity_title_generic">درباره گجت‌بریج</string>
+    <string name="about_description_generic">جایگزین آزاد و بدون کپی‌رایت ابری برای برنامه‌های گجت اندروید منبع بسته از فروشندگان.</string>
 </resources>
