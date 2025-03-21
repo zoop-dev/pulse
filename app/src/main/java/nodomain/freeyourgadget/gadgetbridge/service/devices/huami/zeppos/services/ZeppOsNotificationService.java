@@ -22,8 +22,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 
-import androidx.annotation.Nullable;
-
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -33,6 +31,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -44,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsBitmapFormat;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
@@ -76,6 +76,8 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
     public static final byte NOTIFICATION_DISMISS_REJECT_CALL = 0x01;
     public static final byte NOTIFICATION_CALL_STATE_START = 0x00;
     public static final byte NOTIFICATION_CALL_STATE_END = 0x02;
+
+    private static final boolean FORCE_RELOAD_NOTIFICATION_ICON = false;
 
     private int version = -1;
     private boolean supportsPictures = false;
@@ -317,6 +319,11 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
 
             // app package
             if (notificationSpec.sourceAppId != null) {
+                if (FORCE_RELOAD_NOTIFICATION_ICON) {
+                    // prefix the package name with a uuid to force an icon reload
+                    // it's removed when fetching the package icon
+                    baos.write(UUID.randomUUID().toString().getBytes());
+                }
                 baos.write(notificationSpec.sourceAppId.getBytes(StandardCharsets.UTF_8));
             } else {
                 // Send the GB package name, otherwise the last notification icon will
@@ -450,20 +457,27 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
     }
 
     private void sendIconForPackage(final String packageName, final byte iconFormat, final int width, final int height) {
-        final BitmapFormat format = BitmapFormat.fromCode(iconFormat);
+        final ZeppOsBitmapFormat format = ZeppOsBitmapFormat.fromCode(iconFormat);
         if (format == null) {
             LOG.error("Unknown icon bitmap format code {}", String.format("0x%02x", iconFormat));
             return;
         }
 
-        final Drawable icon = NotificationUtils.getAppIcon(getContext(), packageName);
+        final Drawable icon = NotificationUtils.getAppIcon(
+                getContext(),
+                FORCE_RELOAD_NOTIFICATION_ICON ? packageName.substring(36) : packageName
+        );
         if (icon == null) {
             LOG.warn("Failed to get icon for {}", packageName);
             return;
         }
 
         final Bitmap bmp = BitmapUtil.toBitmap(icon);
-        final byte[] tga = encodeBitmap(bmp, format, width, height);
+        final byte[] tga = format.encode(bmp, width, height);
+        if (tga == null) {
+            LOG.error("Failed to encode icon to tga");
+            return;
+        }
 
         final String url = String.format(
                 Locale.ROOT,
@@ -475,11 +489,24 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         );
         final String filename = String.format("logo_%s.tga", packageName.replace(".", "_"));
 
+        //try {
+        //    final GBDevice device = getSupport().getDevice();
+        //    final File exportDirectory = device.getDeviceCoordinator().getWritableExportDirectory(device);
+        //    final File targetDir = new File(exportDirectory, "notificationIcons");
+        //    targetDir.mkdirs();
+        //    final File outputFile = new File(targetDir, filename);
+        //    final OutputStream outputStream = new FileOutputStream(outputFile);
+        //    outputStream.write(tga);
+        //    outputStream.close();
+        //} catch (final Exception e) {
+        //    LOG.error("Failed to dump bytes to storage", e);
+        //}
+
         sendFile(url, filename, tga, false, success -> ackNotificationAfterIconSent(packageName, success));
     }
 
     private void sendNotificationPicture(final String packageName, final int notificationId, final byte pictureFormat, final int width) {
-        final BitmapFormat format = BitmapFormat.fromCode(pictureFormat);
+        final ZeppOsBitmapFormat format = ZeppOsBitmapFormat.fromCode(pictureFormat);
         if (format == null) {
             LOG.error("Unknown picture bitmap format code {}", String.format("0x%02x", pictureFormat));
             ackNotificationAfterPictureSent(packageName, notificationId, false);
@@ -504,7 +531,7 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         //  if sent as requested, it gets all corrupted...
         final int targetWidth = width + 10;
         final int targetHeight = (int) Math.round(bmp.getHeight() * ((double) targetWidth / bmp.getWidth()));
-        final byte[] tga = encodeBitmap(bmp, format, targetWidth, targetHeight);
+        final byte[] tga = format.encode(bmp, targetWidth, targetHeight);
 
         final String url = String.format(
                 Locale.ROOT,
@@ -555,48 +582,5 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         );
 
         LOG.info("Queueing file send '{}' to '{}'", filename, url);
-    }
-
-    private static byte[] encodeBitmap(final Bitmap bmp, final BitmapFormat format, final int width, final int height) {
-        // Without the expected tga id and format string they seem to get corrupted,
-        // but the encoding seems to actually be the same...?
-        // The TGA needs to have this ID, or the band does not accept it
-        final byte[] tgaIdBytes = new byte[46];
-        System.arraycopy(format.getTgaId().getBytes(StandardCharsets.UTF_8), 0, tgaIdBytes, 0, 5);
-
-        return BitmapUtil.convertToTgaRGB565(bmp, width, height, tgaIdBytes);
-    }
-
-    private enum BitmapFormat {
-        TGA_RGB565_GCNANOLITE(0x04, "SOMHP"),
-        TGA_RGB565_DAVE2D(0x08, "SOMH6"),
-        ;
-
-        private final byte code;
-        private final String tgaId;
-
-        BitmapFormat(final int code, final String tgaId) {
-            this.code = (byte) code;
-            this.tgaId = tgaId;
-        }
-
-        public byte getCode() {
-            return code;
-        }
-
-        public String getTgaId() {
-            return tgaId;
-        }
-
-        @Nullable
-        public static BitmapFormat fromCode(final byte code) {
-            for (final BitmapFormat format : BitmapFormat.values()) {
-                if (format.code == code) {
-                    return format;
-                }
-            }
-
-            return null;
-        }
     }
 }

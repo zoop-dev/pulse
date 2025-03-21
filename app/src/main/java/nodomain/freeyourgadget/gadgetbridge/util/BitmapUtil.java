@@ -235,6 +235,21 @@ public class BitmapUtil {
         return bitmap;
     }
 
+    public static Bitmap convert(final Bitmap bmp, final Bitmap.Config config, final int width, final int height) {
+        if (bmp.getConfig().equals(config) && bmp.getWidth() == width && bmp.getHeight() == height) {
+            // Right encoding and size
+            return bmp;
+        }
+
+        // Convert encoding / scale
+        final Bitmap target = Bitmap.createBitmap(width, height, config);
+        final Canvas canvas = new Canvas(target);
+        final Rect rect = new Rect(0, 0, width, height);
+        canvas.drawBitmap(bmp, null, rect, null);
+
+        return target;
+    }
+
     /**
      * Converts a {@link Bitmap} to an uncompressed TGA image, as raw bytes, in RGB565 encoding.
      * @param bmp the {@link Bitmap} to convert.
@@ -244,54 +259,58 @@ public class BitmapUtil {
      * @return the raw bytes for the TGA image
      */
     public static byte[] convertToTgaRGB565(final Bitmap bmp, final int width, final int height, final byte[] id) {
-        final Bitmap bmp565;
-        if (bmp.getConfig().equals(Bitmap.Config.RGB_565) && bmp.getWidth() == width && bmp.getHeight() == height) {
-            // Right encoding and size
-            bmp565 = bmp;
-        } else {
-            // Convert encoding / scale
-            bmp565 = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            final Canvas canvas = new Canvas(bmp565);
-            final Rect rect = new Rect(0, 0, width, height);
-            canvas.drawBitmap(bmp, null, rect, null);
-        }
+        final Bitmap bmp565 = convert(bmp, Bitmap.Config.RGB_565, width, height);
 
         int size = bmp565.getRowBytes() * bmp565.getHeight();
         final ByteBuffer bmp565buf = ByteBuffer.allocate(size);
         bmp565.copyPixelsToBuffer(bmp565buf);
 
-        // As per https://en.wikipedia.org/wiki/Truevision_TGA
-        // 18 bytes
-        final byte[] header = {
-                // ID length
-                (byte) id.length,
-                // Color map type - (0 - no color map)
-                0x00,
-                // Image type (2 - uncompressed true-color image)
-                0x02,
-                // Color map specification (5 bytes)
-                0x00, 0x00, // first entry index
-                0x00, 0x00, /// color map length
-                0x00, // color map entry size
-                // Image dimensions and format (10 bytes)
-                0x00, 0x00, // x origin
-                0x00, 0x00, // y origin
-                (byte) (width & 0xff), (byte) ((width >> 8) & 0xff), // width
-                (byte) (height & 0xff), (byte) ((height >> 8) & 0xff), // height
-                16, // bits per pixel (10)
-                0x20, // image descriptor (0x20, 00100000)
-                // bits 3-0 give the alpha channel depth, bits 5-4 give pixel ordering
-                // Bit 4 of the image descriptor byte indicates right-to-left pixel ordering if set.
-                // Bit 5 indicates an ordering of top-to-bottom. Otherwise, pixels are stored in bottom-to-top, left-to-right order.
-        };
+        return buildTga(bmp565buf.array(), 16, null, width, height, id);
+    }
 
-        final ByteBuffer tga565buf = ByteBuffer.allocate(header.length + id.length + size);
+    public static byte[] buildTga(final byte[] imageData,
+                                  final int bpp,
+                                  @Nullable final byte[] colorMap,
+                                  final int width,
+                                  final int height,
+                                  final byte[] id) {
+        final int colorMapLength = colorMap != null ? colorMap.length : 0;
 
-        tga565buf.put(header);
-        tga565buf.put(id);
-        tga565buf.put(bmp565buf.array());
+        final ByteBuffer buf = ByteBuffer.allocate(18 + id.length + colorMapLength + imageData.length)
+                .order(ByteOrder.LITTLE_ENDIAN);
 
-        return tga565buf.array();
+        //
+        // 18-byte header, as per https://en.wikipedia.org/wiki/Truevision_TGA
+        //
+
+        // ID length
+        buf.put((byte) id.length);
+        // Color map type - (1 color map present, 0 - no color map)
+        buf.put((byte) (colorMap != null ? 0x01 : 0x00));
+        // Image type (1 - uncompressed color-mapped image, 2 - uncompressed true-color image)
+        buf.put((byte) (colorMap != null ? 0x01 : 0x02));
+        // Color map specification (5 bytes)
+        buf.putShort((byte) 0); // first entry index
+        buf.putShort((short) (colorMapLength / 4)); // color map length
+        buf.put((byte) (colorMap != null ? 32 : 0)); // if we have a color map, it's 32b argb
+        // Image dimensions and format (10 bytes)
+        buf.putShort((short) 0); // x origin
+        buf.putShort((short) 0); // y origin
+        buf.putShort((short) width); // y origin
+        buf.putShort((short) height); // y origin
+        buf.put((byte) bpp); // bits per pixel
+        buf.put((byte) 0x20); // image descriptor (0x20, 00100000)
+        // bits 3-0 give the alpha channel depth, bits 5-4 give pixel ordering
+        // Bit 4 of the image descriptor byte indicates right-to-left pixel ordering if set.
+        // Bit 5 indicates an ordering of top-to-bottom. Otherwise, pixels are stored in bottom-to-top, left-to-right order.
+
+        buf.put(id);
+        if (colorMap != null) {
+            buf.put(colorMap);
+        }
+        buf.put(imageData);
+
+        return buf.array();
     }
 
     public static boolean isPng(final byte[] data) {
