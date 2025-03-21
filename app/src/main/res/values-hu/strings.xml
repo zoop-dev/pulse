@@ -3661,5 +3661,5 @@
     <string name="ultrahuman_airplane_mode_activated">repülős üzemmód aktiválva</string>
     <string name="ultrahuman_airplane_mode_on_charger">a gyűrű töltődik - repülős üzemmód NINCS aktiválva</string>
     <string name="ultrahuman_airplane_mode_too_full">a gyűrű teljesen feltöltve - repülős üzemmód NINCS aktiválva</string>
-    <string name="ultrahuman_airplane_mode_question">Aktiválja a repülős üzemmódot?</string>
+    <string name="ultrahuman_airplane_mode_question">Repülős üzemmód aktiválása?</string>
 </resources>
