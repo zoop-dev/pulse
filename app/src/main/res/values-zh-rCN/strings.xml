@@ -3855,4 +3855,12 @@
     <string name="finnish">芬兰语</string>
     <string name="bahasa_melayu">马来语</string>
     <string name="pref_vibration_intensity">振动强度</string>
+    <string name="devicetype_ultrahuma_ring_air">超人指环 AIR</string>
+    <string name="ultrahuman_airplane_mode_too_full">指环已充满电 - 飞行模式未激活</string>
+    <string name="ultrahuman_airplane_mode_question">启动飞行模式？</string>
+    <string name="ultrahuman_airplane_mode_title">飞行模式</string>
+    <string name="ultrahuman_airplane_mode_unknown">未知错误 - 飞行模式未激活</string>
+    <string name="ultrahuman_airplane_mode_activated">飞行模式已激活</string>
+    <string name="ultrahuman_airplane_mode_on_charger">指环正在充电 - 飞行模式未激活</string>
+    <string name="ultrahuman_unhandled_error_response">操作 0x%x 时遇到未识别的错误代码 0x%x</string>
 </resources>
