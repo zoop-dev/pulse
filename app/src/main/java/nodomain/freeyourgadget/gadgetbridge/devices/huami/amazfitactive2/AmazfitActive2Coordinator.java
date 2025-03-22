@@ -71,11 +71,6 @@ public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public boolean supportsToDoList() {
         return true;
     }

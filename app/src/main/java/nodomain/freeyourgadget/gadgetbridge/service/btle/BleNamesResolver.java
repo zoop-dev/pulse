@@ -98,6 +98,7 @@ public class BleNamesResolver {
         mServices.put("0000fe95-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi Wear Service)");
         mServices.put("0000fee0-0000-3512-2118-0009af100700", "(Propr: Xiaomi MiLi Service)");
         mServices.put("00001530-0000-3512-2118-0009af100700", "(Propr: Xiaomi Weight Service)");
+        mServices.put("0000fee0-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi Huami Service)");
         mServices.put("14701820-620a-3973-7c78-9cfff0876abd", "(Propr: HPLUS Service)");
         mServices.put("16186f00-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi Wear Service - Mi Watch Lite/Redmi Watch)");
         mServices.put("16187f00-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi Wear Service - Mi Smart Watch 4C/Redmi Band)");
@@ -219,6 +220,26 @@ public class BleNamesResolver {
         //mCharacteristics.put("ebe0ccbc-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd HISTORY)");
         //mCharacteristics.put("ebe0ccc1-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd LIVE_DATA)");
         //mCharacteristics.put("ebe0ccba-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd HISTORY_LAST_ID)");
+        mCharacteristics.put("00000001-0000-3512-2118-0009af100700", "(Propr: Huami Raw Sensor Control)");
+        mCharacteristics.put("00000002-0000-3512-2118-0009af100700", "(Propr: Huami Raw Sensor Data)");
+        mCharacteristics.put("00000003-0000-3512-2118-0009af100700", "(Propr: Huami Configuration)");
+        mCharacteristics.put("00000004-0000-3512-2118-0009af100700", "(Propr: Huami Activity Control)");
+        mCharacteristics.put("00000005-0000-3512-2118-0009af100700", "(Propr: Huami Activity Data)");
+        mCharacteristics.put("00000006-0000-3512-2118-0009af100700", "(Propr: Huami Battery Info)");
+        mCharacteristics.put("00000007-0000-3512-2118-0009af100700", "(Propr: Huami Realtime Steps)");
+        mCharacteristics.put("00000008-0000-3512-2118-0009af100700", "(Propr: Huami User Settings)");
+        mCharacteristics.put("00000009-0000-3512-2118-0009af100700", "(Propr: Huami Auth)");
+        mCharacteristics.put("0000000f-0000-3512-2118-0009af100700", "(Propr: Huami Workout)");
+        mCharacteristics.put("00000010-0000-3512-2118-0009af100700", "(Propr: Huami Device Event)");
+        mCharacteristics.put("00000012-0000-3512-2118-0009af100700", "(Propr: Huami Audio Control)");
+        mCharacteristics.put("00000013-0000-3512-2118-0009af100700", "(Propr: Huami Audio Data)");
+        mCharacteristics.put("00000016-0000-3512-2118-0009af100700", "(Propr: Huami 2021 Chunked Write)");
+        mCharacteristics.put("00000017-0000-3512-2118-0009af100700", "(Propr: Huami 2021 Chunked Read)");
+        mCharacteristics.put("00000020-0000-3512-2118-0009af100700", "(Propr: Huami Chunked Transfer)");
+        mCharacteristics.put("00000023-0000-3512-2118-0009af100700", "(Propr: Zepp OS File Transfer V3 Send)");
+        mCharacteristics.put("00000024-0000-3512-2118-0009af100700", "(Propr: Zepp OS File Transfer V3 Receive)");
+        mCharacteristics.put("00001531-0000-3512-2118-0009af100700", "(Propr: Huami Firmware Control)");
+        mCharacteristics.put("00001532-0000-3512-2118-0009af100700", "(Propr: Huami Firmware Data)");
 
         mValueFormats.put(52, "32bit float");
         mValueFormats.put(50, "16bit float");

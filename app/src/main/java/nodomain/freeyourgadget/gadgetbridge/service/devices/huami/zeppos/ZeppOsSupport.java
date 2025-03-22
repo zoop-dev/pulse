@@ -1378,8 +1378,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public boolean onCharacteristicChanged(final BluetoothGatt gatt,
                                            final BluetoothGattCharacteristic characteristic) {
         final UUID characteristicUUID = characteristic.getUuid();
-        if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3.equals(characteristicUUID)) {
-            fileTransferService.onCharacteristicChanged(characteristic.getValue());
+        if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND.equals(characteristicUUID)) {
+            fileTransferService.onCharacteristicChanged(characteristic);
+            return true;
+        } else if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE.equals(characteristicUUID)) {
+            fileTransferService.onCharacteristicChanged(characteristic);
             return true;
         }
 

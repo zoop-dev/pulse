@@ -22,7 +22,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
@@ -100,7 +99,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         characteristicActivityData = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA);
         builder.notify(characteristicActivityData, false);
 
-        characteristicFetch = getCharacteristic(HuamiService.UUID_UNKNOWN_CHARACTERISTIC4);
+        characteristicFetch = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL);
         builder.notify(characteristicFetch, true);
 
         startFetching(builder);
@@ -123,7 +122,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA.equals(characteristicUUID)) {
             handleActivityData(characteristic.getValue());
             return true;
-        } else if (HuamiService.UUID_UNKNOWN_CHARACTERISTIC4.equals(characteristicUUID)) {
+        } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL.equals(characteristicUUID)) {
             handleActivityMetadata(characteristic.getValue());
             return true;
         } else {
