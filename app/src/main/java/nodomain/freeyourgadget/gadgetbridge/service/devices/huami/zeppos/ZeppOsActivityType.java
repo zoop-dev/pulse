@@ -16,9 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 
 /**
@@ -147,8 +144,6 @@ public enum ZeppOsActivityType {
     Zumba(0x4d, ActivityKind.ZUMBA),
     ;
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsActivityType.class);
-
     private final byte code;
     private final ActivityKind activityKind;
 
@@ -162,54 +157,7 @@ public enum ZeppOsActivityType {
     }
 
     public ActivityKind toActivityKind() {
-        switch (this) {
-            case Badminton:
-                return ActivityKind.BADMINTON;
-            case Basketball:
-                return ActivityKind.BASKETBALL;
-            case Cricket:
-                return ActivityKind.CRICKET;
-            case Elliptical:
-                return ActivityKind.ELLIPTICAL_TRAINER;
-            case Freestyle:
-            case IndoorFitness:
-                return ActivityKind.EXERCISE;
-            case IndoorCycling:
-                return ActivityKind.INDOOR_CYCLING;
-            case JumpRope:
-                return ActivityKind.JUMP_ROPING;
-            case OutdoorCycling:
-                return ActivityKind.CYCLING;
-            case OutdoorHiking:
-                return ActivityKind.HIKING;
-            case OutdoorRunning:
-                return ActivityKind.RUNNING;
-            case OutdoorSwimming:
-                return ActivityKind.SWIMMING_OPENWATER;
-            case PoolSwimming:
-                return ActivityKind.SWIMMING;
-            case RockClimbing:
-                return ActivityKind.CLIMBING;
-            case Rowing:
-                return ActivityKind.ROWING_MACHINE;
-            case Soccer:
-                return ActivityKind.SOCCER;
-            case TableTennis:
-                return ActivityKind.PINGPONG;
-            case Treadmill:
-                return ActivityKind.TREADMILL;
-            case Walking:
-            case RaceWalking:
-                return ActivityKind.WALKING;
-            case Strength:
-                return ActivityKind.STRENGTH_TRAINING;
-            case Yoga:
-                return ActivityKind.YOGA;
-        }
-
-        LOG.warn("Unmapped workout type {}", this);
-
-        return ActivityKind.UNKNOWN;
+        return activityKind;
     }
 
     public static ZeppOsActivityType fromCode(final byte code) {
