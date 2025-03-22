@@ -61,10 +61,15 @@ public class FetchPaiOperation extends AbstractRepeatingFetchOperation {
 
         final ByteBuffer buf = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
 
+        if (bytes.length % 102 != 0) {
+            LOG.error("Unexpected length for PAI data {}, not divisible by 102", bytes.length);
+            return false;
+        }
+
         while (buf.position() < bytes.length) {
             final int type = buf.get() & 0xff;
 
-            if (type != 5) {
+            if (type != 5 && type != 0) {
                 LOG.error("Unsupported PAI type {}", type);
                 return false;
             }
@@ -97,6 +102,12 @@ public class FetchPaiOperation extends AbstractRepeatingFetchOperation {
                     GB.hexdump(unknown1),
                     GB.hexdump(unknown2)
             );
+
+            if (type == 0) {
+                // Values from before the factory reset?
+                LOG.warn("Ignoring PAI type 0");
+                continue;
+            }
 
             final HuamiPaiSample sample = new HuamiPaiSample();
             sample.setTimestamp(timestamp.getTimeInMillis());
