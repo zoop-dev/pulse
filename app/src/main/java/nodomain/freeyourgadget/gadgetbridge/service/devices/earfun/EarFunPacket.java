@@ -69,6 +69,7 @@ public class EarFunPacket {
         REQUEST_RESPONSE_0300((short) 0x0300), // 00030301
         REQUEST_RESPONSE_BATTERY_STATE_LEFT((short) 0x0306),
         REQUEST_RESPONSE_BATTERY_STATE_RIGHT((short) 0x0307),
+        COMMAND_REBOOT((short) 0x0308),
         REQUEST_RESPONSE_FIRMWARE_VERSION((short) 0x0309),
         SET_GAME_MODE((short) 0x0312),
         REQUEST_RESPONSE_GAME_MODE((short) 0x0313),
@@ -76,26 +77,37 @@ public class EarFunPacket {
         REQUEST_RESPONSE_AMBIENT_SOUND((short) 0x0315),
         SET_DEVICENAME((short) 0x0316),
         REQUEST_RESPONSE_BATTERY_STATE_CASE((short) 0x0317),
-        REQUEST_RESPONSE_0318((short) 0x0318), // 0000 or 0001
+        REQUEST_RESPONSE_0318((short) 0x0318), // 0000 or 0001 query constantly send
         UNIDENTIFIED_0321((short) 0x0321), // Pro 4
-        UNIDENTIFIED_0326((short) 0x0326), // 0001 Pro 4
+        REQUEST_RESPONSE_CONNECT_TWO_DEVICES((short) 0x0326), // 0001
+        SET_CONNECT_TWO_DEVICES((short) 0x0327), // 00, 01
         SET_TOUCH_ACTION((short) 0x030A),
         REQUEST_RESPONSE_TOUCH_ACTION((short) 0x030B),
-        UNIDENTIFIED_032C((short) 0x032C), // 00004C47205137000000000000000000000000000000006DC3F201 Pro 4
-        UNIDENTIFIED_032F((short) 0x032F), // 0013 Pro 4 // check
-        UNIDENTIFIED_0331((short) 0x0331), // 0000 Pro 4 // check
-        UNIDENTIFIED_0333((short) 0x0333), // 0000 Pro 4 // check
-        UNIDENTIFIED_0335((short) 0x0335), // 0000 Pro 4 // check
-        UNIDENTIFIED_0339((short) 0x0339), // 0001 Pro 4 // check
+        UNIDENTIFIED_0329((short) 0x0329), // 00 = enable first device?, 01 = enable second device? SET
+        UNIDENTIFIED_032A((short) 0x032A), // 00 = disable first device, 01 = disable second device SET
+        UNIDENTIFIED_032B((short) 0x032B), // trigger pairing?
+        REQUEST_RESPONSE_CONNECTED_DEVICES((short) 0x032C), // names of paired devices + something else
+        SET_AUDIO_CODEC((short) 0x032E), // 00 = Stable Connection, 01 = aptX, 03 = aptX Adaptive, 13 = aptX Lossless, 08 = LDAC
+        REQUEST_RESPONSE_AUDIO_CODEC((short) 0x032F), // 0013
+        SET_MICROPHONE_MODE((short) 0x0330), // 00 = auto, 01 = left, 02 =right
+        REQUEST_RESPONSE_MICROPHONE_MODE((short) 0x0331), // 0000
+        SET_FIND_DEVICE((short) 0x0332), // 00 = off, 01 = left, 02 = right, 03 = both
+        REQUEST_RESPONSE_FIND_DEVICE((short) 0x0333), // 0000
+        SET_TOUCH_MODE((short) 0x0334), // 00 = both, 01 = none, 02 = right, 03 = left
+        REQUEST_RESPONSE_TOUCH_MODE((short) 0x0335), // 0000
+        SET_VOICE_PROMPT_VOLUME((short) 0x0338), // 00 (max) - 04 (min)
+        REQUEST_RESPONSE_VOICE_PROMPT_VOLUME((short) 0x0339), // 0000 (max) - 0004 (min)
         SET_ANC_MODE((short) 0x033A),
         REQUEST_RESPONSE_ANC_MODE((short) 0x033B),
         SET_TRANSPARENCY_MODE((short) 0x033C),
         REQUEST_RESPONSE_TRANSPARENCY_MODE((short) 0x033D),
-        UNIDENTIFIED_034A((short) 0x034A), // 0000 Pro 4
-        UNIDENTIFIED_034C((short) 0x034C), // 0000 Pro 4
-        UNIDENTIFIED_034D((short) 0x034D), // 0003 Pro 4
-        UNIDENTIFIED_0348((short) 0x0348), // no REQUEST
-        UNIDENTIFIED_0350((short) 0x0350), // 0001 Pro 4
+        UNIDENTIFIED_0348((short) 0x0348), // from phone to device
+        SET_DISABLE_IN_EAR_DETECTION((short) 0x349), // 00, 01
+        REQUEST_RESPONSE_DISABLE_IN_EAR_DETECTION((short) 0x034A), // 0000
+        SET_ADVANCED_AUDIO_MODE((short) 0x034B), // 00 = Google Fast Pair, 01 = LE Audio
+        REQUEST_RESPONSE_ADVANCED_AUDIO_MODE((short) 0x034C), // 0000
+        REQUEST_RESPONSE_034D((short) 0x034D), // 0003 with "AptX" (any mode) or 0002 with "Stable Connection" and "LDAC" can also be 0000, send if second device connects
+        REQUEST_RESPONSE_0350((short) 0x0350), // 0001 Pro 4 not sure what this is, send, if second device connects
         SET_EQUALIZER_BAND((short) 0x0E01, OTHER_VENDOR_ID), // answers with UNIDENTIFIED_0F81
         UNIDENTIFIED_0E80((short) 0x0E80, OTHER_VENDOR_ID), // 01
         RESPONSE_EQUALIZER_BAND((short) 0x0F81, OTHER_VENDOR_ID),

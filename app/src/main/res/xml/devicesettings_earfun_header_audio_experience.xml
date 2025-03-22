@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="pref_header_earfun_audio_experience"
+        android:title="@string/earfun_header_audio_experience" />
+
+</androidx.preference.PreferenceScreen>

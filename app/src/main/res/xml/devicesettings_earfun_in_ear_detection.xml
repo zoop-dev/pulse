@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_hearing"
+        android:key="pref_earfun_in_ear_detection_mode"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/earfun_in_ear_detection_hint"
+        android:title="@string/nothing_prefs_inear_title" />
+
+</androidx.preference.PreferenceScreen>

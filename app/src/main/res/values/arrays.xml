@@ -3666,6 +3666,58 @@
         <item>1</item>
     </string-array>
 
+    <string-array name="earfun_microphone_mode_names">
+        <item>@string/earfun_earbud_mode_automatic</item>
+        <item>@string/earfun_earbud_mode_left</item>
+        <item>@string/earfun_earbud_mode_right</item>
+    </string-array>
+
+    <string-array name="earfun_microphone_mode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="earfun_audio_codec_names">
+        <item>@string/pref_title_stable_connection</item>
+        <item>aptX</item>
+        <item>aptX Adaptive</item>
+        <item>aptX Adaptive Lossless</item>
+        <item>LDAC</item>
+    </string-array>
+
+    <string-array name="earfun_audio_codec_values">
+        <item>0</item>
+        <item>1</item>
+        <item>3</item>
+        <item>19</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="earfun_advanced_audio_mode_names">
+        <item>Google Fast Pair</item>
+        <item>LE Audio</item>
+    </string-array>
+
+    <string-array name="earfun_advanced_audio_mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="earfun_find_device_names">
+        <item>@string/off</item>
+        <item>@string/earfun_earbud_mode_left</item>
+        <item>@string/earfun_earbud_mode_right</item>
+        <item>@string/earfun_earbud_mode_both</item>
+    </string-array>
+
+    <string-array name="earfun_find_device_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="earfun_air_s_tap_action_names">
         <item>@string/none</item>
         <item>@string/pref_media_volumeup</item>

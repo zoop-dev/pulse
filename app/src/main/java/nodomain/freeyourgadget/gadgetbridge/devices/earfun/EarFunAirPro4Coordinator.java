@@ -81,9 +81,20 @@ public class EarFunAirPro4Coordinator extends AbstractEarFunCoordinator {
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_pro_4_headphones);
+        // Category Audio Experience
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_header_audio_experience);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_10_band_equalizer);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_pro_4_sound_control);
+
+        // Category Audio Quality & Connectivity
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_header_connectivity);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_pro_4_audio_quality);
+
+        // Category System Settings
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_header_system_settings);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_pro_4_gestures);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_in_ear_detection);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_find_device);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_device_name);
         final List<Integer> callsAndNotif = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         callsAndNotif.add(R.xml.devicesettings_headphones);

@@ -21,25 +21,38 @@ public class EarFunPacketEncoder {
     // Gaia uses a factor of 60 to convert to dB and EarFun projects 6 dBs on a slider scale of 10
     private static final double EQUALIZER_GAIN_FACTOR = 60 * 0.6;
 
-    public static byte[] encodeBatteryReq() {
+    public static byte[] encodeCommonSettingsReq() {
         return joinPackets(
+                // battery levels
                 new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_BATTERY_STATE_LEFT).encode(),
                 new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_BATTERY_STATE_RIGHT).encode(),
-                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_BATTERY_STATE_CASE).encode()
-        );
-    }
-
-    public static byte[] encodeSoundReq() {
-        return joinPackets(
+                // sound settings
                 new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_GAME_MODE).encode(),
                 new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_AMBIENT_SOUND).encode(),
-                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_ANC_MODE).encode(),
-                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_TRANSPARENCY_MODE).encode()
+                // touch settings
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_TOUCH_ACTION).encode()
         );
     }
 
-    public static byte[] encodeTouchActionReq() {
-        return joinPackets(new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_TOUCH_ACTION).encode());
+    public static byte[] encodeAirPro4SettingsReq() {
+        return joinPackets(
+                encodeCommonSettingsReq(),
+                // battery levels
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_BATTERY_STATE_CASE).encode(),
+                // sound settings
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_ANC_MODE).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_TRANSPARENCY_MODE).encode(),
+                // touch settings
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_TOUCH_MODE).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_DISABLE_IN_EAR_DETECTION).encode(),
+                // system settings
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_CONNECT_TWO_DEVICES).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_ADVANCED_AUDIO_MODE).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_MICROPHONE_MODE).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_FIND_DEVICE).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_VOICE_PROMPT_VOLUME).encode(),
+                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_AUDIO_CODEC).encode()
+        );
     }
 
     public static byte[] encodeFirmwareVersionReq() {

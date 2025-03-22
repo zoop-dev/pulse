@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/earfun_find_device_names"
+        android:entryValues="@array/earfun_find_device_values"
+        android:icon="@drawable/ic_action_find_lost_device"
+        android:key="pref_earfun_find_device"
+        android:summary="%s"
+        android:title="@string/earfun_find_headphones" />
+    <Preference
+        android:key="pref_earfun_find_device_hint"
+        android:selectable="false"
+        android:summary="@string/earfun_find_headphones_hint" />
+
+</androidx.preference.PreferenceScreen>

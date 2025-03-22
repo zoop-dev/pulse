@@ -40,9 +40,7 @@ public class EarFunIOThread extends BtClassicIoThread {
     protected void initialize() {
         super.initialize();
         write(earFunProtocol.encodeFirmwareVersionReq());
-        write(earFunProtocol.encodeBatteryReq());
-        write(earFunProtocol.encodeSoundReq());
-        write(earFunProtocol.encodeTouchActionReq());
+        write(earFunProtocol.encodeSettingsReq());
     }
 
     @Override

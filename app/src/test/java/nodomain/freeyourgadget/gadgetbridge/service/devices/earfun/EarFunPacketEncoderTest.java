@@ -57,30 +57,6 @@ public class EarFunPacketEncoderTest {
     }
 
     @Test
-    public void testEncodeBatteryReq() {
-        byte[] encoded = EarFunPacketEncoder.encodeBatteryReq();
-
-        assertNotNull(encoded);
-        assertEquals(24, encoded.length);
-    }
-
-    @Test
-    public void testEncodeSoundReq() {
-        byte[] encoded = EarFunPacketEncoder.encodeSoundReq();
-
-        assertNotNull(encoded);
-        assertEquals(32, encoded.length);
-    }
-
-    @Test
-    public void testEncodeTouchActionReq() {
-        byte[] encoded = EarFunPacketEncoder.encodeTouchActionReq();
-
-        assertNotNull(encoded);
-        assertEquals(8, encoded.length);
-    }
-
-    @Test
     public void testEncodeFirmwareVersionReq() {
         byte[] encoded = EarFunPacketEncoder.encodeFirmwareVersionReq();
 

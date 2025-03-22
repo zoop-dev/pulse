@@ -66,31 +66,35 @@ public class EarFunProtocol extends GBDeviceProtocol {
                 // do nothing with these, they are returned after each EQ set operation and always return 01
                 case RESPONSE_EQUALIZER_BAND:
                     break;
+                case REQUEST_RESPONSE_DISABLE_IN_EAR_DETECTION:
+                    events.add(handleInEarDetectionModeInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_TOUCH_MODE:
+                    events.add(handleTouchModeInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_CONNECT_TWO_DEVICES:
+                    events.add(handleConnectTwoDevicesModeInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_ADVANCED_AUDIO_MODE:
+                    events.add(handleAdvancedAudioModeInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_MICROPHONE_MODE:
+                    events.add(handleMicrophoneModeInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_FIND_DEVICE:
+                    events.add(handleFindDeviceInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_VOICE_PROMPT_VOLUME:
+                    events.add(handleVoicePromptVolumeInfo(payload));
+                    break;
+                case REQUEST_RESPONSE_AUDIO_CODEC:
+                    events.add(handleAudioCodecInfo(payload));
+                    break;
                 default:
                     LOG.error("no handler for packet type {}", packet.getCommand().name());
             }
         }
         return events.toArray(new GBDeviceEvent[0]);
-    }
-
-    @Override
-    public byte[] encodeTestNewFunction() {
-        return joinPackets(
-                new EarFunPacket(EarFunPacket.Command.REQUEST_RESPONSE_0318).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0321).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0326).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_032C).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_032F).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0331).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0333).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0335).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0339).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_034A).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_034C).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_034D).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0348).encode(),
-                new EarFunPacket(EarFunPacket.Command.UNIDENTIFIED_0350).encode()
-        );
     }
 
     @Override
@@ -129,22 +133,45 @@ public class EarFunProtocol extends GBDeviceProtocol {
             case PREF_EARFUN_TRANSPARENCY_MODE:
                 byte transparencyMode = (byte) (Integer.parseInt(prefs.getString(PREF_EARFUN_TRANSPARENCY_MODE, "0")) & 0xFF);
                 return new EarFunPacket(EarFunPacket.Command.SET_TRANSPARENCY_MODE, transparencyMode).encode();
+            case PREF_EARFUN_IN_EAR_DETECTION_MODE:
+                int disableInEarDetectionMode = prefs.getBoolean(PREF_EARFUN_IN_EAR_DETECTION_MODE, false) ? 0 : 1;
+                return new EarFunPacket(EarFunPacket.Command.SET_DISABLE_IN_EAR_DETECTION, (byte) disableInEarDetectionMode).encode();
+            case PREF_EARFUN_TOUCH_MODE:
+                // 0 = both, 1 = none
+                int touchMode = prefs.getBoolean(PREF_EARFUN_TOUCH_MODE, false) ? 0 : 1;
+                return new EarFunPacket(EarFunPacket.Command.SET_TOUCH_MODE, (byte) touchMode).encode();
+            case PREF_EARFUN_CONNECT_TWO_DEVICES_MODE:
+                int connectTwoDevicesMode = prefs.getBoolean(PREF_EARFUN_CONNECT_TWO_DEVICES_MODE, false) ? 1 : 0;
+                return joinPackets(
+                        new EarFunPacket(EarFunPacket.Command.SET_CONNECT_TWO_DEVICES, (byte) connectTwoDevicesMode).encode(),
+                        new EarFunPacket(EarFunPacket.Command.COMMAND_REBOOT).encode()
+                );
+            case PREF_EARFUN_ADVANCED_AUDIO_MODE:
+                byte advancedAudioMode = (byte) (Integer.parseInt(prefs.getString(PREF_EARFUN_ADVANCED_AUDIO_MODE, "0")) & 0xFF);
+                return new EarFunPacket(EarFunPacket.Command.SET_ADVANCED_AUDIO_MODE, advancedAudioMode).encode();
+            case PREF_EARFUN_MICROPHONE_MODE:
+                byte microphoneMode = (byte) (Integer.parseInt(prefs.getString(PREF_EARFUN_MICROPHONE_MODE, "0")) & 0xFF);
+                return new EarFunPacket(EarFunPacket.Command.SET_MICROPHONE_MODE, microphoneMode).encode();
+            case PREF_EARFUN_FIND_DEVICE:
+                byte findDeviceMode = (byte) (Integer.parseInt(prefs.getString(PREF_EARFUN_FIND_DEVICE, "0")) & 0xFF);
+                return new EarFunPacket(EarFunPacket.Command.SET_FIND_DEVICE, findDeviceMode).encode();
+            case PREF_EARFUN_VOICE_PROMPT_VOLUME:
+                // the volume has a scale from 4 to 0, where 0 is the highest volume and 4 is off,
+                // to make it nicer for a slider, we reverse it
+                int voicePromptVolume = prefs.getInt(PREF_EARFUN_VOICE_PROMPT_VOLUME, 0);
+                voicePromptVolume = Math.max(0, 4 - voicePromptVolume);
+                return new EarFunPacket(EarFunPacket.Command.SET_VOICE_PROMPT_VOLUME, (byte) voicePromptVolume).encode();
+            case PREF_EARFUN_AUDIO_CODEC:
+                byte audioCodec = (byte) (Integer.parseInt(prefs.getString(PREF_EARFUN_AUDIO_CODEC, "0")) & 0xFF);
+                return new EarFunPacket(EarFunPacket.Command.SET_AUDIO_CODEC, audioCodec).encode();
             default:
                 LOG.error("unhandled send configuration {}", config);
         }
         return null;
     }
 
-    public byte[] encodeBatteryReq() {
-        return EarFunPacketEncoder.encodeBatteryReq();
-    }
-
-    public byte[] encodeSoundReq() {
-        return EarFunPacketEncoder.encodeSoundReq();
-    }
-
-    public byte[] encodeTouchActionReq() {
-        return EarFunPacketEncoder.encodeTouchActionReq();
+    public byte[] encodeSettingsReq() {
+        return EarFunPacketEncoder.encodeCommonSettingsReq();
     }
 
     @Override

@@ -27,4 +27,12 @@ public class EarFunSettingsPreferenceConst {
     public static final String PREF_EARFUN_EQUALIZER_BAND_15000 = "pref_earfun_equalizer_band_15000";
     public static final String PREF_EARFUN_EQUALIZER_BAND_16000 = "pref_earfun_equalizer_band_16000";
     public static final String PREF_EARFUN_EQUALIZER_PRESET = "pref_earfun_equalizer_preset";
+    public static final String PREF_EARFUN_IN_EAR_DETECTION_MODE = "pref_earfun_in_ear_detection_mode";
+    public static final String PREF_EARFUN_TOUCH_MODE = "pref_earfun_touch_mode";
+    public static final String PREF_EARFUN_CONNECT_TWO_DEVICES_MODE = "pref_earfun_connect_two_devices";
+    public static final String PREF_EARFUN_ADVANCED_AUDIO_MODE = "pref_earfun_advanced_audio_mode";
+    public static final String PREF_EARFUN_MICROPHONE_MODE = "pref_earfun_microphone_mode";
+    public static final String PREF_EARFUN_FIND_DEVICE = "pref_earfun_find_device";
+    public static final String PREF_EARFUN_VOICE_PROMPT_VOLUME = "pref_earfun_voice_prompt_volume";
+    public static final String PREF_EARFUN_AUDIO_CODEC = "pref_earfun_audio_codec";
 }

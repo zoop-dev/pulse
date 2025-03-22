@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_videogame"
+        android:key="pref_earfun_game_mode"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/earfun_low_latency_mode_hint"
+        android:title="@string/earfun_low_latency_mode" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_bluetooth_searching"
+        android:key="pref_earfun_connect_two_devices"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/earfun_connect_two_devices_hint"
+        android:title="@string/earfun_connect_two_devices" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/earfun_audio_codec_names"
+        android:entryValues="@array/earfun_audio_codec_values"
+        android:icon="@drawable/ic_equalizer"
+        android:key="pref_earfun_audio_codec"
+        android:summary="%s"
+        android:title="@string/audio_codec" />
+    <Preference
+        android:key="pref_earfun_audio_codec_hint"
+        android:selectable="false"
+        android:summary="@string/earfun_audio_codec_hint" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/earfun_advanced_audio_mode_names"
+        android:entryValues="@array/earfun_advanced_audio_mode_values"
+        android:icon="@drawable/ic_bluetooth"
+        android:key="pref_earfun_advanced_audio_mode"
+        android:summary="%s"
+        android:title="@string/earfun_advanced_audio_mode" />
+    <Preference
+        android:key="pref_earfun_advanced_audio_mode_hint"
+        android:selectable="false"
+        android:summary="@string/earfun_advanced_audio_mode_hint" />
+
+</androidx.preference.PreferenceScreen>

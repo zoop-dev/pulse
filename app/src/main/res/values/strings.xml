@@ -444,6 +444,7 @@
     <string name="pref_display_add_device_fab_off">Visible only if no device is added</string>
     <string name="pref_title_huami_force_new_protocol">New Auth Protocol</string>
     <string name="pref_summary_huami_force_new_protocol">Enable if your device no longer connects after a firmware upgrade</string>
+    <string name="pref_title_stable_connection">Stable Connection</string>
     <!-- HPlus Preferences -->
     <string name="pref_title_unit_system">Units</string>
     <string name="pref_title_timeformat">Time format</string>
@@ -3748,6 +3749,29 @@
     <string name="earfun_tap_action_noise_control_normal_ambient">Noise Control (Normal, Ambient Sound)</string>
     <string name="earfun_tap_action_noise_control_wind_ambient">Noise Control (Wind Noise, Ambient Sound)</string>
     <string name="earfun_tap_action_redial">Redial</string>
+    <string name="earfun_change_device_name_confirm_message">1) Once you\'ve updated the name, place the earbuds in the charging case, close the lid, and wait for about 10 seconds.\n\n2) In your device settings, remove the original device.\n\n3) Open the charging case again, search for the device, and the name change should be applied successfully.</string>
+    <string name="earfun_change_confirm_title">Change %s?</string>
+    <string name="earfun_reboot_confirm_message">After applying this setting, your device will restart. Once it powers back on, navigate to the \'Devices\' screen and reconnect.</string>
+    <string name="earfun_low_latency_mode">Low Latency Mode</string>
+    <string name="earfun_low_latency_mode_hint">Low latency mode reduces audio lag by utilizing a smaller buffer, though this can sometimes result in a less stable connection.</string>
+    <string name="earfun_connect_two_devices">Dual device connection</string>
+    <string name="earfun_connect_two_devices_hint">Connect to two Bluetooth devices simultaneously. For a stable signal, avoid using Dual Device Connection and LDAP mode at the same time.</string>
+    <string name="earfun_advanced_audio_mode">Advanced Audio Mode</string>
+    <string name="earfun_advanced_audio_mode_hint"><b>Google Fast Pair</b> offers instant and seamless device pairing.\n<b>LE Audio</b> provides improved sound quality, lower power consumption, and support for multiple audio streams.</string>
+    <string name="earfun_microphone_mode">Microphone Mode</string>
+    <string name="earfun_microphone_mode_hint">When using the headphone microphone, it can either automatically switch between the left and right earbud or remain fixed on one side based on your preference.</string>
+    <string name="earfun_earbud_mode_automatic">Choose best earbud automatically</string>
+    <string name="earfun_earbud_mode_right">Right earbud only</string>
+    <string name="earfun_earbud_mode_left">Left earbud only</string>
+    <string name="earfun_earbud_mode_both">Both earbuds</string>
+    <string name="earfun_find_headphones">Find Headphones</string>
+    <string name="earfun_find_headphones_hint">This option plays a loud sound through the headphones to help locate them. Avoid wearing the headphones to prevent potential hearing damage.</string>
+    <string name="earfun_in_ear_detection_hint">When enabled, In-Ear detection automatically resumes audio when the earbuds are worn and pauses playback when they are removed.</string>
+    <string name="earfun_audio_codec_hint"><b>LDAC</b> is a high-resolution codec for superior sound quality.\n<b>aptX</b> ensures low latency and high-fidelity audio streaming.\n<b>aptX Adaptive</b> adjusts bitrate dynamically based on content and connection.\n<b>aptX Adaptive Lossless</b> delivers lossless audio for high-resolution music.\n<b>Stable Connection</b> minimizes sound stuttering or skipping.</string>
+    <string name="earfun_voice_prompt_volume">Voice Prompt Volume</string>
+    <string name="earfun_header_audio_experience">Audio Experience</string>
+    <string name="earfun_header_connectivity">Audio Quality &amp; Connectivity</string>
+    <string name="earfun_header_system_settings">System Settings</string>
     <string name="ultrahuman_airplane_mode_activated">airplane mode activated</string>
     <string name="ultrahuman_airplane_mode_on_charger">ring is charging - airplane mode NOT activated</string>
     <string name="ultrahuman_airplane_mode_too_full">ring is fully charged - airplane mode NOT activated</string>

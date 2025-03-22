@@ -79,8 +79,17 @@ public class EarFunAirSCoordinator extends AbstractEarFunCoordinator {
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_headphones);
+        // Category Audio Experience
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_header_audio_experience);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_6_band_equalizer);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_sound_control);
+
+        // Category Audio Quality & Connectivity
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_header_connectivity);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_audio_quality);
+
+        // Category System Settings
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_header_system_settings);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_air_s_gestures);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_earfun_device_name);
         final List<Integer> callsAndNotif = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
