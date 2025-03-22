@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
@@ -90,15 +91,18 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
     }
 
     protected byte[] getSecretKey() {
-        byte[] authKeyBytes = new byte[]{0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45};
+        final byte[] authKeyBytes = new byte[]{0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45};
 
-        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
+        final SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
 
-        String authKey = sharedPrefs.getString("authkey", null);
+        final String authKey = sharedPrefs.getString("authkey", null);
         if (authKey != null && !authKey.isEmpty()) {
             byte[] srcBytes = authKey.trim().getBytes();
             if (authKey.length() == 34 && authKey.startsWith("0x")) {
                 srcBytes = GB.hexStringToByteArray(authKey.substring(2));
+            } else if (authKey.length() == 32 && huamiSupport instanceof ZeppOsSupport) {
+                // All Zepp OS devices require a hex key
+                srcBytes = GB.hexStringToByteArray(authKey);
             }
             System.arraycopy(srcBytes, 0, authKeyBytes, 0, Math.min(srcBytes.length, 16));
         }
