@@ -71,6 +71,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
@@ -148,6 +149,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFtpServerService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsMorningUpdatesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVoiceMemosService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWatchfaceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWifiService;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
@@ -190,6 +192,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsHttpService httpService = new ZeppOsHttpService(this);
     private final ZeppOsRemindersService remindersService = new ZeppOsRemindersService(this);
     private final ZeppOsLoyaltyCardService loyaltyCardService = new ZeppOsLoyaltyCardService(this);
+    private final ZeppOsVoiceMemosService voiceMemosService = new ZeppOsVoiceMemosService(this);
     private final ZeppOsMusicService musicService = new ZeppOsMusicService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
@@ -219,6 +222,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(remindersService.getEndpoint(), remindersService);
         put(loyaltyCardService.getEndpoint(), loyaltyCardService);
         put(musicService.getEndpoint(), musicService);
+        put(voiceMemosService.getEndpoint(), voiceMemosService);
     }};
 
     public ZeppOsSupport() {
@@ -247,6 +251,17 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     @Override
     public boolean getImplicitCallbackModify() {
         return false;
+    }
+
+    @Override
+    public void dispose() {
+        for (final Short endpoint : mSupportedServices) {
+            if (mServiceMap.containsKey(endpoint)) {
+                Objects.requireNonNull(mServiceMap.get(endpoint)).dispose();
+            }
+        }
+
+        super.dispose();
     }
 
     @Override
@@ -1706,6 +1721,10 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             GBDeviceEventScreenshot gbDeviceEventScreenshot = new GBDeviceEventScreenshot(data);
             evaluateGBDeviceEvent(gbDeviceEventScreenshot);
             return;
+        }
+
+        if (url.startsWith("voicememo://") && filename.endsWith(".opus")) {
+            voiceMemosService.downloadFinish();
         }
 
         final String fileDownloadsDir = "zepp-os-received-files";

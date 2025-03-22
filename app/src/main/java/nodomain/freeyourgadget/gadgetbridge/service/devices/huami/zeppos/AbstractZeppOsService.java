@@ -74,6 +74,10 @@ public abstract class AbstractZeppOsService {
         // we will already know the capabilities
     }
 
+    public void dispose() {
+        // Do nothing by default
+    }
+
     protected ZeppOsSupport getSupport() {
         return mSupport;
     }
