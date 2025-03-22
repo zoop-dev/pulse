@@ -298,13 +298,11 @@ public class FileTransferImplV3 extends AbstractFileTransferImpl {
             // Start of a chunk
             receivePacketBuffer.reset();
 
-            LOG.debug("Got start of chunk - {} bytes", payload.length);
-
             final ByteBuffer buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
             buf.get(); // Discard first byte
             final byte flags = buf.get();
-            final boolean firstChunk = (flags == FLAG_FIRST_CHUNK);
-            currentReceiveChunkIsLast = (flags == FLAG_LAST_CHUNK);
+            final boolean firstChunk = (flags & FLAG_FIRST_CHUNK) != 0;
+            currentReceiveChunkIsLast = (flags & FLAG_LAST_CHUNK) != 0;
             final byte index = buf.get();
             currentReceiveChunkSize = buf.getShort();
 
@@ -318,10 +316,20 @@ public class FileTransferImplV3 extends AbstractFileTransferImpl {
                 return;
             }
 
-            LOG.debug("Starting a new chunk of {} bytes at index {}", currentReceiveChunkSize, currentReceiveRequest.getIndex());
+            LOG.debug(
+                    "Got start of chunk - payload={}b, firstChunk={}, lastChunk={}, index={}, chunkSize={}",
+                    payload.length, firstChunk, currentReceiveChunkIsLast, index, currentReceiveChunkSize
+            );
 
             receivePacketBuffer.write(payload, buf.position(), buf.limit() - buf.position());
         }
+
+        LOG.trace(
+                "Chunk buffer: {} of {}, currentReceiveChunkIsLast={}",
+                receivePacketBuffer.size(),
+                currentReceiveChunkSize,
+                currentReceiveChunkIsLast
+        );
 
         if (receivePacketBuffer.size() >= currentReceiveChunkSize) {
             // Finished a chunk
@@ -374,13 +382,15 @@ public class FileTransferImplV3 extends AbstractFileTransferImpl {
                     return;
                 }
 
-                currentReceiveRequest.getCallback().onFileDownloadFinish(
-                        currentReceiveRequest.getUrl(),
-                        currentReceiveRequest.getFilename(),
-                        data
-                );
+                final FileTransferRequest requestBackup = currentReceiveRequest;
 
                 resetReceive();
+
+                requestBackup.getCallback().onFileDownloadFinish(
+                        requestBackup.getUrl(),
+                        requestBackup.getFilename(),
+                        data
+                );
             }
 
             currentReceiveChunkSize = -1;
