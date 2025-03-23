@@ -1718,20 +1718,18 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
             this.fetchOperationQueue.add(new FetchHrvOperation(this));
         }
 
-        if (ZeppOsCoordinator.experimentalFeatures(getDevice())) {
-            if ((dataTypes & RecordedDataTypes.TYPE_HEART_RATE) != 0 && coordinator.supportsHeartRateStats()) {
-                this.fetchOperationQueue.add(new FetchHeartRateManualOperation(this));
-                this.fetchOperationQueue.add(new FetchHeartRateMaxOperation(this));
-                this.fetchOperationQueue.add(new FetchHeartRateRestingOperation(this));
-            }
+        if ((dataTypes & RecordedDataTypes.TYPE_HEART_RATE) != 0 && coordinator.supportsHeartRateStats()) {
+            this.fetchOperationQueue.add(new FetchHeartRateManualOperation(this));
+            this.fetchOperationQueue.add(new FetchHeartRateMaxOperation(this));
+            this.fetchOperationQueue.add(new FetchHeartRateRestingOperation(this));
+        }
 
-            if ((dataTypes & RecordedDataTypes.TYPE_SLEEP_RESPIRATORY_RATE) != 0 && coordinator.supportsSleepRespiratoryRate()) {
-                this.fetchOperationQueue.add(new FetchSleepRespiratoryRateOperation(this));
-            }
+        if ((dataTypes & RecordedDataTypes.TYPE_SLEEP_RESPIRATORY_RATE) != 0 && coordinator.supportsSleepRespiratoryRate()) {
+            this.fetchOperationQueue.add(new FetchSleepRespiratoryRateOperation(this));
+        }
 
-            if ((dataTypes & RecordedDataTypes.TYPE_TEMPERATURE) != 0) {
-                this.fetchOperationQueue.add(new FetchTemperatureOperation(this));
-            }
+        if ((dataTypes & RecordedDataTypes.TYPE_TEMPERATURE) != 0 && coordinator.supportsTemperatureMeasurement()) {
+            this.fetchOperationQueue.add(new FetchTemperatureOperation(this));
         }
 
         if ((dataTypes & RecordedDataTypes.TYPE_SLEEP) != 0 && coordinator.supportsSleepScore(gbDevice)) {

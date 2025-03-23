@@ -522,6 +522,11 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         return false;
     }
 
+    @Override
+    public boolean supportsTemperatureMeasurement() {
+        return false; // TODO: supportsDisplayItem(device, "temperature");
+    }
+
     public boolean supportsAgpsUpdates() {
         return true;
     }
