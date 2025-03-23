@@ -23,8 +23,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public abstract class AbstractFileTransferImpl {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractFileTransferImpl.class);
+public abstract class ZeppOsFileTransferImpl {
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFileTransferImpl.class);
 
     public static final byte CMD_CAPABILITIES_REQUEST = 0x01;
     public static final byte CMD_CAPABILITIES_RESPONSE = 0x02;
@@ -47,8 +47,8 @@ public abstract class AbstractFileTransferImpl {
     protected int mCompressedChunkSize = -1;
     protected final List<String> supportedServices = new ArrayList<>();
 
-    public AbstractFileTransferImpl(final ZeppOsFileTransferService fileTransferService,
-                                    final ZeppOsSupport support) {
+    public ZeppOsFileTransferImpl(final ZeppOsFileTransferService fileTransferService,
+                                  final ZeppOsSupport support) {
         this.mFileTransferService = fileTransferService;
         this.mSupport = support;
     }

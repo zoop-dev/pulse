@@ -21,7 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 /**
  * Wrapper class to keep track of ongoing file send requests and their progress.
  */
-public class FileTransferRequest {
+class FileTransferRequest {
     private final String url;
     private final String filename;
     private final int rawLength;
@@ -32,7 +32,7 @@ public class FileTransferRequest {
     private final ZeppOsFileTransferService.Callback callback;
 
     private int progress = 0;
-    private byte index = 0;
+    private int index = 0;
 
     public FileTransferRequest(final String url,
                                final String filename,
@@ -96,11 +96,11 @@ public class FileTransferRequest {
         this.progress = progress;
     }
 
-    public byte getIndex() {
+    public int getIndex() {
         return index;
     }
 
-    public void setIndex(final byte index) {
-        this.index = index;
+    public void setIndex(final int index) {
+        this.index = index & 0xff;
     }
 }

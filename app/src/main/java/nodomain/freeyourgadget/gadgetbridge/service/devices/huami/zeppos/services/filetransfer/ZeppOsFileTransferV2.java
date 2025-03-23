@@ -33,13 +33,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
-public class FileTransferImplV2 extends AbstractFileTransferImpl {
-    private static final Logger LOG = LoggerFactory.getLogger(FileTransferImplV2.class);
+public class ZeppOsFileTransferV2 extends ZeppOsFileTransferImpl {
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFileTransferV2.class);
 
     private final Map<Byte, FileTransferRequest> mSessionRequests = new HashMap<>();
 
-    public FileTransferImplV2(final ZeppOsFileTransferService fileTransferService,
-                              final ZeppOsSupport support) {
+    public ZeppOsFileTransferV2(final ZeppOsFileTransferService fileTransferService,
+                                final ZeppOsSupport support) {
         super(fileTransferService, support);
     }
 
@@ -171,7 +171,7 @@ public class FileTransferImplV2 extends AbstractFileTransferImpl {
         }
 
         buf.get(request.getBytes(), request.getProgress(), size);
-        request.setIndex((byte) (index + 1));
+        request.setIndex(index + 1);
         request.setProgress(request.getProgress() + size);
 
         LOG.debug("Got data for session={}, progress={}/{}", session, request.getProgress(), request.getSize());
@@ -247,7 +247,7 @@ public class FileTransferImplV2 extends AbstractFileTransferImpl {
 
         buf.put(flags);
         buf.put(session);
-        buf.put(request.getIndex());
+        buf.put((byte) request.getIndex());
         if ((flags & FLAG_FIRST_CHUNK) > 0) {
             buf.put((byte) 0x00); // ?
             buf.put((byte) 0x00); // ?
@@ -265,7 +265,7 @@ public class FileTransferImplV2 extends AbstractFileTransferImpl {
         buf.put(payload);
 
         request.setProgress(request.getProgress() + payload.length);
-        request.setIndex((byte) (request.getIndex() + 1));
+        request.setIndex(request.getIndex() + 1);
         request.getCallback().onFileUploadProgress(request.getProgress());
 
         mFileTransferService.write("send file data", buf.array());

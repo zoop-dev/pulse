@@ -36,8 +36,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
-public class FileTransferImplV3 extends AbstractFileTransferImpl {
-    private static final Logger LOG = LoggerFactory.getLogger(FileTransferImplV3.class);
+public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFileTransferV3.class);
 
     private static final byte CMD_DATA_V3_SEND = 0x12;
     private static final byte CMD_DATA_V3_ACK = 0x13;
@@ -58,8 +58,8 @@ public class FileTransferImplV3 extends AbstractFileTransferImpl {
     private boolean currentReceiveChunkIsLast = false;
     private final ByteArrayOutputStream receivePacketBuffer = new ByteArrayOutputStream();
 
-    public FileTransferImplV3(final ZeppOsFileTransferService fileTransferService,
-                              final ZeppOsSupport support) {
+    public ZeppOsFileTransferV3(final ZeppOsFileTransferService fileTransferService,
+                                final ZeppOsSupport support) {
         super(fileTransferService, support);
     }
 
@@ -193,7 +193,7 @@ public class FileTransferImplV3 extends AbstractFileTransferImpl {
             }
 
             final byte status = value[1];
-            final byte chunkIndex = value[2];
+            final int chunkIndex = value[2] & 0xff;
             final byte unk1 = value[3]; // 1/2?
 
             LOG.info(
@@ -248,7 +248,7 @@ public class FileTransferImplV3 extends AbstractFileTransferImpl {
         buf.order(ByteOrder.LITTLE_ENDIAN);
         buf.put(CMD_DATA_V3_SEND);
         buf.put(flags);
-        buf.put(request.getIndex());
+        buf.put((byte) request.getIndex());
         buf.putShort((short) chunk.length);
         buf.put(chunk);
 

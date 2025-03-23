@@ -24,16 +24,16 @@ import org.slf4j.LoggerFactory;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.AbstractFileTransferImpl;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.FileTransferImplV2;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.FileTransferImplV3;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferImpl;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferV2;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferV3;
 
 public class ZeppOsFileTransferService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFileTransferService.class);
 
     private static final short ENDPOINT = 0x000d;
 
-    private AbstractFileTransferImpl impl;
+    private ZeppOsFileTransferImpl impl;
 
     public ZeppOsFileTransferService(final ZeppOsSupport support) {
         super(support, false);
@@ -59,15 +59,15 @@ public class ZeppOsFileTransferService extends AbstractZeppOsService {
             return;
         }
 
-        if (payload[0] != AbstractFileTransferImpl.CMD_CAPABILITIES_RESPONSE) {
+        if (payload[0] != ZeppOsFileTransferImpl.CMD_CAPABILITIES_RESPONSE) {
             LOG.warn("Got file transfer command, but impl is not initialized");
             return;
         }
         final int version = payload[1] & 0xff;
         if (version == 1 || version == 2) {
-            impl = new FileTransferImplV2(this, getSupport());
+            impl = new ZeppOsFileTransferV2(this, getSupport());
         } else if (version == 3) {
-            impl = new FileTransferImplV3(this, getSupport());
+            impl = new ZeppOsFileTransferV3(this, getSupport());
         } else {
             LOG.error("Unsupported file transfer service version: {}", version);
             return;
@@ -78,7 +78,7 @@ public class ZeppOsFileTransferService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final TransactionBuilder builder) {
-        write(builder, new byte[]{AbstractFileTransferImpl.CMD_CAPABILITIES_REQUEST});
+        write(builder, new byte[]{ZeppOsFileTransferImpl.CMD_CAPABILITIES_REQUEST});
     }
 
     public void sendFile(final String url, final String filename, final byte[] bytes, final boolean compress, final Callback callback) {
