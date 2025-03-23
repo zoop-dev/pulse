@@ -130,6 +130,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.AbstractFetchOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchSleepSessionOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchStatisticsOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchTemperatureOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchHeartRateManualOperation;
@@ -1726,6 +1727,10 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
             if ((dataTypes & RecordedDataTypes.TYPE_TEMPERATURE) != 0) {
                 this.fetchOperationQueue.add(new FetchTemperatureOperation(this));
             }
+        }
+
+        if ((dataTypes & RecordedDataTypes.TYPE_SLEEP) != 0 && coordinator.supportsSleepScore(gbDevice)) {
+            this.fetchOperationQueue.add(new FetchSleepSessionOperation(this));
         }
 
         if ((dataTypes & RecordedDataTypes.TYPE_HUAMI_STATISTICS) != 0) {

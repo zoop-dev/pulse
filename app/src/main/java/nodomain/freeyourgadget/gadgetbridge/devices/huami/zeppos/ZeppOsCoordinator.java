@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateMaxSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateRestingSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiPaiSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepRespiratoryRateSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepSessionSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSpo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -212,6 +213,16 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsSleepAsAndroid() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSleepScore(final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAwakeSleep() {
         return true;
     }
 

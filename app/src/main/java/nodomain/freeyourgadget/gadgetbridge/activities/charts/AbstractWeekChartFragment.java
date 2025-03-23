@@ -303,7 +303,7 @@ public abstract class AbstractWeekChartFragment extends AbstractActivityChartFra
 
     public boolean supportsSleepScore() {
         final GBDevice device = getChartsHost().getDevice();
-        return device.getDeviceCoordinator().supportsSleepScore();
+        return device.getDeviceCoordinator().supportsSleepScore(device);
     }
 
     abstract String getAverage(float value);

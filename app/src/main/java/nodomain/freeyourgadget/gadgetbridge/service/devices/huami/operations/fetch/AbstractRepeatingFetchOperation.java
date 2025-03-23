@@ -29,6 +29,7 @@ import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 /**
@@ -50,7 +51,7 @@ public abstract class AbstractRepeatingFetchOperation extends AbstractFetchOpera
     @Override
     protected void startFetching(final TransactionBuilder builder) {
         final GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-        LOG.info("start {} since {}", getName(), sinceWhen.getTime());
+        LOG.info("start {} since {}", getName(), DateTimeUtils.formatIso8601(sinceWhen.getTime()));
         startFetching(builder, dataType.getCode(), sinceWhen);
     }
 

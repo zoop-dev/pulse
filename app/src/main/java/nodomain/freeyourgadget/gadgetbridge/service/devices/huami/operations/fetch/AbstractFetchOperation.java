@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiO
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -256,14 +257,14 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         Calendar startTimestamp = getSupport().fromTimeBytes(Arrays.copyOfRange(value, 7, value.length));
 
         if (expectedDataLength == 0) {
-            LOG.info("No data to fetch since {}", startTimestamp.getTime());
+            LOG.info("No data to fetch since {}", DateTimeUtils.formatIso8601(startTimestamp.getTime()));
             sendAck(true);
             // do not finish the operation - do it in the ack response
             return;
         }
 
         setStartTimestamp(startTimestamp);
-        LOG.info("Will transfer {} packets since {}", expectedDataLength, startTimestamp.getTime());
+        LOG.info("Will transfer {} packets since {}", expectedDataLength, DateTimeUtils.formatIso8601(startTimestamp.getTime()));
 
         GB.updateTransferNotification(taskDescription(),
                 getContext().getString(R.string.FetchActivityOperation_about_to_transfer_since,

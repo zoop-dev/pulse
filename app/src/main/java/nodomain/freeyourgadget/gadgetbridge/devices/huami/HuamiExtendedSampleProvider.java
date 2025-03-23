@@ -28,6 +28,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySample
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.util.RangeMap;
 
 public class HuamiExtendedSampleProvider extends AbstractSampleProvider<HuamiExtendedActivitySample> {
     public static final int TYPE_CUSTOM_UNSET = -1;
@@ -37,6 +39,7 @@ public class HuamiExtendedSampleProvider extends AbstractSampleProvider<HuamiExt
     public static final int TYPE_SLEEP = 120;
     public static final int TYPE_CUSTOM_DEEP_SLEEP = TYPE_SLEEP + 1;
     public static final int TYPE_CUSTOM_REM_SLEEP = TYPE_SLEEP + 2;
+    public static final int TYPE_CUSTOM_AWAKE_SLEEP = TYPE_SLEEP + 3;
 
     public HuamiExtendedSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
@@ -77,31 +80,66 @@ public class HuamiExtendedSampleProvider extends AbstractSampleProvider<HuamiExt
     @Override
     protected List<HuamiExtendedActivitySample> getGBActivitySamples(final int timestamp_from, final int timestamp_to) {
         final List<HuamiExtendedActivitySample> samples = super.getGBActivitySamples(timestamp_from, timestamp_to);
-        postProcess(samples);
+        postProcess(samples, timestamp_from, timestamp_to);
         return samples;
     }
 
-    private void postProcess(final List<HuamiExtendedActivitySample> samples) {
+    private void postProcess(final List<HuamiExtendedActivitySample> samples, final int timestamp_from, final int timestamp_to) {
         if (samples.isEmpty()) {
             return;
         }
 
-        for (final HuamiExtendedActivitySample sample : samples) {
-            if (sample.getRawKind() == TYPE_SLEEP) {
-                // Band reports type sleep regardless of sleep type, so we map it to custom raw types
-                // These thresholds are arbitrary, but seem to somewhat match the data that's displayed on the band
+        final HuamiSleepSessionSampleProvider sleepSessionSampleProvider = new HuamiSleepSessionSampleProvider(getDevice(), getSession());
+        final RangeMap<Long, ActivityKind> sleepStages = sleepSessionSampleProvider.getSleepStages(
+                timestamp_from * 1000L,
+                timestamp_to * 1000L
+        );
 
-                sample.setDeepSleep(sample.getDeepSleep() & 127);
-                sample.setRemSleep(sample.getRemSleep() & 127);
+        if (!sleepStages.isEmpty()) {
+            // The device reports the sleep stage durations - overlay them
+            for (final HuamiExtendedActivitySample sample : samples) {
+                final long ts = sample.getTimestamp() * 1000L;
+                final ActivityKind sleepType = sleepStages.get(ts);
+                if (sleepType != null && !sleepType.equals(ActivityKind.UNKNOWN)) {
+                    switch (sleepType) {
+                        case DEEP_SLEEP:
+                            sample.setRawKind(TYPE_CUSTOM_DEEP_SLEEP);
+                            break;
+                        case REM_SLEEP:
+                            sample.setRawKind(TYPE_CUSTOM_REM_SLEEP);
+                            break;
+                        case AWAKE_SLEEP:
+                            sample.setRawKind(TYPE_CUSTOM_AWAKE_SLEEP);
+                            break;
+                        case LIGHT_SLEEP:
+                        case SLEEP_ANY:
+                        default:
+                            sample.setRawKind(TYPE_SLEEP);
+                            break;
+                    }
 
-                if (sample.getRemSleep() > 55) {
-                    sample.setRawKind(TYPE_CUSTOM_REM_SLEEP);
-                    sample.setRawIntensity(sample.getRemSleep());
-                } else if (sample.getDeepSleep() > 42) {
-                    sample.setRawKind(TYPE_CUSTOM_DEEP_SLEEP);
-                    sample.setRawIntensity(sample.getDeepSleep());
-                } else {
-                    sample.setRawIntensity(sample.getSleep());
+                    sample.setRawIntensity(ActivitySample.NOT_MEASURED);
+                }
+            }
+        } else {
+            // Fallback to the old threshold-based approach, which is not accurate
+            for (final HuamiExtendedActivitySample sample : samples) {
+                if (sample.getRawKind() == TYPE_SLEEP) {
+                    // Band reports type sleep regardless of sleep type, so we map it to custom raw types
+                    // These thresholds are arbitrary, but seem to somewhat match the data that's displayed on the band
+
+                    sample.setDeepSleep(sample.getDeepSleep() & 127);
+                    sample.setRemSleep(sample.getRemSleep() & 127);
+
+                    if (sample.getRemSleep() > 55) {
+                        sample.setRawKind(TYPE_CUSTOM_REM_SLEEP);
+                        sample.setRawIntensity(sample.getRemSleep());
+                    } else if (sample.getDeepSleep() > 42) {
+                        sample.setRawKind(TYPE_CUSTOM_DEEP_SLEEP);
+                        sample.setRawIntensity(sample.getDeepSleep());
+                    } else {
+                        sample.setRawIntensity(sample.getSleep());
+                    }
                 }
             }
         }
@@ -121,6 +159,8 @@ public class HuamiExtendedSampleProvider extends AbstractSampleProvider<HuamiExt
                 return ActivityKind.DEEP_SLEEP;
             case TYPE_CUSTOM_REM_SLEEP:
                 return ActivityKind.REM_SLEEP;
+                case TYPE_CUSTOM_AWAKE_SLEEP:
+                return ActivityKind.AWAKE_SLEEP;
         }
 
         return ActivityKind.UNKNOWN;

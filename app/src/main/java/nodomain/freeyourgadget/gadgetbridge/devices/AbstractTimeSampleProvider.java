@@ -16,8 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +35,9 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractTimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
  * Base class for all time sample providers. A Sample provider is device specific and provides
@@ -38,6 +46,8 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
  * @param <T> the sample type
  */
 public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> implements TimeSampleProvider<T> {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractTimeSampleProvider.class);
+
     private final DaoSession mSession;
     private final GBDevice mDevice;
 
@@ -196,4 +206,33 @@ public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> i
 
     @NonNull
     protected abstract Property getDeviceIdentifierSampleProperty();
+
+    public void persistForDevice(final Context context, final GBDevice gbDevice, final List<T> samples) {
+        if (samples.isEmpty()) {
+            return;
+        }
+
+        LOG.debug(
+                "Will persist {} {} samples",
+                samples.size(),
+                getClass().getSimpleName().replace("SampleProvider", "")
+        );
+
+        try {
+            final DaoSession session = getSession();
+
+            final Device device = DBHelper.getDevice(gbDevice, session);
+            final User user = DBHelper.getUser(session);
+
+            for (final T sample : samples) {
+                sample.setDevice(device);
+                sample.setUser(user);
+            }
+
+            this.addSamples(samples);
+        } catch (final Exception e) {
+            LOG.error("Error saving samples", e);
+            GB.toast(context, "Error saving samples", Toast.LENGTH_LONG, GB.ERROR, e);
+        }
+    }
 }

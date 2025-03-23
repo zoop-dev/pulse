@@ -330,7 +330,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSleepScore() {
+    public boolean supportsSleepScore(final GBDevice device) {
         return true;
     }
 

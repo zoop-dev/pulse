@@ -16,22 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
-import androidx.annotation.NonNull;
-
-import nodomain.freeyourgadget.gadgetbridge.entities.AbstractTimeSample;
-import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-
-public abstract class SleepScoreSample extends AbstractTimeSample {
-    public abstract int getSleepScore();
-
-    @NonNull
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "{" +
-                "timestamp=" + DateTimeUtils.formatDateTime(DateTimeUtils.parseTimestampMillis(getTimestamp())) +
-                ", userId=" + getUserId() +
-                ", deviceId=" + getDeviceId() +
-                ", sleepScore=" + getSleepScore() +
-                "}";
-    }
+public interface SleepScoreSample extends TimeSample {
+    int getSleepScore();
 }

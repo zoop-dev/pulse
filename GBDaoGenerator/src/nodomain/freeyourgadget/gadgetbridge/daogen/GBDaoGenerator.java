@@ -56,7 +56,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(98, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(99, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -81,6 +81,7 @@ public class GBDaoGenerator {
         addHuamiHeartRateRestingSample(schema, user, device);
         addHuamiPaiSample(schema, user, device);
         addHuamiSleepRespiratoryRateSample(schema, user, device);
+        addHuamiSleepSessionSample(schema, user, device);
         addXiaomiActivitySample(schema, user, device);
         addXiaomiSleepTimeSamples(schema, user, device);
         addHeartPulseSamples(schema, user, device);
@@ -402,6 +403,13 @@ public class GBDaoGenerator {
                         "    }\n\n"
         );
         return sleepRespiratoryRateSample;
+    }
+
+    private static Entity addHuamiSleepSessionSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "HuamiSleepSessionSample");
+        addCommonTimeSampleProperties("AbstractHuamiSleepSessionSample", sample, user, device);
+        sample.addByteArrayProperty("data");
+        return sample;
     }
 
     private static Entity addXiaomiActivitySample(Schema schema, Entity user, Entity device) {
@@ -925,7 +933,8 @@ public class GBDaoGenerator {
     private static Entity addGarminSleepStatsSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "GarminSleepStatsSample");
         sample.addImport(MAIN_PACKAGE + ".model.SleepScoreSample");
-        addCommonTimeSampleProperties("SleepScoreSample", sample, user, device);
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.implementsInterface("SleepScoreSample");
         sample.addIntProperty("sleepScore").notNull().codeBeforeGetter(OVERRIDE);
         return sample;
     }

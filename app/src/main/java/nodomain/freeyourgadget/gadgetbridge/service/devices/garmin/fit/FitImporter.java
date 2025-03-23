@@ -685,30 +685,6 @@ public class FitImporter {
 
     private <T extends AbstractTimeSample> void persistAbstractSamples(final List<T> samples,
                                                                        final AbstractTimeSampleProvider<T> sampleProvider) {
-        if (samples.isEmpty()) {
-            return;
-        }
-
-        LOG.debug(
-                "Will persist {} {} samples",
-                samples.size(),
-                sampleProvider.getClass().getSimpleName().replace("Garmin", "").replace("SampleProvider", "")
-        );
-
-        try {
-            final DaoSession session = sampleProvider.getSession();
-
-            final Device device = DBHelper.getDevice(gbDevice, session);
-            final User user = DBHelper.getUser(session);
-
-            for (final T sample : samples) {
-                sample.setDevice(device);
-                sample.setUser(user);
-            }
-
-            sampleProvider.addSamples(samples);
-        } catch (final Exception e) {
-            GB.toast(context, "Error saving samples", Toast.LENGTH_LONG, GB.ERROR, e);
-        }
+        sampleProvider.persistForDevice(context, gbDevice, samples);
     }
 }

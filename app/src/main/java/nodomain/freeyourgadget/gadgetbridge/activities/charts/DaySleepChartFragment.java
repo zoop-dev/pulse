@@ -366,7 +366,7 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
 
     public boolean supportsSleepScore() {
         final GBDevice device = getChartsHost().getDevice();
-        return device.getDeviceCoordinator().supportsSleepScore();
+        return device.getDeviceCoordinator().supportsSleepScore(device);
     }
 
     @Override

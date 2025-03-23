@@ -736,7 +736,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSleepScore() {
+    public boolean supportsSleepScore(final GBDevice device) {
         return false;
     }
 

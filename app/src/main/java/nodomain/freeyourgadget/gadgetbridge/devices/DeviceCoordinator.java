@@ -625,7 +625,7 @@ public interface DeviceCoordinator {
     /**
      * Indicates whether the device supports determining a sleep score in a 0-100 range.
      */
-    boolean supportsSleepScore();
+    boolean supportsSleepScore(GBDevice device);
 
     /**
      * Indicates whether the device supports current weather and/or weather

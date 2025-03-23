@@ -96,7 +96,7 @@ public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
 
     @Override
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsSleepScore();
+        return device.getDeviceCoordinator().supportsSleepScore(device);
     }
 
     private static class SleepScoreData implements Serializable {

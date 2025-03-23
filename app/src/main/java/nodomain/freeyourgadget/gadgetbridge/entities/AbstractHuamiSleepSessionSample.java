@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -14,34 +14,16 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch;
+package nodomain.freeyourgadget.gadgetbridge.entities;
 
-public enum HuamiFetchDataType {
-    ACTIVITY(0x01),
-    MANUAL_HEART_RATE(0x02),
-    SPORTS_SUMMARIES(0x05),
-    SPORTS_DETAILS(0x06),
-    DEBUG_LOGS(0x07),
-    PAI(0x0d),
-    STRESS_MANUAL(0x12),
-    STRESS_AUTOMATIC(0x13),
-    SPO2_NORMAL(0x25),
-    SPO2_SLEEP(0x26),
-    STATISTICS(0x2c),
-    TEMPERATURE(0x2e),
-    SLEEP_RESPIRATORY_RATE(0x38),
-    RESTING_HEART_RATE(0x3a),
-    MAX_HEART_RATE(0x3d),
-    SLEEP_SESSION(0x48),
-    ;
+import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 
-    private final byte code;
+public abstract class AbstractHuamiSleepSessionSample extends AbstractTimeSample implements SleepScoreSample {
+    public abstract byte[] getData();
 
-    HuamiFetchDataType(final int code) {
-        this.code = (byte) code;
-    }
-
-    public byte getCode() {
-        return code;
+    @Override
+    public int getSleepScore() {
+        return BLETypeConversions.toUnsigned(getData(), 0x16);
     }
 }

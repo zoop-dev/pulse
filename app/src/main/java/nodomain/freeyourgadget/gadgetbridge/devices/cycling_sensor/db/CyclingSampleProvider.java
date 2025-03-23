@@ -17,6 +17,7 @@ public class CyclingSampleProvider extends AbstractTimeSampleProvider<CyclingSam
         super(device, session);
     }
 
+    @NonNull
     @Override
     public AbstractDao<CyclingSample, ?> getSampleDao() {
         return getSession().getCyclingSampleDao();
