@@ -380,9 +380,9 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
                 handler.findPreference(DeviceSettingsPreferenceConst.FTP_SERVER_START),
                 handler.findPreference(DeviceSettingsPreferenceConst.FTP_SERVER_STOP),
                 // TODO: These are temporary for debugging and will be removed
-                handler.findPreference("zepp_os_alexa_btn_trigger"),
-                handler.findPreference("zepp_os_alexa_btn_send_simple"),
-                handler.findPreference("zepp_os_alexa_btn_send_complex")
+                handler.findPreference("zepp_os_assistant_btn_trigger"),
+                handler.findPreference("zepp_os_assistant_btn_send_simple"),
+                handler.findPreference("zepp_os_assistant_btn_send_complex")
         );
 
         for (final Preference btn : wifiFtpButtons) {

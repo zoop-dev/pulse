@@ -59,7 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsFwInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlexaService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsContactsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
@@ -465,8 +465,8 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         if (ZeppOsLogsService.isSupported(getPrefs(device))) {
             developer.add(R.xml.devicesettings_app_logs_start_stop);
         }
-        if (supportsAlexa(device)) {
-            developer.add(R.xml.devicesettings_huami2021_alexa);
+        if (supportsAssistant(device)) {
+            developer.add(R.xml.devicesettings_zeppos_assistant);
         }
         if (supportsWifiHotspot(device)) {
             developer.add(R.xml.devicesettings_wifi_hotspot);
@@ -582,8 +582,8 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         return ZeppOsShortcutCardsService.isSupported(getPrefs(device));
     }
 
-    public boolean supportsAlexa(final GBDevice device) {
-        return experimentalFeatures(device) && ZeppOsAlexaService.isSupported(getPrefs(device));
+    public boolean supportsAssistant(final GBDevice device) {
+        return experimentalFeatures(device) && ZeppOsAssistantService.isSupported(getPrefs(device));
     }
 
     private boolean supportsConfig(final GBDevice device, final ZeppOsConfigService.ConfigArg config) {

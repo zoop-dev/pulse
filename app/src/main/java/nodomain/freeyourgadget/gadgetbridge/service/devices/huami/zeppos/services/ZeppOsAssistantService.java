@@ -46,10 +46,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class ZeppOsAlexaService extends AbstractZeppOsService {
-    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAlexaService.class);
+public class ZeppOsAssistantService extends AbstractZeppOsService {
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAssistantService.class);
 
-    private static final short ENDPOINT = 0x0011;
+    public static final short ENDPOINT_ALEXA = 0x0011;
+    public static final short ENDPOINT_ZEPP_FLOW = 0x004a;
 
     private static final byte CMD_START = 0x01;
     private static final byte CMD_END = 0x02;
@@ -75,19 +76,21 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
     private static final byte ERROR_NO_INTERNET = 0x03;
     private static final byte ERROR_UNAUTHORIZED = 0x06;
 
-    public static final String PREF_VERSION = "zepp_os_alexa_version";
+    public static final String PREF_VERSION = "zepp_os_assistant_version";
 
     private final Handler handler = new Handler();
+    private final short endpoint;
 
     final ByteArrayOutputStream voiceBuffer = new ByteArrayOutputStream();
 
-    public ZeppOsAlexaService(final ZeppOsSupport support) {
+    public ZeppOsAssistantService(final ZeppOsSupport support, final short endpoint) {
         super(support, true);
+        this.endpoint = endpoint;
     }
 
     @Override
     public short getEndpoint() {
-        return ENDPOINT;
+        return endpoint;
     }
 
     @Override
@@ -106,13 +109,13 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
                 handleLanguagesResponse(payload);
                 break;
             case CMD_SET_LANGUAGE_ACK:
-                LOG.info("Alexa set language ack, status = {}", payload[1]);
+                LOG.info("Assistant set language ack, status = {}", payload[1]);
                 break;
             case CMD_CAPABILITIES_RESPONSE:
                 handleCapabilitiesResponse(payload);
                 break;
             default:
-                LOG.warn("Unexpected alexa byte {}", String.format("0x%02x", payload[0]));
+                LOG.warn("Unexpected assistant byte {}", String.format("0x%02x", payload[0]));
         }
     }
 
@@ -120,24 +123,24 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
     public boolean onSendConfiguration(final String config, final Prefs prefs) {
         switch (config) {
             case DeviceSettingsPreferenceConst.PREF_VOICE_SERVICE_LANGUAGE:
-                final String alexaLanguage = prefs.getString(DeviceSettingsPreferenceConst.PREF_VOICE_SERVICE_LANGUAGE, null);
-                LOG.info("Setting alexa language to {}", alexaLanguage);
-                setLanguage(alexaLanguage);
+                final String language = prefs.getString(DeviceSettingsPreferenceConst.PREF_VOICE_SERVICE_LANGUAGE, null);
+                LOG.info("Setting assistant language to {}", language);
+                setLanguage(language);
                 return true;
-            case "zepp_os_alexa_btn_trigger":
-                GB.toast("Alexa cmd trigger", Toast.LENGTH_SHORT, GB.INFO);
+            case "zepp_os_assistant_btn_trigger":
+                GB.toast("Assistant cmd trigger", Toast.LENGTH_SHORT, GB.INFO);
                 sendCmdTriggered();
                 return true;
-            case "zepp_os_alexa_btn_send_simple":
-                GB.toast("Alexa simple reply", Toast.LENGTH_SHORT, GB.INFO);
-                final String simpleText = prefs.getString("zepp_os_alexa_reply_text", null);
+            case "zepp_os_assistant_btn_send_simple":
+                GB.toast("Assistant simple reply", Toast.LENGTH_SHORT, GB.INFO);
+                final String simpleText = prefs.getString("zepp_os_assistant_reply_text", null);
                 sendReply(simpleText);
                 return true;
-            case "zepp_os_alexa_btn_send_complex":
-                GB.toast("Alexa complex reply", Toast.LENGTH_SHORT, GB.INFO);
-                final String title = prefs.getString("zepp_os_alexa_reply_title", null);
-                final String subtitle = prefs.getString("zepp_os_alexa_reply_subtitle", null);
-                final String text = prefs.getString("zepp_os_alexa_reply_text", null);
+            case "zepp_os_assistant_btn_send_complex":
+                GB.toast("Assistant complex reply", Toast.LENGTH_SHORT, GB.INFO);
+                final String title = prefs.getString("zepp_os_assistant_reply_title", null);
+                final String subtitle = prefs.getString("zepp_os_assistant_reply_subtitle", null);
+                final String text = prefs.getString("zepp_os_assistant_reply_text", null);
                 sendReply(title, subtitle, text);
                 return true;
         }
@@ -149,7 +152,6 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
     public void initialize(final TransactionBuilder builder) {
         if (ZeppOsCoordinator.experimentalFeatures(getSupport().getDevice())) {
             requestCapabilities(builder);
-            requestLanguages(builder);
         }
     }
 
@@ -157,12 +159,12 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 
-    public void requestLanguages(final TransactionBuilder builder) {
-        write(builder, CMD_LANGUAGES_REQUEST);
+    public void requestLanguages() {
+        write("assistant request languages", CMD_LANGUAGES_REQUEST);
     }
 
     public void sendReply(final String text) {
-        LOG.debug("Sending alexa simple text reply '{}'", text);
+        LOG.debug("Sending assistant simple text reply '{}'", text);
 
         final byte[] textBytes = StringUtils.ensureNotNull(text).getBytes(StandardCharsets.UTF_8);
 
@@ -177,7 +179,7 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
     }
 
     public void sendReply(final String title, final String subtitle, final String text) {
-        LOG.debug("Sending alexa complex text reply '{}', '{}', '{}'", title, subtitle, text);
+        LOG.debug("Sending assistant complex text reply '{}', '{}', '{}'", title, subtitle, text);
 
         final byte[] titleBytes = StringUtils.ensureNotNull(title).getBytes(StandardCharsets.UTF_8);
         final byte[] subtitleBytes = StringUtils.ensureNotNull(subtitle).getBytes(StandardCharsets.UTF_8);
@@ -276,7 +278,7 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
 
     public void setLanguage(final String language) {
         if (language == null) {
-            LOG.warn("Alexa language is null");
+            LOG.warn("Assistant language is null");
             return;
         }
 
@@ -289,7 +291,7 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
         buf.put(languageBytes);
         buf.put((byte) 0);
 
-        write("set alexa language", buf.array());
+        write("set assistant language", buf.array());
     }
 
     public void sendError(final byte errorCode, final String errorMessage) {
@@ -303,25 +305,25 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
         buf.put(messageBytes);
         buf.put((byte) 0);
 
-        write("send alexa error", buf.array());
+        write("send assistant error", buf.array());
     }
 
     public void sendStartAck() {
-        write("send alexa start ack", new byte[]{CMD_START_ACK, 0x00});
+        write("send assistant start ack", new byte[]{CMD_START_ACK, 0x00});
     }
 
     public void sendCmdTriggered() {
-        write("alexa cmd triggered", CMD_TRIGGERED);
+        write("assistant cmd triggered", CMD_TRIGGERED);
     }
 
     public void sendVoiceMore() {
-        write("alexa request more voice", CMD_REPLY_VOICE_MORE);
+        write("assistant request more voice", CMD_REPLY_VOICE_MORE);
     }
 
     private void handleCapabilitiesResponse(final byte[] payload) {
         final int version = payload[1] & 0xFF;
-        if (version != 3) {
-            LOG.warn("Unsupported alexa service version {}", version);
+        if (version != 3 && version != 5) {
+            LOG.warn("Unsupported assistant service version {}", version);
             return;
         }
         final byte var1 = payload[2];
@@ -335,7 +337,12 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
 
         getSupport().evaluateGBDeviceEvent(new GBDeviceEventUpdatePreferences(PREF_VERSION, version));
 
-        LOG.info("Alexa version={}, var1={}, var2={}", version, var1, var2);
+        LOG.info("Assistant version={}, var1={}, var2={}", version, var1, var2);
+
+        if (version == 3) {
+            // only in Alexa (?)
+            requestLanguages();
+        }
     }
 
     private void handleStart(final byte[] payload) {
@@ -345,7 +352,7 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
         final byte var4 = payload[4];
         final String params = StringUtils.untilNullTerminator(payload, 5);
 
-        LOG.info("Alexa starting: var1={}, var2={}, var3={}, var4={}, params={}", var1, var2, var3, var4, params);
+        LOG.info("Assistant starting: var1={}, var2={}, var3={}, var4={}, params={}", var1, var2, var3, var4, params);
 
         // Send the start ack with a slight delay, to give enough time for the connection to switch to fast mode
         // I can't seem to get the callback for onConnectionUpdated working, and if we reply too soon the watch
@@ -364,6 +371,11 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
     }
 
     private void handleLanguagesResponse(final byte[] payload) {
+        if (payload[1] != 1) {
+            LOG.warn("Assistant language response status = {}", payload[1]);
+            return;
+        }
+
         int pos = 2;
         final String currentLanguage = StringUtils.untilNullTerminator(payload, pos);
         pos = pos + currentLanguage.length() + 1;
@@ -377,7 +389,7 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
             pos = pos + language.length() + 1;
         }
 
-        LOG.info("Got alexa language = {}, supported languages = {}", currentLanguage, allLanguages);
+        LOG.info("Got assistant language = {}, supported languages = {}", currentLanguage, allLanguages);
 
         final GBDeviceEventUpdatePreferences evt = new GBDeviceEventUpdatePreferences()
                 .withPreference(PREF_VOICE_SERVICE_LANGUAGE, currentLanguage.replace("-", "_"))
@@ -386,6 +398,7 @@ public class ZeppOsAlexaService extends AbstractZeppOsService {
     }
 
     public static boolean isSupported(final Prefs devicePrefs) {
-        return devicePrefs.getInt(PREF_VERSION, 0) == 3;
+        final int version = devicePrefs.getInt(PREF_VERSION, 0);
+        return version >= 3 && version <= 5;
     }
 }

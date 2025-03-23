@@ -4,8 +4,8 @@
 
     <PreferenceScreen
         android:icon="@drawable/ic_voice"
-        android:key="pref_screen_alexa"
-        android:title="@string/menuitem_alexa">
+        android:key="pref_screen_voice_assistant"
+        android:title="@string/pref_title_touch_voice_assistant">
 
         <ListPreference
             android:defaultValue="auto"
@@ -40,41 +40,41 @@
 
             <EditTextPreference
                 android:defaultValue=""
-                android:key="zepp_os_alexa_reply_title"
+                android:key="zepp_os_assistant_reply_title"
                 android:title="Reply Title"
                 app:useSimpleSummaryProvider="true" />
 
             <EditTextPreference
                 android:defaultValue=""
-                android:key="zepp_os_alexa_reply_subtitle"
+                android:key="zepp_os_assistant_reply_subtitle"
                 android:title="Reply Subtitle"
                 app:useSimpleSummaryProvider="true" />
 
             <EditTextPreference
                 android:defaultValue=""
-                android:key="zepp_os_alexa_reply_text"
+                android:key="zepp_os_assistant_reply_text"
                 android:title="Reply Text"
                 app:useSimpleSummaryProvider="true" />
 
             <SwitchPreferenceCompat
                 android:defaultValue="false"
-                android:key="zepp_os_alexa_ask_more_input"
+                android:key="zepp_os_assistant_ask_more_input"
                 android:layout="@layout/preference_checkbox"
                 android:summary="Continue listening after sending the reply"
                 android:title="Ask for more input" />
 
             <Preference
-                android:key="zepp_os_alexa_btn_trigger"
+                android:key="zepp_os_assistant_btn_trigger"
                 android:summary="Send a command trigger to the watch (stops sending voice data)"
                 android:title="Send command trigger" />
 
             <Preference
-                android:key="zepp_os_alexa_btn_send_simple"
+                android:key="zepp_os_assistant_btn_send_simple"
                 android:summary="Send a simple reply to the watch (just text)"
                 android:title="Send simple reply" />
 
             <Preference
-                android:key="zepp_os_alexa_btn_send_complex"
+                android:key="zepp_os_assistant_btn_send_complex"
                 android:summary="Send a complex reply to the watch (title, subtitle, text)"
                 android:title="Send complex reply" />
         </PreferenceCategory>

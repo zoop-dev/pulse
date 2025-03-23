@@ -130,7 +130,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operati
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsGpxRouteUploadOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAgpsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlarmsService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlexaService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAppsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
@@ -185,7 +185,8 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsCalendarService calendarService = new ZeppOsCalendarService(this);
     private final ZeppOsCannedMessagesService cannedMessagesService = new ZeppOsCannedMessagesService(this);
     private final ZeppOsNotificationService notificationService = new ZeppOsNotificationService(this, fileTransferService);
-    private final ZeppOsAlexaService alexaService = new ZeppOsAlexaService(this);
+    private final ZeppOsAssistantService alexaService = new ZeppOsAssistantService(this, ZeppOsAssistantService.ENDPOINT_ALEXA);
+    private final ZeppOsAssistantService zeppFlowService = new ZeppOsAssistantService(this, ZeppOsAssistantService.ENDPOINT_ZEPP_FLOW);
     private final ZeppOsAppsService appsService = new ZeppOsAppsService(this);
     private final ZeppOsLogsService logsService = new ZeppOsLogsService(this);
     private final ZeppOsDisplayItemsService displayItemsService = new ZeppOsDisplayItemsService(this);
@@ -215,6 +216,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(cannedMessagesService.getEndpoint(), cannedMessagesService);
         put(notificationService.getEndpoint(), notificationService);
         put(alexaService.getEndpoint(), alexaService);
+        put(zeppFlowService.getEndpoint(), zeppFlowService);
         put(appsService.getEndpoint(), appsService);
         put(logsService.getEndpoint(), logsService);
         put(displayItemsService.getEndpoint(), displayItemsService);
