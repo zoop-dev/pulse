@@ -145,7 +145,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
-        return supportsTemperatureMeasurement() ? new TestTemperatureSampleProvider() : super.getTemperatureSampleProvider(device, session);
+        return supportsTemperatureMeasurement(device) ? new TestTemperatureSampleProvider() : super.getTemperatureSampleProvider(device, session);
     }
 
     @Override
@@ -325,7 +325,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return supports(getTestDevice(), TestFeature.TEMPERATURE_MEASUREMENT);
     }
 

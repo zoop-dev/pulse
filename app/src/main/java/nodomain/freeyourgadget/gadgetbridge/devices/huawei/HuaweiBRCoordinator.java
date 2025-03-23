@@ -205,12 +205,12 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return huaweiCoordinator.supportsTemperature();
     }
 
     @Override
-    public boolean supportsContinuousTemperature() {
+    public boolean supportsContinuousTemperature(final GBDevice device) {
         return huaweiCoordinator.supportsTemperature();
     }
 

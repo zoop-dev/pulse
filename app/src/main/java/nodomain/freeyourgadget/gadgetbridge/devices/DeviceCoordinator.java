@@ -257,13 +257,13 @@ public interface DeviceCoordinator {
      * Returns true if measurement and fetching of body temperature is supported by the device
      * (with this coordinator).
      */
-    boolean supportsTemperatureMeasurement();
+    boolean supportsTemperatureMeasurement(GBDevice device);
 
     /**
      * Returns true if continuous temperature measurement used in device
      * (with this coordinator).
      */
-    boolean supportsContinuousTemperature();
+    boolean supportsContinuousTemperature(GBDevice device);
 
     /**
      * Returns true if SpO2 measurement and fetching is supported by the device

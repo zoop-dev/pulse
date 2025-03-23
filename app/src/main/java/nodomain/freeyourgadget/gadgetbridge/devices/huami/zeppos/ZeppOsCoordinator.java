@@ -523,8 +523,13 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
-        return false; // TODO: supportsDisplayItem(device, "temperature");
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+        return supportsDisplayItem(device, "thermometer");
+    }
+
+    @Override
+    public boolean supportsContinuousTemperature(final GBDevice device) {
+        return supportsDisplayItem(device, "thermometer");
     }
 
     public boolean supportsAgpsUpdates() {

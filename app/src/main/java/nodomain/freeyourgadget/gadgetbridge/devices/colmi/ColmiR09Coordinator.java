@@ -43,12 +43,12 @@ public class ColmiR09Coordinator extends AbstractColmiR0xCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsContinuousTemperature() {
+    public boolean supportsContinuousTemperature(final GBDevice device) {
         return true;
     }
 }

@@ -84,12 +84,12 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsContinuousTemperature() {
+    public boolean supportsContinuousTemperature(final GBDevice device) {
         return true;
     }
 

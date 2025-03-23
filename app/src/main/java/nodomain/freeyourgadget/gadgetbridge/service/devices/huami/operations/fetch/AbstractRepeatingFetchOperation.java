@@ -104,7 +104,7 @@ public abstract class AbstractRepeatingFetchOperation extends AbstractFetchOpera
             return false;
         }
 
-        if (fetchCount > 5) {
+        if (fetchCount > 10) {
             LOG.warn("Already have {} fetch rounds for {}, not doing another one", fetchCount, getName());
             return false;
         }

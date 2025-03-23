@@ -41,7 +41,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
-import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -214,12 +213,12 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return huaweiCoordinator.supportsTemperature();
     }
 
     @Override
-    public boolean supportsContinuousTemperature() {
+    public boolean supportsContinuousTemperature(final GBDevice device) {
         return huaweiCoordinator.supportsTemperature();
     }
 

@@ -113,7 +113,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
         if (!coordinator.supportsRealtimeData()) {
             tabList.remove("livestats");
         }
-        if (!coordinator.supportsTemperatureMeasurement()) {
+        if (!coordinator.supportsTemperatureMeasurement(device)) {
             tabList.remove("temperature");
         }
         if (!coordinator.supportsCyclingData()) {
@@ -190,7 +190,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
                 case "spo2":
                     return new Spo2ChartFragment();
                 case "temperature":
-                    return coordinator.supportsContinuousTemperature()? new TemperatureDailyFragment(): new TemperatureChartFragment();
+                    return coordinator.supportsContinuousTemperature(getDevice())? new TemperatureDailyFragment(): new TemperatureChartFragment();
                 case "cycling":
                     return new CyclingChartFragment();
                 case "weight":

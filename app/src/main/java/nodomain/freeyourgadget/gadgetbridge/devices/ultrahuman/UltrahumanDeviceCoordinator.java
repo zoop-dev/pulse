@@ -172,7 +172,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsContinuousTemperature() {
+    public boolean supportsContinuousTemperature(final GBDevice device) {
         return true;
     }
 
@@ -208,7 +208,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return true;
     }
 

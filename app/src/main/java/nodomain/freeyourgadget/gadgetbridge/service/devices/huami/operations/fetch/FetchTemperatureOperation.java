@@ -16,15 +16,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch;
 
+import android.widget.Toast;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -51,17 +63,48 @@ public class FetchTemperatureOperation extends AbstractRepeatingFetchOperation {
 
         final ByteBuffer buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
 
-        while (buffer.position() < bytes.length) {
-            final int temp1 = buffer.getShort();
-            final int temp2 = buffer.getShort();
-            final int temp3 = buffer.getShort();
-            final int temp4 = buffer.getShort();
+        final List<GenericTemperatureSample> samples = new ArrayList<>();
 
-            // TODO persist / parse rest
-            LOG.warn("temp1: {}, temp2={}, temp3: {}, temp4={}", temp1, temp2, temp3, temp4);
+        while (buffer.position() < bytes.length) {
+            final int unk1 = buffer.getShort(); // 32767
+            final int temperature = buffer.getShort();
+            final int unk3 = buffer.getShort(); // 23130
+            final int unk4 = buffer.getShort(); // 23130
+
+            LOG.trace(
+                    "Temperature at {}: {}",
+                    DateTimeUtils.formatIso8601(timestamp.getTime()),
+                    temperature
+            );
+
+            final GenericTemperatureSample sample = new GenericTemperatureSample();
+            sample.setTimestamp(timestamp.getTimeInMillis());
+            sample.setTemperature(temperature / 100f);
+            sample.setTemperatureType(0);
+            samples.add(sample);
+
+            timestamp.add(Calendar.MINUTE, 1);
         }
 
-        return false;
+        timestamp.add(Calendar.MINUTE, -1);
+
+        return persistSamples(samples);
+    }
+
+    protected boolean persistSamples(final List<GenericTemperatureSample> samples) {
+        try (DBHandler handler = GBApplication.acquireDB()) {
+            final DaoSession session = handler.getDaoSession();
+
+            final HuamiCoordinator coordinator = (HuamiCoordinator) getDevice().getDeviceCoordinator();
+            final GenericTemperatureSampleProvider sampleProvider = coordinator.getTemperatureSampleProvider(getDevice(), session);
+
+            sampleProvider.persistForDevice(getContext(), getDevice(), samples);
+        } catch (final Exception e) {
+            GB.toast(getContext(), "Error saving temperature samples", Toast.LENGTH_LONG, GB.ERROR, e);
+            return false;
+        }
+
+        return true;
     }
 
     @Override

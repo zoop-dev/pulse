@@ -101,7 +101,7 @@ public class FemometerVinca2DeviceCoordinator extends AbstractDeviceCoordinator 
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return true;
     }
 

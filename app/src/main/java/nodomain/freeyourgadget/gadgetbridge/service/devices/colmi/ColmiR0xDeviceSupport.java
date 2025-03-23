@@ -314,7 +314,7 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
                             daysAgo++;
                             fetchHistoryHRV();
                         } else {
-                            if (getDevice().getDeviceCoordinator().supportsTemperatureMeasurement()) {
+                            if (getDevice().getDeviceCoordinator().supportsTemperatureMeasurement(gbDevice)) {
                                 fetchTemperature();
                             } else {
                                 fetchRecordedDataFinished();

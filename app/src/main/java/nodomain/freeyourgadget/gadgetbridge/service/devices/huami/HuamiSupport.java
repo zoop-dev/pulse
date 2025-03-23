@@ -1728,7 +1728,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
             this.fetchOperationQueue.add(new FetchSleepRespiratoryRateOperation(this));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_TEMPERATURE) != 0 && coordinator.supportsTemperatureMeasurement()) {
+        if ((dataTypes & RecordedDataTypes.TYPE_TEMPERATURE) != 0 && coordinator.supportsTemperatureMeasurement(gbDevice)) {
             this.fetchOperationQueue.add(new FetchTemperatureOperation(this));
         }
 

@@ -46,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DateTimeDisplay;
@@ -60,6 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHrvValueSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateManualSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateMaxSampleDao;
@@ -112,6 +114,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
             put(session.getHuamiPaiSampleDao(), HuamiPaiSampleDao.Properties.DeviceId);
             put(session.getHuamiSleepRespiratoryRateSampleDao(), HuamiSleepRespiratoryRateSampleDao.Properties.DeviceId);
             put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
+            put(session.getGenericTemperatureSampleDao(), GenericTemperatureSampleDao.Properties.DeviceId);
             put(session.getHuamiSleepSessionSampleDao(), HuamiSleepSessionSampleDao.Properties.DeviceId);
             put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
         }};
@@ -211,6 +214,11 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public GenericHrvValueSampleProvider getHrvValueSampleProvider(GBDevice device, DaoSession session) {
         return new GenericHrvValueSampleProvider(device, session);
+    }
+
+    @Override
+    public GenericTemperatureSampleProvider getTemperatureSampleProvider(GBDevice device, DaoSession session) {
+        return new GenericTemperatureSampleProvider(device, session);
     }
 
     @Override

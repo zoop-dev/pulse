@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class XiaomiWatchS1ProCoordinator extends XiaomiCoordinator {
 
@@ -60,7 +61,7 @@ public class XiaomiWatchS1ProCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement() {
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return true;
     }
 }

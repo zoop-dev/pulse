@@ -235,7 +235,7 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         final List<Integer> health = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH);
         health.add(R.xml.devicesettings_colmi_r0x);
-        if (supportsContinuousTemperature()) {
+        if (supportsContinuousTemperature(device)) {
             health.add(R.xml.devicesettings_temperature_automatic_enable);
         }
         return deviceSpecificSettings;
