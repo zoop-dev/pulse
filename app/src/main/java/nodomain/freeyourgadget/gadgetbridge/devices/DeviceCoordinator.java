@@ -243,7 +243,7 @@ public interface DeviceCoordinator {
     boolean supportsStressMeasurement();
 
     boolean supportsBodyEnergy();
-    boolean supportsHrvMeasurement();
+    boolean supportsHrvMeasurement(GBDevice device);
     boolean supportsVO2Max();
     boolean supportsVO2MaxCycling();
     boolean supportsVO2MaxRunning();

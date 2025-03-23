@@ -169,7 +169,7 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
         List<Entry> lineEntries = new ArrayList<>();
         final List<ILineDataSet> lineDataSets = new ArrayList<>();
         weeklyData.getDaysData().forEach((HRVStatusDayData day) -> {
-            if (day.status.getNum() > 0) {
+            if (day.dayAvg > 0) {
                 lineEntries.add(new Entry(day.i, day.dayAvg));
             } else {
                 if (!lineEntries.isEmpty()) {
@@ -297,12 +297,20 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
     private List<? extends HrvSummarySample> getSamples(final DBHandler db, final GBDevice device, int tsFrom, int tsTo) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends HrvSummarySample> sampleProvider = coordinator.getHrvSummarySampleProvider(device, db.getDaoSession());
+        if (sampleProvider == null) {
+            LOG.warn("Device {} does not implement HrvSummarySampleProvider", device);
+            return new ArrayList<>();
+        }
         return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 
     public List<? extends HrvValueSample> getHrvValueSamples(final DBHandler db, final GBDevice device, int tsFrom, int tsTo) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends HrvValueSample> sampleProvider = coordinator.getHrvValueSampleProvider(device, db.getDaoSession());
+        if (sampleProvider == null) {
+            LOG.warn("Device {} does not implement HrvValueSampleProvider", device);
+            return new ArrayList<>();
+        }
         return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 

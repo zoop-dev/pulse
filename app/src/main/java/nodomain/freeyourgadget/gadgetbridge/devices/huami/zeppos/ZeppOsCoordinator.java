@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -45,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.Vo2MaxSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.WorkoutVo2MaxSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiExtendedSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
@@ -224,6 +226,11 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     @Override
     public boolean supportsAwakeSleep() {
         return true;
+    }
+
+    @Override
+    public boolean supportsHrvMeasurement(final GBDevice device) {
+        return supportsDisplayItem(device, "hrv");
     }
 
     @Override
@@ -626,6 +633,13 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     private boolean supportsConfig(final GBDevice device, final ZeppOsConfigService.ConfigArg config) {
         return ZeppOsConfigService.deviceHasConfig(getPrefs(device), config);
+    }
+
+    private boolean supportsDisplayItem(final GBDevice device, final String item) {
+        return getPrefs(device).getList(
+                DeviceSettingsUtils.getPrefPossibleValuesKey(HuamiConst.PREF_DISPLAY_ITEMS_SORTABLE),
+                Collections.emptyList()
+        ).contains(item);
     }
 
     public static boolean experimentalFeatures(final GBDevice device) {

@@ -174,7 +174,7 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public boolean supportsHrvMeasurement() {
+    public boolean supportsHrvMeasurement(final GBDevice device) {
         return true;
     }
 

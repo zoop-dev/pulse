@@ -129,13 +129,12 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public TimeSampleProvider<? extends HrvSummarySample> getHrvSummarySampleProvider(final GBDevice device, final DaoSession session) {
-        return supportsBodyEnergy() ? new TestHrvSummarySampleProvider() : super.getHrvSummarySampleProvider(device ,session);
-
+        return supportsHrvMeasurement(device) ? new TestHrvSummarySampleProvider() : super.getHrvSummarySampleProvider(device ,session);
     }
 
     @Override
     public TimeSampleProvider<? extends HrvValueSample> getHrvValueSampleProvider(final GBDevice device, final DaoSession session) {
-        return supportsBodyEnergy() ? new TestHrvValueSampleProvider() : super.getHrvValueSampleProvider(device ,session);
+        return supportsHrvMeasurement(device) ? new TestHrvValueSampleProvider() : super.getHrvValueSampleProvider(device ,session);
     }
 
     @Override
@@ -346,8 +345,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement() {
-        return supports(getTestDevice(), TestFeature.HRV_MEASUREMENT);
+    public boolean supportsHrvMeasurement(final GBDevice device) {
+        return supports(device, TestFeature.HRV_MEASUREMENT);
     }
 
     @Override

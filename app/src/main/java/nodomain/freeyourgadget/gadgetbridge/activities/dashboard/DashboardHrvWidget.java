@@ -30,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 
@@ -50,7 +51,7 @@ public class DashboardHrvWidget extends AbstractGaugeWidget {
 
     @Override
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsHrvMeasurement();
+        return device.getDeviceCoordinator().supportsHrvMeasurement(device);
     }
 
     @Override
@@ -61,8 +62,17 @@ public class DashboardHrvWidget extends AbstractGaugeWidget {
 
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                final List<? extends HrvSummarySample> deviceLatestSummaries = dev.getDeviceCoordinator().getHrvSummarySampleProvider(dev, dbHandler.getDaoSession())
-                        .getAllSamples(dashboardData.timeFrom * 1000L, dashboardData.timeTo * 1000L);
+                final TimeSampleProvider<? extends HrvSummarySample> hrvSummarySampleProvider = dev.getDeviceCoordinator().getHrvSummarySampleProvider(dev, dbHandler.getDaoSession());
+
+                if (hrvSummarySampleProvider == null) {
+                    LOG.warn("Device {} does not has an hrv summary sample provider", dev);
+                    continue;
+                }
+
+                final List<? extends HrvSummarySample> deviceLatestSummaries = hrvSummarySampleProvider.getAllSamples(
+                        dashboardData.timeFrom * 1000L,
+                        dashboardData.timeTo * 1000L
+                );
 
                 if (!deviceLatestSummaries.isEmpty() && (latestSummary == null || latestSummary.getTimestamp() < deviceLatestSummaries.get(deviceLatestSummaries.size() - 1).getTimestamp())) {
                     latestSummary = deviceLatestSummaries.get(deviceLatestSummaries.size() - 1);
@@ -94,7 +104,7 @@ public class DashboardHrvWidget extends AbstractGaugeWidget {
         final HrvData hrvData = (HrvData) dashboardData.get("hrv");
         final float value = hrvData != null ? calculateGaugeValue(hrvData.weeklyAverage, hrvData.baselineLowUpper, hrvData.baselineBalancedLower, hrvData.baselineBalancedUpper) : -1;
         final String valueText;
-        valueText = value > 0 ? getString(R.string.hrv_status_unit, hrvData.weeklyAverage) : getString(R.string.stats_empty_value);
+        valueText = hrvData != null && hrvData.weeklyAverage > 0 ? getString(R.string.hrv_status_unit, hrvData.weeklyAverage) : getString(R.string.stats_empty_value);
         setText(valueText);
         drawSegmentedGauge(
                 colors,

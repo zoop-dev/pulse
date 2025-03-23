@@ -19,9 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 
 import androidx.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -62,8 +59,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.ultrahuman.UltrahumanDeviceSupport;
 
 public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(UltrahumanDeviceCoordinator.class);
-
     @Override
     public List<DeviceCardAction> getCustomActions() {
         // TODO - use an airplane icon instead
@@ -187,7 +182,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement() {
+    public boolean supportsHrvMeasurement(final GBDevice device) {
         // TODO - needs getHrvSummarySampleProvider in addition to the implemented getHrvValueSampleProvider
         return false;
     }

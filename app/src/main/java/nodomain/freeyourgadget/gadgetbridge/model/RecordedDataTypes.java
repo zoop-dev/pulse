@@ -30,6 +30,7 @@ public class RecordedDataTypes {
     public static final int TYPE_SLEEP_RESPIRATORY_RATE = 0x00000200;
     public static final int TYPE_HUAMI_STATISTICS = 0x00000400;
     public static final int TYPE_SLEEP        = 0x00000800;
+    public static final int TYPE_HRV          = 0x00001000;
 
     public static final int TYPE_ALL          = (int)0xffffffff;
 
@@ -38,5 +39,6 @@ public class RecordedDataTypes {
     public static final int TYPE_SYNC = TYPE_ACTIVITY | TYPE_GPS_TRACKS | TYPE_SPO2 | TYPE_STRESS |
             TYPE_TEMPERATURE |
             TYPE_SLEEP |
+            TYPE_HRV |
             TYPE_HEART_RATE | TYPE_PAI | TYPE_SLEEP_RESPIRATORY_RATE;
 }

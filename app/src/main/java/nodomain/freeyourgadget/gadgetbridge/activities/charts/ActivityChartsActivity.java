@@ -122,7 +122,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
         if (!coordinator.supportsWeightMeasurement()) {
             tabList.remove("weight");
         }
-        if (!coordinator.supportsHrvMeasurement()) {
+        if (!coordinator.supportsHrvMeasurement(device)) {
             tabList.remove("hrvstatus");
         }
         if (!coordinator.supportsHeartRateMeasurement(device)) {

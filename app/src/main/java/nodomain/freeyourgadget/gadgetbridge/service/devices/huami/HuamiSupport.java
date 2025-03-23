@@ -130,6 +130,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.AbstractFetchOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchHrvOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchSleepSessionOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchStatisticsOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchTemperatureOperation;
@@ -1711,6 +1712,10 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
 
         if ((dataTypes & RecordedDataTypes.TYPE_SPO2) != 0 && coordinator.supportsSpo2(gbDevice)) {
             this.fetchOperationQueue.add(new FetchSpo2NormalOperation(this));
+        }
+
+        if ((dataTypes & RecordedDataTypes.TYPE_HRV) != 0 && coordinator.supportsHrvMeasurement(gbDevice)) {
+            this.fetchOperationQueue.add(new FetchHrvOperation(this));
         }
 
         if (ZeppOsCoordinator.experimentalFeatures(getDevice())) {

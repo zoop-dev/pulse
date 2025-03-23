@@ -508,7 +508,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement() {
+    public boolean supportsHrvMeasurement(final GBDevice device) {
         return false;
     }
 

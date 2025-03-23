@@ -266,7 +266,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement() {
+    public boolean supportsHrvMeasurement(final GBDevice device) {
         return true;
     }
 

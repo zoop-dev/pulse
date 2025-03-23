@@ -172,7 +172,7 @@ public class Prefs {
      */
     public List<String> getList(final String key, final List<String> defaultValue, final String separatorRegex) {
         final String stringValue = preferences.getString(key, null);
-        if (stringValue == null) {
+        if (stringValue == null || stringValue.isEmpty()) {
             return defaultValue;
         }
         return Arrays.asList(stringValue.split(separatorRegex));

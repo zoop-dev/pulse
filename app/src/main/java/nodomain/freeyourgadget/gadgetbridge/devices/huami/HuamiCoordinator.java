@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DateTimeDisplay;
@@ -170,6 +171,11 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public HuamiSleepRespiratoryRateSampleProvider getRespiratoryRateSampleProvider(GBDevice device, DaoSession session) {
         return new HuamiSleepRespiratoryRateSampleProvider(device, session);
+    }
+
+    @Override
+    public GenericHrvValueSampleProvider getHrvValueSampleProvider(GBDevice device, DaoSession session) {
+        return new GenericHrvValueSampleProvider(device, session);
     }
 
     @Override
