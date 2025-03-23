@@ -52,12 +52,13 @@ public class FetchTemperatureOperation extends AbstractRepeatingFetchOperation {
         final ByteBuffer buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
 
         while (buffer.position() < bytes.length) {
-            final int temperature = buffer.getShort();
-            final byte[] unknown = new byte[6];
-            buffer.get(unknown);
+            final int temp1 = buffer.getShort();
+            final int temp2 = buffer.getShort();
+            final int temp3 = buffer.getShort();
+            final int temp4 = buffer.getShort();
 
             // TODO persist / parse rest
-            LOG.warn("Temperature: {}, unknown={}", temperature, GB.hexdump(unknown));
+            LOG.warn("temp1: {}, temp2={}, temp3: {}, temp4={}", temp1, temp2, temp3, temp4);
         }
 
         return false;
