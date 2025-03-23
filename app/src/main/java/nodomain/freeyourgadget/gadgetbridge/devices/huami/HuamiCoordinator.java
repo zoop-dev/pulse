@@ -30,10 +30,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -53,8 +56,19 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandPairingActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericHrvValueSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateManualSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateMaxSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateRestingSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiPaiSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepRespiratoryRateSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepSessionSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSpo2SampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuamiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MiBandActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
@@ -82,10 +96,31 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        Long deviceId = device.getId();
-        QueryBuilder<?> qb = session.getMiBandActivitySampleDao().queryBuilder();
-        qb.where(MiBandActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+    protected void deleteDevice(@NonNull final GBDevice gbDevice,
+                                @NonNull final Device device,
+                                @NonNull final DaoSession session) throws GBException {
+        final Long deviceId = device.getId();
+
+        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
+            put(session.getMiBandActivitySampleDao(), MiBandActivitySampleDao.Properties.DeviceId);
+            put(session.getHuamiExtendedActivitySampleDao(), HuamiExtendedActivitySampleDao.Properties.DeviceId);
+            put(session.getHuamiStressSampleDao(), HuamiStressSampleDao.Properties.DeviceId);
+            put(session.getHuamiSpo2SampleDao(), HuamiSpo2SampleDao.Properties.DeviceId);
+            put(session.getHuamiHeartRateManualSampleDao(), HuamiHeartRateManualSampleDao.Properties.DeviceId);
+            put(session.getHuamiHeartRateMaxSampleDao(), HuamiHeartRateMaxSampleDao.Properties.DeviceId);
+            put(session.getHuamiHeartRateRestingSampleDao(), HuamiHeartRateRestingSampleDao.Properties.DeviceId);
+            put(session.getHuamiPaiSampleDao(), HuamiPaiSampleDao.Properties.DeviceId);
+            put(session.getHuamiSleepRespiratoryRateSampleDao(), HuamiSleepRespiratoryRateSampleDao.Properties.DeviceId);
+            put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
+            put(session.getHuamiSleepSessionSampleDao(), HuamiSleepSessionSampleDao.Properties.DeviceId);
+            put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
+        }};
+
+        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
+            e.getKey().queryBuilder()
+                    .where(e.getValue().eq(deviceId))
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+        }
     }
 
     @Override

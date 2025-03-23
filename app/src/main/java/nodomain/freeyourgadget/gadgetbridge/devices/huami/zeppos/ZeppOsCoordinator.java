@@ -36,14 +36,14 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.Vo2MaxSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.WorkoutVo2MaxSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
@@ -51,34 +51,23 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiExtendedSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateManualSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateMaxSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateRestingSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiPaiSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepRespiratoryRateSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepSessionSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSpo2SampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuamiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsFwInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlexaService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsContactsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLoyaltyCardService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsRemindersService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsShortcutCardsService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
-import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 
 public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     public abstract String getDeviceBluetoothName();
@@ -286,45 +275,6 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     @Override
     public boolean supportsCalendarEvents() {
         return true;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice,
-                                @NonNull final Device device,
-                                @NonNull final DaoSession session) throws GBException {
-        final Long deviceId = device.getId();
-
-        session.getHuamiExtendedActivitySampleDao().queryBuilder()
-                .where(HuamiExtendedActivitySampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiStressSampleDao().queryBuilder()
-                .where(HuamiStressSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiSpo2SampleDao().queryBuilder()
-                .where(HuamiSpo2SampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiHeartRateManualSampleDao().queryBuilder()
-                .where(HuamiHeartRateManualSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiHeartRateMaxSampleDao().queryBuilder()
-                .where(HuamiHeartRateMaxSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiHeartRateRestingSampleDao().queryBuilder()
-                .where(HuamiHeartRateRestingSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiPaiSampleDao().queryBuilder()
-                .where(HuamiPaiSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuamiSleepRespiratoryRateSampleDao().queryBuilder()
-                .where(HuamiSleepRespiratoryRateSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     @Override
