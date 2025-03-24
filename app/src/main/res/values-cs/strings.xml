@@ -3860,4 +3860,9 @@
     <string name="ultrahuman_airplane_mode_activated">režim letadlo aktivován</string>
     <string name="ultrahuman_airplane_mode_unknown">neznámá chyba - režim letadlo NEBYL aktivován</string>
     <string name="ultrahuman_unhandled_error_response">obdržel neznámý kód odpovědi 0x%x pro operaci 0x%x</string>
+    <string name="devicetype_huawei_band10">Huawei Band 10</string>
+    <string name="zepp_os_install_map_instructions">Jakmile bude na telefonu spuštěna instalace, budete ji muset přijmout i na hodinkách.</string>
+    <string name="map_upload_failed">Nepodařilo se nahrát mapu</string>
+    <string name="map_upload_in_progress">Nahrávání mapy</string>
+    <string name="map_upload_complete">Mapa úspěšně nahrána</string>
 </resources>
