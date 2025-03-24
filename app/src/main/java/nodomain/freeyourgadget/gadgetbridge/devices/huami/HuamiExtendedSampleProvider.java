@@ -119,6 +119,9 @@ public class HuamiExtendedSampleProvider extends AbstractSampleProvider<HuamiExt
                     }
 
                     sample.setRawIntensity(ActivitySample.NOT_MEASURED);
+                } else if (sample.getRawKind() == TYPE_SLEEP) {
+                    // Unset sleep, as it might sometimes be set out of the actual sleep times
+                    sample.setRawIntensity(TYPE_CUSTOM_UNSET);
                 }
             }
         } else {
