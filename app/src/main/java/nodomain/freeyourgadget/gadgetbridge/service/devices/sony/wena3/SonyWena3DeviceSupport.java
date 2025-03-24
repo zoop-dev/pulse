@@ -193,7 +193,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
         requestActivityDataDownload(builder, false);
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
-        CalendarReceiver.forceSync();
+        CalendarReceiver.forceSync(getDevice());
         return builder;
     }
 
@@ -230,7 +230,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
                 return true;
             }
             else if(request.requestType == StatusRequestType.GET_CALENDAR.value) {
-                CalendarReceiver.forceSync();
+                CalendarReceiver.forceSync(getDevice());
                 sendAllCalendarEvents(null);
             }
             else {

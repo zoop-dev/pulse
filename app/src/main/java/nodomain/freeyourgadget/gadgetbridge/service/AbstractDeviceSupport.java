@@ -92,6 +92,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceMusicUpdate;
 import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksController;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -1242,7 +1243,12 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
      */
     @Override
     public void onSendConfiguration(String config) {
-
+        switch (config) {
+            case DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR:
+            case DeviceSettingsPreferenceConst.PREF_SYNC_BIRTHDAYS:
+                CalendarReceiver.forceSync(getDevice());
+                break;
+        }
     }
 
     /**

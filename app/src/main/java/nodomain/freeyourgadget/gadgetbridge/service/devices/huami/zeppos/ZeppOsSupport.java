@@ -388,7 +388,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     @Override
     protected ZeppOsSupport sendCalendarEvents(final TransactionBuilder builder) {
         // We have native calendar sync
-        CalendarReceiver.forceSync();
+        CalendarReceiver.forceSync(getDevice());
         return this;
     }
 

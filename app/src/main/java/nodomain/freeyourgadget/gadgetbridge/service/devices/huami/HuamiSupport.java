@@ -3020,6 +3020,8 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         } catch (IOException e) {
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }
+
+        super.onSendConfiguration(config);
     }
 
     @Override

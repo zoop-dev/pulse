@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.provider.CalendarContract;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import org.slf4j.Logger;
@@ -105,6 +106,16 @@ public class CalendarReceiver extends ContentObserver {
         mForceSyncReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
+                final String action = intent.getAction();
+                if (!ACTION_FORCE_SYNC.equals(action)) {
+                    LOG.warn("Got unknown action {}", action);
+                    return;
+                }
+                final GBDevice intentDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+                if (intentDevice != null && !intentDevice.equals(mGBDevice)) {
+                    // Force sync is not for this device - ignore
+                    return;
+                }
                 LOG.info("Got force sync: {}", intent.getAction());
                 scheduleSync();
             }
@@ -123,7 +134,7 @@ public class CalendarReceiver extends ContentObserver {
     }
 
     public void scheduleSync() {
-        LOG.debug("Scheduling calendar sync");
+        LOG.debug("Scheduling calendar sync for {}", mGBDevice);
         mSyncHandler.removeCallbacksAndMessages(null);
         mSyncHandler.postDelayed(this::syncCalendar, 2500L);
     }
@@ -273,9 +284,12 @@ public class CalendarReceiver extends ContentObserver {
         mSyncHandler.removeCallbacksAndMessages(null);
     }
 
-    public static void forceSync() {
+    public static void forceSync(@Nullable final GBDevice device) {
         final Intent intent = new Intent(ACTION_FORCE_SYNC);
         intent.setPackage(BuildConfig.APPLICATION_ID);
+        if (device != null) {
+            intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+        }
         GBApplication.getContext().sendBroadcast(intent);
     }
 }

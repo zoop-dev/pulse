@@ -45,6 +45,7 @@ import java.util.TimeZone;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -93,18 +94,22 @@ public class CalendarManager {
     public List<CalendarEvent> getCalendarEventList() {
         loadCalendarsBlackList();
 
-        final SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
-        final Prefs prefs = new Prefs(sharedPrefs);
-        int lookaheadDays = Math.max(1, prefs.getInt("calendar_lookahead_days", 7));
-        final List<CalendarEvent> calendarEventList = getCalendarEvents(lookaheadDays);
-        if (sharedPrefs.getBoolean("sync_birthdays", false)) {
+        final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
+
+        final List<CalendarEvent> calendarEventList = new ArrayList<>();
+        final int lookaheadDays = Math.max(1, prefs.getInt("calendar_lookahead_days", 7));
+
+        if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR, false)) {
+            calendarEventList.addAll(getCalendarEvents(lookaheadDays));
+        }
+        if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SYNC_BIRTHDAYS, false)) {
             calendarEventList.addAll(getBirthdays(lookaheadDays));
             calendarEventList.sort(Comparator.comparingInt(CalendarEvent::getBeginSeconds));
         }
         return calendarEventList;
     }
 
-    public List<CalendarEvent> getCalendarEvents(final int lookaheadDays) {
+    private List<CalendarEvent> getCalendarEvents(final int lookaheadDays) {
         final List<CalendarEvent> calendarEventList = new ArrayList<>();
 
         Calendar cal = GregorianCalendar.getInstance();

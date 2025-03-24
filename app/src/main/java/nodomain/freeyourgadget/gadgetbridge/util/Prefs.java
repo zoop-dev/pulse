@@ -151,7 +151,7 @@ public class Prefs {
         } catch (Exception ex) {
             try {
                 String value = preferences.getString(key, String.valueOf(defaultValue));
-                if ("".equals(value)) {
+                if (value.isEmpty()) {
                     return defaultValue;
                 }
                 return Boolean.parseBoolean(value);

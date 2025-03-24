@@ -105,7 +105,9 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
 
     @Override
     public void onSendConfiguration(String config) {
-        if(bleApi != null) {
+        super.onSendConfiguration(config);
+
+        if (bleApi != null) {
             bleApi.onSendConfiguration(config);
         }
     }

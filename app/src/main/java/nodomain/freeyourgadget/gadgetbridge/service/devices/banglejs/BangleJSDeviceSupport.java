@@ -1051,7 +1051,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             GB.toast("Database Error while forcefully syncing Calendar", Toast.LENGTH_SHORT, GB.ERROR, e1);
         }
         //force a syncCalendar now, send missing events
-        CalendarReceiver.forceSync();
+        CalendarReceiver.forceSync(getDevice());
     }
 
     /**
