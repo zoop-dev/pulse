@@ -38,12 +38,13 @@ public class SendFileUploadChunk extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
+            boolean isEncrypted = huaweiUploadManager.getFileUploadInfo().getEncrypt() && paramsProvider.areTransactionsCrypted();
             return new FileUpload.FileNextChunkSend(this.paramsProvider).serializeFileChunk(
                     huaweiUploadManager.getFileUploadInfo().getCurrentChunk(),
                     huaweiUploadManager.getFileUploadInfo().getCurrentUploadPosition(),
                     huaweiUploadManager.getFileUploadInfo().getUnitSize(),
                     huaweiUploadManager.getFileUploadInfo().getFileId(),
-                    huaweiUploadManager.getFileUploadInfo().getEncrypt()
+                    isEncrypted
             );
         } catch(HuaweiPacket.SerializeException e) {
             throw new RequestCreationException(e.getMessage());
