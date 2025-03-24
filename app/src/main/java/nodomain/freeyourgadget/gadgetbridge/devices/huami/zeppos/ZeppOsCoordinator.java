@@ -577,7 +577,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     public boolean hasGps(final GBDevice device) {
-        return supportsConfig(device, ZeppOsConfigService.ConfigArg.WORKOUT_GPS_PRESET);
+        return supportsConfig(device, ZeppOsConfigService.ConfigArg.AGPS_UPDATE_TIME);
     }
 
     public boolean supportsAutoBrightness(final GBDevice device) {

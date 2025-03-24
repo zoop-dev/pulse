@@ -2,12 +2,12 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceScreen
         android:icon="@drawable/ic_gps_location"
-        android:key="pref_header_gps"
+        android:key="pref_screen_gps"
         android:persistent="false"
         android:title="@string/pref_gps_header">
 
         <PreferenceCategory
-            android:key="pref_gps_header_category"
+            android:key="pref_header_gps"
             android:title="@string/pref_gps_header">
 
             <ListPreference

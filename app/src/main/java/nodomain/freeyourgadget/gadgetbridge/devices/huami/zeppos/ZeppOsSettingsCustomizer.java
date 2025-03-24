@@ -25,6 +25,7 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -229,11 +230,17 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
                 DeviceSettingsPreferenceConst.PREF_USER_FITNESS_GOAL_NOTIFICATION
         ));
         hidePrefIfNoneVisible(handler, DeviceSettingsPreferenceConst.PREF_HEADER_WORKOUT, Arrays.asList(
-                DeviceSettingsPreferenceConst.PREF_HEADER_GPS,
+                DeviceSettingsPreferenceConst.PREF_SCREEN_GPS,
                 DeviceSettingsPreferenceConst.PREF_WORKOUT_START_ON_PHONE,
                 DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND,
                 DeviceSettingsPreferenceConst.PREF_HEADER_WORKOUT_DETECTION,
                 DeviceSettingsPreferenceConst.PREF_WORKOUT_KEEP_SCREEN_ON
+        ));
+        hidePrefIfNoneVisible(handler, DeviceSettingsPreferenceConst.PREF_HEADER_GPS, Arrays.asList(
+                DeviceSettingsPreferenceConst.PREF_GPS_MODE_PRESET,
+                DeviceSettingsPreferenceConst.PREF_GPS_BAND,
+                DeviceSettingsPreferenceConst.PREF_GPS_COMBINATION,
+                DeviceSettingsPreferenceConst.PREF_GPS_SATELLITE_SEARCH
         ));
         hidePrefIfNoneVisible(handler, DeviceSettingsPreferenceConst.PREF_HEADER_AGPS, Arrays.asList(
                 DeviceSettingsPreferenceConst.PREF_AGPS_EXPIRY_REMINDER_ENABLED,
@@ -327,7 +334,9 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
             };
 
             handler.addPreferenceHandlerFor(DeviceSettingsPreferenceConst.PREF_GPS_MODE_PRESET, onGpsPresetUpdated);
-            onGpsPresetUpdated.onPreferenceChange(prefGpsPreset, prefGpsPreset.getValue());
+            if (!StringUtils.isBlank(prefGpsPreset.getValue())) {
+                onGpsPresetUpdated.onPreferenceChange(prefGpsPreset, prefGpsPreset.getValue());
+            }
         }
 
         // The gps combination can only be chosen if the gps band is single band
@@ -408,8 +417,7 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
         }
 
         for (final String prefKey : supportedPref) {
-            final boolean deviceHasConfig = prefs.getBoolean(DeviceSettingsUtils.getPrefKnownConfig(prefKey), false);
-            if (deviceHasConfig) {
+            if (supportsConfig(prefs, prefKey)) {
                 // This preference is supported, don't hide
                 return;
             }
@@ -417,6 +425,10 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
 
         // None of the configs were supported by the device, hide this preference
         pref.setVisible(false);
+    }
+
+    private boolean supportsConfig(final Prefs prefs, final String prefKey) {
+        return prefs.getBoolean(DeviceSettingsUtils.getPrefKnownConfig(prefKey), false);
     }
 
     private void enforceMinMax(final DeviceSpecificSettingsHandler handler, final Prefs prefs, final ZeppOsConfigService.ConfigArg config) {
