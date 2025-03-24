@@ -117,13 +117,18 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
             }
         }
 
-        final ZeppOsFwInstallHandler handler = new ZeppOsFwInstallHandler(
+        final ZeppOsMapsInstallHandler mapsInstallHandler = new ZeppOsMapsInstallHandler(uri, context);
+        if (mapsInstallHandler.isValid()) {
+            return mapsInstallHandler;
+        }
+
+        final ZeppOsFwInstallHandler fwInstallHandler = new ZeppOsFwInstallHandler(
                 uri,
                 context,
                 getDeviceBluetoothName(),
                 getDeviceSources()
         );
-        return handler.isValid() ? handler : null;
+        return fwInstallHandler.isValid() ? fwInstallHandler : null;
     }
 
     @Override
@@ -589,6 +594,10 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     public boolean supportsAssistant(final GBDevice device) {
         return experimentalFeatures(device) && ZeppOsAssistantService.isSupported(getPrefs(device));
+    }
+
+    public boolean supportsMaps(final GBDevice device) {
+        return supportsDisplayItem(device, "map");
     }
 
     private boolean supportsConfig(final GBDevice device, final ZeppOsConfigService.ConfigArg config) {

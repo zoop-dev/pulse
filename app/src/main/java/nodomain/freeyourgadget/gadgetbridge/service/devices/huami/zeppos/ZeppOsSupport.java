@@ -89,6 +89,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSilentMode;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -138,6 +139,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLoyaltyCardService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsMapsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsMusicService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsNotificationService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsRemindersService;
@@ -190,10 +192,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsAppsService appsService = new ZeppOsAppsService(this);
     private final ZeppOsLogsService logsService = new ZeppOsLogsService(this);
     private final ZeppOsDisplayItemsService displayItemsService = new ZeppOsDisplayItemsService(this);
-    private final ZeppOsHttpService httpService = new ZeppOsHttpService(this);
+    private final ZeppOsHttpService httpService = new ZeppOsHttpService(this, fileTransferService);
     private final ZeppOsRemindersService remindersService = new ZeppOsRemindersService(this);
     private final ZeppOsLoyaltyCardService loyaltyCardService = new ZeppOsLoyaltyCardService(this);
     private final ZeppOsVoiceMemosService voiceMemosService = new ZeppOsVoiceMemosService(this);
+    private final ZeppOsMapsService mapsService = new ZeppOsMapsService(this, httpService);
     private final ZeppOsMusicService musicService = new ZeppOsMusicService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
@@ -225,6 +228,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(loyaltyCardService.getEndpoint(), loyaltyCardService);
         put(musicService.getEndpoint(), musicService);
         put(voiceMemosService.getEndpoint(), voiceMemosService);
+        put(mapsService.getEndpoint(), mapsService);
     }};
 
     public ZeppOsSupport() {
@@ -732,6 +736,12 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 GB.toast(getContext(), "Gpx install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
 
+            return;
+        }
+
+        final ZeppOsMapsInstallHandler mapsHandler = new ZeppOsMapsInstallHandler(uri, getContext());
+        if (mapsHandler.isValid()) {
+            mapsService.upload(mapsHandler.getFile());
             return;
         }
 

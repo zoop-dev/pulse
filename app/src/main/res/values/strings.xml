@@ -195,6 +195,7 @@
     <string name="open_fw_installer_connect_minimum_one_device">Please connect AT LEAST ONE device you want to send the file to.</string>
     <string name="open_fw_installer_connect_maximum_one_device">Please connect ONLY ONE device you want to send the file to.</string>
     <string name="open_fw_installer_ensure_device_connected">Make sure that the device %s is connected</string>
+    <string name="zepp_os_install_map_instructions">After the installation starts on the phone, you need to accept on the watch as well.</string>
     <!-- Strings related to MusicManager -->
     <string name="title_activity_musicmanager">Music Manager</string>
     <!-- Strings related to Settings -->
@@ -944,6 +945,9 @@
     <string name="gpx_route_upload_failed">Gpx route upload failed</string>
     <string name="gpx_route_upload_complete">Gpx route upload complete</string>
     <string name="gpx_route_upload_in_progress">Uploading gpx route</string>
+    <string name="map_upload_failed">Map upload failed</string>
+    <string name="map_upload_complete">Map upload complete</string>
+    <string name="map_upload_in_progress">Uploading map</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Current MTU of %1$d is too low, please enable high MTU in the device settings and disconnect/re-connect the device.</string>
     <string name="chart_steps">Steps</string>
     <string name="calories">Calories</string>
