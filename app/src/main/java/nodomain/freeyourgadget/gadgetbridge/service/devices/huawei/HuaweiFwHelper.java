@@ -263,7 +263,14 @@ public class HuaweiFwHelper {
                 previewBitmap = BitmapFactory.decodeByteArray(preview, 0, preview.length);
             }
 
-            byte[] watchfaceZip = watchfacePackage.getFileFromZip("com.huawei.watchface");
+            String watchfacePath="";
+            if (watchfaceDescription.isHonor) {
+                watchfacePath ="com.honor.watchface";
+            } else {
+                watchfacePath = "com.huawei.watchface";
+            }
+
+            byte[] watchfaceZip = watchfacePackage.getFileFromZip(watchfacePath);
             try {
                 GBZipFile watchfaceBinZip = new GBZipFile(watchfaceZip);
                 fw = watchfaceBinZip.getFileFromZip("watchface.bin");

@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import java.io.IOException;
@@ -50,7 +52,7 @@ public class HuaweiWatchfaceManager
 
         Map<String, Object> map = new HashMap<>();
         public Resolution() {
-            //             "height*width"
+            // Huawei sizes    "height*width"
             map.put("HWHD01", "390*390");
             map.put("HWHD02", "454*454");
             map.put("HWHD03", "240*120");
@@ -64,6 +66,13 @@ public class HuaweiWatchfaceManager
             map.put("HWHD11", "480*336");
             map.put("HWHD12", "240*240");
             map.put("HWHD13", "480*408");
+            //Honor sizes
+            map.put("HNHD01", "466*466");
+            map.put("HNHD02","368*194");
+            map.put("HNHD03","450*390");
+            map.put("HNHD04","454*454");
+            map.put("QXHD01","402*256");
+            map.put("QXHD02","502*410");
         }
 
         public boolean  isValid(String themeVersion, String screenResolution) {
@@ -96,7 +105,16 @@ public class HuaweiWatchfaceManager
         public String version;
         public String font;
         public String font_cn;
+        public Boolean isHonor;
 
+        private String parseElement(Document doc, String tag) {
+            NodeList tagNodes = doc.getElementsByTagName(tag);
+            if (tagNodes.getLength() > 0) {
+                return tagNodes.item(0).getTextContent().trim();
+            } else {
+                return "";
+            }
+        }
         public WatchfaceDescription(String xmlStr) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder;
@@ -105,14 +123,23 @@ public class HuaweiWatchfaceManager
                 Document doc = builder.parse(new InputSource(new StringReader(
                         xmlStr)));
 
-                this.title = doc.getElementsByTagName("title").item(0).getTextContent();
-                this.title_cn = doc.getElementsByTagName("title-cn").item(0).getTextContent();
-                this.author = doc.getElementsByTagName("author").item(0).getTextContent();
-                this.designer = doc.getElementsByTagName("designer").item(0).getTextContent();
-                this.screen = doc.getElementsByTagName("screen").item(0).getTextContent();
-                this.version = doc.getElementsByTagName("version").item(0).getTextContent();
-                this.font = doc.getElementsByTagName("font").item(0).getTextContent();
-                this.font_cn = doc.getElementsByTagName("font-cn").item(0).getTextContent();
+                Element root = doc.getDocumentElement();
+                String rootName = root.getTagName();
+
+                if ("HnTheme".equals(rootName)) {
+                    isHonor = true;
+                } else if ("HwTheme".equals(rootName)) {
+                    isHonor = false;
+                }
+
+                this.title = parseElement(doc, "title");
+                this.title_cn = parseElement(doc,"title-cn");
+                this.author = parseElement(doc,"author");
+                this.designer = parseElement(doc,"designer");
+                this.screen = parseElement(doc,"screen");
+                this.version = parseElement(doc,"version");
+                this.font = parseElement(doc,"font");
+                this.font_cn = parseElement(doc,"font-cn");
 
             } catch (Exception e) {
                 e.printStackTrace();
