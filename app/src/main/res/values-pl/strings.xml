@@ -3882,4 +3882,9 @@
     <string name="ultrahuman_airplane_mode_on_charger">pierścień ładuje się - tryb samolotowy NIE jest włączony</string>
     <string name="ultrahuman_airplane_mode_unknown">nieznany błąd - tryb samolotu NIE aktywowany</string>
     <string name="ultrahuman_airplane_mode_too_full">pierścień jest w pełni naładowany - tryb samolotowy NIE jest włączony</string>
+    <string name="map_upload_in_progress">Przesyłanie mapy</string>
+    <string name="map_upload_complete">Przesyłanie mapy zakończone</string>
+    <string name="zepp_os_install_map_instructions">Po rozpoczęciu instalacji na telefonie należy ją zaakceptować także na zegarku.</string>
+    <string name="map_upload_failed">Przesyłanie mapy nie powiodło się</string>
+    <string name="devicetype_huawei_band10">Huawei Band 10</string>
 </resources>
