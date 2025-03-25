@@ -1383,7 +1383,7 @@
     <string name="pref_title_pebble_enable_bgjs">Háttérbeli JS engedélyezése</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="sony_surround_mode_outdoor_stage">Kültéri színpad</string>
-    <string name="notif_export_failed_title">Az adatbázis exportálása meghiúsult! Ellenőrizze a beállításait.</string>
+    <string name="notif_export_failed_title">Az adatbázis exportálása sikertelen! Ellenőrizze a beállításait.</string>
     <string name="fw_upgrade_notice_amazfitcor2">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor 2 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A karkötő az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA! \n \nTELJESEN TESZTELETLEN, VÉLEMÉNYESEN BEATS_W FIRMWARE-T KELL TELEPÍTENIE, HA AZ ESZKÖZ NEVE „Amazfit Band 2”</string>
     <string name="fw_upgrade_notice_amazfitgts">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfitvergel">A(z) %s firmware-t kívánja telepíteni az Amazfit Verge Lite eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
@@ -3663,4 +3663,8 @@
     <string name="ultrahuman_airplane_mode_too_full">a gyűrű teljesen feltöltve - repülős üzemmód NINCS aktiválva</string>
     <string name="ultrahuman_airplane_mode_question">Repülős üzemmód aktiválása?</string>
     <string name="devicetype_huawei_band10">Huawei Band 10</string>
+    <string name="zepp_os_install_map_instructions">Miután a telepítés elindul a telefonon, az órán is el kell fogadnia.</string>
+    <string name="map_upload_failed">A térkép feltöltése sikertelen</string>
+    <string name="map_upload_complete">A térkép feltöltése befejeződött</string>
+    <string name="map_upload_in_progress">Térkép feltöltése</string>
 </resources>
