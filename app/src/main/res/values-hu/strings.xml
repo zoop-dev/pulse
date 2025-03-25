@@ -156,7 +156,7 @@
     <string name="cannot_connect_bt_address_invalid_">Nem lehet csatlakozni. Érvénytelen a Bluetooth-cím?</string>
     <string name="gadgetbridge_running_generic">A Gadgetbridge fut</string>
     <string name="installing_binary_d_d">%1$d/%2$d bináris telepítése</string>
-    <string name="installation_failed_">Sikertelen telepítés</string>
+    <string name="installation_failed_">A telepítés nem sikerült</string>
     <string name="installation_successful">Telepítve</string>
     <string name="firmware_install_warning">FIRMWARE-T PRÓBÁL TELEPÍTENI, CSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA. \n \n \n Ez a firmware a következő hardververzióhoz tartozik: %s</string>
     <string name="app_install_info">A következő alkalmazást fogja telepíteni:
@@ -248,7 +248,7 @@
     <string name="installer_activity_unable_to_find_handler">A telepítéshez szükséges segédfájl nem található.</string>
     <string name="pbw_install_handler_unable_to_install">Nem sikerült telepíteni a fájlt: %1$s</string>
     <string name="pbw_install_handler_hw_revision_mismatch">Nem lehet telepíteni a firmware-t: nem kompatibilis a Pebble hardververziójával.</string>
-    <string name="installer_activity_wait_while_determining_status">Kérem várjon a telepítési állapot megállapításáig…</string>
+    <string name="installer_activity_wait_while_determining_status">Várjon a telepítési állapot megállapításáig…</string>
     <string name="notif_battery_low_title">Alacsony az eszköz akkumulátor töltése!</string>
     <string name="notif_battery_low_percent">%1$s fennmaradó akkumulátor töltés: %2$s%%</string>
     <string name="notif_battery_low_bigtext_last_charge_time">Utoljára töltve: %s \n</string>
@@ -272,7 +272,7 @@
     <string name="updatefirmwareoperation_metadata_updateproblem">Probléma volt a Firmware metaadatainak küldésekor</string>
     <string name="updatefirmwareoperation_update_complete">A Firmware telepítése kész</string>
     <string name="updatefirmwareoperation_update_complete_rebooting">A Firmware telepítése kész, az eszköz újraindítása…</string>
-    <string name="updatefirmwareoperation_write_failed">Firmware telepítése sikertelen</string>
+    <string name="updatefirmwareoperation_write_failed">A Firmware telepítése nem sikerült</string>
     <string name="chart_steps">Lépések</string>
     <string name="calories">Kalória</string>
     <string name="distance">Távolság</string>
@@ -359,7 +359,7 @@
     <string name="dbmanagementactivity_delete_activity_data_title">Törli az tevékenységadatokat?</string>
     <string name="dbmanagementactivity_really_delete_entire_db">Biztosan törölni szeretné az egész adatbázist? Minden tevékenységadat és az Önről tárolt információ el fog veszni.</string>
     <string name="dbmanagementactivity_database_successfully_deleted">Adatok törölve.</string>
-    <string name="dbmanagementactivity_db_deletion_failed">Az adatbázis törlése sikertelen.</string>
+    <string name="dbmanagementactivity_db_deletion_failed">Az adatbázis törlése nem sikerült.</string>
     <string name="dbmanagementactivity_delete_old_activity_db">Törli a régi tevékenység-adatbázist?</string>
     <string name="dbmanagementactivity_delete_old_activitydb_confirmation">Biztosan törli a régi tevékenység-adatbázist? A nem importált tevékenységadatok el fognak veszni.</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Régi tevékenységadatok törölve.</string>
@@ -1383,7 +1383,7 @@
     <string name="pref_title_pebble_enable_bgjs">Háttérbeli JS engedélyezése</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="sony_surround_mode_outdoor_stage">Kültéri színpad</string>
-    <string name="notif_export_failed_title">Az adatbázis exportálása sikertelen! Ellenőrizze a beállításait.</string>
+    <string name="notif_export_failed_title">Az adatbázis exportálása nem sikerült! Ellenőrizze a beállításokat.</string>
     <string name="fw_upgrade_notice_amazfitcor2">A(z) %s firmware-t kívánja telepíteni az Amazfit Cor 2 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. A karkötő az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA! \n \nTELJESEN TESZTELETLEN, VÉLEMÉNYESEN BEATS_W FIRMWARE-T KELL TELEPÍTENIE, HA AZ ESZKÖZ NEVE „Amazfit Band 2”</string>
     <string name="fw_upgrade_notice_amazfitgts">A(z) %s firmware-t kívánja telepíteni az Amazfit GTS eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfitvergel">A(z) %s firmware-t kívánja telepíteni az Amazfit Verge Lite eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt és végül a .gps fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res és .gps fájlokat, ha ezek a fájlok pontosan megegyeznek a korábban telepítettekkel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
@@ -1517,7 +1517,7 @@
     <string name="pref_workout_detection_time_summary">Az edzés percek számainak folyamatban kell lennie, mielőtt észlelné</string>
     <string name="pref_sleep_mode_sleep_screen_summary">Jelenítse meg az alvó képernyőt, amikor alvó üzemmódban felébreszti a képernyőt, hogy csökkentse a zavaró tényezőket</string>
     <string name="preferences_miband_1_2_warning">Figyelmeztetés: Ezek a beállítások csak a Mi Bands 1-re és 2-re vonatkoznak.</string>
-    <string name="pref_write_logfiles_not_available">A fájlnaplózás inicializálása sikertelen, a naplófájlok írása jelenleg nem elérhető. Indítsa újra az alkalmazást, hogy újra megpróbálja inicializálni a naplófájlokat.</string>
+    <string name="pref_write_logfiles_not_available">A fájlnaplózás inicializálása nem sikerült, a naplófájlok írása jelenleg nem elérhető. Indítsa újra az alkalmazást, hogy újra megpróbálja inicializálni a naplófájlokat.</string>
     <string name="contact_no_free_slots_description">Az eszközön nincs szabad hely az névjegyek számára (összes hely: %1$s)</string>
     <string name="world_clock_no_free_slots_description">Az eszközön nincs szabad hely a világórák számára (összes hely: %1$s)</string>
     <string name="chart_get_active_and_synchronize">Végezzen valamilyen tevékenységet, és szinkronizálja az eszközt.</string>
@@ -1748,7 +1748,7 @@
     <string name="prefs_spo2_monitoring_title">Véroxigén szint figyelése</string>
     <string name="prefs_activity_monitoring_description">Automatikusan növelje a pulzusszám-frekvenciát, amikor a karkötő fizikai gyakorlatot észlel, a pulzusszám pontosságának növelése érdekében.</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">Az eszköz akkumulátorszintje túl alacsony</string>
-    <string name="gpx_route_upload_failed">Gpx útvonal feltöltése sikertelen</string>
+    <string name="gpx_route_upload_failed">A Gpx útvonal feltöltése nem sikerült</string>
     <string name="gpx_route_upload_in_progress">Gpx útvonal feltöltése</string>
     <string name="seconds_12">12 másodperc</string>
     <string name="seconds_13">13 másodperc</string>
@@ -1932,7 +1932,7 @@
     <string name="devicetype_huawei_talk_band_b6">Huawei Talk Band B6</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
     <string name="menuitem_lockscreen">Zárolási képernyő</string>
-    <string name="activity_error_share_failed">A fájl megosztása sikertelen.</string>
+    <string name="activity_error_share_failed">A fájl megosztása nem sikerült.</string>
     <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="activity_type_pilates">Pilates</string>
     <string name="activity_type_table_tennis">Asztali tenisz</string>
@@ -2038,7 +2038,7 @@
     <string name="baseAltitude">Bázismagasság</string>
     <string name="error_retrieving_devices_database">Hiba történt az eszközök adatbázisból való lekérésekor</string>
     <string name="error_background_service">Nem sikerült elindítani a háttérszolgáltatást</string>
-    <string name="error_background_service_reason_truncated">A háttérszolgáltatás indítása sikertelen, mert…</string>
+    <string name="error_background_service_reason_truncated">A háttérszolgáltatás indítása nem sikerült, mert…</string>
     <string name="aerobicTrainingEffect">Aerobic hatás</string>
     <string name="currentWorkoutLoad">Edzésterhelés</string>
     <string name="maximumOxygenUptake">Maximális oxigénfelvétel</string>
@@ -2294,7 +2294,7 @@
     <string name="watchface_setting_light_up_on_notification">Új értesítéskor világít</string>
     <string name="watchface_dialog_widget_update_timeout">Frissítési időkorlát percben</string>
     <string name="watchface_dialog_widget_timeout_hide_text">Szöveg elrejtése időtúllépéskor</string>
-    <string name="uploadwatchfaceoperation_failed">A számlap telepítése sikertelen</string>
+    <string name="uploadwatchfaceoperation_failed">A számlap telepítése nem sikerült</string>
     <string name="uploadwatchfaceoperation_complete">A számlap telepítése kész</string>
     <string name="prefs_events_forwarding_summary">Eszközesemények használata a műveletek és az Android üzenetszórásainak kiváltásához</string>
     <string name="agps_status_pending">Függőben</string>
@@ -2311,7 +2311,7 @@
     <string name="activity_prefs_height_inches">Magasság inchben</string>
     <string name="notif_battery_full_title">Eszköz akkumulátora tele!</string>
     <string name="notif_battery_full">%1$s akkumulátora feltöltve</string>
-    <string name="authentication_failed_check_key">Hitelesítés sikertelen, kérem ellenőrizze a hitelesítő kulcsot</string>
+    <string name="authentication_failed_check_key">A hitelesítés nem sikerült, ellenőrizze a hitelesítő kulcsot</string>
     <string name="pref_touch_tone_summary">Hangjelzés a fülhallgató megérintésekor</string>
     <string name="pref_description_dashboard">Modulok, bevonható eszközök</string>
     <string name="pref_wearing_tone">Hangvétel</string>
@@ -2924,7 +2924,7 @@
     <string name="pref_force_smart_alarm_summary">Intelligens riasztások támogatásának kényszerítése.\nCSAK SAJÁT FELELŐSSÉGRE</string>
     <string name="loyalty_cards_catima">Catima</string>
     <string name="device_state_waiting_scan">Várakozás az eszköz beolvasására</string>
-    <string name="error_scan_failed">A beolvasás sikertelen: %d</string>
+    <string name="error_scan_failed">A beolvasás nem sikerült: %d</string>
     <string name="music_multiselect_limit">Elérte az egynél több elem kiválasztásának határát</string>
     <string name="first_start_intro_tag_line">Szabaduljon meg a készülékgyártók saját alkalmazásai és felhőszolgáltatásai alól.</string>
     <string name="permission_notifications_summary">Értesítések továbbítása csatlakoztatott kütyükre</string>
@@ -3222,7 +3222,7 @@
     <string name="backup_restore_warning_files">%1d fájl helyreállítása nem sikerült: \n%2s</string>
     <string name="backup_restore_export_complete">Exportálás befejeződött</string>
     <string name="backup_restore_import_complete">Importálás befejeződött</string>
-    <string name="backup_restore_error_export">Exportálás zip formátumba sikertelen</string>
+    <string name="backup_restore_error_export">A zip-be történtő exportálás nem sikerült</string>
     <string name="backup_restore_restart_summary">%1s most újraindul.</string>
     <string name="label_distance_trip">Utazás: %.1f km</string>
     <string name="label_distance_trip_mph">Utazás: %.1f mérföld</string>
@@ -3348,7 +3348,7 @@
     <string name="permission_bluetooth_summary">Csatlakozás Bluetooth-eszközökhöz</string>
     <string name="prefs_summary_gatt_client_api_package">A BLE Intent API kommunikáció korlátozása erre a csomagra</string>
     <string name="backup_restore_exporting">Exportálás zip formátumba…</string>
-    <string name="backup_restore_error_import">Importálás zip formátumba sikertelen</string>
+    <string name="backup_restore_error_import">A zip-be történő importálás nem sikerült</string>
     <string name="music_delete_multiple_confirm_description">Biztosan törölni szeretné a(z) „%1$d” dalokat?</string>
     <string name="permission_internet_access_summary">Szinkronizálás online forrásokkal</string>
     <string name="permission_calendar_summary">Naptár küldése a kütyükre</string>
@@ -3399,7 +3399,7 @@
     <string name="miscale_small_objects_summary">10 kg-nál könnyebb tárgyak tárolása</string>
     <string name="steps_streaks_total_steps_hint">A lépések teljes száma az egész sorozatban</string>
     <string name="fossil_hr_confirm_connection">Erősítse meg az óráján</string>
-    <string name="fossil_hr_pairing_failed">Az órával való párosítás sikertelen</string>
+    <string name="fossil_hr_pairing_failed">Az órával való párosítás nem sikerült</string>
     <string name="button_open_menu_companion">Nyissa meg a menü társalkalmazást</string>
     <string name="pref_header_calls_and_notifications">Hívások és értesítések</string>
     <string name="pref_summary_bottom_navigation_bar_off">Váltás a főképernyők között csak vízszintes csúsztatással</string>
@@ -3664,7 +3664,7 @@
     <string name="ultrahuman_airplane_mode_question">Repülős üzemmód aktiválása?</string>
     <string name="devicetype_huawei_band10">Huawei Band 10</string>
     <string name="zepp_os_install_map_instructions">Miután a telepítés elindul a telefonon, az órán is el kell fogadnia.</string>
-    <string name="map_upload_failed">A térkép feltöltése sikertelen</string>
+    <string name="map_upload_failed">A térkép feltöltése nem sikerült</string>
     <string name="map_upload_complete">A térkép feltöltése befejeződött</string>
     <string name="map_upload_in_progress">Térkép feltöltése</string>
 </resources>
