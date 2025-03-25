@@ -3863,4 +3863,9 @@
     <string name="ultrahuman_airplane_mode_activated">飞行模式已激活</string>
     <string name="ultrahuman_airplane_mode_on_charger">指环正在充电 - 飞行模式未激活</string>
     <string name="ultrahuman_unhandled_error_response">操作 0x%x 时遇到未识别的错误代码 0x%x</string>
+    <string name="zepp_os_install_map_instructions">手机上开始安装后，您也需要在手表上接受。</string>
+    <string name="map_upload_failed">地图上传失败</string>
+    <string name="map_upload_complete">地图上传完成</string>
+    <string name="map_upload_in_progress">正在上传地图</string>
+    <string name="devicetype_huawei_band10">华为手环 10</string>
 </resources>
