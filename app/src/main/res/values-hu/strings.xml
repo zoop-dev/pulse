@@ -815,7 +815,7 @@
     <string name="activity_DB_import_button">Adatok importálása</string>
     <string name="activity_type_treadmill">Futópad</string>
     <string name="prefs_sensors_button_bp_calibration">Kalibrálás</string>
-    <string name="pref_summary_auto_export_interval">Exportálás minden %d. órában</string>
+    <string name="pref_summary_auto_export_interval">Exportálás minden %d órában</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">A dinamikus színek nem elérhetők az eszközén, csak az Android 12+ verziók támogatják ezt a funkciót. A Gadgetbridge az alapértelmezett Material 3 színeket fogja használni.</string>
     <string name="hr_appname_commute">Ingázás</string>
     <string name="averageHR">Pulzus</string>
@@ -1489,8 +1489,8 @@
     <string name="pref_summary_banglejs_phone_gps_update_interval">A GPS pozíció frissítésének gyakorisága mp-ben</string>
     <string name="pref_header_intent_api">Intent API</string>
     <string name="intent_api_broadcast_export_summary">Intent közvetítése, amikor az adatbázis exportálása befejeződik</string>
-    <string name="intent_api_allow_trigger_export_title">Engedélyezze az adatbázisexportot</string>
-    <string name="intent_api_allow_trigger_export_summary">Lehetővé teszi az adatbázisexport kiváltását Intent API-n keresztül</string>
+    <string name="intent_api_allow_trigger_export_title">Engedélyezze az adatbázis exportálását</string>
+    <string name="intent_api_allow_trigger_export_summary">Lehetővé teszi az adatbázis exportálásának kiváltását Intent API-n keresztül</string>
     <string name="femometer_measurement_mode_normal">Normál mód (60-90s)</string>
     <string name="femometer_measurement_mode_precise">Precíz mód (3 perc)</string>
     <string name="pref_gps_band">GPS sáv</string>
@@ -2614,11 +2614,11 @@
     <string name="battery_full_notify_enabled">Értesítés teljes akkumulátor esetén</string>
     <string name="battery_percentage_str">%1$s%%</string>
     <string name="activity_db_management_backup_restore_label">Biztonsági mentés és visszaállítás</string>
-    <string name="activity_db_management_export_to_zip">Zip exportálása</string>
+    <string name="activity_db_management_export_to_zip">Exportálás zip-be</string>
     <string name="backup_restore_exporting_preferences">Beállítások exportálása…</string>
     <string name="backup_restore_exporting_files">Fájlok exportálása…</string>
     <string name="backup_restore_exporting_finishing">Exportálás befejezése…</string>
-    <string name="backup_restore_importing">Importálás zip formátumba…</string>
+    <string name="backup_restore_importing">Importálás zip-ből…</string>
     <string name="backup_restore_abort_export_confirmation">Megszakítja az exportálást? A részleges zip-fájl törlődik.</string>
     <string name="devicetype_garmin_fenix_6s_pro">Garmin Fenix 6S Pro</string>
     <string name="devicetype_garmin_fenix_8">Garmin Fenix 8</string>
@@ -2998,7 +2998,7 @@
     <string name="pref_auto_reply_calls_title">Telefonhívások automatikus fogadása</string>
     <string name="insufficient_space_for_upload">Nincs elegendő hely a feltöltéshez</string>
     <string name="pref_header_deprecated_functionalities">Elavult funkciók</string>
-    <string name="activity_db_management_import_from_zip">Zip importálása</string>
+    <string name="activity_db_management_import_from_zip">Importálás zip-be</string>
     <string name="backup_restore_importing_validating">Fájl hitelesítése…</string>
     <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker">Vivitar HR &amp; BP Monitor Activity Tracker</string>
     <string name="menuitem_stress_breakdown">Stressz (összeomlás)</string>
@@ -3348,7 +3348,7 @@
     <string name="permission_bluetooth_summary">Csatlakozás Bluetooth-eszközökhöz</string>
     <string name="prefs_summary_gatt_client_api_package">A BLE Intent API kommunikáció korlátozása erre a csomagra</string>
     <string name="backup_restore_exporting">Exportálás zip formátumba…</string>
-    <string name="backup_restore_error_import">A zip-be történő importálás nem sikerült</string>
+    <string name="backup_restore_error_import">A zip-ből történő importálás nem sikerült</string>
     <string name="music_delete_multiple_confirm_description">Biztosan törölni szeretné a(z) „%1$d” dalokat?</string>
     <string name="permission_internet_access_summary">Szinkronizálás online forrásokkal</string>
     <string name="permission_calendar_summary">Naptár küldése a kütyükre</string>
