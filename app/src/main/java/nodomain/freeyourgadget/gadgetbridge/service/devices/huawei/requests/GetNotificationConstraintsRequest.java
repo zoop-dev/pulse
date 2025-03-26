@@ -39,7 +39,8 @@ public class GetNotificationConstraintsRequest extends Request {
     @Override
     protected boolean requestSupported() {
         return supportProvider.getHuaweiCoordinator().supportsNotificationAlert() && supportProvider.getProtocolVersion() == 2
-                && supportProvider.getCoordinator().getDeviceType() != DeviceType.HUAWEIBANDAW70; // Bit of a workaround, there is probably some capabilities this actually depends on
+                && supportProvider.getCoordinator().getDeviceType() != DeviceType.HUAWEIBANDAW70
+                && supportProvider.getCoordinator().getDeviceType() != DeviceType.HONORWATCH4; // Bit of a workaround, there is probably some capabilities this actually depends on
     }
 
     @Override
