@@ -2955,4 +2955,7 @@
     <string name="pref_description_about_you">Дата народження, стать, зріст, вага, цілі</string>
     <string name="pref_description_notifications">Сповіщення у застосунку, білий/чорний список</string>
     <string name="pref_header_main_screen">Головний екран</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
 </resources>
