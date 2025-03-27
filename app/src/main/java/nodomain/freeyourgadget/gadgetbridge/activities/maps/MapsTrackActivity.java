@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2024 José Rebelo, a0z
 
     This file is part of Gadgetbridge.
 
@@ -22,34 +22,54 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
 import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.overlay.Polyline;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesGpsFragment;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager;
 
 public class MapsTrackActivity extends AbstractGBActivity {
     private MapView mapView;
+    private File file;
+    public static boolean isActivityOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_track);
 
+        if (isActivityOpen) {
+            finish();
+            return;
+        }
+        isActivityOpen = true;
+
         mapView = findViewById(R.id.activitygpsview);
         MapsManager mapsManager = new MapsManager(this);
         mapsManager.loadMaps(mapView);
 
-        final ArrayList<? extends GPSCoordinate> trackPoints = getIntent().getParcelableArrayListExtra("points");
+        file = (File) getIntent().getExtras().get("file");
+        final List<GPSCoordinate> trackPoints = ActivitySummariesGpsFragment.getActivityPoints(file)
+                .stream()
+                .map(ActivityPoint::getLocation)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        if (trackPoints.isEmpty()) {
+            return;
+        }
 
         double maxLat = (Collections.max(trackPoints, new GPSCoordinate.compareLatitude())).getLatitude();
         double minLat = (Collections.min(trackPoints, new GPSCoordinate.compareLatitude())).getLatitude();
@@ -59,9 +79,11 @@ public class MapsTrackActivity extends AbstractGBActivity {
                 .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
                 .collect(Collectors.toList());
 
-        Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
-        p.setColor(R.color.hrv_status_char_line_color);
-        Polyline polyline = new Polyline(p, AndroidGraphicFactory.INSTANCE);
+        Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
+        paint.setColor(getResources().getColor(R.color.chart_activity_light));
+        paint.setStrokeWidth(8);
+        paint.setStyle(Style.STROKE);
+        Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
         polyline.setPoints(latlongs);
         mapView.addLayer(polyline);
 
@@ -89,4 +111,13 @@ public class MapsTrackActivity extends AbstractGBActivity {
     protected void onRestoreInstanceState(@NonNull final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        synchronized (MapsTrackActivity.class) {
+            isActivityOpen = false;
+        }
+    }
+
 }

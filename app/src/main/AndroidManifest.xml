@@ -174,12 +174,12 @@
             android:label="@string/dashboard_settings"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
-            android:name=".activities.maps.MapsTrackActivity"
-            android:label="@string/maps"
-            android:parentActivityName=".activities.SettingsActivity" />
-        <activity
             android:name=".activities.maps.MapsSettingsActivity"
             android:label="@string/maps_settings"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
+            android:name=".activities.maps.MapsTrackActivity"
+            android:label="@string/maps"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".activities.SleepAsAndroidPreferencesActivity"

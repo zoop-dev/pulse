@@ -18,10 +18,13 @@ package nodomain.freeyourgadget.gadgetbridge.util.maps;
 
 import android.content.Context;
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.documentfile.provider.DocumentFile;
 
+import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.Color;
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
@@ -34,11 +37,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 public final class MapsManager {
@@ -47,6 +47,8 @@ public final class MapsManager {
     public static final String PREF_MAPS_FOLDER = "maps_folder";
 
     private final Context mContext;
+
+    private boolean isMapLoaded = false;
 
     public MapsManager(final Context context) {
         this.mContext = context;
@@ -88,6 +90,7 @@ public final class MapsManager {
                 assert inputStream != null;
                 MapFile mapFile = new MapFile(inputStream, 0, null);
                 multiMapDataStore.addMapDataStore(mapFile, true, true);
+                isMapLoaded = true;
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -97,13 +100,22 @@ public final class MapsManager {
                 mapView.getModel().displayModel.getTileSize(), 1f,
                 mapView.getModel().frameBufferModel.getOverdrawFactor());
 
-        TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, multiMapDataStore,
-                mapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+        TileRendererLayer tileRendererLayer = new TileRendererLayer(
+                tileCache, multiMapDataStore,
+                mapView.getModel().mapViewPosition, true, false, false, AndroidGraphicFactory.INSTANCE) {
+            @Override
+            public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
+                // Clear the canvas with the desired background color
+                canvas.fillColor(Color.TRANSPARENT);
+                super.draw(boundingBox, zoomLevel, canvas, topLeftPoint);
+            }
+        };
         tileRendererLayer.setXmlRenderTheme(MapTheme.DEFAULT);
 
         mapView.getLayerManager().getLayers().add(tileRendererLayer);
+    }
 
-        // TODO on exit mapView.destroyAll();
-        //AndroidGraphicFactory.clearResourceMemoryCache();
+    public boolean isMapLoaded() {
+        return isMapLoaded;
     }
 }

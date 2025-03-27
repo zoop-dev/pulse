@@ -3559,6 +3559,7 @@
     <string name="pref_garmin_agps_help">The list below contains all URLs requested by the watch for AGPS updates. You can select a file from the phone\'s storage that will be sent to the watch when it requests an update.</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="loading">Loading…</string>
+    <string name="maps_not_found">Maps not found</string>
     <string name="toggle_debug_mode">Toggle debug mode</string>
     <string name="share_debug_info">Share debug info</string>
     <string name="realtime_settings">Realtime settings</string>
