@@ -17,6 +17,10 @@
 package nodomain.freeyourgadget.gadgetbridge.model;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 
 import androidx.annotation.NonNull;
 
@@ -24,7 +28,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
 
-public class GPSCoordinate {
+public class GPSCoordinate implements Parcelable {
     private final double latitude;
     private final double longitude;
     private final double altitude;
@@ -48,6 +52,12 @@ public class GPSCoordinate {
 
     public GPSCoordinate(double longitude, double latitude) {
         this(longitude, latitude, UNKNOWN_ALTITUDE);
+    }
+
+    protected GPSCoordinate(Parcel in) {
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        altitude = in.readDouble();
     }
 
     public double getLatitude() {
@@ -155,6 +165,30 @@ public class GPSCoordinate {
     public String toString() {
         return "lon: " + formatLocation(longitude) + ", lat: " + formatLocation(latitude) + ", alt: " + formatLocation(altitude) + "m";
     }
+
+    @Override
+    public void writeToParcel(@NonNull final Parcel dest, final int flags) {
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeDouble(altitude);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<GPSCoordinate> CREATOR = new Creator<GPSCoordinate>() {
+        @Override
+        public GPSCoordinate createFromParcel(Parcel in) {
+            return new GPSCoordinate(in);
+        }
+
+        @Override
+        public GPSCoordinate[] newArray(int size) {
+            return new GPSCoordinate[size];
+        }
+    };
 
     public static class compareLatitude implements Comparator<GPSCoordinate> {
         @Override

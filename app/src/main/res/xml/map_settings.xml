@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/ic_download"
+        android:key="maps_download"
+        android:persistent="false"
+        android:summary="@string/maps_download_summary"
+        android:title="@string/maps_download_title" />
+
+    <Preference
+        android:icon="@drawable/ic_folder"
+        android:key="maps_folder"
+        android:title="@string/folder" />
+</PreferenceScreen>

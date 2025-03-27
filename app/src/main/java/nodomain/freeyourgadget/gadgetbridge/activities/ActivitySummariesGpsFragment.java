@@ -16,9 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +27,11 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.layer.overlay.Polyline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +43,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
@@ -48,21 +55,28 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDat
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParseException;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser;
+import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager;
 
 import static android.graphics.Bitmap.createBitmap;
 
 
 public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     private static final Logger LOG = LoggerFactory.getLogger(ActivitySummariesGpsFragment.class);
-    private ImageView gpsView;
     private final int CANVAS_SIZE = 360;
+    private MapView mapView;
     private File inputFile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gps, container, false);
-        gpsView = rootView.findViewById(R.id.activitygpsview);
+        mapView = rootView.findViewById(R.id.activitygpsview);
+        //mapView.getMapScaleBar().setVisible(true);
+        mapView.setBuiltInZoomControls(false);
+
+        MapsManager mapsManager = new MapsManager(requireContext());
+        mapsManager.loadMaps(mapView);
+
         if (inputFile != null) {
             processInBackgroundThread();
         }
@@ -71,88 +85,83 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
 
     public void set_data(File inputFile) {
         this.inputFile = inputFile;
-        if (gpsView != null) { //first fragment inflate is AFTER this is called
+        if (mapView != null) { //first fragment inflate is AFTER this is called
             processInBackgroundThread();
         }
     }
 
     private void processInBackgroundThread() {
-        final Canvas canvas = createCanvas(gpsView);
         new Thread(() -> {
-            final List<GPSCoordinate> points = getActivityPoints(inputFile)
-                    .stream()
-                    .map(ActivityPoint::getLocation)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
+            final ArrayList<GPSCoordinate> points = new ArrayList<>();
+            if (inputFile.getName().endsWith(".gpx")) {
+                try (FileInputStream inputStream = new FileInputStream(inputFile)) {
+                    final GpxParser gpxParser = new GpxParser(inputStream);
+                    points.addAll(gpxParser.getGpxFile().getPoints());
+                } catch (final IOException e) {
+                    LOG.error("Failed to open {}", inputFile, e);
+                    return;
+                } catch (final GpxParseException e) {
+                    LOG.error("Failed to parse gpx file", e);
+                    return;
+                }
+            } else if (inputFile.getName().endsWith(".fit")) {
+                try {
+                    FitFile fitFile = FitFile.parseIncoming(inputFile);
+                    for (final RecordData record : fitFile.getRecords()) {
+                        if (record instanceof FitRecord) {
+                            final ActivityPoint activityPoint = ((FitRecord) record).toActivityPoint();
+                            if (activityPoint.getLocation() != null) {
+                                points.add(activityPoint.getLocation());
+                            }
+                        }
+                    }
+                } catch (final IOException e) {
+                    LOG.error("Failed to open {}", inputFile, e);
+                    return;
+                } catch (final Exception e) {
+                    LOG.error("Failed to parse fit file", e);
+                    return;
+                }
+            } else {
+                LOG.warn("Unknown file type {}", inputFile.getName());
+                return;
+            }
 
             if (!points.isEmpty()) {
-                drawTrack(canvas, points);
+                drawTrack(mapView, points);
             }
         }).start();
     }
 
-    public static List<ActivityPoint> getActivityPoints(final File trackFile) {
-        final List<ActivityPoint> points = new ArrayList<>();
-        if (trackFile == null) {
-            return points;
-        }
-        if (trackFile.getName().endsWith(".gpx")) {
-            try (FileInputStream inputStream = new FileInputStream(trackFile)) {
-                final GpxParser gpxParser = new GpxParser(inputStream);
-                points.addAll(gpxParser.getGpxFile().getActivityPoints());
-            } catch (final IOException e) {
-                LOG.error("Failed to open {}", trackFile, e);
-            } catch (final GpxParseException e) {
-                LOG.error("Failed to parse gpx file", e);
-            }
-        } else if (trackFile.getName().endsWith(".fit")) {
-            try {
-                FitFile fitFile = FitFile.parseIncoming(trackFile);
-                for (final RecordData record : fitFile.getRecords()) {
-                    if (record instanceof FitRecord) {
-                        points.add(((FitRecord) record).toActivityPoint());
-                    }
-                }
-            } catch (final IOException e) {
-                LOG.error("Failed to open {}", trackFile, e);
-            } catch (final Exception e) {
-                LOG.error("Failed to parse fit file", e);
-            }
-        } else {
-            LOG.warn("Unknown file type {}", trackFile.getName());
-        }
-
-        return points;
-    }
-
-    private void drawTrack(Canvas canvas, List<? extends GPSCoordinate> trackPoints) {
+    private void drawTrack(MapView mapView, final ArrayList<? extends GPSCoordinate> trackPoints) {
         double maxLat = (Collections.max(trackPoints, new GPSCoordinate.compareLatitude())).getLatitude();
         double minLat = (Collections.min(trackPoints, new GPSCoordinate.compareLatitude())).getLatitude();
         double maxLon = (Collections.max(trackPoints, new GPSCoordinate.compareLongitude())).getLongitude();
         double minLon = (Collections.min(trackPoints, new GPSCoordinate.compareLongitude())).getLongitude();
-        double maxAlt = (Collections.max(trackPoints, new GPSCoordinate.compareElevation())).getAltitude();
-        double minAlt = (Collections.min(trackPoints, new GPSCoordinate.compareElevation())).getAltitude();
-        float scale_factor_w = (float) ((maxLon - minLon) / (maxLat - minLat));
-        float scale_factor_h = (float) ((maxLat - minLat) / (maxLon - minLon));
+        List<LatLong> latlongs = trackPoints.stream()
+                .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
+                .collect(Collectors.toList());
 
-        if (scale_factor_h > scale_factor_w) { //scaling to draw proportionally
-            scale_factor_h = 1;
-        } else {
-            scale_factor_w = 1;
-        }
+        Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
+        p.setColor(R.color.hrv_status_char_line_color);
+        Polyline polyline = new Polyline(p, AndroidGraphicFactory.INSTANCE);
+        polyline.setPoints(latlongs);
+        mapView.addLayer(polyline);
 
+        mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
+        mapView.setZoomLevel((byte) 12);
 
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setStrokeWidth(1);
-        paint.setColor(getResources().getColor(R.color.chart_activity_light));
-
-        for (GPSCoordinate p : trackPoints) {
-            float lat = (float) ((p.getLatitude() - minLat) / (maxLat - minLat));
-            float lon = (float) ((p.getLongitude() - minLon) / (maxLon - minLon));
-            float alt = (float) ((p.getAltitude() - minAlt) / (maxAlt - minAlt));
-            paint.setStrokeWidth(1 + alt); //make thicker with higher altitude, we could do more here
-            canvas.drawPoint(CANVAS_SIZE * lon * scale_factor_w, CANVAS_SIZE * lat * scale_factor_h, paint);
-        }
+        mapView.setOnTouchListener((a, b) -> {
+            final Intent startIntent = new Intent(requireContext(), MapsTrackActivity.class);
+            startIntent.putParcelableArrayListExtra("points", trackPoints);
+            requireContext().startActivity(startIntent);
+            return true;
+        });
+        mapView.setOnClickListener(v -> {
+            final Intent startIntent = new Intent(requireContext(), MapsTrackActivity.class);
+            startIntent.putParcelableArrayListExtra("points", trackPoints);
+            requireContext().startActivity(startIntent);
+        });
     }
 
     private Canvas createCanvas(ImageView imageView) {
@@ -178,6 +187,4 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     protected CharSequence getTitle() {
         return null;
     }
-
 }
-

@@ -29,6 +29,12 @@
       ]
     },
     {
+      "groupName": "mapsforge",
+      "matchPackagePrefixes": [
+        "com.github.mapsforge.mapsforge"
+      ]
+    },
+    {
       "description": "solarpositioning v2 needs java 17, we need to stay on v0",
       "allowedVersions": "<2.0",
       "matchPackageNames": [

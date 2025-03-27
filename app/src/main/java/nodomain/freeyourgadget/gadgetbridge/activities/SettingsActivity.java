@@ -65,6 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
@@ -367,6 +368,15 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             if (pref != null) {
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), DashboardPreferencesActivity.class);
+                    startActivity(enableIntent);
+                    return true;
+                });
+            }
+
+            pref = findPreference("pref_category_maps");
+            if (pref != null) {
+                pref.setOnPreferenceClickListener(preference -> {
+                    Intent enableIntent = new Intent(requireContext(), MapsSettingsActivity.class);
                     startActivity(enableIntent);
                     return true;
                 });

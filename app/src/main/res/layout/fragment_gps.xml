@@ -18,11 +18,33 @@
             android:text="@string/gps_track"
             android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/activitygpsview"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:src="@tools:sample/avatars" />
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/gpsWarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Maps not found" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <org.mapsforge.map.android.view.MapView
+                android:id="@+id/activitygpsview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

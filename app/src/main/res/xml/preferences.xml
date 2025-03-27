@@ -327,6 +327,11 @@
             android:title="@string/pref_title_opentracks_packagename" />
 
         <Preference
+            android:key="pref_category_maps"
+            android:title="@string/maps"
+            app:iconSpaceReserved="false" />
+
+        <Preference
             android:icon="@drawable/ic_activity_sleep"
             android:key="pref_category_sleepasandroid"
             android:title="@string/sleepasandroid_settings" />

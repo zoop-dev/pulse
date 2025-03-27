@@ -3786,7 +3786,6 @@
     <string name="ultrahuman_airplane_mode_question">Activate airplane mode?</string>
     <string name="ultrahuman_airplane_mode_title">airplane mode</string>
     <string name="ultrahuman_unhandled_error_response">received unhandled response code 0x%x for operation 0x%x</string>
-
     <string name="huawei_stress_test_enable">Automatic stress test</string>
     <string name="huawei_stress_test_enable_summary">Enable or disable automatic stress test</string>
     <string name="huawei_stress_no_calibration_data">No initial data - calibrate first</string>
@@ -3801,10 +3800,12 @@
     <string name="huawei_stress_calibrate_finish">Finish</string>
     <string name="huawei_stress_calibrate_again">Calibrate again</string>
     <string name="huawei_stress_calibrate_adjust_score">Adjust score</string>
-
     <string name="banglejs_notification_missed_call_title">Missed call</string>
     <string name="banglejs_notification_missed_call_source">Incoming call</string>
     <string name="banglejs_notification_missed_call_suppressed_caller_id">Unknown caller. ID is suppressed</string>
-
     <string name="huawei_voice_boost">Voice Boost</string>
+    <string name="maps">Maps</string>
+    <string name="maps_settings">Maps settings</string>
+    <string name="maps_download_title">Download Maps</string>
+    <string name="maps_download_summary">Click here to download map files. They should be saved to the folder selected in the preference below.</string>
 </resources>
