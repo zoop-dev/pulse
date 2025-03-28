@@ -16,20 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
-import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_HIGH_ALERT;
-import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_LOW_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,11 +66,13 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpsParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTruSleepParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ui.HuaweiStressCalibrationFragment;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
@@ -154,6 +157,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetH
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetMediumToStrengthThresholdRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetSkinTemperatureMeasurement;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetSpO2LowAlert;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetStressRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetTemperatureUnitSetting;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.StopFindPhoneRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.StopNotificationRequest;
@@ -274,6 +278,7 @@ public class HuaweiSupportProvider {
 
     protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
 
+    HuaweiStressCalibration stressCalibration = null;
 
     public HuaweiCoordinatorSupplier getCoordinator() {
         return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
@@ -1139,6 +1144,12 @@ public class HuaweiSupportProvider {
                 case HuaweiConstants.PREF_HUAWEI_SPO_LOW_ALERT:
                     setSpoLowAlert();
                     break;
+                case HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH:
+                    setStress();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_STRESS_CALIBRATE:
+                    calibrateStress();
+                    break;
                 case DeviceSettingsPreferenceConst.PREF_FORCE_ENABLE_SMART_ALARM:
                     getAlarms();
                     break;
@@ -1344,7 +1355,7 @@ public class HuaweiSupportProvider {
         getFitnessTotalsRequest.setFinalizeReq(new RequestCallback() {
             @Override
             public void call() {
-                if (!downloadTruSleepData(start, end))
+                if (!(downloadTruSleepData(start, end) && downloadStressData(start, end)))
                     syncState.setActivitySync(false);
             }
 
@@ -2275,6 +2286,98 @@ public class HuaweiSupportProvider {
         }
     }
 
+    private void setStress() {
+        boolean automaticStressEnabled = GBApplication
+                .getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                .getBoolean(HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH, false);
+        if(automaticStressEnabled && getLastStressData() == null) {
+            SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress());
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putBoolean(HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH, false);
+            editor.apply();
+            GB.toast(context, context.getString(R.string.huawei_stress_no_calibration_data), Toast.LENGTH_SHORT, GB.ERROR);
+            return;
+        }
+
+        try {
+            SetStressRequest req = new SetStressRequest(this, automaticStressEnabled);
+            req.doPerform();
+        } catch (IOException e) {
+            GB.toast(context, "Failed to set stress", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("Failed to set stress", e);
+        }
+    }
+
+    private void calibrateStress() {
+
+        if(stressCalibration != null) {
+            GB.toast(context.getString(R.string.huawei_stress_calibrate_in_progress), Toast.LENGTH_SHORT, GB.INFO);
+            return;
+        }
+
+        stressCalibration = new HuaweiStressCalibration(this);
+        boolean ret = stressCalibration.startMeasurements(new HuaweiStressCalibration.HuaweiStressCalibrateCallback() {
+            @Override
+            public void onFinish(HuaweiStressParser.StressData stressData) {
+                stressCalibration = null;
+                GB.toast(context.getString(R.string.huawei_stress_calibrate_done), Toast.LENGTH_SHORT, GB.INFO);
+                final Intent intent = new Intent(HuaweiStressCalibrationFragment.ACTION_STRESS_RESULT);
+                String str = HuaweiStressParser.stressDataToJsonStr(stressData);
+                if(!TextUtils.isEmpty(str)) {
+                    intent.putExtra(HuaweiStressCalibrationFragment.EXTRA_STRESS_ERROR, false);
+                    intent.putExtra(HuaweiStressCalibrationFragment.EXTRA_STRESS_DATA, str);
+                } else {
+                    intent.putExtra(HuaweiStressCalibrationFragment.EXTRA_STRESS_ERROR, true);
+                }
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            }
+
+            @Override
+            public void onProgress(long j) {
+                final Intent intent = new Intent(HuaweiStressCalibrationFragment.ACTION_STRESS_UPDATE);
+                intent.putExtra(HuaweiStressCalibrationFragment.EXTRA_STRESS_PROGRESS, j);
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            }
+
+            @Override
+            public void onError() {
+                stressCalibration = null;
+                final Intent intent = new Intent(HuaweiStressCalibrationFragment.ACTION_STRESS_RESULT);
+                intent.putExtra(HuaweiStressCalibrationFragment.EXTRA_STRESS_ERROR, true);
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                GB.toast(context.getString(R.string.huawei_stress_calibrate_error), Toast.LENGTH_SHORT, GB.ERROR);
+            }
+        });
+        if(ret) {
+            GB.toast(context.getString(R.string.huawei_stress_calibrate_started), Toast.LENGTH_SHORT, GB.INFO);
+        } else {
+            GB.toast(context.getString(R.string.huawei_stress_calibrate_in_progress), Toast.LENGTH_SHORT, GB.INFO);
+        }
+    }
+
+    public void storeLastStressData(HuaweiStressParser.StressData data) {
+        String str = HuaweiStressParser.stressDataToJsonStr(data);
+        if(TextUtils.isEmpty(str)) {
+            LOG.error("Failed to store stress data");
+            return;
+        }
+        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceMac);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putString(HuaweiConstants.PREF_HUAWEI_STRESS_LAST_DATA, str);
+        editor.apply();
+    }
+
+    public HuaweiStressParser.StressData getLastStressData() {
+        String str = GBApplication
+                .getDeviceSpecificSharedPrefs(this.getDevice().getAddress())
+                .getString(HuaweiConstants.PREF_HUAWEI_STRESS_LAST_DATA, "");
+        if(TextUtils.isEmpty(str)) {
+            LOG.error("Failed to get saved stress data");
+            return null;
+        }
+        return HuaweiStressParser.stressDataFromJsonStr(str);
+    }
+
     public void sendDebugRequest() {
         try {
             LOG.debug("Send debug request");
@@ -2615,6 +2718,47 @@ public class HuaweiSupportProvider {
         return true;
     }
 
+    public boolean downloadStressData(int start, int end) {
+        if (!getHuaweiCoordinator().supportsAutoStress())
+            return false;
+
+        huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.rriFileRequest(
+                getHuaweiCoordinator().getSupportsRriNewSync(),
+                start,
+                end,
+                new HuaweiFileDownloadManager.FileDownloadCallback() {
+                    @Override
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                        if (fileRequest.getData().length != 0) {
+                            LOG.debug("Parsing stress file");
+                            HuaweiStressParser.RriFileData results = HuaweiStressParser.parseRri(fileRequest.getData());
+                            LOG.info("stress result: {}", results);
+                            // TODO: process and save
+                            if(results != null && !results.stressData.isEmpty()) {
+                                HuaweiStressParser.StressData stressData = results.stressData.get(results.stressData.size() - 1);
+                                LOG.info("Last stored stress data: {}", stressData);
+                                HuaweiStressParser.StressData currentStressData = getLastStressData();
+                                if(currentStressData == null || stressData.endTime > currentStressData.endTime) {
+                                    storeLastStressData(stressData);
+                                }
+                            }
+
+                        } else {
+                            LOG.debug("Stress file empty");
+                        }
+                        syncState.setActivitySync(false);
+                    }
+
+                    @Override
+                    public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
+                        super.downloadException(e);
+                        syncState.setActivitySync(false);
+                    }
+                }
+        ), true);
+        return true;
+    }
+
     public void endOfWorkoutSync() {
         this.syncState.setWorkoutSync(false);
     }
@@ -2743,6 +2887,7 @@ public class HuaweiSupportProvider {
     public void downloadQueueEmpty(boolean needSync) {
         syncState.updateState(needSync);
     }
+
 
     public void onTestNewFunction() {
         // Show to user

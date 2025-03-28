@@ -116,6 +116,7 @@ public class HuaweiFileDownloadManager {
         DEBUG,
         SLEEP_STATE,
         SLEEP_DATA,
+        RRI,
         GPS,
         UNKNOWN // Never for input!
     }
@@ -171,6 +172,10 @@ public class HuaweiFileDownloadManager {
 
         public static FileRequest sleepDataFileRequest(boolean supportsTruSleepNewSync, int startTime, int endTime, FileDownloadCallback fileDownloadCallback) {
             return new FileRequest("sleep_data.bin", FileType.SLEEP_DATA, supportsTruSleepNewSync, startTime, endTime, fileDownloadCallback);
+        }
+
+        public static FileRequest rriFileRequest(boolean supportsRriNewSync, int startTime, int endTime, FileDownloadCallback fileDownloadCallback) {
+            return new FileRequest("rrisqi_data.bin", FileType.RRI, supportsRriNewSync, startTime, endTime, fileDownloadCallback);
         }
 
         private FileRequest(String filename, FileType fileType, boolean newSync, FileDownloadCallback fileDownloadCallback) {
@@ -595,10 +600,23 @@ public class HuaweiFileDownloadManager {
         // Old sync only, can never be multiple at the same time
         // Assuming currentRequest is the correct one the entire time
         // Which may no longer be the case when we implement multi-download for new sync
-        GetFileParametersRequest getFileParametersRequest = new GetFileParametersRequest(supportProvider,
-                currentFileRequest.fileType == FileType.SLEEP_STATE ||
-                        currentFileRequest.fileType == FileType.SLEEP_DATA
-        );
+        byte fileType;
+
+        if (currentFileRequest.fileType == HuaweiFileDownloadManager.FileType.DEBUG)
+            fileType = 0x00;
+        else if(currentFileRequest.fileType == FileType.SLEEP_STATE || currentFileRequest.fileType == FileType.SLEEP_DATA)
+            fileType = 0x01;
+        else if (currentFileRequest.fileType == HuaweiFileDownloadManager.FileType.GPS)
+            fileType = 0x02;
+        else if(currentFileRequest.fileType == HuaweiFileDownloadManager.FileType.RRI)
+            fileType = 0x04;
+        else {
+            currentFileRequest.fileDownloadCallback.downloadException(new HuaweiFileDownloadException(currentFileRequest, "Unknown download type"));
+            reset();
+            return;
+        }
+
+        GetFileParametersRequest getFileParametersRequest = new GetFileParametersRequest(supportProvider, fileType);
         getFileParametersRequest.setFinalizeReq(new Request.RequestCallback() {
             @Override
             public void call() {

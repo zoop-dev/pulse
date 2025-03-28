@@ -16,10 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreferenceCompat;
@@ -28,8 +31,11 @@ import java.util.Set;
 import java.util.Collections;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.AppBlacklistActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRealtimeSettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ui.HuaweiStressCalibrationActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -43,6 +49,8 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstant
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_LOW_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_REALTIME_MODE;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_SPO_LOW_ALERT;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_STRESS_CALIBRATE;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_TRUSLEEP;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_WORKMODE;
 
@@ -114,6 +122,9 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         handler.addPreferenceHandlerFor(PREF_HUAWEI_HEART_RATE_LOW_ALERT);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_HEART_RATE_HIGH_ALERT);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_SPO_LOW_ALERT);
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_STRESS_SWITCH);
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_STRESS_CALIBRATE);
+
 
         final Preference forceOptions = handler.findPreference(PREF_FORCE_OPTIONS);
         if (forceOptions != null) {
@@ -137,6 +148,16 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
             reparseWorkout.setVisible(false);
             if (this.coordinator.supportsWorkouts())
                 reparseWorkout.setVisible(true);
+        }
+
+        final Preference stressCalibrate = handler.findPreference("pref_huawei_stress_perform_calibrate");
+        if (stressCalibrate != null) {
+            stressCalibrate.setOnPreferenceClickListener(preference -> {
+                final Intent intent = new Intent(handler.getContext(), HuaweiStressCalibrationActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                handler.getContext().startActivity(intent);
+                return true;
+            });
         }
     }
 

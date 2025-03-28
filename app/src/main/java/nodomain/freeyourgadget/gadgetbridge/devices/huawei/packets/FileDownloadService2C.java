@@ -33,6 +33,7 @@ public class FileDownloadService2C {
     public enum FileType {
         SLEEP_STATE,
         SLEEP_DATA,
+        RRI,
         GPS,
         UNKNOWN; // Never use this as input
 
@@ -42,6 +43,8 @@ public class FileDownloadService2C {
                     return (byte) 0x0e;
                 case SLEEP_DATA:
                     return (byte) 0x0f;
+                case RRI:
+                    return (byte) 0x10;
                 case GPS:
                     return (byte) 0x11;
                 default:
@@ -55,6 +58,8 @@ public class FileDownloadService2C {
                     return FileType.SLEEP_STATE;
                 case 0x0f:
                     return FileType.SLEEP_DATA;
+                case 0x10:
+                    return FileType.RRI;
                 case 0x11:
                     return FileType.GPS;
                 default:

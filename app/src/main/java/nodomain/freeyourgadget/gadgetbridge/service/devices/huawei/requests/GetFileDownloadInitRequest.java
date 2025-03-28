@@ -57,6 +57,8 @@ public class GetFileDownloadInitRequest extends Request {
                 return FileDownloadService2C.FileType.SLEEP_STATE;
             case SLEEP_DATA:
                 return FileDownloadService2C.FileType.SLEEP_DATA;
+            case RRI:
+                return FileDownloadService2C.FileType.RRI;
             case GPS:
                 return FileDownloadService2C.FileType.GPS;
             default:
@@ -70,6 +72,8 @@ public class GetFileDownloadInitRequest extends Request {
                 return HuaweiFileDownloadManager.FileType.SLEEP_STATE;
             case SLEEP_DATA:
                 return HuaweiFileDownloadManager.FileType.SLEEP_DATA;
+            case RRI:
+                return HuaweiFileDownloadManager.FileType.RRI;
             case GPS:
                 return HuaweiFileDownloadManager.FileType.GPS;
             default:
@@ -92,6 +96,8 @@ public class GetFileDownloadInitRequest extends Request {
                     return new FileDownloadService0A.FileDownloadInit.SleepFilesRequest(paramsProvider, request.getStartTime(), request.getEndTime()).serialize();
                 else if (this.request.getFileType() == HuaweiFileDownloadManager.FileType.GPS)
                     return new FileDownloadService0A.FileDownloadInit.GpsFileRequest(paramsProvider, request.getWorkoutId()).serialize();
+                else if(this.request.getFileType() == HuaweiFileDownloadManager.FileType.RRI)
+                    return new FileDownloadService0A.FileDownloadInit.RriFileRequest(paramsProvider, request.getStartTime(), request.getEndTime()).serialize();
                 else
                     throw new RequestCreationException("Unknown file type");
             }

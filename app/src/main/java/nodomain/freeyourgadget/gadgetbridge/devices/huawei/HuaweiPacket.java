@@ -43,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.EphemerisFile
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService0A;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService2C;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.HrRriTest;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.OTA;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Watchface;
@@ -604,6 +605,14 @@ public class HuaweiPacket {
                         return new GpsAndTime.GpsStatus.Response(paramsProvider).fromPacket(this);
                     case GpsAndTime.GpsData.id:
                         return new GpsAndTime.GpsData.Response(paramsProvider).fromPacket(this);
+                    default:
+                        this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
+                        return this;
+                }
+            case HrRriTest.id:
+                switch (this.commandId) {
+                    case HrRriTest.RriData.id:
+                        return new HrRriTest.RriData.Response(paramsProvider).fromPacket(this);
                     default:
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;

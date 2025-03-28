@@ -73,6 +73,7 @@ public class HuaweiCoordinator {
     ByteBuffer notificationConstraints = null;
 
     private boolean supportsTruSleepNewSync = false;
+    private boolean supportsRriNewSync = false;
     private boolean supportsGpsNewSync = false;
 
     private boolean supportsWorkoutNewSteps = false;
@@ -299,6 +300,10 @@ public class HuaweiCoordinator {
         }
         if(supportsTemperature()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_temperature_automatic_enable);
+        }
+
+        if(supportsAutoStress()) {
+            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_stress);
         }
 
         // Notifications
@@ -681,6 +686,10 @@ public class HuaweiCoordinator {
         return supportsCommandForService(0x01, 0x21);
     }
 
+    public boolean supportsAutoStress() {
+        return supportsCommandForService(0x20, 0x09);
+    }
+
     public boolean supportsExternalCalendarService() {
         if (supportsExpandCapability())
             return supportsExpandCapability(184);
@@ -1003,6 +1012,14 @@ public class HuaweiCoordinator {
 
     public void setSupportsTruSleepNewSync(boolean supportsTruSleepNewSync) {
         this.supportsTruSleepNewSync = supportsTruSleepNewSync;
+    }
+
+    public boolean getSupportsRriNewSync() {
+        return supportsRriNewSync;
+    }
+
+    public void setSupportsRriNewSync(boolean supportsRriNewSync) {
+        this.supportsRriNewSync = supportsRriNewSync;
     }
 
     public boolean isSupportsGpsNewSync() {

@@ -99,6 +99,11 @@ public final class HuaweiConstants {
     public static final String PREF_HUAWEI_HEART_RATE_LOW_ALERT = "pref_huawei_heart_rate_low_alert";
     public static final String PREF_HUAWEI_HEART_RATE_HIGH_ALERT= "pref_huawei_heart_rate_high_alert";
     public static final String PREF_HUAWEI_SPO_LOW_ALERT= "pref_huawei_spo_low_alert";
+    public static final String PREF_HUAWEI_STRESS_SWITCH= "pref_huawei_stress_switch";
+    public static final String PREF_HUAWEI_STRESS_CALIBRATE= "pref_huawei_stress_calibrate";
+    public static final String PREF_HUAWEI_STRESS_LAST_DATA= "huawei_stress_last_data";
+
+
 
     public static final String PKG_NAME = "com.huawei.devicegroupmanage";
 }

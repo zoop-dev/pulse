@@ -3751,4 +3751,20 @@
     <string name="ultrahuman_airplane_mode_question">Activate airplane mode?</string>
     <string name="ultrahuman_airplane_mode_title">airplane mode</string>
     <string name="ultrahuman_unhandled_error_response">received unhandled response code 0x%x for operation 0x%x</string>
+
+    <string name="huawei_stress_test_enable">Automatic stress test</string>
+    <string name="huawei_stress_test_enable_summary">Enable or disable automatic stress test</string>
+    <string name="huawei_stress_no_calibration_data">No initial data - calibrate first</string>
+    <string name="huawei_stress_calibrate">Calibrate</string>
+    <string name="huawei_stress_calibrate_summary">Calibrate automatic stress test</string>
+    <string name="huawei_stress_calibrate_started">Stress calibration has been started</string>
+    <string name="huawei_stress_calibrate_in_progress">Stress calibration already in progress</string>
+    <string name="huawei_stress_calibrate_done">Stress calibration is done</string>
+    <string name="huawei_stress_calibrate_error">Stress calibration error</string>
+    <string name="huawei_stress_calibrate_information">For optimal results rest for a while before starting a test and keep still during the test. \n Fasten the device tightly, with the screen facing up and the sensor in direct contact with your skin.</string>
+    <string name="huawei_stress_calibrate_start">Start</string>
+    <string name="huawei_stress_calibrate_finish">Finish</string>
+    <string name="huawei_stress_calibrate_again">Calibrate again</string>
+    <string name="huawei_stress_calibrate_adjust_score">Adjust score</string>
+
 </resources>

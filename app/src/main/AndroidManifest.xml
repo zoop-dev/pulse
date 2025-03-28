@@ -210,6 +210,10 @@
             android:label="@string/loading"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
+            android:name=".devices.huawei.ui.HuaweiStressCalibrationActivity"
+            android:label="@string/huawei_stress_calibrate"
+            android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
+        <activity
             android:name=".activities.ActivitySummariesActivity"
             android:label="@string/activity_summaries"
             android:parentActivityName=".activities.ControlCenterv2" />

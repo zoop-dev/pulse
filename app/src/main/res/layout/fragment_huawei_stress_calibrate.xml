@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/huawei_stress_measure"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/huawei_stress_countdown"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="@string/huawei_stress_calibrate_information" />
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/huawei_stress_countdown"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            app:indicatorSize="200dp"
+            app:indicatorColor="@color/accent"
+            app:trackThickness="10dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="false"
+            android:max="60"
+            android:progress="60" />
+        <TextView
+            android:id="@+id/huawei_stress_countdown_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="60:00"
+            android:textSize="40sp" />
+        <Button
+            android:id="@+id/huawei_stress_calibrate_start"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/huawei_stress_countdown"
+            android:layout_centerHorizontal="true"
+            android:text="@string/start" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/huawei_stress_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <Button
+            android:id="@+id/huawei_stress_calibrate_again"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_above="@+id/huawei_stress_score"
+            android:layout_centerHorizontal="true"
+            android:text="@string/huawei_stress_calibrate_again"
+            />
+        <TextView
+            android:id="@+id/huawei_stress_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/n_a"
+            android:textSize="80sp" />
+        <CheckBox
+            android:id="@+id/huawei_stress_calibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/huawei_stress_score"
+            android:checked="false"
+            android:text="@string/huawei_stress_calibrate_adjust_score" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/huawei_stress_calibrate_slider"
+            android:layout_below="@+id/huawei_stress_calibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:valueFrom="40"
+            android:valueTo="70"
+            android:value="55"
+            android:stepSize="1" />
+        <Button
+            android:id="@+id/huawei_stress_calibrate_finish"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/huawei_stress_calibrate_slider"
+            android:layout_centerHorizontal="true"
+            android:text="@string/huawei_stress_calibrate_finish"
+            />
+    </RelativeLayout>
+</RelativeLayout>

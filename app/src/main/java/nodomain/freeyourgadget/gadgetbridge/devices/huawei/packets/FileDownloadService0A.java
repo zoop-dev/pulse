@@ -90,6 +90,24 @@ public class FileDownloadService0A {
             }
         }
 
+        public static class RriFileRequest extends HuaweiPacket {
+            public RriFileRequest(ParamsProvider paramsProvider, int startTime, int endTime) {
+                super(paramsProvider);
+
+                this.serviceId = FileDownloadService0A.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x02, (byte) 0x04)
+                        .put(0x8f, new HuaweiTLV()
+                                .put(0x10, startTime)
+                                .put(0x11, endTime)
+                        );
+
+                this.complete = true;
+            }
+        }
+
         public static class Response extends HuaweiPacket {
             public String[] fileNames;
 
@@ -113,16 +131,19 @@ public class FileDownloadService0A {
         public static final int id = 0x02;
 
         public static class Request extends HuaweiPacket {
-            public Request(ParamsProvider paramsProvider, boolean truSleep) {
+            public Request(ParamsProvider paramsProvider, byte fileType) {
                 super(paramsProvider);
 
                 this.serviceId = FileDownloadService0A.id;
                 this.commandId = id;
 
-                if (truSleep)
-                    this.tlv = new HuaweiTLV().put(0x06, (byte) 0x01);
-                else
-                    this.tlv = new HuaweiTLV().put(0x06, (byte) 0x02).put(0x07, (byte) 0x03);
+
+                // NOTE: empty for debug files
+                if(fileType != 0x0) {
+                    this.tlv = new HuaweiTLV().put(0x06, fileType);
+                    if (fileType == 0x02)
+                        this.tlv.put(0x07, (byte) 0x03);
+                }
 
                 this.complete = true;
             }
@@ -214,7 +235,7 @@ public class FileDownloadService0A {
         public static class Response extends HuaweiPacket {
             public boolean isOk;
             public String filename;
-            public int offset;
+            public int offset = 0;
 
             public Response(ParamsProvider paramsProvider) {
                 super(paramsProvider);
@@ -225,7 +246,8 @@ public class FileDownloadService0A {
                 if (isOk) {
                     if (this.tlv.contains(0x01))
                         filename = this.tlv.getString(0x01);
-                    offset = this.tlv.getInteger(0x02);
+                    if (this.tlv.contains(0x02))
+                        offset = this.tlv.getInteger(0x02);
                 }
             }
         }

@@ -1560,6 +1560,7 @@ public class DeviceConfig {
 
         public static class Response extends HuaweiPacket {
             public boolean truSleepNewSync = false;
+            public boolean rriNewSync = false;
             public boolean gpsNewSync = false;
 
             public Response(ParamsProvider paramsProvider) {
@@ -1578,6 +1579,7 @@ public class DeviceConfig {
                     // Tag 2 -> File support
                     byte value = this.tlv.getByte(0x02);
                     truSleepNewSync = (value & 2) != 0;
+                    rriNewSync = (value & 4) != 0;
                     gpsNewSync = (value & 8) != 0;
                 }
 
