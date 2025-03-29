@@ -57,6 +57,7 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
 
     private RelativeLayout layoutResult;
     private TextView score;
+    private TextView level;
     private CheckBox isCalibrate;
     private Slider calibrateSlider;
 
@@ -84,16 +85,19 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
 
         layoutResult = rootView.findViewById(R.id.huawei_stress_result);
         score = rootView.findViewById(R.id.huawei_stress_score);
+        level = rootView.findViewById(R.id.huawei_stress_level);
         isCalibrate = rootView.findViewById(R.id.huawei_stress_calibrate);
         calibrateSlider = rootView.findViewById(R.id.huawei_stress_calibrate_slider);
         Button finish = rootView.findViewById(R.id.huawei_stress_calibrate_finish);
         Button again = rootView.findViewById(R.id.huawei_stress_calibrate_again);
+
 
         calibrateSlider.setEnabled(false);
 
         start.setOnClickListener(view -> {
             start.setVisibility(View.GONE);
             startCalibration();
+            layoutMeasure.setKeepScreenOn(true);
         });
 
         again.setOnClickListener(view -> {
@@ -122,6 +126,22 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
         countdownTime.setText(formatTime(j));
     }
 
+    private String getLevelDescription(byte level) {
+        switch (level) {
+            case 1:
+                return getString(R.string.stress_relaxed);
+            case 2:
+                return getString(R.string.stress_mild);
+            case 3:
+                return getString(R.string.stress_moderate);
+            case 4:
+                return getString(R.string.stress_high);
+            default:
+                return getString(R.string.n_a);
+        }
+
+    }
+
     private void calculateScore() {
         if(data == null) {
             return;
@@ -137,8 +157,9 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
             calibrateSlider.setEnabled(false);
             data.score = HuaweiStressScoreCalculation.calculateNormalizedFinalScore(data.scoreFactor);
         }
+        data.level = HuaweiStressScoreCalculation.calculateLevel(data.score);
         score.setText(String.format(Locale.ROOT, "%02d", data.score));
-
+        level.setText(getLevelDescription(data.level));
     }
 
     public HuaweiStressParser.StressData getStressData(final Intent intent) {
@@ -164,6 +185,9 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
         editor.putBoolean(HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH, true);
         editor.apply();
         GBApplication.deviceService(device).onSendConfiguration(HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH);
+        if(getActivity() != null) {
+            getActivity().finish();
+        }
     }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -181,13 +205,14 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
                     setProgress(currentCountDownTime);
                     break;
                 case ACTION_STRESS_RESULT:
+                    layoutMeasure.setKeepScreenOn(false);
                     boolean isError = intent.getBooleanExtra(EXTRA_STRESS_ERROR, true);
                     if(isError) {
                         setProgress(60000);
                         start.setVisibility(View.VISIBLE);
                         Snackbar.make(layoutMeasure, context.getString(R.string.huawei_stress_calibrate_error), Snackbar.LENGTH_LONG).show();
                     } else {
-                        data =  getStressData(intent);
+                        data = getStressData(intent);
                         layoutMeasure.setVisibility(View.GONE);
                         layoutResult.setVisibility(View.VISIBLE);
                         calculateScore();

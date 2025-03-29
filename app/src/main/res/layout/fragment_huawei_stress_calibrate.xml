@@ -65,18 +65,29 @@
             android:layout_centerInParent="true"
             android:text="@string/n_a"
             android:textSize="80sp" />
+        <TextView
+            android:id="@+id/huawei_stress_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/n_a"
+            android:layout_below="@+id/huawei_stress_score"
+            android:layout_marginTop="20dp"
+            android:textSize="15sp"/>
         <CheckBox
             android:id="@+id/huawei_stress_calibrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/huawei_stress_score"
+            android:layout_below="@+id/huawei_stress_level"
             android:checked="false"
+            android:layout_marginTop="20dp"
             android:text="@string/huawei_stress_calibrate_adjust_score" />
         <com.google.android.material.slider.Slider
             android:id="@+id/huawei_stress_calibrate_slider"
             android:layout_below="@+id/huawei_stress_calibrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:labelBehavior="gone"
             android:valueFrom="40"
             android:valueTo="70"
             android:value="55"

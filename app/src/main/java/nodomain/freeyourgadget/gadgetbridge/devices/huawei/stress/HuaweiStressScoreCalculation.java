@@ -55,10 +55,15 @@ public class HuaweiStressScoreCalculation {
 
     public static float calibrateScoreFactor(float calibrationScore, float scoreFactor) {
         calibrationScore = Math.max(40, Math.min(calibrationScore, 70));
-
         float calibrationScoreFactor = (float) (((calibrationScore - 1) * 7.0) / 98.0);
         float clampedCalibrationScoreFactor = Math.max(MIN_SCORE, Math.min(calibrationScoreFactor, MAX_SCORE));
-
         return (float) ((clampedCalibrationScoreFactor * 0.8) + (scoreFactor * 0.2));
+    }
+
+    public static byte calculateLevel(int score) {
+        if (score <= 29) return 1;
+        if (score <= 59) return 2;
+        if (score <= 79) return 3;
+        return 4;
     }
 }

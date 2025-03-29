@@ -194,6 +194,7 @@ public class HuaweiStressCalibration {
         stressData.endTime = endTime;
         stressData.score = stressScore;
         stressData.scoreFactor = scoreFactor;
+        stressData.level = HuaweiStressScoreCalculation.calculateLevel(stressScore);
 
         if (this.callback != null) {
             callback.onFinish(stressData);
