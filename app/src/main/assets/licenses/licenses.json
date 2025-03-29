@@ -133,6 +133,13 @@
     "path": "licenses/ckchangelog.txt"
   },
   {
+    "name": "Concentus",
+    "owner": "Logan Stromberg, various holding parties",
+    "type": "BSD-3",
+    "url": "https://github.com/lostromb/concentus",
+    "path": "licenses/concentus.txt"
+  },
+  {
     "name": "solarpositioning",
     "owner": "Klaus A. Brunner",
     "type": "MIT",
