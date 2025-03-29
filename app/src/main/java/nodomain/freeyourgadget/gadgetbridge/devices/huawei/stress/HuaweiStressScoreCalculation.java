@@ -23,8 +23,6 @@ public class HuaweiStressScoreCalculation {
     private static final int OUTPUT_MIN = 15;
     private static final int OUTPUT_MAX = 90;
 
-
-
     public static float calculateScoreFactor(float[] features) {
         float[] copyFeatures = features.clone();
 

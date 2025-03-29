@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
@@ -124,6 +125,9 @@ public class HuaweiCoordinator {
         long deviceId = device.getId();
         QueryBuilder<?> qb = session.getHuaweiActivitySampleDao().queryBuilder();
         qb.where(HuaweiActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        QueryBuilder<?> stressQb = session.getHuaweiStressSampleDao().queryBuilder();
+        stressQb.where(HuaweiStressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
 
         QueryBuilder<HuaweiWorkoutSummarySample> qb2 = session.getHuaweiWorkoutSummarySampleDao().queryBuilder();
         List<HuaweiWorkoutSummarySample> workouts = qb2.where(HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId)).build().list();
@@ -1053,4 +1057,13 @@ public class HuaweiCoordinator {
     public void setOtaSignatureLength(int otaSignatureLength) {
         this.otaSignatureLength = otaSignatureLength;
     }
+
+    public int[] getStressRanges() {
+        // 1-29 = relaxed
+        // 30-59 = mild
+        // 60-79 = moderate
+        // 80-100 = high
+        return new int[]{1, 30, 60, 80};
+    }
+
 }

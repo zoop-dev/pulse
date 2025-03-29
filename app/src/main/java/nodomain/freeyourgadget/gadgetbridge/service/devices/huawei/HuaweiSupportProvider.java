@@ -67,6 +67,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpsParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressParser;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTruSleepParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
@@ -81,6 +82,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValues;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSample;
@@ -1720,6 +1722,26 @@ public class HuaweiSupportProvider {
         }
     }
 
+    public void addStressData(long startTime, long endTime, byte stress, byte level) {
+        try (DBHandler db = GBApplication.acquireDB()) {
+            final Device device = DBHelper.getDevice(getDevice(), db.getDaoSession());
+            final User user = DBHelper.getUser(db.getDaoSession());
+            HuaweiStressSampleProvider sampleProvider = new HuaweiStressSampleProvider(gbDevice, db.getDaoSession());
+
+            HuaweiStressSample stressSample = new HuaweiStressSample();
+            stressSample.setTimestamp(endTime);
+            stressSample.setStartTime(startTime);
+            stressSample.setStress(stress);
+            stressSample.setLevel(level);
+            stressSample.setDevice(device);
+            stressSample.setUser(user);
+
+            sampleProvider.addSample(stressSample);
+        } catch (Exception e) {
+            LOG.error("Failed to add step data to database", e);
+        }
+    }
+
     public void addTotalFitnessData(int steps, int calories, int distance) {
         LOG.debug("FITNESS total steps: {}", steps);
         LOG.debug("FITNESS total calories: {}", calories); // TODO: May actually be kilocalories
@@ -2733,13 +2755,15 @@ public class HuaweiSupportProvider {
                             LOG.debug("Parsing stress file");
                             HuaweiStressParser.RriFileData results = HuaweiStressParser.parseRri(fileRequest.getData());
                             LOG.info("stress result: {}", results);
-                            // TODO: process and save
                             if(results != null && !results.stressData.isEmpty()) {
                                 HuaweiStressParser.StressData stressData = results.stressData.get(results.stressData.size() - 1);
                                 LOG.info("Last stored stress data: {}", stressData);
                                 HuaweiStressParser.StressData currentStressData = getLastStressData();
                                 if(currentStressData == null || stressData.endTime > currentStressData.endTime) {
                                     storeLastStressData(stressData);
+                                }
+                                for(HuaweiStressParser.StressData dt: results.stressData) {
+                                    addStressData(dt.startTime, dt.endTime, dt.score, dt.level);
                                 }
                             }
 

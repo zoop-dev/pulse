@@ -56,7 +56,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(99, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(100, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -159,6 +159,7 @@ public class GBDaoGenerator {
         addColmiTemperatureSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
+        addHuaweiStressSample(schema, user, device);
 
         addUltrahumanActivitySample(schema, user, device);
         addUltrahumanDeviceStateSample(schema, user, device);
@@ -1426,6 +1427,15 @@ public class GBDaoGenerator {
         activitySample.addIntProperty("spo").notNull();
         activitySample.addIntProperty("heartRate").notNull();
         return activitySample;
+    }
+
+    private static Entity addHuaweiStressSample(Schema schema, Entity user, Entity device) {
+        Entity stressSample = addEntity(schema, "HuaweiStressSample");
+        addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
+        stressSample.addByteProperty("level").notNull();
+        stressSample.addLongProperty("startTime").notNull();
+        return stressSample;
     }
 
     private static Entity addHuaweiWorkoutSummarySample(Schema schema, Entity user, Entity device) {
