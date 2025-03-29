@@ -309,7 +309,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     @Override
     public void onTestNewFunction() {
-        setRawSensor(!rawSensor);
+        voiceMemosService.requestList();
     }
 
     @Override

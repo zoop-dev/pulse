@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.servic
 import android.os.Handler;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.concentus.OpusDecoder;
+import org.concentus.OpusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +53,7 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
     private final Handler handler = new Handler();
 
     public ZeppOsVoiceMemosService(final ZeppOsSupport support) {
-        super(support, false);
+        super(support, true);
     }
 
     @Override
@@ -138,6 +140,29 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
             LOG.debug("Voice memo downloads finished");
             downloading = false;
             write("voice memo download finish", CMD_DOWNLOAD_FINISH_REQUEST);
+        }
+    }
+
+    private void decode(final byte[] opusBytes) throws OpusException {
+        final int SAMPLE_RATE = 16000;
+        final int NUM_CHANNELS = 1;
+        final int FRAME_SIZE = 320;
+
+        final OpusDecoder opusDecoder = new OpusDecoder(SAMPLE_RATE, NUM_CHANNELS);
+        final ByteBuffer buf = ByteBuffer.wrap(opusBytes).order(ByteOrder.BIG_ENDIAN);
+
+        final byte[] pcm = new byte[FRAME_SIZE * 2];
+
+        while (buf.hasRemaining()) {
+            final int len = buf.getInt();
+            final int unk = buf.getInt();
+            final byte[] arr = new byte[len];
+            buf.get(arr);
+
+            int decode = opusDecoder.decode(arr, 0, arr.length, pcm, 0, FRAME_SIZE, false);
+
+            // ffmpeg -f s16le -ar 16k -ac 1 -i memo.pcm memo.wav
+            // outputStream.write(pcm, 0, FRAME_SIZE * 2);
         }
     }
 }
