@@ -799,7 +799,7 @@
     <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="swedish">Svéd</string>
     <string name="activity_DB_ExportButton">Adatok exportálása</string>
-    <string name="menuitem_stress">Stressz</string>
+    <string name="menuitem_stress">Terhelés</string>
     <string name="dutch">Holland</string>
     <string name="hungarian">Magyar</string>
     <string name="menuitem_compass">Iránytű</string>
@@ -881,7 +881,7 @@
     <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="seconds_m">mp/m</string>
     <string name="on">Be</string>
-    <string name="busy_task_fetch_stress_data">Stresszadatok lekérdezése</string>
+    <string name="busy_task_fetch_stress_data">Terhelési adatok lekérdezése</string>
     <string name="menuitem_sleep">Alvás</string>
     <string name="seconds_km">mp/km</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">Alvási légzésszám adatok lekérdezése</string>
@@ -1160,8 +1160,8 @@
     <string name="menuitem_countdown">Visszaszámlálás</string>
     <string name="devicetype_vesc">VESC</string>
     <string name="status">Állapot</string>
-    <string name="pref_header_stress">Stressz</string>
-    <string name="stress_relaxed">Nyugodt</string>
+    <string name="pref_header_stress">Terhelés</string>
+    <string name="stress_relaxed">Laza</string>
     <string name="averageSpeed">Átlagsebesség</string>
     <string name="activity_summary_edit_name_title">Címke szerkesztése</string>
     <string name="battery_case">Akkumulátortok</string>
@@ -1610,13 +1610,13 @@
     <string name="contact_delete_confirm_title">Névjegy törlése</string>
     <string name="world_clock_delete_confirm_description">Biztosan törölni szeretné a világórát?</string>
     <string name="title_activity_contact_details">Névjegy adatok</string>
-    <string name="prefs_relaxation_reminder_description">A karkötő rezgésével értesítse, ha a feszültség értéke meghaladja a 80-at</string>
+    <string name="prefs_relaxation_reminder_description">A karkötő rezgésével értesítse, ha a terhelés értéke meghaladja a 80-at</string>
     <string name="devicestatus_upload_failed">A feltöltés nem sikerült</string>
     <string name="prefs_always_on_display_follow_watchface">A stílus követi a számlapot</string>
     <string name="prefs_heartrate_alert_low_threshold">Alacsony pulzusszámriasztás küszöb</string>
     <string name="pref_title_expose_hr">Harmadik fél általi valós idejű HR hozzáférése</string>
     <string name="prefs_heartrate_alert_high_threshold">Magas pulzusszámriasztás küszöb</string>
-    <string name="prefs_stress_monitoring_description">Pihenés közbeni stresszszint ellenőrzése</string>
+    <string name="prefs_stress_monitoring_description">Pihenés közben a terhelési szint ellenőrzése</string>
     <string name="updatefirmwareoperation_updateproblem_free_space">Az eszközön nincs elég szabad hely</string>
     <string name="pref_enable_unsupported_settings_title">Engedélyezze a nem támogatott beállításokat</string>
     <string name="prefs_find_phone_duration">A csengetés időtartama másodpercben</string>
@@ -1652,7 +1652,7 @@
     <string name="activity_type_high_jump">Magasugrás</string>
     <string name="activity_type_trampoline">Trambulin</string>
     <string name="prefs_heartrate_alert_experimental_description">Rázza meg a karkötőt, ha a pulzusszám túllép egy küszöbértéket, anélkül, hogy az elmúlt 10 percben bármilyen nyilvánvaló fizikai tevékenységet végzett volna. Ez a funkció kísérleti jellegű, és nem lett alaposan tesztelve.</string>
-    <string name="prefs_stress_monitoring_title">Stresszfigyelés</string>
+    <string name="prefs_stress_monitoring_title">Terhelés nyomon követése</string>
     <string name="prefs_heartrate_alert_threshold">Pulzusszámriasztás küszöbértéke</string>
     <string name="prefs_charts_tabs">Grafikonfülek</string>
     <string name="devicestatus_upload_completed">A feltöltés befejeződött</string>
@@ -1681,7 +1681,7 @@
     <string name="devicestatus_upload_starting">A feltöltés megkezdődik</string>
     <string name="prefs_enable_find_phone">Kapcsolja be a „Telefon keresése” funkciót</string>
     <string name="mi3_prefs_band_screen_unlock">Karkötő képernyő feloldása\"</string>
-    <string name="charts_legend_stress_average">Stresszátlag</string>
+    <string name="charts_legend_stress_average">Átlagos terhelés</string>
     <string name="devicestatus_upload_started">A feltöltés megkezdődött</string>
     <string name="gpx_route_upload_complete">Gpx útvonal feltöltése befejeződött</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">A lehívási művelet időbélyegzőinek csonkítása</string>
@@ -2366,7 +2366,7 @@
     <string name="pref_title_sync_birthdays">Születésnapok szinkronizálása</string>
     <string name="pref_summary_sync_birthdays">A naptárbejegyezések mellett a névjegyek születésnapjainak szinkronizálása</string>
     <string name="no_supported_devices_found">Nem található támogatott eszköz</string>
-    <string name="stress_average">Átlag</string>
+    <string name="stress_average">Átlagos</string>
     <string name="activity_type_beach_soccer">Strandlabdarúgás</string>
     <string name="activity_type_bike_commute">Biciklis közlekedés</string>
     <string name="activity_type_cardio">Kardió edzés</string>
@@ -2987,7 +2987,7 @@
     <string name="loading">Betöltés…</string>
     <string name="widget_layout_top_large_bot_wide">Felül nagy, alul széles</string>
     <string name="activity_type_shooting">Lövészet</string>
-    <string name="menuitem_stress_simple">Stressz (egyszerű)</string>
+    <string name="menuitem_stress_simple">Terhelés (egyszerű)</string>
     <string name="nothing_prefs_inear_title">Fülbe helyezhető érzékelés</string>
     <string name="moondrop_touch_earbud_both">Mindkettő</string>
     <string name="soundcore_equalizer_reset_title">Visszaállítás alapértelmezettre</string>
@@ -3001,7 +3001,7 @@
     <string name="activity_db_management_import_from_zip">Importálás zip-be</string>
     <string name="backup_restore_importing_validating">Fájl hitelesítése…</string>
     <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker">Vivitar HR &amp; BP Monitor Activity Tracker</string>
-    <string name="menuitem_stress_breakdown">Stressz (összeomlás)</string>
+    <string name="menuitem_stress_breakdown">Terhelés (összeomlás)</string>
     <string name="menuitem_calories_segmented">Kalória (szegmentált)</string>
     <string name="menuitem_calories_active_goal">Kalóriacél (aktív)</string>
     <string name="app_crash_share_stacktrace">Hiba megosztása</string>
@@ -3421,7 +3421,7 @@
     <string name="activity_type_hacky_sack">Lábfallabda</string>
     <string name="activity_type_hip_hop">Hip-hop</string>
     <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
-    <string name="menuitem_stress_segmented">Stressz (szegmentált)</string>
+    <string name="menuitem_stress_segmented">Terhelés (szakaszos)</string>
     <string name="pref_force_enable_spo2_support">SpO2-támogatás kényszerítése</string>
     <string name="wifi_hotspot_start_summary">A Wi-Fi hotspot elindítása az órán</string>
     <string name="white">Fehér</string>
@@ -3573,7 +3573,7 @@
     <string name="average_cadence_standing">Átlag pedálozási frekvencia (álló helyzetben)</string>
     <string name="max_power">Maximális teljesítmény</string>
     <string name="intensity_factor">Intenzitási tényező (IF)</string>
-    <string name="training_stress_score">Edzési stresszpontszám (TSS)</string>
+    <string name="training_stress_score">Edzésterhelési pontszám (TSS)</string>
     <string name="left_right_balance">Egyensúly</string>
     <string name="average_pedal_smoothness">Zökkenőmentes</string>
     <string name="average_torque_effectiveness">Nyomatékhatékonyság</string>
@@ -3667,4 +3667,18 @@
     <string name="map_upload_failed">A térkép feltöltése nem sikerült</string>
     <string name="map_upload_complete">A térkép feltöltése befejeződött</string>
     <string name="map_upload_in_progress">Térkép feltöltése</string>
+    <string name="huawei_stress_calibrate">Kalibrálás</string>
+    <string name="huawei_stress_calibrate_start">Indítás</string>
+    <string name="huawei_stress_calibrate_finish">Befejezés</string>
+    <string name="huawei_stress_calibrate_adjust_score">Pontszám beállítása</string>
+    <string name="huawei_stress_calibrate_again">Újrakalibrálás</string>
+    <string name="huawei_stress_calibrate_started">A terhelési kalibráció megkezdődött</string>
+    <string name="huawei_stress_calibrate_in_progress">A terhelési kalibráció folyamatban van</string>
+    <string name="huawei_stress_calibrate_done">A terhelési kalibráció kész</string>
+    <string name="huawei_stress_calibrate_error">Hiba a terhelés kalibrálásakor</string>
+    <string name="huawei_stress_no_calibration_data">Nincsenek kiinduló adatok - kalibrálás szükséges</string>
+    <string name="huawei_stress_calibrate_information">Az optimális eredmény érdekében a teszt megkezdése előtt pihenjen egy kicsit, és a teszt alatt maradjon nyugton. \n Az eszközt szorosan rögzítse úgy, hogy a képernyő felfelé nézzen, és az érzékelő közvetlenül érintkezzen a bőrével.</string>
+    <string name="huawei_stress_test_enable">Automatikus terhelési teszt</string>
+    <string name="huawei_stress_test_enable_summary">Automatikus terhelési teszt engedélyezése vagy letiltása</string>
+    <string name="huawei_stress_calibrate_summary">Automatikus terhelési teszt kalibrálása</string>
 </resources>
