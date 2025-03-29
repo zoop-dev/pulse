@@ -3865,4 +3865,18 @@
     <string name="map_upload_failed">Nepodařilo se nahrát mapu</string>
     <string name="map_upload_in_progress">Nahrávání mapy</string>
     <string name="map_upload_complete">Mapa úspěšně nahrána</string>
+    <string name="huawei_stress_no_calibration_data">Žádná základní data – nejprve proveďte kalibraci</string>
+    <string name="huawei_stress_calibrate_finish">Dokončit</string>
+    <string name="huawei_stress_calibrate_adjust_score">Upravit skóre</string>
+    <string name="huawei_stress_test_enable_summary">Zapnout nebo vypnout automatické měření stresu</string>
+    <string name="huawei_stress_calibrate">Kalibrovat</string>
+    <string name="huawei_stress_calibrate_again">Znovu kalibrovat</string>
+    <string name="huawei_stress_calibrate_start">Spustit</string>
+    <string name="huawei_stress_test_enable">Automatické měření stresu</string>
+    <string name="huawei_stress_calibrate_summary">Kalibrovat automatické měření stresu</string>
+    <string name="huawei_stress_calibrate_in_progress">Kalibrace stresu již probíhá</string>
+    <string name="huawei_stress_calibrate_done">Kalibrace stresu dokončena</string>
+    <string name="huawei_stress_calibrate_started">Kalibrace stresu spuštěna</string>
+    <string name="huawei_stress_calibrate_error">Chyba kalibrace stresu</string>
+    <string name="huawei_stress_calibrate_information">Pro optimální výsledky si před spuštěním měření odpočiňte a během měření zůstaňte v klidu. \n Zařízení utáhněte, obrazovka by měla být nahoře a senzor by se měl přímo dotýkat vaší kůže.</string>
 </resources>
