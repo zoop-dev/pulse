@@ -71,6 +71,7 @@ public class ZeppOsMapsFile {
                 final Matcher matcher = imgPathPattern.matcher(zipEntry.getName());
                 if (!matcher.find()) {
                     LOG.error("Unknown file {}", zipEntry.getName());
+                    return false;
                 }
 
                 final int num1 = Integer.parseInt(Objects.requireNonNull(matcher.group(1)), 10);
@@ -90,7 +91,7 @@ public class ZeppOsMapsFile {
 
                 uncompressedSize += zipEntry.getSize();
             }
-        } catch (final IOException e) {
+        } catch (final Exception e) {
             LOG.error("Failed to read {}", uri, e);
             return false;
         }
