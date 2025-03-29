@@ -3868,4 +3868,18 @@
     <string name="map_upload_complete">地图上传完成</string>
     <string name="map_upload_in_progress">正在上传地图</string>
     <string name="devicetype_huawei_band10">华为手环 10</string>
+    <string name="huawei_stress_test_enable">自动压力测试</string>
+    <string name="huawei_stress_no_calibration_data">没有初始数据 - 请先校准</string>
+    <string name="huawei_stress_calibrate">校准</string>
+    <string name="huawei_stress_calibrate_summary">校准自动压力测试</string>
+    <string name="huawei_stress_calibrate_in_progress">压力校准正在进行中</string>
+    <string name="huawei_stress_calibrate_done">压力校准完成</string>
+    <string name="huawei_stress_calibrate_error">应力校准误差</string>
+    <string name="huawei_stress_calibrate_start">开始</string>
+    <string name="huawei_stress_calibrate_finish">完成</string>
+    <string name="huawei_stress_calibrate_again">再次校准</string>
+    <string name="huawei_stress_calibrate_adjust_score">调整分数</string>
+    <string name="huawei_stress_calibrate_started">压力校准已开始</string>
+    <string name="huawei_stress_test_enable_summary">启用或禁用自动压力测试</string>
+    <string name="huawei_stress_calibrate_information">为了获得最佳效果，请在开始测试前休息一会儿，并在测试期间保持静止。\n将设备紧紧固定，使屏幕朝上并且传感器直接接触您的皮肤。</string>
 </resources>
