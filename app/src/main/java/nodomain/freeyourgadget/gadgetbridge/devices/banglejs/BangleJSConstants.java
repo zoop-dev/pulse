@@ -29,4 +29,6 @@ public final class BangleJSConstants {
     public static final String PREF_BANGLEJS_ACTIVITY_FULL_SYNC_STATUS = "pref_banglejs_activity_full_sync_status";
     public static final String PREF_BANGLEJS_ACTIVITY_FULL_SYNC_START = "pref_banglejs_activity_full_sync_start";
     public static final String PREF_BANGLEJS_ACTIVITY_FULL_SYNC_STOP = "pref_banglejs_activity_full_sync_stop";
+    public static final String PREF_BANGLEJS_NOTIFICATION_MISSED_CALL_ENABLE = "pref_notification_enable_missed_call";
+
 }

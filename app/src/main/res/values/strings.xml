@@ -3768,4 +3768,7 @@
     <string name="huawei_stress_calibrate_again">Calibrate again</string>
     <string name="huawei_stress_calibrate_adjust_score">Adjust score</string>
 
+    <string name="banglejs_notification_missed_call_title">Missed call</string>
+    <string name="banglejs_notification_missed_call_source">Incoming call</string>
+    <string name="banglejs_notification_missed_call_suppressed_caller_id">Unknown caller. ID is suppressed</string>
 </resources>

@@ -31,6 +31,7 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import static nodomain.freeyourgadget.gadgetbridge.database.DBHelper.getUser;
 import static nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSConstants.PREF_BANGLEJS_ACTIVITY_FULL_SYNC_START;
 import static nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSConstants.PREF_BANGLEJS_ACTIVITY_FULL_SYNC_STATUS;
+import static nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSConstants.PREF_BANGLEJS_NOTIFICATION_MISSED_CALL_ENABLE;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -48,6 +49,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -174,6 +176,9 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
     /// Last battery percentage reported (or -1) to help with smoothing reported battery levels
     private int lastBatteryPercent = -1;
 
+    private boolean isMissedCall = false;
+    private final Handler handler = new Handler();
+
     private final LimitedQueue<Integer, Long> mNotificationReplyAction = new LimitedQueue<>(16);
 
     private boolean gpsUpdateSetup = false;
@@ -211,6 +216,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         stopGlobalUartReceiver();
         stopLocationUpdate();
         stopRequestQueue();
+        handler.removeCallbacksAndMessages(null);
     }
 
     private void stopGlobalUartReceiver(){
@@ -1573,6 +1579,46 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     public void onSetCallState(CallSpec callSpec) {
         try {
+            final boolean enableMissedCall = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(PREF_BANGLEJS_NOTIFICATION_MISSED_CALL_ENABLE, false);
+            switch (callSpec.command) {
+                case CallSpec.CALL_INCOMING:
+                    // possible missed call
+                    isMissedCall = true;
+                    break;
+                case CallSpec.CALL_END:
+                    if (isMissedCall) {
+                        LOG.info("Missed call");
+                        isMissedCall = false;
+                        if (enableMissedCall) {
+                            NotificationSpec notificationSpec = new NotificationSpec();
+                            notificationSpec.sourceName = getContext().getString(R.string.banglejs_notification_missed_call_source);
+                            notificationSpec.title =  getContext().getString(R.string.banglejs_notification_missed_call_title);
+                            notificationSpec.subject = getContext().getString(R.string.banglejs_notification_missed_call_title);
+                            if (callSpec.name == null && callSpec.number == null) {
+                                notificationSpec.body = getContext().getString(R.string.banglejs_notification_missed_call_suppressed_caller_id);
+                            }else if (callSpec.name == null) {
+                                notificationSpec.sender = callSpec.number;
+                                notificationSpec.body = callSpec.number;
+                                notificationSpec.phoneNumber = callSpec.number;
+                            } else {
+                                notificationSpec.sender = callSpec.name;
+                                notificationSpec.body = callSpec.name + "\n" + callSpec.number;
+                                notificationSpec.phoneNumber = callSpec.number;
+                            }
+
+                            handler.postDelayed(() -> {
+                                onNotification(notificationSpec);
+                            }, 1000L);
+
+                        } else {
+                            LOG.info("Ignoring missed call");
+                        }
+                    }
+                    break;
+                default:
+                    isMissedCall = false;
+                    break;
+            }
             JSONObject o = new JSONObject();
             o.put("t", "call");
             String cmdName = "";

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_phone"
+        android:key="pref_notification_enable_missed_call"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/pref_notifications_and_calls_enable_misscall" />
+</androidx.preference.PreferenceScreen>
