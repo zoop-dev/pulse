@@ -55,14 +55,6 @@
         android:icon="@drawable/ic_settings"
         android:key="pref_category_device_spec_settings"
         android:title="@string/pref_header_device_spec_settings">
-        <ListPreference
-            android:icon="@drawable/ic_language"
-            android:defaultValue="1"
-            android:title="@string/pref_title_language"
-            android:entries="@array/language_only_EN_CH"
-            android:entryValues="@array/language_only_EN_CH_values"
-            android:key="language"
-            android:summary="%s" />
         <SwitchPreferenceCompat
             android:icon="@drawable/ic_access_time"
             android:defaultValue="false"

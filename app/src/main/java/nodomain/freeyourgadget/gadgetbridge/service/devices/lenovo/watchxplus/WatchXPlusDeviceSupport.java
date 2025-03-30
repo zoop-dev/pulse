@@ -871,6 +871,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                     setPowerMode();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_LANGUAGE:
+                case DeviceSettingsPreferenceConst.PREF_TIMEFORMAT:
                     setLanguageAndTimeFormat(builder);
                     break;
 
@@ -893,16 +894,13 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                 case DeviceSettingsPreferenceConst.PREF_DISCONNECTNOTIF_NOSHED:
                     setDisconnectReminder(builder);
                     break;
-                case DeviceSettingsPreferenceConst.PREF_TIMEFORMAT:
-                    setLanguageAndTimeFormat(builder);
-                    break;
                 case DeviceSettingsPreferenceConst.PREF_DO_NOT_DISTURB_NOAUTO:
                     setDNDHours(builder);
                     break;
             }
             builder.queue(getQueue());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Failed to send config", e);
         }
     }
 
@@ -2033,21 +2031,23 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                 buildCommand(WatchXPlusConstants.CMD_ALTITUDE,
                         WatchXPlusConstants.WRITE_VALUE,
                         bArr));
-        LOG.info(" setAltitude: " + mAltitude);
+        LOG.info(" setAltitude: {}", mAltitude);
     }
 
     // set time format
     private void setLanguageAndTimeFormat(TransactionBuilder transactionBuilder) {
         byte setLanguage, setTimeMode;
-        String languageString = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getString(DeviceSettingsPreferenceConst.PREF_LANGUAGE, "1");
-        if (languageString == null || languageString.equals("1")) {
-             setLanguage = 0x01;
-        } else {
-            setLanguage = 0x00;
+        String languageString = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getString(DeviceSettingsPreferenceConst.PREF_LANGUAGE, "en_US");
+        switch (languageString) {
+            case "zh_CN":
+                setLanguage = 0x00;
+                break;
+            case "en_US":
+            default:
+                setLanguage = 0x01;
         }
 
         String timeformatString = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getString(DeviceSettingsPreferenceConst.PREF_TIMEFORMAT, "1");
-        assert timeformatString != null;
         if (timeformatString.equals(getContext().getString(R.string.p_timeformat_24h))) {
             setTimeMode = WatchXPlusConstants.ARG_SET_TIMEMODE_24H;
         } else {

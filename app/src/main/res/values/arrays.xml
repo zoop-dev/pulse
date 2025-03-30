@@ -168,14 +168,6 @@
         <item>never</item>
     </string-array>
 
-    <string-array name="language_only_EN_CH">
-        <item name="0">@string/simplified_chinese</item>
-        <item name="1">@string/english</item>
-    </string-array>
-    <string-array name="language_only_EN_CH_values">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
     <string-array name="sensors_bp_cal">
         <item name="0">@string/prefs_sensors_button_bp_calibration</item>
         <item name="1">@string/Cancel</item>

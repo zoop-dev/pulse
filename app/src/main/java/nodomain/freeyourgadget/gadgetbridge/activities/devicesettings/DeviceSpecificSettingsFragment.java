@@ -343,16 +343,18 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         final ListPreference languageListPreference = findPreference("language");
         if (languageListPreference != null) {
             final String[] supportedLanguages = coordinator.getSupportedLanguageSettings(device);
-            CharSequence[] entries = languageListPreference.getEntries();
-            CharSequence[] values = languageListPreference.getEntryValues();
-            for (int i = entries.length - 1; i >= 0; i--) {
-                if (!ArrayUtils.contains(supportedLanguages, values[i])) {
-                    entries = ArrayUtils.remove(entries, i);
-                    values = ArrayUtils.remove(values, i);
+            if (supportedLanguages != null) {
+                CharSequence[] entries = languageListPreference.getEntries();
+                CharSequence[] values = languageListPreference.getEntryValues();
+                for (int i = entries.length - 1; i >= 0; i--) {
+                    if (!ArrayUtils.contains(supportedLanguages, values[i])) {
+                        entries = ArrayUtils.remove(entries, i);
+                        values = ArrayUtils.remove(values, i);
+                    }
                 }
+                languageListPreference.setEntries(entries);
+                languageListPreference.setEntryValues(values);
             }
-            languageListPreference.setEntries(entries);
-            languageListPreference.setEntryValues(values);
         }
 
         String disconnectNotificationState = prefs.getString(PREF_DISCONNECT_NOTIFICATION, PREF_DO_NOT_DISTURB_OFF);
