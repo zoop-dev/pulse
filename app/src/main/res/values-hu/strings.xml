@@ -818,7 +818,7 @@
     <string name="pref_summary_auto_export_interval">Exportálás minden %d órában</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">A dinamikus színek nem elérhetők az eszközén, csak az Android 12+ verziók támogatják ezt a funkciót. A Gadgetbridge az alapértelmezett Material 3 színeket fogja használni.</string>
     <string name="hr_appname_commute">Ingázás</string>
-    <string name="averageHR">Pulzus</string>
+    <string name="averageHR">Pulzusszám</string>
     <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="kind_gps">GPS firmware</string>
     <string name="hr_widget_last_notification">Utolsó értesítés</string>
@@ -1767,7 +1767,7 @@
     <string name="danish">Dán</string>
     <string name="pref_charts_range_on">A grafikonok tartománya egy hónapra van állítva</string>
     <string name="activity_prefs_chart_min_session_length">Minimális tevékenység időtartama (perc)</string>
-    <string name="charts_legend_spo2_average">Véroxigénszint átlaga</string>
+    <string name="charts_legend_spo2_average">Átlagos véroxigénszint</string>
     <string name="active_time">Aktív idő</string>
     <string name="standing_time">Állásidő</string>
     <string name="controlcenter_start_activity_tracks">Az Ön tevékenységeinek nyomon követése</string>
@@ -2042,7 +2042,7 @@
     <string name="aerobicTrainingEffect">Aerobic hatás</string>
     <string name="currentWorkoutLoad">Edzésterhelés</string>
     <string name="maximumOxygenUptake">Maximális oxigénfelvétel</string>
-    <string name="minStride">Min. lépésszám</string>
+    <string name="minStride">Minimális lépéshossz</string>
     <string name="avgStrokeRate">Átlagos löketszám arány</string>
     <string name="maxStrokeRate">Max. löketszám</string>
     <string name="swim_style">úszás stílus</string>
@@ -2072,11 +2072,11 @@
     <string name="flatDistance">Sík távolság</string>
     <string name="elevationGain">Magasságnövekedés</string>
     <string name="maxPace">Leggyorsabb tempó</string>
-    <string name="totalStride">Teljes lépésszám</string>
+    <string name="totalStride">Teljes lépéshossz</string>
     <string name="TrainingEffect">Edzés hatása</string>
     <string name="anaerobicTrainingEffect">Anaerob hatás</string>
-    <string name="averageStride">Átlagos lépésszám</string>
-    <string name="averageCadence">Átlagos ütem</string>
+    <string name="averageStride">Átlagos lépéshossz</string>
+    <string name="averageCadence">Átlagos pedálozási frekvencia</string>
     <string name="maxCadence">Max. ütem</string>
     <string name="strokes">Teljes löketszám</string>
     <string name="averageLapPace">Átlagos körtempó</string>
@@ -2089,7 +2089,7 @@
     <string name="averageStrokeDistance">Átlagos lökettávolság</string>
     <string name="alarm_smart_wakeup_interval">Intelligens ébresztés időköze:</string>
     <string name="alarm_smart_wakeup_interval_default">5 perc</string>
-    <string name="maxStride">Max. lépésszám</string>
+    <string name="maxStride">Maximális lépéshossz</string>
     <string name="swolfIndex">SWOLF</string>
     <string name="swimStyle">Úszási stílus</string>
     <string name="sony_speak_to_chat_timeout">Időtúllépés</string>
@@ -2168,7 +2168,7 @@
     <string name="fw_upgrade_notice_amazfitbip3">A(z) %s firmware-t kívánja telepíteni az Amazfit Bip 3 eszközre. \n \nGyőződjön meg róla, hogy a .fw fájlt, majd a .res fájlt telepíti. Az óra az .fw fájl telepítése után újraindul. \n \nMegjegyzés: Nem kell telepítenie a .res fájlt, ha pontosan megegyezik a korábban telepítettel. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="pref_summary_notification_wake_on_open">Ébressze fel és oldja fel az Android-eszközt, ha a kütyü OPEN választ küld vissza. Az eszköznek megbízható állapotban kell lennie.</string>
     <string name="busy_task_fetch_sports_details_interrupted">A sportadatok lekérése megszakadt</string>
-    <string name="swolfAvg">Úszási hatékonyság átlag</string>
+    <string name="swolfAvg">Átlagos úszási hatékonyság</string>
     <string name="swolfMax">Maximum swolf</string>
     <string name="swolfMin">Minimum swolf</string>
     <string name="milliseconds">ezredmásodperc</string>
@@ -2191,8 +2191,8 @@
     <string name="swingAngleAvg">Lengésszögátlag</string>
     <string name="eversionAngleAvg">Kifordulási szög átlag</string>
     <string name="fmtPaceDistance">Ütem %d távolság</string>
-    <string name="stepRateAvg">Lépésszám átlag</string>
-    <string name="stepLengthAvg">Lépéshossz átlag</string>
+    <string name="stepRateAvg">Átlagos lépésszám</string>
+    <string name="stepLengthAvg">Átlagos lépéshossz</string>
     <string name="groundContactTimeAvg">Talajkontakt-idő átlag</string>
     <string name="foreFootLandings">Lábfej leérkezés</string>
     <string name="backFootLandings">Lábsarok leérkezés</string>
@@ -2359,8 +2359,8 @@
     <string name="minutes_2">2 perc</string>
     <string name="minutes_3">3 perc</string>
     <string name="minutes_150">150 perc</string>
-    <string name="stats_lowest_hr">Legalacsonyabb pulzus</string>
-    <string name="stats_highest_hr">Legmagasabb pulzus</string>
+    <string name="stats_lowest_hr">Legalacsonyabb pulzusszám</string>
+    <string name="stats_highest_hr">Legmagasabb pulzusszám</string>
     <string name="activity_type_auto_racing">Autóversenyzés</string>
     <string name="pref_summary_debug">Hibakeresési kérelem küldése egy Huawei eszköz felé</string>
     <string name="pref_title_sync_birthdays">Születésnapok szinkronizálása</string>
@@ -3681,4 +3681,5 @@
     <string name="huawei_stress_test_enable">Automatikus terhelési teszt</string>
     <string name="huawei_stress_test_enable_summary">Automatikus terhelési teszt engedélyezése vagy letiltása</string>
     <string name="huawei_stress_calibrate_summary">Automatikus terhelési teszt kalibrálása</string>
+    <string name="stats_average_hr">Átlagos pulzusszám</string>
 </resources>
