@@ -365,7 +365,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
 
         // get version
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
         if (getDevice().getFirmwareVersion() == null) {
             getDevice().setFirmwareVersion("N/A");
             getDevice().setFirmwareVersion2("N/A");
