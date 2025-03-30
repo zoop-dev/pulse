@@ -3901,4 +3901,5 @@
     <string name="huawei_stress_calibrate_again">Skalibruj ponownie</string>
     <string name="huawei_stress_calibrate_adjust_score">Dostosuj wynik</string>
     <string name="huawei_stress_calibrate_information">Aby uzyskać optymalne wyniki, odpocznij chwilę przed rozpoczęciem testu i pozostań nieruchomo podczas testu.\nMocno zamocuj urządzenie, ekranem skierowanym do góry, a czujnikiem w bezpośrednim kontakcie ze skórą.</string>
+    <string name="stats_average_hr">Średnie tętno</string>
 </resources>
