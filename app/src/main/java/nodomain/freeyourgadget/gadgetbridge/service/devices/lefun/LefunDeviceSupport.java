@@ -805,7 +805,7 @@ public class LefunDeviceSupport extends AbstractBTLEDeviceSupport {
      */
     public void completeInitialization() {
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
         onReadConfiguration("");
     }
 

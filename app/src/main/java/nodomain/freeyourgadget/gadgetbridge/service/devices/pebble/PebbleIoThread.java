@@ -173,7 +173,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         String deviceAddress = gbDevice.getAddress();
         GBDevice.State originalState = gbDevice.getState();
         gbDevice.setState(GBDevice.State.CONNECTING);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
         try {
             // contains only one ":"? then it is addr:port
             int firstColon = deviceAddress.indexOf(":");
@@ -225,7 +225,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         } catch (IOException e) {
             LOG.warn("error while connecting: " + e.getMessage(), e);
             gbDevice.setState(originalState);
-            gbDevice.sendDeviceUpdateIntent(getContext());
+            gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
             mInStream = null;
             mOutStream = null;
@@ -238,7 +238,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         mIsConnected = true;
         write(mPebbleProtocol.encodeFirmwareVersionReq());
         gbDevice.setState(GBDevice.State.CONNECTED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         return true;
     }
@@ -249,7 +249,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         if (!mIsConnected) {
             if (GBApplication.getPrefs().getAutoReconnect(getDevice()) && !mQuit) {
                 gbDevice.setState(GBDevice.State.WAITING_FOR_RECONNECT);
-                gbDevice.sendDeviceUpdateIntent(getContext());
+                gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
             }
             return;
         }

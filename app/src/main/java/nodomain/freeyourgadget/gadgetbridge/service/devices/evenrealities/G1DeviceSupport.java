@@ -97,9 +97,7 @@ public class G1DeviceSupport extends AbstractBTLEDeviceSupport {
         scheduleBatteryPolling();
 
         // Device is ready for use.
-        builder.add(
-                new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
         return builder;
     }
 

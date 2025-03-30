@@ -71,7 +71,7 @@ public class WaspOSDeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Initializing");
 
         gbDevice.setState(GBDevice.State.INITIALIZING);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         rxCharacteristic = getCharacteristic(WaspOSConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX);
         txCharacteristic = getCharacteristic(WaspOSConstants.UUID_CHARACTERISTIC_NORDIC_UART_TX);
@@ -88,7 +88,7 @@ public class WaspOSDeviceSupport extends AbstractBTLEDeviceSupport {
         // get version
 
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         LOG.info("Initialization Done");
 

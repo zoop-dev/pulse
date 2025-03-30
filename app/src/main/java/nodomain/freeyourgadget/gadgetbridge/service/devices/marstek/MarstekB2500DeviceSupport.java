@@ -92,7 +92,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
                 if (!is_initialized) {
                     sendCommand("set time (initial)", encodeSetCurrentTime());
                     gbDevice.setState(GBDevice.State.INITIALIZED);
-                    gbDevice.sendDeviceUpdateIntent(getContext());
+                    gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
                     is_initialized = true;
                 }
                 return true;

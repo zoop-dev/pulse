@@ -424,7 +424,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
         }
 
         gbDevice.setState(updateDeviceState.state);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
     }
 
     protected void handleGBDeviceEvent(GBDeviceEventFmFrequency frequencyEvent) {

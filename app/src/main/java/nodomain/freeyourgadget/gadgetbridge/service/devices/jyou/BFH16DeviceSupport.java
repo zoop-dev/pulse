@@ -103,7 +103,7 @@ public class BFH16DeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Initializing BFH16");
 
         gbDevice.setState(GBDevice.State.INITIALIZING);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         measureCharacteristic = getCharacteristic(BFH16Constants.BFH16_SERVICE1_NOTIFY);
         ctrlCharacteristic = getCharacteristic(BFH16Constants.BFH16_SERVICE1_WRITE);
@@ -114,7 +114,7 @@ public class BFH16DeviceSupport extends AbstractBTLEDeviceSupport {
         syncSettings(builder);
 
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         LOG.info("Initialization BFH16 Done");
 

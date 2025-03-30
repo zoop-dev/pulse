@@ -51,7 +51,7 @@ public abstract class CasioSupport extends AbstractBTLEDeviceSupport {
     public void setInitialized() {
         mFirstConnect = false;
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
     }
 
     @Override

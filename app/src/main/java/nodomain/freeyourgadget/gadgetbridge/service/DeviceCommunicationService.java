@@ -402,6 +402,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             String action = intent.getAction();
             if(GBDevice.ACTION_DEVICE_CHANGED.equals(action)){
                 GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+                if (device == null) {
+                    // Should never happen
+                    LOG.error("Got ACTION_DEVICE_CHANGED without device");
+                    return;
+                }
 
                 // create a new instance of the changed devices coordinator, in case it's capabilities changed
                 DeviceStruct cachedStruct = getDeviceStructOrNull(device);
@@ -414,13 +419,13 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
                 GBDevice.DeviceUpdateSubject subject = (GBDevice.DeviceUpdateSubject) intent.getSerializableExtra(GBDevice.EXTRA_UPDATE_SUBJECT);
 
-                if(subject == GBDevice.DeviceUpdateSubject.DEVICE_STATE && device.isInitialized()){
+                if (subject == GBDevice.DeviceUpdateSubject.DEVICE_STATE && device.isInitialized()) {
                     sendDeviceConnectedBroadcast(device.getAddress());
                     sendCachedNotifications(device);
-                }else if(subject == GBDevice.DeviceUpdateSubject.DEVICE_STATE && (device.getState() == GBDevice.State.SCANNED)){
+                } else if(subject == GBDevice.DeviceUpdateSubject.DEVICE_STATE && (device.getState() == GBDevice.State.SCANNED)) {
                     sendDeviceAPIBroadcast(device.getAddress(), API_LEGACY_ACTION_DEVICE_SCANNED);
                 }
-            }else if(BLEScanService.EVENT_DEVICE_FOUND.equals(action)){
+            } else if(BLEScanService.EVENT_DEVICE_FOUND.equals(action)){
                 String deviceAddress = intent.getStringExtra(BLEScanService.EXTRA_DEVICE_ADDRESS);
 
                 GBDevice target = GBApplication

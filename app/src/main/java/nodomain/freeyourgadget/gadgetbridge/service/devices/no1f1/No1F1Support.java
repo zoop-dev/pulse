@@ -78,7 +78,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
         LOG.info("Initializing");
 
         gbDevice.setState(GBDevice.State.INITIALIZING);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         measureCharacteristic = getCharacteristic(No1F1Constants.UUID_CHARACTERISTIC_MEASURE);
         ctrlCharacteristic = getCharacteristic(No1F1Constants.UUID_CHARACTERISTIC_CONTROL);
@@ -93,7 +93,7 @@ public class No1F1Support extends AbstractBTLEDeviceSupport {
         builder.write(ctrlCharacteristic, new byte[]{No1F1Constants.CMD_BATTERY});
 
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         LOG.info("Initialization Done");
 

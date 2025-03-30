@@ -275,7 +275,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     }
 
     void handleDeviceConnect(GBDevice device){
-        if(!device.getDeviceCoordinator().isConnectable()){
+        if (!device.getDeviceCoordinator().isConnectable()){
             device.setState(GBDevice.State.WAITING_FOR_SCAN);
             device.sendDeviceUpdateIntent(GBApplication.getContext(), GBDevice.DeviceUpdateSubject.CONNECTION_STATE);
             return;

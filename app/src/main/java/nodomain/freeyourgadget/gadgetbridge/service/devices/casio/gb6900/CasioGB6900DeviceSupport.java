@@ -295,13 +295,13 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
                 mHandlerThread = new CasioGB6900HandlerThread(getDevice(), getContext(), this);
                 mHandlerThread.start();
                 gbDevice.setState(GBDevice.State.INITIALIZED);
-                gbDevice.sendDeviceUpdateIntent(getContext());
+                gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
                 handled = true;
                 break;
             default:
                 LOG.warn("handleInitResponse: Error initializing device, received unexpected value: " + data);
                 gbDevice.setState(GBDevice.State.NOT_CONNECTED);
-                gbDevice.sendDeviceUpdateIntent(getContext());
+                gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
                 handled = true;
                 break;
         }

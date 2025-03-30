@@ -571,7 +571,7 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
         enableBatteryLevelUpdate();
 
         gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext());
+        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
 
         sendOutgoingMessage("request supported file types", new SupportedFileTypesMessage());
 
