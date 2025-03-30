@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +73,18 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     private GBDevice gbDevice;
     private int startTime;
     private int endTime;
+
+    @Override
+    protected void onReceive(final Context context, final Intent intent) {
+        // FIXME: We need to override this, or we crash
+        //  This class should be refactored not to extend AbstractActivityChartFragment
+        //    java.lang.ClassCastException: nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummaryDetail cannot be cast to nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsHost
+        //      at nodomain.freeyourgadget.gadgetbridge.activities.charts.AbstractChartFragment.getChartsHost(AbstractChartFragment.java:164)
+        //      at nodomain.freeyourgadget.gadgetbridge.activities.charts.AbstractChartFragment.getStartDate(AbstractChartFragment.java:176)
+        //      at nodomain.freeyourgadget.gadgetbridge.activities.charts.AbstractChartFragment.onReceive(AbstractChartFragment.java:215)
+        //      at nodomain.freeyourgadget.gadgetbridge.activities.charts.AbstractChartFragment$1.onReceive(AbstractChartFragment.java:82)
+        //      at androidx.localbroadcastmanager.content.LocalBroadcastManager.executePendingBroadcasts(LocalBroadcastManager.java:319)
+    }
 
     public void setDateAndGetData(@Nullable File trackFile, GBDevice gbDevice, long startTime, long endTime) {
         this.trackFile = trackFile;
