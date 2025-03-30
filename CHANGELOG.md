@@ -5,10 +5,18 @@
 * Initial support for 1MORE SonoFlow headphones
 * Initial support for EarFun Air S and Air Pro 4 headphones
 * Initial support for Garmin Instinct 3
+* Initial support for Huawei Band 10
 * Initial support for Huawei FreeBuds Pro
 * Initial support for Redmi Buds 3 Pro
-* Amazfit Active 2: Fix device discovery
+* Experimental support for Ultrahuman Air smart ring
+* Amazfit Active 2: Fix device discovery, improved support
+* Amazfit Bip 3: Add workout gps settings
 * Amazfit GTR2e: Enable PAI support
+* Bangle.js: Fix cached messages not send after reconnect
+* Bangle.js: Fix music sometimes not being sent to the watch
+* Bangle.js: Missed call notifications
+* Bangle.js: Send phone music volume level to watch
+* CMF Watch Pro: Allow enable of bluetooth calls
 * Fossil/Skagen Hybrids: Fix hidden upload button in app manager
 * Garmin: Add nap support
 * Garmin: Allow manual import of activity files
@@ -16,18 +24,36 @@
 * Garmin: Fix weight unit in strength training sets
 * Garmin: Parse extended running and cycling workout data
 * Garmin: Resolve names for services and characteristics
+* Huami: Delete some missing tables when deleting a device
+* Huawei: Add stress calibration and sync
+* Huawei: Add trail run activity
 * Huawei: Fix delete notifications for LE devices
 * Huawei: Fix some crashes
 * Huawei: Increase user ID length to 19 characters
 * Huawei: Real-time heart rate mode and low/high alerts
+* Lenovo Watch X (Plus): Fix language setting
 * Pebble: Fix all day events timezone
 * Xiaomi-protobuf: Make GPS timeout configurable
 * Xiaomi-protobuf: Map some missing workout types
+* Zepp OS 3.5+: Fetch sleep stages and score
+* Zepp OS 3+: Fix screenshots
+* Zepp OS 4: Fix notification icons
+* Zepp OS: Allow 32-character hex key without 0x prefix
+* Zepp OS: Fetch body temperature, HR stats, HRV, sleep respiratory rate
+* Zepp OS: Fix AGPS section not available on some devices
+* Zepp OS: Fix parsing of PAI values after factory reset
 * Zepp OS: Fix temperature and distance unit configuration
+* Zepp OS: Map all missing activity kinds
+* Zepp OS: Maps upload
+* Zepp OS: Respect calendar sync setting
+* Add page with all open-source licenses
+* Charts: Add sleep HR average
 * Fix app crash when switching between Android user profiles
 * Fix icon on low battery level
 * Fix ignoring low priority notifications on Android 13+
 * Fix some preference summaries not getting updated
+* Improve idle and stale media session handling
+* Make alarm notifications respect app whitelist/blacklist
 * Reduce log spam from browsing preferences
 
 #### 0.84.0
