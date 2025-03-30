@@ -3882,4 +3882,5 @@
     <string name="huawei_stress_calibrate_started">压力校准已开始</string>
     <string name="huawei_stress_test_enable_summary">启用或禁用自动压力测试</string>
     <string name="huawei_stress_calibrate_information">为了获得最佳效果，请在开始测试前休息一会儿，并在测试期间保持静止。\n将设备紧紧固定，使屏幕朝上并且传感器直接接触您的皮肤。</string>
+    <string name="stats_average_hr">平均心率</string>
 </resources>
