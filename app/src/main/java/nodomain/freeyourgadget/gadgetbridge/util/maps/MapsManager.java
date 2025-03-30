@@ -22,9 +22,9 @@ import android.net.Uri;
 import androidx.documentfile.provider.DocumentFile;
 
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
+import org.mapsforge.core.model.Rotation;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
@@ -104,10 +104,11 @@ public final class MapsManager {
                 tileCache, multiMapDataStore,
                 mapView.getModel().mapViewPosition, true, false, false, AndroidGraphicFactory.INSTANCE) {
             @Override
-            public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-                // Clear the canvas with the desired background color
-                canvas.fillColor(Color.TRANSPARENT);
-                super.draw(boundingBox, zoomLevel, canvas, topLeftPoint);
+            public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint, Rotation rotation) {
+                if (!isMapLoaded) {
+                    canvas.fillColor(GBApplication.getWindowBackgroundColor(mapView.getContext()));
+                }
+                super.draw(boundingBox, zoomLevel, canvas, topLeftPoint, rotation);
             }
         };
         tileRendererLayer.setXmlRenderTheme(MapTheme.DEFAULT);

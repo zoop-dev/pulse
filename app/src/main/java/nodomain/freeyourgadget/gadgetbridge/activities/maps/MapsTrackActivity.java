@@ -23,7 +23,10 @@ import androidx.annotation.NonNull;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.overlay.Polyline;
@@ -80,15 +83,17 @@ public class MapsTrackActivity extends AbstractGBActivity {
                 .collect(Collectors.toList());
 
         Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-        paint.setColor(getResources().getColor(R.color.chart_activity_light));
+        paint.setColor(getResources().getColor(R.color.hrv_status_low));
         paint.setStrokeWidth(8);
         paint.setStyle(Style.STROKE);
         Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
         polyline.setPoints(latlongs);
         mapView.addLayer(polyline);
+        mapView.getLayerManager().redrawLayers();
 
         mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
-        mapView.setZoomLevel((byte) 12);
+        byte zoom = LatLongUtils.zoomForBounds(new Dimension(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels), new BoundingBox(minLat, minLon, maxLat, maxLon), mapView.getModel().displayModel.getTileSize());
+        mapView.setZoomLevel(zoom);
     }
 
     @Override

@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,10 +29,15 @@ import androidx.annotation.Nullable;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.MapPosition;
+import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.overlay.Polyline;
+import org.mapsforge.map.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +69,7 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     private MapView mapView;
     private TextView gpsWarning;
     private File inputFile;
-    private long downTime;
+    private MapsManager mapsManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +79,7 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
         mapView = rootView.findViewById(R.id.activitygpsview);
         mapView.setBuiltInZoomControls(false);
 
-        MapsManager mapsManager = new MapsManager(requireContext());
+        mapsManager = new MapsManager(requireContext());
         mapsManager.loadMaps(mapView);
 
         if (mapsManager.isMapLoaded()) {
@@ -150,33 +156,67 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
                 .collect(Collectors.toList());
 
         Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-        paint.setColor(getResources().getColor(R.color.chart_activity_light));
+        paint.setColor(getResources().getColor(R.color.hrv_status_low));
         paint.setStrokeWidth(8);
         paint.setStyle(Style.STROKE);
         Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
         polyline.addPoints(latlongs);
 
-        mapView.getLayerManager().getLayers().add(polyline);
+        mapView.addLayer(polyline);
         mapView.getLayerManager().redrawLayers();
 
-        mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
-        mapView.setZoomLevel((byte) 13);
+        final Model model = mapView.getModel();
+        final BoundingBox boundingBox = new BoundingBox(minLat, minLon, maxLat, maxLon);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int screenWidth = displayMetrics.widthPixels;
+        int height = (int) (300 * displayMetrics.density);
+        byte zoom = LatLongUtils.zoomForBounds(new Dimension(screenWidth, height), boundingBox, model.displayModel.getTileSize());
+        model.mapViewPosition.setMapPosition(new MapPosition(boundingBox.getCenterPoint(), zoom));
 
-        final long DOUBLE_TAP_THRESHOLD = 300;
-        mapView.setOnTouchListener((view, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    long currentTime = System.currentTimeMillis();
-                    if ((currentTime - downTime) <= DOUBLE_TAP_THRESHOLD) {
-                        Intent intent = new Intent(getContext(), MapsTrackActivity.class);
-                        intent.putExtra("file", inputFile);
-                        startActivity(intent);
-                    }
-                    downTime = currentTime;
-                    break;
+        View.OnTouchListener controlTouchListener = new View.OnTouchListener() {
+            private float startX, startY;
+            private static final int TAP_THRESHOLD = 10;
+            private static final int LONG_PRESS_TIME = 300;
+            private long pressTime;
+            private Runnable longPressRunnable;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startX = event.getX();
+                        startY = event.getY();
+                        pressTime = System.currentTimeMillis();
+                        longPressRunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                if (System.currentTimeMillis() - pressTime >= LONG_PRESS_TIME) {
+                                    openMapActivity();
+                                }
+                            }
+                        };
+                        v.postDelayed(longPressRunnable, LONG_PRESS_TIME);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (Math.abs(startX - event.getX()) > TAP_THRESHOLD || Math.abs(startY - event.getY()) > TAP_THRESHOLD) {
+                            v.removeCallbacks(longPressRunnable);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        v.removeCallbacks(longPressRunnable);
+                        break;
+                }
+                return true;
             }
-            return true;
-        });
+
+            private void openMapActivity() {
+                Intent intent = new Intent(getContext(), MapsTrackActivity.class);
+                intent.putExtra("file", inputFile);
+                startActivity(intent);
+            }
+        };
+        mapView.setOnTouchListener(controlTouchListener);
 
         mapView.invalidate();
     }
