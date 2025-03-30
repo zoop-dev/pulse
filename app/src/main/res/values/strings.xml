@@ -1053,6 +1053,7 @@
     <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
     <string name="stats_lowest_hr">Lowest HR</string>
     <string name="stats_highest_hr">Highest HR</string>
+    <string name="stats_average_hr">Average HR</string>
     <string name="transition">Transition</string>
     <string name="you_slept">%1$s - %2$s</string>
     <string name="you_did_not_sleep">You did not sleep</string>

@@ -190,7 +190,7 @@
                     android:id="@+id/sleep_hr_lowest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/stats_empty_value"
                     android:textSize="20sp" />
 
                 <TextView
@@ -208,13 +208,31 @@
                     android:id="@+id/sleep_hr_highest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/stats_empty_value"
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/stats_highest_hr"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="1dp"
+                style="@style/GridTile"
+                >
+                <TextView
+                    android:id="@+id/sleep_hr_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_average_hr"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
@@ -228,7 +246,7 @@
                     android:id="@+id/sleep_movement_intensity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/stats_empty_value"
                     android:textSize="20sp" />
 
                 <TextView
@@ -237,12 +255,6 @@
                     android:text="@string/movement_intensity"
                     android:textSize="12sp" />
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/sleep_chart_legend_dummy_tile"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="1dp"
-                style="@style/GridTile"
-                />
         </GridLayout>
 
 
