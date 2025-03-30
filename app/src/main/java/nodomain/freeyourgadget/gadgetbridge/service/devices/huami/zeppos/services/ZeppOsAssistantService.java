@@ -18,19 +18,28 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.servic
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_VOICE_SERVICE_LANGUAGE;
 
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import org.concentus.OpusDecoder;
+import org.concentus.OpusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -42,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -76,12 +86,23 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
     private static final byte ERROR_NO_INTERNET = 0x03;
     private static final byte ERROR_UNAUTHORIZED = 0x06;
 
+    private static final int CHANNELS = 1;
+    private static final int MAX_FRAME_SIZE = 6 * 960;
+
     public static final String PREF_VERSION = "zepp_os_assistant_version";
+
+    private int mVersion = -1;
 
     private final Handler handler = new Handler();
     private final short endpoint;
 
-    final ByteArrayOutputStream voiceBuffer = new ByteArrayOutputStream();
+    private OpusDecoder opusDecoder;
+    private AudioTrack audioTrack;
+
+    private static final boolean DUMP_RAW_VOICE = false;
+    private OutputStream rawVoiceOutputStream;
+
+    final ByteBuffer voiceBuffer = ByteBuffer.allocate(4096).order(ByteOrder.BIG_ENDIAN);
 
     public ZeppOsAssistantService(final ZeppOsSupport support, final short endpoint) {
         super(support, true);
@@ -321,9 +342,9 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
     }
 
     private void handleCapabilitiesResponse(final byte[] payload) {
-        final int version = payload[1] & 0xFF;
-        if (version != 3 && version != 5) {
-            LOG.warn("Unsupported assistant service version {}", version);
+        mVersion = payload[1] & 0xFF;
+        if (mVersion != 3 && mVersion != 5) {
+            LOG.warn("Unsupported assistant service version {}", mVersion);
             return;
         }
         final byte var1 = payload[2];
@@ -335,11 +356,11 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
             LOG.warn("Unexpected value for var2 '{}'", var2);
         }
 
-        getSupport().evaluateGBDeviceEvent(new GBDeviceEventUpdatePreferences(PREF_VERSION, version));
+        getSupport().evaluateGBDeviceEvent(new GBDeviceEventUpdatePreferences(PREF_VERSION, mVersion));
 
-        LOG.info("Assistant version={}, var1={}, var2={}", version, var1, var2);
+        LOG.info("Assistant version={}, var1={}, var2={}", mVersion, var1, var2);
 
-        if (version == 3) {
+        if (mVersion == 3) {
             // only in Alexa (?)
             requestLanguages();
         }
@@ -354,6 +375,44 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
 
         LOG.info("Assistant starting: var1={}, var2={}, var3={}, var4={}, params={}", var1, var2, var3, var4, params);
 
+        final int sampleRate = 16000; // FIXME how to detect sample rate?
+
+        try {
+            opusDecoder = new OpusDecoder(sampleRate, 1);
+        } catch (final OpusException e) {
+            LOG.error("Failed to initialize opus decoder", e);
+            write("send assistant start nack", new byte[]{CMD_START_ACK, ERROR_UNAUTHORIZED});
+            return;
+        }
+
+        if (DUMP_RAW_VOICE) {
+            // for decoding debug
+            try {
+                final File writableExportDirectory = getCoordinator().getWritableExportDirectory(getSupport().getDevice());
+                final File targetDir = new File(writableExportDirectory, "assistantRawVoice");
+                targetDir.mkdirs();
+                final String filename = DateTimeUtils.formatIso8601(new Date()) + ".opus";
+                final File outputFile = new File(targetDir, filename);
+                rawVoiceOutputStream = new FileOutputStream(outputFile);
+                LOG.debug("Started assistant raw voice output to {}", outputFile);
+            } catch (final Exception e) {
+                LOG.error("Failed to open raw voice output stream", e);
+            }
+        }
+
+        audioTrack = new AudioTrack(
+                AudioManager.STREAM_MUSIC,
+                sampleRate,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                AudioTrack.getMinBufferSize(
+                        16000,
+                        AudioFormat.CHANNEL_OUT_MONO,
+                        AudioFormat.ENCODING_PCM_16BIT
+                ),
+                AudioTrack.MODE_STREAM
+        );
+
         // Send the start ack with a slight delay, to give enough time for the connection to switch to fast mode
         // I can't seem to get the callback for onConnectionUpdated working, and if we reply too soon the watch
         // will just stay stuck "Connecting...". It seems like it takes ~350ms to switch to fast connection.
@@ -361,13 +420,94 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
     }
 
     private void handleEnd(final byte[] payload) {
-        voiceBuffer.reset();
+        voiceBuffer.position(0);
+
+        if (opusDecoder != null) {
+            opusDecoder = null;
+        }
+        if (audioTrack != null) {
+            audioTrack.release();
+            audioTrack = null;
+        }
+
+        if (DUMP_RAW_VOICE && rawVoiceOutputStream != null) {
+            try {
+                rawVoiceOutputStream.close();
+            } catch (final IOException e) {
+                LOG.error("Failed to close raw opus output stream");
+            }
+        }
+
         // TODO do something else?
     }
 
-    private void handleVoiceData(final byte[] payload) {
-        LOG.info("Got {} bytes of voice data", payload.length);
-        // TODO
+    public void handleVoiceData(final byte[] payload) {
+        LOG.info("Got {} bytes of voice data ({})", payload.length, BLETypeConversions.toUint32(payload, 1));
+
+        if (DUMP_RAW_VOICE && rawVoiceOutputStream != null) {
+            try {
+                rawVoiceOutputStream.write(payload, 5, payload.length - 5);
+                rawVoiceOutputStream.flush();
+            } catch (final IOException e) {
+                LOG.error("Failed to dump raw opus payload", e);
+            }
+        }
+
+        this.voiceBuffer.put(payload, 5, payload.length - 5);
+        this.voiceBuffer.flip();
+
+        while (voiceBuffer.remaining() > 0) {
+            voiceBuffer.mark();
+
+            final int frameSizeBytes = mVersion >= 5 ? 4 : 1;
+
+            if (voiceBuffer.remaining() < frameSizeBytes) {
+                voiceBuffer.reset();
+                break;
+            }
+
+            final int frameSize;
+            switch (frameSizeBytes) {
+                case 1:
+                    frameSize = voiceBuffer.get() & 0xff;
+                    break;
+                case 4:
+                    frameSize = voiceBuffer.getInt();
+                    voiceBuffer.getInt(); // skip 4 unknown bytes
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown frame size " + frameSizeBytes);
+            }
+
+            if (voiceBuffer.remaining() < frameSize) {
+                voiceBuffer.reset(); // Not enough data for full frame
+                break;
+            }
+
+            if (frameSize == 0) {
+                continue;
+            }
+
+            final byte[] frame = new byte[frameSize];
+            voiceBuffer.get(frame);
+
+            LOG.trace("Voice Data Frame: {}", GB.hexdump(frame));
+
+            if (opusDecoder != null) {
+                try {
+                    final byte[] pcm = new byte[MAX_FRAME_SIZE * CHANNELS * 2];
+                    final int decodedSamples = opusDecoder.decode(frame, 0, frame.length, pcm, 0, MAX_FRAME_SIZE, false);
+                    LOG.debug("Opus decode: {}", decodedSamples);
+                    if (audioTrack != null) {
+                        audioTrack.write(pcm, 0, decodedSamples * 2 /* 16 bit */);
+                    }
+                } catch (final Exception e) {
+                    LOG.error("Failed to decode opus frame", e);
+                }
+            }
+        }
+
+        voiceBuffer.compact();
     }
 
     private void handleLanguagesResponse(final byte[] payload) {
