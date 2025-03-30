@@ -129,27 +129,22 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             byte[] data = new byte[payload.length - 1];
             System.arraycopy(payload, 1, data, 0, data.length);
 
-            // NOTE: Does this seem swapped to you? That's because IT IS! I took the constant names
-            //       from the official app, but as it turns out, the official app has a bug.
-            //       (and yes, you can see that data from yesterday appears as two days ago
-            //       in the app itself and all past data is getting messed up because of it)
-
-            if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS) {
+            if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS) {
                 LOG.info("2 DAYS AGO STEPS data: " + Logging.formatBytes(data));
                 decodeSteps(2, data);
                 return true;
             }
-            else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS) {
+            else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS) {
                 LOG.info("YESTERDAY STEPS data: " + Logging.formatBytes(data));
                 decodeSteps(1, data);
                 return true;
             }
-            else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP) {
+            else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP) {
                 LOG.info("2 DAYS AGO SLEEP data: " + Logging.formatBytes(data));
                 decodeSleep(2, data);
                 return true;
             }
-            else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP) {
+            else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP) {
                 LOG.info("YESTERDAY SLEEP data: " + Logging.formatBytes(data));
                 decodeSleep(1, data);
                 return true;

@@ -1256,7 +1256,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 int start_h = data[3*i + 1];
                 int start_m = data[3*i + 2];
 
-                LOG.info("sleep[" + daysAgo + "][" + i + "] type=" + type + ", start_h=" + start_h + ", start_m=" + start_m);
+                LOG.info("sleep[daysago=" + daysAgo + "][i=" + i + "] type=" + type + ", start_h=" + start_h + ", start_m=" + start_m);
 
                 Calendar thisSample = Calendar.getInstance();
                 thisSample.add(Calendar.DAY_OF_MONTH, -daysAgo);
