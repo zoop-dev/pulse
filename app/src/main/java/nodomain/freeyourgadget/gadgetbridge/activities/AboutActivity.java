@@ -19,15 +19,18 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.licenses.LicensesActivity;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class AboutActivity extends AbstractGBActivity {
@@ -51,6 +54,9 @@ public class AboutActivity extends AbstractGBActivity {
         link2.setMovementMethod(LinkMovementMethod.getInstance());
         TextView link3 = findViewById(R.id.links3);
         link3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        Button licensesButton = findViewById(R.id.showLicenses);
+        licensesButton.setOnClickListener(v -> startActivity(new Intent(AboutActivity.this, LicensesActivity.class)));
     }
 
     private void copyVersionToClipboard(View view) {

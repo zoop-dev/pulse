@@ -191,6 +191,9 @@
     <string name="open_fw_installer_getting_files_text">Since we may not distribute the firmware files, you will have to get the files yourself. This means that you will need to search for the files in apk files, online, in forums, on Amazfitwatchfaces (for Miband/Amazfit devices) and so on.</string>
     <string name="open_fw_installer_pick_file">Select file</string>
     <string name="open_fw_installer_info_text_title">File Installer</string>
+    <string name="open_source_licenses">Licenses</string>
+    <string name="dialog_close">Close</string>
+    <string name="dialog_open_url">Open URL</string>
     <string name="open_fw_installer_select_file">Select a file you want to upload to device: %s</string>
     <string name="open_fw_installer_connect_minimum_one_device">Please connect AT LEAST ONE device you want to send the file to.</string>
     <string name="open_fw_installer_connect_maximum_one_device">Please connect ONLY ONE device you want to send the file to.</string>

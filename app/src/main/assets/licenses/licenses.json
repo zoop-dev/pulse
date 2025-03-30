@@ -1,0 +1,211 @@
+[
+  {
+    "name": "Aho-Corasick",
+    "owner": "Robert Bor",
+    "type": "Apache 2.0",
+    "url": "https://github.com/robert-bor/aho-corasick",
+    "path": "licenses/aho-corasick.txt"
+  },
+  {
+    "name": "android-emojify",
+    "owner": "AniTrend",
+    "type": "Apache 2.0",
+    "url": "https://github.com/AniTrend/android-emojify",
+    "path": "licenses/android-emojify.txt"
+  },
+  {
+    "name": "Android Jetpack",
+    "owner": "Google",
+    "type": "Apache 2.0",
+    "url": "https://github.com/androidx/androidx",
+    "path": "licenses/androidx.txt"
+  },
+  {
+    "name": "Bouncy Castle Crypto",
+    "owner": "Legion of the Bouncy Castle",
+    "type": "MIT",
+    "url": "https://www.bouncycastle.org/",
+    "path": "licenses/bc-java.txt"
+  },
+  {
+    "name": "MessagePack",
+    "owner": "Sadayuki Furuhashi",
+    "type": "Apache 2.0",
+    "url": "https://github.com/msgpack/msgpack-java",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "nQuant.android",
+    "owner": "Miller Cy Chan",
+    "type": "Apache 2.0",
+    "url": "https://github.com/mcychan/nQuant.android",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "OsmAnd",
+    "owner": "OsmAnd BV",
+    "type": "GPLv3",
+    "url": "https://github.com/osmandapp/Osmand",
+    "path": "licenses/gpl-3.0.txt"
+  },
+  {
+    "name": "Protocol Buffers",
+    "owner": "Google",
+    "type": "BSD-3",
+    "url": "https://github.com/protocolbuffers/protobuf",
+    "path": "licenses/protobuf.txt"
+  },
+  {
+    "name": "desugar_jdk_libs",
+    "owner": "Google",
+    "type": "GPLv2",
+    "url": "https://github.com/google/desugar_jdk_libs",
+    "path": "licenses/desugar_jdk_libs.txt"
+  },
+  {
+    "name": "volley",
+    "owner": "Google",
+    "type": "Apache 2.0",
+    "url": "https://github.com/google/volley",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "flexbox-layout",
+    "owner": "Google",
+    "type": "Apache 2.0",
+    "url": "https://github.com/google/flexbox-layout",
+    "path": "licenses/flexbox-layout.txt"
+  },
+  {
+    "name": "Color Picker",
+    "owner": "Daniel Nilsson, Jared Rummler",
+    "type": "Apache 2.0",
+    "url": "https://github.com/jaredrummler/ColorPicker",
+    "path": "licenses/color-picker.txt"
+  },
+  {
+    "name": "cbor-java",
+    "owner": "Constantin Rack",
+    "type": "Apache 2.0",
+    "url": "https://github.com/c-rack/cbor-java",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "durationformatter",
+    "owner": "Peter Fichtner",
+    "type": "Apache 2.0",
+    "url": "https://github.com/pfichtner/durationformatter",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "MPAndroidChart",
+    "owner": "Philipp Jahoda",
+    "type": "Apache 2.0",
+    "url": "https://github.com/PhilJay/MPAndroidChart",
+    "path": "licenses/mpandroidchart.txt"
+  },
+  {
+    "name": "logback-android",
+    "owner": "Tony Trinh",
+    "type": "Apache 2.0",
+    "url": "https://github.com/tony19/logback-android",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "material-components-android",
+    "owner": "Google",
+    "type": "Apache 2.0",
+    "url": "https://github.com/material-components/material-components-android",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "gson",
+    "owner": "Google",
+    "type": "Apache 2.0",
+    "url": "https://github.com/google/gson",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "ckChangeLog",
+    "owner": "cketti and contributors",
+    "type": "Apache 2.0",
+    "url": "https://github.com/cketti/ckChangeLog",
+    "path": "licenses/ckchangelog.txt"
+  },
+  {
+    "name": "solarpositioning",
+    "owner": "Klaus A. Brunner",
+    "type": "MIT",
+    "url": "https://github.com/klausbrunner/solarpositioning",
+    "path": "licenses/solarpositioning.txt"
+  },
+  {
+    "name": "DFU Library",
+    "owner": "Nordic Semiconductor",
+    "type": "BSD-3",
+    "url": "https://github.com/NordicSemiconductor/Android-DFU-Library",
+    "path": "licenses/nordic-dfu.txt"
+  },
+  {
+    "name": "commons-lang3",
+    "owner": "Apache Software Foundation",
+    "type": "Apache 2.0",
+    "url": "https://commons.apache.org/proper/commons-lang/",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "CyanogenMod Platform SDK",
+    "owner": "CyanogenMod",
+    "type": "Apache 2.0",
+    "url": "https://github.com/CyanogenMod/cm_platform_sdk",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "greenDAO",
+    "owner": "greenrobot",
+    "type": "Apache 2.0",
+    "url": "https://github.com/greenrobot/greenDAO",
+    "path": "licenses/apache-2.0.txt"
+  },
+  {
+    "name": "slf4j",
+    "owner": "QOS.ch Sarl (Switzerland)",
+    "type": "MIT",
+    "url": "https://github.com/qos-ch/slf4j",
+    "path": "licenses/slf4j.txt"
+  },
+  {
+    "name": "JSON In Java",
+    "owner": "Sean Leary",
+    "type": "Public Domain",
+    "url": "https://github.com/stleary/JSON-java"
+  },
+  {
+    "name": "JUnit 4",
+    "owner": "JUnit Team",
+    "type": "EPL-1.0",
+    "url": "https://github.com/junit-team/junit4",
+    "path": "licenses/junit4.txt"
+  },
+  {
+    "name": "Hamcrest",
+    "owner": "www.hamcrest.org",
+    "type": "BSD-3",
+    "url": "https://github.com/hamcrest/JavaHamcrest",
+    "path": "licenses/hamcrest.txt"
+  },
+  {
+    "name": "Mockito",
+    "owner": "Mockito contributors",
+    "type": "MIT",
+    "url": "https://github.com/mockito/mockito",
+    "path": "licenses/mockito.txt"
+  },
+  {
+    "name": "Roboelectric",
+    "owner": "Xtreme Labs and Pivotal Labs",
+    "type": "MIT",
+    "url": "https://github.com/robolectric/robolectric",
+    "path": "licenses/roboelectric.txt"
+  }
+]

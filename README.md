@@ -22,9 +22,9 @@ vendor's servers.
 ## Code Licenses
 
 * Gadgetbridge is licensed under the AGPLv3
-* Files in app/src/main/java/net/osmand/ and app/src/main/aidl/net/osmand/ are licensed under the GPLv3 by OsmAnd BV
-* Files in app/src/main/java/org/bouncycastle are licensed under the MIT license by The Legion of the Bouncy Castle Inc.
-* Files in app/src/main/java/com/android/nQuant are licensed under the Apache license by Miller Cy Chan
+* Files in app/src/main/java/net/osmand/ and app/src/main/aidl/net/osmand/ are taken from the [OsmAnd](https://osmand.net/) project, licensed under the GPLv3 by OsmAnd BV
+* Files in app/src/main/java/org/bouncycastle are taken from the [Bouncy Castle](https://www.bouncycastle.org/java.html) project, licensed under the MIT license by The Legion of the Bouncy Castle Inc.
+* Files in app/src/main/java/com/android/nQuant are taken from the [nQuant.android](https://github.com/mcychan/nQuant.android/) project, licensed under the Apache license by Miller Cy Chan
 
 ## Download
 
