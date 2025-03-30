@@ -3879,4 +3879,5 @@
     <string name="huawei_stress_calibrate_started">Kalibrace stresu spuštěna</string>
     <string name="huawei_stress_calibrate_error">Chyba kalibrace stresu</string>
     <string name="huawei_stress_calibrate_information">Pro optimální výsledky si před spuštěním měření odpočiňte a během měření zůstaňte v klidu. \n Zařízení utáhněte, obrazovka by měla být nahoře a senzor by se měl přímo dotýkat vaší kůže.</string>
+    <string name="stats_average_hr">Průměrný tep</string>
 </resources>
