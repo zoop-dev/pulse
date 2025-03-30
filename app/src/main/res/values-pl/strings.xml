@@ -3887,4 +3887,18 @@
     <string name="zepp_os_install_map_instructions">Po rozpoczęciu instalacji na telefonie należy ją zaakceptować także na zegarku.</string>
     <string name="map_upload_failed">Przesyłanie mapy nie powiodło się</string>
     <string name="devicetype_huawei_band10">Huawei Band 10</string>
+    <string name="huawei_stress_test_enable">Automatyczny test stresu</string>
+    <string name="huawei_stress_no_calibration_data">Brak danych początkowych – najpierw skalibruj</string>
+    <string name="huawei_stress_test_enable_summary">Włącz lub wyłącz automatyczny test stresu</string>
+    <string name="huawei_stress_calibrate">Skalibruj</string>
+    <string name="huawei_stress_calibrate_summary">Kalibracja automatycznego testu stresu</string>
+    <string name="huawei_stress_calibrate_started">Rozpoczęto kalibrację stresu</string>
+    <string name="huawei_stress_calibrate_in_progress">Kalibracja stresu już trwa</string>
+    <string name="huawei_stress_calibrate_done">Kalibracja stresu została wykonana</string>
+    <string name="huawei_stress_calibrate_error">Błąd kalibracji stresu</string>
+    <string name="huawei_stress_calibrate_start">Start</string>
+    <string name="huawei_stress_calibrate_finish">Koniec</string>
+    <string name="huawei_stress_calibrate_again">Skalibruj ponownie</string>
+    <string name="huawei_stress_calibrate_adjust_score">Dostosuj wynik</string>
+    <string name="huawei_stress_calibrate_information">Aby uzyskać optymalne wyniki, odpocznij chwilę przed rozpoczęciem testu i pozostań nieruchomo podczas testu.\nMocno zamocuj urządzenie, ekranem skierowanym do góry, a czujnikiem w bezpośrednim kontakcie ze skórą.</string>
 </resources>
