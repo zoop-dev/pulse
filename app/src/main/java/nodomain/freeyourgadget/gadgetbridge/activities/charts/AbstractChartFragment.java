@@ -206,7 +206,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
 
     protected void onReceive(Context context, Intent intent) {
         final FragmentActivity fragmentActivity = requireActivity();
-        if (fragmentActivity instanceof ChartsHost) {
+        if (!(fragmentActivity instanceof ChartsHost)) {
             LOG.error("{} is not an instance of ChartsHost, preventing crash", fragmentActivity.getClass());
             return;
         }
