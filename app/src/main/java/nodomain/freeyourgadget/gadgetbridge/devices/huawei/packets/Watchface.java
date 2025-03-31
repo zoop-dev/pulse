@@ -256,7 +256,7 @@ public class Watchface {
         }
 
         public static class Response extends HuaweiPacket {
-            public HashMap<String, String> watchFaceNames = new HashMap<String, String>();
+            public HashMap<String, String> watchFaceNames = new HashMap<>();
             public Response (ParamsProvider paramsProvider) {
                 super(paramsProvider);
             }

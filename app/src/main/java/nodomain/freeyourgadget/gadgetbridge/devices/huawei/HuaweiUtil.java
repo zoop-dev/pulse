@@ -38,7 +38,7 @@ public class HuaweiUtil {
             assert t != null;
             calendar.setTime(t);
         } catch (ParseException e) {
-            LOG.error("Time conversion error: " + e);
+            LOG.error("Time to Byte conversion error", e);
             return null;
         }
         return new byte[]{

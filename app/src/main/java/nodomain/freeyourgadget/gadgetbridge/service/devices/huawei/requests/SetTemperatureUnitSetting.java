@@ -12,7 +12,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.LocaleConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SetTemperatureUnitSetting extends Request {
-    private static final Logger LOG = LoggerFactory.getLogger(SetLanguageSettingRequest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SetTemperatureUnitSetting.class);
 
     public SetTemperatureUnitSetting(HuaweiSupportProvider support) {
         super(support);

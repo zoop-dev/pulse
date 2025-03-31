@@ -108,7 +108,7 @@ public class HuaweiAppManager {
                     SendAppDelete sendAppDelete = new SendAppDelete(support, appInfo.packageName);
                     sendAppDelete.doPerform();
                 } catch (IOException e) {
-                    LOG.error("Could not delete app: " + appInfo.packageName, e);
+                    LOG.error("Could not delete app: {}", appInfo.packageName, e);
                 }
                 return true;
             }

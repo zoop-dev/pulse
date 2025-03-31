@@ -99,7 +99,7 @@ public class HuaweiUploadManager {
             currentUploadPosition = 0;
             uploadChunkSize = 0;
 
-            LOG.info("File ready for upload, SHA256: "+ GB.hexdump(fileSHA256) + " fileName: " + fileName + " filetype: ", fileType);
+            LOG.info("File ready for upload, SHA256: {} fileName: {} filetype: {}", GB.hexdump(fileSHA256), fileName, fileType);
 
         }
 

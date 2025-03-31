@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCrypto;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket.CryptoException;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DeviceConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;

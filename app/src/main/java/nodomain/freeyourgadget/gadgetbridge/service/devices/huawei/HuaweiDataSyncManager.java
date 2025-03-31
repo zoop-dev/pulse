@@ -7,18 +7,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncCommon;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiBaseP2PService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetHiChainRequest;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetPincodeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDataSyncConfigCommand;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDataSyncDataCommand;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDataSyncDictDataCommand;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDataSyncEventCommand;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class HuaweiDataSyncManager {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiDataSyncManager.class);

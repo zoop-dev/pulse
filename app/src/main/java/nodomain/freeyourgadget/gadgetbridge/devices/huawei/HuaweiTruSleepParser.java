@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiFileDownloadManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
@@ -215,7 +214,7 @@ public class HuaweiTruSleepParser {
 
             byte tag = buffer.get();
 
-            ArrayList<Short> al = new ArrayList<Short>();
+            ArrayList<Short> al = new ArrayList<>();
             if (tag == TAG_COMPRESSION_RAW) {
                 if (buffer.remaining() < countShort * 2)
                     throw new IllegalArgumentException("Not enough elements in buffer");
@@ -256,7 +255,7 @@ public class HuaweiTruSleepParser {
 
             byte tag = buffer.get();
 
-            ArrayList<Short> al = new ArrayList<Short>();
+            ArrayList<Short> al = new ArrayList<>();
             if (tag == TAG_COMPRESSION_RAW) {
                 if (buffer.remaining() < countShort * 2)
                     throw new IllegalArgumentException("Not enough elements in buffer");

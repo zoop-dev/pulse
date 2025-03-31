@@ -261,7 +261,7 @@ public class HuaweiWatchfaceManager
             sendWatchfaceOperation.setFinalizeReq(finalizeReq);
             sendWatchfaceOperation.doPerform();
         } catch (IOException e) {
-            LOG.error("Could not set watchface ", getFullFileName(uuid), e );
+            LOG.error("Could not set watchface: {}", getFullFileName(uuid), e);
         }
     }
 
@@ -285,7 +285,7 @@ public class HuaweiWatchfaceManager
             sendWatchfaceOperation.setFinalizeReq(finalizeReq);
             sendWatchfaceOperation.doPerform();
         } catch (IOException e) {
-            LOG.error("Could not delete watchface", getFullFileName(uuid), e);
+            LOG.error("Could not delete watchface: {}", getFullFileName(uuid), e);
         }
     }
 
