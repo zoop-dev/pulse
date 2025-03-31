@@ -18,8 +18,8 @@ public class HuaweiStressScoreCalculation {
     private static final float SCORE_INIT_VALUE = 3.835272F;
     private static final float[] COEFFICIENTS = {0.16605523F, 0.24399279F, 0.0F, 0.0F, -0.07095941F, -0.20609115F, 0.0F, -0.14579488F, -0.09786916F, 0.0F};
 
-    private static final float MIN_SCORE = 0.0f;
-    private static final float MAX_SCORE = 7.0f;
+    private static final float MIN_SCORE = 0.0F;
+    private static final float MAX_SCORE = 7.0F;
     private static final int OUTPUT_MIN = 15;
     private static final int OUTPUT_MAX = 90;
 
@@ -41,7 +41,7 @@ public class HuaweiStressScoreCalculation {
     }
 
     private static int calculateNormalizedScore(float value) {
-        final int score = (int) ((value * 14.0f) + 1.5f);
+        final int score = (int) ((value * 14.0F) + 1.5F);
         return Math.min(Math.max(score, 1), 99);
     }
 
