@@ -3822,4 +3822,14 @@
     <string name="ultrahuman_airplane_mode_unknown">неизвестная ошибка – режим полёта НЕ активирован</string>
     <string name="ultrahuman_airplane_mode_question">Активировать режим полёта?</string>
     <string name="pref_import_activity_files_title">Импорт файлов активности</string>
+    <string name="open_source_licenses">Лицензии</string>
+    <string name="dialog_close">Закрыть</string>
+    <string name="dialog_open_url">Открыть ссылку</string>
+    <string name="map_upload_complete">Карта успешно загружена</string>
+    <string name="map_upload_in_progress">Загрузка карты</string>
+    <string name="stats_average_hr">Средний пульс</string>
+    <string name="devicetype_huawei_band10">Huawei Band 10</string>
+    <string name="pref_title_stable_connection">Стабильное соединение</string>
+    <string name="zepp_os_install_map_instructions">После того, как на телефоне начнётся установка, нужно будет её подтвердить и на часах.</string>
+    <string name="map_upload_failed">Ошибка загрузки карты</string>
 </resources>
