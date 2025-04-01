@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         android:icon="@drawable/ic_download"
         android:key="maps_download"
@@ -11,4 +12,18 @@
         android:icon="@drawable/ic_folder"
         android:key="maps_folder"
         android:title="@string/folder" />
+
+    <PreferenceCategory
+        android:key="pref_header_theme"
+        android:title="@string/pref_title_theme"
+        app:iconSpaceReserved="false">
+
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            android:defaultValue="@color/map_track_default"
+            android:icon="@drawable/ic_paint"
+            android:key="maps_track_color"
+            android:title="@string/maps_track_color_title"
+            app:cpv_dialogTitle="@string/maps_track_color_title" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -23,17 +23,22 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.Preference;
 
 import java.util.Objects;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager;
 
 public class MapsSettingsFragment extends AbstractPreferenceFragment {
     static final String FRAGMENT_TAG = "MAP_SETTINGS_FRAGMENT";
+
+    public static final String ACTION_SETTING_CHANGE = "nodomain.freeyourgadget.gadgetbridge.maps.setting_change";
 
     @Override
     public void onCreatePreferences(@Nullable final Bundle savedInstanceState, @Nullable final String rootKey) {
@@ -65,6 +70,7 @@ public class MapsSettingsFragment extends AbstractPreferenceFragment {
                                 .putString(MapsManager.PREF_MAPS_FOLDER, localUri.toString())
                                 .apply();
                         prefFolder.setSummary(localUri.toString());
+                        broadcastPreferenceChange();
                     }
                 }
         );
@@ -74,5 +80,17 @@ public class MapsSettingsFragment extends AbstractPreferenceFragment {
             mapsFolderChooser.launch(null);
             return true;
         });
+
+        final Preference prefTrackColor = Objects.requireNonNull(findPreference(MapsManager.PREF_TRACK_COLOR));
+        prefTrackColor.setOnPreferenceChangeListener((preference, newValue) -> {
+            broadcastPreferenceChange();
+            return true;
+        });
+    }
+
+    private void broadcastPreferenceChange() {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_SETTING_CHANGE);
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);
     }
 }

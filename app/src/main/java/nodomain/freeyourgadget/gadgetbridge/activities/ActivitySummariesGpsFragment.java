@@ -16,7 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -26,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
@@ -50,7 +54,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Objects;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
@@ -71,6 +77,17 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     private File inputFile;
     private MapsManager mapsManager;
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            if (MapsSettingsFragment.ACTION_SETTING_CHANGE.equals(intent.getAction())) {
+                // FIXME: Map reloading is not working properly
+                //LOG.debug("Reloading map view");
+                //mapsManager.loadMaps(mapView);
+            }
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +99,10 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
         mapsManager = new MapsManager(requireContext());
         mapsManager.loadMaps(mapView);
 
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE);
+        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mReceiver, intentFilter);
+
         if (mapsManager.isMapLoaded()) {
             gpsWarning.setVisibility(View.GONE);
         }
@@ -90,6 +111,12 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
             processInBackgroundThread();
         }
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mReceiver);
+        super.onDestroyView();
     }
 
     public void set_data(File inputFile) {
@@ -156,7 +183,8 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
                 .collect(Collectors.toList());
 
         Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-        paint.setColor(getResources().getColor(R.color.hrv_status_low));
+        final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
+        paint.setColor(trackColor);
         paint.setStrokeWidth(8);
         paint.setStyle(Style.STROKE);
         Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);

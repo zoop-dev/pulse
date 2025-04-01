@@ -45,6 +45,7 @@ public final class MapsManager {
     private static final Logger LOG = LoggerFactory.getLogger(MapsManager.class);
 
     public static final String PREF_MAPS_FOLDER = "maps_folder";
+    public static final String PREF_TRACK_COLOR = "maps_track_color";
 
     private final Context mContext;
 

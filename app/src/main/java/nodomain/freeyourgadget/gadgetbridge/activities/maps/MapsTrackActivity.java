@@ -16,10 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.maps;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
@@ -30,6 +38,8 @@ import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.overlay.Polyline;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Collections;
@@ -37,6 +47,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesGpsFragment;
@@ -44,10 +55,25 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager;
 
-public class MapsTrackActivity extends AbstractGBActivity {
+public class MapsTrackActivity extends AbstractGBActivity implements MenuProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(MapsTrackActivity.class);
+
     private MapView mapView;
     private File file;
     public static boolean isActivityOpen = false;
+
+    private MapsManager mapsManager;
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            if (MapsSettingsFragment.ACTION_SETTING_CHANGE.equals(intent.getAction())) {
+                // FIXME: Map reloading is not working properly
+                //LOG.debug("Reloading map view");
+                //mapsManager.loadMaps(mapView);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +86,16 @@ public class MapsTrackActivity extends AbstractGBActivity {
         }
         isActivityOpen = true;
 
+        // FIXME: This is disabled since map reloading is not working properly
+        //addMenuProvider(this);
+
         mapView = findViewById(R.id.activitygpsview);
-        MapsManager mapsManager = new MapsManager(this);
+        mapsManager = new MapsManager(this);
         mapsManager.loadMaps(mapView);
+
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter);
 
         file = (File) getIntent().getExtras().get("file");
         final List<GPSCoordinate> trackPoints = ActivitySummariesGpsFragment.getActivityPoints(file)
@@ -83,7 +116,8 @@ public class MapsTrackActivity extends AbstractGBActivity {
                 .collect(Collectors.toList());
 
         Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-        paint.setColor(getResources().getColor(R.color.hrv_status_low));
+        final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
+        paint.setColor(trackColor);
         paint.setStrokeWidth(8);
         paint.setStyle(Style.STROKE);
         Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
@@ -123,6 +157,23 @@ public class MapsTrackActivity extends AbstractGBActivity {
         synchronized (MapsTrackActivity.class) {
             isActivityOpen = false;
         }
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
+    @Override
+    public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.maps_track_menu, menu);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
+        final int itemId = menuItem.getItemId();
+        if (itemId == R.id.maps_settings) {
+            final Intent enableIntent = new Intent(this, MapsSettingsActivity.class);
+            startActivity(enableIntent);
+            return true;
+        }
+        return false;
+    }
 }

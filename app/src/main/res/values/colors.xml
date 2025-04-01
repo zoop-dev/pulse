@@ -86,6 +86,8 @@
     <color name="alternate_row_background_light">#FFEDEDED</color>
     <color name="alternate_row_background_dark">#545254</color>
 
+    <color name="map_track_default" type="color">#fc5203</color>
+
     <color name="transparent">#00000000</color>
 
     <drawable name="selected">@color/accent</drawable>

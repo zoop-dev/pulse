@@ -3809,4 +3809,5 @@
     <string name="maps_settings">Maps settings</string>
     <string name="maps_download_title">Download Maps</string>
     <string name="maps_download_summary">Click here to download map files. They should be saved to the folder selected in the preference below.</string>
+    <string name="maps_track_color_title">Track color</string>
 </resources>
