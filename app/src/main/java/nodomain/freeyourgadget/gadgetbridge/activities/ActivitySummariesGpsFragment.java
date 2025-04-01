@@ -201,38 +201,33 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
         byte zoom = LatLongUtils.zoomForBounds(new Dimension(screenWidth, height), boundingBox, model.displayModel.getTileSize());
         model.mapViewPosition.setMapPosition(new MapPosition(boundingBox.getCenterPoint(), zoom));
 
-        View.OnTouchListener controlTouchListener = new View.OnTouchListener() {
+        final View.OnTouchListener controlTouchListener = new View.OnTouchListener() {
             private float startX, startY;
             private static final int TAP_THRESHOLD = 10;
             private static final int LONG_PRESS_TIME = 300;
             private long pressTime;
-            private Runnable longPressRunnable;
+            private boolean isDrag = false;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        isDrag = false;
                         startX = event.getX();
                         startY = event.getY();
                         pressTime = System.currentTimeMillis();
-                        longPressRunnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                if (System.currentTimeMillis() - pressTime >= LONG_PRESS_TIME) {
-                                    openMapActivity();
-                                }
-                            }
-                        };
-                        v.postDelayed(longPressRunnable, LONG_PRESS_TIME);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (Math.abs(startX - event.getX()) > TAP_THRESHOLD || Math.abs(startY - event.getY()) > TAP_THRESHOLD) {
-                            v.removeCallbacks(longPressRunnable);
+                            isDrag = true;
                         }
                         break;
                     case MotionEvent.ACTION_UP:
+                        if (!isDrag && System.currentTimeMillis() - pressTime < LONG_PRESS_TIME) {
+                            openMapActivity();
+                        }
+                        break;
                     case MotionEvent.ACTION_CANCEL:
-                        v.removeCallbacks(longPressRunnable);
                         break;
                 }
                 return true;
