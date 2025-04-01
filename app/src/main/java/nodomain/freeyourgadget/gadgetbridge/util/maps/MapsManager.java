@@ -36,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
@@ -88,20 +87,19 @@ public final class MapsManager {
 
             try {
                 FileInputStream inputStream = (FileInputStream) mContext.getContentResolver().openInputStream(documentFile.getUri());
-                assert inputStream != null;
-                MapFile mapFile = new MapFile(inputStream, 0, null);
+                final MapFile mapFile = new MapFile(inputStream, 0, null);
                 multiMapDataStore.addMapDataStore(mapFile, true, true);
                 isMapLoaded = true;
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+            } catch (final Exception e) {
+                LOG.error("Failed to load map file", e);
             }
         }
 
-        TileCache tileCache = AndroidUtil.createTileCache(mContext, "mapcache",
+        final TileCache tileCache = AndroidUtil.createTileCache(mContext, "mapcache",
                 mapView.getModel().displayModel.getTileSize(), 1f,
                 mapView.getModel().frameBufferModel.getOverdrawFactor());
 
-        TileRendererLayer tileRendererLayer = new TileRendererLayer(
+        final TileRendererLayer tileRendererLayer = new TileRendererLayer(
                 tileCache, multiMapDataStore,
                 mapView.getModel().mapViewPosition, true, false, false, AndroidGraphicFactory.INSTANCE) {
             @Override
