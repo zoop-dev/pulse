@@ -3796,4 +3796,14 @@ Temps de sommeil préféré en heures</string>
     <string name="ultrahuman_airplane_mode_activated">mode avion activé</string>
     <string name="pairing_even_realities_g1_bottom_hint">Plusieurs boîtes de dialogue d’appariement s’afficheront sur votre appareil Android. Si ce n’est pas le cas, regardez dans le tiroir des notifications et acceptez la demande d’appariement. Les lentilles gauche et droite devront être jumelées.</string>
     <string name="earfun_tap_action_noise_control_wind_ambient">Contrôle du bruit (vent, son ambiant)</string>
+    <string name="earfun_microphone_mode">Mode microphone</string>
+    <string name="banglejs_notification_missed_call_source">Appel entrant</string>
+    <string name="banglejs_notification_missed_call_suppressed_caller_id">Appelant inconnu. ID est supprimé</string>
+    <string name="dialog_close">Fermer</string>
+    <string name="dialog_open_url">Ouvrir URL</string>
+    <string name="pref_title_stable_connection">Connexion stable</string>
+    <string name="earfun_header_system_settings">Paramètres système</string>
+    <string name="huawei_stress_calibrate_start">Démarrer</string>
+    <string name="huawei_stress_calibrate_finish">Terminé</string>
+    <string name="banglejs_notification_missed_call_title">Appel manqué</string>
 </resources>
