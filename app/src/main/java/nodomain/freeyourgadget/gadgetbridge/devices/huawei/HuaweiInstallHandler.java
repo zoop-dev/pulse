@@ -36,8 +36,8 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiAppManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiFwHelper;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiMusicManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWatchfaceManager;
+import nodomain.freeyourgadget.gadgetbridge.util.audio.AudioInfo;
 
 public class HuaweiInstallHandler implements InstallHandler {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiInstallHandler.class);
@@ -66,7 +66,7 @@ public class HuaweiInstallHandler implements InstallHandler {
     }
 
     //TODO: add proper checks
-    private boolean checkMediaCompatibility(HuaweiMusicUtils.MusicCapabilities capabilities, HuaweiMusicManager.AudioInfo currentMusicInfo) {
+    private boolean checkMediaCompatibility(HuaweiMusicUtils.MusicCapabilities capabilities, AudioInfo currentMusicInfo) {
         if (capabilities == null) {
             LOG.error("No media info from device");
             return false;
@@ -257,7 +257,7 @@ public class HuaweiInstallHandler implements InstallHandler {
             if (capabilities == null) {
                 capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getMusicInfoParams();
             }
-            HuaweiMusicManager.AudioInfo currentMusicInfo = helper.getMusicInfo();
+            AudioInfo currentMusicInfo = helper.getMusicInfo();
 
             boolean isMediaCompatible = checkMediaCompatibility(capabilities, currentMusicInfo);
 

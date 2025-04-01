@@ -17,17 +17,10 @@
 
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaExtractor;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaFormat;
 import android.net.Uri;
-import android.provider.OpenableColumns;
-import android.text.TextUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +40,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBZipFile;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.ZipFileException;
+import nodomain.freeyourgadget.gadgetbridge.util.audio.AudioInfo;
+import nodomain.freeyourgadget.gadgetbridge.util.audio.MusicUtils;
 
 public class HuaweiFwHelper {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiFwHelper.class);
@@ -62,7 +57,7 @@ public class HuaweiFwHelper {
     Bitmap previewBitmap;
     HuaweiWatchfaceManager.WatchfaceDescription watchfaceDescription;
     HuaweiAppManager.AppConfig appConfig;
-    HuaweiMusicManager.AudioInfo musicInfo;
+    AudioInfo musicInfo;
     Context mContext;
 
     public boolean isFirmware = false;
@@ -70,16 +65,8 @@ public class HuaweiFwHelper {
 
 
     public HuaweiFwHelper(final Uri uri, final Context context) {
-
         this.uri = uri;
-        final UriHelper uriHelper;
         this.mContext = context;
-        try {
-            uriHelper = UriHelper.get(uri, context);
-        } catch (final IOException e) {
-            LOG.error("Failed to get uri helper for {}", uri, e);
-            return;
-        }
 
         parseFile();
     }
@@ -90,9 +77,11 @@ public class HuaweiFwHelper {
         } else if (parseAsMusic()) {
             fileType = FileUpload.Filetype.music;
         } else if (parseAsApp()) {
+            assert appConfig != null;
             assert appConfig.bundleName != null;
             fileType = FileUpload.Filetype.app;
         } else if (parseAsWatchFace()) {
+            assert watchfaceDescription != null;
             assert watchfaceDescription.screen != null;
             assert watchfaceDescription.title != null;
             fileType = FileUpload.Filetype.watchface;
@@ -158,76 +147,6 @@ public class HuaweiFwHelper {
         return false;
     }
 
-    private String getNameWithoutExtension(String fileName) {
-        return fileName.indexOf(".") > 0 ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
-    }
-
-    private String getExtension(String fileName) {
-        if (TextUtils.isEmpty(fileName)) {
-            return null;
-        }
-        int lastIndexOf = fileName.lastIndexOf(".");
-        if (lastIndexOf >= 0 && lastIndexOf + 1 < fileName.length()) {
-            return fileName.substring(lastIndexOf + 1);
-        }
-        return null;
-    }
-
-    private HuaweiMusicManager.AudioInfo getAudioInfo(Uri selectedUri) throws IOException {
-        ContentResolver contentResolver = mContext.getContentResolver();
-        String[] filePathColumn = {OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
-
-        Cursor cursor = contentResolver.query(selectedUri, filePathColumn, null, null, null);
-        if (cursor == null)
-            return null;
-        cursor.moveToFirst();
-
-        int fileNameIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String fileName = cursor.getString(fileNameIndex);
-        int fileSizeIndex = cursor.getColumnIndex(filePathColumn[1]);
-        long fileSize = cursor.getLong(fileSizeIndex);
-        cursor.close();
-
-        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(mContext, selectedUri);
-
-        String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-        String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-
-        if (TextUtils.isEmpty(title)) {
-            title = getNameWithoutExtension(fileName);
-        }
-        if (TextUtils.isEmpty(artist)) {
-            artist = "Unknown";
-        }
-
-        MediaExtractor mex = new MediaExtractor();
-        mex.setDataSource(mContext, selectedUri, null);
-
-
-        MediaFormat mf = mex.getTrackFormat(0);
-
-        int bitrate = -1; // TODO: calculate or get bitrate
-        int sampleRate = mf.getInteger(MediaFormat.KEY_SAMPLE_RATE);
-        int channels = mf.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
-        long duration = mf.getLong(MediaFormat.KEY_DURATION);
-
-        LOG.info("bitRate: {}", bitrate);
-        LOG.info("sampleRate: {}", sampleRate);
-        LOG.info("channelCount: {}", channels);
-        LOG.info("duration: {}", duration);
-
-        String extension = getExtension(fileName);
-        if (!TextUtils.isEmpty(extension)) {
-            extension = extension.toLowerCase();
-        }
-
-        HuaweiMusicManager.AudioInfo audioInfo = new HuaweiMusicManager.AudioInfo(fileName, fileSize, title, artist, extension);
-        audioInfo.setCharacteristics(duration, sampleRate, bitrate, (byte) channels);
-
-        return audioInfo;
-    }
-
     private byte[] getFileData(UriHelper uriHelper) throws IOException {
         InputStream inputStream = uriHelper.openInputStream();
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -245,18 +164,9 @@ public class HuaweiFwHelper {
     boolean parseAsMusic() {
         try {
             final UriHelper uriHelper = UriHelper.get(uri, this.mContext);
-
-            String mimeType = mContext.getContentResolver().getType(uri);
-            LOG.info("File mime type: {}", mimeType);
-
-            if (mimeType == null || !mimeType.startsWith("audio/"))
-                return false;
-
-            musicInfo = getAudioInfo(uri);
+            musicInfo = MusicUtils.audioInfoFromUri(mContext, uri);
             if (musicInfo == null)
                 return false;
-
-            musicInfo.setMimeType(mimeType);
 
             byte[] musicData = getFileData(uriHelper);
 
@@ -337,8 +247,8 @@ public class HuaweiFwHelper {
             byte[] bom = new byte[3];
             // get the first 3 bytes
             bb.get(bom, 0, bom.length);
-            String content = new String(GB.hexdump(bom));
-            String xmlDescription = null;
+            String content = GB.hexdump(bom);
+            String xmlDescription;
             if ("efbbbf".equalsIgnoreCase(content)) {
                 byte[] contentAfterFirst3Bytes = new byte[bytesDescription.length - 3];
                 bb.get(contentAfterFirst3Bytes, 0, contentAfterFirst3Bytes.length);
@@ -405,7 +315,7 @@ public class HuaweiFwHelper {
         return appConfig;
     }
 
-    public HuaweiMusicManager.AudioInfo getMusicInfo() {
+    public AudioInfo getMusicInfo() {
         return musicInfo;
     }
 
