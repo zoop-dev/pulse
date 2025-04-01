@@ -265,7 +265,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
         builder.queue(mSupport.getQueue());
 
         request.setProgress(request.getProgress() + chunk.length);
-        request.setIndex((byte) (request.getIndex() + 1));
+        request.setIndex(request.getIndex() + 1);
         request.getCallback().onFileUploadProgress(request.getProgress());
     }
 
@@ -342,7 +342,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
                     currentReceiveChunkSize
             );
 
-            currentReceiveRequest.setIndex((byte) (currentReceiveRequest.getIndex() + 1));
+            currentReceiveRequest.setIndex(currentReceiveRequest.getIndex() + 1);
             currentReceiveRequest.setProgress(currentReceiveRequest.getProgress() + currentReceiveChunkSize);
 
             LOG.debug("Got V3 data for session={}, progress={}/{}", currentReceiveSession, currentReceiveRequest.getProgress(), currentReceiveRequest.getSize());
