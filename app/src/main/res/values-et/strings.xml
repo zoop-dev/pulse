@@ -902,4 +902,11 @@
     <string name="first_start_overview_title">Ülevaade</string>
     <string name="first_start_welcome_title">Tere tulemast</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">Eilsed andmed</string>
+    <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
+    <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
+    <string name="about_activity_title_main_nightly">Gadgetbridge Nightly teave</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">Kuva eilsed andmed praeguse kellaaja ja kesköö vahelisel ajal tuhmina</string>
+    <string name="pref_dashboard_widget_today_time_indicator_summary">Kuva praegusel kellaajal indikaator, et eilse ja tänase andmed visuaalselt eraldada</string>
+    <string name="pref_dashboard_widget_today_time_indicator_title">Praeguse aja indikaator</string>
+    <string name="first_start_overview_dashboard">Juhtpaneel võimaldab saada kiire ülevaate sellest, kuidas täna läinud on. Kalendrivaade näitab eesmärkide olekut terve kuu jooksul.</string>
 </resources>
