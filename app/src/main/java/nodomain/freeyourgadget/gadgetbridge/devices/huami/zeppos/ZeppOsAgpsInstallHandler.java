@@ -42,6 +42,8 @@ public class ZeppOsAgpsInstallHandler implements InstallHandler {
     protected final Context mContext;
     private ZeppOsAgpsFile file;
 
+    private static final int MAX_EXPECTED_SIZE = 1024 * 1024; // 1MB, they're usually ~128KB
+
     public ZeppOsAgpsInstallHandler(final Uri uri, final Context context) {
         this.mContext = context;
 
@@ -53,8 +55,13 @@ public class ZeppOsAgpsInstallHandler implements InstallHandler {
             return;
         }
 
+        if (uriHelper.getFileSize() > MAX_EXPECTED_SIZE) {
+            LOG.debug("Not agps - file too large");
+            return;
+        }
+
         try (InputStream in = new BufferedInputStream(uriHelper.openInputStream())) {
-            final byte[] rawBytes = FileUtils.readAll(in, 1024 * 1024); // 1MB, they're usually ~128KB
+            final byte[] rawBytes = FileUtils.readAll(in, MAX_EXPECTED_SIZE);
             final ZeppOsAgpsFile agpsFile = new ZeppOsAgpsFile(rawBytes);
             if (agpsFile.isValid()) {
                 this.file = agpsFile;

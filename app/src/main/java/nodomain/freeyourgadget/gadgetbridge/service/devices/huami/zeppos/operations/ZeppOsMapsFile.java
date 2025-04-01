@@ -96,7 +96,7 @@ public class ZeppOsMapsFile {
             return false;
         }
 
-        return true;
+        return uncompressedSize > 0;
     }
 
     public Uri getUri() {
