@@ -909,4 +909,18 @@
     <string name="pref_dashboard_widget_today_time_indicator_summary">Kuva praegusel kellaajal indikaator, et eilse ja tänase andmed visuaalselt eraldada</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Praeguse aja indikaator</string>
     <string name="first_start_overview_dashboard">Juhtpaneel võimaldab saada kiire ülevaate sellest, kuidas täna läinud on. Kalendrivaade näitab eesmärkide olekut terve kuu jooksul.</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="find_lost_device_message">Kas otsida %1$s?</string>
+    <string name="controlcenter_power_off">Lülita välja</string>
+    <string name="accuracy">Täpsus</string>
+    <string name="balanced">Tasakaalustatud</string>
+    <string name="power_saving">Energiasääst</string>
+    <string name="custom">Kohandatud</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="controlcenter_get_heartrate_measurement">Mõõda südame löögisagedust</string>
+    <string name="action_changelog">Muudatuste logi</string>
+    <string name="controlcenter_power_off_confirm_title">Lülita välja</string>
+    <string name="controlcenter_power_off_confirm_description">Kas soovid seadme välja lülitada?</string>
+    <string name="search">Otsi</string>
 </resources>
