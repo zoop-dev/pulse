@@ -119,6 +119,20 @@
     "path": "licenses/apache-2.0.txt"
   },
   {
+    "name": "Mapsforge",
+    "owner": "Thilo Mühlberg, Jürgen Broß, Ludwig Brinckmann, devemux86",
+    "type": "LGPL-3.0",
+    "url": "https://github.com/mapsforge/mapsforge",
+    "path": "licenses/lgpl-3.0.txt"
+  },
+  {
+    "name": "AndroidSVG",
+    "owner": "Cave Rock Software Ltd",
+    "type": "Apache 2.0",
+    "url": "https://github.com/BigBadaboom/androidsvg",
+    "path": "licenses/androidsvg.txt"
+  },
+  {
     "name": "gson",
     "owner": "Google",
     "type": "Apache 2.0",
