@@ -901,4 +901,5 @@
     <string name="pref_dashboard_all_devices_title">Kõik seadmed</string>
     <string name="first_start_overview_title">Ülevaade</string>
     <string name="first_start_welcome_title">Tere tulemast</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_title">Eilsed andmed</string>
 </resources>
