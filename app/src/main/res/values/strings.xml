@@ -952,6 +952,9 @@
     <string name="map_upload_failed">Map upload failed</string>
     <string name="map_upload_complete">Map upload complete</string>
     <string name="map_upload_in_progress">Uploading map</string>
+    <string name="music_upload_failed">Music upload failed</string>
+    <string name="music_upload_complete">Music upload complete</string>
+    <string name="music_upload_in_progress">Uploading music</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Current MTU of %1$d is too low, please enable high MTU in the device settings and disconnect/re-connect the device.</string>
     <string name="chart_steps">Steps</string>
     <string name="calories">Calories</string>

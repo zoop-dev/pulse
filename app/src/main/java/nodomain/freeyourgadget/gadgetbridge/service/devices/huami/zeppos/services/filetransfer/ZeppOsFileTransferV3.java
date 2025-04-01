@@ -41,6 +41,8 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
 
     private static final byte CMD_DATA_V3_SEND = 0x12;
     private static final byte CMD_DATA_V3_ACK = 0x13;
+    private static final byte CMD_CANCEL_TRANSFER_REQ = 0x20; // 20:01
+    private static final byte CMD_CANCEL_TRANSFER_ACK = 0x21; // 21:01:00
 
     private static final long TRANSFER_TIMEOUT_THRESHOLD_MILLIS = 5_000L;
 

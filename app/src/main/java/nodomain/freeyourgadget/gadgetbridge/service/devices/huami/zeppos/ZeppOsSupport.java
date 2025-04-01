@@ -90,6 +90,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSilentMode;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -129,6 +130,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.upd
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsAgpsUpdateOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsGpxRouteUploadOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsMusicUploadOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAgpsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlarmsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
@@ -734,6 +736,26 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 ).perform();
             } catch (final Exception e) {
                 GB.toast(getContext(), "Gpx install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            }
+
+            return;
+        }
+
+        final ZeppOsMusicInstallHandler musicHandler = new ZeppOsMusicInstallHandler(uri, getContext());
+        if (musicHandler.isValid()) {
+            try {
+                final byte[] musicBytes = musicHandler.readFileBytes();
+                if (musicBytes == null) {
+                    return;
+                }
+                new ZeppOsMusicUploadOperation(
+                        this,
+                        musicHandler.getAudioInfo(),
+                        musicBytes,
+                        fileTransferService
+                ).perform();
+            } catch (final Exception e) {
+                GB.toast(getContext(), "Music install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
 
             return;

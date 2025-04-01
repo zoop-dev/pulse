@@ -67,6 +67,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsRemindersService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsShortcutCardsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferImpl;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public abstract class ZeppOsCoordinator extends HuamiCoordinator {
@@ -120,6 +121,11 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         final ZeppOsMapsInstallHandler mapsInstallHandler = new ZeppOsMapsInstallHandler(uri, context);
         if (mapsInstallHandler.isValid()) {
             return mapsInstallHandler;
+        }
+
+        final ZeppOsMusicInstallHandler musicInstallHandler = new ZeppOsMusicInstallHandler(uri, context);
+        if (musicInstallHandler.isValid()) {
+            return musicInstallHandler;
         }
 
         final ZeppOsFwInstallHandler fwInstallHandler = new ZeppOsFwInstallHandler(
@@ -598,6 +604,13 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     public boolean supportsMaps(final GBDevice device) {
         return supportsDisplayItem(device, "map");
+    }
+
+    public boolean supportsMusicUpload(final GBDevice device) {
+        return supportsDisplayItem(device, "music") &&
+                getPrefs(device)
+                        .getStringSet(ZeppOsFileTransferImpl.PREF_SUPPORTED_SERVICES, Collections.emptySet())
+                        .contains("music");
     }
 
     private boolean supportsConfig(final GBDevice device, final ZeppOsConfigService.ConfigArg config) {
