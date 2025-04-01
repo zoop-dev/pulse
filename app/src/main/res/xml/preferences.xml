@@ -214,6 +214,12 @@
         android:title="@string/activity_prefs_charts"
         app:iconSpaceReserved="false" />
 
+    <Preference
+        android:icon="@drawable/ic_map"
+        android:key="pref_category_maps"
+        android:title="@string/maps"
+        app:iconSpaceReserved="false" />
+
     <PreferenceScreen
         android:icon="@drawable/ic_auto_awesome"
         android:key="pref_screen_automations"
@@ -325,11 +331,6 @@
             android:key="pref_key_opentracks_packagename"
             android:summary="@string/pref_summary_opentracks_packagename"
             android:title="@string/pref_title_opentracks_packagename" />
-
-        <Preference
-            android:key="pref_category_maps"
-            android:title="@string/maps"
-            app:iconSpaceReserved="false" />
 
         <Preference
             android:icon="@drawable/ic_activity_sleep"
