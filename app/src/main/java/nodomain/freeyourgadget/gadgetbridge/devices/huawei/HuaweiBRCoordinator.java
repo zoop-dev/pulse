@@ -220,6 +220,11 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
+    public boolean supportsFindDevice() {
+        return huaweiCoordinator.supportsFindDeviceAbility();
+    }
+
+    @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
         return huaweiCoordinator.getInstallHandler(uri, context);
     }

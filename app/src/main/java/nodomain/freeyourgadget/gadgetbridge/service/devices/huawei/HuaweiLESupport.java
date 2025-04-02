@@ -235,4 +235,9 @@ public class HuaweiLESupport extends AbstractBTLEDeviceSupport {
     public void onSetCannedMessages(final CannedMessagesSpec cannedMessagesSpec) {
         supportProvider.onSetCannedMessages(cannedMessagesSpec);
     }
+
+    @Override
+    public void onFindDevice(boolean start) {
+        supportProvider.onFindDevice(start);
+    }
 }

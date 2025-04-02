@@ -121,6 +121,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
@@ -277,6 +278,8 @@ public class HuaweiSupportProvider {
     protected HuaweiDataSyncManager huaweiDataSyncManager = new HuaweiDataSyncManager(this);
 
     private HuaweiDataSyncGoals huaweiDataSyncTreeCircleGoals = null;
+
+    private HuaweiDataSyncFindDevice huaweiDataSyncFindDevice = null;
 
     protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
 
@@ -927,6 +930,10 @@ public class HuaweiSupportProvider {
 
                     if(getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {
                         huaweiDataSyncTreeCircleGoals = new HuaweiDataSyncGoals(HuaweiSupportProvider.this);
+                    }
+
+                    if(getHuaweiCoordinator().supportsFindDeviceAbility()) {
+                        huaweiDataSyncFindDevice = new HuaweiDataSyncFindDevice(HuaweiSupportProvider.this);
                     }
                 }
             });
@@ -2974,5 +2981,15 @@ public class HuaweiSupportProvider {
             return;
         }
         cannedRepliesService.sendReplies(cannedMessagesSpec.cannedMessages);
+    }
+
+    public void onFindDevice(boolean start) {
+        if(huaweiDataSyncFindDevice != null) {
+            if (start) {
+                huaweiDataSyncFindDevice.sendStartFindDevice();
+            } else {
+                huaweiDataSyncFindDevice.sendStopFindDevice();
+            }
+        }
     }
 }

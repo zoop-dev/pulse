@@ -229,6 +229,11 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     }
 
     @Override
+    public boolean supportsFindDevice() {
+        return huaweiCoordinator.supportsFindDeviceAbility();
+    }
+
+    @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
         return huaweiCoordinator.getInstallHandler(uri, context);
     }
