@@ -632,6 +632,26 @@ public class Weather {
         }
     }
 
+    public static String getAqiLevelString(int aqi) {
+        // Uses the [2023 Plume index](https://plumelabs.files.wordpress.com/2023/06/plume_aqi_2023.pdf) as a reference
+        if (aqi < 0) {
+            return "(n/a)";
+        }
+        if (aqi < 20) {
+            return "excellent";
+        } else if (aqi < 50) {
+            return "fair";
+        } else if (aqi < 100) {
+            return "poor";
+        } else if (aqi < 150) {
+            return "unhealthy";
+        } else if (aqi < 250) {
+            return "very unhealthy";
+        } else {
+            return "dangerous";
+        }
+    }
+
     public static byte mapToZeTimeConditionOld(int openWeatherMapCondition) {
 /* deducted values:
     0 = partly cloudy
