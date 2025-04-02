@@ -359,7 +359,8 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
             TextView label_field = new TextView(ActivitySummaryDetail.this);
             label_field.setId(View.generateViewId());
             label_field.setTextSize(18);
-            label_field.setPaddingRelative(dpToPx(16), dpToPx(16), 0, dpToPx(16));
+            label_field.setGravity(Gravity.CENTER);
+            label_field.setPaddingRelative(dpToPx(16), dpToPx(16), dpToPx(16), dpToPx(16));
             label_field.setTypeface(null, Typeface.BOLD);
             label_field.setText(workoutValueFormatter.getStringResourceByName(groupKey));
             label_row.addView(label_field);
