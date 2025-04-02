@@ -3915,4 +3915,7 @@
     <string name="earfun_header_audio_experience">Zvukový zážitek</string>
     <string name="earfun_header_system_settings">Nastavení systému</string>
     <string name="huawei_voice_boost">Zesílení hlasu</string>
+    <string name="music_upload_failed">Nepodařilo se nahrát hudbu</string>
+    <string name="music_upload_complete">Hudba úspěšně nahrána</string>
+    <string name="music_upload_in_progress">Nahrávání hudby</string>
 </resources>
