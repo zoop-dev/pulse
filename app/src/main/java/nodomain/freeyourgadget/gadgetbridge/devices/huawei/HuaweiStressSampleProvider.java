@@ -18,6 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
@@ -27,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class HuaweiStressSampleProvider extends AbstractTimeSampleProvider<HuaweiStressSample> {
+
     public HuaweiStressSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
@@ -53,4 +57,24 @@ public class HuaweiStressSampleProvider extends AbstractTimeSampleProvider<Huawe
     public HuaweiStressSample createSample() {
         return new HuaweiStressSample();
     }
+
+    @NonNull
+    @Override
+    public List<HuaweiStressSample> getAllSamples(long timestampFrom, long timestampTo) {
+        final long delta = 300000;
+        final long interval = 1800000;
+        List<HuaweiStressSample> samples = super.getAllSamples(timestampFrom, timestampTo);
+        List<HuaweiStressSample> newSamples = new ArrayList<>();
+        for (HuaweiStressSample sample : samples) {
+            long startTime = (((sample.getStartTime() / interval)) * interval) + delta;
+            long endTime = (((sample.getTimestamp() / interval) + 1) * interval) - delta;
+            for (long i = startTime; i < endTime; i += delta) {
+                if (i > timestampFrom && i < timestampTo) {
+                    newSamples.add(new HuaweiStressSample(i, sample.getDeviceId(), sample.getUserId(), sample.getStress(), sample.getLevel(), sample.getStartTime()));
+                }
+            }
+        }
+        return newSamples;
+    }
+
 }
