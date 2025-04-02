@@ -8,6 +8,7 @@
 * Initial support for Huawei Band 10
 * Initial support for Huawei FreeBuds Pro
 * Initial support for Redmi Buds 3 Pro
+* Initial support for Generic Audio BT Devices
 * Experimental support for Ultrahuman Air smart ring
 * Amazfit Active 2: Fix device discovery, improved support
 * Amazfit Bip 3: Add workout gps settings
@@ -25,6 +26,7 @@
 * Garmin: Parse extended running and cycling workout data
 * Garmin: Resolve names for services and characteristics
 * Huami: Delete some missing tables when deleting a device
+* Huawei: Add support for find device
 * Huawei: Add stress calibration and sync
 * Huawei: Add trail run activity
 * Huawei: Fix delete notifications for LE devices
@@ -45,6 +47,7 @@
 * Zepp OS: Fix temperature and distance unit configuration
 * Zepp OS: Map all missing activity kinds
 * Zepp OS: Maps upload
+* Zepp OS: Music upload (unstable)
 * Zepp OS: Respect calendar sync setting
 * Add page with all open-source licenses
 * Charts: Add sleep HR average
