@@ -31,6 +31,7 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -81,7 +82,7 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
     private HuaweiStressParser.StressData data = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final Bundle arguments = getArguments();
         if (arguments == null) {
@@ -138,6 +139,11 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
     }
 
     private void setProgress(long j) {
+        // Hide button when we get progress.
+        // Button can be visible when user has started calibration, closed activity and back again.
+        if(start.getVisibility() != View.GONE) {
+            start.setVisibility(View.GONE);
+        }
         progress.setProgress((int) (j/1000));
         countdownTime.setText(formatTime(j));
     }
@@ -162,11 +168,9 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
         if(data == null) {
             return;
         }
-        LOG.info("User score: {}", data.scoreFactor);
         if(isCalibrate.isChecked()) {
             calibrateSlider.setEnabled(true);
             float userScore = calibrateSlider.getValue();
-            LOG.info("User score: {}", userScore);
             float adjustedScoreFactor = HuaweiStressScoreCalculation.calibrateScoreFactor(userScore, data.scoreFactor);
             data.score = HuaweiStressScoreCalculation.calculateNormalizedFinalScore(adjustedScoreFactor);
         } else {
@@ -187,8 +191,7 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
     }
 
     public void finishCalibrate() {
-        //Maybe end time should be updated. But I am not sure.
-        //stressData.endTime = endTime;
+        data.endTime = System.currentTimeMillis(); // Marks the current result as the most recent
         String str = HuaweiStressParser.stressDataToJsonStr(data);
         if(TextUtils.isEmpty(str)) {
             Snackbar.make(layoutMeasure, getString(R.string.huawei_stress_calibrate_error), Snackbar.LENGTH_LONG).show();
@@ -271,7 +274,6 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
     protected CharSequence getTitle() {
         return getString(R.string.huawei_stress_calibrate);
     }
-
 
     private void startCalibration() {
         GBApplication.deviceService(device).onSendConfiguration(HuaweiConstants.PREF_HUAWEI_STRESS_CALIBRATE);
