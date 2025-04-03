@@ -983,4 +983,15 @@
     <string name="permission_process_outgoing_calls_summary">Väljamineva kõne numbri lugemine selle kuvamiseks nutiseadmes</string>
     <string name="permission_read_call_log_summary">Kõnelogi suunamine nutiseadmetele</string>
     <string name="permission_send_sms_summary">SMS-ide (eelsalvestatud vastus) saatmine nutiseadmetest</string>
+    <string name="huawei_voice_boost">Hääle võimendus</string>
+    <string name="banglejs_notification_missed_call_source">Sissetulev kõne</string>
+    <string name="gps">GPS</string>
+    <string name="gps_bds">GPS + BDS</string>
+    <string name="all_satellites">Kõik satelliidid</string>
+    <string name="speed_first">Kiirus kõigepealt</string>
+    <string name="accuracy_first">Täpsus kõigepealt</string>
+    <string name="gps_galileo">GPS + GALILEO</string>
+    <string name="device_card_activity_card_title">Tegevuse info seadme kaardil</string>
+    <string name="banglejs_notification_missed_call_title">Vastamata kõne</string>
+    <string name="gps_glonass">GPS + GLONASS</string>
 </resources>
