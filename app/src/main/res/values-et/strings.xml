@@ -1000,4 +1000,14 @@
     <string name="prefs_activity_in_device_card_sleep_title">Uni</string>
     <string name="prefs_activity_in_device_card_title">Kuva aktiivsusandmed seadme kaardil</string>
     <string name="device_card_activity_card_title_summary">Valige, millised aktiivsusandmed kuvatakse seadme kaardil</string>
+    <string name="busy_task_fetch_hr_data">Pulsi andmete toomine</string>
+    <string name="heartrate_bpm_50">50 lööki/min</string>
+    <string name="heartrate_bpm_125">125 lööki/min</string>
+    <string name="heartrate_bpm_40">40 lööki/min</string>
+    <string name="heartrate_bpm_100">100 lööki/min</string>
+    <string name="heartrate_bpm_110">110 lööki/min</string>
+    <string name="heartrate_bpm_115">115 lööki/min</string>
+    <string name="heartrate_bpm_45">45 lööki/min</string>
+    <string name="heartrate_bpm_120">120 lööki/min</string>
+    <string name="heartrate_bpm_105">105 lööki/min</string>
 </resources>
