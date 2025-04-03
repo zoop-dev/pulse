@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 import static org.apache.commons.lang3.ArrayUtils.subarray;
 import static java.lang.Thread.sleep;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service.*;
-import static nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService.SUCCESS;
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_NAME;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint16;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint8;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.mapTimeZone;
@@ -45,7 +43,6 @@ import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -61,7 +58,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,9 +81,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSilentMode;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
@@ -138,6 +132,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsDisplayItemsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFindDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLoyaltyCardService;
@@ -153,6 +148,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFtpServerService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsMorningUpdatesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsSilentModeService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsUserInfoService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVoiceMemosService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWatchfaceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWifiService;
@@ -160,7 +157,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.SilentMode;
 
 public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferService.Callback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsSupport.class);
@@ -200,6 +196,9 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsVoiceMemosService voiceMemosService = new ZeppOsVoiceMemosService(this);
     private final ZeppOsMapsService mapsService = new ZeppOsMapsService(this, httpService);
     private final ZeppOsMusicService musicService = new ZeppOsMusicService(this);
+    private final ZeppOsFindDeviceService findDeviceService = new ZeppOsFindDeviceService(this);
+    private final ZeppOsSilentModeService silentModeService = new ZeppOsSilentModeService(this);
+    private final ZeppOsUserInfoService userInfoService = new ZeppOsUserInfoService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
     // FIXME: We need to keep track of which services are encrypted for now, since not all of them were yet migrated to a service
@@ -231,6 +230,9 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(musicService.getEndpoint(), musicService);
         put(voiceMemosService.getEndpoint(), voiceMemosService);
         put(mapsService.getEndpoint(), mapsService);
+        put(findDeviceService.getEndpoint(), findDeviceService);
+        put(silentModeService.getEndpoint(), silentModeService);
+        put(userInfoService.getEndpoint(), userInfoService);
     }};
 
     public ZeppOsSupport() {
@@ -315,54 +317,18 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    protected void acknowledgeFindPhone() {
-        LOG.info("Acknowledging find phone");
-
-        final byte[] cmd = new byte[]{FIND_PHONE_ACK, SUCCESS};
-
-        writeToChunked2021("ack find phone", CHUNKED2021_ENDPOINT_FIND_DEVICE, cmd, true);
-    }
-
-    protected void stopFindPhone() {
-        LOG.info("Stopping find phone");
-
-        writeToChunked2021("found phone", CHUNKED2021_ENDPOINT_FIND_DEVICE, FIND_PHONE_STOP_FROM_PHONE, true);
-    }
-
-    @Override
     public void onFindDevice(final boolean start) {
-        if (getCoordinator().supportsContinuousFindDevice()) {
-            sendFindDeviceCommand(start);
-        } else {
-            // Vibrate band periodically
-            super.onFindDevice(start);
-        }
+        findDeviceService.onFindDevice(start);
     }
 
     @Override
     protected void sendFindDeviceCommand(boolean start) {
-        final byte findBandCommand = start ? FIND_BAND_START : FIND_BAND_STOP_FROM_PHONE;
-
-        LOG.info("Sending find band {}", start);
-
-        try {
-            final TransactionBuilder builder = performInitialized("find huami 2021");
-            writeToChunked2021(builder, CHUNKED2021_ENDPOINT_FIND_DEVICE, findBandCommand, true);
-            builder.queue(getQueue());
-        } catch (IOException e) {
-            LOG.error("error while sending find Huami 2021 device command", e);
-        }
+        findDeviceService.sendFindDeviceCommand(start);
     }
 
     @Override
     public void onFindPhone(final boolean start) {
-        LOG.info("Find phone: {}", start);
-
-        findPhoneStarted = start;
-
-        if (!start) {
-            stopFindPhone();
-        }
+        findDeviceService.onFindPhone(start);
     }
 
     @Override
@@ -502,64 +468,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 .setByte(TEMPERATURE_UNIT, temperatureUnit)
                 .setByte(ZeppOsConfigService.ConfigArg.WEIGHT_UNIT, weightUnit)
                 .write(builder);
-    }
-
-    @Override
-    protected ZeppOsSupport setUserInfo(final TransactionBuilder builder) {
-        LOG.info("Attempting to set user info...");
-
-        final Prefs prefs = GBApplication.getPrefs();
-        final Prefs devicePrefs = getDevicePrefs();
-
-        final String alias = prefs.getString(PREF_USER_NAME, null);
-        final ActivityUser activityUser = new ActivityUser();
-        final int height = activityUser.getHeightCm();
-        final int weight = activityUser.getWeightKg();
-        final LocalDate dateOfBirth = activityUser.getDateOfBirth();
-        final int birthYear = dateOfBirth.getYear();
-        final byte birthMonth = (byte) dateOfBirth.getMonthValue();
-        final byte birthDay = (byte) dateOfBirth.getDayOfMonth();
-        final String region = devicePrefs.getString(DeviceSettingsPreferenceConst.PREF_DEVICE_REGION, "unknown");
-
-        if (alias == null || weight == 0 || height == 0 || birthYear == 0) {
-            LOG.warn("Unable to set user info, make sure it is set up");
-            return this;
-        }
-
-        byte genderByte = 2; // other
-        switch (activityUser.getGender()) {
-            case ActivityUser.GENDER_MALE:
-                genderByte = 0;
-                break;
-            case ActivityUser.GENDER_FEMALE:
-                genderByte = 1;
-        }
-        final int userid = alias.hashCode();
-
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try {
-            baos.write(USER_INFO_CMD_SET);
-            baos.write(new byte[]{0x4f, 0x07, 0x00, 0x00});
-            baos.write(fromUint16(birthYear));
-            baos.write(birthMonth);
-            baos.write(birthDay);
-            baos.write(genderByte);
-            baos.write(fromUint16(height));
-            baos.write(fromUint16(weight * 200));
-            baos.write(BLETypeConversions.fromUint64(userid));
-            baos.write(region.getBytes(StandardCharsets.UTF_8));
-            baos.write(0);
-            baos.write(0x09); // TODO ?
-            baos.write(alias.getBytes(StandardCharsets.UTF_8));
-            baos.write((byte) 0);
-
-            writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_USER_INFO, baos.toByteArray(), true);
-        } catch (final Exception e) {
-            LOG.error("Failed to send user info", e);
-        }
-
-        return this;
     }
 
     @Override
@@ -1310,20 +1218,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 setVibrationPattern(builder, HuamiConst.PREF_HUAMI_VIBRATION_PROFILE_PREFIX + typeKey);
             }
 
-            // TODO move these to a service
-            cannedMessagesService.requestCannedMessages(builder);
-            alarmsService.requestAlarms(builder);
-
             for (AbstractZeppOsService service : mServiceMap.values()) {
                 if (mSupportedServices.contains(service.getEndpoint())) {
                     // Only initialize supported services
                     service.initialize(builder);
                 }
-            }
-
-            if (coordinator.supportsBluetoothPhoneCalls(gbDevice)) {
-                phoneService.requestCapabilities(builder);
-                phoneService.requestEnabled(builder);
             }
 
             builder.queue(getQueue());
@@ -1465,17 +1364,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             case CHUNKED2021_ENDPOINT_WORKOUT:
                 handle2021Workout(payload);
                 return;
-            case CHUNKED2021_ENDPOINT_FIND_DEVICE:
-                handle2021FindDevice(payload);
-                return;
             case CHUNKED2021_ENDPOINT_HEARTRATE:
                 handle2021HeartRate(payload);
                 return;
             case CHUNKED2021_ENDPOINT_CONNECTION:
                 handle2021Connection(payload);
-                return;
-            case CHUNKED2021_ENDPOINT_USER_INFO:
-                handle2021UserInfo(payload);
                 return;
             case CHUNKED2021_ENDPOINT_STEPS:
                 handle2021Steps(payload);
@@ -1485,9 +1378,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 return;
             case CHUNKED2021_ENDPOINT_BATTERY:
                 handle2021Battery(payload);
-                return;
-            case CHUNKED2021_ENDPOINT_SILENT_MODE:
-                handle2021SilentMode(payload);
                 return;
             default:
                 LOG.warn("Unhandled 2021 payload {}", String.format("0x%04x", type));
@@ -1529,56 +1419,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 return;
             default:
                 LOG.warn("Unexpected workout byte {}", String.format("0x%02x", payload[0]));
-        }
-    }
-
-    /**
-     * A handler to schedule the find phone event.
-     */
-    private final Handler findPhoneHandler = new Handler();
-    private boolean findPhoneStarted;
-
-    protected void handle2021FindDevice(final byte[] payload) {
-        final GBDeviceEventFindPhone findPhoneEvent = new GBDeviceEventFindPhone();
-
-        switch (payload[0]) {
-            case FIND_BAND_ACK:
-                LOG.info("Band acknowledged find band command");
-                return;
-            case FIND_PHONE_START:
-                LOG.info("Find Phone Start");
-                acknowledgeFindPhone(); // FIXME: Premature, but the band will only send the mode after we ack
-
-                // Delay the find phone start, because we might get the FIND_PHONE_MODE
-                findPhoneHandler.postDelayed(() -> {
-                    findPhoneEvent.event = GBDeviceEventFindPhone.Event.START;
-                    evaluateGBDeviceEvent(findPhoneEvent);
-                }, 1500);
-
-                break;
-            case FIND_BAND_STOP_FROM_BAND:
-                LOG.info("Find Band Stop from Band");
-                break;
-            case FIND_PHONE_STOP_FROM_BAND:
-                LOG.info("Find Phone Stop");
-                findPhoneEvent.event = GBDeviceEventFindPhone.Event.STOP;
-                evaluateGBDeviceEvent(findPhoneEvent);
-                break;
-            case FIND_PHONE_MODE:
-                findPhoneHandler.removeCallbacksAndMessages(null);
-
-                final int mode = payload[1] & 0xff; // 0 to only vibrate, 1 to ring
-                LOG.info("Find Phone Mode: {}", mode);
-                if (findPhoneStarted) {
-                    // Already started, just change the mode
-                    findPhoneEvent.event = mode == 1 ? GBDeviceEventFindPhone.Event.RING : GBDeviceEventFindPhone.Event.VIBRATE;
-                } else {
-                    findPhoneEvent.event = mode == 1 ? GBDeviceEventFindPhone.Event.START : GBDeviceEventFindPhone.Event.START_VIBRATE;
-                }
-                evaluateGBDeviceEvent(findPhoneEvent);
-                break;
-            default:
-                LOG.warn("Unexpected find phone byte {}", String.format("0x%02x", payload[0]));
         }
     }
 
@@ -1636,17 +1476,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         LOG.warn("Unexpected connection payload byte {}", String.format("0x%02x", payload[0]));
     }
 
-    protected void handle2021UserInfo(final byte[] payload) {
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (payload[0]) {
-            case USER_INFO_CMD_SET_ACK:
-                LOG.info("Got user info set ack, status = {}", payload[1]);
-                return;
-        }
-
-        LOG.warn("Unexpected user info payload byte {}", String.format("0x%02x", payload[0]));
-    }
-
     protected void handle2021Steps(final byte[] payload) {
         switch (payload[0]) {
             case STEPS_CMD_REPLY:
@@ -1696,45 +1525,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
         final HuamiBatteryInfo batteryInfo = new HuamiBatteryInfo(subarray(payload, 1, payload.length));
         handleGBDeviceEvent(batteryInfo.toDeviceEvent());
-    }
-
-    protected void handle2021SilentMode(final byte[] payload) {
-        switch (payload[0]) {
-            case SILENT_MODE_CMD_NOTIFY_BAND_ACK:
-                LOG.info("Band acknowledged current phone silent mode, status = {}", payload[1]);
-                return;
-            case SILENT_MODE_CMD_QUERY:
-                LOG.info("Got silent mode query from band");
-                sendPhoneSilentMode(SilentMode.isPhoneInSilenceMode(getDevice().getAddress()));
-                return;
-            case SILENT_MODE_CMD_SET:
-                LOG.info("Band setting silent mode = {}", payload[1]);
-                final boolean silentModeEnabled = (payload[1] == 1);
-                ackSilentModeSet();
-                sendPhoneSilentMode(silentModeEnabled);
-                evaluateGBDeviceEvent(new GBDeviceEventSilentMode(silentModeEnabled));
-                return;
-            default:
-                LOG.warn("Unexpected silent mode payload byte {}", String.format("0x%02x", payload[0]));
-        }
-    }
-
-    private void ackSilentModeSet() {
-        writeToChunked2021(
-                "ack silent mode set",
-                CHUNKED2021_ENDPOINT_SILENT_MODE,
-                new byte[]{SILENT_MODE_CMD_ACK, 0x01},
-                false
-        );
-    }
-
-    private void sendPhoneSilentMode(final boolean enabled) {
-        writeToChunked2021(
-                "send phone silent mode to band",
-                CHUNKED2021_ENDPOINT_SILENT_MODE,
-                new byte[]{SILENT_MODE_CMD_NOTIFY_BAND, bool(enabled)},
-                false
-        );
     }
 
     @Override

@@ -98,6 +98,11 @@ public class ZeppOsAlarmsService extends AbstractZeppOsService {
         }
     }
 
+    @Override
+    public void initialize(final TransactionBuilder builder) {
+        requestAlarms(builder);
+    }
+
     private void requestAlarms() {
         try {
             final TransactionBuilder builder = new TransactionBuilder("request alarms");

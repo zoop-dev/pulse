@@ -131,6 +131,10 @@ public class ZeppOsPhoneService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final TransactionBuilder builder) {
+        if (getCoordinator().supportsBluetoothPhoneCalls(getSupport().getDevice())) {
+            requestCapabilities(builder);
+            requestEnabled(builder);
+        }
     }
 
     public boolean isSupported() {

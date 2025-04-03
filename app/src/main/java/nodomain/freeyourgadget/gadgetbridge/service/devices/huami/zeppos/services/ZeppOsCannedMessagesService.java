@@ -98,6 +98,11 @@ public class ZeppOsCannedMessagesService extends AbstractZeppOsService {
         }
     }
 
+    @Override
+    public void initialize(final TransactionBuilder builder) {
+        requestCannedMessages(builder);
+    }
+
     public void setCannedMessages(final CannedMessagesSpec cannedMessagesSpec) {
         if (cannedMessagesSpec.type != CannedMessagesSpec.TYPE_GENERIC) {
             LOG.warn("Got unsupported canned messages type: {}", cannedMessagesSpec.type);

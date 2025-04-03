@@ -95,7 +95,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.ActivateDisplayOnLift;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.ActivateDisplayOnLiftSensitivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.DisconnectNotificationSetting;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
@@ -1649,29 +1648,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     }
 
     protected int getFindDeviceInterval() {
-        final VibrationProfile findBand = HuamiCoordinator.getVibrationProfile(
-                getDevice().getAddress(),
-                HuamiVibrationPatternNotificationType.FIND_BAND,
-                supportsDeviceDefaultVibrationProfiles()
-        );
-        int findDeviceInterval = 0;
-
-        if (findBand != null) {
-            // It can be null if the device supports continuous find mode
-            // If that's the case, this function shouldn't even have been called
-            for(int len : findBand.getOnOffSequence())
-                findDeviceInterval += len;
-
-            if(findBand.getRepeat() > 0)
-                findDeviceInterval *= findBand.getRepeat();
-
-            if(findDeviceInterval > 10000) // 10 seconds, about as long as Mi Fit allows
-                findDeviceInterval = 10000;
-        } else {
-            findDeviceInterval = 10000;
-        }
-
-        return findDeviceInterval;
+        return HuamiUtils.getFindDeviceInterval(getDevice(), supportsDeviceDefaultVibrationProfiles());
     }
 
     protected void sendFindDeviceCommand(boolean start) {

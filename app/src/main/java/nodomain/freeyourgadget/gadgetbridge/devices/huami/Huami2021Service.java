@@ -22,29 +22,13 @@ public class Huami2021Service {
      */
     public static final short CHUNKED2021_ENDPOINT_WEATHER = 0x000e;
     public static final short CHUNKED2021_ENDPOINT_CONNECTION = 0x0015;
-    public static final short CHUNKED2021_ENDPOINT_USER_INFO = 0x0017;
     public static final short CHUNKED2021_ENDPOINT_STEPS = 0x0016;
     public static final short CHUNKED2021_ENDPOINT_VIBRATION_PATTERNS = 0x0018;
     public static final short CHUNKED2021_ENDPOINT_WORKOUT = 0x0019;
-    public static final short CHUNKED2021_ENDPOINT_FIND_DEVICE = 0x001a;
     public static final short CHUNKED2021_ENDPOINT_HEARTRATE = 0x001d;
     public static final short CHUNKED2021_ENDPOINT_BATTERY = 0x0029;
-    public static final short CHUNKED2021_ENDPOINT_SILENT_MODE = 0x003b;
     public static final short CHUNKED2021_ENDPOINT_AUTH = 0x0082;
     public static final short CHUNKED2021_ENDPOINT_COMPAT = 0x0090;
-
-    /**
-     * Find Device, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_FIND_DEVICE}.
-     */
-    public static final byte FIND_BAND_START = 0x03;
-    public static final byte FIND_BAND_ACK = 0x04;
-    public static final byte FIND_BAND_STOP_FROM_PHONE = 0x06;
-    public static final byte FIND_BAND_STOP_FROM_BAND = 0x07;
-    public static final byte FIND_PHONE_START = 0x11;
-    public static final byte FIND_PHONE_ACK = 0x12;
-    public static final byte FIND_PHONE_STOP_FROM_BAND = 0x13;
-    public static final byte FIND_PHONE_STOP_FROM_PHONE = 0x14;
-    public static final byte FIND_PHONE_MODE = 0x15;
 
     /**
      * Steps, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_STEPS}.
@@ -66,22 +50,6 @@ public class Huami2021Service {
      */
     public static final byte BATTERY_REQUEST = 0x03;
     public static final byte BATTERY_REPLY = 0x04;
-
-    /**
-     * Silent Mode, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_SILENT_MODE}.
-     */
-    public static final byte SILENT_MODE_CMD_CAPABILITIES_REQUEST = 0x01;
-    public static final byte SILENT_MODE_CMD_CAPABILITIES_RESPONSE = 0x02;
-    // Notify silent mode, from phone
-    public static final byte SILENT_MODE_CMD_NOTIFY_BAND = 0x03;
-    public static final byte SILENT_MODE_CMD_NOTIFY_BAND_ACK = 0x04;
-    // Query silent mode on phone, from band
-    public static final byte SILENT_MODE_CMD_QUERY = 0x05;
-    public static final byte SILENT_MODE_CMD_REPLY = 0x06;
-    // Set silent mode on phone, from band
-    // After this, phone sends ACK + NOTIFY
-    public static final byte SILENT_MODE_CMD_SET = 0x07;
-    public static final byte SILENT_MODE_CMD_ACK = 0x08;
 
     /**
      * Connection, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_CONNECTION}.
@@ -119,12 +87,6 @@ public class Huami2021Service {
      */
     public static final byte WEATHER_CMD_SET_DEFAULT_LOCATION = 0x09;
     public static final byte WEATHER_CMD_DEFAULT_LOCATION_ACK = 0x0a;
-
-    /**
-     * User Info, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_USER_INFO}.
-     */
-    public static final byte USER_INFO_CMD_SET = 0x01;
-    public static final byte USER_INFO_CMD_SET_ACK = 0x02;
 
     /**
      * Raw sensor control.
