@@ -177,17 +177,17 @@
     <string name="pref_title_unit_system">Ühikud</string>
     <string name="pref_title_timeformat">Kellaaja vorming</string>
     <string name="pref_title_screentime">Ekraani avatuse kestus</string>
-    <string name="prefs_title_all_day_heart_rate">Kogu päeva südame löögisageduse mõõtmine</string>
+    <string name="prefs_title_all_day_heart_rate">Pulsi mõõtmine kogu päeva jooksul</string>
     <string name="preferences_hplus_settings">HPlus/Makibes seaded</string>
     <string name="prefs_screen_orientation">Ekraani suund</string>
     <string name="zetime_title_settings">ZeTime seaded</string>
-    <string name="zetime_title_heartrate">Südame löögisageduse seaded</string>
+    <string name="zetime_title_heartrate">Pulsi seaded</string>
     <string name="zetime_title_screentime">Ekraani avatuse kestus sekundites</string>
-    <string name="zetime_title_heart_rate_alarm">Südame löögisageduse alarm</string>
-    <string name="zetime_title_heart_rate_alarm_summary">Kell hoiatab, kui südame löögisagedus ületab piirid.</string>
-    <string name="zetime_heart_rate_alarm_enable">Luba südame löögisageduse alarm</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Suurim südame löögisagedus</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Vähim südame löögisagedus</string>
+    <string name="zetime_title_heart_rate_alarm">Pulsihoiatus</string>
+    <string name="zetime_title_heart_rate_alarm_summary">Kell annab märku, kui pulss ületab lubatud väärtusi.</string>
+    <string name="zetime_heart_rate_alarm_enable">Luba südame pulsihoiatus</string>
+    <string name="activity_prefs_alarm_max_heart_rate">Maksimaalne pulss</string>
+    <string name="activity_prefs_alarm_min_heart_rate">Minimaalne pulss</string>
     <string name="zetime_analog_mode">Analoog režiim</string>
     <string name="zetime_analog_mode_hands">Ainult käed</string>
     <string name="zetime_analog_mode_handsandsteps">Käed ja sammud</string>
@@ -918,7 +918,7 @@
     <string name="power_saving">Energiasääst</string>
     <string name="custom">Kohandatud</string>
     <string name="range_percentage_float">%.1f%% - %.1f%%</string>
-    <string name="controlcenter_get_heartrate_measurement">Mõõda südame löögisagedust</string>
+    <string name="controlcenter_get_heartrate_measurement">Mõõda pulsisagedust</string>
     <string name="action_changelog">Muudatuste logi</string>
     <string name="controlcenter_power_off_confirm_title">Lülita välja</string>
     <string name="controlcenter_power_off_confirm_description">Kas soovid seadme välja lülitada?</string>
@@ -991,7 +991,7 @@
     <string name="speed_first">Kiirus kõigepealt</string>
     <string name="accuracy_first">Täpsus kõigepealt</string>
     <string name="gps_galileo">GPS + GALILEO</string>
-    <string name="device_card_activity_card_title">Tegevuse info seadme kaardil</string>
+    <string name="device_card_activity_card_title">Aktiivsusandmed seadme kaardil</string>
     <string name="banglejs_notification_missed_call_title">Vastamata kõne</string>
     <string name="gps_glonass">GPS + GLONASS</string>
     <string name="prefs_activity_in_device_card_title_summary">Kuva seadme kaardil praegused sammud, vahemaa või unerežiim</string>
@@ -999,4 +999,5 @@
     <string name="title_activity_musicmanager">Muusikahaldur</string>
     <string name="prefs_activity_in_device_card_sleep_title">Uni</string>
     <string name="prefs_activity_in_device_card_title">Kuva aktiivsusandmed seadme kaardil</string>
+    <string name="device_card_activity_card_title_summary">Valige, millised aktiivsusandmed kuvatakse seadme kaardil</string>
 </resources>
