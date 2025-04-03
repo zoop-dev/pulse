@@ -3174,7 +3174,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
             builder = performInitialized("Sending air quality index");
             int length = 8;
             int aqi = weatherSpec.airQuality != null ? weatherSpec.airQuality.aqi : -1;
-            String aqiString = Weather.getAqiLevelString(aqi);
+            String aqiString = Weather.getAqiLevelString(getContext(), aqi);
             if (supportsConditionString) {
                 length += aqiString.getBytes().length + 1;
             }
@@ -3213,7 +3213,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
                 bytesPerDay = 5;
                 conditionsLength = weatherSpec.currentCondition.getBytes().length;
                 for (WeatherSpec.Daily forecast : weatherSpec.forecasts) {
-                    conditionsLength += Weather.getConditionString(forecast.conditionCode).getBytes().length;
+                    conditionsLength += Weather.getConditionString(getContext(), forecast.conditionCode).getBytes().length;
                 }
             }
 
@@ -3260,7 +3260,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
                 buf.put((byte) forecastMinTemp);
 
                 if (supportsConditionString) {
-                    buf.put(Weather.getConditionString(forecast.conditionCode).getBytes());
+                    buf.put(Weather.getConditionString(getContext(), forecast.conditionCode).getBytes());
                     buf.put((byte) 0);
                 }
             }

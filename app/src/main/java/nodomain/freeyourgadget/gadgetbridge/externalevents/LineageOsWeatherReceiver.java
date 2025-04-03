@@ -184,7 +184,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
             weatherSpec.windDirection = (int) weatherInfo.getWindDirection();
 
             weatherSpec.currentConditionCode = Weather.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(weatherInfo.getConditionCode()));
-            weatherSpec.currentCondition = Weather.getConditionString(weatherSpec.currentConditionCode);
+            weatherSpec.currentCondition = Weather.getConditionString(mContext, weatherSpec.currentConditionCode);
             weatherSpec.currentHumidity = (int) weatherInfo.getHumidity();
 
             weatherSpec.forecasts = new ArrayList<>();

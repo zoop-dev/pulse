@@ -17,6 +17,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
@@ -34,6 +36,8 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class Weather {
     private static final Logger LOG = LoggerFactory.getLogger(Weather.class);
@@ -472,183 +476,183 @@ public class Weather {
         }
     }
 
-    public static String getConditionString(int openWeatherMapCondition) {
+    public static String getConditionString(final Context context, int openWeatherMapCondition) {
         switch (openWeatherMapCondition) {
             case 200:
-                return "thunderstorm with light rain";
+                return context.getString(R.string.weather_condition_thunderstorm_with_light_rain);
             case 201:
-                return "thunderstorm with rain";
+                return context.getString(R.string.weather_condition_thunderstorm_with_rain);
             case 202:
-                return "thunderstorm with heavy rain";
+                return context.getString(R.string.weather_condition_thunderstorm_with_heavy_rain);
             case 210:
-                return "light thunderstorm:";
+                return context.getString(R.string.weather_condition_light_thunderstorm);
             case 211:
-                return "thunderstorm";
+                return context.getString(R.string.weather_condition_thunderstorm);
             case 230:
-                return "thunderstorm with light drizzle";
+                return context.getString(R.string.weather_condition_thunderstorm_with_light_drizzle);
             case 231:
-                return "thunderstorm with drizzle";
+                return context.getString(R.string.weather_condition_thunderstorm_with_drizzle);
             case 232:
-                return "thunderstorm with heavy drizzle";
+                return context.getString(R.string.weather_condition_thunderstorm_with_heavy_drizzle);
             case 212:
-                return "heavy thunderstorm";
+                return context.getString(R.string.weather_condition_heavy_thunderstorm);
             case 221:
-                return "ragged thunderstorm";
-            //Group 3xx: Drizzle
+                return context.getString(R.string.weather_condition_ragged_thunderstorm);
+            // Group 3xx: Drizzle
             case 300:
-                return "light intensity drizzle";
+                return context.getString(R.string.weather_condition_light_intensity_drizzle);
             case 301:
-                return "drizzle";
+                return context.getString(R.string.weather_condition_drizzle);
             case 302:
-                return "heavy intensity drizzle";
+                return context.getString(R.string.weather_condition_heavy_intensity_drizzle);
             case 310:
-                return "light intensity drizzle rain";
+                return context.getString(R.string.weather_condition_light_intensity_drizzle_rain);
             case 311:
-                return "drizzle rain";
+                return context.getString(R.string.weather_condition_drizzle_rain);
             case 312:
-                return "heavy intensity drizzle rain";
+                return context.getString(R.string.weather_condition_heavy_intensity_drizzle_rain);
             case 313:
-                return "shower rain and drizzle";
+                return context.getString(R.string.weather_condition_shower_rain_and_drizzle);
             case 314:
-                return "heavy shower rain and drizzle";
+                return context.getString(R.string.weather_condition_heavy_shower_rain_and_drizzle);
             case 321:
-                return "shower drizzle";
-            //Group 5xx: Rain
+                return context.getString(R.string.weather_condition_shower_drizzle);
+            // Group 5xx: Rain
             case 500:
-                return "light rain";
+                return context.getString(R.string.weather_condition_light_rain);
             case 501:
-                return "moderate rain";
+                return context.getString(R.string.weather_condition_moderate_rain);
             case 502:
-                return "heavy intensity rain";
+                return context.getString(R.string.weather_condition_heavy_intensity_rain);
             case 503:
-                return "very heavy rain";
+                return context.getString(R.string.weather_condition_very_heavy_rain);
             case 504:
-                return "extreme rain";
+                return context.getString(R.string.weather_condition_extreme_rain);
             case 511:
-                return "freezing rain";
+                return context.getString(R.string.weather_condition_freezing_rain);
             case 520:
-                return "light intensity shower rain";
+                return context.getString(R.string.weather_condition_light_intensity_shower_rain);
             case 521:
-                return "shower rain";
+                return context.getString(R.string.weather_condition_shower_rain);
             case 522:
-                return "heavy intensity shower rain";
+                return context.getString(R.string.weather_condition_heavy_intensity_shower_rain);
             case 531:
-                return "ragged shower rain";
-            //Group 6xx: Snow
+                return context.getString(R.string.weather_condition_ragged_shower_rain);
+            // Group 6xx: Snow
             case 600:
-                return "light snow";
+                return context.getString(R.string.weather_condition_light_snow);
             case 601:
-                return "snow";
+                return context.getString(R.string.weather_condition_snow);
             case 620:
-                return "light shower snow";
+                return context.getString(R.string.weather_condition_light_shower_snow);
             case 602:
-                return "heavy snow";
+                return context.getString(R.string.weather_condition_heavy_snow);
             case 611:
-                return "sleet";
+                return context.getString(R.string.weather_condition_sleet);
             case 612:
-                return "shower sleet";
+                return context.getString(R.string.weather_condition_shower_sleet);
             case 621:
-                return "shower snow";
+                return context.getString(R.string.weather_condition_shower_snow);
             case 622:
-                return "heavy shower snow";
+                return context.getString(R.string.weather_condition_heavy_shower_snow);
             case 615:
-                return "light rain and snow";
+                return context.getString(R.string.weather_condition_light_rain_and_snow);
             case 616:
-                return "rain and snow";
-            //Group 7xx: Atmosphere
+                return context.getString(R.string.weather_condition_rain_and_snow);
+            // Group 7xx: Atmosphere
             case 701:
-                return "mist";
+                return context.getString(R.string.weather_condition_mist);
             case 711:
-                return "smoke";
+                return context.getString(R.string.weather_condition_smoke);
             case 721:
-                return "haze";
+                return context.getString(R.string.weather_condition_haze);
             case 731:
-                return "sandcase dust whirls";
+                return context.getString(R.string.weather_condition_sandcase_dust_whirls);
             case 741:
-                return "fog";
+                return context.getString(R.string.weather_condition_fog);
             case 751:
-                return "sand";
+                return context.getString(R.string.weather_condition_sand);
             case 761:
-                return "dust";
+                return context.getString(R.string.weather_condition_dust);
             case 762:
-                return "volcanic ash";
+                return context.getString(R.string.weather_condition_volcanic_ash);
             case 771:
-                return "squalls";
+                return context.getString(R.string.weather_condition_squalls);
             case 781:
-                return "tornado";
+                return context.getString(R.string.weather_condition_tornado);
             case 900:
-                return "tornado";
+                return context.getString(R.string.weather_condition_tornado);
             case 800:
-                return "clear sky";
-            //Group 80x: Clouds
+                return context.getString(R.string.weather_condition_clear_sky);
+            // Group 80x: Clouds
             case 801:
-                return "few clouds";
+                return context.getString(R.string.weather_condition_few_clouds);
             case 802:
-                return "scattered clouds";
+                return context.getString(R.string.weather_condition_scattered_clouds);
             case 803:
-                return "broken clouds";
+                return context.getString(R.string.weather_condition_broken_clouds);
             case 804:
-                return "overcast clouds";
-            //Group 90x: Extreme
+                return context.getString(R.string.weather_condition_overcast_clouds);
+            // Group 90x: Extreme
             case 901:
-                return "tropical storm";
+                return context.getString(R.string.weather_condition_tropical_storm);
             case 903:
-                return "cold";
+                return context.getString(R.string.weather_condition_cold);
             case 904:
-                return "hot";
+                return context.getString(R.string.weather_condition_hot);
             case 905:
-                return "windy";
+                return context.getString(R.string.weather_condition_windy);
             case 906:
-                return "hail";
-            //Group 9xx: Additional
+                return context.getString(R.string.weather_condition_hail);
+            // Group 9xx: Additional
             case 951:
-                return "calm";
+                return context.getString(R.string.weather_condition_calm);
             case 952:
-                return "light breeze";
+                return context.getString(R.string.weather_condition_light_breeze);
             case 953:
-                return "gentle breeze";
+                return context.getString(R.string.weather_condition_gentle_breeze);
             case 954:
-                return "moderate breeze";
+                return context.getString(R.string.weather_condition_moderate_breeze);
             case 955:
-                return "fresh breeze";
+                return context.getString(R.string.weather_condition_fresh_breeze);
             case 956:
-                return "strong breeze";
+                return context.getString(R.string.weather_condition_strong_breeze);
             case 957:
-                return "high windcase  near gale";
+                return context.getString(R.string.weather_condition_high_windcase_near_gale);
             case 958:
-                return "gale";
+                return context.getString(R.string.weather_condition_gale);
             case 959:
-                return "severe gale";
+                return context.getString(R.string.weather_condition_severe_gale);
             case 960:
-                return "storm";
+                return context.getString(R.string.weather_condition_storm);
             case 961:
-                return "violent storm";
+                return context.getString(R.string.weather_condition_violent_storm);
             case 902:
-                return "hurricane";
+                return context.getString(R.string.weather_condition_hurricane);
             case 962:
-                return "hurricane";
+                return context.getString(R.string.weather_condition_hurricane);
             default:
                 return "";
         }
     }
 
-    public static String getAqiLevelString(int aqi) {
+    public static String getAqiLevelString(final Context context, int aqi) {
         // Uses the [2023 Plume index](https://plumelabs.files.wordpress.com/2023/06/plume_aqi_2023.pdf) as a reference
         if (aqi < 0) {
-            return "(n/a)";
+            return context.getString(R.string.aqi_level_unknown);
         }
         if (aqi < 20) {
-            return "excellent";
+            return context.getString(R.string.aqi_level_excellent);
         } else if (aqi < 50) {
-            return "fair";
+            return context.getString(R.string.aqi_level_fair);
         } else if (aqi < 100) {
-            return "poor";
+            return context.getString(R.string.aqi_level_poor);
         } else if (aqi < 150) {
-            return "unhealthy";
+            return context.getString(R.string.aqi_level_unhealthy);
         } else if (aqi < 250) {
-            return "very unhealthy";
+            return context.getString(R.string.aqi_level_very_unhealthy);
         } else {
-            return "dangerous";
+            return context.getString(R.string.aqi_level_dangerous);
         }
     }
 

@@ -114,7 +114,7 @@ public class OmniJawsObserver extends ContentObserver {
 
                             weatherSpec.location = c.getString(0);
                             weatherSpec.currentConditionCode = Weather.mapToOpenWeatherMapCondition(c.getInt(2));
-                            weatherSpec.currentCondition = Weather.getConditionString(weatherSpec.currentConditionCode);
+                            weatherSpec.currentCondition = Weather.getConditionString(mContext, weatherSpec.currentConditionCode);
                             //alternatively the following would also be possible
                             //weatherSpec.currentCondition = c.getString(1);
 

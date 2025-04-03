@@ -369,7 +369,7 @@ public class DebugActivity extends AbstractGBActivity {
 
                     weatherSpec.location = "Green Hill";
                     weatherSpec.currentConditionCode = 601; // snow
-                    weatherSpec.currentCondition = Weather.getConditionString(weatherSpec.currentConditionCode);
+                    weatherSpec.currentCondition = Weather.getConditionString(DebugActivity.this, weatherSpec.currentConditionCode);
 
                     weatherSpec.currentTemp = 15 + 273;
                     weatherSpec.currentHumidity = 30;
