@@ -40,11 +40,6 @@ public class AmazfitGTS4Coordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsContinuousFindDevice() {
-        return true;
-    }
-
-    @Override
     public boolean supportsGpxUploads() {
         return true;
     }

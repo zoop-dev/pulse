@@ -45,11 +45,6 @@ public class AmazfitCheetahProCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsContinuousFindDevice() {
-        return true;
-    }
-
-    @Override
     public boolean supportsControlCenter() {
         return true;
     }

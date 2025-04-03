@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsFindDeviceService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFindDeviceService.class);
@@ -43,6 +44,9 @@ public class ZeppOsFindDeviceService extends AbstractZeppOsService {
     public static final byte FIND_PHONE_STOP_FROM_BAND = 0x13;
     public static final byte FIND_PHONE_STOP_FROM_PHONE = 0x14;
     public static final byte FIND_PHONE_MODE = 0x15;
+
+    public static final String PREF_VERSION = "zepp_os_find_device_version";
+    private int mVersion = 0;
 
     private final Handler findWatchHandler = new Handler();
     private boolean findingWatch = false;
@@ -67,12 +71,18 @@ public class ZeppOsFindDeviceService extends AbstractZeppOsService {
             case CMD_CAPABILITIES_RESPONSE:
                 // mb7: 02:01:01
                 // active2 / gtr4: 02:01:02
+                if (payload.length == 3) {
+                    mVersion = payload[2] & 0xff;
+                    LOG.debug("Got find device service version={}", mVersion);
+                } else {
+                    LOG.warn("Got unexpected find device capabilities length {}", payload.length);
+                }
                 break;
             case FIND_BAND_ACK:
                 LOG.info("Band acknowledged find band command");
 
-                final boolean supportsContinuous = getCoordinator().supportsContinuousFindDevice();
-                if (findingWatch && !supportsContinuous) {
+                if (findingWatch && mVersion < 2) {
+                    // continuous find device not supported - schedule periodic
                     findWatchHandler.postDelayed(() -> {
                         LOG.debug("Triggering find device vibration");
                         sendFindDeviceCommand(true);
@@ -164,5 +174,9 @@ public class ZeppOsFindDeviceService extends AbstractZeppOsService {
         LOG.info("Stopping find phone");
 
         write("found phone", FIND_PHONE_STOP_FROM_PHONE);
+    }
+
+    public static boolean supportsContinuousFindDevice(final Prefs devicePrefs) {
+        return devicePrefs.getInt(PREF_VERSION, 0) >= 2;
     }
 }

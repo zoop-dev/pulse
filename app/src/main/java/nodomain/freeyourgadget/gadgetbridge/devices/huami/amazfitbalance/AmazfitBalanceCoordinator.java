@@ -46,11 +46,6 @@ public class AmazfitBalanceCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsContinuousFindDevice() {
-        return true;
-    }
-
-    @Override
     public boolean mainMenuHasMoreSection() {
         return true;
     }

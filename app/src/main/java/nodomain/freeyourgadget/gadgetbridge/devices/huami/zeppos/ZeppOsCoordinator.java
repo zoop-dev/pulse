@@ -62,6 +62,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsContactsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFindDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLoyaltyCardService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
@@ -506,7 +507,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
             notificationTypes.add(HuamiVibrationPatternNotificationType.EVENT_REMINDER);
         }
 
-        if (!supportsContinuousFindDevice()) {
+        if (!supportsContinuousFindDevice(device)) {
             notificationTypes.add(HuamiVibrationPatternNotificationType.FIND_BAND);
         }
 
@@ -528,9 +529,8 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         return BONDING_STYLE_REQUIRE_KEY;
     }
 
-    public boolean supportsContinuousFindDevice() {
-        // TODO: Auto-detect continuous find device?
-        return false;
+    public final boolean supportsContinuousFindDevice(final GBDevice device) {
+        return ZeppOsFindDeviceService.supportsContinuousFindDevice(getPrefs(device));
     }
 
     @Override
