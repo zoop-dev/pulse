@@ -3717,4 +3717,7 @@
     <string name="banglejs_notification_missed_call_source">Bejövő hívás</string>
     <string name="banglejs_notification_missed_call_suppressed_caller_id">Ismeretlen hívó. Rejtett azonosító</string>
     <string name="huawei_voice_boost">Beszédkiemelés</string>
+    <string name="music_upload_in_progress">Zene feltöltése</string>
+    <string name="music_upload_complete">Zene feltöltése befejeződött</string>
+    <string name="music_upload_failed">A zene feltöltése nem sikerült</string>
 </resources>
