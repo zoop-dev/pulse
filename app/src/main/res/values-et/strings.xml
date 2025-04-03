@@ -896,7 +896,7 @@
     <string name="pref_dashboard_widget_double_size_summary">Luba vidinal juhtpaneelil hõivata kaks tulpa</string>
     <string name="pref_dashboard_widget_today_24h_summary">Kuva aktiivsust kahe 12h ringi asemel ühes 24h ringis</string>
     <string name="dashboard_calendar_month_goals_reached_title">% sammudest eesmärgini saavutatud</string>
-    <string name="first_start_intro_tag_line">Vabasta end vidinatootjate patenteeritud rakendustest ja pilveteenustest.</string>
+    <string name="first_start_intro_tag_line">Vabasta end nutiseadmete tootjate patenteeritud rakendustest ja pilveteenustest.</string>
     <string name="pref_dashboard_widget_today_upside_down_title">Kesköö all</string>
     <string name="pref_dashboard_all_devices_title">Kõik seadmed</string>
     <string name="first_start_overview_title">Ülevaade</string>
@@ -968,4 +968,19 @@
     <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge vajab Catima kaartide sünkroonimiseks lugemisõigusi. Nende andmiseks puuduta seda nuppu.</string>
     <string name="share_log_warning">Pea meeles, et Gadgetbridge logib failid, mis võivad sisaldada palju isiklikku teavet, sealhulgas terviseandmeid, kordumatuid identifikaatoreid (nt seadme MAC-aadress), muusikaeelistusi jne. Kaalu faili muutmist ja selle teabe eemaldamist enne faili saatmist avalikule probleemiaruandele.</string>
     <string name="pref_show_changelog_summary">Kuva pärast uuendamist Gadgetbridge\'i muudatuste logi alates viimasest versioonist</string>
+    <string name="first_start_permissions_desc">Gadgetbridge vajab kõigi oma funktsioonide täitmiseks palju õigusi. Vaata allolevad load ja nende eesmärgid üle.</string>
+    <string name="permission_contacts_summary">Kontaktide saatmine nutiseadmetele</string>
+    <string name="first_start_open_source_text">Gadgetbridge on avatud lähtekoodiga rakendus. Selle on välja töötanud kogukond, kogukonna jaoks.\n\nKõik on oodatud koodi, dokumentatsiooni, testimise ja annetuste kaudu panustama.\n\nGadgetbridge ei sisalda reklaame ega jälgimist. See hoiab su andmed sinu Android-seadmes kohapeal, seega on see 100% privaatsussõbralik.\n\nLisateabe, dokumentatsiooni ja meie suhtluskanalite linkide saamiseks külasta meie veebilehte.</string>
+    <string name="permission_background_location_summary">Bluetooth seadmete otsimine taustal ja asukoha saatmine määratud nutiseadmetele</string>
+    <string name="permission_call_phone_summary">Telefonikõnede algatamine nutiseadmetest</string>
+    <string name="permission_calendar_summary">Kalendri saatmine nutiseadmetele</string>
+    <string name="permission_answer_phone_calls_summary">Telefonikõnedele vastamine nutiseadmetes</string>
+    <string name="permission_receive_sms_summary">SMS sõnumite suunamine nutiseadmetele</string>
+    <string name="permission_notifications_summary">Märguannete edastamine ühendatud nutiseadmetele</string>
+    <string name="pref_force_connection_type_description">Võimalik, et saad oma seadme Gadgetbridge\'iga tööle panna sundides kasutama õiget ühenduse tüüpi</string>
+    <string name="prompt_restart_gadgetbridge">Jõustamiseks taaskäivita GB.</string>
+    <string name="pref_theme_dynamic_colors_explanation">Märkus: Dünaamiliste värvide jaoks pead Androidi stiili seadetes lubama taustapildi värvid või värvipaleti. Kui seda ei tehta, kasutab Gadgetbridge Material 3 vaikevärve.</string>
+    <string name="permission_process_outgoing_calls_summary">Väljamineva kõne numbri lugemine selle kuvamiseks nutiseadmes</string>
+    <string name="permission_read_call_log_summary">Kõnelogi suunamine nutiseadmetele</string>
+    <string name="permission_send_sms_summary">SMS-ide (eelsalvestatud vastus) saatmine nutiseadmetest</string>
 </resources>
