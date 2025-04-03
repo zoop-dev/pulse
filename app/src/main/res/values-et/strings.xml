@@ -547,7 +547,7 @@
     <string name="pref_title_sync_caldendar">Sünkrooni kalendrisündmused</string>
     <string name="pref_summary_sync_calendar">Lülitab sisse kalendri märguanded, isegi siis kui seade pole ühenduses</string>
     <string name="pref_summary_custom_deviceicon">Näita seadmespetsiifilist ikooni teavitustes Gadgetbridge\'i ikooni asemel kui seade on ühendatud</string>
-    <string name="pref_title_weather_summary">Kasutatakse LineageOS\'i süsteemi poolt pakutava ilmateate jaoks, teised Android\'i versioonid peavad kasutama näiteks rakendust \"Weather notification\". Lisainfo Gadgetbridge\'i vikis.</string>
+    <string name="pref_title_weather_summary">Kasutatakse LineageOS\'i süsteemi poolt pakutava ilmateate jaoks, teised Androidi versioonid peavad kasutama näiteks rakendust \"Weather notification\". Lisainfo Gadgetbridge\'i vikis.</string>
     <string name="fw_upgrade_notice_amazfit_trex">Olete paigaldamas %s püsivara enda Amazfit T-Rex\'ile. 
 \n 
 \nPalun veenduge, et enne paigaldate .fw faili, pärast seda .res faili ja viimasena .gps faili. Teie kell taaskäivitub pärast .fw faili paigaldust. 
@@ -960,4 +960,5 @@
     <string name="pref_header_equalizer">Ekvalaiser</string>
     <string name="fw_upgrade_notice_amazfitbip3">Oled paigaldamas %s püsivara oma Amazfit Bip 3 kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga.\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Oled paigaldamas %s püsivara oma Amazfit Bip 3 PRO kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga..\n\nJÄTKA OMAL VASTUTUSEL!</string>
+    <string name="pref_summary_notification_wake_on_open">Ärata ja ava Android-seade, kui nutiseade saadab tagasi vastuse OPEN. Peab olema usaldusväärses olekus.</string>
 </resources>
