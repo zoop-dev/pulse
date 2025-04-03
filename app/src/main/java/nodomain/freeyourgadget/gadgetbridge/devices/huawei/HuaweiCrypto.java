@@ -77,6 +77,7 @@ public class HuaweiCrypto {
 
     public static final byte[] MESSAGE_RESPONSE = new byte[]{0x01, 0x10};
     public static final byte[] MESSAGE_CHALLENGE = new byte[]{0x01, 0x00};
+    public static final byte[] MESSAGE_CHALLENGE_V4 = new byte[]{0x04, 0x00};
 
     public static final long ENCRYPTION_COUNTER_MAX = 0xFFFFFFFF;
 
@@ -105,7 +106,7 @@ public class HuaweiCrypto {
 
     private byte[] getDigestSecret() {
         byte[] digest;
-        if (authVersion == 1) {
+        if ((authVersion == 1) || (authVersion == 4)) { //version 4 digest used on honor health devices
             digest = DIGEST_SECRET_v1.clone();
         } else if (authVersion == 2) {
             digest = DIGEST_SECRET_v2.clone();
@@ -168,7 +169,11 @@ public class HuaweiCrypto {
             }
             return computeDigestHiChainLite(MESSAGE_CHALLENGE, secretKey, nonce);
         }
-        return computeDigest(MESSAGE_CHALLENGE, nonce);
+        if (authVersion == 4) {
+            return computeDigest(MESSAGE_CHALLENGE_V4, nonce);
+        } else {
+            return computeDigest(MESSAGE_CHALLENGE, nonce);
+        }
     }
 
     public byte[] digestResponse(byte[] secretKey, byte[] nonce) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, UnsupportedEncodingException {
