@@ -200,7 +200,8 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
         mapView.getLayerManager().redrawLayers();
 
         final Model model = mapView.getModel();
-        final BoundingBox boundingBox = new BoundingBox(minLat, minLon, maxLat, maxLon);
+        // FIXME: We need to offset the min latitude so the track gets centered - not sure why
+        final BoundingBox boundingBox = new BoundingBox(minLat - (maxLat - minLat) / 4, minLon, maxLat, maxLon);
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
         int height = (int) (300 * displayMetrics.density);
