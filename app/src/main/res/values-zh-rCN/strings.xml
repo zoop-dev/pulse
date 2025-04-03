@@ -3907,4 +3907,18 @@
     <string name="earfun_change_confirm_title">修改 %s？</string>
     <string name="earfun_connect_two_devices_hint">同时连接两个蓝牙设备。为了获得稳定的信号，请避免同时使用双设备连接和 LDAP 模式。</string>
     <string name="earfun_advanced_audio_mode_hint"><b>谷歌快速配对</b>提供即时、无缝的设备配对。\n<b>低功耗音频</b> 提供更高的音质、更低的功耗并支持多种音频流。</string>
+    <string name="earfun_earbud_mode_left">仅限左耳塞</string>
+    <string name="earfun_find_headphones">寻找耳机</string>
+    <string name="earfun_header_connectivity">音频质量和连接性</string>
+    <string name="earfun_header_system_settings">系统设置</string>
+    <string name="banglejs_notification_missed_call_suppressed_caller_id">未知来电者。ID 已被隐藏</string>
+    <string name="banglejs_notification_missed_call_source">来电</string>
+    <string name="earfun_find_headphones_hint">此选项会通过耳机播放响亮的声音以帮助定位。请避免佩戴耳机以防止潜在的听力损伤。</string>
+    <string name="earfun_audio_codec_hint"><b>LDAC</b> 是一种高分辨率编解码器，可实现卓越的音质。\n<b>aptX</b> 确保低延迟和高保真音频流。\n<b>aptX Adaptive</b> 根据内容和连接动态调整比特率。\n<b>aptX Adaptive Lossless</b> 为高分辨率音乐提供无损音频。\n<b>稳定的连接</b>可最大限度地减少声音的卡顿或跳跃。</string>
+    <string name="banglejs_notification_missed_call_title">未接来电</string>
+    <string name="earfun_earbud_mode_both">两个耳塞</string>
+    <string name="earfun_in_ear_detection_hint">启用后，入耳检测会在耳塞佩戴时自动恢复音频，并在取下耳塞时暂停播放。</string>
+    <string name="earfun_voice_prompt_volume">语音提示音量</string>
+    <string name="earfun_header_audio_experience">音频体验</string>
+    <string name="huawei_voice_boost">语音增强</string>
 </resources>
