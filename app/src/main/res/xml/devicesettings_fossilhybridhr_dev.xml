@@ -48,4 +48,31 @@
         android:icon="@drawable/ic_voice"
         app:useSimpleSummaryProvider="true" />
 
+    <EditTextPreference
+        android:key="calendar_sync_events_amount"
+        android:title="@string/pref_calendar_amount_events_to_sync_title"
+        android:icon="@drawable/ic_calendar_sync"
+        android:defaultValue="5"
+        android:inputType="number"
+        app:useSimpleSummaryProvider="true" />
+    <EditTextPreference
+        android:key="calendar_sync_event_title_length"
+        android:title="@string/pref_calendar_maximum_title_characters_title"
+        android:icon="@drawable/ic_calendar_sync"
+        android:defaultValue="40"
+        android:inputType="number"
+        app:useSimpleSummaryProvider="true" />
+    <EditTextPreference
+        android:key="calendar_sync_event_desc_length"
+        android:title="@string/pref_calendar_maximum_description_characters_title"
+        android:icon="@drawable/ic_calendar_sync"
+        android:defaultValue="40"
+        android:inputType="number"
+        app:useSimpleSummaryProvider="true" />
+    <EditTextPreference
+        android:key="calendar_sync_target_app"
+        android:title="@string/pref_calendar_target_app_title"
+        android:icon="@drawable/ic_calendar_sync"
+        android:defaultValue="calendarApp"
+        app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>

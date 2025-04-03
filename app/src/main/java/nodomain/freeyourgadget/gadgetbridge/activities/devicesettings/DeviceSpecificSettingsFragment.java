@@ -961,6 +961,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_DISPLAY_ON_START);
         addPreferenceHandlerFor(PREF_DISPLAY_ON_END);
 
+        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_EVENTS_AMOUNT);
+        addPreferenceHandlerFor(PREF_CALENDAR_MAX_TITLE_LENGTH);
+        addPreferenceHandlerFor(PREF_CALENDAR_MAX_DESC_LENGTH);
+        addPreferenceHandlerFor(PREF_CALENDAR_TARGET_APP);
+
         final Preference dischargeIntervalsSet = findPreference(PREF_BATTERY_DISCHARGE_INTERVALS_SET);
         if (dischargeIntervalsSet != null) {
             dischargeIntervalsSet.setOnPreferenceClickListener(preference -> {
@@ -1303,6 +1308,9 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         setInputTypeFor(DeviceSettingsPreferenceConst.PREF_BANGLEJS_TEXT_BITMAP_SIZE, InputType.TYPE_CLASS_NUMBER);
         setInputTypeFor(DeviceSettingsPreferenceConst.PREF_AUTO_REPLY_INCOMING_CALL_DELAY, InputType.TYPE_CLASS_NUMBER);
         setInputTypeFor("hplus_screentime", InputType.TYPE_CLASS_NUMBER);
+        setInputTypeFor(PREF_CALENDAR_SYNC_EVENTS_AMOUNT, InputType.TYPE_CLASS_NUMBER);
+        setInputTypeFor(PREF_CALENDAR_MAX_TITLE_LENGTH, InputType.TYPE_CLASS_NUMBER);
+        setInputTypeFor(PREF_CALENDAR_MAX_DESC_LENGTH, InputType.TYPE_CLASS_NUMBER);
         setNumericInputTypeWithRangeFor(DeviceSettingsPreferenceConst.PREF_BATTERY_DISCHARGE_INTERVAL1_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(DeviceSettingsPreferenceConst.PREF_BATTERY_DISCHARGE_INTERVAL2_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(DeviceSettingsPreferenceConst.PREF_BATTERY_DISCHARGE_INTERVAL3_WATT, 80, 800, false);

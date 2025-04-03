@@ -18,6 +18,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil_hr;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_CALENDAR_MAX_DESC_LENGTH;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_CALENDAR_MAX_TITLE_LENGTH;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_EVENTS_AMOUNT;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_CALENDAR_TARGET_APP;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.configuration.ConfigurationPutRequest.FitnessConfigItem;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.configuration.ConfigurationPutRequest.InactivityWarningItem;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.configuration.ConfigurationPutRequest.UnitsConfigItem;
@@ -189,7 +193,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 
 public class FossilHRWatchAdapter extends FossilWatchAdapter {
     public static final int MESSAGE_WHAT_VOICE_DATA_RECEIVED = 0;
-    private static final int MAX_CALENDAR_ITEMS = 10;
 
     private byte[] phoneRandomNumber;
     private byte[] watchRandomNumber;
@@ -1624,6 +1627,11 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             return;
         }
 
+        int maxItems = Integer.parseInt(getDeviceSpecificPreferences().getString(PREF_CALENDAR_SYNC_EVENTS_AMOUNT, "5"));
+        int titleLength = Integer.parseInt(getDeviceSpecificPreferences().getString(PREF_CALENDAR_MAX_TITLE_LENGTH, "40"));
+        int descLength = Integer.parseInt(getDeviceSpecificPreferences().getString(PREF_CALENDAR_MAX_DESC_LENGTH, "40"));
+        String targetApp = getDeviceSpecificPreferences().getString(PREF_CALENDAR_TARGET_APP, "customWatchFace");
+
         final CalendarManager upcomingEvents = new CalendarManager(getContext(), getDeviceSupport().getDevice().getAddress());
         final List<CalendarEvent> calendarEvents = upcomingEvents.getCalendarEventList();
 
@@ -1631,8 +1639,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         int nEvents = 0;
 
         for (final CalendarEvent calendarEvent : calendarEvents) {
-            if (++nEvents > MAX_CALENDAR_ITEMS) {
-                LOG.warn("Syncing only first {} events of {}", MAX_CALENDAR_ITEMS, calendarEvents.size());
+            if (++nEvents > maxItems) {
+                LOG.warn("Syncing only first {} events of {}", maxItems, calendarEvents.size());
                 break;
             }
             thisSync.add(calendarEvent);
@@ -1658,10 +1666,16 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 for (long reminder : event.getRemindersAbsoluteTs()) {
                     reminders.put(reminder / 1000);
                 }
+                String title = event.getTitle();
+                if (title != null && title.length() > titleLength)
+                    title = event.getTitle().substring(0, titleLength);
+                String desc = event.getDescription();
+                if (desc != null && desc.length() > descLength)
+                    desc = event.getDescription().substring(0, descLength);
                 items.put(new JSONObject()
                         .put("id", event.getId())
-                        .put("title", event.getTitle())
-                        .put("desc", event.getDescription())
+                        .put("title", title)
+                        .put("desc", desc)
                         .put("start", event.getBeginSeconds())
                         .put("end", event.getEndSeconds())
                         .put("reminders", reminders)
@@ -1670,7 +1684,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             JSONObject calendarObj = new JSONObject()
                     .put("res", new JSONObject()
                             .put("set", new JSONObject()
-                                    .put("calendarApp._.config.events", items)
+                                    .put(targetApp + "._.config.events", items)
                             )
                     );
 
@@ -1687,7 +1701,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
 
     @Override
     public void onTestNewFunction() {
-        setVibrationStrengthFromConfig();
+        onSendCalendar();
     }
 
     public byte[] getSecretKey() throws IllegalAccessException {

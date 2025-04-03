@@ -4063,4 +4063,8 @@
     <string name="wifi_frequency_2_4_ghz">2.4 GHz</string>
     <string name="wifi_frequency_5_ghz">5 GHz</string>
     <string name="wifi_frequency">Wi-Fi Frequency</string>
+    <string name="pref_calendar_amount_events_to_sync_title">Amount of calendar events to synchronize</string>
+    <string name="pref_calendar_maximum_title_characters_title">Maximum characters in event title</string>
+    <string name="pref_calendar_maximum_description_characters_title">Maximum characters in event description</string>
+    <string name="pref_calendar_target_app_title">Target app on watch for calendar events</string>
 </resources>
