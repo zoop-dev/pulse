@@ -1022,4 +1022,8 @@
     <string name="heartrate_bpm_145">145 lööki/min</string>
     <string name="heartrate_bpm_165">165 lööki/min</string>
     <string name="heartrate_bpm_175">175 lööki/min</string>
+    <string name="prefs_heartrate_alert_threshold">Pulsi hoiatuslävi</string>
+    <string name="prefs_heartrate_alert_high_threshold">Kõrge pulsi hoiatuslävi</string>
+    <string name="prefs_heartrate_alert_active_high_threshold">Pulsi hoiatuslävi intensiivse sportimise ajal</string>
+    <string name="prefs_heartrate_alert_low_threshold">Madala pulsi hoiatuslävi</string>
 </resources>
