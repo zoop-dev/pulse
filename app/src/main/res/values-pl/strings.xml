@@ -3937,4 +3937,7 @@
     <string name="earfun_change_device_name_confirm_message">1) Po zaktualizowaniu nazwy umieść słuchawki douszne w etui ładującym, zamknij pokrywę i odczekaj około 10 sekund.\n\n2) W ustawieniach urządzenia usuń oryginalne urządzenie.\n\n3) Otwórz ponownie etui ładujące, wyszukaj urządzenie, a zmiana nazwy powinna zostać pomyślnie zastosowana.</string>
     <string name="earfun_find_headphones_hint">Ta opcja odtwarza głośny dźwięk przez słuchawki, aby pomóc je zlokalizować. Unikaj noszenia słuchawek, aby zapobiec potencjalnym uszkodzeniom słuchu.</string>
     <string name="earfun_microphone_mode_hint">Podczas korzystania ze słuchawek mikrofon może automatycznie przełączać się między lewą i prawą słuchawką lub pozostawać na jednej stronie, zależnie od Twoich preferencji.</string>
+    <string name="music_upload_complete">Przesyłanie muzyki zakończone</string>
+    <string name="music_upload_in_progress">Przesyłanie muzyki</string>
+    <string name="music_upload_failed">Przesyłanie muzyki nie powiodło się</string>
 </resources>
