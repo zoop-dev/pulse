@@ -1072,4 +1072,9 @@ public class HuaweiCoordinator {
         return new int[]{1, 30, 60, 80};
     }
 
+    public int[] getStressChartParameters() {
+        // For Huawei devices stress data is provided every 30 minutes. So draw it as bars with delta
+        return new int[]{1800, 1800, 400};
+    }
+
 }

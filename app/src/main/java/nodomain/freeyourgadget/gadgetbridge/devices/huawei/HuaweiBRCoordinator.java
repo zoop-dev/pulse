@@ -259,6 +259,16 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
         return huaweiCoordinator.getStressRanges();
     }
 
+    @Override
+    public boolean showStressLevelInPercents() {
+        return true;
+    }
+
+    @Override
+    public int[] getStressChartParameters() {
+        return huaweiCoordinator.getStressChartParameters();
+    }
+
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         return huaweiCoordinator.getDeviceSpecificSettings(device);
     }

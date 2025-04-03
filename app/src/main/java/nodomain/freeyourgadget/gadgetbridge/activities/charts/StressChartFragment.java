@@ -57,6 +57,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -93,6 +94,9 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
     private final boolean CHARTS_SLEEP_RANGE_24H = prefs.getBoolean("chart_sleep_range_24h", false);
     private final boolean SHOW_CHARTS_AVERAGE = prefs.getBoolean("charts_show_average", true);
 
+
+    private boolean showStressLevelInPercents = false;
+
     @Override
     protected void init() {
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
@@ -118,7 +122,9 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
 
         ensureStartAndEndSamples((List<StressSample>) samples, tsStart, tsEnd);
 
-        return new StressChartsDataBuilder(samples, device.getDeviceCoordinator().getStressRanges()).build();
+        showStressLevelInPercents = device.getDeviceCoordinator().showStressLevelInPercents();
+
+        return new StressChartsDataBuilder(samples, device.getDeviceCoordinator().getStressRanges(), device.getDeviceCoordinator().getStressChartParameters()).build();
     }
 
     protected LineDataSet createDataSet(final StressType stressType, final List<Entry> values) {
@@ -134,6 +140,19 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         return lineDataSet;
     }
 
+    private void setZoneValue(TextView tv, Integer value, long totalStressTime) {
+        if(showStressLevelInPercents) {
+            int valuePercent = (value == null || totalStressTime == 0)? 0: (int) Math.round(((double) value / totalStressTime) * 100);
+            tv.setText(String.format(Locale.ROOT,"%d%%", valuePercent));
+        } else {
+            if (value != null && value > 0) {
+                tv.setText(DateTimeUtils.formatDurationHoursMinutes(value, TimeUnit.SECONDS));
+            } else {
+                tv.setText(R.string.stats_empty_value);
+            }
+        }
+    }
+
     @Override
     protected void updateChartsnUIThread(final StressChartsData stressData) {
         final PieData pieData = stressData.getPieData();
@@ -143,30 +162,10 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         stressDate.setText(formattedDate);
 
         Map<StressType, Integer> stressZoneTimes = stressData.getStressZoneTimes();
-        Integer relaxedTime = stressZoneTimes.get(StressType.RELAXED);
-        if (0 < relaxedTime) {
-            stressChartRelaxedTime.setText(DateTimeUtils.formatDurationHoursMinutes(relaxedTime, TimeUnit.SECONDS));
-        } else {
-            stressChartRelaxedTime.setText(R.string.stats_empty_value);
-        }
-        Integer mildTime = stressZoneTimes.get(StressType.MILD);
-        if (mildTime > 0) {
-            stressChartMildTime.setText(DateTimeUtils.formatDurationHoursMinutes(mildTime, TimeUnit.SECONDS));
-        } else {
-            stressChartMildTime.setText(R.string.stats_empty_value);
-        }
-        Integer moderateTime = stressZoneTimes.get(StressType.MODERATE);
-        if (moderateTime > 0) {
-            stressChartModerateTime.setText(DateTimeUtils.formatDurationHoursMinutes(moderateTime, TimeUnit.SECONDS));
-        } else {
-            stressChartModerateTime.setText(R.string.stats_empty_value);
-        }
-        Integer highTime = stressZoneTimes.get(StressType.HIGH);
-        if (highTime > 0) {
-            stressChartHighTime.setText(DateTimeUtils.formatDurationHoursMinutes(highTime, TimeUnit.SECONDS));
-        } else {
-            stressChartHighTime.setText(R.string.stats_empty_value);
-        }
+        setZoneValue(stressChartRelaxedTime, stressZoneTimes.get(StressType.RELAXED), stressData.getTotalStressTime());
+        setZoneValue(stressChartMildTime, stressZoneTimes.get(StressType.MILD), stressData.getTotalStressTime());
+        setZoneValue(stressChartModerateTime, stressZoneTimes.get(StressType.MODERATE), stressData.getTotalStressTime());
+        setZoneValue(stressChartHighTime, stressZoneTimes.get(StressType.HIGH), stressData.getTotalStressTime());
 
         if (stressData.getAverage() > 0) {
             int noc = String.valueOf(stressData.getAverage()).length();
@@ -209,9 +208,7 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         final View rootView = inflater.inflate(R.layout.fragment_stresschart, container, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                getChartsHost().enableSwipeRefresh(scrollY == 0);
-            });
+            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> getChartsHost().enableSwipeRefresh(scrollY == 0));
         }
 
         mStressChart = rootView.findViewById(R.id.stress_line_chart);
@@ -240,7 +237,7 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         mStressLevelsPieChart.setTouchEnabled(false);
         mStressLevelsPieChart.setCenterTextColor(GBApplication.getTextColor(getContext()));
         mStressLevelsPieChart.setCenterTextSize(18f);
-        mStressLevelsPieChart.setHoleColor(getContext().getResources().getColor(R.color.transparent));
+        mStressLevelsPieChart.setHoleColor(requireContext().getResources().getColor(R.color.transparent));
         mStressLevelsPieChart.setHoleRadius(85);
         mStressLevelsPieChart.setDrawEntryLabels(false);
         mStressLevelsPieChart.getLegend().setEnabled(false);
@@ -360,6 +357,10 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         private final List<? extends StressSample> samples;
         private final int[] stressRanges;
 
+        private final int sampleRate;
+        private final int interval;
+        private final int delta;
+
         private final TimestampTranslation tsTranslation = new TimestampTranslation();
 
         private final Map<StressType, List<Entry>> lineEntriesPerLevel = new HashMap<>();
@@ -371,9 +372,12 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         long averageSum;
         long averageNumSamples;
 
-        public StressChartsDataBuilder(final List<? extends StressSample> samples, final int[] stressRanges) {
+        public StressChartsDataBuilder(final List<? extends StressSample> samples, final int[] stressRanges, final int[] dataParameters) {
             this.samples = samples;
             this.stressRanges = stressRanges;
+            this.sampleRate = dataParameters[0];
+            this.interval = dataParameters[1];
+            this.delta = dataParameters[2];
         }
 
         private void reset() {
@@ -413,25 +417,50 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
                 previousTs = ts;
                 currentTypeStartTs = ts;
                 previousStressType = stressType;
-                set(ts, stressType, sample.getStress());
+                if(interval > 0 && sample.getStress() > 0) {
+                    int endTime = interval - delta;
+                    set(ts, stressType, sample.getStress());
+                    set(endTime - 1, stressType, sample.getStress());
+                    set(endTime, StressType.UNKNOWN, UNKNOWN_VAL);
+                } else {
+                    set(ts, stressType, sample.getStress());
+                }
                 return;
             }
 
-            if (ts - previousTs > 60 * 10) {
-                // More than 15 minutes since last sample
-                // Set to unknown right after the last sample we got until the current time
-                int lastEndTs = Math.min(previousTs + 60 * 5, ts - 1);
-                set(lastEndTs, StressType.UNKNOWN, UNKNOWN_VAL);
-                set(ts - 1, StressType.UNKNOWN, UNKNOWN_VAL);
+            if(interval > 0) {
+                // For interval devices bars chard should be used.
+                // Emulate bars by drawing unknown type on the start and end of interval with delta for spaces.
+                if(sample.getStress() > 0) {
+                    int startTime = (((ts / interval)) * interval) + delta;
+                    int endTime = (((ts / interval) + 1) * interval) - delta;
+
+                    set(startTime, StressType.UNKNOWN, UNKNOWN_VAL);
+                    set(startTime + 1, stressType, sample.getStress());
+                    set(endTime - 1, stressType, sample.getStress());
+                    set(endTime, StressType.UNKNOWN, UNKNOWN_VAL);
+                }  else {
+                    set(ts, stressType, sample.getStress());
+                }
+
+
+            } else {
+                if (ts - previousTs > sampleRate * 10) {
+                    // More than 15 minutes since last sample
+                    // Set to unknown right after the last sample we got until the current time
+                    int lastEndTs = Math.min(previousTs + sampleRate * 5, ts - 1);
+                    set(lastEndTs, StressType.UNKNOWN, UNKNOWN_VAL);
+                    set(ts - 1, StressType.UNKNOWN, UNKNOWN_VAL);
+                }
+
+                set(ts, stressType, sample.getStress());
             }
 
             if (!stressType.equals(previousStressType)) {
                 currentTypeStartTs = ts;
             }
 
-            set(ts, stressType, sample.getStress());
-
-            accumulator.put(stressType, accumulator.get(stressType) + 60);
+            accumulator.computeIfPresent(stressType, (k, v) -> v + sampleRate);
 
             if (stressType != StressType.UNKNOWN) {
                 averageSum += sample.getStress();
@@ -460,13 +489,16 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
             final List<Integer> pieColors = new ArrayList<>();
             final Map<StressType, Integer> stressZoneTimes = new HashMap<>();
 
+            long totalStressTime = 0;
             for (final StressType stressType : StressType.values()) {
                 final List<Entry> stressEntries = lineEntriesPerLevel.get(stressType);
                 lineDataSets.add(createDataSet(stressType, stressEntries));
 
                 final Integer stressTime = accumulator.get(stressType);
                 stressZoneTimes.put(stressType, stressTime);
+
                 if (stressType != StressType.UNKNOWN && stressTime != null && stressTime != 0) {
+                    totalStressTime += stressTime;
                     pieEntries.add(new PieEntry(stressTime, stressType.getLabel(requireContext())));
                     pieColors.add(stressType.getColor(requireContext()));
                 }
@@ -496,7 +528,7 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
             final LineData lineData = new LineData(lineDataSets);
             final ValueFormatter xValueFormatter = new SampleXLabelFormatter(tsTranslation, "HH:mm");
             final DefaultChartsData<LineData> chartsData = new DefaultChartsData<>(lineData, xValueFormatter);
-            return new StressChartsData(pieData, chartsData, Math.round((float) averageSum / averageNumSamples), stressZoneTimes);
+            return new StressChartsData(pieData, chartsData, Math.round((float) averageSum / averageNumSamples), stressZoneTimes, totalStressTime);
         }
     }
 
@@ -504,13 +536,15 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
         private final PieData pieData;
         private final DefaultChartsData<LineData> chartsData;
         private final int average;
-        private Map<StressType, Integer> stressZoneTimes;
+        private final Map<StressType, Integer> stressZoneTimes;
+        private final long totalStressTime;
 
-        public StressChartsData(final PieData pieData, final DefaultChartsData<LineData> chartsData, final int average, Map<StressType, Integer> stressZoneTimes) {
+        public StressChartsData(final PieData pieData, final DefaultChartsData<LineData> chartsData, final int average, Map<StressType, Integer> stressZoneTimes, long totalStressTime) {
             this.pieData = pieData;
             this.chartsData = chartsData;
             this.average = average;
             this.stressZoneTimes = stressZoneTimes;
+            this.totalStressTime = totalStressTime;
         }
 
         public Map<StressType, Integer> getStressZoneTimes() {
@@ -527,6 +561,10 @@ public class StressChartFragment extends AbstractChartFragment<StressChartFragme
 
         public int getAverage() {
             return average;
+        }
+
+        public long getTotalStressTime() {
+            return totalStressTime;
         }
     }
 

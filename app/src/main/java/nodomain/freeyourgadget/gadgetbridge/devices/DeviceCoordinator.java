@@ -376,6 +376,15 @@ public interface DeviceCoordinator {
     int[] getStressRanges();
 
     /**
+     * Returns true if stress level percentages are displayed instead of actual time.
+     */
+    boolean showStressLevelInPercents();
+
+    /**
+     * Returns the stress data parameters (sampleRate, interval, delta) used for chart drawing
+     */
+    int[] getStressChartParameters();
+    /**
      * Returns the sample provider for temperature data, for the device being supported.
      */
     TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(GBDevice device, DaoSession session);

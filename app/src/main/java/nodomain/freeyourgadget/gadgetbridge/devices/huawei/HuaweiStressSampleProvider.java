@@ -58,23 +58,4 @@ public class HuaweiStressSampleProvider extends AbstractTimeSampleProvider<Huawe
         return new HuaweiStressSample();
     }
 
-    @NonNull
-    @Override
-    public List<HuaweiStressSample> getAllSamples(long timestampFrom, long timestampTo) {
-        final long delta = 300000;
-        final long interval = 1800000;
-        List<HuaweiStressSample> samples = super.getAllSamples(timestampFrom, timestampTo);
-        List<HuaweiStressSample> newSamples = new ArrayList<>();
-        for (HuaweiStressSample sample : samples) {
-            long startTime = (((sample.getStartTime() / interval)) * interval) + delta;
-            long endTime = (((sample.getTimestamp() / interval) + 1) * interval) - delta;
-            for (long i = startTime; i < endTime; i += delta) {
-                if (i > timestampFrom && i < timestampTo) {
-                    newSamples.add(new HuaweiStressSample(i, sample.getDeviceId(), sample.getUserId(), sample.getStress(), sample.getLevel(), sample.getStartTime()));
-                }
-            }
-        }
-        return newSamples;
-    }
-
 }

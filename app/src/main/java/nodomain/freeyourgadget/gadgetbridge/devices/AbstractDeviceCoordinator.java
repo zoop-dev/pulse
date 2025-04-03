@@ -263,6 +263,19 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean showStressLevelInPercents() {
+        return false;
+    }
+
+    @Override
+    public int[] getStressChartParameters() {
+        // by default stress data provided every 60 seconds
+        // by default it is not interval data and we don't need to insert deltas
+        // if interval and delta provided stress data will be displayed as bars with deltas between.
+        return new int[]{60, 0, 0};
+    }
+
+    @Override
     public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
