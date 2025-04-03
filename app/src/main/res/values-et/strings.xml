@@ -1010,4 +1010,16 @@
     <string name="heartrate_bpm_45">45 lööki/min</string>
     <string name="heartrate_bpm_120">120 lööki/min</string>
     <string name="heartrate_bpm_105">105 lööki/min</string>
+    <string name="heartrate_bpm_150">150 lööki/min</string>
+    <string name="prefs_heartrate_alert_experimental_title">Pulsihoiatus (katseline)</string>
+    <string name="heartrate_bpm_140">140 lööki/min</string>
+    <string name="heartrate_bpm_155">155 lööki/min</string>
+    <string name="heartrate_bpm_195">195 lööki/min</string>
+    <string name="heartrate_bpm_185">185 lööki/min</string>
+    <string name="heartrate_bpm_205">205 lööki/min</string>
+    <string name="heartrate_bpm_130">130 lööki/min</string>
+    <string name="heartrate_bpm_135">135 lööki/min</string>
+    <string name="heartrate_bpm_145">145 lööki/min</string>
+    <string name="heartrate_bpm_165">165 lööki/min</string>
+    <string name="heartrate_bpm_175">175 lööki/min</string>
 </resources>
