@@ -63,14 +63,17 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
     public static boolean isActivityOpen = false;
 
     private MapsManager mapsManager;
+    private Polyline polyline;
+    private Paint paint;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             if (MapsSettingsFragment.ACTION_SETTING_CHANGE.equals(intent.getAction())) {
-                // FIXME: Map reloading is not working properly
-                //LOG.debug("Reloading map view");
-                //mapsManager.loadMaps(mapView);
+                final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
+                paint.setColor(trackColor);
+                polyline.setPaintStroke(paint);
+                polyline.requestRedraw();
             }
         }
     };
@@ -86,8 +89,7 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
         }
         isActivityOpen = true;
 
-        // FIXME: This is disabled since map reloading is not working properly
-        //addMenuProvider(this);
+        addMenuProvider(this);
 
         mapView = findViewById(R.id.activitygpsview);
         mapsManager = new MapsManager(this);
@@ -115,14 +117,18 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
                 .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
                 .collect(Collectors.toList());
 
-        Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-        final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
-        paint.setColor(trackColor);
-        paint.setStrokeWidth(8);
-        paint.setStyle(Style.STROKE);
-        Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
-        polyline.setPoints(latlongs);
-        mapView.addLayer(polyline);
+        if (paint == null) {
+            paint = AndroidGraphicFactory.INSTANCE.createPaint();
+            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
+            paint.setColor(trackColor);
+            paint.setStrokeWidth(8);
+            paint.setStyle(Style.STROKE);
+        }
+        if (polyline == null) {
+            polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
+            polyline.setPoints(latlongs);
+            mapView.addLayer(polyline);
+        }
         mapView.getLayerManager().redrawLayers();
 
         mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));

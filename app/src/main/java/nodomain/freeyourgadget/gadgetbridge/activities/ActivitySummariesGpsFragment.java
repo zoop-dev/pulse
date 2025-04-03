@@ -76,14 +76,17 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     private TextView gpsWarning;
     private File inputFile;
     private MapsManager mapsManager;
+    private Polyline polyline;
+    private Paint paint;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             if (MapsSettingsFragment.ACTION_SETTING_CHANGE.equals(intent.getAction())) {
-                // FIXME: Map reloading is not working properly
-                //LOG.debug("Reloading map view");
-                //mapsManager.loadMaps(mapView);
+                final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
+                paint.setColor(trackColor);
+                polyline.setPaintStroke(paint);
+                polyline.requestRedraw();
             }
         }
     };
@@ -182,15 +185,18 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
                 .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
                 .collect(Collectors.toList());
 
-        Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-        final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
-        paint.setColor(trackColor);
-        paint.setStrokeWidth(8);
-        paint.setStyle(Style.STROKE);
-        Polyline polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
-        polyline.addPoints(latlongs);
-
-        mapView.addLayer(polyline);
+        if (paint == null) {
+            paint = AndroidGraphicFactory.INSTANCE.createPaint();
+            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
+            paint.setColor(trackColor);
+            paint.setStrokeWidth(8);
+            paint.setStyle(Style.STROKE);
+        }
+        if (polyline == null) {
+            polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
+            mapView.addLayer(polyline);
+        }
+        polyline.setPoints(latlongs);
         mapView.getLayerManager().redrawLayers();
 
         final Model model = mapView.getModel();
