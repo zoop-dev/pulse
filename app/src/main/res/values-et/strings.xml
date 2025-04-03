@@ -334,7 +334,7 @@
     <string name="chart_no_data_synchronize">Andmeid pole. Kas sünkroonida seade\?</string>
     <string name="miband_prefs_fitness_goal">Päevane sammude eesmärk</string>
     <string name="controlcenter_start_activitymonitor">Sinu aktiivsus (ALFA)</string>
-    <string name="notif_battery_low_title">Vidina aku on madal!</string>
+    <string name="notif_battery_low_title">Nutiseadme aku laetuse tase on madal!</string>
     <string name="notif_battery_low_bigtext_last_charge_time">Viimane laadimine: %s 
 \n</string>
     <string name="notif_battery_low_bigtext_number_of_charges">Laadimiste arv: %s</string>
@@ -638,7 +638,7 @@
     <string name="menuitem_alarm">Äratus</string>
     <string name="menuitem_breathing">Hingamine</string>
     <string name="menuitem_weather">Ilmateade</string>
-    <string name="notification_channel_name">Gadgetbridge\'i teavitused</string>
+    <string name="notification_channel_name">Üldised</string>
     <string name="choose_auto_export_location">Ekspordi asukoha valimine</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="devicetype_watchxplus">Watch X Plus</string>
@@ -860,7 +860,7 @@
     <string name="appmanager_app_edit">Muuda</string>
     <string name="watchface_dialog_widget_cat_generic">Üldine</string>
     <string name="prefs_wena3_title_screen">Ekraaniseaded</string>
-    <string name="notif_battery_full_title">Vidina aku on täis!</string>
+    <string name="notif_battery_full_title">Nutiseadme aku on täis!</string>
     <string name="watchface_widget_type_date">Kuupäev</string>
     <string name="watchface_dialog_widget_cat_position">Positsioon</string>
     <string name="appmanager_app_start">Käivita</string>
@@ -961,4 +961,11 @@
     <string name="fw_upgrade_notice_amazfitbip3">Oled paigaldamas %s püsivara oma Amazfit Bip 3 kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga.\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Oled paigaldamas %s püsivara oma Amazfit Bip 3 PRO kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga..\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="pref_summary_notification_wake_on_open">Ärata ja ava Android-seade, kui nutiseade saadab tagasi vastuse OPEN. Peab olema usaldusväärses olekus.</string>
+    <string name="notification_gps_title">Gadgetbridge GPS</string>
+    <string name="huawei_trusleep_warning">Hoiatus: selle lubamisel kuvatakse Gadgetbridge\'is kogu uni kerge unena! Klõpsa siin, kui nõustud sellega.</string>
+    <string name="loyalty_cards_catima_not_compatible">Paigaldatud Catima versioon ei ühildu Gadgetbridge\'iga. Värskenda Catima ja Gadgetbridge uusimatele versioonidele.</string>
+    <string name="pref_theme_dynamic_colors_not_available_warning">Dünaamilised värvid pole sinu seadmes saadaval, seda funktsiooni toetab ainult Android 12+. Gadgetbridge kasutab Material 3 vaikevärve.</string>
+    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge vajab Catima kaartide sünkroonimiseks lugemisõigusi. Nende andmiseks puuduta seda nuppu.</string>
+    <string name="share_log_warning">Pea meeles, et Gadgetbridge logib failid, mis võivad sisaldada palju isiklikku teavet, sealhulgas terviseandmeid, kordumatuid identifikaatoreid (nt seadme MAC-aadress), muusikaeelistusi jne. Kaalu faili muutmist ja selle teabe eemaldamist enne faili saatmist avalikule probleemiaruandele.</string>
+    <string name="pref_show_changelog_summary">Kuva pärast uuendamist Gadgetbridge\'i muudatuste logi alates viimasest versioonist</string>
 </resources>
