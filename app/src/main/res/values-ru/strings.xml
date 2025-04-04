@@ -3843,7 +3843,7 @@
     <string name="prefs_active_noise_cancelling_level_dynamic">Динамический</string>
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="earfun_earbud_mode_right">Только правый наушник</string>
-    <string name="earfun_voice_prompt_volume">Громокость голосовых команд</string>
+    <string name="earfun_voice_prompt_volume">Громкость голосовых команд</string>
     <string name="earfun_header_audio_experience">Аудио опыт</string>
     <string name="earfun_header_system_settings">Системные настройки</string>
     <string name="earfun_find_headphones">Найти наушники</string>
@@ -3867,4 +3867,5 @@
     <string name="earfun_microphone_mode_hint">При использовании микрофона наушников может происходить автоматическое переключение между микрофоном левого и правого наушника, либо использоваться конкретный в зависимости от настроек.</string>
     <string name="earfun_find_headphones_hint">Эта опция играет громкий звук через наушники, чтобы помочь найти их. Не надевайте наушники, чтобы предотвратить потенциальные травмы слуха.</string>
     <string name="huawei_voice_boost">Усиление голоса</string>
+    <string name="banglejs_notification_missed_call_suppressed_caller_id">Неизвестный абонент. Идентификатор скрыт</string>
 </resources>
