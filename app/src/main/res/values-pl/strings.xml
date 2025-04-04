@@ -3367,7 +3367,7 @@
     <string name="agps_status_missing">Brak</string>
     <string name="agps_status_pending">W trakcie</string>
     <string name="agps_status_current">Aktualny</string>
-    <string name="hr_resting">W spoczynku</string>
+    <string name="hr_resting">Spoczynkowe</string>
     <string name="hr_maximum">Maksymalne</string>
     <string name="hr_minimum">Minimalne</string>
     <string name="hr_average">Średnie</string>
