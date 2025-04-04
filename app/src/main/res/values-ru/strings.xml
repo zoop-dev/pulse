@@ -3832,4 +3832,10 @@
     <string name="pref_title_stable_connection">Стабильное соединение</string>
     <string name="zepp_os_install_map_instructions">После того, как на телефоне начнётся установка, нужно будет её подтвердить и на часах.</string>
     <string name="map_upload_failed">Ошибка загрузки карты</string>
+    <string name="music_upload_in_progress">Загрузка музыки</string>
+    <string name="music_upload_failed">Не удалось загрузить музыку</string>
+    <string name="music_upload_complete">Музыка успешно загружена</string>
+    <string name="prefs_active_noise_cancelling_level_normal">Обычный</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="pref_title_equalizer_natural">Естественный</string>
 </resources>
