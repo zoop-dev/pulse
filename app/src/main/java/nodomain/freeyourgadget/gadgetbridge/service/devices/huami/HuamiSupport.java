@@ -396,11 +396,11 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
             }
             characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
             if (characteristicChunked2021Write != null && huami2021ChunkedEncoder == null) {
-                huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(characteristicChunked2021Write, force2021Protocol(), mMTU);
+                huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(mMTU);
             }
             if (force2021Protocol()) {
                 if (characteristicChunked2021Write != null && characteristicChunked2021Read != null) {
-                    new InitOperation2021(authenticate, authFlags, cryptFlags, this, builder, huami2021ChunkedEncoder, huami2021ChunkedDecoder).perform();
+                    new InitOperation2021(authenticate, authFlags, cryptFlags, this, builder, characteristicChunked2021Write, huami2021ChunkedEncoder, huami2021ChunkedDecoder).perform();
                 } else {
                     LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
                     builder.add(new SetDeviceStateAction(getDevice(), State.WAITING_FOR_RECONNECT, getContext()));
@@ -4091,7 +4091,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     }
 
     public void writeToChunked2021(TransactionBuilder builder, short type, byte[] data, boolean encrypt) {
-        huami2021ChunkedEncoder.write(builder, type, data, force2021Protocol(), encrypt);
+        huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), type, data, force2021Protocol(), encrypt);
     }
 
     public void writeToChunked2021(final String taskName, short type, byte data, boolean encrypt) {

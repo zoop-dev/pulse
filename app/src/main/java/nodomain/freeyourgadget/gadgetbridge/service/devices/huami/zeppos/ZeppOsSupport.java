@@ -290,7 +290,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
         characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
         if (characteristicChunked2021Write != null && huami2021ChunkedEncoder == null) {
-            huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(characteristicChunked2021Write, force2021Protocol(), getMTU());
+            huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(getMTU());
         }
 
         if (characteristicChunked2021Write == null || characteristicChunked2021Read == null) {
@@ -1150,7 +1150,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public void writeToChunked2021(final TransactionBuilder builder, final short endpoint, final byte[] data, final boolean encryptIgnored) {
         // Ensure communication for all services contains the encrypted flag reported by the service, since not all
         // watches have the same services encrypted (eg. #3308).
-        huami2021ChunkedEncoder.write(builder, endpoint, data, force2021Protocol(), mIsEncrypted.contains(endpoint));
+        huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), endpoint, data, force2021Protocol(), mIsEncrypted.contains(endpoint));
     }
 
     @Override

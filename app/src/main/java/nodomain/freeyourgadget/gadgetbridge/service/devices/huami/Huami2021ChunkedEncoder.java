@@ -16,19 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import java.util.function.Consumer;
+
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.CryptoUtils;
 
 public class Huami2021ChunkedEncoder {
     private static final Logger LOG = LoggerFactory.getLogger(Huami2021ChunkedEncoder.class);
-
-    private final BluetoothGattCharacteristic characteristicChunked2021Write;
 
     private byte writeHandle;
 
@@ -37,15 +34,9 @@ public class Huami2021ChunkedEncoder {
     // to that thread later.
     private volatile int encryptedSequenceNr;
     private volatile byte[] sharedSessionKey;
+    private volatile int mMTU;
 
-    private final boolean force2021Protocol;
-    private volatile int mMTU = 23;
-
-    public Huami2021ChunkedEncoder(final BluetoothGattCharacteristic characteristicChunked2021Write,
-                                   final boolean force2021Protocol,
-                                   final int mMTU) {
-        this.characteristicChunked2021Write = characteristicChunked2021Write;
-        this.force2021Protocol = force2021Protocol;
+    public Huami2021ChunkedEncoder(final int mMTU) {
         this.mMTU = mMTU;
     }
 
@@ -58,9 +49,9 @@ public class Huami2021ChunkedEncoder {
         this.mMTU = mMTU;
     }
 
-    public synchronized void write(final TransactionBuilder builder,
+    public synchronized void write(final Consumer<byte[]> chunkWriter,
                                    final short type,
-                                   byte[] data,
+                                   final byte[] data,
                                    final boolean extended_flags,
                                    final boolean encrypt) {
         if (encrypt && sharedSessionKey == null) {
@@ -71,7 +62,7 @@ public class Huami2021ChunkedEncoder {
         writeHandle++;
 
         int remaining = data.length;
-        int length = data.length;
+        final int length = data.length;
         byte count = 0;
         int header_size = 10;
 
@@ -79,10 +70,11 @@ public class Huami2021ChunkedEncoder {
             header_size++;
         }
 
+        final byte[] dataToSend;
         if (extended_flags && encrypt) {
-            byte[] messagekey = new byte[16];
+            final byte[] messageKey = new byte[16];
             for (int i = 0; i < 16; i++) {
-                messagekey[i] = (byte) (sharedSessionKey[i] ^ writeHandle);
+                messageKey[i] = (byte) (sharedSessionKey[i] ^ writeHandle);
             }
             int encrypted_length = length + 8;
             int overflow = encrypted_length % 16;
@@ -90,7 +82,7 @@ public class Huami2021ChunkedEncoder {
                 encrypted_length += (16 - overflow);
             }
 
-            byte[] encryptable_payload = new byte[encrypted_length];
+            final byte[] encryptable_payload = new byte[encrypted_length];
             System.arraycopy(data, 0, encryptable_payload, 0, length);
             encryptable_payload[length] = (byte) (encryptedSequenceNr & 0xff);
             encryptable_payload[length + 1] = (byte) ((encryptedSequenceNr >> 8) & 0xff);
@@ -104,18 +96,19 @@ public class Huami2021ChunkedEncoder {
             encryptable_payload[length + 7] = (byte) ((checksum >> 24) & 0xff);
             remaining = encrypted_length;
             try {
-                data = CryptoUtils.encryptAES(encryptable_payload, messagekey);
+                dataToSend = CryptoUtils.encryptAES(encryptable_payload, messageKey);
             } catch (Exception e) {
                 LOG.error("error while encrypting", e);
                 return;
             }
-
+        } else {
+            dataToSend = data;
         }
 
         while (remaining > 0) {
-            int MAX_CHUNKLENGTH = mMTU - 3 - header_size;
-            int copybytes = Math.min(remaining, MAX_CHUNKLENGTH);
-            byte[] chunk = new byte[copybytes + header_size];
+            final int maxChunkLength = mMTU - 3 - header_size;
+            int copyBytes = Math.min(remaining, maxChunkLength);
+            byte[] chunk = new byte[copyBytes + header_size];
 
             byte flags = 0;
             if (encrypt) {
@@ -134,7 +127,7 @@ public class Huami2021ChunkedEncoder {
                 chunk[i++] = (byte) (type & 0xff);
                 chunk[i] = (byte) ((type >> 8) & 0xff);
             }
-            if (remaining <= MAX_CHUNKLENGTH) {
+            if (remaining <= maxChunkLength) {
                 flags |= 0x06; // last chunk?
             }
             chunk[0] = 0x03;
@@ -148,9 +141,9 @@ public class Huami2021ChunkedEncoder {
                 chunk[3] = count;
             }
 
-            System.arraycopy(data, data.length - remaining, chunk, header_size, copybytes);
-            builder.write(characteristicChunked2021Write, chunk);
-            remaining -= copybytes;
+            System.arraycopy(dataToSend, dataToSend.length - remaining, chunk, header_size, copyBytes);
+            chunkWriter.accept(chunk);
+            remaining -= copyBytes;
             header_size = 4;
 
             if (extended_flags) {
