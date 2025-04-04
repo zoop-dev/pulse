@@ -320,8 +320,8 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     protected BluetoothGattCharacteristic characteristicHRControlPoint;
     private BluetoothGattCharacteristic characteristicChunked;
 
-    private BluetoothGattCharacteristic characteristicChunked2021Write;
-    private BluetoothGattCharacteristic characteristicChunked2021Read;
+    protected BluetoothGattCharacteristic characteristicChunked2021Write;
+    protected BluetoothGattCharacteristic characteristicChunked2021Read;
 
     private boolean needsAuth;
     private volatile boolean telephoneRinging;
@@ -335,7 +335,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     protected boolean isMusicAppStarted = false;
     protected MediaManager mediaManager;
     private boolean heartRateNotifyEnabled;
-    private static final int MIN_MTU = 23;
+    protected static final int MIN_MTU = 23;
     private int mMTU = MIN_MTU;
     // Keep track of the previous MTU before reconnection, so that we can request it after reconnection
     private int previousMtu = -1;
@@ -373,7 +373,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
         super.setContext(gbDevice, btAdapter, context);
         this.mediaManager = new MediaManager(context);
-
+        this.sleepAsAndroidSender = new SleepAsAndroidSender(gbDevice);
     }
 
     @Override
@@ -407,9 +407,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
                 }
             } else {
                 new InitOperation(authenticate, authFlags, cryptFlags, this, builder).perform();
-            }
-            if (sleepAsAndroidSender == null) {
-                sleepAsAndroidSender = new SleepAsAndroidSender(gbDevice);
             }
             characteristicHRControlPoint = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT);
             characteristicChunked = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER);
@@ -4103,11 +4100,11 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
 
     public void writeToChunked2021(final String taskName, short type, byte[] data, boolean encrypt) {
         try {
-            final TransactionBuilder builder = performInitialized(taskName);
+            final TransactionBuilder builder = createTransactionBuilder(taskName);
             writeToChunked2021(builder, type, data, encrypt);
             builder.queue(getQueue());
         } catch (final Exception e) {
-            LOG.error("Failed to " + taskName, e);
+            LOG.error("Failed to {}", taskName, e);
         }
     }
 

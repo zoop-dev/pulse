@@ -85,6 +85,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -115,6 +116,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedDecoder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedEncoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiPhoneGpsStatus;
@@ -129,6 +133,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlarmsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAppsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAuthenticationService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsDisplayItemsService;
@@ -171,6 +176,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     // Services
     private final ZeppOsServicesService servicesService = new ZeppOsServicesService(this);
+    private final ZeppOsAuthenticationService authenticationService = new ZeppOsAuthenticationService(this);
     private final ZeppOsFileTransferService fileTransferService = new ZeppOsFileTransferService(this);
     private final ZeppOsConfigService configService = new ZeppOsConfigService(this);
     private final ZeppOsAgpsService agpsService = new ZeppOsAgpsService(this);
@@ -205,6 +211,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final Set<Short> mIsEncrypted = new HashSet<>();
     private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<Short, AbstractZeppOsService>() {{
         put(servicesService.getEndpoint(), servicesService);
+        put(authenticationService.getEndpoint(), authenticationService);
         put(fileTransferService.getEndpoint(), fileTransferService);
         put(configService.getEndpoint(), configService);
         put(agpsService.getEndpoint(), agpsService);
@@ -272,6 +279,31 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         }
 
         super.dispose();
+    }
+
+    @Override
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        characteristicChunked2021Read = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_READ);
+        if (characteristicChunked2021Read != null && huami2021ChunkedDecoder == null) {
+            huami2021ChunkedDecoder = new Huami2021ChunkedDecoder(this, force2021Protocol());
+        }
+
+        characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
+        if (characteristicChunked2021Write != null && huami2021ChunkedEncoder == null) {
+            huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(characteristicChunked2021Write, force2021Protocol(), getMTU());
+        }
+
+        if (characteristicChunked2021Write == null || characteristicChunked2021Read == null) {
+            LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
+            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            return builder;
+        }
+
+        builder.notify(characteristicChunked2021Read, true);
+
+        authenticationService.startAuthentication(builder);
+
+        return builder;
     }
 
     @Override
@@ -1157,6 +1189,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     @Override
     public void phase2Initialize(final TransactionBuilder builder) {
         LOG.info("2021 phase2Initialize...");
+        setCurrentTimeWithService(builder);
         requestMTU(builder);
         requestBatteryInfo(builder);
 
@@ -1382,6 +1415,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             default:
                 LOG.warn("Unhandled 2021 payload {}", String.format("0x%04x", type));
         }
+    }
+
+    public void setEncryptionParameters(final int encryptedSequenceNr, final byte[] sharedSessionKey) {
+        huami2021ChunkedEncoder.setEncryptionParameters(encryptedSequenceNr, sharedSessionKey);
+        huami2021ChunkedDecoder.setEncryptionParameters(sharedSessionKey);
     }
 
     protected void handle2021Workout(final byte[] payload) {
