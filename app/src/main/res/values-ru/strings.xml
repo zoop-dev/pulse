@@ -3868,4 +3868,14 @@
     <string name="earfun_find_headphones_hint">Эта опция играет громкий звук через наушники, чтобы помочь найти их. Не надевайте наушники, чтобы предотвратить потенциальные травмы слуха.</string>
     <string name="huawei_voice_boost">Усиление голоса</string>
     <string name="banglejs_notification_missed_call_suppressed_caller_id">Неизвестный абонент. Идентификатор скрыт</string>
+    <string name="ultrahuman_unhandled_error_response">получен необработанный код ответа 0x%x для операции 0x%x</string>
+    <string name="huawei_stress_calibrate_in_progress">Калибровка уровня стресса уже запущена</string>
+    <string name="huawei_stress_calibrate_done">Калибровка уровня стресса завершена</string>
+    <string name="huawei_stress_calibrate_error">Ошибка калибровки уровня стресса</string>
+    <string name="huawei_stress_test_enable">Автоматическое измерение стресса</string>
+    <string name="huawei_stress_test_enable_summary">Включить или выключить автоматическое измерение уровня стресса</string>
+    <string name="huawei_stress_no_calibration_data">Нет начальных данных, выполните калибровку</string>
+    <string name="huawei_stress_calibrate">Калибровка</string>
+    <string name="huawei_stress_calibrate_summary">Калибровка автоматического измерения уровня стресса</string>
+    <string name="huawei_stress_calibrate_started">Калибровка стресса началась</string>
 </resources>
