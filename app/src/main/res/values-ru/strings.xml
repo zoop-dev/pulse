@@ -3838,4 +3838,8 @@
     <string name="prefs_active_noise_cancelling_level_normal">Обычный</string>
     <string name="range_percentage_float">%.1f%% - %.1f%%</string>
     <string name="pref_title_equalizer_natural">Естественный</string>
+    <string name="prefs_active_noise_cancelling_level_comfort">Комфортный</string>
+    <string name="prefs_active_noise_cancelling_level_ultra">Ультра</string>
+    <string name="prefs_active_noise_cancelling_level_dynamic">Динамический</string>
+    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
 </resources>
