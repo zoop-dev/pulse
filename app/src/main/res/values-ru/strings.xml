@@ -3878,4 +3878,12 @@
     <string name="huawei_stress_calibrate">Калибровка</string>
     <string name="huawei_stress_calibrate_summary">Калибровка автоматического измерения уровня стресса</string>
     <string name="huawei_stress_calibrate_started">Калибровка стресса началась</string>
+    <string name="maps_download_title">Загрузить карты</string>
+    <string name="maps_track_color_title">Цвет траектории</string>
+    <string name="maps">Карты</string>
+    <string name="strokes_per_length">гребков/длина</string>
+    <string name="devicetype_honor_watch4">Honor Watch 4 (Pro)</string>
+    <string name="maps_settings">Настройки карты</string>
+    <string name="maps_download_summary">Нажмите здесь, чтобы загрузить файлы карты. Они должны быть сохранены в папке, выбранной настройкой ниже.</string>
+    <string name="swim_avg_cadence">Средняя частота гребков</string>
 </resources>
