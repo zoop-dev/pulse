@@ -3727,4 +3727,13 @@
     <string name="maps_download_summary">Kattintson ide a térképfájlok letöltéséhez. Ezeket az alábbi beállításban kiválasztott mappába kell menteni.</string>
     <string name="devicetype_honor_watch4">Honor Watch 4 (Pro)</string>
     <string name="maps">Térképek</string>
+    <string name="weather_condition_light_thunderstorm">enyhe zivatar</string>
+    <string name="weather_condition_thunderstorm">zivatar</string>
+    <string name="weather_condition_thunderstorm_with_light_drizzle">zivatar, enyhe szitálással</string>
+    <string name="weather_condition_heavy_thunderstorm">heves zivatar</string>
+    <string name="weather_condition_thunderstorm_with_drizzle">zivatar szitálással</string>
+    <string name="weather_condition_thunderstorm_with_heavy_rain">zivatar, heves esőzéssel</string>
+    <string name="weather_condition_thunderstorm_with_rain">zivatar esővel</string>
+    <string name="weather_condition_thunderstorm_with_heavy_drizzle">zivatar, heves szitálással</string>
+    <string name="weather_condition_thunderstorm_with_light_rain">zivatar, enyhe esőzéssel</string>
 </resources>
