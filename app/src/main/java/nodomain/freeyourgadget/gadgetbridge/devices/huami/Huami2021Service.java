@@ -20,13 +20,9 @@ public class Huami2021Service {
     /**
      * Endpoints for 2021 chunked protocol
      */
-    public static final short CHUNKED2021_ENDPOINT_WEATHER = 0x000e;
-    public static final short CHUNKED2021_ENDPOINT_CONNECTION = 0x0015;
     public static final short CHUNKED2021_ENDPOINT_STEPS = 0x0016;
-    public static final short CHUNKED2021_ENDPOINT_VIBRATION_PATTERNS = 0x0018;
     public static final short CHUNKED2021_ENDPOINT_WORKOUT = 0x0019;
     public static final short CHUNKED2021_ENDPOINT_HEARTRATE = 0x001d;
-    public static final short CHUNKED2021_ENDPOINT_BATTERY = 0x0029;
     public static final short CHUNKED2021_ENDPOINT_AUTH = 0x0082;
     public static final short CHUNKED2021_ENDPOINT_COMPAT = 0x0090;
 
@@ -38,26 +34,6 @@ public class Huami2021Service {
     public static final byte STEPS_CMD_ENABLE_REALTIME = 0x05;
     public static final byte STEPS_CMD_ENABLE_REALTIME_ACK = 0x06;
     public static final byte STEPS_CMD_REALTIME_NOTIFICATION = 0x07;
-
-    /**
-     * Vibration Patterns, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_VIBRATION_PATTERNS}.
-     */
-    public static final byte VIBRATION_PATTERN_SET = 0x03;
-    public static final byte VIBRATION_PATTERN_ACK = 0x04;
-
-    /**
-     * Battery, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_BATTERY}.
-     */
-    public static final byte BATTERY_REQUEST = 0x03;
-    public static final byte BATTERY_REPLY = 0x04;
-
-    /**
-     * Connection, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_CONNECTION}.
-     */
-    public static final byte CONNECTION_CMD_MTU_REQUEST = 0x01;
-    public static final byte CONNECTION_CMD_MTU_RESPONSE = 0x02;
-    public static final byte CONNECTION_CMD_UNKNOWN_3 = 0x03;
-    public static final byte CONNECTION_CMD_UNKNOWN_4 = 0x04;
 
     /**
      * Notifications, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_HEARTRATE}.
@@ -81,12 +57,6 @@ public class Huami2021Service {
     public static final int WORKOUT_GPS_FLAG_POSITION = 0x40000;
     public static final byte WORKOUT_STATUS_START = 0x01;
     public static final byte WORKOUT_STATUS_END = 0x04;
-
-    /**
-     * Weather, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_WEATHER}.
-     */
-    public static final byte WEATHER_CMD_SET_DEFAULT_LOCATION = 0x09;
-    public static final byte WEATHER_CMD_DEFAULT_LOCATION_ACK = 0x0a;
 
     /**
      * Raw sensor control.

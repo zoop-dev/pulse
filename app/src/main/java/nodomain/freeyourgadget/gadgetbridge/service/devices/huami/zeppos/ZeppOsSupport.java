@@ -50,13 +50,11 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,14 +89,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsAgpsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsGpxRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
@@ -120,11 +116,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedDecoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedEncoder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiPhoneGpsStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsAgpsUpdateOperation;
@@ -135,8 +129,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAppsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAuthenticationService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsBatteryService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConnectionService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsDisplayItemsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFindDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsHttpService;
@@ -156,8 +152,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsSilentModeService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsUserInfoService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVibrationPatternsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVoiceMemosService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWatchfaceService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWeatherService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWifiService;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -206,6 +204,10 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsFindDeviceService findDeviceService = new ZeppOsFindDeviceService(this);
     private final ZeppOsSilentModeService silentModeService = new ZeppOsSilentModeService(this);
     private final ZeppOsUserInfoService userInfoService = new ZeppOsUserInfoService(this);
+    private final ZeppOsVibrationPatternsService vibrationPatternsService = new ZeppOsVibrationPatternsService(this);
+    private final ZeppOsBatteryService batteryService = new ZeppOsBatteryService(this);
+    private final ZeppOsWeatherService weatherService = new ZeppOsWeatherService(this);
+    private final ZeppOsConnectionService connectionService = new ZeppOsConnectionService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
     // FIXME: We need to keep track of which services are encrypted for now, since not all of them were yet migrated to a service
@@ -213,6 +215,8 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<Short, AbstractZeppOsService>() {{
         put(servicesService.getEndpoint(), servicesService);
         put(authenticationService.getEndpoint(), authenticationService);
+        put(batteryService.getEndpoint(), batteryService);
+        put(connectionService.getEndpoint(), connectionService);
         put(fileTransferService.getEndpoint(), fileTransferService);
         put(configService.getEndpoint(), configService);
         put(agpsService.getEndpoint(), agpsService);
@@ -241,6 +245,8 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(findDeviceService.getEndpoint(), findDeviceService);
         put(silentModeService.getEndpoint(), silentModeService);
         put(userInfoService.getEndpoint(), userInfoService);
+        put(vibrationPatternsService.getEndpoint(), vibrationPatternsService);
+        put(weatherService.getEndpoint(), weatherService);
     }};
 
     public ZeppOsSupport() {
@@ -456,15 +462,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    protected ZeppOsSupport requestBatteryInfo(TransactionBuilder builder) {
-        LOG.debug("Requesting Battery Info");
-
-        writeToChunked2021(builder, CHUNKED2021_ENDPOINT_BATTERY, BATTERY_REQUEST, false);
-
-        return this;
-    }
-
-    @Override
     protected ZeppOsSupport setFitnessGoal(final TransactionBuilder builder) {
         final int goalSteps = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
         final int goalCalories = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
@@ -618,6 +615,14 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     @Override
     public UpdateFirmwareOperation createUpdateFirmwareOperation(final Uri uri) {
         throw new UnsupportedOperationException("this method should not be used");
+    }
+
+    /**
+     * FIXME: Visibility hack for easier refactoring.
+     */
+    @Override
+    public void setMtu(final int mtu) {
+        super.setMtu(mtu);
     }
 
     @Override
@@ -854,65 +859,8 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    protected boolean supportsDeviceDefaultVibrationProfiles() {
-        return true;
-    }
-
-    @Override
-    protected void setVibrationPattern(final TransactionBuilder builder,
-                                       final HuamiVibrationPatternNotificationType notificationType,
-                                       final boolean test,
-                                       final VibrationProfile profile) {
-        final int MAX_TOTAL_LENGTH_MS = 10_000; // 10 seconds, about as long as Mi Fit allows
-
-        // The on-off sequence, until the max total length is reached
-        final List<Short> onOff = truncateVibrationsOnOff(profile, MAX_TOTAL_LENGTH_MS);
-
-        final ByteBuffer buf = ByteBuffer.allocate(5 + 2 * onOff.size());
-        buf.order(ByteOrder.LITTLE_ENDIAN);
-
-        buf.put(VIBRATION_PATTERN_SET);
-        buf.put(notificationType.getCode());
-        buf.put((byte) (profile != null ? 1 : 0)); // 1 for custom, 0 for device default
-        buf.put((byte) (test ? 1 : 0));
-        buf.put((byte) (onOff.size() / 2));
-
-        for (Short time : onOff) {
-            buf.putShort(time);
-        }
-
-        writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_VIBRATION_PATTERNS, buf.array(), true);
-    }
-
-    @Override
     public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) {
-        final WeatherSpec weatherSpec = weatherSpecs.get(0);
-
-        // Weather is not sent directly to the bands, they send HTTP requests for each location.
-        // When we have a weather update, set the default location to that location on the band.
-        // TODO: Support for multiple weather locations
-
-        final String locationKey = "1.234,-5.678,xiaomi_accu:" + System.currentTimeMillis(); // dummy
-        final String locationName = weatherSpec.location;
-
-        try {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            baos.write(Huami2021Service.WEATHER_CMD_SET_DEFAULT_LOCATION);
-            baos.write((byte) 0x02); // ? 2 for current, 4 for default
-            baos.write((byte) 0x00); // ?
-            baos.write((byte) 0x00); // ?
-            baos.write((byte) 0x00); // ?
-            baos.write(locationKey.getBytes(StandardCharsets.UTF_8));
-            baos.write((byte) 0x00); // ?
-            baos.write(locationName.getBytes(StandardCharsets.UTF_8));
-            baos.write((byte) 0x00); // ?
-
-            final TransactionBuilder builder = performInitialized("set weather location");
-            writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_WEATHER, baos.toByteArray(), false);
-            builder.queue(getQueue());
-        } catch (final Exception e) {
-            LOG.error("Failed to set weather location", e);
-        }
+        weatherService.onSendWeather(weatherSpecs);
     }
 
     @Override
@@ -1187,21 +1135,10 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         watchfaceService.requestCurrentWatchface(builder);
     }
 
-    protected void requestMTU(final TransactionBuilder builder) {
-        writeToChunked2021(
-                builder,
-                CHUNKED2021_ENDPOINT_CONNECTION,
-                CONNECTION_CMD_MTU_REQUEST,
-                false
-        );
-    }
-
     @Override
     public void phase2Initialize(final TransactionBuilder builder) {
         LOG.info("2021 phase2Initialize...");
         setCurrentTimeWithService(builder);
-        requestMTU(builder);
-        requestBatteryInfo(builder);
 
         final GBDeviceEventUpdatePreferences evt = new GBDeviceEventUpdatePreferences()
                 .withPreference(DeviceSettingsPreferenceConst.WIFI_HOTSPOT_STATUS, null)
@@ -1250,16 +1187,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             // services are supported, and whether they are encrypted or not
 
             final ZeppOsCoordinator coordinator = getCoordinator();
-
-            // TODO move this to a service
-            setUserInfo(builder);
-
-            // TODO move this to a service
-            for (final HuamiVibrationPatternNotificationType type : coordinator.getVibrationPatternNotificationTypes(gbDevice)) {
-                // FIXME: Can we read these from the band?
-                final String typeKey = type.name().toLowerCase(Locale.ROOT);
-                setVibrationPattern(builder, HuamiConst.PREF_HUAMI_VIBRATION_PROFILE_PREFIX + typeKey);
-            }
 
             for (AbstractZeppOsService service : mServiceMap.values()) {
                 if (mSupportedServices.contains(service.getEndpoint())) {
@@ -1401,26 +1328,14 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             case CHUNKED2021_ENDPOINT_COMPAT:
                 LOG.warn("Unexpected compat payload {}", GB.hexdump(payload));
                 return;
-            case CHUNKED2021_ENDPOINT_WEATHER:
-                handle2021Weather(payload);
-                return;
             case CHUNKED2021_ENDPOINT_WORKOUT:
                 handle2021Workout(payload);
                 return;
             case CHUNKED2021_ENDPOINT_HEARTRATE:
                 handle2021HeartRate(payload);
                 return;
-            case CHUNKED2021_ENDPOINT_CONNECTION:
-                handle2021Connection(payload);
-                return;
             case CHUNKED2021_ENDPOINT_STEPS:
                 handle2021Steps(payload);
-                return;
-            case CHUNKED2021_ENDPOINT_VIBRATION_PATTERNS:
-                handle2021VibrationPatterns(payload);
-                return;
-            case CHUNKED2021_ENDPOINT_BATTERY:
-                handle2021Battery(payload);
                 return;
             default:
                 LOG.warn("Unhandled 2021 payload {}", String.format("0x%04x", type));
@@ -1496,34 +1411,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         }
     }
 
-    protected void handle2021Weather(final byte[] payload) {
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (payload[0]) {
-            case WEATHER_CMD_DEFAULT_LOCATION_ACK:
-                LOG.info("Weather default location ACK, status = {}", payload[1]);
-                return;
-            default:
-                LOG.warn("Unexpected weather byte {}", String.format("0x%02x", payload[0]));
-        }
-    }
-
-    protected void handle2021Connection(final byte[] payload) {
-        switch (payload[0]) {
-            case CONNECTION_CMD_MTU_RESPONSE:
-                final int mtu = BLETypeConversions.toUint16(payload, 1) + 3;
-                LOG.info("Device announced MTU change: {}", mtu);
-                setMtu(mtu);
-                return;
-            case CONNECTION_CMD_UNKNOWN_3:
-                // Some ping? Band sometimes sends 0x03, phone replies with 0x04
-                LOG.info("Got unknown 3, replying with unknown 4");
-                writeToChunked2021("respond connection unknown 4", CHUNKED2021_ENDPOINT_CONNECTION, CONNECTION_CMD_UNKNOWN_4, false);
-                return;
-        }
-
-        LOG.warn("Unexpected connection payload byte {}", String.format("0x%02x", payload[0]));
-    }
-
     protected void handle2021Steps(final byte[] payload) {
         switch (payload[0]) {
             case STEPS_CMD_REPLY:
@@ -1548,31 +1435,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             default:
                 LOG.warn("Unexpected steps payload byte {}", String.format("0x%02x", payload[0]));
         }
-    }
-
-    protected void handle2021VibrationPatterns(final byte[] payload) {
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (payload[0]) {
-            case VIBRATION_PATTERN_ACK:
-                LOG.info("Vibration Patterns ACK, status = {}", payload[1]);
-                return;
-            default:
-                LOG.warn("Unexpected Vibration Patterns payload byte {}", String.format("0x%02x", payload[0]));
-        }
-    }
-
-    protected void handle2021Battery(final byte[] payload) {
-        if (payload[0] != BATTERY_REPLY) {
-            LOG.warn("Unexpected battery payload byte {}", String.format("0x%02x", payload[0]));
-            return;
-        }
-
-        if (payload.length != 21) {
-            LOG.warn("Unexpected battery payload length: {}", payload.length);
-        }
-
-        final HuamiBatteryInfo batteryInfo = new HuamiBatteryInfo(subarray(payload, 1, payload.length));
-        handleGBDeviceEvent(batteryInfo.toDeviceEvent());
     }
 
     @Override

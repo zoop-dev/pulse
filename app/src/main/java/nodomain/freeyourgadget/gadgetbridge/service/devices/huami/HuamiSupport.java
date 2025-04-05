@@ -55,7 +55,6 @@ import java.time.zone.ZoneRules;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -590,7 +589,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     private static final byte[] startHeartMeasurementContinuous = new byte[]{0x15, MiBandService.COMMAND_SET__HR_CONTINUOUS, 1};
     private static final byte[] stopHeartMeasurementContinuous = new byte[]{0x15, MiBandService.COMMAND_SET__HR_CONTINUOUS, 0};
 
-    protected HuamiSupport requestBatteryInfo(TransactionBuilder builder) {
+    private HuamiSupport requestBatteryInfo(TransactionBuilder builder) {
         LOG.debug("Requesting Battery Info!");
         BluetoothGattCharacteristic characteristic = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO);
         builder.read(characteristic);
@@ -1645,7 +1644,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     }
 
     protected int getFindDeviceInterval() {
-        return HuamiUtils.getFindDeviceInterval(getDevice(), supportsDeviceDefaultVibrationProfiles());
+        return HuamiUtils.getFindDeviceInterval(getDevice(), false);
     }
 
     protected void sendFindDeviceCommand(boolean start) {
@@ -3010,7 +3009,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         }
     }
 
-    protected HuamiSupport setVibrationPattern(final TransactionBuilder builder, final String preferenceKey) {
+    private HuamiSupport setVibrationPattern(final TransactionBuilder builder, final String preferenceKey) {
         // The preference key has one of the 3 prefixes
         final String notificationTypeName = preferenceKey.replace(PREF_HUAMI_VIBRATION_COUNT_PREFIX, "")
                 .replace(PREF_HUAMI_VIBRATION_PROFILE_PREFIX, "")
@@ -3022,19 +3021,12 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         final VibrationProfile vibrationProfile = HuamiCoordinator.getVibrationProfile(
                 getDevice().getAddress(),
                 notificationType,
-                supportsDeviceDefaultVibrationProfiles()
+                false
         );
 
         setVibrationPattern(builder, notificationType, isTry, vibrationProfile);
 
         return this;
-    }
-
-    /**
-     * Whether the device supports built-in default vibration profiles.
-     */
-    protected boolean supportsDeviceDefaultVibrationProfiles() {
-        return false;
     }
 
     /**
@@ -3045,7 +3037,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
      * @param test             test the pattern (only vibrate the band, do not set it)
      * @param profile          the {@link VibrationProfile}
      */
-    protected void setVibrationPattern(final TransactionBuilder builder,
+    private void setVibrationPattern(final TransactionBuilder builder,
                                        final HuamiVibrationPatternNotificationType notificationType,
                                        final boolean test,
                                        final VibrationProfile profile) {
@@ -3057,7 +3049,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         final int MAX_TOTAL_LENGTH_MS = 10_000; // 10 seconds, about as long as Mi Fit allows
 
         // The on-off sequence, until the max total length is reached
-        final List<Short> onOff = truncateVibrationsOnOff(profile, MAX_TOTAL_LENGTH_MS);
+        final List<Short> onOff = HuamiUtils.truncateVibrationsOnOff(profile, MAX_TOTAL_LENGTH_MS);
 
         final ByteBuffer buf = ByteBuffer.allocate(3 + 2 * onOff.size());
         buf.order(ByteOrder.LITTLE_ENDIAN);
@@ -3076,35 +3068,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         }
 
         writeToChunked(builder, 2, buf.array());
-    }
-
-    protected List<Short> truncateVibrationsOnOff(final VibrationProfile profile, final int limitMillis) {
-        if (profile == null) {
-            return Collections.emptyList();
-        }
-
-        int totalLengthMs = 0;
-
-        // The on-off sequence, until the max total length is reached
-        final List<Short> onOff = new ArrayList<>(profile.getOnOffSequence().length);
-
-        for (int c = 0; c < profile.getRepeat(); c++) {
-            for (int i = 0; i < profile.getOnOffSequence().length; i += 2) {
-                final short on = (short) profile.getOnOffSequence()[i];
-                final short off = (short) profile.getOnOffSequence()[i + 1];
-
-                if (totalLengthMs + on + off > limitMillis) {
-                    LOG.warn("VibrationProfile {} too long, truncating to {} ms", profile.getId(), limitMillis);
-                    break;
-                }
-
-                onOff.add(on);
-                onOff.add(off);
-                totalLengthMs += on + off;
-            }
-        }
-
-        return onOff;
     }
 
     @Override
