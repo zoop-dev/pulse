@@ -3940,4 +3940,11 @@
     <string name="music_upload_complete">Przesyłanie muzyki zakończone</string>
     <string name="music_upload_in_progress">Przesyłanie muzyki</string>
     <string name="music_upload_failed">Przesyłanie muzyki nie powiodło się</string>
+    <string name="maps">Mapy</string>
+    <string name="maps_settings">Ustawienia map</string>
+    <string name="maps_download_title">Pobierz Mapy</string>
+    <string name="maps_track_color_title">Kolor śladu</string>
+    <string name="devicetype_honor_watch4">Honor Watch 4 (Pro)</string>
+    <string name="maps_not_found">Nie znaleziono map - wybierz prawidłowy folder map w ustawieniach</string>
+    <string name="maps_download_summary">Kliknij tutaj, aby pobrać pliki map. Powinny one zostać zapisane w folderze wybranym w preferencjach poniżej.</string>
 </resources>
