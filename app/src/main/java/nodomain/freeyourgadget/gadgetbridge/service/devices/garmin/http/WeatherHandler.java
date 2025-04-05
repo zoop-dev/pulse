@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import lineageos.weather.util.WeatherUtils;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -89,6 +90,12 @@ public class WeatherHandler {
                 weatherData = new WeatherForecastCurrent(weatherSpec, tempUnit, speedUnit);
                 break;
             }
+            //case "/weather/v1/calibration/altimeter": {
+            //    final int lat = getQueryNum(query, "lat", 0);
+            //    final int lon = getQueryNum(query, "lon", 0);
+            //    weatherData = new WeatherAltimeterCalibration();
+            //    break;
+            //}
             default:
                 LOG.warn("Unknown weather path {}", path);
                 return null;
@@ -132,13 +139,13 @@ public class WeatherHandler {
         public Integer icon;
         public Integer epochSunrise;
         public Integer epochSunset;
-        public Wind wind;
+        public Wind wind; // no gusts
         public Integer humidity;
 
         public WeatherForecastDay(final GregorianCalendar date, final WeatherSpec.Daily dailyForecast, final String tempUnit, final String speedUnit) {
             dayOfWeek = BLETypeConversions.dayOfWeekToRawBytes(date);
-            description = "Unknown"; // TODO from conditionCode
-            summary = "Unknown"; // TODO from conditionCode
+            description = Weather.getConditionString(GBApplication.getContext(), dailyForecast.conditionCode);
+            summary = Weather.getConditionString(GBApplication.getContext(), dailyForecast.conditionCode);
             high = getTemperature(dailyForecast.maxTemp, tempUnit);
             low = getTemperature(dailyForecast.minTemp, tempUnit);
             precipProb = dailyForecast.precipProbability;
@@ -178,17 +185,18 @@ public class WeatherHandler {
         public Wind wind;
         public Integer icon;
         public WeatherValue dewPoint;
-        public Float uvIndex;
+        public Float uvIndex; // 3 decimal places
         public Integer relativeHumidity;
         public WeatherValue feelsLikeTemperature;
         public WeatherValue visibility;
         public WeatherValue pressure;
         public Object airQuality;
         public Integer cloudCover;
+        //public WeatherValue ceilingHeight; // 4700 / FOOT
 
         public WeatherForecastHour(final WeatherSpec.Hourly hourlyForecast, final String tempUnit, final String speedUnit) {
             epochSeconds = hourlyForecast.timestamp;
-            description = "Unknown"; // TODO from conditionCode
+            description = Weather.getConditionString(GBApplication.getContext(), hourlyForecast.conditionCode);
             temp = getTemperature(hourlyForecast.temp, tempUnit);
             precipProb = hourlyForecast.precipProbability;
             wind = new Wind(getSpeed(hourlyForecast.windSpeed, speedUnit), hourlyForecast.windDirection);
@@ -211,12 +219,15 @@ public class WeatherHandler {
         public Integer icon;
         public WeatherValue feelsLikeTemperature;
         public WeatherValue dewPoint;
+        //public WeatherValue windChill; // CELSIUS
         public Integer relativeHumidity;
         public Wind wind;
         public String locationName;
         public WeatherValue visibility;
         public WeatherValue pressure;
+        //public WeatherValue ceilingHeight; // 4700 / FOOT
         public WeatherValue pressureChange;
+        public Integer cloudCoverage;
 
         public WeatherForecastCurrent(final WeatherSpec weatherSpec, final String tempUnit, final String speedUnit) {
             epochSeconds = weatherSpec.timestamp;
@@ -231,7 +242,21 @@ public class WeatherHandler {
             visibility = new WeatherValue(weatherSpec.visibility, "METER");
             pressure = new WeatherValue(weatherSpec.pressure * 0.02953, "INCHES_OF_MERCURY");
             pressureChange = new WeatherValue(0f, "INCHES_OF_MERCURY");
+            cloudCoverage = weatherSpec.cloudCover;
         }
+    }
+
+    // /weather/v1/calibration/altimeter?lat=XXXXXXXXX&lon=-YYYYYYYY
+    public static class WeatherAltimeterCalibration {
+        public UncertainValue temperature; // Celsius - 11.89999... / 100
+        public UncertainValue pressure; // Pa - 101494.79xxx... / 100
+        public Long forecastTime; // unix epoch seconds
+        public Long forecastIssueTime; // unix epoch seconds
+    }
+
+    public static class UncertainValue {
+        public Number value;
+        public Integer uncertainty; // 100
     }
 
     public static class WeatherValue {
@@ -248,6 +273,7 @@ public class WeatherHandler {
         public WeatherValue speed;
         public String directionString;
         public Integer direction;
+        //public WeatherValue gustSpeed;
 
         public Wind(final WeatherValue speed, final int direction) {
             this.speed = speed;
@@ -272,7 +298,10 @@ public class WeatherHandler {
             case "KELVIN":
                 return new WeatherValue(kelvin, "KELVIN");
             case "CELSIUS":
+                // #4313 - We do a "wrong" conversion to celsius on purpose
+                return new WeatherValue(kelvin - 273, "CELSIUS");
             default:
+                LOG.warn("Unknown temperature unit {}, returning CELSIUS", unit);
                 // #4313 - We do a "wrong" conversion to celsius on purpose
                 return new WeatherValue(kelvin - 273, "CELSIUS");
         }
@@ -283,7 +312,9 @@ public class WeatherHandler {
             case "METERS_PER_SECOND":
                 return new WeatherValue(kmph / 3.6, "METERS_PER_SECOND");
             case "KILOMETERS_PER_HOUR":
+                return new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
             default:
+                LOG.warn("Unknown speed unit {}, returning KILOMETERS_PER_HOUR", unit);
                 return new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
         }
     }
