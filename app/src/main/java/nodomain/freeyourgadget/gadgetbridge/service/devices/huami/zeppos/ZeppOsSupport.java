@@ -1139,6 +1139,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public void phase2Initialize(final TransactionBuilder builder) {
         LOG.info("2021 phase2Initialize...");
         setCurrentTimeWithService(builder);
+        requestDeviceInfo(builder);
 
         final GBDeviceEventUpdatePreferences evt = new GBDeviceEventUpdatePreferences()
                 .withPreference(DeviceSettingsPreferenceConst.WIFI_HOTSPOT_STATUS, null)
