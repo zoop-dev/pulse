@@ -22,17 +22,9 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Servic
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint16;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint8;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.mapTimeZone;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.FITNESS_GOAL_CALORIES;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.FITNESS_GOAL_FAT_BURN_TIME;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.FITNESS_GOAL_SLEEP;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.FITNESS_GOAL_STANDING_TIME;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.FITNESS_GOAL_STEPS;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.FITNESS_GOAL_WEIGHT;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.HEART_RATE_ALL_DAY_MONITORING;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE_FOLLOW_PHONE;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.PASSWORD_ENABLED;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.PASSWORD_TEXT;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.SLEEP_HIGH_ACCURACY_MONITORING;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.TEMPERATURE_UNIT;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.TIME_FORMAT;
@@ -63,7 +55,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -74,7 +65,6 @@ import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
@@ -99,7 +89,6 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -317,27 +306,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public void onSendConfiguration(final String config) {
         final Prefs prefs = getDevicePrefs();
 
-        // FIXME: This should not be handled here
-        switch (config) {
-            case ActivityUser.PREF_USER_STEPS_GOAL:
-            case ActivityUser.PREF_USER_CALORIES_BURNT:
-            case ActivityUser.PREF_USER_SLEEP_DURATION:
-            case ActivityUser.PREF_USER_GOAL_WEIGHT_KG:
-            case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
-            case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES: {
-                final TransactionBuilder builder = createTransactionBuilder("set fitness goal");
-                setFitnessGoal(builder);
-                builder.queue(getQueue());
-                return;
-            }
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM: {
-                final TransactionBuilder builder = createTransactionBuilder("set measurement system");
-                setMeasurementSystem(builder);
-                builder.queue(getQueue());
-                return;
-            }
-        }
-
         // Check if any of the services handles this config
         for (AbstractZeppOsService service : mServiceMap.values()) {
             if (service.onSendConfiguration(config, prefs)) {
@@ -459,74 +427,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         } catch (final IOException e) {
             LOG.error("Unable to set realtime heart rate measurement", e);
         }
-    }
-
-    @Override
-    protected ZeppOsSupport setFitnessGoal(final TransactionBuilder builder) {
-        final int goalSteps = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
-        final int goalCalories = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
-        final int goalSleep = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION, ActivityUser.defaultUserSleepDurationGoal);
-        final int goalWeight = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_WEIGHT_KG, ActivityUser.defaultUserGoalWeightKg);
-        final int goalStandingTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS, ActivityUser.defaultUserGoalStandingTimeHours);
-        final int goalFatBurnTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, ActivityUser.defaultUserFatBurnTimeMinutes);
-        LOG.info("Setting Fitness Goals to steps={}, calories={}, sleep={}, weight={}, standingTime={}, fatBurn={}", goalSteps, goalCalories, goalSleep, goalWeight, goalStandingTime, goalFatBurnTime);
-
-        configService.newSetter()
-                .setInt(FITNESS_GOAL_STEPS, goalSteps)
-                .setShort(FITNESS_GOAL_CALORIES, (short) goalCalories)
-                .setShort(FITNESS_GOAL_SLEEP, (short) (goalSleep * 60))
-                .setShort(FITNESS_GOAL_WEIGHT, (short) goalWeight)
-                .setShort(FITNESS_GOAL_STANDING_TIME, (short) (goalStandingTime))
-                .setShort(FITNESS_GOAL_FAT_BURN_TIME, (short) goalFatBurnTime)
-                .write(builder);
-
-        return this;
-    }
-
-    protected void setMeasurementSystem(final TransactionBuilder builder) {
-        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
-        LOG.info("Setting measurement system to {}", measurementSystem);
-
-        final byte distanceUnit;
-        final byte temperatureUnit;
-        final byte weightUnit;
-
-        // FIXME we should be able to configure these separately
-        if ("metric".equals(measurementSystem)) {
-            distanceUnit = 0;
-            temperatureUnit = 0;
-            weightUnit = 0;
-        } else {
-            distanceUnit = 1;
-            temperatureUnit = 1;
-            weightUnit = 2;
-        }
-
-        configService.newSetter()
-                .setByte(ZeppOsConfigService.ConfigArg.DISTANCE_UNIT, distanceUnit)
-                .setByte(TEMPERATURE_UNIT, temperatureUnit)
-                .setByte(ZeppOsConfigService.ConfigArg.WEIGHT_UNIT, weightUnit)
-                .write(builder);
-    }
-
-    @Override
-    protected ZeppOsSupport setPassword(final TransactionBuilder builder) {
-        final boolean passwordEnabled = HuamiCoordinator.getPasswordEnabled(gbDevice.getAddress());
-        final String password = HuamiCoordinator.getPassword(gbDevice.getAddress());
-
-        LOG.info("Setting password: {}, {}", passwordEnabled, password);
-
-        if (password == null || password.isEmpty()) {
-            LOG.warn("Invalid password: {}", password);
-            return this;
-        }
-
-        configService.newSetter()
-                .setBoolean(PASSWORD_ENABLED, passwordEnabled)
-                .setString(PASSWORD_TEXT, password)
-                .write(builder);
-
-        return this;
     }
 
     @Override

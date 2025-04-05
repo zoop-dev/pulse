@@ -59,16 +59,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.GpsCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.WorkoutDetectionCapability;
+import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.ActivateDisplayOnLift;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.ActivateDisplayOnLiftSensitivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.AlwaysOnDisplay;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DoNotDisturb;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsMenuType;
@@ -135,6 +140,37 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
     @Override
     public boolean onSendConfiguration(final String prefKey, Prefs prefs) {
+        // Special cases
+        switch (prefKey) {
+            // Fitness goals are global
+            case ActivityUser.PREF_USER_STEPS_GOAL:
+            case ActivityUser.PREF_USER_CALORIES_BURNT:
+            case ActivityUser.PREF_USER_SLEEP_DURATION:
+            case ActivityUser.PREF_USER_GOAL_WEIGHT_KG:
+            case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
+            case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES: {
+                final TransactionBuilder builder = new TransactionBuilder("set fitness goal");
+                setFitnessGoal(builder);
+                builder.queue(getSupport().getQueue());
+                return true;
+            }
+            // Measurement system is global
+            case SettingsActivity.PREF_MEASUREMENT_SYSTEM: {
+                final TransactionBuilder builder = new TransactionBuilder("set measurement system");
+                setMeasurementSystem(builder);
+                builder.queue(getSupport().getQueue());
+                return true;
+            }
+            // Password needs sanity checks
+            case PasswordCapabilityImpl.PREF_PASSWORD:
+            case PasswordCapabilityImpl.PREF_PASSWORD_ENABLED: {
+                final TransactionBuilder builder = new TransactionBuilder("set " + prefKey);
+                setPassword(builder);
+                builder.queue(getSupport().getQueue());
+                return true;
+            }
+        }
+
         if (!PREF_TO_CONFIG.containsKey(prefKey)) {
             return false;
         }
@@ -154,6 +190,68 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         }
 
         return false;
+    }
+
+    private void setPassword(final TransactionBuilder builder) {
+        final boolean passwordEnabled = HuamiCoordinator.getPasswordEnabled(getSupport().getDevice().getAddress());
+        final String password = HuamiCoordinator.getPassword(getSupport().getDevice().getAddress());
+
+        LOG.info("Setting password: {}, {}", passwordEnabled, password);
+
+        if (password == null || password.isEmpty()) {
+            LOG.warn("Invalid password: {}", password);
+            return;
+        }
+
+        newSetter()
+                .setBoolean(ConfigArg.PASSWORD_ENABLED, passwordEnabled)
+                .setString(ConfigArg.PASSWORD_TEXT, password)
+                .write(builder);
+    }
+
+    protected void setFitnessGoal(final TransactionBuilder builder) {
+        final int goalSteps = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
+        final int goalCalories = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
+        final int goalSleep = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION, ActivityUser.defaultUserSleepDurationGoal);
+        final int goalWeight = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_WEIGHT_KG, ActivityUser.defaultUserGoalWeightKg);
+        final int goalStandingTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS, ActivityUser.defaultUserGoalStandingTimeHours);
+        final int goalFatBurnTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, ActivityUser.defaultUserFatBurnTimeMinutes);
+        LOG.info("Setting Fitness Goals to steps={}, calories={}, sleep={}, weight={}, standingTime={}, fatBurn={}", goalSteps, goalCalories, goalSleep, goalWeight, goalStandingTime, goalFatBurnTime);
+
+        newSetter()
+                .setInt(ConfigArg.FITNESS_GOAL_STEPS, goalSteps)
+                .setShort(ConfigArg.FITNESS_GOAL_CALORIES, (short) goalCalories)
+                .setShort(ConfigArg.FITNESS_GOAL_SLEEP, (short) (goalSleep * 60))
+                .setShort(ConfigArg.FITNESS_GOAL_WEIGHT, (short) goalWeight)
+                .setShort(ConfigArg.FITNESS_GOAL_STANDING_TIME, (short) (goalStandingTime))
+                .setShort(ConfigArg.FITNESS_GOAL_FAT_BURN_TIME, (short) goalFatBurnTime)
+                .write(builder);
+    }
+
+    private void setMeasurementSystem(final TransactionBuilder builder) {
+        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+        LOG.info("Setting measurement system to {}", measurementSystem);
+
+        final byte distanceUnit;
+        final byte temperatureUnit;
+        final byte weightUnit;
+
+        // FIXME we should be able to configure these separately
+        if ("metric".equals(measurementSystem)) {
+            distanceUnit = 0;
+            temperatureUnit = 0;
+            weightUnit = 0;
+        } else {
+            distanceUnit = 1;
+            temperatureUnit = 1;
+            weightUnit = 2;
+        }
+
+        newSetter()
+                .setByte(ConfigArg.DISTANCE_UNIT, distanceUnit)
+                .setByte(ConfigArg.TEMPERATURE_UNIT, temperatureUnit)
+                .setByte(ConfigArg.WEIGHT_UNIT, weightUnit)
+                .write(builder);
     }
 
     private void handleCapabilitiesResponse(final byte[] payload) {
