@@ -55,7 +55,7 @@ public class AmazfitCheetahProCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsGpxUploads() {
+    public boolean supportsGpxUploads(final GBDevice device) {
         return true;
     }
 

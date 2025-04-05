@@ -92,7 +92,7 @@ public class ZeppOsGpxRouteInstallHandler implements InstallHandler {
             return;
         }
         final ZeppOsCoordinator zeppOsCoordinator = (ZeppOsCoordinator) coordinator;
-        if (!zeppOsCoordinator.supportsGpxUploads()) {
+        if (!zeppOsCoordinator.supportsGpxUploads(device)) {
             installActivity.setInfoText(mContext.getString(R.string.fwapp_install_device_not_supported));
             installActivity.setInstallEnabled(false);
             return;

@@ -112,11 +112,9 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
             }
         }
 
-        if (supportsGpxUploads()) {
-            final ZeppOsGpxRouteInstallHandler gpxRouteInstallHandler = new ZeppOsGpxRouteInstallHandler(uri, context);
-            if (gpxRouteInstallHandler.isValid()) {
-                return gpxRouteInstallHandler;
-            }
+        final ZeppOsGpxRouteInstallHandler gpxRouteInstallHandler = new ZeppOsGpxRouteInstallHandler(uri, context);
+        if (gpxRouteInstallHandler.isValid()) {
+            return gpxRouteInstallHandler;
         }
 
         final ZeppOsMapsInstallHandler mapsInstallHandler = new ZeppOsMapsInstallHandler(uri, context);
@@ -562,8 +560,8 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         return true;
     }
 
-    public boolean supportsGpxUploads() {
-        return false;
+    public boolean supportsGpxUploads(final GBDevice device) {
+        return supportsBleFileTransfer(device, "sport");
     }
 
     public boolean supportsControlCenter() {

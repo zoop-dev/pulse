@@ -56,11 +56,6 @@ public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsGpxUploads() {
-        return true;
-    }
-
-    @Override
     public boolean supportsControlCenter() {
         return true;
     }
