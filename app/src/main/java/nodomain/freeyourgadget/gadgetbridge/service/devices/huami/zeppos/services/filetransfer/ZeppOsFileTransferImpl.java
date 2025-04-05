@@ -110,6 +110,8 @@ public abstract class ZeppOsFileTransferImpl {
             mCompressedChunkSize = buf.getInt();
             final int numServices = buf.getShort();
             for (int i = 0; i < numServices; i++) {
+                // gtr 4:    terminal agps notification jsapp sticky_notification nfc sport httpproxy
+                // active 2: terminal agps notification jsapp sticky_notification nfc sport httpproxy readiness voicememo
                 supportedServices.add(StringUtils.untilNullTerminator(buf));
             }
 

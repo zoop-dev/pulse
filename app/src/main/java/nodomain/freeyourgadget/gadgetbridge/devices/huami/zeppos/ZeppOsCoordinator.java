@@ -349,6 +349,11 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         return Arrays.asList(HeartRateCapability.MeasurementInterval.values());
     }
 
+    @Override
+    public boolean supportsAudioRecordings(final GBDevice device) {
+        return supportsDisplayItem(device, "voice_memos") && supportsBleFileTransfer(device, "voicememo");
+    }
+
     /**
      * Returns a superset of all settings supported by Zepp OS Devices. Unsupported settings are removed
      * by {@link ZeppOsSettingsCustomizer}.
@@ -363,6 +368,9 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         //
         if (ZeppOsLoyaltyCardService.isSupported(getPrefs(device))) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_loyalty_cards);
+        }
+        if (supportsAudioRecordings(device)) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_audio_recordings);
         }
 
         //
@@ -607,10 +615,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     public boolean supportsMusicUpload(final GBDevice device) {
-        return supportsDisplayItem(device, "music") &&
-                getPrefs(device)
-                        .getStringSet(ZeppOsFileTransferImpl.PREF_SUPPORTED_SERVICES, Collections.emptySet())
-                        .contains("music");
+        return supportsDisplayItem(device, "music") && supportsBleFileTransfer(device, "music");
     }
 
     private boolean supportsConfig(final GBDevice device, final ZeppOsConfigService.ConfigArg config) {
@@ -622,6 +627,12 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
                 DeviceSettingsUtils.getPrefPossibleValuesKey(HuamiConst.PREF_DISPLAY_ITEMS_SORTABLE),
                 Collections.emptyList()
         ).contains(item);
+    }
+
+    private boolean supportsBleFileTransfer(final GBDevice device, final String service) {
+        return getPrefs(device)
+                .getStringSet(ZeppOsFileTransferImpl.PREF_SUPPORTED_SERVICES, Collections.emptySet())
+                .contains(service);
     }
 
     public static boolean experimentalFeatures(final GBDevice device) {

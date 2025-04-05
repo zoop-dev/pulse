@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recordingItemDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2025-03-31 22:08:00"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/recordingItemLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Test recording"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <!-- TODO: Local playback not yet implemented
+            <ImageView
+                android:id="@+id/recordingItemPlaybackToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/pref_media_playpause"
+                android:focusable="true"
+                android:padding="12dp"
+                android:src="@drawable/ic_play" />
+           -->
+
+            <ImageView
+                android:id="@+id/recordingItemMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/menuitem_menu"
+                android:focusable="true"
+                android:padding="12dp"
+                android:src="@drawable/ic_menu" />
+
+        </LinearLayout>
+
+        <!-- TODO: Local playback not yet implemented
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/recordingItemSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/recordingItemPlaybackPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00 / 01:10"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+        -->
+    </LinearLayout>
+
+    <View
+        android:id="@+id/recordingItemDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="0dp"
+        android:background="?attr/row_separator" />
+</LinearLayout>

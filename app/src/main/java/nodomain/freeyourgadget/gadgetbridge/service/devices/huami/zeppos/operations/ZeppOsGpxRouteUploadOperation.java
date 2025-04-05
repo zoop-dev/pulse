@@ -31,7 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.Op
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class ZeppOsGpxRouteUploadOperation extends AbstractBTLEOperation<ZeppOsSupport>
-        implements ZeppOsFileTransferService.Callback {
+        implements ZeppOsFileTransferService.UploadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsGpxRouteUploadOperation.class);
 
     private final ZeppOsGpxRouteFile file;
@@ -87,11 +87,6 @@ public class ZeppOsGpxRouteUploadOperation extends AbstractBTLEOperation<ZeppOsS
 
         final int progressPercent = (int) ((((float) (progress)) / fileBytes.length) * 100);
         updateProgress(progressPercent);
-    }
-
-    @Override
-    public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
-        LOG.warn("Received unexpected file: url={} filename={} length={}", url, filename, data.length);
     }
 
     private void updateProgress(final int progressPercent) {

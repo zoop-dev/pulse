@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.audiorecordings.AudioRecordingsActivity">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/audioRecordingsListSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/audioRecordingsRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/audioRecordingsListSearchView"
+        tools:context=".activities.audiorecordings.AudioRecordingsActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/audioRecordingsListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:divider="@null"
+            android:scrollbarSize="5dp"
+            android:scrollbars="vertical" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

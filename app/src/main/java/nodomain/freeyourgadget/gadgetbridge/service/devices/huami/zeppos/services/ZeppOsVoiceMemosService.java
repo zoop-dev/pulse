@@ -16,24 +16,36 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
+import android.content.Intent;
 import android.os.Handler;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.apache.commons.lang3.ArrayUtils;
-import org.concentus.OpusDecoder;
-import org.concentus.OpusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.activities.audiorecordings.AudioRecordingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.database.repository.AudioRecordingsRepository;
+import nodomain.freeyourgadget.gadgetbridge.entities.AudioRecording;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
@@ -48,6 +60,7 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
     private static final byte CMD_DOWNLOAD_FINISH_REQUEST = 0x0a;
     private static final byte CMD_DOWNLOAD_FINISH_ACK = 0x09;
 
+    private final Map<String, AudioRecording> downloadingRecordings = new HashMap<>();
     private final Queue<String> downloadQueue = new LinkedList<>();
     private boolean downloading = false;
     private final Handler handler = new Handler();
@@ -76,17 +89,35 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
                 LOG.info("Got list with {} voice memos", count);
 
                 for (int i = 0; i < count; i++) {
-                    final String filename = StringUtils.untilNullTerminator(buf);
+                    final String filename = Objects.requireNonNull(StringUtils.untilNullTerminator(buf));
                     final int size = buf.getInt();
                     final int duration = buf.getInt();
                     final long timestamp = buf.getLong();
+
+                    final AudioRecording existingRecording = AudioRecordingsRepository.getByTimestamp(getSupport().getDevice(), timestamp);
 
                     LOG.debug(
                             "Voice memo: filename={}, size={}b, duration={}ms, timestamp={}",
                             filename, size, duration, DateTimeUtils.formatIso8601(new Date(timestamp))
                     );
 
+                    if (existingRecording != null) {
+                        LOG.debug("Ignoring known local recording {}", filename);
+                        continue;
+                    }
+
+                    final AudioRecording audioRecording = new AudioRecording();
+                    audioRecording.setRecordingId(UUID.randomUUID().toString());
+                    audioRecording.setLabel(filename.replace(".opus", ""));
+                    audioRecording.setTimestamp(timestamp);
+                    audioRecording.setDuration(duration);
+                    downloadingRecordings.put(filename, audioRecording);
+
                     downloadStart(Objects.requireNonNull(filename));
+                }
+
+                if (!downloading) {
+                    broadcastDownloadFinished();
                 }
 
                 return;
@@ -115,7 +146,40 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
         }
     }
 
-    public void downloadFinish() {
+    public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
+        final AudioRecording audioRecording = downloadingRecordings.get(filename);
+        if (audioRecording == null) {
+            LOG.error("Received file {} for unknown audio recording", filename);
+            downloadNext();
+            return;
+        }
+
+        final File targetFile;
+        try {
+            final File exportDirectory = getCoordinator().getWritableExportDirectory(getSupport().getDevice());
+            final File voiceMemosDirectory = new File(exportDirectory, "voicememo");
+            //noinspection ResultOfMethodCallIgnored
+            voiceMemosDirectory.mkdirs();
+
+            final String validFilename = FileUtils.makeValidFileName(filename);
+            targetFile = new File(voiceMemosDirectory, validFilename);
+        } catch (final IOException e) {
+            LOG.error("Failed create folder to save voice memo", e);
+            downloadNext();
+            return;
+        }
+
+        try (FileOutputStream outputStream = new FileOutputStream(targetFile)) {
+            outputStream.write(data);
+        } catch (final IOException e) {
+            LOG.error("Failed to save voice memo bytes", e);
+            downloadNext();
+            return;
+        }
+
+        audioRecording.setPath(targetFile.getPath());
+        AudioRecordingsRepository.insertOrReplace(getSupport().getDevice(), audioRecording);
+
         downloadNext();
     }
 
@@ -140,29 +204,14 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
             LOG.debug("Voice memo downloads finished");
             downloading = false;
             write("voice memo download finish", CMD_DOWNLOAD_FINISH_REQUEST);
+
+            broadcastDownloadFinished();
         }
     }
 
-    private void decode(final byte[] opusBytes) throws OpusException {
-        final int SAMPLE_RATE = 16000;
-        final int NUM_CHANNELS = 1;
-        final int FRAME_SIZE = 320;
-
-        final OpusDecoder opusDecoder = new OpusDecoder(SAMPLE_RATE, NUM_CHANNELS);
-        final ByteBuffer buf = ByteBuffer.wrap(opusBytes).order(ByteOrder.BIG_ENDIAN);
-
-        final byte[] pcm = new byte[FRAME_SIZE * 2];
-
-        while (buf.hasRemaining()) {
-            final int len = buf.getInt();
-            final int unk = buf.getInt();
-            final byte[] arr = new byte[len];
-            buf.get(arr);
-
-            int decode = opusDecoder.decode(arr, 0, arr.length, pcm, 0, FRAME_SIZE, false);
-
-            // ffmpeg -f s16le -ar 16k -ac 1 -i memo.pcm memo.wav
-            // outputStream.write(pcm, 0, FRAME_SIZE * 2);
-        }
+    private void broadcastDownloadFinished() {
+        final Intent intent = new Intent(AudioRecordingsActivity.ACTION_FETCH_FINISH);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 }

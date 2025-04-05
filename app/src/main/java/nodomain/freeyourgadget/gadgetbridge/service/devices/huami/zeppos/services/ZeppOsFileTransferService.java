@@ -101,10 +101,32 @@ public class ZeppOsFileTransferService extends AbstractZeppOsService {
     }
 
     public interface Callback {
-        void onFileUploadFinish(boolean success);
+        void onFileUploadFinish(final boolean success);
 
-        void onFileUploadProgress(int progress);
+        void onFileUploadProgress(final int progress);
 
-        void onFileDownloadFinish(String url, String filename, byte[] data);
+        void onFileDownloadFinish(final String url, final String filename, final byte[] data);
+    }
+
+    public interface UploadCallback extends Callback {
+        void onFileUploadFinish(final boolean success);
+
+        void onFileUploadProgress(final int progress);
+
+        default void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
+            LOG.error("Received unexpected file on upload callback for {}: url={} filename={} length={}", getClass(), url, filename, data.length);
+        }
+    }
+
+    public interface DownloadCallback extends Callback {
+        default void onFileUploadFinish(final boolean success) {
+            LOG.error("Received unexpected upload finish on download callback for {}: success={}", getClass(), success);
+        }
+
+        default void onFileUploadProgress(final int progress) {
+            LOG.error("Received unexpected upload progress on download callback for {}: progress={}", getClass(), progress);
+        }
+
+        void onFileDownloadFinish(final String url, final String filename, final byte[] data);
     }
 }

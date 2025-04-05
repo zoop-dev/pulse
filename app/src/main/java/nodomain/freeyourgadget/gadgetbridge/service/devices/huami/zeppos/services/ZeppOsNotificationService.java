@@ -562,7 +562,7 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                 filename,
                 bytes,
                 true,
-                new ZeppOsFileTransferService.Callback() {
+                new ZeppOsFileTransferService.UploadCallback() {
                     @Override
                     public void onFileUploadFinish(final boolean success) {
                         LOG.info("Finished sending '{}' to '{}', success={}", filename, url, success);
@@ -572,11 +572,6 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                     @Override
                     public void onFileUploadProgress(final int progress) {
                         LOG.trace("File send progress: {}", progress);
-                    }
-
-                    @Override
-                    public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
-                        LOG.warn("Receiver unexpected file: url={} filename={} length={}", url, filename, data.length);
                     }
                 }
         );

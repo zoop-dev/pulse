@@ -31,6 +31,7 @@ public class RecordedDataTypes {
     public static final int TYPE_HUAMI_STATISTICS = 0x00000400;
     public static final int TYPE_SLEEP        = 0x00000800;
     public static final int TYPE_HRV          = 0x00001000;
+    public static final int TYPE_AUDIO_REC    = 0x00002000;
 
     public static final int TYPE_ALL          = (int)0xffffffff;
 

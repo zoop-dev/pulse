@@ -214,6 +214,10 @@
             android:label="@string/loyalty_cards"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
+            android:name=".activities.audiorecordings.AudioRecordingsActivity"
+            android:label="@string/audio_recordings"
+            android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
+        <activity
             android:name=".devices.garmin.GarminRealtimeSettingsActivity"
             android:label="@string/loading"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />

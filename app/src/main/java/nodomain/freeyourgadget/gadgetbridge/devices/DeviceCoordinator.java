@@ -701,6 +701,11 @@ public interface DeviceCoordinator {
     boolean supportsDisabledWorldClocks();
 
     /**
+     * Indicates whether the device supports recording and syncing audio recordings.
+     */
+    boolean supportsAudioRecordings(GBDevice device);
+
+    /**
      * Indicates the maximum number of slots available for contacts in the device.
      */
     int getContactsSlotCount(GBDevice device);

@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.audiorecordings.AudioRecordingsActivity">
+    <item
+        android:id="@+id/audio_recording_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/audio_recording_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/controlcenter_fetch_activity_data"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="ifRoom" />
+</menu>

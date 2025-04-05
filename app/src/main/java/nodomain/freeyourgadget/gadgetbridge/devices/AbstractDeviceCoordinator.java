@@ -698,6 +698,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsAudioRecordings(final GBDevice device) {
+        return false;
+    }
+
+    @Override
     public int getContactsSlotCount(final GBDevice device) {
         return 0;
     }

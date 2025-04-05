@@ -62,6 +62,7 @@
     <string name="controlcenter_snackbar_requested_screenshot">Taking a screenshot of the device</string>
     <string name="controlcenter_calibrate_device">Calibrate Device</string>
     <string name="controlcenter_get_heartrate_measurement">Get heart rate measurement</string>
+    <string name="audio_recordings">Audio Recordings</string>
 
     <string name="accuracy">Accuracy</string>
     <string name="balanced">Balanced</string>

@@ -86,6 +86,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePref
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -163,7 +164,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferService.Callback {
+public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferService.DownloadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsSupport.class);
 
     // Tracks whether realtime HR monitoring is already started, so we can just
@@ -356,6 +357,15 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     @Override
     protected void sendFindDeviceCommand(boolean start) {
         findDeviceService.sendFindDeviceCommand(start);
+    }
+
+    @Override
+    public void onFetchRecordedData(final int dataTypes) {
+        if ((dataTypes & RecordedDataTypes.TYPE_AUDIO_REC) != 0 && getCoordinator().supportsAudioRecordings(getDevice())) {
+            voiceMemosService.requestList();
+        }
+
+        super.onFetchRecordedData(dataTypes);
     }
 
     @Override
@@ -1566,16 +1576,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    public void onFileUploadFinish(final boolean success) {
-        LOG.warn("Unexpected file upload finish: {}", success);
-    }
-
-    @Override
-    public void onFileUploadProgress(final int progress) {
-        LOG.warn("Unexpected file upload progress: {}", progress);
-    }
-
-    @Override
     public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
         LOG.info("File received: url={} filename={} length={}", url, filename, data.length);
 
@@ -1585,8 +1585,9 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             return;
         }
 
-        if (url.startsWith("voicememo://") && filename.endsWith(".opus")) {
-            voiceMemosService.downloadFinish();
+        if (url.startsWith("voicememo://")) {
+            voiceMemosService.onFileDownloadFinish(url, filename, data);
+            return;
         }
 
         final String fileDownloadsDir = "zepp-os-received-files";

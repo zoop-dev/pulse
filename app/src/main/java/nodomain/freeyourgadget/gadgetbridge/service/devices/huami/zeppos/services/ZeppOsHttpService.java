@@ -194,7 +194,7 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
                 filename,
                 rawBytes,
                 false,
-                new ZeppOsFileTransferService.Callback() {
+                new ZeppOsFileTransferService.UploadCallback() {
                     @Override
                     public void onFileUploadFinish(final boolean success) {
                         LOG.info("Finished sending '{}' to http request id '{}', success={}", filename, requestId, success);
@@ -210,11 +210,6 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
                         if (downloadCallback != null) {
                             downloadCallback.onFileDownloadProgress(progress);
                         }
-                    }
-
-                    @Override
-                    public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
-                        LOG.warn("Receiver unexpected file: url={} filename={} length={}", url, filename, data.length);
                     }
                 }
         );

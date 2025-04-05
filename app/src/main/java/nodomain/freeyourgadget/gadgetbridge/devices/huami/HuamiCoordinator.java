@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandPairingActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.AudioRecordingDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -117,6 +118,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
             put(session.getGenericTemperatureSampleDao(), GenericTemperatureSampleDao.Properties.DeviceId);
             put(session.getHuamiSleepSessionSampleDao(), HuamiSleepSessionSampleDao.Properties.DeviceId);
             put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
+            put(session.getAudioRecordingDao(), AudioRecordingDao.Properties.DeviceId);
         }};
 
         for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {

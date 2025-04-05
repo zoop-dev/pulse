@@ -41,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  * to reload the AGPS update and expiration timestamps.
  */
 public class ZeppOsAgpsUpdateOperation extends AbstractBTLEOperation<ZeppOsSupport>
-        implements ZeppOsFileTransferService.Callback, ZeppOsAgpsService.Callback {
+        implements ZeppOsFileTransferService.UploadCallback, ZeppOsAgpsService.Callback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAgpsUpdateOperation.class);
 
     private static final String AGPS_UPDATE_URL = "agps://upgrade";
@@ -97,11 +97,6 @@ public class ZeppOsAgpsUpdateOperation extends AbstractBTLEOperation<ZeppOsSuppo
         // by the update process on the watch
         final int progressPercent = (int) ((((float) (progress)) / (fileBytes.length * 2)) * 100);
         updateProgress(progressPercent);
-    }
-
-    @Override
-    public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
-        LOG.warn("Received unexpected file: url={} filename={} length={}", url, filename, data.length);
     }
 
     @Override

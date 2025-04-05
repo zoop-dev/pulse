@@ -56,7 +56,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(100, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(101, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -181,6 +181,7 @@ public class GBDaoGenerator {
         addContacts(schema, user, device);
         addAppSpecificNotificationSettings(schema, device);
         addCyclingSample(schema, user, device);
+        addAudioRecordings(schema, device);
 
         Entity notificationFilter = addNotificationFilters(schema);
 
@@ -1216,6 +1217,29 @@ public class GBDaoGenerator {
         contact.addStringProperty("number").notNull();
         contact.addToOne(user, userId);
         contact.addToOne(device, deviceId);
+    }
+
+    private static void addAudioRecordings(Schema schema, Entity device) {
+        Entity recording = addEntity(schema, "AudioRecording");
+        recording.implementsSerializable();
+
+        recording.addStringProperty("recordingId").notNull().primaryKey();
+
+        Property deviceId = recording.addLongProperty("deviceId").notNull().getProperty();
+        Property timestamp = recording.addLongProperty("timestamp").notNull().getProperty();
+
+        // For queries by (device, timestamp)
+        Index indexDeviceFilename = new Index();
+        indexDeviceFilename.addProperty(deviceId);
+        indexDeviceFilename.addProperty(timestamp);
+        indexDeviceFilename.makeUnique();
+        recording.addIndex(indexDeviceFilename);
+
+        recording.addStringProperty("label");
+        recording.addStringProperty("path");
+        recording.addIntProperty("duration");
+
+        recording.addToOne(device, deviceId);
     }
 
     private static void addNotificationFilterEntry(Schema schema, Entity notificationFilterEntity) {

@@ -33,7 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.audio.AudioInfo;
 
 public class ZeppOsMusicUploadOperation extends AbstractBTLEOperation<ZeppOsSupport>
-        implements ZeppOsFileTransferService.Callback {
+        implements ZeppOsFileTransferService.UploadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsMusicUploadOperation.class);
 
     private final AudioInfo audioInfo;
@@ -95,11 +95,6 @@ public class ZeppOsMusicUploadOperation extends AbstractBTLEOperation<ZeppOsSupp
 
         final int progressPercent = (int) ((((float) (progress)) / fileBytes.length) * 100);
         updateProgress(progressPercent);
-    }
-
-    @Override
-    public void onFileDownloadFinish(final String url, final String filename, final byte[] data) {
-        LOG.warn("Received unexpected file: url={} filename={} length={}", url, filename, data.length);
     }
 
     private void updateProgress(final int progressPercent) {
