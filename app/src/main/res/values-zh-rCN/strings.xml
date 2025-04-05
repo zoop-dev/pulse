@@ -3921,4 +3921,10 @@
     <string name="earfun_voice_prompt_volume">语音提示音量</string>
     <string name="earfun_header_audio_experience">音频体验</string>
     <string name="huawei_voice_boost">语音增强</string>
+    <string name="maps_not_found">未找到地图 - 请在设置中选择一个有效的地图文件夹</string>
+    <string name="maps_settings">地图设置</string>
+    <string name="maps_download_title">下载地图</string>
+    <string name="maps_download_summary">单击此处下载地图文件。它们应保存到下面首选项中选择的文件夹中。</string>
+    <string name="maps_track_color_title">轨迹颜色</string>
+    <string name="maps">地图</string>
 </resources>
