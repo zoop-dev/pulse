@@ -236,7 +236,7 @@ public class WeatherHandler {
             //feelsLikeTemperature = new WeatherValue(hourlyForecast.temp - 273f, "CELSIUS"); // TODO feelsLikeTemperature
             //visibility = new WeatherValue(0, "METER"); // TODO visibility
             //pressure = new WeatherValue(0f, "INCHES_OF_MERCURY"); // TODO pressure
-            //airQuality = null; // TODO airQuality
+            airQuality = mapAqiToGarminAirQuality(Weather.getInstance().getWeatherSpec().airQuality.aqi);   // TODO: replace with better way to get current weather
             //cloudCover = 0; // TODO cloudCover
         }
     }
@@ -345,6 +345,25 @@ public class WeatherHandler {
             default:
                 LOG.warn("Unknown speed unit {}, returning KILOMETERS_PER_HOUR", unit);
                 return new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
+        }
+    }
+
+    private static Integer mapAqiToGarminAirQuality(int aqi) { //see https://github.com/breezy-weather/breezy-weather/blob/main/app/src/main/java/org/breezyweather/domain/weather/index/PollutantIndex.kt#L38
+        if (aqi == -1) {
+            return null; // Unknown (--)
+        }
+        if (aqi < 20) {
+            return 0;   // Good
+        } else if (aqi < 50) {
+            return 1;   // Moderate
+        } else if (aqi < 100) {
+            return 2;   // Unhealthy Sensitive
+        } else if (aqi < 150) {
+            return 3;   // Unhealthy
+        } else if (aqi < 250) {
+            return 4;   // Very Unhealthy
+        } else {
+            return 5;   // Hazardous
         }
     }
 
