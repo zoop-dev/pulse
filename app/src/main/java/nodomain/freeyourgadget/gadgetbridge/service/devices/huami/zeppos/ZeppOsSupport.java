@@ -75,6 +75,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInsta
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -146,6 +147,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWatchfaceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWeatherService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWifiService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorldClocksService;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -197,6 +199,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsBatteryService batteryService = new ZeppOsBatteryService(this);
     private final ZeppOsWeatherService weatherService = new ZeppOsWeatherService(this);
     private final ZeppOsConnectionService connectionService = new ZeppOsConnectionService(this);
+    private final ZeppOsWorldClocksService worldClocksService = new ZeppOsWorldClocksService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
     // FIXME: We need to keep track of which services are encrypted for now, since not all of them were yet migrated to a service
@@ -236,6 +239,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(userInfoService.getEndpoint(), userInfoService);
         put(vibrationPatternsService.getEndpoint(), vibrationPatternsService);
         put(weatherService.getEndpoint(), weatherService);
+        put(worldClocksService.getEndpoint(), worldClocksService);
     }};
 
     public ZeppOsSupport() {
@@ -457,6 +461,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
+    public void onSetWorldClocks(ArrayList<? extends WorldClock> clocks) {
+        worldClocksService.onSetWorldClocks(clocks);
+    }
+
+    @Override
     public void onSetLoyaltyCards(final ArrayList<LoyaltyCard> cards) {
         loyaltyCardService.setCards(cards);
     }
@@ -465,11 +474,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public void onSetContacts(ArrayList<? extends Contact> contacts) {
         //noinspection unchecked
         contactsService.setContacts((List<Contact>) contacts);
-    }
-
-    @Override
-    protected boolean isWorldClocksEncrypted() {
-        return true;
     }
 
     @Override

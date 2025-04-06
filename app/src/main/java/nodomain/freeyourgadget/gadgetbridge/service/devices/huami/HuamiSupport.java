@@ -143,6 +143,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fet
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchStressManualOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchDebugLogsOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorldClocksService;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.SilentMode;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
@@ -1166,111 +1167,18 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         sendWorldClocks(builder, clocks);
     }
 
-    protected void sendWorldClocks(final TransactionBuilder builder, final List<? extends WorldClock> clocks) {
+    private void sendWorldClocks(final TransactionBuilder builder, final List<? extends WorldClock> clocks) {
         final DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
         if (coordinator.getWorldClocksSlotCount() == 0) {
             return;
         }
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try {
-            baos.write(0x03);
-
-            if (clocks.size() != 0) {
-                baos.write(clocks.size());
-                int i = 0;
-                for (final WorldClock clock : clocks) {
-                    baos.write(i++);
-                    baos.write(encodeWorldClock(clock));
-                }
-            } else {
-                baos.write(0);
-            }
-        } catch (final IOException e) {
-            LOG.error("Unable to send world clocks to device", e);
-            return;
-        }
-
-        writeToChunked2021(builder, (short) 0x0008, baos.toByteArray(), isWorldClocksEncrypted());
-    }
-
-    protected boolean isWorldClocksEncrypted() {
-        return false;
-    }
-
-    private byte[] encodeWorldClock(final WorldClock clock) {
-        final DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
-
-        try {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            final TimeZone timezone = TimeZone.getTimeZone(clock.getTimeZoneId());
-            final ZoneId zoneId = ZoneId.of(clock.getTimeZoneId());
-
-            // Usually the 3-letter city code (eg. LIS for Lisbon)
-            if (clock.getCode() != null) {
-                baos.write(StringUtils.truncate(clock.getCode(), 3).toUpperCase().getBytes(StandardCharsets.UTF_8));
-            } else {
-                baos.write(StringUtils.truncate(clock.getLabel(), 3).toUpperCase().getBytes(StandardCharsets.UTF_8));
-            }
-            baos.write(0x00);
-
-            // Some other string? Seems to be empty
-            baos.write(0x00);
-
-            // The city name / label that shows up on the band
-            baos.write(StringUtils.truncate(clock.getLabel(), coordinator.getWorldClocksLabelLength()).getBytes(StandardCharsets.UTF_8));
-            baos.write(0x00);
-
-            // The raw offset from UTC, in number of 15-minute blocks
-            baos.write((int) (timezone.getRawOffset() / (1000L * 60L * 15L)));
-
-            // Daylight savings
-            final boolean useDaylightTime = timezone.useDaylightTime();
-            final boolean inDaylightTime = timezone.inDaylightTime(new Date());
-            byte daylightByte = 0;
-            // The daylight savings offset, either currently (the previous transition) or future (the next transition), in minutes
-            byte daylightOffsetMinutes = 0;
-
-            final ZoneRules zoneRules = zoneId.getRules();
-            if (useDaylightTime) {
-                final ZoneOffsetTransition transition;
-                if (inDaylightTime) {
-                    daylightByte = 0x01;
-                    transition = zoneRules.previousTransition(Instant.now());
-                } else {
-                    daylightByte = 0x02;
-                    transition = zoneRules.nextTransition(Instant.now());
-                }
-                daylightOffsetMinutes = (byte) transition.getDuration().toMinutes();
-            }
-
-            baos.write(daylightByte);
-            baos.write(daylightOffsetMinutes);
-
-            // The timestamp of the next daylight savings transition, if any
-            final ZoneOffsetTransition nextTransition = zoneRules.nextTransition(Instant.now());
-            long nextTransitionTs = 0;
-            if (nextTransition != null) {
-                nextTransitionTs = nextTransition
-                        .getDateTimeBefore()
-                        .atZone(zoneId)
-                        .toEpochSecond();
-            }
-
-            for (int i = 0; i < 4; i++) {
-                baos.write((byte) ((nextTransitionTs >> (i * 8)) & 0xff));
-            }
-
-            if (coordinator.supportsDisabledWorldClocks()) {
-                baos.write((byte) (clock.getEnabled() ? 0x01 : 0x00));
-            }
-
-            return baos.toByteArray();
-        } catch (final IOException e) {
-            throw new RuntimeException("This should never happen", e);
-        }
+        writeToChunked2021(
+                builder,
+                ZeppOsWorldClocksService.ENDPOINT,
+                ZeppOsWorldClocksService.encodeWorldClocks(clocks, coordinator),
+                false
+        );
     }
 
     @Override
