@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.SilentMode;
+
 public class GBDeviceEventSilentMode extends GBDeviceEvent {
     private final boolean enabled;
 
@@ -25,5 +32,16 @@ public class GBDeviceEventSilentMode extends GBDeviceEvent {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "enabled: " + enabled;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        SilentMode.setPhoneSilentMode(device.getAddress(), isEnabled());
     }
 }

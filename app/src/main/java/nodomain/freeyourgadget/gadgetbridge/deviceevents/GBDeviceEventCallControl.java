@@ -17,7 +17,18 @@
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 
+import android.content.Context;
+import android.content.Intent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.receivers.GBCallControlReceiver;
+
 public class GBDeviceEventCallControl extends GBDeviceEvent {
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventCallControl.class);
+
     public Event event = Event.UNKNOWN;
 
     public GBDeviceEventCallControl() {
@@ -25,6 +36,22 @@ public class GBDeviceEventCallControl extends GBDeviceEvent {
 
     public GBDeviceEventCallControl(final Event event) {
         this.event = event;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        LOG.info("Got event for CALL_CONTROL");
+        if (event == GBDeviceEventCallControl.Event.IGNORE) {
+            LOG.info("Sending intent for mute");
+            final Intent broadcastIntent = new Intent(context.getPackageName() + ".MUTE_CALL");
+            broadcastIntent.setPackage(context.getPackageName());
+            context.sendBroadcast(broadcastIntent);
+            return;
+        }
+        final Intent callIntent = new Intent(GBCallControlReceiver.ACTION_CALLCONTROL);
+        callIntent.putExtra("event", event.ordinal());
+        callIntent.setPackage(context.getPackageName());
+        context.sendBroadcast(callIntent);
     }
 
     public enum Event {

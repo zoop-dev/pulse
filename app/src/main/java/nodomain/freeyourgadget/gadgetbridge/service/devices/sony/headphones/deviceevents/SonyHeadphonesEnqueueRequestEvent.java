@@ -16,11 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.deviceevents;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.Request;
 
 public class SonyHeadphonesEnqueueRequestEvent extends GBDeviceEvent {
@@ -36,5 +39,10 @@ public class SonyHeadphonesEnqueueRequestEvent extends GBDeviceEvent {
 
     public List<Request> getRequests() {
         return this.requests;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        // Handled in support class
     }
 }

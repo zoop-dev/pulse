@@ -16,15 +16,60 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
-import java.util.Locale;
+import android.content.Context;
 
+import androidx.annotation.NonNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Set;
+
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
 
 public class GBDeviceEventWearState extends GBDeviceEvent {
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventWearState.class);
+
     public WearingState wearingState = WearingState.UNKNOWN;
 
+    @NonNull
     @Override
     public String toString() {
         return super.toString() + String.format(Locale.ROOT, "wearingState=%s", wearingState);
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        if (this.wearingState == WearingState.UNKNOWN) {
+            LOG.warn("WEAR_STATE state is UNKNOWN, aborting further evaluation");
+            return;
+        }
+
+        if (this.wearingState != WearingState.NOT_WEARING) {
+            LOG.debug("WEAR_STATE state is not NOT_WEARING, aborting further evaluation");
+        }
+
+        Set<String> actionOnUnwear = GBApplication.getDevicePrefs(device).getStringSet(
+                DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_START_NON_WEAR_SELECTIONS,
+                Collections.emptySet()
+        );
+
+        // check if an action is set
+        if (actionOnUnwear.isEmpty()) {
+            return;
+        }
+
+        String broadcastMessage = GBApplication.getDevicePrefs(device).getString(
+                DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST,
+                context.getString(R.string.prefs_events_forwarding_startnonwear_broadcast_default_value)
+        );
+
+        handleDeviceAction(context, device, actionOnUnwear, broadcastMessage);
     }
 }

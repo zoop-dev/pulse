@@ -741,11 +741,6 @@ public class QHybridSupport extends QHybridBaseSupport {
     }
 
     @Override
-    public void handleGBDeviceEvent(GBDeviceEventBatteryInfo deviceEvent){
-        super.handleGBDeviceEvent(deviceEvent);
-    }
-
-    @Override
     public boolean onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         watchAdapter.onCharacteristicWrite(gatt, characteristic, status);
         return super.onCharacteristicWrite(gatt, characteristic, status);

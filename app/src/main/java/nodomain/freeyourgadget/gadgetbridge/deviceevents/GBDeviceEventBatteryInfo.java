@@ -18,11 +18,31 @@
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 
+import android.content.Context;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.DateFormat;
 import java.util.GregorianCalendar;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel;
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventBatteryInfo.class);
+
     public GregorianCalendar lastChargeTime = null;
     public BatteryState state = BatteryState.UNKNOWN;
     public int batteryIndex = 0;
@@ -31,9 +51,91 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
     public float voltage = -1f;
 
     public boolean extendedInfoAvailable() {
-        if (numCharges != -1 && lastChargeTime != null) {
-            return true;
+        return numCharges != -1 && lastChargeTime != null;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        LOG.info("Got BATTERY_INFO device event");
+        device.setBatteryLevel(this.level, this.batteryIndex);
+        device.setBatteryState(this.state, this.batteryIndex);
+        device.setBatteryVoltage(this.voltage, this.batteryIndex);
+
+        final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+        final BatteryConfig batteryConfig = device.getDeviceCoordinator().getBatteryConfig(device)[this.batteryIndex];
+
+        if (this.level == GBDevice.BATTERY_UNKNOWN) {
+            // no level available, just "high" or "low"
+            GB.removeBatteryFullNotification(context);
+            if (devicePrefs.getBatteryNotifyLowEnabled(batteryConfig) && BatteryState.BATTERY_LOW.equals(this.state)) {
+                GB.updateBatteryLowNotification(context.getString(R.string.notif_battery_low, device.getAliasOrName()),
+                        this.extendedInfoAvailable() ?
+                                context.getString(R.string.notif_battery_low_extended, device.getAliasOrName(),
+                                        context.getString(R.string.notif_battery_low_bigtext_last_charge_time, DateFormat.getDateTimeInstance().format(this.lastChargeTime.getTime())) +
+                                                context.getString(R.string.notif_battery_low_bigtext_number_of_charges, String.valueOf(this.numCharges)))
+                                : ""
+                        , context);
+            } else if (devicePrefs.getBatteryNotifyFullEnabled(batteryConfig) && BatteryState.BATTERY_CHARGING_FULL.equals(this.state)) {
+                GB.removeBatteryLowNotification(context);
+                GB.updateBatteryFullNotification(context.getString(R.string.notif_battery_full, device.getAliasOrName()), "", context);
+            } else {
+                GB.removeBatteryLowNotification(context);
+                GB.removeBatteryFullNotification(context);
+            }
+        } else {
+            new StoreDataTask("Storing battery data", context, device, this).execute();
+
+            final boolean batteryNotifyLowEnabled = devicePrefs.getBatteryNotifyLowEnabled(batteryConfig);
+            final boolean isBatteryLow = this.level <= devicePrefs.getBatteryNotifyLowThreshold(batteryConfig) &&
+                    (BatteryState.BATTERY_LOW.equals(this.state) || BatteryState.BATTERY_NORMAL.equals(this.state));
+
+            final boolean batteryNotifyFullEnabled = devicePrefs.getBatteryNotifyFullEnabled(batteryConfig);
+            final boolean isBatteryFull = this.level >= devicePrefs.getBatteryNotifyFullThreshold(batteryConfig) &&
+                    (BatteryState.BATTERY_CHARGING.equals(this.state) || BatteryState.BATTERY_CHARGING_FULL.equals(this.state));
+
+            //show the notification if the battery level is below threshold and only if not connected to charger
+            if (batteryNotifyLowEnabled && isBatteryLow) {
+                GB.removeBatteryFullNotification(context);
+                GB.updateBatteryLowNotification(context.getString(R.string.notif_battery_low_percent, device.getAliasOrName(), String.valueOf(this.level)),
+                        this.extendedInfoAvailable() ?
+                                context.getString(R.string.notif_battery_low_percent, device.getAliasOrName(), String.valueOf(this.level)) + "\n" +
+                                        context.getString(R.string.notif_battery_low_bigtext_last_charge_time, DateFormat.getDateTimeInstance().format(this.lastChargeTime.getTime())) +
+                                        context.getString(R.string.notif_battery_low_bigtext_number_of_charges, String.valueOf(this.numCharges))
+                                : ""
+                        , context);
+            } else if (batteryNotifyFullEnabled && isBatteryFull) {
+                GB.removeBatteryLowNotification(context);
+                GB.updateBatteryFullNotification(context.getString(R.string.notif_battery_full, device.getAliasOrName()), "", context);
+            } else {
+                GB.removeBatteryLowNotification(context);
+                GB.removeBatteryFullNotification(context);
+            }
         }
-        return false;
+
+        device.sendDeviceUpdateIntent(context);
+    }
+
+    public static class StoreDataTask extends DBAccess {
+        GBDeviceEventBatteryInfo deviceEvent;
+        GBDevice gbDevice;
+
+        public StoreDataTask(String task, Context context, GBDevice device, GBDeviceEventBatteryInfo deviceEvent) {
+            super(task, context);
+            this.deviceEvent = deviceEvent;
+            this.gbDevice = device;
+        }
+
+        @Override
+        protected void doInBackground(DBHandler handler) {
+            DaoSession daoSession = handler.getDaoSession();
+            Device device = DBHelper.getDevice(gbDevice, daoSession);
+            int ts = (int) (System.currentTimeMillis() / 1000);
+            BatteryLevel batteryLevel = new BatteryLevel();
+            batteryLevel.setTimestamp(ts);
+            batteryLevel.setBatteryIndex(deviceEvent.batteryIndex);
+            batteryLevel.setDevice(device);
+            batteryLevel.setLevel(deviceEvent.level);
+            handler.getDaoSession().getBatteryLevelDao().insert(batteryLevel);
+        }
     }
 }

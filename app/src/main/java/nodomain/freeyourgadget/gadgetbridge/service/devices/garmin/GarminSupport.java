@@ -338,9 +338,9 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
             if (!getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
                 sendOutgoingMessage("archive file " + entry.getFileIndex(), new SetFileFlagsMessage(entry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
             }
+        } else {
+            super.evaluateGBDeviceEvent(deviceEvent);
         }
-
-        super.evaluateGBDeviceEvent(deviceEvent);
     }
 
     /** @noinspection BooleanMethodIsAlwaysInverted*/

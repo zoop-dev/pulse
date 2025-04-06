@@ -16,8 +16,22 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+import android.content.Intent;
+
+import nodomain.freeyourgadget.gadgetbridge.activities.CameraActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+
 public class GBDeviceEventCameraRemote extends GBDeviceEvent {
     public Event event = Event.UNKNOWN;
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        final Intent cameraIntent = new Intent(context, CameraActivity.class);
+        cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        cameraIntent.putExtra(CameraActivity.intentExtraEvent, GBDeviceEventCameraRemote.eventToInt(event));
+        context.startActivity(cameraIntent);
+    }
 
     public enum Event {
         UNKNOWN,

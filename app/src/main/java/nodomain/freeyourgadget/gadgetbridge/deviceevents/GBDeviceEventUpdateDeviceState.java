@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceEventUpdateDeviceState extends GBDeviceEvent {
@@ -23,5 +25,11 @@ public class GBDeviceEventUpdateDeviceState extends GBDeviceEvent {
 
     public GBDeviceEventUpdateDeviceState(final GBDevice.State state) {
         this.state = state;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        device.setState(state);
+        device.sendDeviceUpdateIntent(context, GBDevice.DeviceUpdateSubject.DEVICE_STATE);
     }
 }

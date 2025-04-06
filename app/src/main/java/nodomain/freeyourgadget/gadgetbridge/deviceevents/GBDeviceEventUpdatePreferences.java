@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceEventUpdatePreferences extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventUpdatePreferences.class);
@@ -55,12 +59,18 @@ public class GBDeviceEventUpdatePreferences extends GBDeviceEvent {
         return this;
     }
 
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        update(GBApplication.getDeviceSpecificSharedPrefs(device.getAddress()));
+        device.sendDeviceUpdateIntent(context);
+    }
+
     /**
      * Update a {@link SharedPreferences} instance with the preferences in the event.
      *
      * @param prefs the SharedPreferences object to update.
      */
-    public void update(final SharedPreferences prefs) {
+    private void update(final SharedPreferences prefs) {
         final SharedPreferences.Editor editor = prefs.edit();
 
         for (String key : preferences.keySet()) {

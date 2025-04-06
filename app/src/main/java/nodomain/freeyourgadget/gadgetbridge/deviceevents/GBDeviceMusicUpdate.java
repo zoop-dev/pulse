@@ -16,7 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+import android.content.Intent;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import java.util.ArrayList;
+
+import nodomain.freeyourgadget.gadgetbridge.activities.musicmanager.MusicManagerActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceMusicUpdate extends GBDeviceEvent {
     public boolean success = false;
@@ -24,4 +32,17 @@ public class GBDeviceMusicUpdate extends GBDeviceEvent {
     public int playlistIndex = -1;
     public String playlistName;
     public ArrayList<Integer> musicIds = null;
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        final Intent intent = new Intent(MusicManagerActivity.ACTION_MUSIC_UPDATE);
+
+        intent.putExtra("success", success);
+        intent.putExtra("operation", operation);
+        intent.putExtra("playlistIndex", playlistIndex);
+        intent.putExtra("playlistName", playlistName);
+        intent.putExtra("musicIds", musicIds);
+
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 }

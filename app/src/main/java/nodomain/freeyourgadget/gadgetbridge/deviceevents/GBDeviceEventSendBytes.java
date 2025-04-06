@@ -16,6 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+
 public class GBDeviceEventSendBytes extends GBDeviceEvent {
     public byte[] encodedBytes;
 
@@ -24,5 +28,10 @@ public class GBDeviceEventSendBytes extends GBDeviceEvent {
 
     public GBDeviceEventSendBytes(final byte[] encodedBytes) {
         this.encodedBytes = encodedBytes;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        // Handled in support class
     }
 }

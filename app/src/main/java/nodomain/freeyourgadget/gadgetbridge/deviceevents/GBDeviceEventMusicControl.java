@@ -17,8 +17,28 @@
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 
+import android.content.Context;
+import android.content.Intent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.receivers.GBMusicControlReceiver;
+
 public class GBDeviceEventMusicControl extends GBDeviceEvent {
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventMusicControl.class);
+
     public Event event = Event.UNKNOWN;
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        LOG.info("Got event for MUSIC_CONTROL");
+        final Intent musicIntent = new Intent(GBMusicControlReceiver.ACTION_MUSICCONTROL);
+        musicIntent.putExtra("event", event.ordinal());
+        musicIntent.setPackage(context.getPackageName());
+        context.sendBroadcast(musicIntent);
+    }
 
     public enum Event {
         UNKNOWN,

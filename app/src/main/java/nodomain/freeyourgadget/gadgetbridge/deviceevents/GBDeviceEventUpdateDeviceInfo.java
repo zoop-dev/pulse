@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 
@@ -28,5 +31,11 @@ public class GBDeviceEventUpdateDeviceInfo extends GBDeviceEvent {
 
     public GBDeviceEventUpdateDeviceInfo(final String name, final String details) {
         this(new GenericItem(name, details));
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        device.addDeviceInfo(this.item);
+        device.sendDeviceUpdateIntent(context);
     }
 }

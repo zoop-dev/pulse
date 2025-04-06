@@ -16,10 +16,30 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
+import java.util.Locale;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+
 public class GBDeviceEventLEDColor extends GBDeviceEvent {
     public final int color;
 
     public GBDeviceEventLEDColor(final int color) {
         this.color = color;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "color: " + Integer.toHexString(this.color).toUpperCase(Locale.ROOT);
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        device.setExtraInfo("led_color", this.color);
+        device.sendDeviceUpdateIntent(context);
     }
 }

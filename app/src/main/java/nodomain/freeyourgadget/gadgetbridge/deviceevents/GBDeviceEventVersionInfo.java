@@ -16,10 +16,20 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceEventVersionInfo extends GBDeviceEvent {
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventVersionInfo.class);
+
     public String fwVersion = "N/A";
     public String fwVersion2 = null;
     public String hwVersion = "N/A";
@@ -32,8 +42,25 @@ public class GBDeviceEventVersionInfo extends GBDeviceEvent {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return super.toString() + "fwVersion: " + fwVersion + "; fwVersion2: " + fwVersion2 + "; hwVersion: " + hwVersion;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        LOG.info("Got event for VERSION_INFO: {}", this);
+        if (device == null) {
+            return;
+        }
+        if (fwVersion != null) {
+            device.setFirmwareVersion(fwVersion);
+        }
+        if (fwVersion2 != null) {
+            device.setFirmwareVersion2(fwVersion2);
+        }
+        device.setModel(hwVersion);
+        device.sendDeviceUpdateIntent(context);
     }
 }

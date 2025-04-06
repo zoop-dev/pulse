@@ -16,13 +16,22 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
 import java.util.UUID;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceEventAppManagement extends GBDeviceEvent {
     public Event event = Event.UNKNOWN;
     public EventType type = EventType.UNKNOWN;
     public int token = -1;
     public UUID uuid = null;
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        // FIXME: Pebble-specific, handled in support class
+    }
 
     public enum EventType {
         UNKNOWN,

@@ -16,7 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
-public class GBDeviceEventDisplayMessage {
+import android.content.Context;
+import android.content.Intent;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+
+public class GBDeviceEventDisplayMessage extends GBDeviceEvent {
     public String message;
     public int duration;
     public int severity;
@@ -34,5 +42,17 @@ public class GBDeviceEventDisplayMessage {
         this.message = message;
         this.duration = duration;
         this.severity = severity;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        GB.log(this.message, this.severity, null);
+
+        Intent messageIntent = new Intent(GB.ACTION_DISPLAY_MESSAGE);
+        messageIntent.putExtra(GB.DISPLAY_MESSAGE_MESSAGE, this.message);
+        messageIntent.putExtra(GB.DISPLAY_MESSAGE_DURATION, this.duration);
+        messageIntent.putExtra(GB.DISPLAY_MESSAGE_SEVERITY, this.severity);
+
+        LocalBroadcastManager.getInstance(context).sendBroadcast(messageIntent);
     }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2018-2024 José Rebelo
+/*  Copyright (C) 2018-2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -16,10 +16,28 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+
 public class GBDeviceEventFmFrequency extends GBDeviceEvent {
     public final float frequency;
 
     public GBDeviceEventFmFrequency(final float frequency) {
         this.frequency = frequency;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "frequency: " + frequency;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        device.setExtraInfo("fm_frequency", frequency);
+        device.sendDeviceUpdateIntent(context);
     }
 }

@@ -16,9 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents.pebble;
 
+import android.content.Context;
+
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceEventDataLogging extends GBDeviceEvent {
     public static final int COMMAND_RECEIVE_DATA = 1;
@@ -30,4 +33,9 @@ public class GBDeviceEventDataLogging extends GBDeviceEvent {
     public long tag;
     public byte pebbleDataType;
     public Object[] data;
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        // FIXME: Pebble-specific, handled in support class
+    }
 }

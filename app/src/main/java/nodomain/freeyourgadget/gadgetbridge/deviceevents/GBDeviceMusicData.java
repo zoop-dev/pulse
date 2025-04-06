@@ -16,8 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.activities.musicmanager.MusicManagerActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceMusic;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceMusicPlaylist;
 
@@ -28,4 +37,34 @@ public class GBDeviceMusicData extends GBDeviceEvent {
     public String deviceInfo = null;
     public int maxMusicCount = 0;
     public int maxPlaylistCount = 0;
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        final Intent intent = new Intent(MusicManagerActivity.ACTION_MUSIC_DATA);
+
+        intent.putExtra("type", this.type);
+
+        if (this.list != null) {
+            final ArrayList<GBDeviceMusic> list = new ArrayList<>(this.list);
+            intent.putExtra("musicList", list);
+        }
+
+        if (this.playlists != null) {
+            final ArrayList<GBDeviceMusicPlaylist> list = new ArrayList<>(this.playlists);
+            intent.putExtra("musicPlaylist", list);
+        }
+
+        if (!TextUtils.isEmpty(this.deviceInfo)) {
+            intent.putExtra("deviceInfo", this.deviceInfo);
+        }
+
+        if (this.maxMusicCount > 0) {
+            intent.putExtra("maxMusicCount", this.maxMusicCount);
+        }
+        if (this.maxPlaylistCount > 0) {
+            intent.putExtra("maxPlaylistCount", this.maxPlaylistCount);
+        }
+
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 }

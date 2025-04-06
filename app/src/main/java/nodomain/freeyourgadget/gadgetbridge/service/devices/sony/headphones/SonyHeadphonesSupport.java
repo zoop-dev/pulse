@@ -52,6 +52,8 @@ public class SonyHeadphonesSupport extends AbstractHeadphoneDeviceSupport {
                 SonyHeadphonesIoThread deviceIOThread = getDeviceIOThread();
                 deviceIOThread.write(sonyProtocol.getFromQueue());
             }
+
+            return;
         }
 
         super.evaluateGBDeviceEvent(deviceEvent);
