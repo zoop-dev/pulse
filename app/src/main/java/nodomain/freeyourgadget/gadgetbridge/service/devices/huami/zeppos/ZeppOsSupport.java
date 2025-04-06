@@ -992,6 +992,9 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     @Override
     public void phase2Initialize(final TransactionBuilder builder) {
         LOG.info("2021 phase2Initialize...");
+        if (allowHighMtu()) {
+            builder.requestMtu(247);
+        }
         setCurrentTimeWithService(builder);
         requestDeviceInfo(builder);
 

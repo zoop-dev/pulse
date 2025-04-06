@@ -2053,13 +2053,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         return buf.array();
     }
 
-    protected void requestMTU(int mtu) {
-        new TransactionBuilder("requestMtu")
-                .requestMtu(mtu)
-                .queue(getQueue());
-        mMTU = mtu;
-    }
-
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
         super.onMtuChanged(gatt, mtu, status);
@@ -2907,7 +2900,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
 
     @Override
     public void onTestNewFunction() {
-        //requestMTU(23);
         try {
             final TransactionBuilder builder = performInitialized("test request");
             writeToConfiguration(builder, HuamiService.COMMAND_REQUEST_WORKOUT_ACTIVITY_TYPES);
