@@ -57,6 +57,12 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
     @Override
     public void evaluate(final Context context, final GBDevice device) {
         LOG.info("Got BATTERY_INFO device event");
+
+        // for devices that do not report charging, but the level just increased
+        final boolean levelJustIncreased = device.getBatteryLevel(this.batteryIndex) != GBDevice.BATTERY_UNKNOWN &&
+                this.level != GBDevice.BATTERY_UNKNOWN &&
+                this.level > device.getBatteryLevel(this.batteryIndex);
+
         device.setBatteryLevel(this.level, this.batteryIndex);
         device.setBatteryState(this.state, this.batteryIndex);
         device.setBatteryVoltage(this.voltage, this.batteryIndex);
@@ -91,7 +97,10 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
 
             final boolean batteryNotifyFullEnabled = devicePrefs.getBatteryNotifyFullEnabled(batteryConfig);
             final boolean isBatteryFull = this.level >= devicePrefs.getBatteryNotifyFullThreshold(batteryConfig) &&
-                    (BatteryState.BATTERY_CHARGING.equals(this.state) || BatteryState.BATTERY_CHARGING_FULL.equals(this.state));
+                    (BatteryState.BATTERY_CHARGING.equals(this.state) ||
+                            BatteryState.BATTERY_CHARGING_FULL.equals(this.state) ||
+                            levelJustIncreased
+                    );
 
             //show the notification if the battery level is below threshold and only if not connected to charger
             if (batteryNotifyLowEnabled && isBatteryLow) {
