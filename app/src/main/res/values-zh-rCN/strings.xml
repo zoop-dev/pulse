@@ -4006,4 +4006,5 @@
     <string name="weather_condition_haze">阴霾</string>
     <string name="weather_condition_few_clouds">少云</string>
     <string name="weather_condition_hail">冰雹</string>
+    <string name="audio_recordings">录音</string>
 </resources>
