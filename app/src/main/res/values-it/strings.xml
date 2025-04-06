@@ -732,8 +732,8 @@
     <string name="activity_DB_test_export_button">Esegui esportazione automatica ora</string>
     <string name="activity_DB_test_export_message">Esportazione database in corso…</string>
     <string name="activity_DB_delete_legacy_button">Elimina db precedente</string>
-    <string name="activity_DB_empty_button">Database vuoto</string>
-    <string name="activity_db_management_empty_DB">Database vuoto</string>
+    <string name="activity_DB_empty_button">Svuota database</string>
+    <string name="activity_db_management_empty_DB">Svuota database</string>
     <string name="activity_db_management_exportimport_label">Esportazione e importazione</string>
     <string name="activity_db_management_empty_db_warning">Attenzione! Premendo questo pulsante si cancella il database e si riparte da zero.</string>
     <string name="widget_set_alarm_after">Imposta sveglia dopo:</string>
