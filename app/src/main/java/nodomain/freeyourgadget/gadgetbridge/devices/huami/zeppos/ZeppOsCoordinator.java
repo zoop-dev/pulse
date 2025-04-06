@@ -375,6 +375,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         // Time
         //
         final List<Integer> dateTime = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DATE_TIME);
+        // FIXME: This "works", but the band does not update when the setting changes, so it's disabled for now
         //dateTime.add(R.xml.devicesettings_timeformat);
         dateTime.add(R.xml.devicesettings_dateformat_2);
         if (getWorldClocksSlotCount() > 0) {

@@ -3267,7 +3267,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         return this;
     }
 
-    protected HuamiSupport setTimeFormat(TransactionBuilder builder) {
+    private HuamiSupport setTimeFormat(TransactionBuilder builder) {
         String timeFormat = GBApplication.getDevicePrefs(gbDevice).getTimeFormat();
 
         LOG.info("Setting time format to " + timeFormat);
@@ -3786,7 +3786,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         return this;
     }
 
-    protected HuamiSupport setDistanceUnit(TransactionBuilder builder) {
+    private HuamiSupport setDistanceUnit(TransactionBuilder builder) {
         MiBandConst.DistanceUnit unit = HuamiCoordinator.getDistanceUnit();
         LOG.info("Setting distance unit to " + unit);
         if (unit == MiBandConst.DistanceUnit.METRIC) {

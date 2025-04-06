@@ -932,56 +932,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    protected ZeppOsSupport setTimeFormat(final TransactionBuilder builder) {
-        final String timeFormat = getDevicePrefs().getTimeFormat();
-
-        // FIXME: This "works", but the band does not update when the setting changes, so we don't do anything
-        //noinspection ConstantValue
-        if (true) {
-            LOG.warn("setDateTime is disabled");
-            return this;
-        }
-
-        LOG.info("Setting time format to {}", timeFormat);
-
-        final byte timeFormatByte;
-        if (timeFormat.equals("24h")) {
-            timeFormatByte = 0x01;
-        } else {
-            timeFormatByte = 0x00;
-        }
-
-        configService.newSetter()
-                .setByte(TIME_FORMAT, timeFormatByte)
-                .write(builder);
-
-        return this;
-    }
-
-    @Override
-    protected ZeppOsSupport setDistanceUnit(final TransactionBuilder builder) {
-        final MiBandConst.DistanceUnit unit = HuamiCoordinator.getDistanceUnit();
-        LOG.info("Setting distance unit to {}", unit);
-
-        final byte unitByte;
-        switch (unit) {
-            case IMPERIAL:
-                unitByte = 0x01;
-                break;
-            case METRIC:
-            default:
-                unitByte = 0x00;
-                break;
-        }
-
-        configService.newSetter()
-                .setByte(TEMPERATURE_UNIT, unitByte)
-                .write(builder);
-
-        return this;
-    }
-
-    @Override
     protected ZeppOsSupport setLanguage(final TransactionBuilder builder) {
         final String localeString = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress())
                 .getString("language", "auto");
@@ -1227,12 +1177,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
         // TODO: Move these services to dedicated classes, so they get the encryption correctly
         switch (type) {
-            case CHUNKED2021_ENDPOINT_AUTH:
-                LOG.warn("Unexpected auth payload {}", GB.hexdump(payload));
-                return;
-            case CHUNKED2021_ENDPOINT_COMPAT:
-                LOG.warn("Unexpected compat payload {}", GB.hexdump(payload));
-                return;
             case CHUNKED2021_ENDPOINT_WORKOUT:
                 handle2021Workout(payload);
                 return;
