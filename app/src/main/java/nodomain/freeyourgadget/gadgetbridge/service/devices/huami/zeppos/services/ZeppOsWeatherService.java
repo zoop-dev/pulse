@@ -37,7 +37,7 @@ public class ZeppOsWeatherService extends AbstractZeppOsService {
     private static final byte CMD_DEFAULT_LOCATION_ACK = 0x0a;
 
     public ZeppOsWeatherService(final ZeppOsSupport support) {
-        super(support, true);
+        super(support, false);
     }
 
     @Override
