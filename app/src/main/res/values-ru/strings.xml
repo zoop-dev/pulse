@@ -3886,4 +3886,10 @@
     <string name="maps_settings">Настройки карты</string>
     <string name="maps_download_summary">Нажмите здесь, чтобы загрузить файлы карты. Они должны быть сохранены в папке, выбранной настройкой ниже.</string>
     <string name="swim_avg_cadence">Средняя частота гребков</string>
+    <string name="weather_condition_thunderstorm_with_heavy_rain">гроза с ливнем</string>
+    <string name="audio_recordings">Аудиозаписи</string>
+    <string name="weather_condition_light_thunderstorm">лёгкая гроза</string>
+    <string name="weather_condition_thunderstorm_with_rain">гроза с дождём</string>
+    <string name="weather_condition_thunderstorm_with_light_rain">гроза с небольшим дождём</string>
+    <string name="weather_condition_thunderstorm">гроза</string>
 </resources>
