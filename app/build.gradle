@@ -248,11 +248,11 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'org.msgpack:msgpack-core:0.9.9'
 
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-core:0.24.1'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-map:0.24.1'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-reader:0.24.1'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-themes:0.24.1'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-android:0.24.1'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-core:0.25.0'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-map:0.25.0'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-reader:0.25.0'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-themes:0.25.0'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-android:0.25.0'
     implementation 'com.caverock:androidsvg:1.4'
 
     // Bouncy Castle is included directly in GB, to avoid pulling the entire dependency
