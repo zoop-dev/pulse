@@ -5,6 +5,7 @@
 * Initial support for 1MORE SonoFlow headphones
 * Initial support for EarFun Air S and Air Pro 4 headphones
 * Initial support for Garmin Instinct 3
+* Initial support for Honor Watch 4 / 4 Pro
 * Initial support for Huawei Band 10
 * Initial support for Huawei FreeBuds Pro
 * Initial support for Redmi Buds 3 Pro
@@ -26,6 +27,7 @@
 * Garmin: Parse extended running and cycling workout data
 * Garmin: Resolve names for services and characteristics
 * Huami: Delete some missing tables when deleting a device
+* Huami: Fix sending air quality index
 * Huawei: Add support for find device
 * Huawei: Add stress calibration and sync
 * Huawei: Add trail run activity
@@ -49,6 +51,7 @@
 * Zepp OS: Maps upload
 * Zepp OS: Music upload (unstable)
 * Zepp OS: Respect calendar sync setting
+* Zepp OS: Sync audio recordings (voice memos)
 * Add page with all open-source licenses
 * Charts: Add sleep HR average
 * Fix app crash when switching between Android user profiles
@@ -58,6 +61,7 @@
 * Improve idle and stale media session handling
 * Make alarm notifications respect app whitelist/blacklist
 * Reduce log spam from browsing preferences
+* Workouts: Offline maps
 
 #### 0.84.0
 * Initial support for Even G1 Smart Glasses
