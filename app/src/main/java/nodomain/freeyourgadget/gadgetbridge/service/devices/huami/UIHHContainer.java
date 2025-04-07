@@ -28,6 +28,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
@@ -43,6 +44,10 @@ public class UIHHContainer {
 
     public List<FileEntry> getFiles() {
         return files;
+    }
+
+    public List<FileType> getFileTypes() {
+        return files.stream().map(FileEntry::getType).collect(Collectors.toList());
     }
 
     public byte[] getFile(final FileType fileType) {
@@ -91,8 +96,8 @@ public class UIHHContainer {
             return null;
         }
 
-        final int crc32 = BLETypeConversions.toUint32(ArrayUtils.subarray(bytes, 12, 12 + 4));
-        final int length = BLETypeConversions.toUint32(ArrayUtils.subarray(bytes, 22, 22 + 4));
+        final int crc32 = BLETypeConversions.toUint32(bytes, 12);
+        final int length = BLETypeConversions.toUint32(bytes, 22);
 
         if (length + 32 != bytes.length) {
             LOG.error("Length mismatch between header and bytes: {}/{}", length, bytes.length);
@@ -122,14 +127,14 @@ public class UIHHContainer {
 
             final FileType type = FileType.fromValue(bytes[i]);
             if (type == null) {
-                LOG.error("Unknown type byte {} at position {}", String.format("0x%x", bytes[i], i));
+                LOG.error("Unknown type byte {} at position {}", String.format("0x%x", bytes[i]), i);
                 return null;
             }
             i++;
 
-            final int fileLength = BLETypeConversions.toUint32(ArrayUtils.subarray(bytes, i, i + 4));
+            final int fileLength = BLETypeConversions.toUint32(bytes, i);
             i += 4;
-            final int fileCrc32 = BLETypeConversions.toUint32(ArrayUtils.subarray(bytes, i, i + 4));
+            final int fileCrc32 = BLETypeConversions.toUint32(bytes, i);
             i += 4;
 
             if (i + fileLength > bytes.length) {

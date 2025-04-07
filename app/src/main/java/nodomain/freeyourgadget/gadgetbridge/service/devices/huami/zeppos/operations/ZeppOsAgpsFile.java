@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.UIHHContainer;
 import nodomain.freeyourgadget.gadgetbridge.util.GBZipFile;
@@ -29,18 +31,22 @@ import nodomain.freeyourgadget.gadgetbridge.util.ZipFileException;
 public class ZeppOsAgpsFile {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAgpsFile.class);
 
-    private final byte[] zipBytes;
+    private final byte[] fileBytes;
 
-    public ZeppOsAgpsFile(final byte[] zipBytes) {
-        this.zipBytes = zipBytes;
+    public ZeppOsAgpsFile(final byte[] fileBytes) {
+        this.fileBytes = fileBytes;
     }
 
     public boolean isValid() {
-        if (!GBZipFile.isZipFile(zipBytes)) {
-            return false;
+        if (GBZipFile.isZipFile(fileBytes)) {
+            return isValidAsEpoZip();
+        } else {
+            return isValidAsUihh();
         }
+    }
 
-        final GBZipFile zipFile = new GBZipFile(zipBytes);
+    private boolean isValidAsEpoZip() {
+        final GBZipFile zipFile = new GBZipFile(fileBytes);
 
         try {
             final byte[] manifestBin = zipFile.getFileFromZip("META-INF/MANIFEST.MF");
@@ -61,22 +67,64 @@ public class ZeppOsAgpsFile {
             LOG.error("Failed to parse read MANIFEST or check file", e);
         }
 
-        return false;
+        return true;
+    }
+
+    private boolean isValidAsUihh() {
+        final UIHHContainer uihh = UIHHContainer.fromRawBytes(fileBytes);
+        if (uihh == null) {
+            return false;
+        }
+
+        final List<UIHHContainer.FileType> fileTypes = uihh.getFileTypes();
+        final List<UIHHContainer.FileType> expectedFileTypes = Arrays.asList(
+                UIHHContainer.FileType.GPS_ALM_BIN,
+                UIHHContainer.FileType.GLN_ALM_BIN,
+                UIHHContainer.FileType.LLE_BDS_LLE,
+                UIHHContainer.FileType.LLE_GPS_LLE,
+                UIHHContainer.FileType.LLE_GLO_LLE,
+                UIHHContainer.FileType.LLE_GAL_LLE,
+                UIHHContainer.FileType.LLE_QZSS_LLE
+        );
+
+        if (fileTypes.size() != expectedFileTypes.size()) {
+            LOG.warn("uihh file types mismatch - expected {}, found {}", expectedFileTypes.size(), fileTypes.size());
+            return false;
+        }
+
+        for (final UIHHContainer.FileType fileType : expectedFileTypes) {
+            if (!fileTypes.contains(fileType)) {
+                LOG.warn("uihh is missing file type {}", fileType);
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public byte[] getUihhBytes() {
-        final UIHHContainer uihh = new UIHHContainer();
+        if (GBZipFile.isZipFile(fileBytes)) {
+            // EPO zip - repackage into UIHH
+            final UIHHContainer uihh = new UIHHContainer();
 
-        final GBZipFile zipFile = new GBZipFile(zipBytes);
+            final GBZipFile zipFile = new GBZipFile(fileBytes);
 
-        try {
-            uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GR_3, zipFile.getFileFromZip("EPO_GR_3.DAT"));
-            uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GAL_7, zipFile.getFileFromZip("EPO_GAL_7.DAT"));
-            uihh.addFile(UIHHContainer.FileType.AGPS_EPO_BDS_3, zipFile.getFileFromZip("EPO_BDS_3.DAT"));
-        } catch (final ZipFileException e) {
-            throw new IllegalStateException("Failed to read file from zip", e);
+            try {
+                uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GR_3, zipFile.getFileFromZip("EPO_GR_3.DAT"));
+                uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GAL_7, zipFile.getFileFromZip("EPO_GAL_7.DAT"));
+                uihh.addFile(UIHHContainer.FileType.AGPS_EPO_BDS_3, zipFile.getFileFromZip("EPO_BDS_3.DAT"));
+            } catch (final ZipFileException e) {
+                throw new IllegalStateException("Failed to read file from zip", e);
+            }
+
+            return uihh.toRawBytes();
+        } else {
+            final UIHHContainer uihhContainer = UIHHContainer.fromRawBytes(fileBytes);
+            if (uihhContainer != null) {
+                return fileBytes;
+            }
         }
 
-        return uihh.toRawBytes();
+        throw new IllegalStateException("Unknown file bytes - this should never happen");
     }
 }
