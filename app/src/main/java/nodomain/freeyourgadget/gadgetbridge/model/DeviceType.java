@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdge130Plu
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix7XProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActiveHrCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip6Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV89Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.bandwpseries.BandWPSeriesDeviceCoordinator;
@@ -675,6 +676,7 @@ public enum DeviceType {
     COLMI_R10(ColmiR10Coordinator.class),
     COLMI_R12(ColmiR12Coordinator.class),
     COLMI_I28_ULTRA(ColmiI28UltraCoordinator.class),
+    COLMI_V89(ColmiV89Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
     C20(C20Coordinator.class),
     KSIX_VENTURE(KsixVentureCoordinator.class),
