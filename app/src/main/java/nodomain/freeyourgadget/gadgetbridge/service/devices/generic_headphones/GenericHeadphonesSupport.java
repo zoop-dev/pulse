@@ -29,23 +29,8 @@ public class GenericHeadphonesSupport extends AbstractDeviceSupport implements H
 
     private HeadphoneHelper headphoneHelper;
     private BluetoothDisconnectReceiver mBlueToothDisconnectReceiver = null;
-    private final BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+    private BroadcastReceiver batteryLevelReceiver = null;
 
-            if (GBApplication.isRunningPieOrLater()) {
-                final String action = intent.getAction();
-
-                if (ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED.equals(action)) {
-                    final int batteryLevel = intent.getIntExtra(ANDROID_BLUETOOTH_DEVICE_EXTRA_BATTERY_LEVEL, -1);
-                    final GBDeviceEventBatteryInfo eventBatteryInfo = new GBDeviceEventBatteryInfo();
-                    eventBatteryInfo.state = batteryLevel == -1 ? BatteryState.UNKNOWN : BatteryState.BATTERY_NORMAL;
-                    eventBatteryInfo.level = batteryLevel;
-                    evaluateGBDeviceEvent(eventBatteryInfo);
-                }
-            }
-        }
-    };
     private final BluetoothProfile.ServiceListener profileListener = new BluetoothProfile.ServiceListener() {
         @Override
         public void onServiceConnected(int profile, BluetoothProfile proxy) {
@@ -91,7 +76,10 @@ public class GenericHeadphonesSupport extends AbstractDeviceSupport implements H
             getContext().unregisterReceiver(mBlueToothDisconnectReceiver);
             mBlueToothDisconnectReceiver = null;
         }
-        getContext().unregisterReceiver(batteryLevelReceiver);
+        if (batteryLevelReceiver != null) {
+            getContext().unregisterReceiver(batteryLevelReceiver);
+            batteryLevelReceiver = null;
+        }
     }
 
     @Override
@@ -109,6 +97,23 @@ public class GenericHeadphonesSupport extends AbstractDeviceSupport implements H
         getBluetoothAdapter().getProfileProxy(getContext(), profileListener, BluetoothProfile.HEADSET);
 
         if (GBApplication.isRunningPieOrLater()) {
+            batteryLevelReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    if (GBApplication.isRunningPieOrLater()) {
+                        final String action = intent.getAction();
+
+                        if (ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED.equals(action)) {
+                            final int batteryLevel = intent.getIntExtra(ANDROID_BLUETOOTH_DEVICE_EXTRA_BATTERY_LEVEL, -1);
+                            final GBDeviceEventBatteryInfo eventBatteryInfo = new GBDeviceEventBatteryInfo();
+                            eventBatteryInfo.state = batteryLevel == -1 ? BatteryState.UNKNOWN : BatteryState.BATTERY_NORMAL;
+                            eventBatteryInfo.level = batteryLevel;
+                            evaluateGBDeviceEvent(eventBatteryInfo);
+                        }
+                    }
+                }
+            };
             ContextCompat.registerReceiver(getContext(), batteryLevelReceiver, new IntentFilter(ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED), ContextCompat.RECEIVER_EXPORTED);
         }
 
