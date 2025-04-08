@@ -1026,4 +1026,6 @@
     <string name="prefs_heartrate_alert_high_threshold">Kõrge pulsi hoiatuslävi</string>
     <string name="prefs_heartrate_alert_active_high_threshold">Pulsi hoiatuslävi intensiivse sportimise ajal</string>
     <string name="prefs_heartrate_alert_low_threshold">Madala pulsi hoiatuslävi</string>
+    <string name="getting_heart_rate">Mõõtmine</string>
+    <string name="heart_rate_result">Mõõtmistulemused</string>
 </resources>
