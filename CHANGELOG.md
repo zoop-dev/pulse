@@ -3,13 +3,14 @@
 #### Next version (WIP)
 
 * Initial support for 1MORE SonoFlow headphones
+* Initial support for Amazfit Bip 6
 * Initial support for EarFun Air S and Air Pro 4 headphones
 * Initial support for Garmin Instinct 3
+* Initial support for Generic Audio BT Devices
 * Initial support for Honor Watch 4 / 4 Pro
 * Initial support for Huawei Band 10
 * Initial support for Huawei FreeBuds Pro
 * Initial support for Redmi Buds 3 Pro
-* Initial support for Generic Audio BT Devices
 * Experimental support for Ultrahuman Air smart ring
 * Amazfit Active 2: Fix device discovery, improved support
 * Amazfit Bip 3: Add workout gps settings
@@ -28,8 +29,8 @@
 * Garmin: Resolve names for services and characteristics
 * Huami: Delete some missing tables when deleting a device
 * Huami: Fix sending air quality index
-* Huawei: Add support for find device
 * Huawei: Add stress calibration and sync
+* Huawei: Add support for find device
 * Huawei: Add trail run activity
 * Huawei: Fix delete notifications for LE devices
 * Huawei: Fix some crashes
@@ -43,6 +44,7 @@
 * Zepp OS 3+: Fix screenshots
 * Zepp OS 4: Fix notification icons
 * Zepp OS: Allow 32-character hex key without 0x prefix
+* Zepp OS: Allow upload of UIHH AGPS bundles
 * Zepp OS: Fetch body temperature, HR stats, HRV, sleep respiratory rate
 * Zepp OS: Fix AGPS section not available on some devices
 * Zepp OS: Fix parsing of PAI values after factory reset
@@ -50,11 +52,13 @@
 * Zepp OS: Map all missing activity kinds
 * Zepp OS: Maps upload
 * Zepp OS: Music upload (unstable)
+* Zepp OS: Request high MTU on connection
 * Zepp OS: Respect calendar sync setting
 * Zepp OS: Sync audio recordings (voice memos)
 * Add page with all open-source licenses
 * Charts: Add sleep HR average
 * Fix app crash when switching between Android user profiles
+* Fix battery full notifications for devices that do not report charging state
 * Fix icon on low battery level
 * Fix ignoring low priority notifications on Android 13+
 * Fix some preference summaries not getting updated
