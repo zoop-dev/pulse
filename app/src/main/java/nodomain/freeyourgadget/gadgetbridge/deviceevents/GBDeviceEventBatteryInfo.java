@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +56,18 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
         return numCharges != -1 && lastChargeTime != null;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "index: " + batteryIndex + ", level: " + level;
+    }
+
     @Override
     public void evaluate(final Context context, final GBDevice device) {
-        LOG.info("Got BATTERY_INFO device event");
+        if ((level < 0 || level >= 100) && level != GBDevice.BATTERY_UNKNOWN) {
+            LOG.error("Battery level must be within range 0-100: {}", level);
+            return;
+        }
 
         // for devices that do not report charging, but the level just increased
         final boolean levelJustIncreased = device.getBatteryLevel(this.batteryIndex) != GBDevice.BATTERY_UNKNOWN &&

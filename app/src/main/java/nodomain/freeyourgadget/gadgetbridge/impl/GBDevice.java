@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
@@ -101,7 +100,7 @@ public class GBDevice implements Parcelable {
     private int mNotificationIconDisconnected = R.drawable.ic_notification_disconnected;
     private int mNotificationIconLowBattery = R.drawable.ic_notification_low_battery;
 
-    public static enum DeviceUpdateSubject {
+    public enum DeviceUpdateSubject {
         UNKNOWN,
         NOTHING,
         CONNECTION_STATE,
@@ -241,7 +240,7 @@ public class GBDevice implements Parcelable {
     }
 
     public String getAliasOrName() {
-        if (mAlias != null && !mAlias.equals("")) {
+        if (mAlias != null && !mAlias.isEmpty()) {
             return mAlias;
         }
         return mName;
@@ -280,7 +279,6 @@ public class GBDevice implements Parcelable {
 
     /**
      * Sets the second firmware version (HR or GPS or other component)
-     * @param firmwareVersion2
      */
     public void setFirmwareVersion2(String firmwareVersion2) {
         mFirmwareVersion2 = firmwareVersion2;
@@ -560,7 +558,7 @@ public class GBDevice implements Parcelable {
         if ((batteryLevel >= 0 && batteryLevel <= 100) || batteryLevel == BATTERY_UNKNOWN) {
             mBatteryLevel[index] = batteryLevel;
         } else {
-            LOG.error("Battery level musts be within range 0-100: " + batteryLevel);
+            LOG.error("Battery level must be within range 0-100: {}", batteryLevel);
         }
     }
 
@@ -573,7 +571,7 @@ public class GBDevice implements Parcelable {
         if (batteryVoltage >= 0 || batteryVoltage == BATTERY_UNKNOWN) {
             mBatteryVoltage[index] = batteryVoltage;
         } else {
-            LOG.error("Battery voltage must be > 0: " + batteryVoltage);
+            LOG.error("Battery voltage must be > 0: {}", batteryVoltage);
         }
     }
 
@@ -651,7 +649,7 @@ public class GBDevice implements Parcelable {
     }
 
     public boolean hasDeviceInfos() {
-        return getDeviceInfos().size() > 0;
+        return !getDeviceInfos().isEmpty();
     }
 
     public ItemWithDetails getDeviceInfo(String name) {
@@ -730,7 +728,8 @@ public class GBDevice implements Parcelable {
         INITIALIZED(R.string.initialized, R.string.connected);
 
 
-        private int stringId, simpleStringId;
+        private final int stringId;
+        private final int simpleStringId;
 
         State(int stringId, int simpleStringId) {
             this.stringId = stringId;
