@@ -3893,4 +3893,11 @@
     <string name="weather_condition_thunderstorm_with_light_rain">гроза с небольшим дождём</string>
     <string name="weather_condition_thunderstorm">гроза</string>
     <string name="weather_condition_snow">снег</string>
+    <string name="fit_file_viewer">Просмотр FIT-файла</string>
+    <string name="pref_heart_rate_low_alert">Предупреждение о низком пульсе</string>
+    <string name="pref_spo_low_alert">Предупреждение о низком уровне SpO2</string>
+    <string name="dual_device_mode_title">Двойное подключение</string>
+    <string name="pref_heart_rate_high_alert">Предупреждение о высоком пульсе</string>
+    <string name="dual_device_mode_summary">Разрешить подключаться наушникам к двум устройствам одновременно</string>
+    <string name="maps_not_found">Карты не найдены. Пожалуйста, выберите правильную папку с картами в настройках</string>
 </resources>
