@@ -368,12 +368,14 @@ public class MoyoungConstants {
     // The watch stores all dates in GMT+8 time zone with seconds resolution
     // These helper functions convert between the watch time representation and local system representation
 
+    public static final TimeZone WATCH_INTERNAL_TIME_ZONE = TimeZone.getTimeZone("GMT+8");
+
     public static int LocalTimeToWatchTime(Date localTime)
     {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
         String format = simpleDateFormat.format(localTime);
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        simpleDateFormat.setTimeZone(WATCH_INTERNAL_TIME_ZONE);
         try {
             return (int)(simpleDateFormat.parse(format).getTime() / 1000);
         } catch (ParseException e) {
@@ -384,7 +386,7 @@ public class MoyoungConstants {
     public static Date WatchTimeToLocalTime(int watchTime)
     {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        simpleDateFormat.setTimeZone(WATCH_INTERNAL_TIME_ZONE);
         String format = simpleDateFormat.format(new Date((long)watchTime * 1000));
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
         try {

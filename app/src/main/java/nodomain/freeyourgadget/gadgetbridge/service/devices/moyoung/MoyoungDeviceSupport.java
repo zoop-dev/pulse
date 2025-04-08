@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.text.format.DateFormat;
@@ -1242,6 +1243,10 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         if (data.length % 3 != 0)
             throw new IllegalArgumentException();
 
+        SharedPreferences sharedPreferences = getDevicePrefs().getPreferences();
+        long prefLastSyncTime = sharedPreferences.getLong("lastSyncTimeMillis", 0);
+        sharedPreferences.edit().putLong("lastSyncTimeMillis", System.currentTimeMillis()).apply();
+
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             MoyoungSleepStageSampleProvider provider = new MoyoungSleepStageSampleProvider(getDevice(), dbHandler.getDaoSession());
 
@@ -1274,9 +1279,13 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 currentSample.setUser(user);
                 currentSample.setStage(type);
                 currentSample.setTimestamp(thisSample.getTimeInMillis());
-                samples.add(currentSample);
 
-                LOG.debug("Adding sleep stage sample: ts={} stage={}", thisSample.getTime(), type);
+                if (thisSample.getTime().getTime() > prefLastSyncTime) {
+                    samples.add(currentSample);
+                    LOG.debug("Adding sleep stage sample: ts={} stage={}", thisSample.getTime(), type);
+                } else {
+                    LOG.debug("Skipping sleep stage sample from before last sync time: prevSync={} ts={} stage={}", prefLastSyncTime, thisSample.getTime(), type);
+                }
             }
 
             LOG.debug("Will persist {} sleep stage samples", samples.size());

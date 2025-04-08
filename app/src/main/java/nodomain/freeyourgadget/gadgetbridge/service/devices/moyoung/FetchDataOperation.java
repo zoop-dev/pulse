@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.Logging;
@@ -129,6 +131,16 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             byte[] data = new byte[payload.length - 1];
             System.arraycopy(payload, 1, data, 0, data.length);
 
+            // The watch uses the GMT+8 timezone internally. The sleep identifiers below are based
+            // on that timezone. That means the watch thinks "yesterday" starts at a different
+            // moment than in our current locale.
+            long currentTime = System.currentTimeMillis();
+            final TimeZone localTZ = Calendar.getInstance().getTimeZone();
+            int hourDifference = (MoyoungConstants.WATCH_INTERNAL_TIME_ZONE.getOffset(currentTime) - localTZ.getOffset(currentTime)) / (1000 * 60 * 60);
+            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            int daysAgoOffset = 0;
+            if (currentHour + hourDifference >= 24) daysAgoOffset = 1;
+
             if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS) {
                 LOG.info("2 DAYS AGO STEPS data: " + Logging.formatBytes(data));
                 decodeSteps(2, data);
@@ -141,12 +153,12 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             }
             else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP) {
                 LOG.info("2 DAYS AGO SLEEP data: " + Logging.formatBytes(data));
-                decodeSleep(2, data);
+                decodeSleep(2 - daysAgoOffset, data);
                 return true;
             }
             else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP) {
                 LOG.info("YESTERDAY SLEEP data: " + Logging.formatBytes(data));
-                decodeSleep(1, data);
+                decodeSleep(1 - daysAgoOffset, data);
                 return true;
             }
         }
