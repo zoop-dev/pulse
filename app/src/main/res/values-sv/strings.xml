@@ -616,4 +616,6 @@
     <string name="left">Vänster</string>
     <string name="automatic">Automatiskt</string>
     <string name="watchface_dialog_widget_preset_left">Vänster</string>
+    <string name="pref_header_privacy">Sekretess</string>
+    <string name="pref_title_transliteration">Translitterering</string>
 </resources>
