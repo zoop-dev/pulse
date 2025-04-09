@@ -552,7 +552,7 @@
     <string name="calendar_three_months">3 mesiace</string>
     <string name="pref_header_calendar">Kalendár</string>
     <string name="activity_type_fitness_exercises">Fitness cvičenie</string>
-    <string name="dashboard_calendar_month_goals_reached_title">Dosiahnuté % cieľa krokov</string>
+    <string name="dashboard_calendar_month_goals_reached_title">Dosiahnuté %% cieľa krokov</string>
     <string name="maximum_duration">Dĺžka</string>
     <string name="calendar_week">Týždeň</string>
     <string name="calendar_day">Deň</string>

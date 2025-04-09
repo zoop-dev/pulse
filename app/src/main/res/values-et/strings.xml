@@ -895,7 +895,7 @@
     <string name="pref_dashboard_widget_settings">Vidina seaded</string>
     <string name="pref_dashboard_widget_double_size_summary">Luba vidinal juhtpaneelil hõivata kaks tulpa</string>
     <string name="pref_dashboard_widget_today_24h_summary">Kuva aktiivsust kahe 12h ringi asemel ühes 24h ringis</string>
-    <string name="dashboard_calendar_month_goals_reached_title">% sammudest eesmärgini saavutatud</string>
+    <string name="dashboard_calendar_month_goals_reached_title">%% sammudest eesmärgini saavutatud</string>
     <string name="first_start_intro_tag_line">Vabasta end nutiseadmete tootjate patenteeritud rakendustest ja pilveteenustest.</string>
     <string name="pref_dashboard_widget_today_upside_down_title">Kesköö all</string>
     <string name="pref_dashboard_all_devices_title">Kõik seadmed</string>

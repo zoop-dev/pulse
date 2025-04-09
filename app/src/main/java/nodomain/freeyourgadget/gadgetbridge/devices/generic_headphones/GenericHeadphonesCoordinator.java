@@ -5,6 +5,9 @@ import android.bluetooth.BluetoothDevice;
 
 import androidx.annotation.NonNull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -17,6 +20,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.generic_headphones.GenericHeadphonesSupport;
 
 public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
+    private static final Logger LOG = LoggerFactory.getLogger(GenericHeadphonesCoordinator.class);
+
     @Override
     public int getOrderPriority() {
         return Integer.MAX_VALUE;
@@ -34,15 +39,22 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
-        BluetoothDevice device = candidate.getDevice();
-        BluetoothClass deviceClass = device.getBluetoothClass();
-        int deviceType = deviceClass.getDeviceClass();
-        return deviceType == BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET ||
-                deviceType == BluetoothClass.Device.AUDIO_VIDEO_HEADPHONES ||
-                deviceType == BluetoothClass.Device.AUDIO_VIDEO_LOUDSPEAKER ||
-                deviceType == BluetoothClass.Device.AUDIO_VIDEO_VIDEO_DISPLAY_AND_LOUDSPEAKER ||
-                deviceType == BluetoothClass.Device.AUDIO_VIDEO_CAR_AUDIO ||
-                deviceType == BluetoothClass.Device.AUDIO_VIDEO_HANDSFREE;
+        try {
+            final BluetoothDevice device = candidate.getDevice();
+            final BluetoothClass deviceClass = device.getBluetoothClass();
+            int deviceType = deviceClass.getDeviceClass();
+            return deviceType == BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET ||
+                    deviceType == BluetoothClass.Device.AUDIO_VIDEO_HEADPHONES ||
+                    deviceType == BluetoothClass.Device.AUDIO_VIDEO_LOUDSPEAKER ||
+                    deviceType == BluetoothClass.Device.AUDIO_VIDEO_VIDEO_DISPLAY_AND_LOUDSPEAKER ||
+                    deviceType == BluetoothClass.Device.AUDIO_VIDEO_CAR_AUDIO ||
+                    deviceType == BluetoothClass.Device.AUDIO_VIDEO_HANDSFREE;
+        } catch (final SecurityException e) {
+            // Should never happen - we must have bluetooth permissions
+            LOG.error("Failed to check bluetooth class", e);
+        }
+
+        return false;
     }
 
     @Override
