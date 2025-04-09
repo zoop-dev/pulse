@@ -4015,4 +4015,5 @@
     <string name="weather_condition_shower_rain">Regenschauer</string>
     <string name="aqi_level_excellent">ausgezeichnet</string>
     <string name="maps_not_found">Keine Karten gefunden – bitte wählen Sie in den Einstellungen einen gültigen Kartenordner aus</string>
+    <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
 </resources>
