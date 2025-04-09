@@ -4004,4 +4004,5 @@
     <string name="weather_condition_fresh_breeze">svěží vánek</string>
     <string name="weather_condition_hail">krupobití</string>
     <string name="audio_recordings">Nahrávky zvuku</string>
+    <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
 </resources>
