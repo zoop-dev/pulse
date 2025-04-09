@@ -3900,4 +3900,25 @@
     <string name="pref_heart_rate_high_alert">Предупреждение о высоком пульсе</string>
     <string name="dual_device_mode_summary">Разрешить подключаться наушникам к двум устройствам одновременно</string>
     <string name="maps_not_found">Карты не найдены. Пожалуйста, выберите правильную папку с картами в настройках</string>
+    <string name="weather_condition_drizzle">морось</string>
+    <string name="weather_condition_thunderstorm_with_drizzle">гроза с моросью</string>
+    <string name="weather_condition_thunderstorm_with_heavy_drizzle">гроза с сильной моросью</string>
+    <string name="weather_condition_heavy_thunderstorm">сильная гроза</string>
+    <string name="weather_condition_light_intensity_drizzle">слабо моросящий дождь</string>
+    <string name="weather_condition_heavy_intensity_drizzle">сильная изморось</string>
+    <string name="weather_condition_drizzle_rain">моросящий дождь</string>
+    <string name="weather_condition_heavy_intensity_drizzle_rain">сильная изморось</string>
+    <string name="weather_condition_shower_rain_and_drizzle">проливной дождь с изморосью</string>
+    <string name="weather_condition_shower_drizzle">моросящий дождь</string>
+    <string name="weather_condition_light_rain">лёгкий дождь</string>
+    <string name="weather_condition_moderate_rain">умеренный дождь</string>
+    <string name="weather_condition_heavy_intensity_rain">сильный дождь</string>
+    <string name="weather_condition_very_heavy_rain">очень сильный дождь</string>
+    <string name="weather_condition_extreme_rain">ливень</string>
+    <string name="weather_condition_freezing_rain">ледяной дождь</string>
+    <string name="weather_condition_thunderstorm_with_light_drizzle">гроза с лёгкой моросью</string>
+    <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
+    <string name="weather_condition_heavy_shower_rain_and_drizzle">сильный проливной дождь с изморосью</string>
+    <string name="weather_condition_ragged_thunderstorm">местами гроза</string>
+    <string name="weather_condition_light_intensity_drizzle_rain">слабо моросящий дождь</string>
 </resources>
