@@ -861,8 +861,9 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
                     int pace = sample.getPace();
 
+                    int weight = sample.getCorrection() == null ? 10000 : sample.getCorrection();
                     paceCount++;
-                    paceSum += pace;
+                    paceSum += pace * weight;
 
                     if (pace < paceFastest)
                         paceFastest = pace;
@@ -896,7 +897,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     summaryData.add(
                             ActivitySummaryEntries.GROUP_PACE,
                             GBApplication.getContext().getString(R.string.fmtPaceAverage),
-                            paceSum / (float) paceCount,
+                            (paceSum / 10000) / (float) paceCount,
                             ActivitySummaryEntries.UNIT_SECONDS_PER_KM
                     );
                 }
