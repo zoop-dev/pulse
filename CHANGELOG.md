@@ -29,11 +29,13 @@
 * Garmin: Resolve names for services and characteristics
 * Huami: Delete some missing tables when deleting a device
 * Huami: Fix sending air quality index
+* Huawei Freebuds 5i: Fix crash on device preferences
 * Huawei: Add stress calibration and sync
 * Huawei: Add support for find device
 * Huawei: Add trail run activity
 * Huawei: Fix delete notifications for LE devices
 * Huawei: Fix some crashes
+* Huawei: Fix workout average pace calculation
 * Huawei: Increase user ID length to 19 characters
 * Huawei: Real-time heart rate mode and low/high alerts
 * Lenovo Watch X (Plus): Fix language setting
