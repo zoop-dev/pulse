@@ -263,7 +263,11 @@ public class GBApplication extends Application {
             notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (isRunningOreoOrLater()) {
                 bluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
-                registerReceiver(bluetoothStateChangeReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+                final IntentFilter bif = new IntentFilter();
+                bif.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+                if (isRunningPieOrLater())
+                    bif.addAction(BluetoothStateChangeReceiver.ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED);
+                registerReceiver(bluetoothStateChangeReceiver, bif);
             }
             try {
                 //the following will ensure the notification manager is kept alive

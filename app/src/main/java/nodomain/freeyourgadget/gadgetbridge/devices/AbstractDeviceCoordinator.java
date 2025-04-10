@@ -854,6 +854,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return batteryConfigs;
     }
 
+    public boolean supportsOSBatteryLevel() {
+        return false;
+    }
+
     @Override
     public boolean addBatteryPollingSettings() {
         return false;

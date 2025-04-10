@@ -90,4 +90,9 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }
+
+    @Override
+    public boolean supportsOSBatteryLevel() {
+        return true;
+    }
 }

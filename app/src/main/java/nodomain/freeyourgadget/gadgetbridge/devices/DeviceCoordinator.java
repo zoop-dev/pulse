@@ -786,6 +786,12 @@ public interface DeviceCoordinator {
 
     BatteryConfig[] getBatteryConfig(GBDevice device);
 
+    /**
+     * Returns true if the device battery level is reported by the OS (usually for headsets)
+     */
+    boolean supportsOSBatteryLevel();
+
+
     boolean addBatteryPollingSettings();
 
     boolean supportsPowerOff(GBDevice device);
