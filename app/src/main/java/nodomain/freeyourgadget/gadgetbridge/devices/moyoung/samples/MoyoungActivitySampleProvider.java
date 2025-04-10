@@ -244,14 +244,16 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
             // round to the nearest minute, we don't need per-second granularity
             final int tsSecondsPrev = (int) ((prevSample.getTimestamp() / 1000) / 60) * 60;
             final int tsSecondsCur = (int) ((sleepStageSample.getTimestamp() / 1000) / 60) * 60;
-            for (int i = tsSecondsPrev; i < tsSecondsCur; i += 60) {
+            for (int i = tsSecondsPrev; i < tsSecondsCur; i++) {
                 if (i < timestamp_from || i > timestamp_to) continue;
                 MoyoungActivitySample sample = sampleByTs.get(i);
-                if (sample == null) {
+                if (sample == null && i % 60 == 0) {
                     sample = new MoyoungActivitySample();
                     sample.setTimestamp(i);
                     sample.setProvider(this);
                     sampleByTs.put(i, sample);
+                } else if (sample == null) {
+                    continue;
                 }
                 sample.setRawKind(toRawActivityKind(sleepRawKind));
                 sample.setRawIntensity(ActivitySample.NOT_MEASURED);
