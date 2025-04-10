@@ -846,7 +846,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
             byte unitType = (byte) (measurementSystem.equals("metric") ? 0 : 1);
             try (CloseableListIterator<HuaweiWorkoutPaceSample> it = qbPace.build().listIterator()) {
 
-                int paceCount = 0;
+                int paceWeightSum = 0;
                 int paceSum = 0;
                 int paceFastest = Integer.MAX_VALUE;
                 int paceSlowest = 0;
@@ -862,7 +862,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     int pace = sample.getPace();
 
                     int weight = sample.getCorrection() == null ? 10000 : sample.getCorrection();
-                    paceCount++;
+                    paceWeightSum += weight;
                     paceSum += pace * weight;
 
                     if (pace < paceFastest)
@@ -893,11 +893,11 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     );
                 }
 
-                if (paceCount != 0 && paceSum != 0) {
+                if (paceWeightSum != 0 && paceSum != 0) {
                     summaryData.add(
                             ActivitySummaryEntries.GROUP_PACE,
                             GBApplication.getContext().getString(R.string.fmtPaceAverage),
-                            (paceSum / 10000) / (float) paceCount,
+                            paceSum / paceWeightSum,
                             ActivitySummaryEntries.UNIT_SECONDS_PER_KM
                     );
                 }
