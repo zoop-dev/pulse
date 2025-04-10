@@ -39,6 +39,7 @@
 * Huawei: Increase user ID length to 19 characters
 * Huawei: Real-time heart rate mode and low/high alerts
 * Lenovo Watch X (Plus): Fix language setting
+* Mi Band 8: Parse elliptical and rowing workouts
 * Pebble: Fix all day events timezone
 * Xiaomi-protobuf: Make GPS timeout configurable
 * Xiaomi-protobuf: Map some missing workout types

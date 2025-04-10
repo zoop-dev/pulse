@@ -669,6 +669,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         switch (version) {
             case 3:
             case 4:
+            case 5:
                 headerSize = 4;
                 break;
             default:
@@ -708,6 +709,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 4:
                 headerSize = 4;
                 break;
+            case 6:
             case 7:
                 headerSize = 5;
                 break;
