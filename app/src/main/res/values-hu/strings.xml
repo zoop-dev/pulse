@@ -118,7 +118,7 @@
     <string name="pref_title_location_latitude">Szélesség</string>
     <string name="pref_title_location_longitude">Hosszúság</string>
     <string name="pref_title_location_keep_uptodate">Tartózkodási hely frissen tartása</string>
-    <string name="pref_summary_location_keep_uptodate">Aktuális tartózkodási hely meghatározásának megpróbálása futásidőben, hiba esetén az eltárolt helyszín használata</string>
+    <string name="pref_summary_location_keep_uptodate">Jelenlegi tartózkodási hely meghatározásának megpróbálása futásidőben, hiba esetén az eltárolt helyszín használata</string>
     <string name="toast_enable_networklocationprovider">Engedélyezze a hálózati helymeghatározást</string>
     <string name="toast_aqurired_networklocation">tartózkodási hely meghatározva</string>
     <string name="pref_title_pebble_forceprotocol">Értesítési protokoll kényszerítése</string>
@@ -1573,7 +1573,7 @@
     <string name="pref_morning_updates_title">Reggeli frissítések</string>
     <string name="pref_morning_updates_summary">Frissítések megjelenítése minden reggel</string>
     <string name="pref_workout_start_on_phone_title">Fitnesz alkalmazás nyomon követés</string>
-    <string name="pref_workout_send_gps_summary">Edzés közben küldje el az aktuális GPS-pozíciót a karkötőnek</string>
+    <string name="pref_workout_send_gps_summary">Edzés közben küldje el a jelenlegi GPS-pozíciót a karkötőnek</string>
     <string name="pref_workout_keep_screen_on_summary">A képernyő bekapcsolva marad az edzés alatt, és a fényerőt a rendszer úgy állítja be, hogy folyamatosan megjelenítse a valós idejű edzésadatokat</string>
     <string name="pref_workout_detection_summary">Az edzés automatikus felismerése</string>
     <string name="pref_screen_notification_profile_anti_loss">Vesztésgátló figyelmeztetés</string>
@@ -2926,7 +2926,7 @@
     <string name="device_state_waiting_scan">Várakozás az eszköz beolvasására</string>
     <string name="error_scan_failed">A beolvasás nem sikerült: %d</string>
     <string name="music_multiselect_limit">Elérte az egynél több elem kiválasztásának határát</string>
-    <string name="first_start_intro_tag_line">Szabaduljon meg a készülékgyártók saját alkalmazásai és felhőszolgáltatásai alól.</string>
+    <string name="first_start_intro_tag_line">Szabaduljon meg az eszközgyártók saját alkalmazásai és felhőszolgáltatásai alól.</string>
     <string name="permission_notifications_summary">Értesítések továbbítása csatlakoztatott kütyükre</string>
     <string name="permission_bluetooth_connect_summary">Csatlakozás a már párosított Bluetooth-eszközökhöz</string>
     <string name="permission_post_notification_title">Értesítések közzététele</string>
@@ -3230,8 +3230,8 @@
     <string name="birthdays">Születésnapok</string>
     <string name="pref_dnd_follow_phone_summary">Amikor a telefonon engedélyezve vagy le van tiltva a DND mód, akkor automatikusan kapcsolja az eszközön is</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">A tegnapi nap adatai</string>
-    <string name="pref_dashboard_widget_today_yesterday_data_summary">A tegnapi adatok megjelenítése az aktuális idő és éjfél között tompítva</string>
-    <string name="pref_dashboard_widget_today_time_indicator_title">Aktuális idő jelzője</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">A tegnapi adatok megjelenítése a jelenlegi idő és éjfél között tompítva</string>
+    <string name="pref_dashboard_widget_today_time_indicator_title">Jelenlegi idő jelzője</string>
     <string name="prefs_hrv_monitoring_title">Szívfrekvencia-variabilitás megfigyelés</string>
     <string name="prefs_hrv_monitoring_description">Automatikusan figyeli a pulzusszám-változékonyságot a nap folyamán</string>
     <string name="battery_allow_pass_though_summary">Lehetővé teszi az akkumulátor töltését az eszköz használata közben</string>
