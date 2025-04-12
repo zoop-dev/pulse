@@ -18,10 +18,12 @@
 package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Process;
 import android.os.UserHandle;
 import android.os.UserManager;
 
@@ -31,7 +33,10 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -158,5 +163,45 @@ public class NotificationUtils {
         return null;
     }
 
+    /**
+     * Returns all applications on the device, including applications in work profiles.
+     */
+    @NonNull
+    public static List<String> getAllApplications(final Context context) {
+        final PackageManager pm = context.getPackageManager();
+        final List<String> ret = new LinkedList<>();
+
+        // Get apps for the current user
+        final List<ApplicationInfo> currentUserApps = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        for (final ApplicationInfo app : currentUserApps) {
+            ret.add(app.packageName);
+        }
+
+        // Add all apps from other users (eg. manager profile)
+        try {
+            final UserHandle currentUser = Process.myUserHandle();
+            final LauncherApps launcher = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
+            final UserManager um = (UserManager) context.getSystemService(Context.USER_SERVICE);
+            final List<UserHandle> userProfiles = um.getUserProfiles();
+            for (final UserHandle userProfile : userProfiles) {
+                if (userProfile.equals(currentUser)) {
+                    continue;
+                }
+
+                final List<LauncherActivityInfo> userActivityList = launcher.getActivityList(null, userProfile);
+
+                for (final LauncherActivityInfo app : userActivityList) {
+                    final String packageName = app.getApplicationInfo().packageName;
+                    if (!ret.contains(packageName)) {
+                        ret.add(packageName);
+                    }
+                }
+            }
+        } catch (final Exception e) {
+            LOG.error("Failed to get apps from other users", e);
+        }
+
+        return ret;
+    }
 
 }

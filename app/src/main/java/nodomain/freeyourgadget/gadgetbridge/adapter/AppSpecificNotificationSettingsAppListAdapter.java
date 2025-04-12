@@ -18,13 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.LauncherActivityInfo;
-import android.content.pm.LauncherApps;
-import android.content.pm.PackageManager;
-import android.os.Process;
-import android.os.UserHandle;
-import android.os.UserManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,17 +29,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.app_specific_notifications.AppSpecificNotificationSettingsDetailActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.packageNameToPebbleMsgSender;
 
@@ -58,19 +52,17 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
     public static final String STRING_EXTRA_PACKAGE_NAME = "packageName";
     public static final String STRING_EXTRA_PACKAGE_TITLE = "packageTitle";
 
-    private final List<ApplicationInfo> applicationInfoList;
+    private final List<String> applicationInfoList;
     private final int mLayoutId;
     private final Context mContext;
-    private final PackageManager mPm;
-    private GBDevice mDevice;
-    private final IdentityHashMap<ApplicationInfo, String> mNameMap;
+    private final GBDevice mDevice;
+    private final IdentityHashMap<String, String> mNameMap;
 
     private ApplicationFilter applicationFilter;
 
     public AppSpecificNotificationSettingsAppListAdapter(int layoutId, Context context, GBDevice device) {
         mLayoutId = layoutId;
         mContext = context;
-        mPm = context.getPackageManager();
         mDevice = device;
 
         applicationInfoList = getAllApplications();
@@ -78,12 +70,12 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
 
         // sort the package list by label and blacklist status
         mNameMap = new IdentityHashMap<>(applicationInfoList.size());
-        for (ApplicationInfo ai : applicationInfoList) {
-            CharSequence name = mPm.getApplicationLabel(ai);
+        for (String packageName : applicationInfoList) {
+            String name = NotificationUtils.getApplicationLabel(mContext, packageName);
             if (name == null) {
-                name = ai.packageName;
+                name = packageName;
             }
-            mNameMap.put(ai, name.toString());
+            mNameMap.put(packageName, name);
         }
 
         Collections.sort(applicationInfoList, (ai1, ai2) -> {
@@ -94,32 +86,33 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
 
     }
 
+    @NonNull
     @Override
-    public AppNotificationSettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AppNotificationSettingsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
         return new AppNotificationSettingsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final AppNotificationSettingsViewHolder holder, int position) {
-        final ApplicationInfo appInfo = applicationInfoList.get(position);
+        final String packageName = applicationInfoList.get(position);
 
-        holder.deviceAppVersionAuthorLabel.setText(appInfo.packageName);
-        holder.deviceAppNameLabel.setText(mNameMap.get(appInfo));
-        holder.deviceImageView.setImageDrawable(appInfo.loadIcon(mPm));
+        holder.deviceAppVersionAuthorLabel.setText(packageName);
+        holder.deviceAppNameLabel.setText(mNameMap.get(packageName));
+        holder.deviceImageView.setImageDrawable(NotificationUtils.getAppIcon(mContext, packageName));
 
         holder.itemView.setOnClickListener(v -> {
             Intent intentStartNotificationFilterActivity = new Intent(mContext, AppSpecificNotificationSettingsDetailActivity.class);
-            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_NAME, appInfo.packageName);
-            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_TITLE, mNameMap.get(appInfo));
+            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_NAME, packageName);
+            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_TITLE, mNameMap.get(packageName));
             intentStartNotificationFilterActivity.putExtra(GBDevice.EXTRA_DEVICE, mDevice);
             mContext.startActivity(intentStartNotificationFilterActivity);
         });
 
         holder.btnConfigureApp.setOnClickListener(view -> {
             Intent intentStartNotificationFilterActivity = new Intent(mContext, AppSpecificNotificationSettingsDetailActivity.class);
-            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_NAME, appInfo.packageName);
-            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_TITLE, mNameMap.get(appInfo));
+            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_NAME, packageName);
+            intentStartNotificationFilterActivity.putExtra(STRING_EXTRA_PACKAGE_TITLE, mNameMap.get(packageName));
             intentStartNotificationFilterActivity.putExtra(GBDevice.EXTRA_DEVICE, mDevice);
             mContext.startActivity(intentStartNotificationFilterActivity);
         });
@@ -128,46 +121,17 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
     /**
      * Returns the applications for which the Gadgetbridge notifications are enabled.
      */
-    public List<ApplicationInfo> getAllApplications() {
-        final Set<String> allPackageNames = new HashSet<>();
-        final List<ApplicationInfo> ret = new LinkedList<>();
+    public List<String> getAllApplications() {
+        final List<String> apps = NotificationUtils.getAllApplications(GBApplication.getContext());
         boolean filterInverted = !GBApplication.getPrefs().getString("notification_list_is_blacklist", "true").equals("true");
 
-        // Get apps for the current user
-        final List<ApplicationInfo> currentUserApps = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (final ApplicationInfo app : currentUserApps) {
-            boolean blacklisted = GBApplication.appIsNotifBlacklisted(app.packageName) || GBApplication.appIsPebbleBlacklisted(packageNameToPebbleMsgSender(app.packageName));
+        final List<String> ret = new LinkedList<>();
+
+        for(String packageName: apps) {
+            boolean blacklisted = GBApplication.appIsNotifBlacklisted(packageName) || GBApplication.appIsPebbleBlacklisted(packageNameToPebbleMsgSender(packageName));
             if((!filterInverted && !blacklisted) || (filterInverted && blacklisted)) {
-                allPackageNames.add(app.packageName);
-                ret.add(app);
+                ret.add(packageName);
             }
-        }
-
-        // Add all apps from other users (eg. manager profile)
-        try {
-            final UserHandle currentUser = Process.myUserHandle();
-            final LauncherApps launcher = (LauncherApps) mContext.getSystemService(Context.LAUNCHER_APPS_SERVICE);
-            final UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-            final List<UserHandle> userProfiles = um.getUserProfiles();
-            for (final UserHandle userProfile : userProfiles) {
-                if (userProfile.equals(currentUser)) {
-                    continue;
-                }
-
-                final List<LauncherActivityInfo> userActivityList = launcher.getActivityList(null, userProfile);
-
-                for (final LauncherActivityInfo app : userActivityList) {
-                    if (!allPackageNames.contains(app.getApplicationInfo().packageName)) {
-                        boolean blacklisted = GBApplication.appIsNotifBlacklisted(app.getApplicationInfo().packageName) || GBApplication.appIsPebbleBlacklisted(packageNameToPebbleMsgSender(app.getApplicationInfo().packageName));
-                        if((!filterInverted && !blacklisted) || (filterInverted && blacklisted)) {
-                            allPackageNames.add(app.getApplicationInfo().packageName);
-                            ret.add(app.getApplicationInfo());
-                        }
-                    }
-                }
-            }
-        } catch (final Exception e) {
-            LOG.error("Failed to get apps from other users", e);
         }
 
         return ret;
@@ -186,7 +150,7 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
         return applicationFilter;
     }
 
-    class AppNotificationSettingsViewHolder extends RecyclerView.ViewHolder {
+    public static class AppNotificationSettingsViewHolder extends RecyclerView.ViewHolder {
 
         final ImageView deviceImageView;
         final TextView deviceAppVersionAuthorLabel;
@@ -207,10 +171,10 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
     private class ApplicationFilter extends Filter {
 
         private final AppSpecificNotificationSettingsAppListAdapter adapter;
-        private final List<ApplicationInfo> originalList;
-        private final List<ApplicationInfo> filteredList;
+        private final List<String> originalList;
+        private final List<String> filteredList;
 
-        private ApplicationFilter(AppSpecificNotificationSettingsAppListAdapter adapter, List<ApplicationInfo> originalList) {
+        private ApplicationFilter(AppSpecificNotificationSettingsAppListAdapter adapter, List<String> originalList) {
             super();
             this.originalList = new ArrayList<>(originalList);
             this.filteredList = new ArrayList<>();
@@ -227,11 +191,14 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
             else {
                 final String filterPattern = filter.toString().toLowerCase().trim();
 
-                for (ApplicationInfo ai : originalList) {
-                    CharSequence name = mPm.getApplicationLabel(ai);
-                    if (name.toString().toLowerCase().contains(filterPattern) ||
-                            (ai.packageName.contains(filterPattern))) {
-                        filteredList.add(ai);
+                for (String packageName : originalList) {
+                    String name = NotificationUtils.getApplicationLabel(mContext, packageName);
+                    if (TextUtils.isEmpty(name)) {
+                        name = packageName;
+                    }
+                    if (name.toLowerCase().contains(filterPattern) ||
+                            (packageName.contains(filterPattern))) {
+                        filteredList.add(packageName);
                     }
                 }
             }
@@ -244,7 +211,7 @@ public class AppSpecificNotificationSettingsAppListAdapter extends RecyclerView.
         @Override
         protected void publishResults(CharSequence charSequence, Filter.FilterResults filterResults) {
             adapter.applicationInfoList.clear();
-            adapter.applicationInfoList.addAll((List<ApplicationInfo>) filterResults.values);
+            adapter.applicationInfoList.addAll((List<String>) filterResults.values);
             adapter.notifyDataSetChanged();
         }
     }
