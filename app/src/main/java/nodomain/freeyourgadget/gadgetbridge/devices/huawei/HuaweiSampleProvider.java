@@ -261,7 +261,7 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
         }
         Property deviceProperty = getDeviceIdentifierSampleProperty();
         qb.where(deviceProperty.eq(dbDevice.getId()), otherTimestampProperty.ge(timestampFrom))
-                .where(timestampProperty.le(timestampTo))
+                .where(timestampProperty.le(timestampTo), timestampProperty.ge(timestampFrom - 60*60*24)) // The timestamp.ge is necessary for db performance
                 .orderAsc(timestampProperty);
         List<HuaweiActivitySample> samples = qb.build().list();
         for (HuaweiActivitySample sample : samples) {
