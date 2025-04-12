@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV89Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.FireBolttTalkCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.R50ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ViranC29Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSDeviceCoordinator;
@@ -684,6 +685,7 @@ public enum DeviceType {
     KSIX_VENTURE(KsixVentureCoordinator.class),
     FIREBOLTT_TALK(FireBolttTalkCoordinator.class),
     VIRAN_C29(ViranC29Coordinator.class),
+    R50PRO(R50ProCoordinator.class),
     B_AND_W_P_SERIES(BandWPSeriesDeviceCoordinator.class),
     EARFUN_AIR_S(EarFunAirSCoordinator.class),
     EARFUN_AIR_PRO_4(EarFunAirPro4Coordinator.class),
