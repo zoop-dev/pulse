@@ -79,6 +79,8 @@ public final class MapsManager {
             tileRendererLayer = null;
         }
 
+        mapView.getModel().displayModel.setBackgroundColor(GBApplication.getWindowBackgroundColor(mapView.getContext()));
+
         isMapLoaded = false;
 
         AndroidGraphicFactory.createInstance(GBApplication.app());
@@ -132,7 +134,7 @@ public final class MapsManager {
                 mapView.getModel().frameBufferModel.getOverdrawFactor()
         );
 
-        tileRendererLayer = new MyTileRendererLayer(
+        tileRendererLayer = new TileRendererLayer(
                 tileCache,
                 multiMapDataStore,
                 mapView.getModel().mapViewPosition,
@@ -182,25 +184,5 @@ public final class MapsManager {
         }
 
         loadMaps();
-    }
-
-    private class MyTileRendererLayer extends TileRendererLayer {
-        public MyTileRendererLayer(final TileCache tileCache,
-                                   final MapDataStore mapDataStore,
-                                   final MapViewPosition mapViewPosition,
-                                   final boolean isTransparent,
-                                   final boolean renderLabels,
-                                   final boolean cacheLabels,
-                                   final GraphicFactory graphicFactory) {
-            super(tileCache, mapDataStore, mapViewPosition, isTransparent, renderLabels, cacheLabels, graphicFactory);
-        }
-
-        @Override
-        public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint, Rotation rotation) {
-            if (!isMapLoaded) {
-                canvas.fillColor(GBApplication.getWindowBackgroundColor(mapView.getContext()));
-            }
-            super.draw(boundingBox, zoomLevel, canvas, topLeftPoint, rotation);
-        }
     }
 }
