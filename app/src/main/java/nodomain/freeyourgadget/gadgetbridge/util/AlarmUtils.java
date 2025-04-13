@@ -128,6 +128,7 @@ public class AlarmUtils {
      * @deprecated use {@link DBHelper#getAlarms(GBDevice)} instead
      */
     @NonNull
+    @Deprecated
     public static List<Alarm> readAlarmsFromPrefs(GBDevice gbDevice) {
         Prefs prefs = GBApplication.getPrefs();
         Set<String> stringAlarms = prefs.getStringSet(MiBandConst.PREF_MIBAND_ALARMS, new HashSet<String>());

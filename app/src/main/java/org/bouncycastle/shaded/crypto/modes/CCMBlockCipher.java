@@ -49,6 +49,7 @@ public class CCMBlockCipher
      * @param c the block cipher to be used.
      * @deprecated use the CCMBlockCipher.newInstance() static method.
      */
+    @Deprecated
     public CCMBlockCipher(BlockCipher c)
     {
         this.cipher = c;

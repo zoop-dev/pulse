@@ -1,9 +1,11 @@
 import java.nio.file.Files
 
-apply plugin: "com.android.application"
-apply plugin: 'com.google.protobuf'
+plugins {
+    id 'com.android.application'
+    id 'com.google.protobuf'
+}
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     systemProperty "MiFirmwareDir", System.getProperty("MiFirmwareDir", null)
     systemProperty "logback.configurationFile", System.getProperty("user.dir", null) + "/app/src/main/assets/logback.xml"
     systemProperty "GB_LOGFILES_DIR", Files.createTempDirectory("gblog").toString()
@@ -31,12 +33,12 @@ def buildGitChangelog = {
 
     allCommits.trim().eachLine { line ->
         if (includedCommits > 100) {
-            return true;
+            return true
         }
 
         def (commitHash, commitMessage) = line.split(" ", 2)
         if (commitMessage.contains("Translated using Weblate")) {
-            return true;
+            return true
         }
 
         def releaseNode = new Node(changelogNode, 'release', [version: commitHash, versioncode: commitVersionCode--])
@@ -59,24 +61,32 @@ def getGitHashShort = { ->
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
 android {
     compileOptions {
-        coreLibraryDesugaringEnabled true
-
-        // for Android 5+
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled = true
     }
 
-    namespace 'nodomain.freeyourgadget.gadgetbridge'
+    namespace = 'nodomain.freeyourgadget.gadgetbridge'
 
     defaultConfig {
         applicationId "nodomain.freeyourgadget.gadgetbridge"
 
+        // Note: update toolchain.languageVersion when changing targetSdk
         //noinspection OldTargetApi
-        targetSdkVersion 34
-        compileSdk 34
-        minSdkVersion 21
+        targetSdk = 34
+        compileSdk = 35
+        // Note: update sourceCompatibility and targetCompatibility when changing minSdk
+        minSdk = 21
+
+        // WORKAROUND: 35.0.0 is broken if a directory in the AIDL build starts with "u" (https://issuetracker.google.com/issues/389488321)
+        // however 35 is required by com.android.tools.build:gradle:8.9.1, the latest version supported by Android Studio
+        buildToolsVersion = '35.0.1'
 
         // Note: always bump BOTH versionCode and versionName!
         versionName "0.85.0"
@@ -97,7 +107,7 @@ android {
         }
     }
 
-    flavorDimensions "device_type"
+    flavorDimensions += "device_type"
     productFlavors {
         mainline {
             // Ensure that when starting from scratch, 'mainline' is selected, not 'banglejs'
@@ -114,7 +124,6 @@ android {
             applicationIdSuffix ".banglejs"
             versionNameSuffix "-banglejs"
             buildConfigField "boolean", "INTERNET_ACCESS", "true"
-            targetSdkVersion 34
             // Note: app/src/banglejs/AndroidManifest.xml contains some extra permissions
         }
     }
@@ -122,6 +131,8 @@ android {
     sourceSets {
         main {
             res.srcDirs += "build/generated/res/changelog"
+            java.srcDirs += "${protobuf.generatedFilesBaseDir}"
+            java.srcDirs += "build/generated/source/buildConfig"
         }
     }
 
@@ -139,9 +150,9 @@ android {
             debuggable false
 
             if (System.getProperty("nightly_store_file") != null) {
-                signingConfig signingConfigs.nightly
+                signingConfig = signingConfigs.nightly
             } else {
-                signingConfig signingConfigs.debug
+                signingConfig = signingConfigs.debug
             }
         }
 
@@ -153,9 +164,9 @@ android {
             debuggable false
 
             if (System.getProperty("nightly_store_file") != null) {
-                signingConfig signingConfigs.nightly
+                signingConfig = signingConfigs.nightly
             } else {
-                signingConfig signingConfigs.debug
+                signingConfig = signingConfigs.debug
             }
         }
 
@@ -175,14 +186,14 @@ android {
     }
 
     lint {
-        abortOnError true
-        lintConfig file("$rootDir/app/src/main/lint.xml")
+        abortOnError = true
+        lintConfig = file("${rootDir}/app/src/main/lint.xml")
         // If true, generate an HTML report (with issue explanations, sourcecode, etc)
-        htmlReport true
+        htmlReport = true
         // Optional path to report (default will be lint-results.html in the builddir)
-        htmlOutput file("$project.buildDir/reports/lint/lint.html")
+        htmlOutput = file("${project.layout.buildDirectory}/reports/lint/lint.html")
         // Ignore checks present in the snapshot
-        baseline file("lint-baseline.xml")
+        baseline = file("lint-baseline.xml")
     }
 
     testOptions {
@@ -192,8 +203,8 @@ android {
         }
     }
     buildFeatures {
-        aidl true
-        buildConfig true
+        aidl = true
+        buildConfig = true
     }
 }
 
@@ -275,13 +286,6 @@ preBuild.dependsOn(":GBDaoGenerator:genSources")
 
 gradle.beforeProject {
     preBuild.dependsOn(":GBDaoGenerator:genSources")
-}
-
-sourceSets {
-    main {
-        java.srcDirs += "${protobuf.generatedFilesBaseDir}"
-        java.srcDirs += "build/generated/source/buildConfig"
-    }
 }
 
 tasks.register('cleanGenerated', Delete) {
