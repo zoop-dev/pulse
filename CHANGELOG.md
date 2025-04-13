@@ -36,6 +36,7 @@
 * Huawei: Fix delete notifications for LE devices
 * Huawei: Fix some crashes
 * Huawei: Fix workout average pace calculation
+* Huawei: Improve database performance
 * Huawei: Increase user ID length to 19 characters
 * Huawei: Real-time heart rate mode and low/high alerts
 * Lenovo Watch X (Plus): Fix language setting
