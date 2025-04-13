@@ -3385,7 +3385,7 @@
     <string name="pref_continuous_skin_temperature_measurement_title">Průběžné měření teploty pokožky</string>
     <string name="devicetype_ble_gatt_client">Generický klient BLE GATT</string>
     <string name="pref_continuous_skin_temperature_measurement_description">Získávání teploty momentálně není podporováno. Toto nastavení pouze povolí průběžné měření na zařízení</string>
-    <string name="prefs_title_gatt_client_notification_intents">Vysílat oznamovací IntentyGATT skrze BLE Intent API</string>
+    <string name="prefs_title_gatt_client_notification_intents">Vysílat oznamovací intenty GATT skrze BLE Intent API</string>
     <string name="activity_db_management_backup_restore_label">Záloha a obnovení</string>
     <string name="activity_db_management_export_to_zip">Exportovat zip</string>
     <string name="backup_restore_exporting_finishing">Dokončování exportu…</string>
