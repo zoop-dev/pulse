@@ -336,7 +336,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     protected MediaManager mediaManager;
     private boolean heartRateNotifyEnabled;
     protected static final int MIN_MTU = 23;
-    private int mMTU = MIN_MTU;
+    protected int mMTU = MIN_MTU;
     // Keep track of the previous MTU before reconnection, so that we can request it after reconnection
     private int previousMtu = -1;
     protected int mActivitySampleSize = 4;
