@@ -4008,4 +4008,6 @@
     <string name="weather_condition_hail">冰雹</string>
     <string name="audio_recordings">录音</string>
     <string name="devicetype_amazfit_bip6">华米 Bip 6</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorider</string>
 </resources>
