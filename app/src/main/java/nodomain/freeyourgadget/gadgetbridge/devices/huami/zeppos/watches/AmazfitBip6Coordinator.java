@@ -16,7 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -32,7 +33,11 @@ public class AmazfitBip6Coordinator extends ZeppOsCoordinator {
 
     @Override
     public Set<Integer> getDeviceSources() {
-        return Collections.emptySet(); // TODO: not yet listed on the website
+        return new HashSet<>(Arrays.asList(
+                9765120, // chinese mainland version
+                9765121,
+                10158337
+        ));
     }
 
     @Override
