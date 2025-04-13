@@ -4005,4 +4005,6 @@
     <string name="weather_condition_hail">krupobití</string>
     <string name="audio_recordings">Nahrávky zvuku</string>
     <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
+    <string name="map_theme_motorider">Motorider</string>
+    <string name="map_theme_osmarender">Osmarender</string>
 </resources>
