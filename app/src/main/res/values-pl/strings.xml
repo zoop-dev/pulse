@@ -4027,4 +4027,6 @@
     <string name="aqi_level_unknown">(bd)</string>
     <string name="weather_condition_hot">gorąco</string>
     <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
+    <string name="map_theme_motorider">Motorider</string>
+    <string name="map_theme_osmarender">Osmarender</string>
 </resources>
