@@ -206,7 +206,7 @@
     <string name="title_activity_sleepmonitor">Schlafüberwachung</string>
     <string name="pref_write_logfiles">Protokolldateien schreiben</string>
     <string name="initializing">Initialisieren</string>
-    <string name="busy_task_fetch_activity_data">Aktivitätsdaten abrufen</string>
+    <string name="busy_task_fetch_activity_data">Abrufen von Aktivitätsdaten</string>
     <string name="sleep_activity_date_range">Von %1$s bis %2$s</string>
     <string name="prefs_wearside">Wird links oder rechts getragen\?</string>
     <string name="pref_screen_vibration_profile">Vibrationsprofile</string>
@@ -347,7 +347,7 @@
     <string name="updatefirmwareoperation_update_in_progress">Firmwareupdate wird durchgeführt</string>
     <string name="updatefirmwareoperation_firmware_not_sent">Firmware nicht gesendet</string>
     <string name="charts_legend_heartrate">Puls</string>
-    <string name="live_activity_heart_rate">Pulsrate</string>
+    <string name="live_activity_heart_rate">Puls</string>
     <string name="pref_title_pebble_health_store_raw">Rohdaten in der Datenbank speichern</string>
     <string name="pref_summary_pebble_health_store_raw">Speichert Daten „wie sie sind“ und erhöht die Datenbanknutzung, um eine spätere Auswertung zu ermöglichen.</string>
     <string name="action_db_management">Datenmanagement</string>
@@ -455,7 +455,7 @@
     <string name="mi2_prefs_button_press_count">Anzahl der Tastendrücke</string>
     <string name="pref_title_charts_swipe">Streichen nach links/rechts im Diagrammbetrieb aktivieren</string>
     <string name="pref_summary_pebble_enable_bgjs">Wenn aktiviert, kann Zifferblatt Wetter, Akkuinfos, usw. anzeigen.</string>
-    <string name="prefs_title_heartrate_measurement_interval">Ganztägige Messung des Pulses</string>
+    <string name="prefs_title_heartrate_measurement_interval">Ganztägige Pulsmessung</string>
     <string name="interval_one_minute">einmal pro Minute</string>
     <string name="interval_five_minutes">alle 5 Minuten</string>
     <string name="interval_ten_minutes">alle 10 Minuten</string>
@@ -778,7 +778,7 @@
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="pref_chart_heartrate_color_red">Rot</string>
     <string name="pref_chart_heartrate_color_orange">Orange</string>
-    <string name="pref_title_chart_heartrate_color">Farbe des Pulses</string>
+    <string name="pref_title_chart_heartrate_color">Pulsmessungs-Farbe</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Schlafbereich</string>
     <string name="pref_chart_sleep_rolling_24_on">Letzte 24 Stunden</string>
     <string name="pref_chart_sleep_rolling_24_off">Mittag bis Mittag</string>
@@ -821,7 +821,7 @@
     <string name="pref_title_allow_high_mtu">Größere MTU erlauben</string>
     <string name="pref_summary_sync_calendar">Aktiviert Kalendererinnerungen, auch wenn die Verbindung getrennt ist</string>
     <string name="pref_title_sync_caldendar">Kalenderereignisse synchronisieren</string>
-    <string name="hr_widget_heart_rate">Pulsfrequenz</string>
+    <string name="hr_widget_heart_rate">Puls</string>
     <string name="hr_widget_steps">Schritte</string>
     <string name="hr_widget_date">Datum</string>
     <string name="hr_widget_active_minutes">Aktive Minuten</string>
@@ -959,7 +959,7 @@
     <string name="laps">Runden</string>
     <string name="averageLapPace">Durchschnittliches Rundentempo</string>
     <string name="averageKMPaceSeconds">Tempo</string>
-    <string name="averageHR">Pulsfrequenz</string>
+    <string name="averageHR">Puls</string>
     <string name="maxPace">Schnellstes Tempo</string>
     <string name="minPace">Langsamstes Tempo</string>
     <string name="caloriesBurnt">Kalorien</string>
@@ -1052,7 +1052,7 @@
     <string name="sonyswr12_settings_stamina">Der Energiesparmodus ist aktiviert</string>
     <string name="sonyswr12_settings_alarm_interval">Intelligentes Alarmintervall in Minuten</string>
     <string name="sonyswr12_settings_low_vibration_summary">Aktiviere eine geringe Vibrationsintensität auf dem Band</string>
-    <string name="sonyswr12_settings_stamina_summary">Der Energiesparmodus schaltet die regelmäßige automatische Messung der Pulsfrequenz aus und verlängert so die Arbeitszeit</string>
+    <string name="sonyswr12_settings_stamina_summary">Der Energiesparmodus deaktiviert die regelmäßige automatische Pulsmessung und verlängert dadurch die Betriebszeit</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Das intelligente Alarmintervall ist das Intervall vor dem installierten Alarm. In diesem Intervall versucht das Gerät, die leichteste Schlafphase zu erkennen, um den Benutzer zu wecken</string>
     <string name="chart_get_active_and_synchronize">Führe einige Aktivitäten durch und synchronisiere das Gerät.</string>
     <string name="devicetype_nut_mini">Nut mini</string>
@@ -1095,7 +1095,7 @@
     <string name="activity_prefs_step_length_cm">Schrittlänge in cm</string>
     <string name="qhybrid_calibration_align_hint">Verwende die Tasten unten, um die Uhrzeiger auf 12:00 Uhr auszurichten.</string>
     <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
-    <string name="charts_min_max_heartrate_popup">Niedrigstr Puls: %1$d \nHöchster Puls: %2$d \nBewegungsintensität: %3$s</string>
+    <string name="charts_min_max_heartrate_popup">Niedrigster Puls: %1$d \nHöchster Puls: %2$d \nBewegungsintensität: %3$s</string>
     <string name="gps_track">GPS-Track</string>
     <string name="about_version">Version %s</string>
     <string name="menuitem_spo2">SpO2</string>
@@ -1642,14 +1642,14 @@
     <string name="heartrate_bpm_140">140 BPM</string>
     <string name="title_activity_world_clock_details">Weltzeituhrdetails</string>
     <string name="prefs_heartrate_alert_experimental_title">Pulsalarm (experimentell)</string>
-    <string name="prefs_heartrate_alert_experimental_description">Band vibriert, wenn der Puls über einem Schwellenwert liegt, ohne dass Sie in den letzten 10 Minuten eine offensichtliche körperliche Aktivität hatten. Diese Funktion ist experimentell und wurde nicht ausführlich getestet.</string>
-    <string name="prefs_heartrate_alert_threshold">Alarmschwelle Puls</string>
+    <string name="prefs_heartrate_alert_experimental_description">Lasse das Armband vibrieren, wenn der Puls einen Schwellenwert überschreitet, ohne dass in den letzten 10 Minuten eine offensichtliche körperliche Aktivität stattgefunden hat. Diese Funktion ist experimentell und wurde nicht umfassend getestet.</string>
+    <string name="prefs_heartrate_alert_threshold">Schwellenwert für Pulsalarm</string>
     <string name="prefs_stress_monitoring_title">Stressüberwachung</string>
     <string name="prefs_stress_monitoring_description">Stresslevel während des Ausruhens überwachen</string>
     <string name="prefs_activity_monitoring_title">Aktivitätsüberwachung</string>
-    <string name="mi2_prefs_heart_rate_monitoring">Puls überwachen</string>
-    <string name="mi2_prefs_heart_rate_monitoring_summary">Pulsüberwachung konfigurieren</string>
-    <string name="mi2_prefs_heart_rate_monitoring_alerts_summary">Pulsüberwachung und Warnschwellen konfigurieren</string>
+    <string name="mi2_prefs_heart_rate_monitoring">Pulsüberwachung</string>
+    <string name="mi2_prefs_heart_rate_monitoring_summary">Pulsüberwachung einstellen</string>
+    <string name="mi2_prefs_heart_rate_monitoring_alerts_summary">Pulskontrolle und Alarmschwellen konfigurieren</string>
     <string name="activity_type_outdoor_running">Laufen im Freien</string>
     <string name="activity_type_outdoor_cycling">Radfahren im Freien</string>
     <string name="prefs_noise_control">Geräuschkontrolle</string>
@@ -1692,7 +1692,7 @@
     <string name="pref_world_clocks_title">Weltuhren</string>
     <string name="world_clock_delete_confirm_description">Möchtest du die Weltzeituhr wirklich löschen\?</string>
     <string name="world_clock_no_free_slots_title">Keine freien Speicherplätze</string>
-    <string name="prefs_activity_monitoring_description">Erhöht automatisch die Frequenz der Pulserfassung, wenn das Band körperliche Bewegung erkennt, um die Genauigkeit der Pulserfassung zu erhöhen.</string>
+    <string name="prefs_activity_monitoring_description">Erhöhe automatisch die Erkennungsfrequenz für den Puls, wenn das Armband körperliche Aktivität erkennt, um die Genauigkeit der Pulserfassung zu verbessern.</string>
     <string name="prefs_ambient_sound_during_call_title">Umgebungsgeräusche während des Anrufs</string>
     <string name="permission_notification_listener">%1$s benötigt Zugriff auf Benachrichtigungen, um sie auf deiner Uhr anzeigen zu können, wenn der Bildschirm des Telefons ausgeschaltet ist.
 \n
@@ -1839,7 +1839,7 @@
     <string name="spo2_perc_85">85 %</string>
     <string name="spo2_perc_90">90 %</string>
     <string name="spo2_off">Aus</string>
-    <string name="prefs_heartrate_alert_high_threshold">Alarmschwelle für hohen Puls</string>
+    <string name="prefs_heartrate_alert_high_threshold">Schwellenwert für Alarm bei hohem Puls</string>
     <string name="prefs_spo2_monitoring_title">Überwachung des Blutsauerstoffs</string>
     <string name="seconds_6">6 Sekunden</string>
     <string name="seconds_11">11 Sekunden</string>
@@ -1871,7 +1871,7 @@
     <string name="pref_header_display">Anzeige</string>
     <string name="pref_summary_canned_replies">Antworten von der Uhr mit voreingestellten Nachrichten</string>
     <string name="pref_cache_weather">Wetterinformationen zwischenspeichern</string>
-    <string name="prefs_heartrate_alert_low_threshold">Alarmschwelle für niedrigen Puls</string>
+    <string name="prefs_heartrate_alert_low_threshold">Schwellenwert für Alarm bei niedrigem Puls</string>
     <string name="pref_sleep_breathing_quality_monitoring">Überwachung der Qualität der Schlafatmung</string>
     <string name="pref_cache_weather_summary">Wetterinformationen werden über Anwendungsneustarts hinweg zwischengespeichert.</string>
     <string name="heartrate_bpm_40">40 BPM</string>
@@ -2229,7 +2229,7 @@
     <string name="stress_mild">Leicht</string>
     <string name="stress_moderate">Mäßig</string>
     <string name="stress_high">Hoch</string>
-    <string name="charts_legend_stress_average">Durchschnittliche Belastung</string>
+    <string name="charts_legend_stress_average">⌀ Belastung</string>
     <string name="intent_api_allow_debug_commands_summary">Auslösen von Debug-Menübefehlen über Intent-API ermöglichen</string>
     <string name="intent_api_allow_debug_commands_title">Debug-Befehle zulassen</string>
     <string name="screenshot_taken">Screenshot aufgenommen</string>
@@ -2307,7 +2307,7 @@
 \nEs werden nun einige Android-Dialogfelder angezeigt, in denen diese Berechtigungen angefordert werden.
 \n
 \nBitte tippe auf \'%2$s\', um fortzufahren.</string>
-    <string name="busy_task_fetch_hr_data">Abrufen vonPulsdaten</string>
+    <string name="busy_task_fetch_hr_data">Abrufen der Pulsdaten</string>
     <string name="activity_prefs_goals">Ziele</string>
     <string name="activity_type_surfing">Surfen</string>
     <string name="activity_type_windsurfing">Windsurfen</string>
@@ -2553,8 +2553,8 @@
     <string name="silent_mode_normal_silent">Normal / Lautlos</string>
     <string name="silent_mode_vibrate_silent">Vibration / Lautlos</string>
     <string name="clap_hands_to_wakeup_device_summary">Erneutes Klatschen schaltet den Bildschirm aus</string>"
-    <string name="busy_task_fetch_statistics">Statistiken abrufen</string>
-    <string name="busy_task_fetch_temperature">Temperaturdaten abrufen</string>
+    <string name="busy_task_fetch_statistics">Abrufen von Statistiken</string>
+    <string name="busy_task_fetch_temperature">Abrufen von Temperaturdaten</string>
     <string name="prefs_wearmode">Tragemodus</string>
     <string name="zepp_os_watchface_starry_sky">Sternenhimmel</string>
     <string name="prefs_wena3_hint_background_sync">Erlaube Wena, Gadgetbridge in regelmäßigen Abständen aufzufordern, Aktivitätsdaten vom Gerät herunterzuladen</string>
@@ -2705,7 +2705,7 @@
     <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
     <string name="pref_force_connection_type_bt_classic">Bluetooth-Classic</string>
-    <string name="prefs_heartrate_alert_active_high_threshold">Alarmschwelle für hohe Aktivität des Pulses</string>
+    <string name="prefs_heartrate_alert_active_high_threshold">Schwellenwert für Alarm bei hohem Puls während hoher Aktivität</string>
     <string name="hydration_dnd_summary">Deaktivieren von Hydrationswarnungen für ein bestimmtes Zeitintervall</string>
     <string name="activity_type_karate">Karate</string>
     <string name="activity_type_kendo">Kendo</string>
@@ -3053,7 +3053,7 @@
         <item quantity="one">%d Tag</item>
         <item quantity="other">%d Tage</item>
     </plurals>
-    <string name="pref_fetch_unknown_files_title">Unbekannte Dateien abrufen</string>
+    <string name="pref_fetch_unknown_files_title">Abrufen von Unbekannte Dateien</string>
     <string name="devicetype_garmin_forerunner_265">Garmin Forerunner 265</string>
     <string name="devicetype_garmin_venu_2">Garmin Venu 2</string>
     <string name="devicetype_hama_fit6900">Hama Fit Watch 6900</string>
@@ -3226,12 +3226,12 @@
     <string name="hr_resting">Erholung</string>
     <string name="hr_maximum">Maximum</string>
     <string name="hr_minimum">Minimum</string>
-    <string name="hr_average">Durchschnitt</string>
+    <string name="hr_average">⌀ Puls</string>
     <string name="minutes_75">75 Minuten</string>
     <string name="minutes_90">90 Minuten</string>
     <string name="minutes_120">120 Minuten</string>
     <string name="minutes_180">180 Minuten</string>
-    <string name="stress_average">Durchschnitt</string>
+    <string name="stress_average">⌀ Stress</string>
     <string name="activity_type_transition">Übergang</string>
     <string name="activity_type_fitness_equipment">Fitnessgeräte</string>
     <string name="activity_type_multisport">Multisport</string>
@@ -3662,7 +3662,7 @@
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">Ermöglicht das Senden von BLE-Charakteristik Lese-/Schreib- und Verbindungsbefehlen</string>
     <string name="devicetype_huawei_band2pro">Huawei Band 2 (Pro)</string>
     <string name="devicetype_colmi_r09">Colmi R09</string>
-    <string name="menuitem_heart_rate_push">Automatische Pulsübertragung</string>
+    <string name="menuitem_heart_rate_push">Pulsübertragung</string>
     <string name="watchface_widget_type_sp02">SpO2</string>
     <string name="pref_wear_sensor_title">Tragesensor</string>
     <string name="idasen_pref_mid_height">Höhe der mittleren Position (in Zentimetern)</string>
@@ -3838,7 +3838,7 @@
     <string name="huawei_stress_calibrate">Kalibrieren</string>
     <string name="huawei_voice_boost">Sprachverstärkung</string>
     <string name="huawei_stress_calibrate_information">Für optimale Ergebnisse ruhe dich vor dem Test eine Weile aus und bleibe während des Tests möglichst still.\n Befestige das Gerät fest, mit dem Display nach oben und dem Sensor in direktem Kontakt mit deiner Haut.</string>
-    <string name="stats_average_hr">Durchschnittlicher Puls</string>
+    <string name="stats_average_hr">Durchschnitt Puls</string>
     <string name="huawei_stress_calibrate_summary">Automatische Stressmessung kalibrieren</string>
     <string name="huawei_stress_calibrate_in_progress">Stresskalibrierung läuft bereits</string>
     <string name="banglejs_notification_missed_call_title">Verpasster Anruf</string>
@@ -4013,4 +4013,6 @@
     <string name="aqi_level_excellent">ausgezeichnet</string>
     <string name="maps_not_found">Keine Karten gefunden – bitte wählen Sie in den Einstellungen einen gültigen Kartenordner aus</string>
     <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorradfahrer</string>
 </resources>
