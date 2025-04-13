@@ -3807,4 +3807,6 @@
     <string name="weather_condition_fresh_breeze">üdén szellős</string>
     <string name="weather_condition_strong_breeze">erősen szellős</string>
     <string name="weather_condition_severe_gale">viharos erejű szél</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorider</string>
 </resources>
