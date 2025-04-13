@@ -3108,4 +3108,26 @@
     <string name="pref_workout_send_gps_timeout_title">שליחת תום זמן נווטן/GPS</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="huawei_voice_boost">הגברת קול</string>
+    <string name="banglejs_notification_missed_call_source">שיחה נכנסת</string>
+    <string name="banglejs_notification_missed_call_title">שיחה שלא נענתה</string>
+    <string name="maps">מפות</string>
+    <string name="dialog_open_url">פתיחת כתובת</string>
+    <string name="open_source_licenses">רישיונות</string>
+    <string name="dialog_close">סגירה</string>
+    <string name="audio_recordings">הקלטות שמע</string>
+    <string name="maps_download_summary">לחיצה כאן תוריד קובצי מפות. הם אמורים להישמר לתיקייה שנבחרה בהעדפות שלהלן.</string>
+    <string name="zepp_os_install_map_instructions">לאחר התחלת ההתקנה בטלפון, יש לאשר גם בשעון.</string>
+    <string name="maps_settings">הגדרות מפות</string>
+    <string name="maps_download_title">הורדת מפות</string>
+    <string name="banglejs_notification_missed_call_suppressed_caller_id">מתקשר לא ידוע. המזהה הודחק</string>
+    <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity‎</string>
+    <string name="devicetype_amazfit_bip6">Amazfit Bip 6‎</string>
+    <string name="huawei_stress_calibrate_done">כיול הלחץ הושלם</string>
+    <string name="huawei_stress_calibrate_error">שגיאת כיול לחץ</string>
+    <string name="huawei_stress_calibrate_information">לתוצאות מיטבות יש לנוח קצת לפני תחילת הבדיקה ולא לזוז במהלכה.\n יש להדק את המכשיר היטב, תוך שהמסך פונה מעלה והחיישן במגע ישיר עם העור שלך.</string>
+    <string name="huawei_stress_calibrate_start">התחלה</string>
+    <string name="huawei_stress_calibrate_finish">סיום</string>
+    <string name="huawei_stress_calibrate_again">לכייל שוב</string>
+    <string name="huawei_stress_calibrate_adjust_score">כיוון הניקוד</string>
 </resources>
