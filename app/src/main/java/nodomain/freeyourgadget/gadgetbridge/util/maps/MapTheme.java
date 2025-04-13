@@ -9,6 +9,7 @@ import java.io.InputStream;
 public enum MapTheme implements XmlRenderTheme {
     DEFAULT("/assets/mapsforge/default.xml"),
     OSMARENDER("/assets/mapsforge/osmarender.xml"),
+    MOTORIDER("/assets/mapsforge/motorider.xml"),
     ;
 
     private XmlRenderThemeMenuCallback menuCallback;
@@ -46,5 +47,9 @@ public enum MapTheme implements XmlRenderTheme {
     @Override
     public void setResourceProvider(final XmlThemeResourceProvider resourceProvider) {
 
+    }
+
+    public String getPath() {
+        return path;
     }
 }

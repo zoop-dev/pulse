@@ -17,6 +17,20 @@
         <item>@string/pref_theme_value_dynamic</item>
     </string-array>
 
+    <!--
+    These must match nodomain.freeyourgadget.gadgetbridge.util.maps.MapTheme
+    -->
+    <string-array name="maps_themes_names">
+        <item>@string/pref_default</item>
+        <item>@string/map_theme_osmarender</item>
+        <item>@string/map_theme_motorider</item>
+    </string-array>
+    <string-array name="maps_themes_values">
+        <item>default</item>
+        <item>osmarender</item>
+        <item>motorider</item>
+    </string-array>
+
     <!-- https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code -->
     <string-array name="pref_language_options">
         <item name="default">System Default</item>

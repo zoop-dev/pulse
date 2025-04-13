@@ -29,15 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.core.view.MenuProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.layer.overlay.Polyline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +43,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesGpsFragment;
@@ -63,17 +58,14 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
     public static boolean isActivityOpen = false;
 
     private MapsManager mapsManager;
-    private Polyline polyline;
-    private Paint paint;
+
+    private boolean mapValid = true;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             if (MapsSettingsFragment.ACTION_SETTING_CHANGE.equals(intent.getAction())) {
-                final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
-                paint.setColor(trackColor);
-                polyline.setPaintStroke(paint);
-                polyline.requestRedraw();
+                mapValid = false;
             }
         }
     };
@@ -92,8 +84,8 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
         addMenuProvider(this);
 
         mapView = findViewById(R.id.activitygpsview);
-        mapsManager = new MapsManager(this);
-        mapsManager.loadMaps(mapView);
+        mapsManager = new MapsManager(this, mapView);
+        mapsManager.loadMaps();
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE);
@@ -117,19 +109,7 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
                 .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
                 .collect(Collectors.toList());
 
-        if (paint == null) {
-            paint = AndroidGraphicFactory.INSTANCE.createPaint();
-            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
-            paint.setColor(trackColor);
-            paint.setStrokeWidth(8);
-            paint.setStyle(Style.STROKE);
-        }
-        if (polyline == null) {
-            polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
-            polyline.setPoints(latlongs);
-            mapView.addLayer(polyline);
-        }
-        mapView.getLayerManager().redrawLayers();
+        mapsManager.setTrack(latlongs);
 
         mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
         byte zoom = LatLongUtils.zoomForBounds(new Dimension(this.getResources().getDisplayMetrics().widthPixels, this.getResources().getDisplayMetrics().heightPixels), new BoundingBox(minLat, minLon, maxLat, maxLon), mapView.getModel().displayModel.getTileSize());
@@ -165,6 +145,14 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
         }
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mapValid) {
+            mapsManager.reload();
+        }
     }
 
     @Override

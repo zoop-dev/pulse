@@ -249,6 +249,8 @@
     <string name="pref_theme_dark">Dark</string>
     <string name="pref_theme_system">System</string>
     <string name="pref_theme_dynamic">Dynamic colors</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorider</string>
     <string name="pref_theme_black_background">Use black background in Dark Theme</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_title_minimize_priority">Hide the Gadgetbridge notification</string>

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -23,14 +23,12 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.Preference;
 
 import java.util.Objects;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager;
@@ -39,6 +37,7 @@ public class MapsSettingsFragment extends AbstractPreferenceFragment {
     static final String FRAGMENT_TAG = "MAP_SETTINGS_FRAGMENT";
 
     public static final String ACTION_SETTING_CHANGE = "nodomain.freeyourgadget.gadgetbridge.maps.setting_change";
+    public static final String EXTRA_SETTING_KEY = "nodomain.freeyourgadget.gadgetbridge.maps_setting_key";
 
     @Override
     public void onCreatePreferences(@Nullable final Bundle savedInstanceState, @Nullable final String rootKey) {
@@ -70,7 +69,7 @@ public class MapsSettingsFragment extends AbstractPreferenceFragment {
                                 .putString(MapsManager.PREF_MAPS_FOLDER, localUri.toString())
                                 .apply();
                         prefFolder.setSummary(localUri.toString());
-                        broadcastPreferenceChange();
+                        broadcastPreferenceChange(MapsManager.PREF_MAPS_FOLDER);
                     }
                 }
         );
@@ -81,16 +80,23 @@ public class MapsSettingsFragment extends AbstractPreferenceFragment {
             return true;
         });
 
+        final Preference prefMapTheme = Objects.requireNonNull(findPreference(MapsManager.PREF_MAP_THEME));
+        prefMapTheme.setOnPreferenceChangeListener((preference, newValue) -> {
+            broadcastPreferenceChange(MapsManager.PREF_MAP_THEME);
+            return true;
+        });
+
         final Preference prefTrackColor = Objects.requireNonNull(findPreference(MapsManager.PREF_TRACK_COLOR));
         prefTrackColor.setOnPreferenceChangeListener((preference, newValue) -> {
-            broadcastPreferenceChange();
+            broadcastPreferenceChange(MapsManager.PREF_TRACK_COLOR);
             return true;
         });
     }
 
-    private void broadcastPreferenceChange() {
+    private void broadcastPreferenceChange(final String key) {
         final Intent intent = new Intent();
         intent.setAction(ACTION_SETTING_CHANGE);
+        intent.putExtra(EXTRA_SETTING_KEY, key);
         LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);
     }
 }

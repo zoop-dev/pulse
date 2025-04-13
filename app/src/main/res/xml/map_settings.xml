@@ -18,6 +18,15 @@
         android:title="@string/pref_title_theme"
         app:iconSpaceReserved="false">
 
+        <ListPreference
+            android:defaultValue="default"
+            android:entries="@array/maps_themes_names"
+            android:entryValues="@array/maps_themes_values"
+            android:icon="@drawable/ic_paint"
+            android:key="maps_theme"
+            android:title="@string/pref_title_theme"
+            app:useSimpleSummaryProvider="true" />
+
         <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:defaultValue="@color/map_track_default"
             android:icon="@drawable/ic_paint"

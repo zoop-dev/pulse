@@ -31,16 +31,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +50,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Objects;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackActivity;
@@ -73,20 +68,20 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     private static final Logger LOG = LoggerFactory.getLogger(ActivitySummariesGpsFragment.class);
 
     private MapView mapView;
-    private TextView gpsWarning;
     private File inputFile;
     private MapsManager mapsManager;
-    private Polyline polyline;
-    private Paint paint;
+
+    private boolean mapValid = true;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             if (MapsSettingsFragment.ACTION_SETTING_CHANGE.equals(intent.getAction())) {
-                final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
-                paint.setColor(trackColor);
-                polyline.setPaintStroke(paint);
-                polyline.requestRedraw();
+                if (!isResumed()) {
+                    mapValid = false;
+                } else {
+                    mapsManager.reload();
+                }
             }
         }
     };
@@ -95,12 +90,12 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gps, container, false);
-        gpsWarning = rootView.findViewById(R.id.gpsWarning);
+        TextView gpsWarning = rootView.findViewById(R.id.gpsWarning);
         mapView = rootView.findViewById(R.id.activitygpsview);
         mapView.setBuiltInZoomControls(false);
 
-        mapsManager = new MapsManager(requireContext());
-        mapsManager.loadMaps(mapView);
+        mapsManager = new MapsManager(requireContext(), mapView);
+        mapsManager.loadMaps();
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE);
@@ -114,6 +109,14 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
             processInBackgroundThread();
         }
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mapValid) {
+            mapsManager.reload();
+        }
     }
 
     @Override
@@ -185,19 +188,7 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
                 .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
                 .collect(Collectors.toList());
 
-        if (paint == null) {
-            paint = AndroidGraphicFactory.INSTANCE.createPaint();
-            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, getResources().getColor(R.color.hrv_status_low));
-            paint.setColor(trackColor);
-            paint.setStrokeWidth(8);
-            paint.setStyle(Style.STROKE);
-        }
-        if (polyline == null) {
-            polyline = new Polyline(paint, AndroidGraphicFactory.INSTANCE);
-            mapView.addLayer(polyline);
-        }
-        polyline.setPoints(latlongs);
-        mapView.getLayerManager().redrawLayers();
+        mapsManager.setTrack(latlongs);
 
         final Model model = mapView.getModel();
         // FIXME: We need to offset the min latitude so the track gets centered - not sure why
