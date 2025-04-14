@@ -64,7 +64,7 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
 
     @Override
     public void evaluate(final Context context, final GBDevice device) {
-        if ((level < 0 || level >= 100) && level != GBDevice.BATTERY_UNKNOWN) {
+        if ((level < 0 || level > 100) && level != GBDevice.BATTERY_UNKNOWN) {
             LOG.error("Battery level must be within range 0-100: {}", level);
             return;
         }
