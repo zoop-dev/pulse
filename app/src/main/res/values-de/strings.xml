@@ -133,7 +133,7 @@
     <string name="pref_summary_pebble_forcele">Nutze die experimentelle LE-Unterstützung für alle Pebbles anstelle von BT-Classic. Dies erfordert zuerst eine Kopplung mit Nicht-LE und dann Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU Limit</string>
     <string name="pref_summary_pebble_mtu_limit">Wenn deine Pebble 2/Pebble LE nicht so wie erwartet funktioniert, versuche die MTU zu begrenzen (erlaubte Werte 20 bis 512)</string>
-    <string name="pref_title_pebble_enable_applogs">Anwendungsprotokollierung der Armbanduhr aktivieren</string>
+    <string name="pref_title_pebble_enable_applogs">Anwendungsprotokollierung der Smartwatch aktivieren</string>
     <string name="pref_summary_pebble_enable_applogs">Schreibt Protokolle von Armbanduhranwendungen in Gadgetbridge-Protokolle (erfordert erneute Verbindung)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">PebbleKit Nachrichten direkt bestätigen</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Nachrichten, die an externe Drittanbieteranwendungen geschickt werden, immer und sofort bestätigen</string>
@@ -206,7 +206,7 @@
     <string name="title_activity_sleepmonitor">Schlafüberwachung</string>
     <string name="pref_write_logfiles">Protokolldateien schreiben</string>
     <string name="initializing">Initialisieren</string>
-    <string name="busy_task_fetch_activity_data">Abrufen von Aktivitätsdaten</string>
+    <string name="busy_task_fetch_activity_data">Abrufen der Aktivitätsdaten</string>
     <string name="sleep_activity_date_range">Von %1$s bis %2$s</string>
     <string name="prefs_wearside">Wird links oder rechts getragen\?</string>
     <string name="pref_screen_vibration_profile">Vibrationsprofile</string>
@@ -290,7 +290,7 @@
     <string name="weeksteps_today_steps_description">Schritte heute, Ziel: %1$s</string>
     <string name="pref_title_dont_ack_transfer">Übertragung der Aktivitätsdaten nicht bestätigen (ACK)</string>
     <string name="pref_summary_dont_ack_transfers">Ohne ACK (Bestätigung), löscht das Band die Aktivitätsdaten nicht. Nützlich, wenn GB zusammen mit anderen Apps verwendet wird.</string>
-    <string name="pref_summary_keep_data_on_device">Behält die Aktivitätsdaten auch nach der Synchronisierung auf dem Gerät. Nützlich, wenn GB zusammen mit anderen Apps verwendet wird. Dies kann dazu führen, dass die Uhr keinen Platz mehr hat und/oder die Synchronisierung nicht mehr richtig funktioniert.</string>
+    <string name="pref_summary_keep_data_on_device">Behält Aktivitätsdaten auf dem Gerät, auch nach der Synchronisierung. Nützlich, wenn Gadgetbridge zusammen mit anderen Apps verwendet wird. Dies kann jedoch dazu führen, dass die Uhr keinen Speicherplatz mehr hat und/oder die Synchronisierung nicht mehr richtig funktioniert.</string>
     <string name="pref_title_low_latency_fw_update">Verwende den Low-Latency-Modus für Firmwareaktualisierung</string>
     <string name="pref_summary_low_latency_fw_update">Dies kann bei Geräten helfen, bei denen Firmwareupdates fehlschlagen.</string>
     <string name="live_activity_steps_history">Schrittverlauf</string>
@@ -904,7 +904,7 @@
     <string name="about_additional_device_support">Unterstützung zusätzlicher Geräte</string>
     <string name="about_contributors">Beitragende</string>
     <string name="about_core_team_title">Kernteam (Reihenfolge der ersten Mitwirkung am Code)</string>
-    <string name="about_description_generic">Cloudloser freier Ersatz für proprietäre Android-Gadget-Apps der Hersteller.</string>
+    <string name="about_description_generic">Cloudfreie, copyleft-lizenzierte, freie Alternative zu proprietären Android-Gadget-Apps der Hersteller.</string>
     <string name="about_activity_title_generic">Über Gadgetbridge</string>
     <string name="about_title">Über</string>
     <string name="pref_title_weather_summary">Wird für den LineageOS Wetterdienst genutzt, andere Android-Versionen müssen eine Anwendung (wie Breezy Weather) nutzen. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
@@ -1325,7 +1325,7 @@
     <string name="nothing_prefs_inear_title">In-Ear-Erkennung</string>
     <string name="nothing_prefs_audiomode_title">Audiomodus</string>
     <string name="title_activity_notification_management">Benachrichtigungseinstellungen</string>
-    <string name="pref_header_notification_application_settings">Pro App einstellen</string>
+    <string name="pref_header_notification_application_settings">Einstellungen pro App</string>
     <string name="uncheck_all_applications">Alle Apps abwählen</string>
     <string name="pref_message_privacy_mode_complete">Alle Inhalte ausblenden</string>
     <string name="pref_title_notification_use_as">Verwende die App-Liste, um…</string>
@@ -1334,7 +1334,7 @@
     <string name="pref_title_message_privacy_mode">Datenschutzmodus für Nachrichten</string>
     <string name="pref_message_privacy_mode_off">Alle Inhalte anzeigen</string>
     <string name="check_all_applications">Alle Apps auswählen</string>
-    <string name="pref_applications_settings">Liste der Apps</string>
+    <string name="pref_applications_settings">App-Liste verwalten</string>
     <string name="pref_header_other">Andere</string>
     <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
@@ -1580,9 +1580,7 @@
     <string name="menuitem_email">E-Mail</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_main">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang.
-\n
-\nAufgrund der Richtlinien des Google Play Stores ist es uns nicht erlaubt, einen Spendenlink in der App selbst einzubauen, aber wenn dir diese App gefällt, ziehe bitte eine Spende über die Gadgetbridge-Homepage unten in Erwägung.</string>
+    <string name="about_description_banglejs_main">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang. \n \nAufgrund der Richtlinien des Google Play Stores dürfen wir keinen Spendenlink direkt in der App einfügen. Wenn dir diese App gefällt, freuen wir uns jedoch über eine Spende über die Gadgetbridge-Homepage unten.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js läuft</string>
     <string name="about_description_banglejs_nopebble">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang.
 \n
@@ -1744,7 +1742,7 @@
     <string name="controlcenter_add_new_folder">Neuen Ordner hinzufügen</string>
     <string name="controlcenter_unset_folder">Ordner aufheben</string>
     <string name="pref_explanation_authkey">Einige Geräte erfordern einen speziellen Pairing-Schlüssel für die erste Initialisierung des Geräts. Tippe hier für weitere Details im Wiki.</string>
-    <string name="pref_explanation_authkey_new_protocol">Wenn du die Meldung \"Aktualisiere die App auf die neueste Version\" auf dem Band erhältst, überprüfe bitte das \"Neue Auth-Protokoll\" oben. Tippe hier für weitere Details im Wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Erscheint auf dem Band die Meldung „App auf die neueste Version aktualisieren“, überprüfe bitte, ob oben das „Neue Authentifizierungsprotokoll“ aktiviert ist. Für weitere Details tippe hier, um das Wiki zu öffnen.</string>
     <string name="prefs_password">Passwort</string>
     <string name="prefs_password_summary">Sperre das Band mit einem Passwort, wenn du es vom Handgelenk abnimmst</string>
     <string name="prefs_password_enabled">Passwort aktiviert</string>
@@ -1804,14 +1802,12 @@
 \nBewertung</string>
     <string name="watchface_setting_button_toggle_widgets">Widgets umschalten</string>
     <string name="controlcenter_get_heartrate_measurement">Herzfrequenzmessung</string>
-    <string name="pref_write_logfiles_not_available">Die Initialisierung der Dateiprotokollierung ist fehlgeschlagen, das Schreiben von Protokolldateien ist derzeit nicht möglich. Starte die App neu, um zu versuchen, die Protokolldateien erneut zu initialisieren.</string>
+    <string name="pref_write_logfiles_not_available">Initialisierung der Datei-Protokollierung fehlgeschlagen, das Schreiben von Protokolldateien ist derzeit nicht möglich. Starte die Anwendung neu, um die Initialisierung der Protokolldateien erneut zu versuchen.</string>
     <string name="devicetype_binary_sensor">Binärer Sensor</string>
     <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
     <string name="about_activity_title_banglejs_nightly">Über Bangle.js Gadgetbridge (Nightly)</string>
-    <string name="about_description_banglejs_nightly">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang.
-\n
-\nAufgrund der Richtlinien des Google Play Stores ist es uns nicht erlaubt, einen Spendenlink in der App selbst einzubauen, aber wenn dir diese App gefällt, ziehe bitte eine Spende über die Gadgetbridge-Homepage unten in Erwägung.</string>
+    <string name="about_description_banglejs_nightly">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang. \n \nAufgrund der Richtlinien des Google Play Stores dürfen wir keinen Spendenlink direkt in der App einfügen. Wenn dir diese App gefällt, freuen wir uns jedoch über eine Spende über die Gadgetbridge-Homepage unten.</string>
     <string name="gadgetbridge_running_banglejs_nightly">Bangle.js (Nightly) wird ausgeführt</string>
     <string name="prefs_hourly_chime">Stündlicher Klang</string>
     <string name="prefs_hourly_chime_summary">Die Uhr piept einmal pro Stunde</string>
@@ -1839,7 +1835,7 @@
     <string name="spo2_perc_85">85 %</string>
     <string name="spo2_perc_90">90 %</string>
     <string name="spo2_off">Aus</string>
-    <string name="prefs_heartrate_alert_high_threshold">Schwellenwert für Alarm bei hohem Puls</string>
+    <string name="prefs_heartrate_alert_high_threshold">Alarmgrenze hoher Puls</string>
     <string name="prefs_spo2_monitoring_title">Überwachung des Blutsauerstoffs</string>
     <string name="seconds_6">6 Sekunden</string>
     <string name="seconds_11">11 Sekunden</string>
@@ -1871,7 +1867,7 @@
     <string name="pref_header_display">Anzeige</string>
     <string name="pref_summary_canned_replies">Antworten von der Uhr mit voreingestellten Nachrichten</string>
     <string name="pref_cache_weather">Wetterinformationen zwischenspeichern</string>
-    <string name="prefs_heartrate_alert_low_threshold">Schwellenwert für Alarm bei niedrigem Puls</string>
+    <string name="prefs_heartrate_alert_low_threshold">Alarmgrenze niedriger Puls</string>
     <string name="pref_sleep_breathing_quality_monitoring">Überwachung der Qualität der Schlafatmung</string>
     <string name="pref_cache_weather_summary">Wetterinformationen werden über Anwendungsneustarts hinweg zwischengespeichert.</string>
     <string name="heartrate_bpm_40">40 BPM</string>
@@ -2035,7 +2031,7 @@
     <string name="sony_speak_to_chat_sensitivity_standard">Standard</string>
     <string name="pref_screen_auto_brightness_title">Automatische Helligkeit</string>
     <string name="pref_sleep_mode_smart_enable_title">Intelligent aktivieren</string>
-    <string name="pref_sleep_mode_sleep_screen_summary">Schlafbildschirm anzeigen, wenn der Bildschirm während des Ruhezustands aufgeweckt wird, um Ablenkungen zu verringern</string>
+    <string name="pref_sleep_mode_sleep_screen_summary">Zeigt beim Aufwecken im Schlafmodus den Schlafbildschirm an, um Ablenkungen zu vermeiden</string>
     <string name="activity_prefs_target_weight_kg">Zielgewicht in kg</string>
     <string name="menuitem_membership_cards">Mitgliedskarten</string>
     <string name="menuitem_eject_water">Wasser auswerfen</string>
@@ -2044,11 +2040,11 @@
     <string name="pref_title_upper_button_long_press_action">Obere Taste langes Drücken</string>
     <string name="accuracy_first">Priorität auf Genauigkeit</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">Zeitstempel des Abrufvorgangs kürzen</string>
-    <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Kürze die Zeitstempel der Abrufvorgänge auf Minuten. Deaktiviere diese Einstellung, um die Zeitstempel in Sekunden beizubehalten, wenn du Probleme beim Abrufen sehr kurzer Workouts hast.</string>
+    <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Zeitstempel auf Minuten runden. Deaktiviere die Option, um Sekunden beizubehalten, falls es beim Abruf sehr kurzer Workouts zu Problemen kommt.</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Geräteeinstellungen entfernen\?</string>
     <string name="debugactivity_confirm_remove_device_preferences">Dadurch werden die Geräteeinstellungen für alle angeschlossenen Geräte zurückgesetzt. Bist du sicher\?</string>
-    <string name="pref_summary_notification_media_ignores_application_list">Medienbenachrichtigungen vor der App-Liste verarbeiten. Wenn diese Voreinstellung nicht aktiviert ist, müssen Medien-Apps in der App-Liste zugelassen sein, damit die Mediensteuerung auf dem Gerät funktioniert.</string>
-    <string name="pref_title_notification_media_ignores_application_list">Medienbenachrichtigungen ignorieren die App-Liste</string>
+    <string name="pref_summary_notification_media_ignores_application_list">Medienbenachrichtigungen vor der App-Liste verarbeiten. Wenn diese Option deaktiviert ist, müssen Medien-Apps in der App-Liste erlaubt sein, damit die Mediensteuerung auf dem Gerät funktioniert.</string>
+    <string name="pref_title_notification_media_ignores_application_list">App-Liste für Medienbenachrichtigungen ignorieren</string>
     <string name="fw_upgrade_notice_amazfit_band7">Du bist dabei, die Firmware %s auf dein Amazfit Band 7 zu installieren.
 \n
 \nDein Band wird nach der Installation der .zip-Datei neu starten.
@@ -2293,13 +2289,13 @@
     <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
-    <string name="busy_task_fetch_sports_details">Abrufen von Sportdaten</string>
-    <string name="busy_task_fetch_sports_summaries">Abrufen von Sportübersichten</string>
-    <string name="busy_task_fetch_debug_logs">Abrufen von Debug-Protokollen</string>
-    <string name="busy_task_fetch_stress_data">Abrufen von Stressdaten</string>
-    <string name="busy_task_fetch_pai_data">Abrufen von PAI-Daten</string>
-    <string name="busy_task_fetch_spo2_data">Abrufen von SpO2-Daten</string>
-    <string name="busy_task_fetch_sleep_respiratory_rate_data">Abruf von Daten zur Atemfrequenz im Schlaf</string>
+    <string name="busy_task_fetch_sports_details">Abrufen der Sportdetails</string>
+    <string name="busy_task_fetch_sports_summaries">Abrufen der Sportberichte</string>
+    <string name="busy_task_fetch_debug_logs">Abrufen der Debug-Protokollen</string>
+    <string name="busy_task_fetch_stress_data">Abrufen der Stressdaten</string>
+    <string name="busy_task_fetch_pai_data">Abrufen der PAI-Daten</string>
+    <string name="busy_task_fetch_spo2_data">Abrufen der SpO2-Daten</string>
+    <string name="busy_task_fetch_sleep_respiratory_rate_data">Abrufen der Atemfrequenzdaten im Schlaf</string>
     <string name="error_no_bluetooth_scan">Zugriff auf den Bluetooth-Scan muss gewährt und aktiviert sein, damit der Scanvorgang ordnungsgemäß funktioniert</string>
     <string name="error_no_bluetooth_connect">Zugriff auf die Bluetooth-Verbindung muss gewährt und aktiviert sein, damit der Scanvorgang ordnungsgemäß funktioniert</string>
     <string name="permission_request">Mit %1$s kannst du Nachrichten und andere Daten von Android an dein Gerät senden. Dazu ist die Berechtigung für den Zugriff auf diese Daten erforderlich, und ohne diese Berechtigung funktioniert sie möglicherweise nicht richtig.
@@ -2478,7 +2474,7 @@
     <string name="laneLength">Bahnlänge</string>
     <string name="strokes">Anzahl Züge</string>
     <string name="menuitem_apps_shortcuts">Apps-Verknüpfungen</string>
-    <string name="pref_summary_notifications_ignore_work_profile">Benachrichtigungen von Apps im Arbeitsprofil nicht an die Uhr senden</string>
+    <string name="pref_summary_notifications_ignore_work_profile">Keine Benachrichtigungen von Apps im Arbeitsprofil an die Smartwatch senden</string>
     <string name="menuitem_thermometer">Thermometer</string>
     <string name="common_symbols">Häufige Symbole</string>
     <string name="devicetype_femometer_vinca2">Femometer Vinca II</string>
@@ -2553,8 +2549,8 @@
     <string name="silent_mode_normal_silent">Normal / Lautlos</string>
     <string name="silent_mode_vibrate_silent">Vibration / Lautlos</string>
     <string name="clap_hands_to_wakeup_device_summary">Erneutes Klatschen schaltet den Bildschirm aus</string>"
-    <string name="busy_task_fetch_statistics">Abrufen von Statistiken</string>
-    <string name="busy_task_fetch_temperature">Abrufen von Temperaturdaten</string>
+    <string name="busy_task_fetch_statistics">Abrufen der Statistiken</string>
+    <string name="busy_task_fetch_temperature">Abrufen der Temperaturdaten</string>
     <string name="prefs_wearmode">Tragemodus</string>
     <string name="zepp_os_watchface_starry_sky">Sternenhimmel</string>
     <string name="prefs_wena3_hint_background_sync">Erlaube Wena, Gadgetbridge in regelmäßigen Abständen aufzufordern, Aktivitätsdaten vom Gerät herunterzuladen</string>
@@ -2705,7 +2701,7 @@
     <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
     <string name="pref_force_connection_type_bt_classic">Bluetooth-Classic</string>
-    <string name="prefs_heartrate_alert_active_high_threshold">Schwellenwert für Alarm bei hohem Puls während hoher Aktivität</string>
+    <string name="prefs_heartrate_alert_active_high_threshold">Alarmgrenze Aktivitätspuls</string>
     <string name="hydration_dnd_summary">Deaktivieren von Hydrationswarnungen für ein bestimmtes Zeitintervall</string>
     <string name="activity_type_karate">Karate</string>
     <string name="activity_type_kendo">Kendo</string>
@@ -2836,7 +2832,7 @@
     <string name="weekstepschart_steps_a_week_or_month">Schritte pro Woche/Monat</string>
     <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate</string>
     <string name="devicetype_huawei_watchgt4">Huawei Watch GT 4</string>
-    <string name="busy_task_fetch_sports_details_interrupted">Das Abrufen von Sportdaten wurde unterbrochen</string>
+    <string name="busy_task_fetch_sports_details_interrupted">Abrufen der Sportdetails wurde unterbrochen</string>
     <string name="companion_pairing_request_title">Begleitendes Gerät</string>
     <string name="unbind_before_pair_title">Bereits gebunden</string>
     <string name="companion_pairing_request_description">Koppelst du dieses Gerät als Begleiter?
@@ -3217,7 +3213,7 @@
     <string name="dateformat_day_month">Tag, Monat</string>
     <string name="dateformat_month_day">Monat, Tag</string>
     <string name="activity_type_cardio">Kardiotraining</string>
-    <string name="busy_task_fetch_sleep_data">Schlaf-Daten werden abgerufen</string>
+    <string name="busy_task_fetch_sleep_data">Abrufen der Schlaf-Daten</string>
     <string name="pref_header_sound">Audio</string>
     <string name="activity_type_rem_sleep">REM-Schlaf</string>
     <string name="choose_device">Gerät auswählen</string>
@@ -3226,7 +3222,7 @@
     <string name="hr_resting">Erholung</string>
     <string name="hr_maximum">Maximum</string>
     <string name="hr_minimum">Minimum</string>
-    <string name="hr_average">⌀ Puls</string>
+    <string name="hr_average">Durchschnitt</string>
     <string name="minutes_75">75 Minuten</string>
     <string name="minutes_90">90 Minuten</string>
     <string name="minutes_120">120 Minuten</string>
@@ -3270,7 +3266,7 @@
     <string name="pref_title_sync_birthdays">Geburtstage synchronisieren</string>
     <string name="activity_type_spinning">Spinning</string>
     <string name="devicetype_huawei_watchgt5">Huawei Watch GT 5 (Pro)</string>
-    <string name="busy_task_fetch_hrv_data">Abrufen von HRV-Daten</string>
+    <string name="busy_task_fetch_hrv_data">Abrufen der HRV-Daten</string>
     <string name="activity_type_softball_slow_pitch">Slowpitch-Softball</string>
     <string name="activity_type_disc_golf">Discgolf</string>
     <string name="activity_type_snorkeling">Schnorcheln</string>
@@ -3871,7 +3867,7 @@
     <string name="ultrahuman_unhandled_error_response">Antwortcode 0x%x für Operation 0x%x konnte nicht verarbeitet werden</string>
     <string name="vertical_oscillation">Vertikale Oszillation</string>
     <string name="average_power_standing">Durchschnittliche Leistung (Stehen)</string>
-    <string name="earfun_audio_codec_hint"><b>LDAC</b> ist ein hochauflösender Codec für überragende Klangqualität.\n<b>aptX</b> sorgt für geringe Latenz und hochauflösendes Audio-Streaming.\n<b>aptX Adaptive</b> passt die Bitrate dynamisch an Inhalt und Verbindung an.\n<b>aptX Adaptive Lossless</b> liefert verlustfreies Audio für hochauflösende Musik.\n<b>Stabile Verbindung</b> minimiert Ton-Aussetzer und Störungen.</string>
+    <string name="earfun_audio_codec_hint"><b>LDAC</b> ist ein High-Resolution-Codec für herausragende Klangqualität..\n<b>aptX</b> sorgt für geringe Latenz und hochauflösendes Audio-Streaming.\n<b>aptX Adaptive</b> passt die Bitrate dynamisch an Inhalt und Verbindung an.\n<b>aptX Adaptive Lossless</b> Verlustfreies Audio für hochauflösende Musik.\n<b>Stabile Verbindung</b> minimiert Tonstottern und Aussetzer.</string>
     <string name="earfun_change_device_name_confirm_message">1) Sobald du den Namen aktualisiert hast, lege die Ohrhörer in das Ladeetui, schließe den Deckel und warte etwa 10 Sekunden.\n\n2) Entferne in den Geräteeinstellungen das ursprüngliche Gerät.\n\n3) Öffne das Ladeetui erneut, suche nach dem Gerät – der neue Name sollte nun erfolgreich übernommen worden sein.</string>
     <string name="earfun_reboot_confirm_message">Nachdem diese Einstellung übernommen wurde, startet dein Gerät neu. Sobald es wieder eingeschaltet ist, wechsle zum Bildschirm ‚Geräte‘ und stelle die Verbindung erneut her.</string>
     <string name="earfun_voice_prompt_volume">Sprachansage-Lautstärke</string>
