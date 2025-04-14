@@ -19,6 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones;
 
 import androidx.annotation.NonNull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -45,6 +48,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.Sony
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceCoordinator {
+    private static final Logger LOG = LoggerFactory.getLogger(SonyHeadphonesCoordinator.class);
+
     @Override
     public String getManufacturer() {
         return "Sony";
@@ -73,9 +78,11 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
     public int getBatteryCount(final GBDevice device) {
         if (supports(device, SonyHeadphonesCapabilities.BatterySingle)) {
             if (supports(device, SonyHeadphonesCapabilities.BatteryDual) || supports(device, SonyHeadphonesCapabilities.BatteryDual2)) {
-                throw new IllegalStateException("A device can't have both single and dual battery");
+                LOG.error("A device can't have both single and dual battery");
+                return 0;
             } else if (supports(device, SonyHeadphonesCapabilities.BatteryCase)) {
-                throw new IllegalStateException("Devices with single battery + case are not supported by the protocol");
+                LOG.error("Devices with single battery + case are not supported by the protocol");
+                return 0;
             }
         }
 
