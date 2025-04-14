@@ -1853,7 +1853,7 @@
     <string name="menuitem_workout_status">Trainingsstatus</string>
     <string name="pref_header_heartrate_sleep">Schlaf</string>
     <string name="pref_header_heartrate_allday">Ganztägige Überwachung</string>
-    <string name="pref_header_heartrate_alerts">Pulsalarme</string>
+    <string name="pref_header_heartrate_alerts">Pulsalarme (nur bei 1-Minuten-Messung)</string>
     <string name="pref_header_stress">Stress</string>
     <string name="pref_header_spo2">Blutsauerstoff</string>
     <string name="pref_screen_brightness">Bildschirmhelligkeit</string>
