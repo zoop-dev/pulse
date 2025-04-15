@@ -133,15 +133,12 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             byte[] data = new byte[payload.length - 1];
             System.arraycopy(payload, 1, data, 0, data.length);
 
-            // The watch uses the GMT+8 timezone internally. The sleep identifiers below are based
-            // on that timezone. That means the watch thinks "yesterday" starts at a different
-            // moment than in our current locale.
-            long currentTime = System.currentTimeMillis();
-            final TimeZone localTZ = Calendar.getInstance().getTimeZone();
-            int hourDifference = (MoyoungConstants.WATCH_INTERNAL_TIME_ZONE.getOffset(currentTime) - localTZ.getOffset(currentTime)) / (1000 * 60 * 60);
-            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            // For sleep, the watch considers 20h/8pm and later to be "yesterday".
+            // So we introduce daysAgoOffset to account for that.
+            final int sleepOffsetHours = 4;
+            final int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             int daysAgoOffset = 0;
-            if (currentHour + hourDifference >= 24) daysAgoOffset = 1;
+            if (currentHour + sleepOffsetHours >= 24) daysAgoOffset = 1;
 
             if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS) {
                 LOG.info("2 DAYS AGO STEPS data: " + Logging.formatBytes(data));
