@@ -770,7 +770,7 @@ public class NotificationListener extends NotificationListenerService {
                 // Get the last message (assumed to be the most recent)
                 NotificationCompat.MessagingStyle.Message lastMessage = messages.get(messages.size() - 1);
 
-                if (supportedPictureMimeTypes.contains(lastMessage.getDataMimeType())) {
+                if (supportedPictureMimeTypes.contains(lastMessage.getDataMimeType()) && lastMessage.getDataUri() != null) {
                     ContentResolver contentResolver = getContentResolver();
                     try (Cursor cursor = contentResolver.query(lastMessage.getDataUri(), null, null, null, null)) {
                         if (cursor != null && cursor.moveToFirst()) {
@@ -778,7 +778,7 @@ public class NotificationListener extends NotificationListenerService {
                             notificationSpec.picturePath = cursor.getString(dataIndex);
                         }
                     } catch (Exception e) {
-                        LOG.error(e.getMessage());
+                        LOG.error("Failed to get notification picture", e);
                     }
                 }
             }
@@ -786,15 +786,17 @@ public class NotificationListener extends NotificationListenerService {
 
         if (extras.containsKey(NotificationCompat.EXTRA_PICTURE)) {
             final Bitmap bmp = (Bitmap) extras.get(NotificationCompat.EXTRA_PICTURE);
-            File pictureFile = new File(this.notificationPictureCacheDirectory, String.valueOf(notificationSpec.getId()));
+            if (bmp != null) {
+                File pictureFile = new File(this.notificationPictureCacheDirectory, String.valueOf(notificationSpec.getId()));
 
-            try (FileOutputStream fos = new FileOutputStream(pictureFile)) {
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                notificationSpec.picturePath = pictureFile.getAbsolutePath();
-            } catch (IOException e) {
-                LOG.error("Failed to save picture to notification cache: {}", e.getMessage());
-            } finally {
-                bmp.recycle();
+                try (FileOutputStream fos = new FileOutputStream(pictureFile)) {
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    notificationSpec.picturePath = pictureFile.getAbsolutePath();
+                } catch (IOException e) {
+                    LOG.error("Failed to save picture to notification cache: {}", e.getMessage());
+                } finally {
+                    bmp.recycle();
+                }
             }
         }
 
@@ -833,12 +835,7 @@ public class NotificationListener extends NotificationListenerService {
             if (mSetMusicInfoRunnable != null) {
                 mHandler.removeCallbacks(mSetMusicInfoRunnable);
             }
-            mSetMusicInfoRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    GBApplication.deviceService().onSetMusicInfo(musicSpec);
-                }
-            };
+            mSetMusicInfoRunnable = () -> GBApplication.deviceService().onSetMusicInfo(musicSpec);
             mHandler.postDelayed(mSetMusicInfoRunnable, 100);
 
             if (stateSpec != null) {
@@ -1104,7 +1101,7 @@ public class NotificationListener extends NotificationListenerService {
 
         NotificationType type = AppNotificationType.getInstance().get(source);
         //ignore notifications marked as LocalOnly https://developer.android.com/reference/android/app/Notification.html#FLAG_LOCAL_ONLY
-        //some Apps always mark their notifcations as read-only
+        //some Apps always mark their notifications as read-only
         if (NotificationCompat.getLocalOnly(notification) &&
                 type != NotificationType.WECHAT &&
                 type != NotificationType.TELEGRAM &&
@@ -1168,9 +1165,9 @@ public class NotificationListener extends NotificationListenerService {
 
     /**
      * Get the notification color that should be used for this Pebble notification.
-     *
+     * <p>
      * Note that this method will *not* edit the NotificationSpec passed in. It will only evaluate the PebbleColor.
-     *
+     * <p>
      * See Issue #815 on GitHub to see how notification colors are set.
      *
      * @param notificationSpec The NotificationSpec to read from.
@@ -1218,6 +1215,7 @@ public class NotificationListener extends NotificationListenerService {
             return intent;
         }
 
+        @Nullable
         public RemoteInput getRemoteInput() {
             return remoteInput;
         }
