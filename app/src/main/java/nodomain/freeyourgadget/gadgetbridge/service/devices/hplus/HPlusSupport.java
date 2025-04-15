@@ -66,11 +66,15 @@ public class HPlusSupport extends AbstractBTLEDeviceSupport {
     public BluetoothGattCharacteristic ctrlCharacteristic = null;
     public BluetoothGattCharacteristic measureCharacteristic = null;
     private HPlusHandlerThread syncHelper;
-    private DeviceType deviceType = DeviceType.UNKNOWN;
+    private final DeviceType deviceType;
 
-    public HPlusSupport(DeviceType type) {
+    public HPlusSupport() {
+        this(DeviceType.HPLUS);
+    }
+
+    protected HPlusSupport(final DeviceType type) {
         super(LOG);
-        LOG.info("HPlusSupport Instance Created");
+        LOG.info("HPlusSupport Instance created for {}", type);
         deviceType = type;
 
         addSupportedService(HPlusConstants.UUID_SERVICE_HP);

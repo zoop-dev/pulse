@@ -253,7 +253,6 @@ public class HPlusCoordinator extends AbstractBLEDeviceCoordinator {
         return HPlusSupport.class;
     }
 
-
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_hplus;
@@ -270,4 +269,3 @@ public class HPlusCoordinator extends AbstractBLEDeviceCoordinator {
         return R.drawable.ic_device_hplus_disabled;
     }
 }
-    

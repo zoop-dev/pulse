@@ -21,27 +21,21 @@ package nodomain.freeyourgadget.gadgetbridge.devices.hplus;
 * @author João Paulo Barraca &lt;jpbarraca@gmail.com&gt;
 */
 
-
 import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.hplus.MakibesF68Support;
 
 /**
  * Pseudo Coordinator for the Makibes F68, a sub type of the HPLUS devices
  */
 public class MakibesF68Coordinator extends HPlusCoordinator {
-
-    @NonNull
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         String name = candidate.getName();
-        if(name != null && name.startsWith("SPORT") && !name.startsWith("SPORTAGE")){
-            return true;
-        }
-
-        return false;
+        return name != null && name.startsWith("SPORT") && !name.startsWith("SPORTAGE");
     }
 
     @Override
@@ -52,5 +46,11 @@ public class MakibesF68Coordinator extends HPlusCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_makibes_f68;
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+        return MakibesF68Support.class;
     }
 }

@@ -21,14 +21,13 @@ package nodomain.freeyourgadget.gadgetbridge.devices.hplus;
 * @author Alejandro Ladera Chamorro &lt;11555126+tiparega@users.noreply.github.com&gt;
 */
 
-
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.hplus.Q8Support;
 
 /**
  * Pseudo Coordinator for the Q8, a sub type of the HPLUS devices
@@ -47,5 +46,11 @@ public class Q8Coordinator extends HPlusCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_q8;
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+        return Q8Support.class;
     }
 }

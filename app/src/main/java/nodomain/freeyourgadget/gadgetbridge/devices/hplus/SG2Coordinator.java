@@ -21,14 +21,13 @@ import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.hplus.SG2Support;
 
 /**
- * Pseudo Coordinator for the  Lemfo SG2, a sub type of the HPLUS devices
+ * Pseudo Coordinator for the Lemfo SG2, a sub type of the HPLUS devices
  */
 public class SG2Coordinator extends HPlusCoordinator {
-
-    @NonNull
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         String name = candidate.getName();
@@ -65,5 +64,11 @@ public class SG2Coordinator extends HPlusCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_sg2;
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+        return SG2Support.class;
     }
 }
