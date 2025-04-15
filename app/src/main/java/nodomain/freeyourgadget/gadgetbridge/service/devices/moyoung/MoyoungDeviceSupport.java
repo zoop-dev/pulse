@@ -1127,13 +1127,18 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 sample.setUserId(userId);
             }
 
+            LOG.debug("Will persist {} HR samples", hrSamples.size());
             sampleProvider.addSamples(hrSamples);
         } catch (Exception e) {
             LOG.error("Error acquiring database for recording heart rate samples", e);
         }
 
         // Request next batch
-        if (packetIndex >= 7) return;  // 8 packets = 2 days, the maximum
+        if (packetIndex >= 7) {
+            // 8 packets = 2 days, the maximum
+            LOG.info("Last HR history packet received, HR sync finished.");
+            return;
+        }
         try {
             TransactionBuilder builder = performInitialized("FetchHROperation");
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[]{(byte) (packetIndex+1)}));
