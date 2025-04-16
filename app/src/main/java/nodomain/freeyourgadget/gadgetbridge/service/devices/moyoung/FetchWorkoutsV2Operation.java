@@ -142,7 +142,11 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
         LOG.info("Decoding workout HR packet");
         if (data.length < 5) {
             LOG.warn("Not enough data in workout HR packet, stopping fetch");
+            receivedWorkouts++;
             updateProgressAndCheckFinish();
+            if (receivedWorkouts < totalWorkouts) {
+                requestWorkoutDetails(receivedWorkouts);
+            }
             return;
         }
         ByteBuffer buf = ByteBuffer.wrap(data);
