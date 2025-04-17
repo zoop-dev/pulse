@@ -131,8 +131,6 @@ android {
     sourceSets {
         main {
             res.srcDirs += "build/generated/res/changelog"
-            java.srcDirs += "${protobuf.generatedFilesBaseDir}"
-            java.srcDirs += "build/generated/source/buildConfig"
         }
     }
 
