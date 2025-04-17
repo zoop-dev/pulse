@@ -48,8 +48,8 @@ public class MoondropSpaceTravelCoordinator extends AbstractBLClassicDeviceCoord
     }
 
     @Override
-    public int getBatteryCount(final GBDevice device) {
-        return 0;
+    public boolean supportsOSBatteryLevel() {
+        return true;
     }
 
     @Override
