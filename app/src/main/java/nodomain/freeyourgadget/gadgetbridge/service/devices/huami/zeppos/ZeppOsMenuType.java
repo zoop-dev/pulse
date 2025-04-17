@@ -75,6 +75,12 @@ public class ZeppOsMenuType {
         put("00000101", "offline_voice");
         put("00000102", "flashlight");
         put("000FFD39", "hrv");
+        put("000FC452", "bluetooth_scale_assistant");
+        put("000F425B", "calculator");
+        put("000F5D0A", "running_calculator");
+        put("000F4258", "real_time_heart_rate");
+        put("000F4263", "watch_storage_space");
+        put("000F4259", "water_time");
     }};
 
     public static final Map<String, String> shortcutsNameLookup = new HashMap<String, String>() {{

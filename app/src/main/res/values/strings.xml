@@ -2023,6 +2023,12 @@
     <string name="menuitem_apps_shortcuts">Apps shortcuts</string>
     <string name="menuitem_map">Map</string>
     <string name="menuitem_heart_rate_push">Heart Rate Push</string>
+    <string name="menuitem_bluetooth_scale_assistant">Bluetooth Scale Assistant</string>
+    <string name="menuitem_calculator">Calculator</string>
+    <string name="menuitem_running_calculator">Running Calculator</string>
+    <string name="menuitem_real_time_heart_rate">Real-Time Heart Rate</string>
+    <string name="menuitem_watch_storage_space">Watch Storage Space</string>
+    <string name="menuitem_water_time">Water Time</string>
     <string name="menuitem_breathing">Breathing</string>
     <string name="menuitem_cycles">Cycle Tracking</string>
     <string name="menuitem_alarm">Alarm</string>

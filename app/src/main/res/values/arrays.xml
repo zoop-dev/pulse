@@ -998,6 +998,12 @@
         <item>@string/hrv</item>
         <item>@string/menuitem_map</item>
         <item>@string/menuitem_heart_rate_push</item>
+        <item>@string/menuitem_bluetooth_scale_assistant</item>
+        <item>@string/menuitem_calculator</item>
+        <item>@string/menuitem_running_calculator</item>
+        <item>@string/menuitem_real_time_heart_rate</item>
+        <item>@string/menuitem_watch_storage_space</item>
+        <item>@string/menuitem_water_time</item>
         <!-- dummy item -->
         <item>@string/menuitem_more</item>
     </string-array>
