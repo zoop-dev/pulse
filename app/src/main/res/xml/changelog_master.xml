@@ -1,5 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.85.0" versioncode="238">
+        <change>Initial support for 1MORE SonoFlow headphones</change>
+        <change>Initial support for Amazfit Bip 6</change>
+        <change>Initial support for EarFun Air S and Air Pro 4 headphones</change>
+        <change>Initial support for Garmin Instinct 3</change>
+        <change>Initial support for Generic Audio BT Devices</change>
+        <change>Initial support for Honor Watch 4 / 4 Pro</change>
+        <change>Initial support for Huawei Band 10</change>
+        <change>Initial support for Huawei FreeBuds Pro</change>
+        <change>Initial support for Redmi Buds 3 Pro</change>
+        <change>Experimental support for Ultrahuman Air smart ring</change>
+        <change>Amazfit Active 2: Fix device discovery, improved support</change>
+        <change>Amazfit Bip 3: Add workout gps settings</change>
+        <change>Amazfit GTR2e: Enable PAI support</change>
+        <change>Bangle.js: Fix cached messages not send after reconnect</change>
+        <change>Bangle.js: Fix music sometimes not being sent to the watch</change>
+        <change>Bangle.js: Missed call notifications</change>
+        <change>Bangle.js: Send phone music volume level to watch</change>
+        <change>CMF Watch Pro: Allow enable of bluetooth calls</change>
+        <change>Fossil/Skagen Hybrids: Fix hidden upload button in app manager</change>
+        <change>Garmin: Add nap support</change>
+        <change>Garmin: Allow manual import of activity files</change>
+        <change>Garmin: Fix fit file checksum computation</change>
+        <change>Garmin: Fix weight unit in strength training sets</change>
+        <change>Garmin: Parse extended running and cycling workout data</change>
+        <change>Garmin: Resolve names for services and characteristics</change>
+        <change>Huami: Delete some missing tables when deleting a device</change>
+        <change>Huami: Fix sending air quality index</change>
+        <change>Huawei Freebuds 5i: Fix crash on device preferences</change>
+        <change>Huawei: Add stress calibration and sync</change>
+        <change>Huawei: Add support for find device</change>
+        <change>Huawei: Add trail run activity</change>
+        <change>Huawei: Fix delete notifications for LE devices</change>
+        <change>Huawei: Fix some crashes</change>
+        <change>Huawei: Fix workout average pace calculation</change>
+        <change>Huawei: Improve database performance</change>
+        <change>Huawei: Increase user ID length to 19 characters</change>
+        <change>Huawei: Real-time heart rate mode and low/high alerts</change>
+        <change>Lenovo Watch X (Plus): Fix language setting</change>
+        <change>Mi Band 8: Parse elliptical and rowing workouts</change>
+        <change>Pebble: Fix all day events timezone</change>
+        <change>Xiaomi-protobuf: Make GPS timeout configurable</change>
+        <change>Xiaomi-protobuf: Map some missing workout types</change>
+        <change>Zepp OS 3.5+: Fetch sleep stages and score</change>
+        <change>Zepp OS 3+: Fix screenshots</change>
+        <change>Zepp OS 4: Fix notification icons</change>
+        <change>Zepp OS: Allow 32-character hex key without 0x prefix</change>
+        <change>Zepp OS: Allow upload of UIHH AGPS bundles</change>
+        <change>Zepp OS: Fetch body temperature, HR stats, HRV, sleep respiratory rate</change>
+        <change>Zepp OS: Fix AGPS section not available on some devices</change>
+        <change>Zepp OS: Fix parsing of PAI values after factory reset</change>
+        <change>Zepp OS: Fix temperature and distance unit configuration</change>
+        <change>Zepp OS: Map all missing activity kinds</change>
+        <change>Zepp OS: Maps upload</change>
+        <change>Zepp OS: Music upload (unstable)</change>
+        <change>Zepp OS: Request high MTU on connection</change>
+        <change>Zepp OS: Respect calendar sync setting</change>
+        <change>Zepp OS: Sync audio recordings (voice memos)</change>
+        <change>Add page with all open-source licenses</change>
+        <change>Charts: Add sleep HR average</change>
+        <change>Fix app crash when switching between Android user profiles</change>
+        <change>Fix battery full notifications for devices that do not report charging state</change>
+        <change>Fix icon on low battery level</change>
+        <change>Fix ignoring low priority notifications on Android 13+</change>
+        <change>Fix some preference summaries not getting updated</change>
+        <change>Improve idle and stale media session handling</change>
+        <change>Make alarm notifications respect app whitelist/blacklist</change>
+        <change>Reduce log spam from browsing preferences</change>
+        <change>Workouts: Offline maps</change>
+    </release>
     <release version="0.84.0" versioncode="237">
         <change>Initial support for Even G1 Smart Glasses</change>
         <change>Initial support for Garmin Fenix 7S Pro, Forerunner 45 / 735XT, Instinct E / Lily 2 Active</change>

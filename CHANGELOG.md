@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next version (WIP)
+#### 0.85.0
 
 * Initial support for 1MORE SonoFlow headphones
 * Initial support for Amazfit Bip 6
