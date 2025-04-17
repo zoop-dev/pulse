@@ -38,12 +38,13 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.vesc.VescCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
 public class VescDeviceSupport extends VescBaseDeviceSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(VescDeviceSupport.class);
+
     BluetoothGattCharacteristic serialWriteCharacteristic, serialReadCharacteristic;
 
     public static final String COMMAND_SET_RPM = "nodomain.freeyourgadget.gadgetbridge.vesc.command.SET_RPM";
@@ -56,17 +57,12 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
 
     public static final String ACTION_GOT_VALUES = "nodomain.freeyourgadget.gadgetbridge.vesc.action.GOT_VALUES";
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final ByteBuffer responseBuffer = ByteBuffer.allocate(100);
 
-    private DeviceType deviceType;
-
-    private ByteBuffer responseBuffer = ByteBuffer.allocate(100);
-
-    public VescDeviceSupport(DeviceType type) {
+    public VescDeviceSupport() {
         super();
         responseBuffer.order(ByteOrder.BIG_ENDIAN);
 
-        deviceType = type;
         addSupportedService(UUID.fromString(VescCoordinator.UUID_SERVICE_SERIAL_NRF));
         addSupportedService(UUID.fromString(VescCoordinator.UUID_SERVICE_SERIAL_HM10));
     }
@@ -78,7 +74,7 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        logger.debug("initializing device");
+        LOG.debug("initializing device");
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
 
@@ -116,7 +112,7 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
         if (characteristic != serialReadCharacteristic) return;
 
         responseBuffer.put(characteristic.getValue());
-        short length = 0;
+        short length;
         int oldPosition = responseBuffer.position();
         responseBuffer.position(0);
         byte lengthType = responseBuffer.get();
@@ -247,6 +243,10 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
     BroadcastReceiver commandReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() == null) {
+                LOG.warn("Null action, ignoring");
+                return;
+            }
             if (intent.getAction().equals(COMMAND_SET_RPM)) {
                 VescDeviceSupport.this.setRPM(
                         intent.getIntExtra(EXTRA_RPM, 0)
