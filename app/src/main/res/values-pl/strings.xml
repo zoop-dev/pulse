@@ -4029,4 +4029,10 @@
     <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
     <string name="map_theme_motorider">Motorider</string>
     <string name="map_theme_osmarender">Osmarender</string>
+    <string name="menuitem_calculator">Kalkulator</string>
+    <string name="menuitem_running_calculator">Kalkulator biegowy</string>
+    <string name="menuitem_real_time_heart_rate">Tętno w czasie rzeczywistym</string>
+    <string name="menuitem_watch_storage_space">Przestrzeń dyskowa zegarka</string>
+    <string name="menuitem_water_time">Czas wody</string>
+    <string name="menuitem_bluetooth_scale_assistant">Asystent wagi Bluetooth</string>
 </resources>
