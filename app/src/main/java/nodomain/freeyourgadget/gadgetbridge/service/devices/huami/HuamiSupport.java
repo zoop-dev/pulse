@@ -205,8 +205,6 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_TIMEFORMAT;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_USER_FITNESS_GOAL_NOTIFICATION;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_WEARLOCATION;
-import static nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service.WORKOUT_GPS_FLAG_POSITION;
-import static nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service.WORKOUT_GPS_FLAG_STATUS;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst.PREF_BUTTON_ACTION_SELECTION_BROADCAST;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst.PREF_BUTTON_ACTION_SELECTION_FITNESS_APP_START;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst.PREF_BUTTON_ACTION_SELECTION_FITNESS_APP_STOP;
@@ -1824,7 +1822,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
      */
     private long lastPhoneGpsSent = 0;
 
-    protected void onWorkoutOpen(final boolean needsGps, final ActivityKind activityKind) {
+    private void onWorkoutOpen(final boolean needsGps, final ActivityKind activityKind) {
         this.workoutNeedsGps = needsGps;
         this.workoutActivityKind = activityKind;
 
@@ -1841,7 +1839,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         }
     }
 
-    protected void onWorkoutStart() {
+    private void onWorkoutStart() {
         final boolean startOnPhone = HuamiCoordinator.getWorkoutStartOnPhone(getDevice().getAddress());
 
         if (workoutNeedsGps && startOnPhone) {
@@ -1851,7 +1849,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         }
     }
 
-    protected void onWorkoutEnd() {
+    private void onWorkoutEnd() {
         final boolean startOnPhone = HuamiCoordinator.getWorkoutStartOnPhone(getDevice().getAddress());
 
         GBLocationService.stop(getContext(), getDevice());
@@ -1907,12 +1905,12 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         sendPhoneGps(status, location);
     }
 
-    protected void sendPhoneGps(final HuamiPhoneGpsStatus status, final Location location) {
+    private void sendPhoneGps(final HuamiPhoneGpsStatus status, final Location location) {
         if (characteristicChunked == null || location == null) {
             return;
         }
 
-        final byte[] locationBytes = encodePhoneGpsPayload(status, location);
+        final byte[] locationBytes = HuamiUtils.encodePhoneGpsPayload(status, location);
 
         final ByteBuffer buf = ByteBuffer.allocate(1 + locationBytes.length);
         buf.order(ByteOrder.LITTLE_ENDIAN);
@@ -1926,51 +1924,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         } catch (final IOException e) {
             LOG.error("Unable to send location", e);
         }
-    }
-
-    protected byte[] encodePhoneGpsPayload(final HuamiPhoneGpsStatus status, final Location location) {
-        int flags = 0;
-        int length = 4; // Start with just the flag bytes
-
-        if (status != null) {
-            flags |= WORKOUT_GPS_FLAG_STATUS;
-            length += 1;
-        }
-
-        if (location != null) {
-            flags |= WORKOUT_GPS_FLAG_POSITION;
-            length += 31;
-        }
-
-        final ByteBuffer buf = ByteBuffer.allocate(length);
-        buf.order(ByteOrder.LITTLE_ENDIAN);
-
-        buf.putInt(flags);
-
-        if (status != null) {
-            buf.put(status.getCode());
-        }
-
-        if (location != null) {
-            buf.putInt((int) (location.getLongitude() * 3000000.0));
-            buf.putInt((int) (location.getLatitude() * 3000000.0));
-            buf.putInt((int) location.getSpeed() * 10);
-
-            buf.putInt((int) (location.getAltitude() * 100));
-            buf.putLong(location.getTime());
-
-            // Seems to always be ff ?
-            buf.putInt(0xffffffff);
-
-            // Not sure what this is, maybe bearing? It changes while moving, but
-            // doesn't seem to be needed on the Mi Band 5
-            buf.putShort((short) 0x00);
-
-            // Seems to always be 0 ?
-            buf.put((byte) 0x00);
-        }
-
-        return buf.array();
     }
 
     @Override

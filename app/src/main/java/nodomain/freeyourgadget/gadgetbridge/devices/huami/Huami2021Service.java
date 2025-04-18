@@ -21,7 +21,6 @@ public class Huami2021Service {
      * Endpoints for 2021 chunked protocol
      */
     public static final short CHUNKED2021_ENDPOINT_STEPS = 0x0016;
-    public static final short CHUNKED2021_ENDPOINT_WORKOUT = 0x0019;
     public static final short CHUNKED2021_ENDPOINT_HEARTRATE = 0x001d;
     public static final short CHUNKED2021_ENDPOINT_AUTH = 0x0082;
     public static final short CHUNKED2021_ENDPOINT_COMPAT = 0x0090;
@@ -46,17 +45,6 @@ public class Huami2021Service {
     public static final byte HEART_RATE_REALTIME_MODE_STOP = 0x00;
     public static final byte HEART_RATE_REALTIME_MODE_START = 0x01;
     public static final byte HEART_RATE_REALTIME_MODE_CONTINUE = 0x02;
-
-    /**
-     * Workout, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_WORKOUT}.
-     */
-    public static final byte WORKOUT_CMD_GPS_LOCATION = 0x04;
-    public static final byte WORKOUT_CMD_APP_OPEN = 0x20;
-    public static final byte WORKOUT_CMD_STATUS = 0x11;
-    public static final int WORKOUT_GPS_FLAG_STATUS = 0x1;
-    public static final int WORKOUT_GPS_FLAG_POSITION = 0x40000;
-    public static final byte WORKOUT_STATUS_START = 0x01;
-    public static final byte WORKOUT_STATUS_END = 0x04;
 
     /**
      * Raw sensor control.

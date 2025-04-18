@@ -16,9 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami;
 
+import android.location.Location;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -89,5 +93,54 @@ public class HuamiUtils {
         }
 
         return onOff;
+    }
+
+    private static final int GPS_FLAG_STATUS = 0x1;
+    private static final int GPS_FLAG_POSITION = 0x40000;
+
+    public static byte[] encodePhoneGpsPayload(final HuamiPhoneGpsStatus status, final Location location) {
+
+        int flags = 0;
+        int length = 4; // Start with just the flag bytes
+
+        if (status != null) {
+            flags |= GPS_FLAG_STATUS;
+            length += 1;
+        }
+
+        if (location != null) {
+            flags |= GPS_FLAG_POSITION;
+            length += 31;
+        }
+
+        final ByteBuffer buf = ByteBuffer.allocate(length);
+        buf.order(ByteOrder.LITTLE_ENDIAN);
+
+        buf.putInt(flags);
+
+        if (status != null) {
+            buf.put(status.getCode());
+        }
+
+        if (location != null) {
+            buf.putInt((int) (location.getLongitude() * 3000000.0));
+            buf.putInt((int) (location.getLatitude() * 3000000.0));
+            buf.putInt((int) location.getSpeed() * 10);
+
+            buf.putInt((int) (location.getAltitude() * 100));
+            buf.putLong(location.getTime());
+
+            // Seems to always be ff ?
+            buf.putInt(0xffffffff);
+
+            // Not sure what this is, maybe bearing? It changes while moving, but
+            // doesn't seem to be needed on the Mi Band 5
+            buf.putShort((short) 0x00);
+
+            // Seems to always be 0 ?
+            buf.put((byte) 0x00);
+        }
+
+        return buf.array();
     }
 }

@@ -26,8 +26,6 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE_FOLLOW_PHONE;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.SLEEP_HIGH_ACCURACY_MONITORING;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.TEMPERATURE_UNIT;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.TIME_FORMAT;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -87,7 +85,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -105,7 +102,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateA
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedDecoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedEncoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiPhoneGpsStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
@@ -145,6 +141,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWatchfaceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWeatherService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWifiService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorkoutService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorldClocksService;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -198,6 +195,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsWeatherService weatherService = new ZeppOsWeatherService(this);
     private final ZeppOsConnectionService connectionService = new ZeppOsConnectionService(this);
     private final ZeppOsWorldClocksService worldClocksService = new ZeppOsWorldClocksService(this);
+    private final ZeppOsWorkoutService workoutService = new ZeppOsWorkoutService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
     // FIXME: We need to keep track of which services are encrypted for now, since not all of them were yet migrated to a service
@@ -238,6 +236,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(vibrationPatternsService.getEndpoint(), vibrationPatternsService);
         put(weatherService.getEndpoint(), weatherService);
         put(worldClocksService.getEndpoint(), worldClocksService);
+        put(workoutService.getEndpoint(), workoutService);
     }};
 
     public ZeppOsSupport() {
@@ -485,16 +484,8 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    protected void sendPhoneGps(final HuamiPhoneGpsStatus status, final Location location) {
-        final byte[] locationBytes = encodePhoneGpsPayload(status, location);
-
-        final ByteBuffer buf = ByteBuffer.allocate(2 + locationBytes.length);
-        buf.order(ByteOrder.LITTLE_ENDIAN);
-        buf.put(WORKOUT_CMD_GPS_LOCATION);
-        buf.put((byte) 0x00); // ?
-        buf.put(locationBytes);
-
-        writeToChunked2021("send phone gps", CHUNKED2021_ENDPOINT_WORKOUT, buf.array(), true);
+    public void onSetGpsLocation(final Location location) {
+        workoutService.onSetGpsLocation(location);
     }
 
     @Override
@@ -1183,9 +1174,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
         // TODO: Move these services to dedicated classes, so they get the encryption correctly
         switch (type) {
-            case CHUNKED2021_ENDPOINT_WORKOUT:
-                handle2021Workout(payload);
-                return;
             case CHUNKED2021_ENDPOINT_HEARTRATE:
                 handle2021HeartRate(payload);
                 return;
@@ -1200,44 +1188,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public void setEncryptionParameters(final int encryptedSequenceNr, final byte[] sharedSessionKey) {
         huami2021ChunkedEncoder.setEncryptionParameters(encryptedSequenceNr, sharedSessionKey);
         huami2021ChunkedDecoder.setEncryptionParameters(sharedSessionKey);
-    }
-
-    protected void handle2021Workout(final byte[] payload) {
-        switch (payload[0]) {
-            case WORKOUT_CMD_APP_OPEN:
-                final ZeppOsActivityType activityType = ZeppOsActivityType.fromCode(payload[3]);
-                final boolean workoutNeedsGps = (payload[2] == 1);
-                final ActivityKind activityKind;
-
-                if (activityType == null) {
-                    LOG.warn("Unknown workout activity type {}", String.format("0x%x", payload[3]));
-                    activityKind = ActivityKind.UNKNOWN;
-                } else {
-                    activityKind = activityType.toActivityKind();
-                }
-
-                LOG.info("Workout starting on band: {}, needs gps = {}", activityType, workoutNeedsGps);
-
-                onWorkoutOpen(workoutNeedsGps, activityKind);
-                return;
-            case WORKOUT_CMD_STATUS:
-                switch (payload[1]) {
-                    case WORKOUT_STATUS_START:
-                        LOG.info("Workout Start");
-                        onWorkoutStart();
-                        break;
-                    case WORKOUT_STATUS_END:
-                        LOG.info("Workout End");
-                        onWorkoutEnd();
-                        break;
-                    default:
-                        LOG.warn("Unexpected workout status {}", String.format("0x%02x", payload[1]));
-                        break;
-                }
-                return;
-            default:
-                LOG.warn("Unexpected workout byte {}", String.format("0x%02x", payload[0]));
-        }
     }
 
     protected void handle2021HeartRate(final byte[] payload) {
