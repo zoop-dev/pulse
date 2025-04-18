@@ -4010,4 +4010,10 @@
     <string name="devicetype_amazfit_bip6">华米 Bip 6</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>
+    <string name="menuitem_calculator">计算器</string>
+    <string name="menuitem_running_calculator">跑步计算器</string>
+    <string name="menuitem_real_time_heart_rate">实时心率</string>
+    <string name="menuitem_watch_storage_space">手表存储空间</string>
+    <string name="menuitem_water_time">水上时间</string>
+    <string name="menuitem_bluetooth_scale_assistant">蓝牙量表助手</string>
 </resources>
