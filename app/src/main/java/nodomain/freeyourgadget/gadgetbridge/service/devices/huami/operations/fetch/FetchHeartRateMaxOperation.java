@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiHeartRateMaxSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -47,12 +47,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchHeartRateMaxOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchHeartRateMaxOperation.class);
 
-    public FetchHeartRateMaxOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.MAX_HEART_RATE);
+    public FetchHeartRateMaxOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.MAX_HEART_RATE);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_hr_data);
     }
 

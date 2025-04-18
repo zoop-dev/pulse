@@ -37,7 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepRespiratoryRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -46,12 +46,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchSleepRespiratoryRateOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchSleepRespiratoryRateOperation.class);
 
-    public FetchSleepRespiratoryRateOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.SLEEP_RESPIRATORY_RATE);
+    public FetchSleepRespiratoryRateOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.SLEEP_RESPIRATORY_RATE);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_sleep_respiratory_rate_data);
     }
 

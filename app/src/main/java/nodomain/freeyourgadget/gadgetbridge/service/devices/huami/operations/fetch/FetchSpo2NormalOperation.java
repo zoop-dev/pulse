@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSpo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -47,12 +47,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchSpo2NormalOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchSpo2NormalOperation.class);
 
-    public FetchSpo2NormalOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.SPO2_NORMAL);
+    public FetchSpo2NormalOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.SPO2_NORMAL);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_spo2_data);
     }
 

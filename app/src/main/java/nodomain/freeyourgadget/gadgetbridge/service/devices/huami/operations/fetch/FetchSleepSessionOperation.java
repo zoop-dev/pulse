@@ -34,7 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiSleepSessionSampl
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiSleepSessionSample;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -43,12 +43,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchSleepSessionOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchSleepSessionOperation.class);
 
-    public FetchSleepSessionOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.SLEEP_SESSION);
+    public FetchSleepSessionOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.SLEEP_SESSION);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_sleep_data);
     }
 

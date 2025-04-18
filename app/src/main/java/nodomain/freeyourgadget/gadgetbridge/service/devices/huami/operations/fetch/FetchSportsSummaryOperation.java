@@ -35,9 +35,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -47,22 +46,21 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchSportsSummaryOperation extends AbstractFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchSportsSummaryOperation.class);
 
-    public FetchSportsSummaryOperation(HuamiSupport support, int fetchCount) {
-        super(support);
-        setName("fetching sport summaries");
+    public FetchSportsSummaryOperation(final HuamiFetcher fetcher, int fetchCount) {
+        super(fetcher, HuamiFetchDataType.SPORTS_SUMMARIES);
         this.fetchCount = fetchCount;
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_sports_summaries);
     }
 
     @Override
-    protected void startFetching(TransactionBuilder builder) {
-        LOG.info("start" + getName());
+    protected void startFetching() {
+        LOG.info("start {}", getName());
         final GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-        startFetching(builder, HuamiFetchDataType.SPORTS_SUMMARIES.getCode(), sinceWhen);
+        startFetching(HuamiFetchDataType.SPORTS_SUMMARIES.getCode(), sinceWhen);
     }
 
     @Override
@@ -106,8 +104,8 @@ public class FetchSportsSummaryOperation extends AbstractFetchOperation {
         }
 
         final AbstractHuamiActivityDetailsParser detailsParser = ((HuamiActivitySummaryParser) summaryParser).getDetailsParser(summary);
-        final FetchSportsDetailsOperation nextOperation = new FetchSportsDetailsOperation(summary, detailsParser, getSupport(), getLastSyncTimeKey(), fetchCount);
-        getSupport().getFetchOperationQueue().add(0, nextOperation);
+        final FetchSportsDetailsOperation nextOperation = new FetchSportsDetailsOperation(summary, detailsParser, fetcher, getLastSyncTimeKey(), fetchCount);
+        fetcher.getFetchOperationQueue().add(0, nextOperation);
 
         return true;
     }

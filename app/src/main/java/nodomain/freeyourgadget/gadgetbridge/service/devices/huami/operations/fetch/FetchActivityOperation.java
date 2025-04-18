@@ -41,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MiBandActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -54,13 +54,13 @@ public class FetchActivityOperation extends AbstractRepeatingFetchOperation {
 
     private final int sampleSize;
 
-    public FetchActivityOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.ACTIVITY);
-        this.sampleSize = support.getActivitySampleSize();
+    public FetchActivityOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.ACTIVITY);
+        this.sampleSize = fetcher.getActivitySampleSize();
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_activity_data);
     }
 

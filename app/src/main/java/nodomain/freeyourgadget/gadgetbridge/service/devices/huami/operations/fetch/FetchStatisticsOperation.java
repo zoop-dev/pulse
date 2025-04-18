@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 
 /**
  * An operation that fetches statistics from /storage/statistics/ (hm_statis_data* files). We do not
@@ -32,12 +32,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 public class FetchStatisticsOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchStatisticsOperation.class);
 
-    public FetchStatisticsOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.STATISTICS);
+    public FetchStatisticsOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.STATISTICS);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_statistics);
     }
 

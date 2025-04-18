@@ -496,6 +496,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsDebugLogs() {
+        return false;
+    }
+
+    @Override
     public boolean supportsActivityDataFetching() {
         return false;
     }

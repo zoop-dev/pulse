@@ -201,6 +201,11 @@ public interface DeviceCoordinator {
     int getLiveActivityFragmentPulseInterval();
 
     /**
+     * Whether the device supports fetching debug logs.
+     */
+    boolean supportsDebugLogs();
+
+    /**
      * Returns true if activity data fetching is supported by the device
      * (with this coordinator).
      * This enables the sync button in control center and the device can thus be asked to send the data

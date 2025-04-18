@@ -39,13 +39,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiFirmwareInfo;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.AbstractMiBandOperation;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class UpdateFirmwareOperation extends AbstractHuamiOperation {
+public class UpdateFirmwareOperation extends AbstractMiBandOperation<HuamiSupport> {
     private static final Logger LOG = LoggerFactory.getLogger(UpdateFirmwareOperation.class);
 
     protected final Uri uri;
@@ -64,6 +64,11 @@ public class UpdateFirmwareOperation extends AbstractHuamiOperation {
     @Override
     protected void enableNeededNotifications(TransactionBuilder builder, boolean enable) {
         builder.notify(fwCControlChar, enable);
+    }
+
+    @Override
+    protected void enableOtherNotifications(final TransactionBuilder builder, final boolean enable) {
+        // Nothing to do
     }
 
     @Override

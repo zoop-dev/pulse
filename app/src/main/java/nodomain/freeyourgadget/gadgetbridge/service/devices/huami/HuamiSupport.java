@@ -47,24 +47,18 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.zone.ZoneOffsetTransition;
-import java.time.zone.ZoneRules;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.SimpleTimeZone;
-import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -123,25 +117,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
-import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.AbstractFetchOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchHrvOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchSleepSessionOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchStatisticsOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchTemperatureOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchHeartRateManualOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchHeartRateMaxOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchHeartRateRestingOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchPaiOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchSleepRespiratoryRateOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchSpo2NormalOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchSportsSummaryOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchStressAutoOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchStressManualOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchDebugLogsOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorldClocksService;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
@@ -178,7 +156,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.common.SimpleNotific
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.actions.StopNotificationAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.miband2.Mi2NotificationStrategy;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.miband2.Mi2TextNotificationStrategy;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchActivityOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.init.InitOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.init.InitOperation2021;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation;
@@ -294,7 +271,8 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_WEIGHT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL;
 
-public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements Huami2021Handler {
+public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
+        implements Huami2021Handler, HuamiFetcher.HuamiFetchSupport {
 
     // We introduce key press counter for notification purposes
     private static int currentButtonActionId = 0;
@@ -344,7 +322,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     protected Huami2021ChunkedEncoder huami2021ChunkedEncoder;
     protected Huami2021ChunkedDecoder huami2021ChunkedDecoder;
 
-    private final LinkedList<AbstractFetchOperation> fetchOperationQueue = new LinkedList<>();
+    private final HuamiFetcher fetcher = new HuamiFetcher(this);
 
     protected SleepAsAndroidSender sleepAsAndroidSender;
     public HuamiSupport() {
@@ -374,6 +352,21 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         super.setContext(gbDevice, btAdapter, context);
         this.mediaManager = new MediaManager(context);
         this.sleepAsAndroidSender = new SleepAsAndroidSender(gbDevice);
+    }
+
+    @Override
+    public void setActivityNotifications(final boolean control, final boolean data) {
+        final TransactionBuilder builder = createTransactionBuilder("set activity notifications: " + control + " " + data);
+        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL), control);
+        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA), data);
+        builder.queue(getQueue());
+    }
+
+    @Override
+    public void writeActivityControl(final String name, final byte[] value) {
+        final TransactionBuilder builder = createTransactionBuilder(name);
+        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL), value);
+        builder.queue(getQueue());
     }
 
     @Override
@@ -492,11 +485,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
                 // 0 (DST offset?) Mi2
                 // k (tz) Mi2
         };
-    }
-
-    public Calendar fromTimeBytes(byte[] bytes) {
-        GregorianCalendar timestamp = BLETypeConversions.rawBytesToCalendar(bytes);
-        return timestamp;
     }
 
     public HuamiSupport setCurrentTimeWithService(TransactionBuilder builder) {
@@ -1567,76 +1555,8 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
     }
 
     @Override
-    public void onFetchRecordedData(int dataTypes) {
-        final HuamiCoordinator coordinator = getCoordinator();
-
-        if ((dataTypes & RecordedDataTypes.TYPE_ACTIVITY) != 0) {
-            this.fetchOperationQueue.add(new FetchActivityOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_GPS_TRACKS) != 0 && coordinator.supportsActivityTracks()) {
-            this.fetchOperationQueue.add(new FetchSportsSummaryOperation(this, 1));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_DEBUGLOGS) != 0 && coordinator.supportsDebugLogs()) {
-            this.fetchOperationQueue.add(new FetchDebugLogsOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_STRESS) != 0 && coordinator.supportsStressMeasurement()) {
-            this.fetchOperationQueue.add(new FetchStressAutoOperation(this));
-            this.fetchOperationQueue.add(new FetchStressManualOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_PAI) != 0 && coordinator.supportsPai()) {
-            this.fetchOperationQueue.add(new FetchPaiOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_SPO2) != 0 && coordinator.supportsSpo2(gbDevice)) {
-            this.fetchOperationQueue.add(new FetchSpo2NormalOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_HRV) != 0 && coordinator.supportsHrvMeasurement(gbDevice)) {
-            this.fetchOperationQueue.add(new FetchHrvOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_HEART_RATE) != 0 && coordinator.supportsHeartRateStats()) {
-            this.fetchOperationQueue.add(new FetchHeartRateManualOperation(this));
-            this.fetchOperationQueue.add(new FetchHeartRateMaxOperation(this));
-            this.fetchOperationQueue.add(new FetchHeartRateRestingOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_SLEEP_RESPIRATORY_RATE) != 0 && coordinator.supportsSleepRespiratoryRate()) {
-            this.fetchOperationQueue.add(new FetchSleepRespiratoryRateOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_TEMPERATURE) != 0 && coordinator.supportsTemperatureMeasurement(gbDevice)) {
-            this.fetchOperationQueue.add(new FetchTemperatureOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_SLEEP) != 0 && coordinator.supportsSleepScore(gbDevice)) {
-            this.fetchOperationQueue.add(new FetchSleepSessionOperation(this));
-        }
-
-        if ((dataTypes & RecordedDataTypes.TYPE_HUAMI_STATISTICS) != 0) {
-            this.fetchOperationQueue.add(new FetchStatisticsOperation(this));
-        }
-
-        final AbstractFetchOperation nextOperation = this.fetchOperationQueue.poll();
-        if (nextOperation != null) {
-            try {
-                nextOperation.perform();
-            } catch (final IOException e) {
-                LOG.error("Unable to fetch recorded data", e);
-            }
-        }
-    }
-
-    public AbstractFetchOperation getNextFetchOperation() {
-        return fetchOperationQueue.poll();
-    }
-
-    public LinkedList<AbstractFetchOperation> getFetchOperationQueue() {
-        return fetchOperationQueue;
+    public void onFetchRecordedData(final int dataTypes) {
+        fetcher.onFetchRecordedData(dataTypes);
     }
 
     @Override
@@ -2216,8 +2136,14 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         } else if (HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_DATA.equals(characteristicUUID)) {
             handleRawSensorData(characteristic.getValue());
             return true;
-        } else {
-            LOG.info("Unhandled characteristic changed: " + characteristicUUID);
+        } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA.equals(characteristicUUID)) {
+            fetcher.onActivityData(characteristic.getValue());
+            return true;
+        } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL.equals(characteristicUUID)) {
+            fetcher.onActivityControl(characteristic.getValue());
+            return true;
+        }  else {
+            LOG.warn("Unhandled characteristic changed: {}", characteristicUUID);
             logMessageContent(characteristic.getValue());
         }
 
@@ -4131,7 +4057,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport implements 
         return GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean("force_new_protocol", false);
     }
 
-    protected HuamiCoordinator getCoordinator() {
+    public HuamiCoordinator getCoordinator() {
         return (HuamiCoordinator) gbDevice.getDeviceCoordinator();
     }
 

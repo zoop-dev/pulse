@@ -19,11 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Map;
-
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
 
 public abstract class HuamiFirmwareInfo extends AbstractHuamiFirmwareInfo {

@@ -25,13 +25,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class FetchDebugLogsOperation extends AbstractFetchOperation {
@@ -39,18 +41,17 @@ public class FetchDebugLogsOperation extends AbstractFetchOperation {
 
     private FileOutputStream logOutputStream;
 
-    public FetchDebugLogsOperation(final HuamiSupport support) {
-        super(support);
-        setName("fetch debug logs");
+    public FetchDebugLogsOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.DEBUG_LOGS);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_debug_logs);
     }
 
     @Override
-    protected void startFetching(final TransactionBuilder builder) {
+    protected void startFetching() {
         File dir;
         try {
             dir = FileUtils.getExternalFilesDir();
@@ -69,7 +70,7 @@ public class FetchDebugLogsOperation extends AbstractFetchOperation {
             return;
         }
         final GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-        startFetching(builder, HuamiFetchDataType.DEBUG_LOGS.getCode(), sinceWhen);
+        startFetching(HuamiFetchDataType.DEBUG_LOGS.getCode(), sinceWhen);
     }
 
     @Override
@@ -105,5 +106,22 @@ public class FetchDebugLogsOperation extends AbstractFetchOperation {
         } catch (final IOException e) {
             LOG.error("could not write to output stream", e);
         }
+    }
+
+    @Override
+    protected GregorianCalendar getLastSuccessfulSyncTime() {
+        // Avoid going too further back - some devices have so many logs that it will take an
+        // incredibly long time to sync
+        final GregorianCalendar lastHour = BLETypeConversions.createCalendar();
+        lastHour.add(Calendar.HOUR, -1);
+
+        final long timeStampMillis = GBApplication.getDeviceSpecificSharedPrefs(fetcher.getDevice().getAddress()).getLong(getLastSyncTimeKey(), 0);
+        if (timeStampMillis != 0 && timeStampMillis > lastHour.getTimeInMillis()) {
+            GregorianCalendar calendar = BLETypeConversions.createCalendar();
+            calendar.setTimeInMillis(timeStampMillis);
+            return calendar;
+        }
+
+        return lastHour;
     }
 }

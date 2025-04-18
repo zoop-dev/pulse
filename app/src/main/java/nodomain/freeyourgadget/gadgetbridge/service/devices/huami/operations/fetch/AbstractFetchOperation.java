@@ -17,8 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch;
 
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
@@ -33,19 +32,15 @@ import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -53,11 +48,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 /**
  * An operation that fetches activity data.
  */
-public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
+public abstract class AbstractFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractFetchOperation.class);
 
-    protected BluetoothGattCharacteristic characteristicActivityData;
-    protected BluetoothGattCharacteristic characteristicFetch;
+    protected final HuamiFetcher fetcher;
+    protected final HuamiFetchDataType dataType;
+    protected final String name;
 
     protected Calendar startTimestamp;
 
@@ -68,96 +64,46 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
 
     protected boolean operationValid = true; // to mark operation failed midway (eg. out of sync)
 
-    public AbstractFetchOperation(final HuamiSupport support) {
-        super(support);
+    public AbstractFetchOperation(final HuamiFetcher fetcher, final HuamiFetchDataType dataType) {
+        this.fetcher = fetcher;
+        this.dataType = dataType;
+        this.name = "fetching " + dataType.name();
     }
 
-    @Override
-    protected void enableNeededNotifications(final TransactionBuilder builder, final boolean enable) {
-        if (!enable) {
-            // dynamically enabled, but always disabled on finish
-            builder.notify(characteristicFetch, false);
-            builder.notify(characteristicActivityData, false);
-        }
+    protected Context getContext() {
+        return fetcher.getContext();
     }
 
-    @Override
-    protected void doPerform() throws IOException {
-        startFetching();
+    public String getName() {
+        return this.name;
     }
 
-    protected void startFetching() throws IOException {
+    protected GBDevice getDevice() {
+        return fetcher.getDevice();
+    }
+
+    public void doPerform() {
         expectedDataLength = 0;
         lastPacketCounter = -1;
-
-        final TransactionBuilder builder = performInitialized(getName());
-        if (fetchCount == 0) {
-            builder.add(new SetDeviceBusyAction(getDevice(), taskDescription(), getContext()));
-        }
         fetchCount++;
 
-        // TODO: this probably returns null when device is not connected/initialized yet!
-        characteristicActivityData = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA);
-        builder.notify(characteristicActivityData, false);
-
-        characteristicFetch = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL);
-        builder.notify(characteristicFetch, true);
-
-        startFetching(builder);
-        builder.queue(getQueue());
+        startFetching();
     }
 
     /**
      * A task description, to display in notifications and device card.
      */
-    protected abstract String taskDescription();
+    public abstract String taskDescription();
 
-    protected abstract void startFetching(TransactionBuilder builder);
+    protected abstract void startFetching();
 
     protected abstract String getLastSyncTimeKey();
-
-    @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt,
-                                           final BluetoothGattCharacteristic characteristic) {
-        final UUID characteristicUUID = characteristic.getUuid();
-        if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA.equals(characteristicUUID)) {
-            handleActivityData(characteristic.getValue());
-            return true;
-        } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL.equals(characteristicUUID)) {
-            handleActivityMetadata(characteristic.getValue());
-            return true;
-        } else {
-            return super.onCharacteristicChanged(gatt, characteristic);
-        }
-    }
 
     /**
      * Handles the finishing of fetching the activity. This signals the actual end of this operation.
      */
     protected final void onOperationFinished() {
-        final AbstractFetchOperation nextFetchOperation = getSupport().getNextFetchOperation();
-        if (nextFetchOperation != null) {
-            LOG.debug("Performing next operation {}", nextFetchOperation.getName());
-            try {
-                nextFetchOperation.perform();
-                return;
-            } catch (final IOException e) {
-                GB.toast(
-                        getContext(),
-                        "Failed to run next fetch operation",
-                        Toast.LENGTH_SHORT,
-                        GB.ERROR, e
-                );
-                return;
-            }
-        }
-
-        LOG.debug("All operations finished");
-
-        GB.updateTransferNotification(null, "", false, 100, getContext());
-        GB.signalActivityDataFinish(getDevice());
-        operationFinished();
-        unsetBusy();
+        fetcher.triggerNextOperation();
     }
 
     /**
@@ -173,12 +119,11 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
 
     protected abstract boolean processBufferedData();
 
-    protected void handleActivityData(final byte[] value) {
+    public void handleActivityData(final byte[] value) {
         LOG.debug("{} data: {}", getName(), Logging.formatBytes(value));
 
-        if (!isOperationRunning()) {
-            LOG.error("ignoring {} notification because operation is not running. Data length: {}", getName(), value.length);
-            getSupport().logMessageContent(value);
+        if (!operationValid) {
+            LOG.error("Ignoring {} notification because operation is not valid. Data length: {}", getName(), value.length);
             return;
         }
 
@@ -196,16 +141,15 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         buffer.write(value, 1, value.length - 1); // skip the counter
     }
 
-    protected void startFetching(final TransactionBuilder builder, final byte fetchType, final GregorianCalendar sinceWhen) {
-        final HuamiSupport support = getSupport();
-        byte[] fetchBytes = BLETypeConversions.join(new byte[]{
-                        HuamiService.COMMAND_ACTIVITY_DATA_START_DATE,
-                        fetchType},
-                support.getTimeBytes(sinceWhen, support.getFetchOperationsTimeUnit()));
-        builder.write(characteristicFetch, fetchBytes);
+    protected void startFetching(final byte fetchType, final GregorianCalendar sinceWhen) {
+        final byte[] fetchBytes = BLETypeConversions.join(
+                new byte[]{HuamiService.COMMAND_ACTIVITY_DATA_START_DATE, fetchType},
+                fetcher.getTimeBytes(sinceWhen, fetcher.getFetchOperationsTimeUnit())
+        );
+        fetcher.writeControl("fetch", fetchBytes);
     }
 
-    private void handleActivityMetadata(byte[] value) {
+    public void handleActivityMetadata(byte[] value) {
         if (value.length < 3) {
             LOG.warn("Activity metadata too short: {}", Logging.formatBytes(value));
             onOperationFinished();
@@ -254,7 +198,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         expectedDataLength = BLETypeConversions.toUint32(Arrays.copyOfRange(value, 3, 7));
 
         // last 8 bytes are the start date
-        Calendar startTimestamp = getSupport().fromTimeBytes(Arrays.copyOfRange(value, 7, value.length));
+        Calendar startTimestamp = BLETypeConversions.rawBytesToCalendar(Arrays.copyOfRange(value, 7, value.length));
 
         if (expectedDataLength == 0) {
             LOG.info("No data to fetch since {}", DateTimeUtils.formatIso8601(startTimestamp.getTime()));
@@ -271,15 +215,8 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
                         DateFormat.getDateTimeInstance().format(startTimestamp.getTime())), true, 0, getContext());
 
         // Trigger the actual data fetch
-        final TransactionBuilder step2builder = createTransactionBuilder(getName() + " Step 2");
-        step2builder.notify(characteristicActivityData, true);
-        step2builder.write(characteristicFetch, new byte[]{HuamiService.COMMAND_FETCH_DATA});
-        try {
-            performImmediately(step2builder);
-        } catch (final IOException e) {
-            GB.toast(getContext(), "Error starting fetch step 2: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-            onOperationFinished();
-        }
+        fetcher.setNotifications(true, true);
+        fetcher.writeControl(getName() + " step 2", new byte[]{HuamiService.COMMAND_FETCH_DATA});
     }
 
     private void handleFetchDataResponse(final byte[] value) {
@@ -298,7 +235,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         if (value.length == 7 && !validChecksum(BLETypeConversions.toUint32(value, 3))) {
             LOG.warn("Data checksum invalid");
             // If we're on Zepp OS, ack but keep data on device
-            if (isZeppOs()) {
+            if (fetcher.isZeppOs()) {
                 sendAck(true);
                 // do not finish the operation - do it in the ack response
                 return;
@@ -310,7 +247,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         final boolean success = operationValid && processBufferedData();
 
         final boolean keepActivityDataOnDevice = !success || HuamiCoordinator.getKeepActivityDataOnDevice(getDevice().getAddress());
-        if (isZeppOs() || !keepActivityDataOnDevice) {
+        if (fetcher.isZeppOs() || !keepActivityDataOnDevice) {
             sendAck(keepActivityDataOnDevice);
             // do not finish the operation - do it in the ack response
             return;
@@ -322,7 +259,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
     protected void sendAck(final boolean keepDataOnDevice) {
         final byte[] ackBytes;
 
-        if (isZeppOs()) {
+        if (fetcher.isZeppOs()) {
             LOG.debug("Sending ack, keepDataOnDevice = {}", keepDataOnDevice);
 
             // 0x01 to ACK, mark as saved on phone (drop from band)
@@ -335,13 +272,7 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
             ackBytes = new byte[]{HuamiService.COMMAND_ACK_ACTIVITY_DATA};
         }
 
-        try {
-            final TransactionBuilder builder = createTransactionBuilder(getName() + " end");
-            builder.write(characteristicFetch, ackBytes);
-            performImmediately(builder);
-        } catch (final IOException e) {
-            LOG.error("Failed to send ack", e);
-        }
+        fetcher.writeControl(getName() + " end", ackBytes);
     }
 
     private void setStartTimestamp(final Calendar startTimestamp) {
@@ -353,13 +284,13 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
     }
 
     protected void saveLastSyncTimestamp(@NonNull final GregorianCalendar timestamp) {
-        final SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()).edit();
+        final SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(fetcher.getDevice().getAddress()).edit();
         editor.putLong(getLastSyncTimeKey(), timestamp.getTimeInMillis());
         editor.apply();
     }
 
     protected GregorianCalendar getLastSuccessfulSyncTime() {
-        final long timeStampMillis = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()).getLong(getLastSyncTimeKey(), 0);
+        final long timeStampMillis = GBApplication.getDeviceSpecificSharedPrefs(fetcher.getDevice().getAddress()).getLong(getLastSyncTimeKey(), 0);
         if (timeStampMillis != 0) {
             GregorianCalendar calendar = BLETypeConversions.createCalendar();
             calendar.setTimeInMillis(timeStampMillis);
@@ -368,9 +299,5 @@ public abstract class AbstractFetchOperation extends AbstractHuamiOperation {
         final GregorianCalendar calendar = BLETypeConversions.createCalendar();
         calendar.add(Calendar.DAY_OF_MONTH, -100);
         return calendar;
-    }
-
-    protected boolean isZeppOs() {
-        return getSupport() instanceof ZeppOsSupport;
     }
 }

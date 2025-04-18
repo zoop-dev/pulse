@@ -27,8 +27,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
@@ -40,19 +39,15 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 public abstract class AbstractRepeatingFetchOperation extends AbstractFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractRepeatingFetchOperation.class);
 
-    protected final HuamiFetchDataType dataType;
-
-    public AbstractRepeatingFetchOperation(final HuamiSupport support, final HuamiFetchDataType dataType) {
-        super(support);
-        this.dataType = dataType;
-        setName("fetching " + dataType.name());
+    public AbstractRepeatingFetchOperation(final HuamiFetcher fetcher, final HuamiFetchDataType dataType) {
+        super(fetcher, dataType);
     }
 
     @Override
-    protected void startFetching(final TransactionBuilder builder) {
+    protected void startFetching() {
         final GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
         LOG.info("start {} since {}", getName(), DateTimeUtils.formatIso8601(sinceWhen.getTime()));
-        startFetching(builder, dataType.getCode(), sinceWhen);
+        startFetching(dataType.getCode(), sinceWhen);
     }
 
     /**
@@ -91,7 +86,7 @@ public abstract class AbstractRepeatingFetchOperation extends AbstractFetchOpera
         if (needsAnotherFetch(timestamp)) {
             buffer.reset();
 
-            getSupport().getFetchOperationQueue().add(0, this);
+            fetcher.getFetchOperationQueue().add(0, this);
         }
 
         return true;

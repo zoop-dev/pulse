@@ -35,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProv
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -45,12 +45,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchTemperatureOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchTemperatureOperation.class);
 
-    public FetchTemperatureOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.TEMPERATURE);
+    public FetchTemperatureOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.TEMPERATURE);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_temperature);
     }
 

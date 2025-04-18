@@ -37,7 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -46,12 +46,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchStressAutoOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchStressAutoOperation.class);
 
-    public FetchStressAutoOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.STRESS_AUTOMATIC);
+    public FetchStressAutoOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.STRESS_AUTOMATIC);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_stress_data);
     }
 

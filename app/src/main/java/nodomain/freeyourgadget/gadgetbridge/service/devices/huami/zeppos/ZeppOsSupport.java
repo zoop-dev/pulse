@@ -1078,7 +1078,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    protected ZeppOsCoordinator getCoordinator() {
+    public ZeppOsCoordinator getCoordinator() {
         return (ZeppOsCoordinator) gbDevice.getDeviceCoordinator();
     }
 

@@ -39,9 +39,8 @@ import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiActivityDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -57,13 +56,12 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
     private final BaseActivitySummary summary;
     private final String lastSyncTimeKey;
 
-    FetchSportsDetailsOperation(@NonNull BaseActivitySummary summary,
-                                @NonNull AbstractHuamiActivityDetailsParser detailsParser,
-                                @NonNull HuamiSupport support,
-                                @NonNull String lastSyncTimeKey,
+    FetchSportsDetailsOperation(@NonNull final BaseActivitySummary summary,
+                                @NonNull final AbstractHuamiActivityDetailsParser detailsParser,
+                                @NonNull final HuamiFetcher fetcher,
+                                @NonNull final String lastSyncTimeKey,
                                 int fetchCount) {
-        super(support);
-        setName("fetching sport details");
+        super(fetcher, HuamiFetchDataType.SPORTS_DETAILS);
         this.summary = summary;
         this.detailsParser = detailsParser;
         this.lastSyncTimeKey = lastSyncTimeKey;
@@ -71,15 +69,15 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_sports_details);
     }
 
     @Override
-    protected void startFetching(TransactionBuilder builder) {
-        LOG.info("start " + getName());
+    protected void startFetching() {
+        LOG.info("start {}", getName());
         final GregorianCalendar sinceWhen = getLastSuccessfulSyncTime();
-        startFetching(builder, HuamiFetchDataType.SPORTS_DETAILS.getCode(), sinceWhen);
+        startFetching(HuamiFetchDataType.SPORTS_DETAILS.getCode(), sinceWhen);
     }
 
     @Override
@@ -165,8 +163,8 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
         saveLastSyncTimestamp(endTime);
 
         if (needsAnotherFetch(endTime)) {
-            final FetchSportsSummaryOperation nextOperation = new FetchSportsSummaryOperation(getSupport(), fetchCount);
-            getSupport().getFetchOperationQueue().add(0, nextOperation);
+            final FetchSportsSummaryOperation nextOperation = new FetchSportsSummaryOperation(fetcher, fetchCount);
+            fetcher.getFetchOperationQueue().add(0, nextOperation);
         }
 
         return true;
@@ -174,8 +172,8 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
 
     private boolean needsAnotherFetch(GregorianCalendar lastSyncTimestamp) {
         // We have 2 operations per fetch round: summary + details
-        if (fetchCount > 10) {
-            LOG.warn("Already have 5 fetch rounds, not doing another one.");
+        if (fetchCount > 20) {
+            LOG.warn("Already have {} fetch rounds, not doing another one.", fetchCount/ 2);
             return false;
         }
 
@@ -207,14 +205,13 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
 
     private String saveRawBytes() {
         final String fileName = FileUtils.makeValidFileName(String.format("%s.bin", DateTimeUtils.formatIso8601(summary.getStartTime())));
-        FileOutputStream outputStream = null;
 
         try {
             final File targetFolder = new File(FileUtils.getExternalFilesDir(), "rawDetails");
             //noinspection ResultOfMethodCallIgnored
             targetFolder.mkdirs();
             final File targetFile = new File(targetFolder, fileName);
-            outputStream = new FileOutputStream(targetFile);
+            final FileOutputStream outputStream = new FileOutputStream(targetFile);
             outputStream.write(buffer.toByteArray());
             outputStream.close();
             return targetFile.getAbsolutePath();

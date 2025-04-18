@@ -34,7 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvide
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHrvValueSample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -43,12 +43,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchHrvOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchHrvOperation.class);
 
-    public FetchHrvOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.HRV);
+    public FetchHrvOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.HRV);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_hrv_data);
     }
 

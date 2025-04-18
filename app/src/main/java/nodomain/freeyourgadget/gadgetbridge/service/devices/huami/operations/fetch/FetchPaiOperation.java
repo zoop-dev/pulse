@@ -37,7 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiPaiSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -46,12 +46,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchPaiOperation extends AbstractRepeatingFetchOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FetchPaiOperation.class);
 
-    public FetchPaiOperation(final HuamiSupport support) {
-        super(support, HuamiFetchDataType.PAI);
+    public FetchPaiOperation(final HuamiFetcher fetcher) {
+        super(fetcher, HuamiFetchDataType.PAI);
     }
 
     @Override
-    protected String taskDescription() {
+    public String taskDescription() {
         return getContext().getString(R.string.busy_task_fetch_pai_data);
     }
 
