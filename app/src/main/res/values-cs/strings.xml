@@ -4007,4 +4007,10 @@
     <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
     <string name="map_theme_motorider">Motorider</string>
     <string name="map_theme_osmarender">Osmarender</string>
+    <string name="menuitem_calculator">Kalkulačka</string>
+    <string name="menuitem_real_time_heart_rate">Sledování tepu v reálném čase</string>
+    <string name="menuitem_running_calculator">Kalkulačka běhu</string>
+    <string name="menuitem_water_time">Čas vody</string>
+    <string name="menuitem_watch_storage_space">Sledovat úložiště</string>
+    <string name="menuitem_bluetooth_scale_assistant">Asistent váhy Bluetooth</string>
 </resources>
