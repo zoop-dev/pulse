@@ -1061,6 +1061,12 @@
         <item>hrv</item>
         <item>map</item>
         <item>heart_rate_push</item>
+        <item>bluetooth_scale_assistant</item>
+        <item>calculator</item>
+        <item>running_calculator</item>
+        <item>real_time_heart_rate</item>
+        <item>watch_storage_space</item>
+        <item>water_time</item>
         <!-- dummy item -->
         <item>more</item>
     </string-array>
