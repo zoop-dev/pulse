@@ -16,9 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
-import static org.apache.commons.lang3.ArrayUtils.subarray;
 import static java.lang.Thread.sleep;
-import static nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service.*;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint16;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint8;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.mapTimeZone;
@@ -27,6 +25,7 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE_FOLLOW_PHONE;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.SLEEP_HIGH_ACCURACY_MONITORING;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
@@ -102,7 +101,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedDecoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedEncoder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
@@ -120,6 +118,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConnectionService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsDisplayItemsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFindDeviceService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsHeartRateService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLoyaltyCardService;
@@ -136,6 +135,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsMorningUpdatesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsSilentModeService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsStepsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsUserInfoService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVibrationPatternsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVoiceMemosService;
@@ -148,17 +148,15 @@ import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.RealtimeSamplesAggregator;
 
 public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferService.DownloadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsSupport.class);
 
-    // Tracks whether realtime HR monitoring is already started, so we can just
-    // send CONTINUE commands
-    private boolean heartRateRealtimeStarted;
-    private ScheduledExecutorService heartRateRealtimeScheduler;
     // Keep track of whether the rawSensor is enabled
     private boolean rawSensor = false;
     private ScheduledExecutorService rawSensorScheduler;
+    private RealtimeSamplesAggregator realtimeSamplesAggregator;
 
     // Services
     private final ZeppOsServicesService servicesService = new ZeppOsServicesService(this);
@@ -197,11 +195,11 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsConnectionService connectionService = new ZeppOsConnectionService(this);
     private final ZeppOsWorldClocksService worldClocksService = new ZeppOsWorldClocksService(this);
     private final ZeppOsWorkoutService workoutService = new ZeppOsWorkoutService(this);
+    private final ZeppOsHeartRateService heartRateService = new ZeppOsHeartRateService(this);
+    private final ZeppOsStepsService stepsService = new ZeppOsStepsService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
-    // FIXME: We need to keep track of which services are encrypted for now, since not all of them were yet migrated to a service
-    private final Set<Short> mIsEncrypted = new HashSet<>();
-    private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<Short, AbstractZeppOsService>() {{
+    private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<>() {{
         put(servicesService.getEndpoint(), servicesService);
         put(authenticationService.getEndpoint(), authenticationService);
         put(batteryService.getEndpoint(), batteryService);
@@ -238,6 +236,8 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         put(weatherService.getEndpoint(), weatherService);
         put(worldClocksService.getEndpoint(), worldClocksService);
         put(workoutService.getEndpoint(), workoutService);
+        put(heartRateService.getEndpoint(), heartRateService);
+        put(stepsService.getEndpoint(), stepsService);
     }};
 
     public ZeppOsSupport() {
@@ -246,6 +246,15 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     public ZeppOsSupport(final Logger logger) {
         super(logger);
+    }
+
+    @Override
+    public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
+        super.setContext(gbDevice, btAdapter, context);
+        heartRateService.setSleepAsAndroidSender(sleepAsAndroidSender);
+        realtimeSamplesAggregator = new RealtimeSamplesAggregator(getContext(), getDevice());
+        heartRateService.setRealtimeSamplesAggregator(realtimeSamplesAggregator);
+        stepsService.setRealtimeSamplesAggregator(realtimeSamplesAggregator);
     }
 
     @Override
@@ -390,41 +399,12 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     @Override
     public void onHeartRateTest() {
-        // TODO onHeartRateTest - what modes? this only works sometimes
-
-        try {
-            final TransactionBuilder builder = performInitialized("HeartRateTest");
-            enableNotifyHeartRateMeasurements(true, builder);
-            //writeToChunked2021(builder, CHUNKED2021_ENDPOINT_HEARTRATE, new byte[]{HEART_RATE_CMD_REALTIME_SET, HEART_RATE_REALTIME_MODE_START}, false);
-            builder.queue(getQueue());
-        } catch (final IOException e) {
-            LOG.error("Unable to read heart rate from Huami 2021 device", e);
-        }
+        heartRateService.onHeartRateTest();
     }
 
     @Override
     public void onEnableRealtimeHeartRateMeasurement(final boolean enable) {
-        final byte hrcmd;
-        if (!enable) {
-            hrcmd = HEART_RATE_REALTIME_MODE_STOP;
-        } else if (heartRateRealtimeStarted == enable) {
-            hrcmd = HEART_RATE_REALTIME_MODE_CONTINUE;
-        } else {
-            // enable == true, for the first time
-            hrcmd = HEART_RATE_REALTIME_MODE_START;
-        }
-
-        heartRateRealtimeStarted = enable;
-
-        try {
-            final TransactionBuilder builder = performInitialized("Set realtime heart rate measurement = " + enable);
-            enableNotifyHeartRateMeasurements(enable, builder);
-            writeToChunked2021(builder, CHUNKED2021_ENDPOINT_HEARTRATE, new byte[]{HEART_RATE_CMD_REALTIME_SET, hrcmd}, false);
-            builder.queue(getQueue());
-            enableRealtimeSamplesTimer(enable);
-        } catch (final IOException e) {
-            LOG.error("Unable to set realtime heart rate measurement", e);
-        }
+        heartRateService.onEnableRealtimeHeartRateMeasurement(enable);
     }
 
     @Override
@@ -497,9 +477,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     @Override
     public void onEnableRealtimeSteps(final boolean enable) {
-        final byte[] cmd = {STEPS_CMD_ENABLE_REALTIME, bool(enable)};
-
-        writeToChunked2021("toggle realtime steps", CHUNKED2021_ENDPOINT_STEPS, cmd, false);
+        stepsService.onEnableRealtimeSteps(enable);
     }
 
     @Override
@@ -779,13 +757,13 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
                 break;
             // Received when the app starts sleep tracking
             case SleepAsAndroidAction.START_TRACKING:
-                enableRealtimeHeartRateMeasurement(true);
+                heartRateService.onEnableRealtimeHeartRateMeasurement(true);
                 enableRawSensor(true);
                 sleepAsAndroidSender.startTracking();
                 break;
             // Received when the app stops sleep tracking
             case SleepAsAndroidAction.STOP_TRACKING:
-                enableRealtimeHeartRateMeasurement(false);
+                heartRateService.onEnableRealtimeHeartRateMeasurement(false);
                 enableRawSensor(false);
                 sleepAsAndroidSender.stopTracking();
                 break;
@@ -864,37 +842,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         GBApplication.deviceService(gbDevice).onSetAlarms(alarms);
     }
 
-    private ScheduledExecutorService startRealtimeHeartRateMeasurement() {
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                if (heartRateRealtimeStarted) {
-                    onEnableRealtimeHeartRateMeasurement(true);
-                }
-            }
-        }, 0, 1000, TimeUnit.MILLISECONDS);
-        return service;
-    }
-
-    private void stopRealtimeHeartRateMeasurement() {
-        if (heartRateRealtimeScheduler != null) {
-            heartRateRealtimeScheduler.shutdown();
-            heartRateRealtimeScheduler = null;
-        }
-    }
-
-    private void enableRealtimeHeartRateMeasurement(boolean enable) {
-        onEnableRealtimeHeartRateMeasurement(enable);
-        if (enable) {
-            heartRateRealtimeScheduler = startRealtimeHeartRateMeasurement();
-        }
-        else {
-            stopRealtimeHeartRateMeasurement();
-        }
-
-    }
-
     private void stopRawSensors() {
         if (rawSensorScheduler != null) {
             rawSensorScheduler.shutdown();
@@ -954,13 +901,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    public void writeToChunked2021(final TransactionBuilder builder, final short endpoint, final byte[] data, final boolean encryptIgnored) {
-        // Ensure communication for all services contains the encrypted flag reported by the service, since not all
-        // watches have the same services encrypted (eg. #3308).
-        huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), endpoint, data, force2021Protocol(), mIsEncrypted.contains(endpoint));
-    }
-
-    @Override
     public void writeToConfiguration(final TransactionBuilder builder, final byte[] data) {
         LOG.warn("writeToConfiguration is not supported");
     }
@@ -1015,7 +955,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         // In here, we only request the list of supported services - they will all be initialized in
         // initializeServices below
         mSupportedServices.clear();
-        mIsEncrypted.clear();
         servicesService.requestServices(builder);
     }
 
@@ -1027,9 +966,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     public void addSupportedService(final short endpoint, final boolean encrypted) {
         mSupportedServices.add(endpoint);
-        if (encrypted) {
-            mIsEncrypted.add(endpoint);
-        }
     }
 
     public void initializeServices() {
@@ -1157,6 +1093,9 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         } else if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE.equals(characteristicUUID)) {
             fileTransferService.onCharacteristicChanged(characteristic);
             return true;
+        } else if (GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristicUUID)) {
+            heartRateService.handleHeartRate(characteristic.getValue());
+            return true;
         }
 
         return super.onCharacteristicChanged(gatt, characteristic);
@@ -1175,74 +1114,12 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
             return;
         }
 
-        // TODO: Move these services to dedicated classes, so they get the encryption correctly
-        switch (type) {
-            case CHUNKED2021_ENDPOINT_HEARTRATE:
-                handle2021HeartRate(payload);
-                return;
-            case CHUNKED2021_ENDPOINT_STEPS:
-                handle2021Steps(payload);
-                return;
-            default:
-                LOG.warn("Unhandled 2021 payload {}", String.format("0x%04x", type));
-        }
+        LOG.warn("Unhandled 2021 payload {}", String.format("0x%04x", type));
     }
 
     public void setEncryptionParameters(final int encryptedSequenceNr, final byte[] sharedSessionKey) {
         huami2021ChunkedEncoder.setEncryptionParameters(encryptedSequenceNr, sharedSessionKey);
         huami2021ChunkedDecoder.setEncryptionParameters(sharedSessionKey);
-    }
-
-    protected void handle2021HeartRate(final byte[] payload) {
-        switch (payload[0]) {
-            case HEART_RATE_CMD_REALTIME_ACK:
-                // what does the status mean? Seems to be 0 on success
-                LOG.info("Band acknowledged heart rate command, status = {}", payload[1]);
-                return;
-            case HEART_RATE_CMD_SLEEP:
-                switch (payload[1]) {
-                    case HEART_RATE_FALL_ASLEEP:
-                        LOG.info("Fell asleep");
-                        processDeviceEvent(HuamiDeviceEvent.FELL_ASLEEP);
-                        break;
-                    case HEART_RATE_WAKE_UP:
-                        LOG.info("Woke up");
-                        processDeviceEvent(HuamiDeviceEvent.WOKE_UP);
-                        break;
-                    default:
-                        LOG.warn("Unexpected sleep byte {}", String.format("0x%02x", payload[1]));
-                        break;
-                }
-                return;
-            default:
-                LOG.warn("Unexpected heart rate byte {}", String.format("0x%02x", payload[0]));
-        }
-    }
-
-    protected void handle2021Steps(final byte[] payload) {
-        switch (payload[0]) {
-            case STEPS_CMD_REPLY:
-                LOG.info("Got steps reply, status = {}", payload[1]);
-                if (payload.length != 15) {
-                    LOG.error("Unexpected steps reply payload length {}", payload.length);
-                    return;
-                }
-                handleRealtimeSteps(subarray(payload, 2, 15));
-                return;
-            case STEPS_CMD_ENABLE_REALTIME_ACK:
-                LOG.info("Band acknowledged realtime steps, status = {}, enabled = {}", payload[1], payload[2]);
-                return;
-            case STEPS_CMD_REALTIME_NOTIFICATION:
-                LOG.info("Got steps notification");
-                if (payload.length != 14) {
-                    LOG.error("Unexpected realtime notification payload length {}", payload.length);
-                    return;
-                }
-                handleRealtimeSteps(subarray(payload, 1, 14));
-                return;
-            default:
-                LOG.warn("Unexpected steps payload byte {}", String.format("0x%02x", payload[0]));
-        }
     }
 
     @Override

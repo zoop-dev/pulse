@@ -32,7 +32,6 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -48,6 +47,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class InitOperation2021 extends InitOperation implements Huami2021Handler {
     private final byte[] privateEC = new byte[24];
     private byte[] publicEC;
+
+    public static final short CHUNKED2021_ENDPOINT_AUTH = 0x0082;
 
     private final BluetoothGattCharacteristic characteristicChunked2021Write;
     private final Huami2021ChunkedEncoder huami2021ChunkedEncoder;
@@ -82,7 +83,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
         sendPubKeyCommand[2] = 0x00;
         sendPubKeyCommand[3] = 0x02;
         System.arraycopy(publicEC, 0, sendPubKeyCommand, 4, 48);
-        huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), Huami2021Service.CHUNKED2021_ENDPOINT_AUTH, sendPubKeyCommand, true, false);
+        huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), CHUNKED2021_ENDPOINT_AUTH, sendPubKeyCommand, true, false);
     }
 
     private void generateKeyPair() {
@@ -115,7 +116,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
 
     @Override
     public void handle2021Payload(final short type, final byte[] payload) {
-        if (type != Huami2021Service.CHUNKED2021_ENDPOINT_AUTH) {
+        if (type != CHUNKED2021_ENDPOINT_AUTH) {
             this.huamiSupport.handle2021Payload(type, payload);
             return;
         }
@@ -151,7 +152,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
                     System.arraycopy(encryptedRandom1, 0, command, 1, 16);
                     System.arraycopy(encryptedRandom2, 0, command, 17, 16);
                     TransactionBuilder builder = createTransactionBuilder("Sending double encryted random to device");
-                    huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), Huami2021Service.CHUNKED2021_ENDPOINT_AUTH, command, true, false);
+                    huami2021ChunkedEncoder.write(chunk -> builder.write(characteristicChunked2021Write, chunk), CHUNKED2021_ENDPOINT_AUTH, command, true, false);
                     huamiSupport.performImmediately(builder);
                 }
             } catch (final Exception e) {

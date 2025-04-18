@@ -36,7 +36,11 @@ import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 public class GBDeviceEventSleepStateDetection extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventSleepStateDetection.class);
 
-    public SleepState sleepState;
+    public final SleepState sleepState;
+
+    public GBDeviceEventSleepStateDetection(final SleepState sleepState) {
+        this.sleepState = sleepState;
+    }
 
     @NonNull
     @Override

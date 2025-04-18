@@ -148,8 +148,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
-        // TODO: It should be supported, but not yet properly implemented
-        return false;
+        return true;
     }
 
     @Override

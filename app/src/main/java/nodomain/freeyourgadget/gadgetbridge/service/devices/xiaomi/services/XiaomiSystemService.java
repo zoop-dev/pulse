@@ -678,8 +678,7 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
         LOG.debug("Current wearing state = {}, new wearing state = {}", currentWearingState, newState);
 
         if (currentWearingState != WearingState.UNKNOWN && currentWearingState != newState) {
-            GBDeviceEventWearState event = new GBDeviceEventWearState();
-            event.wearingState = newState;
+            GBDeviceEventWearState event = new GBDeviceEventWearState(newState);
             getSupport().evaluateGBDeviceEvent(event);
         }
 
@@ -704,8 +703,7 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
         LOG.debug("Current sleep detection state = {}, new sleep detection state = {}", currentSleepDetectionState, newState);
 
         if (currentSleepDetectionState != SleepState.UNKNOWN && currentSleepDetectionState != newState) {
-            GBDeviceEventSleepStateDetection event = new GBDeviceEventSleepStateDetection();
-            event.sleepState = newState;
+            GBDeviceEventSleepStateDetection event = new GBDeviceEventSleepStateDetection(newState);
             getSupport().evaluateGBDeviceEvent(event);
         }
 
@@ -782,8 +780,7 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
 
             // send event if the previous state is known and the new state is different from cached
             if (currentSleepDetectionState != SleepState.UNKNOWN && currentSleepDetectionState != newSleepState) {
-                GBDeviceEventSleepStateDetection event = new GBDeviceEventSleepStateDetection();
-                event.sleepState = newSleepState;
+                GBDeviceEventSleepStateDetection event = new GBDeviceEventSleepStateDetection(newSleepState);
                 getSupport().evaluateGBDeviceEvent(event);
             }
 
@@ -796,8 +793,7 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
             LOG.debug("Previous wearing state: {}, new wearing state: {}", currentWearingState, newWearingState);
 
             if (currentWearingState != WearingState.UNKNOWN && currentWearingState != newWearingState) {
-                GBDeviceEventWearState event = new GBDeviceEventWearState();
-                event.wearingState = newWearingState;
+                GBDeviceEventWearState event = new GBDeviceEventWearState(newWearingState);
                 getSupport().evaluateGBDeviceEvent(event);
             }
 

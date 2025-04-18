@@ -153,11 +153,6 @@ public interface DeviceService extends EventHandler {
     String EXTRA_CAMERA_EVENT = "event";
     String EXTRA_CAMERA_FILENAME = "filename";
 
-    /**
-     * Use EXTRA_REALTIME_SAMPLE instead
-     */
-    @Deprecated
-    String EXTRA_REALTIME_STEPS = "realtime_steps";
     String EXTRA_REALTIME_SAMPLE = "realtime_sample";
     String EXTRA_TIMESTAMP = "timestamp";
     /**

@@ -73,7 +73,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
@@ -88,7 +87,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.ActivateDisplayOnLift;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.ActivateDisplayOnLiftSensitivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.DisconnectNotificationSetting;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
@@ -271,6 +269,8 @@ import static nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacterist
 
 public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         implements Huami2021Handler, HuamiFetcher.HuamiFetchSupport {
+
+    public static final short CHUNKED2021_ENDPOINT_COMPAT = 0x0090;
 
     // We introduce key press counter for notification purposes
     private static int currentButtonActionId = 0;
@@ -1693,7 +1693,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
                 break;
             case HuamiDeviceEvent.START_NONWEAR:
                 LOG.info("non-wear start detected");
-                processDeviceEvent(HuamiDeviceEvent.START_NONWEAR);
+                evaluateGBDeviceEvent(new GBDeviceEventWearState(WearingState.NOT_WEARING));
                 break;
             case HuamiDeviceEvent.ALARM_TOGGLED:
             case HuamiDeviceEvent.ALARM_CHANGED:
@@ -1704,11 +1704,11 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
                 break;
             case HuamiDeviceEvent.FELL_ASLEEP:
                 LOG.info("Fell asleep");
-                processDeviceEvent(HuamiDeviceEvent.FELL_ASLEEP);
+                evaluateGBDeviceEvent(new GBDeviceEventSleepStateDetection(SleepState.ASLEEP));
                 break;
             case HuamiDeviceEvent.WOKE_UP:
                 LOG.info("Woke up");
-                processDeviceEvent(HuamiDeviceEvent.WOKE_UP);
+                evaluateGBDeviceEvent(new GBDeviceEventSleepStateDetection(SleepState.AWAKE));
                 break;
             case HuamiDeviceEvent.STEPSGOAL_REACHED:
                 LOG.info("Steps goal reached");
@@ -1966,30 +1966,6 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         writeToConfiguration(builder, cmd);
     }
 
-    protected void processDeviceEvent(int deviceEvent){
-        LOG.debug("Handling device event: " + deviceEvent);
-        GBDeviceEvent event;
-        switch (deviceEvent) {
-            case HuamiDeviceEvent.WOKE_UP:
-                event = new GBDeviceEventSleepStateDetection();
-                ((GBDeviceEventSleepStateDetection) event).sleepState = SleepState.AWAKE;
-                break;
-            case HuamiDeviceEvent.FELL_ASLEEP:
-                event = new GBDeviceEventSleepStateDetection();
-                ((GBDeviceEventSleepStateDetection) event).sleepState = SleepState.ASLEEP;
-                break;
-            case HuamiDeviceEvent.START_NONWEAR:
-                event = new GBDeviceEventWearState();
-                ((GBDeviceEventWearState) event).wearingState = WearingState.NOT_WEARING;
-                break;
-            default:
-                LOG.warn("Unhandled device event {}", deviceEvent);
-                return;
-        }
-
-        evaluateGBDeviceEvent(event);
-    }
-
     private void handleLongButtonEvent(){
         Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
 
@@ -2176,7 +2152,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         }
     }
 
-    protected void handleRealtimeSteps(byte[] value) {
+    private void handleRealtimeSteps(byte[] value) {
         if (value == null) {
             LOG.error("realtime steps: value is null");
             return;
@@ -3794,7 +3770,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
             }
 
             byte[] command = ArrayUtils.addAll(new byte[]{0x00, 0x00, (byte) (0xc0 | type), 0x00}, data);
-            writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_COMPAT, command, encrypt);
+            writeToChunked2021(builder, CHUNKED2021_ENDPOINT_COMPAT, command, encrypt);
         } else {
             writeToChunkedOld(builder, type, data);
         }
@@ -3853,7 +3829,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
     public void writeToConfiguration(TransactionBuilder builder, byte[] data) {
         if (force2021Protocol()) {
             data = ArrayUtils.insert(0, data, (byte) 1);
-            writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_COMPAT, data, true);
+            writeToChunked2021(builder, CHUNKED2021_ENDPOINT_COMPAT, data, true);
         } else {
             builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), data);
         }
@@ -4015,7 +3991,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
 
     @Override
     public void handle2021Payload(short type, byte[] payload) {
-        if (type == Huami2021Service.CHUNKED2021_ENDPOINT_COMPAT) {
+        if (type == CHUNKED2021_ENDPOINT_COMPAT) {
             LOG.info("got configuration data");
             type = 0;
             handleConfigurationInfo(ArrayUtils.remove(payload, 0));

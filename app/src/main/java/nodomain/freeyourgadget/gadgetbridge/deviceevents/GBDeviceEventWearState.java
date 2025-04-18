@@ -36,7 +36,11 @@ import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
 public class GBDeviceEventWearState extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventWearState.class);
 
-    public WearingState wearingState = WearingState.UNKNOWN;
+    public final WearingState wearingState;
+
+    public GBDeviceEventWearState(final WearingState wearingState) {
+        this.wearingState = wearingState;
+    }
 
     @NonNull
     @Override

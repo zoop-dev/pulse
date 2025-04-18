@@ -18,35 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami;
 
 public class Huami2021Service {
     /**
-     * Endpoints for 2021 chunked protocol
-     */
-    public static final short CHUNKED2021_ENDPOINT_STEPS = 0x0016;
-    public static final short CHUNKED2021_ENDPOINT_HEARTRATE = 0x001d;
-    public static final short CHUNKED2021_ENDPOINT_AUTH = 0x0082;
-    public static final short CHUNKED2021_ENDPOINT_COMPAT = 0x0090;
-
-    /**
-     * Steps, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_STEPS}.
-     */
-    public static final byte STEPS_CMD_GET = 0x03;
-    public static final byte STEPS_CMD_REPLY = 0x04;
-    public static final byte STEPS_CMD_ENABLE_REALTIME = 0x05;
-    public static final byte STEPS_CMD_ENABLE_REALTIME_ACK = 0x06;
-    public static final byte STEPS_CMD_REALTIME_NOTIFICATION = 0x07;
-
-    /**
-     * Notifications, for {@link Huami2021Service#CHUNKED2021_ENDPOINT_HEARTRATE}.
-     */
-    public static final byte HEART_RATE_CMD_REALTIME_SET = 0x04;
-    public static final byte HEART_RATE_CMD_REALTIME_ACK = 0x05;
-    public static final byte HEART_RATE_CMD_SLEEP = 0x06;
-    public static final byte HEART_RATE_FALL_ASLEEP = 0x01;
-    public static final byte HEART_RATE_WAKE_UP = 0x00;
-    public static final byte HEART_RATE_REALTIME_MODE_STOP = 0x00;
-    public static final byte HEART_RATE_REALTIME_MODE_START = 0x01;
-    public static final byte HEART_RATE_REALTIME_MODE_CONTINUE = 0x02;
-
-    /**
      * Raw sensor control.
      */
     public static final byte[] CMD_RAW_SENSOR_START_1 = new byte[]{0x01, 0x03, 0x19}; // band replies 10:01:03:05
