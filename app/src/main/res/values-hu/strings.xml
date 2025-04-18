@@ -2606,7 +2606,7 @@
     <string name="status_icon">Állapotikon</string>
     <string name="loyalty_cards_sync_options">Szinkronizálási beállítások</string>
     <string name="pref_sleepasandroid_feat_notifications">Értesítések</string>
-    <string name="pref_garmin_agps_help">Az alábbi lista tartalmazza az összes webcímet, amelyet az óra az AGPS-frissítésekhez kért. Kiválaszthat egy fájlt a telefon tárolójából, amelyet elküld az órának, amikor az frissítést kér.</string>
+    <string name="pref_garmin_agps_help">Az alábbi lista tartalmazza az összes webcímet, amelyet az óra az AGPS-frissítésekhez kért. Kiválaszthat egy fájlt a telefon tárhelyéről, melyet elküld az órának, amikor az frissítést kér.</string>
     <string name="toggle_debug_mode">Hibakeresési mód bekapcsolása</string>
     <string name="unsupported">Nem támogatott</string>
     <string name="battery_low_notify_enabled">Értesítés az akkumulátor alacsony töltöttségi szintjéről</string>
@@ -2704,7 +2704,7 @@
     <string name="pref_sleepasandroid_feat_heartrate">Pulzusszám</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="backup_restore_abort_title">Megszakítás</string>
-    <string name="music_huawei_device_info">Támogatott formátumok: %1$s\nÓratárhely: %2$d MB</string>
+    <string name="music_huawei_device_info">Támogatott formátumok: %1$s\nÓra tárhelye: %2$d MB</string>
     <string name="first_start_welcome_title">Üdvözöljük</string>
     <string name="first_start_permissions_title">Engedélyek</string>
     <string name="first_start_permissions_desc">A Gadgetbridge-nek számos engedélyre van szüksége ahhoz, hogy minden funkcióját el tudja látni. Tekintse át az engedélyeket és azok célját az alábbiakban.</string>
@@ -3809,4 +3809,10 @@
     <string name="weather_condition_severe_gale">viharos erejű szél</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>
+    <string name="menuitem_calculator">Kalkulátor</string>
+    <string name="menuitem_watch_storage_space">Óra tárhelye</string>
+    <string name="menuitem_water_time">Vízfogyasztás ideje</string>
+    <string name="menuitem_running_calculator">Futáskalkulátor</string>
+    <string name="menuitem_bluetooth_scale_assistant">Bluetooth mérlegasszisztens</string>
+    <string name="menuitem_real_time_heart_rate">Valós idejű pulzusszám</string>
 </resources>
