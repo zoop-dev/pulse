@@ -32,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvSummarySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericStressSampleProvider;
@@ -51,6 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanDeviceStateSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
+import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
@@ -71,7 +73,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
         final Long deviceId = device.getId();
 
-        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
+        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<>() {{
             put(session.getGenericHeartRateSampleDao(), GenericHeartRateSampleDao.Properties.DeviceId);
             put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
             put(session.getGenericSpo2SampleDao(), GenericSpo2SampleDao.Properties.DeviceId);
@@ -115,6 +117,11 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public TimeSampleProvider<? extends HrvSummarySample> getHrvSummarySampleProvider(GBDevice device, DaoSession session) {
+        return new GenericHrvSummarySampleProvider(device, session);
+    }
+
+    @Override
     public TimeSampleProvider<? extends HrvValueSample> getHrvValueSampleProvider(GBDevice device, DaoSession session) {
         return new GenericHrvValueSampleProvider(device, session);
     }
@@ -147,7 +154,8 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
-                R.xml.devicesettings_time_sync
+                R.xml.devicesettings_time_sync,
+                R.xml.devicesettings_power_saving
         };
     }
 
@@ -183,8 +191,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public boolean supportsHrvMeasurement(final GBDevice device) {
-        // TODO - needs getHrvSummarySampleProvider in addition to the implemented getHrvValueSampleProvider
-        return false;
+        return true;
     }
 
     @Override

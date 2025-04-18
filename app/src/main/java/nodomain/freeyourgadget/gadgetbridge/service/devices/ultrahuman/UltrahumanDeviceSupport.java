@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -57,7 +58,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanDeviceStateSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -71,30 +71,30 @@ import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(UltrahumanDeviceSupport.class);
-    private BroadcastReceiver CommandReceiver;
+    private final UltrahumanBroadcastReceiver CommandReceiver;
     private int FetchTo;
     private int FetchFrom;
     private int FetchCurrent;
 
-    public UltrahumanDeviceSupport(DeviceType type) {
+    public UltrahumanDeviceSupport() {
         super(LOG);
 
         addSupportedService(UltrahumanConstants.UUID_SERVICE_COMMAND);
         addSupportedService(UltrahumanConstants.UUID_SERVICE_STATE);
         addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
 
+        CommandReceiver = new UltrahumanBroadcastReceiver();
+
         DeviceInfoProfile<UltrahumanDeviceSupport> deviceProfile = new DeviceInfoProfile<>(this);
-        deviceProfile.addListener(new UltrahumanIntentListener());
+        deviceProfile.addListener(CommandReceiver);
         addSupportedProfile(deviceProfile);
     }
 
     @Override
     public void dispose() {
-        BroadcastReceiver receiver = CommandReceiver;
-        CommandReceiver = null;
-
-        if (receiver != null) {
-            getContext().unregisterReceiver(receiver);
+        if (CommandReceiver.Registered) {
+            CommandReceiver.Registered = false;
+            getContext().unregisterReceiver(CommandReceiver);
         }
 
         super.dispose();
@@ -115,11 +115,11 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
 
-        if (CommandReceiver == null) {
-            CommandReceiver = new UltrahumanBroadcastReceiver();
+        if (!CommandReceiver.Registered) {
             IntentFilter filter = new IntentFilter();
             filter.addAction(UltrahumanConstants.ACTION_AIRPLANE_MODE);
             ContextCompat.registerReceiver(getContext(), CommandReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
+            CommandReceiver.Registered = true;
         }
 
         // trying to read non-existing characteristics sometimes causes odd BLE failures
@@ -148,6 +148,9 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
             builder.add(new UltrahumanSetTimeAction(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND)));
         }
 
+        boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
+        builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{powerSave ? UltrahumanConstants.OPERATION_ENABLE_POWERSAVE : UltrahumanConstants.OPERATION_DISABLE_POWERSAVE});
+
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
 
         return builder;
@@ -162,12 +165,15 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
         getDevice().setBusyTask(task);
         getDevice().sendDeviceUpdateIntent(getContext());
 
-        FetchFrom = -1;
+        // fetch deltas while the device is connected
+        FetchFrom = (FetchCurrent > 0 && FetchCurrent < Short.MAX_VALUE - 1000) ? FetchCurrent : -1;
         FetchTo = -1;
         FetchCurrent = -1;
 
         TransactionBuilder builder = new TransactionBuilder("onFetchRecordedData");
-        builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{UltrahumanConstants.OPERATION_GET_FIRST_RECORDING_NR});
+        if (FetchFrom <= 0) {
+            builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{UltrahumanConstants.OPERATION_GET_FIRST_RECORDING_NR});
+        }
         builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{UltrahumanConstants.OPERATION_GET_LAST_RECORDING_NR});
 
         if (isConnected()) {
@@ -209,19 +215,20 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
                 return false;
             }
 
-            byte op = raw[0];
-            byte success = raw[1];
-            byte result = raw[2];
+            final byte op = raw[0];
+            final byte success = raw[1];
+            final byte result = raw[2];
             // ignore checksums for now - algorithm is unknown
             //byte chk1 = raw[raw.length-1];
             //byte chk2 = raw[raw.length-2];
 
+            final String info = String.format(Locale.US, "received BLE command response op=%02x, success=%02x, result=%02x : %s", op, success, result, StringUtils.bytesToHex(raw));
             if (success == 0x00) {
-                LOG.debug("received BLE command response op={}, success={}, result={} : {}", op, success, result, StringUtils.bytesToHex(raw));
+                LOG.debug(info);
             } else if ((0xFF & success) == 0xFF) {
-                LOG.warn("received BLE command response op={}, success={}, result={} : {}", op, success, result, StringUtils.bytesToHex(raw));
+                LOG.warn(info);
             } else {
-                LOG.info("received BLE command response op={}, success={}, result={} : {}", op, success, result, StringUtils.bytesToHex(raw));
+                LOG.info(info);
             }
 
             Context context = getContext();
@@ -230,13 +237,12 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
                 case UltrahumanConstants.OPERATION_GET_RECORDINGS:
                     return decodeRecordings(raw);
                 case UltrahumanConstants.OPERATION_PING:
-                    if (raw[1] != 0x00) {
-                        String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, raw[1], raw[0]);
-                        GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
+                    if (success == 0x00) {
+                        return true;
                     }
-                    return true;
+                    break;
                 case UltrahumanConstants.OPERATION_ACTIVATE_AIRPLANE_MODE:
-                    switch (raw[2]) {
+                    switch (result) {
                         case 0x01:
                             GB.toast(context, context.getString(R.string.ultrahuman_airplane_mode_activated), Toast.LENGTH_LONG, GB.INFO);
                             return true;
@@ -247,54 +253,66 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
                             GB.toast(context, context.getString(R.string.ultrahuman_airplane_mode_too_full), Toast.LENGTH_LONG, GB.ERROR);
                             return true;
                     }
-                    LOG.warn("set airplane mode - unknown error: {} ", StringUtils.bytesToHex(raw));
-                    GB.toast(context, context.getString(R.string.ultrahuman_airplane_mode_unknown), Toast.LENGTH_LONG, GB.ERROR);
+
+                    String airplaneMessage = getContext().getString(R.string.ultrahuman_airplane_mode_unknown, result);
+                    GB.toast(context, airplaneMessage, Toast.LENGTH_LONG, GB.ERROR);
                     return false;
 
                 case UltrahumanConstants.OPERATION_GET_FIRST_RECORDING_NR:
-                    if (raw[1] == 0x00 || raw[2] == 0x01) {
+                    if (success == 0x00 && result == 0x01) {
                         FetchFrom = BLETypeConversions.toUint16(raw, 3);
                         if (FetchTo != -1) {
                             fetchRecordingActually();
                         }
                         return true;
-                    } else {
-                        String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, raw[1], raw[0]);
-                        GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
-                        fetchRecordedDataFinished();
                     }
-                    return false;
+                    fetchRecordedDataFinished();
+                    break;
 
                 case UltrahumanConstants.OPERATION_GET_LAST_RECORDING_NR:
-                    if (raw[1] == 0x00 && raw[2] == 0x01) {
+                    if (success == 0x00 && result == 0x01) {
                         FetchTo = BLETypeConversions.toUint16(raw, 3);
                         if (FetchFrom != -1) {
                             fetchRecordingActually();
                         }
                         return true;
-                    } else {
-                        String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, raw[1], raw[0]);
-                        GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
-                        fetchRecordedDataFinished();
                     }
-                    return false;
+                    fetchRecordedDataFinished();
+                    break;
 
+                case UltrahumanConstants.OPERATION_DISABLE_POWERSAVE:
+                case UltrahumanConstants.OPERATION_ENABLE_POWERSAVE:
                 case UltrahumanConstants.OPERATION_SETTIME:
-                    if (raw[1] != 0x00 || raw[2] != 0x01) {
-                        String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, raw[1], raw[0]);
-                        GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
+                    if (success == 0x00 && result == 0x01) {
+                        return true;
                     }
-                    return true;
+                    break;
+
                 default:
-                    LOG.error("unhandled BLE command response: {} ", StringUtils.bytesToHex(raw));
+                    String message = getContext().getString(R.string.ultrahuman_unhandled_operation_response, StringUtils.bytesToHex(raw));
+                    GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
                     return false;
             }
+
+            String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, op, success, result);
+            GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
+            return false;
         }
 
         LOG.error("unhandled characteristics {} - {} ", characteristicUUID, StringUtils.bytesToHex(raw));
         return false;
     }
 
+    @Override
+    public void onSendConfiguration(String config) {
+        if (DeviceSettingsPreferenceConst.PREF_TIME_SYNC.equals(config)) {
+            onSetTime();
+        } else if (DeviceSettingsPreferenceConst.PREF_POWER_SAVING.equals(config)) {
+            onSetPowerSaveMode();
+        } else {
+            super.onSendConfiguration(config);
+        }
+    }
 
     @Override
     public boolean useAutoConnect() {
@@ -310,7 +328,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
             if ((raw[1] & 0xFF) == 0xEE) {
                 LOG.warn("no historic data recorded");
             } else {
-                String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, raw[1], raw[0]);
+                String message = getContext().getString(R.string.ultrahuman_unhandled_error_response, raw[0], raw[1], raw[2]);
                 GB.toast(getContext(), message, Toast.LENGTH_LONG, GB.ERROR);
             }
             fetchRecordedDataFinished();
@@ -439,7 +457,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
                         batteryState = BatteryState.BATTERY_NORMAL;
                         break;
                     case 0x03:
-                        batteryState = BatteryState.BATTERY_CHARGING;
+                        batteryState = (batteryLevel > 99) ? BatteryState.BATTERY_CHARGING_FULL : BatteryState.BATTERY_CHARGING;
                         break;
                     default:
                         LOG.warn("DeviceState contains unhandled device state {}: {}", raw[5], StringUtils.bytesToHex(raw));
@@ -488,8 +506,8 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
         GB.signalActivityDataFinish(getDevice());
     }
 
-    public void activateAirplaneMode() {
-        sendCommand("ActivateAirplaneMode", new byte[]{UltrahumanConstants.OPERATION_ACTIVATE_AIRPLANE_MODE});
+    private void activateAirplaneMode() {
+        sendCommand("activateAirplaneMode", new byte[]{UltrahumanConstants.OPERATION_ACTIVATE_AIRPLANE_MODE});
     }
 
     @Override
@@ -499,16 +517,31 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    @Override
-    public void onSetTime() {
-        TransactionBuilder builder = new TransactionBuilder("onSetTime");
-        UltrahumanSetTimeAction action = new UltrahumanSetTimeAction(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND));
-        builder.add(action);
+    private void onSetPowerSaveMode() {
+        boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
+        TransactionBuilder builder = new TransactionBuilder("onSetPowerSaveMode");
+        builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{powerSave ? UltrahumanConstants.OPERATION_ENABLE_POWERSAVE : UltrahumanConstants.OPERATION_DISABLE_POWERSAVE});
 
         if (isConnected()) {
             builder.queue(getQueue());
         } else {
             GB.toast(getContext(), R.string.devicestatus_disconnected, Toast.LENGTH_LONG, GB.ERROR);
+        }
+    }
+
+    @Override
+    public void onSetTime() {
+        boolean timeSync = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_TIME_SYNC, true);
+        if (timeSync) {
+            TransactionBuilder builder = new TransactionBuilder("onSetTime");
+            UltrahumanSetTimeAction action = new UltrahumanSetTimeAction(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND));
+            builder.add(action);
+
+            if (isConnected()) {
+                builder.queue(getQueue());
+            } else {
+                GB.toast(getContext(), R.string.devicestatus_disconnected, Toast.LENGTH_LONG, GB.ERROR);
+            }
         }
     }
 
@@ -524,9 +557,16 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    private class UltrahumanBroadcastReceiver extends BroadcastReceiver {
+    private class UltrahumanBroadcastReceiver extends BroadcastReceiver implements IntentListener {
+        boolean Registered;
+
         @Override
         public void onReceive(Context context, Intent intent) {
+            notify(intent);
+        }
+
+        @Override
+        public void notify(Intent intent) {
             final GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
             if (device != null && !device.equals(getDevice())) {
                 // this intent is for another device
@@ -536,15 +576,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
             String action = intent.getAction();
             if (UltrahumanConstants.ACTION_AIRPLANE_MODE.equals(action)) {
                 activateAirplaneMode();
-            }
-        }
-    }
-
-    private class UltrahumanIntentListener implements IntentListener {
-        @Override
-        public void notify(Intent intent) {
-            String action = intent.getAction();
-            if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
+            } else if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
                 handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
             }
         }

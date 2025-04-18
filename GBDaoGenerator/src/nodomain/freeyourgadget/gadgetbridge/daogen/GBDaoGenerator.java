@@ -56,7 +56,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(101, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(102, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -193,6 +193,7 @@ public class GBDaoGenerator {
         addGenericHeartRateSample(schema, user, device);
         addGenericSpo2Sample(schema, user, device);
         addGenericStressSample(schema, user, device);
+        addGenericHrvSummarySample(schema, user, device);
         addGenericHrvValueSample(schema, user, device);
         addGenericTemperatureSample(schema, user, device);
 
@@ -1771,6 +1772,19 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractHeartRateSample", heartRateSample, user, device);
         heartRateSample.addIntProperty(SAMPLE_HEART_RATE).notNull();
         return heartRateSample;
+    }
+
+    private static Entity addGenericHrvSummarySample(Schema schema, Entity user, Entity device) {
+        Entity hrvSummarySample = addEntity(schema, "GenericHrvSummarySample");
+        addCommonTimeSampleProperties("AbstractHrvSummarySample", hrvSummarySample, user, device);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_WEEKLY_AVERAGE).codeBeforeGetter(OVERRIDE);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_LAST_NIGHT_AVERAGE).codeBeforeGetter(OVERRIDE);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_LAST_NIGHT_5MIN_HIGH).codeBeforeGetter(OVERRIDE);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_BASELINE_LOW_UPPER).codeBeforeGetter(OVERRIDE);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_BASELINE_BALANCED_LOWER).codeBeforeGetter(OVERRIDE);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_BASELINE_BALANCED_UPPER).codeBeforeGetter(OVERRIDE);
+        hrvSummarySample.addIntProperty(SAMPLE_HRV_STATUS_NUM).codeBeforeGetter(OVERRIDE);
+        return hrvSummarySample;
     }
 
     private static Entity addGenericHrvValueSample(Schema schema, Entity user, Entity device) {

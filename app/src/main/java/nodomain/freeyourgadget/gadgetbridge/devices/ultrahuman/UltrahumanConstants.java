@@ -36,4 +36,6 @@ public class UltrahumanConstants {
     public static final byte OPERATION_PING = 0x59;
     public static final byte OPERATION_ACTIVATE_AIRPLANE_MODE = 0x70;
     public static final byte OPERATION_RESET = (byte) 0x98;
+    public static final byte OPERATION_DISABLE_POWERSAVE = (byte) 0xD1;
+    public static final byte OPERATION_ENABLE_POWERSAVE = (byte) 0xD2;
 }

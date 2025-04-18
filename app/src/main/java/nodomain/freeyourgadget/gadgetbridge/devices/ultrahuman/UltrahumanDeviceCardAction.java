@@ -22,6 +22,7 @@ import android.content.Intent;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -58,6 +59,7 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
                 .setIcon(Icon)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
                     final Intent intent = new Intent(Action);
+                    intent.setPackage(BuildConfig.APPLICATION_ID);
                     intent.putExtra(GBDevice.EXTRA_DEVICE, device);
                     context.sendBroadcast(intent);
                 })
