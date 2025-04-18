@@ -424,7 +424,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
 
         getConnectionSpecificSupport().onAuthSuccess();
 
-        if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true)) {
+        if (GBApplication.getPrefs().syncTime()) {
             systemService.setCurrentTime();
         }
 

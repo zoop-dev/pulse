@@ -143,7 +143,7 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
 
                 TransactionBuilder builder = createTransactionBuilder("Sending the encrypted random key to the device");
                 builder.write(characteristic, responseValue);
-                huamiSupport.setCurrentTimeWithService(builder);
+                huamiSupport.setCurrentTime(builder);
                 huamiSupport.performImmediately(builder);
             } else if ((value[1] & 0x0f) == HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER) {
                 if (value[2] == HuamiService.AUTH_SUCCESS) {

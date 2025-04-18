@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -360,30 +361,21 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
 
     @Override
     public void onSetHeartRateMeasurementInterval(final int seconds) {
-        try {
-            int minuteInterval;
-            if (seconds == -1) {
-                // Smart
-                minuteInterval = -1;
-            } else {
-                minuteInterval = seconds / 60;
-                minuteInterval = Math.min(minuteInterval, 120);
-                minuteInterval = Math.max(0, minuteInterval);
-            }
-
-            final TransactionBuilder builder = performInitialized(String.format("set heart rate interval to: %d minutes", minuteInterval));
-            setHeartrateMeasurementInterval(builder, minuteInterval);
-            builder.queue(getQueue());
-        } catch (final IOException e) {
-            GB.toast(getContext(), "Error toggling heart measurement interval: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+        int minuteInterval;
+        if (seconds == -1) {
+            // Smart
+            minuteInterval = -1;
+        } else {
+            minuteInterval = seconds / 60;
+            minuteInterval = Math.min(minuteInterval, 120);
+            minuteInterval = Math.max(0, minuteInterval);
         }
-    }
 
-    @Override
-    protected ZeppOsSupport sendCalendarEvents(final TransactionBuilder builder) {
-        // We have native calendar sync
-        CalendarReceiver.forceSync(getDevice());
-        return this;
+        final TransactionBuilder builder = createTransactionBuilder(String.format(Locale.ROOT, "set heart rate interval to: %d min", minuteInterval));
+        configService.newSetter()
+                .setByte(HEART_RATE_ALL_DAY_MONITORING, (byte) minuteInterval)
+                .write(builder);
+        builder.queue(getQueue());
     }
 
     @Override
@@ -705,7 +697,27 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     }
 
     @Override
-    public ZeppOsSupport setCurrentTimeWithService(TransactionBuilder builder) {
+    public void onSetTime() {
+        if (!GBApplication.getPrefs().syncTime()) {
+            return;
+        }
+
+        try {
+            final TransactionBuilder builder = performInitialized("set date and time");
+            setCurrentTime(builder);
+            builder.queue(getQueue());
+            CalendarReceiver.forceSync(getDevice());
+        } catch (IOException ex) {
+            LOG.error("Unable to set time on Huami device", ex);
+        }
+    }
+
+    @Override
+    public void setCurrentTime(TransactionBuilder builder) {
+        if (!GBApplication.getPrefs().syncTime()) {
+            return;
+        }
+
         // It seems that the format sent to the Current Time characteristic changed in newer devices
         // to kind-of match the GATT spec, but it doesn't quite respect it?
         // - 11 bytes get sent instead of 10 (extra byte at the end for the offset in quarter-hours?)
@@ -730,8 +742,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         };
 
         builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), cmd);
-
-        return this;
     }
 
     @Override
@@ -744,15 +754,6 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     public ZeppOsSupport enableFurtherNotifications(final TransactionBuilder builder,
                                                     final boolean enable) {
         // Nothing to do here, they are already enabled from enableNotifications
-        return this;
-    }
-
-    @Override
-    protected HuamiSupport setHeartrateMeasurementInterval(final TransactionBuilder builder, final int minutes) {
-        configService.newSetter()
-                .setByte(HEART_RATE_ALL_DAY_MONITORING, (byte) minutes)
-                .write(builder);
-
         return this;
     }
 
@@ -989,7 +990,9 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
         if (allowHighMtu()) {
             builder.requestMtu(247);
         }
-        setCurrentTimeWithService(builder);
+        if (GBApplication.getPrefs().syncTime()) {
+            setCurrentTime(builder);
+        }
         requestDeviceInfo(builder);
 
         final GBDeviceEventUpdatePreferences evt = new GBDeviceEventUpdatePreferences()

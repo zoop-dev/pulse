@@ -165,7 +165,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
                 builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
                 builder.setCallback(null); // remove init operation as the callback
                 huamiSupport.enableFurtherNotifications(builder, true);
-                huamiSupport.setCurrentTimeWithService(builder);
+                huamiSupport.setCurrentTime(builder);
                 huamiSupport.requestDeviceInfo(builder);
                 huamiSupport.phase2Initialize(builder);
                 huamiSupport.phase3Initialize(builder);

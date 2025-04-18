@@ -152,4 +152,8 @@ public class GBPrefs extends Prefs {
     public boolean isMetricUnits() {
         return getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric").equals("metric");
     }
+
+    public boolean syncTime() {
+        return getBoolean("datetime_synconconnect", true);
+    }
 }

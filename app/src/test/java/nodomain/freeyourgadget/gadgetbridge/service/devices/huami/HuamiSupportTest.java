@@ -37,11 +37,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 
 public class HuamiSupportTest {
     @Test
-    public void testSetCurrentTimeWithService() {
+    public void testSetCurrentTime() {
         final TransactionBuilder testTransactionBuilder = new TransactionBuilder("test");
         final HuamiSupport huamiSupport = createSupport();
 
-        huamiSupport.setCurrentTimeWithService(testTransactionBuilder);
+        huamiSupport.setCurrentTime(testTransactionBuilder);
         final WriteAction action = (WriteAction) testTransactionBuilder.getTransaction().getActions().get(0);
 
         Assert.assertArrayEquals(new byte[]{-26, 7, 12, 15, 20, 38, 53, 4, 0, 0, 4}, action.getValue());

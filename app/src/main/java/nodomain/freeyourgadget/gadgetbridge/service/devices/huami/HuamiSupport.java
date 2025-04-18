@@ -485,11 +485,10 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         };
     }
 
-    public HuamiSupport setCurrentTimeWithService(TransactionBuilder builder) {
+    public void setCurrentTime(TransactionBuilder builder) {
         final Calendar now = createCalendar();
         byte[] bytes = getTimeBytes(now, TimeUnit.SECONDS);
         builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), bytes);
-        return this;
     }
 
     /**
@@ -808,7 +807,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         return this;
     }
 
-    protected HuamiSupport setHeartrateMeasurementInterval(TransactionBuilder builder, int minutes) {
+    private HuamiSupport setHeartrateMeasurementInterval(TransactionBuilder builder, int minutes) {
         if (characteristicHRControlPoint != null) {
             builder.notify(characteristicHRControlPoint, true);
             LOG.info("Setting heart rate measurement interval to " + minutes + " minutes");
@@ -1171,7 +1170,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
     public void onSetTime() {
         try {
             TransactionBuilder builder = performInitialized("Set date and time");
-            setCurrentTimeWithService(builder);
+            setCurrentTime(builder);
             //TODO: once we have a common strategy for sending events (e.g. EventHandler), remove this call from here. Meanwhile it does no harm.
             // = we should genaralize the pebble calender code
             sendCalendarEvents(builder);
@@ -2500,7 +2499,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         }
     }
 
-    protected HuamiSupport sendCalendarEvents(TransactionBuilder builder) {
+    private HuamiSupport sendCalendarEvents(TransactionBuilder builder) {
         if (characteristicChunked == null) { // all except Mi Band 2
             sendCalendarEventsAsAlarms(builder);
         } else {

@@ -37,11 +37,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 
 public class ZeppOsSupportTest {
     @Test
-    public void testSetCurrentTimeWithService() {
+    public void testSetCurrentTime() {
         final ZeppOsSupport support = createSupport();
 
         final TransactionBuilder testTransactionBuilder = new TransactionBuilder("test");
-        support.setCurrentTimeWithService(testTransactionBuilder);
+        support.setCurrentTime(testTransactionBuilder);
         final WriteAction action = (WriteAction) testTransactionBuilder.getTransaction().getActions().get(0);
 
         Assert.assertArrayEquals(new byte[]{-26, 7, 12, 15, 20, 38, 53, 4, 0, 8, 4}, action.getValue());
