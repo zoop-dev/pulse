@@ -166,11 +166,11 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
         getDevice().sendDeviceUpdateIntent(getContext());
 
         // fetch deltas while the device is connected
-        FetchFrom = (FetchCurrent > 0 && FetchCurrent < Short.MAX_VALUE - 1000) ? FetchCurrent : -1;
+        FetchFrom = (FetchCurrent > 0) ? FetchCurrent : -1;
         FetchTo = -1;
         FetchCurrent = -1;
 
-        TransactionBuilder builder = new TransactionBuilder("onFetchRecordedData");
+        TransactionBuilder builder = createTransactionBuilder("onFetchRecordedData");
         if (FetchFrom <= 0) {
             builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{UltrahumanConstants.OPERATION_GET_FIRST_RECORDING_NR});
         }
@@ -320,6 +320,10 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     private void fetchRecordingActually() {
+        // ID overflow
+        if (FetchFrom > FetchTo) {
+            FetchFrom = 0;
+        }
         sendCommand("GetRecordingsCommand", new byte[]{UltrahumanConstants.OPERATION_GET_RECORDINGS, (byte) (FetchFrom & 0xFF), (byte) ((FetchFrom >> 8) & 0xFF)});
     }
 
@@ -519,7 +523,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private void onSetPowerSaveMode() {
         boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
-        TransactionBuilder builder = new TransactionBuilder("onSetPowerSaveMode");
+        TransactionBuilder builder = createTransactionBuilder("onSetPowerSaveMode");
         builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), new byte[]{powerSave ? UltrahumanConstants.OPERATION_ENABLE_POWERSAVE : UltrahumanConstants.OPERATION_DISABLE_POWERSAVE});
 
         if (isConnected()) {
@@ -533,7 +537,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
     public void onSetTime() {
         boolean timeSync = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_TIME_SYNC, true);
         if (timeSync) {
-            TransactionBuilder builder = new TransactionBuilder("onSetTime");
+            TransactionBuilder builder = createTransactionBuilder("onSetTime");
             UltrahumanSetTimeAction action = new UltrahumanSetTimeAction(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND));
             builder.add(action);
 
@@ -547,7 +551,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private void sendCommand(String taskName, byte[] contents) {
         LOG.debug("sendCommand {} : {}", taskName, StringUtils.bytesToHex(contents));
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         builder.write(getCharacteristic(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND), contents);
 
         if (isConnected()) {

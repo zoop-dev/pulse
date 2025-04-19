@@ -142,7 +142,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("UH_[0-9A-F]{12}");
+        return Pattern.compile("^UH_[0-9A-F]{12}$");
     }
 
     @Override
