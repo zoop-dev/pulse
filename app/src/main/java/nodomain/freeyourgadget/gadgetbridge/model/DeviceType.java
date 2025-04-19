@@ -29,6 +29,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix7XProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActiveHrCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
@@ -484,6 +485,7 @@ public enum DeviceType {
     GARMIN_FENIX_7S_PRO(GarminFenix7SProCoordinator.class),
     GARMIN_FENIX_7X(GarminFenix7XCoordinator.class),
     GARMIN_FENIX_7_PRO(GarminFenix7ProCoordinator.class),
+    GARMIN_FENIX_7X_PRO(GarminFenix7XProCoordinator.class),
     GARMIN_FENIX_8(GarminFenix8Coordinator.class),
     GARMIN_FORERUNNER_45(GarminForerunner45Coordinator.class),
     GARMIN_FORERUNNER_55(GarminForerunner55Coordinator.class),
