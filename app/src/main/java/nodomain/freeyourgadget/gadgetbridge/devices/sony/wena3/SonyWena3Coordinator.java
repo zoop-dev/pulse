@@ -45,10 +45,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Wena3HeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3StressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3Vo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -81,7 +79,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return SonyWena3DeviceSupport.class;
     }
 

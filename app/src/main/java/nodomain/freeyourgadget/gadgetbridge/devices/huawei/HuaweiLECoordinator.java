@@ -299,7 +299,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return HuaweiLESupport.class;
     }
 

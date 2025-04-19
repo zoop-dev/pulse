@@ -104,7 +104,7 @@ public class DeviceSupportFactory {
 
     private ServiceDeviceSupport createServiceDeviceSupport(GBDevice device) throws GBException {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        final Class<?> supportClass = coordinator.getDeviceSupportClass();
+        final Class<?> supportClass = coordinator.getDeviceSupportClass(device);
 
         try {
             final DeviceSupport supportInstance = (DeviceSupport) supportClass.newInstance();

@@ -52,7 +52,7 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return OppoHeadphonesSupport.class;
     }
 

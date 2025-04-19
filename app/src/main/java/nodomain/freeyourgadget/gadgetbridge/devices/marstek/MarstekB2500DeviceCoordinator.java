@@ -56,7 +56,7 @@ public class MarstekB2500DeviceCoordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return MarstekB2500DeviceSupport.class;
     }
 

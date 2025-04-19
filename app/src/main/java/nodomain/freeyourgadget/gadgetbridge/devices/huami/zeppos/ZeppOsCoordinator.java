@@ -99,7 +99,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @NonNull
     @Override
-    public final Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public final Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return ZeppOsSupport.class;
     }
 

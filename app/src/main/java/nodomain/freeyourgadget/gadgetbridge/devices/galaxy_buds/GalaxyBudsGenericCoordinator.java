@@ -128,7 +128,7 @@ public abstract class GalaxyBudsGenericCoordinator extends AbstractBLClassicDevi
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return GalaxyBudsDeviceSupport.class;
     }
 

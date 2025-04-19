@@ -35,7 +35,7 @@ public class OneMoreSonoFlowCoordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return OneMoreSonoFlowSupport.class;
     }
 

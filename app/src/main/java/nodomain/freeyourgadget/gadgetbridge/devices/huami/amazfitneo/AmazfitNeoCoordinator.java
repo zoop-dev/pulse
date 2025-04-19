@@ -132,7 +132,7 @@ public class AmazfitNeoCoordinator extends HuamiCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return AmazfitNeoSupport.class;
     }
 

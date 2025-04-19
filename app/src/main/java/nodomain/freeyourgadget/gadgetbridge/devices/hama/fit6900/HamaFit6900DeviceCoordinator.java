@@ -94,7 +94,7 @@ public final class HamaFit6900DeviceCoordinator extends AbstractBLEDeviceCoordin
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return HamaFit6900DeviceSupport.class;
     }
 

@@ -24,7 +24,7 @@ public class RedmiBuds3ProCoordinator extends AbstractRedmiBudsCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return RedmiBuds3ProDeviceSupport.class;
     }
 

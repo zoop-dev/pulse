@@ -94,7 +94,7 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return ColmiR0xDeviceSupport.class;
     }
 

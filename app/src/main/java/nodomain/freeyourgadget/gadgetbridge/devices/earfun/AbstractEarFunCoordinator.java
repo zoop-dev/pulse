@@ -28,7 +28,7 @@ public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinato
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return EarFunDeviceSupport.class;
     }
 

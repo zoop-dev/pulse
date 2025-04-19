@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.DrawableRes;
@@ -153,7 +152,7 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return UnknownDeviceSupport.class;
     }
 

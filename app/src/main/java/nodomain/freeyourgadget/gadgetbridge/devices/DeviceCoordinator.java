@@ -821,7 +821,7 @@ public interface DeviceCoordinator {
     int getOrderPriority();
 
     @NonNull
-    Class<? extends DeviceSupport> getDeviceSupportClass();
+    Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device);
 
     EnumSet<ServiceDeviceSupport.Flags> getInitialFlags();
 

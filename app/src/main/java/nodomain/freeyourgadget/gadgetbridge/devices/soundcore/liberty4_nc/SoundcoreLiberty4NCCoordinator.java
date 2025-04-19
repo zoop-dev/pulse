@@ -77,7 +77,7 @@ public class SoundcoreLiberty4NCCoordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return SoundcoreLiberty4NCDeviceSupport.class;
     }
 }

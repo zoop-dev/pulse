@@ -188,7 +188,7 @@ public class ZeTimeCoordinator extends AbstractBLEDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return ZeTimeDeviceSupport.class;
     }
 

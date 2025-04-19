@@ -87,7 +87,7 @@ public class AsteroidOSDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return AsteroidOSDeviceSupport.class;
     }
 

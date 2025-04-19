@@ -87,7 +87,7 @@ public class AmazfitGTS2MiniCoordinator extends AmazfitGTS2Coordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return AmazfitGTS2MiniSupport.class;
     }
 }

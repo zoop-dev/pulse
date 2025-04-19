@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qc35;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
@@ -52,7 +50,7 @@ public class QC35Coordinator extends AbstractBLClassicDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return QC35BaseSupport.class;
     }
 

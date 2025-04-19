@@ -70,7 +70,7 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return Ear1Support.class;
     }
 

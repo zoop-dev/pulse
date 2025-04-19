@@ -248,7 +248,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return SonyHeadphonesSupport.class;
     }
 
