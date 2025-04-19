@@ -1856,6 +1856,7 @@
     <string name="devicetype_garmin_vivoactive_4">Garmin Vívoactive 4</string>
     <string name="devicetype_garmin_vivoactive_4s">Garmin Vívoactive 4S</string>
     <string name="devicetype_garmin_vivoactive_5">Garmin Vívoactive 5</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
     <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
     <string name="devicetype_garmin_vivosport">Garmin Vívosport</string>
     <string name="devicetype_gree_ac">Gree Air Conditioner</string>

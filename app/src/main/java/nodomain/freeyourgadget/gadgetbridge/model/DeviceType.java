@@ -29,6 +29,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActiveHrCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSDeviceCoordinator;
@@ -527,6 +528,7 @@ public enum DeviceType {
     GARMIN_VIVOACTIVE_4(GarminVivoActive4Coordinator.class),
     GARMIN_VIVOACTIVE_4S(GarminVivoActive4SCoordinator.class),
     GARMIN_VIVOACTIVE_5(GarminVivoActive5Coordinator.class),
+    GARMIN_VIVOACTIVE_HR(GarminVivoActiveHrCoordinator.class),
     GARMIN_VIVOSMART_5(GarminVivosmart5Coordinator.class),
     GARMIN_VIVOSPORT(GarminVivosportCoordinator.class),
     GREE_AC(GreeAcCoordinator.class),
