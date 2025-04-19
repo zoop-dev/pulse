@@ -4013,4 +4013,6 @@
     <string name="menuitem_water_time">Čas vody</string>
     <string name="menuitem_watch_storage_space">Sledovat úložiště</string>
     <string name="menuitem_bluetooth_scale_assistant">Asistent váhy Bluetooth</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
 </resources>
