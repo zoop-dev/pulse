@@ -32,7 +32,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvSummarySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericStressSampleProvider;
@@ -114,11 +113,6 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public String getManufacturer() {
         return "Ultrahuman Healthcare Pvt Ltd";
-    }
-
-    @Override
-    public TimeSampleProvider<? extends HrvSummarySample> getHrvSummarySampleProvider(GBDevice device, DaoSession session) {
-        return new GenericHrvSummarySampleProvider(device, session);
     }
 
     @Override
