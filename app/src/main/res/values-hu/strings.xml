@@ -3815,4 +3815,6 @@
     <string name="menuitem_running_calculator">Futáskalkulátor</string>
     <string name="menuitem_bluetooth_scale_assistant">Bluetooth mérlegasszisztens</string>
     <string name="menuitem_real_time_heart_rate">Valós idejű pulzusszám</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
 </resources>
