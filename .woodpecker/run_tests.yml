@@ -1,6 +1,6 @@
 steps:
   tests:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
     commands:
       - pwd #bump
       - ./gradlew :app:testBangleDebugUnitTest :app:testMainDebugUnitTest
