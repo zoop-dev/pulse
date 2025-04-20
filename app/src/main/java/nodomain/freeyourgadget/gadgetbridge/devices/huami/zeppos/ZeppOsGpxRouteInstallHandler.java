@@ -73,7 +73,7 @@ public class ZeppOsGpxRouteInstallHandler implements InstallHandler {
 
     @Override
     public boolean isValid() {
-        return file != null;
+        return file != null && file.isValid();
     }
 
     @Override

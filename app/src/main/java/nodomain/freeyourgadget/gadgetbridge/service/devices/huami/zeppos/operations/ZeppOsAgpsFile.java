@@ -67,7 +67,7 @@ public class ZeppOsAgpsFile {
             LOG.error("Failed to parse read MANIFEST or check file", e);
         }
 
-        return true;
+        return false;
     }
 
     private boolean isValidAsUihh() {
