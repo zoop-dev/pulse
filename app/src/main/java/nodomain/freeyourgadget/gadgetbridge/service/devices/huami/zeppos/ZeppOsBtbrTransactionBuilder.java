@@ -21,21 +21,21 @@ import android.content.Context;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
 
-public class ZeppOsBtleTransactionBuilder implements ZeppOsTransactionBuilder {
-    private final ZeppOsBtleSupport mSupport;
+public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
+    private final ZeppOsBtbrSupport mSupport;
     private final TransactionBuilder mBuilder;
 
-    public ZeppOsBtleTransactionBuilder(final ZeppOsBtleSupport mSupport, final String taskName) {
+    public ZeppOsBtbrTransactionBuilder(final ZeppOsBtbrSupport mSupport, final String taskName) {
         this.mSupport = mSupport;
         this.mBuilder = new TransactionBuilder(taskName);
     }
 
-    public ZeppOsBtleTransactionBuilder(final ZeppOsBtleSupport mSupport, final TransactionBuilder builder) {
+    public ZeppOsBtbrTransactionBuilder(final ZeppOsBtbrSupport mSupport, final TransactionBuilder builder) {
         this.mSupport = mSupport;
         this.mBuilder = builder;
     }
@@ -57,20 +57,16 @@ public class ZeppOsBtleTransactionBuilder implements ZeppOsTransactionBuilder {
 
     @Override
     public void notify(final UUID characteristic, final boolean enable) {
-        mBuilder.notify(mSupport.getCharacteristic(characteristic), enable);
+        // Nothing to do
     }
 
     @Override
     public void write(final UUID characteristic, final byte[] arr) {
-        mBuilder.write(mSupport.getCharacteristic(characteristic), arr);
+        mSupport.write(mBuilder, characteristic, arr);
     }
 
     @Override
     public void queue(final ZeppOsSupport support) {
         mBuilder.queue(mSupport.getQueue());
-    }
-
-    public TransactionBuilder getTransactionBuilder() {
-        return mBuilder;
     }
 }

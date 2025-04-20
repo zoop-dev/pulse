@@ -1442,7 +1442,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
     }
 
     public void sendReboot(TransactionBuilder builder) {
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_FIRMWARE), new byte[] { HuamiService.COMMAND_FIRMWARE_REBOOT});
+        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_FIRMWARE_CONTROL), new byte[] { HuamiService.COMMAND_FIRMWARE_REBOOT});
     }
 
     public void sendFactoryReset(TransactionBuilder builder) {

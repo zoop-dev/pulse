@@ -22,6 +22,8 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
@@ -41,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
@@ -57,8 +61,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsBtbrSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsBtleSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsFwInstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsContactsService;
@@ -100,7 +105,20 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     @NonNull
     @Override
     public final Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
-        return ZeppOsSupport.class;
+        // Prioritize user choice
+        DeviceCoordinator.ConnectionType connType = GBApplication.getDevicePrefs(device).getForcedConnectionTypeFromPrefs();
+        if (connType == DeviceCoordinator.ConnectionType.BOTH) {
+            connType = getConnectionType();
+        }
+
+        switch (connType) {
+            case BOTH:
+            case BT_CLASSIC:
+                return ZeppOsBtbrSupport.class;
+            case BLE:
+            default:
+                return ZeppOsBtleSupport.class;
+        }
     }
 
     @Override
@@ -349,6 +367,18 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     @Override
     public boolean supportsAudioRecordings(final GBDevice device) {
         return supportsDisplayItem(device, "voice_memos") && supportsBleFileTransfer(device, "voicememo");
+    }
+
+    @Override
+    public int[] getSupportedDeviceSpecificConnectionSettings() {
+        final List<Integer> settings = new ArrayList<>();
+
+        settings.add(R.xml.devicesettings_force_connection_type);
+
+        return ArrayUtils.addAll(
+                ArrayUtils.toPrimitive(settings.toArray(new Integer[0])),
+                super.getSupportedDeviceSpecificConnectionSettings()
+        );
     }
 
     /**

@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +29,6 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
@@ -184,10 +181,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
     }
 
     @Override
-    public void onCharacteristicChanged(final BluetoothGattCharacteristic characteristic) {
-        final UUID characteristicUUID = characteristic.getUuid();
-        final byte[] value = characteristic.getValue();
-
+    public void onCharacteristicChanged(final UUID characteristicUUID, final byte[] value) {
         if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE.equals(characteristicUUID)) {
             handleFileReceiveData(value);
         } else if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND.equals(characteristicUUID)) {
@@ -348,9 +342,9 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
 
             LOG.debug("Got V3 data for session={}, progress={}/{}", currentReceiveSession, currentReceiveRequest.getProgress(), currentReceiveRequest.getSize());
 
-            final TransactionBuilder builder = mSupport.createTransactionBuilder("send ack v3 file data");
+            final ZeppOsTransactionBuilder builder = mSupport.createZeppOsTransactionBuilder("send ack v3 file data");
             builder.write(
-                    mSupport.getCharacteristic(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE),
+                    HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE,
                     new byte[]{
                             CMD_DATA_V3_ACK,
                             0x00,
@@ -361,7 +355,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
                             (byte) 0x00
                     }
             );
-            builder.queue(mSupport.getQueue());
+            builder.queue(mSupport);
 
             if (currentReceiveChunkIsLast) {
                 final byte[] data;

@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +25,7 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
@@ -134,8 +133,8 @@ public class ZeppOsFileTransferV2 extends ZeppOsFileTransferImpl {
     }
 
     @Override
-    public void onCharacteristicChanged(final BluetoothGattCharacteristic characteristic) {
-        LOG.error("Unknown characteristic changed: {}", characteristic.getUuid());
+    public void onCharacteristicChanged(final UUID characteristicUUID, final byte[] value) {
+        LOG.error("Unknown characteristic changed: {}", characteristicUUID);
     }
 
     private void handleFileTransferData(final byte[] payload) {

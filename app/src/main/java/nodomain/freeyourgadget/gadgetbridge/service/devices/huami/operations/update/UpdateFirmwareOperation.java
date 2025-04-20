@@ -57,7 +57,7 @@ public class UpdateFirmwareOperation extends AbstractMiBandOperation<HuamiSuppor
     public UpdateFirmwareOperation(Uri uri, HuamiSupport support) {
         super(support);
         this.uri = uri;
-        fwCControlChar = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_FIRMWARE);
+        fwCControlChar = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_FIRMWARE_CONTROL);
         fwCDataChar = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_FIRMWARE_DATA);
     }
 

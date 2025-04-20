@@ -1,7 +1,5 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -13,6 +11,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -74,7 +73,7 @@ public abstract class ZeppOsFileTransferImpl {
 
     public abstract void handleFileDownloadRequest(final byte session, final FileTransferRequest request);
 
-    public abstract void onCharacteristicChanged(final BluetoothGattCharacteristic characteristic);
+    public abstract void onCharacteristicChanged(final UUID characteristicUUID, final byte[] value);
 
     public void uploadFile(final String url,
                            final String filename,
@@ -105,7 +104,7 @@ public abstract class ZeppOsFileTransferImpl {
         buf.get(); // discard command byte
 
         mVersion = buf.get() & 0xff;
-        mChunkSize = buf.getShort();
+        mChunkSize = buf.getShort() & 0xffff;
         if (mVersion >= 3) {
             mCompressedChunkSize = buf.getInt();
             final int numServices = buf.getShort();

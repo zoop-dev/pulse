@@ -25,6 +25,8 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
+import androidx.annotation.CallSuper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,6 +114,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         }
     }
 
+    @CallSuper
     @Override
     public void setContext(GBDevice gbDevice, BluetoothAdapter btAdapter, Context context) {
         super.setContext(gbDevice, btAdapter, context);

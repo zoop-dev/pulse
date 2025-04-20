@@ -17,15 +17,11 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
 import static java.lang.Thread.sleep;
-import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint16;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint8;
-import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.mapTimeZone;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.HEART_RATE_ALL_DAY_MONITORING;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.SLEEP_HIGH_ACCURACY_MONITORING;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
@@ -65,13 +61,12 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.Huami2021Service;
@@ -92,24 +87,18 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedDecoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedEncoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021Handler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDevicePrefs;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsAgpsUpdateOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsGpxRouteUploadOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsMusicUploadOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsActivityFetchService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAgpsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlarmsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAssistantService;
@@ -119,6 +108,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConnectionService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsDeviceInfoService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsDisplayItemsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFindDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsHeartRateService;
@@ -139,6 +129,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsSilentModeService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsStepsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsTimeService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsUserInfoService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVibrationPatternsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsVoiceMemosService;
@@ -153,47 +144,26 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.RealtimeSamplesAggregator;
 
-public class ZeppOsSupport extends AbstractBTLEDeviceSupport
+public class ZeppOsSupport extends AbstractDeviceSupport
         implements Huami2021Handler, HuamiFetcher.HuamiFetchSupport, ZeppOsFileTransferService.DownloadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsSupport.class);
+
+    private final ZeppOsCommunicator communicator;
 
     // Keep track of whether the rawSensor is enabled
     private boolean rawSensor = false;
     private ScheduledExecutorService rawSensorScheduler;
 
-    private final DeviceInfoProfile<ZeppOsSupport> deviceInfoProfile;
-    private final IntentListener mListener = intent -> {
-        String s = intent.getAction();
-        if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(s)) {
-            final DeviceInfo info = intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO);
-            LOG.debug("Device info: {}", info);
-            if (info == null) {
-                return;
-            }
-            final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
-            versionCmd.hwVersion = info.getHardwareRevision();
-            versionCmd.fwVersion = info.getFirmwareRevision();
-            if (versionCmd.fwVersion == null) {
-                versionCmd.fwVersion = info.getSoftwareRevision();
-            }
-            if (versionCmd.fwVersion != null && !versionCmd.fwVersion.isEmpty() && versionCmd.fwVersion.charAt(0) == 'V') {
-                versionCmd.fwVersion = versionCmd.fwVersion.substring(1);
-            }
-            handleGBDeviceEvent(versionCmd);
-        }
-    };
+    private int mMTU = 23;
 
-    protected static final int MIN_MTU = 23;
-    private int mMTU = MIN_MTU;
-    // Keep track of the previous MTU before reconnection, so that we can request it after reconnection
-    private int previousMtu = -1;
-
-    private Huami2021ChunkedEncoder huami2021ChunkedEncoder;
-    private Huami2021ChunkedDecoder huami2021ChunkedDecoder;
+    private final Huami2021ChunkedEncoder huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(getMTU());
+    private final Huami2021ChunkedDecoder huami2021ChunkedDecoder = new Huami2021ChunkedDecoder(this, true);
 
     private final HuamiFetcher fetcher = new HuamiFetcher(this);
 
     private SleepAsAndroidSender sleepAsAndroidSender;
+
+    private ZeppOsFirmwareUpdateOperation firmwareUpdateOperation;
 
     // Services
     private final ZeppOsServicesService servicesService = new ZeppOsServicesService(this);
@@ -234,6 +204,9 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
     private final ZeppOsWorkoutService workoutService = new ZeppOsWorkoutService(this);
     private final ZeppOsHeartRateService heartRateService = new ZeppOsHeartRateService(this);
     private final ZeppOsStepsService stepsService = new ZeppOsStepsService(this);
+    private final ZeppOsActivityFetchService activityFetchService = new ZeppOsActivityFetchService(this, fetcher);
+    private final ZeppOsTimeService timeService = new ZeppOsTimeService(this);
+    private final ZeppOsDeviceInfoService deviceInfoService = new ZeppOsDeviceInfoService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
     private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<Short, AbstractZeppOsService>() {{
@@ -275,20 +248,17 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
         put(workoutService.getEndpoint(), workoutService);
         put(heartRateService.getEndpoint(), heartRateService);
         put(stepsService.getEndpoint(), stepsService);
+        put(activityFetchService.getEndpoint(), activityFetchService);
+        put(timeService.getEndpoint(), timeService);
+        put(deviceInfoService.getEndpoint(), deviceInfoService);
     }};
 
-    public ZeppOsSupport() {
-        super(LOG);
+    public ZeppOsSupport(final ZeppOsCommunicator communicator) {
+        this.communicator = communicator;
+    }
 
-        addSupportedService(GattService.UUID_SERVICE_HEART_RATE);
-        addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
-
-        addSupportedService(MiBandService.UUID_SERVICE_MIBAND_SERVICE);
-        addSupportedService(HuamiService.UUID_SERVICE_FIRMWARE_SERVICE);
-
-        deviceInfoProfile = new DeviceInfoProfile<>(this);
-        deviceInfoProfile.addListener(mListener);
-        addSupportedProfile(deviceInfoProfile);
+    ZeppOsCommunicator getCommunicator() {
+        return communicator;
     }
 
     @Override
@@ -301,13 +271,14 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
     }
 
     @Override
-    public HuamiDevicePrefs getDevicePrefs() {
-        return new HuamiDevicePrefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()), gbDevice);
+    public boolean connect() {
+        // Nothing to do - connection is done in the communicator
+        return true;
     }
 
     @Override
-    public boolean useAutoConnect() {
-        return true;
+    public HuamiDevicePrefs getDevicePrefs() {
+        return new HuamiDevicePrefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()), gbDevice);
     }
 
     @Override
@@ -317,39 +288,17 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
                 Objects.requireNonNull(mServiceMap.get(endpoint)).dispose();
             }
         }
-
-        super.dispose();
     }
 
     @Override
-    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        if (getMTU() != MIN_MTU) {
-            // #3219 - Reset the MTU before re-initializing the device, otherwise initialization will sometimes fail
-            setMtu(MIN_MTU);
-        }
+    public boolean useAutoConnect() {
+        return true;
+    }
 
-        final BluetoothGattCharacteristic characteristicChunked2021Read = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_READ);
-        if (characteristicChunked2021Read != null && huami2021ChunkedDecoder == null) {
-            huami2021ChunkedDecoder = new Huami2021ChunkedDecoder(this, true);
-        }
+    protected void initializeDevice(final ZeppOsTransactionBuilder builder) {
+        builder.setDeviceState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
 
-        final BluetoothGattCharacteristic characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
-        if (characteristicChunked2021Write != null && huami2021ChunkedEncoder == null) {
-            huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(getMTU());
-        }
-
-        if (characteristicChunked2021Write == null || characteristicChunked2021Read == null) {
-            LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
-            return builder;
-        }
-
-        builder.notify(characteristicChunked2021Read, true);
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
-
-        authenticationService.startAuthentication(new ZeppOsBtleTransactionBuilder(this, builder));
-
-        return builder;
+        authenticationService.startAuthentication(builder);
     }
 
     @Override
@@ -557,10 +506,11 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
                         return;
                     }
 
-                    new ZeppOsFirmwareUpdateOperation(
+                    firmwareUpdateOperation = new ZeppOsFirmwareUpdateOperation(
                             Uri.parse(uihhFile.toURI().toString()),
                             this
-                    ).perform();
+                    );
+                    firmwareUpdateOperation.perform();
                 }
             } catch (final Exception e) {
                 GB.toast(getContext(), "AGPS install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
@@ -611,7 +561,8 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
         }
 
         try {
-            new ZeppOsFirmwareUpdateOperation(uri, this).perform();
+            firmwareUpdateOperation = new ZeppOsFirmwareUpdateOperation(uri, this);
+            firmwareUpdateOperation.perform();
         } catch (final IOException ex) {
             GB.toast(getContext(), "Firmware install error: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
@@ -699,38 +650,15 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
     public void onSetTime() {
         if (GBApplication.getPrefs().syncTime()) {
             final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("set date and time");
-            setCurrentTime(builder);
+            if (mSupportedServices.contains(timeService.getEndpoint())) {
+                timeService.setTime(builder);
+            } else {
+                communicator.setCurrentTime(builder);
+            }
             builder.queue(this);
         }
 
         CalendarReceiver.forceSync(getDevice());
-    }
-
-    private void setCurrentTime(ZeppOsTransactionBuilder builder) {
-        // It seems that the format sent to the Current Time characteristic changed in newer devices
-        // to kind-of match the GATT spec, but it doesn't quite respect it?
-        // - 11 bytes get sent instead of 10 (extra byte at the end for the offset in quarter-hours?)
-        // - Day of week starts at 0
-        // Otherwise, the command gets rejected with an "Out of Range" error and init fails.
-
-        final Calendar timestamp = BLETypeConversions.createCalendar();
-        final byte[] year = fromUint16(timestamp.get(Calendar.YEAR));
-
-        final byte[] cmd = {
-                year[0],
-                year[1],
-                fromUint8(timestamp.get(Calendar.MONTH) + 1),
-                fromUint8(timestamp.get(Calendar.DATE)),
-                fromUint8(timestamp.get(Calendar.HOUR_OF_DAY)),
-                fromUint8(timestamp.get(Calendar.MINUTE)),
-                fromUint8(timestamp.get(Calendar.SECOND)),
-                fromUint8(timestamp.get(Calendar.DAY_OF_WEEK) - 1),
-                0x00, // Fractions256?
-                0x08, // Reason for change?
-                mapTimeZone(timestamp, BLETypeConversions.TZ_FLAG_INCLUDE_DST_IN_TZ), // TODO: Confirm this
-        };
-
-        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, cmd);
     }
 
     @Override
@@ -883,20 +811,17 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
         watchfaceService.requestCurrentWatchface(builder);
     }
 
+    public void onFirmwareUpdateFinished() {
+        firmwareUpdateOperation = null;
+    }
+
     public void onAuthenticationSuccess() {
         LOG.info("ZeppOS phase 2 initialize...");
 
-        final TransactionBuilder bleBuilder = new TransactionBuilder("phase 2 initialize");
-        final var builder = new ZeppOsBtleTransactionBuilder(this, bleBuilder);
+        final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("phase 2 initialize");
         builder.setDeviceState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
-        if (getDevicePrefs().allowHighMtu()) {
-            bleBuilder.requestMtu(247);
-        }
-        if (GBApplication.getPrefs().syncTime()) {
-            setCurrentTime(builder);
-        }
-        deviceInfoProfile.requestDeviceInfo(bleBuilder);
+        communicator.onAuthenticationSuccess(builder);
 
         // Make sure that performInitialized is not called accidentally in here
         // (eg. by creating a new TransactionBuilder).
@@ -918,27 +843,36 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
     public void initializeServices() {
         LOG.info("2021 initializeServices...");
 
-        try {
-            final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("initialize services");
+        final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("initialize services");
 
-            // At this point we got the service list from phase 3, so we know which
-            // services are supported, and whether they are encrypted or not
+        // At this point we got the service list from phase 3, so we know which
+        // services are supported, and whether they are encrypted or not
 
-            final ZeppOsCoordinator coordinator = getCoordinator();
-
-            for (AbstractZeppOsService service : mServiceMap.values()) {
-                if (mSupportedServices.contains(service.getEndpoint())) {
-                    // Only initialize supported services
-                    service.initialize(builder);
-                }
+        if (GBApplication.getPrefs().syncTime()) {
+            if (mSupportedServices.contains(timeService.getEndpoint())) {
+                timeService.setTime(builder);
+            } else {
+                communicator.setCurrentTime(builder);
             }
-
-            builder.setDeviceState(getDevice(), GBDevice.State.INITIALIZED, getContext());
-
-            builder.queue(this);
-        } catch (Exception e) {
-            LOG.error("failed initializing device", e);
         }
+        if (mSupportedServices.contains(deviceInfoService.getEndpoint())) {
+            deviceInfoService.requestDeviceInfo(builder);
+        } else {
+            communicator.requestDeviceInfo(builder);
+        }
+
+        final ZeppOsCoordinator coordinator = getCoordinator();
+
+        for (AbstractZeppOsService service : mServiceMap.values()) {
+            if (mSupportedServices.contains(service.getEndpoint())) {
+                // Only initialize supported services
+                service.initialize(builder);
+            }
+        }
+
+        builder.setDeviceState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+
+        builder.queue(this);
     }
 
     @Override
@@ -951,9 +885,13 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
 
     @Override
     public void writeActivityControl(final String name, final byte[] value) {
-        final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder(name);
-        builder.write(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL, value);
-        builder.queue(this);
+        if (mSupportedServices.contains(activityFetchService.getEndpoint())) {
+            activityFetchService.writeActivityControl(name, value);
+        } else {
+            final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder(name);
+            builder.write(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL, value);
+            builder.queue(this);
+        }
     }
 
     @Nullable
@@ -975,20 +913,16 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
         LOG.info("Set raw sensor to {}", enable);
         rawSensor = enable;
 
-        try {
-            final TransactionBuilder builder = performInitialized("set raw sensor");
-            if (enable) {
-                builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL), Huami2021Service.CMD_RAW_SENSOR_START_1);
-                builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL), Huami2021Service.CMD_RAW_SENSOR_START_2);
-                builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL), Huami2021Service.CMD_RAW_SENSOR_START_3);
-            } else {
-                builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL), Huami2021Service.CMD_RAW_SENSOR_STOP);
-            }
-            builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_DATA), enable);
-            builder.queue(getQueue());
-        } catch (final IOException e) {
-            LOG.error("Unable to set raw sensor", e);
+        final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("set raw sensor");
+        if (enable) {
+            builder.write(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL, Huami2021Service.CMD_RAW_SENSOR_START_1);
+            builder.write(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL, Huami2021Service.CMD_RAW_SENSOR_START_2);
+            builder.write(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL, Huami2021Service.CMD_RAW_SENSOR_START_3);
+        } else {
+            builder.write(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_CONTROL, Huami2021Service.CMD_RAW_SENSOR_STOP);
         }
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_DATA, enable);
+        builder.queue(this);
     }
 
     private void handleRawSensorData(final byte[] value) {
@@ -1040,39 +974,41 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
         }
     }
 
-    @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt,
-                                           final BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
-            // handled upstream
-            return true;
-        }
-
-        final UUID characteristicUUID = characteristic.getUuid();
+    public boolean onCharacteristicChanged(final UUID characteristicUUID,
+                                           final byte[] value) {
         if (HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_READ.equals(characteristicUUID)) {
-            handleChunked(characteristic.getValue());
+            handleChunkedRead(value);
+            return true;
+        } if (HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE.equals(characteristicUUID)) {
+            handleChunkedWrite(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA.equals(characteristicUUID)) {
-            fetcher.onActivityData(characteristic.getValue());
+            fetcher.onActivityData(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL.equals(characteristicUUID)) {
-            fetcher.onActivityControl(characteristic.getValue());
+            fetcher.onActivityControl(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND.equals(characteristicUUID)) {
-            fileTransferService.onCharacteristicChanged(characteristic);
+            fileTransferService.onCharacteristicChanged(characteristicUUID, value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE.equals(characteristicUUID)) {
-            fileTransferService.onCharacteristicChanged(characteristic);
+            fileTransferService.onCharacteristicChanged(characteristicUUID, value);
             return true;
         } else if (GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristicUUID)) {
-            heartRateService.handleHeartRate(characteristic.getValue());
+            heartRateService.handleHeartRate(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_DATA.equals(characteristicUUID)) {
-            handleRawSensorData(characteristic.getValue());
+            handleRawSensorData(value);
             return true;
-        } else {
-            LOG.warn("Unhandled characteristic changed: {}", characteristicUUID);
-            logMessageContent(characteristic.getValue());
+        } else if (HuamiService.UUID_CHARACTERISTIC_FIRMWARE_CONTROL.equals(characteristicUUID)) {
+            if (firmwareUpdateOperation != null) {
+                firmwareUpdateOperation.handleControlNotification(value);
+            } else {
+                LOG.error("Got firmware control, but there is no ongoing operation: {}", GB.hexdump(value));
+            }
+            return true;
+        }  else {
+            LOG.warn("Unhandled characteristic changed: {}, data: {}", characteristicUUID, GB.hexdump(value));
         }
 
         return false;
@@ -1083,34 +1019,39 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
     }
 
     public void setMtu(final int mtu) {
-        if (mtu > MIN_MTU && !getDevicePrefs().allowHighMtu()) {
+        if (mtu > 23 && !getDevicePrefs().allowHighMtu()) {
             LOG.warn("High MTU is not allowed, ignoring");
             return;
         }
 
-        if (mtu < MIN_MTU) {
+        if (mtu < 23) {
             LOG.error("Device announced unreasonable low MTU of {}, ignoring", mtu);
             return;
         }
 
+        LOG.debug("Setting mtu to {}", mtu);
+
         this.mMTU = mtu;
-        if (huami2021ChunkedEncoder != null) {
-            huami2021ChunkedEncoder.setMTU(mtu);
+        this.huami2021ChunkedEncoder.setMTU(mtu);
+    }
+
+    /** @noinspection SwitchStatementWithTooFewBranches*/
+    private void handleChunkedRead(final byte[] value) {
+        switch (value[0]) {
+            case 0x03:
+                final boolean needsAck = huami2021ChunkedDecoder.decode(value);
+                if (needsAck) {
+                    sendChunkedAck();
+                }
+                return;
+            default:
+                LOG.warn("Unhandled chunked read payload of type {}", value[0]);
         }
     }
 
-    private void handleChunked(final byte[] value) {
+    /** @noinspection SwitchStatementWithTooFewBranches*/
+    private void handleChunkedWrite(final byte[] value) {
         switch (value[0]) {
-            case 0x03:
-                if (huami2021ChunkedDecoder != null) {
-                    final boolean needsAck = huami2021ChunkedDecoder.decode(value);
-                    if (needsAck) {
-                        sendChunkedAck();
-                    }
-                } else {
-                    LOG.warn("Got chunked payload, but decoder is null");
-                }
-                return;
             case 0x04:
                 final byte handle = value[2];
                 final byte count = value[4];
@@ -1118,7 +1059,7 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
                 // TODO: We should probably update the handle and count on the encoder
                 return;
             default:
-                LOG.warn("Unhandled chunked payload of type {}", value[0]);
+                LOG.warn("Unhandled chunked write payload of type {}", value[0]);
         }
     }
 
@@ -1213,7 +1154,6 @@ public class ZeppOsSupport extends AbstractBTLEDeviceSupport
     }
 
     public ZeppOsTransactionBuilder createZeppOsTransactionBuilder(final String taskName) {
-        // FIXME this needs to be moved upstream
-        return new ZeppOsBtleTransactionBuilder(this, taskName);
+        return communicator.createZeppOsTransactionBuilder(taskName);
     }
 }

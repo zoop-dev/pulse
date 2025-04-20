@@ -1,0 +1,499 @@
+/*  Copyright (C) 2025 José Rebelo
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
+
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.SparseArray;
+
+import org.apache.commons.lang3.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
+import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.Contact;
+import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
+import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+
+public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements ZeppOsCommunicator {
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsBtbrSupport.class);
+
+    private static final int MAX_MTU = 32768;
+
+    private static final byte PACKET_PREAMBLE = 0x55;
+    private static final byte PACKET_TRAILER = (byte) 0xaa;
+
+    private static final byte CMD_CHANNELS_GET = 0x01;
+    private static final byte CMD_CHANNELS_RET = 0x02;
+    private static final byte CMD_SESSION_START = 0x03;
+    private static final byte CMD_SESSION_ACK = 0x04;
+    private static final byte CMD_CHANNEL_DATA = 0x07;
+    private static final byte CMD_CHANNEL_ACK = 0x08;
+
+    private byte seqNumTx = 0x00;
+    private byte seqNumRx = 0x5a;
+
+    private byte sessionNumber;
+    private int sessionNonce;
+
+    private final ByteBuffer packetBuffer = ByteBuffer.allocate(MAX_MTU).order(ByteOrder.LITTLE_ENDIAN);
+
+    private final ZeppOsSupport zeppOsSupport = new ZeppOsSupport(this);
+
+    private final SparseArray<UUID> channelToCharacteristic = new SparseArray<>();
+    private final Map<UUID, Short> characteristicToChannel = new HashMap<>();
+
+    public ZeppOsBtbrSupport() {
+        super(LOG);
+        addSupportedService(HuamiService.UUID_BT_SERIAL_SERVICE);
+        setBufferSize(MAX_MTU);
+    }
+
+    @Override
+    public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
+        super.setContext(gbDevice, btAdapter, context);
+        zeppOsSupport.setContext(gbDevice, btAdapter, context);
+    }
+
+    @Override
+    public boolean useAutoConnect() {
+        return true;
+    }
+
+    @Override
+    public void dispose() {
+        zeppOsSupport.dispose();
+    }
+
+    @Override
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        write(builder, CMD_CHANNELS_GET, new byte[]{});
+        return builder;
+    }
+
+    @Override
+    public void onSocketRead(final byte[] data) {
+        packetBuffer.put(data);
+        packetBuffer.flip();
+
+        while (packetBuffer.hasRemaining()) {
+            packetBuffer.mark();
+            if (packetBuffer.remaining() < 8) {
+                // not enough bytes for min packet
+                packetBuffer.reset();
+                continue;
+            }
+
+            final byte preamble = packetBuffer.get();
+            if (preamble != PACKET_PREAMBLE) {
+                LOG.warn("Unexpected byte {} is not preamble, skipping 1b", String.format("0x%02x", preamble));
+                continue;
+            }
+
+            final byte cmd = packetBuffer.get();
+            final byte seqNum = packetBuffer.get();
+            // TODO check seqNum
+
+            final int length = packetBuffer.getShort();
+            if (packetBuffer.remaining() < length + 3) {
+                // not enough bytes for payload + crc + trailer
+                packetBuffer.reset();
+                continue;
+            }
+            final byte[] payload = new byte[length];
+            packetBuffer.get(payload);
+
+            final short expectedCrc = packetBuffer.getShort();
+
+            final byte trailer = packetBuffer.get();
+            if (trailer != PACKET_TRAILER) {
+                LOG.warn("Unexpected byte {} is not trailer, skipping 1b", String.format("0x%02x", trailer));
+                // if we made it this far, just rewind 1 byte and continue
+                packetBuffer.position(packetBuffer.position() - 1);
+                continue;
+            }
+
+            final short actualCrc = (short) crc16(cmd, seqNum, payload);
+            if (expectedCrc != actualCrc) {
+                LOG.warn(
+                        "Packet has invalid crc, got {}, expected {}",
+                        String.format("%04x", actualCrc),
+                        String.format("%04x", expectedCrc)
+                );
+                continue;
+            }
+
+            handlePacket(cmd, payload);
+        }
+
+        packetBuffer.compact();
+    }
+
+    public void write(final TransactionBuilder builder, final byte cmd, final byte[] payload) {
+        final ByteBuffer buf = ByteBuffer.allocate(payload.length + 8).order(ByteOrder.LITTLE_ENDIAN);
+
+        final byte seqNum = seqNumTx++;
+        buf.put(PACKET_PREAMBLE);
+        buf.put(cmd);
+        buf.put(seqNum);
+        buf.putShort((short) payload.length);
+        if (payload.length > 0) {
+            buf.put(payload);
+        }
+        buf.putShort((short) crc16(cmd, seqNum, payload));
+        buf.put(PACKET_TRAILER);
+
+        builder.write(buf.array());
+    }
+
+    protected void write(final TransactionBuilder builder, final UUID characteristic, final byte[] value) {
+        final Short channel = characteristicToChannel.get(characteristic);
+        if (channel == null) {
+            LOG.error("Unknown characteristic {}", characteristic);
+            return;
+        }
+        final ByteBuffer buf = ByteBuffer.allocate(value.length + 4).order(ByteOrder.LITTLE_ENDIAN);
+        buf.put(sessionNumber);
+        buf.putShort(channel);
+        buf.put((byte) 0); // TODO request ack?
+        buf.put(value);
+        write(builder, CMD_CHANNEL_DATA, buf.array());
+    }
+
+    private void handlePacket(final byte cmd, final byte[] payload) {
+        final ByteBuffer buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
+
+        switch (cmd) {
+            case CMD_CHANNELS_RET: {
+                final int version = buf.get() & 0xff; // ?
+                if (version > 1) {
+                    // TODO warn and disconnect
+                }
+                final int numCharacteristics = buf.getShort();
+                LOG.debug("Got channels version={}, numCharacteristics={}", version, numCharacteristics);
+                channelToCharacteristic.clear();
+                characteristicToChannel.clear();
+                for (int i = 0; i < numCharacteristics; i++) {
+                    final String characteristicUuid = StringUtils.untilNullTerminator(buf);
+                    final short characteristicNumber = buf.getShort();
+
+                    LOG.debug("Got characteristic uuid={} num={}", characteristicUuid, characteristicNumber);
+                    channelToCharacteristic.put(characteristicNumber, UUID.fromString(characteristicUuid));
+                    characteristicToChannel.put(UUID.fromString(characteristicUuid), characteristicNumber);
+                }
+
+                sessionNonce = RandomUtils.insecure().randomInt();
+                final TransactionBuilder builder = createTransactionBuilder("session start");
+                write(builder, CMD_SESSION_START, BLETypeConversions.fromUint32(sessionNonce));
+                builder.queue(getQueue());
+                return;
+            }
+            case CMD_SESSION_ACK: {
+                final int nonce = buf.getInt();
+                if (nonce != sessionNonce) {
+                    LOG.error("Got unexpected session nonce {}, expected {}", nonce, sessionNonce);
+                    // TODO reconnect?
+                    return;
+                }
+                final int status = buf.get() & 0xff;
+                if (status != 1) {
+                    LOG.error("Got unexpected status {}", status);
+                    // TODO reconnect?
+                    return;
+                }
+                sessionNumber = buf.get();
+                final int mtu = buf.getShort() & 0xFFFF;
+                zeppOsSupport.setMtu(mtu);
+
+                if (mtu > MAX_MTU) {
+                    LOG.error("MTU is larger than {}, there may be issues", MAX_MTU);
+                }
+
+                // TODO 3 bytes - 08:07:01?
+
+                LOG.debug("Got session ack, sessionNumber={}, mtu={}", sessionNumber, mtu);
+
+                final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("auth phase 1");
+                zeppOsSupport.initializeDevice(builder);
+                builder.queue(zeppOsSupport);
+
+                return;
+            }
+            case CMD_CHANNEL_DATA: {
+                final byte session = buf.get();
+                if (session != sessionNumber) {
+                    LOG.error("Got data for unknown session {}, expected {}", session, sessionNumber);
+                    return;
+                }
+                final short channel = buf.getShort();
+                final byte mustAck = buf.get();
+                final byte[] dataPayload = new byte[buf.remaining()];
+                buf.get(dataPayload);
+                final UUID uuid = channelToCharacteristic.get(channel);
+                if (uuid == null) {
+                    LOG.error("Channel {} does not match any known characteristic", channel);
+                }
+                zeppOsSupport.onCharacteristicChanged(uuid, dataPayload);
+                if (mustAck != 0) {
+                    // TODO ack
+                    //final TransactionBuilder builder = createTransactionBuilder("ack");
+                    //write(builder, CMD_SESSION_START, BLETypeConversions.fromUint32(sessionNonce));
+                    //builder.queue(getQueue());
+                }
+                return;
+            }
+            case CMD_CHANNEL_ACK: {
+                final byte session = buf.get();
+                final byte seqNum = buf.get();
+                final byte status = buf.get(); // 1 for ack
+                final byte unk = buf.get(); // 0?
+                LOG.debug("Got ack for session={}, seqNum={}, status={}, unk={}", session, seqNum, status, unk);
+                return;
+            }
+        }
+
+        LOG.warn("Unexpected cmd={}, payload={}", String.format("0x%02x", cmd), GB.hexdump(payload));
+    }
+
+    private int crc16(final byte command, final byte seqNum, final byte[] payload) {
+        int crc = CheckSums.getCRC16(new byte[]{command});
+        crc = CheckSums.getCRC16(new byte[]{seqNum}, crc);
+        crc = CheckSums.getCRC16(BLETypeConversions.fromUint16(payload.length), crc);
+        crc = CheckSums.getCRC16(payload, crc);
+        return crc;
+    }
+
+    // =============================================================================================
+    // ZeppOsCommunicator
+    // =============================================================================================
+
+    @Override
+    public ZeppOsTransactionBuilder createZeppOsTransactionBuilder(final String taskName) {
+        return new ZeppOsBtbrTransactionBuilder(this, taskName);
+    }
+
+    @Override
+    public void setCurrentTime(final ZeppOsTransactionBuilder builder) {
+        LOG.error("Set current time not supported on Btbr");
+    }
+
+    @Override
+    public void requestDeviceInfo(final ZeppOsTransactionBuilder builder) {
+        LOG.error("Request device info not supported on Btbr");
+    }
+
+    @Override
+    public void onAuthenticationSuccess(final ZeppOsTransactionBuilder builder) {
+        // Nothing to do
+    }
+
+    // =============================================================================================
+    // Pass-through to zeppOsSupport
+    // =============================================================================================
+
+    @Override
+    public void onSendConfiguration(final String config) {
+        zeppOsSupport.onSendConfiguration(config);
+    }
+
+    @Override
+    public void onTestNewFunction() {
+        zeppOsSupport.onTestNewFunction();
+    }
+
+
+    @Override
+    public void onFindDevice(final boolean start) {
+        zeppOsSupport.onFindDevice(start);
+    }
+
+    @Override
+    public void onFetchRecordedData(final int dataTypes) {
+        zeppOsSupport.onFetchRecordedData(dataTypes);
+    }
+
+    @Override
+    public void onFindPhone(final boolean start) {
+        zeppOsSupport.onFindPhone(start);
+    }
+
+    @Override
+    public void onScreenshotReq() {
+        zeppOsSupport.onScreenshotReq();
+    }
+
+    @Override
+    public void onSetHeartRateMeasurementInterval(final int seconds) {
+        zeppOsSupport.onSetHeartRateMeasurementInterval(seconds);
+    }
+
+    @Override
+    public void onAddCalendarEvent(final CalendarEventSpec calendarEventSpec) {
+        zeppOsSupport.onAddCalendarEvent(calendarEventSpec);
+    }
+
+    @Override
+    public void onDeleteCalendarEvent(final byte type, final long id) {
+        zeppOsSupport.onDeleteCalendarEvent(type, id);
+    }
+
+    @Override
+    public void onHeartRateTest() {
+        zeppOsSupport.onHeartRateTest();
+    }
+
+    @Override
+    public void onEnableRealtimeHeartRateMeasurement(final boolean enable) {
+        zeppOsSupport.onEnableRealtimeHeartRateMeasurement(enable);
+    }
+
+    @Override
+    public void onSetAlarms(final ArrayList<? extends Alarm> alarms) {
+        zeppOsSupport.onSetAlarms(alarms);
+    }
+
+    @Override
+    public void onSetCallState(final CallSpec callSpec) {
+        zeppOsSupport.onSetCallState(callSpec);
+    }
+
+    @Override
+    public void onNotification(final NotificationSpec notificationSpec) {
+        zeppOsSupport.onNotification(notificationSpec);
+    }
+
+    @Override
+    public void onSetReminders(final ArrayList<? extends Reminder> reminders) {
+        zeppOsSupport.onSetReminders(reminders);
+    }
+
+    @Override
+    public void onSetWorldClocks(ArrayList<? extends WorldClock> clocks) {
+        zeppOsSupport.onSetWorldClocks(clocks);
+    }
+
+    @Override
+    public void onSetLoyaltyCards(final ArrayList<LoyaltyCard> cards) {
+        zeppOsSupport.onSetLoyaltyCards(cards);
+    }
+
+    @Override
+    public void onSetContacts(ArrayList<? extends Contact> contacts) {
+        zeppOsSupport.onSetContacts(contacts);
+    }
+
+    @Override
+    public void onDeleteNotification(final int id) {
+        zeppOsSupport.onDeleteNotification(id);
+    }
+
+    @Override
+    public void onSetGpsLocation(final Location location) {
+        zeppOsSupport.onSetGpsLocation(location);
+    }
+
+    @Override
+    public void onSetCannedMessages(final CannedMessagesSpec cannedMessagesSpec) {
+        zeppOsSupport.onSetCannedMessages(cannedMessagesSpec);
+    }
+
+    @Override
+    public void onSetPhoneVolume(final float volume) {
+        zeppOsSupport.onSetPhoneVolume(volume);
+    }
+
+    @Override
+    public void onSetMusicState(final MusicStateSpec stateSpec) {
+        zeppOsSupport.onSetMusicState(stateSpec);
+    }
+
+    @Override
+    public void onSetMusicInfo(final MusicSpec musicSpec) {
+        zeppOsSupport.onSetMusicInfo(musicSpec);
+    }
+
+    @Override
+    public void onEnableRealtimeSteps(final boolean enable) {
+        zeppOsSupport.onEnableRealtimeSteps(enable);
+    }
+
+    @Override
+    public void onInstallApp(final Uri uri) {
+        zeppOsSupport.onInstallApp(uri);
+    }
+
+    @Override
+    public void onAppInfoReq() {
+        zeppOsSupport.onAppInfoReq();
+    }
+
+    @Override
+    public void onAppStart(final UUID uuid, final boolean start) {
+        zeppOsSupport.onAppStart(uuid, start);
+    }
+
+    @Override
+    public void onAppDelete(final UUID uuid) {
+        zeppOsSupport.onAppDelete(uuid);
+    }
+
+    @Override
+    public void onEnableHeartRateSleepSupport(final boolean enable) {
+        zeppOsSupport.onEnableHeartRateSleepSupport(enable);
+    }
+
+    @Override
+    public void onSetTime() {
+        zeppOsSupport.onSetTime();
+    }
+
+    @Override
+    public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) {
+        zeppOsSupport.onSendWeather(weatherSpecs);
+    }
+
+    @Override
+    public void onSleepAsAndroidAction(final String action, final Bundle extras) {
+        zeppOsSupport.onSleepAsAndroidAction(action, extras);
+    }
+}

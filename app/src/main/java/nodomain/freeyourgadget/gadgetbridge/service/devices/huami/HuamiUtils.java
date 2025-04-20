@@ -23,13 +23,18 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.zone.ZoneRules;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 
 public class HuamiUtils {
     private static final Logger LOG = LoggerFactory.getLogger(HuamiUtils.class);
@@ -140,6 +145,38 @@ public class HuamiUtils {
             // Seems to always be 0 ?
             buf.put((byte) 0x00);
         }
+
+        return buf.array();
+    }
+
+    public static byte[] getCurrentTimeBytes() {
+        // It seems that the format sent to the Current Time characteristic changed in newer devices
+        // to kind-of match the GATT spec, but it doesn't quite respect it?
+        // - 11 bytes get sent instead of 10 (extra byte at the end for the offset in quarter-hours?)
+        // - Day of week starts at 0
+        // Otherwise, the command gets rejected with an "Out of Range" error and init fails.
+
+        final Calendar timestamp = BLETypeConversions.createCalendar();
+
+        final ByteBuffer buf = ByteBuffer.allocate(11).order(ByteOrder.LITTLE_ENDIAN);
+        buf.putShort((short) timestamp.get(Calendar.YEAR));
+        buf.put((byte) (timestamp.get(Calendar.MONTH) + 1));
+        buf.put((byte) timestamp.get(Calendar.DATE));
+        buf.put((byte) timestamp.get(Calendar.HOUR_OF_DAY));
+        buf.put((byte) timestamp.get(Calendar.MINUTE));
+        buf.put((byte) timestamp.get(Calendar.SECOND));
+        buf.put((byte) (timestamp.get(Calendar.DAY_OF_WEEK) - 1));
+        buf.put(BLETypeConversions.fromUint8((int) (timestamp.get(Calendar.MILLISECOND) / 1000. * 256))); // Fractions256
+
+        final ZoneId zoneId = ZoneId.systemDefault();
+        final ZoneRules rules = zoneId.getRules();
+        // reason
+        if (rules.isDaylightSavings(Instant.now())) {
+            buf.put((byte) 0x08);
+        } else {
+            buf.put((byte) 0x00);
+        }
+        buf.put((byte) (rules.getOffset(Instant.now()).getTotalSeconds() / (60 * 15)));
 
         return buf.array();
     }

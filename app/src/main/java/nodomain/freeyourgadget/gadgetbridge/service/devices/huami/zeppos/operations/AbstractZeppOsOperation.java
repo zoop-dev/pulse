@@ -45,7 +45,7 @@ public abstract class AbstractZeppOsOperation<T extends ZeppOsSupport> {
 
     protected abstract void doPerform() throws IOException;
 
-    protected void operationFinished() throws IOException {
+    protected void operationFinished() {
     }
 
     protected Context getContext() {

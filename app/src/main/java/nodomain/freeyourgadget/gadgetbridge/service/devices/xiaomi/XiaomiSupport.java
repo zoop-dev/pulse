@@ -123,25 +123,11 @@ public class XiaomiSupport extends AbstractDeviceSupport {
         }
     }
 
-    private DeviceCoordinator.ConnectionType getForcedConnectionTypeFromPrefs() {
-        final String connTypeAuto = getContext().getString(R.string.pref_force_connection_type_auto_value);
-        String connTypePref = getDevicePrefs().getString(PREF_FORCE_CONNECTION_TYPE, connTypeAuto);
-
-        if (getContext().getString(R.string.pref_force_connection_type_ble_value).equals(connTypePref))
-            return DeviceCoordinator.ConnectionType.BLE;
-
-        if (getContext().getString(R.string.pref_force_connection_type_bt_classic_value).equals(connTypePref))
-            return DeviceCoordinator.ConnectionType.BT_CLASSIC;
-
-        // either set to default, unknown option selected, or has not been set
-        return DeviceCoordinator.ConnectionType.BOTH;
-    }
-
     private XiaomiConnectionSupport createConnectionSpecificSupport() {
         DeviceCoordinator.ConnectionType connType = getCoordinator().getConnectionType();
 
         if (connType == DeviceCoordinator.ConnectionType.BOTH) {
-            connType = getForcedConnectionTypeFromPrefs();
+            connType = getDevicePrefs().getForcedConnectionTypeFromPrefs();
         }
 
         switch (connType) {

@@ -16,10 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
@@ -91,13 +91,13 @@ public class ZeppOsFileTransferService extends AbstractZeppOsService {
         impl.uploadFile(url, filename, bytes, compress, callback);
     }
 
-    public void onCharacteristicChanged(final BluetoothGattCharacteristic characteristic) {
+    public void onCharacteristicChanged(final UUID characteristicUUID, final byte[] value) {
         if (impl == null) {
-            LOG.error("Service not initialized, ignoring characteristic change for {}", characteristic.getUuid());
+            LOG.error("Service not initialized, ignoring characteristic change for {}", characteristicUUID);
             return;
         }
 
-        impl.onCharacteristicChanged(characteristic);
+        impl.onCharacteristicChanged(characteristicUUID, value);
     }
 
     public interface Callback {

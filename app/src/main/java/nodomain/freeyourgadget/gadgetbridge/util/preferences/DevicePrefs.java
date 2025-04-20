@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -119,4 +120,16 @@ public class DevicePrefs extends Prefs {
         return getBoolean(PREF_ALLOW_HIGH_MTU, true);
     }
 
+    public DeviceCoordinator.ConnectionType getForcedConnectionTypeFromPrefs() {
+        final String connTypePref = getString(DeviceSettingsPreferenceConst.PREF_FORCE_CONNECTION_TYPE, "BOTH");
+
+        if ("BLE".equals(connTypePref))
+            return DeviceCoordinator.ConnectionType.BLE;
+
+        if ("BT_CLASSIC".equals(connTypePref))
+            return DeviceCoordinator.ConnectionType.BT_CLASSIC;
+
+        // either set to default, unknown option selected, or has not been set
+        return DeviceCoordinator.ConnectionType.BOTH;
+    }
 }
