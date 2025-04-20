@@ -3654,9 +3654,9 @@
     <string name="catalan">Katalán</string>
     <string name="finnish">Finn</string>
     <string name="enhanced">Továbbfejlesztett</string>
-    <string name="ultrahuman_airplane_mode_unknown">ismeretlen hiba - repülős üzemmód NINCS aktiválva</string>
+    <string name="ultrahuman_airplane_mode_unknown">ismeretlen hiba %#02x - repülős üzemmód NINCS aktiválva</string>
     <string name="ultrahuman_airplane_mode_title">repülős üzemmód</string>
-    <string name="ultrahuman_unhandled_error_response">0x%x kezeletlen válaszkódot kapott a(z) 0x%x művelethez</string>
+    <string name="ultrahuman_unhandled_error_response">Nem kezelt válasz: %2$#02x %3$#02x a(z) %1$#02x művelethez</string>
     <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="ultrahuman_airplane_mode_activated">repülős üzemmód aktiválva</string>
     <string name="ultrahuman_airplane_mode_on_charger">a gyűrű töltődik - repülős üzemmód NINCS aktiválva</string>
@@ -3817,4 +3817,5 @@
     <string name="menuitem_real_time_heart_rate">Valós idejű pulzusszám</string>
     <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
     <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="ultrahuman_unhandled_operation_response">nem kezelt művelet válasza: %s</string>
 </resources>
