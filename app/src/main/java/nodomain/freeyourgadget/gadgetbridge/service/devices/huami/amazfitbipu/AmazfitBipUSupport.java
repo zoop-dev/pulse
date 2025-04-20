@@ -24,7 +24,6 @@ import java.io.IOException;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbipu.AmazfitBipUFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitbips.AmazfitBipSSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation2020;
@@ -32,8 +31,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.upd
 public class AmazfitBipUSupport extends AmazfitBipSSupport {
 
     @Override
-    protected HuamiSupport setLanguage(TransactionBuilder builder) {
-        return setLanguageByIdNew(builder);
+    protected void setLanguage(TransactionBuilder builder) {
+        setLanguageByIdNew(builder);
     }
 
     @Override

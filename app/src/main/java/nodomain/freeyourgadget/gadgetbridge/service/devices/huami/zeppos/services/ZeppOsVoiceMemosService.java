@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.repository.AudioRecordingsR
 import nodomain.freeyourgadget.gadgetbridge.entities.AudioRecording;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -130,6 +131,14 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
         }
 
         LOG.warn("Unexpected voice memos byte {}", String.format("0x%02x", payload[0]));
+    }
+
+    @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        downloadingRecordings.clear();
+        downloadQueue.clear();
+        downloading = false;
+        handler.removeCallbacksAndMessages(null);
     }
 
     public void requestList() {

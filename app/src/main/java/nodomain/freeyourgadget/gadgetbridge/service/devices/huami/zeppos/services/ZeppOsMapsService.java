@@ -34,9 +34,9 @@ import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsMapsFile;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -63,7 +63,7 @@ public class ZeppOsMapsService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 

@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 
 public class ZeppOsServicesService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsServicesService.class);
@@ -43,6 +43,7 @@ public class ZeppOsServicesService extends AbstractZeppOsService {
         return ENDPOINT;
     }
 
+    /** @noinspection SwitchStatementWithTooFewBranches*/
     @Override
     public void handlePayload(final byte[] payload) {
         switch (payload[0]) {
@@ -54,7 +55,7 @@ public class ZeppOsServicesService extends AbstractZeppOsService {
         }
     }
 
-    public void requestServices(final TransactionBuilder builder) {
+    public void requestServices(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_GET_LIST);
     }
 

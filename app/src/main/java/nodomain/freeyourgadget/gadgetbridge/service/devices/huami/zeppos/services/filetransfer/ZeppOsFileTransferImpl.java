@@ -19,8 +19,8 @@ import java.util.zip.Inflater;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -117,10 +117,10 @@ public abstract class ZeppOsFileTransferImpl {
 
             // TODO: 3 unknown bytes for v3
 
-            final TransactionBuilder builder = mSupport.createTransactionBuilder("enable file transfer v3 notifications");
-            builder.notify(mSupport.getCharacteristic(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND), true);
-            builder.notify(mSupport.getCharacteristic(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE), true);
-            builder.queue(mSupport.getQueue());
+            final ZeppOsTransactionBuilder builder = mSupport.createZeppOsTransactionBuilder("enable file transfer v3 notifications");
+            builder.notify(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND, true);
+            builder.notify(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE, true);
+            builder.queue(mSupport);
         }
 
         mSupport.evaluateGBDeviceEvent(new GBDeviceEventUpdatePreferences(PREF_SUPPORTED_SERVICES, new HashSet<>(supportedServices)));

@@ -31,11 +31,11 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsVibrationPatternsService extends AbstractZeppOsService {
@@ -68,7 +68,7 @@ public class ZeppOsVibrationPatternsService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         for (final HuamiVibrationPatternNotificationType type : getCoordinator().getVibrationPatternNotificationTypes(getSupport().getDevice())) {
             // FIXME: Can we read these from the band?
             final String typeKey = type.name().toLowerCase(Locale.ROOT);
@@ -81,9 +81,10 @@ public class ZeppOsVibrationPatternsService extends AbstractZeppOsService {
         if (config.startsWith(HuamiConst.PREF_HUAMI_VIBRATION_PROFILE_PREFIX) ||
                 config.startsWith(HuamiConst.PREF_HUAMI_VIBRATION_COUNT_PREFIX) ||
                 config.startsWith(HuamiConst.PREF_HUAMI_VIBRATION_TRY_PREFIX)) {
-            final TransactionBuilder builder = new TransactionBuilder("send " + config);
-            setVibrationPattern(builder, config);
-            builder.queue(getSupport().getQueue());
+            withTransactionBuilder(
+                    "send " + config,
+                    builder -> setVibrationPattern(builder, config)
+            );
             return true;
         }
 
@@ -91,7 +92,7 @@ public class ZeppOsVibrationPatternsService extends AbstractZeppOsService {
     }
 
 
-    protected void setVibrationPattern(final TransactionBuilder builder, final String preferenceKey) {
+    protected void setVibrationPattern(final ZeppOsTransactionBuilder builder, final String preferenceKey) {
         // The preference key has one of the 3 prefixes
         final String notificationTypeName = preferenceKey.replace(PREF_HUAMI_VIBRATION_COUNT_PREFIX, "")
                 .replace(PREF_HUAMI_VIBRATION_PROFILE_PREFIX, "")
@@ -109,7 +110,7 @@ public class ZeppOsVibrationPatternsService extends AbstractZeppOsService {
         setVibrationPattern(builder, notificationType, isTry, vibrationProfile);
     }
 
-    private void setVibrationPattern(final TransactionBuilder builder,
+    private void setVibrationPattern(final ZeppOsTransactionBuilder builder,
                                      final HuamiVibrationPatternNotificationType notificationType,
                                      final boolean test,
                                      final VibrationProfile profile) {

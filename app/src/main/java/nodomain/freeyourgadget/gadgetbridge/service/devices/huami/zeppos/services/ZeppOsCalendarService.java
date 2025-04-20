@@ -26,9 +26,9 @@ import java.nio.charset.StandardCharsets;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class ZeppOsCalendarService extends AbstractZeppOsService {
@@ -59,11 +59,11 @@ public class ZeppOsCalendarService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestCapabilities(builder);
     }
 
-    public void requestCapabilities(final TransactionBuilder builder) {
+    public void requestCapabilities(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 

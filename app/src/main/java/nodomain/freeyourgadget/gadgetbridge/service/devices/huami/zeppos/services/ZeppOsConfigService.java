@@ -24,6 +24,8 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst.PREF
 import static nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst.PREF_NIGHT_MODE;
 import static nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst.PREF_NIGHT_MODE_END;
 import static nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst.PREF_NIGHT_MODE_START;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.LANGUAGE_FOLLOW_PHONE;
 
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -75,11 +77,11 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.DoNotDisturb;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsMenuType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MapUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -133,7 +135,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
         requestAllConfigs(builder);
     }
@@ -149,24 +151,22 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             case ActivityUser.PREF_USER_GOAL_WEIGHT_KG:
             case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
             case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES: {
-                final TransactionBuilder builder = new TransactionBuilder("set fitness goal");
-                setFitnessGoal(builder);
-                builder.queue(getSupport().getQueue());
+                withTransactionBuilder("set fitness goal", this::setFitnessGoal);
                 return true;
             }
             // Measurement system is global
             case SettingsActivity.PREF_MEASUREMENT_SYSTEM: {
-                final TransactionBuilder builder = new TransactionBuilder("set measurement system");
-                setMeasurementSystem(builder);
-                builder.queue(getSupport().getQueue());
+                withTransactionBuilder("set measurement system", this::setMeasurementSystem);
                 return true;
             }
             // Password needs sanity checks
             case PasswordCapabilityImpl.PREF_PASSWORD:
             case PasswordCapabilityImpl.PREF_PASSWORD_ENABLED: {
-                final TransactionBuilder builder = new TransactionBuilder("set " + prefKey);
-                setPassword(builder);
-                builder.queue(getSupport().getQueue());
+                withTransactionBuilder("set " + prefKey, this::setPassword);
+                return true;
+            }
+            case PREF_LANGUAGE: {
+                withTransactionBuilder("set language", this::setLanguage);
                 return true;
             }
         }
@@ -179,9 +179,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         if (setConfig(prefs, prefKey, configSetter)) {
             try {
                 // If the ConfigSetter was able to set the config, just write it and return
-                final TransactionBuilder builder = new TransactionBuilder("send config " + prefKey);
-                configSetter.write(builder);
-                builder.queue(getSupport().getQueue());
+                withTransactionBuilder("send config " + prefKey, configSetter::write);
             } catch (final Exception e) {
                 GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
             }
@@ -192,7 +190,18 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         return false;
     }
 
-    private void setPassword(final TransactionBuilder builder) {
+    private void setLanguage(final ZeppOsTransactionBuilder builder) {
+        final String localeString = getDevicePrefs().getString("language", "auto");
+
+        LOG.info("Setting device language to {}", localeString);
+
+        newSetter()
+                .setByte(LANGUAGE, getDevicePrefs().getLanguageId())
+                .setBoolean(LANGUAGE_FOLLOW_PHONE, localeString.equals("auto"))
+                .write(builder);
+    }
+
+    private void setPassword(final ZeppOsTransactionBuilder builder) {
         final boolean passwordEnabled = HuamiCoordinator.getPasswordEnabled(getSupport().getDevice().getAddress());
         final String password = HuamiCoordinator.getPassword(getSupport().getDevice().getAddress());
 
@@ -209,7 +218,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 .write(builder);
     }
 
-    protected void setFitnessGoal(final TransactionBuilder builder) {
+    protected void setFitnessGoal(final ZeppOsTransactionBuilder builder) {
         final int goalSteps = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
         final int goalCalories = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
         final int goalSleep = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION, ActivityUser.defaultUserSleepDurationGoal);
@@ -228,7 +237,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 .write(builder);
     }
 
-    private void setMeasurementSystem(final TransactionBuilder builder) {
+    private void setMeasurementSystem(final ZeppOsTransactionBuilder builder) {
         final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
         LOG.info("Setting measurement system to {}", measurementSystem);
 
@@ -312,11 +321,11 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         getSupport().evaluateGBDeviceEvent(eventUpdatePreferences);
 
         if (getSupport().getDevice().isInitialized()) {
-            if (prefs.containsKey(PREF_LANGUAGE) && prefs.get(PREF_LANGUAGE).equals(PREF_LANGUAGE_AUTO)) {
+            if (prefs.containsKey(PREF_LANGUAGE) && PREF_LANGUAGE_AUTO.equals(prefs.get(PREF_LANGUAGE))) {
                 // Band is reporting automatic language, we need to send the actual language
                 getSupport().onSendConfiguration(PREF_LANGUAGE);
             }
-            if (prefs.containsKey(PREF_TIMEFORMAT) && prefs.get(PREF_TIMEFORMAT).equals(PREF_TIMEFORMAT_AUTO)) {
+            if (prefs.containsKey(PREF_TIMEFORMAT) && PREF_TIMEFORMAT_AUTO.equals(prefs.get(PREF_TIMEFORMAT))) {
                 // Band is reporting automatic time format, we need to send the actual time format
                 getSupport().onSendConfiguration(PREF_TIMEFORMAT);
             }
@@ -329,17 +338,17 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         }
     }
 
-    public void requestAllConfigs(final TransactionBuilder builder) {
+    public void requestAllConfigs(final ZeppOsTransactionBuilder builder) {
         for (final ConfigGroup configGroup : ConfigGroup.values()) {
             requestConfig(builder, configGroup);
         }
     }
 
-    public void requestConfig(final TransactionBuilder builder, final ConfigGroup config) {
+    public void requestConfig(final ZeppOsTransactionBuilder builder, final ConfigGroup config) {
         requestConfig(builder, config, true, ZeppOsConfigService.ConfigArg.getAllArgsForConfigGroup(config));
     }
 
-    public void requestConfig(final TransactionBuilder builder,
+    public void requestConfig(final ZeppOsTransactionBuilder builder,
                               final ConfigGroup config,
                               final boolean includeConstraints,
                               final List<ZeppOsConfigService.ConfigArg> args) {
@@ -906,7 +915,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return baos.toByteArray();
         }
 
-        public void write(final TransactionBuilder builder) {
+        public void write(final ZeppOsTransactionBuilder builder) {
             // Write one command per config group
             for (final ConfigGroup configGroup : arguments.keySet()) {
                 ZeppOsConfigService.this.write(builder, encode(configGroup));

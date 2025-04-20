@@ -32,15 +32,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -158,6 +159,7 @@ public class ZeppOsShortcutCardsService extends AbstractZeppOsService {
         }
     }
 
+    /** @noinspection SwitchStatementWithTooFewBranches*/
     @Override
     public boolean onSendConfiguration(final String config, final Prefs prefs) {
         switch (config) {
@@ -172,16 +174,8 @@ public class ZeppOsShortcutCardsService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
-        requestCapabilities(builder);
-        requestShortcutCards(builder);
-    }
-
-    public void requestCapabilities(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
-    }
-
-    public void requestShortcutCards(final TransactionBuilder builder) {
         write(builder, CMD_LIST_GET);
     }
 
@@ -254,9 +248,9 @@ public class ZeppOsShortcutCardsService extends AbstractZeppOsService {
             }
 
             try {
-                baos.write(appNum.getBytes(StandardCharsets.UTF_8));
+                baos.write(Objects.requireNonNull(appNum).getBytes(StandardCharsets.UTF_8));
                 baos.write(0);
-                baos.write(cardNum.getBytes(StandardCharsets.UTF_8));
+                baos.write(Objects.requireNonNull(cardNum).getBytes(StandardCharsets.UTF_8));
                 baos.write(0);
                 baos.write(1); // enabled
                 baos.write(0); // ?

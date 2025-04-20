@@ -17,25 +17,29 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class ZeppOsAlarmsService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAlarmsService.class);
@@ -99,27 +103,45 @@ public class ZeppOsAlarmsService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestAlarms(builder);
     }
 
     private void requestAlarms() {
-        try {
-            final TransactionBuilder builder = new TransactionBuilder("request alarms");
-            requestAlarms(builder);
-            builder.queue(getSupport().getQueue());
-        } catch (final Exception e) {
-            LOG.error("Failed to request alarms", e);
-        }
+        withTransactionBuilder("request alarms", this::requestAlarms);
     }
 
-    public void requestAlarms(final TransactionBuilder builder) {
+    public void requestAlarms(final ZeppOsTransactionBuilder builder) {
         LOG.info("Requesting alarms");
 
         write(builder, new byte[]{CMD_REQUEST});
     }
 
-    public void sendAlarm(final Alarm alarm, final TransactionBuilder builder) {
+    public void onSetAlarms(final ArrayList<? extends Alarm> alarms) {
+        final int maxAlarms = getCoordinator().getAlarmSlotCount(getSupport().getDevice());
+
+        final ZeppOsTransactionBuilder builder = createTransactionBuilder("set alarms");
+        boolean anyAlarmEnabled = false;
+        for (final Alarm alarm : alarms) {
+            if (alarm.getPosition() >= maxAlarms) {
+                if (alarm.getEnabled()) {
+                    GB.toast(getContext(), "Only " + maxAlarms + " alarms are currently supported.", Toast.LENGTH_LONG, GB.WARN);
+                }
+                break;
+            }
+
+            anyAlarmEnabled |= alarm.getEnabled();
+            sendAlarm(alarm, builder);
+        }
+        builder.queue(getSupport());
+        if (anyAlarmEnabled) {
+            GB.toast(getContext(), getContext().getString(R.string.user_feedback_miband_set_alarms_ok), Toast.LENGTH_SHORT, GB.INFO);
+        } else {
+            GB.toast(getContext(), getContext().getString(R.string.user_feedback_all_alarms_disabled), Toast.LENGTH_SHORT, GB.INFO);
+        }
+    }
+
+    public void sendAlarm(final Alarm alarm, final ZeppOsTransactionBuilder builder) {
         final DeviceCoordinator coordinator = getSupport().getDevice().getDeviceCoordinator();
 
         final Calendar calendar = AlarmUtils.toCalendar(alarm);

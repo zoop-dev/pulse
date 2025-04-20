@@ -28,15 +28,14 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgts2.AmazfitGTS2MiniFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 
 public class AmazfitGTS2MiniSupport extends AmazfitGTS2Support {
 
     private static final Logger LOG = LoggerFactory.getLogger(AmazfitGTS2MiniSupport.class);
 
     @Override
-    protected HuamiSupport setLanguage(TransactionBuilder builder) {
-        return setLanguageByIdNew(builder);
+    protected void setLanguage(TransactionBuilder builder) {
+        setLanguageByIdNew(builder);
     }
 
     @Override

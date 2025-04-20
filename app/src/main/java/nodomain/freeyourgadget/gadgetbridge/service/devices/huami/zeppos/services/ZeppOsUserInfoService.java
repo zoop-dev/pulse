@@ -34,9 +34,9 @@ import java.time.LocalDate;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsUserInfoService extends AbstractZeppOsService {
@@ -69,10 +69,11 @@ public class ZeppOsUserInfoService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         setUserInfo(builder);
     }
 
+    /** @noinspection EnhancedSwitchMigration*/
     @Override
     public boolean onSendConfiguration(final String config, final Prefs prefs) {
         switch (config) {
@@ -82,16 +83,14 @@ public class ZeppOsUserInfoService extends AbstractZeppOsService {
             case PREF_USER_HEIGHT_CM:
             case PREF_USER_GENDER:
             case PREF_DEVICE_REGION:
-                final TransactionBuilder builder = getSupport().createTransactionBuilder("set user info");
-                setUserInfo(builder);
-                builder.queue(getSupport().getQueue());
+                withTransactionBuilder("set user info", this::setUserInfo);
                 return true;
         }
 
         return false;
     }
 
-    public void setUserInfo(final TransactionBuilder builder) {
+    public void setUserInfo(final ZeppOsTransactionBuilder builder) {
         LOG.info("Attempting to set user info...");
 
         final Prefs prefs = GBApplication.getPrefs();

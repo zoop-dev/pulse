@@ -23,16 +23,14 @@ import java.io.IOException;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.audio.AudioInfo;
 
-public class ZeppOsMusicUploadOperation extends AbstractBTLEOperation<ZeppOsSupport>
+public class ZeppOsMusicUploadOperation extends AbstractZeppOsOperation<ZeppOsSupport>
         implements ZeppOsFileTransferService.UploadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsMusicUploadOperation.class);
 
@@ -99,9 +97,9 @@ public class ZeppOsMusicUploadOperation extends AbstractBTLEOperation<ZeppOsSupp
 
     private void updateProgress(final int progressPercent) {
         try {
-            final TransactionBuilder builder = performInitialized("send music upload progress");
-            builder.add(new SetProgressAction(getContext().getString(R.string.music_upload_in_progress), true, progressPercent, getContext()));
-            builder.queue(getQueue());
+            final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send music upload progress");
+            builder.setProgress(getContext().getString(R.string.music_upload_in_progress), true, progressPercent, getContext());
+            builder.queue(getSupport());
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);
         }

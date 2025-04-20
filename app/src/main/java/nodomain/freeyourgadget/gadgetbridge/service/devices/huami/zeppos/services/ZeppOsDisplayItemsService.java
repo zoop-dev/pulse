@@ -40,10 +40,10 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsMenuType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.MapUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -123,7 +123,7 @@ public class ZeppOsDisplayItemsService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestItems(builder, DISPLAY_ITEMS_MENU);
         requestItems(builder, DISPLAY_ITEMS_SHORTCUTS);
         if (getCoordinator().supportsControlCenter()) {
@@ -131,7 +131,7 @@ public class ZeppOsDisplayItemsService extends AbstractZeppOsService {
         }
     }
 
-    public void requestItems(final TransactionBuilder builder, final byte type) {
+    public void requestItems(final ZeppOsTransactionBuilder builder, final byte type) {
         LOG.info("Requesting display items type={}", type);
 
         write(builder, new byte[]{CMD_REQUEST, type});
@@ -266,16 +266,13 @@ public class ZeppOsDisplayItemsService extends AbstractZeppOsService {
                                  final List<String> allSettings,
                                  List<String> enabledList,
                                  final FlagsMap flags) {
-        try {
-            final TransactionBuilder builder = new TransactionBuilder("set display items type " + menuType);
-            setDisplayItems(builder, menuType, allSettings, enabledList, flags);
-            builder.queue(getSupport().getQueue());
-        } catch (final Exception e) {
-            LOG.error("Failed to set display items", e);
-        }
+        withTransactionBuilder(
+                "set display items type " + menuType,
+                builder -> setDisplayItems(builder, menuType, allSettings, enabledList, flags)
+        );
     }
 
-    private void setDisplayItems(final TransactionBuilder builder,
+    private void setDisplayItems(final ZeppOsTransactionBuilder builder,
                                  final byte menuType,
                                  final List<String> allSettings,
                                  List<String> enabledList,

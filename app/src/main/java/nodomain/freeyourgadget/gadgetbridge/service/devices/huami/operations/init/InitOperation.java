@@ -100,9 +100,6 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
             byte[] srcBytes = authKey.trim().getBytes();
             if (authKey.length() == 34 && authKey.startsWith("0x")) {
                 srcBytes = GB.hexStringToByteArray(authKey.substring(2));
-            } else if (authKey.length() == 32 && huamiSupport instanceof ZeppOsSupport) {
-                // All Zepp OS devices require a hex key
-                srcBytes = GB.hexStringToByteArray(authKey);
             }
             System.arraycopy(srcBytes, 0, authKeyBytes, 0, Math.min(srcBytes.length, 16));
         }

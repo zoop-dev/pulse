@@ -26,9 +26,9 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class ZeppOsContactsService extends AbstractZeppOsService {
@@ -41,7 +41,6 @@ public class ZeppOsContactsService extends AbstractZeppOsService {
     public static final byte CMD_SET_LIST = 0x07;
     public static final byte CMD_SET_LIST_ACK = 0x08;
 
-    private int version = 0;
     private int maxContacts = 0;
 
     public static final String PREF_CONTACTS_SLOT_COUNT = "zepp_os_contacts_slot_count";
@@ -59,7 +58,7 @@ public class ZeppOsContactsService extends AbstractZeppOsService {
     public void handlePayload(final byte[] payload) {
         switch (payload[0]) {
             case CMD_CAPABILITIES_RESPONSE:
-                version = payload[1];
+                final int version = payload[1];
                 if (version != 1) {
                     LOG.warn("Unsupported contacts service version {}", version);
                     return;
@@ -77,11 +76,11 @@ public class ZeppOsContactsService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestCapabilities(builder);
     }
 
-    public void requestCapabilities(final TransactionBuilder builder) {
+    public void requestCapabilities(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 

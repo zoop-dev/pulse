@@ -99,9 +99,8 @@ public class AmazfitBipSSupport extends AmazfitBipSupport {
     }
 
     @Override
-    protected AmazfitBipSSupport setShortcuts(TransactionBuilder builder) {
+    protected void setShortcuts(TransactionBuilder builder) {
         setDisplayItemsNew(builder, true, true, R.array.pref_bips_display_items_default);
-        return this;
     }
 
     private boolean isDTH(Version version) {

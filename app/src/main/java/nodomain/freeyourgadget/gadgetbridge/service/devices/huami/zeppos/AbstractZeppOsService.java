@@ -23,11 +23,13 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.Consumer;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDevicePrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public abstract class AbstractZeppOsService {
@@ -67,7 +69,7 @@ public abstract class AbstractZeppOsService {
         return false;
     }
 
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         // Do nothing by default
         // TODO implement a "quick initialize" that runs for the same firmware + Gb versions, since
         // we will already know the capabilities
@@ -86,8 +88,8 @@ public abstract class AbstractZeppOsService {
         return (ZeppOsCoordinator) coordinator;
     }
 
-    protected Prefs getDevicePrefs() {
-        return new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getSupport().getDevice().getAddress()));
+    protected HuamiDevicePrefs getDevicePrefs() {
+        return getSupport().getDevicePrefs();
     }
 
     protected void write(final String taskName, final byte b) {
@@ -98,11 +100,11 @@ public abstract class AbstractZeppOsService {
         this.mSupport.writeToChunked2021(taskName, getEndpoint(), data, isEncrypted());
     }
 
-    protected void write(final TransactionBuilder builder, final byte b) {
+    protected void write(final ZeppOsTransactionBuilder builder, final byte b) {
         this.write(builder, new byte[]{b});
     }
 
-    protected void write(final TransactionBuilder builder, final byte[] data) {
+    protected void write(final ZeppOsTransactionBuilder builder, final byte[] data) {
         this.mSupport.writeToChunked2021(builder, getEndpoint(), data, isEncrypted());
     }
 
@@ -112,6 +114,16 @@ public abstract class AbstractZeppOsService {
 
     protected Context getContext() {
         return getSupport().getContext();
+    }
+
+    protected ZeppOsTransactionBuilder createTransactionBuilder(final String taskName) {
+        return mSupport.createZeppOsTransactionBuilder(taskName);
+    }
+
+    protected void withTransactionBuilder(final String taskName, final Consumer<ZeppOsTransactionBuilder> consumer) {
+        final ZeppOsTransactionBuilder builder = createTransactionBuilder(taskName);
+        consumer.accept(builder);
+        builder.queue(mSupport);
     }
 
     @Nullable

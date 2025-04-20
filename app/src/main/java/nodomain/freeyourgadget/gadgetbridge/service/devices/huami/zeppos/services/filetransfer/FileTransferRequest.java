@@ -21,7 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 /**
  * Wrapper class to keep track of ongoing file send requests and their progress.
  */
-class FileTransferRequest {
+public class FileTransferRequest {
     private final String url;
     private final String filename;
     private final int rawLength;

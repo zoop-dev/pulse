@@ -48,9 +48,9 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePref
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -141,6 +141,25 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
     }
 
     @Override
+    public void dispose() {
+        handler.removeCallbacksAndMessages(null);
+        opusDecoder = null;
+        if (audioTrack != null) {
+            audioTrack.release();
+            audioTrack = null;
+        }
+        if (rawVoiceOutputStream != null) {
+            try {
+                rawVoiceOutputStream.close();
+            } catch (final IOException e) {
+                LOG.error("Failed to close raw voice output stream", e);
+            }
+            rawVoiceOutputStream = null;
+        }
+        voiceBuffer.clear();
+    }
+
+    @Override
     public boolean onSendConfiguration(final String config, final Prefs prefs) {
         switch (config) {
             case DeviceSettingsPreferenceConst.PREF_VOICE_SERVICE_LANGUAGE:
@@ -170,13 +189,29 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        handler.removeCallbacksAndMessages(null);
+        opusDecoder = null;
+        if (audioTrack != null) {
+            audioTrack.release();
+            audioTrack = null;
+        }
+        if (rawVoiceOutputStream != null) {
+            try {
+                rawVoiceOutputStream.close();
+            } catch (final IOException e) {
+                LOG.error("Failed to close raw voice output stream", e);
+            }
+            rawVoiceOutputStream = null;
+        }
+        voiceBuffer.clear();
+
         if (ZeppOsCoordinator.experimentalFeatures(getSupport().getDevice())) {
             requestCapabilities(builder);
         }
     }
 
-    public void requestCapabilities(final TransactionBuilder builder) {
+    public void requestCapabilities(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 
@@ -285,13 +320,13 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
 
     public void sendVoiceReply(final List<byte[]> voiceFrames) {
         try {
-            final TransactionBuilder builder = getSupport().performInitialized("send voice reply");
+            final ZeppOsTransactionBuilder builder = createTransactionBuilder("send voice reply");
 
             for (final byte[] voiceFrame : voiceFrames) {
                 // TODO encode
             }
 
-            builder.queue(getSupport().getQueue());
+            builder.queue(getSupport());
         } catch (final Exception e) {
             LOG.error("Failed to send voice reply", e);
         }

@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsWeather;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -118,6 +119,12 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
             default:
                 LOG.warn("Unexpected HTTP payload byte {}", String.format("0x%02x", payload[0]));
         }
+    }
+
+    @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        urlToLocalFile.clear();
+        urlDownloadCallbacks.clear();
     }
 
     public void registerForDownload(final String url, final Uri uri, @Nullable final Callback callback) {

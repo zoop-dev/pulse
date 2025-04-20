@@ -39,9 +39,9 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsWatchfaceService extends AbstractZeppOsService {
@@ -171,7 +171,7 @@ public class ZeppOsWatchfaceService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestWatchfaces(builder);
         requestCurrentWatchface(builder);
     }
@@ -180,21 +180,15 @@ public class ZeppOsWatchfaceService extends AbstractZeppOsService {
         return watchfaces;
     }
 
-    public void requestWatchfaces(final TransactionBuilder builder) {
+    public void requestWatchfaces(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_LIST_GET);
     }
 
     public void requestCurrentWatchface() {
-        try {
-            final TransactionBuilder builder = new TransactionBuilder("request current watchface");
-            requestCurrentWatchface(builder);
-            builder.queue(getSupport().getQueue());
-        } catch (final Exception e) {
-            LOG.error("Failed to request current watchface", e);
-        }
+        withTransactionBuilder("request current watchface", this::requestCurrentWatchface);
     }
 
-    public void requestCurrentWatchface(final TransactionBuilder builder) {
+    public void requestCurrentWatchface(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CURRENT_GET);
     }
 

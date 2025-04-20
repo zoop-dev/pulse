@@ -21,9 +21,9 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferImpl;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferV2;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer.ZeppOsFileTransferV3;
@@ -77,7 +77,7 @@ public class ZeppOsFileTransferService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, new byte[]{ZeppOsFileTransferImpl.CMD_CAPABILITIES_REQUEST});
     }
 

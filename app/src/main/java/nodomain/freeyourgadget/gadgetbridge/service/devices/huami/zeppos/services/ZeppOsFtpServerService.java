@@ -26,9 +26,9 @@ import java.nio.charset.StandardCharsets;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -133,7 +133,14 @@ public class ZeppOsFtpServerService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        mCallback = null;
+
+        final GBDeviceEventUpdatePreferences evt = new GBDeviceEventUpdatePreferences()
+                .withPreference(DeviceSettingsPreferenceConst.FTP_SERVER_ADDRESS, null)
+                .withPreference(DeviceSettingsPreferenceConst.FTP_SERVER_USERNAME, null)
+                .withPreference(DeviceSettingsPreferenceConst.FTP_SERVER_STATUS, null);
+        evaluateGBDeviceEvent(evt);
     }
 
     public void setCallback(final Callback callback) {

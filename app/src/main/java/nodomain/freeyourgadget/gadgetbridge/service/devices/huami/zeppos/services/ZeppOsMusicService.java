@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 
 public class ZeppOsMusicService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsMusicService.class);
@@ -43,6 +48,10 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
     private static final byte BUTTON_PREVIOUS = 0x04;
     private static final byte BUTTON_VOLUME_UP = 0x05;
     private static final byte BUTTON_VOLUME_DOWN = 0x06;
+
+    private final Handler handler = new Handler();
+    private MediaManager mediaManager;
+    protected boolean isMusicAppStarted = false;
 
     public ZeppOsMusicService(final ZeppOsSupport support) {
         super(support, false);
@@ -103,16 +112,42 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
         }
     }
 
+    @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        if (mediaManager == null) {
+            mediaManager = new MediaManager(getContext());
+        }
+    }
+
+    @Override
+    public void dispose() {
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    public void onSetMusicState(final MusicStateSpec stateSpec) {
+        if (mediaManager.onSetMusicState(stateSpec) && isMusicAppStarted) {
+            sendMusicState(null, mediaManager.getBufferMusicStateSpec());
+        }
+    }
+
+    public void onSetMusicInfo(final MusicSpec musicSpec) {
+        if (mediaManager.onSetMusicInfo(musicSpec) && isMusicAppStarted) {
+            sendMusicState(mediaManager.getBufferMusicSpec(), mediaManager.getBufferMusicStateSpec());
+        }
+    }
+
     private void onMusicAppOpen() {
-        getSupport().onMusicAppOpen();
+        isMusicAppStarted = true;
+        sendMusicStateDelayed();
     }
 
     private void onMusicAppClosed() {
-        getSupport().onMusicAppClosed();
+        LOG.info("Music app terminated");
+        isMusicAppStarted = false;
     }
 
-    public void sendMusicState(final MusicSpec musicSpec,
-                               final MusicStateSpec musicStateSpec) {
+    private void sendMusicState(final MusicSpec musicSpec,
+                                final MusicStateSpec musicStateSpec) {
         LOG.info("Sending music: {}, {}", musicSpec, musicStateSpec);
 
         // TODO: Encode not playing state (flag 0x20, single 0x01 byte before volume)
@@ -122,6 +157,19 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
         );
 
         write("send music state", cmd);
+    }
+
+    /**
+     * Send the music state after a small delay. If we send it right as the app notifies us that it opened,
+     * it won't be recognized.
+     */
+    private void sendMusicStateDelayed() {
+        final Looper mainLooper = Looper.getMainLooper();
+        new Handler(mainLooper).postDelayed(() -> {
+            mediaManager.refresh();
+            sendMusicState(mediaManager.getBufferMusicSpec(), mediaManager.getBufferMusicStateSpec());
+            sendVolume(mediaManager.getPhoneVolume());
+        }, 100);
     }
 
     public void sendVolume(final float volume) {

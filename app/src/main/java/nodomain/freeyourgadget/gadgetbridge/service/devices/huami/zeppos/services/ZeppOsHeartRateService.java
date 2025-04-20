@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Handler;
 
 import org.slf4j.Logger;
@@ -26,9 +25,9 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSleepState
 import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.RealtimeSamplesAggregator;
 
 public class ZeppOsHeartRateService extends AbstractZeppOsService {
@@ -111,10 +110,10 @@ public class ZeppOsHeartRateService extends AbstractZeppOsService {
         realtimeStarted = true;
         realtimeOneShot = true;
 
-        final TransactionBuilder builder = new TransactionBuilder("HeartRateTest");
-        builder.notify(getSupport().getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT), true);
+        final ZeppOsTransactionBuilder builder = createTransactionBuilder("HeartRateTest");
+        builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, true);
         write(builder, new byte[]{CMD_REALTIME_SET, REALTIME_MODE_START});
-        builder.queue(getSupport().getQueue());
+        builder.queue(getSupport());
 
         realtimeHandler.removeCallbacksAndMessages(null);
         scheduleContinue();
@@ -133,13 +132,10 @@ public class ZeppOsHeartRateService extends AbstractZeppOsService {
         realtimeStarted = enable;
         realtimeOneShot = false;
 
-        final TransactionBuilder builder = new TransactionBuilder("set realtime heart rate measurement = " + enable);
-        final BluetoothGattCharacteristic hrCharacteristic = getSupport().getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT);
-        if (hrCharacteristic != null) {
-            builder.notify(getSupport().getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT), enable);
-        }
+        final ZeppOsTransactionBuilder builder = createTransactionBuilder("set realtime heart rate measurement = " + enable);
+        builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, enable);
         write(builder, new byte[]{CMD_REALTIME_SET, hrCmd});
-        builder.queue(getSupport().getQueue());
+        builder.queue(getSupport());
 
         realtimeHandler.removeCallbacksAndMessages(null);
         if (enable) {
@@ -178,8 +174,6 @@ public class ZeppOsHeartRateService extends AbstractZeppOsService {
     }
 
     private void sendContinue() {
-        final TransactionBuilder builder = new TransactionBuilder("hr continue");
-        write(builder, new byte[]{CMD_REALTIME_SET, REALTIME_MODE_CONTINUE});
-        builder.queue(getSupport().getQueue());
+        write("hr continue", new byte[]{CMD_REALTIME_SET, REALTIME_MODE_CONTINUE});
     }
 }

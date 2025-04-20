@@ -29,10 +29,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.CryptoUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.ECDH_B163;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -122,14 +121,7 @@ public class ZeppOsAuthenticationService extends AbstractZeppOsService {
                 LOG.debug("Auth Success");
 
                 try {
-                    // Authenticated, now initialize phase 2
-                    final TransactionBuilder builder = getSupport().createTransactionBuilder("Authenticated, now initialize phase 2");
-                    builder.add(new SetDeviceStateAction(getSupport().getDevice(), GBDevice.State.INITIALIZING, getContext()));
-                    builder.setCallback(null); // remove init operation as the callback
-                    getSupport().phase2Initialize(builder);
-                    getSupport().phase3Initialize(builder);
-                    getSupport().setInitialized(builder);
-                    getSupport().performImmediately(builder);
+                    getSupport().onAuthenticationSuccess();
                 } catch (Exception e) {
                     LOG.error("failed initializing device", e);
                 }
@@ -139,7 +131,7 @@ public class ZeppOsAuthenticationService extends AbstractZeppOsService {
         LOG.warn("Got unknown auth byte {}", String.format("0x%02x", payload[0]));
     }
 
-    public void startAuthentication(final TransactionBuilder builder) {
+    public void startAuthentication(final ZeppOsTransactionBuilder builder) {
         new Random().nextBytes(privateEC);
 
         final byte[] pub = ECDH_B163.ecdh_generate_public(privateEC);

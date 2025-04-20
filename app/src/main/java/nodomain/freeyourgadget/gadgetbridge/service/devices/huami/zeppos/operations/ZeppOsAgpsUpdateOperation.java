@@ -22,10 +22,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAgpsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
@@ -40,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  * 4. After successful ack from 3, update is finished. Trigger an AGPS config request from {@link ZeppOsConfigService}
  * to reload the AGPS update and expiration timestamps.
  */
-public class ZeppOsAgpsUpdateOperation extends AbstractBTLEOperation<ZeppOsSupport>
+public class ZeppOsAgpsUpdateOperation extends AbstractZeppOsOperation<ZeppOsSupport>
         implements ZeppOsFileTransferService.UploadCallback, ZeppOsAgpsService.Callback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAgpsUpdateOperation.class);
 
@@ -120,9 +118,9 @@ public class ZeppOsAgpsUpdateOperation extends AbstractBTLEOperation<ZeppOsSuppo
     public void onAgpsUpdateFinishResponse(final boolean success) {
         if (success) {
             try {
-                final TransactionBuilder builder = performInitialized("request agps config");
+                final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("request agps config");
                 configService.requestConfig(builder, ZeppOsConfigService.ConfigGroup.AGPS);
-                builder.queue(getQueue());
+                builder.queue(getSupport());
             } catch (final Exception e) {
                 LOG.error("Failed to request agps config", e);
             }
@@ -133,9 +131,9 @@ public class ZeppOsAgpsUpdateOperation extends AbstractBTLEOperation<ZeppOsSuppo
 
     private void updateProgress(final int progressPercent) {
         try {
-            final TransactionBuilder builder = performInitialized("send agps update progress");
-            builder.add(new SetProgressAction(getContext().getString(R.string.updatefirmwareoperation_update_in_progress), true, progressPercent, getContext()));
-            builder.queue(getQueue());
+            final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send agps update progress");
+            builder.setProgress(getContext().getString(R.string.updatefirmwareoperation_update_in_progress), true, progressPercent, getContext());
+            builder.queue(getSupport());
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);
         }

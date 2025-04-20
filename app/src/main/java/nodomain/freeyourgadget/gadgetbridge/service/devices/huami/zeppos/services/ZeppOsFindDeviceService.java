@@ -22,10 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsFindDeviceService extends AbstractZeppOsService {
@@ -128,7 +128,7 @@ public class ZeppOsFindDeviceService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 

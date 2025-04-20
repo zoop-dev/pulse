@@ -24,7 +24,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 
@@ -79,9 +78,7 @@ public class ZeppOsWeatherService extends AbstractZeppOsService {
             baos.write(locationName.getBytes(StandardCharsets.UTF_8));
             baos.write((byte) 0x00); // ?
 
-            final TransactionBuilder builder = new TransactionBuilder("set weather location");
-            write(builder, baos.toByteArray());
-            builder.queue(getSupport().getQueue());
+            write("set weather location", baos.toByteArray());
         } catch (final Exception e) {
             LOG.error("Failed to set weather location", e);
         }

@@ -42,9 +42,8 @@ public class MiBand5Support extends MiBand4Support {
     }
 
     @Override
-    protected MiBand5Support setShortcuts(TransactionBuilder builder) {
+    protected void setShortcuts(TransactionBuilder builder) {
         setDisplayItemsNew(builder, true, true, R.array.pref_miband5_shortcuts_default);
-        return this;
     }
 
     @Override

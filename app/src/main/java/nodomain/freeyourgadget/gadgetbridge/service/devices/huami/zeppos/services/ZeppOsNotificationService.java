@@ -42,10 +42,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsBitmapFormat;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
@@ -103,11 +103,7 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
-        requestCapabilities(builder);
-    }
-
-    public void requestCapabilities(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, NOTIFICATION_CMD_CAPABILITIES_REQUEST);
     }
 
@@ -255,8 +251,6 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try {
-            final TransactionBuilder builder = new TransactionBuilder("send notification");
-
             baos.write(NOTIFICATION_CMD_SEND);
 
             // ID
@@ -285,12 +279,12 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
 
             // TODO put this behind a setting?
             baos.write(callSpec.number != null ? 0x01 : 0x00); // reply from watch
-
-            write(builder, baos.toByteArray());
-            builder.queue(getSupport().getQueue());
         } catch (final Exception e) {
             LOG.error("Failed to send call", e);
+            return;
         }
+
+        write("send notification", baos.toByteArray());
     }
 
     public void sendNotification(final NotificationSpec notificationSpec) {
@@ -306,8 +300,6 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         // TODO Check real limit for notificationMaxLength / respect across all fields
 
         try {
-            final TransactionBuilder builder = new TransactionBuilder("send notification");
-
             baos.write(NOTIFICATION_CMD_SEND);
             baos.write(BLETypeConversions.fromUint32(notificationSpec.getId()));
             if (notificationSpec.type == NotificationType.GENERIC_SMS) {
@@ -380,12 +372,12 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                 }
                 baos.write(0);
             }
-
-            write(builder, baos.toByteArray());
-            builder.queue(getSupport().getQueue());
         } catch (final Exception e) {
             LOG.error("Failed to send notification", e);
+            return;
         }
+
+        write("send notification", baos.toByteArray());
     }
 
     public void deleteNotification(final int id) {

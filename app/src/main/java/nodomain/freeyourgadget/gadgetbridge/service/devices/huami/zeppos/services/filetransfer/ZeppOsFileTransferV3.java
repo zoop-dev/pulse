@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
@@ -65,6 +66,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
         super(fileTransferService, support);
     }
 
+    /** @noinspection SwitchStatementWithTooFewBranches*/
     @Override
     public void handlePayload(final byte[] payload) {
         switch (payload[0]) {
@@ -256,15 +258,12 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
 
         final byte[] payload = buf.array();
 
-        final TransactionBuilder builder = mSupport.createTransactionBuilder("send chunk v3");
+        final ZeppOsTransactionBuilder builder = mSupport.createZeppOsTransactionBuilder("send chunk v3");
         for (int i = 0; i < payload.length; i += partSize) {
             final byte[] part = ArrayUtils.subarray(payload, i, i + partSize);
-            builder.write(
-                    mSupport.getCharacteristic(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND),
-                    part
-            );
+            builder.write(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND, part);
         }
-        builder.queue(mSupport.getQueue());
+        builder.queue(mSupport);
 
         request.setProgress(request.getProgress() + chunk.length);
         request.setIndex(request.getIndex() + 1);

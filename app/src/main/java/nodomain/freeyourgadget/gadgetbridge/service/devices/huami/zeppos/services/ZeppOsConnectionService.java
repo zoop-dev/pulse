@@ -20,9 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 
 public class ZeppOsConnectionService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsConnectionService.class);
@@ -61,7 +61,7 @@ public class ZeppOsConnectionService extends AbstractZeppOsService {
         LOG.warn("Unexpected connection payload byte {}", String.format("0x%02x", payload[0]));
     }
 
-    public void requestMTU(final TransactionBuilder builder) {
+    public void requestMTU(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_MTU_REQUEST);
     }
 }

@@ -32,7 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 
 public class DevicePrefs extends Prefs {
-    private GBDevice gbDevice;
+    private final GBDevice gbDevice;
 
     public DevicePrefs(final SharedPreferences preferences, GBDevice gbDevice) {
         super(preferences);
@@ -113,6 +113,10 @@ public class DevicePrefs extends Prefs {
         if (!getBoolean(DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR, false))
             return 0;
         return getInt(DeviceSettingsPreferenceConst.PREF_RESERVE_REMINDERS_CALENDAR, 9);
+    }
+
+    public boolean allowHighMtu() {
+        return getBoolean(PREF_ALLOW_HIGH_MTU, true);
     }
 
 }

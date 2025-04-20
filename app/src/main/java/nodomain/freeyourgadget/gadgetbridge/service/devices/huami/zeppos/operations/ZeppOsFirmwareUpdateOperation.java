@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressActi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation2020;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.AbstractMiBandOperation;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -177,9 +178,9 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractMiBandOperation<ZeppO
                         break;
                     case UpdateFirmwareOperation2020.COMMAND_FINALIZE_UPDATE: {
                         if (fwHelper.getFirmwareType() == HuamiFirmwareType.FIRMWARE) {
-                            TransactionBuilder builder = performInitialized("reboot");
-                            getSupport().sendReboot(builder);
-                            builder.queue(getQueue());
+                            ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("reboot");
+                            builder.write(HuamiService.UUID_CHARACTERISTIC_FIRMWARE, new byte[]{HuamiService.COMMAND_FIRMWARE_REBOOT});
+                            builder.queue(getSupport());
                         } else {
                             GB.updateInstallNotification(getContext().getString(R.string.updatefirmwareoperation_update_complete), false, 100, getContext());
                             done();
@@ -225,24 +226,16 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractMiBandOperation<ZeppO
         if (ArrayUtils.startsWith(value, new byte[]{HuamiService.RESPONSE, UpdateFirmwareOperation2020.COMMAND_FINALIZE_UPDATE, HuamiService.SUCCESS})) {
             if (fwHelper.getFirmwareType() == HuamiFirmwareType.APP) {
                 // After an app is installed, request the display items from the band (new app will be at the end)
-                try {
-                    TransactionBuilder builder = performInitialized("request display items and apps");
-                    getSupport().requestDisplayItems(builder);
-                    getSupport().requestApps(builder);
-                    builder.queue(getQueue());
-                } catch (final IOException e) {
-                    LOG.error("Failed to request display items after app install", e);
-                }
+                ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("request display items and apps");
+                getSupport().requestDisplayItems(builder);
+                getSupport().requestApps(builder);
+                builder.queue(getSupport());
             } else if (fwHelper.getFirmwareType() == HuamiFirmwareType.WATCHFACE) {
                 // After a watchface is installed, request the watchfaces from the band (new watchface will be at the end)
-                try {
-                    TransactionBuilder builder = performInitialized("request watchfaces and apps");
-                    getSupport().requestWatchfaces(builder);
-                    getSupport().requestApps(builder);
-                    builder.queue(getQueue());
-                } catch (final IOException e) {
-                    LOG.error("Failed to request watchfaces after watchface install", e);
-                }
+                ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("request watchfaces and apps");
+                getSupport().requestWatchfaces(builder);
+                getSupport().requestApps(builder);
+                builder.queue(getSupport());
             }
         }
     }

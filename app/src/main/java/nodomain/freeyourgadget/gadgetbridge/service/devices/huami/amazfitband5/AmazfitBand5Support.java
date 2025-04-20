@@ -35,9 +35,8 @@ public class AmazfitBand5Support extends MiBand5Support {
     }
 
     @Override
-    protected AmazfitBand5Support setShortcuts(TransactionBuilder builder) {
+    protected void setShortcuts(TransactionBuilder builder) {
         setDisplayItemsNew(builder, true, true, R.array.pref_amazfitband5_shortcuts_default);
-        return this;
     }
 
     @Override

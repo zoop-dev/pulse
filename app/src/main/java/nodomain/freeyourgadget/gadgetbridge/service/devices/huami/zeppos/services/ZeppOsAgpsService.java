@@ -27,6 +27,7 @@ import java.nio.ByteOrder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 
 public class ZeppOsAgpsService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAgpsService.class);
@@ -79,6 +80,11 @@ public class ZeppOsAgpsService extends AbstractZeppOsService {
             default:
                 LOG.warn("Unexpected agps byte {}", String.format("0x%02x", payload[0]));
         }
+    }
+
+    @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        this.mCallback = null;
     }
 
     public void startUpload(final int size) {

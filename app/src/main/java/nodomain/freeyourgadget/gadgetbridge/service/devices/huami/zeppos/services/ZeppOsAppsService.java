@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 
 public class ZeppOsAppsService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAppsService.class);
@@ -78,7 +78,7 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
         }
     }
 
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestApps(builder);
     }
 
@@ -92,7 +92,7 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
 
     private void handleAppsPayload(final byte[] payload) {
         if (payload[1] != CMD_INCOMING) {
-            LOG.warn("Unexpected non-incoming payload ({})", String.format("0x%02x", payload[1]));
+            LOG.warn("Unexpected non-incoming apps payload ({})", String.format("0x%02x", payload[1]));
             return;
         }
 
@@ -115,9 +115,10 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
         }
     }
 
+    /** @noinspection SwitchStatementWithTooFewBranches*/
     private void handleScreenshotPayload(final byte[] payload) {
         if (payload[1] != CMD_INCOMING) {
-            LOG.warn("Unexpected non-incoming payload ({})", String.format("0x%02x", payload[1]));
+            LOG.warn("Unexpected non-incoming screenshot payload ({})", String.format("0x%02x", payload[1]));
             return;
         }
 
@@ -164,7 +165,7 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
         // TODO broadcast something to update app manager
     }
 
-    public void requestApps(final TransactionBuilder builder) {
+    public void requestApps(final ZeppOsTransactionBuilder builder) {
         LOG.info("Request apps");
 
         final ByteBuffer buf = ByteBuffer.allocate(16).order(ByteOrder.LITTLE_ENDIAN);

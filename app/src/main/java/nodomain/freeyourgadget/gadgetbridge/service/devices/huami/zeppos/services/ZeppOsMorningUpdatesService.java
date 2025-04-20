@@ -26,15 +26,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.MapUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -54,15 +55,15 @@ public class ZeppOsMorningUpdatesService extends AbstractZeppOsService {
     private static final byte CMD_CATEGORIES_SET_ACK = 0x0a;
 
     private static final Map<Byte, String> MORNING_UPDATES_MAP = new HashMap<Byte, String>() {{
-         put((byte) 0x02, "weather");
-         put((byte) 0x03, "battery");
-         put((byte) 0x04, "sleep");
-         put((byte) 0x06, "event");
-         put((byte) 0x07, "pai");
-         put((byte) 0x08, "yesterdays_activity");
-         put((byte) 0x09, "zepp_coach");
-         put((byte) 0x0a, "cycle_tracking");
-         put((byte) 0x0b, "readiness");
+        put((byte) 0x02, "weather");
+        put((byte) 0x03, "battery");
+        put((byte) 0x04, "sleep");
+        put((byte) 0x06, "event");
+        put((byte) 0x07, "pai");
+        put((byte) 0x08, "yesterdays_activity");
+        put((byte) 0x09, "zepp_coach");
+        put((byte) 0x0a, "cycle_tracking");
+        put((byte) 0x0b, "readiness");
     }};
 
     public ZeppOsMorningUpdatesService(ZeppOsSupport support) {
@@ -128,12 +129,12 @@ public class ZeppOsMorningUpdatesService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         getEnabled(builder);
         getCategories(builder);
     }
 
-    public void getEnabled(final TransactionBuilder builder) {
+    public void getEnabled(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_ENABLED_GET);
     }
 
@@ -141,7 +142,7 @@ public class ZeppOsMorningUpdatesService extends AbstractZeppOsService {
         write("set morning updates enabled", new byte[] {CMD_ENABLED_SET, bool(enabled)});
     }
 
-    public void getCategories(final TransactionBuilder builder) {
+    public void getCategories(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CATEGORIES_REQUEST);
     }
 
@@ -165,12 +166,12 @@ public class ZeppOsMorningUpdatesService extends AbstractZeppOsService {
         for (final String category : categoriesSorted) {
             final byte id;
             if (idMap.containsKey(category)) {
-                id = idMap.get(category);
+                id = Objects.requireNonNull(idMap.get(category));
             } else {
                 // name doesn't match a known value, attempt to parse it as hex
                 final Matcher matcher = Pattern.compile("^0[xX]([0-9a-fA-F]{1,2})$").matcher(category);
                 if (matcher.find()) {
-                    id = (byte) Integer.parseInt(matcher.group(1), 16);
+                    id = (byte) Integer.parseInt(Objects.requireNonNull(matcher.group(1)), 16);
                 } else {
                     LOG.warn("Unknown category {}, and failed to parse as hex, not setting", category);
                     return;

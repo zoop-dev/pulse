@@ -65,13 +65,12 @@ public class AmazfitBipSupport extends HuamiSupport {
     }
 
     @Override
-    protected AmazfitBipSupport setShortcuts(TransactionBuilder builder) {
+    protected void setShortcuts(TransactionBuilder builder) {
         Map<String, Integer> keyPosMap = new LinkedHashMap<>();
         keyPosMap.put("alipay", 1);
         keyPosMap.put("weather", 2);
 
         setDisplayItemsOld(builder, true, R.array.pref_bip_shortcuts_default, keyPosMap);
-        return this;
     }
 
     @Override

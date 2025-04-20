@@ -37,9 +37,9 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePref
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -107,9 +107,7 @@ public class ZeppOsRemindersService extends AbstractZeppOsService {
             case CMD_RESPONSE:
                 LOG.info("Got reminders from band");
                 decodeAndUpdateReminders(payload);
-                final TransactionBuilder builder = getSupport().createTransactionBuilder("send reminders");
-                sendReminders(builder);
-                builder.queue(getSupport().getQueue());
+                withTransactionBuilder("send reminders", this::sendReminders);
                 return;
             default:
                 LOG.warn("Unexpected reminders payload byte {}", String.format("0x%02x", payload[0]));
@@ -117,25 +115,25 @@ public class ZeppOsRemindersService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         requestCapabilities(builder);
         requestReminders(builder);
     }
 
-    private void requestCapabilities(final TransactionBuilder builder) {
+    private void requestCapabilities(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 
-    private void requestReminders(final TransactionBuilder builder) {
+    private void requestReminders(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_REQUEST);
     }
 
-    public void sendReminders(final TransactionBuilder builder) {
+    public void sendReminders(final ZeppOsTransactionBuilder builder) {
         final List<? extends Reminder> reminders = DBHelper.getReminders(getSupport().getDevice());
         sendReminders(builder, reminders);
     }
 
-    public void sendReminders(final TransactionBuilder builder, final List<? extends Reminder> reminders) {
+    public void sendReminders(final ZeppOsTransactionBuilder builder, final List<? extends Reminder> reminders) {
         LOG.info("On Set Reminders: {}", reminders.size());
 
         final int reminderSlotCount = getCoordinator().getReminderSlotCount(getSupport().getDevice());
@@ -209,7 +207,7 @@ public class ZeppOsRemindersService extends AbstractZeppOsService {
         }
     }
 
-    private void sendReminderToDevice(final TransactionBuilder builder, int position, final boolean update, final ZeppOsReminder reminder) {
+    private void sendReminderToDevice(final ZeppOsTransactionBuilder builder, int position, final boolean update, final ZeppOsReminder reminder) {
         final DeviceCoordinator coordinator = getCoordinator();
         final int reminderSlotCount = coordinator.getReminderSlotCount(getSupport().getDevice());
         if (position + 1 > reminderSlotCount) {

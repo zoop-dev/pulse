@@ -16,9 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.content.pm.PackageManager;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+import androidx.core.app.ActivityCompat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +33,9 @@ import java.nio.charset.StandardCharsets;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsPhoneService extends AbstractZeppOsService {
@@ -130,7 +134,7 @@ public class ZeppOsPhoneService extends AbstractZeppOsService {
     }
 
     @Override
-    public void initialize(final TransactionBuilder builder) {
+    public void initialize(final ZeppOsTransactionBuilder builder) {
         if (getCoordinator().supportsBluetoothPhoneCalls(getSupport().getDevice())) {
             requestCapabilities(builder);
             requestEnabled(builder);
@@ -141,14 +145,15 @@ public class ZeppOsPhoneService extends AbstractZeppOsService {
         return version == 1;
     }
 
-    public void requestCapabilities(final TransactionBuilder builder) {
+    public void requestCapabilities(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 
+    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     public void getPairedStatus() {
         final String bluetoothName = getBluetoothName();
         if (bluetoothName == null) {
-            LOG.error("bluetoothName is null");
+            LOG.error("bluetoothName for paired status check is null");
             return;
         }
 
@@ -165,9 +170,13 @@ public class ZeppOsPhoneService extends AbstractZeppOsService {
     }
 
     public void startPairing() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            LOG.error("Bluetooth permission not granted");
+            return;
+        }
         final String bluetoothName = getBluetoothName();
         if (bluetoothName == null) {
-            LOG.error("bluetoothName is null");
+            LOG.error("bluetoothName for pairing is null");
             return;
         }
 
@@ -183,7 +192,7 @@ public class ZeppOsPhoneService extends AbstractZeppOsService {
         write("start phone pairing", buf.array());
     }
 
-    public void requestEnabled(final TransactionBuilder builder) {
+    public void requestEnabled(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_ENABLED_REQUEST);
     }
 
@@ -198,6 +207,7 @@ public class ZeppOsPhoneService extends AbstractZeppOsService {
         write("set phone enabled", cmd);
     }
 
+    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     @Nullable
     public String getBluetoothName() {
         final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
