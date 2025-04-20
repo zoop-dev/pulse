@@ -3859,10 +3859,10 @@
     <string name="ultrahuman_airplane_mode_too_full">指环已充满电 - 飞行模式未激活</string>
     <string name="ultrahuman_airplane_mode_question">启动飞行模式？</string>
     <string name="ultrahuman_airplane_mode_title">飞行模式</string>
-    <string name="ultrahuman_airplane_mode_unknown">未知错误 - 飞行模式未激活</string>
+    <string name="ultrahuman_airplane_mode_unknown">未知错误 %#02x - 飞行模式未激活</string>
     <string name="ultrahuman_airplane_mode_activated">飞行模式已激活</string>
     <string name="ultrahuman_airplane_mode_on_charger">指环正在充电 - 飞行模式未激活</string>
-    <string name="ultrahuman_unhandled_error_response">操作 0x%x 时遇到未识别的错误代码 0x%x</string>
+    <string name="ultrahuman_unhandled_error_response">操作 %1$#02x 时遇到未识别的错误代码 %2$#02x %3$#02x</string>
     <string name="zepp_os_install_map_instructions">手机上开始安装后，您也需要在手表上接受。</string>
     <string name="map_upload_failed">地图上传失败</string>
     <string name="map_upload_complete">地图上传完成</string>
@@ -4016,4 +4016,7 @@
     <string name="menuitem_watch_storage_space">手表存储空间</string>
     <string name="menuitem_water_time">水上时间</string>
     <string name="menuitem_bluetooth_scale_assistant">蓝牙量表助手</string>
+    <string name="devicetype_garmin_fenix_7x_pro">佳明 Fenix 7X Pro</string>
+    <string name="ultrahuman_unhandled_operation_response">未处理的操作响应 %s</string>
+    <string name="devicetype_garmin_vivoactive_hr">佳明 Vívoactive HR</string>
 </resources>
