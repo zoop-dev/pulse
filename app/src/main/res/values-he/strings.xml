@@ -3132,7 +3132,7 @@
     <string name="huawei_stress_calibrate_adjust_score">כיוון הניקוד</string>
     <string name="ultrahuman_airplane_mode_question">להפעיל מצב טיסה?</string>
     <string name="ultrahuman_airplane_mode_title">מצב טיסה</string>
-    <string name="ultrahuman_airplane_mode_unknown">שגיאה לא ידועה - מצב טיסה ﬥﬡ הופעל</string>
+    <string name="ultrahuman_airplane_mode_unknown">שגיאה לא ידועה %#02x - מצב טיסה ﬥﬡ הופעל</string>
     <string name="huawei_stress_calibrate_summary">כיול בדיקת מתח אוטומית</string>
     <string name="huawei_stress_test_enable">בדיקת מתח אוטומטית</string>
     <string name="huawei_stress_calibrate_in_progress">כבר מתבצע כיול מתח</string>
@@ -3140,4 +3140,8 @@
     <string name="huawei_stress_test_enable_summary">הפעלת או השבתת בדיקת מתח אוטומטית</string>
     <string name="huawei_stress_no_calibration_data">אין נתונים ראשוניים - נא לכייל תחילה</string>
     <string name="huawei_stress_calibrate">כיול</string>
+    <string name="earfun_header_system_settings">הגדרת מערכת</string>
+    <string name="ultrahuman_airplane_mode_activated">מצב טיסה מופעל</string>
+    <string name="ultrahuman_airplane_mode_too_full">הטבעת טעונה במלואה - מצב טיסה ﬥﬡ הופעל</string>
+    <string name="ultrahuman_airplane_mode_on_charger">הטבעת נטענת - מצב טיסה ﬥﬡ הופעל</string>
 </resources>
