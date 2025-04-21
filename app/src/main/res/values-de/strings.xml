@@ -73,7 +73,7 @@
     <string name="pref_title_notifications_sms">SMS</string>
     <string name="pref_title_notifications_pebblemsg">Pebble-Nachrichten</string>
     <string name="pref_summary_notifications_pebblemsg">Unterstützung für Apps, die Benachrichtigungen an die Pebble via PebbleKit senden.</string>
-    <string name="pref_title_notifications_generic">Unterstützung allgemeine Benachrichtigung</string>
+    <string name="pref_title_notifications_generic">Allgemeine Benachrichtigungsunterstützung</string>
     <string name="pref_title_whenscreenon">…auch wenn der Bildschirm an ist</string>
     <string name="pref_title_notification_filter">Bitte nicht stören</string>
     <string name="pref_summary_notification_filter">Alle Benachrichtigungen blockieren, wenn \"Nicht stören\" auf dem Telefon aktiviert ist</string>
@@ -1329,8 +1329,8 @@
     <string name="uncheck_all_applications">Alle Apps abwählen</string>
     <string name="pref_message_privacy_mode_complete">Alle Inhalte ausblenden</string>
     <string name="pref_title_notification_use_as">Verwende die App-Liste, um…</string>
-    <string name="pref_title_notification_use_as_deny">Benachrichtigungen von ausgewählten Apps ablehnen</string>
-    <string name="pref_title_notification_use_as_allow">Benachrichtigungen von ausgewählten Apps zulassen</string>
+    <string name="pref_title_notification_use_as_deny">Benachrichtigungen von ausgewählten Apps abzulehnen</string>
+    <string name="pref_title_notification_use_as_allow">Benachrichtigungen von ausgewählten Apps zuzulassen</string>
     <string name="pref_title_message_privacy_mode">Datenschutzmodus für Nachrichten</string>
     <string name="pref_message_privacy_mode_off">Alle Inhalte anzeigen</string>
     <string name="check_all_applications">Alle Apps auswählen</string>
@@ -1566,7 +1566,7 @@
     <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
     <string name="pref_title_opentracks_packagename">OpenTracks Paketname</string>
     <string name="pref_summary_opentracks_packagename">Dient zum Starten/Stoppen der GPS-Track-Aufzeichnung in der externen Fitness-App.</string>
-    <string name="pref_title_notifications_generic_settings">Android-Benachrichtigungseinstellungen</string>
+    <string name="pref_title_notifications_generic_settings">Benachrichtigungen verwalten</string>
     <string name="watchface_dialog_pre_setting_position">Voreinstellung der Position auf %s</string>
     <string name="pref_device_action_fitness_app_control_stop">Fitness-App Tracking Stopp</string>
     <string name="pref_device_action_fitness_app_control_start">Fitness-App Tracking Start</string>
@@ -3861,10 +3861,10 @@
     <string name="ultrahuman_airplane_mode_activated">Flugmodus aktiviert</string>
     <string name="ultrahuman_airplane_mode_on_charger">Ring wird geladen – Flugmodus ist NICHT aktiviert</string>
     <string name="ultrahuman_airplane_mode_too_full">Ring vollständig geladen – Flugmodus nicht aktiviert</string>
-    <string name="ultrahuman_airplane_mode_unknown">Unbekannter Fehler – Flugmodus ist NICHT aktiviert</string>
+    <string name="ultrahuman_airplane_mode_unknown">Unbekannter Fehler %#02x – Flugmodus nicht aktiviert</string>
     <string name="ultrahuman_airplane_mode_question">Flugmodus aktivieren?</string>
     <string name="ultrahuman_airplane_mode_title">Flugmodus</string>
-    <string name="ultrahuman_unhandled_error_response">Antwortcode 0x%x für Operation 0x%x konnte nicht verarbeitet werden</string>
+    <string name="ultrahuman_unhandled_error_response">Unbehandelte Antwort %2$#02x %3$#02x bei Vorgang %1$#02x</string>
     <string name="vertical_oscillation">Vertikale Oszillation</string>
     <string name="average_power_standing">Durchschnittliche Leistung (Stehen)</string>
     <string name="earfun_audio_codec_hint"><b>LDAC</b> ist ein High-Resolution-Codec für herausragende Klangqualität..\n<b>aptX</b> sorgt für geringe Latenz und hochauflösendes Audio-Streaming.\n<b>aptX Adaptive</b> passt die Bitrate dynamisch an Inhalt und Verbindung an.\n<b>aptX Adaptive Lossless</b> Verlustfreies Audio für hochauflösende Musik.\n<b>Stabile Verbindung</b> minimiert Tonstottern und Aussetzer.</string>
@@ -4011,4 +4011,13 @@
     <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorradfahrer</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="menuitem_bluetooth_scale_assistant">Bluetooth-Waagen-Assistent</string>
+    <string name="menuitem_calculator">Rechner</string>
+    <string name="menuitem_running_calculator">Laufrechner</string>
+    <string name="menuitem_real_time_heart_rate">Puls in Echtzeit</string>
+    <string name="menuitem_water_time">Trinkzeit</string>
+    <string name="ultrahuman_unhandled_operation_response">Unbehandelte Antwort auf Vorgang: %s</string>
+    <string name="menuitem_watch_storage_space">Smartwatch-Speicher</string>
 </resources>
