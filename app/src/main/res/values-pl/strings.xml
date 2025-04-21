@@ -3877,10 +3877,10 @@
     <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="ultrahuman_airplane_mode_activated">tryb samolotowy włączony</string>
     <string name="ultrahuman_airplane_mode_question">Aktywować tryb samolotowy?</string>
-    <string name="ultrahuman_unhandled_error_response">otrzymał nieobsługiwany kod odpowiedzi 0x%x dla operacji 0x%x</string>
+    <string name="ultrahuman_unhandled_error_response">nieobsługiwana odpowiedź %2$#02x %3$#02x dla operacji %1$#02x</string>
     <string name="ultrahuman_airplane_mode_title">tryb samolotowy</string>
     <string name="ultrahuman_airplane_mode_on_charger">pierścień ładuje się - tryb samolotowy NIE jest włączony</string>
-    <string name="ultrahuman_airplane_mode_unknown">nieznany błąd - tryb samolotu NIE aktywowany</string>
+    <string name="ultrahuman_airplane_mode_unknown">nieznany błąd %#02x - tryb samolotu NIE aktywowany</string>
     <string name="ultrahuman_airplane_mode_too_full">pierścień jest w pełni naładowany - tryb samolotowy NIE jest włączony</string>
     <string name="map_upload_in_progress">Przesyłanie mapy</string>
     <string name="map_upload_complete">Przesyłanie mapy zakończone</string>
@@ -4035,4 +4035,7 @@
     <string name="menuitem_watch_storage_space">Przestrzeń dyskowa zegarka</string>
     <string name="menuitem_water_time">Czas wody</string>
     <string name="menuitem_bluetooth_scale_assistant">Asystent wagi Bluetooth</string>
+    <string name="ultrahuman_unhandled_operation_response">nieobsługiwana operacja odpowiedź %s</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
 </resources>
