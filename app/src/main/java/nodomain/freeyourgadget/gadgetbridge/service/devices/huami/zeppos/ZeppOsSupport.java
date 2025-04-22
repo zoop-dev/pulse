@@ -199,7 +199,7 @@ public class ZeppOsSupport extends HuamiSupport implements ZeppOsFileTransferSer
     private final ZeppOsStepsService stepsService = new ZeppOsStepsService(this);
 
     private final Set<Short> mSupportedServices = new HashSet<>();
-    private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<>() {{
+    private final Map<Short, AbstractZeppOsService> mServiceMap = new LinkedHashMap<Short, AbstractZeppOsService>() {{
         put(servicesService.getEndpoint(), servicesService);
         put(authenticationService.getEndpoint(), authenticationService);
         put(batteryService.getEndpoint(), batteryService);

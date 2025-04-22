@@ -72,7 +72,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
         final Long deviceId = device.getId();
 
-        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<>() {{
+        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?,?>,Property>() {{
             put(session.getGenericHeartRateSampleDao(), GenericHeartRateSampleDao.Properties.DeviceId);
             put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
             put(session.getGenericSpo2SampleDao(), GenericSpo2SampleDao.Properties.DeviceId);
