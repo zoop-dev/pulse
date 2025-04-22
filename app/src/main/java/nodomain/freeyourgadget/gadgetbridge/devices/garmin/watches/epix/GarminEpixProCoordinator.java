@@ -3,9 +3,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 
-public class GarminEpixProCoordinator extends GarminCoordinator {
+public class GarminEpixProCoordinator extends GarminWatchCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^EPIX PRO - \\d+mm$");

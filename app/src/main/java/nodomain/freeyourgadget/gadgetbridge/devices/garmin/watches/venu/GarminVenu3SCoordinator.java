@@ -3,9 +3,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 
-public class GarminVenu3SCoordinator extends GarminCoordinator {
+public class GarminVenu3SCoordinator extends GarminWatchCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^Venu 3S|UAT-4261$");

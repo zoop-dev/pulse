@@ -3,9 +3,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 
-public class GarminFenix6SSapphireCoordinator extends GarminCoordinator {
+public class GarminFenix6SSapphireCoordinator extends GarminWatchCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^fenix 6S Sapphire$");

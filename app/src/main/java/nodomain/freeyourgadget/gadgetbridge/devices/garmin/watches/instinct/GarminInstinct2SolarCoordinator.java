@@ -1,12 +1,12 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 import java.util.regex.Pattern;
 
-public class GarminInstinct2SolarCoordinator extends GarminCoordinator {
+public class GarminInstinct2SolarCoordinator extends GarminWatchCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^Instinct 2 Solar$");

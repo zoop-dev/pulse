@@ -3,9 +3,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 
-public class GarminForerunner245MusicCoordinator extends GarminCoordinator {
+public class GarminForerunner245MusicCoordinator extends GarminWatchCoordinator {
     @Override
     public boolean isExperimental() {
         // https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/3986
