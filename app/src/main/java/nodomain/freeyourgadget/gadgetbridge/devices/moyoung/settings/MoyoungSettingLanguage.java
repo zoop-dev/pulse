@@ -25,8 +25,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.service.devices.moyoung.QuerySettingsOperation;
-
 public class MoyoungSettingLanguage extends MoyoungSettingEnum<MoyoungEnumLanguage> {
     private static final Logger LOG = LoggerFactory.getLogger(MoyoungSettingLanguage.class);
 

@@ -118,7 +118,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
 
     private void handleTrainingHealthRatePacket(byte[] payload, boolean isFirst) {
-        LOG.info("TRAINING DATA: " + Logging.formatBytes(payload));
+        LOG.info("TRAINING DATA: {}", Logging.formatBytes(payload));
         byte sequenceType = payload[0];
         if (isFirst != (sequenceType == MoyoungConstants.ARG_TRANSMISSION_FIRST))
             throw new IllegalArgumentException("Expected packet to be " + (isFirst ? "first" : "continued") + " but got packet of type " + sequenceType);
@@ -148,7 +148,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
     private void processAllData() {
         byte[] completeData = data.toByteArray();
-        LOG.info("HAVE COMPLETE DATA: " + Logging.formatBytes(completeData));
+        LOG.info("HAVE COMPLETE DATA: {}", Logging.formatBytes(completeData));
         ByteBuffer dataBuffer = ByteBuffer.wrap(completeData);
         dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -164,14 +164,14 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
             MoyoungHeartRateSampleProvider provider = new MoyoungHeartRateSampleProvider(getDevice(), dbHandler.getDaoSession());
 
-            LOG.info("START DATE: " + dateRecorded.getTime().toString());
+            LOG.info("START DATE: {}", dateRecorded.getTime());
             while (dataBuffer.hasRemaining())
             {
                 int measurement = dataBuffer.get() & 0xFF;
                 if (!dataBuffer.hasRemaining())
                     dateRecorded.setTimeInMillis(firstPacketTimeInMillis); // the last sample is captured exactly at the end of measurement
 
-                LOG.info("MEASUREMENT: at " + dateRecorded.getTime().toString() + " was " + measurement);
+                LOG.info("MEASUREMENT: at {} was {}", dateRecorded.getTime(), measurement);
 
                 MoyoungHeartRateSample sample = new MoyoungHeartRateSample();
                 sample.setDevice(device);
@@ -180,7 +180,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
                 sample.setHeartRate(measurement != 0 ? measurement : ActivitySample.NOT_MEASURED);
 
                 provider.addSample(sample);
-                LOG.info("Adding a training sample: " + sample.toString());
+                LOG.info("Adding a training sample: {}", sample);
 
                 dateRecorded.add(Calendar.MINUTE, 1);
             }

@@ -20,7 +20,6 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.text.format.DateFormat;
@@ -84,7 +83,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSett
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingEnum;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingRemindersToMove;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingTimeRange;
-import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -140,15 +138,6 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     private final HeartRateProfile<MoyoungDeviceSupport> heartRateProfile;
     private final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     private final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
-    private final IntentListener mListener = intent -> {
-        String s = intent.getAction();
-        if (Objects.equals(s, DeviceInfoProfile.ACTION_DEVICE_INFO)) {
-            handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
-        }
-        if (Objects.equals(s, BatteryInfoProfile.ACTION_BATTERY_INFO)) {
-            handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
-        }
-    };
 
     private final Handler idleUpdateHandler = new Handler();
 
@@ -175,6 +164,15 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         addSupportedService(GattService.UUID_SERVICE_HEART_RATE);
         addSupportedService(MoyoungConstants.UUID_SERVICE_MOYOUNG);
 
+        IntentListener mListener = intent -> {
+            String s = intent.getAction();
+            if (Objects.equals(s, DeviceInfoProfile.ACTION_DEVICE_INFO)) {
+                handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
+            }
+            if (Objects.equals(s, BatteryInfoProfile.ACTION_BATTERY_INFO)) {
+                handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
+            }
+        };
         deviceInfoProfile = new DeviceInfoProfile<>(this);
         deviceInfoProfile.addListener(mListener);
         batteryInfoProfile = new BatteryInfoProfile<>(this);
@@ -242,7 +240,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS))
         {
             byte[] payload = characteristic.getValue();
-            LOG.info("Update step count: " + Logging.formatBytes(characteristic.getValue()));
+            LOG.info("Update step count: {}", Logging.formatBytes(characteristic.getValue()));
             handleStepsHistory(0, payload, true);
             return true;
         }
@@ -255,7 +253,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                     byte packetType = packet.first;
                     byte[] payload = packet.second;
 
-                    LOG.info("Response for: " + Logging.formatBytes(new byte[]{packetType}));
+                    LOG.info("Response for: {}", Logging.formatBytes(new byte[]{packetType}));
 
                     if (handlePacket(packetType, payload))
                         return true;
@@ -280,7 +278,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE)
         {
             int heartRate = payload[0] & 0xff;
-            LOG.info("Measure heart rate finished: " + heartRate + " BPM");
+            LOG.info("Measure heart rate finished: {} BPM", heartRate);
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
                 MoyoungHeartRateSampleProvider sampleProvider = new MoyoungHeartRateSampleProvider(getDevice(), dbHandler.getDaoSession());
@@ -307,7 +305,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_OXYGEN)
         {
             int percent = payload[0] & 0xff;
-            LOG.info("Measure blood oxygen finished: " + percent + "%");
+            LOG.info("Measure blood oxygen finished: {}%", percent);
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
                 MoyoungSpo2SampleProvider sampleProvider = new MoyoungSpo2SampleProvider(getDevice(), dbHandler.getDaoSession());
@@ -333,7 +331,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             int dataUnknown = payload[0] & 0xff;
             int data1 = payload[1] & 0xff;
             int data2 = payload[2] & 0xff;
-            LOG.info("Measure blood pressure finished: " + data1 + "/" + data2 + " (" + dataUnknown + ")");
+            LOG.info("Measure blood pressure finished: {}/{} ({})", data1, data2, dataUnknown);
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
                 MoyoungBloodPressureSampleProvider sampleProvider = new MoyoungBloodPressureSampleProvider(getDevice(), dbHandler.getDaoSession());
@@ -538,7 +536,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        LOG.warn("Unhandled packet " + Logging.formatBytes(new byte[]{packetType}) + ": " + Logging.formatBytes(payload));
+        LOG.warn("Unhandled packet {}: {}", Logging.formatBytes(new byte[]{packetType}), Logging.formatBytes(payload));
         return false;
     }
 
@@ -560,14 +558,14 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     private void handleDeviceInfo(DeviceInfo info) {
-        LOG.warn("Device info: " + info);
+        LOG.warn("Device info: {}", info);
         versionCmd.hwVersion = info.getHardwareRevision();
         versionCmd.fwVersion = info.getSoftwareRevision();
         handleGBDeviceEvent(versionCmd);
     }
 
     private void handleBatteryInfo(BatteryInfo info) {
-        LOG.warn("Battery info: " + info);
+        LOG.warn("Battery info: {}", info);
         batteryCmd.level = (short) info.getPercentCharged();
         if (batteryCmd.state == BatteryState.UNKNOWN) batteryCmd.state = BatteryState.BATTERY_NORMAL;
         handleGBDeviceEvent(batteryCmd);
@@ -727,11 +725,11 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         nodomain.freeyourgadget.gadgetbridge.entities.Alarm alarm = new nodomain.freeyourgadget.gadgetbridge.entities.Alarm();
         int alarmNr = buffer.get();
         alarm.setEnabled(buffer.get() != 0);
-        byte repetitionEnabled = buffer.get(); // not sure why they store the same info in two places
+        buffer.get(); // repetitionEnabled, not sure why they store the same info in two places
         alarm.setHour(buffer.get());
         alarm.setMinute(buffer.get());
-        byte singleShotYearAndMonth = buffer.get();
-        byte singleShotDay = buffer.get();
+        buffer.get(); // singleShotYearAndMonth
+        buffer.get(); // singleShotDay
         byte repetition = buffer.get();
         alarm.setRepetition(AlarmUtils.createRepetitionMask(
                 (repetition & 2) != 0,
@@ -885,7 +883,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("sendWorldClocks");
             for (byte i=1; i<getDevice().getDeviceCoordinator().getWorldClocksSlotCount(); i++) {
-                LOG.info("Deleting world clock " + i);
+                LOG.info("Deleting world clock {}", i);
                 ByteBuffer payload = ByteBuffer.allocate(3);
                 payload.put((byte) 0x00);
                 payload.put((byte) 0x03); // Delete clock
@@ -894,7 +892,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             }
             byte currentNr = 1;
             for (WorldClock clock : clocks) {
-                LOG.info("Sending world clock " + currentNr);
+                LOG.info("Sending world clock {}", currentNr);
                 TimeZone timezone = TimeZone.getTimeZone(clock.getTimeZoneId());
                 ByteBuffer payload = ByteBuffer.allocate(19 + clock.getLabel().getBytes().length).order(ByteOrder.LITTLE_ENDIAN);
                 payload.put((byte) 0x00);
@@ -1036,7 +1034,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    private Runnable updateIdleStepsRunnable = new Runnable() {
+    private final Runnable updateIdleStepsRunnable = new Runnable() {
         @Override
         public void run() {
             try {
@@ -1084,7 +1082,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 //            provider.addGBActivitySample(sample);
 //            broadcastSample(sample);
 
-            LOG.info("Adding an idle sample: " + sample.toString());
+            LOG.info("Adding an idle sample: {}", sample);
         } catch (Exception ex) {
             LOG.error("Error saving samples: ", ex);
             GB.toast(getContext(), "Error saving samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
@@ -1177,10 +1175,6 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 thisSample.set(Calendar.SECOND, 59);
                 thisSample.set(Calendar.MILLISECOND, 999);
             }
-            else
-            {
-                // no change needed - use current time
-            }
 
             Calendar startOfDay = (Calendar) thisSample.clone();
             startOfDay.set(Calendar.HOUR_OF_DAY, 0);
@@ -1262,7 +1256,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 int start_h = data[3*i + 1];
                 int start_m = data[3*i + 2];
 
-                LOG.info("sleep[daysago=" + daysAgo + "][i=" + i + "] type=" + type + ", start_h=" + start_h + ", start_m=" + start_m);
+                LOG.info("sleep[daysago={}][i={}] type={}, start_h={}, start_m={}", daysAgo, i, type, start_h, start_m);
 
                 Calendar thisSample = Calendar.getInstance();
                 thisSample.add(Calendar.DAY_OF_MONTH, -daysAgo);
@@ -1344,7 +1338,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             } else {
                 calories = buffer.getInt();
             }
-            LOG.info("Training data: start=" + startTime + " end=" + endTime + " totalTimeWithoutPause=" + validTime + " num=" + num + " type=" + type + " steps=" + steps + " avgHR=" + avgHR + " distance=" + distance + " calories=" + calories);
+            LOG.info("Training data: start={} end={} totalTimeWithoutPause={} num={} type={} steps={} avgHR={} distance={} calories={}", startTime, endTime, validTime, num, type, steps, avgHR, distance, calories);
 
             // NOTE: We are ignoring the step/distance/calories data here
             // If we had the phone connected, the realtime data is already stored anyway, and I'm
@@ -1479,10 +1473,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 LOG.error("Error while finding device: ", e);
             }
         }
-        else
-        {
-            // Not supported - the device vibrates three times and then stops automatically
-        }
+        // if start == false -> the device vibrates three times and then stops automatically
     }
 
     @SuppressWarnings("unchecked")
@@ -1525,7 +1516,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    private Set<MoyoungSetting> queriedSettings = new HashSet<>();
+    private final Set<MoyoungSetting> queriedSettings = new HashSet<>();
 
     private void querySetting(MoyoungSetting setting)
     {
@@ -1544,7 +1535,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onSendConfiguration(String config) {
-        LOG.info("Send configuration: " + config);
+        LOG.info("Send configuration: {}", config);
 
         Prefs prefs = getDevicePrefs();
         switch (config) {
@@ -1582,7 +1573,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
             case MoyoungConstants.PREF_MOYOUNG_WATCH_FACE:
                 String watchFacePref = prefs.getString(MoyoungConstants.PREF_MOYOUNG_WATCH_FACE, String.valueOf(1));
-                byte watchFace = Byte.valueOf(watchFacePref);
+                byte watchFace = Byte.parseByte(watchFacePref);
                 sendSetting(getSetting("DISPLAY_WATCH_FACE"), watchFace);
                 break;
 
@@ -1648,7 +1639,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             case MoyoungConstants.PREF_MOYOUNG_DEVICE_VERSION:
                 String versionPref = prefs.getString(MoyoungConstants.PREF_MOYOUNG_DEVICE_VERSION,
                     String.valueOf(MoyoungEnumDeviceVersion.INTERNATIONAL_EDITION.value()));
-                byte versionNum = Byte.valueOf(versionPref);
+                byte versionNum = Byte.parseByte(versionPref);
                 MoyoungSettingEnum<MoyoungEnumDeviceVersion> versionSetting = getSetting("DEVICE_VERSION");
                 sendSetting(versionSetting, versionSetting.findByValue(versionNum));
                 break;
@@ -1738,7 +1729,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onReadConfiguration(String config) {
-        LOG.info("Read configuration: " + config);
+        LOG.info("Read configuration: {}", config);
 
         switch (config) {
             /* These use the global Gadgetbridge configuration and are always forced on device upon connection
@@ -1808,7 +1799,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     public void onReadConfigurationDone(MoyoungSetting setting, Object value, byte[] data)
     {
-        LOG.info("CONFIG " + setting.name + " = " + value);
+        LOG.info("CONFIG {} = {}", setting.name, value);
         Prefs prefs = getDevicePrefs();
         final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
         switch (setting.name) {

@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.Logging;
@@ -40,8 +39,8 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchDataOperation.class);
 
-    private boolean[] receivedSteps = new boolean[3];
-    private boolean[] receivedSleep = new boolean[3];
+    private final boolean[] receivedSteps = new boolean[3];
+    private final boolean[] receivedSleep = new boolean[3];
     private boolean receivedTrainingData = false;
 
     private MoyoungPacketIn packetIn = new MoyoungPacketIn();
@@ -83,7 +82,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS)) {
                 byte[] data = characteristic.getValue();
-                LOG.info("TODAY STEPS data: " + Logging.formatBytes(data));
+                LOG.info("TODAY STEPS data: {}", Logging.formatBytes(data));
                 receivedSteps[0] = true;
                 decodeSteps(0, data);
                 return true;
@@ -123,7 +122,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
 
     private boolean handlePacket(byte packetType, byte[] payload) {
         if (packetType == MoyoungConstants.CMD_SYNC_SLEEP) {
-            LOG.info("TODAY SLEEP data: " + Logging.formatBytes(payload));
+            LOG.info("TODAY SLEEP data: {}", Logging.formatBytes(payload));
             receivedSleep[0] = true;
             decodeSleep(0, payload);
             return true;
@@ -141,25 +140,25 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             if (currentHour + sleepOffsetHours >= 24) daysAgoOffset = 1;
 
             if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS) {
-                LOG.info("2 DAYS AGO STEPS data: " + Logging.formatBytes(data));
+                LOG.info("2 DAYS AGO STEPS data: {}", Logging.formatBytes(data));
                 receivedSteps[2] = true;
                 decodeSteps(2, data);
                 return true;
             }
             else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS) {
-                LOG.info("YESTERDAY STEPS data: " + Logging.formatBytes(data));
+                LOG.info("YESTERDAY STEPS data: {}", Logging.formatBytes(data));
                 receivedSteps[1] = true;
                 decodeSteps(1, data);
                 return true;
             }
             else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP) {
-                LOG.info("2 DAYS AGO SLEEP data: " + Logging.formatBytes(data));
+                LOG.info("2 DAYS AGO SLEEP data: {}", Logging.formatBytes(data));
                 receivedSleep[2] = true;
                 decodeSleep(2 - daysAgoOffset, data);
                 return true;
             }
             else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP) {
-                LOG.info("YESTERDAY SLEEP data: " + Logging.formatBytes(data));
+                LOG.info("YESTERDAY SLEEP data: {}", Logging.formatBytes(data));
                 receivedSleep[1] = true;
                 decodeSleep(1 - daysAgoOffset, data);
                 return true;
@@ -197,11 +196,11 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
         int count_sleep = 0;
         int count_training = 0;
         int total = receivedSteps.length + receivedSleep.length;
-        for (int i = 0; i < receivedSteps.length; i++)
-            if (receivedSteps[i])
+        for (boolean receivedStep : receivedSteps)
+            if (receivedStep)
                 ++count_steps;
-        for (int i = 0; i < receivedSleep.length; i++)
-            if (receivedSleep[i])
+        for (boolean b : receivedSleep)
+            if (b)
                 ++count_sleep;
         if (receivedTrainingData)
             ++count_training;

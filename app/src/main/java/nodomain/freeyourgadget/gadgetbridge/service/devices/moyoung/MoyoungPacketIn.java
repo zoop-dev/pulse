@@ -93,7 +93,7 @@ public class MoyoungPacketIn extends MoyoungPacket {
     {
         if (packetOrFragment[0] != (byte)0xFE || packetOrFragment[1] != (byte)0xEA)
         {
-            LOG.warn("Invalid packet header, ignoring! Fragment: " + Logging.formatBytes(packetOrFragment));
+            LOG.warn("Invalid packet header, ignoring! Fragment: {}", Logging.formatBytes(packetOrFragment));
             return -1;
         }
 

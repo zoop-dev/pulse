@@ -67,13 +67,12 @@ public class MoyoungPacketOut extends MoyoungPacket {
         if (mtu == 20)
         {
             packet[2] = 16;
-            packet[3] = (byte)(packet.length & 0xFF);
         }
         else
         {
             packet[2] = (byte)(32 + (packet.length >> 8) & 0xFF);
-            packet[3] = (byte)(packet.length & 0xFF);
         }
+        packet[3] = (byte)(packet.length & 0xFF);
         packet[4] = packetType;
         System.arraycopy(payload, 0, packet, 5, payload.length);
         return packet;

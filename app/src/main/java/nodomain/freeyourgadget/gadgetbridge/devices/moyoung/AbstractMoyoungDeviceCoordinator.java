@@ -16,10 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
-import android.annotation.TargetApi;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
-import android.os.Build;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
@@ -70,7 +68,6 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
 
     @NonNull
     @Override
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Collection<? extends ScanFilter> createBLEScanFilters() {
         ParcelUuid service = new ParcelUuid(MoyoungConstants.UUID_SERVICE_MOYOUNG);
         ScanFilter filter = new ScanFilter.Builder().setServiceUuid(service).build();
@@ -79,7 +76,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass() {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(GBDevice device) {
         return MoyoungDeviceSupport.class;
     }
 
@@ -252,7 +249,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
                 "uk_UA",
                 "zh_CN",
         };
-    };
+    }
 
     @Override
     public List<HeartRateCapability.MeasurementInterval> getHeartRateMeasurementIntervals() {
