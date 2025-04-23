@@ -805,7 +805,7 @@
     <string name="qhybrid_offset_timezone">Verschiebung der Zeitzone um</string>
     <string name="qhybrid_changes_delay_prompt">Änderung kann einige Sekunden dauern…</string>
     <string name="qhybrid_offset_time_by">Zeitverschiebung um</string>
-    <string name="pref_disable_new_ble_scanning">Deaktivieren des neuen BLE-Scans</string>
+    <string name="pref_disable_new_ble_scanning">Deaktivieren des neuen BLE Scans</string>
     <string name="pref_summary_disable_new_ble_scanning">Aktiviere diese Option, wenn dein Gerät bei der Erkennung nicht gefunden wird</string>
     <string name="devicetype_banglejs">Bangle.js</string>
     <string name="devicetype_y5">Y5</string>
@@ -1643,7 +1643,7 @@
     <string name="prefs_heartrate_alert_experimental_description">Lasse das Armband vibrieren, wenn der Puls einen Schwellenwert überschreitet, ohne dass in den letzten 10 Minuten eine offensichtliche körperliche Aktivität stattgefunden hat. Diese Funktion ist experimentell und wurde nicht umfassend getestet.</string>
     <string name="prefs_heartrate_alert_threshold">Schwellenwert für Pulsalarm</string>
     <string name="prefs_stress_monitoring_title">Stressüberwachung</string>
-    <string name="prefs_stress_monitoring_description">Stresslevel während des Ausruhens überwachen</string>
+    <string name="prefs_stress_monitoring_description">Überwacht dein Stressniveau auch im Ruhezustand</string>
     <string name="prefs_activity_monitoring_title">Aktivitätsüberwachung</string>
     <string name="mi2_prefs_heart_rate_monitoring">Pulsüberwachung</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Pulsüberwachung einstellen</string>
@@ -1863,7 +1863,7 @@
     <string name="heartrate_bpm_50">50 BPM</string>
     <string name="prefs_spo2_monitoring_description">Automatische Überwachung des Sauerstoffgehalts im Blut während des gesamten Tages</string>
     <string name="heartrate_bpm_115">115 BPM</string>
-    <string name="prefs_relaxation_reminder_description">Band vibriert, um dich zu benachrichtigen, wenn der Stresswert höher als 80 ist</string>
+    <string name="prefs_relaxation_reminder_description">Band vibriert, um dich zu benachrichtigen, wenn das Stressniveau höher als 80 ist</string>
     <string name="pref_header_display">Anzeige</string>
     <string name="pref_summary_canned_replies">Antworten von der Uhr mit voreingestellten Nachrichten</string>
     <string name="pref_cache_weather">Wetterinformationen zwischenspeichern</string>
@@ -2225,7 +2225,7 @@
     <string name="stress_mild">Leicht</string>
     <string name="stress_moderate">Mäßig</string>
     <string name="stress_high">Hoch</string>
-    <string name="charts_legend_stress_average">⌀ Belastung</string>
+    <string name="charts_legend_stress_average">Stressdurchschnitt</string>
     <string name="intent_api_allow_debug_commands_summary">Auslösen von Debug-Menübefehlen über Intent-API ermöglichen</string>
     <string name="intent_api_allow_debug_commands_title">Debug-Befehle zulassen</string>
     <string name="screenshot_taken">Screenshot aufgenommen</string>
@@ -2810,7 +2810,7 @@
     <string name="scan_scanning_single_device">Scannen von 1 Gerät</string>
     <string name="scan_scanning_multiple_devices">Scannen von %d Geräten</string>
     <string name="notification_channel_scan_service_name">Scan-Dienst</string>
-    <string name="auto_reconnect_ble_scan_title">Wiederherstellung der Verbindung durch BLE-Scan</string>
+    <string name="auto_reconnect_ble_scan_title">Wiederverbindung per BLE Scan</string>
     <string name="prompt_restart_gadgetbridge">Bitte Gadgetbridge neu starten, damit es wirksam wird.</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
     <string name="temperature">Temperatur</string>
@@ -3010,7 +3010,7 @@
     <string name="pref_summary_garmin_default_reply_suffix">Zusätzlich zu dem in Gadgetbridge eingestellten Suffix angefügt</string>
     <string name="none">Keine</string>
     <string name="garmin_agps_url_i">AGPS %1$d URL</string>
-    <string name="pref_garmin_agps_help">Die folgende Liste enthält alle URLs, über die die Uhr AGPS-Updates anfordert. Du kannst eine Datei aus dem Telefonspeicher auswählen, die an die Uhr gesendet wird, wenn sie ein Update anfordert.</string>
+    <string name="pref_garmin_agps_help">Die folgende Liste enthält alle URLs, über die die Smartwatch AGPS-Updates anfordert. Du kannst eine Datei aus dem Telefonspeicher auswählen, die an die Smartwatch gesendet wird, wenn sie ein Update anfordert.</string>
     <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
     <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
     <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
@@ -3227,7 +3227,7 @@
     <string name="minutes_90">90 Minuten</string>
     <string name="minutes_120">120 Minuten</string>
     <string name="minutes_180">180 Minuten</string>
-    <string name="stress_average">⌀ Stress</string>
+    <string name="stress_average">Stressdurchschnitt</string>
     <string name="activity_type_transition">Übergang</string>
     <string name="activity_type_fitness_equipment">Fitnessgeräte</string>
     <string name="activity_type_multisport">Multisport</string>
@@ -3464,7 +3464,7 @@
     <string name="prefs_hrv_monitoring_description">Automatische Überwachung der Herzfrequenzvariabilität über den ganzen Tag</string>
     <string name="first_start_permissions_title">Berechtigungen</string>
     <string name="prefs_summary_gatt_client_device_state_updates">Änderungen des BLE Verbindungsstatus über Intents empfangen</string>
-    <string name="prefs_title_gatt_client_allow_gatt_interactions">Erlaube GATT Interaktionen durch BLE Intent API</string>
+    <string name="prefs_title_gatt_client_allow_gatt_interactions">GATT Interaktionen durch BLE Intent API erlauben</string>
     <string name="first_start_intro_tag_line">Befreie dich von properitären Apps und den Clouddiensten der Gadgethersteller.</string>
     <string name="permission_bluetooth_title">Bluetooth</string>
     <string name="label_distance_trip">Trip: %.1f km</string>
@@ -3601,7 +3601,7 @@
     <string name="redmi_buds_5_pro_equalizer_neg1">-1 dB</string>
     <string name="redmi_buds_5_pro_equalizer_zero">0 dB</string>
     <string name="weekly_total">Wöchentliche Summe</string>
-    <string name="prefs_title_gatt_client_notification_intents">Verbreitung von GATT-Benachrichtigungsintentionen über die BLE Intent API</string>
+    <string name="prefs_title_gatt_client_notification_intents">GATT Benachrichtigung Itents über die BLE Intent API senden</string>
     <string name="devicetype_garmin_forerunner_265s">Garmin Forerunner 265S</string>
     <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
     <string name="devicetype_mijia_xmwsdj04">Mijia Temperatur- und Feuchtigkeitssensor 2 (E-ink)</string>
@@ -3633,7 +3633,7 @@
     <string name="devicetype_casioecbs100">Casio ECB-S100</string>
     <string name="devicetype_sony_wf_c500">Sony WF-C500</string>
     <string name="lactateThresholdHeartRate">Puls an der Laktatschwelle</string>
-    <string name="sleep_score_value">Punktzahl: %1d</string>
+    <string name="sleep_score_value">Schlafscore: %1d/100</string>
     <string name="activity_type_mass_gymnastics">Massengymnastik</string>
     <string name="activity_type_free_sparring">Freikampf</string>
     <string name="activity_type_weiqi">Go</string>
@@ -3655,7 +3655,7 @@
     <string name="mijia_lywsd_comfort_temperature_summary">Empfohlener Bereich: 19 - 27</string>
     <string name="activity_type_para_sport">Parasport</string>
     <string name="activity_type_water_tubing">Tubing</string>
-    <string name="prefs_summary_gatt_client_allow_gatt_interactions">Ermöglicht das Senden von BLE-Charakteristik Lese-/Schreib- und Verbindungsbefehlen</string>
+    <string name="prefs_summary_gatt_client_allow_gatt_interactions">Senden von BLE Lese-/Schreibbefehlen und Verbindungsaufbau erlauben</string>
     <string name="devicetype_huawei_band2pro">Huawei Band 2 (Pro)</string>
     <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="menuitem_heart_rate_push">Pulsübertragung</string>
