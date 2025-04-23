@@ -4019,4 +4019,5 @@
     <string name="devicetype_garmin_fenix_7x_pro">佳明 Fenix 7X Pro</string>
     <string name="ultrahuman_unhandled_operation_response">未处理的操作响应 %s</string>
     <string name="devicetype_garmin_vivoactive_hr">佳明 Vívoactive HR</string>
+    <string name="devicetype_garmin_edge_130_plus">佳明 Edge 130 Plus</string>
 </resources>
