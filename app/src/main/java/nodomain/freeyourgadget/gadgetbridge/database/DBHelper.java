@@ -71,6 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.entities.WorldClockDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.ValidByDate;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
@@ -395,6 +396,20 @@ public class DBHelper {
 
         final Device device = devices.get(0);
         device.setIdentifier(newAddress);
+        session.getDeviceDao().update(device);
+    }
+
+    public static void updateDeviceType(final DaoSession session, final String address, final DeviceType newType) {
+        final DeviceDao deviceDao = session.getDeviceDao();
+        final Query<Device> query = deviceDao.queryBuilder().where(DeviceDao.Properties.Identifier.eq(address)).build();
+        final List<Device> devices = query.list();
+        if (devices.isEmpty()) {
+            LOG.warn("Failed to find device with address {}", address);
+            return;
+        }
+
+        final Device device = devices.get(0);
+        device.setTypeName(newType.name());
         session.getDeviceDao().update(device);
     }
 

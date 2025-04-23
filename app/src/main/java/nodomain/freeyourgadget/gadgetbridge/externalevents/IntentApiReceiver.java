@@ -40,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
@@ -56,6 +57,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
     public static final String COMMAND_DEBUG_INCOMING_CALL = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_INCOMING_CALL";
     public static final String COMMAND_DEBUG_END_CALL = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_END_CALL";
     public static final String COMMAND_DEBUG_SET_DEVICE_ADDRESS = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_SET_DEVICE_ADDRESS";
+    public static final String COMMAND_DEBUG_SET_DEVICE_TYPE = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_SET_DEVICE_TYPE";
     public static final String COMMAND_DEBUG_TEST_NEW_FUNCTION = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_TEST_NEW_FUNCTION";
 
     private static final String MAC_ADDR_PATTERN = "^([0-9A-F]{2}:){5}[0-9A-F]{2}$";
@@ -190,6 +192,14 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 setDeviceAddress(intent);
                 break;
 
+            case COMMAND_DEBUG_SET_DEVICE_TYPE:
+                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
+                    LOG.warn(msgDebugNotAllowed);
+                    return;
+                }
+                setDeviceType(intent);
+                break;
+
             case COMMAND_DEBUG_TEST_NEW_FUNCTION:
                 if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
                     LOG.warn(msgDebugNotAllowed);
@@ -209,6 +219,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
         intentFilter.addAction(COMMAND_DEBUG_INCOMING_CALL);
         intentFilter.addAction(COMMAND_DEBUG_END_CALL);
         intentFilter.addAction(COMMAND_DEBUG_SET_DEVICE_ADDRESS);
+        intentFilter.addAction(COMMAND_DEBUG_SET_DEVICE_TYPE);
         intentFilter.addAction(COMMAND_DEBUG_TEST_NEW_FUNCTION);
         return intentFilter;
     }
@@ -284,6 +295,43 @@ public class IntentApiReceiver extends BroadcastReceiver {
         }
 
         LOG.info("Quitting GB after device address update");
+
+        GBApplication.quit();
+    }
+
+    private void setDeviceType(final Intent intent) {
+        final String address = intent.getStringExtra("address");
+        if (!validAddress(address)) {
+            return;
+        }
+
+        final GBDevice device = GBApplication.app()
+                .getDeviceManager()
+                .getDeviceByAddress(address);
+        if (device == null) {
+            LOG.error("Device with address {} not found", address);
+            return;
+        }
+
+        final DeviceType newType;
+        try {
+            newType = DeviceType.valueOf(intent.getStringExtra("type"));
+        } catch (final Exception e) {
+            LOG.error("Invalid new device type", e);
+            return;
+        }
+
+        LOG.info("Updating device type from {} to {}", device.getType(), newType);
+
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            final DaoSession session = dbHandler.getDaoSession();
+            DBHelper.updateDeviceType(session, device.getAddress(), newType);
+        } catch (final Exception e) {
+            LOG.error("Failed to update device type", e);
+            return;
+        }
+
+        LOG.info("Quitting GB after device type update");
 
         GBApplication.quit();
     }
