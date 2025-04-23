@@ -20,4 +20,9 @@ public class GarminEdge130PlusCoordinator extends GarminBikeComputerCoordinator 
     public int getBatteryCount(final GBDevice device) {
         return 0; // does not seem to report the battery %
     }
+
+    @Override
+    public boolean supportsMusicInfo() {
+        return false;
+    }
 }

@@ -10,6 +10,46 @@ public abstract class GarminBikeComputerCoordinator extends GarminCoordinator {
     }
 
     @Override
+    public boolean supportsActivityTracking() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsActivityTabs() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSleepMeasurement() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsStepCounter() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSpeedzones() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsActiveCalories() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVO2Max() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVO2MaxCycling() {
+        return true;
+    }
+
+    @Override
     public boolean supportsActivityTracks() {
         return true;
     }
@@ -31,7 +71,7 @@ public abstract class GarminBikeComputerCoordinator extends GarminCoordinator {
 
     @Override
     public boolean supportsMusicInfo() {
-        // TODO does it?
+        // eg. Edge 840, but not all
         return true;
     }
 }
