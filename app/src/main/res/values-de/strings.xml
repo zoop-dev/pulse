@@ -1952,7 +1952,7 @@
     <string name="balanced">Ausgewogen</string>
     <string name="dual_band">Doppelband</string>
     <string name="low_power_gps">Stromsparendes GPS</string>
-    <string name="gps">GPS</string>
+    <string name="gps">GPS/AGPS</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="speed_first">Priorität auf Geschwindigkeit</string>
@@ -2104,8 +2104,8 @@
     <string name="devicetype_soflow_s06">SoFlow SO6</string>
     <string name="pref_title_lock_unlock">Sperren</string>
     <string name="pref_header_intent_api">Intent-API</string>
-    <string name="pref_agps_update_time">AGPS Aktualisierungszeit</string>
-    <string name="pref_agps_expire_time">AGPS Ablaufzeit</string>
+    <string name="pref_agps_update_time">AGPS-Aktualisierungszeit</string>
+    <string name="pref_agps_expire_time">AGP- Ablaufzeit</string>
     <string name="intent_api_allow_activity_sync_summary">Auslösen der Aktivitätssynchronisierung über die Intent-API erlauben</string>
     <string name="intent_api_allow_activity_sync_title">Aktivitätssynchronisierungsauslöser zulassen</string>
     <string name="sony_ambient_sound_control_button_modes">Tastenmodi für die Steuerung von Umgebungsgeräuschen</string>
@@ -2998,8 +2998,8 @@
     <string name="url">URL</string>
     <string name="garmin_agps_local_file">Lokale Datei</string>
     <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
-    <string name="pref_agps_status">AGPS Status</string>
-    <string name="agps_status_pending">Anhängig</string>
+    <string name="pref_agps_status">AGPS-Status</string>
+    <string name="agps_status_pending">Ausstehend</string>
     <string name="agps_status_current">Aktuell</string>
     <string name="devicetype_garmin_vivomove_hr">Garmin Vívomove HR</string>
     <string name="devicetype_garmin_vivomove_style">Garmin Vívomove Style</string>
@@ -3010,7 +3010,7 @@
     <string name="pref_summary_garmin_default_reply_suffix">Zusätzlich zu dem in Gadgetbridge eingestellten Suffix angefügt</string>
     <string name="none">Keine</string>
     <string name="garmin_agps_url_i">AGPS %1$d URL</string>
-    <string name="pref_garmin_agps_help">Die folgende Liste enthält alle URLs, die von der Uhr für AGPS-Aktualisierungen angefordert werden. Du kannst eine Datei aus dem Speicher des Telefons auswählen, die an die Uhr gesendet wird, wenn sie eine Aktualisierung anfordert.</string>
+    <string name="pref_garmin_agps_help">Die folgende Liste enthält alle URLs, über die die Uhr AGPS-Updates anfordert. Du kannst eine Datei aus dem Telefonspeicher auswählen, die an die Uhr gesendet wird, wenn sie ein Update anfordert.</string>
     <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
     <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
     <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
@@ -3729,7 +3729,7 @@
     <string name="gree_pair_status_failure">Kopplung fehlgeschlagen: %s</string>
     <string name="copy_to_clipboard">Kopieren</string>
     <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
-    <string name="pref_garmin_fake_oauth_summary">Behebt einige Funktionen wie Wetter- und AGPS-Updates ohne Verbindung zur offiziellen App alle 90 Tage.</string>
+    <string name="pref_garmin_fake_oauth_summary">Behebt bestimmte Funktionen wie Wetter- und AGPS-Updates, ohne alle 90 Tage eine Verbindung zur offiziellen App herstellen zu müssen.</string>
     <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="activity_prefs_goal_standing_hours">Tagesziel: Stehzeiten</string>
     <string name="poolLength">Pool länge</string>
@@ -4020,4 +4020,5 @@
     <string name="menuitem_water_time">Trinkzeit</string>
     <string name="ultrahuman_unhandled_operation_response">Unbehandelte Antwort auf Vorgang: %s</string>
     <string name="menuitem_watch_storage_space">Smartwatch-Speicher</string>
+    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
 </resources>
