@@ -33,6 +33,7 @@ import java.nio.ByteOrder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -548,6 +549,39 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
                 byte[] tempPrefsPacket = buildPacket(new byte[]{ColmiR0xConstants.CMD_AUTO_TEMP_PREF, 0x03, ColmiR0xConstants.PREF_WRITE, (byte) (tempEnabled ? 0x01 : 0x00)});
                 LOG.info("Temperature preference request sent: {}", StringUtils.bytesToHex(tempPrefsPacket));
                 sendWrite("tempPreferenceRequest", tempPrefsPacket);
+                break;
+            case DeviceSettingsPreferenceConst.PREF_DISPLAY_ENABLED:
+            case DeviceSettingsPreferenceConst.PREF_WEARLOCATION:
+            case DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS:
+            case DeviceSettingsPreferenceConst.PREF_DISPLAY_ENABLED_ALL_DAY:
+            case DeviceSettingsPreferenceConst.PREF_DISPLAY_ON_START:
+            case DeviceSettingsPreferenceConst.PREF_DISPLAY_ON_END:
+                final boolean displayEnabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_DISPLAY_ENABLED, false);
+                final String wearLocation = prefs.getString(DeviceSettingsPreferenceConst.PREF_WEARLOCATION, "left");
+                int brightness = prefs.getInt(DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS, 2);
+                if (brightness < 0 || brightness > 4) brightness = 2;
+                final boolean displayEnabledAllDay = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_DISPLAY_ENABLED_ALL_DAY, false);
+                final String displayOnStart = prefs.getString(DeviceSettingsPreferenceConst.PREF_DISPLAY_ON_START, "07:00");
+                final int displayOnStartHour = Integer.parseInt(displayOnStart.split(":")[0]);
+                final int displayOnStartMin = Integer.parseInt(displayOnStart.split(":")[1]);
+                final String displayOnEnd = prefs.getString(DeviceSettingsPreferenceConst.PREF_DISPLAY_ON_END, "22:00");
+                final int displayOnEndHour = Integer.parseInt(displayOnEnd.split(":")[0]);
+                final int displayOnEndMin = Integer.parseInt(displayOnEnd.split(":")[1]);
+                byte[] displayPrefsPacket = buildPacket(new byte[]{
+                    ColmiR0xConstants.CMD_DISPLAY_PREF,
+                    0x04,
+                    (byte) (displayEnabled ? 0x01 : 0x02),
+                    (byte) (Objects.equals(wearLocation, "left") ? 0x01 : 0x02),
+                    (byte) (brightness + 1),
+                    0x05,
+                    (byte) (displayEnabledAllDay ? 0x02 : 0x01),
+                    (byte) displayOnStartHour,
+                    (byte) displayOnStartMin,
+                    (byte) displayOnEndHour,
+                    (byte) displayOnEndMin
+                });
+                LOG.info("Display preferences request sent: {}", StringUtils.bytesToHex(displayPrefsPacket));
+                sendWrite("displayPreferencesRequest", displayPrefsPacket);
                 break;
         }
     }

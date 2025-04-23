@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_power_settings_new"
+        android:key="display_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/pref_display_enabled_title"
+        android:summary="@string/pref_display_enabled_summary" />
+    <ListPreference
+        android:dependency="display_enabled"
+        android:defaultValue="left"
+        android:icon="@drawable/ic_switch_left"
+        android:entries="@array/wearside"
+        android:entryValues="@array/wearside_values"
+        android:key="wearlocation"
+        android:title="@string/prefs_wearside"
+        android:summary="%s" />
+    <SeekBarPreference
+        android:dependency="display_enabled"
+        android:defaultValue="2"
+        android:icon="@drawable/ic_wb_sunny"
+        android:key="screen_brightness"
+        android:max="4"
+        android:title="@string/pref_screen_brightness" />
+    <SwitchPreferenceCompat
+        android:dependency="display_enabled"
+        android:disableDependentsState="true"
+        android:defaultValue="true"
+        android:icon="@drawable/ic_timer"
+        android:key="display_all_day"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/pref_display_enabled_all_day_title"
+        android:summary="@string/pref_display_enabled_all_day_summary" />
+    <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+        android:dependency="display_all_day"
+        android:defaultValue="07:00"
+        android:key="display_on_start"
+        android:title="@string/mi2_prefs_do_not_disturb_start" />
+    <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+        android:dependency="display_all_day"
+        android:defaultValue="22:00"
+        android:key="display_on_end"
+        android:title="@string/mi2_prefs_do_not_disturb_end" />
+</PreferenceScreen>

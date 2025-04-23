@@ -29,6 +29,7 @@ public class ColmiR0xConstants {
     public static final byte CMD_SET_DATE_TIME = 0x01;
     public static final byte CMD_BATTERY = 0x03;
     public static final byte CMD_PHONE_NAME = 0x04;
+    public static final byte CMD_DISPLAY_PREF = 0x05;
     public static final byte CMD_POWER_OFF = 0x08;
     public static final byte CMD_PREFERENCES = 0x0a;
     public static final byte CMD_SYNC_HEART_RATE = 0x15;

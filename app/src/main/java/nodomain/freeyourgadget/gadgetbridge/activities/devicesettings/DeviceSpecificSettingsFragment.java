@@ -898,6 +898,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_BATTERY_MINIMUM_CHARGE);
         addPreferenceHandlerFor(PREF_BATTERY_ALLOW_PASS_THROUGH);
 
+        addPreferenceHandlerFor(PREF_DISPLAY_ENABLED);
+        addPreferenceHandlerFor(PREF_DISPLAY_ENABLED_ALL_DAY);
+        addPreferenceHandlerFor(PREF_DISPLAY_ON_START);
+        addPreferenceHandlerFor(PREF_DISPLAY_ON_END);
+
         final Preference dischargeIntervalsSet = findPreference(PREF_BATTERY_DISCHARGE_INTERVALS_SET);
         if (dischargeIntervalsSet != null) {
             dischargeIntervalsSet.setOnPreferenceClickListener(preference -> {

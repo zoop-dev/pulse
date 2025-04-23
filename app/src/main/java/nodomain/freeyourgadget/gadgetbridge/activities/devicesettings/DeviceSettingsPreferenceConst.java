@@ -614,4 +614,9 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_BATTERY_DISCHARGE_MANUAL = "battery_discharge_manual";
     public static final String PREF_BATTERY_MINIMUM_CHARGE = "battery_minimum_charge";
     public static final String PREF_BATTERY_ALLOW_PASS_THROUGH = "battery_allow_pass_through";
+
+    public static final String PREF_DISPLAY_ENABLED = "display_enabled";
+    public static final String PREF_DISPLAY_ENABLED_ALL_DAY = "display_all_day";
+    public static final String PREF_DISPLAY_ON_START = "display_on_start";
+    public static final String PREF_DISPLAY_ON_END = "display_on_end";
 }

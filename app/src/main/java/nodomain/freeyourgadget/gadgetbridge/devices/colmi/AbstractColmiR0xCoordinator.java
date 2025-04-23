@@ -178,6 +178,10 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
         return true;
     }
 
+    public boolean hasDisplay() {
+        return false;
+    }
+
     @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
         return new ColmiActivitySampleProvider(device, session);
@@ -237,6 +241,10 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
         health.add(R.xml.devicesettings_colmi_r0x);
         if (supportsContinuousTemperature(device)) {
             health.add(R.xml.devicesettings_temperature_automatic_enable);
+        }
+        if (hasDisplay()) {
+            final List<Integer> display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY);
+            display.add(R.xml.devicesettings_colmi_r0x_display);
         }
         return deviceSpecificSettings;
     }

@@ -1985,6 +1985,7 @@
     <string name="devicetype_colmi_r06">Colmi R06</string>
     <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="devicetype_colmi_r10">Colmi R10</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
     <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="devicetype_bandw_pseries">Bowers and Wilkins P series</string>
     <string name="devicetype_earfun_air_s">EarFun Air S</string>
@@ -3904,4 +3905,8 @@
     <string name="maps_download_title">Download Maps</string>
     <string name="maps_download_summary">Click here to download map files. They should be saved to the folder selected in the preference below.</string>
     <string name="maps_track_color_title">Track color</string>
+    <string name="pref_display_enabled_title">Display enabled</string>
+    <string name="pref_display_enabled_summary">Enable the display on the ring</string>
+    <string name="pref_display_enabled_all_day_title">Enabled all day</string>
+    <string name="pref_display_enabled_all_day_summary">Enable the display the whole day. Disable to select specific times below</string>
 </resources>

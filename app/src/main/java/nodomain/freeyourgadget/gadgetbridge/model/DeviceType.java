@@ -29,6 +29,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiR12Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdge130PlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix7XProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActiveHrCoordinator;
@@ -632,6 +633,7 @@ public enum DeviceType {
     COLMI_R06(ColmiR06Coordinator.class),
     COLMI_R09(ColmiR09Coordinator.class),
     COLMI_R10(ColmiR10Coordinator.class),
+    COLMI_R12(ColmiR12Coordinator.class),
     B_AND_W_P_SERIES(BandWPSeriesDeviceCoordinator.class),
     EARFUN_AIR_S(EarFunAirSCoordinator.class),
     EARFUN_AIR_PRO_4(EarFunAirPro4Coordinator.class),
