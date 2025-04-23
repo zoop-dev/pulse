@@ -4016,4 +4016,5 @@
     <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
     <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
     <string name="ultrahuman_unhandled_operation_response">neznámá odpověď na operaci %s</string>
+    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
 </resources>
