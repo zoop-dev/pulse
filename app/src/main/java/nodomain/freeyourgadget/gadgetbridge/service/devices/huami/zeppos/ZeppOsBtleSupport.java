@@ -217,7 +217,6 @@ public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements Zepp
         zeppOsSupport.onTestNewFunction();
     }
 
-
     @Override
     public void onFindDevice(final boolean start) {
         zeppOsSupport.onFindDevice(start);

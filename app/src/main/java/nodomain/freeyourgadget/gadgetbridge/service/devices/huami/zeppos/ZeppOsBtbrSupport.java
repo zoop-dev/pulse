@@ -66,9 +66,13 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     private static final byte CMD_CHANNELS_GET = 0x01;
     private static final byte CMD_CHANNELS_RET = 0x02;
     private static final byte CMD_SESSION_START = 0x03;
-    private static final byte CMD_SESSION_ACK = 0x04;
+    private static final byte CMD_SESSION_START_ACK = 0x04;
+    private static final byte CMD_SESSION_END = 0x05;
+    private static final byte CMD_SESSION_END_ACK = 0x06;
     private static final byte CMD_CHANNEL_DATA = 0x07;
     private static final byte CMD_CHANNEL_ACK = 0x08;
+    private static final byte CMD_PING = 0x09;
+    private static final byte CMD_PONG = 0x0a;
 
     private byte seqNumTx = 0x00;
     private byte seqNumRx = 0x5a;
@@ -228,7 +232,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 builder.queue(getQueue());
                 return;
             }
-            case CMD_SESSION_ACK: {
+            case CMD_SESSION_START_ACK: {
                 final int nonce = buf.getInt();
                 if (nonce != sessionNonce) {
                     LOG.error("Got unexpected session nonce {}, expected {}", nonce, sessionNonce);
@@ -251,12 +255,26 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
 
                 // TODO 3 bytes - 08:07:01?
 
-                LOG.debug("Got session ack, sessionNumber={}, mtu={}", sessionNumber, mtu);
+                LOG.debug("Got session start ack, sessionNumber={}, mtu={}", sessionNumber, mtu);
 
                 final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("auth phase 1");
                 zeppOsSupport.initializeDevice(builder);
                 builder.queue(zeppOsSupport);
 
+                return;
+            }
+            case CMD_SESSION_END: {
+                final byte session = buf.get();
+                final byte status = buf.get(); // 3
+                LOG.debug("Got session end, session={}, status={}", session, status);
+                // TODO reconnect if we lose main session?
+                return;
+            }
+            case CMD_SESSION_END_ACK: {
+                final byte session = buf.get(); // 0xff on unk session
+                final byte status = buf.get(); // 1 for ack, 0x10 for unk session
+                LOG.debug("Got session end ack, session={}, status={}", session, status);
+                // TODO reconnect if we lose main session?
                 return;
             }
             case CMD_CHANNEL_DATA: {
@@ -283,11 +301,33 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 return;
             }
             case CMD_CHANNEL_ACK: {
-                final byte session = buf.get();
+                final byte session = buf.get(); // 0xff on unk session
                 final byte seqNum = buf.get();
-                final byte status = buf.get(); // 1 for ack
+                final byte status = buf.get(); // 1 for ack, 2 for unk session
                 final byte unk = buf.get(); // 0?
                 LOG.debug("Got ack for session={}, seqNum={}, status={}, unk={}", session, seqNum, status, unk);
+                return;
+            }
+            case CMD_PING: {
+                final byte session = buf.get();
+                final byte status = buf.get(); // 0
+                final byte unk1 = buf.get(); // 0
+                final byte unk2 = buf.get(); // 0
+                if (session != sessionNumber) {
+                    LOG.warn("Got ping for unknown session {}, expected {}", session, sessionNumber);
+                }
+                LOG.debug("Got ping, session={}, status={}, unk1={}, unk2={}", session, status, unk1, unk2);
+                final TransactionBuilder builder = createTransactionBuilder("pong");
+                write(builder, CMD_PONG, new byte[]{session, 0x01, 0x00, 0x00});
+                builder.queue(getQueue());
+                return;
+            }
+            case CMD_PONG: {
+                final byte session = buf.get();
+                final byte status = buf.get(); // 1
+                final byte unk1 = buf.get(); // 0
+                final byte unk2 = buf.get(); // 0
+                LOG.debug("Got pong, session={}, status={}, unk1={}, unk2={}", session, status, unk1, unk2);
                 return;
             }
         }
@@ -340,7 +380,6 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     public void onTestNewFunction() {
         zeppOsSupport.onTestNewFunction();
     }
-
 
     @Override
     public void onFindDevice(final boolean start) {
