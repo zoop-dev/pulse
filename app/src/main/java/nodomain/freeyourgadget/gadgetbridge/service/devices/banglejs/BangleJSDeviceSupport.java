@@ -58,6 +58,7 @@ import androidx.core.text.HtmlCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -998,6 +999,10 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                 return h;
             }
         };
+        if (json.has("timeout")) {
+            int timeout = json.getInt("timeout");
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(timeout, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        }
         RequestQueue queue = getRequestQueue();
         queue.add(stringRequest);
     }
