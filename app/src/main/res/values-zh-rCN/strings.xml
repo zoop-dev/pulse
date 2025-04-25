@@ -4020,4 +4020,9 @@
     <string name="ultrahuman_unhandled_operation_response">未处理的操作响应 %s</string>
     <string name="devicetype_garmin_vivoactive_hr">佳明 Vívoactive HR</string>
     <string name="devicetype_garmin_edge_130_plus">佳明 Edge 130 Plus</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
+    <string name="pref_display_enabled_title">显示已启用</string>
+    <string name="pref_display_enabled_summary">启用戒指上的显示屏</string>
+    <string name="pref_display_enabled_all_day_title">全天开启</string>
+    <string name="pref_display_enabled_all_day_summary">全天启用显示。禁用以在下面选择特定的时间</string>
 </resources>
