@@ -114,6 +114,7 @@ public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements Zepp
     @Override
     public void dispose() {
         zeppOsSupport.dispose();
+        super.dispose();
     }
 
     @Override

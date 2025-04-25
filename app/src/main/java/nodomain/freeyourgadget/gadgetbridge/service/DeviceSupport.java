@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
+import androidx.annotation.CallSuper;
+
 import nodomain.freeyourgadget.gadgetbridge.devices.EventHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -92,6 +94,7 @@ public interface DeviceSupport extends EventHandler {
      * Disposes of this instance, closing all connections and freeing all resources.
      * Instances will not be reused after having been disposed.
      */
+    @CallSuper
     void dispose();
 
     /**
