@@ -133,8 +133,8 @@
     <string name="pref_summary_pebble_forcele">Nutze die experimentelle LE-Unterstützung für alle Pebbles anstelle von BT-Classic. Dies erfordert zuerst eine Kopplung mit Nicht-LE und dann Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU Limit</string>
     <string name="pref_summary_pebble_mtu_limit">Wenn deine Pebble 2/Pebble LE nicht so wie erwartet funktioniert, versuche die MTU zu begrenzen (erlaubte Werte 20 bis 512)</string>
-    <string name="pref_title_pebble_enable_applogs">Anwendungsprotokollierung der Smartwatch aktivieren</string>
-    <string name="pref_summary_pebble_enable_applogs">Schreibt Protokolle von Armbanduhranwendungen in Gadgetbridge-Protokolle (erfordert erneute Verbindung)</string>
+    <string name="pref_title_pebble_enable_applogs">Protokollierung von Smartwatch-Apps aktivieren</string>
+    <string name="pref_summary_pebble_enable_applogs">Smartwatch-App-Logs werden von Gadgetbridge erfasst (erneute Verbindung nötig)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">PebbleKit Nachrichten direkt bestätigen</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Nachrichten, die an externe Drittanbieteranwendungen geschickt werden, immer und sofort bestätigen</string>
     <string name="pref_title_pebble_reconnect_attempts">Wiederverbindungsversuche</string>
@@ -247,7 +247,7 @@
     <string name="user_feedback_miband_set_alarms_ok">Wecker ans Gerät gesendet.</string>
     <string name="chart_no_data_synchronize">Keine Daten. Gerät synchronisieren?</string>
     <string name="user_feedback_miband_activity_data_transfer">Im Begriff %1$s Daten zu übertragen, beginnend mit %2$s</string>
-    <string name="miband_prefs_fitness_goal">Tägliches Schrittziel</string>
+    <string name="miband_prefs_fitness_goal">Tagesziel: Schritte</string>
     <string name="dbaccess_error_executing">Fehler beim Ausführen von \'%1$s\'</string>
     <string name="controlcenter_start_activitymonitor">Deine Aktivität</string>
     <string name="cannot_connect">Keine Verbindung möglich: %1$s</string>
@@ -314,7 +314,7 @@
     <string name="dateformat_time">Zeit</string>
     <string name="dateformat_date_time"><![CDATA[Zeit & Datum]]></string>
     <string name="mi2_prefs_goal_notification">Zielbenachrichtigung</string>
-    <string name="mi2_prefs_goal_notification_summary">Das Band vibriert, wenn das Tagesschrittziel erreicht ist</string>
+    <string name="mi2_prefs_goal_notification_summary">Die Smartwatch vibriert, wenn du dein Tagesschrittziel erreichst</string>
     <string name="mi2_prefs_display_items">Anzeigeelemente</string>
     <string name="mi2_prefs_display_items_summary">Die auf der Bandanzeige anzuzeigenden Elemente auswählen</string>
     <string name="mi2_prefs_activate_display_on_lift">Anzeige beim Anheben aktivieren</string>
@@ -322,7 +322,7 @@
     <string name="mi2_prefs_do_not_disturb">Bitte nicht stören</string>
     <string name="mi2_prefs_do_not_disturb_summary">Wenn das Band aktiv ist, erhält es keine Benachrichtigungen</string>
     <string name="mi2_prefs_inactivity_warnings">Inaktivitätswarnungen</string>
-    <string name="mi2_prefs_inactivity_warnings_summary">Das Band vibriert, wenn du eine Weile nicht aktiv warst</string>
+    <string name="mi2_prefs_inactivity_warnings_summary">Die Smartwatch vibriert, wenn du eine Zeit lang inaktiv warst</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Grenzwert für Inaktivität (in Minuten)</string>
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Deaktivieren von Inaktivitätswarnungen für eine bestimmte Zeit</string>
     <string name="mi2_prefs_do_not_disturb_start">Startzeit</string>
@@ -338,7 +338,7 @@
     <string name="authentication_required">Authentifizierung erforderlich</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Widget hinzufügen</string>
-    <string name="activity_prefs_sleep_duration">Gewünschte Schlafdauer in Stunden</string>
+    <string name="activity_prefs_sleep_duration">Tagesziel: Schlafdauer (Stunden)</string>
     <string name="appwidget_setting_alarm">Wecker wurde auf %1$02d:%2$02d gestellt</string>
     <string name="device_hw">Hardwarerevision: %1$s</string>
     <string name="device_fw">Firmwareversion: %1$s</string>
@@ -420,13 +420,7 @@
     <string name="discovery_yes_pair">Koppeln</string>
     <string name="discovery_dont_pair">Nicht koppeln</string>
     <string name="stats_title">Geschwindigkeitszonen</string>
-    <string name="fw_upgrade_notice_amazfitbip">Du bist dabei, die Firmware %s auf deine Amazfit Bip zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw-Datei, dann die .res-Datei und schließlich die .gps-Datei installierst. Deine Uhr wird nach der Installation der .fw-Datei neu gestartet.
-\n
-\nHinweis: Du musst die .res und .gps nicht installieren, wenn diese Dateien genau die gleichen sind, wie die zuvor installierten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitbip">Du bist dabei, die Firmware %s auf deiner Amazfit Bip zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei, dann die .res-Datei und schließlich die .gps-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res und .gps nicht installieren, wenn diese Dateien exakt mit den zuvor installierten identisch sind.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="mi2_prefs_button_actions">Tastenaktionen</string>
     <string name="mi2_prefs_button_actions_summary">Tastendruckaktionen bestimmen</string>
     <string name="mi2_prefs_button_press_count_summary">Anzahl der Tastendrücke, um Aktion 1 auszulösen. Wiederholen der gleichen Anzahl an Tastendrücken führt Aktion 2 aus, und so weiter.</string>
@@ -454,7 +448,7 @@
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="mi2_prefs_button_press_count">Anzahl der Tastendrücke</string>
     <string name="pref_title_charts_swipe">Streichen nach links/rechts im Diagrammbetrieb aktivieren</string>
-    <string name="pref_summary_pebble_enable_bgjs">Wenn aktiviert, kann Zifferblatt Wetter, Akkuinfos, usw. anzeigen.</string>
+    <string name="pref_summary_pebble_enable_bgjs">Wenn aktiviert, werden Wetter- und Akkudaten etc. auf Zifferblättern angezeigt.</string>
     <string name="prefs_title_heartrate_measurement_interval">Ganztägige Pulsmessung</string>
     <string name="interval_one_minute">einmal pro Minute</string>
     <string name="interval_five_minutes">alle 5 Minuten</string>
@@ -539,7 +533,7 @@
     <string name="blacklist_all_for_notifications">Blacklist für alle Benachrichtigungen</string>
     <string name="whitelist_all_for_notifications">Whitelist für alle Benachrichtigungen</string>
     <string name="pref_auto_fetch_summary">Abruf erfolgt beim Entsperren des Bildschirms. Funktioniert nur, wenn ein Sperrmechanismus eingestellt ist!</string>
-    <string name="watch9_pairing_tap_hint">Wenn deine Uhr vibriert, schüttel das Gerät oder drücke die Taste.</string>
+    <string name="watch9_pairing_tap_hint">Wenn deine Samrtwatch vibriert, schüttel das Gerät oder drücke die Taste.</string>
     <string name="preferences_qhybrid_settings">Q Hybrid-Einstellungen</string>
     <string name="watch9_calibration_button">Kalibrieren</string>
     <string name="title_activity_watch9_pairing">Watch 9 koppeln</string>
@@ -635,9 +629,9 @@
     <string name="save_configuration">Konfiguration speichern</string>
     <string name="appwidget_not_connected">Nicht verbunden, Alarm nicht eingestellt.</string>
     <string name="prefs_disconnect_notification">Trennungsbenachrichtigung</string>
-    <string name="activity_prefs_calories_burnt">Tägliches Ziel: verbrannte Kalorien</string>
-    <string name="activity_prefs_distance_meters">Tägliches Ziel: zurückgelegte Strecke in Meter</string>
-    <string name="activity_prefs_activetime_minutes">Tägliches Ziel: aktive Zeit in Minuten</string>
+    <string name="activity_prefs_calories_burnt">Tagesziel: verbrannte Kalorien</string>
+    <string name="activity_prefs_distance_meters">Tagesziel: Distanz in Metern</string>
+    <string name="activity_prefs_activetime_minutes">Tagesziel: Aktive Zeit in Minuten</string>
     <!-- ZeTime Preferences -->
     <string name="zetime_title_settings">ZeTime-Einstellungen</string>
     <string name="zetime_title_screentime">Display-Aktivierungsdauer in Sekunden</string>
@@ -659,7 +653,7 @@
     <string name="zetime_prefs_inactivity_su">Sonntag</string>
     <string name="zetime_signaling_none">Lautlos</string>
     <string name="devicetype_miscale2">Mi Scale 2</string>
-    <string name="zetime_title_heart_rate_alarm_summary">Löst eine Warnung aus, wenn deine Herzfrequenz die Grenzwerte überschreitet.</string>
+    <string name="zetime_title_heart_rate_alarm_summary">Die Smartwatch warnt dich, wenn dein Puls die festgelegten Grenzwerte überschreitet.</string>
     <string name="zetime_analog_mode">Analoger Modus</string>
     <string name="zetime_analog_mode_hands">Nur Zeiger</string>
     <string name="zetime_analog_mode_handsandsteps">Zeiger und Schrittanzahl</string>
@@ -761,21 +755,9 @@
     <string name="prefs_find_phone_duration">Klingeldauer in Sekunden</string>
     <string name="maximum_duration">Dauer</string>
     <string name="discovery_need_to_enter_authkey">Dieses Gerät benötigt einen geheimen Authentifikationsschlüssel, den du durch langes Drücken auf den Gerätnamen eingeben kannst. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
-    <string name="fw_upgrade_notice_amazfitbip_lite">Du bist dabei, die Firmware %s auf deine Amazfit Bip Lite zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei und danach die .res Datei installierst. Deine Uhr wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">Du bist dabei, die Firmware %s auf deiner Amazfit Bip Lite zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
-    <string name="fw_upgrade_notice_amazfitgtr">Du bist dabei, die Firmware %s auf deine Amazfit GTR zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei, dann die .res Datei und schließlich die .gps Datei installierst. Deine Uhr wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst die .res und .gps nicht installieren, wenn diese Dateien genau die gleichen sind wie die zuvor installierten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitgtr">Du bist dabei, die Firmware %s auf deiner Amazfit GTR zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="pref_chart_heartrate_color_red">Rot</string>
     <string name="pref_chart_heartrate_color_orange">Orange</string>
     <string name="pref_title_chart_heartrate_color">Pulsmessungs-Farbe</string>
@@ -783,13 +765,7 @@
     <string name="pref_chart_sleep_rolling_24_on">Letzte 24 Stunden</string>
     <string name="pref_chart_sleep_rolling_24_off">Mittag bis Mittag</string>
     <string name="devicetype_amazfit_gts">Amazfit GTS</string>
-    <string name="fw_upgrade_notice_amazfitgts">Du bist dabei, die Firmware %s auf deine Amazfit GTS zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei, dann die .res Datei und schließlich die .gps Datei installierst. Deine Uhr wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst die .res und .gps nicht installieren, wenn diese Dateien genau die gleichen sind wie die zuvor installierten.
-\n 
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitgts">Du bist dabei, die Firmware %s auf deiner Amazfit GTS zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="watch_not_connected">Uhr nicht verbunden</string>
@@ -860,16 +836,16 @@
     <string name="pref_title_device_spec_settings_force_time">Synchronisierungszeit erzwingen</string>
     <string name="pref_header_device_spec_settings">Geräteeinstellungen</string>
     <string name="pref_header_notifications_and_calls">Benachrichtigungen und Anrufe</string>
-    <string name="power_mode_watch">Nur Uhr</string>
+    <string name="power_mode_watch">Nur Smartwatch</string>
     <string name="power_mode_saving">Energiesparmodus</string>
     <string name="power_mode_normal">Normal</string>
     <string name="prefs_sensors_button_bp_calibration_sum">Drücke hier, um die Kalibrierung zu starten</string>
     <string name="pref_title_device_spec_settings_show_raw_graph">RAW-Daten im Aktivitätsdiagramm anzeigen</string>
-    <string name="power_mode_title">Uhr-Energiesparmodus</string>
+    <string name="power_mode_title">Energiesparmodus der Smartwatch</string>
     <string name="menuitem_eventreminder">Ereigniserinnerung</string>
     <string name="menuitem_pai">PAI</string>
     <string name="pref_summary_device_spec_settings_title_force_time">Erzwinge automatische Zeitsynchronisation beim erneuten Verbinden. Analoge Uhrzeiger können dabei die falsche Uhrzeit anzeigen!</string>
-    <string name="pref_summary_notifications_and_calls_title_shake_reject">Kopiere Aktion vom Uhr-Knopf</string>
+    <string name="pref_summary_notifications_and_calls_title_shake_reject">Dupliziert die Aktion der Smartwatch-Taste</string>
     <string name="prefs_notifications_and_calls_shake_reject">Schüttelgeste Anruf ignorieren/zurückzuweisen</string>
     <string name="pref_summary_notifications_and_calls_title_reject">Aus - ignorieren, An - zurückweisen</string>
     <string name="prefs_notifications_and_calls_reject">Taste Anruf ignorieren/zurückweisen</string>
@@ -892,13 +868,7 @@
     <string name="bip_prefs_shortcuts">Verknüpfungen</string>
     <string name="hr_widget_last_notification">Letzte Benachrichtigung</string>
     <string name="controlcenter_set_alias">Alias setzen</string>
-    <string name="fw_upgrade_notice_amazfit_trex">Du bist dabei, die Firmware %s auf deine Amazfit T-Rex zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei, dann die .res Datei und schließlich die .gps Datei installierst. Deine Uhr wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst die .res und .gps nicht installieren, wenn diese Dateien genau die gleichen sind wie die zuvor installierten. 
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_trex">Du bist dabei, die Firmware %s auf deiner Amazfit T-Rex zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei, dann die .res-Datei und schließlich die .gps-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res und .gps nicht installieren, wenn diese Dateien exakt mit den zuvor installierten identisch sind.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
     <string name="about_additional_contributions">Wir danken allen nicht gelisteten Mitwirkenden dafür uns zu unterstützen mit Code, Übersetzung, Unterstützung, Ideen, Motivation, Fehlermeldungen, Geld… ✊</string>
     <string name="about_additional_device_support">Unterstützung zusätzlicher Geräte</string>
@@ -908,7 +878,7 @@
     <string name="about_activity_title_generic">Über Gadgetbridge</string>
     <string name="about_title">Über</string>
     <string name="pref_title_weather_summary">Wird für den LineageOS Wetterdienst genutzt, andere Android-Versionen müssen eine Anwendung (wie Breezy Weather) nutzen. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
-    <string name="menuitem_worldclock">Weltzeituhr</string>
+    <string name="menuitem_worldclock">Weltuhr</string>
     <string name="error_version_check_extreme_caution">ACHTUNG: Fehler beim Prüfen der Information zur Version! Du solltest nicht fortfahren! Versionsname \"%s\" gefunden</string>
     <string name="permission_granting_mandatory">Alle Berechtigungen sind notwendig und es kann zu Problemen führen, wenn sie nicht genehmigt werden</string>
     <string name="menuitem_stress">Stress</string>
@@ -1133,13 +1103,7 @@
     <string name="discovery_entered_invalid_authkey">Der eingegebene geheime Authentifikationsschlüssel ist ungültig! Drücke zum Bearbeiten lange auf das Gerät.</string>
     <string name="pref_summary_connected_advertisement">Macht das Gerät trotz bestehender Bluetoothverbindung auffindbar</string>
     <string name="pref_title_connected_advertisement">Sichtbar, während eine Verbindung besteht</string>
-    <string name="fw_upgrade_notice_amazfitvergel">Du bist dabei, die Firmware %s auf deine Amazfit Verge Lite zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei, dann die .res Datei und schließlich die .gps Datei installierst. Deine Uhr wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst die .res und .gps nicht installieren, wenn diese Dateien genau die gleichen sind wie die zuvor installierten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitvergel">Du bist dabei, die Firmware %s auf deiner Amazfit Verge Lite zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei, dann die .res-Datei und schließlich die .gps-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res und .gps nicht installieren, wenn diese Dateien exakt mit den zuvor installierten identisch sind.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="widget_settings_select_device_title">Gerät auswählen</string>
     <string name="dbmanagementactivity_export_confirmation">Die Daten wirklich exportieren\? Zuvor exportierte Aktivitätsdaten (falls vorhanden) und Einstellungen werden überschrieben.</string>
     <string name="dbmanagementactivity_export_data_title">Daten exportieren\?</string>
@@ -1620,13 +1584,13 @@
     <string name="heartrate_bpm_145">145 BPM</string>
     <string name="heartrate_bpm_150">150 BPM</string>
     <string name="world_clock_label">Beschriftung</string>
-    <string name="world_clock_no_free_slots_description">Das Gerät hat keine freien Speicherplätze für Weltzeituhren (Speicherplätze insgesamt: %1$s)</string>
+    <string name="world_clock_no_free_slots_description">Das Gerät hat keine freien Plätze mehr für Weltuhren (insgesamt: %1$s)</string>
     <string name="activity_type_elliptical">Elliptisch</string>
-    <string name="pref_summary_banglejs_text_bitmap">Wenn ein Wort nicht mit der Schriftart der Uhr gerendert werden kann, in Gadgetbridge eine Bitmap rendern und die Bitmap auf der Uhr anzeigen</string>
+    <string name="pref_summary_banglejs_text_bitmap">Wenn ein Wort nicht mit der Schriftart der Smartwatch dargestellt werden kann, wird es in Gadgetbridge als Bitmap gerendert und auf der Smartwatch angezeigt</string>
     <string name="pref_title_device_internet_access">Internetzugang zulassen</string>
     <string name="pref_summary_device_internet_access">Apps auf diesem Gerät Internetzugriff erlauben</string>
     <string name="pref_title_device_intents">Eingriffe erlauben</string>
-    <string name="pref_summary_device_intents">Bangle.js-Watch-Apps erlauben, Android-Intents zu senden und anderen Apps auf Android (wie Tasker) erlauben, Daten mit dem com.banglejs.uart.tx-Intent an Bangle.js zu senden. Benötigt die Berechtigung zum Anzeigen über andere Apps, um im Hintergrund zu arbeiten.</string>
+    <string name="pref_summary_device_intents">Erlaubt Bangle.js-Apps, Intents zu senden und von anderen Android-Apps (z. B. Tasker) Daten über den Intent com.banglejs.uart.tx zu empfangen. Erfordert die Berechtigung „Über anderen Apps anzeigen“, um im Hintergrund zu funktionieren.</string>
     <string name="pref_screen_vibration_patterns_title">Vibrationsmuster</string>
     <string name="pref_screen_vibration_patterns_summary">Vibrationsmuster für verschiedene Benachrichtigungen konfigurieren</string>
     <string name="heartrate_bpm_100">100 BPM</string>
@@ -1638,7 +1602,7 @@
     <string name="heartrate_bpm_130">130 BPM</string>
     <string name="heartrate_bpm_135">135 BPM</string>
     <string name="heartrate_bpm_140">140 BPM</string>
-    <string name="title_activity_world_clock_details">Weltzeituhrdetails</string>
+    <string name="title_activity_world_clock_details">Weltuhrdetails</string>
     <string name="prefs_heartrate_alert_experimental_title">Pulsalarm (experimentell)</string>
     <string name="prefs_heartrate_alert_experimental_description">Lasse das Armband vibrieren, wenn der Puls einen Schwellenwert überschreitet, ohne dass in den letzten 10 Minuten eine offensichtliche körperliche Aktivität stattgefunden hat. Diese Funktion ist experimentell und wurde nicht umfassend getestet.</string>
     <string name="prefs_heartrate_alert_threshold">Schwellenwert für Pulsalarm</string>
@@ -1688,7 +1652,7 @@
     <string name="world_clock_delete_confirm_title">\'%1$s\' löschen</string>
     <string name="world_clock_timezone">Zeitzone</string>
     <string name="pref_world_clocks_title">Weltuhren</string>
-    <string name="world_clock_delete_confirm_description">Möchtest du die Weltzeituhr wirklich löschen\?</string>
+    <string name="world_clock_delete_confirm_description">Möchtest du die Weltuhr wirklich löschen?</string>
     <string name="world_clock_no_free_slots_title">Keine freien Speicherplätze</string>
     <string name="prefs_activity_monitoring_description">Erhöhe automatisch die Erkennungsfrequenz für den Puls, wenn das Armband körperliche Aktivität erkennt, um die Genauigkeit der Pulserfassung zu verbessern.</string>
     <string name="prefs_ambient_sound_during_call_title">Umgebungsgeräusche während des Anrufs</string>
@@ -1761,7 +1725,7 @@
     <string name="open_fw_installer_connect_minimum_one_device">Bitte verbinde MINDESTENS EIN Gerät, an das du die Datei senden möchtest.</string>
     <string name="open_fw_installer_connect_maximum_one_device">Bitte verbinde NUR EIN Gerät, an das du die Datei senden möchtest.</string>
     <string name="open_fw_installer_ensure_device_connected">Stelle sicher, dass das Gerät %s angeschlossen ist</string>
-    <string name="open_fw_installer_info_text">Mit dem Firmware/Watchface/App/File Installer kannst du unterstützte Dateien (Firmware, Zifferblätter, Anwendungen, GPS, Ressourcen, Schriftarten...) auf das Gerät hochladen/installieren. Mehr Informationen dazu gibt es im Wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Mit dem Installer kannst du unterstützte Dateien (Firmware, Zifferblätter, Apps, GPS-Daten, Ressourcen und Schriftarten ) auf deine Smartwatch übertragen. Mehr Infos im Wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_getting_files_text">Da wir die Firmware-Dateien nicht verteilen dürfen, musst du dir die Dateien selbst beschaffen. Das bedeutet, dass du nach den Dateien in apk-Dateien, online, in Foren, auf Amazfitwatchfaces (für Miband/Amazfit-Geräte) und so weiter suchen musst.</string>
     <string name="appmanager_item_outdated">(veraltet)</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Größe der Text-Bitmaps</string>
@@ -1863,9 +1827,9 @@
     <string name="heartrate_bpm_50">50 BPM</string>
     <string name="prefs_spo2_monitoring_description">Automatische Überwachung des Sauerstoffgehalts im Blut während des gesamten Tages</string>
     <string name="heartrate_bpm_115">115 BPM</string>
-    <string name="prefs_relaxation_reminder_description">Band vibriert, um dich zu benachrichtigen, wenn das Stressniveau höher als 80 ist</string>
+    <string name="prefs_relaxation_reminder_description">Die Smartwatch vibriert, wenn dein Stresswert über 80 liegt</string>
     <string name="pref_header_display">Anzeige</string>
-    <string name="pref_summary_canned_replies">Antworten von der Uhr mit voreingestellten Nachrichten</string>
+    <string name="pref_summary_canned_replies">Von der Smartwatch mit vordefinierten Nachrichten antworten</string>
     <string name="pref_cache_weather">Wetterinformationen zwischenspeichern</string>
     <string name="prefs_heartrate_alert_low_threshold">Alarmgrenze niedriger Puls</string>
     <string name="pref_sleep_breathing_quality_monitoring">Überwachung der Qualität der Schlafatmung</string>
@@ -1881,7 +1845,7 @@
     <string name="menuitem_workout_history">Trainingsverlauf</string>
     <string name="prefs_screen_timeout">Bildschirmzeitlimit</string>
     <string name="pref_title_notifications_ignore_low_priority">Benachrichtigungen mit niedriger Priorität ignorieren</string>
-    <string name="pref_summary_notifications_ignore_low_priority">Keine Benachrichtigungen mit niedriger und minimaler Priorität an die Uhr senden</string>
+    <string name="pref_summary_notifications_ignore_low_priority">Sende keine Benachrichtigungen mit niedriger oder minimaler Priorität an die Smartwatch</string>
     <string name="devicetype_flipper_zero">Flipper zero</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">Steuerung der Bluetooth-Verbindung über Intent-API</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent-API</string>
@@ -2113,7 +2077,7 @@
     <string name="intent_api_broadcast_export_summary">Einen Intent via Broadcast verschicken, wenn der Datenbankexport abgeschlossen ist</string>
     <string name="pref_workout_keep_screen_on_title">Bildschirm während des Trainings eingeschaltet lassen</string>
     <string name="pref_workout_keep_screen_on_summary">Der Bildschirm bleibt während des Trainings eingeschaltet und die Helligkeit wird angepasst, um die Trainingsdaten in Echtzeit anzuzeigen</string>
-    <string name="pref_camera_remote_summary">Ermöglicht es der Uhr, die Kamera des Telefons auszulösen</string>
+    <string name="pref_camera_remote_summary">Ermöglicht der Smartwatch, die Kamera des Smartphones auszulösen</string>
     <string name="pref_camera_remote_title">Kamera-Fernauslösung</string>
     <string name="stop">Stop</string>
     <string name="status">Status</string>
@@ -2141,18 +2105,18 @@
     <string name="yesterdays_activity">Gestrige Aktivität</string>
     <string name="pref_morning_updates_categories_summary">Liste der Kategorien, die jeden Morgen angezeigt werden</string>
     <string name="pref_pair_bluetooth_calls_help_warning">WARNUNG: Wenn du Bluetooth-Anrufe aktivierst, ohne dich mit der zweiten Instanz zu koppeln, funktionieren die Anrufbenachrichtigungen möglicherweise nicht wie erwartet.</string>
-    <string name="pref_summary_receive_calls_watch">Führen und empfangen von Anrufen direkt auf der Uhr</string>
+    <string name="pref_summary_receive_calls_watch">Anrufe direkt über die Smartwatch tätigen und empfangen</string>
     <string name="bluetooth_calls">Bluetooth-Anrufe</string>
     <string name="bluetooth_calls_settings">Einstellungen für Bluetooth-Anrufe</string>
     <string name="pref_pair_bluetooth_calls_summary">Klicke hier, um den Kopplungsprozess zu starten</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Um Bluetooth-Anrufe empfangen zu können, musst du dein Telefon mit einer zweiten Instanz der Uhr koppeln.</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Um Bluetooth-Anrufe empfangen zu können, musst du dein Telefon mit einer zweiten Instanz der Smartwatch koppeln.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tippe auf die Schaltfläche unten, um den Kopplungsprozess zu starten.</string>
     <string name="bluetooth_calls_pairing">Bluetooth-Anrufe koppeln</string>
     <string name="pref_display_caller_summary">Telefonnummer oder Name bei eingehenden Anrufen anzeigen</string>
     <string name="pref_display_caller_title">Kontaktinformationen anzeigen</string>
     <string name="pref_pair_bluetooth_calls_title">Koppeln für Bluetooth-Anrufe</string>
     <string name="pref_pair_bluetooth_calls_help_title">Wie man Bluetooth-Anrufe empfängt</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Gehe zu den Bluetooth-Einstellungen deines Telefons und verbinde es mit dem neuen Gerät, das angezeigt wird (ähnlicher Name wie deine aktuelle Uhr, aber mit einem Suffix, z. B. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Öffne die Bluetooth-Einstellungen deines Smartphones und kopple es mit dem neuen Gerät (Name ähnlich deiner Smartwatch, z. B. ‚Amazfit GTR 4 – AFC8‘).</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Aktiviere die nachstehende Einstellung für Bluetooth-Anrufe.</string>
     <string name="pref_title_notification_cache_while_disconnected">Cache außerhalb der Reichweite</string>
     <string name="pref_summary_notification_cache_while_disconnected">Verpasste Benachrichtigungen senden, wenn sich ein Gerät wieder verbindet, nachdem es sich außerhalb der Reichweite befand</string>
@@ -2349,20 +2313,10 @@
 \nDeine Uhr wird nach der Installation der .zip-Datei neu starten.
 \n
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
-    <string name="fw_upgrade_notice_zepp_os">Du bist dabei, die Firmware %s auf deine %s zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip-Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_zepp_os">Du bist dabei, die Firmware %s auf deiner %s zu installieren.\n\nDeine Smartwatch wird nach der Installation der .zip-Datei neu gestartet.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Quadratisch)</string>
     <string name="device_experimental">EXPERIMENTELL</string>
-    <string name="fw_upgrade_notice_amazfitbip3pro">Du bist dabei, die Firmware %s auf deine Amazfit Bip 3 Pro zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei und danach die .res Datei installierst. Deine Uhr wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitbip3pro">Du bist dabei, die Firmware %s auf deiner Amazfit Bip 3 Pro zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (Rund)</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
     <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
@@ -2821,13 +2775,7 @@
     <string name="pref_adaptive_volume_control_title">Adaptive Lautstärkeregelung</string>
     <string name="devicetype_amazfit_bip3">Amazfit Bip 3</string>
     <string name="pref_wide_area_tap_title">Weiträumiges Abgreifen</string>
-    <string name="fw_upgrade_notice_amazfitbip3">Du bist dabei, die %s-Firmware auf deiner Amazfit Bip 3 zu installieren.
-\n
-\nBitte stelle sicher, dass die .fw-Datei und danach die .res-Datei installiert wird. Die Uhr wird nach der Installation der .fw-Datei neu starten.
-\n
-\nHinweis: Du brauchst die .res-Datei nicht installieren, wenn sie mit der zuvor installierten Datei identisch ist.
-\n
-\nVORGEHEN AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitbip3">Du bist dabei, die Firmware %s auf deiner Amazfit Bip 3 zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Schlaf pro Woche/Monat</string>
     <string name="weekstepschart_steps_a_week_or_month">Schritte pro Woche/Monat</string>
     <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate</string>
@@ -3375,7 +3323,7 @@
     <string name="active_calories_short">Aktivität</string>
     <string name="active_calories">Aktivitätskalorien</string>
     <string name="active_calories_goal">Aktivitätsziel</string>
-    <string name="activity_prefs_goal_active_calories_burnt">Tagesziel: Aktiver Verbrauch</string>
+    <string name="activity_prefs_goal_active_calories_burnt">Tagesziel: Aktivkalorien</string>
     <string name="activity_type_health_snapshot">Gesundheitsübersicht</string>
     <string name="total_calories_burnt">Insgesamt verbraucht</string>
     <string name="title_activity_musicmanager">Musikmanager</string>
@@ -3829,7 +3777,7 @@
     <string name="pref_workout_send_gps_timeout_title">GPS-Zeitüberschreitung senden</string>
     <string name="huawei_stress_calibrate_started">Stresskalibrierung wurde gestartet</string>
     <string name="map_upload_in_progress">Karten-Upload läuft</string>
-    <string name="zepp_os_install_map_instructions">Nachdem die Installation auf dem Telefon gestartet wurde, musst du sie auch auf der Uhr bestätigen.</string>
+    <string name="zepp_os_install_map_instructions">Nachdem die Installation auf dem Telefon gestartet wurde, musst du sie auch auf der Smartwatch bestätigen.</string>
     <string name="pref_title_stable_connection">Stabile Verbindung</string>
     <string name="huawei_stress_calibrate">Kalibrieren</string>
     <string name="huawei_voice_boost">Sprachverstärkung</string>
@@ -4021,4 +3969,9 @@
     <string name="ultrahuman_unhandled_operation_response">Unbehandelte Antwort auf Vorgang: %s</string>
     <string name="menuitem_watch_storage_space">Smartwatch-Speicher</string>
     <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
+    <string name="pref_display_enabled_summary">Anzeige am Ring aktivieren</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
+    <string name="pref_display_enabled_all_day_summary">Anzeige den ganzen Tag aktivieren. Zum Auswählen bestimmter Zeiten unten deaktivieren</string>
+    <string name="pref_display_enabled_title">Anzeige aktiviert</string>
+    <string name="pref_display_enabled_all_day_title">Den ganzen Tag aktiviert</string>
 </resources>
