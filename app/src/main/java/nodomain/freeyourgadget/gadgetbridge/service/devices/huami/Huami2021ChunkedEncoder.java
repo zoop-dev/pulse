@@ -115,7 +115,7 @@ public class Huami2021ChunkedEncoder {
                 flags |= 0x08;
             }
             if (count == 0) {
-                flags |= 0x01;
+                flags |= 0x01; // first chunk
                 int i = 4;
                 if (extended_flags) {
                     i++;
@@ -128,7 +128,8 @@ public class Huami2021ChunkedEncoder {
                 chunk[i] = (byte) ((type >> 8) & 0xff);
             }
             if (remaining <= maxChunkLength) {
-                flags |= 0x06; // last chunk?
+                flags |= 0x02; // last chunk
+                flags |= 0x04; // needs ack
             }
             chunk[0] = 0x03;
             chunk[1] = flags;

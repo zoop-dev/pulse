@@ -22,6 +22,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -107,6 +109,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     @Override
     public void dispose() {
         zeppOsSupport.dispose();
+        super.dispose();
     }
 
     @Override
@@ -137,6 +140,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
             final byte cmd = packetBuffer.get();
             final byte seqNum = packetBuffer.get();
             // TODO check seqNum
+            seqNumRx = seqNum;
 
             final int length = packetBuffer.getShort();
             if (packetBuffer.remaining() < length + 3) {
@@ -190,7 +194,10 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
         builder.write(buf.array());
     }
 
-    protected void write(final TransactionBuilder builder, final UUID characteristic, final byte[] value) {
+    protected void write(final TransactionBuilder builder,
+                         final UUID characteristic,
+                         final byte[] value,
+                         final boolean requestAck) {
         final Short channel = characteristicToChannel.get(characteristic);
         if (channel == null) {
             LOG.error("Unknown characteristic {}", characteristic);
@@ -199,7 +206,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
         final ByteBuffer buf = ByteBuffer.allocate(value.length + 4).order(ByteOrder.LITTLE_ENDIAN);
         buf.put(sessionNumber);
         buf.putShort(channel);
-        buf.put((byte) 0); // TODO request ack?
+        buf.put((byte) (requestAck ? 1 : 0));
         buf.put(value);
         write(builder, CMD_CHANNEL_DATA, buf.array());
     }
@@ -211,7 +218,10 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
             case CMD_CHANNELS_RET: {
                 final int version = buf.get() & 0xff; // ?
                 if (version > 1) {
-                    // TODO warn and disconnect
+                    LOG.error("Protocol version {} is not supported", version);
+                    GB.toast(getContext(), "Unsupported protocol version " + version, Toast.LENGTH_LONG, GB.WARN);
+                    GBApplication.deviceService(getDevice()).disconnect();
+                    return;
                 }
                 final int numCharacteristics = buf.getShort();
                 LOG.debug("Got channels version={}, numCharacteristics={}", version, numCharacteristics);
@@ -235,14 +245,12 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
             case CMD_SESSION_START_ACK: {
                 final int nonce = buf.getInt();
                 if (nonce != sessionNonce) {
-                    LOG.error("Got unexpected session nonce {}, expected {}", nonce, sessionNonce);
-                    // TODO reconnect?
+                    LOG.warn("Got unexpected session nonce {}, expected {}", nonce, sessionNonce);
                     return;
                 }
                 final int status = buf.get() & 0xff;
                 if (status != 1) {
                     LOG.error("Got unexpected status {}", status);
-                    // TODO reconnect?
                     return;
                 }
                 sessionNumber = buf.get();
@@ -290,13 +298,14 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 final UUID uuid = channelToCharacteristic.get(channel);
                 if (uuid == null) {
                     LOG.error("Channel {} does not match any known characteristic", channel);
+                    return;
                 }
                 zeppOsSupport.onCharacteristicChanged(uuid, dataPayload);
                 if (mustAck != 0) {
-                    // TODO ack
-                    //final TransactionBuilder builder = createTransactionBuilder("ack");
-                    //write(builder, CMD_SESSION_START, BLETypeConversions.fromUint32(sessionNonce));
-                    //builder.queue(getQueue());
+                    // untested, based on what we see in the watch->phone ack when requested
+                    final TransactionBuilder builder = createTransactionBuilder("channel ack");
+                    write(builder, CMD_CHANNEL_ACK, new byte[]{session, seqNumRx, 0x01 /* ok */, 0x00 /* ? */});
+                    builder.queue(getQueue());
                 }
                 return;
             }
@@ -315,11 +324,20 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 final byte unk2 = buf.get(); // 0
                 if (session != sessionNumber) {
                     LOG.warn("Got ping for unknown session {}, expected {}", session, sessionNumber);
+                    return;
                 }
                 LOG.debug("Got ping, session={}, status={}, unk1={}, unk2={}", session, status, unk1, unk2);
+
                 final TransactionBuilder builder = createTransactionBuilder("pong");
                 write(builder, CMD_PONG, new byte[]{session, 0x01, 0x00, 0x00});
                 builder.queue(getQueue());
+
+                // When we send a ping, watch replies with a pong. However, we never actually saw it happen
+                // in the other direction, and sending the pong is not enough. The official app will
+                // constantly request the apps list every once in a while.
+                // Send an actual data packet to try and keep it alive when we get a btbr ping.
+                zeppOsSupport.sendPing();
+
                 return;
             }
             case CMD_PONG: {

@@ -319,7 +319,11 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void onTestNewFunction() {
-        voiceMemosService.requestList();
+
+    }
+
+    public void sendPing() {
+        connectionService.sendPing();
     }
 
     @Override

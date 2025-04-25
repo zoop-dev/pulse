@@ -62,7 +62,7 @@ public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
 
     @Override
     public void write(final UUID characteristic, final byte[] arr) {
-        mSupport.write(mBuilder, characteristic, arr);
+        mSupport.write(mBuilder, characteristic, arr, false);
     }
 
     @Override

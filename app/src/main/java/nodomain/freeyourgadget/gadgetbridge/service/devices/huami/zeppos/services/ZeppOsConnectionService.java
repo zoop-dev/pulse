@@ -31,8 +31,8 @@ public class ZeppOsConnectionService extends AbstractZeppOsService {
 
     private static final byte CMD_MTU_REQUEST = 0x01;
     private static final byte CMD_MTU_RESPONSE = 0x02;
-    private static final byte CMD_UNKNOWN_3 = 0x03;
-    private static final byte CMD_UNKNOWN_4 = 0x04;
+    private static final byte CMD_PING = 0x03;
+    private static final byte CMD_PONG = 0x04;
 
     public ZeppOsConnectionService(final ZeppOsSupport support) {
         super(support, true);
@@ -51,10 +51,10 @@ public class ZeppOsConnectionService extends AbstractZeppOsService {
                 LOG.info("Device announced MTU change: {}", mtu);
                 getSupport().setMtu(mtu);
                 return;
-            case CMD_UNKNOWN_3:
+            case CMD_PING:
                 // Some ping? Band sometimes sends 0x03, phone replies with 0x04
-                LOG.info("Got unknown 3, replying with unknown 4");
-                write("respond connection unknown 4", CMD_UNKNOWN_4);
+                LOG.info("Got ping, replying with pong");
+                write("connection pong reply", CMD_PONG);
                 return;
         }
 
@@ -63,5 +63,9 @@ public class ZeppOsConnectionService extends AbstractZeppOsService {
 
     public void requestMTU(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_MTU_REQUEST);
+    }
+
+    public void sendPing() {
+        write("send connection ping", CMD_PING);
     }
 }
