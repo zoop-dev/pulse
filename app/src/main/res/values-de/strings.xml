@@ -2259,7 +2259,7 @@
     <string name="busy_task_fetch_stress_data">Abrufen der Stressdaten</string>
     <string name="busy_task_fetch_pai_data">Abrufen der PAI-Daten</string>
     <string name="busy_task_fetch_spo2_data">Abrufen der SpO2-Daten</string>
-    <string name="busy_task_fetch_sleep_respiratory_rate_data">Abrufen der Atemfrequenzdaten im Schlaf</string>
+    <string name="busy_task_fetch_sleep_respiratory_rate_data">Abrufen der Atemfrequenzdaten</string>
     <string name="error_no_bluetooth_scan">Zugriff auf den Bluetooth-Scan muss gewährt und aktiviert sein, damit der Scanvorgang ordnungsgemäß funktioniert</string>
     <string name="error_no_bluetooth_connect">Zugriff auf die Bluetooth-Verbindung muss gewährt und aktiviert sein, damit der Scanvorgang ordnungsgemäß funktioniert</string>
     <string name="permission_request">Mit %1$s kannst du Nachrichten und andere Daten von Android an dein Gerät senden. Dazu ist die Berechtigung für den Zugriff auf diese Daten erforderlich, und ohne diese Berechtigung funktioniert sie möglicherweise nicht richtig.
