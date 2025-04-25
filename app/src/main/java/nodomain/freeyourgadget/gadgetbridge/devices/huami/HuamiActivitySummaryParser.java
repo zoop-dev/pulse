@@ -47,7 +47,7 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
             return null;
         }
         summaryData = new ActivitySummaryData();
-        parseBinaryData(summary, startTime);
+        parseBinaryData(summary, startTime, forDetails);
         summary.setSummaryData(summaryData.toString());
         return summary;
     }
@@ -56,7 +56,7 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
         return new HuamiActivityDetailsParser(summary);
     }
 
-    protected void parseBinaryData(BaseActivitySummary summary, Date startTime) {
+    protected void parseBinaryData(BaseActivitySummary summary, Date startTime, final boolean forDetails) {
         final byte[] rawSummaryData = summary.getRawSummaryData();
         if (rawSummaryData == null) {
             return;

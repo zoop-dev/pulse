@@ -29,12 +29,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
 
@@ -54,7 +54,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
     private long latitude;
     private double altitude;
 
-    private final ActivityTrack activityTrack;
+    private final ZeppOsActivityTrack activityTrack;
     private ActivityPoint lastActivityPoint;
 
     public ZeppOsActivityDetailsParser(final BaseActivitySummary summary) {
@@ -64,14 +64,14 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         this.latitude = summary.getBaseLatitude();
         this.altitude = summary.getBaseAltitude();
 
-        this.activityTrack = new ActivityTrack();
+        this.activityTrack = new ZeppOsActivityTrack();
         this.activityTrack.setUser(summary.getUser());
         this.activityTrack.setDevice(summary.getDevice());
         this.activityTrack.setName(createActivityName(summary));
     }
 
     @Override
-    public ActivityTrack parse(final byte[] bytes) throws GBException {
+    public ZeppOsActivityTrack parse(final byte[] bytes) throws GBException {
         final ByteBuffer buf = ByteBuffer.wrap(bytes)
                 .order(ByteOrder.LITTLE_ENDIAN);
 
@@ -100,7 +100,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                     unknownTypeCodes.put(typeCode, 0);
                 }
 
-                unknownTypeCodes.put(typeCode, unknownTypeCodes.get(typeCode) + 1);
+                unknownTypeCodes.put(typeCode, Objects.requireNonNull(unknownTypeCodes.get(typeCode)) + 1);
                 //LOG.warn("Unknown type code {} of length {}", String.format("0x%X", typeCode), length);
                 // Consume the reported length
                 buf.get(new byte[length]);
@@ -136,7 +136,8 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                     consumeHeartRate(buf);
                     break;
                 case STRENGTH_SET:
-                    // TODO parse strength sets: weight, count, type
+                    consumeStrengthSet(buf);
+                    break;
                 default:
                     LOG.warn("No consumer for for type {}", type);
                     // Consume the reported length
@@ -233,8 +234,6 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                 LOG.warn("Unknown status code {}", String.format("0x%X", statusCode));
         }
 
-        // TODO split track into multiple segments?
-
         //trace("Consumed Status: {}", status);
     }
 
@@ -245,7 +244,13 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         final short stride = buf.getShort(); // cm
         final short pace = buf.getShort(); // sec/km
 
-        // TODO integrate into gpx
+        final ActivityPoint ap = getCurrentActivityPoint();
+        if (ap != null) {
+            ap.setCadence(cadence);
+            if (pace != 0) {
+                ap.setSpeed(1000f / pace); // s/km -> m/s
+            }
+        }
 
         //trace("Consumed speed: cadence={}, stride={}, pace={}", cadence, stride, pace);
     }
@@ -278,6 +283,18 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         }
 
         //trace("Consumed HeartRate: {}", heartRate);
+    }
+
+    private void consumeStrengthSet(final ByteBuffer buf) {
+        buf.get(new byte[15]); // ?
+        final int reps = buf.getShort() & 0xffff;
+        buf.get(); // 0?
+        final int weight = buf.getShort() & 0xffff;
+        buf.get(new byte[14]); // ffff... ?
+
+        activityTrack.addStrengthSet(reps, weight != 0xffff ? weight / 10f : -1);
+
+        //trace("Consumed strength set: reps={}, weightKg={}", reps, weightKg);
     }
 
     @Nullable

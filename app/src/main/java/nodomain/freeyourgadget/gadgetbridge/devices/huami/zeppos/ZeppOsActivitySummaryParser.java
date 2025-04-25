@@ -23,22 +23,32 @@ import android.content.Context;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableBuilder;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.proto.HuamiProtos;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityDetailsParser;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityType;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsActivitySummaryParser.class);
@@ -54,7 +64,7 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
     }
 
     @Override
-    protected void parseBinaryData(final BaseActivitySummary summary, final Date startTime) {
+    protected void parseBinaryData(final BaseActivitySummary summary, final Date startTime, final boolean forDetails) {
         final byte[] rawData = summary.getRawSummaryData();
         if (rawData == null) {
             return;
@@ -207,6 +217,53 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             summaryData.add(STROKE_RATE_MAX, summaryProto.getSwimmingData().getMaxStrokeRate(), UNIT_STROKES_PER_MINUTE);
             summaryData.add(STROKE_DISTANCE_AVG, summaryProto.getSwimmingData().getAvgDps(), UNIT_CM);
             summaryData.add(SWOLF_INDEX, summaryProto.getSwimmingData().getSwolf(), UNIT_NONE);
+        }
+
+        if (forDetails && !StringUtils.isBlank(summary.getRawDetailsPath())) {
+            try {
+                enrichWithDetails(summary);
+            } catch (final Exception e) {
+                LOG.error("Failed enrich summary", e);
+            }
+        }
+    }
+
+    private void enrichWithDetails(final BaseActivitySummary summary) throws IOException, GBException {
+        final File inputFile = FileUtils.tryFixPath(new File(summary.getRawDetailsPath()));
+        if (inputFile == null) {
+            return;
+        }
+
+        final byte[] detailsBytes;
+        try (InputStream inputStream = new FileInputStream(inputFile)) {
+            detailsBytes = FileUtils.readAll(inputStream, inputFile.length());
+        }
+
+        final ZeppOsActivityDetailsParser detailsParser = new ZeppOsActivityDetailsParser(summary);
+        final ZeppOsActivityTrack activityTrack = detailsParser.parse(detailsBytes);
+        List<ZeppOsActivityTrack.StrengthSet> strengthSets = activityTrack.getStrengthSets();
+        if (!strengthSets.isEmpty()) {
+            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(SETS, "sets_header", Arrays.asList(
+                    "set",
+                    "workout_set_reps",
+                    "menuitem_weight"
+            ));
+
+            int i = 1;
+            for (final ZeppOsActivityTrack.StrengthSet strengthSet : strengthSets) {
+                tableBuilder.addRow(
+                        "set_" + i,
+                        Arrays.asList(
+                                new ActivitySummaryValue(i, UNIT_NONE),
+                                new ActivitySummaryValue(String.valueOf(strengthSet.getReps())),
+                                new ActivitySummaryValue(strengthSet.getWeightKg() >= 0 ? strengthSet.getWeightKg() : null, UNIT_KG)
+                        )
+                );
+
+                i++;
+            }
+
+            tableBuilder.addToSummaryData(summaryData);
         }
     }
 }
