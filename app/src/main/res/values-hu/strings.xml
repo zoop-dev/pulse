@@ -3819,4 +3819,9 @@
     <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
     <string name="ultrahuman_unhandled_operation_response">nem kezelt művelet válasza: %s</string>
     <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
+    <string name="pref_display_enabled_all_day_title">Egész nap engedélyezve</string>
+    <string name="pref_display_enabled_summary">Engedélyezi a gyűrűn történő kijelzést</string>
+    <string name="pref_display_enabled_title">Kijelzés engedélyezve</string>
+    <string name="pref_display_enabled_all_day_summary">Engedélyezi az egész napos kijelzést. Letiltja az alábbi meghatározott időpontok kiválasztását</string>
 </resources>
