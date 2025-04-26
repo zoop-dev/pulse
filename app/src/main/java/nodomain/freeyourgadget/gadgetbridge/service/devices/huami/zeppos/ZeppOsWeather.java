@@ -291,8 +291,8 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class MoonRiseSet {
-        public List<String> moonPhaseValue = new ArrayList<>(); // numbers? 20 21 23...
+    public static class MoonRiseSet {
+        public List<String> moonPhaseValue = new ArrayList<>(); // lunar day, from 1 to 30
         public List<Range> moonRise = new ArrayList<>(); // yyyy-MM-dd HH:mm:ss
 
         public static class Serializer implements JsonSerializer<MoonRiseSet> {
@@ -305,8 +305,13 @@ public class ZeppOsWeather {
             }
         }
 
-        public void add(final int rise, final int set, final int phase) {
-            moonPhaseValue.add(String.valueOf(phase));
+        public void add(final int rise, final int set, final int phaseDegrees) {
+            // Normalize degrees to [0, 360)
+            final int degreesNormalized = (phaseDegrees % 360 + 360) % 360;
+            // Map 0–360 degrees to 1–30 lunar days
+            final int lunarDay = (int) Math.floor(degreesNormalized / 360.0 * 30) + 1;
+
+            moonPhaseValue.add(String.valueOf(lunarDay));
 
             final SimpleDateFormat moonRiseSetSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
             moonRiseSetSdf.setTimeZone(TimeZone.getDefault());
@@ -318,7 +323,7 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class Range {
+    public static class Range {
         public String from;
         public String to;
 
@@ -369,7 +374,7 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class IndexEntry {
+    public static class IndexEntry {
         public LocalDate date;
         public String osi; // int
         public String uvi; // int
@@ -418,7 +423,7 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class CurrentWeatherModel {
+    public static class CurrentWeatherModel {
         public UnitValue humidity;
         public UnitValue pressure;
         public Date pubTime;
@@ -456,7 +461,7 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class AqiModel {
+    public static class AqiModel {
         public String aqi; // int
         public String co; // float
         public String no2; // float
@@ -588,7 +593,7 @@ public class ZeppOsWeather {
         }
     }
 
-    private enum Unit {
+    public enum Unit {
         PRESSURE_MB("mb"),
         PERCENTAGE("%"),
         TEMPERATURE_C("℃"), // e2 84 83 in UTF-8
@@ -608,7 +613,7 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class UnitValue {
+    public static class UnitValue {
         public String unit;
         public String value;
 
@@ -633,13 +638,13 @@ public class ZeppOsWeather {
         }
     }
 
-    private static class Wind {
+    public static class Wind {
         public UnitValue direction;
         public UnitValue speed;
 
         public Wind(final int direction, final int speed) {
             this.direction = new UnitValue(Unit.WIND_DEGREES, direction);
-            this.speed = new UnitValue(Unit.KPH, Math.round(speed));
+            this.speed = new UnitValue(Unit.KPH, speed);
         }
     }
 
