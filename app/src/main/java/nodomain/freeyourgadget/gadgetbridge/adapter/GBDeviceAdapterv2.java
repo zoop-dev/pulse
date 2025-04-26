@@ -1295,12 +1295,23 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             heartRateIcon = view.findViewById(R.id.device_heart_rate_status);
             infoIcons = view.findViewById(R.id.device_info_icons);
 
-            customActions = new CustomActionHolder[1];
-            customActions[0] = new CustomActionHolder(
-                    view.findViewById(R.id.device_custom_action_0_box),
-                    view.findViewById(R.id.device_custom_action_0_image),
-                    view.findViewById(R.id.device_custom_action_0_label)
-            );
+            customActions = new CustomActionHolder[]{
+                    new CustomActionHolder(
+                            view.findViewById(R.id.device_custom_action_0_box),
+                            view.findViewById(R.id.device_custom_action_0_image),
+                            view.findViewById(R.id.device_custom_action_0_label)
+                    ),
+                    new CustomActionHolder(
+                            view.findViewById(R.id.device_custom_action_1_box),
+                            view.findViewById(R.id.device_custom_action_1_image),
+                            view.findViewById(R.id.device_custom_action_1_label)
+                    ),
+                    new CustomActionHolder(
+                            view.findViewById(R.id.device_custom_action_2_box),
+                            view.findViewById(R.id.device_custom_action_2_image),
+                            view.findViewById(R.id.device_custom_action_2_label)
+                    )
+            };
 
             cardViewActivityCardLayout = view.findViewById(R.id.card_view_activity_card_layout);
 
