@@ -527,7 +527,7 @@
     <string name="live_activity_max_heart_rate">当前／最大心率：%1$d / %2$d</string>
     <string name="you_slept">%1$s - %2$s</string>
     <string name="you_did_not_sleep">您没有睡觉</string>
-    <string name="mi3_prefs_band_screen_unlock">手环屏幕解锁\"</string>
+    <string name="mi3_prefs_band_screen_unlock">手环屏幕解锁</string>
     <string name="mi3_prefs_band_screen_unlock_summary">滑动以解锁手环屏幕</string>
     <string name="mi3_prefs_night_mode">夜晚模式</string>
     <string name="mi3_prefs_night_mode_summary">到夜晚时自动降低手环屏幕亮度</string>
@@ -4025,4 +4025,12 @@
     <string name="pref_display_enabled_summary">启用戒指上的显示屏</string>
     <string name="pref_display_enabled_all_day_title">全天开启</string>
     <string name="pref_display_enabled_all_day_summary">全天启用显示。禁用以在下面选择特定的时间</string>
+    <string name="busy_task_fetch_weight_data">正在获取体重数据</string>
+    <string name="swimming_stroke">仰泳</string>
+    <string name="swim_style_butterfly">碟式</string>
+    <string name="swim_style_drill">训练</string>
+    <string name="swim_style_mixed">混合泳</string>
+    <string name="restingCalories">静息卡路里</string>
+    <string name="workout_swings">秋千</string>
+    <string name="workout_intervals">间隔</string>
 </resources>
