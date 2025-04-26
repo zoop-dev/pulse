@@ -14,16 +14,18 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
-import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableRowEntry;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableBuilder;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
@@ -211,6 +213,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(STEP_LENGTH_AVG, session.getAvgStepLength(), UNIT_MM);
         if (session.getTotalCalories() != null) {
             summaryData.add(CALORIES_BURNT, session.getTotalCalories(), UNIT_KCAL);
+            if (session.getRestingCalories() != null) {
+                summaryData.add(CALORIES_ACTIVE, session.getTotalCalories() - session.getRestingCalories(), UNIT_KCAL);
+                summaryData.add(CALORIES_RESTING, session.getRestingCalories(), UNIT_KCAL);
+            }
         }
         if (session.getEstimatedSweatLoss() != null) {
             summaryData.add(ESTIMATED_SWEAT_LOSS, session.getEstimatedSweatLoss(), UNIT_ML);
@@ -305,7 +311,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                     context.getString(
                             R.string.range_percentage_float,
                             session.getAvgStanceTimeBalance(),
-                            100f  - session.getAvgStanceTimeBalance()
+                            100f - session.getAvgStanceTimeBalance()
                     )
             );
         }
@@ -505,61 +511,65 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(TRAINING_STRESS_SCORE, session.getTrainingStressScore(), UNIT_NONE);
 
         if (!sets.isEmpty()) {
-            final boolean anyReps = sets.stream().anyMatch(s -> s.getRepetitions() != null);
-            final boolean anyWeight = sets.stream().anyMatch(s -> s.getWeight() != null);
-
-            final List<ActivitySummaryValue> header = new LinkedList<>();
-            header.add(new ActivitySummaryValue("set"));
-            header.add(new ActivitySummaryValue("workout_set_reps"));
-            header.add(new ActivitySummaryValue("menuitem_weight"));
-            header.add(new ActivitySummaryValue("activity_detail_duration_label"));
-
-            summaryData.add(
-                    "sets_header",
-                    new ActivitySummaryTableRowEntry(
-                            SETS,
-                            header,
-                            true,
-                            true
-                    )
-            );
+            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(SETS, "sets_header", Arrays.asList(
+                    "set",
+                    "workout_set_reps",
+                    "menuitem_weight",
+                    "activity_detail_duration_label"
+            ));
 
             int i = 1;
             for (final FitSet set : sets) {
                 if (set.getSetType() != null && set.getDuration() != null && set.getSetType() == 1) {
-                    final List<ActivitySummaryValue> columns = new LinkedList<>();
-                    columns.add(new ActivitySummaryValue(i, UNIT_NONE));
-
-                    if (set.getRepetitions() != null) {
-                        columns.add(new ActivitySummaryValue(String.valueOf(set.getRepetitions())));
-                    } else {
-                        columns.add(new ActivitySummaryValue("stats_empty_value"));
-                    }
-
-                    if (set.getWeight() != null) {
-                        columns.add(new ActivitySummaryValue(set.getWeight(), weightUnit));
-                    } else {
-                        columns.add(new ActivitySummaryValue("stats_empty_value"));
-                    }
-
-                    columns.add(new ActivitySummaryValue(set.getDuration().longValue(), UNIT_SECONDS));
-
-                    summaryData.add(
+                    tableBuilder.addRow(
                             "set_" + i,
-                            new ActivitySummaryTableRowEntry(
-                                    SETS,
-                                    columns,
-                                    false,
-                                    true
+                            Arrays.asList(
+                                    new ActivitySummaryValue(i, UNIT_NONE),
+                                    new ActivitySummaryValue(set.getRepetitions() != null ? String.valueOf(set.getRepetitions()) : null),
+                                    new ActivitySummaryValue(set.getWeight(), weightUnit),
+                                    new ActivitySummaryValue(set.getDuration().longValue(), UNIT_SECONDS)
                             )
                     );
+
                     i++;
                 }
             }
+
+            tableBuilder.addToSummaryData(summaryData);
         }
 
-        if (!laps.isEmpty()) {
-            final boolean anySwolf = laps.stream().anyMatch(l -> l.getAvgSwolf() != null);
+        // FIXME: For now we only support swimming intervals
+        final boolean anyValidLaps = laps.stream()
+                .anyMatch(lap -> lap.getTotalDistance() != null && lap.getTotalDistance() != 0 && lap.getSwimStyle() != null);
+
+        if (anyValidLaps) {
+            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(GROUP_INTERVALS, "intervals_header", Arrays.asList(
+                    "#",
+                    "swimming_stroke",
+                    "Distance",
+                    "pref_header_time"
+            ));
+
+            int i = 1;
+            for (final FitLap lap : laps) {
+                if (lap.getTotalDistance() == null || lap.getTotalDistance() == 0) {
+                    continue;
+                }
+
+                tableBuilder.addRow(
+                        "interval_" + i,
+                        Arrays.asList(
+                                new ActivitySummaryValue(i, UNIT_NONE),
+                                new ActivitySummaryValue(lap.getSwimStyle() != null ? context.getString(lap.getSwimStyle().getNameResId()) : null, UNIT_NONE),
+                                new ActivitySummaryValue(lap.getTotalDistance(), UNIT_METERS),
+                                new ActivitySummaryValue(lap.getTotalTimerTime(), UNIT_SECONDS)
+                        )
+                );
+
+                i++;
+            }
+
+            tableBuilder.addToSummaryData(summaryData);
         }
 
         summaryData.add(

@@ -14,6 +14,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionTemperature;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionTimestamp;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
@@ -59,6 +60,8 @@ public class FieldDefinitionFactory {
                 return new FieldDefinitionWeatherAqi(localNumber, size, baseType, name);
             case COORDINATE:
                 return new FieldDefinitionCoordinate(localNumber, size, baseType, name);
+            case SWIM_STYLE:
+                return new FieldDefinitionSwimStyle(localNumber, size, baseType, name);
             default:
                 return new FieldDefinition(localNumber, size, baseType, name);
         }
@@ -81,6 +84,7 @@ public class FieldDefinitionFactory {
         LANGUAGE,
         SLEEP_STAGE,
         WEATHER_AQI,
-        COORDINATE
+        COORDINATE,
+        SWIM_STYLE,
     }
 }

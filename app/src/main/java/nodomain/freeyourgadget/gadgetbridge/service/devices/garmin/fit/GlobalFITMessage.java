@@ -198,7 +198,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(32, BaseType.UINT16, "num_lengths"),
             new FieldDefinitionPrimitive(35, BaseType.UINT16, "first_length_index"),
             new FieldDefinitionPrimitive(37, BaseType.UINT16, "avg_stroke_distance"),
-            new FieldDefinitionPrimitive(38, BaseType.ENUM, "swim_style"), // 0 freestyle 2 breaststroke 5 mixed
+            new FieldDefinitionPrimitive(38, BaseType.ENUM, "swim_style", FieldDefinitionFactory.FIELD.SWIM_STYLE),
             new FieldDefinitionPrimitive(39, BaseType.ENUM, "sub_sport"), // 17 = lap swimming
             new FieldDefinitionPrimitive(40, BaseType.UINT16, "num_active_lengths"),
             new FieldDefinitionPrimitive(73, BaseType.UINT16, "avg_swolf"),

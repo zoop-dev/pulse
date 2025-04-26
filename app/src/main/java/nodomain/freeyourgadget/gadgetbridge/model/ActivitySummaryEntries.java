@@ -156,6 +156,8 @@ public class ActivitySummaryEntries {
     public static final String SWIM_AVG_CADENCE = "swim_avg_cadence";
 
     public static final String CALORIES_BURNT = "caloriesBurnt";
+    public static final String CALORIES_ACTIVE = "active_calories";
+    public static final String CALORIES_RESTING = "restingCalories";
     public static final String TRAINING_EFFECT_AEROBIC = "aerobicTrainingEffect";
     public static final String TRAINING_EFFECT_ANAEROBIC = "anaerobicTrainingEffect";
     public static final String WORKOUT_LOAD = "currentWorkoutLoad";
@@ -226,6 +228,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_TRAINING_EFFECT = "TrainingEffect";
     public static final String GROUP_LAPS = "laps";
     public static final String GROUP_RUNNING_FORM = "RunningForm";
+    public static final String GROUP_INTERVALS = "workout_intervals";
 
     /**
      * Used to signal that this activity has a gps track. This is currently used by ActivitySummaryDetail

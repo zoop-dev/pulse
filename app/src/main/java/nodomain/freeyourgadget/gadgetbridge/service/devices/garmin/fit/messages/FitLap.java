@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle.SwimStyle;
 
 //
 // WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -131,8 +132,8 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
-    public Integer getSwimStyle() {
-        return (Integer) getFieldByNumber(38);
+    public SwimStyle getSwimStyle() {
+        return (SwimStyle) getFieldByNumber(38);
     }
 
     @Nullable

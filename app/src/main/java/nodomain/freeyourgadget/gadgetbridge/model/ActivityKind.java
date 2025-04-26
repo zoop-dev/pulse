@@ -446,13 +446,24 @@ public enum ActivityKind {
     }
 
     public enum CycleUnit {
-        NONE,
-        UNKNOWN,
-        STEPS,
-        STROKES,
-        JUMPS,
-        REPS,
-        REVOLUTIONS,
-        SWINGS,
+        NONE("n_a"),
+        UNKNOWN("unknown"),
+        STEPS("steps"),
+        STROKES("strokes"),
+        JUMPS("Jumps"),
+        REPS("workout_set_reps"),
+        REVOLUTIONS("workout_revolutions"),
+        SWINGS("workout_swings"),
+        ;
+
+        private final String name;
+
+        CycleUnit(final String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -274,6 +275,8 @@ public class FitCodeGen {
                     return FieldDefinitionWeatherAqi.AQI_LEVELS.class;
                 case COORDINATE:
                     return Double.class;
+                case SWIM_STYLE:
+                    return FieldDefinitionSwimStyle.SwimStyle.class;
             }
 
             throw new RuntimeException("Unknown field type " + primitive.getType());

@@ -2389,6 +2389,7 @@
     <string name="distance_total">Distance Total</string>
     <string name="activeSeconds">Active</string>
     <string name="caloriesBurnt">Calories</string>
+    <string name="restingCalories">Resting Calories</string>
     <string name="maxSpeed">Maximum</string>
     <string name="minSpeed">Minimum</string>
     <string name="minPace">Slowest Pace</string>
@@ -2535,6 +2536,7 @@
     <string name="ground_contact_time_balance">Ground Contact Time Balance</string>
     <string name="workout_repetitions">Repetitions</string>
     <string name="workout_revolutions">Revolutions</string>
+    <string name="workout_swings">Swings</string>
     <string name="seconds">sec</string>
     <string name="milliseconds">milliseconds</string>
     <string name="milliseconds_ms">ms</string>
@@ -2553,6 +2555,7 @@
     <string name="Pace">Pace</string>
     <!-- activity summary groups-->
     <string name="Strokes">Strokes</string>
+    <string name="swimming_stroke">Stroke</string>
     <string name="Jumps">Jumps</string>
     <string name="Swimming">Swimming</string>
     <string name="Distance">Distance</string>
@@ -2615,6 +2618,10 @@
     <string name="freestyle">Freestyle</string>
     <string name="backstroke">Backstroke</string>
     <string name="medley">Medley</string>
+    <string name="swim_style_butterfly">Butterfly</string>
+    <string name="swim_style_drill">Drill</string>
+    <string name="swim_style_mixed">Mixed</string>
+    <string name="workout_intervals">Intervals</string>
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="qhybrid_calibration_align_hint">Use the buttons below to align the watch hands to 12:00.</string>
     <string name="lorem_ipsum" translatable="false">Lorem Ipsum</string>
