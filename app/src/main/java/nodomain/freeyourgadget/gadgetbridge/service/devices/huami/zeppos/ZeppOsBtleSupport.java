@@ -16,10 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
-import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint16;
-import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint8;
-import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.mapTimeZone;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -32,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
@@ -52,13 +47,13 @@ import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
 
 public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements ZeppOsCommunicator {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsBtleSupport.class);
@@ -166,30 +161,7 @@ public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements Zepp
 
     @Override
     public void setCurrentTime(final ZeppOsTransactionBuilder builder) {
-        // It seems that the format sent to the Current Time characteristic changed in newer devices
-        // to kind-of match the GATT spec, but it doesn't quite respect it?
-        // - 11 bytes get sent instead of 10 (extra byte at the end for the offset in quarter-hours?)
-        // - Day of week starts at 0
-        // Otherwise, the command gets rejected with an "Out of Range" error and init fails.
-
-        final Calendar timestamp = BLETypeConversions.createCalendar();
-        final byte[] year = fromUint16(timestamp.get(Calendar.YEAR));
-
-        final byte[] cmd = {
-                year[0],
-                year[1],
-                fromUint8(timestamp.get(Calendar.MONTH) + 1),
-                fromUint8(timestamp.get(Calendar.DATE)),
-                fromUint8(timestamp.get(Calendar.HOUR_OF_DAY)),
-                fromUint8(timestamp.get(Calendar.MINUTE)),
-                fromUint8(timestamp.get(Calendar.SECOND)),
-                fromUint8(timestamp.get(Calendar.DAY_OF_WEEK) - 1),
-                0x00, // Fractions256?
-                0x08, // Reason for change?
-                mapTimeZone(timestamp, BLETypeConversions.TZ_FLAG_INCLUDE_DST_IN_TZ), // TODO: Confirm this
-        };
-
-        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, cmd);
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, HuamiUtils.getCurrentTimeBytes());
     }
 
     @Override
