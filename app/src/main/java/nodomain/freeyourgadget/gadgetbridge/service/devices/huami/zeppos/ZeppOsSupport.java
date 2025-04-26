@@ -264,6 +264,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     @Override
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
         super.setContext(gbDevice, btAdapter, context);
+        sleepAsAndroidSender = new SleepAsAndroidSender(gbDevice);
         heartRateService.setSleepAsAndroidSender(sleepAsAndroidSender);
         final RealtimeSamplesAggregator realtimeSamplesAggregator = new RealtimeSamplesAggregator(getContext(), getDevice());
         heartRateService.setRealtimeSamplesAggregator(realtimeSamplesAggregator);
