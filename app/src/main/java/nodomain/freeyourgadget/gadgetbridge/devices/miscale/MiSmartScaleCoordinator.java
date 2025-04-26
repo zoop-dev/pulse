@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.miscale;
 
 import androidx.annotation.NonNull;
 
+import java.util.EnumSet;
 import java.util.regex.Pattern;
 
 import de.greenrobot.dao.query.QueryBuilder;
@@ -32,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MiScaleWeightSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.WeightSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miscale.MiSmartScaleDeviceSupport;
 
 public class MiSmartScaleCoordinator extends AbstractBLEDeviceCoordinator {
@@ -127,5 +129,10 @@ public class MiSmartScaleCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return MiSmartScaleDeviceSupport.class;
+    }
+
+    @Override
+    public EnumSet<ServiceDeviceSupport.Flags> getInitialFlags() {
+        return EnumSet.noneOf(ServiceDeviceSupport.Flags.class);
     }
 }

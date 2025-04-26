@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
@@ -43,10 +44,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
 
@@ -118,11 +121,8 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
             setTime(builder);
 
         builder.notify(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_WEIGHT_MEASUREMENT), true);
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), true);
 
-        // Query weight measurements saved by the scale
-        sendHistoryCommand(builder, CMD_HISTORY_START, true);
-        sendHistoryCommand(builder, CMD_HISTORY_QUERY, false);
+        fetchWeightHistory(builder);
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
 
@@ -150,6 +150,9 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
             sendHistoryCommand(builder, CMD_HISTORY_END, true);
             builder.notify(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), false);
             builder.queue(getQueue());
+            getDevice().unsetBusyTask();
+            GB.updateTransferNotification(null, "", false, 100, getContext());
+            getDevice().sendDeviceUpdateIntent(getContext());
         } else {
             ByteBuffer buf = ByteBuffer.wrap(characteristic.getValue());
             List<WeightMeasurement> measurements = new ArrayList<>();
@@ -208,6 +211,31 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     public boolean useAutoConnect() {
         return false;
+    }
+
+    @Override
+    public void onFetchRecordedData(final int dataTypes) {
+        if (getDevice().isBusy()) {
+            // already busy
+            return;
+        }
+
+        final TransactionBuilder builder = createTransactionBuilder("fetch weight history");
+        fetchWeightHistory(builder);
+        builder.queue(getQueue());
+    }
+
+    public void fetchWeightHistory(final TransactionBuilder builder) {
+        final String fetchMessage = getContext().getString(R.string.busy_task_fetch_weight_data);
+
+        GB.updateTransferNotification(fetchMessage,"", true, 0, getContext());
+
+        builder.add(new SetDeviceBusyAction(getDevice(), fetchMessage, getContext()));
+        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), true);
+        // Query weight measurements saved by the scale
+        sendHistoryCommand(builder, CMD_HISTORY_START, true);
+        sendHistoryCommand(builder, CMD_HISTORY_QUERY, false);
+        builder.queue(getQueue());
     }
 
     private void setTime(TransactionBuilder builder) {

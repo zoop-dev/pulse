@@ -365,9 +365,9 @@ public class GBDevice implements Parcelable {
             throw new IllegalArgumentException("busy task must not be null");
         }
         if (mBusyTask != null) {
-            LOG.warn("Attempt to mark device as busy with: " + task + ", but is already busy with: " + mBusyTask);
+            LOG.warn("Attempt to mark device as busy with: {}, but is already busy with: {}", task, mBusyTask);
         }
-        LOG.info("Mark device as busy: " + task);
+        LOG.info("Mark device as busy: {}", task);
         mBusyTask = task;
     }
 
@@ -379,7 +379,7 @@ public class GBDevice implements Parcelable {
             LOG.error("Attempt to mark device as not busy anymore, but was not busy before.");
             return;
         }
-        LOG.info("Mark device as NOT busy anymore: " + mBusyTask);
+        LOG.info("Mark device as NOT busy anymore: {}", mBusyTask);
         mBusyTask = null;
     }
 
