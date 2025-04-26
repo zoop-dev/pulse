@@ -322,10 +322,6 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     }
 
-    public void sendPing() {
-        connectionService.sendPing();
-    }
-
     @Override
     public void onFindDevice(final boolean start) {
         findDeviceService.onFindDevice(start);

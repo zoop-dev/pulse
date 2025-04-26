@@ -21,6 +21,7 @@ import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -89,6 +90,9 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     private final SparseArray<UUID> channelToCharacteristic = new SparseArray<>();
     private final Map<UUID, Short> characteristicToChannel = new HashMap<>();
 
+    private final Handler pingHandler = new Handler();
+    private long lastWrite = -1;
+
     public ZeppOsBtbrSupport() {
         super(LOG);
         addSupportedService(HuamiService.UUID_BT_SERIAL_SERVICE);
@@ -109,12 +113,14 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     @Override
     public void dispose() {
         zeppOsSupport.dispose();
+        pingHandler.removeCallbacksAndMessages(null);
         super.dispose();
     }
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         write(builder, CMD_CHANNELS_GET, new byte[]{});
+        scheduleNextPing(25 * 60 * 1000L);
         return builder;
     }
 
@@ -192,6 +198,11 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
         buf.put(PACKET_TRAILER);
 
         builder.write(buf.array());
+
+        // FIXME we haven't written here yet, but a few milliseconds / seconds shouldn't be a big problem
+        if (cmd == CMD_CHANNEL_DATA) {
+            lastWrite = System.currentTimeMillis();
+        }
     }
 
     protected void write(final TransactionBuilder builder,
@@ -335,8 +346,6 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 // When we send a ping, watch replies with a pong. However, we never actually saw it happen
                 // in the other direction, and sending the pong is not enough. The official app will
                 // constantly request the apps list every once in a while.
-                // Send an actual data packet to try and keep it alive when we get a btbr ping.
-                zeppOsSupport.sendPing();
 
                 return;
             }
@@ -359,6 +368,28 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
         crc = CheckSums.getCRC16(BLETypeConversions.fromUint16(payload.length), crc);
         crc = CheckSums.getCRC16(payload, crc);
         return crc;
+    }
+
+    private void scheduleNextPing(final long delayMillis) {
+        LOG.debug("Scheduling next ping for {} ms in the future", delayMillis);
+        pingHandler.postDelayed(() -> {
+            final long timeSinceLastWrite = System.currentTimeMillis() - lastWrite;
+            // Only send the ping if there were > 24 min since the last one
+            if (timeSinceLastWrite > 24 * 60 * 1000L) {
+                LOG.debug("Sending ping");
+                sendPing();
+                scheduleNextPing(25 * 60 * 1000L);
+            } else {
+                LOG.debug("Not enough time since last write, scheduling another ping");
+                scheduleNextPing(25 * 60 * 1000L - timeSinceLastWrite);
+            }
+        }, delayMillis);
+    }
+
+    private void sendPing() {
+        final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("ping with request apps");
+        zeppOsSupport.requestApps(builder);
+        builder.queue(zeppOsSupport);
     }
 
     // =============================================================================================
