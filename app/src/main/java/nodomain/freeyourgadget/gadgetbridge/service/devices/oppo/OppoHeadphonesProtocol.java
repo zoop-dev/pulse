@@ -83,8 +83,6 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     }
 
     private static List<GBDeviceEvent> handleSingleResponse(final byte[] responseData) {
-        final List<GBDeviceEvent> events = new ArrayList<>();
-
         final ByteBuffer responseBuf = ByteBuffer.wrap(responseData).order(ByteOrder.LITTLE_ENDIAN);
         final byte preamble = responseBuf.get();
 
@@ -102,6 +100,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         final short zero = responseBuf.getShort();
         if (zero != 0 && zero != 4) {
             // 0 on oppo, 4 on realme?
+            // #4672 - sometimes 1 on oppo?
             LOG.warn("Unexpected bytes: {}, expected 0 or 4", zero);
         }
 
@@ -113,9 +112,21 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         }
 
         final int seq = responseBuf.get();
-        final short payloadLength = responseBuf.getShort();
+        final int payloadLength = responseBuf.getShort() & 0xffff;
+
+        if (payloadLength > responseBuf.remaining()) {
+            // FIXME: #4672 - avoid crash on some incoming commands - what are we parsing wrong?
+            LOG.error("Payload length {} is larger than remaining {}", payloadLength, responseBuf.remaining());
+            return Collections.emptyList();
+        } else if (payloadLength < responseBuf.remaining()) {
+            // leftover bytes?
+            LOG.warn("Payload length {} is smaller than remaining {}", payloadLength, responseBuf.remaining());
+        }
+
         final byte[] payload = new byte[payloadLength];
         responseBuf.get(payload);
+
+        final List<GBDeviceEvent> events = new ArrayList<>();
 
         switch (command) {
             case BATTERY_RET: {
