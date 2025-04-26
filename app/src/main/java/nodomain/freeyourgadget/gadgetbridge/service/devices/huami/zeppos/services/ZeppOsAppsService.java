@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class ZeppOsAppsService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAppsService.class);
@@ -134,11 +134,15 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
     private void parseAppList(final byte[] payload) {
         apps.clear();
 
-        final byte[] appListStringBytes = ArrayUtils.subarray(payload, 16, payload.length);
-        final String appListString = new String(appListStringBytes);
+        final String appListString = StringUtils.untilNullTerminator(payload, 16);
+        if (appListString == null) {
+            LOG.warn("Failed to get app list string from payload");
+            return;
+        }
+
         final String[] appListSplit = appListString.split(";");
         for (final String appString : appListSplit) {
-            if (StringUtils.isBlank(appString)) {
+            if (StringUtils.isEmpty(appString)) {
                 continue;
             }
 
