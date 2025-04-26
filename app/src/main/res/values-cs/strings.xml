@@ -905,7 +905,7 @@
     <string name="Elevation">Elevace</string>
     <string name="Distance">Vzdálenost</string>
     <string name="Swimming">Plavání</string>
-    <string name="Strokes">Záběry</string>
+    <string name="Strokes">Tempo</string>
     <string name="bpm">tepů/min</string>
     <string name="minutes_km">min/km</string>
     <string name="seconds_km">s/km</string>
@@ -4022,4 +4022,12 @@
     <string name="pref_display_enabled_all_day_title">Povoleno celý den</string>
     <string name="pref_display_enabled_title">Displej povolen</string>
     <string name="pref_display_enabled_summary">Povolit displej na prstenu</string>
+    <string name="busy_task_fetch_weight_data">Získávání údajů o váze</string>
+    <string name="swimming_stroke">Styl</string>
+    <string name="swim_style_butterfly">Motýlek</string>
+    <string name="swim_style_drill">Drill</string>
+    <string name="workout_swings">Švihy</string>
+    <string name="restingCalories">Kalorie v klidu</string>
+    <string name="workout_intervals">Intervaly</string>
+    <string name="swim_style_mixed">Smíšený</string>
 </resources>
