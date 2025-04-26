@@ -1680,7 +1680,7 @@
     <string name="extended_ascii">Kibővített ASCII</string>
     <string name="devicestatus_upload_starting">A feltöltés megkezdődik</string>
     <string name="prefs_enable_find_phone">Kapcsolja be a „Telefon keresése” funkciót</string>
-    <string name="mi3_prefs_band_screen_unlock">Karkötő képernyő feloldása\"</string>
+    <string name="mi3_prefs_band_screen_unlock">Karkötő képernyő feloldása</string>
     <string name="charts_legend_stress_average">Átlagos terhelés</string>
     <string name="devicestatus_upload_started">A feltöltés megkezdődött</string>
     <string name="gpx_route_upload_complete">Gpx útvonal feltöltése befejeződött</string>
@@ -1805,7 +1805,7 @@
     <string name="activity_type_archery">Íjászat</string>
     <string name="activity_type_horse_riding">Lovaglás</string>
     <string name="activity_type_kite_flying">Papírsárkány repítés</string>
-    <string name="activity_type_swing">Hintázás</string>
+    <string name="activity_type_swing">Hinta</string>
     <string name="activity_type_stairs">Lépcsőzés</string>
     <string name="activity_type_fishing">Horgászat</string>
     <string name="activity_type_mind_and_body">Test és lélek</string>
@@ -3824,4 +3824,12 @@
     <string name="pref_display_enabled_summary">Engedélyezi a gyűrűn történő kijelzést</string>
     <string name="pref_display_enabled_title">Kijelzés engedélyezve</string>
     <string name="pref_display_enabled_all_day_summary">Engedélyezi az egész napos kijelzést. Letiltja az alábbi meghatározott időpontok kiválasztását</string>
+    <string name="workout_swings">Hintázás</string>
+    <string name="swim_style_drill">Drill</string>
+    <string name="swim_style_mixed">Vegyes</string>
+    <string name="workout_intervals">Időközök</string>
+    <string name="swim_style_butterfly">Pillangó</string>
+    <string name="busy_task_fetch_weight_data">Súlyadatok lekérése</string>
+    <string name="swimming_stroke">Úszótechnika</string>
+    <string name="restingCalories">Nyugalmi kalóriák</string>
 </resources>
