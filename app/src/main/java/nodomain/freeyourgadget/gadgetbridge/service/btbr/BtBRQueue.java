@@ -46,7 +46,7 @@ public final class BtBRQueue {
     public static final int HANDLER_SUBJECT_CONNECT = 0;
     public static final int HANDLER_SUBJECT_PERFORM_TRANSACTION = 1;
 
-    private BluetoothAdapter mBtAdapter = null;
+    private final BluetoothAdapter mBtAdapter;
     private BluetoothSocket mBtSocket = null;
     private final GBDevice mGbDevice;
     private final SocketCallback mCallback;
@@ -63,7 +63,7 @@ public final class BtBRQueue {
     private Thread readThread = new Thread("Read Thread") {
         @Override
         public void run() {
-            byte[] buffer = new byte[mBufferSize];
+            final byte[] buffer = new byte[mBufferSize];
             int nRead;
 
             LOG.debug("Read thread started, entering loop");
@@ -215,7 +215,7 @@ public final class BtBRQueue {
         return true;
     }
 
-    protected void onConnectionEstablished() {
+    private void onConnectionEstablished() {
         mCallback.onConnectionEstablished();
     }
 

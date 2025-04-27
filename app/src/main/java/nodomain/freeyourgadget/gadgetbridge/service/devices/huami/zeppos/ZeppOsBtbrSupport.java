@@ -61,7 +61,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements ZeppOsCommunicator {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsBtbrSupport.class);
 
-    private static final int MAX_MTU = 32768;
+    /**
+     * The highest MTU we have seen is 32768. However, there is some bug in the BtbrQueue where it
+     * will lose some bytes if we read less than the available bytes, so we double the buffer size.
+     */
+    private static final int MAX_MTU = 2 * 32768;
 
     private static final byte PACKET_PREAMBLE = 0x55;
     private static final byte PACKET_TRAILER = (byte) 0xaa;
