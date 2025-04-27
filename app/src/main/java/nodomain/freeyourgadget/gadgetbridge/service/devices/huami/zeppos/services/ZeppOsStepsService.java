@@ -25,6 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.RealtimeSamplesAggregator;
 
 public class ZeppOsStepsService extends AbstractZeppOsService {
@@ -47,6 +48,12 @@ public class ZeppOsStepsService extends AbstractZeppOsService {
     @Override
     public short getEndpoint() {
         return ENDPOINT;
+    }
+
+    @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        // It can stay enable across connections
+        setRealtimeSteps(builder, false);
     }
 
     @Override
@@ -80,7 +87,11 @@ public class ZeppOsStepsService extends AbstractZeppOsService {
         this.realtimeSamplesAggregator = realtimeSamplesAggregator;
     }
 
-    public void onEnableRealtimeSteps(final boolean enable) {
+    public void setRealtimeSteps(final boolean enable) {
+        withTransactionBuilder("toggle realtime steps", builder -> setRealtimeSteps(builder, enable));
+    }
+
+    public void setRealtimeSteps(final ZeppOsTransactionBuilder builder, final boolean enable) {
         write("toggle realtime steps", new byte[]{CMD_ENABLE_REALTIME, bool(enable)});
     }
 

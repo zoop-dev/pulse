@@ -460,7 +460,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void onEnableRealtimeSteps(final boolean enable) {
-        stepsService.onEnableRealtimeSteps(enable);
+        stepsService.setRealtimeSteps(enable);
     }
 
     @Override
