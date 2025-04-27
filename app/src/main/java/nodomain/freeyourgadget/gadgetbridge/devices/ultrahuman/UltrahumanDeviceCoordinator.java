@@ -19,7 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 
 import androidx.annotation.NonNull;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanDeviceStateSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
-import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
@@ -62,17 +61,18 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.ultrahuman.Ultrahuma
 public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public List<DeviceCardAction> getCustomActions() {
-        // TODO - use an airplane icon instead
-        DeviceCardAction airplaneMode = new UltrahumanDeviceCardAction(R.drawable.ic_circle, R.string.ultrahuman_airplane_mode_title, R.string.ultrahuman_airplane_mode_question, UltrahumanConstants.ACTION_AIRPLANE_MODE);
+        ArrayList<DeviceCardAction> list = new ArrayList<>();
+        list.add(new UltrahumanDeviceCardAction(R.drawable.ic_flight, R.string.ultrahuman_airplane_mode_title, R.string.ultrahuman_airplane_mode_question, UltrahumanConstants.ACTION_AIRPLANE_MODE));
+        list.add(new UltrahumanDeviceCardAction(R.drawable.ic_pulmonology, R.string.ultrahuman_breathing_title, UltrahumanBreathingActivity.class));
 
-        return Collections.singletonList(airplaneMode);
+        return list;
     }
 
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
         final Long deviceId = device.getId();
 
-        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?,?>,Property>() {{
+        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
             put(session.getGenericHeartRateSampleDao(), GenericHeartRateSampleDao.Properties.DeviceId);
             put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
             put(session.getGenericSpo2SampleDao(), GenericSpo2SampleDao.Properties.DeviceId);

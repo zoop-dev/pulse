@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ultrahuman_breathing_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:text="b:000% t:00"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/ultrahuman_breathing_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:text="00:00:00"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/ultrahuman_breathing_HR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:text="000 bpm"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/ultrahuman_breathing_temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:text="00.000 °C"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/ultrahuman_breathing_HRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:text="000 ms"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ultrahuman_breathing_start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:text="@string/ultrahuman_breathing_start" />
+
+        <Button
+            android:id="@+id/ultrahuman_breathing_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:text="@string/ultrahuman_breathing_stop" />
+    </LinearLayout>
+</LinearLayout>

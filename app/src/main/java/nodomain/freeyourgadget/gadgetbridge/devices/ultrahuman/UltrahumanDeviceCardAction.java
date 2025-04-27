@@ -23,6 +23,7 @@ import android.content.Intent;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -32,13 +33,23 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
     private final int Description;
     private final int Question;
 
-    private final String Action;
+    private final String IntentAction;
+    private final Class<?> IntentClass;
 
     public UltrahumanDeviceCardAction(int icon, int description, int question, String action) {
         Icon = icon;
         Description = description;
         Question = question;
-        Action = action;
+        IntentAction = action;
+        IntentClass = null;
+    }
+
+    public UltrahumanDeviceCardAction(int icon, int description, Class<?> cls) {
+        Icon = icon;
+        Description = description;
+        Question = 0;
+        IntentAction = null;
+        IntentClass = cls;
     }
 
     @Override
@@ -53,17 +64,41 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
 
     @Override
     public void onClick(GBDevice device, Context context) {
-        new MaterialAlertDialogBuilder(context)
-                .setTitle(Description)
-                .setMessage(Question)
-                .setIcon(Icon)
-                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                    final Intent intent = new Intent(Action);
-                    intent.setPackage(BuildConfig.APPLICATION_ID);
-                    intent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                    context.sendBroadcast(intent);
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .show();
+        if (Question != 0) {
+            new MaterialAlertDialogBuilder(context)
+                    .setTitle(Description)
+                    .setMessage(Question)
+                    .setIcon(Icon)
+                    .setPositiveButton(android.R.string.yes, (dialog, whichButton)
+                            -> sendIntent(device, context))
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
+        } else {
+            sendIntent(device, context);
+        }
+    }
+
+    private void sendIntent(GBDevice device, Context context) {
+        final Intent intent = new Intent(IntentAction);
+        intent.setPackage(BuildConfig.APPLICATION_ID);
+        intent.putExtra(UltrahumanConstants.EXTRA_ADDRESS, device.getAddress());
+
+        if (IntentClass != null) {
+            intent.setClass(context, IntentClass);
+            if (AbstractGBActivity.class.isAssignableFrom(IntentClass)) {
+                context.startActivity(intent);
+                return;
+            }
+        }
+
+        context.sendBroadcast(intent);
+    }
+
+    @Override
+    public boolean isVisible(final GBDevice device) {
+        // device.isInitialized() also treats State.SCANNED as initialized but that isn't
+        // appropriate for this device type
+        final GBDevice.State state = device.getState();
+        return state.equalsOrHigherThan(GBDevice.State.INITIALIZED);
     }
 }

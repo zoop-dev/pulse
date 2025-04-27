@@ -3890,6 +3890,9 @@
     <string name="ultrahuman_airplane_mode_unknown">unknown error %#02x - airplane mode NOT activated</string>
     <string name="ultrahuman_airplane_mode_question">Activate airplane mode?</string>
     <string name="ultrahuman_airplane_mode_title">airplane mode</string>
+    <string name="ultrahuman_breathing_title">Breathing</string>
+    <string name="ultrahuman_breathing_start">Start</string>
+    <string name="ultrahuman_breathing_stop">Stop</string>
     <string name="ultrahuman_unhandled_error_response">unhandled response %2$#02x %3$#02x for operation %1$#02x</string>
     <string name="ultrahuman_unhandled_operation_response">unhandled operation response %s</string>
     <string name="huawei_stress_test_enable">Automatic stress test</string>
