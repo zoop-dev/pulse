@@ -1,6 +1,5 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -41,6 +40,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
     private TextView dateView;
     private TextView caloriesResting;
     private TextView caloriesActive;
+    private TextView metabolicRate;
     private LinearLayout caloriesActiveWrapper;
     private TextView caloriesActiveGoal;
     private LinearLayout caloriesActiveGoalWrapper;
@@ -85,6 +85,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         dateView = rootView.findViewById(R.id.date_view);
         caloriesResting = rootView.findViewById(R.id.calories_resting);
         caloriesActive = rootView.findViewById(R.id.calories_active);
+        metabolicRate = rootView.findViewById(R.id.calories_resting_metabolic_rate);
         caloriesActiveWrapper = rootView.findViewById(R.id.calories_active_wrapper);
         caloriesActiveGoal = rootView.findViewById(R.id.calories_active_goal);
         caloriesActiveGoalWrapper = rootView.findViewById(R.id.calories_active_goal_wrapper);
@@ -154,7 +155,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         List<? extends ActivitySample> samples = getActivitySamples(db, device, startTs, endTs);
         RestingMetabolicRateSample metabolicRate = getRestingMetabolicRate(db, device);
         if (metabolicRate == null) {
-            return new CaloriesData(0, 0, 0);
+            return new CaloriesData(0, 0, 0, 0);
         }
         int totalBurnt;
         int activeBurnt = 0;
@@ -176,7 +177,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         activeBurnt = activeBurnt / 1000;
         totalBurnt = restingBurnt + activeBurnt;
 
-        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt);
+        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, metabolicRate.getRestingMetabolicRate());
     }
 
     @Override
@@ -185,6 +186,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         int activeCalories = data.activeBurnt;
         int totalCalories = activeCalories + restingCalories;
         caloriesActive.setText(String.valueOf(activeCalories));
+        metabolicRate.setText(String.valueOf(data.restingMetabolicRate));
         caloriesResting.setText(String.valueOf(restingCalories));
         caloriesActiveGoal.setText(String.valueOf(ACTIVE_CALORIES_GOAL));
 
@@ -243,11 +245,13 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         public int activeBurnt;
         public int restingBurnt;
         public int totalBurnt;
+        public int restingMetabolicRate;
 
-        protected CaloriesData(int totalBurnt, int activeBurnt, int restingBurnt) {
+        protected CaloriesData(int totalBurnt, int activeBurnt, int restingBurnt, final int restingMetabolicRate) {
             this.totalBurnt = totalBurnt;
             this.activeBurnt = activeBurnt;
             this.restingBurnt = restingBurnt;
+            this.restingMetabolicRate = restingMetabolicRate;
         }
     }
 }

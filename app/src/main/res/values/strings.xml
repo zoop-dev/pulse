@@ -2390,6 +2390,7 @@
     <string name="activeSeconds">Active</string>
     <string name="caloriesBurnt">Calories</string>
     <string name="restingCalories">Resting Calories</string>
+    <string name="metabolic_rate">Metabolic Rate</string>
     <string name="maxSpeed">Maximum</string>
     <string name="minSpeed">Minimum</string>
     <string name="minPace">Slowest Pace</string>
