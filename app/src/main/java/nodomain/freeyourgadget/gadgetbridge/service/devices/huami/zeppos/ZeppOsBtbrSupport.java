@@ -22,6 +22,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -290,7 +291,18 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 final byte session = buf.get();
                 final byte status = buf.get(); // 3
                 LOG.debug("Got session end, session={}, status={}", session, status);
-                // TODO reconnect if we lose main session?
+                if (session == sessionNumber) {
+                    // FIXME: the watch will disconnect the btrfcomm socket ~2s after this msg is received.
+                    //  The btbr implementation should recover by itself, but does not, so we
+                    //  force a disconnect and reconnect 5s after
+                    LOG.warn("Main session ended - will disconnect and re-connect");
+                    GBApplication.deviceService(getDevice()).disconnect();
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(() -> {
+                        LOG.debug("Triggering re-connect due to main session end");
+                        GBApplication.deviceService(getDevice()).connect();
+                    }, 5000L);
+                }
                 return;
             }
             case CMD_SESSION_END_ACK: {
