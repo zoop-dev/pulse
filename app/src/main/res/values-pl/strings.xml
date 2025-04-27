@@ -4038,4 +4038,18 @@
     <string name="ultrahuman_unhandled_operation_response">nieobsługiwana operacja odpowiedź %s</string>
     <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
     <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
+    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
+    <string name="pref_display_enabled_title">Wyświetlacz włączony</string>
+    <string name="pref_display_enabled_summary">Włącz wyświetlacz na pierścieniu</string>
+    <string name="pref_display_enabled_all_day_title">Włączony przez cały dzień</string>
+    <string name="pref_display_enabled_all_day_summary">Włącz wyświetlacz przez cały dzień. Wyłącz, aby wybrać określone godziny poniżej</string>
+    <string name="busy_task_fetch_weight_data">Pobieranie danych o wadze</string>
+    <string name="workout_swings">Swingi</string>
+    <string name="swimming_stroke">Uderzenie</string>
+    <string name="swim_style_drill">Ćwiczenia pływackie</string>
+    <string name="swim_style_mixed">Mieszany</string>
+    <string name="workout_intervals">Interwały</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
+    <string name="restingCalories">Kalorie spoczynkowe</string>
+    <string name="swim_style_butterfly">Motylek</string>
 </resources>
