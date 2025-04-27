@@ -226,6 +226,10 @@
             android:label="@string/huawei_stress_calibrate"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
+            android:name=".activities.NotificationsAppIconUploadActivity"
+            android:label="@string/notifications_app_icon_upload"
+            android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
+        <activity
             android:name=".activities.ActivitySummariesActivity"
             android:label="@string/activity_summaries"
             android:parentActivityName=".activities.ControlCenterv2" />

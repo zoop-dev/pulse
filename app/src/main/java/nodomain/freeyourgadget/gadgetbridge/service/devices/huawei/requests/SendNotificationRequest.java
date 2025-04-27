@@ -86,7 +86,7 @@ public class SendNotificationRequest extends Request {
         params.supportsRepeatedNotify = supportProvider.getHuaweiCoordinator().supportsNotificationsRepeatedNotify();
         params.supportsRemoveSingle = supportProvider.getHuaweiCoordinator().supportsNotificationsRemoveSingle();
         params.supportsReplyActions = supportProvider.getHuaweiCoordinator().supportsNotificationsReplyActions();
-        params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsTimestamp();
+        params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsAddIconTimestamp();
 
         params.notificationId = notificationSpec.getId();
         params.notificationKey = getNotificationKey(notificationSpec);

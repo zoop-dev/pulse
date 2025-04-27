@@ -293,6 +293,8 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_MUSIC_MANAGEMENT = "pref_music_management";
 
+    public static final String PREF_UPLOAD_NOTIFICATIONS_APP_ICON = "pref_upload_notifications_app_icon";
+
     public static final String PREF_ANTILOST_ENABLED = "pref_antilost_enabled";
     public static final String PREF_HYDRATION_SWITCH = "pref_hydration_switch";
     public static final String PREF_HYDRATION_PERIOD = "pref_hydration_period";

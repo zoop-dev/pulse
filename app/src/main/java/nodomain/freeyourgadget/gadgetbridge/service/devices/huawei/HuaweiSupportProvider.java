@@ -40,6 +40,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -123,6 +124,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PAppIcon;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
@@ -926,6 +928,12 @@ public class HuaweiSupportProvider {
                             HuaweiP2PDataDictionarySyncService trackService = new HuaweiP2PDataDictionarySyncService(huaweiP2PManager);
                             trackService.register();
                         }
+                        if(getHuaweiCoordinator().supportsNotificationsAddIconTimestamp()) {
+                            if (HuaweiP2PAppIcon.getRegisteredInstance(huaweiP2PManager) == null) {
+                                HuaweiP2PAppIcon appIconService = new HuaweiP2PAppIcon(huaweiP2PManager);
+                                appIconService.register();
+                            }
+                        }
                     }
 
                     if(getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {
@@ -1208,6 +1216,9 @@ public class HuaweiSupportProvider {
                 case DeviceSettingsPreferenceConst.PREF_CALENDAR_LOOKAHEAD_DAYS:
                     HuaweiP2PCalendarService.getRegisteredInstance(huaweiP2PManager).restartSynchronization();
                     break;
+                case DeviceSettingsPreferenceConst.PREF_UPLOAD_NOTIFICATIONS_APP_ICON:
+                    startUploadNotificationsAppIcons();
+                    break;
             }
         } catch (IOException e) {
             GB.toast(context, "Configuration of Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
@@ -1264,6 +1275,19 @@ public class HuaweiSupportProvider {
             } catch (IOException e) {
                 LOG.error("SendFitnessGoalRequest failed", e);
             }
+        }
+    }
+
+    public void startUploadNotificationsAppIcons() {
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        HashSet<String> iconsToUpload = (HashSet<String>) prefs.getStringSet(DeviceSettingsPreferenceConst.PREF_UPLOAD_NOTIFICATIONS_APP_ICON, null);
+        if (iconsToUpload == null) {
+            iconsToUpload = new HashSet<>();
+        }
+        LOG.debug("startUploadNotificationsAppIcons: {}", iconsToUpload);
+        HuaweiP2PAppIcon appIconService = HuaweiP2PAppIcon.getRegisteredInstance(this.huaweiP2PManager);
+        if(appIconService != null) {
+            appIconService.addPackageName(new ArrayList<>(iconsToUpload));
         }
     }
 
@@ -2992,4 +3016,5 @@ public class HuaweiSupportProvider {
             }
         }
     }
+
 }

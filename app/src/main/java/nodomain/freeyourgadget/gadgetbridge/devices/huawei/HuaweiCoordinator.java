@@ -323,6 +323,9 @@ public class HuaweiCoordinator {
             notifications.add(R.xml.devicesettings_disconnectnotification_noshed);
         if (supportsDoNotDisturb(device))
             notifications.add(R.xml.devicesettings_donotdisturb_allday_liftwirst_notwear);
+        if (supportsNotificationsAddIconTimestamp() && device.isConnected()) {
+            notifications.add(R.xml.devicesettings_upload_notifications_app_icon);
+        }
 
 
         // Workout
@@ -736,7 +739,7 @@ public class HuaweiCoordinator {
         return false;
     }
 
-    public boolean supportsNotificationsTimestamp() {
+    public boolean supportsNotificationsAddIconTimestamp() {
         if (supportsExpandCapability())
             return supportsExpandCapability(77);
         return false;

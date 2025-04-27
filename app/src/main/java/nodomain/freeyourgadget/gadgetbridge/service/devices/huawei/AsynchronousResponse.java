@@ -521,13 +521,13 @@ public class AsynchronousResponse {
                 } else {
                     try {
                         byte fileId = support.huaweiUploadManager.getFileUploadInfo().getFileId();
+                        SendFileUploadComplete sendFileUploadComplete = new SendFileUploadComplete(this.support, fileId);
+                        sendFileUploadComplete.doPerform();
                         if (support.huaweiUploadManager.getFileUploadInfo().getFileUploadCallback() != null) {
                             support.huaweiUploadManager.getFileUploadInfo().getFileUploadCallback().onUploadComplete();
                         }
                         //Cleanup
                         support.huaweiUploadManager.setFileUploadInfo(null);
-                        SendFileUploadComplete sendFileUploadComplete = new SendFileUploadComplete(this.support, fileId);
-                        sendFileUploadComplete.doPerform();
                     } catch (IOException e) {
                         LOG.error("Could not send file upload result request", e);
                     }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/ic_action_manage_apps"
+        android:key="pref_upload_notifications_app_icon"
+        android:summary="@string/pref_notifications_app_icon_upload_summary"
+        android:title="@string/pref_notifications_app_icon_upload_title" />
+</androidx.preference.PreferenceScreen>

@@ -67,6 +67,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragmen
 import nodomain.freeyourgadget.gadgetbridge.activities.CalBlacklistActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureContacts;
 import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureWorldClocks;
+import nodomain.freeyourgadget.gadgetbridge.activities.NotificationsAppIconUploadActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.app_specific_notifications.AppSpecificNotificationSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.audiorecordings.AudioRecordingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.LoyaltyCardsSettingsActivity;
@@ -1123,6 +1124,19 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     final Intent intent = new Intent(getContext(), MusicManagerActivity.class);
+                    intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+        }
+
+        final Preference notifications_app_icon_upload = findPreference(PREF_UPLOAD_NOTIFICATIONS_APP_ICON);
+        if (notifications_app_icon_upload != null) {
+            notifications_app_icon_upload.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    final Intent intent = new Intent(getContext(), NotificationsAppIconUploadActivity.class);
                     intent.putExtra(GBDevice.EXTRA_DEVICE, device);
                     startActivity(intent);
                     return true;

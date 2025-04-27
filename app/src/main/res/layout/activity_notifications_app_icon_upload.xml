@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/notifications_app_icon_info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/notifications_app_icon_info" />
+
+    <Button
+        android:id="@+id/notifications_app_icon_send_to_device_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notifications_app_icon_info_text"
+        android:layout_margin="5dp"
+        android:text="@string/notifications_app_icon_upload_to_device" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/notifications_app_icon_send_to_device_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notifications_app_icon_send_to_device_button"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notifications_app_icon_apps_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/notifications_app_icon_send_to_device_search_view"
+        android:divider="@null" />
+
+    <RelativeLayout
+        android:id="@+id/notifications_app_icon_apps_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#95000000"
+        android:gravity="center">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</android.widget.RelativeLayout>
