@@ -4030,4 +4030,5 @@
     <string name="restingCalories">Kalorie v klidu</string>
     <string name="workout_intervals">Intervaly</string>
     <string name="swim_style_mixed">Smíšený</string>
+    <string name="metabolic_rate">Rychlost metabolismu</string>
 </resources>
