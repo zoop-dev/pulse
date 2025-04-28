@@ -3540,7 +3540,7 @@
     <string name="midFootLandings">Mid foot landings</string>
     <string name="foreFootLandings">Fore foot landings</string>
     <string name="backFootLandings">Back foot landings</string>
-    <string name="moondrop_touch_trigger">Spust</string>
+    <string name="moondrop_touch_trigger">Akcja</string>
     <string name="activity_type_transition">Transition</string>
     <string name="activity_type_tactical">Tactical</string>
     <string name="activity_type_push_run_speed">Push - Run Speed</string>
