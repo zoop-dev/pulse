@@ -4052,4 +4052,5 @@
     <string name="devicetype_colmi_r12">Colmi R12</string>
     <string name="restingCalories">Kalorie spoczynkowe</string>
     <string name="swim_style_butterfly">Motylek</string>
+    <string name="metabolic_rate">Tempo metabolizmu</string>
 </resources>
