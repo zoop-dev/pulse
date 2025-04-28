@@ -3832,4 +3832,5 @@
     <string name="busy_task_fetch_weight_data">Súlyadatok lekérése</string>
     <string name="swimming_stroke">Úszótechnika</string>
     <string name="restingCalories">Nyugalmi kalóriák</string>
+    <string name="metabolic_rate">Alapanyagcsere</string>
 </resources>
