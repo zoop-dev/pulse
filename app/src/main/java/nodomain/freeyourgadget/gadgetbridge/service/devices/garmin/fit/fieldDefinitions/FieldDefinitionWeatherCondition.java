@@ -13,8 +13,12 @@ public class FieldDefinitionWeatherCondition extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int idx = (int) baseType.decode(byteBuffer, scale, offset);
-        return Condition.values()[idx];
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return Condition.values()[raw];
+        }
+        return null;
     }
 
     @Override

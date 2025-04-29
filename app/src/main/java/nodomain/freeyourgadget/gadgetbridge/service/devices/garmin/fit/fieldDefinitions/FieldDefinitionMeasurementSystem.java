@@ -14,8 +14,12 @@ public class FieldDefinitionMeasurementSystem extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return Type.fromId(raw) == null ? raw : Type.fromId(raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return Type.fromId(raw) == null ? raw : Type.fromId(raw);
+        }
+        return null;
     }
 
     @Override

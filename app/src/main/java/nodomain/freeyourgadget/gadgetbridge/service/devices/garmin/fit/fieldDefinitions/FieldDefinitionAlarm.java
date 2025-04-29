@@ -13,11 +13,15 @@ public class FieldDefinitionAlarm extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, Math.round(raw / 60));
-        calendar.set(Calendar.MINUTE, raw % 60);
-        return calendar;
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, raw / 60);
+            calendar.set(Calendar.MINUTE, raw % 60);
+            return calendar;
+        }
+        return null;
     }
 
     @Override

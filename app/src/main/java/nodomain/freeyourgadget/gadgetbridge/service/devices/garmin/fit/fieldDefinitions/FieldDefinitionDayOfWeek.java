@@ -16,8 +16,12 @@ public class FieldDefinitionDayOfWeek extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return DayOfWeek.of(raw == 0 ? 7 : raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return DayOfWeek.of(raw == 0 ? 7 : raw);
+        }
+        return null;
     }
 
     @Override

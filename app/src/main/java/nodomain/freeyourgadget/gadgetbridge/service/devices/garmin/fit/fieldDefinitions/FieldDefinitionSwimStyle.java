@@ -17,8 +17,12 @@ public class FieldDefinitionSwimStyle extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return SwimStyle.fromId(raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return SwimStyle.fromId(raw);
+        }
+        return null;
     }
 
     @Override

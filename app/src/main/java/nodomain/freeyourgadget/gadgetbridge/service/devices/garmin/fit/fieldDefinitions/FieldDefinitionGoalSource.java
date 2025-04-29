@@ -15,8 +15,12 @@ public class FieldDefinitionGoalSource extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return Source.fromId(raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return Source.fromId(raw);
+        }
+        return null;
     }
 
     @Override

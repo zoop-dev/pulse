@@ -14,8 +14,12 @@ public class FieldDefinitionSleepStage extends FieldDefinition {
 
     @Override
     public Object decode(final ByteBuffer byteBuffer) {
-        final int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return SleepStage.fromId(raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return SleepStage.fromId(raw);
+        }
+        return null;
     }
 
     @Override

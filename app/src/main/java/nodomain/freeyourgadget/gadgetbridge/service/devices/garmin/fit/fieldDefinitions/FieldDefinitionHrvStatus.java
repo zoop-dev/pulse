@@ -14,8 +14,12 @@ public class FieldDefinitionHrvStatus extends FieldDefinition {
 
     @Override
     public Object decode(final ByteBuffer byteBuffer) {
-        final int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return HrvStatus.fromId(raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return HrvStatus.fromId(raw);
+        }
+        return null;
     }
 
     @Override

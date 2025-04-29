@@ -15,8 +15,12 @@ public class FieldDefinitionLanguage extends FieldDefinition {
 
     @Override
     public Object decode(ByteBuffer byteBuffer) {
-        int raw = (int) baseType.decode(byteBuffer, scale, offset);
-        return Language.fromId(raw);
+        final Object rawObj = baseType.decode(byteBuffer, scale, offset);
+        if (rawObj != null) {
+            final int raw = (int) rawObj;
+            return Language.fromId(raw);
+        }
+        return null;
     }
 
     @Override
