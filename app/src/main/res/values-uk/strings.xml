@@ -347,7 +347,7 @@
     <string name="dbmanagementactivity_import_successful">Імпортовано.</string>
     <string name="dbmanagementactivity_error_importing_db">Помилка імпортування бази даних: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">Помилка імпортування налаштувань: %1$s</string>
-    <string name="dbmanagementactivity_delete_activity_data_title">Видалити дані про діяльність?</string>
+    <string name="dbmanagementactivity_delete_activity_data_title">Видалити дані про діяльності?</string>
     <string name="dbmanagementactivity_database_successfully_deleted">Дані видалено.</string>
     <string name="dbmanagementactivity_db_deletion_failed">Не вдалося видалити базу даних.</string>
     <string name="dbmanagementactivity_overwrite">Перезаписати</string>
@@ -363,7 +363,7 @@
     <string name="mi2_dnd_automatic">Автоматично (виявлення сну)</string>
     <string name="mi2_dnd_scheduled">Заплановано (часовий проміжок)</string>
     <string name="_pebble_watch_reply">Відповісти</string>
-    <string name="activity_type_light_sleep">Швидкий сон</string>
+    <string name="activity_type_light_sleep">Легкий сон</string>
     <string name="activity_type_deep_sleep">Глибокий сон</string>
     <string name="activity_type_swimming">Плавання</string>
     <string name="activity_type_unknown">Невідома діяльність</string>
@@ -474,7 +474,7 @@
     <string name="live_activity_heart_rate">Пульс</string>
     <string name="action_db_management">Керування даними</string>
     <string name="title_activity_db_management">Керування даними</string>
-    <string name="activity_db_management_merge_old_title">Видалення застарілої бази даних</string>
+    <string name="activity_db_management_merge_old_title">Видалити застарілу базу даних</string>
     <string name="dbmanagementactivity_exported_to">Експортовано до: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Помилка експортування бази даних: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_shared">Помилка експортування налаштувань: %1$s</string>
@@ -606,39 +606,33 @@
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Вимкнути попередження про бездіяльність на певний проміжок часу</string>
     <string name="FetchActivityOperation_about_to_transfer_since">Будуть передані дані, зібрані з %1$s</string>
     <string name="appwidget_text">Zzz</string>
-    <string name="error_creating_directory_for_logfiles">Помилка створення директорії для файлів журналу: %1$s</string>
+    <string name="error_creating_directory_for_logfiles">Помилка створення теки для файлів журналу: %1$s</string>
     <string name="pref_title_pebble_health_store_raw">Зберігати необроблені записи до бази даних</string>
     <string name="pref_summary_pebble_health_store_raw">Зберігати дані «як є», збільшуючи використання бази даних для подальшого аналізу.</string>
     <string name="activity_db_management_import_export_explanation">Операції експорту/імпорту використовують наступний шлях (див. нижче) до директорії на вашому пристрої. Ця тека доступна для інших застосунків Android та вашого комп\'ютера. Зверніть увагу, що ця директорія та всі файли в ній буде знищенно під час видалення Gadgetbridge. Ці дані включають:\n Export_preference — загальні налаштування\n Export_preference_MAC — специфічні налаштування пристрою\n Gadgetbridge — база даних пристроїв та діяльностей\n Gadgetbridge_date — база даних експортована в певну дату\n *.gpx — GPS записи\n *.log — файли журналів\nЕкспортовані файли (або файли для імпорту) будуть знаходитися тут:</string>
-    <string name="dbmanagementactivvity_cannot_access_export_path">Неможливо отримати доступ до теки для експорту. Будь ласка, зверніться до розробників.</string>
-    <string name="dbmanagementactivity_overwrite_database_confirmation">Дійсно перезаписати поточні дані? Усі поточні дані про діяльність (якщо вони є) пристрої та налаштування будуть перезаписані.</string>
-    <string name="dbmanagementactivity_really_delete_entire_db">Дійсно видалити всю базу даних? Всі ваші дані про діяльність та дані про ваші пристрої будуть втрачені.</string>
+    <string name="dbmanagementactivvity_cannot_access_export_path">Не вдалося отримати доступ до шляху експорту. Зверніться до розробників.</string>
+    <string name="dbmanagementactivity_overwrite_database_confirmation">Ви впевнені, що хочете перезаписати поточні дані? Усі ваші поточні дані про діяльності (якщо вони є), пристрої та налаштування будуть перезаписані.</string>
+    <string name="dbmanagementactivity_really_delete_entire_db">Ви впевнені, що хочете видалити всю базу даних? Усі ваші дані про діяльності та ваші пристрої будуть втрачені.</string>
     <string name="dbmanagementactivity_delete_old_activity_db">Видалити стару базу даних?</string>
-    <string name="dbmanagementactivity_delete_old_activitydb_confirmation">Дійсно видалити стару базу даних діяльностей? Дані, які не були імпортовані, будуть втрачені.</string>
-    <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Старі дані про діяльність видалено.</string>
+    <string name="dbmanagementactivity_delete_old_activitydb_confirmation">Ви випевнені, що хочете видалити стару базу даних діяльностей? Дані, які не були імпортовані, будуть втрачені.</string>
+    <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Старі дані про діяльності видалено.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Не вдалося видалити стару базу даних.</string>
     <string name="title_activity_pebble_pairing">Створення пари з Pebble</string>
-    <string name="pebble_pairing_hint">На вашому Android пристрої з\'явиться сповіщення про створення пари. Якщо цього не сталося, то знайдіть його на панелі сповіщень та підтвердьте запит на створення пари. Після цього підтвердьте запит на створення пари знову на вашому Pebble.</string>
-    <string name="weather_notification_label">Щоб отримувати погодні дані на ваш Pebble, переконайтеся, що пункт \"Gadgetbridge\" ввімкнено в застосунку \"Weather notification\".
-\n
-\nДодаткові налаштування тут не потрібні.
-\n
-\nУвімкнути застосунок погоди на вашому Pebble можна в \"Менеджері застосунків\".
-\n
-\nПідтримувані циферблати покажуть погоду автоматично.</string>
-    <string name="pref_title_setup_bt_pairing">Увімкніть створення пари через Bluetooth</string>
+    <string name="pebble_pairing_hint">На вашому Android пристрої з\'явиться діалогове вікно про створення пари. Якщо ні, перевірте панель сповіщень та прийміть запит на сполучення. Після цього також прийміть його на вашому Pebble.</string>
+    <string name="weather_notification_label">Щоб отримувати погодні дані на ваш Pebble, переконайтеся, що цей стиль увімкнено в застосунку «Weather notification».\n\nДодаткові налаштування тут не потрібні.\n\nУвімкнути системний застосунок погоди на вашому Pebble можна через менеджер застосунків.\n\nПідтримувані циферблати автоматично відображатимуть подробиці про погоду.</string>
+    <string name="pref_title_setup_bt_pairing">Увімкнути створення пари через Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Вимкніть це, якщо у вас виникають проблеми з під\'єднанням</string>
-    <string name="mi2_fw_installhandler_fw53_hint">Перед встановленням цієї мікропрограми спочатку потрібно встановити версію %1$s!</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Потрібна мікропрограма >= 1.0.1.28 та встановлений Mili_pro.ft*.]]></string>
+    <string name="mi2_fw_installhandler_fw53_hint">Вам потрібно встановити версію %1$s, перш ніж установити цю мікропрограму!</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Потрібна мікропрограма версії ≥ 1.0.1.28 та встановлений Mili_pro.ft*.]]></string>
     <string name="off">Вимкнути</string>
     <string name="mi2_dnd_off">Вимкнути</string>
     <string name="discovery_attempting_to_pair">Спроба створення пари з %1$s</string>
-    <string name="discovery_bonding_failed_immediately">Пов\'язування з %1$s відразу не вдалося.</string>
-    <string name="discovery_trying_to_connect_to">Спроба з\'єднання з: %1$s</string>
+    <string name="discovery_bonding_failed_immediately">Не вдалося пов\'язати %1$s відразу.</string>
+    <string name="discovery_trying_to_connect_to">Спроба під\'єднання до: %1$s</string>
     <string name="discovery_enable_bluetooth">Увімкніть Bluetooth для виявлення пристроїв.</string>
-    <string name="discovery_successfully_bonded">Пов\'язаний з %1$s.</string>
+    <string name="discovery_successfully_bonded">Пов\'язано з %1$s.</string>
     <string name="discovery_pair_title">Створити пару з %1$s?</string>
-    <string name="discovery_pair_question">Виберіть \"Створити пару\" для створення пари з вашим пристроєм. Якщо не вдається, спробуйте знову без створення пари.</string>
+    <string name="discovery_pair_question">Оберіть «Створити пару», щоби сполучити ваші пристроєм. Якщо не вдається, спробуйте ще раз без створення пари.</string>
     <string name="discovery_yes_pair">Створити пару</string>
     <string name="discovery_dont_pair">Не створювати пару</string>
     <string name="mi2_prefs_button_press_count_summary">Кількість натискань кнопки для запуску «Подія 1». Наступне натискання призведе до створення «Подія 2» й так далі.</string>
@@ -648,8 +642,8 @@
     <string name="mi2_prefs_button_press_count_max_delay">Максимальна затримка між натисканнями</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">Максимальна затримка між натисканнями кнопок у мілісекундах</string>
     <string name="_pebble_watch_open_on_phone">Відкрити на пристрої Android</string>
-    <string name="_pebble_watch_mute">Без звуку</string>
-    <string name="activity_web_view">Діяльність (Web версія)</string>
+    <string name="_pebble_watch_mute">Вимкнути звук</string>
+    <string name="activity_web_view">Діяльність (вебверсія)</string>
     <string name="kind_gps_cep">Виправлення помилок GPS</string>
     <string name="kind_watchface">Циферблат</string>
     <string name="on">Увімкнути</string>
@@ -710,12 +704,12 @@
     <string name="activity_db_management_autoexport_explanation">Для автоматичного експортування бази даних було призначено цю теку:</string>
     <string name="activity_db_management_autoexport_label">Автоекспорт</string>
     <string name="activity_DB_test_export_button">Запустити автоекспорт зараз</string>
-    <string name="activity_DB_test_export_message">Експорт бази даних…</string>
+    <string name="activity_DB_test_export_message">Експортування бази даних…</string>
     <string name="activity_DB_delete_legacy_button">Видалити стару базу даних</string>
     <string name="activity_DB_empty_button">Очистити базу даних</string>
     <string name="activity_db_management_empty_DB">Очистити базу даних</string>
     <string name="activity_db_management_exportimport_label">Експорт та імпорт</string>
-    <string name="activity_db_management_empty_db_warning">Увага! Натиснувши цю кнопку, ви видалите свою базу даних і почнете з нуля.</string>
+    <string name="activity_db_management_empty_db_warning">Увага! Натиснувши цю кнопку, ви повністю видалите свою базу даних та почнете з нуля.</string>
     <string name="appwidget_sleep_alarm_widget_label">Будильник</string>
     <string name="widget_listing_label">Стан і будильники</string>
     <string name="widget_set_alarm_after">Встановити будильник після:</string>
@@ -990,7 +984,7 @@
     <string name="sonyswr12_settings_stamina_summary">Енергоощадний режим вимикає періодичне автовимірювання пульсу, подовжуючи час роботи</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Інтервал розумного будильника – це інтервал перед встановленим будильником. Протягом цього інтервалу пристрій намагається виявити найлегшу фазу сну для пробудження користувача</string>
     <string name="prefs_key_vibration">Вібрація клавіш</string>
-    <string name="activity_db_management_clean_export_directory_text">Експортовані файли в теці для експорту/імпорту доступні для будь-якого застосунку на вашому пристрої. Можливо ви захочете видалити ці файли після синхронізації чи створення резервної копії. Перед видаленням переконайтеся, що ви створили резервну копію. Файли GPX, підтеки та автоекспортований файл бази даних (якщо він є) не будуть видалені. Шлях до теки для експорту/імпорту:</string>
+    <string name="activity_db_management_clean_export_directory_text">Файли, експортовані до теки для експорту/імпорту, доступні для будь-якого застосунку на вашому пристрої. Можливо ви захочете видалити ці файли після синхронізації або створення резервної копії. Переконайтеся, що у вас є резервна копія перед їх видаленням. Файли GPX, підтеки та автоматично експортована база даних (якщо вона є) не будуть видалені. Шлях до теки для експорту/імпорту:</string>
     <string name="activity_error_no_app_for_png">Щоб поділитись цим знімком екрана, встановіть застосунок, який може обробляти файли зображень.</string>
     <string name="prefs_fake_ring_duration">Несправжній безперервний дзвінок</string>
     <string name="prefs_autoremove_message">Автоматично видаляти СМС-повідомлення</string>
@@ -1057,13 +1051,13 @@
     <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="activity_type_strength_training">Силове тренування</string>
     <string name="dbmanagementactivity_export_finished">Видалення завершено</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Дійсно видалити файли з теки для експорту/імпорту?</string>
+    <string name="activity_DB_clean_export_directory_warning_message">Ви впевнені, що хочете видалити файли з теки для експорту/імпорту?</string>
     <string name="activity_DB_clean_export_directory_warning_title">Видалити файли з теки для експорту/імпорту?</string>
     <string name="activity_db_management_clean_export_directory_label">Видалити файли з теки для експорту/імпорту</string>
-    <string name="activity_DB_ShowContentButton">Показати вміст теки для експорту/імпорту</string>
-    <string name="activity_data_management_directory_content_title">Експорт/імпорт вмісту теки</string>
-    <string name="dbmanagementactivity_export_confirmation">Дійсно експортувати дані? Попередньо експортовані дані (якщо вони є) та налаштування будуть перезаписані.</string>
-    <string name="dbmanagementactivity_error_cleaning_export_directory">Помилка видалення файлів з теки для експорту %1$s</string>
+    <string name="activity_DB_ShowContentButton">Переглянути вміст теки для експорту/імпорту</string>
+    <string name="activity_data_management_directory_content_title">Вміст теки для експорту/імпорту</string>
+    <string name="dbmanagementactivity_export_confirmation">Ви впевнені, що хочете експортувати дані? Попередньо експортовані дані (якщо вони є) та налаштування будуть перезаписані.</string>
+    <string name="dbmanagementactivity_error_cleaning_export_directory">Помилка видалення файлів із теки для експорту %1$s</string>
     <string name="dbmanagementactivity_export_data_title">Експортувати дані\?</string>
     <string name="charts_legend_heartrate_average">Середній пульс</string>
     <string name="activity_prefs_chart_min_session_length">Найнижча тривалість діяльності (в хвилинах)</string>
@@ -1485,7 +1479,7 @@
     <string name="activity_db_management_autoexport_enabled_no">Автоекспорт не ввімкнено.</string>
     <string name="activity_db_management_autoexport_scheduled_no">Автоекспорт не заплановано.</string>
     <string name="autoExport_lastTime_label">Останній автоекспорт: %1$s</string>
-    <string name="activity_db_management_autoexport_location">Не вдалося встановити місцеперебування. Ймовірно, проблема з новішою системою дозволів Android. Швидше за все, автоекспорт зараз не працює.</string>
+    <string name="activity_db_management_autoexport_location">Не вдалося розпізнати місцеперебування. Імовірно, це пов\'язано з новішою системою дозволів Android. Швидше за все, автоекспорт зараз не працює.</string>
     <string name="watchface_dialog_pre_setting_position">попереднє встановлення розташування на %s</string>
     <string name="watchface_setting_light_up_on_notification">Засвітлювати за нового сповіщення</string>
     <string name="menuitem_email">Ел. пошта</string>
@@ -1872,7 +1866,7 @@
     <string name="prefs_always_on_display_style">Стиль</string>
     <string name="prefs_control_center">Центр керування</string>
     <string name="prefs_control_center_summary">Оберіть елементи в спадному списку центру керування</string>
-    <string name="activity_type_indoor_walking">Ходьба у приміщенні</string>
+    <string name="activity_type_indoor_walking">Ходьба в приміщенні</string>
     <string name="devicetype_amazfit_gtr4">Amazfit GTR 4</string>
     <string name="menuitem_volume">Гучність</string>
     <string name="pref_screen_auto_brightness_title">Автояскравість</string>
@@ -2505,7 +2499,7 @@
     <string name="activity_type_indoor_running">Біг у приміщенні</string>
     <string name="activity_type_crossfit">Кросфіт</string>
     <string name="activity_type_functional_training">Функціональне тренування</string>
-    <string name="activity_type_physical_training">Фізична підготовка</string>
+    <string name="activity_type_physical_training">Фізичне тренування</string>
     <string name="activity_type_taekwondo">Тхеквондо</string>
     <string name="activity_type_karate">Карате</string>
     <string name="activity_type_ballet">Балет</string>
@@ -2513,7 +2507,7 @@
     <string name="activity_type_stairs">Вправи на сходах</string>
     <string name="activity_type_karting">Картинг</string>
     <string name="activity_type_billiards">Більярд</string>
-    <string name="dnd_all_day">Весь день</string>
+    <string name="dnd_all_day">Увесь день</string>
     <string name="pref_header_audio">Аудіо</string>
     <string name="pref_header_generic">Загальні</string>
     <string name="pref_summary_notification_wake_on_open">Вмикати та розблоковувати Android пристрій, коли гаджет надсилає відповідь «ВІДКРИТО». Має бути в довіреному стані.</string>
@@ -2556,17 +2550,17 @@
     <string name="activity_type_aerobic_exercise">Аеробне тренування</string>
     <string name="activity_type_plank">Планка</string>
     <string name="activity_type_javelin">Метання спису</string>
-    <string name="activity_type_long_jump">Стрибки у довжину</string>
+    <string name="activity_type_long_jump">Стрибки в довжину</string>
     <string name="activity_type_trampoline">Вправи на батуті</string>
     <string name="activity_type_darts">Дартс</string>
-    <string name="activity_type_kite_flying">Запускання повітряного змія</string>
+    <string name="activity_type_kite_flying">Запуск повітряного змія</string>
     <string name="activity_type_hand_cycling">Вправи з хендбайком</string>
     <string name="activity_type_softball">Софтбол</string>
     <string name="activity_type_dodgeball">Вибивали</string>
-    <string name="activity_type_sailing">Вітрильник</string>
+    <string name="activity_type_sailing">Плавання на вітрильнику</string>
     <string name="activity_type_outdoor_walking">Ходьба надворі</string>
     <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity</string>
-    <string name="activity_type_rower">Веслування</string>
+    <string name="activity_type_rower">Гребний тренажер</string>
     <string name="activity_type_skating">Катання на ковзанах</string>
     <string name="activity_type_parallel_bar">Вправи на паралельних брусах</string>
     <string name="activity_type_cooldown">Розминка</string>
@@ -2599,7 +2593,7 @@
     <string name="activity_type_pull_ups">Підтягування</string>
     <string name="activity_type_dumbbell">Вправи з гантелями</string>
     <string name="activity_type_shot">Штовхання ядра</string>
-    <string name="activity_type_mind_and_body">Розум і тіло</string>
+    <string name="activity_type_mind_and_body">Розум та тіло</string>
     <string name="activity_type_kabaddi">Кабадді</string>
     <string name="activity_type_pickleball">Піклбол</string>
     <string name="activity_type_jet_skiing">Плавання на гідроциклі</string>
@@ -2614,7 +2608,7 @@
     <string name="activity_type_cross_training">Комплексне тренування</string>
     <string name="activity_type_fitness_gaming">Фітнес-ігри</string>
     <string name="activity_type_rolling">Кочення</string>
-    <string name="activity_type_cross_country_running">Крос</string>
+    <string name="activity_type_cross_country_running">Легкоатлетичний крос</string>
     <string name="activity_type_horizontal_bar">Вправи на перекладині</string>
     <string name="activity_type_hula_hooping">Вправи з обручем</string>
     <string name="activity_type_disc_sports">Вправи з фризбі</string>
@@ -2868,4 +2862,28 @@
     <string name="activity_prefs_goal_active_calories_burnt">Щоденна мета: спалення активних калорій</string>
     <string name="activity_prefs_goal_standing_hours">Щоденна мета: години стояння</string>
     <string name="serbian_latin">Сербська (латиницею)</string>
+    <string name="enhanced">Покращено</string>
+    <string name="activity_type_luge">Санний спорт</string>
+    <string name="activity_type_parachuting">Парашутизм</string>
+    <string name="activity_type_auto_racing">Автоперегони</string>
+    <string name="activity_type_navigate">Навігація</string>
+    <string name="activity_type_platform_tennis">Теніс на платформі</string>
+    <string name="notifications_dismiss_all">Відхилити всі</string>
+    <string name="activity_type_tae_bo">Тай-бо</string>
+    <string name="activity_type_american_football">Американський футбол</string>
+    <string name="activity_type_training">Тренування</string>
+    <string name="activity_type_breathwork">Дихальна гімнастика</string>
+    <string name="activity_type_gateball">Ґейтбол</string>
+    <string name="activity_type_e_bike">Електровелосипед</string>
+    <string name="copy_to_clipboard">Скопіювати</string>
+    <string name="activity_type_barbell">Вправи зі штангою</string>
+    <string name="activity_type_sepak_takraw">Сепак такро</string>
+    <string name="activity_type_cross_country_skiing">Крос на лижах</string>
+    <string name="activity_type_indoor_track">Бігова доріжка</string>
+    <string name="activity_type_handcycling">Їзда на хендбайку</string>
+    <string name="activity_type_bike_commute">Велопоїздка</string>
+    <string name="activity_type_handcycling_indoor">Їзда на хендбайку в приміщенні</string>
+    <string name="activity_type_transition">Перехід</string>
+    <string name="activity_type_fitness_equipment">Вправи зі спорядженням для фітнесу</string>
+    <string name="activity_type_cardio">Кардіо</string>
 </resources>
