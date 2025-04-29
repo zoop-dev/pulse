@@ -4053,4 +4053,5 @@
     <string name="restingCalories">Kalorie spoczynkowe</string>
     <string name="swim_style_butterfly">Motylek</string>
     <string name="metabolic_rate">Tempo metabolizmu</string>
+    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
 </resources>
