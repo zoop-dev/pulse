@@ -325,7 +325,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
                 HashMap<UUID, BluetoothGattCharacteristic> intmAvailableCharacteristics = new HashMap<>(characteristics.size());
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
                     intmAvailableCharacteristics.put(characteristic.getUuid(), characteristic);
-                    logger.info("    characteristic: {}: {}", BleNamesResolver.resolveCharacteristicName(characteristic.getUuid().toString()), characteristic.getUuid());
+                    logger.info("    characteristic: {}: {} ({})", BleNamesResolver.resolveCharacteristicName(characteristic.getUuid().toString()), characteristic.getUuid(), BleNamesResolver.getCharacteristicPropertyString(characteristic.getProperties()));
                 }
                 newCharacteristics.putAll(intmAvailableCharacteristics);
 

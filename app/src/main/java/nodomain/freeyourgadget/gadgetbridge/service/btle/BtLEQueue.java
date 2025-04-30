@@ -252,7 +252,7 @@ public final class BtLEQueue {
     public boolean connect() {
         mPauseTransaction = false;
         if (isConnected()) {
-            LOG.warn("Ingoring connect() because already connected.");
+            LOG.warn("Ignoring connect() because already connected.");
             return false;
         }
         synchronized (mGattMonitor) {
@@ -512,7 +512,7 @@ public final class BtLEQueue {
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            LOG.debug("connection state change, newState: {}{}", newState, getStatusString(status));
+            LOG.debug("connection state change, newState: {} {}", newState, BleNamesResolver.getStatusString(status));
 
             synchronized (mGattMonitor) {
                 if (mBluetoothGatt == null) {
@@ -530,7 +530,7 @@ public final class BtLEQueue {
 
             switch (newState) {
                 case BluetoothProfile.STATE_CONNECTED:
-                    LOG.info("Connected to GATT server.");
+                    LOG.info("Connected to GATT server. ({})", BleNamesResolver.getBondStateString(gatt.getDevice().getBondState()));
                     setDeviceConnectionState(State.CONNECTED);
                     // Attempts to discover services after successful connection.
                     List<BluetoothGattService> cachedServices = gatt.getServices();
@@ -563,7 +563,7 @@ public final class BtLEQueue {
 
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-            if (!checkCorrectGattInstance(gatt, "services discovered: " + getStatusString(status))) {
+            if (!checkCorrectGattInstance(gatt, "services discovered: " + BleNamesResolver.getStatusString(status))) {
                 return;
             }
 
@@ -582,7 +582,7 @@ public final class BtLEQueue {
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            LOG.debug("characteristic write: {}{}", characteristic.getUuid(), getStatusString(status));
+            LOG.debug("characteristic write: {} {}", characteristic.getUuid(), BleNamesResolver.getStatusString(status));
             if (!checkCorrectGattInstance(gatt, "characteristic write")) {
                 return;
             }
@@ -598,7 +598,7 @@ public final class BtLEQueue {
         public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
             super.onMtuChanged(gatt, mtu, status);
 
-            LOG.debug("mtu changed to {}{}", mtu, getStatusString(status));
+            LOG.debug("mtu changed to {} {}", mtu, BleNamesResolver.getStatusString(status));
 
             if(getCallbackToUse() != null){
                 getCallbackToUse().onMtuChanged(gatt, mtu, status);
@@ -614,9 +614,9 @@ public final class BtLEQueue {
                                          BluetoothGattCharacteristic characteristic,
                                          int status) {
             LOG.debug(
-                    "characteristic read: {}{}{}",
+                    "characteristic read: {} {} {}",
                     characteristic.getUuid(),
-                    getStatusString(status),
+                    BleNamesResolver.getStatusString(status),
                     status == BluetoothGatt.GATT_SUCCESS ? ": " + Logging.formatBytes(characteristic.getValue()) : ""
             );
             if (!checkCorrectGattInstance(gatt, "characteristic read")) {
@@ -634,7 +634,7 @@ public final class BtLEQueue {
 
         @Override
         public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-            LOG.debug("descriptor read: {}{}", descriptor.getUuid(), getStatusString(status));
+            LOG.debug("descriptor read: {} {}", descriptor.getUuid(), BleNamesResolver.getStatusString(status));
             if (!checkCorrectGattInstance(gatt, "descriptor read")) {
                 return;
             }
@@ -650,7 +650,7 @@ public final class BtLEQueue {
 
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-            LOG.debug("descriptor write: {}{}", descriptor.getUuid(), getStatusString(status));
+            LOG.debug("descriptor write: {} {}", descriptor.getUuid(), BleNamesResolver.getStatusString(status));
             if (!checkCorrectGattInstance(gatt, "descriptor write")) {
                 return;
             }
@@ -687,7 +687,7 @@ public final class BtLEQueue {
 
         @Override
         public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
-            LOG.debug("remote rssi: {}{}", rssi, getStatusString(status));
+            LOG.debug("remote rssi: {} {}", rssi, BleNamesResolver.getStatusString(status));
             if (!checkCorrectGattInstance(gatt, "remote rssi")) {
                 return;
             }
@@ -703,7 +703,7 @@ public final class BtLEQueue {
         private void checkWaitingCharacteristic(BluetoothGattCharacteristic characteristic, int status) {
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 if (characteristic != null) {
-                    LOG.debug("failed btle action, aborting transaction: {}{}", characteristic.getUuid(), getStatusString(status));
+                    LOG.debug("failed btle action, aborting transaction: {} {}", characteristic.getUuid(), BleNamesResolver.getStatusString(status));
                 }
                 mAbortTransaction = true;
             }
@@ -719,10 +719,6 @@ public final class BtLEQueue {
                     );
                 }
             }
-        }
-
-        private String getStatusString(int status) {
-            return status == BluetoothGatt.GATT_SUCCESS ? " (success)" : " (failed: " + status + ")";
         }
 
         public void reset() {
@@ -758,7 +754,7 @@ public final class BtLEQueue {
 
         @Override
         public void onConnectionStateChange(BluetoothDevice device, int status, int newState) {
-            LOG.debug("gatt server connection state change, newState: {}{}", newState, getStatusString(status));
+            LOG.debug("gatt server connection state change, newState: {} {}", newState, BleNamesResolver.getStatusString(status));
 
             if(!checkCorrectBluetoothDevice(device)) {
                 return;
@@ -767,10 +763,6 @@ public final class BtLEQueue {
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 LOG.warn("gatt server connection state event with error status {}", status);
             }
-        }
-
-        private String getStatusString(int status) {
-            return status == BluetoothGatt.GATT_SUCCESS ? " (success)" : " (failed: " + status + ")";
         }
 
         @Override

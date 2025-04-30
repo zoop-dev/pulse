@@ -397,10 +397,12 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
                         new HashMap<>(characteristics.size());
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
                     intmAvailableCharacteristics.put(characteristic.getUuid(), characteristic);
-                    logger.info("    characteristic: {}: {}",
+                    logger.info("    characteristic: {}: {} ({})",
                                 BleNamesResolver.resolveCharacteristicName(
                                         characteristic.getUuid().toString()),
-                                characteristic.getUuid());
+                                characteristic.getUuid(),
+                                BleNamesResolver.getCharacteristicPropertyString(
+                                        characteristic.getProperties()));
                 }
                 newCharacteristics.putAll(intmAvailableCharacteristics);
 

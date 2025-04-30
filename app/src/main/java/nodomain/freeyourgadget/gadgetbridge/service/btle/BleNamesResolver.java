@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.util.SparseArray;
 
 import java.util.HashMap;
@@ -69,6 +72,76 @@ public class BleNamesResolver {
 
     static public boolean isCharacteristic(final String uuid) {
         return mCharacteristics.containsKey(uuid);
+    }
+
+    static public String getBondStateString(int state) {
+        switch (state) {
+            case BluetoothDevice.BOND_NONE:
+                return "BOND_NONE";
+            case BluetoothDevice.BOND_BONDED:
+                return "BOND_BONDED";
+            case BluetoothDevice.BOND_BONDING:
+                return "BOND_BONDING";
+            default:
+                return "bond_" + state;
+        }
+    }
+
+    static public String getStatusString(int status) {
+        switch (status) {
+            case BluetoothGatt.GATT_SUCCESS:
+                return "SUCCESS";
+            case BluetoothGatt.GATT_READ_NOT_PERMITTED:
+                return "READ_NOT_PERMITTED";
+            case BluetoothGatt.GATT_WRITE_NOT_PERMITTED:
+                return "WRITE_NOT_PERMITTED";
+            case BluetoothGatt.GATT_INSUFFICIENT_AUTHENTICATION:
+                return "INSUFFICIENT_AUTHENTICATION";
+            case BluetoothGatt.GATT_REQUEST_NOT_SUPPORTED:
+                return "REQUEST_NOT_SUPPORTED";
+            case BluetoothGatt.GATT_INVALID_OFFSET:
+                return "INVALID_OFFSET";
+            case BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION:
+                return "INSUFFICIENT_AUTHORIZATION";
+            case BluetoothGatt.GATT_INVALID_ATTRIBUTE_LENGTH:
+                return "GATT_INVALID_ATTRIBUTE_LENGTH";
+            case BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION:
+                return "INSUFFICIENT_ENCRYPTION";
+            case BluetoothGatt.GATT_CONNECTION_CONGESTED:
+                return "CONNECTION_CONGESTED";
+            case BluetoothGatt.GATT_CONNECTION_TIMEOUT:
+                return "CONNECTION_TIMEOUT";
+            case BluetoothGatt.GATT_FAILURE:
+                return "FAILURE";
+            default:
+                return "failed_" + status;
+        }
+    }
+
+    static public String getCharacteristicPropertyString(int property) {
+        StringBuilder builder = new StringBuilder();
+        if (BluetoothGattCharacteristic.PROPERTY_BROADCAST == (BluetoothGattCharacteristic.PROPERTY_BROADCAST & property)) {
+            builder.append("broadcast,");
+        }
+        if (BluetoothGattCharacteristic.PROPERTY_READ == (BluetoothGattCharacteristic.PROPERTY_READ & property)) {
+            builder.append("read,");
+        }
+        if (BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE == (BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE & property)) {
+            builder.append("writeNoResponse,");
+        }
+        if (BluetoothGattCharacteristic.PROPERTY_WRITE == (BluetoothGattCharacteristic.PROPERTY_WRITE & property)) {
+            builder.append("write,");
+        }
+        if (BluetoothGattCharacteristic.PROPERTY_NOTIFY == (BluetoothGattCharacteristic.PROPERTY_NOTIFY & property)) {
+            builder.append("notify,");
+        }
+        if (BluetoothGattCharacteristic.PROPERTY_INDICATE == (BluetoothGattCharacteristic.PROPERTY_INDICATE & property)) {
+            builder.append("indicate,");
+        }
+        if (builder.length() > 0) {
+            builder.setLength(builder.length() - 1);
+        }
+        return builder.toString();
     }
 
     static {
