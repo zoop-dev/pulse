@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitUserProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class GarminWorkoutParser implements ActivitySummaryParser {
     private static final Logger LOG = LoggerFactory.getLogger(GarminWorkoutParser.class);
@@ -170,7 +171,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         final ActivityKind activityKind;
         if (sport != null) {
-            summary.setName(sport.getName());
+            if (StringUtils.isNullOrEmpty(summary.getName())) {
+                summary.setName(sport.getName());
+            }
             activityKind = getActivityKind(sport.getSport(), sport.getSubSport());
         } else {
             activityKind = getActivityKind(session.getSport(), session.getSubSport());
