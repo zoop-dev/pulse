@@ -26,6 +26,7 @@ import android.os.Build;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.GattDescriptor.UUID_DESCRIPTOR_GATT_CLIENT_CHARACTERISTIC_CONFIGURATION;
@@ -62,7 +63,7 @@ public class NotifyAction extends BtLEAction {
 
         final String charUuid = descriptor.getCharacteristic().getUuid().toString();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (GBApplication.isRunningTiramisuOrLater()) {
             // use API introduced in SDK level 33 to catch exceptions and more specific errors
             try {
                 final int result = gatt.writeDescriptor(descriptor, value);

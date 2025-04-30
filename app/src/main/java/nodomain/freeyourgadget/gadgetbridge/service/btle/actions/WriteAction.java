@@ -1,5 +1,5 @@
 /*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, José Rebelo, Uwe Hermann
+    Gobbetti, José Rebelo, Uwe Hermann, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -17,13 +17,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothStatusCodes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
@@ -50,13 +53,31 @@ public class WriteAction extends BtLEAction {
         if ((properties & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0 || ((properties & BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0)) {
             return writeValue(gatt, characteristic, value);
         }
+
+        LOG.error("WriteAction for non-writeable characteristic {}", characteristic.getUuid());
         return false;
     }
 
+    @SuppressLint("MissingPermission")
     protected boolean writeValue(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("writing to characteristic: " + characteristic.getUuid() + ": " + Logging.formatBytes(value));
+            LOG.debug("writing to characteristic: {} : {}", characteristic.getUuid(), Logging.formatBytes(value));
         }
+
+        if (GBApplication.isRunningTiramisuOrLater()) {
+            // use API introduced in SDK level 33 to catch exceptions and more specific errors
+            try {
+                final int status = gatt.writeCharacteristic(characteristic, value, characteristic.getWriteType());
+                if (status == BluetoothStatusCodes.SUCCESS) {
+                    return true;
+                }
+                LOG.error("writing to characteristic {} failed: BluetoothStatusCode={}", characteristic.getUuid(), status);
+            } catch (Exception e) {
+                LOG.error("writing to characteristic {} failed with ", characteristic.getUuid(), e);
+            }
+            return false;
+        }
+
         if (characteristic.setValue(value)) {
             return gatt.writeCharacteristic(characteristic);
         }
