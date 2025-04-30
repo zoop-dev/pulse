@@ -4034,4 +4034,5 @@
     <string name="workout_swings">秋千</string>
     <string name="workout_intervals">间隔</string>
     <string name="metabolic_rate">代谢率</string>
+    <string name="devicetype_garmin_instinct_2x_tactical">佳明 Instinct 2X Tactical</string>
 </resources>
