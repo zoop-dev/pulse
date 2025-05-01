@@ -1242,13 +1242,14 @@ public class DebugActivity extends AbstractGBActivity {
                 name += " (" + coordinator.getManufacturer() + ")";
             }
             long deviceId = deviceType.ordinal();
-            newMap.put(name, new Pair(deviceId, icon));
+            newMap.put(name, new Pair<>(deviceId, icon));
         }
-        TreeMap <String, Pair<Long, Integer>> sortedMap = new TreeMap<>(newMap);
+        TreeMap <String, Pair<Long, Integer>> sortedMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        sortedMap.putAll(newMap);
         newMap = new LinkedHashMap<>(1);
-        newMap.put(app.getString(R.string.widget_settings_select_device_title), new Pair(SELECT_DEVICE, R.drawable.ic_device_unknown));
-        newMap.put(app.getString(R.string.devicetype_scannable), new Pair((long) DeviceType.SCANNABLE.ordinal(), R.drawable.ic_device_scannable));
-        newMap.put(app.getString(R.string.devicetype_ble_gatt_client), new Pair((long) DeviceType.BLE_GATT_CLIENT.ordinal(), R.drawable.ic_device_scannable));
+        newMap.put(app.getString(R.string.widget_settings_select_device_title), new Pair<>(SELECT_DEVICE, R.drawable.ic_device_unknown));
+        newMap.put(app.getString(R.string.devicetype_scannable), new Pair<>((long) DeviceType.SCANNABLE.ordinal(), R.drawable.ic_device_scannable));
+        newMap.put(app.getString(R.string.devicetype_ble_gatt_client), new Pair<>((long) DeviceType.BLE_GATT_CLIENT.ordinal(), R.drawable.ic_device_scannable));
 
         newMap.putAll(sortedMap);
 
