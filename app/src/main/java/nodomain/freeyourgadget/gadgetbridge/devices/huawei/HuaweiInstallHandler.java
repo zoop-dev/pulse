@@ -120,8 +120,7 @@ public class HuaweiInstallHandler implements InstallHandler {
             this.valid = true; //NOTE: nothing to verify for now
 
             if (device.isBusy()) {
-                LOG.error("Firmware cannot be uploaded (device busy)");
-                installActivity.setInfoText("Firmware cannot be uploaded (device busy)");
+                installActivity.setInfoText(device.getBusyTask());
                 installActivity.setInstallEnabled(false);
                 return;
             }
@@ -153,7 +152,6 @@ public class HuaweiInstallHandler implements InstallHandler {
 
             installActivity.setInstallEnabled(true);
 
-
             LOG.debug("Initialized HuaweiInstallHandler: Firmware");
             return;
         }
@@ -179,8 +177,6 @@ public class HuaweiInstallHandler implements InstallHandler {
             installItem.setName(description.title);
             installActivity.setInstallItem(installItem);
             if (device.isBusy()) {
-                LOG.error("Watchface cannot be installed (device busy)");
-                installActivity.setInfoText("Watchface cannot be installed (device busy)");
                 installActivity.setInfoText(device.getBusyTask());
                 installActivity.setInstallEnabled(false);
                 return;
@@ -223,8 +219,6 @@ public class HuaweiInstallHandler implements InstallHandler {
             installItem.setName(config.bundleName);
             installActivity.setInstallItem(installItem);
             if (device.isBusy()) {
-                LOG.error("App cannot be installed (device busy)");
-                installActivity.setInfoText("App cannot be installed (device busy)");
                 installActivity.setInfoText(device.getBusyTask());
                 installActivity.setInstallEnabled(false);
                 return;
@@ -270,8 +264,6 @@ public class HuaweiInstallHandler implements InstallHandler {
             installItem.setName(helper.getFileName());
             installActivity.setInstallItem(installItem);
             if (device.isBusy()) {
-                LOG.error("Music cannot be uploaded (device busy)");
-                installActivity.setInfoText("Music cannot be uploaded (device busy)");
                 installActivity.setInfoText(device.getBusyTask());
                 installActivity.setInstallEnabled(false);
                 return;
