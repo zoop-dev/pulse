@@ -4032,4 +4032,15 @@
     <string name="swim_style_mixed">Smíšený</string>
     <string name="metabolic_rate">Rychlost metabolismu</string>
     <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
+    <string name="ultrahuman_breathing_title">Dýchání</string>
+    <string name="notifications_app_icon_nothing_selected">Vyberte alespoň jednu aplikaci k nahrání</string>
+    <string name="notifications_app_icon_uploading_confirm_description">Opravdu chcete nahrát %1$d ikon aplikací?</string>
+    <string name="notifications_app_icon_upload">Nahrát ikonu notifikační aplikace</string>
+    <string name="notifications_app_icon_upload_to_device">Nahrát do zařízení</string>
+    <string name="notifications_app_icon_uploading">Ikony budou nahrány na pozadí. Tuto aktivitu můžete uzavřít</string>
+    <string name="pref_notifications_app_icon_upload_title">Nahrát ikony notifikačních aplikací</string>
+    <string name="pref_notifications_app_icon_upload_summary">Nahrát ikony notifikačních aplikací do zařízení</string>
+    <string name="notifications_app_icon_info">Vyberte aplikace a stiskněte Nahrát do zařízení. Jakékoli dříve nahrané ikony mohou být nahrazeny. Aktuální omezení zařízení nejsou známa.</string>
+    <string name="ultrahuman_breathing_start">Spustit</string>
+    <string name="ultrahuman_breathing_stop">Zastavit</string>
 </resources>
