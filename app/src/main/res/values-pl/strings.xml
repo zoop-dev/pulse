@@ -4065,4 +4065,11 @@
     <string name="notifications_app_icon_upload_to_device">Prześlij do urządzenia</string>
     <string name="notifications_app_icon_info">Wybierz aplikacje i naciśnij przycisk Prześlij do urządzenia. Wszelkie wcześniej przesłane ikony mogą zostać zastąpione. Aktualne ograniczenia urządzenia nie są znane.</string>
     <string name="notifications_app_icon_uploading">Ikony zostaną przesłane w tle. Możesz zamknąć tę aktywność</string>
+    <string name="pref_huawei_activity_reminder_stand_title">Stać</string>
+    <string name="pref_huawei_activity_reminder_progress_summary">Otrzymuj przypomnienia o postępach Activity Ring</string>
+    <string name="pref_huawei_activity_reminder_stand_summary">Przypomnienie o wstaniu, jeśli nie wstałeś w ciągu 1 godziny</string>
+    <string name="pref_huawei_activity_reminder_progress_title">Postęp</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_title">Cel osiągnięty</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">Otrzymaj przypomnienie po ukończeniu pierścieni</string>
+    <string name="pref_huawei_activity_reminders">Przypomnienia o aktywności</string>
 </resources>
