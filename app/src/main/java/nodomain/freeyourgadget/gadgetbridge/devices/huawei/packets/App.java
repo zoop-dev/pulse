@@ -26,36 +26,33 @@ public class App {
     public static final byte id = 0x2a;
 
     public static class AppDeviceParams {
-        public byte unknown1 = 0;
-        public int unknown2 = 0;
+        public byte type = 0;
+        public int osApiLevel = 0;
         public String osVersion = "";
         public String screenShape = "";
         public int width = 0;
         public int height = 0;
-        public int unknown3 = 0;
+        public int buildLevel = 0;
         public String buildType = "";
     }
 
     public static class InstalledAppInfo {
         public String packageName;
         public String version;
-        public int unknown1;
+        public int size;
         public String appName;
-        public int unknown2;
+        public int appTime;
         public int versionCode;
-        public byte unknown4;
-        public byte unknown6;
+        public byte packageType;
 
         public InstalledAppInfo(HuaweiTLV tlv) throws HuaweiPacket.MissingTagException {
             this.packageName = tlv.getString(0x03);
             this.version = tlv.getString(0x04);
-            this.unknown1 = tlv.getInteger(0x05);
+            this.size = tlv.getInteger(0x05); // Most devices returns 0
             this.appName =  tlv.getString(0x06);
-            this.unknown2 = tlv.getInteger(0x07);
+            this.appTime = tlv.getInteger(0x07); // Most devices returns 0
             this.versionCode = tlv.getInteger(0x09);
-            this.unknown4 = tlv.getByte(0x0a);
-            //{tag: b - Value: } -
-            this.unknown6 = tlv.getByte(0x0d);
+            this.packageType = tlv.getByte(0x0d);
         }
     }
 
@@ -139,8 +136,8 @@ public class App {
             public void parseTlv() throws ParseException {
                 if(this.tlv.contains(0x81)) {
                     HuaweiTLV subTlv = this.tlv.getObject(0x81).getObject(0x82);
-                    this.params.unknown1 = subTlv.getByte(0x03);
-                    this.params.unknown2 = subTlv.getInteger(0x04);
+                    this.params.type = subTlv.getByte(0x03); // 38 - liteWearable
+                    this.params.osApiLevel = subTlv.getInteger(0x04);
                     this.params.osVersion = subTlv.getString(0x05);
                     if (subTlv.contains(0x06))
                         this.params.screenShape = subTlv.getString(0x06);
@@ -149,7 +146,7 @@ public class App {
                     if (subTlv.contains(0x08))
                         this.params.height = subTlv.getShort(0x08);
                     if (subTlv.contains(0x09))
-                        this.params.unknown3 = subTlv.getInteger(0x09);
+                        this.params.buildLevel = subTlv.getInteger(0x09);
                     if(subTlv.contains(0x0a))
                         this.params.buildType = subTlv.getString(0x0a);
                 }

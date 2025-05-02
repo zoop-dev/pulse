@@ -68,7 +68,7 @@ public class HuaweiBinAppParser {
         return newPayload;
     }
 
-    private String readStringInternal(ByteBuffer data, int len) throws Exception {
+    private String readStringInternal(ByteBuffer data, int len) {
         byte[] newPayload = new byte[len];
         data.get(newPayload, 0, len);
         return new String(newPayload, StandardCharsets.UTF_8);
