@@ -3845,4 +3845,11 @@
     <string name="notifications_app_icon_info">Válassza ki az alkalmazásokat, és nyomja meg a „Feltöltés az eszközre” gombot. A korábban feltöltött ikonok helyettesíthetők. Az eszköz jelenlegi korlátai ismeretlenek.</string>
     <string name="ultrahuman_breathing_title">Légzés</string>
     <string name="notifications_app_icon_nothing_selected">Válasszon ki legalább egy alkalmazást a feltöltéshez</string>
+    <string name="pref_huawei_activity_reminders">Tevékenységi emlékeztetők</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">Kapjon emlékeztetőt, ha teljesítette a gyűrűket</string>
+    <string name="pref_huawei_activity_reminder_progress_title">Folyamat</string>
+    <string name="pref_huawei_activity_reminder_stand_title">Tétlenség</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_title">Cél elérve</string>
+    <string name="pref_huawei_activity_reminder_stand_summary">Kapjon emlékeztetőt a mozgásról, ha egy órája nem mozgott</string>
+    <string name="pref_huawei_activity_reminder_progress_summary">Kapjon emlékeztetőt a tevékenységi gyűrűk előrehaladásáról</string>
 </resources>
