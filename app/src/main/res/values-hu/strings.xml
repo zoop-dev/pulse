@@ -3834,4 +3834,15 @@
     <string name="restingCalories">Nyugalmi kalóriák</string>
     <string name="metabolic_rate">Alapanyagcsere</string>
     <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
+    <string name="notifications_app_icon_uploading">Az ikonok a háttérben kerülnek feltöltésre. Ezt a tevékenységet bezárhatja</string>
+    <string name="notifications_app_icon_uploading_confirm_description">Biztos, hogy %1$d alkalmazás ikonokat szeretne feltölteni?</string>
+    <string name="pref_notifications_app_icon_upload_title">Értesítési alkalmazások ikonjainak feltöltése</string>
+    <string name="notifications_app_icon_upload">Értesítési alkalmazás ikonjának feltöltése</string>
+    <string name="ultrahuman_breathing_start">Indítás</string>
+    <string name="ultrahuman_breathing_stop">Megállítás</string>
+    <string name="pref_notifications_app_icon_upload_summary">Értesítési alkalmazás ikonok feltöltése az eszközre</string>
+    <string name="notifications_app_icon_upload_to_device">Feltöltés az eszközre</string>
+    <string name="notifications_app_icon_info">Válassza ki az alkalmazásokat, és nyomja meg a „Feltöltés az eszközre” gombot. A korábban feltöltött ikonok helyettesíthetők. Az eszköz jelenlegi korlátai ismeretlenek.</string>
+    <string name="ultrahuman_breathing_title">Légzés</string>
+    <string name="notifications_app_icon_nothing_selected">Válasszon ki legalább egy alkalmazást a feltöltéshez</string>
 </resources>
