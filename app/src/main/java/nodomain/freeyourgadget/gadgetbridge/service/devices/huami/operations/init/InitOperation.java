@@ -114,19 +114,19 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
         if (!HuamiService.UUID_CHARACTERISTIC_AUTH.equals(characteristicUUID)) {
             LOG.info("Unhandled characteristic changed: {}", characteristicUUID);
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, value);
         }
 
         try {
-            final byte[] value = characteristic.getValue();
             huamiSupport.logMessageContent(value);
             if (value[0] != HuamiService.AUTH_RESPONSE) {
                 LOG.warn("Got a non-response: {}", GB.hexdump(value));
-                return super.onCharacteristicChanged(gatt, characteristic);
+                return super.onCharacteristicChanged(gatt, characteristic, value);
             }
 
             if (value[1] == HuamiService.AUTH_SEND_KEY && value[2] == HuamiService.AUTH_SUCCESS) {
@@ -161,10 +161,10 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
                         GBApplication.deviceService(device).disconnect();
                     }
                 } else {
-                    return super.onCharacteristicChanged(gatt, characteristic);
+                    return super.onCharacteristicChanged(gatt, characteristic, value);
                 }
             } else {
-                return super.onCharacteristicChanged(gatt, characteristic);
+                return super.onCharacteristicChanged(gatt, characteristic, value);
             }
         } catch (Exception e) {
             GB.toast(getContext(), "Error authenticating Huami device", Toast.LENGTH_LONG, GB.ERROR, e);

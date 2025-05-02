@@ -658,9 +658,8 @@ public class LefunDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] data) {
         if (characteristic.getUuid().equals(LefunConstants.UUID_CHARACTERISTIC_LEFUN_NOTIFY)) {
-            byte[] data = characteristic.getValue();
             // Parse response
             if (data.length >= LefunConstants.CMD_HEADER_LENGTH && data[0] == LefunConstants.CMD_RESPONSE_ID) {
                 // Note: full validation is done within the request
@@ -693,7 +692,7 @@ public class LefunDeviceSupport extends AbstractBTLEDeviceSupport {
             return false;
         }
 
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, data);
     }
 
     /**

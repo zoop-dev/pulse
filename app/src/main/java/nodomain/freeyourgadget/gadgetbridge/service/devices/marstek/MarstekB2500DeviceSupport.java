@@ -75,10 +75,8 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
-
-        byte[] value = characteristic.getValue();
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         if (value[0] == COMMAND_PREFIX) {
             if ((value[1] == 0x10) && (value[2] == COMMAND) && (value[3] == OPCODE_INFO1)) {

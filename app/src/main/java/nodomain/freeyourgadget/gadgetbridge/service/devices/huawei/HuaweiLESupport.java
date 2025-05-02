@@ -78,8 +78,8 @@ public class HuaweiLESupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        supportProvider.onCharacteristicChanged(characteristic);
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] data) {
+        supportProvider.onCharacteristicChanged(characteristic, data);
         return true;
     }
 

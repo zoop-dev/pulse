@@ -164,16 +164,15 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] receivedData) {
+        if (super.onCharacteristicChanged(gatt, characteristic, receivedData)) {
             return true;
         }
 
         if (!characteristic.getUuid().equals(HamaFit6900Constants.UUID_CHARACTERISTIC_RX)) {
             return false;
         }
-
-        byte[] receivedData = characteristic.getValue();
 
         Message.CommandMessage cmdMsg = Message.decodeCommandMessage(receivedData);
         if (cmdMsg == null) {

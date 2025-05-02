@@ -85,13 +85,13 @@ public class SuperCarsSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] byte_data) {
+        if (super.onCharacteristicChanged(gatt, characteristic, byte_data)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] byte_data = characteristic.getValue();
         LOG.debug("got characteristics: " + characteristicUUID);
         /*
         //keep here for now. This requires descriptor reading

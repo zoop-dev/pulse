@@ -149,8 +149,7 @@ public class CyclingSensorSupport extends CyclingSensorBaseSupport {
         return builder;
     }
 
-    private void handleMeasurementCharacteristic(BluetoothGattCharacteristic characteristic){
-        byte[] value = characteristic.getValue();
+    private void handleMeasurementCharacteristic(byte[] value){
         if(value == null || value.length < 7){
             logger.error("Measurement characteristic value length smaller than 7");
             return;
@@ -245,12 +244,10 @@ public class CyclingSensorSupport extends CyclingSensorBaseSupport {
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-        byte[] value = characteristic.getValue();
-
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if(characteristic.equals(batteryCharacteristic) && value != null && value.length == 1){
             GBDeviceEventBatteryInfo info = new GBDeviceEventBatteryInfo();
-            info.level = characteristic.getValue()[0];
+            info.level = value[0];
             handleGBDeviceEvent(info);
         }
 
@@ -258,9 +255,9 @@ public class CyclingSensorSupport extends CyclingSensorBaseSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if(characteristic.getUuid().equals(UUID_CYCLING_SENSOR_CSC_MEASUREMENT)){
-            handleMeasurementCharacteristic(characteristic);
+            handleMeasurementCharacteristic(value);
             return true;
         }
         return false;

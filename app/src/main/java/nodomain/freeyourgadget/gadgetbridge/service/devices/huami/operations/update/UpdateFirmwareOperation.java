@@ -110,13 +110,14 @@ public class UpdateFirmwareOperation extends AbstractMiBandOperation<HuamiSuppor
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
         if (fwCControlChar.getUuid().equals(characteristicUUID)) {
-            handleNotificationNotif(characteristic.getValue());
+            handleNotificationNotif(value);
             return true; // don't let anyone else handle it
         } else {
-            super.onCharacteristicChanged(gatt, characteristic);
+            super.onCharacteristicChanged(gatt, characteristic, value);
         }
         return false;
     }

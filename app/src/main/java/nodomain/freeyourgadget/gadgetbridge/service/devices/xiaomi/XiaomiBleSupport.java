@@ -181,13 +181,12 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
         }
 
         @Override
-        public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
-            if (super.onCharacteristicChanged(gatt, characteristic)) {
+        public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final byte[] value) {
+            if (super.onCharacteristicChanged(gatt, characteristic, value)) {
                 return true;
             }
 
             final UUID characteristicUUID = characteristic.getUuid();
-            final byte[] value = characteristic.getValue();
 
             if (characteristicCommandRead.getCharacteristicUUID().equals(characteristicUUID)) {
                 characteristicCommandRead.onCharacteristicChanged(value);

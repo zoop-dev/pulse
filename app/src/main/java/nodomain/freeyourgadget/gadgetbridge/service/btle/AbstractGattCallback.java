@@ -33,7 +33,7 @@ public abstract class AbstractGattCallback implements GattCallback {
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         return false;
     }
 
@@ -43,7 +43,7 @@ public abstract class AbstractGattCallback implements GattCallback {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         return false;
     }
 

@@ -123,7 +123,7 @@ public class BleIntentApi {
         return intentApiEnabledReadWrite | intentApiEnabledNotifications | intentApiEnabledDeviceState;
     }
 
-    public void onCharacteristicChanged(BluetoothGattCharacteristic characteristic) {
+    public void onCharacteristicChanged(BluetoothGattCharacteristic characteristic, byte[] value) {
         if(!intentApiEnabledNotifications) {
             return;
         }
@@ -135,7 +135,7 @@ public class BleIntentApi {
             intent.setPackage(intentApiPackage);
         }
         intent.putExtra("EXTRA_CHARACTERISTIC", characteristic.getUuid().toString());
-        intent.putExtra("EXTRA_PAYLOAD", StringUtils.bytesToHex(characteristic.getValue()));
+        intent.putExtra("EXTRA_PAYLOAD", StringUtils.bytesToHex(value));
 
         getContext().sendBroadcast(intent);
     }

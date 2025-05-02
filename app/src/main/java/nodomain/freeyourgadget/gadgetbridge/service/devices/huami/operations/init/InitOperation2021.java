@@ -93,17 +93,17 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           final byte[] value) {
         final UUID characteristicUUID = characteristic.getUuid();
         if (!HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_READ.equals(characteristicUUID)) {
             LOG.warn("Unhandled characteristic changed: {}", characteristicUUID);
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, value);
         }
 
-        final byte[] value = characteristic.getValue();
         if (value.length <= 1 || value[0] != 0x03) {
             // Not chunked
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, value);
         }
 
         final boolean needsAck = huami2021ChunkedDecoder.decode(value);

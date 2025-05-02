@@ -137,15 +137,15 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] data,
+                                        int status) {
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
 
         if(data.length == 0)
             return true;
 
-        return super.onCharacteristicRead(gatt, characteristic, status);
+        return super.onCharacteristicRead(gatt, characteristic, data, status);
     }
 
     public CasioGBX100ActivitySample getSumWithinRange(int timestamp_from, int timestamp_to) {
@@ -211,9 +211,9 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
         if (data.length == 0)
             return true;
 
@@ -240,7 +240,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
         }
 
         LOG.info("Unhandled characteristic change: " + characteristicUUID + " code: " + String.format("0x%1x ...", data[0]));
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, data);
     }
 
     public void syncProfile() {

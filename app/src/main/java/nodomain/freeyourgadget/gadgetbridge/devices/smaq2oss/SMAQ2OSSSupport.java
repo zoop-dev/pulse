@@ -79,12 +79,13 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
         if (SMAQ2OSSConstants.UUID_CHARACTERISTIC_NOTIFY_NORMAL.equals(characteristicUUID)) {
-            handleDeviceEvent(characteristic.getValue());
+            handleDeviceEvent(value);
         }
         return true;
     }

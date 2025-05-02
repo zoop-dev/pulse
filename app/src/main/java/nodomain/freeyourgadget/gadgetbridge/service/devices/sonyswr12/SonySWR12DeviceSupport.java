@@ -156,18 +156,18 @@ public class SonySWR12DeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-        return super.onCharacteristicRead(gatt, characteristic, status);
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
+        return super.onCharacteristicRead(gatt, characteristic, value, status);
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic))
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value))
             return true;
         UUID uuid = characteristic.getUuid();
         if (uuid.equals(SonySWR12Constants.UUID_CHARACTERISTIC_EVENT)) {
             try {
-                EventBase event = EventFactory.readEventFromByteArray(characteristic.getValue());
+                EventBase event = EventFactory.readEventFromByteArray(value);
                 getProcessor().process(event);
             } catch (Exception e) {
                 return false;

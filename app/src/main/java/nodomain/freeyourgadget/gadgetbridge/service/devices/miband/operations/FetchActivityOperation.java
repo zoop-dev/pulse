@@ -185,13 +185,14 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
         if (MiBandService.UUID_CHARACTERISTIC_ACTIVITY_DATA.equals(characteristicUUID)) {
-            handleActivityNotif(characteristic.getValue());
+            handleActivityNotif(value);
             return true;
         } else {
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, value);
         }
     }
 

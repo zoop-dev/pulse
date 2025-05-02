@@ -39,11 +39,11 @@ public abstract class AbstractGattListenerWriteAction extends WriteAction implem
     public GattCallback getGattCallback() {
         return new AbstractGattCallback() {
             @Override
-            public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-                return AbstractGattListenerWriteAction.this.onCharacteristicChanged(gatt, characteristic);
+            public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+                return AbstractGattListenerWriteAction.this.onCharacteristicChanged(gatt, characteristic, value);
             }
         };
     }
 
-    protected abstract boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic);
+    protected abstract boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value);
 }

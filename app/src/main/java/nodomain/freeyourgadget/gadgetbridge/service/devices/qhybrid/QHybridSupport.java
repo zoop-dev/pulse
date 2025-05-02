@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
@@ -747,10 +748,10 @@ public class QHybridSupport extends QHybridBaseSupport {
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         switch (characteristic.getUuid().toString()) {
             case "00002a26-0000-1000-8000-00805f9b34fb": {
-                String firmwareVersion = characteristic.getStringValue(0);
+                String firmwareVersion = BLETypeConversions.getStringValue(value, 0);
                 gbDevice.setFirmwareVersion(firmwareVersion);
 
                 Matcher matcher = Pattern
@@ -766,7 +767,7 @@ public class QHybridSupport extends QHybridBaseSupport {
                 break;
             }
             case "00002a24-0000-1000-8000-00805f9b34fb": {
-                String modelNumber = characteristic.getStringValue(0);
+                String modelNumber = BLETypeConversions.getStringValue(value, 0);
                 gbDevice.setModel(modelNumber);
                 gbDevice.setName(watchAdapter.getModelName());
                 try {
@@ -779,7 +780,7 @@ public class QHybridSupport extends QHybridBaseSupport {
                 break;
             }
             case "00002a19-0000-1000-8000-00805f9b34fb": {
-                short level = characteristic.getValue()[0];
+                short level = value[0];
                 gbDevice.setBatteryLevel(level);
 
                 GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
@@ -796,9 +797,9 @@ public class QHybridSupport extends QHybridBaseSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic
-            characteristic) {
-        if(watchAdapter == null) return super.onCharacteristicChanged(gatt, characteristic);
-        return watchAdapter.onCharacteristicChanged(gatt, characteristic);
+            characteristic, byte[] value) {
+        if(watchAdapter == null) return super.onCharacteristicChanged(gatt, characteristic, value);
+        return watchAdapter.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     @Override

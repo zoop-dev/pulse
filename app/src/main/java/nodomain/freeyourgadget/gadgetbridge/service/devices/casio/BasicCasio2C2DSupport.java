@@ -91,9 +91,9 @@ public abstract class BasicCasio2C2DSupport extends Casio2C2DSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
         if (data.length == 0)
             return true;
 
@@ -109,6 +109,6 @@ public abstract class BasicCasio2C2DSupport extends Casio2C2DSupport {
                 return true;
             }
         }
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, data);
     }
 }

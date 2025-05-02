@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
@@ -60,16 +61,15 @@ public class HeartRateProfile<T extends AbstractBTLEDeviceSupport> extends Abstr
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
             int flag = characteristic.getProperties();
-            int format = -1;
+            final int heartRate;
             if ((flag & 0x01) != 0) {
-                format = BluetoothGattCharacteristic.FORMAT_UINT16;
+                heartRate = BLETypeConversions.toUint16(value, 1);
             } else {
-                format = BluetoothGattCharacteristic.FORMAT_UINT8;
+                heartRate = BLETypeConversions.toUnsigned(value, 1);
             }
-            final int heartRate = characteristic.getIntValue(format, 1);
             LOG.info("Heart rate: " + heartRate);
         }
         return false;

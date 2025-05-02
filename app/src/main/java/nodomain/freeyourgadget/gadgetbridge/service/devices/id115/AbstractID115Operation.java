@@ -72,13 +72,14 @@ public abstract class AbstractID115Operation extends AbstractBTLEOperation<ID115
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
         if (notifyCharacteristic.getUuid().equals(characteristicUUID)) {
-            handleResponse(characteristic.getValue());
+            handleResponse(value);
             return true;
         } else {
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, value);
         }
     }
 

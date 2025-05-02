@@ -125,13 +125,13 @@ public class CommunicatorV2 implements ICommunicator {
     }
 
     @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final byte[] value) {
         if (!characteristic.getUuid().equals(characteristicReceive.getUuid())) {
             // Not ML
             return false;
         }
 
-        final ByteBuffer message = ByteBuffer.wrap(characteristic.getValue()).order(ByteOrder.LITTLE_ENDIAN);
+        final ByteBuffer message = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
         final byte handle = message.get();
 
         if (0x00 == handle) {
@@ -151,7 +151,7 @@ public class CommunicatorV2 implements ICommunicator {
         } else if (this.realtimeHrvHandle == handle) {
             processRealtimeHrv(message);
         } else {
-            LOG.warn("Got message for unknown handle {}: {}", handle, GB.hexdump(characteristic.getValue()));
+            LOG.warn("Got message for unknown handle {}: {}", handle, GB.hexdump(value));
         }
 
         return true;

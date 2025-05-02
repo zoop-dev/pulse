@@ -379,10 +379,10 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] data,
+                                        int status) {
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
 
         if(data.length == 0)
             return true;
@@ -395,7 +395,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
             LOG.info(str.toString());
         }
         else {
-            return super.onCharacteristicRead(gatt, characteristic, status);
+            return super.onCharacteristicRead(gatt, characteristic, data, status);
         }
 
         return true;
@@ -403,11 +403,11 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
         boolean handled = false;
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
         if (data.length == 0)
             return true;
 
@@ -443,7 +443,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
 
         if(!handled) {
             LOG.info("Unhandled characteristic change: " + characteristicUUID + " code: " + String.format("0x%1x ...", data[0]));
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, data);
         }
         return true;
     }

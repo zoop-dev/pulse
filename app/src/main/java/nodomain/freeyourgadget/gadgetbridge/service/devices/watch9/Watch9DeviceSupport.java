@@ -395,12 +395,12 @@ public class Watch9DeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
         if (Watch9Constants.UUID_CHARACTERISTIC_WRITE.equals(characteristicUUID)) {
-            byte[] value = characteristic.getValue();
             if (ArrayUtils.equals(value, Watch9Constants.RESP_FIRMWARE_INFO, 5)) {
                 handleFirmwareInfo(value);
             } else if (ArrayUtils.equals(value, Watch9Constants.RESP_BATTERY_INFO, 5)) {
@@ -419,7 +419,7 @@ public class Watch9DeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         } else {
             LOG.info("Unhandled characteristic changed: " + characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
 
         return false;

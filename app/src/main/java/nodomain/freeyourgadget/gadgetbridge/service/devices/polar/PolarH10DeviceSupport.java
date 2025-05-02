@@ -97,13 +97,13 @@ public class PolarH10DeviceSupport extends AbstractBTLEDeviceSupport {
         return builder;
     }
 
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+    @Override
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] value = characteristic.getValue();
 
         if (characteristicUUID.equals(UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT)) {
             int heartrate = Byte.toUnsignedInt(value[1]);

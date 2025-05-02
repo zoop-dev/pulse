@@ -44,14 +44,12 @@ public class FileCloseRequest extends FossilRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
 
         if(!characteristic.getUuid().toString().equals(this.getRequestUUID().toString())){
             throw new RuntimeException("wrong response UUID");
         }
-
-        byte[] value = characteristic.getValue();
 
         byte type = (byte)(value[0] & 0x0F);
 

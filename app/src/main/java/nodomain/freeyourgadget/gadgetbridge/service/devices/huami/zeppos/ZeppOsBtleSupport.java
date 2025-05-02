@@ -135,13 +135,14 @@ public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements Zepp
 
     @Override
     public boolean onCharacteristicChanged(final BluetoothGatt gatt,
-                                           final BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           final BluetoothGattCharacteristic characteristic,
+                                           final byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             // handled upstream
             return true;
         }
 
-        return zeppOsSupport.onCharacteristicChanged(characteristic.getUuid(), characteristic.getValue());
+        return zeppOsSupport.onCharacteristicChanged(characteristic.getUuid(), value);
     }
 
     @Override

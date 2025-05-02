@@ -32,6 +32,7 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -143,13 +144,13 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if(characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING)){
-            String revision = characteristic.getStringValue(0);
+            String revision = BLETypeConversions.getStringValue(value, 0);
             getDevice().setFirmwareVersion(revision);
             getDevice().sendDeviceUpdateIntent(getContext());
         }
-        return super.onCharacteristicRead(gatt, characteristic, status);
+        return super.onCharacteristicRead(gatt, characteristic, value, status);
     }
 
     @Override

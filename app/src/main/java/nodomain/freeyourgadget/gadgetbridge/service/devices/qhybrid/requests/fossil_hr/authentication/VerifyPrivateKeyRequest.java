@@ -49,9 +49,8 @@ public class VerifyPrivateKeyRequest extends AuthenticationRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
 
         ByteBuffer buffer = ByteBuffer.wrap(value);
 

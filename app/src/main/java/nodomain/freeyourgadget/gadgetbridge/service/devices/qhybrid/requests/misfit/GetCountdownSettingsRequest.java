@@ -30,8 +30,7 @@ public class GetCountdownSettingsRequest extends Request {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         if (value.length != 14) {
             return;
         }

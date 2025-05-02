@@ -296,11 +296,11 @@ public abstract class Casio2C2DSupport extends CasioSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] response) {
         UUID characteristicUUID = characteristic.getUuid();
 
         if (characteristicUUID.equals(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID)) {
-            byte[] response = characteristic.getValue();
             Iterator<RequestWithHandler> it = requests.iterator();
             while (it.hasNext()) {
                 RequestWithHandler rh = it.next();
@@ -313,7 +313,7 @@ public abstract class Casio2C2DSupport extends CasioSupport {
             LOG.warn("unhandled response: " + Logging.formatBytes(response));
         }
 
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, response);
     }
 
     public void writeCurrentTime(TransactionBuilder builder, ZonedDateTime time) {

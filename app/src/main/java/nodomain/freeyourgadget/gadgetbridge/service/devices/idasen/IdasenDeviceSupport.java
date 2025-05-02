@@ -140,26 +140,26 @@ public class IdasenDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic,
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
                                         int status) {
 
         if (characteristic.getUuid().equals(IdasenConstants.CHARACTERISTIC_HEIGHT)) {
-            getDeskValues(characteristic);
+            getDeskValues(value);
             announceDeskValues();
             return true;
         }
-        return super.onCharacteristicRead(gatt, characteristic, status);
+        return super.onCharacteristicRead(gatt, characteristic, value, status);
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
 
         if (characteristic.getUuid().equals(IdasenConstants.CHARACTERISTIC_HEIGHT)) {
-            getDeskValues(characteristic);
+            getDeskValues(value);
             announceDeskValues();
             return true;
         }
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private void readCharacteristic(String taskName, UUID charac) {
@@ -182,8 +182,7 @@ public class IdasenDeviceSupport extends AbstractBTLEDeviceSupport {
         broadcastManager.registerReceiver(commandReceiver, filter);
     }
 
-    private void getDeskValues(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    private void getDeskValues(byte[] value) {
         final ByteBuffer buf = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
         int hh = BLETypeConversions.toUnsigned(buf.getShort());
         deskHeight = (float) IdasenConstants.MIN_HEIGHT + hh / 10000F;

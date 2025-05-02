@@ -72,8 +72,7 @@ public abstract class FileGetRawRequest extends FossilRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         byte first = value[0];
         if(characteristic.getUuid().toString().equals("3dda0003-957f-7d4a-34a6-74696673696d")){
             if((first & 0x0F) == 1){

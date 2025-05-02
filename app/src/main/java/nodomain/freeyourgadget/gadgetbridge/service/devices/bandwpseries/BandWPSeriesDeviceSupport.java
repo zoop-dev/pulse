@@ -83,19 +83,20 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLEDeviceSupport {
         return builder;
     }
 
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+    @Override
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
 
         if (UUID_RPC_RESPONSE_CHARACTERISTIC.equals(characteristicUUID) || UUID_RPC_NOTIFICATION_CHARACTERISTIC.equals(characteristicUUID)) {
-            return handleRPCResponse(characteristic);
+            return handleRPCResponse(characteristic, value);
         }
         return false;
     }
 
-    private boolean handleRPCResponse(BluetoothGattCharacteristic characteristic) {
-        BandWPSeriesResponse response = new BandWPSeriesResponse(characteristic.getValue());
+    private boolean handleRPCResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        BandWPSeriesResponse response = new BandWPSeriesResponse(value);
         LOG.debug("Got RPC response: Type {}, commandID {}, namespace {}, errorCode {}, payload {}",
                 response.messageType,
                 response.commandId,

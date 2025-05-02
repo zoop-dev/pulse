@@ -50,8 +50,7 @@ public class OTAEraseRequest extends Request {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] bytes = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] bytes) {
         final ByteBuffer wrap = ByteBuffer.wrap(bytes);
         wrap.order(ByteOrder.LITTLE_ENDIAN);
         short fileHandle = wrap.getShort(1);

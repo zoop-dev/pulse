@@ -2006,53 +2006,54 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             // handled upstream
             return true;
         }
 
         final UUID characteristicUUID = characteristic.getUuid();
         if (HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO.equals(characteristicUUID)) {
-            handleBatteryInfo(characteristic.getValue(), BluetoothGatt.GATT_SUCCESS);
+            handleBatteryInfo(value, BluetoothGatt.GATT_SUCCESS);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_REALTIME_STEPS.equals(characteristicUUID)) {
-            handleRealtimeSteps(characteristic.getValue());
+            handleRealtimeSteps(value);
             return true;
         } else if (GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristicUUID)) {
-            handleHeartrate(characteristic.getValue());
+            handleHeartrate(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_AUTH.equals(characteristicUUID)) {
             LOG.info("AUTHENTICATION?? " + characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_DEVICEEVENT.equals(characteristicUUID)) {
-            handleDeviceEvent(characteristic.getValue());
+            handleDeviceEvent(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_WORKOUT.equals(characteristicUUID)) {
-            handleDeviceWorkoutEvent(characteristic.getValue());
+            handleDeviceWorkoutEvent(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_7_REALTIME_STEPS.equals(characteristicUUID)) {
-            handleRealtimeSteps(characteristic.getValue());
+            handleRealtimeSteps(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION.equals(characteristicUUID)) {
-            handleConfigurationInfo(characteristic.getValue());
+            handleConfigurationInfo(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_READ.equals(characteristicUUID)) {
-            handleChunked(characteristic.getValue());
+            handleChunked(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_RAW_SENSOR_DATA.equals(characteristicUUID)) {
-            handleRawSensorData(characteristic.getValue());
+            handleRawSensorData(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA.equals(characteristicUUID)) {
-            fetcher.onActivityData(characteristic.getValue());
+            fetcher.onActivityData(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL.equals(characteristicUUID)) {
-            fetcher.onActivityControl(characteristic.getValue());
+            fetcher.onActivityControl(value);
             return true;
         }  else {
             LOG.warn("Unhandled characteristic changed: {}", characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
 
         return false;
@@ -2060,34 +2061,35 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             // handled upstream
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
         if (GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME.equals(characteristicUUID)) {
-            handleDeviceName(characteristic.getValue(), status);
+            handleDeviceName(value, status);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO.equals(characteristicUUID)) {
-            handleBatteryInfo(characteristic.getValue(), status);
+            handleBatteryInfo(value, status);
             return true;
         } else if (GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristicUUID)) {
-            logHeartrate(characteristic.getValue(), status);
+            logHeartrate(value, status);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_7_REALTIME_STEPS.equals(characteristicUUID)) {
-            handleRealtimeSteps(characteristic.getValue());
+            handleRealtimeSteps(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_DEVICEEVENT.equals(characteristicUUID)) {
-            handleDeviceEvent(characteristic.getValue());
+            handleDeviceEvent(value);
             return true;
         } else if (HuamiService.UUID_CHARACTERISTIC_WORKOUT.equals(characteristicUUID)) {
-            handleDeviceWorkoutEvent(characteristic.getValue());
+            handleDeviceWorkoutEvent(value);
             return true;
         } else {
             LOG.info("Unhandled characteristic read: " + characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
 
         return false;

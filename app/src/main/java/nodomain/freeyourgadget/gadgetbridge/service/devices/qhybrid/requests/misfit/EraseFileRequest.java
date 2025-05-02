@@ -33,13 +33,13 @@ public class EraseFileRequest extends FileRequest{
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
         if(!characteristic.getUuid().toString().equals(getRequestUUID().toString())){
             log("wrong descriptor");
             return;
         }
-        ByteBuffer buffer = ByteBuffer.wrap(characteristic.getValue());
+        ByteBuffer buffer = ByteBuffer.wrap(value);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         deletedHandle = buffer.getShort(1);
         status = buffer.get(3);

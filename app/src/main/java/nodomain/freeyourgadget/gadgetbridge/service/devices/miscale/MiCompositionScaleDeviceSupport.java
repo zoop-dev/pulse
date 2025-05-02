@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiScaleSampleProvide
 import nodomain.freeyourgadget.gadgetbridge.entities.MiScaleWeightSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -91,31 +92,29 @@ public class MiCompositionScaleDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final byte[] data) {
+        if (super.onCharacteristicChanged(gatt, characteristic, data)) {
             return true;
         }
 
         final UUID characteristicUUID = characteristic.getUuid();
         if (characteristicUUID.equals(GattCharacteristic.UUID_CHARACTERISTIC_BODY_COMPOSITION_MEASUREMENT)) {
-            final byte[] data = characteristic.getValue();
-
             final byte flags = data[1];
             final boolean stabilized = testBit(flags, 5) && !testBit(flags, 7);
 
             if (stabilized) {
-                final int year = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 2);
-                final int month = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 4);
-                final int day = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 5);
-                final int hour = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 6);
-                final int minute = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 7);
-                final int second = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 8);
+                final int year = BLETypeConversions.toUint16(data, 2);
+                final int month = BLETypeConversions.toUnsigned(data, 4);
+                final int day = BLETypeConversions.toUnsigned(data, 5);
+                final int hour = BLETypeConversions.toUnsigned(data, 6);
+                final int minute = BLETypeConversions.toUnsigned(data, 7);
+                final int second = BLETypeConversions.toUnsigned(data, 8);
                 final Calendar c = GregorianCalendar.getInstance();
                 c.set(year, month - 1, day, hour, minute, second);
                 final Date date = c.getTime();
 
                 float weightKg = WeightMeasurement.weightToKg(
-                        characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 11),
+                        BLETypeConversions.toUint16(data, 11),
                         flags
                 );
                 handleWeightInfo(date, weightKg);

@@ -36,8 +36,8 @@ public class SetConnectionParametersRequest extends FossilRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
         this.finished = true;
     }
 

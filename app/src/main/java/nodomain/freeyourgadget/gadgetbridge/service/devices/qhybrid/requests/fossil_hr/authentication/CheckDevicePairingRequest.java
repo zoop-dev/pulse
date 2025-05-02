@@ -31,11 +31,10 @@ public class CheckDevicePairingRequest extends FossilRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         if(!characteristic.getUuid().equals(getRequestUUID())){
             throw new RuntimeException("wrong characteristic responded to pairing");
         }
-        byte[] value = characteristic.getValue();
         if(value.length != 3){
             throw new RuntimeException("wrong pairing response length");
         }

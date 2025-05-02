@@ -12,7 +12,7 @@ public interface ICommunicator {
 
     boolean initializeDevice(TransactionBuilder builder);
 
-    boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic);
+    boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value);
 
     void onHeartRateTest();
 

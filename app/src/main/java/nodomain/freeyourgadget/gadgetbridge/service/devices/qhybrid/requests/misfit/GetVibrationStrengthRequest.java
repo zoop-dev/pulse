@@ -27,8 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Req
 public class GetVibrationStrengthRequest extends Request {
     public int strength = -1;
 
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         if (value.length < 4) {
             return;
         } else {

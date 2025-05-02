@@ -638,14 +638,14 @@ public class FossilWatchAdapter extends WatchAdapter {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         switch (characteristic.getUuid().toString()) {
             case "3dda0006-957f-7d4a-34a6-74696673696d": {
-                handleBackgroundCharacteristic(characteristic);
+                handleBackgroundCharacteristic(characteristic, value);
                 break;
             }
             case "00002a37-0000-1000-8000-00805f9b34fb": {
-                handleHeartRateCharacteristic(characteristic);
+                handleHeartRateCharacteristic(characteristic, value);
                 break;
             }
             case "3dda0002-957f-7d4a-34a6-74696673696d":
@@ -656,14 +656,14 @@ public class FossilWatchAdapter extends WatchAdapter {
                     boolean requestFinished;
                     try {
                         if (characteristic.getUuid().toString().equals("3dda0003-957f-7d4a-34a6-74696673696d")) {
-                            byte requestType = (byte) (characteristic.getValue()[0] & 0x0F);
+                            byte requestType = (byte) (value[0] & 0x0F);
 
                             if (requestType != 0x0A && requestType != fossilRequest.getType()) {
                                 // throw new RuntimeException("Answer type " + requestType + " does not match current request " + fossilRequest.getType());
                             }
                         }
 
-                        fossilRequest.handleResponse(characteristic);
+                        fossilRequest.handleResponse(characteristic, value);
                         requestFinished = fossilRequest.isFinished();
                     } catch (RuntimeException e) {
                         if (characteristic.getUuid().toString().equals("3dda0005-957f-7d4a-34a6-74696673696d")) {
@@ -692,7 +692,7 @@ public class FossilWatchAdapter extends WatchAdapter {
         return true;
     }
 
-    public void handleHeartRateCharacteristic(BluetoothGattCharacteristic characteristic) {
+    public void handleHeartRateCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
     }
 
     @Override
@@ -741,8 +741,7 @@ public class FossilWatchAdapter extends WatchAdapter {
         }
     }
 
-    protected void handleBackgroundCharacteristic(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    protected void handleBackgroundCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
         switch (value[1]) {
             case 2: {
                 byte syncId = value[2];

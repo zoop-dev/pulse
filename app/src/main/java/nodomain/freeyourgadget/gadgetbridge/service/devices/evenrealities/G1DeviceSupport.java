@@ -115,15 +115,15 @@ public class G1DeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] payload) {
         // Super already handled this.
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+        if (super.onCharacteristicChanged(gatt, characteristic, payload)) {
             return true;
         }
 
         // If this is the correct UART RX message, parse it.
         if (G1DeviceConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX.equals(characteristic.getUuid())) {
-            byte[] payload = characteristic.getValue();
             if (payload[0] == G1DeviceConstants.CommandId.BATTERY_LEVEL.id) {
                 GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
                 batteryInfo.state = BatteryState.BATTERY_NORMAL;

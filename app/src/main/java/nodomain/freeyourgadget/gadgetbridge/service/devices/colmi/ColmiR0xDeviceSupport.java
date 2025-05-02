@@ -177,15 +177,14 @@ public class ColmiR0xDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] value = characteristic.getValue();
 
-        LOG.debug("Characteristic {} changed, value: {}", characteristicUUID, StringUtils.bytesToHex(characteristic.getValue()));
+        LOG.debug("Characteristic {} changed, value: {}", characteristicUUID, StringUtils.bytesToHex(value));
 
         if (characteristicUUID.equals(ColmiR0xConstants.CHARACTERISTIC_NOTIFY_V1)) {
             switch (value[0]) {

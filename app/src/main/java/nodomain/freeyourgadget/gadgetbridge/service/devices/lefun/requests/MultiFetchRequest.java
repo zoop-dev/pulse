@@ -75,9 +75,8 @@ public abstract class MultiFetchRequest extends Request {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] data) {
         if (characteristic.getUuid().equals(LefunConstants.UUID_CHARACTERISTIC_LEFUN_NOTIFY)) {
-            byte[] data = characteristic.getValue();
             // Parse response
             if (data.length >= LefunConstants.CMD_HEADER_LENGTH && data[0] == LefunConstants.CMD_RESPONSE_ID) {
                 try {
@@ -94,7 +93,7 @@ public abstract class MultiFetchRequest extends Request {
             return false;
         }
 
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, data);
     }
 
     @Override

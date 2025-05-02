@@ -419,4 +419,24 @@ public class BLETypeConversions {
         }
         return AlertCategory.Simple;
     }
+
+    /// compatible with {@link android.bluetooth.BluetoothGattCharacteristic#getFloatValue(int, int)}
+    public static float toFloat32(byte[] bytes, int offset){
+        int raw = toUint32(bytes, offset);
+        return Float.intBitsToFloat(raw);
+    }
+
+    /// compatible with {@link android.bluetooth.BluetoothGattCharacteristic#getStringValue(int)}
+    public static String getStringValue(final byte[] bytes, final int offset) {
+        if (bytes == null || offset > bytes.length) {
+            return null;
+        }
+        final byte[] str = new byte[bytes.length - offset];
+        for (int i = 0; i < (bytes.length - offset); i++) {
+            str[i] = bytes[offset + i];
+        }
+
+        //noinspection ImplicitDefaultCharsetUsage
+        return new String(str);
+    }
 }

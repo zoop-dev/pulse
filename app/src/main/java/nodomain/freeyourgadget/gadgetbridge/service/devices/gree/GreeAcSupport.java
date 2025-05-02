@@ -75,13 +75,12 @@ public class GreeAcSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         final UUID characteristicUUID = characteristic.getUuid();
-        final byte[] value = characteristic.getValue();
 
         if (UUID_CHARACTERISTIC_PACK_RX.equals(characteristicUUID)) {
             final String packMessageJson = new String(value, StandardCharsets.UTF_8);

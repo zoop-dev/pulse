@@ -21,17 +21,18 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 
 public class ValueDecoder {
     private static final Logger LOG = LoggerFactory.getLogger(ValueDecoder.class);
 
-    public static int decodeInt(BluetoothGattCharacteristic characteristic) {
-        return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+    public static int decodeInt(BluetoothGattCharacteristic characteristic, byte[] value) {
+        return BLETypeConversions.toUnsigned(value, 0);
     }
 
-    public static int decodePercent(BluetoothGattCharacteristic characteristic) {
-        int percent = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+    public static int decodePercent(BluetoothGattCharacteristic characteristic, byte[] value) {
+        int percent = BLETypeConversions.toUnsigned(value, 0);
         if (percent > 100 || percent < 0) {
             LOG.warn("Unexpected percent value: " + percent + ": " + GattCharacteristic.toString(characteristic));
             percent = Math.min(100, Math.max(0, percent));

@@ -13,6 +13,7 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -34,17 +35,17 @@ public class BleGattClientSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if(characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
             GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
-            batteryInfo.level = characteristic.getValue()[0];
+            batteryInfo.level = value[0];
             handleGBDeviceEvent(batteryInfo);
         }else if(characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING)) {
-            String firmwareVersion = characteristic.getStringValue(0);
+            String firmwareVersion = BLETypeConversions.getStringValue(value,0);
             getDevice().setFirmwareVersion(firmwareVersion);
             getDevice().sendDeviceUpdateIntent(getContext());
         }
-        return super.onCharacteristicRead(gatt, characteristic, status);
+        return super.onCharacteristicRead(gatt, characteristic, value, status);
     }
 
     void readCharacteristicIfAvailable(UUID characteristicUUID, TransactionBuilder builder) {

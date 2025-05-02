@@ -59,11 +59,11 @@ public class BatteryInfoProfile<T extends AbstractBTLEDeviceSupport> extends Abs
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
-                handleBatteryLevel(gatt, characteristic);
+                handleBatteryLevel(gatt, characteristic, value);
                 return true;
             } else {
                 LOG.info("Unexpected onCharacteristicRead: " + GattCharacteristic.toString(characteristic));
@@ -75,12 +75,12 @@ public class BatteryInfoProfile<T extends AbstractBTLEDeviceSupport> extends Abs
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        return onCharacteristicRead(gatt, characteristic, BluetoothGatt.GATT_SUCCESS);
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        return onCharacteristicRead(gatt, characteristic, value, BluetoothGatt.GATT_SUCCESS);
     }
 
-    private void handleBatteryLevel(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        int percent = ValueDecoder.decodePercent(characteristic);
+    private void handleBatteryLevel(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        int percent = ValueDecoder.decodePercent(characteristic, value);
         batteryInfo.setPercentCharged(percent);
 
         notify(createIntent(batteryInfo));

@@ -28,7 +28,7 @@ import android.bluetooth.BluetoothGattDescriptor;
  *
  * Note: the boolean return values indicate whether this callback "consumed" this event
  * or not. True means, the event was consumed by this instance and no further instances
- * shall be notified. Fallse means, this instance could not handle the event.
+ * shall be notified. False means, this instance could not handle the event.
  */
 public interface GattCallback {
 
@@ -49,10 +49,12 @@ public interface GattCallback {
     /**
      * @param gatt
      * @param characteristic
+     * @param value
      * @param status
-     * @see BluetoothGattCallback#onCharacteristicRead(BluetoothGatt, BluetoothGattCharacteristic, int)
+     * @see BluetoothGattCallback#onCharacteristicRead(BluetoothGatt, BluetoothGattCharacteristic, byte[], int)
      */
-    boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
+    boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic,
+                                 byte[] value, int status);
 
     /**
      * @param gatt
@@ -66,10 +68,11 @@ public interface GattCallback {
     /**
      * @param gatt
      * @param characteristic
-     * @see BluetoothGattCallback#onCharacteristicChanged(BluetoothGatt, BluetoothGattCharacteristic)
+     * @param value
+     * @see BluetoothGattCallback#onCharacteristicChanged(BluetoothGatt, BluetoothGattCharacteristic, byte[])
      */
     boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                 BluetoothGattCharacteristic characteristic);
+                                 BluetoothGattCharacteristic characteristic, byte[] value);
 
     /**
      * @param gatt

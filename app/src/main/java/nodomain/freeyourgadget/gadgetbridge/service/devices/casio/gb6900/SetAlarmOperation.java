@@ -84,10 +84,10 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] data,
+                                        int status) {
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
 
         if(data.length == 0)
             return true;
@@ -127,7 +127,7 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
             operationFinished();
         }
         else {
-            return super.onCharacteristicRead(gatt, characteristic, status);
+            return super.onCharacteristicRead(gatt, characteristic, data, status);
         }
 
         return true;

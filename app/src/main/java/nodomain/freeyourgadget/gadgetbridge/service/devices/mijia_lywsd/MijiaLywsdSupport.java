@@ -421,25 +421,26 @@ public class MijiaLywsdSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         final UUID characteristicUUID = characteristic.getUuid();
 
         if (MijiaLywsdSupport.UUID_HISTORY.equals(characteristicUUID)) {
-            handleHistory(characteristic.getValue(), BluetoothGatt.GATT_SUCCESS);
+            handleHistory(value, BluetoothGatt.GATT_SUCCESS);
             return true;
         }
 
         if (MijiaLywsdSupport.UUID_LIVE_DATA.equals(characteristicUUID)) {
-            handleLiveData(characteristic.getValue(), BluetoothGatt.GATT_SUCCESS);
+            handleLiveData(value, BluetoothGatt.GATT_SUCCESS);
             return true;
         }
 
         if (MijiaLywsdSupport.UUID_TIME.equals(characteristicUUID)) {
-            handleTime(characteristic.getValue(), BluetoothGatt.GATT_SUCCESS);
+            handleTime(value, BluetoothGatt.GATT_SUCCESS);
             return true;
         }
 
@@ -449,34 +450,35 @@ public class MijiaLywsdSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();
 
         if (MijiaLywsdSupport.UUID_BATTERY.equals(characteristicUUID)) {
-            handleBatteryInfo(characteristic.getValue(), status);
+            handleBatteryInfo(value, status);
             return true;
         }
 
         if (MijiaLywsdSupport.UUID_COMFORT_LEVEL.equals(characteristicUUID)) {
-            handleComfortLevel(characteristic.getValue(), status);
+            handleComfortLevel(value, status);
             return true;
         }
 
         if (MijiaLywsdSupport.UUID_HISTORY.equals(characteristicUUID)) {
-            handleHistory(characteristic.getValue(), status);
+            handleHistory(value, status);
             return true;
         }
 
         if (MijiaLywsdSupport.UUID_LIVE_DATA.equals(characteristicUUID)) {
-            handleLiveData(characteristic.getValue(), status);
+            handleLiveData(value, status);
             return true;
         }
 
         if (MijiaLywsdSupport.UUID_TIME.equals(characteristicUUID)) {
-            handleTime(characteristic.getValue(), status);
+            handleTime(value, status);
             return true;
         }
 

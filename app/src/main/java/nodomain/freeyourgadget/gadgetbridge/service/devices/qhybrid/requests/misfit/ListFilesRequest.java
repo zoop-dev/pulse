@@ -29,9 +29,8 @@ public class ListFilesRequest extends FileRequest{
 
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         String uuid = characteristic.getUuid().toString();
-        byte[] value = characteristic.getValue();
 
         if(uuid.equals("3dda0004-957f-7d4a-34a6-74696673696d")){
             buffer.put(value, 1, value.length - 1);

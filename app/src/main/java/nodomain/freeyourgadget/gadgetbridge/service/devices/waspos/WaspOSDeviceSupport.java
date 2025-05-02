@@ -208,12 +208,12 @@ public class WaspOSDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] chars) {
+        if (super.onCharacteristicChanged(gatt, characteristic, chars)) {
             return true;
         }
         if (WaspOSConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX.equals(characteristic.getUuid())) {
-            byte[] chars = characteristic.getValue();
             String packetStr = new String(chars);
             LOG.info("RX: " + packetStr);
             receivedLine += packetStr;

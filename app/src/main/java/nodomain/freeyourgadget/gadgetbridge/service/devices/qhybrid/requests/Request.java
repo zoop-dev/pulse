@@ -59,7 +59,7 @@ public abstract class Request {
 
     public abstract byte[] getStartSequence();
 
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {}
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {}
 
     public String getName(){
         Class thisClass = getClass();

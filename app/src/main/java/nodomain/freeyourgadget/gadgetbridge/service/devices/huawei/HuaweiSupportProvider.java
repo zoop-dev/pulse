@@ -1051,8 +1051,7 @@ public class HuaweiSupportProvider {
         }
     }
 
-    public boolean onCharacteristicChanged(BluetoothGattCharacteristic characteristic) {
-        byte[] data = characteristic.getValue();
+    public boolean onCharacteristicChanged(BluetoothGattCharacteristic characteristic, byte[] data) {
         responseManager.handleData(data);
         return true;
     }

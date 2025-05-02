@@ -102,16 +102,16 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        handleRxCharacteristic(characteristic);
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        handleRxCharacteristic(characteristic, value);
 
         return true;
     }
 
-    private void handleRxCharacteristic(BluetoothGattCharacteristic characteristic) {
+    private void handleRxCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
         if (characteristic != serialReadCharacteristic) return;
 
-        responseBuffer.put(characteristic.getValue());
+        responseBuffer.put(value);
         short length;
         int oldPosition = responseBuffer.position();
         responseBuffer.position(0);

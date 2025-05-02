@@ -130,8 +130,8 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic))
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] data) {
+        if (super.onCharacteristicChanged(gatt, characteristic, data))
             return true;
 
         UUID uuid = characteristic.getUuid();
@@ -139,8 +139,6 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
         if (!uuid.equals(GattCharacteristic.UUID_CHARACTERISTIC_WEIGHT_MEASUREMENT) &&
             !uuid.equals(UUID_CHARACTERISTIC_WEIGHT_HISTORY))
             return false;
-
-        byte[] data = characteristic.getValue();
 
         if (data.length == 1 && data[0] == CMD_HISTORY_COMPLETE) {
             TransactionBuilder builder = createTransactionBuilder("ack");
@@ -154,7 +152,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
             GB.updateTransferNotification(null, "", false, 100, getContext());
             getDevice().sendDeviceUpdateIntent(getContext());
         } else {
-            ByteBuffer buf = ByteBuffer.wrap(characteristic.getValue());
+            ByteBuffer buf = ByteBuffer.wrap(data);
             List<WeightMeasurement> measurements = new ArrayList<>();
             WeightMeasurement measurement = WeightMeasurement.decode(buf);
 

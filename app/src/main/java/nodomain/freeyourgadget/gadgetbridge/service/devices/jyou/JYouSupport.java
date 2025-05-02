@@ -84,8 +84,9 @@ public class JYouSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        return super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     protected void syncDateAndTime(TransactionBuilder builder) {

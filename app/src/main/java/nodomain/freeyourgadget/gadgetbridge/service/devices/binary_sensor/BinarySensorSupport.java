@@ -87,9 +87,9 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
     };
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (characteristic.getUuid().toString().equals(BINARY_SENSOR_RESPONSE_CHARACTERISTIC_UUID)) {
-            handleResponseValue(characteristic.getValue());
+            handleResponseValue(value);
             return true;
         }
 

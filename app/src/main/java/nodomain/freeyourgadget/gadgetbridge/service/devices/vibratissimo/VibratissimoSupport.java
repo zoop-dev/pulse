@@ -128,8 +128,9 @@ public class VibratissimoSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
@@ -140,8 +141,9 @@ public class VibratissimoSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();

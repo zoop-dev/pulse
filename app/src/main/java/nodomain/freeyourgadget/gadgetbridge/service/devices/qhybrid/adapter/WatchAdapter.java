@@ -100,7 +100,7 @@ public abstract class WatchAdapter {
 
     public abstract void onSendConfiguration(String config);
 
-    public abstract boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic);
+    public abstract boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value);
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status){};
 
 

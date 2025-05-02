@@ -150,24 +150,24 @@ public class MisfitWatchAdapter extends WatchAdapter {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, final byte[] value) {
         GBDevice gbDevice = getDeviceSupport().getDevice();
         switch (characteristic.getUuid().toString()) {
             case "3dda0004-957f-7d4a-34a6-74696673696d":
             case "3dda0003-957f-7d4a-34a6-74696673696d": {
-                return handleFileDownloadCharacteristic(characteristic);
+                return handleFileDownloadCharacteristic(characteristic, value);
             }
             case "3dda0007-957f-7d4a-34a6-74696673696d": {
-                return handleFileUploadCharacteristic(characteristic);
+                return handleFileUploadCharacteristic(characteristic, value);
             }
             case "3dda0002-957f-7d4a-34a6-74696673696d": {
-                return handleBasicCharacteristic(characteristic);
+                return handleBasicCharacteristic(characteristic, value);
             }
             case "3dda0006-957f-7d4a-34a6-74696673696d": {
-                return handleButtonCharacteristic(characteristic);
+                return handleButtonCharacteristic(characteristic, value);
             }
             case "00002a19-0000-1000-8000-00805f9b34fb": {
-                short level = characteristic.getValue()[0];
+                short level = value[0];
                 gbDevice.setBatteryLevel(level);
 
                 GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
@@ -177,11 +177,11 @@ public class MisfitWatchAdapter extends WatchAdapter {
                 break;
             }
             default: {
-                log("unknown shit on " + characteristic.getUuid().toString() + ":  " + arrayToString(characteristic.getValue()));
+                log("unknown shit on " + characteristic.getUuid().toString() + ":  " + arrayToString(value));
                 try {
                     File charLog = FileUtils.getExternalFile("qFiles/charLog.txt");
                     try (FileOutputStream fos = new FileOutputStream(charLog, true)) {
-                        fos.write((new Date().toString() + ": " + characteristic.getUuid().toString() + ": " + arrayToString(characteristic.getValue())).getBytes());
+                        fos.write((new Date().toString() + ": " + characteristic.getUuid().toString() + ": " + arrayToString(value)).getBytes());
                     }
                 } catch (IOException e) {
                     GB.log("error", GB.ERROR, e);
@@ -189,7 +189,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
                 break;
             }
         }
-        return getDeviceSupport().onCharacteristicChanged(gatt, characteristic);
+        return getDeviceSupport().onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private void fillResponseList() {
@@ -218,21 +218,20 @@ public class MisfitWatchAdapter extends WatchAdapter {
         }
     }
 
-    private boolean handleBasicCharacteristic(BluetoothGattCharacteristic characteristic) {
-        byte[] values = characteristic.getValue();
-        Request request = resolveAnswer(characteristic);
+    private boolean handleBasicCharacteristic(BluetoothGattCharacteristic characteristic, byte[] values) {
+        Request request = resolveAnswer(characteristic, values);
         GBDevice gbDevice = getDeviceSupport().getDevice();
 
         if (request == null) {
             StringBuilder valueString = new StringBuilder(String.valueOf(values[0]));
-            for (int i = 1; i < characteristic.getValue().length; i++) {
+            for (int i = 1; i < values.length; i++) {
                 valueString.append(", ").append(values[i]);
             }
             log("unable to resolve " + characteristic.getUuid().toString() + ": " + valueString);
             return true;
         }
         log("response: " + request.getClass().getSimpleName());
-        request.handleResponse(characteristic);
+        request.handleResponse(characteristic, values);
 
         if (request instanceof GetStepGoalRequest) {
             gbDevice.addDeviceInfo(new GenericItem(ITEM_STEP_GOAL, String.valueOf(((GetStepGoalRequest) request).stepGoal)));
@@ -270,16 +269,15 @@ public class MisfitWatchAdapter extends WatchAdapter {
     }
 
 
-    private Request resolveAnswer(BluetoothGattCharacteristic characteristic) {
-        byte[] values = characteristic.getValue();
+    private Request resolveAnswer(BluetoothGattCharacteristic characteristic, byte[] values) {
         if (values[0] != 3) return null;
         return responseFilters.get(values[1]);
     }
 
-    private boolean handleFileDownloadCharacteristic(BluetoothGattCharacteristic characteristic) {
+    private boolean handleFileDownloadCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
         Request request;
         request = fileRequest;
-        request.handleResponse(characteristic);
+        request.handleResponse(characteristic, value);
         if (request instanceof ListFilesRequest) {
             if (((ListFilesRequest) request).completed) {
                 logger.debug("File count: " + ((ListFilesRequest) request).fileCount + "  size: " + ((ListFilesRequest) request).size);
@@ -300,13 +298,13 @@ public class MisfitWatchAdapter extends WatchAdapter {
     }
 
 
-    private boolean handleFileUploadCharacteristic(BluetoothGattCharacteristic characteristic) {
+    private boolean handleFileUploadCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
         if (uploadFileRequest == null) {
             logger.debug("no uploadFileRequest to handle response");
             return true;
         }
 
-        uploadFileRequest.handleResponse(characteristic);
+        uploadFileRequest.handleResponse(characteristic, value);
 
         switch (uploadFileRequest.state) {
             case ERROR:
@@ -329,8 +327,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
         return true;
     }
 
-    private boolean handleButtonCharacteristic(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    private boolean handleButtonCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
         if (value.length != 11) {
             logger.debug("wrong button message");
             return true;

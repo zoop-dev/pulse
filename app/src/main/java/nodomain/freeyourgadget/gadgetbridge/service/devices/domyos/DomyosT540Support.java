@@ -216,15 +216,15 @@ public class DomyosT540Support extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
+        if (super.onCharacteristicChanged(gatt, characteristic, data)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
 
         if (characteristicUUID.equals(UUUD_CHARACTERISTICS_NOTIFY)) {
-            byte[] data = characteristic.getValue();
             if (data.length == 6) { // FIXME: this is assumed the tail of the data below which does not fit inside the MTU
                 System.arraycopy(data, 0, last_data, 20, 6);
                 ByteBuffer buf = ByteBuffer.wrap(last_data);
@@ -283,8 +283,9 @@ public class DomyosT540Support extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();

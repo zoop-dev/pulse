@@ -194,14 +194,14 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
     }
 
     @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final byte[] value) {
         final UUID characteristicUUID = characteristic.getUuid();
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             LOG.debug("Change of characteristic {} handled by parent", characteristicUUID);
             return true;
         }
 
-        return communicator.onCharacteristicChanged(gatt, characteristic);
+        return communicator.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     @Override

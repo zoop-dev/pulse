@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -71,14 +72,14 @@ public class HealthThermometerProfile <T extends AbstractBTLEDeviceSupport> exte
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(UUID_CHARACTERISTIC_MEASUREMENT_INTERVAL)) {
-                handleMeasurementInterval(gatt, characteristic);
+                handleMeasurementInterval(gatt, characteristic, value);
                 return true;
             } else if (charUuid.equals(UUID_CHARACTERISTIC_TEMPERATURE_MEASUREMENT)) {
-                handleTemperatureMeasurement(gatt, characteristic);
+                handleTemperatureMeasurement(gatt, characteristic, value);
                 return true;
             } else {
                 LOG.info("Unexpected onCharacteristicRead: " + GattCharacteristic.toString(characteristic));
@@ -90,39 +91,39 @@ public class HealthThermometerProfile <T extends AbstractBTLEDeviceSupport> exte
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        return onCharacteristicRead(gatt, characteristic, BluetoothGatt.GATT_SUCCESS);
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        return onCharacteristicRead(gatt, characteristic, value, BluetoothGatt.GATT_SUCCESS);
     }
 
 
-    private void handleMeasurementInterval(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    private void handleMeasurementInterval(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         // todo: not implemented
-        LOG.debug("Health thermometer received Measurement Interval: " + ValueDecoder.decodeInt(characteristic));
+        LOG.debug("Health thermometer received Measurement Interval: " + ValueDecoder.decodeInt(characteristic, value));
     }
 
-    private void handleTemperatureMeasurement(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    private void handleTemperatureMeasurement(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] raw) {
         /*
          * This metadata contains as bits:
          * the unit (celsius (0) or fahrenheit (1)) (bit 7 (last bit))
          * if a timestamp is present (1) or not present (0) (bit 6)
          * if a temperature type is present (1) or not present (0) (bit 5)
          */
-        byte metadata = characteristic.getValue()[0];
+        byte metadata = raw[0];
         // todo: evaluate this byte to enable support for devices without timestamp or temperature-type
 
-        int year = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 5);
-        int month = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 7);
-        int day = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 8);
-        int hour = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 9);
-        int minute = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 10);
-        int second = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 11);
+        int year = BLETypeConversions.toUint16(raw, 5);
+        int month = BLETypeConversions.toUnsigned(raw, 7);
+        int day = BLETypeConversions.toUnsigned(raw, 8);
+        int hour = BLETypeConversions.toUnsigned(raw, 9);
+        int minute = BLETypeConversions.toUnsigned(raw, 10);
+        int second = BLETypeConversions.toUnsigned(raw, 11);
 
         Calendar c = GregorianCalendar.getInstance();
         c.set(year, month - 1, day, hour, minute, second);
         Date date = c.getTime();
 
-        float temperature = characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_FLOAT, 1); // bytes 1 - 4
-        int temperature_type = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 12); // encodes where the measurement was taken
+        float temperature = BLETypeConversions.toFloat32(raw, 1); // bytes 1 - 4
+        int temperature_type = BLETypeConversions.toUnsigned(raw, 12); // encodes where the measurement was taken
 
         LOG.debug("Received measurement of " + temperature + "° with Timestamp " + date + ", metadata is " + Integer.toBinaryString((metadata & 0xFF) + 0x100).substring(1));
 

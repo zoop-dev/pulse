@@ -60,9 +60,8 @@ public class DownloadFileRequest extends FileRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
-        byte[] data = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] data) {
+        super.handleResponse(characteristic, data);
         if(characteristic.getUuid().toString().equals("3dda0003-957f-7d4a-34a6-74696673696d")){
             if(buffer == null){
                 buffer = ByteBuffer.allocate(4096);

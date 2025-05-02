@@ -269,10 +269,10 @@ public class FitProDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
+        super.onCharacteristicChanged(gatt, characteristic, data);
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
         debugPrintArray(data, "FitPro received value");
         if (data[0] != FitProConstants.DATA_HEADER) {
             if (debugEnabled) {

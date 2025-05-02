@@ -434,12 +434,11 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         }
     }
 
-    private void handleVoiceStatusCharacteristic(BluetoothGattCharacteristic characteristic){
-        byte[] value = characteristic.getValue();
+    private void handleVoiceStatusCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value){
         handleVoiceStatus(value[0]);
     }
 
-    private void handleVoiceDataCharacteristic(BluetoothGattCharacteristic characteristic){
+    private void handleVoiceDataCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value){
         if(voiceMessenger == null){
             return;
         }
@@ -448,7 +447,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 MESSAGE_WHAT_VOICE_DATA_RECEIVED
         );
         Bundle dataBundle = new Bundle(1);
-        dataBundle.putByteArray("VOICE_DATA", characteristic.getValue());
+        dataBundle.putByteArray("VOICE_DATA", value);
         dataBundle.putString("VOICE_ENCODING", "OPUS");
         message.setData(dataBundle);
         try {
@@ -463,16 +462,16 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         switch (characteristic.getUuid().toString()){
             case "010541ae-efe8-11c0-91c0-105d1a1155f0":
-                handleVoiceStatusCharacteristic(characteristic);
+                handleVoiceStatusCharacteristic(characteristic, value);
                 return true;
             case "842d2791-0d20-4ce4-1ada-105d1a1155f0":
-                handleVoiceDataCharacteristic(characteristic);
+                handleVoiceDataCharacteristic(characteristic, value);
                 return true;
         }
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private void initializeAfterWatchConfirmation(boolean authenticated) {
@@ -1837,10 +1836,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     }
 
     @Override
-    public void handleHeartRateCharacteristic(BluetoothGattCharacteristic characteristic) {
-        super.handleHeartRateCharacteristic(characteristic);
-
-        byte[] value = characteristic.getValue();
+    public void handleHeartRateCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleHeartRateCharacteristic(characteristic, value);
 
         int heartRate = value[1];
 
@@ -1848,10 +1845,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     }
 
     @Override
-    protected void handleBackgroundCharacteristic(BluetoothGattCharacteristic characteristic) {
-        super.handleBackgroundCharacteristic(characteristic);
-
-        byte[] value = characteristic.getValue();
+    protected void handleBackgroundCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleBackgroundCharacteristic(characteristic, value);
 
         byte requestType = value[1];
 

@@ -139,15 +139,16 @@ public class SoFlowSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
         if (UUID_CHARACTERISICS_NOTIFICATION.equals(characteristicUUID)) {
             try {
-                byte[] data = CryptoUtils.decryptAES(characteristic.getValue(), aesKey);
+                byte[] data = CryptoUtils.decryptAES(value, aesKey);
                 if (data[0] == 0x06 && data[1] == 0x01 && data[2] == 0x07) {
                     session[0] = data[3];
                     session[1] = data[4];
@@ -206,8 +207,9 @@ public class SoFlowSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();

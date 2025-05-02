@@ -49,8 +49,7 @@ public class UploadFileRequest extends Request {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         if (value.length == 4) {
             if (value[1] != 0) {
                 state = UploadState.ERROR;

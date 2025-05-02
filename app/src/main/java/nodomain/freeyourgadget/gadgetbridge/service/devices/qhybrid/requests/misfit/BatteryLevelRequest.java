@@ -31,10 +31,8 @@ public class BatteryLevelRequest extends Request {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
-
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
 
         if (value.length >= 3) {
             ByteBuffer buffer = ByteBuffer.wrap(value);

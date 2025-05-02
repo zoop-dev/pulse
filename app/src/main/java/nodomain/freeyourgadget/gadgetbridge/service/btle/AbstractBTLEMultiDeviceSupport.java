@@ -460,15 +460,16 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
 
         int deviceIdx = getDeviceIndexForAddress(gatt.getDevice().getAddress());
         if (bleApis[deviceIdx] != null) {
-            bleApis[deviceIdx].onCharacteristicChanged(characteristic);
+            bleApis[deviceIdx].onCharacteristicChanged(characteristic, value);
         }
 
         for (AbstractBleProfile<?> profile : mSupportedProfiles) {
-            if (profile.onCharacteristicRead(gatt, characteristic, status)) {
+            if (profile.onCharacteristicRead(gatt, characteristic, value, status)) {
                 return true;
             }
         }
@@ -510,14 +511,14 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic, byte[] value) {
         int deviceIdx = getDeviceIndexForAddress(gatt.getDevice().getAddress());
         if (bleApis[deviceIdx] != null) {
-            bleApis[deviceIdx].onCharacteristicChanged(characteristic);
+            bleApis[deviceIdx].onCharacteristicChanged(characteristic, value);
         }
 
         for (AbstractBleProfile<?> profile : mSupportedProfiles) {
-            if (profile.onCharacteristicChanged(gatt, characteristic)) {
+            if (profile.onCharacteristicChanged(gatt, characteristic, value)) {
                 return true;
             }
         }

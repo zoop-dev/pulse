@@ -44,11 +44,10 @@ public class FileDeleteRequest extends FossilRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
         if(!characteristic.getUuid().toString().equals("3dda0003-957f-7d4a-34a6-74696673696d"))
             throw new RuntimeException("wrong response UUID");
-        byte[] value = characteristic.getValue();
 
         if(value.length != 4) throw new RuntimeException("wrong response length");
 

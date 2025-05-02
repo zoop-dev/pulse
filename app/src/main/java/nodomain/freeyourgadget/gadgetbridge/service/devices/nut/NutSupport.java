@@ -178,14 +178,15 @@ public class NutSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
         if (characteristicUUID.equals(NutConstants.CHARAC_AUTH_STATUS)) {
-            handleAuthResult(characteristic.getValue());
+            handleAuthResult(value);
             return true;
         }
         LOG.info("Unhandled characteristic changed: " + characteristicUUID);
@@ -194,9 +195,9 @@ public class NutSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic,
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
                                         int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();

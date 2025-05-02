@@ -241,35 +241,36 @@ public class XWatchSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
+        super.onCharacteristicChanged(gatt, characteristic, data);
 
         UUID characteristicUUID = characteristic.getUuid();
         if (XWatchService.UUID_NOTIFY.equals(characteristicUUID)) {
-            byte[] data = characteristic.getValue();
             if (data[0] == XWatchService.COMMAND_ACTIVITY_TOTALS) {
-                handleSummarizedData(characteristic.getValue());
+                handleSummarizedData(data);
             } else if (data[0] == XWatchService.COMMAND_ACTIVITY_DATA) {
-                handleDetailedData(characteristic.getValue());
+                handleDetailedData(data);
             } else if (data[0] == XWatchService.COMMAND_ACTION_BUTTON) {
-                handleButtonPressed(characteristic.getValue());
+                handleButtonPressed(data);
             } else if (data[0] == XWatchService.COMMAND_CONNECTED) {
                 handleDeviceInfo(data, BluetoothGatt.GATT_SUCCESS);
             } else {
                 LOG.info("Handled characteristic with unknown data: " + characteristicUUID);
-                logMessageContent(characteristic.getValue());
+                logMessageContent(data);
             }
         } else {
             LOG.info("Unhandled characteristic changed: " + characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(data);
         }
         return false;
     }
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        return super.onCharacteristicChanged(gatt, characteristic);
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        return super.onCharacteristicChanged(gatt, characteristic, value);
         //TODO: Implement (if necessary)
     }
 

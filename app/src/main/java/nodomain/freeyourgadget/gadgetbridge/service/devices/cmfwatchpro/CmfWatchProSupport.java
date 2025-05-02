@@ -208,13 +208,13 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
 
     @Override
     public boolean onCharacteristicChanged(final BluetoothGatt gatt,
-                                           final BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           final BluetoothGattCharacteristic characteristic,
+                                           final byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         final UUID characteristicUUID = characteristic.getUuid();
-        final byte[] value = characteristic.getValue();
 
         if (characteristicUUID.equals(characteristicCommandRead.getCharacteristicUUID())) {
             characteristicCommandRead.onCharacteristicChanged(value);

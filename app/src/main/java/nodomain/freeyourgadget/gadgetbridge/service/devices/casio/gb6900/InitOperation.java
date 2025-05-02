@@ -61,10 +61,11 @@ public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSuppor
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
         LOG.info("Unhandled characteristic changed: " + characteristicUUID);
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private void configureBleSettings() {
@@ -94,10 +95,10 @@ public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSuppor
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] data,
+                                        int status) {
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
 
         if(data.length == 0)
             return true;
@@ -160,7 +161,7 @@ public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSuppor
             writeBleSettings();
         }
         else {
-            return super.onCharacteristicRead(gatt, characteristic, status);
+            return super.onCharacteristicRead(gatt, characteristic, data, status);
         }
 
         return true;

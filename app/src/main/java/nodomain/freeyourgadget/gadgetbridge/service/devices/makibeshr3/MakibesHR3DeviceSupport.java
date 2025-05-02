@@ -649,13 +649,13 @@ public class MakibesHR3DeviceSupport extends AbstractBTLEDeviceSupport implement
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
-        byte[] data = characteristic.getValue();
-        if (data.length < 6)
+        if (value.length < 6)
             return true;
 
         this.fetch(false);
@@ -663,7 +663,6 @@ public class MakibesHR3DeviceSupport extends AbstractBTLEDeviceSupport implement
         UUID characteristicUuid = characteristic.getUuid();
 
         if (characteristicUuid.equals(mReportCharacteristic.getUuid())) {
-            byte[] value = characteristic.getValue();
             byte[] arguments = new byte[value.length - 6];
 
             if (arguments.length >= 0) {

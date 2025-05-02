@@ -26,9 +26,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Req
 public class GetStepGoalRequest extends Request {
     public int stepGoal = -1;
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        super.handleResponse(characteristic);
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.handleResponse(characteristic, value);
         if (value.length < 6) {
             return;
         } else {

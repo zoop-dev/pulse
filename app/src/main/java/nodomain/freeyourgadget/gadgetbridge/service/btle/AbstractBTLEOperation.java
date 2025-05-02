@@ -182,8 +182,8 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport>
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-        return mSupport.onCharacteristicRead(gatt, characteristic, status);
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
+        return mSupport.onCharacteristicRead(gatt, characteristic, value, status);
     }
 
     @Override
@@ -192,8 +192,8 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport>
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        return mSupport.onCharacteristicChanged(gatt, characteristic);
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        return mSupport.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     @Override

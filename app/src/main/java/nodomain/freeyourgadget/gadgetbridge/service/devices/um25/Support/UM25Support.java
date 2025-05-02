@@ -168,11 +168,11 @@ public class UM25Support extends UM25BaseSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if(!characteristic.getUuid().toString().equals(UUID_CHAR)) return false;
 
         try{
-            buffer.put(characteristic.getValue());
+            buffer.put(value);
 
             if(buffer.position() == PAYLOAD_LENGTH){
                 handlePayload(buffer);

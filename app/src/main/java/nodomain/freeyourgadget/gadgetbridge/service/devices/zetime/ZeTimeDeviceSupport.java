@@ -796,12 +796,13 @@ public class ZeTimeDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
         if (ZeTimeConstants.UUID_ACK_CHARACTERISTIC.equals(characteristicUUID)) {
-            byte[] data = receiveCompleteMsg(characteristic.getValue());
+            byte[] data = receiveCompleteMsg(value);
             if (isMsgFormatOK(data)) {
                 switch (data[1]) {
                     case ZeTimeConstants.CMD_WATCH_ID:
@@ -870,7 +871,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLEDeviceSupport {
             }
             return true;
         } else if (ZeTimeConstants.UUID_NOTIFY_CHARACTERISTIC.equals(characteristicUUID)) {
-            byte[] data = receiveCompleteMsg(characteristic.getValue());
+            byte[] data = receiveCompleteMsg(value);
             if (isMsgFormatOK(data)) {
                 switch (data[1]) {
                     case ZeTimeConstants.CMD_MUSIC_CONTROL:
@@ -884,7 +885,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLEDeviceSupport {
             }
         } else {
             LOG.warn("Unhandled characteristic changed: {}", characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
         return false;
     }

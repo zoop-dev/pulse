@@ -25,8 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Req
 
 public class GoalTrackingGetRequest extends Request {
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] value = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         if(value.length != 5) return;
 
         ByteBuffer buffer = ByteBuffer.wrap(value);

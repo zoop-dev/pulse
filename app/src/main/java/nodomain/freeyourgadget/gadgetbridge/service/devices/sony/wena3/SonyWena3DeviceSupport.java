@@ -198,14 +198,14 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if(characteristic.getUuid().equals(SonyWena3Constants.COMMON_SERVICE_CHARACTERISTIC_STATE_UUID)) {
-            BatteryLevelInfo stateInfo = new BatteryLevelInfo(characteristic.getValue());
+            BatteryLevelInfo stateInfo = new BatteryLevelInfo(value);
             handleGBDeviceEvent(stateInfo.toDeviceEvent());
             return true;
         }
         else if (characteristic.getUuid().equals(SonyWena3Constants.NOTIFICATION_SERVICE_CHARACTERISTIC_UUID)) {
-            NotificationServiceStatusRequest request = new NotificationServiceStatusRequest(characteristic.getValue());
+            NotificationServiceStatusRequest request = new NotificationServiceStatusRequest(value);
             if(request.requestType == StatusRequestType.MUSIC_INFO_FETCH.value) {
                 LOG.debug("Request for music info received");
                 if(lastMusicState != null && lastMusicState.state == MusicStateSpec.STATE_PLAYING && lastMusicInfo != null) {
@@ -237,20 +237,20 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
                 LOG.warn("Unknown NotificationServiceStatusRequest " + request.requestType);
             }
         } else if(characteristic.getUuid().equals(SonyWena3Constants.ACTIVITY_LOG_CHARACTERISTIC_UUID)) {
-            ActivitySyncDataPacket asdp = new ActivitySyncDataPacket(characteristic.getValue());
+            ActivitySyncDataPacket asdp = new ActivitySyncDataPacket(value);
             activitySyncHandler.receivePacket(asdp, getDevice());
         }
         return false;
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if(characteristic.getUuid().equals(SonyWena3Constants.COMMON_SERVICE_CHARACTERISTIC_STATE_UUID)) {
-            BatteryLevelInfo stateInfo = new BatteryLevelInfo(characteristic.getValue());
+            BatteryLevelInfo stateInfo = new BatteryLevelInfo(value);
             handleGBDeviceEvent(stateInfo.toDeviceEvent());
             return true;
         } else if(characteristic.getUuid().equals(SonyWena3Constants.COMMON_SERVICE_CHARACTERISTIC_INFO_UUID)) {
-            DeviceInfo deviceInfo = new DeviceInfo(characteristic.getValue());
+            DeviceInfo deviceInfo = new DeviceInfo(value);
             handleGBDeviceEvent(deviceInfo.toDeviceEvent());
             return true;
         }

@@ -1381,11 +1381,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] value = characteristic.getValue();
         if (WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE.equals(characteristicUUID)) {
             if (ArrayUtils.equals(value, WatchXPlusConstants.RESP_FIRMWARE_INFO, 5)) {
                 handleFirmwareInfo(value);
@@ -1440,7 +1440,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                 LOG.info(" Received notification settings status ");
             } else {
                 LOG.info(" Unhandled value change for characteristic: " + characteristicUUID);
-                logMessageContent(characteristic.getValue());
+                logMessageContent(value);
             }
 
             return true;
@@ -1450,7 +1450,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         } else {
             LOG.info(" Unhandled characteristic changed: " + characteristicUUID + " value " + Arrays.toString(value));
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
 
         return false;

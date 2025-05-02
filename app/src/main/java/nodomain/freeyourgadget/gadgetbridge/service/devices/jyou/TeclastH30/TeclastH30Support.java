@@ -40,13 +40,13 @@ public class TeclastH30Support extends JYouSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
+        if (super.onCharacteristicChanged(gatt, characteristic, data)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
         if (data.length == 0)
             return true;
 

@@ -99,9 +99,9 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
 
         if (data.length == 0)
             return true;
@@ -162,13 +162,14 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
         }
 
         LOG.info("Unhandled characteristic changed: " + characteristicUUID);
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, data);
     }
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
 
-        return super.onCharacteristicRead(gatt, characteristic, status);
+        return super.onCharacteristicRead(gatt, characteristic, value, status);
     }
 }

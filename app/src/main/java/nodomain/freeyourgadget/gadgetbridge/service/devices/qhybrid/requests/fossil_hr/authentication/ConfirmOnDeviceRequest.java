@@ -27,11 +27,10 @@ public class ConfirmOnDeviceRequest extends AuthenticationRequest {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] value) {
         if(!characteristic.getUuid().equals(getRequestUUID())){
             throw new RuntimeException("wrong characteristic responded to authentication");
         }
-        byte[] value = characteristic.getValue();
         if(value.length != 4){
             throw new RuntimeException("wrong authentication response length");
         }

@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Böhler, Andreas Shimokawa, Carsten
+/*  Copyright (C) 2015-2025 Andreas Böhler, Andreas Shimokawa, Carsten
     Pfeiffer, Cre3per, Daniel Dakhno, Daniele Gobbetti, Gordon Williams, José
-    Rebelo, Sergey Trofimov, Taavi Eomäe, Uwe Hermann, Yoran Vulker
+    Rebelo, Sergey Trofimov, Taavi Eomäe, Uwe Hermann, Yoran Vulker, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -34,6 +34,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -60,6 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 @SuppressLint("MissingPermission") // if we're using this, we have bluetooth permissions
 public final class BtLEQueue {
     private static final Logger LOG = LoggerFactory.getLogger(BtLEQueue.class);
+    private static final byte[] EMPTY = new byte[0];
 
     private final Object mGattMonitor = new Object();
     private final GBDevice mGbDevice;
@@ -123,7 +125,7 @@ public final class BtLEQueue {
                                 break;
                             }
                             if (LOG.isDebugEnabled()) {
-                                LOG.debug("About to run server action: " + action);
+                                LOG.debug("About to run server action: {}", action);
                             }
                             if (action.run(mBluetoothGattServer)) {
                                 // check again, maybe due to some condition, action did not need to write, so we can't wait
@@ -160,14 +162,14 @@ public final class BtLEQueue {
                               try {
                                   Thread.sleep(100);
                               } catch (Exception e) {
-                                  LOG.info("Exception during pause: {}", e);
+                                  LOG.info("Exception during pause", e);
                                   break;
                               }
                             }
                             mWaitCharacteristic = action.getCharacteristic();
                             mWaitForActionResultLatch = new CountDownLatch(1);
                             if (LOG.isDebugEnabled()) {
-                                LOG.debug("About to run action: " + action);
+                                LOG.debug("About to run action: {}", action);
                             }
                             if (action instanceof GattListenerAction) {
                                 // this special action overwrites the transaction gatt listener (if any), it must
@@ -259,7 +261,7 @@ public final class BtLEQueue {
             if (mBluetoothGatt != null) {
                 // Tribal knowledge says you're better off not reusing existing BluetoothGatt connections,
                 // so create a new one.
-                LOG.info("connect() requested -- disconnecting previous connection: " + mGbDevice.getName());
+                LOG.info("connect() requested -- disconnecting previous connection: {}", mGbDevice.getName());
                 disconnect();
             }
         }
@@ -613,18 +615,26 @@ public final class BtLEQueue {
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic,
                                          int status) {
+            byte[] value = emulateMemorySafeValue(characteristic, status);
+            onCharacteristicRead(gatt, characteristic, value, status);
+        }
+
+        @Override
+        public void onCharacteristicRead(@NonNull BluetoothGatt gatt,
+                                         BluetoothGattCharacteristic characteristic,
+                                         @NonNull byte[] value, int status) {
             LOG.debug(
                     "characteristic read: {} {} {}",
                     characteristic.getUuid(),
                     BleNamesResolver.getStatusString(status),
-                    status == BluetoothGatt.GATT_SUCCESS ? ": " + Logging.formatBytes(characteristic.getValue()) : ""
+                    status == BluetoothGatt.GATT_SUCCESS ? ": " + Logging.formatBytes(value) : ""
             );
             if (!checkCorrectGattInstance(gatt, "characteristic read")) {
                 return;
             }
             if (getCallbackToUse() != null) {
                 try {
-                    getCallbackToUse().onCharacteristicRead(gatt, characteristic, status);
+                    getCallbackToUse().onCharacteristicRead(gatt, characteristic, value, status);
                 } catch (Throwable ex) {
                     LOG.error("onCharacteristicRead: {}", ex.getMessage(), ex);
                 }
@@ -667,8 +677,16 @@ public final class BtLEQueue {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
+            byte[] value = emulateMemorySafeValue(characteristic, BluetoothGatt.GATT_SUCCESS);
+            onCharacteristicChanged(gatt, characteristic, value);
+        }
+
+        @Override
+        public void onCharacteristicChanged(@NonNull BluetoothGatt gatt,
+                                            @NonNull BluetoothGattCharacteristic characteristic,
+                                            @NonNull byte[] value) {
             if (LOG.isDebugEnabled()) {
-                String content = Logging.formatBytes(characteristic.getValue());
+                String content = Logging.formatBytes(value);
                 LOG.debug("characteristic changed: {} value: {}", characteristic.getUuid(), content);
             }
             if (!checkCorrectGattInstance(gatt, "characteristic changed")) {
@@ -676,7 +694,7 @@ public final class BtLEQueue {
             }
             if (getCallbackToUse() != null) {
                 try {
-                    getCallbackToUse().onCharacteristicChanged(gatt, characteristic);
+                    getCallbackToUse().onCharacteristicChanged(gatt, characteristic, value);
                 } catch (Throwable ex) {
                     LOG.error("onCharacteristicChanged failed", ex);
                 }
@@ -726,6 +744,18 @@ public final class BtLEQueue {
                 LOG.debug("internal gatt callback set to null");
             }
             mTransactionGattCallback = null;
+        }
+
+        /// helper to emulate Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU on older APIs
+        private byte[] emulateMemorySafeValue(BluetoothGattCharacteristic characteristic,
+                                              int status){
+            if(status == BluetoothGatt.GATT_SUCCESS) {
+                byte[] value = characteristic.getValue();
+                if (value != null) {
+                    return value.clone();
+                }
+            }
+            return EMPTY;
         }
     }
 

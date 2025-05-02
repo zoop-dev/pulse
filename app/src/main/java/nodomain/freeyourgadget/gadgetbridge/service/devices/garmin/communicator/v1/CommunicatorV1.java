@@ -91,9 +91,9 @@ public class CommunicatorV1 implements ICommunicator {
     }
 
     @Override
-    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final byte[] value) {
         if (characteristic.getUuid().equals(characteristicReceive.getUuid())) {
-            this.cobsCoDec.receivedBytes(characteristic.getValue());
+            this.cobsCoDec.receivedBytes(value);
             this.mSupport.onMessage(this.cobsCoDec.retrieveMessage());
 
             return true;

@@ -64,11 +64,11 @@ public class InitOperation extends AbstractBTLEOperation<WatchXPlusDeviceSupport
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
         if (Watch9Constants.UUID_CHARACTERISTIC_WRITE.equals(characteristicUUID) && needsAuth) {
             try {
-                byte[] value = characteristic.getValue();
                 getSupport().logMessageContent(value);
                 if (ArrayUtils.equals(value, Watch9Constants.RESP_AUTHORIZATION_TASK, 5) && value[8] == 0x01) {
                     TransactionBuilder builder = getSupport().createTransactionBuilder("authInit");
@@ -76,7 +76,7 @@ public class InitOperation extends AbstractBTLEOperation<WatchXPlusDeviceSupport
                     builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
                     getSupport().initialize(builder).performImmediately(builder);
                 } else {
-                    return super.onCharacteristicChanged(gatt, characteristic);
+                    return super.onCharacteristicChanged(gatt, characteristic, value);
                 }
             } catch (Exception e) {
                 GB.toast(getContext(), "Error authenticating Watch X Plus", Toast.LENGTH_LONG, GB.ERROR, e);
@@ -84,7 +84,7 @@ public class InitOperation extends AbstractBTLEOperation<WatchXPlusDeviceSupport
             return true;
         } else {
             LOG.info("Unhandled characteristic changed: " + characteristicUUID);
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, value);
         }
     }
 

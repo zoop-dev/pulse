@@ -285,12 +285,11 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
+        if (super.onCharacteristicChanged(gatt, characteristic, data)) {
             return true;
         }
-
-        byte[] data = characteristic.getValue();
 
         boolean complete = messageBuilder.buildMessage(data);
         if (complete) {

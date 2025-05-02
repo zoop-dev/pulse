@@ -29,8 +29,7 @@ public class OTAEnterRequest extends Request {
     }
 
     @Override
-    public void handleResponse(BluetoothGattCharacteristic characteristic) {
-        byte[] result = characteristic.getValue();
+    public void handleResponse(BluetoothGattCharacteristic characteristic, byte[] result) {
         success = result[2] == 9;
     }
 }

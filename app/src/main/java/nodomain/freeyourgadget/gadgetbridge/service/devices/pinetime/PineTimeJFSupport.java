@@ -587,8 +587,9 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();
@@ -651,14 +652,14 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        if (super.onCharacteristicChanged(gatt, characteristic, value)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
         if (characteristicUUID.equals(PineTimeJFConstants.UUID_CHARACTERISTICS_MUSIC_EVENT)) {
-            byte[] value = characteristic.getValue();
             GBDeviceEventMusicControl deviceEventMusicControl = new GBDeviceEventMusicControl();
 
             switch (value[0]) {
@@ -686,7 +687,6 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
             evaluateGBDeviceEvent(deviceEventMusicControl);
             return true;
         } else if (characteristicUUID.equals(PineTimeJFConstants.UUID_CHARACTERISTIC_ALERT_NOTIFICATION_EVENT)) {
-            byte[] value = characteristic.getValue();
             GBDeviceEventCallControl deviceEventCallControl = new GBDeviceEventCallControl();
             switch (value[0]) {
                 case 0:
@@ -704,14 +704,14 @@ public class PineTimeJFSupport extends AbstractBTLEDeviceSupport implements DfuL
             evaluateGBDeviceEvent(deviceEventCallControl);
             return true;
         } else if (characteristicUUID.equals(PineTimeJFConstants.UUID_CHARACTERISTIC_MOTION_STEP_COUNT)) {
-            int steps = BLETypeConversions.toUint32(characteristic.getValue());
+            int steps = BLETypeConversions.toUint32(value);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("onCharacteristicChanged: MotionService:Steps=" + steps);
             }
             onReceiveStepsSample(steps);
             return true;
         } else if (characteristicUUID.equals(PineTimeJFConstants.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT)) {
-            int heartrate = Byte.toUnsignedInt(characteristic.getValue()[1]);
+            int heartrate = Byte.toUnsignedInt(value[1]);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("onCharacteristicChanged: HeartRateMeasurement:HeartRate=" + heartrate);
             }

@@ -213,14 +213,14 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+    public boolean onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic,
+                                        final byte[] raw, final int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, raw, status)) {
             return true;
         }
 
 
         if (STATE.uuid.equals(characteristic.getUuid())) {
-            final byte[] raw = characteristic.getValue();
             LOG.debug("UH>>GB read {} {} {}", STATE, status, StringUtils.bytesToHex(raw));
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 return decodeDeviceState(raw);
@@ -231,13 +231,12 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] raw) {
+        if (super.onCharacteristicChanged(gatt, characteristic, raw)) {
             return true;
         }
 
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] raw = characteristic.getValue();
 
         if (STATE.uuid.equals(characteristicUUID)) {
             LOG.debug("UH>>GB changed STATE {}", StringUtils.bytesToHex(raw));

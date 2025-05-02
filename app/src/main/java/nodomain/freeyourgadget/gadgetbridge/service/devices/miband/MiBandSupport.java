@@ -805,55 +805,57 @@ public class MiBandSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
         if (MiBandService.UUID_CHARACTERISTIC_BATTERY.equals(characteristicUUID)) {
-            handleBatteryInfo(characteristic.getValue(), BluetoothGatt.GATT_SUCCESS);
+            handleBatteryInfo(value, BluetoothGatt.GATT_SUCCESS);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_NOTIFICATION.equals(characteristicUUID)) {
-            handleNotificationNotif(characteristic.getValue());
+            handleNotificationNotif(value);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_REALTIME_STEPS.equals(characteristicUUID)) {
-            handleRealtimeSteps(characteristic.getValue());
+            handleRealtimeSteps(value);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristicUUID)) {
-            handleHeartrate(characteristic.getValue());
+            handleHeartrate(value);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_SENSOR_DATA.equals(characteristicUUID)) {
-            handleSensorData(characteristic.getValue());
+            handleSensorData(value);
         } else {
             LOG.info("Unhandled characteristic changed: " + characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
         return false;
     }
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        super.onCharacteristicRead(gatt, characteristic, status);
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        super.onCharacteristicRead(gatt, characteristic, value, status);
 
         UUID characteristicUUID = characteristic.getUuid();
         if (MiBandService.UUID_CHARACTERISTIC_DEVICE_INFO.equals(characteristicUUID)) {
-            handleDeviceInfo(characteristic.getValue(), status);
+            handleDeviceInfo(value, status);
             return true;
         } else if (GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME.equals(characteristicUUID)) {
-            handleDeviceName(characteristic.getValue(), status);
+            handleDeviceName(value, status);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_BATTERY.equals(characteristicUUID)) {
-            handleBatteryInfo(characteristic.getValue(), status);
+            handleBatteryInfo(value, status);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristicUUID)) {
-            logHeartrate(characteristic.getValue(), status);
+            logHeartrate(value, status);
             return true;
         } else if (MiBandService.UUID_CHARACTERISTIC_DATE_TIME.equals(characteristicUUID)) {
-            logDate(characteristic.getValue(), status);
+            logDate(value, status);
             return true;
         } else {
             LOG.info("Unhandled characteristic read: " + characteristicUUID);
-            logMessageContent(characteristic.getValue());
+            logMessageContent(value);
         }
         return false;
     }

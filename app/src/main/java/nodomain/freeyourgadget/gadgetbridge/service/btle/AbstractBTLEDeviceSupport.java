@@ -377,13 +377,14 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
         if(bleApi != null && status == BluetoothGatt.GATT_SUCCESS) {
-            bleApi.onCharacteristicChanged(characteristic);
+            bleApi.onCharacteristicChanged(characteristic, value);
         }
 
         for (AbstractBleProfile<?> profile : mSupportedProfiles) {
-            if (profile.onCharacteristicRead(gatt, characteristic, status)) {
+            if (profile.onCharacteristicRead(gatt, characteristic, value, status)) {
                 return true;
             }
         }
@@ -423,13 +424,13 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic, byte[] value) {
         if(bleApi != null) {
-            bleApi.onCharacteristicChanged(characteristic);
+            bleApi.onCharacteristicChanged(characteristic, value);
         }
 
         for (AbstractBleProfile<?> profile : mSupportedProfiles) {
-            if (profile.onCharacteristicChanged(gatt, characteristic)) {
+            if (profile.onCharacteristicChanged(gatt, characteristic, value)) {
                 return true;
             }
         }

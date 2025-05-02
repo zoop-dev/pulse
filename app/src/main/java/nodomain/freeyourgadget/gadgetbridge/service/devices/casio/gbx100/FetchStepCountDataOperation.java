@@ -120,9 +120,9 @@ public class FetchStepCountDataOperation  extends AbstractBTLEOperation<CasioGBX
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] data) {
         UUID characteristicUUID = characteristic.getUuid();
-        byte[] data = characteristic.getValue();
 
         if (data.length == 0)
             return true;
@@ -282,7 +282,7 @@ public class FetchStepCountDataOperation  extends AbstractBTLEOperation<CasioGBX
             return true;
         } else {
             LOG.warn("Unhandled characteristic changed: {}", characteristicUUID);
-            return super.onCharacteristicChanged(gatt, characteristic);
+            return super.onCharacteristicChanged(gatt, characteristic, data);
         }
     }
 

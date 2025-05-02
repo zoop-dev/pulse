@@ -86,19 +86,21 @@ public class AsteroidOSDeviceSupport extends AbstractBTLEDeviceSupport {
         handleGBDeviceEvent(batteryCmd);
     }
 
+    @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        super.onCharacteristicChanged(gatt, characteristic);
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
 
         UUID characteristicUUID = characteristic.getUuid();
 
         if (characteristicUUID.equals(AsteroidOSConstants.MEDIA_COMMANDS_CHAR)) {
-            handleMediaCommand(characteristic);
+            handleMediaCommand(characteristic, value);
             return true;
         }
 
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
-        LOG.info("Characteristic changed value: " + Arrays.toString(characteristic.getValue()));
+        LOG.info("Characteristic changed value: " + Arrays.toString(value));
         return false;
     }
 
@@ -258,8 +260,9 @@ public class AsteroidOSDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic characteristic, int status) {
-        if (super.onCharacteristicRead(gatt, characteristic, status)) {
+                                        BluetoothGattCharacteristic characteristic, byte[] value,
+                                        int status) {
+        if (super.onCharacteristicRead(gatt, characteristic, value, status)) {
             return true;
         }
         UUID characteristicUUID = characteristic.getUuid();
@@ -273,9 +276,9 @@ public class AsteroidOSDeviceSupport extends AbstractBTLEDeviceSupport {
      * Handles a media command sent from the AsteroidOS device
      * @param characteristic The Characteristic information
      */
-    public void handleMediaCommand (BluetoothGattCharacteristic characteristic) {
+    public void handleMediaCommand (BluetoothGattCharacteristic characteristic, byte[] value) {
         LOG.info("handle media command");
-        AsteroidOSMediaCommand command = new AsteroidOSMediaCommand(characteristic.getValue(), getContext());
+        AsteroidOSMediaCommand command = new AsteroidOSMediaCommand(value, getContext());
         GBDeviceEventMusicControl event = command.toMusicControlEvent();
         if (event != null)
             evaluateGBDeviceEvent(event);

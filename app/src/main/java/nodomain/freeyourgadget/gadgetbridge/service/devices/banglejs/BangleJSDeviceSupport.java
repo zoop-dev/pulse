@@ -1193,12 +1193,12 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        if (super.onCharacteristicChanged(gatt, characteristic)) {
+                                           BluetoothGattCharacteristic characteristic,
+                                           byte[] chars) {
+        if (super.onCharacteristicChanged(gatt, characteristic, chars)) {
             return true;
         }
         if (BangleJSConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX.equals(characteristic.getUuid())) {
-            byte[] chars = characteristic.getValue();
             // check to see if we get more data - if so, increase out MTU for sending
             if (allowHighMTU && chars.length > mtuSize)
                 mtuSize = chars.length;
