@@ -378,7 +378,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt,
                                         BluetoothGattCharacteristic characteristic, int status) {
-        if(bleApi != null) {
+        if(bleApi != null && status == BluetoothGatt.GATT_SUCCESS) {
             bleApi.onCharacteristicChanged(characteristic);
         }
 
