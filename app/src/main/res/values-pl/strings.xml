@@ -4054,4 +4054,15 @@
     <string name="swim_style_butterfly">Motylek</string>
     <string name="metabolic_rate">Tempo metabolizmu</string>
     <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
+    <string name="ultrahuman_breathing_start">Start</string>
+    <string name="ultrahuman_breathing_title">Oddychanie</string>
+    <string name="notifications_app_icon_uploading_confirm_description">Czy na pewno chcesz przesłać %1$d ikon aplikacji?</string>
+    <string name="pref_notifications_app_icon_upload_title">Prześlij ikony aplikacji powiadomień</string>
+    <string name="pref_notifications_app_icon_upload_summary">Przesyłanie ikon aplikacji powiadomień do urządzenia</string>
+    <string name="notifications_app_icon_nothing_selected">Wybierz co najmniej jedną aplikację do przesłania</string>
+    <string name="notifications_app_icon_upload">Prześlij ikonę aplikacji powiadomień</string>
+    <string name="ultrahuman_breathing_stop">Stop</string>
+    <string name="notifications_app_icon_upload_to_device">Prześlij do urządzenia</string>
+    <string name="notifications_app_icon_info">Wybierz aplikacje i naciśnij przycisk Prześlij do urządzenia. Wszelkie wcześniej przesłane ikony mogą zostać zastąpione. Aktualne ograniczenia urządzenia nie są znane.</string>
+    <string name="notifications_app_icon_uploading">Ikony zostaną przesłane w tle. Możesz zamknąć tę aktywność</string>
 </resources>
