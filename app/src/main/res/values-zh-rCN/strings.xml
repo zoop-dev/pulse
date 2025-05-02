@@ -4035,4 +4035,12 @@
     <string name="workout_intervals">间隔</string>
     <string name="metabolic_rate">代谢率</string>
     <string name="devicetype_garmin_instinct_2x_tactical">佳明 Instinct 2X Tactical</string>
+    <string name="notifications_app_icon_upload_to_device">上传至设备</string>
+    <string name="notifications_app_icon_nothing_selected">请选择至少一个要上传的应用</string>
+    <string name="notifications_app_icon_uploading_confirm_description">您确定要上传 %1$d 个应用程序图标吗？</string>
+    <string name="pref_notifications_app_icon_upload_title">上传通知应用图标</string>
+    <string name="pref_notifications_app_icon_upload_summary">将通知应用程序图标上传到设备</string>
+    <string name="notifications_app_icon_info">选择应用程序并点击“上传至设备”。之前上传的任何图标都可能被替换。当前设备限制未知。</string>
+    <string name="notifications_app_icon_uploading">图标将在后台上传。您可以关闭此活动</string>
+    <string name="notifications_app_icon_upload">上传应用通知图标</string>
 </resources>
