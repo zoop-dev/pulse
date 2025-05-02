@@ -498,7 +498,7 @@
     <string name="pref_summary_rtl">Activar si tu dispositivo no puede mostrar idiomas de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length">Longitud de línea máxima de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length_summary">Alarga o acorta las líneas de texto de derecha a izquierda si contiene separaciones</string>
-    <string name="pref_title_pebble_gatt_clientonly">Sólo cliente GATT</string>
+    <string name="pref_title_pebble_gatt_clientonly">Solo cliente GATT</string>
     <string name="pref_summary_pebble_gatt_clientonly">Esto es solo para Pebble 2 y es experimental, pruébalo si tienes problemas de conectividad</string>
     <string name="prefs_screen_orientation">Orientación de pantalla</string>
     <string name="pref_auto_fetch_summary">La recuperación funciona luego de desbloquear la pantalla. ¡Sólo funciona si se ha definido un mecanismo de bloqueo!</string>
@@ -937,7 +937,7 @@
     <string name="activity_type_indoor_cycling">Ciclismo en interiores</string>
     <string name="activity_type_swimming_openwater">Nadar (Aguas abiertas)</string>
     <string name="find_lost_device_you_found_it">¡Encontrado!</string>
-    <string name="charts_legend_heartrate_average">Frec. cardíaca (promedio)</string>
+    <string name="charts_legend_heartrate_average">Frec. cardíaca media</string>
     <string name="activity_prefs_chart_min_session_length">Duración mínima de la actividad (minutos)</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Duración de la pausa para separar las actividades (minutos)</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Pasos mínimos por minuto para detectar la actividad</string>
@@ -1168,7 +1168,7 @@
     <string name="watchface_dialog_widget_type">Tipo</string>
     <string name="appmanager_app_edit">Editar</string>
     <string name="button_watchface_save_apply">Guardar y aplicar</string>
-    <string name="button_watchface_preview">Vista previa en el reloj</string>
+    <string name="button_watchface_preview">Previsualizar en reloj</string>
     <string name="watchface_widget_type_heart_rate">Frecuencia cardíaca</string>
     <string name="watchface_widget_type_steps">Pasos</string>
     <string name="watchface_widget_type_weather">Meteorología</string>
@@ -1526,7 +1526,7 @@
     <string name="pref_header_sound_vibration">Sonido y vibración</string>
     <string name="pref_header_offline_voice">Voz sin conexión</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Tamaño de los mapas de bits de texto</string>
-    <string name="pref_explanation_authkey_new_protocol">Si aparece el mensaje \"Actualizar la aplicación a la última versión\" en la pulsera, asegúrate de comprobar el \"Nuevo protocolo de autenticación\" más arriba. Pulsa aquí para obtener más detalles en la wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Si aparece el mensaje «Actualizar la aplicación a la última versión» en la pulsera, asegúrese de marcar el «Nuevo protocolo de autenticación» más arriba. Pulse aquí para obtener más detalles en el wiki.</string>
     <string name="pref_gps_header">GPS</string>
     <string name="pref_gps_mode_preset">Modo GPS</string>
     <string name="pref_gps_band">Banda GPS</string>
@@ -3757,4 +3757,9 @@
     <string name="huawei_stress_calibrate_information">Para mejores resultados, descanse un rato antes de empezar la prueba y manténgase inmóvil mientras transcurre.\nAjústese bien el dispositivo, con la pantalla hacia arriba y el sensor en contacto directo con su piel.</string>
     <string name="dual_device_mode_title">Modo de dispositivo dual</string>
     <string name="weather_condition_extreme_rain">lluvia extrema</string>
+    <string name="pref_huawei_activity_reminders">Recordatorios de actividad</string>
+    <string name="pref_huawei_activity_reminder_progress_title">Progreso</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_title">Meta alcanzada</string>
+    <string name="pref_huawei_activity_reminder_stand_title">Ponerse en pie</string>
+    <string name="swim_style_mixed">Mixto</string>
 </resources>
