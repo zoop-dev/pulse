@@ -343,7 +343,7 @@
     <string name="charts_legend_heartrate">Frecuencia cardíaca</string>
     <string name="live_activity_heart_rate">Frecuencia cardíaca</string>
     <string name="pref_title_pebble_health_store_raw">Almacenar datos en bruto en la base de datos </string>
-    <string name="pref_summary_pebble_health_store_raw">Almacena los datos en su forma original, por lo que la base de datos es más grande, pero permite una evaluación posterior.</string>
+    <string name="pref_summary_pebble_health_store_raw">Almacena los datos «tal cual», aumentando el uso de la base de datos para permitir una interpretación posterior.</string>
     <string name="action_db_management">Administración de datos</string>
     <string name="title_activity_db_management">Administración de datos</string>
     <string name="activity_db_management_import_export_explanation">Las operaciones de exportación/importación utilizan la siguiente ruta (véase más abajo) a un directorio de tu dispositivo. Este directorio es accesible a otras aplicaciones Android y a tu ordenador. Ten en cuenta que este directorio y todos los archivos que contiene se eliminan si desinstalas Gadgetbridge. Los datos incluyen:\n· Export_preference - ajustes globales\n· Export_preference_MAC - ajustes específicos del dispositivo\n· Gadgetbridge - base de datos de dispositivos y actividades\n· Gadgetbridge_date - base de datos exportada en una fecha\n· *.gpx - grabaciones GPS\n· *.log - archivos de registro\nEspera encontrar tus archivos exportados (o coloca los archivos que deseas importar) en:</string>
@@ -3086,7 +3086,7 @@
     <string name="activity_type_water_scooter">Scooter subacuático</string>
     <string name="activity_type_laser_tag">Laser Combat</string>
     <string name="activity_type_obstacle_race">Carreras de obstáculos</string>
-    <string name="activity_type_orienteering">Orienteering</string>
+    <string name="activity_type_orienteering">Orientación</string>
     <string name="activity_type_sledding">Descenso en trineo</string>
     <string name="activity_type_biathlon">Biatlón</string>
     <string name="activity_type_bungee_jumping">Puenting</string>
