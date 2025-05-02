@@ -305,9 +305,11 @@ public class HuaweiCoordinator {
         if(supportsTemperature()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_temperature_automatic_enable);
         }
-
         if(supportsAutoStress()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_stress);
+        }
+        if(supportsThreeCircle() || supportsThreeCircleLite()) {
+            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_activity_reminders);
         }
 
         // Notifications
@@ -326,7 +328,6 @@ public class HuaweiCoordinator {
         if (supportsNotificationsAddIconTimestamp() && device.isConnected()) {
             notifications.add(R.xml.devicesettings_upload_notifications_app_icon);
         }
-
 
         // Workout
         if (supportsSendingGps())

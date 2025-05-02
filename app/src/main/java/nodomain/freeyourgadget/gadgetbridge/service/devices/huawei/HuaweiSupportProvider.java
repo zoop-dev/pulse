@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_STAND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS;
 
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -1185,6 +1188,15 @@ public class HuaweiSupportProvider {
                 case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
                     setStandingTime();
                     break;
+                case PREF_HUAWEI_ACTIVITY_REMINDER_STAND:
+                    setActivityReminderStand();
+                    break;
+                case PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS:
+                    setActivityReminderProgress();
+                    break;
+                case PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED:
+                    setActivityReminderGoalReached();
+                    break;
                 case DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE:
                     if (GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE, false)) {
                         SendCameraRemoteSetupEvent sendCameraRemoteSetupEvent = new SendCameraRemoteSetupEvent(this, CameraRemote.CameraRemoteSetup.Request.Event.ENABLE_CAMERA);
@@ -1229,7 +1241,9 @@ public class HuaweiSupportProvider {
     public void setStepsGoal() {
         if(huaweiDataSyncTreeCircleGoals != null) {
             int stepGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
-            huaweiDataSyncTreeCircleGoals.sendStepsGoal(stepGoal);
+            if(! huaweiDataSyncTreeCircleGoals.sendStepsGoal(stepGoal)) {
+                LOG.error("Error to set stand goal");
+            }
         } else {
             try {
                 new SendFitnessGoalRequest(this).doPerform();
@@ -1242,7 +1256,9 @@ public class HuaweiSupportProvider {
     public void setCaloriesBurntGoal() {
         if(huaweiDataSyncTreeCircleGoals != null) {
             int caloriesBurntGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
-            huaweiDataSyncTreeCircleGoals.sendCaloriesBurntGoal(caloriesBurntGoal);
+            if(!huaweiDataSyncTreeCircleGoals.sendCaloriesBurntGoal(caloriesBurntGoal)) {
+                LOG.error("Error to set calories burnt goal");
+            }
         } else {
             try {
                 new SendFitnessGoalRequest(this).doPerform();
@@ -1255,7 +1271,9 @@ public class HuaweiSupportProvider {
     public void setFatBurnTime() {
         if(huaweiDataSyncTreeCircleGoals != null) {
             int fatBurnTimeGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, ActivityUser.defaultUserFatBurnTimeMinutes);
-            huaweiDataSyncTreeCircleGoals.sendExerciseGoal(fatBurnTimeGoal);
+            if(!huaweiDataSyncTreeCircleGoals.sendExerciseGoal(fatBurnTimeGoal)) {
+                LOG.error("Error to set exercise goal");
+            }
         } else {
             try {
                 new SendFitnessGoalRequest(this).doPerform();
@@ -1268,12 +1286,41 @@ public class HuaweiSupportProvider {
     public void setStandingTime() {
         if(huaweiDataSyncTreeCircleGoals != null) {
             int standingTimeGoal = GBApplication.getPrefs().getInt(PREF_USER_GOAL_STANDING_TIME_HOURS, ActivityUser.defaultUserGoalStandingTimeHours);
-            huaweiDataSyncTreeCircleGoals.sendStandGoal(standingTimeGoal);
+            if(!huaweiDataSyncTreeCircleGoals.sendStandGoal(standingTimeGoal)) {
+                LOG.error("Error to set stand goal");
+            }
         } else {
             try {
                 new SendFitnessGoalRequest(this).doPerform();
             } catch (IOException e) {
                 LOG.error("SendFitnessGoalRequest failed", e);
+            }
+        }
+    }
+
+    public void setActivityReminderStand() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            boolean state = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(PREF_HUAWEI_ACTIVITY_REMINDER_STAND, true);
+            if(!huaweiDataSyncTreeCircleGoals.sendRemindersStand(state)) {
+                LOG.error("Error to set stand reminder");
+            }
+        }
+    }
+
+    public void setActivityReminderProgress() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            boolean state = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS, true);
+            if(!huaweiDataSyncTreeCircleGoals.sendRemindersProgress(state)) {
+                LOG.error("Error to set progress reminder");
+            }
+        }
+    }
+
+    public void setActivityReminderGoalReached() {
+        if(huaweiDataSyncTreeCircleGoals != null) {
+            boolean state = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED, true);
+            if(!huaweiDataSyncTreeCircleGoals.sendRemindersGoalReached(state)) {
+                LOG.error("Error to set goal reached reminder");
             }
         }
     }
@@ -1451,12 +1498,9 @@ public class HuaweiSupportProvider {
             List<Integer> list = P2PSyncService.checkSupported(this.getHuaweiCoordinator(), Arrays.asList(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS, HuaweiDictTypes.BLOOD_PRESSURE_CLASS));
             if(!list.isEmpty()) {
                 syncState.setP2pSync(true);
-                P2PSyncService.startSync(list, new HuaweiP2PDataDictionarySyncService.DictionarySyncCallback() {
-                    @Override
-                    public void onComplete(boolean complete) {
-                        LOG.info("Sync P2P Data complete");
-                        syncState.setP2pSync(false);
-                    }
+                P2PSyncService.startSync(list, complete -> {
+                    LOG.info("Sync P2P Data complete");
+                    syncState.setP2pSync(false);
                 });
             }
         }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
@@ -40,6 +41,10 @@ public class HuaweiDataSyncGoals implements HuaweiDataSyncCommon.DataCallback {
     public static final int EXERCISES_GOAL = 900200008;
     public static final int STAND_GOAL = 900200009;
 
+    public static final int REMINDER_STAND = 900200004;
+    public static final int REMINDER_PROGRESS = 900200010;
+    public static final int REMINDER_GOAL_REACHED = 900200011;
+
     public static final String SRC_PKG_NAME = "hw.sport.config";
     public static final String PKG_NAME = "in.huawei.motion";
 
@@ -48,7 +53,7 @@ public class HuaweiDataSyncGoals implements HuaweiDataSyncCommon.DataCallback {
         this.support.getHuaweiDataSyncManager().registerCallback(PKG_NAME, this);
     }
 
-    private boolean sendCommonGoal(int configId, int goal) {
+    private boolean sendCommonData(int configId, int goal) {
         int time = (int) (System.currentTimeMillis() / 1000);
         HuaweiTLV tlv = new HuaweiTLV().put(0x01, time).put(0x02, goal);
         HuaweiDataSyncCommon.ConfigCommandData data = new HuaweiDataSyncCommon.ConfigCommandData();
@@ -60,6 +65,14 @@ public class HuaweiDataSyncGoals implements HuaweiDataSyncCommon.DataCallback {
         list.add(goalConfigData);
         data.setConfigDataList(list);
         return this.support.getHuaweiDataSyncManager().sendConfigCommand(SRC_PKG_NAME, PKG_NAME, data);
+    }
+
+    private boolean sendCommonGoal(int configId, int goal) {
+        return sendCommonData(configId, goal);
+    }
+
+    private boolean sendCommonReminder(int configId, boolean state) {
+        return sendCommonData(configId, state ? 1 : 0);
     }
 
     public boolean sendStepsGoal(int stepsGoal) {
@@ -78,52 +91,92 @@ public class HuaweiDataSyncGoals implements HuaweiDataSyncCommon.DataCallback {
         return sendCommonGoal(STAND_GOAL, standGoal);
     }
 
+    public boolean sendRemindersStand(boolean state) {
+        return sendCommonReminder(REMINDER_STAND, state);
+    }
+
+    public boolean sendRemindersProgress(boolean state) {
+        return sendCommonReminder(REMINDER_PROGRESS, state);
+    }
+
+    public boolean sendRemindersGoalReached(boolean state) {
+        return sendCommonReminder(REMINDER_GOAL_REACHED, state);
+    }
+
     @Override
     public void onConfigCommand(HuaweiDataSyncCommon.ConfigCommandData data) {
-        if(data.getCode() != HuaweiDataSyncCommon.REPLY_OK) {
+        if (data.getCode() != HuaweiDataSyncCommon.REPLY_OK) {
             return;
         }
         List<HuaweiDataSyncCommon.ConfigData> list = data.getConfigDataList();
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return;
         }
         HuaweiDataSyncCommon.ConfigData config = list.get(0);
         HuaweiTLV tlv = new HuaweiTLV();
         tlv.parse(config.configData);
-        if(!tlv.contains(0x02)) {
+        if (!tlv.contains(0x02)) {
             return;
         }
         try {
-        switch(config.configId) {
-            case STEPS_GOAL: {
-                int goal = tlv.getInteger(0x02);
-                SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(ActivityUser.PREF_USER_STEPS_GOAL, String.valueOf(goal));
-                editor.apply();
-            } break;
-            case CALORIES_GOAL: {
-                int goal = tlv.getInteger(0x02);
-                SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(ActivityUser.PREF_USER_CALORIES_BURNT, String.valueOf(goal / 1000));
-                editor.apply();
-            } break;
-            case EXERCISES_GOAL: {
-                int goal = tlv.getInteger(0x02);
-                SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, String.valueOf(goal));
-                editor.apply();
-            } break;
-            case STAND_GOAL: {
-                int goal = tlv.getInteger(0x02);
-                SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS, String.valueOf(goal));
-                editor.apply();
-            } break;
-        }
+            switch (config.configId) {
+                case STEPS_GOAL: {
+                    int goal = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(ActivityUser.PREF_USER_STEPS_GOAL, String.valueOf(goal));
+                    editor.apply();
+                }
+                break;
+                case CALORIES_GOAL: {
+                    int goal = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(ActivityUser.PREF_USER_CALORIES_BURNT, String.valueOf(goal / 1000));
+                    editor.apply();
+                }
+                break;
+                case EXERCISES_GOAL: {
+                    int goal = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, String.valueOf(goal));
+                    editor.apply();
+                }
+                break;
+                case STAND_GOAL: {
+                    int goal = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getPrefs().getPreferences();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS, String.valueOf(goal));
+                    editor.apply();
+                }
+                break;
+                case REMINDER_STAND: {
+                    int state = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(support.getDevice().getAddress());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_STAND, state != 0);
+                    editor.apply();
+                }
+                break;
+                case REMINDER_PROGRESS: {
+                    int state = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(support.getDevice().getAddress());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS, state != 0);
+                    editor.apply();
+                }
+                break;
+                case REMINDER_GOAL_REACHED: {
+                    int state = tlv.getInteger(0x02);
+                    SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(support.getDevice().getAddress());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED, state != 0);
+                    editor.apply();
+                }
+                break;
+            }
         } catch (HuaweiPacket.MissingTagException e) {
             LOG.error("Failed to handle data sync goals config command", e);
         }

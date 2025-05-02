@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_device_set_reminders"
+        android:key="screen_huawei_activity_reminders"
+        android:persistent="false"
+        android:title="@string/pref_huawei_activity_reminders">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_huawei_activity_reminder_stand"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_activity_reminder_stand_title"
+            android:summary="@string/pref_huawei_activity_reminder_stand_summary" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_huawei_activity_reminder_progress"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_activity_reminder_progress_title"
+            android:summary="@string/pref_huawei_activity_reminder_progress_summary" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_huawei_activity_reminder_goal_reached"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_activity_reminder_goal_reached_title"
+            android:summary="@string/pref_huawei_activity_reminder_goal_reached_summary" />
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>

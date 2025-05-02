@@ -39,6 +39,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.XTimePreference;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ACTIVITY_REMINDER_STAND;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_DEBUG_REQUEST;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_CONTINUOUS_SKIN_TEMPERATURE_MEASUREMENT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_HIGH_ALERT;
@@ -120,6 +123,10 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         handler.addPreferenceHandlerFor(PREF_HUAWEI_SPO_LOW_ALERT);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_STRESS_SWITCH);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_STRESS_CALIBRATE);
+
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_ACTIVITY_REMINDER_STAND);
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS);
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED);
 
 
         final Preference forceOptions = handler.findPreference(PREF_FORCE_OPTIONS);

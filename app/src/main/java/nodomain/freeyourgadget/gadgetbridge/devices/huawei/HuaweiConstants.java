@@ -100,11 +100,14 @@ public final class HuaweiConstants {
     public static final String PREF_HUAWEI_CONTINUOUS_SKIN_TEMPERATURE_MEASUREMENT = "continuous_skin_temperature_measurement";
     public static final String PREF_HUAWEI_HEART_RATE_REALTIME_MODE = "pref_huawei_heart_rate_realtime_mode";
     public static final String PREF_HUAWEI_HEART_RATE_LOW_ALERT = "pref_huawei_heart_rate_low_alert";
-    public static final String PREF_HUAWEI_HEART_RATE_HIGH_ALERT= "pref_huawei_heart_rate_high_alert";
-    public static final String PREF_HUAWEI_SPO_LOW_ALERT= "pref_huawei_spo_low_alert";
-    public static final String PREF_HUAWEI_STRESS_SWITCH= "pref_huawei_stress_switch";
-    public static final String PREF_HUAWEI_STRESS_CALIBRATE= "pref_huawei_stress_calibrate";
-    public static final String PREF_HUAWEI_STRESS_LAST_DATA= "huawei_stress_last_data";
+    public static final String PREF_HUAWEI_HEART_RATE_HIGH_ALERT = "pref_huawei_heart_rate_high_alert";
+    public static final String PREF_HUAWEI_SPO_LOW_ALERT = "pref_huawei_spo_low_alert";
+    public static final String PREF_HUAWEI_STRESS_SWITCH = "pref_huawei_stress_switch";
+    public static final String PREF_HUAWEI_STRESS_CALIBRATE = "pref_huawei_stress_calibrate";
+    public static final String PREF_HUAWEI_STRESS_LAST_DATA = "huawei_stress_last_data";
+    public static final String PREF_HUAWEI_ACTIVITY_REMINDER_STAND = "pref_huawei_activity_reminder_stand";
+    public static final String PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS = "pref_huawei_activity_reminder_progress";
+    public static final String PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED = "pref_huawei_activity_reminder_goal_reached";
 
 
 
