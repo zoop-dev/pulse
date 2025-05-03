@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -196,9 +195,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
                 case "weight":
                     return new WeightChartFragment();
                 case "calories":
-                    Intent intent = getIntent();
-                    String mode = intent.getStringExtra(ActivityChartsActivity.EXTRA_MODE);
-                    return CaloriesDailyFragment.newInstance(mode);
+                    return CaloriesCollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "respiratoryrate":
                     return RespiratoryRateCollectionFragment.newInstance(enabledTabsList.size() == 1);
             }

@@ -2393,6 +2393,11 @@
     <string name="caloriesBurnt">Calories</string>
     <string name="restingCalories">Resting Calories</string>
     <string name="metabolic_rate">Metabolic Rate</string>
+    <string name="active_calories_avg">Active AVG</string>
+    <string name="active_calories_total">Active Total</string>
+    <string name="resting_calories_total">Resting Total</string>
+    <string name="calorie_over_goal">Above goal: %1$d kcal</string>
+    <string name="calorie_under_goal">Below goal: %1$d kcal</string>
     <string name="maxSpeed">Maximum</string>
     <string name="minSpeed">Minimum</string>
     <string name="minPace">Slowest Pace</string>
