@@ -420,10 +420,23 @@ public class BLETypeConversions {
         return AlertCategory.Simple;
     }
 
-    /// compatible with {@link android.bluetooth.BluetoothGattCharacteristic#getFloatValue(int, int)}
-    public static float toFloat32(byte[] bytes, int offset){
-        int raw = toUint32(bytes, offset);
-        return Float.intBitsToFloat(raw);
+    /// compatible with FORMAT_FLOAT in {@link android.bluetooth.BluetoothGattCharacteristic#getFloatValue(int, int)}
+    public static Float toFloat32(byte[] bytes, int offset) {
+        if ((offset + 4) > bytes.length) {
+            return null;
+        }
+
+        int mantissa24 = (bytes[offset] & 0xFF)
+                | ((bytes[offset + 1] & 0xFF) << 8)
+                | ((bytes[offset + 2] & 0xFF) << 16);
+
+        if (0 != (bytes[offset + 2] & 0x80)) {
+            mantissa24 |= (0xFF << 24);
+        }
+
+        int exponent8 = bytes[offset + 3];
+
+        return (float) (Math.pow(10, exponent8) * mantissa24);
     }
 
     /// compatible with {@link android.bluetooth.BluetoothGattCharacteristic#getStringValue(int)}
