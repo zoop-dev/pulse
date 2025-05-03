@@ -4072,4 +4072,5 @@
     <string name="pref_huawei_activity_reminder_goal_reached_title">Cel osiągnięty</string>
     <string name="pref_huawei_activity_reminder_goal_reached_summary">Otrzymaj przypomnienie po ukończeniu pierścieni</string>
     <string name="pref_huawei_activity_reminders">Przypomnienia o aktywności</string>
+    <string name="devicetype_polarh10">Polar H10</string>
 </resources>
