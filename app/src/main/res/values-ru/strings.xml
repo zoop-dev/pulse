@@ -562,7 +562,7 @@
     <string name="watch9_calibration_button">Калибровка</string>
     <string name="title_activity_watch9_pairing">Сопряжение Watch 9</string>
     <string name="title_activity_watch9_calibration">Калибровка Watch 9</string>
-    <string name="mi3_prefs_band_screen_unlock">Разблокировка экрана\"</string>
+    <string name="mi3_prefs_band_screen_unlock">Разблокировка экрана браслета</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Смахните вверх для разблокировки экрана браслета</string>
     <string name="german">Немецкий</string>
     <string name="italian">Итальянский</string>
@@ -1667,7 +1667,7 @@
     <string name="estonian">Эстонский</string>
     <string name="extended_ascii">Расширенный ASCII</string>
     <string name="lithuanian">Литовский</string>
-    <string name="ukranian">Укранский</string>
+    <string name="ukranian">Украинский</string>
     <string name="activity_prefs_target_weight_kg">Желаемый вес в кг</string>
     <string name="activity_type_freestyle">Свободный стиль</string>
     <string name="activity_type_pool_swimming">Плавание в бассейне</string>
@@ -3921,4 +3921,17 @@
     <string name="weather_condition_heavy_shower_rain_and_drizzle">сильный проливной дождь с изморосью</string>
     <string name="weather_condition_ragged_thunderstorm">местами гроза</string>
     <string name="weather_condition_light_intensity_drizzle_rain">слабо моросящий дождь</string>
+    <string name="devicetype_polarh10">Polar H10</string>
+    <string name="weather_condition_shower_snow">снегопад</string>
+    <string name="weather_condition_heavy_shower_snow">сильный снегопад</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">Получать напоминание когда вы завершаете круги</string>
+    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
+    <string name="weather_condition_shower_sleet">ливень со снегом</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
+    <string name="busy_task_fetch_weight_data">Получение данных о весе</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorider</string>
 </resources>
