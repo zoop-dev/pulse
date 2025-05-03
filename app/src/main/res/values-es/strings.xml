@@ -297,7 +297,7 @@
     <string name="abstract_chart_fragment_kind_deep_sleep">Sueño profundo</string>
     <string name="abstract_chart_fragment_kind_not_worn">Sin usar</string>
     <string name="device_not_connected">No conectado.</string>
-    <string name="user_feedback_all_alarms_disabled">Todas las alarmas deshabilitadas</string>
+    <string name="user_feedback_all_alarms_disabled">Todas las alarmas desactivadas</string>
     <string name="pref_title_keep_data_on_device">Mantener los datos de actividad en el dispositivo</string>
     <string name="miband_fwinstaller_incompatible_version">Firmware incompatible</string>
     <string name="fwinstaller_firmware_not_compatible_to_device">Este firmware no es compatible con tu dispositivo</string>
@@ -378,8 +378,8 @@
     <string name="pref_summary_setup_bt_pairing">Desactive esto si tiene problemas de conexión</string>
     <string name="unit_metric">Métrica</string>
     <string name="unit_imperial">Imperial</string>
-    <string name="timeformat_24h">24H</string>
-    <string name="timeformat_am_pm">AM/PM</string>
+    <string name="timeformat_24h">24 h</string>
+    <string name="timeformat_am_pm">a.m./p.m.</string>
     <string name="pref_screen_notification_profile_alarm_clock">Despertador</string>
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="find_device_you_found_it">¡Lo ha encontrado!</string>
@@ -417,7 +417,7 @@
     <string name="_pebble_watch_mute">Silenciar</string>
     <string name="_pebble_watch_reply">Responder</string>
     <string name="pref_title_pebble_enable_bgjs">Activar JS en 2.º plano</string>
-    <string name="pref_summary_pebble_enable_bgjs">Cuando está habilitado, permite que las esferas muestren el clima, información de la batería, etc.</string>
+    <string name="pref_summary_pebble_enable_bgjs">Cuando se activa, permite que las esferas muestren el tiempo, información de la batería, etc.</string>
     <string name="activity_web_view">Vista de actividad web</string>
     <string name="controlcenter_connect">Conectar…</string>
     <string name="fw_upgrade_notice_amazfitcor">Está a punto de instalar el firmware %s en su Amazfit Cor.\n\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
@@ -574,7 +574,7 @@
     <string name="pref_invalid_frequency_title">Frecuencia no válida</string>
     <string name="pref_invalid_frequency_message">Proporcione una frecuencia entre 87,5 y 108,0</string>
     <string name="language_and_region_prefs">Configuración de idioma y región</string>
-    <string name="title_activity_notification_filter">Filtro de Notificaciones</string>
+    <string name="title_activity_notification_filter">Filtro de notificaciones</string>
     <string name="edittext_notification_filter_words_hint">Ingrese las palabras deseadas, nueva línea para cada una</string>
     <string name="toast_notification_filter_saved_successfully">Filtro de notificación guardado</string>
     <string name="filter_mode_none">No filtrar</string>
@@ -1324,7 +1324,7 @@
     <string name="sony_automatic_power_off_1_hour">1 hora</string>
     <string name="prefs_activity_in_device_card_title_summary">Mostrar los pasos actuales, la distancia o el registro de sueño en la tarjeta del dispositivo</string>
     <string name="prefs_fm_preset_instructions">Presionar prolongadamente el botón para guardar la preconfiguración</string>
-    <string name="prefs_fm_presets_presets">Preconfiguración</string>
+    <string name="prefs_fm_presets_presets">Preconfiguraciones</string>
     <string name="sony_automatic_power_off_when_taken_off">Al quitar (el dispositivo)</string>
     <string name="watchface_dialog_widget_timezone">Huso horario</string>
     <string name="watchface_dialog_widget_update_timeout">Tiempo de actualización en minutos</string>
@@ -2002,7 +2002,7 @@
     <string name="pref_pair_bluetooth_calls_help_1">1. Pulsa el botón de abajo para iniciar el proceso de emparejamiento.</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Vaya a la configuración de Bluetooth del teléfono y empareje con el nuevo dispositivo que aparecerá (con un nombre similar al de su reloj actual, pero con un sufijo, como «Amazfit GTR 4 - AFC8»).</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: si activa las llamadas Bluetooth sin emparejar con la segunda instancia, es posible que las notificaciones de llamadas no funcionen como se espera.</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Habilite la configuración de llamadas por Bluetooth a continuación.</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Active la configuración de llamadas por Bluetooth a continuación.</string>
     <string name="pref_summary_notification_cache_while_disconnected">Enviar notificaciones perdidas cuando un dispositivo se vuelve a conectar después de estar fuera de cobertura</string>
     <string name="pref_title_notification_cache_while_disconnected">Caché mientras está fuera de cobertura</string>
     <string name="sony_button_mode_help_summary">Descripción de cada modo de botón</string>
@@ -3138,8 +3138,8 @@
     <string name="minutes_150">150 minutos</string>
     <string name="minutes_180">180 minutos</string>
     <string name="minutes_210">210 minutos</string>
-    <string name="dateformat_day_month">Día, Mes</string>
-    <string name="dateformat_month_day">Mes, Día</string>
+    <string name="dateformat_day_month">Día, mes</string>
+    <string name="dateformat_month_day">Mes, día</string>
     <string name="activity_type_push_run_speed">Impulso: velocidad de carrera</string>
     <string name="activity_type_indoor_push_run_speed">Impulso en interiores: Velocidad de carrera</string>
     <string name="pref_time_sync">Sincronización horaria automática</string>
@@ -3763,4 +3763,22 @@
     <string name="pref_huawei_activity_reminder_stand_title">Ponerse en pie</string>
     <string name="swim_style_mixed">Mixto</string>
     <string name="weather_condition_haze">calima</string>
+    <string name="aqi_level_dangerous">peligroso</string>
+    <string name="aqi_level_very_unhealthy">muy insalubre</string>
+    <string name="weather_condition_mist">neblina</string>
+    <string name="aqi_level_unhealthy">insalubre</string>
+    <string name="devicetype_polarh10">Polar H10</string>
+    <string name="pref_huawei_activity_reminder_stand_summary">Recordar cuando no se haya puesto en pie en 1 hora</string>
+    <string name="weather_condition_volcanic_ash">ceniza volcánica</string>
+    <string name="weather_condition_squalls">borrascas</string>
+    <string name="weather_condition_cold">frío</string>
+    <string name="weather_condition_hot">cálido</string>
+    <string name="weather_condition_windy">ventoso</string>
+    <string name="weather_condition_calm">bonancible</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">Obtener recordatorios al completar círculos</string>
+    <string name="weather_condition_sandcase_dust_whirls">tolvaneras</string>
+    <string name="weather_condition_freezing_rain">lluvia engelante</string>
+    <string name="weather_condition_fog">niebla</string>
+    <string name="weather_condition_smoke">humo</string>
+    <string name="pref_huawei_activity_reminder_progress_summary">Obtener recordatorios de progreso de círculos de actividad</string>
 </resources>
