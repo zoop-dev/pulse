@@ -4043,4 +4043,16 @@
     <string name="notifications_app_icon_info">选择应用程序并点击“上传至设备”。之前上传的任何图标都可能被替换。当前设备限制未知。</string>
     <string name="notifications_app_icon_uploading">图标将在后台上传。您可以关闭此活动</string>
     <string name="notifications_app_icon_upload">上传应用通知图标</string>
+    <string name="devicetype_polarh10">Polar H10</string>
+    <string name="ultrahuman_breathing_title">呼吸</string>
+    <string name="ultrahuman_breathing_start">开始</string>
+    <string name="ultrahuman_breathing_stop">停止</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">完成活动环后收到提醒</string>
+    <string name="devicetype_realme_buds_air_5_pro">真我 Buds Air 5 Pro</string>
+    <string name="pref_huawei_activity_reminders">活动提醒</string>
+    <string name="pref_huawei_activity_reminder_progress_title">进度</string>
+    <string name="pref_huawei_activity_reminder_progress_summary">获取活动环进度提醒</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_title">目标达成</string>
+    <string name="pref_huawei_activity_reminder_stand_title">站立</string>
+    <string name="pref_huawei_activity_reminder_stand_summary">如果您 1 小时未站立，则会收到提醒</string>
 </resources>
