@@ -42,8 +42,8 @@
     <string name="title_activity_calblacklist">Calendarios en lista negra</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">Instalador de FW/App</string>
-    <string name="fw_upgrade_notice">Estás a punto de instalar el %s.</string>
-    <string name="fw_multi_upgrade_notice">Estás a punto de instalar el firmware %1$s y %2$s en sustitución de los que hay actualmente en tu Mi Band.</string>
+    <string name="fw_upgrade_notice">Está a punto de instalar el %s.</string>
+    <string name="fw_multi_upgrade_notice">Está a punto de instalar el firmware %1$s y %2$s en sustitución de los que hay actualmente en su Mi Band.</string>
     <string name="miband_firmware_known">Este firmware ha sido probado y se sabe que es compatible con Gadgetbridge.</string>
     <string name="miband_firmware_unknown_warning">Este firmware no ha sido probado y puede que no sea compatible con Gadgetbridge. \n \n¡NO se recomienda la instalación en su Mi Band!</string>
     <string name="miband_firmware_suggest_whitelist">Si aun desea continuar y después las cosas continúan funcionando correctamente, pida a los desarrolladores de Gadgetbridge que incluyan en la lista blanca la versión de firmware de %s.</string>
@@ -81,7 +81,7 @@
     <string name="when_screen_off">Cuando la pantalla está apagada</string>
     <string name="never">Nunca</string>
     <string name="pref_header_privacy">Privacidad</string>
-    <string name="pref_title_call_privacy_mode">Modo de privacidad de llamada</string>
+    <string name="pref_title_call_privacy_mode">Modo de privacidad en llamadas</string>
     <string name="pref_call_privacy_mode_off">Mostrar nombre y número</string>
     <string name="pref_call_privacy_mode_name">Ocultar nombre pero mostrar número</string>
     <string name="pref_call_privacy_mode_number">Ocultar el número pero mostrar el nombre</string>
@@ -124,7 +124,7 @@
     <string name="toast_enable_networklocationprovider">Active la ubicación por red</string>
     <string name="toast_aqurired_networklocation">ubicación encontrada</string>
     <string name="pref_title_pebble_forceprotocol">Forzar protocolo de notificación</string>
-    <string name="pref_summary_pebble_forceprotocol">Esta opción obliga a usar el último protocolo de notificación dependiendo de la versión del firmware. ¡SABE LO QUE ESTÁS HACIENDO!</string>
+    <string name="pref_summary_pebble_forceprotocol">Esta opción obliga a usar el último protocolo de notificación dependiendo de la versión del firmware. ¡SEPA LO QUE HACE!</string>
     <string name="pref_title_pebble_forceuntested">Activar características no probadas</string>
     <string name="pref_summary_pebble_forceuntested">Activar funciones no probadas. ¡ACTÍVELO SÓLO SI SABE LO QUE ESTÁ HACIENDO!</string>
     <string name="pref_title_pebble_forcele">Preferir siempre BLE</string>
@@ -164,7 +164,7 @@
 \n
 \n
 \n Este firmware es para la revisión de HW: %s</string>
-    <string name="app_install_info">Estás a punto de instalar la siguiente app:\n\n%1$s\nVersión %2$s por %3$s\n</string>
+    <string name="app_install_info">Está a punto de instalar esta aplicación:\n\n%1$s\nVersión %2$s por %3$s\n</string>
     <string name="n_a">N/A</string>
     <string name="initialized">iniciado</string>
     <string name="appversion_by_creator">%1$s de %2$s</string>
@@ -384,7 +384,7 @@
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="find_device_you_found_it">¡Lo ha encontrado!</string>
     <string name="miband2_prefs_timeformat">Mi2: formato de hora</string>
-    <string name="mi2_fw_installhandler_fw53_hint">¡Debes instalar la versión %1$s antes de instalar este firmware!</string>
+    <string name="mi2_fw_installhandler_fw53_hint">¡Debe instalar la versión %1$s antes de instalar este firmware!</string>
     <string name="mi2_enable_text_notifications">Notificaciones de texto</string>
     <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 y Mili_pro.ft* instalados.]]></string>
     <string name="off">Apagado</string>
@@ -494,12 +494,12 @@
     <string name="whitelist_all_for_notifications">Lista blanca para todas las notificaciones</string>
     <string name="fw_upgrade_notice_miband3">Está a punto de instalar el firmware %s en su Mi Band 3.\n\nAsegúrese de instalar el archivo .fw, y a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_title_notifications_timeout">Tiempo mínimo entre notificaciones</string>
-    <string name="pref_title_rtl">Derecha a Izquierda</string>
-    <string name="pref_summary_rtl">Activar si tu dispositivo no puede mostrar idiomas de derecha a izquierda</string>
+    <string name="pref_title_rtl">De derecha a izquierda</string>
+    <string name="pref_summary_rtl">Actívelo si su dispositivo no puede mostrar idiomas de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length">Longitud de línea máxima de derecha a izquierda</string>
     <string name="pref_rtl_max_line_length_summary">Alarga o acorta las líneas de texto de derecha a izquierda si contiene separaciones</string>
     <string name="pref_title_pebble_gatt_clientonly">Solo cliente GATT</string>
-    <string name="pref_summary_pebble_gatt_clientonly">Esto es solo para Pebble 2 y es experimental, pruébalo si tienes problemas de conectividad</string>
+    <string name="pref_summary_pebble_gatt_clientonly">Esto es solo para Pebble 2 y es experimental; pruébelo si tiene problemas de conectividad</string>
     <string name="prefs_screen_orientation">Orientación de pantalla</string>
     <string name="pref_auto_fetch_summary">La recuperación funciona luego de desbloquear la pantalla. ¡Sólo funciona si se ha definido un mecanismo de bloqueo!</string>
     <string name="horizontal">Horizontal</string>
@@ -1120,11 +1120,11 @@
     <string name="fw_upgrade_notice_miband6">Está a punto de instalar el firmware %s en su Mi Band 6.\n\nAsegúrese de instalar el archivo .fw, y a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivos .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="qhybrid_pref_title_external_intents">Permitir intents externos peligrosos</string>
     <string name="pref_summary_developer_settings">Ajustes y funcionalidades utilizadas por los desarrolladores</string>
-    <string name="pref_title_developer_settings">Configuración para desarrolladores</string>
+    <string name="pref_title_developer_settings">Configuración de desarrollo</string>
     <string name="qhybrid_pref_title_actions">Acciones</string>
     <string name="qhybrid_calibration_100_steps">100 pasos</string>
     <string name="qhybrid_calibration_10_steps">10 pasos</string>
-    <string name="qhybrid_pref_summary_external_intents">Permite que otras apps de Android suban/sobreescriban archivos</string>
+    <string name="qhybrid_pref_summary_external_intents">Permite que otras aplicaciones de Android carguen/sobreescriban archivos</string>
     <string name="fossil_hr_new_action">Nueva acción</string>
     <string name="fossil_hr_new_action_cancel">cancelar</string>
     <string name="fossil_hr_edit_action">Editar acción</string>
@@ -1133,7 +1133,7 @@
     <string name="qhybrid_title_watchface">Configuración de esfera</string>
     <string name="notification_channel_low_battery_name">Batería baja</string>
     <string name="notification_channel_transfer_name">Transferencia de datos</string>
-    <string name="watchface_install_info">Estás a punto de instalar la siguiente esfera:\n\n%1$s\nVersión %2$s por %3$s\n</string>
+    <string name="watchface_install_info">Está a punto de instalar esta esfera:\n\n%1$s\nVersión %2$s por %3$s\n</string>
     <string name="watchface_setting_power_saving_hands">Desactivar el movimiento de las manos cuando no esté en la muñeca</string>
     <string name="watchface_setting_power_saving_display">Desactivar las actualizaciones de pantalla cuando no esté en la muñeca</string>
     <string name="watchface_setting_title_power_saving">Ahorro de energía</string>
@@ -1217,7 +1217,7 @@
     <string name="devicetype_fitpro">FitPro</string>
     <string name="pref_title_ping_tone">Tono de ping</string>
     <string name="nothing_prefs_inear_summary">Reproducir/pausar la música dependiendo de si lleva los auriculares</string>
-    <string name="nothing_prefs_inear_title">Detección de la oreja</string>
+    <string name="nothing_prefs_inear_title">Detección de oído</string>
     <string name="nothing_prefs_audiomode_title">Modo de sonido</string>
     <string name="devicetype_nothingear1">Nothing Ear (1)</string>
     <string name="uncheck_all_applications">Desmarcar todas las aplicaciones</string>
@@ -1563,7 +1563,7 @@
     <string name="pref_summary_notification_prefer_long_text">Si está disponible, envía el texto de notificación largo al dispositivo</string>
     <string name="controlcenter_get_heartrate_measurement">Medición de la frecuencia cardiaca</string>
     <string name="open_fw_installer_warning_text">Esta función podría dejar su dispositivo inservible. No obstante, ninguno de los desarrolladores ha experimentado este problema al realizar el flasheo. Aun así, recuerde que lo hace bajo su propio riesgo.</string>
-    <string name="open_fw_installer_getting_files_title">Obteniendo el archivo de firmware/app</string>
+    <string name="open_fw_installer_getting_files_title">Obteniendo el archivo de firmware/aplicación</string>
     <string name="about_description_banglejs_nightly">Aplicación complementaria de Android para Bangle.js, basada en el proyecto Gadgetbridge, con acceso a Internet añadido.\n\nDebido a las políticas de Google Play Store, no podemos incluir un enlace de donación en la aplicación. Sin embargo, si le gusta esta aplicación, considere donar a través de la página de Gadgetbridge que encontrará a continuación.</string>
     <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
@@ -1575,7 +1575,7 @@
     <string name="pref_summary_notification_delay_calls">Retraso antes de enviar notificaciones de llamadas entrantes al dispositivo, en segundos.</string>
     <string name="pref_summary_notification_media_ignores_application_list">Procesar las notificaciones multimedia antes que la lista de aplicaciones. Si esta preferencia no está marcada, las aplicaciones multimedia deben estar permitidas en la lista de aplicaciones para que los controles multimedia funcionen en el dispositivo.</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Tamaño a utilizar para la representación de texto en mapa de bits</string>
-    <string name="pref_title_banglejs_webview_url">URL del cargador de Apps</string>
+    <string name="pref_title_banglejs_webview_url">URL del cargador de aplicaciones</string>
     <string name="pref_summary_banglejs_webview_url">Si quieres un cargador de aplicaciones personalizado pon aquí tu URL https://.../android.html. De lo contrario, deja en blanco https://banglejs.com/apps</string>
     <string name="pref_blacklist_calendars_summary">Los calendarios de la lista negra no se sincronizarán con el dispositivo</string>
     <string name="pref_summary_canned_replies">Responder desde el reloj con mensajes predefinidos</string>
@@ -1641,7 +1641,7 @@
     <string name="pref_screen_notification_profile_todo_list">Lista de tareas</string>
     <string name="prefs_screen_timeout">Tiempo de espera de la pantalla</string>
     <string name="watchface_dialog_widget_cat_generic">Genérico</string>
-    <string name="vibration_profile_default">Por defecto</string>
+    <string name="vibration_profile_default">Predeterminado</string>
     <string name="pref_screen_notification_profile_schedule">Programar</string>
     <string name="prefs_weardirection">Dirección de puesta</string>
     <string name="heartrate_bpm_130">130 ppm</string>
@@ -1998,7 +1998,7 @@
     <string name="pref_pair_bluetooth_calls_title">Emparejar para llamadas bluetooth</string>
     <string name="pref_pair_bluetooth_calls_summary">Pulsa aquí para iniciar el proceso de emparejamiento</string>
     <string name="pref_pair_bluetooth_calls_help_title">Cómo recibir llamadas por bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas por Bluetooth, debes emparejar tu teléfono con una segunda instancia del reloj.</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas por Bluetooth, debe emparejar el teléfono con una segunda instancia del reloj.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Pulsa el botón de abajo para iniciar el proceso de emparejamiento.</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Vaya a la configuración de Bluetooth del teléfono y empareje con el nuevo dispositivo que aparecerá (con un nombre similar al de su reloj actual, pero con un sufijo, como «Amazfit GTR 4 - AFC8»).</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: si activa las llamadas Bluetooth sin emparejar con la segunda instancia, es posible que las notificaciones de llamadas no funcionen como se espera.</string>
@@ -2093,7 +2093,7 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">Intervalo de actualización de datos GPS</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">Utiliza los datos GPS del teléfono móvil para sobrescribir los datos GPS del dispositivo de pulsera</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">El intervalo de actualización de la posición GPS, en ms</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Utiliza los datos GPS de tu teléfono</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Usar datos GPS del teléfono</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Utiliza sólo el proveedor de red para determinar la ubicación. Esto reduce el consumo de energía a costa de la precisión. Es necesaria una reconexión.</string>
     <string name="description">Descripción</string>
     <string name="preview_image">Previsualizar imagen</string>
@@ -2221,7 +2221,7 @@
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
     <string name="new_discover_activity_description">Activa una nueva actividad de detección, que debería solucionar los problemas de detección de dispositivos. Desactivela si tiene problemas al buscar o emparejar el dispositivo.</string>
     <string name="new_discover_activity_title">Activar nueva actividad de detección</string>
-    <string name="prefs_wena3_receive_calls_title">Ajustes de llamadas entrantes</string>
+    <string name="prefs_wena3_receive_calls_title">Configuración de llamadas entrantes</string>
     <string name="prefs_wena3_button_action_name_start_timer">Iniciar temporizador activo</string>
     <string name="prefs_wena3_menu_icon_hint">El icono Configuración siempre aparece al final</string>
     <string name="prefs_wena3_notification_vibration_repetition_3">3 veces</string>
@@ -2844,7 +2844,7 @@
     <string name="devicetype_garmin_venu_3s">Garmin Venu 3S</string>
     <string name="devicetype_garmin_fenix_7_pro">Garmin Fenix 7 Pro</string>
     <string name="battery_low_threshold">Umbral de batería baja</string>
-    <string name="default_percentage">Por defecto (%1$d%%)</string>
+    <string name="default_percentage">Predeterminado (%1$d %%)</string>
     <string name="notif_battery_full_title">¡Batería del dispositivo llena!</string>
     <string name="battery_i">Batería %d</string>
     <string name="battery_percentage_str">%1$s%%</string>
@@ -3324,7 +3324,7 @@
     <string name="idasen_pref_mid_height">Altura de posición media (en centímetros)</string>
     <string name="idasen_pref_stand_height">Altura de la posición de pie (en centímetros)</string>
     <string name="milliseconds_ms">ms</string>
-    <string name="music_upload_info">Estás a punto de cargar el siguiente archivo de música:\n\n%1$s\nTítulo de la canción: %2$s\nÁlbum: %3$s\n</string>
+    <string name="music_upload_info">Está a punto de cargar este archivo de música:\n\n%1$s\nTítulo de la canción: %2$s\nÁlbum: %3$s\n</string>
     <string name="file_already_exists">El archivo ya existe</string>
     <string name="devicetype_garmin_fenix_7">Garmin Fenix 7</string>
     <string name="devicetype_garmin_forerunner_235">Garmin Forerunner 235</string>
@@ -3781,4 +3781,7 @@
     <string name="weather_condition_fog">niebla</string>
     <string name="weather_condition_smoke">humo</string>
     <string name="pref_huawei_activity_reminder_progress_summary">Obtener recordatorios de progreso de círculos de actividad</string>
+    <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
+    <string name="metabolic_rate">Tasa metabólica</string>
+    <string name="restingCalories">Calorías en reposo</string>
 </resources>
