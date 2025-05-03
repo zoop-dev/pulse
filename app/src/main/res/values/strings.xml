@@ -1901,6 +1901,7 @@
     <string name="devicetype_banglejs">Bangle.js</string>
     <string name="devicetype_tlw64">TLW64</string>
     <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
+    <string name="devicetype_polarh10">Polar H10</string>
     <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="devicetype_waspos">Wasp-os</string>
     <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>

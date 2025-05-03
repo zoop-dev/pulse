@@ -56,7 +56,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(101, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(102, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -117,6 +117,7 @@ public class GBDaoGenerator {
         addCasioGBX100Sample(schema, user, device);
         addFitProActivitySample(schema, user, device);
         addPineTimeActivitySample(schema, user, device);
+        addPolarH10ActivitySample(schema, user, device);
         addWithingsSteelHRActivitySample(schema, user, device);
         addHybridHRActivitySample(schema, user, device);
         addHybridHRSpo2Sample(schema, user, device);
@@ -1346,6 +1347,13 @@ public class GBDaoGenerator {
         return activitySample;
     }
 
+    private static Entity addPolarH10ActivitySample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "PolarH10ActivitySample");
+        sample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", sample, user, device);
+        sample.addIntProperty(SAMPLE_HEART_RATE).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        return sample;
+    }
 
     private static Entity addWithingsSteelHRActivitySample(Schema schema, Entity user, Entity device) {
         Entity activitySample = addEntity(schema, "WithingsSteelHRActivitySample");

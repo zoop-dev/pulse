@@ -27,6 +27,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiR12Coordinator;
@@ -458,6 +459,7 @@ public enum DeviceType {
     FOSSILQHYBRID(QHybridCoordinator.class),
     TLW64(TLW64Coordinator.class),
     PINETIME_JF(PineTimeJFCoordinator.class),
+    POLARH10(PolarH10DeviceCoordinator.class),
     MIJIA_LYWSD02(MijiaLywsd02Coordinator.class),
     MIJIA_LYWSD03(MijiaLywsd03Coordinator.class),
     MIJIA_XMWSDJ04(MijiaXmwsdj04Coordinator.class),
