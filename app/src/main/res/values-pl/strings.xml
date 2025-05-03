@@ -1539,8 +1539,8 @@
     <string name="pref_media_play">Odtwarzanie multimediów</string>
     <string name="pref_media_pause">Pauza multimediów</string>
     <string name="pref_media_playpause">Przełączanie odtwarzania</string>
-    <string name="pref_media_next">Następna ścieżka</string>
-    <string name="pref_media_previous">Poprzednia ścieżka</string>
+    <string name="pref_media_next">Następny Utwór</string>
+    <string name="pref_media_previous">Poprzedni Utwór</string>
     <string name="pref_media_volumeup">Zwiększanie głośności</string>
     <string name="pref_media_volumedown">Zmniejszanie głośności</string>
     <string name="pref_media_forward">Przejdź do przodu</string>
@@ -3342,7 +3342,7 @@
     <string name="activity_type_track_and_field">Lekkoatletyka</string>
     <string name="vo2max_running">VO₂ Max podczas biegu</string>
     <string name="thirty_days_timeline">Oś czasowa z 30 dni</string>
-    <string name="moondrop_touch_action_play_pause">Graj/Zatrzymaj</string>
+    <string name="moondrop_touch_action_play_pause">Odtwarzaj/Wstrzymaj</string>
     <string name="moondrop_touch_trigger_long_press_1s">Długie przyciśnięcie (1s)</string>
     <string name="soundcore_equalizer_band5">Pasmo 5</string>
     <string name="auto_reconnect_ble_scan_summary">Czekaj na skan urządzenia zamiast prób połączenia się na ślepo</string>
