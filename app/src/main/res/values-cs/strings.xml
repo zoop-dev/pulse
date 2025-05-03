@@ -362,7 +362,7 @@
     <string name="action_donate">Podpořit</string>
     <string name="title_activity_calblacklist">Zakázané kalendáře</string>
     <string name="pref_call_privacy_mode_number">Skrýt číslo, ale zobrazit jméno</string>
-    <string name="pref_blacklist_calendars">Zakázané kalendáře</string>
+    <string name="pref_blacklist_calendars">Zakázat kalendáře</string>
     <string name="pref_header_pebble_timeline">Časová osa Pebble</string>
     <string name="pref_title_enable_calendar_sync">Synchronizace kalendáře</string>
     <string name="pref_summary_enable_calendar_sync">Odesílat události kalendáře na časovou osu</string>
@@ -4050,4 +4050,6 @@
     <string name="pref_huawei_activity_reminder_progress_summary">Dostávejte připomínky o postupu v kruhu aktivit</string>
     <string name="pref_huawei_activity_reminder_goal_reached_title">Dosažení cíle</string>
     <string name="pref_huawei_activity_reminder_goal_reached_summary">Dostaňte připomínku, jakmile dokončíte kruhy</string>
+    <string name="devicetype_polarh10">Polar H10</string>
+    <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
 </resources>
