@@ -1,5 +1,34 @@
 ### Changelog
 
+#### Next version (WIP)
+
+* Initial support for Colmi R12
+* Initial support for Polar H10
+* Initial support for Garmin Edge 130 Plus, Fenix 7X Pro, Instinct 2X Tactical, Vívoactive HR
+* Bangle.js: Set the HTTP request timeout
+* Colmi R0x: Add support for display preferences
+* Garmin: Fix activity renaming
+* Garmin: Parse swimming workout intervals
+* Huawei: Configuration of goal reminders
+* Huawei: Fix crash in app list
+* Huawei: Fix message during firmware update
+* Huawei: Upload notification app icons
+* iTag/thermometer: Fix icon colors in dynamic color theme
+* Mi Smart Scale: Mark device as busy while fetching weight history
+* Moondrop Space Travel: Enable battery reporting
+* Moondrop Space Travel: Fix device icon
+* Oppo Headphones: Prevent crash on invalid incoming commands
+* Ultrahuman: Add basic support for breathing exercise
+* Zepp OS: Add missing application names
+* Zepp OS: Disable realtime steps on connection
+* Zepp OS: Experimental btrfcomm support
+* Zepp OS: Fix DST when setting time
+* Zepp OS: Fix moon phase icon
+* Zepp OS: Fix zip files being wrongly recognized as AGPS
+* Zepp OS: Parse workout pace, cadence, strength sets
+* Charts: Display resting metabolic rate
+* Intent API: Add command to set device type
+
 #### 0.85.0
 
 * Initial support for 1MORE SonoFlow headphones
