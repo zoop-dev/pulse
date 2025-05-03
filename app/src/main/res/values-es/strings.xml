@@ -3762,4 +3762,5 @@
     <string name="pref_huawei_activity_reminder_goal_reached_title">Meta alcanzada</string>
     <string name="pref_huawei_activity_reminder_stand_title">Ponerse en pie</string>
     <string name="swim_style_mixed">Mixto</string>
+    <string name="weather_condition_haze">calima</string>
 </resources>
