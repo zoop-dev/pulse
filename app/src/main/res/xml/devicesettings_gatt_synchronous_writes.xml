@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/prefs_title_gatt_settings" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_sync_alt"
+        android:key="prefs_device_gatt_synchronous_writes"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/gatt_synchronous_writes_summary"
+        android:title="@string/gatt_synchronous_writes_title" />
+</androidx.preference.PreferenceScreen>

@@ -18,6 +18,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREFS_DEVICE_GATT_SYNCHRONOUS_WRITES;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -39,11 +41,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.CheckInitializedAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 /**
  * Abstract base class for all devices connected through Bluetooth Low Energy (LE) aka
@@ -308,6 +312,10 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         }
         Set<UUID> supportedServices = getSupportedServices();
         Map<UUID, BluetoothGattCharacteristic> newCharacteristics = new HashMap<>();
+
+        final Prefs devicePrefs = GBApplication.getDevicePrefs(getDevice());
+        final boolean prefs_device_gatt_synchronous_writes = devicePrefs.getBoolean(PREFS_DEVICE_GATT_SYNCHRONOUS_WRITES, false);
+
         for (BluetoothGattService service : discoveredGattServices) {
             if(bleApi != null) {
                 bleApi.addService(service);
@@ -324,6 +332,17 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
                     intmAvailableCharacteristics.put(characteristic.getUuid(), characteristic);
                     logger.info("    characteristic: {}: {} ({})", BleNamesResolver.resolveCharacteristicName(characteristic.getUuid().toString()), characteristic.getUuid(), BleNamesResolver.getCharacteristicPropertyString(characteristic.getProperties()));
+
+                    if (prefs_device_gatt_synchronous_writes && characteristic.getWriteType() == BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE) {
+                        if (0 != (characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_WRITE)) {
+                            // if both PROPERTY_WRITE and PROPERTY_WRITE_NO_RESPONSE are set Android
+                            // defaults to WRITE_TYPE_NO_RESPONSE and then calls onCharacteristicWrite
+                            // when the write has been queued on the mobile but potentially not yet
+                            // actually completely reached the gadget
+                            characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
+                            logger.debug("changed WriteType of characteristic {} to synchronous", characteristic.getUuid());
+                        }
+                    }
                 }
                 newCharacteristics.putAll(intmAvailableCharacteristics);
 

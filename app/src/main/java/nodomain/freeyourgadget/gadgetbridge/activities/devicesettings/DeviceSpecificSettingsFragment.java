@@ -1459,6 +1459,10 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                         DeviceSpecificSettingsScreen.DEVELOPER,
                         R.xml.devicesettings_ble_api
                 );
+                deviceSpecificSettings.addRootScreen(
+                        DeviceSpecificSettingsScreen.DEVELOPER,
+                        R.xml.devicesettings_gatt_synchronous_writes
+                );
             }
         }
 
