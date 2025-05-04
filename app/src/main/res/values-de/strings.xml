@@ -3974,4 +3974,27 @@
     <string name="pref_display_enabled_all_day_summary">Anzeige den ganzen Tag aktivieren. Zum Auswählen bestimmter Zeiten unten deaktivieren</string>
     <string name="pref_display_enabled_title">Anzeige aktiviert</string>
     <string name="pref_display_enabled_all_day_title">Den ganzen Tag aktiviert</string>
+    <string name="notifications_app_icon_uploading_confirm_description">Bist du sicher, dass du %1$d Anwendungssymbole hochladen möchtest?</string>
+    <string name="ultrahuman_breathing_title">Atmung</string>
+    <string name="ultrahuman_breathing_start">Start</string>
+    <string name="ultrahuman_breathing_stop">Stop</string>
+    <string name="notifications_app_icon_nothing_selected">Wähle mindestens eine App zum Hochladen</string>
+    <string name="pref_notifications_app_icon_upload_title">Symbole für Benachrichtigungsanwendungen hochladen</string>
+    <string name="pref_notifications_app_icon_upload_summary">Symbole für Benachrichtigungsanwendungen auf das Gerät hochladen</string>
+    <string name="pref_huawei_activity_reminder_progress_title">Fortschritt</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_title">Ziel erreicht</string>
+    <string name="notifications_app_icon_upload_to_device">an Gerät senden</string>
+    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
+    <string name="metabolic_rate">Stoffwechselrate</string>
+    <string name="workout_intervals">Intervalle</string>
+    <string name="devicetype_polarh10">Polar H10</string>
+    <string name="busy_task_fetch_weight_data">Abrufen der Gewichtsdaten</string>
+    <string name="restingCalories">Ruhekalorien</string>
+    <string name="notifications_app_icon_info">Wähle Anwendungen und drücke «an Gerät senden». Alle zuvor hochgeladenen Symbole können ersetzt werden. Aktuelle Gerätebeschränkungen unbekannt.</string>
+    <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
+    <string name="notifications_app_icon_uploading">Die Symbole werden im Hintergrund hochgeladen. Du kannst diese Aktivität schliessen</string>
+    <string name="pref_huawei_activity_reminders">Aktivitätserinnerungen</string>
+    <string name="pref_huawei_activity_reminder_stand_title">Stand</string>
+    <string name="pref_huawei_activity_reminder_stand_summary">Erhalte eine Erinnerung, aufzustehen, wenn du seit einer Stunde nicht aufgestanden bist</string>
+    <string name="swimming_stroke">Schwimmzug</string>
 </resources>
