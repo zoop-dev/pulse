@@ -57,7 +57,7 @@ public class ServerResponseAction extends BtLEServerAction {
             LOG.debug("writing to server: " + device.getAddress() + ": " + Logging.formatBytes(value));
         }
 
-        return gattServer.sendResponse(device, requestId, 0, offset, value);
+        return gattServer.sendResponse(device, requestId, status, offset, value);
     }
 
     protected final byte[] getValue() {
