@@ -130,7 +130,7 @@
     <string name="pref_title_pebble_forcele">Preferir siempre BLE</string>
     <string name="pref_summary_pebble_forcele">Usar el soporte experimental de Pebble LE para todos los Pebble en lugar del Bluetooth clásico. Esto requiere vincular primero con Pebble no LE, y luego Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE límite de GATT MTU</string>
-    <string name="pref_summary_pebble_mtu_limit">Si tu Pebble 2/Pebble LE no funciona correctamente, prueba esta opción para limitar el MTU (rango válido 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Si su Pebble 2/Pebble LE no funciona correctamente, pruebe esta opción para limitar el MTU (intervalo válido 20-512)</string>
     <string name="pref_title_pebble_enable_applogs">Activar el registro de la aplicación del reloj</string>
     <string name="pref_summary_pebble_enable_applogs">Producirá registros de las apps del reloj que Gadgetbridge guardará (necesita reconexión)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">ACK antes de tiempo de PebbleKit</string>
@@ -175,7 +175,7 @@
     <string name="device_with_rssi">%1$s (%2$s)</string>
     <string name="title_activity_android_pairing">Emparejar dispositivo</string>
     <string name="android_pairing_hint">Usar el menú de emparejamiento Bluetooth de Android para vincular el dispositivo.</string>
-    <string name="title_activity_mi_band_pairing">Emparejar tu Mi Band</string>
+    <string name="title_activity_mi_band_pairing">Emparejar su Mi Band</string>
     <string name="pairing">Emparejando con %s…</string>
     <string name="pairing_creating_bond_with">Creando emparejamiento con %1$s (%2$s)</string>
     <string name="pairing_unable_to_pair_with">No se ha podido emparejar con %1$s (%2$s)</string>
@@ -192,7 +192,7 @@
     <string name="miband_pairing_using_dummy_userdata">No se proporcionaron datos de usuario válidos. Por ahora se emplearán datos ficticios.</string>
     <string name="miband_pairing_tap_hint">Cuando su MiBand vibre y parpadee, púlsela repetidas veces.</string>
     <string name="appinstaller_install">Instalar</string>
-    <string name="discovery_connected_devices_hint">Haz tu dispositivo visible. Los dispositivos ya conectados no aparecerán. En Android 6 o superior, necesitas activar la localización (ej. GPS). Desactiva Privacy Guard para Gadgetbridge, puesto que podría detener y reiniciar tu teléfono. Si tu dispositivo no aparece en dos minutos, vuelve a intentarlo tras reiniciar tu teléfono.</string>
+    <string name="discovery_connected_devices_hint">Haga visible su dispositivo. Los dispositivos ya conectados no aparecerán. En Android 6 o superior, necesita activar la localización (ej. GPS). Desactive Privacy Guard para Gadgetbridge, puesto que podría detener y reiniciar el teléfono. Si el dispositivo no aparece en dos minutos, vuelva a intentarlo tras reiniciarlo.</string>
     <string name="discovery_note">Nota:</string>
     <string name="candidate_item_device_image">Imagen del dispositivo</string>
     <string name="miband_prefs_alias">Nombre/Apodo</string>
@@ -269,7 +269,7 @@
     <string name="pbwinstallhandler_correct_hw_revision">Revisión de hardware correcta</string>
     <string name="pbwinstallhandler_incorrect_hw_revision">¡La versión de hardware es incorrecta!</string>
     <string name="pbwinstallhandler_app_item">%1$s (%2$s)</string>
-    <string name="updatefirmwareoperation_updateproblem_do_not_reboot">Hubo un problema con la transferencia de firmware. ¡NO REINICIES tu Mi Band!</string>
+    <string name="updatefirmwareoperation_updateproblem_do_not_reboot">Hubo un problema con la transferencia de firmware. ¡NO REINICIE su Mi Band!</string>
     <string name="updatefirmwareoperation_metadata_updateproblem">Hubo un problema con la transferencia de metadatos del firmware</string>
     <string name="updatefirmwareoperation_update_complete">Instalación del firmware completa</string>
     <string name="updatefirmwareoperation_update_complete_rebooting">Instalación del firmware completa, reiniciando dispositivo…</string>
@@ -291,7 +291,7 @@
     <string name="live_activity_current_steps_per_minute">Pasos/min actuales</string>
     <string name="live_activity_total_steps">Pasos totales</string>
     <string name="live_activity_steps_per_minute_history">Historial de pasos por minuto</string>
-    <string name="live_activity_start_your_activity">Empieza tu actividad</string>
+    <string name="live_activity_start_your_activity">Empiece su actividad</string>
     <string name="abstract_chart_fragment_kind_activity">Actividad</string>
     <string name="abstract_chart_fragment_kind_light_sleep">Sueño ligero</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">Sueño profundo</string>
@@ -300,7 +300,7 @@
     <string name="user_feedback_all_alarms_disabled">Todas las alarmas desactivadas</string>
     <string name="pref_title_keep_data_on_device">Mantener los datos de actividad en el dispositivo</string>
     <string name="miband_fwinstaller_incompatible_version">Firmware incompatible</string>
-    <string name="fwinstaller_firmware_not_compatible_to_device">Este firmware no es compatible con tu dispositivo</string>
+    <string name="fwinstaller_firmware_not_compatible_to_device">Este firmware no es compatible con el dispositivo</string>
     <string name="miband_prefs_reserve_alarm_calendar">Reserva de alarmas para próximos eventos</string>
     <string name="miband_prefs_hr_sleep_detection">Usar sensor de pulso para mejorar la detección del sueño</string>
     <string name="miband_prefs_device_time_offset_hours">Compensación de la hora del dispositivo en horas (para detectar el sueño de trabajadores a turnos)</string>
@@ -353,7 +353,7 @@
     <string name="dbmanagementactivity_error_exporting_db">Error de exportación de la base de datos: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_shared">Error de exportación de las preferencias: %1$s</string>
     <string name="dbmanagementactivity_import_data_title">¿Importar datos?</string>
-    <string name="dbmanagementactivity_overwrite_database_confirmation">¿Realmente quieres sobrescribir los datos actuales? Se sobrescribirán todos tus datos de actividad actuales (si los tienes), dispositivos y preferencias.</string>
+    <string name="dbmanagementactivity_overwrite_database_confirmation">¿Realmente quiere sobrescribir los datos actuales? Se sobrescribirán todos sus datos de actividad actuales (si los hay), dispositivos y preferencias.</string>
     <string name="dbmanagementactivity_import_successful">Importado.</string>
     <string name="dbmanagementactivity_error_importing_db">Error de importación de la base de datos: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">Error de importación de las preferencias: %1$s</string>
@@ -433,10 +433,10 @@
     <string name="interval_thirty_minutes">cada 30 minutos</string>
     <string name="interval_one_hour">cada hora</string>
     <string name="pref_title_weather">Meteorología</string>
-    <string name="pref_title_weather_location">Ubicación para el clima (para el proveedor del clima de LineageOS)</string>
+    <string name="pref_title_weather_location">Ubicación de pronóstico (para el proveedor de meteorología de LineageOS)</string>
     <string name="kind_firmware">Firmware</string>
     <string name="kind_invalid">Datos no válidos</string>
-    <string name="kind_font">Fuente</string>
+    <string name="kind_font">Tipo de letra</string>
     <string name="kind_gps">Firmware del GPS</string>
     <string name="kind_gps_almanac">Almanaque GPS</string>
     <string name="kind_gps_cep">Corrección de error del GPS</string>
@@ -596,7 +596,7 @@
     <string name="zetime_title_heartrate">Configuración de frecuencia cardíaca</string>
     <string name="zetime_title_screentime">Duración de encendido de pantalla en segundos</string>
     <string name="zetime_title_heart_rate_alarm">Alarma de frecuencia cardíaca</string>
-    <string name="zetime_title_heart_rate_alarm_summary">El reloj te avisará cuando tu frecuencia cardíaca exceda los límites.</string>
+    <string name="zetime_title_heart_rate_alarm_summary">El reloj le avisará cuando su frecuencia cardíaca exceda los límites.</string>
     <string name="zetime_heart_rate_alarm_enable">Activar alarma de frecuencia cardíaca</string>
     <string name="activity_prefs_alarm_max_heart_rate">Frecuencia cardíaca máxima</string>
     <string name="activity_prefs_alarm_min_heart_rate">Frecuencia cardíaca mínima</string>
@@ -707,7 +707,7 @@
     <string name="preferences_makibes_hr3_settings">Configuración de Makibes HR3</string>
     <string name="prefs_find_phone">Encontrar teléfono</string>
     <string name="prefs_enable_find_phone">Activar «Encontrar teléfono»</string>
-    <string name="prefs_find_phone_summary">Usa tu pulsera para reproducir el tono del teléfono.</string>
+    <string name="prefs_find_phone_summary">Use la pulsera para reproducir el tono del teléfono.</string>
     <string name="prefs_find_phone_duration">Duración del tono en segundos</string>
     <string name="maximum_duration">Duración</string>
     <string name="discovery_need_to_enter_authkey">Este dispositivo necesita una clave de autenticación secreta. Mantén presionado el dispositivo para introducirla. Consulta la wiki.</string>
@@ -737,7 +737,7 @@
     <string name="qhybrid_offset_timezone">compensar huso horario por</string>
     <string name="qhybrid_changes_delay_prompt">El cambio puede demorar varios segundos…</string>
     <string name="qhybrid_offset_time_by">tiempo compensado por</string>
-    <string name="pref_summary_disable_new_ble_scanning">Marca esta opción si tu dispositivo no es encontrado durante el descubrimiento</string>
+    <string name="pref_summary_disable_new_ble_scanning">Marque esta opción si su dispositivo no se encuentra durante la detección</string>
     <string name="pref_summary_allow_high_mtu">Incrementa la velocidad de transferencia, pero puede no funcionar en algunos dispositivos Android.</string>
     <string name="pref_summary_sync_calendar">Activa las alertas del calendario, incluso cuando se encuentre desconectado</string>
     <string name="pref_title_sync_caldendar">Sincronizar eventos del calendario</string>
@@ -766,7 +766,7 @@
     <string name="hr_appname_stopwatch">Cronógrafa</string>
     <string name="hr_appname_workout">Rutina de ejercicio</string>
     <string name="hr_appname_wellness">Bienestar</string>
-    <string name="pref_summary_force_white_color_scheme">Útil si tu reloj tiene manecillas oscuras</string>
+    <string name="pref_summary_force_white_color_scheme">Útil si su reloj tiene manecillas oscuras</string>
     <string name="find_my_phone_notification">Encuentra mi teléfono</string>
     <string name="pref_title_vibration_strength">Intensidad de la vibración</string>
     <string name="pref_title_relax_firmware_checks">Activa esto si quieres instalar un firmware no destinado a tu dispositivo (bajo tu propio riesgo)</string>
@@ -798,10 +798,10 @@
     <string name="hungarian">Húngaro</string>
     <string name="romanian">Rumano</string>
     <string name="lefun_prefs_interface_language_title">Idioma de la interfaz</string>
-    <string name="lefun_prefs_antilost_summary">La banda vibrará si tu teléfono se desconecta de la banda</string>
+    <string name="lefun_prefs_antilost_summary">La pulsera vibrará si su teléfono se desconecta de esta</string>
     <string name="lefun_prefs_antilost_title">Antipérdida</string>
     <string name="lefun_prefs_hydration_reminder_interval_title">Intervalo del recordatorio de hidratación (en minutos)</string>
-    <string name="lefun_prefs_hydration_reminder_summary">La banda vibrará para recordarte que bebas agua</string>
+    <string name="lefun_prefs_hydration_reminder_summary">La pulsera vibrará para recordarle que beba agua</string>
     <string name="lefun_prefs_hydration_reminder_title">Recordatorio de hidratación</string>
     <string name="charts_min_max_heartrate_popup">Frecuencia cardíaca más baja: %1$d \nFrecuencia cardíaca más alta: %2$d \nIntensidad de movimiento: %3$s</string>
     <string name="movement_intensity">Intensidad de movimiento</string>
@@ -841,7 +841,7 @@
     <string name="pref_sensors_bp_calibration_high">Presión arterial SISTÓLICA (alta)</string>
     <string name="pref_sensors_bp_calibration">Calibración de la presión sanguínea</string>
     <string name="pref_title_sensors_altitude">Calibración de altitud</string>
-    <string name="bip_prefs_shotcuts_summary">Elegir los atajos en la pantalla de la banda</string>
+    <string name="bip_prefs_shotcuts_summary">Elija los atajos en la pantalla de la pulsera</string>
     <string name="bip_prefs_shortcuts">Atajos</string>
     <string name="baseAltitude">Altitud base</string>
     <string name="averageStrokesPerSecond">Promedio brazada</string>
@@ -1576,7 +1576,7 @@
     <string name="pref_summary_notification_media_ignores_application_list">Procesar las notificaciones multimedia antes que la lista de aplicaciones. Si esta preferencia no está marcada, las aplicaciones multimedia deben estar permitidas en la lista de aplicaciones para que los controles multimedia funcionen en el dispositivo.</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Tamaño a utilizar para la representación de texto en mapa de bits</string>
     <string name="pref_title_banglejs_webview_url">URL del cargador de aplicaciones</string>
-    <string name="pref_summary_banglejs_webview_url">Si quieres un cargador de aplicaciones personalizado pon aquí tu URL https://.../android.html. De lo contrario, deja en blanco https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">Si quiere un cargador de aplicaciones personalizado, introduzca aquí su URL https://.../android.html. De lo contrario, deje en blanco para usar https://banglejs.com/apps</string>
     <string name="pref_blacklist_calendars_summary">Los calendarios de la lista negra no se sincronizarán con el dispositivo</string>
     <string name="pref_summary_canned_replies">Responder desde el reloj con mensajes predefinidos</string>
     <string name="pref_header_intent_api">Intent API</string>
@@ -1902,7 +1902,7 @@
     <string name="intent_api_allow_trigger_export_title">Permitir la exportación de bases de datos</string>
     <string name="supercars_lights_label">Iluminación</string>
     <string name="supercars_lights_blinking_label">Intermitente</string>
-    <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Trunca las marcas de tiempo de las operaciones de recuperación a minutos. Desactiva esta opción para mantener las marcas de tiempo en segundos, si tienes problemas al recuperar de entrenamientos muy cortos.</string>
+    <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Trunca las marcas de tiempo de las operaciones de recuperación a minutos. Desactive esta opción para mantener las marcas de tiempo en segundos, si tiene problemas al recuperar de entrenamientos muy cortos.</string>
     <string name="prefs_password_summary">Bloquea la pulsera con una contraseña cuando se la quita de la muñeca</string>
     <string name="normal">Normal</string>
     <string name="pref_cover_to_mute">Pulsar para silenciar</string>
@@ -2094,7 +2094,7 @@
     <string name="pref_summary_banglejs_phone_gps_enbale">Utiliza los datos GPS del teléfono móvil para sobrescribir los datos GPS del dispositivo de pulsera</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">El intervalo de actualización de la posición GPS, en ms</string>
     <string name="pref_title_banglejs_phone_gps_enbale">Usar datos GPS del teléfono</string>
-    <string name="pref_summary_banglejs_phone_gps_network_only">Utiliza sólo el proveedor de red para determinar la ubicación. Esto reduce el consumo de energía a costa de la precisión. Es necesaria una reconexión.</string>
+    <string name="pref_summary_banglejs_phone_gps_network_only">Utiliza solo el proveedor de red para determinar la ubicación. Esto reduce el consumo de energía a costa de la precisión. Es necesaria una reconexión.</string>
     <string name="description">Descripción</string>
     <string name="preview_image">Previsualizar imagen</string>
     <string name="status_icon">Icono de estado</string>
@@ -2479,7 +2479,7 @@
     <string name="prefs_workmode">Modo de trabajo</string>
     <string name="huawei_alarm_smart_description">No desmarque la casilla de activación inteligente.</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="huawei_trusleep_summary">Monitoriza la calidad de tu sueño y patrón respiratorio en tiempo real.\nAnaliza tus patrones de sueño y diagnostica con precisión 6 tipos de problemas de sueño.</string>
+    <string name="huawei_trusleep_summary">Monitoriza la calidad de su sueño y patrón respiratorio en tiempo real.\nAnaliza sus patrones de sueño y diagnostica con precisión 6 tipos de problemas de sueño.</string>
     <string name="huawei_trusleep_summary_light">Control del sueño mejorado</string>
     <string name="pref_enable_call_accept">Permitir aceptar llamadas</string>
     <string name="pref_enable_call_accept_summary">Activar la aceptación de llamadas desde el dispositivo</string>
@@ -2525,7 +2525,7 @@
     <string name="pref_force_connection_type_auto">Automático</string>
     <string name="pref_force_connection_type_ble">Bluetooth de baja energía</string>
     <string name="pref_force_connection_type_bt_classic">Bluetooth</string>
-    <string name="pref_force_connection_type_description">Puedes intentar forzar el tipo de conexión en caso de que tu dispositivo no responda a Gadgetbridge</string>
+    <string name="pref_force_connection_type_description">Puede intentar forzar el tipo de conexión en caso de que su dispositivo no responda a Gadgetbridge</string>
     <string name="flatDistance">Ruta llana</string>
     <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N</string>
     <string name="heartrate_bpm_155">155 ppm</string>
@@ -2948,7 +2948,7 @@
     <string name="devicetype_soundcore_motion300">Soundcore Motion 300</string>
     <string name="soundcore_voice_prompts">Indicaciones de voz</string>
     <string name="soundcore_button_brightness_high">Alto</string>
-    <string name="soundcore_ldac_mode_summary">Habilitar LDAC reducirá la duración de la batería y podría provocar inestabilidad en la conexión</string>
+    <string name="soundcore_ldac_mode_summary">Activar LDAC reducirá la vida de la batería y podría desestabilizar la conexión</string>
     <string name="soundcore_adaptive_direction_title">Dirección adaptativa</string>
     <string name="soundcore_equalizer_preset_signature">Firma de Soundcore</string>
     <string name="soundcore_equalizer_preset_voice">Voz</string>
@@ -2966,7 +2966,7 @@
     <string name="soundcore_equalizer_custom_summary">Configuración del ecualizador paramétrico</string>
     <string name="soundcore_equalizer_direction_standing">Vertical</string>
     <string name="soundcore_equalizer_direction_lying">Horizontal</string>
-    <string name="soundcore_equalizer_reset_title">Restablecer los valores predeterminados</string>
+    <string name="soundcore_equalizer_reset_title">Restablecer valores predeterminados</string>
     <string name="soundcore_equalizer_band1">Banda 1</string>
     <string name="soundcore_equalizer_band4">Banda 4</string>
     <string name="soundcore_equalizer_band5">Banda 5</string>
@@ -3403,7 +3403,7 @@
     <string name="first_start_permissions_title">Permisos</string>
     <string name="first_start_permissions_desc">Gadgetbridge necesita muchos permisos para realizar todas sus funciones. Revisa los permisos y sus propósitos a continuación.</string>
     <string name="first_start_permissions_request_all_button">Solicitar todos los permisos</string>
-    <string name="first_start_get_started_desc">Para comenzar, agrega tu primer dispositivo directamente desde esta pantalla, restaura una copia de seguridad o comienza con una base de datos limpia.</string>
+    <string name="first_start_get_started_desc">Para comenzar, añada su primer dispositivo directamente desde esta pantalla, restaure una copia de respaldo o comience con una base de datos limpia.</string>
     <string name="first_start_get_started_add_first_device_button">Añadir el primer dispositivo</string>
     <string name="permission_notifications_summary">Reenvío de notificaciones a gadgets conectados</string>
     <string name="permission_manage_dnd_summary">Cambiando directiva de notificaciones en modo No molestar</string>
@@ -3498,7 +3498,7 @@
     <string name="discharge_interval_5">Intervalo de descarga 5</string>
     <string name="power_w">Potencia en W</string>
     <string name="manual_discharge">Intervalos de descarga manual</string>
-    <string name="battery_allow_pass_though_summary">Cuando está habilitado, la batería se puede cargar y descargar al mismo tiempo</string>
+    <string name="battery_allow_pass_though_summary">Cuando se activa, la batería se puede cargar mientras se descarga</string>
     <string name="stepRateMax">Frecuencia máxima de pasos</string>
     <string name="devicetype_casioecbs100">Casio ECB-S100</string>
     <string name="weekly_total">Resumen semanal</string>
@@ -3784,4 +3784,11 @@
     <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
     <string name="metabolic_rate">Tasa metabólica</string>
     <string name="restingCalories">Calorías en reposo</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
+    <string name="weather_condition_few_clouds">pocas nubes</string>
+    <string name="weather_condition_scattered_clouds">nubes dispersas</string>
+    <string name="weather_condition_sand">arena</string>
+    <string name="weather_condition_dust">polvo</string>
+    <string name="earfun_anc_mode">Modo de ANC</string>
+    <string name="weather_condition_sleet">aguanieve</string>
 </resources>
