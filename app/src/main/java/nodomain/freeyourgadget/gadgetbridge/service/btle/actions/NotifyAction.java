@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.GattDescriptor.UUID_DESCRIPTOR_GATT_CLIENT_CHARACTERISTIC_CONFIGURATION;
@@ -69,7 +70,7 @@ public class NotifyAction extends BtLEAction {
                 final int result = gatt.writeDescriptor(descriptor, value);
 
                 if (result != BluetoothStatusCodes.SUCCESS) {
-                    LOG.error("Writing characteristic {} descriptor failed: {}", charUuid, result);
+                    LOG.error("Writing characteristic {} descriptor failed: {}", charUuid, BleNamesResolver.getBluetoothStatusString(result));
                     return false;
                 }
             } catch (final SecurityException ex) {

@@ -87,6 +87,7 @@ public class BleNamesResolver {
         }
     }
 
+    /// lookup description for numeric status used by {@link android.bluetooth.BluetoothGattCallback}
     static public String getStatusString(int status) {
         switch (status) {
             case BluetoothGatt.GATT_SUCCESS:
@@ -115,6 +116,153 @@ public class BleNamesResolver {
                 return "FAILURE";
             default:
                 return "failed_" + status;
+        }
+    }
+
+    /// lookup description for numeric {@link android.bluetooth.BluetoothStatusCodes}
+    public static String getBluetoothStatusString(int status) {
+        // many of the values in BluetoothStatusCodes aren't accessible due to @SystemApi
+        switch (status) {
+            case 0:
+                return "SUCCESS";
+            case 1:
+                return "ERROR_BLUETOOTH_NOT_ENABLED";
+            case 2:
+                return "ERROR_BLUETOOTH_NOT_ALLOWED";
+            case 3:
+                return "ERROR_DEVICE_NOT_BONDED";
+            case 4:
+                return "ERROR_DEVICE_NOT_CONNECTED";
+            case 6:
+                return "ERROR_MISSING_BLUETOOTH_CONNECT_PERMISSION";
+            case 7:
+                return "ERROR_MISSING_BLUETOOTH_SCAN_PERMISSION";
+            case 9:
+                return "ERROR_PROFILE_SERVICE_NOT_BOUND";
+            case 10:
+                return "FEATURE_SUPPORTED";
+            case 11:
+                return "FEATURE_NOT_SUPPORTED";
+            case 12:
+                return "ERROR_NOT_ACTIVE_DEVICE";
+            case 13:
+                return "ERROR_NO_ACTIVE_DEVICES";
+            case 14:
+                return "ERROR_PROFILE_NOT_CONNECTED";
+            case 15:
+                return "ERROR_TIMEOUT";
+            case 16:
+                return "REASON_LOCAL_APP_REQUEST";
+            case 17:
+                return "REASON_LOCAL_STACK_REQUEST";
+            case 18:
+                return "REASON_REMOTE_REQUEST";
+            case 19:
+                return "REASON_SYSTEM_POLICY";
+            case 20:
+                return "ERROR_HARDWARE_GENERIC";
+            case 21:
+                return "ERROR_BAD_PARAMETERS";
+            case 22:
+                return "ERROR_LOCAL_NOT_ENOUGH_RESOURCES";
+            case 23:
+                return "ERROR_REMOTE_NOT_ENOUGH_RESOURCES";
+            case 24:
+                return "ERROR_REMOTE_OPERATION_REJECTED";
+            case 25:
+                return "ERROR_REMOTE_LINK_ERROR";
+            case 26:
+                return "ERROR_ALREADY_IN_TARGET_STATE";
+            case 27:
+                return "ERROR_REMOTE_OPERATION_NOT_SUPPORTED";
+            case 28:
+                return "ERROR_CALLBACK_NOT_REGISTERED";
+            case 29:
+                return "ERROR_ANOTHER_ACTIVE_REQUEST";
+            case 30:
+                return "FEATURE_NOT_CONFIGURED";
+            case 200:
+                return "ERROR_GATT_WRITE_NOT_ALLOWED";
+            case 201:
+                return "ERROR_GATT_WRITE_REQUEST_BUSY";
+            case 400:
+                return "ALLOWED";
+            case 401:
+                return "NOT_ALLOWED";
+            case 1000:
+                return "ERROR_ANOTHER_ACTIVE_OOB_REQUEST";
+            case 1100:
+                return "ERROR_DISCONNECT_REASON_LOCAL_REQUEST";
+            case 1101:
+                return "ERROR_DISCONNECT_REASON_REMOTE_REQUEST";
+            case 1102:
+                return "ERROR_DISCONNECT_REASON_LOCAL";
+            case 1103:
+                return "ERROR_DISCONNECT_REASON_REMOTE";
+            case 1104:
+                return "ERROR_DISCONNECT_REASON_TIMEOUT";
+            case 1105:
+                return "ERROR_DISCONNECT_REASON_SECURITY";
+            case 1106:
+                return "ERROR_DISCONNECT_REASON_SYSTEM_POLICY";
+            case 1107:
+                return "ERROR_DISCONNECT_REASON_RESOURCE_LIMIT_REACHED";
+            case 1108:
+                return "ERROR_DISCONNECT_REASON_CONNECTION_ALREADY_EXISTS";
+            case 1109:
+                return "ERROR_DISCONNECT_REASON_BAD_PARAMETERS";
+            case 1116:
+                return "ERROR_AUDIO_DEVICE_ALREADY_CONNECTED";
+            case 1117:
+                return "ERROR_AUDIO_DEVICE_ALREADY_DISCONNECTED";
+            case 1118:
+                return "ERROR_AUDIO_ROUTE_BLOCKED";
+            case 1119:
+                return "ERROR_CALL_ACTIVE";
+            case 1200:
+                return "ERROR_LE_BROADCAST_INVALID_BROADCAST_ID";
+            case 1201:
+                return "ERROR_LE_BROADCAST_INVALID_CODE";
+            case 1202:
+                return "ERROR_LE_BROADCAST_ASSISTANT_INVALID_SOURCE_ID";
+            case 1203:
+                return "ERROR_LE_BROADCAST_ASSISTANT_DUPLICATE_ADDITION";
+            case 1204:
+                return "ERROR_LE_CONTENT_METADATA_INVALID_PROGRAM_INFO";
+            case 1205:
+                return "ERROR_LE_CONTENT_METADATA_INVALID_LANGUAGE";
+            case 1206:
+                return "ERROR_LE_CONTENT_METADATA_INVALID_OTHER";
+            case 1207:
+                return "ERROR_CSIP_INVALID_GROUP_ID";
+            case 1208:
+                return "ERROR_CSIP_GROUP_LOCKED_BY_OTHER";
+            case 1209:
+                return "ERROR_CSIP_LOCKED_GROUP_MEMBER_LOST";
+            case 1210:
+                return "ERROR_HAP_PRESET_NAME_TOO_LONG";
+            case 1211:
+                return "ERROR_HAP_INVALID_PRESET_INDEX";
+            case 1300:
+                return "ERROR_NO_LE_CONNECTION";
+            case 1301:
+                return "ERROR_DISTANCE_MEASUREMENT_INTERNAL";
+            case 2000:
+                return "RFCOMM_LISTENER_START_FAILED_UUID_IN_USE";
+            case 2001:
+                return "RFCOMM_LISTENER_OPERATION_FAILED_NO_MATCHING_SERVICE_RECORD";
+            case 2002:
+                return "RFCOMM_LISTENER_OPERATION_FAILED_DIFFERENT_APP";
+            case 2003:
+                return "RFCOMM_LISTENER_FAILED_TO_CREATE_SERVER_SOCKET";
+            case 2004:
+                return "RFCOMM_LISTENER_FAILED_TO_CLOSE_SERVER_SOCKET";
+            case 2005:
+                return "RFCOMM_LISTENER_NO_SOCKET_AVAILABLE";
+            case 3000:
+                return "ERROR_NOT_DUAL_MODE_AUDIO_DEVICE";
+            default:
+                return "status_" + status;
         }
     }
 

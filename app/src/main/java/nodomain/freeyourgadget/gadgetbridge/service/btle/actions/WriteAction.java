@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
 /**
@@ -71,7 +72,7 @@ public class WriteAction extends BtLEAction {
                 if (status == BluetoothStatusCodes.SUCCESS) {
                     return true;
                 }
-                LOG.error("writing to characteristic {} failed: BluetoothStatusCode={}", characteristic.getUuid(), status);
+                LOG.error("writing to characteristic {} failed: BluetoothStatusCode={}", characteristic.getUuid(), BleNamesResolver.getBluetoothStatusString(status));
             } catch (Exception e) {
                 LOG.error("writing to characteristic {} failed with ", characteristic.getUuid(), e);
             }
