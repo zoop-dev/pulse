@@ -31,7 +31,7 @@ public class RequestConnectionPriorityAction extends BtLEAction {
 
     @Override
     public boolean expectsResult() {
-        return true;
+        return false;
     }
 
     @Override
