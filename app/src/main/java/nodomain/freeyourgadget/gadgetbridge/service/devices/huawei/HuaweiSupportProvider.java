@@ -1903,7 +1903,9 @@ public class HuaweiSupportProvider {
                     packet.runPaceZone4Time,
                     packet.runPaceZone5Time,
                     packet.algType,
-                    packet.trainingPoints
+                    packet.trainingPoints,
+                    packet.longestStreak,
+                    packet.tripped
             );
 
 

@@ -186,6 +186,9 @@ public class Workout {
 
             public int trainingPoints = -1;
 
+            public int longestStreak = -1;
+            public int tripped = -1;
+
             public Response(ParamsProvider paramsProvider) {
                 super(paramsProvider);
             }
@@ -272,6 +275,10 @@ public class Workout {
                     this.runPaceZone4Time = container.getShort(0x59);
                 if (container.contains(0x5a))
                     this.runPaceZone5Time = container.getShort(0x5a);
+                if (container.contains(0x5b))
+                    this.longestStreak = container.getAsInteger(0x5b);
+                if (container.contains(0x5c))
+                    this.tripped = container.getAsInteger(0x5c);
                 if (container.contains(0x5d))
                     this.algType = container.getByte(0x5d);
                 if (container.contains(0x63))
