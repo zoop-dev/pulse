@@ -59,6 +59,11 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
     protected int CHART_TEXT_COLOR;
     protected int LEGEND_TEXT_COLOR;
     protected int TEXT_COLOR;
+    protected int AVERAGE_LINE_COLOR;
+
+    // Number of days to include in the average calculation
+    private static final int DAYS_FOR_AVERAGE = 30;
+    private static final int AVERAGE_BIN_SIZE_MINS = 60;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,12 +98,14 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         TEXT_COLOR = GBApplication.getTextColor(requireContext());
         LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
+        AVERAGE_LINE_COLOR = Color.GRAY;
     }
 
     @Override
     protected BodyEnergyData refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device) {
-        List<? extends BodyEnergySample> samples = getBodyEnergySamples(db, device, getTSStart(), getTSEnd());
-        return new BodyEnergyData(samples);
+        List<? extends BodyEnergySample> todaySamples = getBodyEnergySamples(db, device, getTSStart(), getTSEnd());
+        List<List<? extends BodyEnergySample>> historicalData = getHistoricalBodyEnergyData(db, device, DAYS_FOR_AVERAGE);
+        return new BodyEnergyData(todaySamples, historicalData);
     }
 
     @Override
@@ -107,16 +114,19 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         mDateView.setText(formattedDate);
 
         List<Entry> lineEntries = new ArrayList<>();
+        List<Entry> averageLineEntries = new ArrayList<>();
         final List<ILineDataSet> lineDataSets = new ArrayList<>();
         final AtomicInteger gainedValue = new AtomicInteger(0);
         final AtomicInteger drainedValue = new AtomicInteger(0);
         int newestValue = 0;
         long referencedTimestamp;
-        if (!bodyEnergyData.samples.isEmpty()) {
-            newestValue = bodyEnergyData.samples.get(bodyEnergyData.samples.size() - 1).getEnergy();
-            referencedTimestamp = bodyEnergyData.samples.get(0).getTimestamp();
+
+        if (!bodyEnergyData.todaySamples.isEmpty()) {
+            // Process today's samples
+            newestValue = bodyEnergyData.todaySamples.get(bodyEnergyData.todaySamples.size() - 1).getEnergy();
+            referencedTimestamp = bodyEnergyData.todaySamples.get(0).getTimestamp();
             final AtomicInteger[] lastValue = {new AtomicInteger(0)};
-            bodyEnergyData.samples.forEach((sample) -> {
+            bodyEnergyData.todaySamples.forEach((sample) -> {
                 if (sample.getEnergy() < lastValue[0].intValue()) {
                     drainedValue.set(drainedValue.get() + lastValue[0].intValue() - sample.getEnergy());
                 } else if (lastValue[0].intValue() > 0 && sample.getEnergy() > lastValue[0].intValue()) {
@@ -128,29 +138,64 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
             });
         }
 
+        if (!bodyEnergyData.historicalData.isEmpty()) {
+            averageLineEntries = buildAverageEntries(bodyEnergyData.historicalData, AVERAGE_BIN_SIZE_MINS);
+        }
+
+        // Create the average line dataset if we have data
+        if (!averageLineEntries.isEmpty()) {
+            final LineDataSet averageLineDataSet = new LineDataSet(averageLineEntries, getString(R.string.body_energy_legend_average));
+            averageLineDataSet.setColor(AVERAGE_LINE_COLOR);
+            averageLineDataSet.setLineWidth(1.5f);
+            averageLineDataSet.setDrawCircles(false);
+            averageLineDataSet.setDrawValues(false);
+            averageLineDataSet.setDrawFilled(true);
+            averageLineDataSet.setFillColor(AVERAGE_LINE_COLOR);
+            averageLineDataSet.setFillAlpha(40);
+            averageLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            averageLineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            averageLineDataSet.setHighlightEnabled(false);
+
+            // Add average line first so it appears underneath
+            lineDataSets.add(averageLineDataSet);
+        }
+
+        // Create the current day line dataset
         final LineDataSet lineDataSet = new LineDataSet(lineEntries, getString(R.string.body_energy_legend_level));
         lineDataSet.setColor(getResources().getColor(R.color.body_energy_level_color));
         lineDataSet.setDrawCircles(false);
         lineDataSet.setLineWidth(2f);
-        lineDataSet.setFillAlpha(255);
         lineDataSet.setDrawCircles(false);
         lineDataSet.setCircleColor(getResources().getColor(R.color.body_energy_level_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillAlpha(60);
-        lineDataSet.setFillColor(getResources().getColor(R.color.body_energy_level_color ));
+        lineDataSet.setFillAlpha(70);
+        lineDataSet.setFillColor(getResources().getColor(R.color.body_energy_level_color));
 
-        List<LegendEntry> legendEntries = new ArrayList<>(1);
+        // Add current day line
+        lineDataSets.add(lineDataSet);
+
+        // Create legend entries
+        List<LegendEntry> legendEntries = new ArrayList<>(2);
+
         LegendEntry activityEntry = new LegendEntry();
         activityEntry.label = getString(R.string.body_energy_legend_level);
         activityEntry.formColor = getResources().getColor(R.color.body_energy_level_color);
         legendEntries.add(activityEntry);
+
+        // Add average legend entry if we have average data
+        if (!averageLineEntries.isEmpty()) {
+            LegendEntry averageEntry = new LegendEntry();
+            averageEntry.label = getString(R.string.body_energy_legend_average);
+            averageEntry.formColor = AVERAGE_LINE_COLOR;
+            legendEntries.add(averageEntry);
+        }
+
         bodyEnergyChart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
         bodyEnergyChart.getLegend().setCustom(legendEntries);
 
-        lineDataSets.add(lineDataSet);
         final LineData lineData = new LineData(lineDataSets);
         bodyEnergyChart.setData(lineData);
 
@@ -176,7 +221,9 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         bodyEnergyChart.invalidate();
     }
 
-
+    /**
+     * Get body energy samples for the specified time range
+     */
     public List<? extends BodyEnergySample> getBodyEnergySamples(final DBHandler db, final GBDevice device, int tsFrom, int tsTo) {
         Calendar day = Calendar.getInstance();
         day.setTimeInMillis(tsTo * 1000L); //we need today initially, which is the end of the time range
@@ -189,6 +236,89 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends BodyEnergySample> sampleProvider = coordinator.getBodyEnergySampleProvider(device, db.getDaoSession());
         return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
+    }
+
+    /**
+     * Get historical body energy data for the specified number of days
+     */
+    private List<List<? extends BodyEnergySample>> getHistoricalBodyEnergyData(final DBHandler db, final GBDevice device, int daysCount) {
+        List<List<? extends BodyEnergySample>> historicalData = new ArrayList<>();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(getTSEnd() * 1000L);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+
+        // Go back one more day to exclude today
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+
+        final DeviceCoordinator coordinator = device.getDeviceCoordinator();
+        final TimeSampleProvider<? extends BodyEnergySample> sampleProvider = coordinator.getBodyEnergySampleProvider(device, db.getDaoSession());
+
+        for (int i = 0; i < daysCount; i++) {
+            long dayStart = (int) (cal.getTimeInMillis() / 1000);
+            long dayEnd = dayStart + 24 * 60 * 60 - 1;
+
+            List<? extends BodyEnergySample> daySamples = sampleProvider.getAllSamples(dayStart * 1000L, dayEnd * 1000L);
+            historicalData.add(daySamples);
+
+            // Move to the previous day
+            cal.add(Calendar.DAY_OF_YEAR, -1);
+        }
+
+        return historicalData;
+    }
+
+    /**
+     * Build an binned average body energy curve with an arbitrary bin size.
+     *
+     * @param historicDays list of samples maps (timestamp -> energy)
+     * @param binSizeMinutes width of a bin in minutes (must divide 24 hours evenly)
+     * @return MPAndroidChart entries (x = seconds from local midnight, y = avg body energy)
+     */
+    private List<Entry> buildAverageEntries(List<List<? extends BodyEnergySample>> historicDays, int binSizeMinutes) {
+        if (binSizeMinutes <= 0 || 24 * 60 % binSizeMinutes != 0) {
+            throw new IllegalArgumentException("binSizeMinutes must be a positive divisor of 24 hours");
+        }
+
+        final int binSizeSeconds = binSizeMinutes * 60;
+        final int binsPerDay = 24 * 60 * 60 / binSizeSeconds;
+
+        long[] sum = new long[binsPerDay];
+        int[] count = new int[binsPerDay];
+
+        TimeZone tz = TimeZone.getDefault();
+
+        // Sum body energy in bins over the provided history
+        for (List<? extends BodyEnergySample> day : historicDays) {
+            for (BodyEnergySample sample : day) {
+                long ts = sample.getTimestamp();
+                int offsetSec = tz.getOffset(ts) / 1000; // Time zone + DST in seconds
+                long localSec = ts / 1000 + offsetSec; // Epoch seconds in local time
+                int bin = (int) ((localSec / binSizeSeconds) % binsPerDay);
+
+                sum[bin] += sample.getEnergy();
+                count[bin] += 1;
+            }
+        }
+
+        // Calculate the average in each bin and make plot entries
+        List<Entry> avgEntries = new ArrayList<>(binsPerDay);
+        for (int bin = 0; bin < binsPerDay; bin++) {
+            if (count[bin] != 0) {
+                float x = bin * (float) binSizeSeconds; // seconds from local midnight
+                float avg = (float) sum[bin] / count[bin];
+                avgEntries.add(new Entry(x, avg));
+            }
+        }
+
+        // Add one extra entry to make the graph wrap at the end of the day
+        float x = binsPerDay * (float) binSizeSeconds;
+        float avg = (float) sum[0] / count[0];
+        avgEntries.add(new Entry(x, avg));
+
+        return avgEntries;
     }
 
     protected void setupLegend(Chart<?> chart) {}
@@ -296,10 +426,12 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
     }
 
     protected static class BodyEnergyData extends ChartsData {
-        private final List<? extends BodyEnergySample> samples;
+        private final List<? extends BodyEnergySample> todaySamples;
+        private final List<List<? extends BodyEnergySample>> historicalData;
 
-        protected BodyEnergyData(List<? extends BodyEnergySample> samples) {
-            this.samples = samples;
+        protected BodyEnergyData(List<? extends BodyEnergySample> todaySamples, List<List<? extends BodyEnergySample>> historicalData) {
+            this.todaySamples = todaySamples;
+            this.historicalData = historicalData;
         }
     }
 }
