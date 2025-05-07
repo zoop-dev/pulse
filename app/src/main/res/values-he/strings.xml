@@ -3144,4 +3144,7 @@
     <string name="ultrahuman_airplane_mode_activated">מצב טיסה מופעל</string>
     <string name="ultrahuman_airplane_mode_too_full">הטבעת טעונה במלואה - מצב טיסה ﬥﬡ הופעל</string>
     <string name="ultrahuman_airplane_mode_on_charger">הטבעת נטענת - מצב טיסה ﬥﬡ הופעל</string>
+    <string name="earfun_microphone_mode">מצב מיקרופון</string>
+    <string name="earfun_advanced_audio_mode">מצב שמע מתקדם</string>
+    <string name="earfun_find_headphones">איתור אוזניות</string>
 </resources>
