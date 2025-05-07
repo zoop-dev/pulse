@@ -3934,4 +3934,8 @@
     <string name="busy_task_fetch_weight_data">Получение данных о весе</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>
+    <string name="menuitem_watch_storage_space">Хранилище данных часов</string>
+    <string name="menuitem_bluetooth_scale_assistant">Управление Bluetooth-весами</string>
+    <string name="menuitem_real_time_heart_rate">Измеритель пульса в реальном времени</string>
+    <string name="menuitem_calculator">Калькулятор</string>
 </resources>
