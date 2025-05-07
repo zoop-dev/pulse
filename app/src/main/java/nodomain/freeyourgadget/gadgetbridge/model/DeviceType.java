@@ -27,6 +27,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
@@ -263,7 +264,9 @@ import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pinetime.PineTimeJFCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qc35.QC35Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT100Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT110Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT300Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsAir5ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi3Coordinator;
@@ -626,7 +629,10 @@ public enum DeviceType {
     ASTEROIDOS(AsteroidOSDeviceCoordinator.class),
     OPPO_ENCO_AIR(OppoEncoAirCoordinator.class),
     OPPO_ENCO_AIR2(OppoEncoAir2Coordinator.class),
+    OPPO_ENCO_BUDS2(OppoEncoBuds2Coordinator.class),
     REALME_BUDS_T110(RealmeBudsT110Coordinator.class),
+    REALME_BUDS_T100(RealmeBudsT100Coordinator.class),
+    REALME_BUDS_T300(RealmeBudsT300Coordinator.class),
     REALME_BUDS_AIR_5_PRO(RealmeBudsAir5ProCoordinator.class),
     SOFLOW_SO6(SoFlowCoordinator.class),
     WITHINGS_STEEL_HR(WithingsSteelHRDeviceCoordinator.class),
