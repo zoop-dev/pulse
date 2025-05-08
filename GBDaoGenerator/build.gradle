@@ -22,6 +22,9 @@ sourceSets {
 application.mainClass = "nodomain.freeyourgadget.gadgetbridge.daogen.GBDaoGenerator"
 
 tasks.register('genSources', JavaExec) {
+    inputs.dir(file("src"))
+    outputs.dir(project.rootProject.file("app/src/main/java"))
+
     mainClass = application.mainClass
     classpath = sourceSets.main.runtimeClasspath
     workingDir = '../'
