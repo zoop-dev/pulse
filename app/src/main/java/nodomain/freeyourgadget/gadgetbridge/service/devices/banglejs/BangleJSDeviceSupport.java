@@ -75,6 +75,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -143,6 +144,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
@@ -150,7 +152,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MusicControlEntityUpdateMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -623,6 +624,10 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             } break;
             case "accel":
                 handleAcceleration(json);
+                break;
+            case "weather":
+                LOG.info("Got weather resend request");
+                handleWeather(json);
                 break;
             default : {
                 LOG.info("UART RX JSON packet type '"+packetType+"' not understood.");
@@ -1957,15 +1962,44 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             }
     }
 
-    @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
+    private void handleWeather(JSONObject json)
+    {
+        if (!json.has("v")) {
+            handleWeatherV1(Weather.getInstance().getWeatherSpecs());
+            return;
+        }
+        try {
+            int version = json.getInt("v");
+            boolean forecast = false;
+            if (json.has("f")) {
+                forecast = json.getBoolean("f");
+            }
+            if (version == 1) {
+                handleWeatherV1(Weather.getInstance().getWeatherSpecs());
+            } else if (version == 2) {
+                handleWeatherV2(Weather.getInstance().getWeatherSpecs(), forecast);
+            }
+        } catch (JSONException e) {
+            LOG.info("JSONException: " + e.getLocalizedMessage());
+        }
+    }
+
+    private void handleWeatherV1(List<WeatherSpec> weatherSpecs)
+    {
+        if (weatherSpecs.isEmpty()) {
+            return;
+        }
+
         WeatherSpec weatherSpec = weatherSpecs.get(0);
         try {
             JSONObject o = new JSONObject();
             o.put("t", "weather");
+            o.put("v", 1);
+
+            // Current weather
             o.put("temp", weatherSpec.currentTemp);
             o.put("hi", weatherSpec.todayMaxTemp);
-            o.put("lo", weatherSpec.todayMinTemp );
+            o.put("lo", weatherSpec.todayMinTemp);
             o.put("hum", weatherSpec.currentHumidity);
             o.put("rain", weatherSpec.precipProbability);
             o.put("uv", Math.round(weatherSpec.uvIndex*10)/10);
@@ -1974,10 +2008,161 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             o.put("wind", Math.round(weatherSpec.windSpeed*100)/100.0);
             o.put("wdir", weatherSpec.windDirection);
             o.put("loc", weatherSpec.location);
-            uartTxJSON("onSendWeather", o);
+
+            uartTxJSON("handleWeather", o);
         } catch (JSONException e) {
             LOG.info("JSONException: " + e.getLocalizedMessage());
         }
+    }
+
+    private void handleWeatherV2(List<WeatherSpec> weatherSpecs, boolean includeForecast)
+    {
+        if (weatherSpecs.isEmpty()) {
+            return;
+        }
+
+        WeatherSpec weatherSpec = weatherSpecs.get(0);
+        try {
+            JSONObject o = new JSONObject();
+            o.put("t", "weather");
+            o.put("v", 2);
+            o.put("l", weatherSpec.location);
+            o.put("c", weatherSpec.currentCondition);
+
+            ByteArrayOutputStream weatherData = new ByteArrayOutputStream();
+
+            // Current weather
+            write1ByteSigned(weatherData, weatherSpec.currentTemp - 273);
+            write1ByteSigned(weatherData, weatherSpec.todayMaxTemp - 273);
+            write1ByteSigned(weatherData, weatherSpec.todayMinTemp - 273);
+            weatherData.write(weatherSpec.currentHumidity);
+            weatherData.write(weatherSpec.precipProbability);
+            weatherData.write(Math.round(weatherSpec.uvIndex*10));  // fixed point decimal
+            weatherData.write(conditionCodeMapping(weatherSpec.currentConditionCode));
+            write2Bytes(weatherData, Math.round(weatherSpec.windSpeed*100));  // fixed point decimal
+            write2Bytes(weatherData, weatherSpec.windDirection);
+            write1ByteSigned(weatherData, weatherSpec.dewPoint - 273);
+            write2Bytes(weatherData, Math.round(weatherSpec.pressure*10));  // fixed point decimal
+            weatherData.write(weatherSpec.cloudCover);
+            write4Bytes(weatherData, Math.round(weatherSpec.visibility*10)); // fixed point decimal
+            write4Bytes(weatherData, weatherSpec.sunRise);
+            write4Bytes(weatherData, weatherSpec.sunSet);
+            write4Bytes(weatherData, weatherSpec.moonRise);
+            write4Bytes(weatherData, weatherSpec.moonSet);
+            write2Bytes(weatherData, weatherSpec.moonPhase);
+            write1ByteSigned(weatherData, weatherSpec.feelsLikeTemp - 273);
+
+            if (includeForecast) {
+                // Hourly forecast as Structure of Arrays
+                int hourlyAmount = Math.min(weatherSpec.hourly.size(), 25);
+                weatherData.write(hourlyAmount);
+                if(hourlyAmount>0)
+                {
+                    write4Bytes(weatherData, weatherSpec.hourly.get(0).timestamp);
+                }
+                List<WeatherSpec.Hourly> hourly = weatherSpec.hourly.subList(0, hourlyAmount);
+                for (final WeatherSpec.Hourly hour : hourly) {
+                    float hoursDelta = (float) (hour.timestamp - weatherSpec.hourly.get(0).timestamp)/3600;
+                    weatherData.write(Math.round(hoursDelta*10)); // fixed point decimal (max 25 hours ahead)
+                }
+                for (final WeatherSpec.Hourly hour :hourly) {
+                    write1ByteSigned(weatherData, hour.temp - 273);
+                }
+                for (final WeatherSpec.Hourly hour : hourly) {
+                    weatherData.write(conditionCodeMapping(hour.conditionCode));
+                }
+                for (final WeatherSpec.Hourly hour : hourly) {
+                    weatherData.write(Math.round(hour.windSpeed));
+                }
+                for (final WeatherSpec.Hourly hour : hourly) {
+                    weatherData.write(hour.windDirection / 2); // Divide 2 by to save 1 Byte
+                }
+                for (final WeatherSpec.Hourly hour : hourly) {
+                    weatherData.write(hour.precipProbability);
+                }
+
+                // Daily forecast as Structure of Arrays
+                int dailyAmount = Math.min(weatherSpec.forecasts.size(), 7);
+                weatherData.write(dailyAmount);
+                List<WeatherSpec.Daily> daily = weatherSpec.forecasts.subList(0, dailyAmount);
+                for (final WeatherSpec.Daily day : daily) {
+                    write1ByteSigned(weatherData, day.maxTemp - 273);
+                }
+                for (final WeatherSpec.Daily day : daily) {
+                    write1ByteSigned(weatherData, day.minTemp - 273);
+                }
+                for (final WeatherSpec.Daily day : daily) {
+                    weatherData.write(conditionCodeMapping(day.conditionCode));
+                }
+                for (final WeatherSpec.Daily day : daily) {
+                    weatherData.write(Math.round(day.windSpeed));
+                }
+                for (final WeatherSpec.Daily day : daily) {
+                    weatherData.write(day.windDirection / 2); // Divide 2 by to save 1 Byte
+                }
+                for (final WeatherSpec.Daily day : daily) {
+                    weatherData.write(day.precipProbability);
+                }
+            }
+            o.put("d", Base64.encodeToString(weatherData.toByteArray(), Base64.DEFAULT));
+
+            uartTxJSON("handleWeatherV2", o);
+        } catch (JSONException e) {
+            LOG.info("JSONException: " + e.getLocalizedMessage());
+        }
+    }
+
+    private void write1ByteSigned(ByteArrayOutputStream buffer, int value) {
+        buffer.write((byte) Math.min(127, Math.max(-128, value)));
+    }
+
+    private void write2Bytes(ByteArrayOutputStream buffer, int value) {
+        buffer.write(value);
+        buffer.write(value>>>8);
+    }
+
+    private void write4Bytes(ByteArrayOutputStream buffer, int value) {
+        buffer.write(value);
+        buffer.write(value>>>8);
+        buffer.write(value>>>16);
+        buffer.write(value>>>24);
+    }
+
+    private int conditionCodeMapping(int code) {
+        // When adding new value to the arrays, make sure it is always added at the end
+        if(code < 300) { // Thunderstorm
+            return java.util.Arrays.asList(200,201,202,210,211,212,221,230,231,232).indexOf(code);
+        }
+        if(code < 400) { // Drizzle
+            int index = java.util.Arrays.asList(300,301,302,310,311,312,313,314,321).indexOf(code);
+            return 32 + index;
+        }
+        if(code < 500) { // Not used
+            int index = java.util.Arrays.asList().indexOf(code);
+            return 64 + index;
+        }
+        if(code < 600) { // Rain
+            int index = java.util.Arrays.asList(500, 501, 502, 503, 504, 511, 520, 521, 522, 531).indexOf(code);
+            return 96 + index;
+        }
+        if(code < 700) { // Snow
+            int index = java.util.Arrays.asList(600, 601, 602, 611, 612, 613, 615, 616, 620, 621, 622).indexOf(code);
+            return 128 + index;
+        }
+        if(code < 800) { // Atmosphere
+            int index = java.util.Arrays.asList(701, 711, 721, 731, 741, 751, 761, 762, 771, 781).indexOf(code);
+            return 160 + index;
+        }
+        if(code < 900) { // Clear and Clouds
+            int index = java.util.Arrays.asList(800, 801, 802, 803, 804).indexOf(code);
+            return 192 + index;
+        }
+        return 255; // Error/Unknown
+    }
+
+    @Override
+    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
+        handleWeatherV1(weatherSpecs);
     }
 
     public Bitmap textToBitmap(String text) {
