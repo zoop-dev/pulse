@@ -22,33 +22,39 @@ def getVersionCode = { ->
     }
 }
 
-def buildGitChangelog = {
-    def allCommits = providers.exec {
-        commandLine('git', 'log', '--pretty=format:%h %s')
-    }.standardOutput.asText.get()
-
-    def commitVersionCode = getVersionCode()
-    def includedCommits = 0
-    def changelogNode = new Node(null, 'changelog')
-
-    allCommits.trim().eachLine { line ->
-        if (includedCommits > 100) {
-            return true
-        }
-
-        def (commitHash, commitMessage) = line.split(" ", 2)
-        if (commitMessage.contains("Translated using Weblate")) {
-            return true
-        }
-
-        def releaseNode = new Node(changelogNode, 'release', [version: commitHash, versioncode: commitVersionCode--])
-        def _ = new Node(releaseNode, 'change', [:], commitMessage)
-        includedCommits++
-    }
-
+tasks.register("buildGitChangelog"){
     def changelogFile = new File("${project.rootDir}/app/build/generated/res/changelog/xml/changelog_git.xml")
-    changelogFile.getParentFile().mkdirs()
-    changelogFile.write(groovy.xml.XmlUtil.serialize(changelogNode))
+
+    inputs.file(project.rootProject.file(".git/HEAD"))
+    outputs.file(changelogFile)
+
+    doLast {
+        def allCommits = providers.exec {
+            commandLine('git', 'log', '--pretty=format:%h %s')
+        }.standardOutput.asText.get()
+
+        def commitVersionCode = getVersionCode()
+        def includedCommits = 0
+        def changelogNode = new Node(null, 'changelog')
+
+        allCommits.trim().eachLine { line ->
+            if (includedCommits > 100) {
+                return true
+            }
+
+            def (commitHash, commitMessage) = line.split(" ", 2)
+            if (commitMessage.contains("Translated using Weblate")) {
+                return true
+            }
+
+            def releaseNode = new Node(changelogNode, 'release', [version: commitHash, versioncode: commitVersionCode--])
+            def _ = new Node(releaseNode, 'change', [:], commitMessage)
+            includedCommits++
+        }
+
+        changelogFile.getParentFile().mkdirs()
+        changelogFile.write(groovy.xml.XmlUtil.serialize(changelogNode))
+    }
 }
 
 def getGitHashShort = { ->
@@ -170,7 +176,6 @@ android {
 
         applicationVariants.all { variant ->
             variant.resValue "string", "applicationId", variant.applicationId
-            buildGitChangelog()
 
             if (variant.buildType.name == 'nightly' || variant.buildType.name == 'nopebble') {
                 variant.outputs.all {
@@ -281,6 +286,7 @@ dependencies {
 }
 
 preBuild.dependsOn(":GBDaoGenerator:genSources")
+preBuild.dependsOn(tasks.buildGitChangelog)
 
 gradle.beforeProject {
     preBuild.dependsOn(":GBDaoGenerator:genSources")
