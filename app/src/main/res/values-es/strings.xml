@@ -1816,8 +1816,8 @@
     <string name="prefs_switch_control_left">Botones de control a la izquierda</string>
     <string name="pref_title_touch_spotify">Spotify</string>
     <string name="prefs_noise_control_with_one_earbud_summary">Permite controlar el ruido cuando se utiliza un solo auricular</string>
-    <string name="pref_switch_controls_anc_off">Cancelación de ruido ←→ Apagado</string>
-    <string name="pref_switch_controls_ambient_off">Ambiental ←→ Apagado</string>
+    <string name="pref_switch_controls_anc_off">Cancelación de ruido ↔ Desactivado</string>
+    <string name="pref_switch_controls_ambient_off">Ambiental ↔ Desactivado</string>
     <string name="prefs_voice_detect_duration">Terminar después de silenciar por:</string>
     <string name="pref_header_heartrate_alerts">Alertas de frecuencia cardíaca</string>
     <string name="pref_screen_auto_brightness_title">Brillo automático</string>
@@ -1879,7 +1879,7 @@
     <string name="pref_switch_noise_control">Interruptor de control de ruido</string>
     <string name="prefs_noise_control_with_one_earbud">Control de ruido con un solo auricular</string>
     <string name="pref_ambient_sound_tone">Tono de sonido ambiente</string>
-    <string name="pref_switch_controls_anc_ambient">Cancelación de ruido ←→ Ambiental</string>
+    <string name="pref_switch_controls_anc_ambient">Cancelación de ruido ↔ Ambiental</string>
     <string name="prefs_double_tap_edge_summary">Detecta la doble pulsación aunque no se pulse en el panel táctil</string>
     <string name="pref_header_spo2">Oxígeno en sangre</string>
     <string name="pref_header_stress">Tensión</string>
@@ -2010,7 +2010,7 @@
     <string name="double_tap">Toque doble</string>
     <string name="triple_tap">Toque triple</string>
     <string name="quick_attention">Pulsación rápida</string>
-    <string name="pref_switch_controls_anc_ambient_off">Cancelación de ruido ←→ Ambiente ←→ Apagado</string>
+    <string name="pref_switch_controls_anc_ambient_off">Cancelación de ruido ↔ Ambiental ↔ Desactivado</string>
     <string name="sony_button_mode_help_title">Modos de botón - Ayuda</string>
     <string name="long_press">Pulsación larga</string>
     <string name="continue_pressing">Pulsación continua</string>
@@ -2747,7 +2747,7 @@
     <string name="pref_sleepasandroid_slot_summary">Qué espacio usar al configurar alarmas</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oximetría</string>
     <string name="pref_sleepasandroid_device_title">Dispositivo del proveedor</string>
-    <string name="pref_sleepasandroid_features_title">Características</string>
+    <string name="pref_sleepasandroid_features_title">Funcionalidades</string>
     <string name="pref_sleepasandroid_features_summary">La compatibilidad varía de un dispositivo a otro</string>
     <string name="pref_sleepasandroid_feat_alarms">Alarmas</string>
     <string name="alarm_slot_reset">El espacio de la alarma se ha ajustado por defecto</string>
@@ -2756,7 +2756,7 @@
     <string name="pref_sleepasandroid_feat_movement">Acelerómetro</string>
     <string name="pref_sleepasandroid_feat_heartrate">Frecuencia cardíaca</string>
     <string name="pref_sleepasandroid_feat_spo2">SpO₂</string>
-    <string name="pref_title_huawei_account">Cuenta Huawei</string>
+    <string name="pref_title_huawei_account">Cuenta de Huawei</string>
     <string name="pref_summary_huawei_account">Cuenta de Huawei utilizada en el proceso de emparejamiento. Configurarlo permite el emparejamiento sin restablecimiento de fábrica.</string>
     <string name="serbian">Serbio</string>
     <string name="watchface_resolution_doesnt_match">La resolución de la esfera del reloj no coincide con la pantalla del dispositivo. La esfera es de %1$s y la pantalla del dispositivo es de %2$s</string>
@@ -2836,7 +2836,7 @@
     <string name="activity_prefs_height_inches">Altura en pulgadas</string>
     <string name="loading">Cargando…</string>
     <string name="toggle_debug_mode">Conmutar el modo de depuración</string>
-    <string name="share_debug_info">Compartir la información de depuración</string>
+    <string name="share_debug_info">Compartir información de depuración</string>
     <string name="realtime_settings">Ajustes en tiempo real</string>
     <string name="unsupported">No compatible</string>
     <string name="max_val">Máximo: %d</string>
