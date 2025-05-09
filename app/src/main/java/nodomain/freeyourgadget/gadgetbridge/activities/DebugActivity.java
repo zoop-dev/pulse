@@ -47,6 +47,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Pair;
@@ -585,6 +586,25 @@ public class DebugActivity extends AbstractGBActivity {
                 final TextView textView = new TextView(DebugActivity.this);
                 textView.setText("MAC Address: ");
                 final EditText editText = new EditText(DebugActivity.this);
+                // help the user to input a properly formated MAC - see BluetoothAdapter.checkBluetoothAddress
+                // for banglejs builds: also support pebble emulator addresses
+                editText.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
+                    StringBuilder builder = new StringBuilder();
+
+                    for (int i = start; i < end; i++) {
+                        char c = source.charAt(i);
+                        if (('0' <= c && c <= '9') || ('A' <= c && c <= 'F') || c == ':') {
+                            builder.append(c);
+                        } else if ('a' <= c && c <= 'f') {
+                            builder.append((char) (c - 'a' + 'A'));
+                        } else if (BuildConfig.INTERNET_ACCESS) {
+                            builder.append(c);
+                        } else if (c == '-') {
+                            builder.append(':');
+                        }
+                    }
+                    return builder;
+                }});
                 selectedTestDeviceMAC = randomMac();
                 editText.setText(selectedTestDeviceMAC);
                 editText.addTextChangedListener(new TextWatcher() {
