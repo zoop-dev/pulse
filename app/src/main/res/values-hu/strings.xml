@@ -3854,4 +3854,8 @@
     <string name="pref_huawei_activity_reminder_progress_summary">Kapjon emlékeztetőt a tevékenységi gyűrűk előrehaladásáról</string>
     <string name="devicetype_polarh10">Polar H10</string>
     <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
+    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
+    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
+    <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
+    <string name="body_energy_legend_average">30 napos átlag</string>
 </resources>
