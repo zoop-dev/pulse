@@ -181,6 +181,11 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
 
     @Override
     public void onMtuChanged(final BluetoothGatt gatt, final int mtu, final int status) {
+        super.onMtuChanged(gatt, mtu, status);
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
+
         if (mtu < 23) {
             LOG.warn("Ignoring mtu of {}, too low", mtu);
             return;

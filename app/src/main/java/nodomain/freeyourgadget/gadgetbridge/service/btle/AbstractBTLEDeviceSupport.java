@@ -444,9 +444,12 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         }
     }
 
+    @CallSuper
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
-        this.mMTU = mtu;
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            this.mMTU = mtu;
+        }
     }
 
     @Override

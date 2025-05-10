@@ -534,8 +534,10 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
 
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
-        int deviceIdx = getDeviceIndexForAddress(gatt.getDevice().getAddress());
-        mMTUs[deviceIdx] = mtu;
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            int deviceIdx = getDeviceIndexForAddress(gatt.getDevice().getAddress());
+            mMTUs[deviceIdx] = mtu;
+        }
     }
 
     @Override

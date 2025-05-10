@@ -1908,6 +1908,9 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
         super.onMtuChanged(gatt, mtu, status);
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
 
         LOG.info("MTU changed to {}", mtu);
         setMtu(mtu);

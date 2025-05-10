@@ -201,6 +201,11 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+        super.onMtuChanged(gatt, mtu, status);
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
+
         logger.debug("MTU has changed to " + mtu);
         mtuSize = mtu;
         if (firstTimeConnect) {

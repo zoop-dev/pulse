@@ -209,6 +209,9 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
         @Override
         public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
             super.onMtuChanged(gatt, mtu, status);
+            if (status != BluetoothGatt.GATT_SUCCESS) {
+                return;
+            }
 
             if (characteristicCommandRead != null)
                 characteristicCommandRead.setMtu(mtu);

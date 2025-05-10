@@ -235,6 +235,10 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
     public void onMtuChanged(final BluetoothGatt gatt, final int mtu, final int status) {
         super.onMtuChanged(gatt, mtu, status);
 
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
+
         characteristicCommandRead.setMtu(mtu);
         characteristicCommandWrite.setMtu(mtu);
         characteristicDataRead.setMtu(mtu);

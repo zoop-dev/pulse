@@ -679,6 +679,9 @@ public class QHybridSupport extends QHybridBaseSupport {
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
         super.onMtuChanged(gatt, mtu, status);
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
         if(watchAdapter == null) return;
         watchAdapter.onMtuChanged(gatt, mtu, status);
     }

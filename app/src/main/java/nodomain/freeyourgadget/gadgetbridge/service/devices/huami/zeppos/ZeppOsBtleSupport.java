@@ -148,6 +148,10 @@ public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements Zepp
     @Override
     public void onMtuChanged(final BluetoothGatt gatt, final int mtu, final int status) {
         super.onMtuChanged(gatt, mtu, status);
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
+
         zeppOsSupport.setMtu(mtu);
     }
 
