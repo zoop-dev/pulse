@@ -1524,7 +1524,7 @@
     <string name="appmanager_downloaded_to_cache">Descarregat %s a cache</string>
     <string name="appmanager_download_app_error">Error descarregant la app</string>
     <string name="speed_first">Velocitat primer</string>
-    <string name="open_fw_installer_warning_title">Advertència</string>
+    <string name="open_fw_installer_warning_title">Avís</string>
     <string name="about_description_main_nopebble">Substitut lliure copyleft sense núvols per a aplicacions de dispositiu Android privatives dels proveïdors. Llançaments nocturns de Gadgetbridge. No es pot instal·lar si ja tens l\'aplicació Gadgetbridge o la de Pebble, degut a un conflicte en el proveïdor de Pebble.</string>
     <string name="range_percentage_float">%.1f%% - %.1f%%</string>
     <string name="single_band">Banda única</string>
