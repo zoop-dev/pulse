@@ -11,11 +11,6 @@ tasks.withType(Test).configureEach {
     systemProperty "GB_LOGFILES_DIR", Files.createTempDirectory("gblog").toString()
 }
 
-// disable Java 1.8 warning
-tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs << "-Xlint:-options"
-}
-
 def getVersionCode = { ->
     try {
         def commitCount = providers.exec {
@@ -79,8 +74,8 @@ java {
 android {
     compileOptions {
         coreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     namespace = 'nodomain.freeyourgadget.gadgetbridge'
