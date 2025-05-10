@@ -1263,7 +1263,7 @@
     <string name="pref_header_system">Система</string>
     <string name="pref_header_equalizer">Еквалайзер</string>
     <string name="prefs_active_noise_cancelling_summary">Блокувати шуми довкілля</string>
-    <string name="pref_header_sony_ambient_sound_control">Керування навколишнім звуком</string>
+    <string name="pref_header_sony_ambient_sound_control">Керування звуком довкілля</string>
     <string name="sony_ambient_sound_wind_noise_reduction">Зниження шуму вітру</string>
     <string name="prefs_pressure_relief">Знижувати тиск через шуми довкілля</string>
     <string name="pressure_relief_summary">Запобігати відчуттю тиску у вухах, коли не використовується активне шумопоглинання</string>
@@ -1440,7 +1440,7 @@
     <string name="discovery_bluetooth_le_scan">Сканування Bluetooth LE:</string>
     <string name="device_unsupported">НЕ ПІДТРИМУЄТЬСЯ</string>
     <string name="devicetype_sonyswr12">Sony SWR12</string>
-    <string name="pref_header_sony_device_info">Відомості про пристрій</string>
+    <string name="pref_header_sony_device_info">Подробиці про пристрій</string>
     <string name="audio_codec">Аудіокодек</string>
     <string name="unknown">Невідомо</string>
     <string name="start">Розпочати</string>
@@ -3167,5 +3167,22 @@
     <string name="body_energy">Енергія тіла</string>
     <string name="pref_wear_sensor_summary">Виявляти, коли пристрій не одягнено</string>
     <string name="pref_wear_sensor_title">Датник носіння</string>
-    <string name="vo2max_running">Біг VO₂ Max</string>
+    <string name="vo2max_running">VO₂ Max (Біг)</string>
+    <string name="redmi_buds_5_pro_transparency_ambient">Підсилення звуків довкілля</string>
+    <string name="redmi_buds_5_pro_combo_anc_off">Акт. шумопоглинання / Вимк.</string>
+    <string name="redmi_buds_5_pro_combo_all">Акт. шумопоглинання / Прозорість / Вимк.</string>
+    <string name="redmi_buds_5_pro_combo_anc_transparency">Акт. шумопоглинання / Прозорість</string>
+    <string name="target">Мета</string>
+    <string name="redmi_buds_5_pro_anc_balanced">Збалансоване</string>
+    <string name="vo2max_cycling">VO₂ Max (Велоїзда)</string>
+    <string name="redmi_buds_5_pro_transparency_regular">Звичайний</string>
+    <string name="redmi_buds_5_pro_transparency_voice">Підсилення голосів</string>
+    <string name="weight_lbs">%1$.2f фунтів</string>
+    <string name="weight_kg">%1$.2f кг</string>
+    <string name="pref_header_sony_sound_control">Керування звуком</string>
+    <string name="redmi_buds_5_pro_combo_transparency_off">Прозорість / Вимк.</string>
+    <string name="thirty_days_timeline">Часова шкала за 30 днів</string>
+    <string name="redmi_buds_5_pro_anc_deep">Глибоке</string>
+    <string name="redmi_buds_5_pro_anc_light">Легке</string>
+    <string name="redmi_buds_5_pro_transparency_strength">Рівень прозорості</string>
 </resources>
