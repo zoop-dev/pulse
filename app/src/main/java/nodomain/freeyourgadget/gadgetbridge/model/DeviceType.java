@@ -282,6 +282,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWFC500Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWFC510Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWFC700NCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWFC710NCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWFSP800NCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWH1000XM2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWH1000XM3Coordinator;
@@ -581,6 +582,7 @@ public enum DeviceType {
     SONY_WF_C500(SonyWFC500Coordinator.class),
     SONY_WF_C510(SonyWFC510Coordinator.class),
     SONY_WF_C700N(SonyWFC700NCoordinator.class),
+    SONY_WF_C710N(SonyWFC710NCoordinator.class),
     SOUNDCORE_LIBERTY3_PRO(SoundcoreLiberty3ProCoordinator.class),
     SOUNDCORE_LIBERTY4_NC(SoundcoreLiberty4NCCoordinator.class),
     SOUNDCORE_MOTION300(SoundcoreMotion300Coordinator.class),
