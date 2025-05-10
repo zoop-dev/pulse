@@ -3858,4 +3858,9 @@
     <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
     <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
     <string name="body_energy_legend_average">30 napos átlag</string>
+    <string name="active_calories_avg">Aktív ÁTL</string>
+    <string name="active_calories_total">Összes aktív</string>
+    <string name="resting_calories_total">Összes nyugalmi</string>
+    <string name="calorie_over_goal">Cél fölött: %1$d kcal</string>
+    <string name="calorie_under_goal">Cél alatt: %1$d kcal</string>
 </resources>
