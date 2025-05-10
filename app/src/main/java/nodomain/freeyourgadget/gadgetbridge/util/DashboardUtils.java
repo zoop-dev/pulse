@@ -82,16 +82,24 @@ public class DashboardUtils {
     public static int getRestingCaloriesTotal(DashboardFragment.DashboardData dashboardData) {
         List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
         int totalRestingCalories = 0;
+        int totalRestingCaloriesDevices = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
                 if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActiveCalories()) {
-                    totalRestingCalories += (int) getDailyTotals(dev, dbHandler, dashboardData.timeTo).getRestingCalories();
+                    final int restingCalories = (int) getDailyTotals(dev, dbHandler, dashboardData.timeTo).getRestingCalories();
+                    if (restingCalories > 0) {
+                        totalRestingCalories += restingCalories;
+                        totalRestingCaloriesDevices++;
+                    }
                 }
             }
         } catch (Exception e) {
             LOG.warn("Could not calculate total amount of resting calories: ", e);
         }
-        return totalRestingCalories;
+        if (totalRestingCaloriesDevices == 0) {
+            return 0;
+        }
+        return Math.round(totalRestingCalories / (float) totalRestingCaloriesDevices);
     }
 
     public static float getStepsGoalFactor(DashboardFragment.DashboardData dashboardData) {
