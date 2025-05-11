@@ -3764,10 +3764,8 @@ Temps de sommeil préféré en heures</string>
     <string name="earfun_anc_mode_wind_noise_cancelling">Annulation bruit du vent</string>
     <string name="earfun_tap_action_redial">Recomposer</string>
     <string name="earfun_tap_action_noise_control_normal_ambient">Contrôle du bruit (normal, son ambiant)</string>
-    <string name="ultrahuman_unhandled_error_response">a reçu le code de réponse non traité 0x%x pour l’opération 0x%x</string>
     <string name="ultrahuman_airplane_mode_title">mode avion</string>
     <string name="ultrahuman_airplane_mode_question">Activer mode avion ?</string>
-    <string name="ultrahuman_airplane_mode_unknown">erreur inconnue - mode avion PAS activé</string>
     <string name="activity_type_triathlon">Triathlon</string>
     <string name="activity_type_other_water_sports">Autres sports aquatiques</string>
     <string name="activity_type_other_winter_sports">Autres sports d\'hiver</string>

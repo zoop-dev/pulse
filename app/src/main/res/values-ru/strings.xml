@@ -3819,7 +3819,6 @@
     <string name="pref_import_activity_files_summary">Ручной импорт файлов активности из памяти телефона</string>
     <string name="ultrahuman_airplane_mode_activated">режим полёта активирован</string>
     <string name="ultrahuman_airplane_mode_too_full">кольцо полностью заряжено – режим полёта НЕ активирован</string>
-    <string name="ultrahuman_airplane_mode_unknown">неизвестная ошибка – режим полёта НЕ активирован</string>
     <string name="ultrahuman_airplane_mode_question">Активировать режим полёта?</string>
     <string name="pref_import_activity_files_title">Импорт файлов активности</string>
     <string name="open_source_licenses">Лицензии</string>
@@ -3868,7 +3867,6 @@
     <string name="earfun_find_headphones_hint">Эта опция играет громкий звук через наушники, чтобы помочь найти их. Не надевайте наушники, чтобы предотвратить потенциальные травмы слуха.</string>
     <string name="huawei_voice_boost">Усиление голоса</string>
     <string name="banglejs_notification_missed_call_suppressed_caller_id">Неизвестный абонент. Идентификатор скрыт</string>
-    <string name="ultrahuman_unhandled_error_response">получен необработанный код ответа 0x%x для операции 0x%x</string>
     <string name="huawei_stress_calibrate_in_progress">Калибровка уровня стресса уже запущена</string>
     <string name="huawei_stress_calibrate_done">Калибровка уровня стресса завершена</string>
     <string name="huawei_stress_calibrate_error">Ошибка калибровки уровня стресса</string>

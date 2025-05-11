@@ -3867,8 +3867,6 @@
     <string name="earfun_anc_mode_ai_ear_adaptive">AI ooraanpassing</string>
     <string name="ultrahuman_airplane_mode_activated">vliegtuigstand geactiveerd</string>
     <string name="ultrahuman_airplane_mode_on_charger">ring laadt op - vliegtuigstand NIET geactiveerd</string>
-    <string name="ultrahuman_airplane_mode_unknown">onbekende fout - vliegtuigstand NIET geactiveerd</string>
-    <string name="ultrahuman_unhandled_error_response">onbekende antwoordcode 0x%x voor operatie 0x%x ontvangen</string>
     <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="zepp_os_watchface_digital_wraith">Digitale schim</string>
     <string name="ultrahuman_airplane_mode_title">vliegtuigstand</string>
