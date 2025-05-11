@@ -6,7 +6,7 @@ clone:
 
 steps:
   check-if-released:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     environment:
       HC_URL_NIGHTLY_DEPLOY:
         from_secret: hc_url_nightly_deploy
@@ -27,7 +27,7 @@ steps:
 
 
   build-apks:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - if [ -f .do_not_build ]; then return 0; fi
       # build the apks
@@ -44,7 +44,7 @@ steps:
         from_secret: keypass
 
   pull-repo-config:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - if [ -f .do_not_build ]; then return 0; fi
       - cd ..
@@ -59,7 +59,7 @@ steps:
         from_secret: commit_token
 
   pull-pages:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - if [ -f .do_not_build ]; then return 0; fi
       # prepare the pages repo, so fdroidclient can push files into it later
@@ -78,7 +78,7 @@ steps:
         #- rm -f fdroid/repo/*apk
 
   update-fdroid-data:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - if [ -f .do_not_build ]; then return 0; fi
       - pwd
@@ -104,7 +104,7 @@ steps:
         from_secret: keypass
 
   push-pages-update-repo:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - if [ -f .do_not_build ]; then return 0; fi
       - cd ../pages/pages/
@@ -127,7 +127,7 @@ steps:
         from_secret: commit_token
 
   on-success:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - curl -fsS -m 10 --retry 5 "$${HC_URL_NIGHTLY_DEPLOY}"
     when:
@@ -137,7 +137,7 @@ steps:
         from_secret: hc_url_nightly_deploy
 
   on-error:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - curl -fsS -m 10 --retry 5 "$${HC_URL_NIGHTLY_DEPLOY}/fail"
       - cd ..

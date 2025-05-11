@@ -1,6 +1,6 @@
 steps:
   lint:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:35.0.1-androguard-4.1.2-java-21
     commands:
       - pwd #bump
       - ./gradlew lint
