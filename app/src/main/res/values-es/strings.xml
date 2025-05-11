@@ -183,7 +183,6 @@
     <string name="pairing_already_bonded">Emparejado con %1$s (%2$s), conectando…</string>
     <string name="message_cannot_pair_no_mac">Ninguna dirección MAC proporcionada, no se puede emparejar.</string>
     <string name="preferences_category_device_specific_settings">Ajustes específicos del dispositivo</string>
-    <string name="preferences_miband_settings">Ajustes de Mi Band / Amazfit</string>
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
     <string name="other">Otro</string>
@@ -660,7 +659,6 @@
     <string name="activity_prefs_calories_burnt">Objetivo diario: calorías quemadas</string>
     <string name="activity_prefs_distance_meters">Objetivo diario: distancia en metros</string>
     <string name="activity_prefs_activetime_minutes">Objetivo diario: tiempo activo en minutos</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="ukrainian">Ucraniano</string>
     <string name="arabic">Árabe</string>
@@ -918,7 +916,6 @@
     <string name="Speed">Velocidad</string>
     <string name="Elevation">Elevación</string>
     <string name="Distance">Distancia</string>
-    <string name="companiondevice_pairing_details">Activar el nuevo soporte de la API de CompanionDevice (sólo tiene efecto en Android 8 o superior) que aumentará la fiabilidad si el servicio necesita ser reiniciado en segundo plano, requiere un re-emparejamiento usando Gadgetbridge paraque surja efecto</string>
     <string name="notification_channel_high_priority_name">Prioridad alta</string>
     <string name="activity_error_no_app_for_png">Para compartir esta captura de pantalla, instale una aplicación que pueda manejar archivos de imagen.</string>
     <string name="activity_summary_yesterday">Ayer</string>
@@ -979,8 +976,6 @@
     <string name="minAltitude">Mínimo</string>
     <string name="maxAltitude">Máximo</string>
     <string name="error_location_enabled_mandatory">La ubicación debe estar activada para buscar dispositivos</string>
-    <string name="ignore_bonded_devices_description">Al activar esta opción se ignoran los dispositivos que ya han sido vinculados/emparejados al escanear</string>
-    <string name="ignore_bonded_devices">Ignorar los dispositivos vinculados</string>
     <string name="error_retrieving_devices_database">Error al recuperar los dispositivos de la base de datos</string>
     <string name="error_setting_alias">Error al establecer el alias:</string>
     <string name="error_exporting_device_preferences">Error al exportar las preferencias específicas del dispositivo</string>
@@ -1173,8 +1168,6 @@
     <string name="watchface_widget_type_steps">Pasos</string>
     <string name="watchface_widget_type_weather">Meteorología</string>
     <string name="watchface_widget_type_date">Fecha</string>
-    <string name="watchface_dialog_title_add_widget">Añadir widget</string>
-    <string name="watchface_toast_settings_incomplete">Configuración incompleta, widget no añadido</string>
     <string name="watchface_dialog_title_set_name">Establecer el nombre de la esfera</string>
     <string name="button_watchface_settings">Configuración de esfera</string>
     <string name="button_watchface_add_widget">Añadir widget</string>
@@ -1479,11 +1472,6 @@
     <string name="about_activity_title_banglejs_main">Acerca de Bangle.js Gadgetbridge</string>
     <string name="about_description_banglejs_main">Aplicación complementaria de Android para Bangle.js, basada en el proyecto Gadgetbridge, con acceso a Internet añadido.\n\nDebido a las políticas de Google Play Store, no podemos incluir un enlace de donación en la aplicación. Sin embargo, si le gusta esta aplicación, considere donar a través de la página de Gadgetbridge que encontrará a continuación.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js en ejecución</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">Acerca de Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Aplicación complementaria de Android para Bangle.js construida sobre el proyecto Gadgetbridge, con acceso a Internet añadido.</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js ejecutándose</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
     <string name="about_activity_title_main_nightly">Acerca de Gadgetbridge Nightly</string>
@@ -1506,7 +1494,6 @@
     <string name="low_power_gps">GPS de bajo consumo</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="fw_upgrade_notice_amazfit_gts4">Está a punto de instalar el firmware %s en su Amazfit GTS 4.\n\nSu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="pref_header_workout">Entrenamiento</string>
     <string name="pref_title_screen_on_on_notifications">Encender pantalla con notificaciones</string>
     <string name="pref_summary_screen_on_on_notifications">Encender la pantalla de la pulsera cuando llegue una notificación</string>
@@ -1636,7 +1623,6 @@
     <string name="pref_sleep_mode_smart_enable_summary">Activa automáticamente el modo de reposo cuando lleves puesta la pulsera mientras duermes</string>
     <string name="pref_cache_weather">Información meteorológica en caché</string>
     <string name="buttons_on_right">Botones a la derecha</string>
-    <string name="discovery_scanning_intensity">Intensidad de escaneado</string>
     <string name="pref_cache_weather_summary">La información meteorológica se almacenará en caché cuando se reinicie la aplicación.</string>
     <string name="pref_screen_notification_profile_todo_list">Lista de tareas</string>
     <string name="prefs_screen_timeout">Tiempo de espera de la pantalla</string>
@@ -1906,7 +1892,6 @@
     <string name="prefs_password_summary">Bloquea la pulsera con una contraseña cuando se la quita de la muñeca</string>
     <string name="normal">Normal</string>
     <string name="pref_cover_to_mute">Pulsar para silenciar</string>
-    <string name="discovery_scanning_intensity_warning">Si el dispositivo se bloquea o no responde, intente reducir la intensidad de escaneado. Si no se detecta el dispositivo, pruebe a aumentarla.</string>
     <string name="pref_screen_notification_profile_find_device">Buscar dispositivo</string>
     <string name="pref_screen_notification_idle_alerts">Alertas de inactividad</string>
     <string name="pref_screen_vibration_patterns_title">Patrones de vibración</string>
@@ -2131,7 +2116,6 @@
     <string name="pref_title_mb_intents">Transmitir directamente los intentos de los botones multimedia</string>
     <string name="pref_summary_mb_intents">Activar si el control de medios del dispositivo no funciona para determinadas aplicaciones</string>
     <string name="devicetype_bohemic_smart_bracelet">Pulsera inteligente Bohemia</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="busy_task_fetch_sports_details">Recuperando información deportiva</string>
     <string name="busy_task_fetch_stress_data">Recuperando datos de estrés</string>
     <string name="busy_task_fetch_pai_data">Recuperando datos PAI</string>
@@ -2219,8 +2203,6 @@
     <string name="text_receiver_activity_title">Enviar un texto al dispositivo</string>
     <string name="updatefirmwareoperation_failed_low_mtu">La MTU actual de %1$d es demasiado baja; active la MTU alta en la configuración del dispositivo y desconecte/conecte de nuevo el dispositivo.</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_description">Activa una nueva actividad de detección, que debería solucionar los problemas de detección de dispositivos. Desactivela si tiene problemas al buscar o emparejar el dispositivo.</string>
-    <string name="new_discover_activity_title">Activar nueva actividad de detección</string>
     <string name="prefs_wena3_receive_calls_title">Configuración de llamadas entrantes</string>
     <string name="prefs_wena3_button_action_name_start_timer">Iniciar temporizador activo</string>
     <string name="prefs_wena3_menu_icon_hint">El icono Configuración siempre aparece al final</string>
@@ -2634,7 +2616,6 @@
     <string name="scan_scanning_multiple_devices">Escaneando %d dispositivos</string>
     <string name="scan_scanning_single_device">Escaneando 1 dispositivo</string>
     <string name="notification_channel_scan_service_name">Servicio de escaneo</string>
-    <string name="temperature">Temperatura</string>
     <string name="pref_header_sony_sound_control">Control del sonido</string>
     <string name="devicetype_amazfit_bip3">Amazfit Bip 3</string>
     <string name="pref_wide_area_tap_summary">Reconocer palpitaciones entre las mejillas y las orejas</string>
@@ -3198,7 +3179,6 @@
     <string name="pref_description_about_you">Fecha de nacimiento, género, altura, peso, objetivos</string>
     <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Medición continua de la temperatura de la piel</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Actualmente no se admite la recuperación de temperatura. Esta configuración solo permite la medición continua en el dispositivo</string>
     <string name="prefs_summary_gatt_client_notification_intents">Recibir cambios característicos de BLE a través de Intents</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Permitir la interacción de GATT a través de la API BLE Intent</string>
     <string name="prefs_summary_gatt_client_device_state_updates">Recibir los cambios de estado de la conexión BLE a través de Intents</string>

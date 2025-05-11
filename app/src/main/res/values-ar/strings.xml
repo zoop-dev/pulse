@@ -233,7 +233,6 @@
     <string name="low_power_gps">نظام تحديد المواقع العالمي (GPS) منخفض الطاقة</string>
     <string name="gps">تحديد المواقع</string>
     <string name="gps_bds">نظام تحديد المواقع + BDS</string>
-    <string name="gps_gnolass">نظام تحديد المواقع + جنولاس</string>
     <string name="gps_galileo">نظام تحديد المواقع + غاليليو</string>
     <string name="all_satellites">جميع الأقمار الصناعية</string>
     <string name="speed_first">السرعة أولا</string>
@@ -443,7 +442,6 @@
     <string name="pref_title_general_autoconnectonbluetooth">قم بالاتصال بالجهاز/أجهزة Gadgetbridge عند تشغيل Bluetooth</string>
     <string name="open_fw_installer_connect_minimum_one_device">الرجاء توصيل جهاز واحد على الأقل الذي تريد إرسال الملف إليه.</string>
     <string name="pref_summary_minimize_priority_off">يتم عرض الرمز الموجود في شريط الحالة والإشعار في شاشة القفل</string>
-    <string name="ignore_bonded_devices_description">سيؤدي تمكين هذا الخيار إلى تجاهل الأجهزة التي تم ربطها / إقرانها بالفعل عند المسح</string>
     <string name="pref_title_notification_cache_while_disconnected">التخزين المؤقت خارج النطاق</string>
     <string name="pref_title_notification_use_as_allow">السماح بالإشعارات من التطبيقات المحددة</string>
     <string name="pref_title_transliteration">الترجمة الحرفية</string>
@@ -663,7 +661,6 @@
 \nلإيقاف طلب %1$s للحصول على أذونات ، انتقل إلى \"الإعدادات\" وقم بإلغاء تحديد \"التحقق من حالة الإذن\".
 \n
 \nتأكد من منح %1$s الأذونات اللازمة للعمل كما تتوقع.</string>
-    <string name="companiondevice_pairing_details">يُمكّن دعم واجهة برمجة التطبيقات CompanionDevice الجديدة (له تأثير فقط على Android 8 أو أعلى) مما سيزيد من الموثوقية إذا كانت الخدمة بحاجة إلى إعادة التشغيل في الخلفية ، ويتطلب إعادة الاقتران باستخدام Gadgetbridge ليكون لها تأثير</string>
     <string name="discover_unsupported_devices_description">سيؤدي تمكين هذا الخيار إلى عرض جميع أجهزة البلوتوث المكتشفة عند المسح. سيؤدي النقر باختصار إلى نسخ اسم الجهاز وعنوان mac إلى الحافظة. الضغط لفترة طويلة سيؤدي إلى تشغيل مربع الحوار \"إضافة جهاز اختبار\". يمكن أن يتسبب في حدوث مشكلات محتملة في تجميد التطبيق.</string>
     <string name="fossil_hr_warning_firmware_too_new">تم تعطيل بعض الوظائف لأن البرنامج الثابت للساعة جديد جدًا</string>
     <string name="pref_summary_physical_buttons">تكوين وظائف الأزرار المادية على الساعة</string>
@@ -901,7 +898,6 @@
     <string name="pref_summary_authkey">قم بتغيير مفتاح المصادقة إلى مفتاح مشترك على جميع أجهزة Android التي ترغب في الاتصال منها. المفتاح الافتراضي السابق لجميع الأجهزة هو 0123456789 @ ABCDE</string>
     <string name="pref_check_permission_status_summary">تحقق واطلب الأذونات المفقودة حتى عندما لا تكون هناك حاجة إليها على الفور. قم بتعطيل هذا فقط إذا كانت أجهزتك لا تدعم بالفعل أيًا من هذه الميزات. قد يؤدي عدم منح الإذن إلى حدوث مشكلات!</string>
     <string name="prefs_heartrate_alert_experimental_description">اهتزاز النطاق عندما يتجاوز معدل نبضات القلب عتبة ، دون أي نشاط بدني واضح في الدقائق العشر الماضية. هذه الميزة تجريبية ولم يتم اختبارها على نطاق واسع.</string>
-    <string name="discovery_scanning_intensity_warning">إذا واجهت تجميدًا أو عدم استجابة ، فحاول ضبط كثافة المسح على مستوى أقل. إذا لم يتم اكتشاف جهازك ، فحاول ضبط كثافة المسح على مستوى أعلى.</string>
     <string name="permission_location">%1$s يَحتاجُ وصولاً إلى موقعِكَ في الخلفيةِ لتَسْمحُ له للبَقاء متصل بساعتِكَ حتى عندما تكون الشاشةِ مغلقة.\n\nرجاءً إخترْ \' %2$s في الشاشةِ التاليةِ، ثمّ اضغط \' رجوع للعَودة إلى %1$s.</string>
     <string name="firmware_install_warning">أنت تحاول تثبيت برنامج ثابت ، تابع على مسؤوليتك الخاصة.
 \n
@@ -965,7 +961,6 @@
     <string name="pref_summary_relax_firmware_checks">الاسترخاء في عمليات فحص البرامج الثابتة</string>
     <string name="pairing_unable_to_pair_with">تعذر الإقران بـ %1$s (%2$s)</string>
     <string name="about_contributors">المساهمون</string>
-    <string name="preferences_miband_settings">إعدادات Mi Band / Amazfit</string>
     <string name="sony_pause_when_taken_off">إيقاف مؤقت عند ازالة سماعات الرأس</string>
     <string name="activity_db_management_empty_DB">قاعدة بيانات فارغة</string>
     <string name="activity_data_management_directory_content_title">تصدير/استيراد محتوى المسار</string>
@@ -1385,7 +1380,6 @@
     <string name="add_widget">إضافة الويدجيت</string>
     <string name="qhybrid_time_shift">تحول الوقت</string>
     <string name="gpx_receiver_files_received">تم استلام ملف (ملفات) GPX:</string>
-    <string name="ignore_bonded_devices">تجاهل الأجهزة المرتبطة</string>
     <string name="sonyswr12_settings_title">إعدادات سوني SWR12</string>
     <string name="watchface_dialog_title_set_name">تعيين اسم واجهة الساعة</string>
     <string name="button_watchface_save_apply">حفظ وتطبيق</string>
@@ -1889,7 +1883,6 @@
     <string name="pref_workout_detection_sensitivity">الحساسية</string>
     <string name="pref_summary_auto_export_interval">تصدير كل %d ساعة</string>
     <string name="pref_auto_fetch">الجلب التلقائي لبيانات النشاط</string>
-    <string name="discovery_scanning_intensity">كثافة الفحص</string>
     <string name="pref_disable_new_ble_scanning">تعطيل فحص BLE الجديد</string>
     <string name="not_connected">غير متصل</string>
     <string name="test_notification">إشعار الاختبار</string>
@@ -1930,7 +1923,6 @@
     <string name="activity_summary_detail_select_gpx_track">اختيار مسار GPX</string>
     <string name="activity_summary_detail_editing_gpx_track">تحرير مسار GPX المرتبط</string>
     <string name="kind_agps_bundle">حزمة AGPS</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_roidmi3">Roidmi 3</string>
     <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
@@ -2278,7 +2270,6 @@
     <string name="pref_title_mb_intents">نوايا زر بث الوسائط مباشرة</string>
     <string name="pref_summary_mb_intents">تمكين إذا كان التحكم في وسائط الجهاز لا يعمل مع تطبيقات معينة</string>
     <string name="devicetype_bohemic_smart_bracelet">سوار Bohemic الذكي</string>
-    <string name="devicetype_vivomove_hr">غارمين فيفوموفوف HR</string>
     <string name="devicetype_casiogwb5600">كاسيو GW-B5600</string>
     <string name="devicetype_casiogmwb5000">كاسيو GMW-B5000</string>
     <string name="busy_task_fetch_sports_details">جلب التفاصيل الرياضية</string>
@@ -2384,8 +2375,6 @@
     <string name="text_receiver_activity_title">أرسل رسالة إلى الجهاز</string>
     <string name="updatefirmwareoperation_failed_low_mtu">وحدة MTU اصدارها %1$d منخفضة جدًا، يرجى تمكين وحدة MTU في إعدادات الجهاز وفصل/إعادة توصيل الجهاز.</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_description">MTU الحالي البالغ %1$قم بتمكين نشاط الاكتشاف الجديد، والذي من المفترض أن يحل مشكلات اكتشاف الجهاز. قم بتعطيل هذا إذا واجهت أي مشاكل أثناء البحث عن جهازك أو الاقتران به. مستوى الإرسال منخفض جدًا، يرجى تمكين MTU العالي في إعدادات الجهاز وفصل/إعادة توصيل الجهاز.</string>
-    <string name="new_discover_activity_title">تمكين أنشطة الاكتشاف/ططوجديدة</string>
     <string name="prefs_wena3_receive_calls_title">إعدادات المكالمات الواردة</string>
     <string name="prefs_wena3_button_action_name_start_timer">بدء الموقت النشط</string>
     <string name="prefs_wena3_menu_icon_hint">يظهر رمز الإعدادات دائمًا في النهاية</string>
@@ -2813,7 +2802,6 @@
     <string name="scan_scanning_all_devices">فحص جميع الأجهزة</string>
     <string name="scan_scanning_multiple_devices">جارٍ فحص %d جهاز</string>
     <string name="devicetype_miband8active">سوار شاومي الذكي 8 اكتيف</string>
-    <string name="temperature">الحرارة</string>
     <string name="pref_header_sony_sound_control">التحكم في الصوت</string>
     <string name="pref_wide_area_tap_summary">التعرف على النقرات بين الخدين والأذنين</string>
     <string name="devicetype_sony_linkbuds">سماعات سوني لينك بودز</string>
@@ -3231,7 +3219,6 @@
     <string name="minutes_150">150 دقيقة</string>
     <string name="idasen_pref_value_warning">ويجب أن تتراوح القيمة بين 62 و126 سم</string>
     <string name="prefs_hrv_monitoring_description">راقب تقلب معدل ضربات القلب تلقائيًا على مدار اليوم</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">استرداد درجة الحرارة غير مدعوم حاليًا. يتيح هذا الإعداد القياس المستمر على الجهاز فقط</string>
     <string name="backup_restore_do_not_exit">%s يرجى إبقاء هذه الشاشة مفتوحة حتى تنتهي العملية.</string>
     <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
     <string name="activity_type_ice_skating">التزلج على الثلج</string>

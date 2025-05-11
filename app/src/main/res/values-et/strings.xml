@@ -281,7 +281,6 @@
     <string name="initialized">käivitatud</string>
     <string name="message_cannot_pair_no_mac">MAC aadressi ei edastatud, sidumine ebaõnnestus.</string>
     <string name="preferences_category_device_specific_settings">Seadmespetsiifilised sätted</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit sätted</string>
     <string name="male">Mees</string>
     <string name="female">Naine</string>
     <string name="other">Muu</string>
@@ -592,7 +591,6 @@
     <string name="mi2_prefs_inactivity_warnings_threshold">Inaktiivsuse maksimaalne kestvus (minutites)</string>
     <string name="mi2_prefs_inactivity_warnings_summary">Kell väriseb, kui sa oled tükk aega inaktiivne olnud</string>
     <string name="mi2_prefs_inactivity_warnings">Inaktiivsushoiatused</string>
-    <string name="companiondevice_pairing_details">Lülitab sisse uue CompanionDevice-tüüpi paaritamise (omab efekti Android 8l või uuemal), suurendab stabiilsust kui teenust peab taustal uuesti käivitama, uuesti paaritamine Gadgetbridge\'i kasutades on vajalik, et asi omaks efekti</string>
     <string name="pref_qhybrid_save_raw_activity_files">Salvestage tegevuste failid töötlemata</string>
     <string name="qhybrid_changes_delay_prompt">muudatus võib võtta mõne hetke…</string>
     <string name="qhybrid_overwrite_buttons">muuda nuppude käitumist</string>
@@ -731,7 +729,6 @@
     <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="devicetype_amazfit_bip">Amazfit Bip</string>
     <string name="devicetype_itag">iTag</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="devicetype_y5">Y5</string>
     <string name="devicetype_roidmi3">Roidmi 3</string>
@@ -767,8 +764,6 @@
     <string name="widget_20_minutes">20 minutit</string>
     <string name="widget_10_minutes">10 minutit</string>
     <string name="error_location_enabled_mandatory">Asukoha leidmine peab olema sisse lülitatud seadmete otsimiseks</string>
-    <string name="ignore_bonded_devices_description">Kui see valik on sisse lülitatud siis juba paaritatud seadmeid ei kuvata skanneerimisel</string>
-    <string name="ignore_bonded_devices">Ignoreeri paaritatud seadmeid</string>
     <string name="error_retrieving_devices_database">Viga seadmete andmebaasist lugemisel</string>
     <string name="error_setting_alias">Viga teise nime seadmisel:</string>
     <string name="error_exporting_device_preferences">Viga seadmespetsiifliste sätete eksportimisel</string>

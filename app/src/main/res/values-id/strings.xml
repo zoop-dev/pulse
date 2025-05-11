@@ -378,12 +378,10 @@
     <string name="activity_prefs_charts">Pengaturan bagan</string>
     <string name="activity_prefs_activetime_minutes">Sasaran setiap hari: waktu aktif dalam menit</string>
     <string name="companiondevice_pairing">Penyandingan CompanionDevice</string>
-    <string name="ignore_bonded_devices">Abaikan perangkat yang dijalin</string>
     <string name="miband_prefs_fitness_goal">Sasaran langkah sehari</string>
     <string name="pref_title_physical_buttons">Tombol fisik</string>
     <string name="pref_header_sony_equalizer_bands">Band</string>
     <string name="sony_button_mode_right">Mode Tombol (Kanan)</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="menuitem_goal">Sasaran Aktivitas</string>
     <string name="weeksleepchart_sleep_a_month">Tidur per bulan</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Jangka tidur</string>
@@ -647,7 +645,6 @@
     <string name="power_saving">Penghemat Daya</string>
     <string name="single_band">Jalur Tunggal</string>
     <string name="low_power_gps">GPS Daya Rendah</string>
-    <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="all_satellites">Semua Satelit</string>
     <string name="speed_first">Kecepatan Terlebih Dahulu</string>
     <string name="accuracy_first">Akurasi Terlebih Dahulu</string>
@@ -735,7 +732,6 @@
     <string name="hr_widget_heart_rate">Detak jantung</string>
     <string name="qhybrid_offset_time_by">geser waktu dengan</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">gunakan tangan aktivitas sebagai penghitung notifikasi</string>
-    <string name="companiondevice_pairing_details">Mengaktifkan dukungan API CompanionDevice baru (hanya ada efek di Android 8 dan lebih) yang akan meningkatkan keandalan ketika perangkat harus dimulai ulang di latar belakang, membutuhkan menyandingan ulang ke Gadgetbridge untuk diterapkan</string>
     <string name="laps_unit">putaran</string>
     <string name="qhybrid_calibration_counterclockwise">Berlawanan arah jarum jam</string>
     <string name="watchface_setting_button_toggle_backlight">Nyalakan lampu belakang</string>
@@ -849,7 +845,6 @@
     <string name="gpx_receiver_overwrite_some_files">Beberapa berkas sudah ada. Timpa\?</string>
     <string name="error_no_location_access">Akses lokasi harus diberikan dan diaktifkan untuk pemindaian untuk bekerja dengan benar</string>
     <string name="error_retrieving_devices_database">Kesalahan mendapatkan perangkat dari basis data</string>
-    <string name="ignore_bonded_devices_description">Mengaktifkan opsi ini akan mengabaikan perangkat yang telah dijalin/disandingkan ketika memindai</string>
     <string name="sports_activity_confirm_delete_title">Hapus %d aktivitas</string>
     <string name="sports_activity_confirm_delete_description">Apakah Anda yakin ingin menghapus %d aktivitas\?</string>
     <string name="watchface_dialog_widget_background">Latar belakang</string>
@@ -1544,7 +1539,6 @@
     <string name="pref_title_auto_export_enabled">Ekspor otomatis diaktifkan</string>
     <string name="pref_header_auto_fetch">Dapatkan secara otomatis</string>
     <string name="pref_auto_fetch_limit_fetches">Waktu minimum antara pendapatan</string>
-    <string name="discovery_scanning_intensity">Intensitas pemindaian</string>
     <string name="connecting">Menhubungkan</string>
     <string name="pref_screen_notification_profile_email">Notifikasi surel</string>
     <string name="pref_screen_notification_profile_missed_call">Notifikasi panggilan tidak terjawab</string>
@@ -1644,7 +1638,6 @@
     <string name="pref_sleep_mode_sleep_screen_summary">Tampilkan Layar Tidur ketika membangunkan layar saat mode tidur, untuk mengurangi gangguan</string>
     <string name="pref_sleep_mode_smart_enable_title">Pengaktifan Pintar</string>
     <string name="pref_sleep_mode_smart_enable_summary">Aktifkan mode tidur secara otomatis ketika memakai gelang saat tidur</string>
-    <string name="discovery_scanning_intensity_warning">Jika Anda mengalami pembekuan atau tidak menanggapi, coba atur Intensitas pemindaian ke tingkat yang rendah. Jika perangkat Anda tidak ditemukan, coba atur Intesitas pemindaian ke tingkat yang tinggi.</string>
     <string name="pref_summary_disable_new_ble_scanning">Centang opsi ini jika perangkat Anda tidak dapat ditemukan saat penemuan</string>
     <string name="connected">Terhubung</string>
     <string name="test">Uji coba</string>
@@ -1951,7 +1944,6 @@
     <string name="zetime_prefs_inactivity_sa">Sabtu</string>
     <string name="pref_pebble_privacy_mode_complete">Hanya tampilkan ikon notifikasi</string>
     <string name="pref_gps_satellite_search">Pencarian Satelit</string>
-    <string name="preferences_miband_settings">Pengaturan Mi Band / Amazfit</string>
     <string name="watchface_install_info">Anda akan memasang wajah jam berikut: 
 \n 
 \n%1$s 
@@ -2282,7 +2274,6 @@
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
     <string name="pref_title_mb_intents">Intent Tombol Media Siaran Secara Langsung</string>
     <string name="pref_summary_mb_intents">Aktifkan jika kontrol media perangkat tidak berfungsi untuk aplikasi tertentu</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="busy_task_fetch_sports_summaries">Mendapatkan rangkuman olahraga</string>
@@ -2388,8 +2379,6 @@
     <string name="updatefirmwareoperation_failed_low_mtu">MTU %1$d saat ini terlalu rendah, silakan aktitkan MTU yang tintgi dalan pengaturan perangkat dan putuskan/hubungkan ulang perangkat.</string>
     <string name="text_receiver_activity_title">Kirim teks ke perangkat</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_description">Aktifkan aktivitas penemuan baru, yang seharusnya memperbaiki masalah penemuan perangkat. Nonaktifkan ini jika Anda menghadapi masalah apa pun saat mencari atau memasangkan perangkat Anda.</string>
-    <string name="new_discover_activity_title">Aktifkan aktivitas penemuan baru</string>
     <string name="prefs_home_icon_left_item">Kiri</string>
     <string name="prefs_wena3_title_activity">Pengaturan Aktivitas</string>
     <string name="white">Putih</string>
@@ -2809,7 +2798,6 @@
     <string name="scan_scanning_single_device">Memindai 1 perangkat</string>
     <string name="scan_scanning_multiple_devices">Memindai %d perangkat</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
-    <string name="temperature">Suhu</string>
     <string name="pref_adaptive_volume_control_title">Kontrol volume adaptif</string>
     <string name="pref_wide_area_tap_title">Ketukan area luas</string>
     <string name="devicetype_sony_linkbuds">Sony LinkBuds</string>

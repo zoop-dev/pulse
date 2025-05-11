@@ -181,7 +181,6 @@
     <string name="pairing_already_bonded">Vazba s %1$s (%2$s) již existuje, propojuji…</string>
     <string name="message_cannot_pair_no_mac">Adresa MAC nepřišla, nemohu párovat.</string>
     <string name="preferences_category_device_specific_settings">Nastavení zařízení</string>
-    <string name="preferences_miband_settings">Nastavení Mi Band / Amazfit</string>
     <string name="male">Muž</string>
     <string name="female">Žena</string>
     <string name="other">Jiné</string>
@@ -667,7 +666,6 @@
     <string name="activity_prefs_calories_burnt">Denní cíl: spálené kalorie</string>
     <string name="activity_prefs_distance_meters">Denní cíl: vzdálenost v metrech</string>
     <string name="activity_prefs_activetime_minutes">Denní cíl: aktivita v minutách</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">Povolit upozornění VOIP hovorů</string>
     <string name="title_activity_device_specific_settings">Nastavení pro jednotlivá zařízení</string>
     <string name="pref_title_authkey">Autentizační klíč</string>
@@ -945,8 +943,6 @@
     <string name="ascentMeters">Do kopce</string>
     <string name="distanceMeters">Vzdálenost</string>
     <string name="error_location_enabled_mandatory">Chcete-li vyhledat zařízení, Poloha musí být zapnutá</string>
-    <string name="ignore_bonded_devices_description">Povolením této možnosti se budou ignorovat zařízení, která byla při skenování již spojena/spárována</string>
-    <string name="ignore_bonded_devices">Ignorovat připojená zařízení</string>
     <string name="error_retrieving_devices_database">Při načítání zařízení z databáze došlo k chybě</string>
     <string name="error_setting_alias">Chyba při nastavování přezdívky:</string>
     <string name="error_exporting_device_preferences">Při exportu předvoleb specifických pro zařízení došlo k chybě</string>
@@ -957,7 +953,6 @@
     <string name="device_is_currently_bonded">JIŽ SPÁROVÁNO</string>
     <string name="error_background_service_reason_truncated">Službu na pozadí se nepodařilo spustit z důvodu…</string>
     <string name="error_background_service">Nepodařilo se spustit službu na pozadí</string>
-    <string name="companiondevice_pairing_details">Povoluje nové rozhraní Doprovodného Zařízení (CompanionDevice API, toto existuje pouze v Android 8 a novějším), které zlepšuje spolehlivost připojení. Pro využití tohoto rozhraní je nutné znovu-napárování za použití Gadgetbridge</string>
     <string name="companiondevice_pairing">Párování systémem doprovodného zařízení</string>
     <string name="require_location_provider">Poloha musí být povolena</string>
     <string name="menuitem_stress">Stres</string>
@@ -1267,8 +1262,6 @@
     <string name="watchface_widget_type_steps">Kroky</string>
     <string name="watchface_widget_type_weather">Počasí</string>
     <string name="watchface_widget_type_date">Datum</string>
-    <string name="watchface_dialog_title_add_widget">Přidat widget</string>
-    <string name="watchface_toast_settings_incomplete">Nastavení není kompletní, widget nebyl přidán</string>
     <string name="watchface_dialog_title_set_name">Jméno ciferníku</string>
     <string name="button_watchface_settings">Nastavení ciferníku</string>
     <string name="button_watchface_add_widget">Přidat widget</string>
@@ -1565,21 +1558,14 @@
     <string name="activity_db_management_autoexport_scheduled_no">Automatický export zatím nebyl naplánován.</string>
     <string name="menuitem_email">E-mail</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js běží</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Doprovodná aplikace pro Bangle.js pro Android vytvořená na základě projektu Gadgetbridge s přidaným přístupem k internetu.
-\n
-\nVzhledem k pravidlům obchodu Google Play nemůžeme v samotné aplikaci uvést odkaz na dárcovství, pokud se vám tato aplikace ale líbí, zvažte prosím možnost přispět prostřednictvím níže uvedené domovské stránky Gadgetbridge.</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">O Bangle.js Gadgetbridge</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">O Bangle.js Gadgetbridge</string>
     <string name="about_description_banglejs_main">Doprovodná aplikace pro Bangle.js pro Android vytvořená na základě projektu Gadgetbridge s přidaným přístupem k internetu.
 \n
 \nVzhledem k pravidlům obchodu Google Play nemůžeme v samotné aplikaci uvést odkaz na dárcovství, pokud se vám tato aplikace ale líbí, zvažte prosím možnost přispět prostřednictvím níže uvedené domovské stránky Gadgetbridge.</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js běží</string>
     <string name="about_activity_title_main_nightly">O aplikaci Gadgetbridge Nightly</string>
     <string name="gadgetbridge_running_main_nightly">Nightly GB běží</string>
     <string name="application_name_main_nopebble">Gadgetbridge (Nightly, bez poskytovatele služeb Pebble)</string>
@@ -1622,7 +1608,6 @@
     <string name="heartrate_bpm_105">105 tepů/min</string>
     <string name="heartrate_bpm_100">100 tepů/min</string>
     <string name="heartrate_bpm_110">110 tepů/min</string>
-    <string name="heartrate_bpm_112">112 tepů/min</string>
     <string name="prefs_switch_control_right">Ovládání přepínání Vpravo</string>
     <string name="pref_title_touch_volume">Hlasitost</string>
     <string name="pref_title_touch_spotify">Spotify</string>
@@ -1698,7 +1683,6 @@
     <string name="pref_workout_start_on_phone_summary">Spuštění/zastavení sledování fitness aplikací v telefonu při spuštění tréninku na náramku/hodinkách</string>
     <string name="pref_workout_send_gps_title">Během cvičení posílat GPS do náramku</string>
     <string name="pref_workout_send_gps_summary">Během tréninku odesílat do náramku aktuální GPS polohu</string>
-    <string name="discovery_scanning_intensity">Intenzita skenování</string>
     <string name="notification_gps_text">Odesílání polohy GPS do %1$d zařízení</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="quick_alarm">Rychlý budík</string>
@@ -1724,7 +1708,6 @@
     <string name="pref_blacklist_calendars_summary">Kalendáře na černé listině nebudou synchronizovány se zařízením</string>
     <string name="pref_title_notification_delay_calls">Zpoždění upozornění na hovor</string>
     <string name="pref_summary_notification_delay_calls">Zpoždění před odesláním oznámení o příchozím hovoru do zařízení, v sekundách.</string>
-    <string name="discovery_scanning_intensity_warning">Pokud dochází k zamrznutí nebo nereagování aplikace při skenování, zkuste nastavit intenzitu skenování na nižší úroveň. Pokud vaše bluetooth zařízení není vyhledáno, zkuste nastavit intenzitu skenování na vyšší úroveň.</string>
     <string name="prefs_password_4_digits_1_to_4_summary">Heslo musí mít 4 znaky a musí obsahovat čísla 1 až 4</string>
     <string name="prefs_password_6_digits_0_to_9_summary">Heslo musí mít 6 znaků a může obsahovat pouze čísla</string>
     <string name="persian">Perština</string>
@@ -1761,7 +1744,6 @@
     <string name="steps_streaks_achievement_rate">Míra
 \núspěšnosti</string>
     <string name="step_streak_longest">Nejdelší</string>
-    <string name="watchface_setting_title_button_toggle_widgets">Přepínání viditelnosti widgetů</string>
     <string name="watchface_dialog_widget_background">Pozadí</string>
     <string name="watchface_setting_button_toggle_widgets">Přepínání zobrazení widgetů</string>
     <string name="hybridhr_widget_bg_double_circle">Dvojitý kruh</string>
@@ -1949,7 +1931,6 @@
     <string name="devicetype_asteroidos">AsteroidOS</string>
     <string name="devicetype_soflow_s06">SoFlow SO6</string>
     <string name="gps">GPS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="bluetooth_calls_pairing">Párování Bluetooth volání</string>
     <string name="all_satellites">Všechny satelity</string>
     <string name="pref_display_caller_title">Zobrazit informace o kontaktu</string>
@@ -2196,7 +2177,6 @@
     <string name="fossil_hr_pairing_failed">Párování selhalo</string>
     <string name="pref_activity_full_sync_trigger_warning">Vyvolá plnou synchronizaci všech dat aktivit ze zařízení. Může trvat několik minut.</string>
     <string name="elevationGain">Převýšení</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="menuitem_todo">Úkoly</string>
     <string name="zepp_os_watchface_minimalist">Minimalista</string>
     <string name="zepp_os_watchface_simplicity_data">Simplicity Data</string>
@@ -2407,7 +2387,6 @@
     <string name="pref_force_options">Vynucené volby</string>
     <string name="info_menu_structure_set">JSON struktura menu nastavena v GB</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">Úroveň baterie zařízení je příliš nízká</string>
-    <string name="temperature">Teplota</string>
     <string name="prefs_phone_silent_mode">Tichý režim telefonu</string>
     <string name="silent_mode_normal_vibrate">Normální/vibrovat</string>
     <string name="silent_mode_vibrate_silent">Vibrovat/tichý</string>
@@ -3384,7 +3363,6 @@
     <string name="prefs_title_ble_intent_api">BLE Intent API</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Průběžné měření teploty pokožky</string>
     <string name="devicetype_ble_gatt_client">Generický klient BLE GATT</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Získávání teploty momentálně není podporováno. Toto nastavení pouze povolí průběžné měření na zařízení</string>
     <string name="prefs_title_gatt_client_notification_intents">Vysílat oznamovací intenty GATT skrze BLE Intent API</string>
     <string name="activity_db_management_backup_restore_label">Záloha a obnovení</string>
     <string name="activity_db_management_export_to_zip">Exportovat zip</string>

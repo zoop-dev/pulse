@@ -246,14 +246,12 @@
     <string name="about_additional_contributions">Veliko hvala svim nenavedenim suradnicima na doprinosu kodu, prijevodima, podršci, idejama, motivaciji, izvješćima o greškama, novcu… ✊</string>
     <string name="error_version_check_extreme_caution">OPREZ: Pogreška prilikom provjere informacija o verziji! Ne biste trebali nastaviti! Vidio sam naziv verzije \"%s\"</string>
     <string name="require_location_provider">Lokacija mora biti omogućena</string>
-    <string name="companiondevice_pairing_details">Omogućuje novu podršku za CompanionDevice API (ima učinak samo na Android 8 ili noviji) koja će povećati pouzdanost ako se usluga treba ponovno pokrenuti u pozadini, zahtijeva ponovno uparivanje pomoću Gadgetbridge-a da bi imalo učinak</string>
     <string name="error_background_service">Pokretanje pozadinske usluge nije uspjelo</string>
     <string name="error_background_service_reason_truncated">Pokretanje pozadinske usluge nije uspjelo jer…</string>
     <string name="device_is_currently_bonded">VEĆ POVEZANO</string>
     <string name="device_requires_key">POTREBAN JE KLJUČ, PRITISNI ZA UNOS</string>
     <string name="error_background_service_reason">Pokretanje pozadinske usluge nije uspjelo zbog iznimke – Pritisni ovdje za više informacija.\n\nGreška:</string>
     <string name="error_retrieving_devices_database">Pogreška prilikom dohvaćanja uređaja iz baze podataka</string>
-    <string name="ignore_bonded_devices_description">Omogućavanje ove opcije zanemarit će uređaje koji su već bili povezani/upareni prilikom skeniranja</string>
     <string name="distanceMeters">Udaljenost</string>
     <string name="ascentMeters">Uzbrdo</string>
     <string name="descentMeters">Nizbrdo</string>
@@ -358,8 +356,6 @@
     <string name="button_watchface_edit_name">Uredi naziv</string>
     <string name="button_watchface_settings">Postavke brojčanika</string>
     <string name="watchface_dialog_title_set_name">Postavi naziv brojčanika</string>
-    <string name="watchface_toast_settings_incomplete">Postavke nepotpune, widget nije dodan</string>
-    <string name="watchface_dialog_title_add_widget">Dodaj widget</string>
     <string name="watchface_widget_type_steps">Koraci</string>
     <string name="watchface_widget_type_heart_rate">Broj otkucaja srca</string>
     <string name="button_watchface_preview">Pregled na satu</string>
@@ -761,7 +757,6 @@
     <string name="pairing_in_progress">Spajanje u tijeku: %1$s (%2$s)</string>
     <string name="pairing_already_bonded">Već povezan s %1$s (%2$s), povezivanje…</string>
     <string name="preferences_category_device_specific_settings">Postavke specifične za uređaj</string>
-    <string name="preferences_miband_settings">Mi Band/Amazfit postavke</string>
     <string name="horizontal">Horizontalno</string>
     <string name="vertical">Okomito</string>
     <string name="discovery_connected_devices_hint">Učinite svoj uređaj vidljivim. Trenutno povezani uređaji vjerojatno neće biti otkriveni. Aktivirajte lokaciju (npr. GPS) na Androidu 6+. Onemogućite Privacy Guard za Gadgetbridge jer se može srušiti i ponovno pokrenuti vaš telefon. Ako se uređaj ne pronađe nakon nekoliko minuta, pokušajte ponovno nakon ponovnog pokretanja mobilnog uređaja.</string>
@@ -996,7 +991,6 @@
     <string name="widget_5_minutes">5 minuta</string>
     <string name="qhybrid_offset_timezone">pomaknite vremensku zonu za</string>
     <string name="error_exporting_device_preferences">Pogreška pri izvozu postavki specifičnih za uređaj</string>
-    <string name="ignore_bonded_devices">Zanemari povezane uređaje</string>
     <string name="minAltitude">Minimum</string>
     <string name="laps">Krugovi</string>
     <string name="meters_second">m/s</string>
@@ -1282,7 +1276,6 @@
     <string name="qhybrid_second_timezone_offset_relative_to_utc">drugi pomak vremenske zone u odnosu na UTC</string>
     <string name="devicetype_casiogbx100">Casio GBX-100</string>
     <string name="mi2_enable_text_notifications_summary"><![CDATA[Firmware >= 1.0.1.28 i Mili_pro.ft* moraju biti instalirani.]]></string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_itag">iTag</string>
     <string name="fossil_hr_synced_activity_data">Sinkronizirani podaci o aktivnostima</string>
     <string name="fossil_hr_auth_failed">Provjera autentičnosti nije uspjela, ograničena funkcionalnost</string>

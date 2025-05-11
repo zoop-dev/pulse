@@ -186,7 +186,6 @@
     <string name="pairing_already_bonded">Déjà lié avec %1$s (%2$s), connexion…</string>
     <string name="message_cannot_pair_no_mac">Aucune adresse MAC fournie, ne peut être appairé.</string>
     <string name="preferences_category_device_specific_settings">Paramètres spécifiques à l\'appareil </string>
-    <string name="preferences_miband_settings">Paramètres Mi Band / Amazfit</string>
     <string name="male">Homme</string>
     <string name="female">Femme</string>
     <string name="other">Autre</string>
@@ -677,7 +676,6 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_prefs_calories_burnt">Objectif quotidien : calories brulées</string>
     <string name="activity_prefs_distance_meters">Objectif quotidien : distance en mètres</string>
     <string name="activity_prefs_activetime_minutes">Objectif quotidien : temps d\'activité en minutes</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">Activer les applications d\'appel VoIP</string>
     <string name="title_activity_device_specific_settings">Paramètres spécifiques de l\'appareil</string>
     <string name="pref_title_authkey">Clé d\'autorisation</string>
@@ -977,8 +975,6 @@ Temps de sommeil préféré en heures</string>
     <string name="ascentMeters">Montée</string>
     <string name="distanceMeters">Distance</string>
     <string name="error_location_enabled_mandatory">La localisation doit être activée pour scanner les appareils</string>
-    <string name="ignore_bonded_devices_description">Activer cette option ignorera les appareils déja liés/pairés lors d\'un scan</string>
-    <string name="ignore_bonded_devices">Ignorer les appareils déja liés</string>
     <string name="error_retrieving_devices_database">Erreur lors de la récupération des appareils de la base de données</string>
     <string name="error_setting_alias">Erreur pour configurer l\'alias:</string>
     <string name="error_exporting_device_preferences">Erreur à l\'exportation des préférences spécifiques de cet appareil</string>
@@ -989,7 +985,6 @@ Temps de sommeil préféré en heures</string>
     <string name="device_is_currently_bonded">DÉJA LIÉ</string>
     <string name="error_background_service_reason_truncated">Le démarrage du service en arrière-plan n\'a pas réussi à cause de…</string>
     <string name="error_background_service">Impossible de démarrer le service d\'arrière-plan</string>
-    <string name="companiondevice_pairing_details">Active le support de la nouvelle API CompanionDevice (n\'a d\'effet qu\'avec Android 8 ou supérieur) ce qui améliore la fiabilité si le service doit être redémarré en tâche de fond, nécessite de refaire le pairage avec GadgetBridge pour être effectif</string>
     <string name="companiondevice_pairing">Pairage du bracelet</string>
     <string name="require_location_provider">La géolocalisation doit être activée</string>
     <string name="error_version_check_extreme_caution">ATTENTION: Erreur lors de la vérification de l\'information de version ! Vous ne devriez pas poursuivre ! Numéro de version \"%s\"</string>
@@ -1279,8 +1274,6 @@ Temps de sommeil préféré en heures</string>
     <string name="watchface_widget_type_steps">Pas</string>
     <string name="watchface_widget_type_weather">Météo</string>
     <string name="watchface_widget_type_date">Date</string>
-    <string name="watchface_dialog_title_add_widget">Ajouter un widget</string>
-    <string name="watchface_toast_settings_incomplete">Configuration incomplète, widget non ajouté</string>
     <string name="watchface_dialog_title_set_name">Configurer le nom du thème d\'écran</string>
     <string name="button_watchface_settings">Réglages du thème d\'écran</string>
     <string name="button_watchface_add_widget">Ajouter un widget</string>
@@ -1582,20 +1575,13 @@ Temps de sommeil préféré en heures</string>
     <string name="about_description_banglejs_main">Application complémentaire Android pour Bangle.js élaborée sur la base du projet Gadgetbridge, avec des fonctionnalités Internet supplémentaires.
 \n
 \nEn raison des règles du Google Play Store, nous ne pouvons pas mettre de lien de don directement dans l\'application, mais si vous appréciez cette application, pensez à faire un don via la page web de Gadgetbridge ci-dessous.</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js pour Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js pour Gadgetbridge</string>
     <string name="about_activity_title_main_nightly">À propos de Gatgetbridge Nightly</string>
-    <string name="about_activity_title_banglejs_nopebble">A propos de Bangle.js pour Gadgetbridge</string>
     <string name="about_activity_title_main_nopebble">À propos de Gadgetbridge Nightly sans Pebble</string>
     <string name="about_description_main_nightly">Remplaçant autonome et sous licence libre pour remplacer les applications propriétaires des fabricants. Version Nightly de Gadgetbridge. Ne peut pas être installé si vous avez déja Gadgetbridge ou Pebble d\'installé, en raison d\'un conflit avec l\'application Pebble.</string>
     <string name="application_name_main_nopebble">Gadgetbridage (Nightly, pas defournisseur Pebble)</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly Sans Pebble</string>
     <string name="gadgetbridge_running_main_nightly">GB Nightly en fonctionnement</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js en fonctionnement</string>
-    <string name="about_description_banglejs_nopebble">Application complémentaire Android pour Bangle.js élaborée sur la base du projet Gadgetbridge, avec des fonctionnalités Internet supplémentaires.
-\n
-\nEn raison des règles du Google Play Store, nous ne pouvons pas mettre de lien de don directement dans l\'application, mais si vous appréciez cette application, pensez à faire un don via la page web de Gadgetbridge ci-dessous.</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js en fonctionnement</string>
     <string name="application_name_main_nightly">Gadgetbridge (version Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbrigde version Nightly</string>
     <string name="pref_screen_notification_profile_event_reminder">Rappel d\'évènements</string>
@@ -1626,7 +1612,6 @@ Temps de sommeil préféré en heures</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Configuration de la surveillance du rythme cardiaque</string>
     <string name="heartrate_bpm_100">100 bpm</string>
     <string name="heartrate_bpm_110">110 bpm</string>
-    <string name="heartrate_bpm_112">112 bpm</string>
     <string name="heartrate_bpm_120">120 bpm</string>
     <string name="heartrate_bpm_125">125 bpm</string>
     <string name="heartrate_bpm_130">130 bpm</string>
@@ -1670,8 +1655,6 @@ Temps de sommeil préféré en heures</string>
     <string name="permission_notification_listener">%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint.
 \n
 \nMerci de sélectionner \'%2$s\' puis \'%1$s\' et activer \'Autoriser l\'accès aux notifications\', puis appuyer sur \'Retour\' pour revenir à %1$s.</string>
-    <string name="discovery_scanning_intensity">Intensité du scan</string>
-    <string name="discovery_scanning_intensity_warning">Si vous rencontrez des problèmes de blocage ou non réponse, essayer de régler l\'intensité du scan à un faible niveau. Si votre appareil n\'est pas découvert, essayer l\'intensité du scan au plus haut niveau.</string>
     <string name="portuguese_br">Portugais (Brésil)</string>
     <string name="portuguese_pt">Portugais (Portugal)</string>
     <string name="prefs_active_noise_cancelling_level_low">Bas</string>
@@ -1776,7 +1759,6 @@ Temps de sommeil préféré en heures</string>
     <string name="watchface_dialog_widget_cat_2nd_tz_widget">Widget deuxième fuseau horaire</string>
     <string name="watchface_dialog_widget_cat_custom_widget">Widget personnalisé</string>
     <string name="hybridhr_widget_bg_thin_circle">Cercle fin</string>
-    <string name="watchface_setting_title_button_toggle_widgets">Intervertir les widgets</string>
     <string name="watchface_setting_button_toggle_widgets">Intervertir les widgets</string>
     <string name="steps_streaks">Rythme de marche</string>
     <string name="step_streak_total">Total</string>
@@ -1956,7 +1938,6 @@ Temps de sommeil préféré en heures</string>
     <string name="gps">GPS</string>
     <string name="low_power_gps">GPS en mode économie d\'énergie</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="all_satellites">Tous les satellites</string>
     <string name="speed_first">Vitesse en premier</string>
     <string name="accuracy_first">Précision en premier</string>
@@ -2289,7 +2270,6 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_title_mb_intents">Diffuser les annonces Media directement</string>
     <string name="pref_summary_mb_intents">Activer si le contrôle des médias ne marche pas dans certaines applications</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="busy_task_fetch_stress_data">Récupération des données de stress</string>
     <string name="busy_task_fetch_hr_data">Récupération des données de rythme cardiaque</string>
     <string name="busy_task_fetch_sports_summaries">Récupération des résumés d\'exercice</string>
@@ -2395,7 +2375,6 @@ Temps de sommeil préféré en heures</string>
     <string name="text_receiver_activity_title">Envoyer un message texte à l\'appareil</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Le MTU actuel pour %1$d est trop faible, merci de régler un MTU élevé dans les réglages de l\'appareil. et puis déconnecter/reconnecter l\'appareil.</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_title">Activer la découverte de nouvelles activités</string>
     <string name="prefs_wena3_receive_calls_title">Réglages pour les appels entrants</string>
     <string name="prefs_wena3_button_action_name_start_timer">Démarrer le chronomètre</string>
     <string name="prefs_wena3_menu_icon_hint">L\'icône des réglages est toujours affichée en dernière</string>
@@ -2417,7 +2396,6 @@ Temps de sommeil préféré en heures</string>
     <string name="prefs_wena3_vibration_continuous">Continu</string>
     <string name="prefs_wena3_home_icon_name_pedometer">Nombre de pas</string>
     <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
-    <string name="new_discover_activity_description">Activer le nouveau service de découverte, ce qui devrait résoudre le problème de découverte. Désactiver cette option en cas de problèmes si vous avez des problèmes pour découvrir ou pairer votre appareil.</string>
     <string name="white">Blanc</string>
     <string name="prefs_wena3_home_icon_name_clock">Heure actuelle</string>
     <string name="prefs_wena3_item_background_sync">Activité de synchronisation en tache de fond</string>
@@ -3414,7 +3392,6 @@ Temps de sommeil préféré en heures</string>
     <string name="menuitem_night_display">Affichage de nuit</string>
     <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
     <string name="menuitem_map">Carte</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">La récupération de température n’est pas prise en charge actuellement. Ce paramètre permet uniquement une mesure continue sur l’appareil</string>
     <string name="prefs_title_gatt_client_notification_intents">Diffuser les intentions de notification GATT par l’intermédiaire de l’API Intent BLE</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Permettre l’interaction GATT par l’intermédiaire de l’API Intent BLE</string>
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">Autoriser l’envoi de commandes de lecture/écriture et de connexion des caractéristiques BLE</string>

@@ -172,7 +172,6 @@
     <string name="pairing_already_bonded">כבר נוצר איגוד עם %1$s (%2$s), מתבצעת התחברות…</string>
     <string name="message_cannot_pair_no_mac">לא הועברה כתובת חומרה, לא ניתן לצמד.</string>
     <string name="preferences_category_device_specific_settings">הגדרות ייעודיות להתקן</string>
-    <string name="preferences_miband_settings">הגדרות Mi Band / Amazfit</string>
     <string name="male">זכר</string>
     <string name="female">נקבה</string>
     <string name="other">אחר</string>
@@ -672,7 +671,6 @@
     <string name="activity_prefs_calories_burnt">יעד יומי: קלוריות שנשרפו</string>
     <string name="activity_prefs_distance_meters">יעד יומי: מרחק במטרים</string>
     <string name="activity_prefs_activetime_minutes">יעד יומי: זמן פעילות בדקות</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">הפעלת שיחות VoIP מהיישומון</string>
     <string name="title_activity_device_specific_settings">הגדרות ייחודיות למכשיר</string>
     <string name="pref_title_authkey">מפתח אימות</string>
@@ -915,8 +913,6 @@
     <string name="menuitem_cycles">מעקב מחזור</string>
     <string name="menuitem_breathing">נשימה</string>
     <string name="devicetype_miband5">Mi Band 5</string>
-    <string name="ignore_bonded_devices_description">הפעלת אפשרות זו תתעלם ממכשירים שכבר אוגדו/צומדו טרם הסריקה</string>
-    <string name="ignore_bonded_devices">התעלמות ממכשירים שאוגדו</string>
     <string name="error_retrieving_devices_database">שגיאה בקבלת מכשירים ממסד הנתונים</string>
     <string name="error_setting_alias">שגיאה בהגדרת כינוי:</string>
     <string name="error_exporting_device_preferences">שגיאה בייצוא העדפות ייחודיות למכשיר</string>
@@ -925,7 +921,6 @@
     <string name="device_is_currently_bonded">כבר מאוגד</string>
     <string name="devicetype_tlw64">TLW64</string>
     <string name="error_location_enabled_mandatory">יש להפעיל מיקום כדי לסרוק לאיתור מכשירים</string>
-    <string name="companiondevice_pairing_details">מפעיל את התמיכה ב־API החדש מסוג CompanionDevice (תקף על Android 8 ומעלה) שמגביר את האמינות אם יש להפעיל את השירות מחדש ברקע, דורש צימוד מחדש באמצעות Gadgetbridge כדי שייכנס לתוקף</string>
     <string name="companiondevice_pairing">צימוד CompanionDevice</string>
     <string name="require_location_provider">יש להפעיל מיקום</string>
     <string name="pref_check_permission_status_summary">לבדוק ולבקש הרשאות חסרות אפילו אם אינן נדרשות באותו הרגע. יש להשבית את זה רק אם המכשירים שלך אכן לא תומכים בתכונות האלו. חסך בהענקת הרשאות עלול להוביל לתקלות!</string>
@@ -1273,8 +1268,6 @@
     <string name="watchface_widget_type_steps">צעדים</string>
     <string name="watchface_widget_type_weather">מזג אוויר</string>
     <string name="watchface_widget_type_date">תאריך</string>
-    <string name="watchface_dialog_title_add_widget">הוספת וידג׳ט</string>
-    <string name="watchface_toast_settings_incomplete">ההגדרות לא הושלמו, הווידג׳ט לא נוסף</string>
     <string name="watchface_dialog_title_set_name">הגדרת שם לפני השעון</string>
     <string name="button_watchface_settings">הגדרות פני השעון</string>
     <string name="button_watchface_add_widget">הוספת וידג׳ט</string>
@@ -1574,19 +1567,12 @@
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_main_nightly">גרסה נסיונית של Gadgetbridge</string>
     <string name="about_activity_title_main_nightly">על הגרסה הנסיונית של Gadgetbridge</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js פעיל</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">על Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">על Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">יישומון Android מלווה ל־Bangle.js שנבנה על גבי מיזם Gadgetbridge עם תוספת של גישה לאינטרנט.
-\n
-\nעקב מדיניות של חנות Google Play, אסור לנו להציב קישור תרומה ביישומון עצמו אך אם היישומון נושא חן בעיניך אפשר לתרום דרך עמוד הבית של Gadgetbridge להלן.</string>
     <string name="about_description_banglejs_main">יישומון Android מלווה ל־Bangle.js שנבנה על גבי מיזם Gadgetbridge עם תוספת של גישה לאינטרנט.
 \n
 \nעקב מדיניות של חנות Google Play, אסור לנו להציב קישור תרומה ביישומון עצמו אך אם היישומון נושא חן בעיניך אפשר לתרום דרך עמוד הבית של Gadgetbridge להלן.</string>
     <string name="application_name_main_nightly">Gadgetbridge (גרסה ניסיונית)</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js פעיל</string>
     <string name="gadgetbridge_running_main_nightly">GB במהדורה לילית פעיל</string>
     <string name="about_activity_title_main_nopebble">על מהדורה לילית של Gadgetbridge בלי Pebble</string>
@@ -1666,7 +1652,6 @@
     <string name="prefs_in_ear_detection_summary">להשמיע שיחות דרך האוזניות שלך כשהן בתוך האוזניים</string>
     <string name="heartrate_bpm_100">דופק 100</string>
     <string name="heartrate_bpm_105">דופק 105</string>
-    <string name="heartrate_bpm_112">דופק 112</string>
     <string name="prefs_heartrate_alert_threshold">סף התראת דופק</string>
     <string name="heartrate_bpm_130">דופק 130</string>
     <string name="prefs_stress_monitoring_title">מעקב אחר לחץ</string>
@@ -1694,8 +1679,6 @@
     <string name="pref_workout_start_on_phone_title">מעקב ביישומון חיטוב</string>
     <string name="pref_workout_start_on_phone_summary">התחלת/עצירת מעקב ביישומון חיטוב בטלפון כאשר מופעל אימון GPS בצמיד</string>
     <string name="notification_channel_gps">מעקב GPS</string>
-    <string name="discovery_scanning_intensity">עוצמת סריקה</string>
-    <string name="discovery_scanning_intensity_warning">אם חווית קפאון או חוסר תגובתיות, כדאי לנסות לשנות את עוצמת הסריקה לרמה נמוכה. אם המכשיר שלך לא מתגלה, כדאי לנסות לשנות את עוצמת הסריקה לרמה גבוהה.</string>
     <string name="portuguese_pt">פורטוגלית של פורטוגל</string>
     <string name="quick_alarm_description">שעון מעורר מווידג׳ט</string>
     <string name="portuguese_br">פורטוגלית ברזילאית</string>
@@ -1793,7 +1776,6 @@
     <string name="steps_streaks_average_steps">צעדים
 \nבממוצע</string>
     <string name="note">פתק</string>
-    <string name="watchface_setting_title_button_toggle_widgets">ניהול וידג׳טים</string>
     <string name="watchface_setting_button_toggle_widgets">ניהול וידג׳טים</string>
     <string name="watchface_setting_title_custom_events">אירועים בהתאמה אישית</string>
     <string name="watchface_setting_button_toggle_backlight">הפעלת תאורה אחורית</string>
@@ -2018,7 +2000,6 @@
     <string name="pref_sleep_mode_sleep_screen_summary">להציג את מסך השינה בעת השכמת המסך במהלך מצב שינה כדי להפחית הפרעות</string>
     <string name="pref_sleep_mode_smart_enable_summary">להפעיל את מצב השינה אוטומטית תוך ענידת הצמיד תוך כדי שינה</string>
     <string name="pref_vibrate_for_alert">רטט להתראה</string>
-    <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="pref_crown_vibration">רטט בכתר</string>
     <string name="offline_voice_respond_turn_wrist">להגיב עם סיבוב כף היד</string>
     <string name="offline_voice_respond_screen_on">להגיב כשהמסך פעיל</string>
@@ -2284,7 +2265,6 @@
     <string name="pref_title_mb_intents">שידור Intents של כפתורי מדיה ישירות</string>
     <string name="pref_summary_mb_intents">יש להפעיל אם בקרת המדיה של המכשיר לא עובדת ביישומים מסוימים</string>
     <string name="devicetype_bohemic_smart_bracelet">צמיד חכם של Bohemic</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR‎</string>
     <string name="busy_task_fetch_sports_summaries">תקצירי הספורט מעודכנים</string>
     <string name="busy_task_fetch_sports_details">פרטי הספורט מתעדכנים</string>
     <string name="busy_task_fetch_debug_logs">יומני ניפוי התקלות מעודכנים</string>
@@ -2390,8 +2370,6 @@
     <string name="text_receiver_activity_title">שליחת טקסט למכשיר</string>
     <string name="updatefirmwareoperation_failed_low_mtu">הגדרת ה־MTU (יחידת העברה מרבית) הנוכחית %1$d נמוכה מדי, נא להפעיל MTU גבוה בהגדרות המכשיר ולנתק ולחבר את המכשיר שוב.</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX‎</string>
-    <string name="new_discover_activity_description">הפעלת פעילות הגילוי החדשה שאמורה לפתור תקלות בגילוי התקנים. רצוי להשבית אותה אם צצות תקלות במהלך חיפוש אחר או צימוד ההתקן שלך.</string>
-    <string name="new_discover_activity_title">הפעלת פעילות גילוי חדשה</string>
     <string name="devicetype_sony_wena3">Sony Wena 3‎</string>
     <string name="prefs_home_icon_left_item">שמאל</string>
     <string name="white">לבן</string>
@@ -2709,7 +2687,6 @@
 \nעל אחריותך בלבד</string>
     <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite‎</string>
     <string name="devicetype_huawei_watchfit">Huawei Watch Fit‎</string>
-    <string name="temperature">טמפרטורה</string>
     <string name="activity_type_sailing">שייט</string>
     <string name="activity_type_wrestling">היאבקות</string>
     <string name="activity_type_trail_run">ריצת מסלול</string>

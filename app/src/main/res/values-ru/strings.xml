@@ -182,7 +182,6 @@
     <string name="pairing_already_bonded">Уже привязан к %1$s (%2$s), выполняется соединение…</string>
     <string name="message_cannot_pair_no_mac">MAC-адреса нет, сопряжение не удалось.</string>
     <string name="preferences_category_device_specific_settings">Настройки устройства</string>
-    <string name="preferences_miband_settings">Настройки Mi Band и Amazfit</string>
     <string name="male">Мужчина</string>
     <string name="female">Женщина</string>
     <string name="other">Другой</string>
@@ -690,7 +689,6 @@
     <string name="activity_prefs_calories_burnt">Ежедневная цель: сожженные калории</string>
     <string name="activity_prefs_distance_meters">Ежедневная цель: дистанция в метрах</string>
     <string name="activity_prefs_activetime_minutes">Ежедневная цель: время активности в минутах</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">Включить VoIP-звонки</string>
     <string name="title_activity_device_specific_settings">Специфичные для устройства настройки</string>
     <string name="pref_title_authkey">Ключ авторизации</string>
@@ -983,8 +981,6 @@
     <string name="ascentMeters">В гору</string>
     <string name="distanceMeters">Расстояние</string>
     <string name="error_location_enabled_mandatory">Для поиска устройств необходимо включить определение местоположения</string>
-    <string name="ignore_bonded_devices_description">Включение этого параметра будет игнорировать устройства, которые уже были связаны/сопряжены при сканировании</string>
-    <string name="ignore_bonded_devices">Игнорировать связанные устройства</string>
     <string name="error_retrieving_devices_database">Ошибка при получении устройств из базы данных</string>
     <string name="error_setting_alias">Ошибка настройки псевдонима:</string>
     <string name="error_exporting_device_preferences">Ошибка при экспорте специфичных настроек устройства</string>
@@ -992,7 +988,6 @@
     <string name="pref_check_permission_status">Проверять статус разрешений</string>
     <string name="device_requires_key">НЕОБХОДИМ КЛЮЧ, ДОЛГОЕ ЗАЖАТИЕ ДЛЯ ВХОДА</string>
     <string name="device_is_currently_bonded">УЖЕ СВЯЗАНЫ</string>
-    <string name="companiondevice_pairing_details">Включает поддержку нового API CompanionDevice (работает только на Android 8 или выше), что повысит надежность, если службу необходимо перезапустить в фоновом режиме, для достижения эффекта требуется повторное сопряжение с помощью Gadgetbridge</string>
     <string name="companiondevice_pairing">Сопряжение с CompanionDevice</string>
     <string name="require_location_provider">Местоположение должно быть включено</string>
     <string name="devicetype_pinetime_jf">PineTime (Прошивка JF)</string>
@@ -1280,8 +1275,6 @@
     <string name="watchface_widget_type_steps">Шаги</string>
     <string name="watchface_widget_type_weather">Погода</string>
     <string name="watchface_widget_type_date">Дата</string>
-    <string name="watchface_dialog_title_add_widget">Добавить виджет</string>
-    <string name="watchface_toast_settings_incomplete">Настройки не завершены, виджет не добавлен</string>
     <string name="watchface_dialog_title_set_name">Задать имя циферблата</string>
     <string name="button_watchface_settings">Настройки циферблата</string>
     <string name="button_watchface_add_widget">Добавить виджет</string>
@@ -1423,13 +1416,7 @@
     <string name="prefs_equalizer">Эквалайзер</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">О Bangle.js Gadgetbridge</string>
     <string name="application_name_main_nightly">Gadgetbridge (ночная сборка)</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js запущен</string>
-    <string name="about_description_banglejs_nopebble">Приложение-компаньон для Bangle.js построено на основе проекта Gadgetbridge, с добавленным доступом в Интернет.
-\n
-\nВ соответствии с политикой Google Play Store, мы не можем разместить ссылку для пожертвований в самом приложении, но если вам нравится это приложение, пожалуйста, рассмотрите возможность пожертвования через домашнюю страницу Gadgetbridge ниже.</string>
     <string name="about_activity_title_main_nightly">О ночной сборке Gadgetbridge</string>
     <string name="application_name_main_nopebble">Gadgetbridge (Ночная сборка, без провайдера Pebble)</string>
     <string name="about_description_main_nightly">\"Безоблачная\" свободная альтернатива закрытым приложениям от производителей гаджетов. \"Ночные\" сборки Gadgetbridge. Ночные сборки Gadgetbridge. Их нельзя установить, если приложение Gadgetbridge или Pebble уже установлено, из-за конфликта провайдера Pebble.</string>
@@ -1438,7 +1425,6 @@
     <string name="about_description_banglejs_main">Приложение-компаньон для Bangle.js построено на основе проекта Gadgetbridge с добавленным доступом в Интернет. \n \nВ соответствии с политикой магазина Google Play, мы не можем разместить ссылку для пожертвований в самом приложении, но если вам нравится это приложение, пожалуйста, рассмотрите возможность пожертвования через домашнюю страницу Gadgetbridge ниже.</string>
     <string name="about_activity_title_banglejs_main">О Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js выполняется</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_main_nightly">Ночная сборка Gadgetbridge</string>
     <string name="gadgetbridge_running_main_nightly">Nightly GB запущен</string>
     <string name="about_activity_title_main_nopebble">О ночной сборке Gadgetbridge без Pebble</string>
@@ -1543,8 +1529,6 @@
     <string name="toast_app_must_be_selected">Чтобы сконфигурировать приложение, выберите его</string>
     <string name="pref_title_equalizer_soft">Мягкий</string>
     <string name="discover_unsupported_devices_description">Если включить этот параметр, во время сканирования будут показаны все обнаруженные Bluetooth-устройства. Короткое касание приведет к копированию имени устройства и mac-адреса в буфер обмена. Длительное нажатие откроет диалоговое окно \"Добавить тестовое устройство\". Может привести к потенциальным проблемам с зависанием приложений.</string>
-    <string name="discovery_scanning_intensity">Интенсивность сканирования</string>
-    <string name="discovery_scanning_intensity_warning">Если наблюдается зависание или отсутствие реакции, попробуйте установить более низкий уровень интенсивности сканирования. Если устройство не обнаруживается, попробуйте установить интенсивность сканирования на более высокий уровень.</string>
     <string name="accuracy">Точность</string>
     <string name="balanced">Сбалансированный</string>
     <string name="power_saving">Энергосбережение</string>
@@ -1790,7 +1774,6 @@
     <string name="hybridhr_widget_bg_double_circle">Двойной круг</string>
     <string name="gps">GPS</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="gps_gnolass">GPS + ГЛОНАСС</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="pref_agps_header">AGPS</string>
     <string name="fw_upgrade_notice_amazfit_gts4">Вы собираетесь установить прошивку %s на свой Amazfit GTS 4.
@@ -2334,7 +2317,6 @@
 \nВам будут выведены несколько диалогов с запросами на эти разрешения.
 \n
 \nНажмите «%2$s», чтобы продолжить.</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="pref_device_action_broadcast">Отправить трансляцию</string>
     <string name="prefs_ambient_sound_during_call_summary">Отчётливо слышать свой голос во время звонков</string>
     <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
@@ -2464,9 +2446,7 @@
     <string name="prefs_wena3_button_action_name_activity_screen">Отображение активности</string>
     <string name="pref_device_action_fitness_app_control_start">Начало отслеживания фитнес-приложением</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX (без датчика ЧСС)</string>
-    <string name="new_discover_activity_description">Включить новое действие обнаружения, которое должно устранить проблемы с обнаружением устройств. Отключите эту функцию, если у вас возникнут какие-либо проблемы при поиске или сопряжении с вашим устройством.</string>
     <string name="drag_handle">перетаскивание элементов</string>
-    <string name="new_discover_activity_title">Включить новое обнаружение активности</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="watchface_setting_power_saving_hands">Выключить движения рук при снятом ремешке</string>
     <string name="pref_device_action_fitness_app_control_stop">Остановка отслеживания фитнес-приложением</string>
@@ -2761,7 +2741,6 @@
     <string name="auto_reconnect_ble_scan_title">Переподключение при сканировании BLE</string>
     <string name="error_scan_failed">Поиск не удался: %d</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
-    <string name="temperature">Температура</string>
     <string name="pref_header_sony_sound_control">Управление звуком</string>
     <string name="pref_adaptive_volume_control_summary">Автоматически повышать громкость в шумных местах</string>
     <string name="pref_adaptive_volume_control_title">Адаптивная настройка громкости</string>

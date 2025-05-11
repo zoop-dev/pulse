@@ -206,7 +206,6 @@
     <string name="pairing_already_bonded">Ja s\'ha aparellat amb %1$s (%2$s). Connectant…</string>
     <string name="message_cannot_pair_no_mac">No s\'ha proporcionat cap adreça MAC. No es pot emparellar.</string>
     <string name="preferences_category_device_specific_settings">Configuració d\'aparells específics</string>
-    <string name="preferences_miband_settings">Configuració de Mi Band / Amazfit</string>
     <string name="male">Home</string>
     <string name="female">Dona</string>
     <string name="other">Altre</string>
@@ -686,7 +685,6 @@
     <string name="activity_prefs_calories_burnt">Objectiu diari: calories cremades</string>
     <string name="activity_prefs_distance_meters">Objectiu diari: distància en metres</string>
     <string name="activity_prefs_activetime_minutes">Objectiu diari: temps d\'activitat en minuts</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="title_activity_device_specific_settings">Configuració específica de l\'aparell</string>
     <string name="pref_title_authkey">Clau d\'autenticació</string>
     <string name="pref_summary_authkey">Canvia la clau d\'autenticació en tots els aparells Android des dels quals et vulguis connectar. La clau anterior per defecte per a tots els aparells és 0123456789@ABCDE</string>
@@ -1147,7 +1145,6 @@
     <string name="prefs_sounds">Sons</string>
     <string name="watchface_widget_type_date">Data</string>
     <string name="watchface_widget_type_weather">Temps</string>
-    <string name="watchface_dialog_title_add_widget">Afegeix un giny</string>
     <string name="fw_upgrade_notice_amazfitneo">Sou a punt d’instal·lar el microprogramari %s a la vostra Amazfit Neo.
 \n
 \nLa vostra polsera es reiniciarà després d’instal·lar el fitxer .fw.
@@ -1314,14 +1311,12 @@
     <string name="qhybrid_pref_title_external_intents">Permetre el intents externs perillosos</string>
     <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="gpx_receiver_overwrite_some_files">Algun(s) fitxer(s) ja existeixen. Sobreescriure\'ls\?</string>
-    <string name="ignore_bonded_devices_description">Activant aquesta opció farà que s\'ignorin els aparells que ja han estat vinculats/aparellats a l\'escanejar</string>
     <string name="gpx_receiver_files_received">Fitxer(s) GPX rebut(s):</string>
     <string name="fossil_hr_auth_failed">Autenticació fallada, funcionalitat limitada</string>
     <string name="fossil_hr_unavailable_unauthed">No disponible en mode no autenticat</string>
     <string name="qhybrid_calibration_1_step">1 passa</string>
     <string name="pref_check_permission_status_summary">Comproveu i demaneu els permisos que faltin tot i que poden no ser necessitats en aquest moment. Desactiveu això només si el vostre aparell realment no suporta cap d\'aquestes característiques. No donar un permís pot causar problemes!</string>
     <string name="fossil_hr_warning_firmware_too_new">Algunes funcions estan desactivades perquè el microprogramari del rellotge és massa nou</string>
-    <string name="companiondevice_pairing_details">Activa el suport de la nova API de CompanionDevice (només té efecte en Android 8 o superior) que incrementarà la fiabilitat si el servei s\'ha de reiniciar en segon pla; requereix re-aparellar amb Gadgetbridge per tenir efecte</string>
     <string name="error_version_check_extreme_caution">COMPTE: Error al comprovar la informació de versió! No hauríeu de continuar! Nom de versió vist: \"%s\"</string>
     <string name="averageStrokesPerSecond">Mitjana de braçades</string>
     <string name="fossil_hr_commute_actions_explanation">Les accions configurades aquí apareixeran a l\'aplicació Commute del rellotge. Llegiu la wiki per obtenir informació sobre com gestionar els intents produïts per aquestes accions.</string>
@@ -1335,7 +1330,6 @@
     <string name="minCadence">Cadència mínima</string>
     <string name="spm">passes/min</string>
     <string name="watchface_dialog_widget_presets">Preconfiguracions de posició:</string>
-    <string name="ignore_bonded_devices">Ignora els dispositius vinculats</string>
     <string name="minHR">Ritme cardíac mínim</string>
     <string name="prefs_sleep_time_label">Definiu les hores de son</string>
     <string name="nothing_prefs_inear_summary">Reprodueix / pausa la música segons si porteu els auriculars</string>
@@ -1357,7 +1351,6 @@
     <string name="distance_format_miles">###.# mi</string>
     <string name="distance_format_kilometers">###.# km</string>
     <string name="discover_unsupported_devices">Detecta aparells no admesos</string>
-    <string name="watchface_toast_settings_incomplete">Configuració incompleta, giny no afegit</string>
     <string name="prefs_vibration_enable">Activa la vibració</string>
     <string name="prefs_autoheartrate_interval">Freqüència de mesures</string>
     <string name="left_earbud">Auricular esquerre</string>
@@ -1455,9 +1448,6 @@
 \n
 \nA causa de les polítiques de la botiga del Google Play, no se\'ns permet incloure un enllaç per fer donatius a la mateixa aplicació, però si us agrada aquesta aplicació considereu fer una donació a través de la pàgina d\'inici de Gadgetbridge a continuació.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js funcionant</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">Sobre Bangle.js Gadgetbridge</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="appmanager_watchface_activate">Activa</string>
@@ -1479,7 +1469,6 @@
 \n
 \nA causa de les polítiques de la botiga del Google Play, no se\'ns permet incloure un enllaç per fer donatius a la mateixa aplicació, però si us agrada aquesta aplicació considereu fer una donació a través de la pàgina d\'inici de Gadgetbridge a continuació.</string>
     <string name="about_activity_title_main_nightly">Sobre Gadgetbridge Nightly</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="appmanager_app_share">Comparteix</string>
     <string name="fw_upgrade_notice_amazfit_gts3">Està a punt d\'instal·lar %s microprogramari al seu Amazfit GTS 3.
 \n

@@ -536,7 +536,6 @@
     <string name="zetime_signaling_vibrate_beep_once">Затреси и писни једном</string>
     <string name="pref_gps_combination">Преплет ГПС-а</string>
     <string name="dual_band">Двострука веза</string>
-    <string name="gps_gnolass">ГПС + ГЛОНАС</string>
     <string name="power_mode_saving">Чување снаге</string>
     <string name="activity_prefs_alarm_min_heart_rate">Најнижи откуцаји срца</string>
     <string name="zetime_prefs_inactivity_sa">Субота</string>
@@ -815,8 +814,6 @@
     <string name="pref_workout_start_on_phone_summary">Покрени/заустави праћење програма за вежбање на телефону када се на уређају покрене вежбање уз ГПС</string>
     <string name="pref_workout_send_gps_title">Пошаљи ГПС током вежбања</string>
     <string name="pref_auto_fetch_limit_fetches_summary">Добављање сваких %d минута</string>
-    <string name="discovery_scanning_intensity_warning">Уколико приметите кочење или неодзивност, покушајте да смањите јачину претраге. Ако се уређај не пронађе, покушајте да повећате јачину претраге.</string>
-    <string name="discovery_scanning_intensity">Јачина претраге</string>
     <string name="pref_enable_unsupported_settings_summary">Ово ће омогућити пристуо свим доступним поставкама, чак уколико нису подржане од уређаја. Може узроковати непостојаност и отказе на уређају.</string>
     <string name="live_activity_steps_history">Повест корака</string>
     <string name="live_activity_current_steps_per_minute">Тренутни кораци по минуту</string>
@@ -1226,8 +1223,6 @@
     <string name="device_unsupported">НЕПОДРЖАНО</string>
     <string name="error_background_service_reason">Нисам успео да покренем позадинску услугу због изузетка. Грешка:</string>
     <string name="pref_check_permission_status">Провери стање овлашћења</string>
-    <string name="ignore_bonded_devices">Занемари повезане уређаје</string>
-    <string name="ignore_bonded_devices_description">Омогућавање овога ће занемарити повезане уређаје који су већ упарени приликом претраге</string>
     <string name="discover_unsupported_devices">Откриј неподржане уређаје</string>
     <string name="sonyswr12_settings_low_vibration_summary">Омогући слабу трешњу на ручном уређају</string>
     <string name="sonyswr12_settings_stamina">Чување снаге је укључено</string>
@@ -1631,7 +1626,6 @@
     <string name="discovery_need_to_enter_authkey">Овом уређају је потребна тајна лозинка, дуго притисните уређај ради њеног уноса. Прочитајте вики.</string>
     <string name="pref_agps_expiry_reminder_time">Време подсетника истека АГПС-а</string>
     <string name="pref_sleep_mode_sleep_screen_summary">Приказуј заслон спавања при тицању заслона током спавања, ради мањег узнемиравања</string>
-    <string name="preferences_miband_settings">Поставке Ми Банда / Амејзфита</string>
     <string name="discovery_entered_invalid_authkey">Тајна лозинка коју сте унели је погрешна! Дуго притисните уређај ради њеног уређивања.</string>
     <string name="devicetype_miband2">Ми Банд 2</string>
     <string name="devicetype_miband5">Ми Банд 5</string>
@@ -1663,7 +1657,6 @@
     <string name="devicetype_xwatch">ХВач</string>
     <string name="devicetype_watchxplus">Вач Икс Плус</string>
     <string name="devicetype_roidmi">Роидми</string>
-    <string name="devicetype_miscale2">Ми Скале 2</string>
     <string name="devicetype_bfh16">БФХ-16</string>
     <string name="devicetype_casiogbx100">Касио ГБИкс-100</string>
     <string name="devicetype_itag">иТаг</string>

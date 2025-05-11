@@ -189,7 +189,6 @@
     <string name="pairing_already_bonded">既に %1$s (%2$s) と紐付けられています。接続中…</string>
     <string name="message_cannot_pair_no_mac">MACアドレスが渡されていないためペアリングできません。</string>
     <string name="preferences_category_device_specific_settings">デバイス固有の設定</string>
-    <string name="preferences_miband_settings">Mi Band/Amazfitの設定</string>
     <string name="male">男性</string>
     <string name="female">女性</string>
     <string name="other">その他</string>
@@ -972,7 +971,6 @@
     <string name="controlcenter_set_alias">デバイスに名前を付ける</string>
     <string name="gps">GPS</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="prefs_activity_in_device_card_sleep_title">睡眠</string>
     <string name="prefs_activity_in_device_card_steps_title_summary">歩数の合計を表示</string>
     <string name="calendar_two_weeks">2週間</string>
@@ -1657,7 +1655,6 @@
     <string name="devicetype_sony_wf_1000xm5">SONY WF-1000XM5</string>
     <string name="devicetype_sony_linkbuds_s">SONY LinkBuds S</string>
     <string name="devicetype_casiogmwb5000">CASIO GMW-B5000</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_itag">iTag</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
@@ -1791,7 +1788,6 @@
     <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
     <string name="devicetype_amazfit_x">Amazfit X</string>
     <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="menuitem_temperature">温度</string>
     <string name="menuitem_calendar">カレンダー</string>
     <string name="menuitem_flashlight">懐中電灯</string>

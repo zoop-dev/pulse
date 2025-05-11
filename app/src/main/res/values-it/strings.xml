@@ -186,7 +186,6 @@
     <string name="pairing_already_bonded">Accoppiamento già effettuato con %1$s (%2$s), connessione in corso…</string>
     <string name="message_cannot_pair_no_mac">Indirizzo MAC mancante, impossibile completare l\'accoppiamento.</string>
     <string name="preferences_category_device_specific_settings">Impostazioni specifiche dispositivo</string>
-    <string name="preferences_miband_settings">Impostazioni Mi Band / Amazfit</string>
     <string name="male">Uomo</string>
     <string name="female">Donna</string>
     <string name="other">Altro</string>
@@ -681,7 +680,6 @@
     <string name="activity_prefs_calories_burnt">Obiettivo giornaliero: calorie bruciate</string>
     <string name="activity_prefs_distance_meters">Obiettivo giornaliero: distanza percorsa in metri</string>
     <string name="activity_prefs_activetime_minutes">Obiettivo giornaliero: tempo di attività in minuti</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">Stai per installare il firmware %s sul tuo Amazfit Cor 2. 
 \n 
@@ -926,11 +924,8 @@
 \nNOTA: Non è necessario installare il file .res se risulta essere uguale a quello precedentemente installato.
 \n
 \nPROCEDI A TUO RISCHIO E PERICOLO!</string>
-    <string name="companiondevice_pairing_details">Abilita il supporto alla nuova API CompanionDevice (ha effetto solo su dispositivi Android 8 o superiore) che aumenta l\'affidabilità se il servizio necessita di essere riavviato in background, richiede una ri-associazione utilizzando Gadgetbridge per avere un effetto</string>
     <string name="error_exporting_device_preferences">Errore durante l\'esportazione delle preferenze specifiche del dispositivo</string>
     <string name="error_location_enabled_mandatory">La posizione deve essere attivata per cercare i dispositivi</string>
-    <string name="ignore_bonded_devices_description">L\'abilitazione di questa opzione ignorerà i dispositivi che sono stati già associati / accoppiati durante la scansione</string>
-    <string name="ignore_bonded_devices">Ignora i dispositivi associati</string>
     <string name="error_retrieving_devices_database">Errore durante il recupero dei dispositivi dal database</string>
     <string name="error_setting_alias">Errore durante l\'impostazione dell\'alias:</string>
     <string name="pref_check_permission_status_summary">Controlla e chiedi le autorizzazioni mancanti anche quando potrebbero non essere immediatamente necessarie. Disabilita questo solo se i tuoi dispositivi in realtà non supportano nessuna di queste funzionalità. Non concedere un\'autorizzazione potrebbe causare problemi!</string>
@@ -1243,13 +1238,11 @@
     <string name="qhybrid_calibration_counterclockwise">Senso contro-orario</string>
     <string name="qhybrid_summary_file_management">Carica e scarica files</string>
     <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
-    <string name="watchface_dialog_title_add_widget">Aggiungi widget</string>
     <string name="qhybrid_calibration_clockwise">Senso orario</string>
     <string name="pref_summary_developer_settings">Impostazioni e funzionalità utilizzate da sviluppatori</string>
     <string name="qhybrid_pref_summary_external_intents">Permette ad altre app di caricare/sovrascrivere files</string>
     <string name="pref_title_developer_settings">Impostazioni sviluppatore</string>
     <string name="button_watchface_add_widget">Aggiungi widget</string>
-    <string name="watchface_toast_settings_incomplete">Impostazioni incomplete, widget non aggiunto</string>
     <string name="reminder_date">Data</string>
     <string name="unknown">Sconosciuto</string>
     <string name="title_activity_set_reminders">Configura promemoria</string>
@@ -1296,7 +1289,6 @@
     <string name="reminder_time_once">%1$s, una volta sola</string>
     <string name="check_all_applications">Controlla tutte le applicazioni</string>
     <string name="prefs_reserve_reminder_calendar_summary">Numero di eventi del calendario che verranno sincronizzati</string>
-    <string name="discovery_scanning_intensity_warning">Se il dispositivo si blocca o non risponde, prova a impostare l\'Intensità di scansione ad un livello inferiore. Se il dispositivo non viene rilevato, prova a impostare l\'Intensità di scansione ad un livello più alto.</string>
     <string name="pref_write_logfiles_not_available">L\'inizializzazione dei file di log non è riuscita, la scrittura dei file di log non è attualmente disponibile. Riavvia l\'applicazione per provare a inizializzare di nuovo i file di log.</string>
     <string name="pref_world_clocks_title">Orologi mondiali</string>
     <string name="world_clock_label">Etichetta</string>
@@ -1692,7 +1684,6 @@
     <string name="watchface_dialog_widget_cat_custom_widget">Widget personalizzato</string>
     <string name="watchface_dialog_title_widget">Impostazioni widget</string>
     <string name="watchface_setting_wrist_flick_duration">Durata (in ms)</string>
-    <string name="discovery_scanning_intensity">Intensità di scansione</string>
     <string name="world_clock_timezone">Fuso orario</string>
     <string name="prefs_heartrate_alert_high_threshold">Soglia allarme frequenza cardiaca elevata</string>
     <string name="prefs_activity_monitoring_title">Monitoraggio attività</string>
@@ -1941,7 +1932,6 @@
     <string name="low_power_gps">GPS a basso consumo</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="gps">GPS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="all_satellites">Tutti i satelliti</string>
     <string name="speed_first">Preferisci velocità</string>
@@ -2231,7 +2221,6 @@
     <string name="changelog_ok_button">OK</string>
     <string name="withings_bt_calibration_previous">Precedente</string>
     <string name="withings_bt_calibration_next">Successivo</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="watchface_widget_type_uv_index">Indice UV</string>
     <string name="stress_relaxed">Rilassato</string>
     <string name="stress_high">Elevato</string>
@@ -3282,7 +3271,6 @@
     <string name="pref_force_connection_type_description">Si può provare a forzare il tipo di connessione nel caso in cui il dispositivo non risponda a Gadgetbridge</string>
     <string name="pref_force_connection_type_auto">Automatica</string>
     <string name="device_state_waiting_scan">In attesa della scansione del dispositivo</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Il recupero della temperatura non è attualmente supportato. Questa impostazione abilita solo la misurazione continua sul dispositivo</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Misurazione continua temperatura della pelle</string>
     <string name="pref_title_fossil_hr_nav_foreground">Porta in primo piano</string>
     <string name="soundcore_equalizer_direction_lying">Sdraiato</string>

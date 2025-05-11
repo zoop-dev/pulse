@@ -203,7 +203,6 @@
     <string name="pairing_already_bonded">Έχει ήδη γίνει δεσμός με %1$s (%2$s), σύνδεση…</string>
     <string name="message_cannot_pair_no_mac">Δεν πέρασε καμία διεύθυνση MAC, δεν είναι δυνατή η σύζευξη.</string>
     <string name="preferences_category_device_specific_settings">Ρυθμίσεις ανάλογα με τον τύπο συσκευής</string>
-    <string name="preferences_miband_settings">Ρυθμίσεις για Mi Band / Amazfit</string>
     <string name="male">Άνδρας</string>
     <string name="female">Γυναίκα</string>
     <string name="other">Άλλο</string>
@@ -671,7 +670,6 @@
     <string name="activity_prefs_calories_burnt">Καθημερινός στόχος: θερμίδες που καίγονται</string>
     <string name="activity_prefs_distance_meters">Καθημερινός στόχος: απόσταση σε μέτρα</string>
     <string name="activity_prefs_activetime_minutes">Καθημερινός στόχος: ενεργός χρόνος σε λεπτά</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">Ενεργοποίηση κλήσεων εφαρμογής VoIP</string>
     <string name="title_activity_device_specific_settings">Μοναδικές ρυθμίσεις συσκευών</string>
     <string name="pref_title_authkey">Κλειδί εξουσιοδότησης</string>
@@ -933,8 +931,6 @@
     <string name="ascentMeters">Ανηφόρα</string>
     <string name="distanceMeters">Απόσταση</string>
     <string name="error_location_enabled_mandatory">Η υπηρεσία τοποθεσίας πρέπει να είναι ενεργοποιημένη για να γίνει η σάρωση των συσκευών</string>
-    <string name="ignore_bonded_devices_description">Η ενεργοποίηση αυτής της επιλογής θα αγνοήσει συσκευές που έχουν ήδη συνδεθεί / είναι σε ζεύξη, κατά τη σάρωση</string>
-    <string name="ignore_bonded_devices">Αγνόησε τις συνδεδεμένες συσκευές</string>
     <string name="error_retrieving_devices_database">Σφάλμα κατά την ανάκτηση συσκευών από τη βάση δεδομένων</string>
     <string name="error_setting_alias">Σφάλμα κατά τη ρύθμιση ψευδωνύμου:</string>
     <string name="error_exporting_device_preferences">Σφάλμα κατά την εξαγωγή συγκεκριμένων προτιμήσεων της συσκευής</string>
@@ -955,7 +951,6 @@
 \nΣημείωση: δεν χρειάζεται να εγκαταστήσετε το αρχείο .res αν είναι ακριβώς το ίδιο με αυτό που έχει εγκατασταθεί προηγουμένως.
 \n
 \nΠΡΟΧΩΡΗΣΤΕ ΜΕ ΔΙΚΗ ΣΑΣ ΕΥΘΥΝΗ!</string>
-    <string name="companiondevice_pairing_details">Ενεργοποιεί τη νέα υποστήριξη API CompanionDevice (έχει μόνο επίδραση στο Android 8 ή νεότερη έκδοση), η οποία θα αυξήσει την αξιοπιστία εάν η υπηρεσία πρέπει να επανεκκινηθεί στο παρασκήνιο, απαιτεί επανασύνδεση χρησιμοποιώντας το Gadgetbridge για να έχει αποτέλεσμα</string>
     <string name="companiondevice_pairing">Σύζευξη συνοδευτικής συσκευής</string>
     <string name="require_location_provider">Η τοποθεσία πρέπει να είναι ενεργοποιημένη</string>
     <string name="menuitem_cycles">Περίοδος</string>

@@ -193,7 +193,6 @@
     <string name="pairing_already_bonded">已与 %1$s (%2$s) 绑定，正在连接…</string>
     <string name="message_cannot_pair_no_mac">没有 MAC 地址通过, 不能配对。</string>
     <string name="preferences_category_device_specific_settings">设备特定设置</string>
-    <string name="preferences_miband_settings">小米手环/跃我手环设置</string>
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="other">其它</string>
@@ -674,7 +673,6 @@
     <string name="activity_prefs_calories_burnt">每日目标：热量消耗</string>
     <string name="activity_prefs_distance_meters">每日目标：距离（米）</string>
     <string name="activity_prefs_activetime_minutes">每日目标：运动时长（分钟）</string>
-    <string name="devicetype_miscale2">小米手环2</string>
     <string name="pref_title_support_voip_calls">启用 VoIP 应用呼叫</string>
     <string name="title_activity_device_specific_settings">设备特殊设置</string>
     <string name="pref_title_authkey">认证密钥</string>
@@ -915,10 +913,7 @@
 \n
 \n风险自担！</string>
     <string name="devicetype_tlw64">TLW64</string>
-    <string name="companiondevice_pairing_details">启用新的 CompanionDevice API 支持（仅限 Android 8 或以上！），这将会在理论上提升可靠性，若需要，后台服务器将会自动重启，且需要重新配对才能生效</string>
     <string name="error_location_enabled_mandatory">必须打开定位才能扫描设备</string>
-    <string name="ignore_bonded_devices_description">启用此选项将会在扫描时忽略已绑定或已配对的设备</string>
-    <string name="ignore_bonded_devices">忽略已绑定的设备</string>
     <string name="error_retrieving_devices_database">从数据库中获取设备出错</string>
     <string name="error_setting_alias">错误设置别名：</string>
     <string name="error_exporting_device_preferences">导出设备特定首选项时遇到错误</string>
@@ -1272,8 +1267,6 @@
     <string name="watchface_widget_type_steps">步数</string>
     <string name="watchface_widget_type_weather">天气</string>
     <string name="watchface_widget_type_date">日期</string>
-    <string name="watchface_dialog_title_add_widget">添加窗口小部件</string>
-    <string name="watchface_toast_settings_incomplete">设置未完成，窗口小部件未能添加。</string>
     <string name="watchface_dialog_title_set_name">设置表盘名称</string>
     <string name="button_watchface_settings">表盘设置</string>
     <string name="button_watchface_add_widget">添加窗口小部件</string>
@@ -1572,13 +1565,6 @@
     <string name="menuitem_email">电子邮件</string>
     <string name="about_description_banglejs_main">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。 \n \n由于 Google Play 商店政策，我们不允许在应用程序本身中提供捐赠链接，但如果您喜欢此应用程序，请考虑通过下面的 Gadgetbridge 主页进行捐赠。</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js 正在运行</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">关于 Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。
-\n
-\n由于 Google Play 商店的政策，我们不允许在应用程序本身有捐赠链接，但如果你喜欢这个应用程序，请考虑通过下面的Gadgetbridge主页进行捐赠。</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js 正在运行</string>
     <string name="application_name_main_nightly">Gadgetbridge (每夜编译版本)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge 每夜编译版本</string>
     <string name="about_activity_title_main_nightly">关于 Gadgetbridge 每夜编译版本</string>
@@ -1667,7 +1653,6 @@
     <string name="prefs_heartrate_alert_experimental_description">在过去 10 分钟内没有任何明显的体力活动的情况下，当心率超过阈值时振动腕带。此功能是实验性的，未经广泛测试。</string>
     <string name="prefs_activity_monitoring_title">活动监测</string>
     <string name="heartrate_bpm_145">145 次/分钟</string>
-    <string name="heartrate_bpm_112">112 次/分钟</string>
     <string name="heartrate_bpm_120">120 次/分钟</string>
     <string name="heartrate_bpm_125">125 次/分钟</string>
     <string name="prefs_heartrate_alert_threshold">心率警报阈值</string>
@@ -1697,8 +1682,6 @@
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">将 GPS 位置发送到 %1$d 设备</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">GPS 位置监听器停止</string>
-    <string name="discovery_scanning_intensity">扫描强度</string>
-    <string name="discovery_scanning_intensity_warning">如果您遇到卡住或无反应的情况，尝试将扫描强度设置为较低水平。如果你的设备没有被发现，尝试将扫描强度设置到更高的水平。</string>
     <string name="portuguese_br">葡萄牙语(巴西)</string>
     <string name="quick_alarm">快速闹钟</string>
     <string name="portuguese_pt">葡萄牙语 (葡萄牙)</string>
@@ -1768,7 +1751,6 @@
     <string name="hybridhr_widget_bg_double_circle">双圆</string>
     <string name="pref_title_banglejs_txt_bitmap_size">文本位图大小</string>
     <string name="hybridhr_widget_bg_dashed_circle">虚线圈</string>
-    <string name="watchface_setting_title_button_toggle_widgets">切换小部件</string>
     <string name="watchface_setting_button_toggle_widgets">切换小部件</string>
     <string name="steps_streaks_since_date">自 %s 起</string>
     <string name="step_streak_average_steps_hint">连续每天的平均步数</string>
@@ -1953,7 +1935,6 @@
     <string name="low_power_gps">低功耗 GPS</string>
     <string name="gps">全球定位系统</string>
     <string name="gps_bds">全球定位系统 + 北斗定位系统</string>
-    <string name="gps_gnolass">全球定位系统 + 格诺拉斯</string>
     <string name="speed_first">速度优先</string>
     <string name="accuracy_first">精度优先</string>
     <string name="fw_upgrade_notice_amazfit_gtr4">您即将安装 %s 固件在您的 跃我 GTR 4 上。
@@ -2281,7 +2262,6 @@
     <string name="pref_title_mb_intents">广播媒体按钮直接广播意图</string>
     <string name="pref_summary_mb_intents">如果设备媒体控制对某些应用程序不起作用，则可以启用</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic 智能手环</string>
-    <string name="devicetype_vivomove_hr">佳明 Vivomove HR</string>
     <string name="devicetype_casiogwb5600">卡西欧 GW-B5600</string>
     <string name="devicetype_casiogmwb5000">卡西欧 GMW-B5000</string>
     <string name="busy_task_fetch_sports_summaries">正在获取运动摘要</string>
@@ -2387,8 +2367,6 @@
     <string name="text_receiver_activity_title">发送文本到设备</string>
     <string name="updatefirmwareoperation_failed_low_mtu">%1$d 的当前 MTU 太低，请在设备设置中启用高 MTU 并断开/重新连接设备。</string>
     <string name="devicetype_miband2_hrx">小米手环 HRX</string>
-    <string name="new_discover_activity_description">启用新的发现活动，这应该可以解决设备发现的问题。如果您在搜索设备或与设备配对时遇到任何问题，请禁用此功能。</string>
-    <string name="new_discover_activity_title">启用新的发现活动</string>
     <string name="prefs_wena3_receive_calls_title">来电设置</string>
     <string name="prefs_wena3_button_action_name_start_timer">启动活动计时器</string>
     <string name="prefs_wena3_menu_icon_hint">设置图标始终显示在末尾</string>
@@ -2808,7 +2786,6 @@
     <string name="scan_scanning_multiple_devices">正在扫描 %d 个设备</string>
     <string name="notification_channel_scan_service_name">扫描服务</string>
     <string name="devicetype_miband8active">小米智能手环8 运动版</string>
-    <string name="temperature">温度</string>
     <string name="pref_wide_area_tap_summary">识别脸颊和耳朵之间的轻拍</string>
     <string name="pref_wide_area_tap_title">大范围触击</string>
     <string name="pref_header_sony_sound_control">声音控制</string>
@@ -3384,7 +3361,6 @@
     <string name="prefs_summary_gatt_client_device_state_updates">通过低功耗蓝牙接收意图连接状态变化</string>
     <string name="prefs_summary_gatt_client_api_package">限制低功耗蓝牙意图 API 通信至此包</string>
     <string name="pref_continuous_skin_temperature_measurement_title">连续皮肤温度测量</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">目前不支持温度检索。此设置仅启用设备上的连续测量</string>
     <string name="devicetype_ble_gatt_client">通用低功耗蓝牙 GATT 客户端</string>
     <string name="prefs_title_gatt_client_notification_intents">通过低功耗蓝牙内部 API 广播 GATT 通知意图</string>
     <string name="prefs_title_gatt_client_api_package">低功耗蓝牙 API 包</string>

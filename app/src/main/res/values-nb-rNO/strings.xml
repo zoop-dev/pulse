@@ -194,7 +194,6 @@
     <string name="pairing_already_bonded">Allerede tilknyttet %1$s (%2$s), tilkobler…</string>
     <string name="message_cannot_pair_no_mac">Ingen MAC-adresse sendt, kan ikke parre.</string>
     <string name="preferences_category_device_specific_settings">Enhetsspesifikke innstillinger</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit -innstillinger</string>
     <string name="male">Mann</string>
     <string name="female">Kvinne</string>
     <string name="other">Annet</string>
@@ -666,7 +665,6 @@
     <string name="activity_prefs_calories_burnt">Daglig mål: Forbrente kalorier</string>
     <string name="activity_prefs_distance_meters">Daglig mål: Distanse i meter</string>
     <string name="activity_prefs_activetime_minutes">Daglig mål: Aktiv tid i minutter</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="zetime_title_heartrate">Pulsinnstillinger</string>
     <string name="zetime_title_screentime">Skjermaktivitetsvarighet, i sekunder</string>
     <string name="zetime_title_heart_rate_alarm">Pulsalarm</string>
@@ -1026,7 +1024,6 @@
     <string name="sonyswr12_settings_alarm_interval_summary">Smart alarmintervall er intervall før installert alarm. I dette intervallet prøver enheten å oppdage den letteste søvnfasen for å våkne brukeren</string>
     <string name="about_description_generic">Skyfri, gemenhetslig fri erstatning for den lukkede motsatsen for dine Android-slaveenheter.</string>
     <string name="pref_check_permission_status_summary">Sjekk og forespør tilganger selv om de ikke trengs umiddelbart. Skru av dette kun hvis enhetene dine ikke støtter noen av disse funksjonene. Å ikke innvilge tilganger kan forårsake problemer!</string>
-    <string name="companiondevice_pairing_details">Skrur på slaveenhets-API (funker kun på Android 8 og høyere, og tilknytningen må settes opp på ny med Gadgetbro), noe som øker påliteligheten hvis tjenester må startes på ny i bakgrunnen</string>
     <string name="error_version_check_extreme_caution">Advarsel: Kunne ikke sjekke versjonsinfo! Du bør ikke fortsette og versjonsnavnet «%s» ble sett.</string>
     <string name="companiondevice_pairing">Tilknytning av slaveenhet</string>
     <string name="error_exporting_device_preferences">Klarte ikke å eksportere enhetsspesifikke innstillinger</string>
@@ -1052,8 +1049,6 @@
     <string name="yes">Ja</string>
     <string name="error_background_service_reason">Kunne ikke starte bakgrunnstjenesten:</string>
     <string name="require_location_provider">Posisjon må skrus på</string>
-    <string name="ignore_bonded_devices_description">Ignorerer enheter ved skanning som allerede har blitt tilknyttet/parret</string>
-    <string name="ignore_bonded_devices">Ignorer tilknyttede enheter</string>
     <string name="device_is_currently_bonded">ALLEREDE TILKNYTTET</string>
     <string name="devicetype_sg2">LEMFO SG2</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Pauselengde for inndeling av aktiviteter (minutter)</string>
@@ -1268,7 +1263,6 @@
     <string name="watchface_setting_wrist_flick_move_relative">Beveg hendene relativt til tid:</string>
     <string name="watchface_setting_wrist_flick_hour">Din hånd (-360 til 360)</string>
     <string name="watchface_widget_type_heart_rate">Puls</string>
-    <string name="watchface_toast_settings_incomplete">Ufullstendige innstillinger. Miniprogram ikke innlastet</string>
     <string name="gpx_receiver_activity_title">GPX-mottager Gadgetbridge</string>
     <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="activity_summary_detail_clear_gpx_track">Tøm GPX-spor</string>
@@ -1290,7 +1284,6 @@
     <string name="watchface_widget_type_steps">Steg</string>
     <string name="watchface_widget_type_weather">Vær</string>
     <string name="watchface_widget_type_date">Dato</string>
-    <string name="watchface_dialog_title_add_widget">Legg til miniprogram</string>
     <string name="button_watchface_add_widget">Legg til miniprogram</string>
     <string name="button_watchface_select_image">Endre bakgrunnsbilde</string>
     <string name="button_watchface_edit_name">Rediger navn</string>
@@ -1600,7 +1593,6 @@
     <string name="normal">Normal</string>
     <string name="sensitive">Sensitiv</string>
     <string name="menuitem_email">E-post</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js kjører …</string>
     <string name="pref_blacklist_calendars_summary">Svartelistede kalendere vil ikke synkroniseres til enheten</string>
     <string name="pref_title_device_internet_access">Tillat tilgang til Internett</string>
     <string name="pref_summary_device_internet_access">Tillat programmer på denne enheten å koble til Internett</string>
@@ -1644,7 +1636,6 @@
     <string name="prefs_screen_timeout">Skjerm-tidsavbrudd</string>
     <string name="steps_streaks_since_date">Siden %s</string>
     <string name="step_streak_ongoing">Pågående</string>
-    <string name="discovery_scanning_intensity">Skanningsintensitet</string>
     <string name="spo2_off">Av</string>
     <string name="seconds_9">9 sekunder</string>
     <string name="seconds_11">11 sekunder</string>

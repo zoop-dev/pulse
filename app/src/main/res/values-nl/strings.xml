@@ -214,7 +214,6 @@
     <string name="pairing_already_bonded">Reeds gekoppeld met %1$s (%2$s), verbinden…</string>
     <string name="message_cannot_pair_no_mac">Geen MAC adres doorgegeven, kan niet koppelen.</string>
     <string name="preferences_category_device_specific_settings">Apparaat-specifieke instellingen</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit instellingen</string>
     <string name="male">Mannelijk</string>
     <string name="female">Vrouwelijk</string>
     <string name="other">Anders</string>
@@ -676,7 +675,6 @@
     <string name="activity_prefs_calories_burnt">Dagelijks doel: calorieën verbrand</string>
     <string name="activity_prefs_distance_meters">Dagelijks doel: afstand in meters</string>
     <string name="activity_prefs_activetime_minutes">Dagelijks doel: tijd actief in minuten</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">Sta VoIP app calls toe</string>
     <string name="title_activity_device_specific_settings">Apparaatspecifieke instellingen</string>
     <string name="pref_title_authkey">Authenticatiesleutel</string>
@@ -919,8 +917,6 @@
 \nGA VERDER OP EIGEN RISICO!</string>
     <string name="devicetype_tlw64">TLW64</string>
     <string name="error_location_enabled_mandatory">Locatie moet zijn ingeschakeld om naar apparaten te scannen</string>
-    <string name="ignore_bonded_devices_description">Als u deze optie inschakelt, worden apparaten genegeerd die bij het scannen al zijn gekoppeld</string>
-    <string name="ignore_bonded_devices">Negeer gekoppelde apparaten</string>
     <string name="error_retrieving_devices_database">Fout bij het ophalen van apparaten uit de database</string>
     <string name="error_setting_alias">Fout bij instellen van alias:</string>
     <string name="error_exporting_device_preferences">Fout bij het exporteren van apparaatspecifieke voorkeuren</string>
@@ -928,7 +924,6 @@
     <string name="pref_check_permission_status">Machtigingsstatus controleren</string>
     <string name="device_requires_key">SLEUTEL VEREIST, LANG INDRUKKEN OM IN TE VOEREN</string>
     <string name="device_is_currently_bonded">REEDS GEKOPPELD</string>
-    <string name="companiondevice_pairing_details">Schakelt de nieuwe CompanionDevice API-ondersteuning in (heeft alleen een effect op Android 8 of hoger), wat de betrouwbaarheid verhoogt als de service op de achtergrond opnieuw moet worden opgestart, vereist opnieuw koppelen met Gadgetbridge om effect te hebben</string>
     <string name="companiondevice_pairing">Companion-apparaat koppelen</string>
     <string name="require_location_provider">Locatie moet ingeschakeld zijn</string>
     <string name="minAltitude">Minimaal</string>
@@ -1275,8 +1270,6 @@
     <string name="watchface_widget_type_steps">Stappen</string>
     <string name="watchface_widget_type_weather">Weer</string>
     <string name="watchface_widget_type_date">Datum</string>
-    <string name="watchface_dialog_title_add_widget">Widget toevoegen</string>
-    <string name="watchface_toast_settings_incomplete">Instellingen niet compleet, widget niet toegevoegd</string>
     <string name="watchface_dialog_title_set_name">Naam aanpassen</string>
     <string name="button_watchface_settings">Wijzerplaat-instellingen</string>
     <string name="button_watchface_add_widget">Widget toevoegen</string>
@@ -1607,13 +1600,6 @@
 \n
 \nVanwege het Google Play Store-beleid is een donatielink in de app zelf niet toegestaan, maar als je deze app leuk vindt, overweeg dan om te doneren via de Gadgetbridge-homepage hieronder.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js actief</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">Over Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Android-app voor Bangle.js gebouwd bovenop het Gadgetbridge-project, met toegevoegde internettoegang.
-\n
-\nVanwege het Google Play Store-beleid is een donatielink in de app zelf niet toegestaan, maar als je deze app leuk vindt, overweeg dan om te doneren via de Gadgetbridge-homepage hieronder.</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js actief</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
     <string name="about_description_main_nightly">Cloudless copyleft libre-vervanging voor closed source Android-gadget-apps van leveranciers. Nightly releases van Gadgetbridge. Het kan niet worden geïnstalleerd als je de Gadgetbridge- of de Pebble-app al hebt geïnstalleerd, vanwege een conflict in de Pebble-provider.</string>
@@ -1625,7 +1611,6 @@
     <string name="pref_title_touch_ambient">Omgevingsgeluid</string>
     <string name="prefs_voice_detect_summary">Schakel omgevingsgeluid in en verlaag het volume automatisch nadat spraak is gedetecteerd</string>
     <string name="pref_voice_detect_duration_15">15 seconden</string>
-    <string name="heartrate_bpm_112">112 bpm</string>
     <string name="heartrate_bpm_120">120 bpm</string>
     <string name="heartrate_bpm_125">125 bpm</string>
     <string name="prefs_heartrate_alert_experimental_title">Hartslagwaarschuwing (experimenteel)</string>
@@ -1705,13 +1690,11 @@
     <string name="permission_notification_listener">%1$s heeft toegang tot meldingen nodig om ze op je horloge weer te geven wanneer het scherm van je telefoon is uitgeschakeld.
 \n
 \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Toegang tot meldingen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
-    <string name="discovery_scanning_intensity">Scanintensiteit</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">GPS-locatie Listener Stop</string>
     <string name="pref_title_banglejs_webview_url">URL app-lader</string>
     <string name="pref_summary_banglejs_webview_url">Als u een aangepaste app-lader wilt, plaatst u hier uw https://…/android.html URL. Laat anders leeg voor https://banglejs.com/apps</string>
     <string name="pref_workout_start_on_phone_summary">Start/stop het volgen van de fitness-app op de telefoon wanneer een GPS-training op de band wordt gestart</string>
     <string name="pref_workout_send_gps_summary">Stuur de huidige GPS-locatie naar de band tijdens een training</string>
-    <string name="discovery_scanning_intensity_warning">Als uw apparaat bevriest of niet reageert, probeer dan de scanintensiteit op een lager niveau in te stellen. Als uw apparaat niet wordt ontdekt, probeer dan de intensiteit van het scannen op een hoger niveau in te stellen.</string>
     <string name="pref_title_notification_delay_calls">Vertraging oproepmelding</string>
     <string name="pref_summary_notification_delay_calls">Vertraging voor het verzenden van inkomende oproepmeldingen naar het apparaat, in seconden.</string>
     <string name="prefs_password">Wachtwoord</string>
@@ -1947,7 +1930,6 @@
     <string name="single_band">Enkele band</string>
     <string name="dual_band">Dubbele band</string>
     <string name="gps">GPS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="speed_first">Snelheid eerst</string>
     <string name="accuracy_first">Nauwkeurigheid eerst</string>
@@ -2285,7 +2267,6 @@
     <string name="pref_title_mb_intents">Broadcast Media Knop Intents Direct</string>
     <string name="pref_summary_mb_intents">Inschakelen als mediabediening van apparaat niet werkt voor bepaalde apps</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Armband</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">Gegevens over slaapademhalingsfrequentie ophalen</string>
     <string name="busy_task_fetch_sports_summaries">Sportoverzichten ophalen</string>
     <string name="busy_task_fetch_debug_logs">Foutopsporingslogboeken ophalen</string>
@@ -2391,8 +2372,6 @@
     <string name="text_receiver_activity_title">Stuur tekst naar apparaat</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Huidige MTU van %1$d is te laag, activeer alstublieft Hoge MTU in de apparaatinstellingen en verbind het apparaat opnieuw.</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_description">Schakel het nieuwe scan-scherm in, die de problemen met het vinden van apparaten zou moeten oplossen. Schakel dit uit wanneer u problemen ondervindt met het vinden en koppelen van uw apparaat.</string>
-    <string name="new_discover_activity_title">Nieuw scan-scherm inschakelen</string>
     <string name="prefs_wena3_receive_calls_title">Instellingen binnenkomend gesprek</string>
     <string name="prefs_wena3_button_action_name_start_timer">Start timer</string>
     <string name="prefs_wena3_menu_icon_hint">Instellingen wordt altijd aan het eind getoond</string>
@@ -3362,7 +3341,6 @@
     <string name="prefs_summary_gatt_client_api_package">Beperk BLE Intent API-communicatie tot deze app</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Continue huidtemperatuurmeting</string>
     <string name="devicetype_ble_gatt_client">Algemene BLE GATT-client</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Termperatuurgegevens ophalen wordt momenteel niet ondersteund. Deze instelling schakelt alleen het continu meten in op het apparaat</string>
     <string name="pref_header_deprecated_functionalities_warning">De volgende functies zijn verouderd en zullen in een toekomstige versie van de software verwijderd worden.
 \nAls het voor u nodig is om een van deze instellingen in te schakelen, neem dan contact op met het projectteam om dit te melden.</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Sta GATT-interactie toe via de BLE Intent API</string>

@@ -355,7 +355,6 @@
     <string name="open_fw_installer_select_file">Välj filen som ska överföras till enheten: %s</string>
     <string name="pref_summary_minimize_priority_on">Ikonen i statusfältet och på låsskärmen är döljd</string>
     <string name="pref_display_caller_title">Visa kontaktinformation</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="action_changelog">Ändringslogg</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Gå till telefonens bluetooth-inställningar och koppla ihop med den nya enheten som dyker upp (liknande namn på din nuvarande klocka, men med ett suffix, t.ex. \"Amazfit GTR 4 - AFC8\".</string>
     <string name="open_fw_installer_ensure_device_connected">Se till att enheten %s är ansluten</string>

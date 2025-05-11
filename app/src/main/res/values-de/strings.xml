@@ -189,7 +189,6 @@
     <string name="pairing_already_bonded">Bereits an %1$s (%2$s) gebunden, verbinden…</string>
     <string name="message_cannot_pair_no_mac">Keine MAC-Adresse erhalten, koppeln nicht möglich.</string>
     <string name="preferences_category_device_specific_settings">Gerätespezifische Einstellungen</string>
-    <string name="preferences_miband_settings">Mi Band- / Amazfit-Einstellungen</string>
     <string name="male">Männlich</string>
     <string name="female">Weiblich</string>
     <string name="other">Andere</string>
@@ -652,7 +651,6 @@
     <string name="zetime_prefs_inactivity_sa">Samstag</string>
     <string name="zetime_prefs_inactivity_su">Sonntag</string>
     <string name="zetime_signaling_none">Lautlos</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="zetime_title_heart_rate_alarm_summary">Die Smartwatch warnt dich, wenn dein Puls die festgelegten Grenzwerte überschreitet.</string>
     <string name="zetime_analog_mode">Analoger Modus</string>
     <string name="zetime_analog_mode_hands">Nur Zeiger</string>
@@ -895,10 +893,7 @@
 \nHinweis: Die .res Datei muss nicht installiert werden, wenn es die gleiche Datei ist, die schon zuvor installiert wurde.
 \n
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
-    <string name="companiondevice_pairing_details">Aktiviert die neue CompanionDevice-API-Unterstützung (funktioniert nur bei Android 8 und neuer). Erhöht die Zuverlässigkeit der Verbindung, wenn der Dienst im Hintergrund neu gestartet werden muss. Benötigt eine erneute Kopplung mit Gadgetbridge, um zu funktionieren</string>
     <string name="error_location_enabled_mandatory">Standort muss für den Gerätescan aktiviert sein</string>
-    <string name="ignore_bonded_devices_description">Bei aktiver Option werden Geräte ignoriert, die beim Scan schon verbunden/gepaart sind</string>
-    <string name="ignore_bonded_devices">Ignoriere verbundene Geräte</string>
     <string name="error_retrieving_devices_database">Fehler beim laden der Geräte aus der Datenbank</string>
     <string name="error_setting_alias">Fehler beim setzen des Alias:</string>
     <string name="error_exporting_device_preferences">Fehler beim Export der gerätespezifischen Einstellungen</string>
@@ -1239,8 +1234,6 @@
     <string name="watchface_widget_type_steps">Schritte</string>
     <string name="watchface_widget_type_weather">Wetter</string>
     <string name="watchface_widget_type_date">Datum</string>
-    <string name="watchface_dialog_title_add_widget">Widget hinzufügen</string>
-    <string name="watchface_toast_settings_incomplete">Einstellungen unvollständig, Widget nicht hinzugefügt</string>
     <string name="watchface_dialog_title_set_name">Zifferblattnamen festlegen</string>
     <string name="button_watchface_settings">Zifferblatteinstellungen</string>
     <string name="button_watchface_add_widget">Widget hinzufügen</string>
@@ -1546,9 +1539,6 @@
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_description_banglejs_main">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang. \n \nAufgrund der Richtlinien des Google Play Stores dürfen wir keinen Spendenlink direkt in der App einfügen. Wenn dir diese App gefällt, freuen wir uns jedoch über eine Spende über die Gadgetbridge-Homepage unten.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js läuft</string>
-    <string name="about_description_banglejs_nopebble">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang.
-\n
-\nAufgrund der Richtlinien des Google Play Stores ist es uns nicht erlaubt, einen Spendenlink in der App selbst einzubauen, aber wenn dir diese App gefällt, ziehe bitte eine Spende über die Gadgetbridge-Homepage unten in Erwägung.</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="about_activity_title_main_nightly">Über Gadgetbridge (Nightly)</string>
@@ -1561,12 +1551,8 @@
     <string name="prefs_activate_display_on_lift_sensitivity">Empfindlichkeit</string>
     <string name="normal">Normal</string>
     <string name="sensitive">Empfindlich</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">Über Bangle.js Gadgetbridge</string>
     <string name="about_description_main_nopebble">Cloudloser und freier quelloffener Ersatz für Closed-Source Android-Gadget-Apps von Anbietern. Nächtliche Veröffentlichungen von Gadgetbridge. Bei dieser Version wurde der Pebble-Provider umbenannt, um Konflikte zu vermeiden. Daher werden einige Pebble-bezogene Integrationen nicht funktionieren, aber sie kann neben einer bestehenden Gadgetbridge-Installation installiert werden.</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js läuft</string>
-    <string name="about_activity_title_banglejs_nopebble">Über Bangle.js Gadgetbridge</string>
     <string name="pref_device_action_fitness_app_control_toggle">Fitness-App Tracking umschalten</string>
     <string name="pref_title_banglejs_text_bitmap">Text als Bitmaps</string>
     <string name="pref_screen_notification_profile_event_reminder">Terminerinnerung</string>
@@ -1596,7 +1582,6 @@
     <string name="heartrate_bpm_100">100 BPM</string>
     <string name="heartrate_bpm_105">105 BPM</string>
     <string name="heartrate_bpm_110">110 BPM</string>
-    <string name="heartrate_bpm_112">112 BPM</string>
     <string name="heartrate_bpm_120">120 BPM</string>
     <string name="heartrate_bpm_125">125 BPM</string>
     <string name="heartrate_bpm_130">130 BPM</string>
@@ -1665,8 +1650,6 @@
     <string name="pref_workout_send_gps_title">GPS während des Trainings senden</string>
     <string name="pref_workout_send_gps_summary">Senden der aktuellen GPS-Position an das Band während des Trainings</string>
     <string name="pref_workout_start_on_phone_title">Fitness-App-Tracking</string>
-    <string name="discovery_scanning_intensity_warning">Wenn dein Gerät einfriert oder nicht reagiert, versuche, die Scanning-Intensität auf eine niedrigere Stufe einzustellen. Wenn dein Gerät nicht erkannt wird, stelle die Scanning-Intensität auf eine höhere Stufe.</string>
-    <string name="discovery_scanning_intensity">Scanning-Intensität</string>
     <string name="portuguese_br">Portugiesisch (Brasilien)</string>
     <string name="quick_alarm">Schneller Alarm</string>
     <string name="quick_alarm_description">Alarm vom Widget</string>
@@ -1918,7 +1901,6 @@
     <string name="low_power_gps">Stromsparendes GPS</string>
     <string name="gps">GPS/AGPS</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="speed_first">Priorität auf Geschwindigkeit</string>
     <string name="pref_cover_to_mute">Abdecken zum Stummschalten</string>
     <string name="pref_workout_detection_title">Trainingserkennung</string>
@@ -2250,7 +2232,6 @@
     <string name="loyalty_cards_syncing">Synchronisieren der %d Kundenkarten mit dem Gerät</string>
     <string name="loyalty_cards_catima">Catima</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="busy_task_fetch_sports_details">Abrufen der Sportdetails</string>
@@ -2354,7 +2335,6 @@
     <string name="prefs_wena3_home_icon_name_pedometer">Schrittzähler</string>
     <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_description">Aktiviere die neue Erkennungsaktivität, die Probleme bei der Geräteerkennung beheben sollte. Deaktiviere diese Funktion, wenn du bei der Suche nach deinem Gerät oder der Kopplung mit diesem Probleme hast.</string>
     <string name="white">Weiß</string>
     <string name="prefs_wena3_home_icon_name_clock">Aktuelle Zeit</string>
     <string name="prefs_wena3_vibration_strength_item_weak">Schwach</string>
@@ -2371,7 +2351,6 @@
     <string name="temperature_scale_cf">Temperaturskala</string>
     <string name="prefs_wena3_notification_vibration_repetition_1">Einmal</string>
     <string name="prefs_wena3_home_icon_name_wena_pay">Wena Pay</string>
-    <string name="new_discover_activity_title">Neue Entdeckungsaktivität aktivieren</string>
     <string name="green">Grün</string>
     <string name="yellow">Gelb</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
@@ -2767,7 +2746,6 @@
     <string name="auto_reconnect_ble_scan_title">Wiederverbindung per BLE Scan</string>
     <string name="prompt_restart_gadgetbridge">Bitte Gadgetbridge neu starten, damit es wirksam wird.</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
-    <string name="temperature">Temperatur</string>
     <string name="devicetype_sony_linkbuds">Sony LinkBuds</string>
     <string name="pref_header_sony_sound_control">Klangkontrolle</string>
     <string name="pref_wide_area_tap_summary">Klopfen zwischen Wangen und Ohren erkennen</string>
@@ -3258,7 +3236,6 @@
     <string name="activity_type_lacrosse">Lacrosse</string>
     <string name="activity_type_aerobics">Aerobic</string>
     <string name="activity_type_american_football">American Football</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Temperaturabfrage derzeit nicht unterstützt. Diese Einstellung ermöglicht nur die kontinuierliche Messung auf dem Gerät</string>
     <string name="paceCorrection">Korrektur</string>
     <string name="miscale_weight_unit_imperial">Imperial (lbs)</string>
     <string name="min_respiration_rate">Atemfrequenz min</string>

@@ -11,7 +11,6 @@
     <string name="other">अन्य</string>
     <string name="female">महिला</string>
     <string name="male">नर</string>
-    <string name="preferences_miband_settings">मी बैंड / अमेज़फिट सेटिंग्स</string>
     <string name="preferences_category_device_specific_settings">डिवाइस विशिष्ट सेटिंग्स</string>
     <string name="discovery_note">ध्यान दें:</string>
     <string name="pref_screen_vibration_profile">कंपन प्रोफ़ाइल</string>

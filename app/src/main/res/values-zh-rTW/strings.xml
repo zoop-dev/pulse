@@ -356,7 +356,6 @@
     <string name="share">分享</string>
     <string name="kind_firmware">韌體</string>
     <string name="kind_font">字體</string>
-    <string name="devicetype_miscale2">小米體重計 2</string>
     <string name="choose_auto_export_location">選擇匯出位置</string>
     <string name="menuitem_music">音樂</string>
     <string name="share_log">分享日誌檔</string>
@@ -563,10 +562,7 @@
     <string name="cm">公分</string>
     <string name="meters">公尺</string>
     <string name="activity_summary_detail">運動活動詳細資訊</string>
-    <string name="companiondevice_pairing_details">啟用新的CompanionDevice API支援（僅在Android 8或更高版本上有效），這將提高當服務需要在背景重新啟動時的可靠性，需要使用 Gadgetbridge 進行重新配對才能生效</string>
     <string name="companiondevice_pairing">使用 CompanionDevice 進行配對</string>
-    <string name="ignore_bonded_devices_description">啟用此選項將在掃描時忽略已綁定/已配對的裝置</string>
-    <string name="ignore_bonded_devices">忽略已綁定的裝置</string>
     <string name="pref_check_permission_status">檢查權限狀態</string>
     <string name="device_requires_key">需要金鑰，長按可進入</string>
     <string name="device_is_currently_bonded">已綁定</string>
@@ -2554,7 +2550,6 @@
     <string name="romanian">羅馬尼亞語</string>
     <string name="pref_title_lower_button_function_long">長下按鈕</string>
     <string name="devicetype_galaxybuds">Galaxy Buds</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">目前不支援溫度檢索。此設置僅啟用設備上的連續測量。</string>
     <string name="watchface_dialog_pre_setting_position">預設位置為 %s</string>
     <string name="pref_summary_canned_messages_set">將以下配置的消息發送到您的設備</string>
     <string name="heartrate_bpm_140">140 每分鐘</string>

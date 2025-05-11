@@ -183,7 +183,6 @@
     <string name="pairing_in_progress">Asociación en progreso: %1$s (%2$s)</string>
     <string name="pairing_already_bonded">Xa asociado con %1$s (%2$s), conectando …</string>
     <string name="message_cannot_pair_no_mac">Nengún enderezo MAC fornecido, non é posíbel emparellar.</string>
-    <string name="preferences_miband_settings">Axustes de MiBand / Amazfit</string>
     <string name="male">Home</string>
     <string name="female">Muller</string>
     <string name="other">Outro</string>

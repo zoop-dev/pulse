@@ -92,7 +92,6 @@
     <string name="pairing">%s에 페어링…</string>
     <string name="message_cannot_pair_no_mac">MAC 주소가 통과되지 않았습니다. 페어링 할 수 없습니다.</string>
     <string name="preferences_category_device_specific_settings">기기 특정 설정</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit 설정</string>
     <string name="male">남성</string>
     <string name="female">여성</string>
     <string name="other">기타</string>
@@ -618,7 +617,6 @@
     <string name="low_power_gps">저전력 GPS</string>
     <string name="gps">GPS</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="prefs_activity_in_device_card_sleep_title_summary">수면 시간 표시</string>
     <string name="prefs_activity_in_device_card_distance_title_summary">거리는 걸음과 보폭(설정 - 나의 정보에서 변경 가능)에서 계산됩니다</string>

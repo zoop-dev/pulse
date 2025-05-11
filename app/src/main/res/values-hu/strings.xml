@@ -182,7 +182,6 @@
     <string name="pairing_already_bonded">Már párosítva van a következővel: %1$s (%2$s), kapcsolódás…</string>
     <string name="message_cannot_pair_no_mac">Nincs átadott MAC-cím, nem lehet párosítani.</string>
     <string name="preferences_category_device_specific_settings">Eszközspecifikus beállítások</string>
-    <string name="preferences_miband_settings">MI Band / Amazfit beállítások</string>
     <string name="male">Férfi</string>
     <string name="female">Nő</string>
     <string name="other">Egyéb</string>
@@ -1229,7 +1228,6 @@
     <string name="power_saving">Energiatakarékos</string>
     <string name="gadgetbridge_running_banglejs_main">A Bangle.js fut</string>
     <string name="debugactivity_confirm_remove_device_preferences">Ez a művelet az összes párosított eszköz beállítását alap helyzetbe helyezi. Biztos benne?</string>
-    <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="low_power_gps">Alacsony energiájú GPS</string>
     <string name="heartrate_bpm_110">110 bpm</string>
@@ -1324,7 +1322,6 @@
     <string name="controlcenter_get_heartrate_measurement">Pulzusszámmérés elvégzése</string>
     <string name="zepp_os_watchface_lightning_flash">Lightning flash</string>
     <string name="prefs_wena3_vibration_siren">Sziréna</string>
-    <string name="ignore_bonded_devices_description">Ennek az opciónak az engedélyezése ignorálni fogja kereséskor azokat az eszközöket, amik már összeköttetve/párosítva vannak</string>
     <string name="activity_DB_test_export_button">Automatikus exportálás futtatása most</string>
     <string name="prefs_wena3_notification_default_call_vibration_repetition">Rezgés ismétlése bejövő híváskor</string>
     <string name="prefs_wena3_notification_default_vibration">Értesítés rezgés</string>
@@ -1337,7 +1334,6 @@
     <string name="lefun_prefs_antilost_summary">A karkötő rezegni fog, ha a telefon leválasztódik a karkötőről</string>
     <string name="zepp_os_watchface_multiple_data">Multiple Data</string>
     <string name="about_description_main_nightly">Felhőmentes, szerzői jogmentes, szabad szoftveres alternatíva a zárt forráskódú Android-kütyüalkalmazások helyett, amelyeket a gyártók kínálnak. A Gadgetbridge korai hozzáférésű kiadásai. Nem telepíthető, ha már telepítve van a Gadgetbridge vagy a Pebble alkalmazás, a Pebble szolgáltató ütközése miatt.</string>
-    <string name="ignore_bonded_devices">Összeköttetett eszközök ignorálása</string>
     <string name="prefs_wena3_notification_default_vibration_repetition">Értesítés rezgés ismétlés</string>
     <string name="zepp_os_watchface_rotating_earth">Rotating Earth</string>
     <string name="about_hash">Kommit %s</string>
@@ -1933,7 +1929,6 @@
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
     <string name="menuitem_lockscreen">Zárolási képernyő</string>
     <string name="activity_error_share_failed">A fájl megosztása nem sikerült.</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="activity_type_pilates">Pilates</string>
     <string name="activity_type_table_tennis">Asztali tenisz</string>
     <string name="activity_type_bowling">Bowling</string>
@@ -1963,7 +1958,6 @@
     <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="devicetype_mijia_lywsd03">Mijia Temperature and Humidity Sensor 2</string>
     <string name="devicetype_mijia_mho_c303">Mijia MHO-C303</string>
@@ -2061,7 +2055,6 @@
     <string name="strokes_minute">löket/perc</string>
     <string name="hrZoneFatBurn">Zsírégetés</string>
     <string name="strokes_second">löket/s</string>
-    <string name="companiondevice_pairing_details">Engedélyezi az új CompanionDevice API támogatását (csak Android 8 vagy újabb rendszerekre van hatással), amely növeli a megbízhatóságot, ha a szolgáltatást újra kell indítani a háttérben. A hatás eléréséhez újra kell párosítani a Gadgetbridge használatával</string>
     <string name="laneLength">Sávhossz</string>
     <string name="pref_check_permission_status_summary">Ellenőrizze és kérje a hiányzó engedélyeket akkor is, ha esetleg nincs rájuk azonnal szükség. Csak akkor kapcsolja ki, ha eszközei valójában nem támogatják ezen funkciók egyikét sem. Az engedély hiánya problémákat okozhat!</string>
     <string name="averageKMPaceSeconds">Tempó</string>
@@ -2351,7 +2344,6 @@
     <string name="minutes_60">60 perc</string>
     <string name="scan_scanning_all_devices">Minden eszköz beolvasása</string>
     <string name="single_tap">Koppintás</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">A hőmérséklet lekérdezése jelenleg nem támogatott. Ez a beállítás csak az eszközön történő folyamatos mérést kapcsolja be.</string>
     <string name="distance_avg">Távolság ÁTL</string>
     <string name="transition">Átmenet</string>
     <string name="choose_device">Eszköz kiválasztása</string>

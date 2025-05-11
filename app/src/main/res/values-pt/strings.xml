@@ -181,7 +181,6 @@
     <string name="pairing_already_bonded">Já associado com %1$s (%2$s), a ligar…</string>
     <string name="message_cannot_pair_no_mac">Nenhum endereço MAC passado, não é possível parear.</string>
     <string name="preferences_category_device_specific_settings">Configurações específicas do aparelho</string>
-    <string name="preferences_miband_settings">Configurações de Mi Band / Amazfit</string>
     <string name="male">Masculino</string>
     <string name="female">Feminino</string>
     <string name="other">Outro</string>
@@ -786,7 +785,6 @@
     <string name="pref_title_authkey">Chave de autenticação</string>
     <string name="title_activity_device_specific_settings">Configurações específicas do aparelho</string>
     <string name="pref_title_support_voip_calls">Ativar chamadas de app VoIP</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="activity_prefs_activetime_minutes">Meta diária: tempo ativo em minutos</string>
     <string name="activity_prefs_distance_meters">Meta diária: distância em metros</string>
     <string name="activity_prefs_calories_burnt">Meta diária: calorias queimadas</string>
@@ -973,11 +971,8 @@
     <string name="activity_summary_detail">Detalhes de atividade de desporto</string>
     <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
     <string name="error_location_enabled_mandatory">A localização deve ser ligada para procurar aparelhos</string>
-    <string name="companiondevice_pairing_details">Ativa o novo suporte à API CompanionDevice (tem efeito apenas em Android 8 ou mais novo) que vai aumentar a confiabilidade se o serviço precisar ser reiniciado em segundo plano, requer novo emparelhamento usando o Gadgetbridge para ter um efeito</string>
     <string name="companiondevice_pairing">Pareamento de CompanionDevice</string>
     <string name="require_location_provider">Localização deve estar ativada</string>
-    <string name="ignore_bonded_devices_description">Ativar esta opção ignorará aparelhos que já foram associados/emparelhados durante a varredura</string>
-    <string name="ignore_bonded_devices">Ignorar aparelhos associados</string>
     <string name="error_retrieving_devices_database">Erro ao obter aparelhos do banco de dados</string>
     <string name="error_setting_alias">Erro ao definir um alias:</string>
     <string name="error_exporting_device_preferences">Erro ao exportar as preferências específicas do aparelho</string>
@@ -1312,8 +1307,6 @@
     <string name="qhybrid_pref_summary_external_intents">Permitir que outras apps do Android enviem/sobrescrevam ficheiros</string>
     <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="watchface_dialog_title_set_name">Definir nome do mostrador</string>
-    <string name="watchface_toast_settings_incomplete">Configurações incompletas, widget não adicionado</string>
-    <string name="watchface_dialog_title_add_widget">Adicionar widget</string>
     <string name="watchface_widget_type_date">Data</string>
     <string name="watchface_widget_type_weather">Clima</string>
     <string name="watchface_widget_type_steps">Passos</string>
@@ -1630,11 +1623,9 @@
     <string name="all_satellites">Todos os satélites</string>
     <string name="controlcenter_get_heartrate_measurement">Medir batimento cardíaco</string>
     <string name="open_fw_installer_pick_file">Selecionar ficheiro</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="custom">Personalizado</string>
     <string name="gps_galileo">GPS + GALILEO</string>
-    <string name="temperature">Temperatura</string>
     <string name="pref_dashboard_widget_today_upside_down_title">Meia-noite na parte inferior</string>
     <string name="pref_sleepasandroid_enable_summary">Ativar a integração do Sleep as Android</string>
     <string name="pref_title_huawei_account">Conta da Huawei</string>

@@ -112,7 +112,6 @@
     <string name="title_activity_mi_band_pairing">Створення пари з вашим Mi Band</string>
     <string name="message_cannot_pair_no_mac">MAC-адреса не передана, не вдалося створити пару.</string>
     <string name="preferences_category_device_specific_settings">Специфічні налаштування пристрою</string>
-    <string name="preferences_miband_settings">Налаштування Mi Band / Amazfit</string>
     <string name="male">Чоловіча</string>
     <string name="female">Жіноча</string>
     <string name="other">Інша</string>
@@ -681,7 +680,6 @@
     <string name="activity_prefs_calories_burnt">Щоденна мета: спалення калорій</string>
     <string name="activity_prefs_distance_meters">Щоденна мета: відстань у метрах</string>
     <string name="activity_prefs_activetime_minutes">Щоденна мета: тривалість діяльності у хвилинах</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_summary_authkey">Змініти ключ автентифікації на загальний ключ для всіх ваших Android пристроїв, із яких ви хочете підʼєднатися. Попередній усталений ключ для всіх пристроїв – 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">Ви збираєтеся встановити мікропрограму %s на ваш Amazfit Cor 2.\n\nСпочатку встановіть файл .fw, потім .res. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файл .res, якщо він такий самий, як раніше встановлений.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!\n\nПОВНІСТЮ НЕПЕРЕВІРЕНО, ЙМОВІРНО, ВАМ ПОТРІБНО ВСТАНОВИТИ МІКРОПРОГРАМУ BEATS_W, ЯКЩО НАЗВА ВАШОГО ПРИСТРОЮ \"Amazfit Band 2\"</string>
@@ -918,8 +916,6 @@
     <string name="ascentMeters">Підйом</string>
     <string name="distanceMeters">Відстань</string>
     <string name="error_location_enabled_mandatory">Потрібно ввімкнути місцеперебування для виявлення пристроїв</string>
-    <string name="ignore_bonded_devices_description">Увімкнення цієї опції ігнорує пристрої, які вже були пов\'язані перед скануванням</string>
-    <string name="ignore_bonded_devices">Ігнорувати пов\'язані пристрої</string>
     <string name="error_retrieving_devices_database">Помилка отримання пристроїв із бази даних</string>
     <string name="error_setting_alias">Помилка встановлення псевдоніма:</string>
     <string name="error_exporting_device_preferences">Помилка експортування специфічних налаштувань пристрою</string>
@@ -930,7 +926,6 @@
     <string name="device_is_currently_bonded">УЖЕ ПОВʼЯЗАНО</string>
     <string name="error_background_service_reason_truncated">Не вдалося запустити фонову службу, оскільки…</string>
     <string name="error_background_service">Не вдалось запустити фонову службу</string>
-    <string name="companiondevice_pairing_details">Вмикає підтримку нового API CompanionDevice (працює на Android 8 та новіше), що має підвищити надійність, коли служба має бути перезапущена у фоні, потребує повторного з\'єднання використовуючи Gadgetbridge</string>
     <string name="companiondevice_pairing">Створення пари з CompanionDevice</string>
     <string name="require_location_provider">Місцеперебування має бути ввімкнено</string>
     <string name="error_version_check_extreme_caution">УВАГА: Помилка під час перевірки версії! Вам не варто продовжувати! Назва версії: %s</string>
@@ -1182,8 +1177,6 @@
     <string name="watchface_widget_type_steps">Кроки</string>
     <string name="watchface_widget_type_weather">Погода</string>
     <string name="watchface_widget_type_date">Дата</string>
-    <string name="watchface_dialog_title_add_widget">Додати віджет</string>
-    <string name="watchface_toast_settings_incomplete">Налаштування незавершені, віджет не додано</string>
     <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="watchface_upload_failed">Не вдалося завантажити циферблат. Повторіть спробу.</string>
     <string name="watchface_cache_confirm_overwrite">Циферблат з такою назвою вже є у кеші. Хочете перезаписати його?</string>
@@ -1476,9 +1469,6 @@
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_description_banglejs_main">Android застосунок для Bangle.js, створений на основі проєкту Gadgetbridge, з додатковим доступом до інтернету.\n\nЧерез політику Google Play Маркету, ми не можемо розміщувати покликання на пожертвування в самому застосунку, але якщо він вам подобається, розгляньте можливість пожертування через домашню сторінку Gadgetbridge нижче.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js працює</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js працює</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="about_activity_title_main_nightly">Про Gadgetbridge Nightly</string>
     <string name="gadgetbridge_running_main_nightly">Nightly GB працює</string>
@@ -1486,12 +1476,8 @@
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly без Pebble</string>
     <string name="about_activity_title_main_nopebble">Про Gadgetbridge Nightly без Pebble</string>
     <string name="gadgetbridge_running_main_nopebble">Nightly GB без Pebble працює</string>
-    <string name="about_activity_title_banglejs_nopebble">Про Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">Про Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Засосунок-компаньйон Android для Bangle.js побудований на основі проєкту Gadgetbridge, з додаванням доступу до інтернету.
-\n
-\nЗгідно з правилами Google Play Маркету, нам не дозволено вказувати посилання на допомогу в самому застосунку, але якщо він вам до вподоби, ви можете посприяти розвитку проєкту через домашню сторінку Gadgetbridge нижче.</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
     <string name="about_description_main_nightly">Безхмарна вільна заміна закритих Android застосунків для гаджетів від інших виробників із копілефт ліцензією. Випуски Gadgetbridge Nightly. Не можна встановити, якщо у вас уже встановлено застосунок Gadgetbridge або Pebble через конфлікт у постачальнику Pebble.</string>
     <string name="about_description_main_nopebble">Безхмарна вільна заміна закритих Android застосунків для гаджетів від інших виробників із копілефт ліцензією. Випуски Gadgetbridge Nightly. У цій версії постачальника Pebble було перейменовано для уникнення конфліктів, тому деякі інтеграції, повʼязані з Pebble, не працюватимуть, але його можна встановити разом із наявним установленим Gadgetbridge.</string>
@@ -1567,7 +1553,6 @@
     <string name="heartrate_bpm_150">150 уд/хв</string>
     <string name="heartrate_bpm_105">105 уд/хв</string>
     <string name="heartrate_bpm_120">120 уд/хв</string>
-    <string name="heartrate_bpm_112">112 ударів на хвилину</string>
     <string name="heartrate_bpm_130">130 уд/хв</string>
     <string name="heartrate_bpm_145">145 уд/хв</string>
     <string name="heartrate_bpm_125">125 уд/хв</string>
@@ -1596,8 +1581,6 @@
     <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоби показувати їх на вашому годиннику, коли екран телефону вимкнено.\n\nНатисніть «%2$s», потім «%1$s» та ввімкніть «Дозволити доступ до сповіщень», потім торкніться «Назад», щоби повернутися до %1$s.</string>
     <string name="permission_notification_policy_access">%1$s потребує доступу до налаштувань режиму «Не турбувати», щоби дотримуватися їх на вашому годиннику, коли екран телефона вимкнено.\n\nНатисніть «%2$s», потім «%1$s» та ввімкніть «Дозволити доступ до режиму \"Не турбувати\"», потім торкніться «Назад», щоби повернутися до %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Зупинка відстежувача GPS-розташування</string>
-    <string name="discovery_scanning_intensity_warning">Якщо ви бачите заморожування або несприйняття, спробуйте встановити нижчий рівень інтенсивності сканування. Якщо пристрій не виявлено, спробуйте встановити інтенсивність сканування на вищий рівень.</string>
-    <string name="discovery_scanning_intensity">Інтенсивність сканування</string>
     <string name="portuguese_br">Португальська (Бразилія)</string>
     <string name="quick_alarm">Швидкий будильник</string>
     <string name="portuguese_pt">Португальська (Португалія)</string>
@@ -1667,7 +1650,6 @@
     <string name="hybridhr_widget_bg_double_circle">Подвійне коло</string>
     <string name="watchface_dialog_widget_cat_generic">Загальний</string>
     <string name="watchface_dialog_title_widget">Налаштування віджета</string>
-    <string name="watchface_setting_title_button_toggle_widgets">Перемкнути віджети</string>
     <string name="watchface_setting_button_toggle_widgets">Перемкнути віджети</string>
     <string name="note">Примітка</string>
     <string name="share_log_not_enabled_message">Спочатку потрібно ввімкнути журналювання в налаштуваннях (Налаштування – Записувати файли журналу)</string>
@@ -1859,7 +1841,6 @@
     <string name="custom">Власний</string>
     <string name="gps">GPS</string>
     <string name="gps_bds">GPS + BDS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="low_power_gps">Енергоощадний GPS</string>
     <string name="single_band">Односмуговий</string>
     <string name="dual_band">Двосмуговий</string>
@@ -2133,7 +2114,6 @@
     <string name="pref_title_mb_intents">Безпосередньо транслювати дії медіакнопок</string>
     <string name="pref_summary_mb_intents">Увімкніть, якщо керування медіа на пристрої не працює для певних застосунків</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="busy_task_fetch_hr_data">Отримання даних про пульс</string>
@@ -2221,8 +2201,6 @@
     <string name="text_receiver_activity_title">Надіслати текст на пристрій</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Поточне значення MTU (%1$d) занизьке. Увімкніть високе значення MTU в налаштуваннях пристрою та перепідʼєднайте пристрій.</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX</string>
-    <string name="new_discover_activity_description">Увімкнути виявлення нової активності, що має усунути проблеми з виявленням пристроїв. Вимкніть цей параметр, якщо у вас виникли проблеми під час пошуку або сполучення з пристроєм.</string>
-    <string name="new_discover_activity_title">Увімкнути виявлення нової активності</string>
     <string name="prefs_home_icon_left_item">Ліворуч</string>
     <string name="prefs_wena3_title_activity">Налаштування діяльності</string>
     <string name="white">Білий</string>

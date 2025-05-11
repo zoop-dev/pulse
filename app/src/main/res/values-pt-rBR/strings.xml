@@ -176,7 +176,6 @@
     <string name="pairing_already_bonded">Já ligado com %1$s (%2$s), conectando…</string>
     <string name="message_cannot_pair_no_mac">Nenhum endereço MAC passado, não é possível parear.</string>
     <string name="preferences_category_device_specific_settings">Configurações específicas do dispositivo</string>
-    <string name="preferences_miband_settings">Configurações de Mi Band / Amazfit</string>
     <string name="male">Masculino</string>
     <string name="female">Feminino</string>
     <string name="other">Outro</string>
@@ -681,7 +680,6 @@
     <string name="activity_prefs_calories_burnt">Meta diária: calorias queimadas</string>
     <string name="activity_prefs_distance_meters">Meta diária: distância em metros</string>
     <string name="activity_prefs_activetime_minutes">Meta diária: tempo ativo em minutos</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="pref_title_support_voip_calls">Ativar chamadas de aplicativo VoIP</string>
     <string name="title_activity_device_specific_settings">Configurações específicas do dispositivo</string>
     <string name="pref_title_authkey">Chave de autenticação</string>
@@ -933,8 +931,6 @@
     <string name="devicetype_miband5">Mi Band 5</string>
     <string name="devicetype_tlw64">TLW64</string>
     <string name="error_location_enabled_mandatory">A localização deve ser ligada para procurar dispositivos</string>
-    <string name="ignore_bonded_devices_description">Habilitar esta opção ignorará dispositivos que já foram associados/emparelhados durante a varredura</string>
-    <string name="ignore_bonded_devices">Ignorar dispositivos associados</string>
     <string name="error_retrieving_devices_database">Erro ao obter dispositivos do banco de dados</string>
     <string name="error_setting_alias">Erro ao definir um alias:</string>
     <string name="error_exporting_device_preferences">Erro ao exportar as preferências específicas do dispositivo</string>
@@ -942,7 +938,6 @@
     <string name="pref_check_permission_status">Verificar status de permissão</string>
     <string name="device_requires_key">CHAVE NECESSÁRIA</string>
     <string name="device_is_currently_bonded">JÁ ASSOCIADO</string>
-    <string name="companiondevice_pairing_details">Habilita o novo suporte à API CompanionDevice (tem efeito apenas em Android 8 ou mais novo) que vai aumentar a confiabilidade se o serviço precisar ser reiniciado em segundo plano, requer novo emparelhamento usando o Gadgetbridge para ter um efeito</string>
     <string name="companiondevice_pairing">Pareamento de CompanionDevice</string>
     <string name="require_location_provider">Localização deve estar habilitada</string>
     <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
@@ -1186,8 +1181,6 @@
     <string name="button_watchface_save_apply">Salvar e aplicar</string>
     <string name="button_watchface_preview">Visualização no relógio</string>
     <string name="watchface_widget_type_heart_rate">Frequência cardíaca</string>
-    <string name="watchface_dialog_title_add_widget">Adicionar widget</string>
-    <string name="watchface_toast_settings_incomplete">Configurações incompletas, widget não adicionado</string>
     <string name="qhybrid_title_watchface">Configuração do mostrador</string>
     <string name="watchface_install_info">Você está prestes a instalar o seguinte mostrador:
 \n
@@ -1476,14 +1469,9 @@
     <string name="discovery_bluetooth_le_scan">Busca por Bluetooth LE:</string>
     <string name="world_clock_timezone">Fuso horário</string>
     <string name="world_clock_no_free_slots_description">O dispositivo não tem espaço para relógios mundiais (total de espaços: %1$s)</string>
-    <string name="about_activity_title_banglejs_nopebble">Sobre Bangle.js Gadgetbridge</string>
     <string name="about_description_main_nopebble">Substituto para aplicativos não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e possui código livre. Atualizações Nightly (diárias) de Gadgetbridge. Essa versão tem o provedor Pebble renomeado para prevenir conflitos, então algumas integrações do Pebble não funcionarão, mas pode ser instalado junto com Gadgetbridge já existente.</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js em execução</string>
     <string name="about_description_main_nightly">Substituto para aplicativos não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e código livre. Atualizações Nightly (diárias) de Gadgetbridge. Não pode ser instalado se você já tem ou o aplicativo Gadgetbridge ou Pebble, devido a um conflito no provedor Pebble.</string>
     <string name="world_clock_no_free_slots_title">Não há espaço</string>
-    <string name="about_description_banglejs_nopebble">App de Android para Bangle.js construida sobre o projeto Gadgetbridge, com acesso a Internet adicionado.
-\n
-\nDevido a políticas da Google Play Store, não estamos autorizados a um link para doações no próprio aplicativo, porém se você gostou deste aplicativo por favor considere fazer uma doação através da página do Gadgetbridge mostrada abaixo.</string>
     <string name="about_description_banglejs_main">App de Android para Bangle.js construida sobre o projeto Gadgetbridge, com acesso a Internet adicionado.
 \n
 \nDevido a políticas da Google Play Store, não estamos autorizados a um link para doações no próprio aplicativo, porém se você gostou deste aplicativo por favor considere fazer uma doação através da página do Gadgetbridge mostrada abaixo.</string>
@@ -1491,8 +1479,6 @@
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_main">Sobre Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js em execução</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
     <string name="about_activity_title_main_nightly">Sobre Gadgetbridge Nightly</string>
@@ -1617,7 +1603,6 @@
     <string name="open_fw_installer_pick_file">Escolha um Arquivo</string>
     <string name="pref_title_notification_delay_calls">Delay de notificação de chamada</string>
     <string name="pref_summary_notification_delay_calls">Tempo antes de enviar notificações de chamadas para o dispositivo, em segundos.</string>
-    <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="all_satellites">Todos os Satélites</string>
     <string name="open_fw_installer_warning_title">Aviso</string>

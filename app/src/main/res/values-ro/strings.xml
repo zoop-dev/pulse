@@ -178,7 +178,6 @@
     <string name="debugactivity_confirm_remove_device_preferences_title">Elimini preferințele dispozitivului?</string>
     <string name="device_card_activity_card_title_summary">Alege ce detalii vor fii afișate pe cardul dispozitivului</string>
     <string name="about_description_generic">Înlocuitor sub o licență copyleft pentru aplicațiile cu sursă închisă Android, de administrare a unor dispozitive portabile.</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="gadgetbridge_running_main_nightly">Nightly GB este pornit</string>
     <string name="action_changelog">Jurnal de modificări</string>
     <string name="about_activity_title_generic">Despre Gadgetbridge</string>

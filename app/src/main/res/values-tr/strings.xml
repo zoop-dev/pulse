@@ -201,7 +201,6 @@
     <string name="devicetype_miband3">Mi Band 3</string>
     <string name="devicetype_miband4">Mi Band 4</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="devicetype_no1_f1">No.1 F1</string>
     <string name="devicetype_pebble">Pebble</string>
@@ -673,7 +672,6 @@
     <string name="preferences_hplus_settings">HPlus/Makibes ayarları</string>
     <string name="preferences_led_color">LED Rengi</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 ayarları</string>
-    <string name="preferences_miband_settings">Mi Band / AmazFit ayarları</string>
     <string name="preferences_qhybrid_settings">Q Hybrid Ayarları</string>
     <string name="preferences_rtl_settings">Sağdan Sola Desteği</string>
     <string name="prefs_button_double_press_action_selection_title">Etkinlik 2 eylemi</string>
@@ -941,9 +939,6 @@
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="devicetype_tlw64">TLW64</string>
-    <string name="companiondevice_pairing_details">Hizmetin arka planda yeniden başlatılması gerekiyorsa güvenilirliği artıracak yeni CompanionDevice API desteğini etkinleştirir (yalnızca Android 8 veya üzerinde bir etkisi vardır), etkili olması için Gadgetbridge kullanarak yeniden eşleştirme gerektirir</string>
-    <string name="ignore_bonded_devices_description">Bu seçeneğin etkinleştirilmesi, tarama sırasında önceden etkileşimde/eşleştirilmiş olan aygıtları yok sayar</string>
-    <string name="ignore_bonded_devices">Etkileşimde olan aygıtları yok say</string>
     <string name="device_is_currently_bonded">ZATEN ETKİLEŞİMDE</string>
     <string name="device_requires_key">ANAHTAR GEREKLİ, GİRMEK İÇİN UZUN BASIN</string>
     <string name="error_location_enabled_mandatory">Aygıtları taramak için konumun açık olması gerekmektedir</string>
@@ -1295,8 +1290,6 @@
     <string name="watchface_widget_type_weather">Hava durumu</string>
     <string name="watchface_widget_type_steps">Adım</string>
     <string name="watchface_widget_type_date">Tarih</string>
-    <string name="watchface_dialog_title_add_widget">Widget ekle</string>
-    <string name="watchface_toast_settings_incomplete">Ayarlar eksik, widget eklenmedi</string>
     <string name="watchface_dialog_title_set_name">Saat arayüzü adını ayarla</string>
     <string name="button_watchface_settings">Saat arayüzü ayarları</string>
     <string name="button_watchface_add_widget">Widget ekle</string>
@@ -1587,9 +1580,6 @@
     <string name="watchface_setting_light_up_on_notification">Yeni bildirimde ışığı aç</string>
     <string name="menuitem_email">E-posta</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js çalışıyor</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">Bangle.js Gadgetbridge Hakkında</string>
     <string name="about_activity_title_main_nightly">Gadgetbridge Gecelik Hakkında</string>
     <string name="about_description_main_nightly">Satıcıların kapalı kaynaklı Android aygıt uygulamalarının yerine bulut gerektirmeyen copyleft özgür alternatif. Gadgetbridge gecelik sürümleri. Pebble sağlayıcısındaki bir çakışma nedeniyle Gadgetbridge veya Pebble uygulaması zaten kuruluysa bu kurulamaz.</string>
     <string name="gadgetbridge_running_main_nightly">Gecelik GB çalışıyor</string>
@@ -1605,10 +1595,6 @@
     <string name="application_name_main_nopebble">Gadgetbridge (Gecelik, Pebble sağlayıcısı yok)</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_description_main_nopebble">Satıcıların kapalı kaynaklı Android aygıt uygulamalarının yerine bulut gerektirmeyen copyleft özgür alternatif. Gadgetbridge gecelik sürümleri. Bu sürümde, çakışmaları önlemek için Pebble sağlayıcısının adı değiştirilmiştir, bu nedenle Pebble ile ilgili bazı bütünleşmeler çalışmayacaktır, ancak mevcut bir Gadgetbridge kurulumunun yanına kurulabilir.</string>
-    <string name="about_description_banglejs_nopebble">Bangle.js için Gadgetbridge projesinin üzerine inşa edilmiş, internet erişimi eklenmiş Android yardımcı uygulaması.
-\n
-\nGoogle Play Store politikaları nedeniyle, uygulamanın kendisinde bir bağış bağlantısına izin verilmiyor, ancak bu uygulamayı beğendiyseniz lütfen aşağıdaki Gadgetbridge ana sayfası üzerinden bağış yapmayı düşünün.</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js çalışıyor</string>
     <string name="application_name_main_nightly">Gadgetbridge (Gecelik)</string>
     <string name="prefs_activate_display_on_lift_sensitivity">Hassasiyet</string>
     <string name="normal">Normal</string>
@@ -1684,7 +1670,6 @@
     <string name="pref_voice_detect_duration_10">10 saniye</string>
     <string name="pref_voice_detect_duration_15">15 saniye</string>
     <string name="heartrate_bpm_110">110 kalp atışı/dakika</string>
-    <string name="heartrate_bpm_112">112 kalp atışı/dakika</string>
     <string name="heartrate_bpm_125">125 kalp atışı/dakika</string>
     <string name="prefs_heartrate_alert_threshold">Kalp ritmi uyarı eşiği</string>
     <string name="mi2_prefs_heart_rate_monitoring">Kalp Ritmi İzleme</string>
@@ -1715,8 +1700,6 @@
     <string name="permission_notification_policy_access">%1$s, telefonunuzun ekranı kapalıyken saatinizde bu ayarları yerine getirebilmek için Rahatsız Etme ayarlarına erişmeye ihtiyaç duyuyor.
 \n
 \nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Rahatsız Etmeye İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
-    <string name="discovery_scanning_intensity">Tarama yoğunluğu</string>
-    <string name="discovery_scanning_intensity_warning">Donma veya yanıt alamama yaşıyorsanız, tarama yoğunluğunu daha düşük bir seviyeye ayarlamayı deneyin. Aygıtınız bulunamıyorsa, tarama yoğunluğunu daha yüksek bir seviyeye ayarlamayı deneyin.</string>
     <string name="quick_alarm">Hızlı alarm</string>
     <string name="quick_alarm_description">Widget alarmı</string>
     <string name="portuguese_pt">Portekizce (Portekiz)</string>
@@ -1786,7 +1769,6 @@
     <string name="watchface_dialog_widget_background">Arka plan</string>
     <string name="hybridhr_widget_bg_double_circle">Çift çember</string>
     <string name="hybridhr_widget_bg_dashed_circle">Kesikli çember</string>
-    <string name="watchface_setting_title_button_toggle_widgets">Widget\'ları değiştir</string>
     <string name="watchface_setting_button_toggle_widgets">Widget\'ları aç/kapat</string>
     <string name="steps_streaks_total_steps">Toplam
 \nadım</string>
@@ -1964,7 +1946,6 @@
     <string name="devicetype_sony_wf_1000xm4">Sony WF-1000XM4</string>
     <string name="low_power_gps">Düşük Güçlü GPS</string>
     <string name="gps">GPS</string>
-    <string name="gps_gnolass">GPS + GLONASS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="all_satellites">Tüm Uydular</string>
     <string name="single_band">Tek Bant</string>
@@ -2428,7 +2409,6 @@
     <string name="activity_type_trekking">Doğa yürüyüşü</string>
     <string name="activity_type_wrestling">Güreş</string>
     <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="devicetype_mijia_lywsd03">Mijia Sıcaklık ve Nem Sensörü 2</string>
     <string name="devicetype_mijia_mho_c303">Mijia MHO-C303</string>
@@ -2824,7 +2804,6 @@
     <string name="scan_scanning_multiple_devices">%d aygıt taranıyor</string>
     <string name="notification_channel_scan_service_name">Tarama hizmeti</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
-    <string name="temperature">Sıcaklık</string>
     <string name="pref_wide_area_tap_summary">Yanaklar ve kulaklar arasındaki dokunuşları tanı</string>
     <string name="pref_wide_area_tap_title">Geniş alan dokunuşu</string>
     <string name="pref_adaptive_volume_control_summary">Ortam sesi yüksek olduğunda sesi otomatik olarak artır</string>
@@ -3399,7 +3378,6 @@
     <string name="prefs_summary_gatt_client_device_state_updates">Amaçlar aracılığıyla BLE bağlantı durumu değişikliklerini al</string>
     <string name="prefs_title_gatt_client_api_package">BLE API paketi</string>
     <string name="prefs_title_ble_intent_api">BLE Amaç API</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Sıcaklık alımı şu anda desteklenmiyor. Bu ayar yalnızca aygıtta sürekli ölçümü etkinleştirir</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Sürekli cilt sıcaklığı ölçümü</string>
     <string name="devicetype_ble_gatt_client">Genel BLE GATT İstemcisi</string>
     <string name="prefs_title_gatt_client_notification_intents">BLE Amaç API\'si aracılığıyla GATT bildirim amaçlarını yayınla</string>

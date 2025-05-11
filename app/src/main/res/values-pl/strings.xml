@@ -132,7 +132,6 @@
     <string name="pairing">Parowanie z %s…</string>
     <string name="message_cannot_pair_no_mac">Nie przekazano adresu MAC, nie można go sparować.</string>
     <string name="preferences_category_device_specific_settings">Ustawienia danego urządzenia</string>
-    <string name="preferences_miband_settings">Ustawienia Mi Band i Amazfit</string>
     <string name="male">Mężczyzna</string>
     <string name="female">Kobieta</string>
     <string name="other">Inne</string>
@@ -643,7 +642,6 @@
     <string name="activity_prefs_calories_burnt">Cel dzienny: spalone kalorie</string>
     <string name="activity_prefs_distance_meters">Cel dzienny: odległość w metrach</string>
     <string name="activity_prefs_activetime_minutes">Cel dzienny: czas aktywności w minutach</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="title_activity_device_specific_settings">Ustawienia danego urządzenia</string>
     <string name="pref_title_authkey">Klucz autoryzacji</string>
     <string name="devicetype_bfh16">BFH-16</string>
@@ -1006,8 +1004,6 @@
     <string name="averageStrokeDistance">Średnia odległość ruchu</string>
     <string name="totalStride">Całkowity krok</string>
     <string name="error_location_enabled_mandatory">Lokalizacja musi być włączona w celu skanowania w poszukiwaniu urządzeń</string>
-    <string name="ignore_bonded_devices_description">Włączenie tej opcji spowoduje zignorowanie podczas skanowania urządzeń, które zostały już połączone/sparowane</string>
-    <string name="ignore_bonded_devices">Ignoruj połączone urządzenia</string>
     <string name="error_retrieving_devices_database">Błąd podczas pobierania urządzeń z bazy danych</string>
     <string name="error_setting_alias">Błąd ustawienia aliasu:</string>
     <string name="error_exporting_device_preferences">Błąd podczas eksportowania preferencji specyficznych dla urządzenia</string>
@@ -1015,7 +1011,6 @@
     <string name="error_background_service_reason">Uruchomienie usługi działającej w tle nie powiodło się z powodu wyjątku — kliknij tutaj, aby uzyskać więcej informacji.\n\nBłąd:</string>
     <string name="error_background_service_reason_truncated">Uruchomienie usługi w tle nie powiodło się, ponieważ…</string>
     <string name="error_background_service">Nie udało się uruchomić usługi w tle</string>
-    <string name="companiondevice_pairing_details">Włącza obsługę nowego interfejsu API urządzeń towarzyszących (CompanionDevice) (ma wpływ tylko na Android 8 lub nowszy), który zwiększa niezawodność, jeśli usługa będzie musiała zostać ponownie uruchomiona w tle, aby odniosło skutek wymaga to ponownego sparowania przy użyciu Gadgetbridge</string>
     <string name="companiondevice_pairing">Parowanie urządzeń towarzyszących (CompanionDevice Pairing)</string>
     <string name="error_version_check_extreme_caution">UWAGA: Błąd przy sprawdzaniu informacji o wersji! Nie należy kontynuować! Nazwa wersji \"%s\"</string>
     <string name="about_links">Linki</string>
@@ -1271,7 +1266,6 @@
     <string name="watchface_widget_type_steps">Kroki</string>
     <string name="watchface_widget_type_weather">Pogoda</string>
     <string name="watchface_widget_type_date">Data</string>
-    <string name="watchface_dialog_title_add_widget">Dodaj widget</string>
     <string name="button_watchface_add_widget">Dodaj widget</string>
     <string name="button_watchface_select_image">Zmień obraz tła</string>
     <string name="button_watchface_edit_name">Edytuj nazwę</string>
@@ -1300,7 +1294,6 @@
     <string name="watchface_dialog_widget_x_coordinate">Współrzędna X (maks. 240)</string>
     <string name="watchface_dialog_widget_type">Rodzaj</string>
     <string name="button_watchface_preview">Podgląd na zegarku</string>
-    <string name="watchface_toast_settings_incomplete">Ustawienia niekompletne, widżet nie został dodany</string>
     <string name="watchface_dialog_title_set_name">Ustaw nazwę tarczy zegarka</string>
     <string name="button_watchface_settings">Ustawienia tarczy zegarka</string>
     <string name="heart_rate_result">Wyniki pomiaru</string>
@@ -1602,10 +1595,6 @@
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js jest uruchomiony</string>
-    <string name="about_activity_title_banglejs_nopebble">O Bangle.js Gadgetbridge</string>
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js jest uruchomiony</string>
     <string name="pref_title_banglejs_text_bitmap">Tekst jako bitmapy</string>
     <string name="pref_title_device_internet_access">Zezwól na dostęp do internetu</string>
     <string name="pref_summary_device_internet_access">Zezwól aplikacjom na tym urządzeniu na dostęp do Internetu</string>
@@ -1614,7 +1603,6 @@
     <string name="world_clock_timezone">Strefa czasowa</string>
     <string name="heartrate_bpm_105">105 uderzeń/min</string>
     <string name="heartrate_bpm_110">110 uderzeń/min</string>
-    <string name="heartrate_bpm_112">112 bpm</string>
     <string name="heartrate_bpm_120">120 uderzeń/min</string>
     <string name="heartrate_bpm_125">125 uderzeń/min</string>
     <string name="heartrate_bpm_130">130 uderzeń/min</string>
@@ -1704,7 +1692,6 @@
     <string name="pref_header_display">Wyświetlanie</string>
     <string name="pref_header_workout">Ćwiczenia</string>
     <string name="pref_summary_canned_replies">Odpowiadaj z zegarka za pomocą zaprogramowanych wiadomości</string>
-    <string name="discovery_scanning_intensity_warning">W przypadku wystąpienia zamrożenia lub braku reakcji, spróbuj ustawić intensywność skanowania na niższy poziom. Jeśli urządzenie nie jest wykrywane, spróbuj ustawić intensywność skanowania na wyższy poziom.</string>
     <string name="pref_cache_weather">Przechowuj informacje o pogodzie w pamięci podręcznej</string>
     <string name="pref_cache_weather_summary">Informacje o pogodzie będą buforowane podczas ponownych uruchomień aplikacji.</string>
     <string name="pref_title_device_intents">Zezwalaj na intencje</string>
@@ -1730,7 +1717,6 @@
     <string name="pref_summary_banglejs_text_bitmap">Jeśli słowo nie może być wygenerowane za pomocą czcionki zegarka, wygeneruj je do bitmapy w Gadgetbridge i wyświetl ją na zegarku</string>
     <string name="open_fw_installer_warning_text">Ta funkcja ma potencjał, aby pozostawić z Twojego urządzenia cegłę. To powiedziawszy, taka sytuacja nigdy nie zdarzyła się żadnemu z programistów poprzez flashowanie, ale pamiętaj, że robisz to na własne ryzyko.</string>
     <string name="open_fw_installer_getting_files_title">Pobieranie pliku z oprogramowaniem sprzętowym/aplikacją</string>
-    <string name="discovery_scanning_intensity">Intensywność skanowania</string>
     <string name="title_activity_world_clock_details">Szczegóły zegara światowego</string>
     <string name="prefs_heartrate_alert_experimental_description">Zawibruj opaską, gdy tętno przekracza pewien próg, bez widocznej aktywności fizycznej w ciągu ostatnich 10 minut. Ta funkcja jest eksperymentalna i nie była szeroko testowana.</string>
     <string name="prefs_activity_monitoring_description">Automatycznie zwiększaj częstotliwość wykrywania tętna, gdy opaska wykryje ćwiczenia fizyczne, aby zwiększyć dokładność przechwytywania tętna.</string>
@@ -2044,7 +2030,6 @@
     <string name="dual_band">Podwójna opaska</string>
     <string name="low_power_gps">GPS niskiego zasilania</string>
     <string name="gps">GPS</string>
-    <string name="gps_gnolass">GPS + GNOLASS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="accuracy_first">Najpierw dokładność</string>
     <string name="buttons_on_left">Przyciski po lewej stronie</string>
@@ -2146,7 +2131,6 @@
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="long_press">Długie naciśnięcie</string>
     <string name="pref_camera_remote_title">Zdalna kamera</string>
-    <string name="devicetype_vivomove_hr">Garmin Vivomove HR</string>
     <string name="menuitem_recommendation">Rekomendacje</string>
     <string name="yesterdays_activity">Wczorajsza aktywność</string>
     <string name="pref_show_changelog">Pokaż listę zmian po uruchomieniu</string>
@@ -2310,7 +2294,6 @@
     <string name="menuitem_total_workout">Totalny trening</string>
     <string name="fossil_hr_confirmation_skipped">Pomijanie potwierdzenia na urządzeniu</string>
     <string name="find_my_phone_found_it">ZNALAZŁEM</string>
-    <string name="new_discover_activity_description">Włącz wykrywanie nowej aktywności, która powinna rozwiązać problemy z wykrywaniem urządzeń. Wyłącz tę opcję, jeśli napotkasz jakiekolwiek problemy podczas wyszukiwania lub parowania z urządzeniem.</string>
     <string name="error_no_bluetooth_scan">Aby skanowanie działało prawidłowo, należy przyznać i włączyć dostęp do skanowania Bluetooth</string>
     <string name="activity_type_snowboarding">Snowboard</string>
     <string name="busy_task_fetch_stress_data">Pobieranie danych o obciążeniu</string>
@@ -2395,7 +2378,6 @@
     <string name="withings_calibration_text_minutes">Teraz użyj pokrętła, aby ustawić wskazówkę minutową na godzinie 12.</string>
     <string name="loyalty_cards_catima_permissions_title">Brak uprawnień</string>
     <string name="loyalty_cards">Karty lojalnościowe</string>
-    <string name="new_discover_activity_title">Włącz wykrywanie nowej aktywności</string>
     <string name="prefs_wena3_notification_default_call_vibration">Wibracja połączenia przychodzącego</string>
     <string name="activity_type_baseball">Baseball</string>
     <string name="green">Zielony</string>
@@ -2786,7 +2768,6 @@
     <string name="activity_type_belly_dance">Taniec brzucha</string>
     <string name="alarm_smart_wakeup_interval">Inteligentny interwał budzenia:</string>
     <string name="devicetype_huawei_watchfit">Huawei Watch Fit</string>
-    <string name="temperature">Temperatura</string>
     <string name="activity_type_long_jump">Skok w dal</string>
     <string name="activity_type_high_jump">Skok wzwyż</string>
     <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
@@ -3279,7 +3260,6 @@
     <string name="activity_db_management_import_from_zip">Importuj zip</string>
     <string name="soundcore_equalizer_custom_title">Personalizuj…</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Ciągły pomiar temperatury skóry</string>
-    <string name="pref_continuous_skin_temperature_measurement_description">Pobieranie temperatury jest obecnie niewspierane. Ta opcja jedynie włącza ciągły pomiar na urządzeniu</string>
     <string name="devicesetting_scannable_debounce_summary">Po zeskanowaniu urządzenie będzie uznawane za zeskanowane i ignorowane przez określoną długość czasu</string>
     <string name="devicesetting_scannable_rssi_summary">Minimalny próg RSSI dla wykrycia</string>
     <string name="devicesetting_scannable_rssi">Minimalny próg RSSI</string>

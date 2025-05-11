@@ -257,7 +257,6 @@
     <string name="pairing_already_bonded">Установена е връзка с/със %1$s (%2$s), свързване…</string>
     <string name="message_cannot_pair_no_mac">Липсва MAC адрес, не може да се установи връзка.</string>
     <string name="preferences_category_device_specific_settings">Специфични настройки за устройствата</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit настройки</string>
     <string name="male">Мъж</string>
     <string name="female">Жена</string>
     <string name="other">Друг</string>

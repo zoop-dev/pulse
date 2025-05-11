@@ -177,7 +177,6 @@
     <string name="pref_title_authkey">Auth Key</string>
     <string name="title_activity_device_specific_settings">Device specific settings</string>
     <string name="pref_title_support_voip_calls">Enable VoIP app calls</string>
-    <string name="devicetype_miscale2">Mi Scale 2</string>
     <string name="activity_prefs_activetime_minutes">Daily target: active time in minutes</string>
     <string name="activity_prefs_calories_burnt">Daily target: calories burnt</string>
     <string name="interval_forty_five_minutes">every 45 minutes</string>
@@ -647,7 +646,6 @@
     <string name="other">Other</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit settings</string>
     <string name="preferences_category_device_specific_settings">Device specific settings</string>
     <string name="message_cannot_pair_no_mac">No MAC address passed, cannot pair.</string>
     <string name="pairing_already_bonded">Already bonded with %1$s (%2$s), connecting…</string>
@@ -1010,8 +1008,6 @@
     <string name="button_watchface_edit_name">Edit name</string>
     <string name="button_watchface_add_widget">Add widget</string>
     <string name="watchface_dialog_title_set_name">Set watchface name</string>
-    <string name="watchface_toast_settings_incomplete">Settings incomplete, widget not added</string>
-    <string name="watchface_dialog_title_add_widget">Add widget</string>
     <string name="watchface_widget_type_weather">Weather</string>
     <string name="watchface_widget_type_steps">Steps</string>
     <string name="watchface_widget_type_heart_rate">Heart rate</string>
@@ -1373,8 +1369,6 @@
     <string name="ascentMeters">Uphill</string>
     <string name="descentMeters">Downhill</string>
     <string name="error_location_enabled_mandatory">Location must be turned on to scan for devices</string>
-    <string name="ignore_bonded_devices">Ignore bonded devices</string>
-    <string name="ignore_bonded_devices_description">Enabling this option will ignore devices that have been bonded/paired already when scanning</string>
     <string name="error_retrieving_devices_database">Error retrieving devices from database</string>
     <string name="pref_check_permission_status_summary">Check and ask for missing permissions even when they might not be instantly needed. Disable this only if your devices actually doesn\'t support any of these features. Not granting a permission might cause issues!</string>
     <string name="pref_check_permission_status">Check permission status</string>
@@ -1382,7 +1376,6 @@
     <string name="device_requires_key">Key required</string>
     <string name="error_background_service_reason_truncated">Starting the background service failed because…</string>
     <string name="error_background_service">Failed to start background service</string>
-    <string name="companiondevice_pairing_details">Enables the new CompanionDevice API support (only has an effect on Android 8 or above) which will increase reliability if the service needs to be restarted in the background, requires re-pairing using Gadgetbridge to have an effect</string>
     <string name="permission_granting_mandatory">All these permissions are required and instability might occur if not granted</string>
     <string name="about_links">Links</string>
     <string name="menuitem_worldclock">World Clock</string>

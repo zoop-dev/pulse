@@ -63,7 +63,6 @@
     <string name="pairing">Đang ghép đôi với %s…</string>
     <string name="message_cannot_pair_no_mac">Không có địa chỉ MAC được cho, không thể ghép đôi.</string>
     <string name="preferences_category_device_specific_settings">Cài đặt cho thiết bị cụ thể</string>
-    <string name="preferences_miband_settings">Cài đặt Mi Band / Amazfit</string>
     <string name="male">Nam</string>
     <string name="female">Nữ</string>
     <string name="other">Khác</string>

@@ -520,7 +520,6 @@
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Pasukti riešą, kad pakeistumėte informaciją</string>
     <string name="pref_title_canned_messages_set">Atnaujinti įrenginyje</string>
     <string name="fw_upgrade_notice">Jūs instaliuosite %s.</string>
-    <string name="preferences_miband_settings">Mi Band / Amazfit nustatymai</string>
     <string name="preferences_category_device_specific_settings">Nuo įrenginio priklausantys nustatymai</string>
     <string name="distance">Atstumas</string>
     <string name="pref_summary_dont_ack_transfers">Nepatvirtinus, aktyvumo duomenys apyrankėje neišvalomi. Naudinga jei GB naudojama su kitomis programėlėmis.</string>
