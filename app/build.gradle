@@ -194,7 +194,7 @@ android {
         // If true, generate an HTML report (with issue explanations, sourcecode, etc)
         htmlReport = true
         // Optional path to report (default will be lint-results.html in the builddir)
-        htmlOutput = file("${project.layout.buildDirectory}/reports/lint/lint.html")
+        htmlOutput = layout.buildDirectory.file("reports/lint/lint.html").get().asFile
         // Ignore checks present in the snapshot
         baseline = file("lint-baseline.xml")
     }
