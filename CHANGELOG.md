@@ -2,9 +2,13 @@
 
 #### Next version (WIP)
 
+* Initial support for Amazfit Active 2 NFC
 * Initial support for Colmi R12
 * Initial support for Polar H10
 * Initial support for Garmin Edge 130 Plus, Fenix 7X Pro, Instinct 2X Tactical, Vívoactive HR
+* Initial support for Oppo Enco Buds2
+* Initial support for Realme Buds Air 5 Pro, Buds T100, Buds T300
+* Initial support for Sony WF-C710N
 * Bangle.js: Set the HTTP request timeout
 * Colmi R0x: Add support for display preferences
 * Garmin: Fix activity renaming
@@ -27,6 +31,9 @@
 * Zepp OS: Fix zip files being wrongly recognized as AGPS
 * Zepp OS: Parse workout pace, cadence, strength sets
 * Charts: Display resting metabolic rate
+* Charts: Add average day for body energy
+* Charts: Add weekly/monthly views for calories
+* Dashboard: Fix resting calories when using multiple devices
 * Intent API: Add command to set device type
 
 #### 0.85.0
