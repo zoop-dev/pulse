@@ -622,6 +622,10 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_WEAR_SENSOR_TOGGLE);
         addPreferenceHandlerFor(PREF_BANDW_PSERIES_GUI_VPT_LEVEL);
 
+        addPreferenceHandlerFor(PREF_EVEN_REALITIES_SCREEN_HEIGHT);
+        addPreferenceHandlerFor(PREF_EVEN_REALITIES_SCREEN_DEPTH);
+        addPreferenceHandlerFor(PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE);
+
         addPreferenceHandlerFor(PREF_HYBRID_HR_DRAW_WIDGET_CIRCLES);
         addPreferenceHandlerFor(PREF_HYBRID_HR_FORCE_WHITE_COLOR);
         addPreferenceHandlerFor(PREF_HYBRID_HR_SAVE_RAW_ACTIVITY_FILES);

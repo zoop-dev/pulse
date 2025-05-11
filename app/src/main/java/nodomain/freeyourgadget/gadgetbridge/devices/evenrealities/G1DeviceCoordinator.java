@@ -1,6 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.evenrealities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.annotation.DrawableRes;
@@ -9,12 +11,15 @@ import androidx.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -172,6 +177,38 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
             return 2;
         } else {
             return 1;
+        }
+    }
+
+    @Override
+    public List<DeviceCardAction> getCustomActions() {
+        return Collections.singletonList(new DeviceCardAction() {
+            @Override
+            public int getIcon(GBDevice device) {
+                return R.drawable.ic_dnd;
+            }
+
+            @Override
+            public String getDescription(final GBDevice device, final Context context) {
+                return context.getString(R.string.silent_mode);
+            }
+
+            @Override
+            public void onClick(final GBDevice device, final Context context) {
+                final Intent intent = new Intent(G1Constants.INTENT_TOGGLE_SILENT_MODE);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                intent.setPackage(context.getPackageName());
+                context.sendBroadcast(intent);
+            }
+        });
+    }
+
+    @Override
+    public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
+        if (device.isConnected()) {
+            return new int[]{R.xml.devicesettings_even_realities_g1_display};
+        } else {
+            return new int[]{};
         }
     }
 }

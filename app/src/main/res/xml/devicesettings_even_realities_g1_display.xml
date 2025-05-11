@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <PreferenceCategory android:title="@string/pref_header_display">-->
+        <SeekBarPreference
+            android:key="pref_even_realities_g1_screen_height"
+            android:defaultValue="0"
+            android:max="8"
+            android:icon="@drawable/ic_arrows_up_down"
+            android:title="@string/pref_even_realities_g1_screen_location_title"
+            android:summary="@string/pref_even_realities_g1_screen_location_summary" />
+        <SeekBarPreference
+            android:key="pref_even_realities_g1_screen_depth"
+            android:defaultValue="0"
+            android:icon="@drawable/ic_arrow_depth"
+            android:max="8"
+            android:title="@string/pref_even_realities_g1_screen_depth_title"
+            android:summary="@string/pref_even_realities_g1_screen_depth_summary" />
+        <SeekBarPreference
+            android:key="pref_even_realities_g1_screen_activation_angle"
+            android:defaultValue="40"
+            android:icon="@drawable/ic_angle"
+            android:max="60"
+            android:title="@string/pref_even_realities_g1_screen_activation_angle_title"
+            android:summary="@string/pref_even_realities_g1_screen_activation_angle_summary" />
+        <Preference
+            android:defaultValue="0"
+            android:icon="@drawable/ic_angle_calibrate"
+            android:enabled="false"
+            android:key="pref_even_realities_g1_screen_calibrate_angle"
+            android:summary="@string/pref_even_realities_g1_screen_calibrate_angle_summary"
+            android:title="@string/pref_even_realities_g1_screen_calibrate_angle_title" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:disableDependentsState="true"
+            android:icon="@drawable/ic_wb_sunny"
+            android:key="screen_auto_brightness"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_screen_auto_brightness_summary"
+            android:title="@string/pref_screen_auto_brightness_title" />
+        <SeekBarPreference
+            android:key="screen_brightness"
+            android:dependency="screen_auto_brightness"
+            android:defaultValue="42"
+            android:max="42"
+            android:icon="@drawable/ic_wb_sunny"
+            android:title="@string/pref_screen_brightness" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_ear_glasses"
+            android:key="wear_sensor_toggle"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_wear_sensor_summary"
+            android:title="@string/pref_wear_sensor_title" />
+
+    <!--    </PreferenceCategory>-->
+</PreferenceScreen>

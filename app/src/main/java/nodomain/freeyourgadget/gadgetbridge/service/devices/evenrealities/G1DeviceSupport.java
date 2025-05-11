@@ -3,12 +3,17 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +48,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(G1DeviceSupport.class);
     private final Handler backgroundTasksHandler = new Handler(Looper.getMainLooper());
-    private G1SideManager leftSide;
-    private G1SideManager rightSide;
+    private BroadcastReceiver intentReceiver = null;
     private final Object sendTimeLock = new Object();
-
+    private G1SideManager leftSide = null;
+    private G1SideManager rightSide = null;
     public G1DeviceSupport() {
         this(LOG);
     }
@@ -97,6 +102,16 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             // device before the devices are linked.
             super.setContext(device, btAdapter, context);
         }
+
+        // Register to receive silent mode intent calls from the UI.
+        if (intentReceiver == null) {
+            intentReceiver = new IntentReceiver();
+            ContextCompat.registerReceiver(
+                    context,
+                    intentReceiver,
+                    new IntentFilter(G1Constants.INTENT_TOGGLE_SILENT_MODE),
+                    ContextCompat.RECEIVER_NOT_EXPORTED);
+        }
     }
 
     @Override
@@ -142,17 +157,21 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         builder.setCallback(this);
         builder.notify(rx, true);
 
-        // If the manager is initializing, then the whole device is initializing as well.
+        // If the side is in the connected state, it is ready to be initialized.
+        // IMPORTANT: use getDevice(deviceIdx), not getDevice(/* 0 */) here otherwise the device
+        // will lock up in a half initialized state because GB thinks the left side is initialized,
+        // after because the right ran first.
         if (side.getState() == GBDevice.State.CONNECTED) {
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING,
+            builder.add(new SetDeviceStateAction(getDevice(deviceIdx), GBDevice.State.INITIALIZING,
                                                  getContext()));
-            side.initialize();
+            side.initialize(builder);
         }
 
-        // Both sides are initialized. The whole device is initialized.
         synchronized (this) {
             if (leftSide != null && leftSide.getState() == GBDevice.State.INITIALIZED &&
                 rightSide != null && rightSide.getState() == GBDevice.State.INITIALIZED) {
+                // Both sides are initialized. The whole device is initialized, don't use a device
+                // index here. Device 0 is the device that the reset of GB sees.
                 builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED,
                                                      getContext()));
                 // This means that both sides have been connected to and basic info has been collected.
@@ -160,8 +179,8 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                 // individual initialization. We don't know what thread we are handling the update state
                 // event on, so to be safe, schedule these as a background task.
                 backgroundTasksHandler.postDelayed(() -> {
-                    leftSide.postInitialize();
-                    rightSide.postInitialize();
+                    leftSide.postInitializeLeft();
+                    rightSide.postInitializeRight();
                     onSetTime();
                 }, 200);
             }
@@ -179,6 +198,11 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         // Kill both sides.
         leftSide = null;
         rightSide = null;
+
+        // Stop listening for intent actions
+        if (intentReceiver != null) {
+            getContext().unregisterReceiver(intentReceiver);
+        }
 
         super.dispose();
     }
@@ -211,8 +235,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             return leftSide;
         } else if (deviceIdx == G1Constants.Side.RIGHT.getDeviceIndex()) {
             rightSide = new G1SideManager(G1Constants.Side.RIGHT, backgroundTasksHandler,
-                                          getQueue, handleEvent, this::getDevicePrefs,
-                                          rx, tx);
+                                          getQueue, handleEvent, this::getDevicePrefs, rx, tx);
             return rightSide;
         }
 
@@ -229,6 +252,20 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         return null;
     }
 
+    private class IntentReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action != null && action.equals(G1Constants.INTENT_TOGGLE_SILENT_MODE)) {
+                GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+                if (device != null && device.equals(getDevice())) {
+                    // We don't know what thread is handling this event, schedule the BLE to run in
+                    // the background.
+                    backgroundTasksHandler.post(G1DeviceSupport.this::onToggleSilentMode);
+                }
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////
     // Below are all the onXXX() handlers overridden from the base class. //
@@ -277,9 +314,17 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
      */
     @Override
     public void onSendConfiguration(String config) {
-        // Forward to both sides.
-        if (leftSide != null) leftSide.onSendConfiguration(config);
-        if (rightSide != null) rightSide.onSendConfiguration(config);
+        switch (config) {
+            case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE:
+                // This setting is only sent to the right arm.
+                if (rightSide != null) rightSide.onSendConfiguration(config);
+                break;
+            default:
+                // Forward to both sides.
+                if (leftSide != null) leftSide.onSendConfiguration(config);
+                if (rightSide != null) rightSide.onSendConfiguration(config);
+                break;
+        }
     }
 
     @Override
@@ -289,31 +334,48 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         boolean use12HourFormat = getDevicePrefs().getTimeFormat().equals(
                 DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_12H);
         Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        long timeMilliseconds = c.getTimeInMillis();
-        long tzOffset = TimeZone.getDefault().getOffset(timeMilliseconds);
-        timeMilliseconds += tzOffset;
+        long currentMilliseconds = c.getTimeInMillis();
+        long tzOffset = TimeZone.getDefault().getOffset(currentMilliseconds);
+        long timeMilliseconds = currentMilliseconds + tzOffset;
 
         // Check if the GB settings are set to metric, if not, set the temp to use Fahrenheit.
         String metricString = GBApplication.getContext().getString(R.string.p_unit_metric);
         boolean useFahrenheit = !GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, metricString).equals(metricString);
 
-        // This block is synchronized. We do not want two calls to overlap, otherwise the lenses
-        // could get skewed with different values.
-        synchronized (sendTimeLock) {
-            // Send the left the time synchronously, then once a response is received, send the right.
-            // The glasses will ignore the command on the right lens if it arrives before the left.
-            G1Communications.CommandHandler leftCommandHandler =
-                    new G1Communications.CommandTimeAndWeather(
-                            timeMilliseconds, use12HourFormat, /*weatherInfo=*/ null, useFahrenheit);
-            leftSide.send(leftCommandHandler);
-            if (!leftCommandHandler.waitForResponsePayload()) {
-                LOG.error("Set time on left lens timed out");
-                getDevice().setState(GBDevice.State.WAITING_FOR_RECONNECT);
-                getDevice().sendDeviceUpdateIntent(getContext());
-            }
+        // Run in the background in case the command hangs and this was run from the UI thread.
+        backgroundTasksHandler.post(() -> {
+            // This block is synchronized. We do not want two calls to overlap, otherwise the lenses
+            // could get skewed with different values.
+            synchronized (sendTimeLock) {
+                // Send the left the time synchronously, then once a response is received, send the right.
+                // The glasses will ignore the command on the right lens if it arrives before the left.
+                G1Communications.CommandHandler leftCommandHandler =
+                        new G1Communications.CommandSetTimeAndWeather(timeMilliseconds,
+                                                                      use12HourFormat, useFahrenheit);
+                leftSide.send(leftCommandHandler);
+                if (!leftCommandHandler.waitForResponsePayload()) {
+                    LOG.error("Set time on left lens timed out");
+                    getDevice().setState(GBDevice.State.WAITING_FOR_RECONNECT);
+                    getDevice().sendDeviceUpdateIntent(getContext());
+                }
 
-            rightSide.send(new G1Communications.CommandTimeAndWeather(
-                        timeMilliseconds, use12HourFormat, /*weatherInfo=*/ null, useFahrenheit));
+                rightSide.send(new G1Communications.CommandSetTimeAndWeather(timeMilliseconds,
+                                                                             use12HourFormat,
+                                                                             useFahrenheit));
+            }
+        });
+    }
+
+    private void onToggleSilentMode() {
+        if (leftSide == null || rightSide == null) return;
+
+        // If both lenses are in sync on what the status is, set them both. Otherwise, only set the
+        // right one so they can be resynchronized.
+        if(leftSide.getSilentModeStatus() == rightSide.getSilentModeStatus()){
+            leftSide.onToggleSilentMode();
+            rightSide.onToggleSilentMode();
+        } else {
+            rightSide.onToggleSilentMode();
         }
     }
 }

@@ -1124,6 +1124,7 @@
     <string name="silent_mode_normal_vibrate">Normal / Vibrate</string>
     <string name="silent_mode_normal_silent">Normal / Silent</string>
     <string name="silent_mode_vibrate_silent">Vibrate / Silent</string>
+    <string name="silent_mode">Silent Mode</string>
     <string name="prefs_always_on_display">Always On Display</string>
     <string name="prefs_always_on_display_follow_watchface">Style follows Watchface</string>
     <string name="prefs_always_on_display_style">Style</string>
@@ -3959,4 +3960,12 @@
     <string name="pref_huawei_activity_reminder_goal_reached_title">Goal Reached</string>
     <string name="pref_huawei_activity_reminder_goal_reached_summary">Get a reminder when you complete rings</string>
     <string name="body_energy_legend_average">30-Day Average</string>
+    <string name="pref_even_realities_g1_screen_location_title">Screen Location</string>
+    <string name="pref_even_realities_g1_screen_location_summary">Changes the vertical location of the display</string>
+    <string name="pref_even_realities_g1_screen_depth_title">Screen Depth</string>
+    <string name="pref_even_realities_g1_screen_depth_summary">Changes the binocular separation and apparent depth of the display</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_title">Activation Angle</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_summary">Changes how high the wearer needs to lift their head for the dashboard to be shown</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_title">Calibrate Angle</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Zeroes the angle of the glasses, look straight ahead and tap here</string>
 </resources>

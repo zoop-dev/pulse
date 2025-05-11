@@ -1,6 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 
 import org.slf4j.Logger;
@@ -42,9 +44,10 @@ public class G1SideManager {
     private final BluetoothGattCharacteristic tx;
     private final Runnable batteryRunner;
     private final Runnable heartBeatRunner;
+    private final Runnable displaySettingsPreviewCloserRunner;
     private final Set<G1Communications.CommandHandler> commandHandlers;
-    private short heartBeatSequence;
-    private short globalSequence;
+    private byte globalSequence;
+    private boolean isSilentModeEnabled;
     private GBDevice.State state;
 
     public G1SideManager(G1Constants.Side mySide, Handler backgroundTasksHandler,
@@ -59,19 +62,29 @@ public class G1SideManager {
         this.rx = rx;
         this.tx = tx;
         this.batteryRunner = () -> {
-            send(new G1Communications.CommandBatteryLevel(this::handleBatteryPayload));
+            send(new G1Communications.CommandGetBatteryInfo(this::handleBatteryPayload));
             scheduleBatteryPolling();
         };
 
         this.heartBeatRunner = () -> {
-            send(new G1Communications.CommandHeartBeat(heartBeatSequence++));
+            // We can send any command as a heart beat. The official app uses this one.
+            send(new G1Communications.CommandGetSilentModeSettings(null));
             scheduleHeatBeat();
+        };
+        this.displaySettingsPreviewCloserRunner = () -> {
+            DevicePrefs prefs = getDevicePrefs();
+            send(new G1Communications.CommandSetDisplaySettings(
+                    false /* preview */,
+                    (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT, 0),
+                    // Depth ranges from 1-9 instead of 0-8, so offset by one to convert from
+                    // the slider space.
+                    (byte)(prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH, 0) + 1)));
         };
         this.commandHandlers = new HashSet<>();
 
         // Non Finals
-        this.heartBeatSequence = 0;
         this.globalSequence = 0;
+        this.isSilentModeEnabled = false;
         this.state = GBDevice.State.CONNECTED;
     }
 
@@ -99,7 +112,7 @@ public class G1SideManager {
         return state;
     }
 
-    public void initialize() {
+    public void initialize(TransactionBuilder transaction) {
         // The glasses will auto disconnect after 30 seconds of no data on the wire.
         // Schedule a heartbeat task. If this is not enabled, the glasses will disconnect and be
         // useless to the user.
@@ -111,19 +124,75 @@ public class G1SideManager {
         state = GBDevice.State.INITIALIZED;
     }
 
-    public void postInitialize() {
-        send(new G1Communications.CommandBatteryLevel(this::handleBatteryPayload));
-        send(new G1Communications.CommandFirmwareInfo(this::handleFirmwareInfoPayload));
+    public byte getSilentModeStatus() {
+        return isSilentModeEnabled ? G1Constants.SilentStatus.ENABLE : G1Constants.SilentStatus.DISABLE;
+    }
+
+    private void postInitializeCommon(TransactionBuilder transaction) {
+        sendInTransaction(transaction, new G1Communications.CommandGetBatteryInfo(this::handleBatteryPayload));
+        sendInTransaction(transaction, new G1Communications.CommandGetFirmwareInfo(this::handleFirmwareInfoPayload));
+        sendInTransaction(transaction, new G1Communications.CommandGetSilentModeSettings(this::handleSilentStatusPayload));
+    }
+
+    public void postInitializeLeft() {
+        TransactionBuilder transaction =
+                new TransactionBuilder("post_initialize_left_" + mySide.getDeviceIndex());
+        postInitializeCommon(transaction);
+
+        // These can be sent to both, but the left lens is used as the master for these settings.
+        sendInTransaction(transaction, new G1Communications.CommandGetDisplaySettings(this::handleDisplaySettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandGetBrightnessSettings(this::handleBrightnessSettingsPayload));
+        transaction.queue(getQueue());
+    }
+
+    public void postInitializeRight() {
+        TransactionBuilder transaction =
+                new TransactionBuilder( "post_initialize_right_" + mySide.getDeviceIndex());
+        postInitializeCommon(transaction);
+
+        // This settings are only sent to the right lens in the official app, so we copy that.
+        sendInTransaction(transaction, new G1Communications.CommandGetHeadGestureSettings(this::handleHeadGestureSettingsPayload));
+        // This setting uses the right lens as the master for the setting simply to balance the amount
+        // of commands being sent to the left vs right.
+        sendInTransaction(transaction, new G1Communications.CommandGetWearDetectionSettings(this::handleWearDetectionSettingsPayload));
+        transaction.queue(getQueue());
     }
 
     public void onSendConfiguration(String config) {
+        DevicePrefs prefs = getDevicePrefs();
         switch (config) {
             // Reschedule battery polling. The new schedule may be disabled.
             case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
             case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_INTERVAL:
                 scheduleBatteryPolling();
                 break;
+            case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT:
+            case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH:
+                sendDisplaySettings(prefs);
+                break;
+            case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE:
+                send(new G1Communications.CommandSetHeadGestureSettings(
+                        (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE, 40)));
+                break;
+            case DeviceSettingsPreferenceConst.PREF_SCREEN_AUTO_BRIGHTNESS:
+            case DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS:
+                send(new G1Communications.CommandSetBrightnessSettings(
+                        prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SCREEN_AUTO_BRIGHTNESS, true),
+                        (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS, 0x2A)));// TODO: Add a constant for the max value?
+                break;
+            case DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE:
+                send(new G1Communications.CommandSetWearDetectionSettings(
+                        prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE, true)));
+                break;
+
         }
+    }
+
+    public void onToggleSilentMode() {
+        isSilentModeEnabled = !isSilentModeEnabled;
+        G1Communications.CommandHandler commandHandler =
+                new G1Communications.CommandSetSilentModeSettings(isSilentModeEnabled);
+        send(commandHandler);
     }
 
     private void scheduleHeatBeat() {
@@ -134,30 +203,56 @@ public class G1SideManager {
 
     private void scheduleBatteryPolling() {
         backgroundTasksHandler.removeCallbacksAndMessages(batteryRunner);
-        DevicePrefs prefs = getDevicePrefs();
-        if (prefs.getBatteryPollingEnabled()) {
-            int interval_minutes = prefs.getBatteryPollingIntervalMinutes();
-            int interval = interval_minutes * 60 * 1000;
-            LOG.debug("Starting battery runner delayed by {} ({} minutes)", interval,
-                      interval_minutes);
-            backgroundTasksHandler.postDelayed(batteryRunner, interval);
+            DevicePrefs prefs = getDevicePrefs();
+            if (prefs.getBatteryPollingEnabled()) {
+                int interval_minutes = prefs.getBatteryPollingIntervalMinutes();
+                int interval = interval_minutes * 60 * 1000;
+                LOG.debug("Starting battery runner delayed by {} ({} minutes)", interval,
+                          interval_minutes);
+                backgroundTasksHandler.postDelayed(batteryRunner, interval);
         }
     }
 
-    private synchronized short getNextSequence() {
+    private synchronized byte getNextSequence() {
+        // Synchronized so the sequence increments atomically.
         // This number will eventually overflow, and that is fine. The sequence number is just to
         // match the request and response together.
         return globalSequence++;
     }
 
-    public void send(G1Communications.CommandHandler command) {
-        TransactionBuilder builder =
-                new TransactionBuilder(command.getName() + "_" + mySide.getDeviceIndex());
-        sendInTransaction(builder, command);
-        builder.queue(getQueue());
+    private synchronized void sendDisplaySettings(DevicePrefs prefs) {
+        // Synchronized so that there can only ever be one background task.
+        // Clear any existing runner in case the user has changed the value multiple times
+        // before th delay expired.
+        backgroundTasksHandler.removeCallbacksAndMessages(displaySettingsPreviewCloserRunner);
+
+        // The glasses expect the setting to
+        send(new G1Communications.CommandSetDisplaySettings(
+                true /* preview */,
+                (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT, 0),
+                // Depth ranges from 1-9 instead of 0-8, so offset by one to convert from
+                // the slider space.
+                (byte)(prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH, 0) + 1)));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // On newer APIs, use the runner as the token.
+            backgroundTasksHandler.postDelayed(displaySettingsPreviewCloserRunner,
+                                               displaySettingsPreviewCloserRunner,
+                                               G1Constants.DISPLAY_SETTINGS_PREVIEW_DELAY);
+        } else {
+            backgroundTasksHandler.postDelayed(displaySettingsPreviewCloserRunner,
+                                               G1Constants.DISPLAY_SETTINGS_PREVIEW_DELAY);
+        }
     }
 
-    private void sendInTransaction(TransactionBuilder builder, G1Communications.CommandHandler command) {
+    public void send(G1Communications.CommandHandler command) {
+        TransactionBuilder transaction =
+                new TransactionBuilder(command.getName() + "_" + mySide.getDeviceIndex());
+        sendInTransaction(transaction, command);
+        transaction.queue(getQueue());
+    }
+
+    private void sendInTransaction(TransactionBuilder transaction, G1Communications.CommandHandler command) {
         // Calling getNextSequence() will advance the global sequence, if the command doesn't need
         // a sequence number, don't call it so we don't waste a sequence number.
         if (command.needsGlobalSequence()) {
@@ -167,7 +262,7 @@ public class G1SideManager {
         LOG.debug("Send command {} on side {}", command.getName(), mySide.getDeviceIndex());
 
         // Write the packet to the BLE txn.
-        builder.write(tx, command.serialize());
+        transaction.write(tx, command.serialize());
 
         // If this command expects a response, register the handler.
         if (command.expectResponse()) {
@@ -206,8 +301,10 @@ public class G1SideManager {
 
     public boolean handlePayload(byte[] payload) {
         for (G1Communications.CommandHandler commandHandler : commandHandlers) {
-            LOG.debug("Got response payload for command {} on side {}: {}", commandHandler.getName(), mySide.getDeviceIndex(), Logging.formatBytes(payload));
             if (commandHandler.responseMatches(payload)) {
+                LOG.debug("Got response payload for command {} on side {}: {}",
+                          commandHandler.getName(), mySide.getDeviceIndex(),
+                          Logging.formatBytes(payload));
                 synchronized (commandHandlers) {
                     commandHandlers.remove(commandHandler);
                     commandHandler.setResponsePayload(payload);
@@ -217,7 +314,19 @@ public class G1SideManager {
                 return callback != null && callback.apply(payload);
             }
         }
-        LOG.debug("Unhandled payload on side {}: {}", mySide.getDeviceIndex(), Logging.formatBytes(payload));
+
+        // These can come in unprompted from the glasses, call the correct handler based on what the
+        // command is.
+        if (payload.length > 1) {
+            if (payload[0] == G1Constants.CommandId.DEVICE_ACTION.id) {
+                return handleDeviceActionPayload(payload);
+            } else if (payload[0] == G1Constants.CommandId.DASHBOARD.id) {
+                return handleDashboardPayload(payload);
+            }
+        }
+
+        LOG.debug("Unhandled payload on side {}: {}",
+                  mySide.getDeviceIndex(), Logging.formatBytes(payload));
 
         // Not handled by any handlers.
         return false;
@@ -253,5 +362,56 @@ public class G1SideManager {
             return true;
         }
         return false;
+    }
+
+    private boolean handleSilentStatusPayload(byte[] payload) {
+        isSilentModeEnabled = G1Communications.CommandGetSilentModeSettings.isEnabled(payload);
+        return true;
+    }
+    private boolean handleDisplaySettingsPayload(byte[] payload) {
+        SharedPreferences.Editor editor = getDevicePrefs().getPreferences().edit();
+        editor.putInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT,
+                      G1Communications.CommandGetDisplaySettings.getHeight(payload));
+        // Depth is indexed is 1-9, so subtract 1 to map it to the 0-8 of the slider.
+        editor.putInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH,
+                      G1Communications.CommandGetDisplaySettings.getDepth(payload) - 1);
+        editor.apply();
+        return true;
+    }
+
+    private boolean handleHeadGestureSettingsPayload(byte[] payload) {
+        SharedPreferences.Editor editor = getDevicePrefs().getPreferences().edit();
+        editor.putInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE,
+                      G1Communications.CommandGetHeadGestureSettings.getActivationAngle(payload));
+        editor.apply();
+        return true;
+    }
+
+    private boolean handleBrightnessSettingsPayload(byte[] payload) {
+        SharedPreferences.Editor editor = getDevicePrefs().getPreferences().edit();
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SCREEN_AUTO_BRIGHTNESS,
+                          G1Communications.CommandGetBrightnessSettings.isAutoBrightnessEnabled(payload));
+        editor.putInt(DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS,
+                      G1Communications.CommandGetBrightnessSettings.getBrightnessLevel(payload));
+        editor.apply();
+        return true;
+    }
+
+    private boolean handleWearDetectionSettingsPayload(byte[] payload) {
+        SharedPreferences.Editor editor = getDevicePrefs().getPreferences().edit();
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE,
+                          G1Communications.CommandGetWearDetectionSettings.isEnabled(payload));
+        editor.apply();
+        return true;
+    }
+
+    private boolean handleDeviceActionPayload(byte[] payload) {
+        LOG.debug("Device Action payload on side {}: {}", mySide.getDeviceIndex(), Logging.formatBytes(payload));
+        return true;
+    }
+
+    private boolean handleDashboardPayload(byte[] payload) {
+        LOG.debug("Dashboard payload on side {}: {}", mySide.getDeviceIndex(), Logging.formatBytes(payload));
+        return true;
     }
 }

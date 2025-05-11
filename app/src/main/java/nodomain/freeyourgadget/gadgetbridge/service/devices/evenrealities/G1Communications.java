@@ -14,7 +14,7 @@ public class G1Communications {
     public abstract static class CommandHandler {
         private final boolean expectResponse;
         private final Function<byte[], Boolean> callback;
-        protected short sequence;
+        protected byte sequence;
         private byte[] responsePayload;
         private int retryCount;
 
@@ -26,7 +26,7 @@ public class G1Communications {
         }
 
         public boolean needsGlobalSequence() { return false; }
-        public void setGlobalSequence(short sequence) {
+        public void setGlobalSequence(byte sequence) {
             this.sequence = sequence;
         }
         public int getTimeout() {
@@ -95,8 +95,29 @@ public class G1Communications {
         public abstract String getName();
     }
 
-    public static class CommandFirmwareInfo extends CommandHandler {
-        public CommandFirmwareInfo(Function<byte[], Boolean> callback) {
+    public static class CommandSendInit extends CommandHandler {
+        public CommandSendInit() {
+            super(true, null);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.INIT.id, (byte)0xFB };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload[0] == G1Constants.CommandId.INIT.id;
+        }
+
+        @Override
+        public String getName() {
+            return "send_init";
+        }
+    }
+
+    public static class CommandGetFirmwareInfo extends CommandHandler {
+        public CommandGetFirmwareInfo(Function<byte[], Boolean> callback) {
             super(true, callback);
         }
 
@@ -115,12 +136,12 @@ public class G1Communications {
 
         @Override
         public String getName() {
-            return "firmware_info";
+            return "get_firmware_info";
         }
     }
 
-     public static class CommandBatteryLevel extends CommandHandler {
-        public CommandBatteryLevel(Function<byte[], Boolean> callback) {
+     public static class CommandGetBatteryInfo extends CommandHandler {
+        public CommandGetBatteryInfo(Function<byte[], Boolean> callback) {
             super(true, callback);
         }
         @Override
@@ -138,14 +159,14 @@ public class G1Communications {
 
         @Override
         public String getName() {
-            return "battery_level";
+            return "get_battery_info";
         }
     }
 
-    public static class CommandHeartBeat extends CommandHandler {
-        public CommandHeartBeat(short sequence) {
+    public static class CommandSendHeartBeat extends CommandHandler {
+        public CommandSendHeartBeat(byte sequence) {
             super(false, null);
-            super.sequence = sequence;
+            setGlobalSequence(sequence);
         }
 
         @Override
@@ -154,11 +175,9 @@ public class G1Communications {
                 G1Constants.CommandId.HEARTBEAT.id,
                 0x00, // length is a short
                 0x06, // length
-                // TODO: What the heck is the 0x04 and why is the sequence split?
-                //  Need to look at a real capture for this.
-                (byte) (sequence % 0xFF),
-                0x04,
-                (byte) (sequence % 0xFF)
+                sequence, // Sequence is included twice for some reason, also verified by the FW.
+                0x04, // Magic value that the FW looks for.
+                sequence
             };
         }
 
@@ -169,18 +188,18 @@ public class G1Communications {
 
         @Override
         public String getName() {
-            return "heart_beat";
+            return "send_heart_beat";
         }
     }
 
-    public static class CommandTimeAndWeather extends CommandHandler {
+    public static class CommandSetTimeAndWeather extends CommandHandler {
         long timeMilliseconds;
         boolean use12HourFormat;
         byte tempInCelsius;
         byte weatherIcon;
         boolean useFahrenheit;
 
-        public CommandTimeAndWeather(long timeMilliseconds, boolean use12HourFormat, WeatherSpec weatherInfo, boolean useFahrenheit) {
+        public CommandSetTimeAndWeather(long timeMilliseconds, boolean use12HourFormat, WeatherSpec weatherInfo, boolean useFahrenheit) {
             super(true, null);
             this.timeMilliseconds = timeMilliseconds;
             this.use12HourFormat = use12HourFormat;
@@ -194,15 +213,20 @@ public class G1Communications {
             }
             this.useFahrenheit = useFahrenheit;
         }
+        public CommandSetTimeAndWeather(long timeMilliseconds, boolean use12HourFormat, boolean useFahrenheit) {
+            this(timeMilliseconds, use12HourFormat, null, useFahrenheit);
+        }
+
+        @Override
+        public boolean needsGlobalSequence() { return true; }
 
         @Override
         public byte[] serialize() {
             byte[] packet = new byte[] {
                 G1Constants.CommandId.DASHBOARD_CONFIG.id,
                 G1Constants.DashboardConfigSubCommand.SET_TIME_AND_WEATHER.id,
-                // Sequence place holder
                 0x00,
-                0x00,
+                sequence,
                 // Magic number?
                 0x01,
                 // Time 32bit place holders
@@ -227,7 +251,6 @@ public class G1Communications {
                 // 24H/12H
                 (byte)(use12HourFormat ? 0x01 : 0x00)
             };
-            BLETypeConversions.writeUint16BE(packet, 2, sequence);
             BLETypeConversions.writeUint32(packet, 5, (int)(timeMilliseconds / 1000));
             BLETypeConversions.writeUint64(packet, 9, timeMilliseconds);
 
@@ -241,16 +264,300 @@ public class G1Communications {
             }
 
             // Command should match and the sequence should match.
-            // TODO actually check the sequence (need to confirm the offset).
             return payload[0] == G1Constants.CommandId.DASHBOARD_CONFIG.id &&
-                   payload[1] == G1Constants.DashboardConfigSubCommand.SET_TIME_AND_WEATHER.id;
-           // payload[2] == (byte)(sequence >> 8) &&
-           // payload[3] == (byte)sequence;
+                   payload[1] == G1Constants.DashboardConfigSubCommand.SET_TIME_AND_WEATHER.id &&
+                   payload[3] == sequence;
         }
 
         @Override
         public String getName() {
-            return "time_and_weather";
+            return "set_time_and_weather";
+        }
+    }
+
+    public static class CommandGetSilentModeSettings extends CommandHandler {
+        public CommandGetSilentModeSettings(Function<byte[], Boolean> callback) {
+            super(true, callback);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.GET_SILENT_MODE_SETTINGS.id };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 4 && payload[0] == G1Constants.CommandId.GET_SILENT_MODE_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "get_silent_status";
+        }
+
+        public static boolean isEnabled(byte[] payload) {
+            return payload[2] == G1Constants.SilentStatus.ENABLE;
+        }
+    }
+
+    public static class CommandSetSilentModeSettings extends CommandHandler {
+        private final boolean enable;
+        public CommandSetSilentModeSettings(boolean enable) {
+            super(true, null);
+            this.enable = enable;
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] {
+                G1Constants.CommandId.SET_SILENT_MODE_SETTINGS.id,
+                (byte)(enable ? G1Constants.SilentStatus.ENABLE : G1Constants.SilentStatus.DISABLE),
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length > 1 && payload[0] == G1Constants.CommandId.SET_SILENT_MODE_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "set_silent_mode_settings_" + (enable ? "enabled" : "disabled");
+        }
+    }
+
+    public static class CommandGetDisplaySettings extends CommandHandler {
+        public CommandGetDisplaySettings(Function<byte[], Boolean> callback) {
+            super(true, callback);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.GET_DISPLAY_SETTINGS.id };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 4 && payload[0] == G1Constants.CommandId.GET_DISPLAY_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "get_display_settings";
+        }
+
+        public static byte getHeight(byte[] payload) {
+            return payload[2];
+        }
+
+        public static byte getDepth(byte[] payload) {
+            return payload[3];
+        }
+    }
+
+    public static class CommandSetDisplaySettings extends CommandHandler {
+        private final boolean preview;
+        private final byte height;
+        private final byte depth;
+        public CommandSetDisplaySettings(boolean preview, byte height, byte depth) {
+            super(true, null);
+            this.preview = preview;
+            this.height = height;
+            this.depth = depth;
+        }
+
+        @Override
+        public boolean needsGlobalSequence() { return true; }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] {
+                G1Constants.CommandId.SET_DISPLAY_SETTINGS.id,
+                0x08, // Subcommand?
+                0x00,
+                sequence,
+                0x02, // Seems to be a magic number?
+                preview ? 0x01 : (byte)0x00,
+                height,
+                depth
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 6 &&
+                   payload[0] == G1Constants.CommandId.SET_DISPLAY_SETTINGS.id &&
+                   payload[1] == 0x06 && // Magic Number
+                   payload[3] == sequence;
+        }
+
+        @Override
+        public String getName() {
+            return "set_display_settings_" + height + "_" + depth;
+        }
+    }
+
+    public static class CommandGetHeadGestureSettings extends CommandHandler {
+        public CommandGetHeadGestureSettings(Function<byte[], Boolean> callback) {
+            super(true, callback);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.GET_HEAD_GESTURE_SETTINGS.id };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 4 && payload[0] == G1Constants.CommandId.GET_HEAD_GESTURE_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "get_head_gesture_settings";
+        }
+
+        public static byte getActivationAngle(byte[] payload) {
+            return payload[2];
+        }
+    }
+
+    public static class CommandSetHeadGestureSettings extends CommandHandler {
+        private final byte angle;
+        // Allowed Angles are 0-60.
+        public CommandSetHeadGestureSettings(byte angle) {
+            super(true, null);
+            this.angle = angle;
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] {
+                G1Constants.CommandId.SET_HEAD_GESTURE_SETTINGS.id,
+                angle,
+                // Magic number, other project called it the "level setting".
+                // Maybe try sending 0x00 and see what happens?
+                0x01
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 1 && payload[0] == G1Constants.CommandId.SET_HEAD_GESTURE_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "set_head_gesture_settings_" + angle;
+        }
+    }
+
+    public static class CommandGetBrightnessSettings extends CommandHandler {
+        public CommandGetBrightnessSettings(Function<byte[], Boolean> callback) {
+            super(true, callback);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.GET_BRIGHTNESS_SETTINGS.id };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 3 && payload[0] == G1Constants.CommandId.GET_BRIGHTNESS_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "get_brightness_settings";
+        }
+
+        public static byte getBrightnessLevel(byte[] payload) {
+            return payload[2];
+        }
+
+        public static boolean isAutoBrightnessEnabled(byte[] payload) {
+            return payload[3] == 0x01;
+        }
+    }
+
+    public static class CommandSetBrightnessSettings extends CommandHandler {
+        private final boolean enableAutoBrightness;
+        private final byte brightnessLevel;
+        public CommandSetBrightnessSettings(boolean enableAutoBrightness, byte brightnessLevel) {
+            super(true, null);
+            this.enableAutoBrightness = enableAutoBrightness;
+            this.brightnessLevel = brightnessLevel;
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] {
+                G1Constants.CommandId.SET_BRIGHTNESS_SETTINGS.id,
+                brightnessLevel,
+                enableAutoBrightness ? 0x01 : (byte)0x00
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length > 1 && payload[0] == G1Constants.CommandId.SET_BRIGHTNESS_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "set_brightness_settings_" + enableAutoBrightness + "_" + brightnessLevel;
+        }
+    }
+
+    public static class CommandGetWearDetectionSettings extends CommandHandler {
+        public CommandGetWearDetectionSettings(Function<byte[], Boolean> callback) {
+            super(true, callback);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.GET_WEAR_DETECTION_SETTINGS.id };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 2 && payload[0] == G1Constants.CommandId.GET_WEAR_DETECTION_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "get_wear_detection_settings";
+        }
+
+        public static boolean isEnabled(byte[] payload) {
+            return payload[2] == 0x01;
+        }
+    }
+
+    public static class CommandSetWearDetectionSettings extends CommandHandler {
+        private final boolean enable;
+        public CommandSetWearDetectionSettings(boolean enable) {
+            super(true, null);
+            this.enable = enable;
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] {
+                G1Constants.CommandId.SET_WEAR_DETECTION_SETTINGS.id,
+                enable ? 0x01 : (byte)0x00
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 2 && payload[0] == G1Constants.CommandId.SET_WEAR_DETECTION_SETTINGS.id;
+        }
+
+        @Override
+        public String getName() {
+            return "set_wear_detection_settings_" + (enable ? "enabled" : "disabled");
         }
     }
 }

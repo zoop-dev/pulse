@@ -12,7 +12,9 @@ public class G1Constants {
     public static final int MTU = 251;
     public static final int HEART_BEAT_DELAY_MS = 28000;
     public static final int DEFAULT_COMMAND_TIMEOUT_MS = 5000;
+    public static final int DISPLAY_SETTINGS_PREVIEW_DELAY = 3000;
     public static final int DEFAULT_RETRY_COUNT = 5;
+    public static final String INTENT_TOGGLE_SILENT_MODE = "nodomain.freeyourgadget.gadgetbridge.evenrealities.silent_mode";
 
     // Extract the L or R at the end of the device prefix.
     public static Side getSideFromFullName(String deviceName) {
@@ -71,12 +73,15 @@ public class G1Constants {
         }
     }
 
+    public static class CommandStatus {
+        public static final byte FAILED = (byte)0xCA;
+        public static final byte DATA_CONTINUES = (byte)0xCA;
+        public static final byte SUCCESS = (byte)0xC9;
+    }
 
     // TODO: Lifted these from a different project, some of them are wrong.
     public enum CommandId {
-        SILENT_MODE((byte) 0x03),
         NOTIFICATION_CONFIG((byte) 0x04),
-
         DASHBOARD_CONFIG((byte) 0x06),
         DASHBOARD((byte) 0x22),
         FW_INFO_REQUEST((byte) 0x23),
@@ -84,7 +89,18 @@ public class G1Constants {
         BATTERY_LEVEL((byte) 0x2C),
         INIT((byte) 0x4D),
         NOTIFICATION((byte) 0x4B),
-        FW_INFO_RESPONSE((byte) 0x6E);
+        FW_INFO_RESPONSE((byte) 0x6E),
+        DEVICE_ACTION((byte) 0xF5),
+        GET_SILENT_MODE_SETTINGS((byte) 0x2B), // There is more info in this one
+        SET_SILENT_MODE_SETTINGS((byte) 0x03),
+        GET_DISPLAY_SETTINGS((byte) 0x3B),
+        SET_DISPLAY_SETTINGS((byte) 0x26),
+        GET_HEAD_GESTURE_SETTINGS((byte) 0x32),
+        SET_HEAD_GESTURE_SETTINGS((byte) 0x0B),
+        GET_BRIGHTNESS_SETTINGS((byte) 0x29),
+        SET_BRIGHTNESS_SETTINGS((byte) 0x01),
+        GET_WEAR_DETECTION_SETTINGS((byte) 0x3A),
+        SET_WEAR_DETECTION_SETTINGS((byte) 0x27);
 
         final public byte id;
 
@@ -96,12 +112,19 @@ public class G1Constants {
     public enum DashboardConfigSubCommand {
         SET_MODE((byte) 0x07),
         UNKNOWN_1((byte) 0x0C),
-        SET_TIME_AND_WEATHER((byte) 0x15);
+        SET_TIME_AND_WEATHER((byte) 0x15),
+        // Not sure why they use this one sometimes.
+        SET_TIME_AND_WEATHER_ALSO((byte) 0x16);
 
         final public byte id;
 
         DashboardConfigSubCommand(byte id) {
             this.id = id;
         }
+    }
+
+    public static class SilentStatus {
+        public static final byte ENABLE = 0x0C;
+        public static final byte DISABLE = 0x0A;
     }
 }
