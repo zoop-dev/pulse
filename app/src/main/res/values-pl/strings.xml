@@ -4054,4 +4054,16 @@
     <string name="pref_huawei_activity_reminders">Przypomnienia o aktywności</string>
     <string name="devicetype_polarh10">Polar H10</string>
     <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
+    <string name="body_energy_legend_average">Średnia 30-dniowa</string>
+    <string name="devicetype_amazfit_active_2_nfc">Amazfit Active 2 NFC</string>
+    <string name="active_calories_total">Aktywne kalorie ogółem</string>
+    <string name="resting_calories_total">Kalorie spoczynkowe ogółem</string>
+    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
+    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
+    <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
+    <string name="pairing_even_realities_g1_final_connect">Konfigurowanie urządzeń, proszę czekać...</string>
+    <string name="calorie_over_goal">Powyżej celu: %1$d kcal</string>
+    <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
+    <string name="calorie_under_goal">Poniżej celu: %1$d kcal</string>
+    <string name="active_calories_avg">Średnia aktywnych kalorii</string>
 </resources>
