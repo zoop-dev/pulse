@@ -72,7 +72,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
     }
 
     @Override
-    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         if (!isOperationRunning())
         {
             LOG.error("onCharacteristicRead but operation is not running!");
@@ -81,19 +81,18 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
         {
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS)) {
-                byte[] data = characteristic.getValue();
-                LOG.info("TODAY STEPS data: {}", Logging.formatBytes(data));
+                LOG.info("TODAY STEPS data: {}", Logging.formatBytes(value));
                 receivedSteps[0] = true;
-                decodeSteps(0, data);
+                decodeSteps(0, value);
                 return true;
             }
         }
 
-        return super.onCharacteristicRead(gatt, characteristic, status);
+        return super.onCharacteristicRead(gatt, characteristic, value, status);
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (!isOperationRunning())
         {
             LOG.error("onCharacteristicChanged but operation is not running!");
@@ -103,7 +102,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
             {
-                if (packetIn.putFragment(characteristic.getValue())) {
+                if (packetIn.putFragment(value)) {
                     Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                     packetIn = new MoyoungPacketIn();
                     if (packet != null) {
@@ -117,7 +116,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
             }
         }
 
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private boolean handlePacket(byte packetType, byte[] payload) {

@@ -235,18 +235,17 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         UUID charUuid = characteristic.getUuid();
         if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS))
         {
-            byte[] payload = characteristic.getValue();
-            LOG.info("Update step count: {}", Logging.formatBytes(characteristic.getValue()));
-            handleStepsHistory(0, payload, true);
+            LOG.info("Update step count: {}", Logging.formatBytes(value));
+            handleStepsHistory(0, value, true);
             return true;
         }
         if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
         {
-            if (packetIn.putFragment(characteristic.getValue())) {
+            if (packetIn.putFragment(value)) {
                 Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                 packetIn = new MoyoungPacketIn();
                 if (packet != null) {
@@ -261,7 +260,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             }
         }
 
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private boolean handlePacket(byte packetType, byte[] payload)

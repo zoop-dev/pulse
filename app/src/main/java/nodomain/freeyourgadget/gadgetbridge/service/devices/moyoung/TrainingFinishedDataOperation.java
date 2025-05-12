@@ -76,7 +76,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (!isOperationRunning())
         {
             LOG.error("onCharacteristicChanged but operation is not running!");
@@ -86,7 +86,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
             {
-                if (packetIn.putFragment(characteristic.getValue())) {
+                if (packetIn.putFragment(value)) {
                     Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                     packetIn = new MoyoungPacketIn();
                     if (packet != null) {
@@ -101,7 +101,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
         }
 
-        return super.onCharacteristicChanged(gatt, characteristic);
+        return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
     private boolean handlePacket(byte packetType, byte[] payload) {
