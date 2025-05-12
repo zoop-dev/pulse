@@ -55,6 +55,11 @@ public class CaloriesPeriodFragment extends CaloriesFragment<CaloriesPeriodFragm
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
 
+    @Override
+    protected boolean isSingleDay() {
+        return false;
+    }
+
     public static CaloriesPeriodFragment newInstance(int totalDays) {
         CaloriesPeriodFragment fragmentFirst = new CaloriesPeriodFragment();
         Bundle args = new Bundle();

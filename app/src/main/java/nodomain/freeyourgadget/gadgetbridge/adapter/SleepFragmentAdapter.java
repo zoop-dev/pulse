@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager;
 
 
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.DaySleepChartFragment;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.WeekSleepChartFragment;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepDailyFragment;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepPeriodFragment;
 
 public class SleepFragmentAdapter extends NestedFragmentAdapter {
     public SleepFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
@@ -19,12 +19,12 @@ public class SleepFragmentAdapter extends NestedFragmentAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new DaySleepChartFragment();
+                return new SleepDailyFragment();
             case 1:
-                return WeekSleepChartFragment.newInstance(7);
+                return SleepPeriodFragment.newInstance(7);
             case 2:
-                return WeekSleepChartFragment.newInstance(30);
+                return SleepPeriodFragment.newInstance(30);
         }
-        return new DaySleepChartFragment();
+        return new SleepDailyFragment();
     }
 }

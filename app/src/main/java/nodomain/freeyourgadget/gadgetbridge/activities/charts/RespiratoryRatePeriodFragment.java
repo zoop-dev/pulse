@@ -43,6 +43,11 @@ public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<Respi
     private TextView awakeAvg;
     private LineChart respiratoryRateChart;
 
+    @Override
+    protected boolean isSingleDay() {
+        return false;
+    }
+
     public static RespiratoryRatePeriodFragment newInstance (int totalDays) {
         RespiratoryRatePeriodFragment fragmentFirst = new RespiratoryRatePeriodFragment();
         Bundle args = new Bundle();

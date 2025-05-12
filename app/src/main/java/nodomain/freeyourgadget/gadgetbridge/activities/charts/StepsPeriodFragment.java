@@ -57,6 +57,11 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
 
+    @Override
+    protected boolean isSingleDay() {
+        return false;
+    }
+
     public static StepsPeriodFragment newInstance(int totalDays) {
         StepsPeriodFragment fragmentFirst = new StepsPeriodFragment();
         Bundle args = new Bundle();

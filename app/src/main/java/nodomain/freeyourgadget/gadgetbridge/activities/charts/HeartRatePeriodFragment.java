@@ -70,6 +70,11 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
     private LineChart hrLineChart;
     private int TOTAL_DAYS;
 
+    @Override
+    protected boolean isSingleDay() {
+        return false;
+    }
+
     public static HeartRatePeriodFragment newInstance(int totalDays) {
         HeartRatePeriodFragment fragmentFirst = new HeartRatePeriodFragment();
         Bundle args = new Bundle();

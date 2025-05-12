@@ -45,7 +45,13 @@ import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -59,12 +65,13 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.LedColor;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
-public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySleepChartFragment.MyChartsData> {
-    protected static final Logger LOG = LoggerFactory.getLogger(DaySleepChartFragment.class);
+public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChartsData> {
+    protected static final Logger LOG = LoggerFactory.getLogger(SleepDailyFragment.class);
 
     private LineChart mActivityChart;
     private ImageView sleepStagesGauge;
@@ -133,8 +140,6 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
         Triple<Float, Float, Float> intensityData = calculateIntensityData(samples);
         return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight());
     }
-
-
 
     private MySleepChartsData refreshSleepAmounts(GBDevice mGBDevice, List<? extends ActivitySample> samples, List<? extends SleepScoreSample> sleepScoreSamples) {
         SleepAnalysis sleepAnalysis = new SleepAnalysis();
@@ -364,15 +369,7 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
         return result.toString();
     }
 
-    public boolean supportsSleepScore() {
-        final GBDevice device = getChartsHost().getDevice();
-        return device.getDeviceCoordinator().supportsSleepScore(device);
-    }
 
-    @Override
-    public String getTitle() {
-        return getString(R.string.sleepchart_your_sleep);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -457,30 +454,7 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
 
     @Override
     protected void setupLegend(Chart<?> chart) {
-        List<LegendEntry> legendEntries = new ArrayList<>(4);
-        LegendEntry lightSleepEntry = new LegendEntry();
-        lightSleepEntry.label = getActivity().getString(R.string.sleep_colored_stats_light);
-        lightSleepEntry.formColor = akLightSleep.color;
-        legendEntries.add(lightSleepEntry);
-
-        LegendEntry deepSleepEntry = new LegendEntry();
-        deepSleepEntry.label = getActivity().getString(R.string.sleep_colored_stats_deep);
-        deepSleepEntry.formColor = akDeepSleep.color;
-        legendEntries.add(deepSleepEntry);
-
-        if (supportsRemSleep(getChartsHost().getDevice())) {
-            LegendEntry remSleepEntry = new LegendEntry();
-            remSleepEntry.label = getActivity().getString(R.string.sleep_colored_stats_rem);
-            remSleepEntry.formColor = akRemSleep.color;
-            legendEntries.add(remSleepEntry);
-        }
-
-        if (supportsAwakeSleep(getChartsHost().getDevice())) {
-            LegendEntry awakeSleepEntry = new LegendEntry();
-            awakeSleepEntry.label = getActivity().getString(R.string.abstract_chart_fragment_kind_awake_sleep);
-            awakeSleepEntry.formColor = akAwakeSleep.color;
-            legendEntries.add(awakeSleepEntry);
-        }
+        List<LegendEntry> legendEntries = super.createLegendEntries(chart);
 
         if (supportsHeartrate(getChartsHost().getDevice())) {
             LegendEntry hrEntry = new LegendEntry();
@@ -496,17 +470,6 @@ public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySlee
         }
         chart.getLegend().setCustom(legendEntries);
         chart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
-    }
-
-    @Override
-    protected List<? extends ActivitySample> getSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
-        // Temporary fix for totally wrong sleep amounts.
-        return super.getAllSamples(db, device, tsFrom, tsTo);
-    }
-
-    protected List<SleepScoreSample> getSleepScoreSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
-        TimeSampleProvider<? extends SleepScoreSample> provider = device.getDeviceCoordinator().getSleepScoreProvider(device, db.getDaoSession());
-        return (List<SleepScoreSample>) provider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 
     @Override
