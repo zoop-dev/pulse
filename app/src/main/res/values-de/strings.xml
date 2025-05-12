@@ -3981,16 +3981,16 @@
     <string name="calorie_under_goal">Ziel unterschritten: %1$d kcal</string>
     <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
     <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
-    <string name="notifications_app_icon_upload">Benachrichtigungssymbol für Upload</string>
+    <string name="notifications_app_icon_upload">Benachrichtigungs-App-Symbol hochladen</string>
     <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
     <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
     <string name="pairing_even_realities_g1_final_connect">Geräte werden eingerichtet, bitte warten …</string>
-    <string name="pref_huawei_activity_reminder_progress_summary">Lass dich erinnern, wenn du dich deinem Aktivitätsziel näherst.</string>
+    <string name="pref_huawei_activity_reminder_progress_summary">Erinnerungen über den Fortschritt des Aktivitätsrings erhalten</string>
     <string name="active_calories_avg">Aktiver Durchschnitt</string>
     <string name="calorie_over_goal">Ziel überschritten: %1$d kcal</string>
     <string name="workout_swings">Schwünge</string>
     <string name="pref_huawei_activity_reminder_goal_reached_summary">Lass dich erinnern, sobald du dein Tagesziel erreicht hast</string>
     <string name="swim_style_mixed">Gemischte Lagen</string>
-    <string name="swim_style_butterfly">Schmetterlingsstil</string>
+    <string name="swim_style_butterfly">Schmetterlingsschwimmen</string>
     <string name="swim_style_drill">Technikübung</string>
 </resources>
