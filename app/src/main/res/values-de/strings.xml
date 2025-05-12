@@ -576,7 +576,7 @@
     <string name="lack_of_step">Zu wenig Schritte: %1$d</string>
     <string name="overstep">Schritte über Tagesziel: %1$d</string>
     <string name="live_activity_max_heart_rate">Aktueller / Maximaler Puls: %1$d / %2$d</string>
-    <string name="mi3_prefs_band_screen_unlock">Bildschirm des Bands entsperren</string>
+    <string name="mi3_prefs_band_screen_unlock">Smartwatch-Bildschirm entsperren</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Nach oben wischen, um den Band-Bildschirm zu entsperren</string>
     <string name="mi3_prefs_night_mode">Nachtmodus</string>
     <string name="mi3_prefs_night_mode_summary">Bandhelligkeit nachts automatisch verringern</string>
@@ -3974,4 +3974,23 @@
     <string name="pref_huawei_activity_reminder_stand_title">Stand</string>
     <string name="pref_huawei_activity_reminder_stand_summary">Erhalte eine Erinnerung, aufzustehen, wenn du seit einer Stunde nicht aufgestanden bist</string>
     <string name="swimming_stroke">Schwimmzug</string>
+    <string name="body_energy_legend_average">30-Tage-Durchschnitt</string>
+    <string name="devicetype_amazfit_active_2_nfc">Amazfit Active 2 NFC</string>
+    <string name="active_calories_total">Gesamt aktiv</string>
+    <string name="resting_calories_total">Gesamt (Ruhe)</string>
+    <string name="calorie_under_goal">Ziel unterschritten: %1$d kcal</string>
+    <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
+    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
+    <string name="notifications_app_icon_upload">Benachrichtigungssymbol für Upload</string>
+    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
+    <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
+    <string name="pairing_even_realities_g1_final_connect">Geräte werden eingerichtet, bitte warten …</string>
+    <string name="pref_huawei_activity_reminder_progress_summary">Lass dich erinnern, wenn du dich deinem Aktivitätsziel näherst.</string>
+    <string name="active_calories_avg">Aktiver Durchschnitt</string>
+    <string name="calorie_over_goal">Ziel überschritten: %1$d kcal</string>
+    <string name="workout_swings">Schwünge</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">Lass dich erinnern, sobald du dein Tagesziel erreicht hast</string>
+    <string name="swim_style_mixed">Gemischte Lagen</string>
+    <string name="swim_style_butterfly">Schmetterlingsstil</string>
+    <string name="swim_style_drill">Technikübung</string>
 </resources>
