@@ -44,11 +44,9 @@
     <string name="title_activity_fw_app_insaller">FW/App-Installer</string>
     <string name="fw_upgrade_notice">Du bist dabei, die %s zu installieren.</string>
     <string name="fw_multi_upgrade_notice">Du bist dabei anstelle der aktuell auf dem Mi Band vorhandenen Firmware, die Firmware %1$s und %2$s zu installieren.</string>
-    <string name="miband_firmware_known">Diese Firmware wurde getestet und ist bekanntlich mit Gadgetbridge kompatibel.</string>
-    <string name="miband_firmware_unknown_warning">Diese Firmware ist nicht getestet und ist möglicherweise nicht mit Gadgetbridge kompatibel.
-\n
-\nDu wirst GEBETEN, diese nicht zu flashen!</string>
-    <string name="miband_firmware_suggest_whitelist">Wenn du dennoch fortfahren möchtest und das Gerät anschließend korrekt funktioniert, melde bitte den Gadgetbridge-Entwicklern, das sie die Firmwareversion %s auf die Whitelist setzen sollen.</string>
+    <string name="miband_firmware_known">Diese Firmware wurde getestet und ist mit Gadgetbridge kompatibel.</string>
+    <string name="miband_firmware_unknown_warning">Diese Firmware wurde nicht getestet und ist möglicherweise nicht mit Gadgetbridge kompatibel.\n\nDas Flashen dieser Firmware wird ausdrücklich nicht empfohlen!</string>
+    <string name="miband_firmware_suggest_whitelist">Wenn du trotzdem fortfahren möchtest und danach weiterhin alles wie gewünscht funktioniert, informiere bitte die Gadgetbridge-Entwickler, damit die Firmware-Version %s auf die Whitelist gesetzt wird.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_header_general">Allgemeine Einstellungen</string>
@@ -289,7 +287,7 @@
     <string name="weeksteps_today_steps_description">Schritte heute, Ziel: %1$s</string>
     <string name="pref_title_dont_ack_transfer">Übertragung der Aktivitätsdaten nicht bestätigen (ACK)</string>
     <string name="pref_summary_dont_ack_transfers">Ohne ACK (Bestätigung), löscht das Band die Aktivitätsdaten nicht. Nützlich, wenn GB zusammen mit anderen Apps verwendet wird.</string>
-    <string name="pref_summary_keep_data_on_device">Behält Aktivitätsdaten auf dem Gerät, auch nach der Synchronisierung. Nützlich, wenn Gadgetbridge zusammen mit anderen Apps verwendet wird. Dies kann jedoch dazu führen, dass die Uhr keinen Speicherplatz mehr hat und/oder die Synchronisierung nicht mehr richtig funktioniert.</string>
+    <string name="pref_summary_keep_data_on_device">Behält Aktivitätsdaten auch nach der Synchronisierung auf dem Gerät. Nützlich, wenn Gadgetbridge mit anderen Apps verwendet wird. Kann zu Speicherproblemen oder Synchronisierungsfehlern führen.</string>
     <string name="pref_title_low_latency_fw_update">Verwende den Low-Latency-Modus für Firmwareaktualisierung</string>
     <string name="pref_summary_low_latency_fw_update">Dies kann bei Geräten helfen, bei denen Firmwareupdates fehlschlagen.</string>
     <string name="live_activity_steps_history">Schrittverlauf</string>
@@ -315,7 +313,7 @@
     <string name="mi2_prefs_goal_notification">Zielbenachrichtigung</string>
     <string name="mi2_prefs_goal_notification_summary">Die Smartwatch vibriert, wenn du dein Tagesschrittziel erreichst</string>
     <string name="mi2_prefs_display_items">Anzeigeelemente</string>
-    <string name="mi2_prefs_display_items_summary">Die auf der Bandanzeige anzuzeigenden Elemente auswählen</string>
+    <string name="mi2_prefs_display_items_summary">Wähle die Elemente aus, die auf dem Geräte-Bildschirm angezeigt werden</string>
     <string name="mi2_prefs_activate_display_on_lift">Anzeige beim Anheben aktivieren</string>
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Handgelenk drehen, um die Information zu wechseln</string>
     <string name="mi2_prefs_do_not_disturb">Bitte nicht stören</string>
@@ -385,13 +383,7 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble koppeln</string>
     <string name="pebble_pairing_hint">Auf deinem Android-Gerät erscheint ein Koppeln-Dialog. Wenn nicht, schaue in die Benachrichtigungsübersicht und akzeptiere die Kopplungsanforderung. Akzeptiere es auch danach auf deiner Pebble.</string>
-    <string name="weather_notification_label">Stelle sicher, dass dieser Skin in der App \"Weather Notification\" aktiviert ist, damit du Wetterdaten auf deiner Pebble erhältst.
-\n
-\nHier ist keine Konfiguration nötig.
-\n
-\nDu kannst die Systemwetter-App deiner Pebble in App-Verwaltung aktivieren.
-\n
-\nUnterstützte Zifferblätter zeigen das Wetter automatisch an.</string>
+    <string name="weather_notification_label">Stelle sicher, dass dieser Skin in der App „Weather Notification“ aktiviert ist, damit du Wetterdaten auf deiner Smartwatch (Pebble) erhältst.\n\nEine zusätzliche Konfiguration ist nicht erforderlich.\n\nDie Wetterfunktion der Pebble kannst du in der App-Verwaltung aktivieren.\n\nUnterstützte Zifferblätter zeigen das Wetter automatisch an.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth-Kopplung aktivieren</string>
     <string name="pref_summary_setup_bt_pairing">Deaktivierbar, falls du Probleme beim Verbinden hast</string>
     <string name="unit_metric">Metrisch</string>
@@ -407,7 +399,7 @@
     <string name="mi2_enable_text_notifications_summary"><![CDATA[Benötigt Firmware >= 1.0.1.28 und Mili_pro.ft* Installiert.]]></string>
     <string name="off">Aus</string>
     <string name="mi2_dnd_off">Aus</string>
-    <string name="mi2_dnd_automatic">Automatisch (Schlaferkennung)</string>
+    <string name="mi2_dnd_automatic">Automatisch (bei Schlaferkennung aus)</string>
     <string name="mi2_dnd_scheduled">Geplant (Zeitintervall)</string>
     <string name="discovery_attempting_to_pair">Versuche mit %1$s zu koppeln</string>
     <string name="discovery_bonding_failed_immediately">Bindung mit %1$s sofort fehlgeschlagen.</string>
@@ -540,7 +532,7 @@
     <string name="watch9_time_hours">Stunden:</string>
     <string name="watch9_time_seconds">Sekunden:</string>
     <string name="title_activity_watch9_calibration">Watch 9 kalibrieren</string>
-    <string name="watch9_calibration_hint">Stelle die Zeit ein, die dir dein Gerät gerade anzeigt.</string>
+    <string name="watch9_calibration_hint">Stelle die Uhrzeit ein, die dir dein Gerät gerade anzeigt.</string>
     <string name="controlcenter_calibrate_device">Gerät kalibrieren</string>
     <string name="horizontal">Horizontal</string>
     <string name="vertical">Vertikal</string>
@@ -577,7 +569,7 @@
     <string name="overstep">Schritte über Tagesziel: %1$d</string>
     <string name="live_activity_max_heart_rate">Aktueller / Maximaler Puls: %1$d / %2$d</string>
     <string name="mi3_prefs_band_screen_unlock">Smartwatch-Bildschirm entsperren</string>
-    <string name="mi3_prefs_band_screen_unlock_summary">Nach oben wischen, um den Band-Bildschirm zu entsperren</string>
+    <string name="mi3_prefs_band_screen_unlock_summary">Nach oben wischen, um den Geräte-Bildschirm zu entsperren</string>
     <string name="mi3_prefs_night_mode">Nachtmodus</string>
     <string name="mi3_prefs_night_mode_summary">Bandhelligkeit nachts automatisch verringern</string>
     <string name="activity_prefs_charts">Diagrammeinstellungen</string>
@@ -766,7 +758,7 @@
     <string name="fw_upgrade_notice_amazfitgts">Du bist dabei, die Firmware %s auf deiner Amazfit GTS zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
-    <string name="watch_not_connected">Uhr nicht verbunden</string>
+    <string name="watch_not_connected">Smartwatch nicht verbunden</string>
     <string name="qhybrid_vibration_strength">Vibrationsstärke:</string>
     <string name="qhybrid_goal_in_steps">Ziel in Schritten</string>
     <string name="qhybrid_time_shift">Zeitverschiebung</string>
@@ -805,7 +797,7 @@
     <string name="hr_widget_nothing">Nichts</string>
     <string name="find_lost_device_you_found_it">Gefunden!</string>
     <string name="pref_title_force_white_color_scheme">Schwarz-Weiß-Farbschema erzwingen</string>
-    <string name="pref_summary_force_white_color_scheme">Nützlich, wenn deine Uhr dunkle Zeiger hat</string>
+    <string name="pref_summary_force_white_color_scheme">Nützlich, wenn deine Smartwatch dunkle Zeiger hat</string>
     <string name="find_my_phone_notification">Mein Telefon finden</string>
     <string name="notification_channel_high_priority_name">Hohe Priorität</string>
     <string name="pref_title_custom_deviceicon">Gerätespezifisches Benachrichtigungssymbol anzeigen</string>
@@ -842,7 +834,7 @@
     <string name="power_mode_title">Energiesparmodus der Smartwatch</string>
     <string name="menuitem_eventreminder">Ereigniserinnerung</string>
     <string name="menuitem_pai">PAI</string>
-    <string name="pref_summary_device_spec_settings_title_force_time">Erzwinge automatische Zeitsynchronisation beim erneuten Verbinden. Analoge Uhrzeiger können dabei die falsche Uhrzeit anzeigen!</string>
+    <string name="pref_summary_device_spec_settings_title_force_time">Automatische Zeitsynchronisierung bei erneuter Verbindung erzwingen. Die analogen Zeiger könnten sonst eine falsche Uhrzeit anzeigen!</string>
     <string name="pref_summary_notifications_and_calls_title_shake_reject">Dupliziert die Aktion der Smartwatch-Taste</string>
     <string name="prefs_notifications_and_calls_shake_reject">Schüttelgeste Anruf ignorieren/zurückzuweisen</string>
     <string name="pref_summary_notifications_and_calls_title_reject">Aus - ignorieren, An - zurückweisen</string>
@@ -861,7 +853,7 @@
     <string name="swedish">Schwedisch</string>
     <string name="hebrew">Hebräisch</string>
     <string name="greek">Griechisch</string>
-    <string name="bip_prefs_shotcuts_summary">Wähle die Verknüpfungen auf dem Band-Bildschirm</string>
+    <string name="bip_prefs_shotcuts_summary">Wähle die Verknüpfungen auf dem Geräte-Bildschirm</string>
     <string name="menuitem_unknown">Unbekannt</string>
     <string name="bip_prefs_shortcuts">Verknüpfungen</string>
     <string name="hr_widget_last_notification">Letzte Benachrichtigung</string>
@@ -953,7 +945,7 @@
     <string name="seconds">sek</string>
     <string name="minutes_km">min/km</string>
     <string name="seconds_m">sek/m</string>
-    <string name="ascentSeconds">Aufsteigend</string>
+    <string name="ascentSeconds">Anstiegszeit</string>
     <string name="backstroke">Rückenschwimmen</string>
     <string name="freestyle">Freistil</string>
     <string name="breaststroke">Brustschwimmen</string>
@@ -1021,7 +1013,7 @@
     <string name="sonyswr12_settings_alarm_interval_summary">Das intelligente Alarmintervall ist das Intervall vor dem installierten Alarm. In diesem Intervall versucht das Gerät, die leichteste Schlafphase zu erkennen, um den Benutzer zu wecken</string>
     <string name="chart_get_active_and_synchronize">Führe einige Aktivitäten durch und synchronisiere das Gerät.</string>
     <string name="devicetype_nut_mini">Nut mini</string>
-    <string name="descentSeconds">Absteigend</string>
+    <string name="descentSeconds">Abstiegszeit</string>
     <string name="devicetype_lefun">Lefun</string>
     <string name="activity_error_no_app_for_png">Um diesen Screenshot zu teilen installiere eine App die Bilder verarbeiten kann.</string>
     <string name="activity_prefs_chart_min_session_length">Minimale Aktivitätsdauer (Minuten)</string>
@@ -1145,7 +1137,7 @@
     <string name="fossil_hr_unavailable_unauthed">Im unauthentifizierten Modus nicht verfügbar</string>
     <string name="fossil_hr_synced_activity_data">Synchronisierte Aktivitätsdaten</string>
     <string name="fossil_hr_commute_processing">Anfrage wird verarbeitet…</string>
-    <string name="fossil_hr_warning_firmware_too_new">Einige Funktionen sind deaktiviert, weil die Firmware der Uhr zu neu ist</string>
+    <string name="fossil_hr_warning_firmware_too_new">Einige Funktionen sind deaktiviert, weil die Firmware der Smartwatch zu neu ist</string>
     <string name="qhybrid_title_calibration">Kalibrierung</string>
     <string name="qhybrid_title_apps_management">App-Verwaltung</string>
     <string name="qhybrid_title_file_management">Dateiverwaltung</string>
@@ -1170,7 +1162,7 @@
 \nHinweis: Du musst .res nicht installieren, wenn es genau die gleiche ist, wie die zuvor installierte.
 \n
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
-    <string name="fossil_hr_commute_actions_explanation">Die hier konfigurierten Aktionen werden in der Commute-App auf deiner Uhr angezeigt. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
+    <string name="fossil_hr_commute_actions_explanation">Die hier konfigurierten Aktionen werden in der Commute-App auf deiner Smartwatch angezeigt. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
     <string name="kind_agps_bundle">AGPS-Bundle</string>
     <string name="qhybrid_calibration_100_steps">100 Schritte</string>
     <string name="qhybrid_calibration_10_steps">10 Schritte</string>
@@ -1181,18 +1173,18 @@
     <string name="fossil_hr_new_action_cancel">abbrechen</string>
     <string name="fossil_hr_edit_action">Aktion bearbeiten</string>
     <string name="fossil_hr_edit_action_delete">löschen</string>
-    <string name="pref_summary_canned_messages_dismisscall">Abgewiesene Anrufe von der Uhr mit einer SMS-Nachricht beantworten</string>
+    <string name="pref_summary_canned_messages_dismisscall">Abgewiesene Anrufe von der Smartwatch mit einer SMS-Nachricht beantworten</string>
     <string name="pref_summary_canned_messages_set">Sende die unten konfigurierten Nachrichten an dein Gerät</string>
     <string name="qhybrid_summary_calibration">Kalibrieren der Uhrzeiger</string>
     <string name="qhybrid_summary_file_management">Hochladen und Herunterladen von Dateien</string>
-    <string name="pref_summary_physical_buttons">Konfiguriere die Funktionalität der physischen Tasten an der Uhr</string>
+    <string name="pref_summary_physical_buttons">Konfiguriere die Funktionalität der physischen Tasten an der Smartwatch</string>
     <string name="pref_title_physical_buttons">Physische Tasten</string>
     <string name="watchface_install_info">Du bist dabei, das folgende Zifferblatt zu installieren:
 \n
 \n%1$s
 \nVersion %2$s von %3$s
 \n</string>
-    <string name="qhybrid_watchface_configuration_old_firmware">Zifferblattkonfiguration für Uhren mit Firmware-Version DN1.0.2.19r und niedriger</string>
+    <string name="qhybrid_watchface_configuration_old_firmware">Zifferblattkonfiguration für Smartwatches mit Firmware-Version DN1.0.2.19r und niedriger</string>
     <string name="qhybrid_title_watchface">Zifferblattkonfiguration</string>
     <string name="qhybrid_pref_title_external_intents">Gefährliche externe Eingriffe zulassen</string>
     <string name="qhybrid_pref_summary_external_intents">Erlaubt anderen Android-Apps das Hochladen/Überschreiben von Dateien</string>
@@ -1258,8 +1250,8 @@
     <string name="watchface_widget_type_2nd_tz">Zweite Zeitzone</string>
     <string name="watchface_widget_type_calories">Kalorien</string>
     <string name="watchface_widget_type_battery">Akku</string>
-    <string name="watchface_setting_power_saving_hands">Zeigerbewegung deaktivieren, wenn Uhr nicht getragen wird</string>
-    <string name="watchface_setting_power_saving_display">Bildschirmaktualisierungen deaktivieren, wenn Uhr nicht getragen wird</string>
+    <string name="watchface_setting_power_saving_hands">Zeigerbewegung deaktivieren, wenn Smartwatch nicht getragen wird</string>
+    <string name="watchface_setting_power_saving_display">Bildschirmaktualisierungen deaktivieren, wenn Smartwatch nicht getragen wird</string>
     <string name="pref_summary_huami_force_new_protocol">Aktivieren, wenn das Gerät nach einem Firmware-Upgrade keine Verbindung mehr herstellt</string>
     <string name="pref_title_huami_force_new_protocol">Neues Auth-Protokoll</string>
     <string name="menuitem_flashlight">Taschenlampe</string>
@@ -1481,9 +1473,7 @@
     <string name="pref_activity_recognition_mode_none">keine</string>
     <string name="pref_activity_recognition_mode_ask">fragen</string>
     <string name="pref_activity_recognition_mode_auto">automatisch</string>
-    <string name="fossil_hr_button_config_info">Einige Tasten können nicht konfiguriert werden, da ihre Funktionen in der Firmware der Uhr fest programmiert sind.
-\n
-\nAchtung: Ein langer Druck auf den oberen Knopf, wenn ein Zifferblatt aus der offiziellen Fossil-App installiert ist, schaltet auch zwischen dem Ein- und Ausblenden von Widgets um.</string>
+    <string name="fossil_hr_button_config_info">Einige Tasten können nicht konfiguriert werden, da ihre Funktionen in der Firmware der Smartwatch fest programmiert sind. \n \nAchtung: Ein langer Druck auf den oberen Knopf, wenn ein Zifferblatt aus der offiziellen Fossil-App installiert ist, schaltet auch zwischen dem Ein- und Ausblenden von Widgets um.</string>
     <string name="menuitem_menu">Menü</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Automatisch</string>
     <string name="sony_speak_to_chat_sensitivity_low">Niedrig</string>
@@ -1609,9 +1599,7 @@
     <string name="pref_voice_detect_duration_15">15 Sekunden</string>
     <string name="prefs_voice_detect">Spracherkennung</string>
     <string name="prefs_double_tap_edge">Kante doppelt antippen</string>
-    <string name="permission_notification_policy_access">%1$s benötigt Zugriff auf die Einstellungen von \'DND\', um sie auf deiner Uhr zu berücksichtigen, wenn der Bildschirm des Telefons ausgeschaltet ist.
-\n
-\nBitte auf \'%2$s\', dann auf \'%1$s tippen und \'DND\' aktiveren und dann auf \'Zurück\' tippen, um zu %1$s zurückzukehren.</string>
+    <string name="permission_notification_policy_access">%1$s benötigt Zugriff auf die „Nicht stören“-Einstellungen, um sie auf deiner Smartwatch zu berücksichtigen, wenn der Bildschirm deines Telefons ausgeschaltet ist.\n\nTippe bitte auf „%2$s“, dann auf „%1$s“ und aktiviere „Nicht stören erlauben“. Tippe anschließend auf „Zurück“, um zu %1$s zurückzukehren.</string>
     <string name="prefs_seamless_connection_switch_title">Nahtloser Verbindungswechsel</string>
     <string name="prefs_seamless_connection_switch_summary">Wechselt die Stöpsel automatisch zwischen den gekoppelten Geräten</string>
     <string name="prefs_ambient_volume_left">Umgebungslautstärke links</string>
@@ -1641,12 +1629,10 @@
     <string name="world_clock_no_free_slots_title">Keine freien Speicherplätze</string>
     <string name="prefs_activity_monitoring_description">Erhöhe automatisch die Erkennungsfrequenz für den Puls, wenn das Armband körperliche Aktivität erkennt, um die Genauigkeit der Pulserfassung zu verbessern.</string>
     <string name="prefs_ambient_sound_during_call_title">Umgebungsgeräusche während des Anrufs</string>
-    <string name="permission_notification_listener">%1$s benötigt Zugriff auf Benachrichtigungen, um sie auf deiner Uhr anzeigen zu können, wenn der Bildschirm des Telefons ausgeschaltet ist.
-\n
-\nBitte auf \'%2$s\' und dann auf \'%1$s\' tippen, \'Zugriff auf Benachrichtigungen zulassen\' aktivieren und auf \'Zurück\' tippen, um zu %1$s zurückzukehren.</string>
+    <string name="permission_notification_listener">%1$s benötigt Zugriff auf Benachrichtigungen, um sie auf deiner Smartwatch anzuzeigen, wenn der Bildschirm deines Telefons ausgeschaltet ist.\n\nTippe bitte auf „%2$s“, dann auf „%1$s“ und aktiviere „Benachrichtigungszugriff erlauben“. Tippe anschließend auf „Zurück“, um zu %1$s zurückzukehren.</string>
     <string name="prefs_switch_control_left">Schaltersteuerung links</string>
     <string name="pref_switch_controls_anc_ambient">Geräuschunterdrückung ←→ Umgebung</string>
-    <string name="pref_workout_start_on_phone_summary">Startet/stoppt das Fitness-App-Tracking auf dem Telefon, wenn ein GPS-Training auf dem Band gestartet wird</string>
+    <string name="pref_workout_start_on_phone_summary">Startet/stoppt das Fitness-App-Tracking auf dem Telefon, wenn ein GPS-Training auf dem Gerät gestartet wird</string>
     <string name="pref_workout_send_gps_title">GPS während des Trainings senden</string>
     <string name="pref_workout_send_gps_summary">Senden der aktuellen GPS-Position an das Band während des Trainings</string>
     <string name="pref_workout_start_on_phone_title">Fitness-App-Tracking</string>
@@ -1669,7 +1655,7 @@
     <string name="czech">Tschechisch</string>
     <string name="pref_title_banglejs_webview_url">URL des App-Loaders</string>
     <string name="icelandic">Isländisch</string>
-    <string name="permission_location">%1$s benötigt im Hintergrund Zugriff auf deinen Standort, um mit deiner Uhr verbunden zu bleiben, auch wenn dein Bildschirm ausgeschaltet ist. \n \nBitte wähle \'%2$s\' im folgenden Bildschirm, dann drücke \'Zurück\' um zu %1$s zurück zu kommen.</string>
+    <string name="permission_location">%1$s benötigt Zugriff auf deinen Standort im Hintergrund, damit die Verbindung zu deiner Smartwatch auch bei ausgeschaltetem Bildschirm erhalten bleibt.\n\nWähle im nächsten Bildschirm bitte „%2$s“ aus und tippe anschließend auf „Zurück“, um zu %1$s zurückzukehren.</string>
     <string name="persian">Persisch</string>
     <string name="pref_summary_banglejs_webview_url">Wenn du einen benutzerdefinierten App-Loader möchtest, trage hier deine URL https://…/android.html ein. Andernfalls lasse https://banglejs.com/apps leer</string>
     <string name="bengali">Bengalisch</string>
@@ -1709,7 +1695,7 @@
     <string name="open_fw_installer_connect_maximum_one_device">Bitte verbinde NUR EIN Gerät, an das du die Datei senden möchtest.</string>
     <string name="open_fw_installer_ensure_device_connected">Stelle sicher, dass das Gerät %s angeschlossen ist</string>
     <string name="open_fw_installer_info_text">Mit dem Installer kannst du unterstützte Dateien (Firmware, Zifferblätter, Apps, GPS-Daten, Ressourcen und Schriftarten ) auf deine Smartwatch übertragen. Mehr Infos im Wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
-    <string name="open_fw_installer_getting_files_text">Da wir die Firmware-Dateien nicht verteilen dürfen, musst du dir die Dateien selbst beschaffen. Das bedeutet, dass du nach den Dateien in apk-Dateien, online, in Foren, auf Amazfitwatchfaces (für Miband/Amazfit-Geräte) und so weiter suchen musst.</string>
+    <string name="open_fw_installer_getting_files_text">Da wir die Firmware-Dateien nicht weitergeben dürfen, musst du sie selbst beschaffen. Das bedeutet, dass du nach den Dateien in APKs, online, in Foren oder auf Amazfitwatchfaces (für Mi Band- und Amazfit-Geräte) suchen musst.</string>
     <string name="appmanager_item_outdated">(veraltet)</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Größe der Text-Bitmaps</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Größe, die für das Rendern von Text als Bitmap verwendet werden soll</string>
@@ -1757,7 +1743,7 @@
     <string name="about_description_banglejs_nightly">Android-Begleit-App für Bangle.js, die auf dem Gadgetbridge-Projekt aufbaut, mit zusätzlichem Internetzugang. \n \nAufgrund der Richtlinien des Google Play Stores dürfen wir keinen Spendenlink direkt in der App einfügen. Wenn dir diese App gefällt, freuen wir uns jedoch über eine Spende über die Gadgetbridge-Homepage unten.</string>
     <string name="gadgetbridge_running_banglejs_nightly">Bangle.js (Nightly) wird ausgeführt</string>
     <string name="prefs_hourly_chime">Stündlicher Klang</string>
-    <string name="prefs_hourly_chime_summary">Die Uhr piept einmal pro Stunde</string>
+    <string name="prefs_hourly_chime_summary">Die Smartwatch gibt einmal pro Stunde einen Signalton ab</string>
     <string name="step_streaks_achievements_sharing_message">Meine täglichen Schritterfolge!</string>
     <string name="step_streaks_achievements_sharing_title">Schritterfolge</string>
     <string name="permission_display_over_other_apps">%1$s benötigt die Berechtigung, über andere Apps angezeigt zu werden, damit Bangle.js-Watch Aktivitäten mit Intents starten kann, wenn %1$s im Hintergrund ist.
@@ -1777,7 +1763,7 @@
     <string name="pref_header_calendar">Kalender</string>
     <string name="pref_header_connection">Verbindung</string>
     <string name="pref_title_screen_on_on_notifications">Bildschirm ein bei Benachrichtigungen</string>
-    <string name="pref_summary_screen_on_on_notifications">Schaltet den Bildschirm des Bands ein, wenn eine Benachrichtigung eingeht</string>
+    <string name="pref_summary_screen_on_on_notifications">Bildschirm des Bandes/Smartwatch bei Benachrichtigungen einschalten</string>
     <string name="spo2_perc_80">80 %</string>
     <string name="spo2_perc_85">85 %</string>
     <string name="spo2_perc_90">90 %</string>
@@ -1824,7 +1810,7 @@
     <string name="seconds_7">7 Sekunden</string>
     <string name="seconds_8">8 Sekunden</string>
     <string name="seconds_9">9 Sekunden</string>
-    <string name="prefs_always_on_display_summary">Display des Bandes immer eingeschaltet lassen</string>
+    <string name="prefs_always_on_display_summary">Display des Bandes/Smartwatch immer eingeschaltet lassen</string>
     <string name="menuitem_workout_history">Trainingsverlauf</string>
     <string name="prefs_screen_timeout">Bildschirmzeitlimit</string>
     <string name="pref_title_notifications_ignore_low_priority">Benachrichtigungen mit niedriger Priorität ignorieren</string>
@@ -1832,24 +1818,16 @@
     <string name="devicetype_flipper_zero">Flipper zero</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">Steuerung der Bluetooth-Verbindung über Intent-API</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent-API</string>
-    <string name="fw_upgrade_notice_amazfit_gts3">Du bist dabei, die Firmware %s auf deine Amazfit GTS 3 zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">Du bist dabei, die Firmware %s auf deine Amazfit GTS 3 zu installieren. \n \nDeine Samrtwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="pref_title_notification_prefer_long_text">Langen Benachrichtigungstext bevorzugen</string>
     <string name="pref_summary_notification_prefer_long_text">Falls verfügbar, langen Benachrichtigungstext an das Gerät senden</string>
     <string name="devicetype_amazfit_gts3">Amazfit GTS 3</string>
     <string name="menuitem_unknown_app">Unbekannt (%s)</string>
-    <string name="pref_summary_overwrite_settings_on_connection">Beim Verbinden mit dem Band überschreibst du alle Einstellungen des Bandes.</string>
+    <string name="pref_summary_overwrite_settings_on_connection">Beim Verbinden mit dem Gerät alle Einstellungen darauf überschreiben.</string>
     <string name="pref_title_overwrite_settings_on_connection">Überschreiben von Einstellungen bei der Verbindung</string>
     <string name="kind_app">App</string>
     <string name="dismiss">Ablehnen</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3">Du bist dabei, die Firmware %s auf deine Amazfit GTR 3 zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">Du bist dabei, die Firmware %s auf deine Amazfit GTR 3 zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_gtr3">Amazfit GTR 3</string>
     <string name="pref_summary_third_party_app_device_settings">Erlaube anderen installierten Apps von Drittanbietern, Geräteeinstellungen über Intents festzulegen.</string>
     <string name="pref_title_third_party_app_device_settings">Ändern von Einstellungen durch App von Drittanbietern zulassen</string>
@@ -1912,7 +1890,7 @@
     <string name="prefs_weardirection">Tragerichtung</string>
     <string name="prefs_always_on_display_follow_watchface">Stil folgt Zifferblatt</string>
     <string name="prefs_control_center">Kontrollzentrum</string>
-    <string name="prefs_control_center_summary">Wähle die Elemente im Dropdown-Menü des Kontrollzentrums</string>
+    <string name="prefs_control_center_summary">Welche Elemente im Kontrollzentrum angezeigt werden sollen</string>
     <string name="activity_prefs_goal_fat_burn_time_minutes">Tagesziel: Fettverbrennungszeit in Minuten</string>
     <string name="activity_type_indoor_walking">Indoor-Gehen</string>
     <string name="devicetype_amazfit_gtr4">Amazfit GTR 4</string>
@@ -1949,11 +1927,7 @@
     <string name="pref_agps_expiry_reminder_enabled">AGPS-Ablauferinnerung</string>
     <string name="pref_agps_expiry_reminder_time">AGPS-Ablauferinnerungszeit</string>
     <string name="all_satellites">Alle Satelliten</string>
-    <string name="fw_upgrade_notice_amazfit_gtr4">Du bist dabei, die Firmware %s auf deine Amazfit GTR 4 zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr4">Du bist dabei, die Firmware %s auf deine Amazfit GTR 4 zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="pref_gps_mode_preset">GPS-Modus</string>
     <string name="pref_workout_detection_sensitivity">Empfindlichkeit</string>
     <string name="pref_enable_unsupported_settings_title">Nicht unterstützte Einstellungen aktivieren</string>
@@ -2002,18 +1976,10 @@
     <string name="devicetype_amazfit_gts4">Amazfit GTS 4</string>
     <string name="pref_title_touch_spotify_official_app">Spotify (nur offizielle App)</string>
     <string name="pref_title_touch_spotify_galaxy_app">Spotify (nur Galaxy Wearable App)</string>
-    <string name="fw_upgrade_notice_amazfit_gts4">Du bist dabei, die Firmware %s auf deine Amazfit GTS 4 zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_gts4">Du bist dabei, die Firmware %s auf deine Amazfit GTS 4 zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
     <string name="prefs_touch_lock_buds2">Berührungssteuerung</string>
-    <string name="fw_upgrade_notice_amazfit_gts4_mini">Du bist dabei, die Firmware %s auf deine Amazfit GTS 4 Mini zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_gts4_mini">Du bist dabei, die Firmware %s auf deine Amazfit GTS 4 Mini zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_gts4_mini">Amazfit GTS 4 Mini</string>
     <string name="devicetype_sony_linkbuds_s">Sony LinkBuds S</string>
     <string name="intent_api_allow_trigger_export_title">Datenbankexport zulassen</string>
@@ -2032,18 +1998,14 @@
     <string name="appmanager_app_download">In den Cache herunterladen</string>
     <string name="appmanager_download_started">App-Download gestartet</string>
     <string name="devicetype_asteroidos">AsteroidOS</string>
-    <string name="fw_upgrade_notice_amazfit_trex2">Du bist dabei, die Firmware %s auf deine Amazfit T-Rex 2 zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_trex2">Du bist dabei, die Firmware %s auf deine Amazfit T-Rex 2 zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_trex_2">Amazfit T-Rex 2</string>
     <string name="activity_type_rowing">Rudern</string>
     <string name="georgian">Georgisch</string>
     <string name="pref_workout_detection_enabled">Erkennung aktiviert</string>
     <string name="pref_workout_detection_enabled_summary">Automatische Erkennung dieses Training aktivieren</string>
     <string name="pref_workout_detection_ask_first">Frage mich zuerst</string>
-    <string name="pref_workout_detection_ask_first_summary">Bestätigung auf der Uhr erforderlich, wenn dieses Training erkannt wird</string>
+    <string name="pref_workout_detection_ask_first_summary">Bestätigung auf der Smartwatch erforderlich, wenn dieses Training erkannt wird</string>
     <string name="pref_workout_detection_time">Aktive Minuten vor der Erkennung</string>
     <string name="pref_workout_detection_time_summary">Die Anzahl der Minuten, die das Training andauern muss, bevor es erkannt wird</string>
     <string name="devicetype_galaxybuds_2_pro">Galaxy Buds2 Pro</string>
@@ -2064,7 +2026,7 @@
     <string name="stop">Stop</string>
     <string name="status">Status</string>
     <string name="wifi_hotspot">WLAN Hotspot</string>
-    <string name="wifi_hotspot_summary">Kontrolliere den WLAN-Hotspot auf der Uhr</string>
+    <string name="wifi_hotspot_summary">WLAN-Hotspot auf der Smartwatch steuern</string>
     <string name="wifi_hotspot_configuration">WLAN-Hotspot-Konfiguration</string>
     <string name="wifi_ssid">SSID</string>
     <string name="croatian">Kroatisch</string>
@@ -2072,12 +2034,12 @@
     <string name="username">Nutzername</string>
     <string name="sony_speak_to_chat_summary">Deaktiviere Geräuschunterdrückung automatisch, wenn du anfängst zu reden.</string>
     <string name="ftp_server">FTP-Server</string>
-    <string name="ftp_server_stop_summary">Beende den FTP-Server auf der Uhr</string>
+    <string name="ftp_server_stop_summary">FTP-Server auf der Smartwatch stoppen</string>
     <string name="wifi_hotspot_status">Status des WLAN-Hotspots</string>
-    <string name="wifi_hotspot_start_summary">Starte den WLAN-Hotspot auf der Uhr</string>
-    <string name="wifi_hotspot_stop_summary">Beende den WLAN-Hotspot auf der Uhr</string>
-    <string name="ftp_server_summary">Steuern des FTP-Servers auf der Uhr</string>
-    <string name="ftp_server_start_summary">Starte den FTP-Server auf der Uhr</string>
+    <string name="wifi_hotspot_start_summary">WLAN-Hotspot auf der Smartwatch starten</string>
+    <string name="wifi_hotspot_stop_summary">WLAN-Hotspot auf der Smartwatch stoppen</string>
+    <string name="ftp_server_summary">FTP-Server der Smartwatch steuern</string>
+    <string name="ftp_server_start_summary">FTP-Server auf der Smartwatch starten</string>
     <string name="ftp_server_status">Status des FTP-Servers</string>
     <string name="ftp_server_configuration">FTP-Serverkonfiguration</string>
     <string name="ftp_server_root_dir">Stammverzeichnis</string>
@@ -2126,17 +2088,13 @@
     <string name="zepp_os_watchface_red_fantasy">Rote Fantasie</string>
     <string name="zepp_os_watchface_multiple_data">Mehrere Daten</string>
     <string name="menuitem_cards">Karten</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3_pro">Du bist dabei, die Firmware %s auf deine Amazfit GTR 3 Pro zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3_pro">Du bist dabei, die Firmware %s auf deine Amazfit GTR 3 Pro zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5</string>
     <string name="menuitem_forecast">Vorhersage</string>
     <string name="menuitem_last_workout">Letztes Training</string>
     <string name="pref_switch_controls_anc_ambient_off">Geräuschunterdrückung ←→ Umgebungsgeräusche ←→ Aus</string>
     <string name="single_tap">Einmaliges Antippen</string>
-    <string name="prefs_shortcut_cards_summary">Verknüpfungskarten, die beim Wischen nach rechts auf dem Zifferblatt angezeigt werden. Wenn eine App ausgeführt wird, sind automatisch generierte Karten von dieser Einstellung nicht betroffen.</string>
+    <string name="prefs_shortcut_cards_summary">Kurzbefehlkarten, die erscheinen, wenn du vom Zifferblatt nach rechts wischst. Wenn gerade eine App läuft, wirkt sich diese Einstellung nicht auf automatisch erstellte Karten aus.</string>
     <string name="prefs_shortcut_cards">Verknüpfungskarten</string>
     <string name="debug_companion_pair_current">Aktuelles Gerät als Begleiter koppeln</string>
     <string name="debug_companion_show_associated">Zugehörige Begleitgeräte anzeigen</string>
@@ -2149,10 +2107,10 @@
     <string name="activity_detail_share_raw_details">Rohdaten teilen</string>
     <string name="activity_detail_share_raw_summary">Rohdatenzusammenfassung teilen</string>
     <string name="dev_tools">Entwicklungswerkzeuge</string>
-    <string name="fossil_hr_pairing_successful">Kopplung mit Uhr erfolgreich</string>
-    <string name="fossil_hr_confirm_connection">Bitte auf deiner Uhr bestätigen</string>
-    <string name="fossil_hr_connection_not_confirmed">Verbindung auf der Uhr nicht bestätigt, nutze unauthentifizierten Modus</string>
-    <string name="fossil_hr_pairing_failed">Kopplung mit Uhr fehlgeschlagen</string>
+    <string name="fossil_hr_pairing_successful">Kopplung mit der Smartwatch erfolgreich</string>
+    <string name="fossil_hr_confirm_connection">Bitte bestätige auf deiner Smartwatch</string>
+    <string name="fossil_hr_connection_not_confirmed">Verbindung auf der Smartwatch nicht bestätigt, nutze unauthentifizierten Modus</string>
+    <string name="fossil_hr_pairing_failed">Kopplung mit der Smartwatch fehlgeschlagen</string>
     <string name="fossil_hr_confirmation_skipped">Überspringen der Bestätigung auf dem Gerät</string>
     <string name="fossil_hr_confirmation_timeout">Zeitüberschreitung bei der Bestätigung, wird fortgesetzt</string>
     <string name="pref_contacts_title">Kontakte</string>
@@ -2164,9 +2122,9 @@
     <string name="contact_phone_number">Telefonnummer</string>
     <string name="title_activity_set_contacts">Kontakte konfigurieren</string>
     <string name="contact_missing_name">Kontaktname ist leer</string>
-    <string name="pref_contacts_summary">Konfigurieren der Kontakte auf der Uhr</string>
+    <string name="pref_contacts_summary">Kontakte auf der Smartwatch konfigurieren</string>
     <string name="contact_missing_number">Kontaktnummer ist leer</string>
-    <string name="pref_app_logs_stop_summary">Beenden der Protokollierung über Watch-Apps</string>
+    <string name="pref_app_logs_stop_summary">Protokollierung von Smartwatch-Apps stoppen</string>
     <string name="stress_relaxed">Entspannt</string>
     <string name="stress_mild">Leicht</string>
     <string name="stress_moderate">Mäßig</string>
@@ -2176,16 +2134,16 @@
     <string name="intent_api_allow_debug_commands_title">Debug-Befehle zulassen</string>
     <string name="screenshot_taken">Screenshot aufgenommen</string>
     <string name="share_screenshot">Screenshot teilen</string>
-    <string name="pref_summary_navigation_forward">Anweisungen von Navigations-Apps an die Uhr weiterleiten</string>
-    <string name="pref_title_navigation_forward">Navigation an Uhr senden</string>
+    <string name="pref_summary_navigation_forward">Anweisungen von Navigations-Apps an die Smartwatch weiterleiten</string>
+    <string name="pref_title_navigation_forward">Navigation an die Smartwatch senden</string>
     <string name="voice_service_package_summary">Anwendung, die den Dienst zur Bearbeitung von Sprachbefehlen enthält</string>
     <string name="voice_service_class_title">Sprachdienstklasse</string>
     <string name="voice_service_class_summary">Vollständiger Servicepfad zur Verarbeitung von Sprachbefehlen</string>
     <string name="voice_service">Sprachdienst</string>
     <string name="voice_service_package_title">Sprachdienstpaket</string>
     <string name="pref_app_logs_title">App-Protokolle</string>
-    <string name="pref_app_logs_summary">Protokolle von Uhr-Apps aktivieren</string>
-    <string name="pref_app_logs_start_summary">Start der Protokollierung über Watch-Apps</string>
+    <string name="pref_app_logs_summary">Protokolle von Smartwatch-Apps aktivieren</string>
+    <string name="pref_app_logs_start_summary">Protokollierung von Smartwatch-Apps starten</string>
     <string name="pref_header_navigation">Navigation</string>
     <string name="fwapp_install_device_not_supported">Datei kann nicht installiert werden, das Gerät wird nicht unterstützt.</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Standortbestimmung nur über das Netzwerk</string>
@@ -2214,7 +2172,7 @@
     <string name="loyalty_cards_catima_package">Catima Paketname</string>
     <string name="loyalty_cards_install">Catima installieren</string>
     <string name="loyalty_cards_sync_groups_only">Nur bestimmte Gruppen synchronisieren</string>
-    <string name="loyalty_cards_sync_summary">Tippe, um die Karten mit der Uhr zu synchronisieren</string>
+    <string name="loyalty_cards_sync_summary">Tippen, um Karten zur Smartwatch zu senden</string>
     <string name="loyalty_cards_sync_title">Kundenkarten synchronisieren</string>
     <string name="loyalty_cards_catima_not_compatible">Die installierte Catima-Version ist nicht mit Gadgetbridge kompatibel. Bitte aktualisiere Catima und Gadgetbridge auf die neuesten Versionen.</string>
     <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge benötigt Leseberechtigungen für Catima-Karten, um diese zu synchronisieren. Tippe auf diese Schaltfläche, um sie zu erteilen.</string>
@@ -2266,7 +2224,7 @@
     <string name="activity_type_golf">Golfen</string>
     <string name="withings_calibration_text_hours">Bitte verwende das Zifferblatt unten, um den Stundenzeiger auf die 12 auszurichten.</string>
     <string name="withings_calibration_text_minutes">Verwende nun das Zifferblatt, um den Minutenzeiger auf die 12 auszurichten.</string>
-    <string name="withings_calibration_text_activity_target">Zum Schluss richte den Aktivitätszeiger auf 100% aus. Bitte beachte, dass sich dieser Zeiger nur im Uhrzeigersinn bewegt.</string>
+    <string name="withings_calibration_text_activity_target">Richte zum Schluss den Aktivitätszeiger auf 100% aus. Bitte beachte, dass sich dieser Zeiger nur im Uhrzeigersinn bewegt.</string>
     <string name="withings_bt_calibration_previous">Vorherige</string>
     <string name="withings_bt_calibration_next">Nächste</string>
     <string name="activity_type_kitesurfing">Kitesurfen</string>
@@ -2289,11 +2247,7 @@
     <string name="pref_theme_dynamic_colors_explanation">Hinweis: Für das Design mit dynamischen Farben musst du Hintergrundbildfarben oder Farbpalette in deinen Android 12+ Darstellungseinstellungen aktivieren. Wenn du das nicht tust, wird Gadgetbridge die Standardfarben von Material 3 verwenden.</string>
     <string name="menuitem_zepp_coach">Zepp Coach</string>
     <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
-    <string name="fw_upgrade_notice_amazfit_cheetah_pro">Du bist dabei, die Firmware %s auf deine Amazfit Cheetah Pro zu installieren.
-\n
-\nDeine Uhr wird nach der Installation der .zip-Datei neu starten.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfit_cheetah_pro">Du bist dabei, die Firmware %s auf deine Amazfit Cheetah Pro zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip-Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="fw_upgrade_notice_zepp_os">Du bist dabei, die Firmware %s auf deiner %s zu installieren.\n\nDeine Smartwatch wird nach der Installation der .zip-Datei neu gestartet.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Quadratisch)</string>
     <string name="device_experimental">EXPERIMENTELL</string>
@@ -2315,7 +2269,7 @@
     <string name="english_gb">Englisch (Vereinigtes Königreich)</string>
     <string name="english_us">Englisch (USA)</string>
     <string name="spanish_us">Spanisch (USA)</string>
-    <string name="info_fossil_rebuild_watchface_custom_menu">Bitte überarbeite dein Zifferblatt für das benutzerdefinierte Menü</string>
+    <string name="info_fossil_rebuild_watchface_custom_menu">Zifferblatt neu erstellen, um benutzerdefiniertes Menü zu verwenden</string>
     <string name="english_ca">Englisch (Kanada)</string>
     <string name="prefs_wena3_menu_icon_hint">Das Einstellungssymbol wird immer am Ende angezeigt</string>
     <string name="prefs_wena3_notification_vibration_repetition_3">3 Mal</string>
@@ -2450,8 +2404,8 @@
     <string name="prefs_password_4_digits_0_to_9_summary">Das Passwort muss 4-stellig sein und darf nur Zahlen enthalten</string>
     <string name="activity_type_trail_run">Geländelauf</string>
     <string name="pref_force_connection_type_title">Verbindungstyp erzwingen</string>
-    <string name="uploadwatchfaceoperation_complete">Installation des Zifferblatts abgeschlossen</string>
-    <string name="uploadwatchfaceoperation_failed">Installation des Zifferblatts fehlgeschlagen</string>
+    <string name="uploadwatchfaceoperation_complete">Zifferblatt erfolgreich installiert</string>
+    <string name="uploadwatchfaceoperation_failed">Zifferblatt konnte nicht installiert werden</string>
     <string name="pref_heartrate_automatic_enable">Automatische Pulsmessung aktivieren</string>
     <string name="zepp_os_watchface_vast_sky">Weitläufiger Himmel</string>
     <string name="zepp_os_watchface_pure_white">Reines Weiß</string>
@@ -2487,7 +2441,7 @@
     <string name="prefs_wearmode">Tragemodus</string>
     <string name="zepp_os_watchface_starry_sky">Sternenhimmel</string>
     <string name="prefs_wena3_hint_background_sync">Erlaube Wena, Gadgetbridge in regelmäßigen Abständen aufzufordern, Aktivitätsdaten vom Gerät herunterzuladen</string>
-    <string name="fossil_hr_nav_app_not_installed_notify_title">Navigations-App nicht auf der Uhr installiert</string>
+    <string name="fossil_hr_nav_app_not_installed_notify_title">Navigations-App nicht auf der Smartwatch installiert</string>
     <string name="call_rejection_method_reject">Ablehnen</string>
     <string name="pref_sleep_mode_schedule_title">Zeitplan für Schlafmodus</string>
     <string name="pref_sleep_mode_schedule_summary">Sendet eine Erinnerung und schaltet zur Bettzeit in den Schlafmodus. Zur geplanten Aufwachzeit ertönt der Weckalarm.</string>
@@ -2501,7 +2455,7 @@
     <string name="prefs_wena3_button_action_item_long">Lange drücken</string>
     <string name="menuitem_buzzer_intensity">Summer-Intensität</string>
     <string name="zepp_os_watchface_lightning_flash">Blitzschlag</string>
-    <string name="uploading_watchface">Zifferblatt hochladen…</string>
+    <string name="uploading_watchface">Zifferblatt wird hochladen…</string>
     <string name="uploadwatchfaceoperation_in_progress">Zifferblatt hochladen</string>
     <string name="pref_title_fossil_hr_nav_vibrate">Vibrieren bei neuer Anweisung</string>
     <string name="pref_title_fossil_hr_nav_foreground">In den Vordergrund rücken</string>
@@ -2512,7 +2466,7 @@
     <string name="protocol_version">Protokoll-Version</string>
     <string name="flatDistance">Flache Strecke</string>
     <string name="pref_enable_call_accept">Annehmen von Anrufen aktivieren</string>
-    <string name="fossil_hr_nav_app_not_installed_notify_text">Navigation gestartet, aber die Navigation-App ist nicht auf der Uhr installiert. Bitte installiere sie über den App-Manager.</string>
+    <string name="fossil_hr_nav_app_not_installed_notify_text">Navigation gestartet, aber keine Navigations-App auf der Smartwatch installiert. Bitte installiere sie über den App-Manager.</string>
     <string name="pref_summary_fossil_hr_nav_foreground">Ob die Navigations-App automatisch in den Vordergrund kommen soll, wenn sie eine Navigationsanweisung erhält</string>
     <string name="pref_force_connection_type_description">Du kannst versuchen, den Verbindungstyp zu erzwingen, falls dein Gerät nicht auf Gadgetbridge reagiert</string>
     <string name="pref_force_connection_type_auto">Automatisch</string>
@@ -2556,7 +2510,7 @@
 \nVERWENDUNG AUF EIGENE GEFAHR</string>
     <string name="prefs_wena3_button_action_name_start_timer">Starte Aktivitätstimer</string>
     <string name="pref_title_fossil_hr_navigation_instructions">Anweisungen für die Navigation</string>
-    <string name="pref_summary_fossil_hr_nav_vibrate">Ob die Uhr bei jeder neuen oder geänderten Navigationsanweisung vibrieren soll (nur wenn die App im Vordergrund ist)</string>
+    <string name="pref_summary_fossil_hr_nav_vibrate">Ob die Smartwatch bei jeder neuen oder geänderten Navigationseinweisung vibrieren soll (nur wenn die App im Vordergrund läuft)</string>
     <string name="pref_summary_fossil_hr_navigation_instructions">Konfiguriere das Verhalten der Navigations-App</string>
     <string name="manual">Manuell</string>
     <string name="pref_do_not_disturb_not_wear">Bitte-Nicht-Stören wenn nicht getragen</string>
@@ -2617,10 +2571,10 @@
     <string name="huawei_alarm_event_description">Aktiviere nicht das Kontrollkästchen für das intelligente Aufwecken.</string>
     <string name="huawei_ignore_wakeup_status_end_description">Kann bei der korrekten Schlaferkennung helfen. Sofort sichtbar in der Ansicht der täglichen Aktivitäten.</string>
     <string name="widget_screen_delete_confirm_title">Widget-Bildschirm löschen</string>
-    <string name="pref_force_wear_location">Erzwinge Standort der Uhr</string>
+    <string name="pref_force_wear_location">Trageseite manuell festlegen</string>
     <string name="huawei_reparse_workout_data_description">Dies wird nur nach bestimmten Aktualisierungen geschehen</string>
     <string name="prefs_wena3_button_action_item">Schaltflächenaktion</string>
-    <string name="pref_call_rejection_method_summary">Welche Aktion wird ausgeführt wenn ein eingehender Anruf von der Uhr abgelehnt wird</string>
+    <string name="pref_call_rejection_method_summary">Welche Aktion wird ausgeführt, wenn ein eingehender Anruf über die Smartwatch abgelehnt wird</string>
     <string name="do_not_disturb_lift_wrist_summary">Nur falls beim \"Hochheben Display aktivieren\" aktiviert ist</string>
     <string name="menuitem_focus">Fokus</string>
     <string name="pref_call_rejection_method_title">Methode zur Ablehnung von Anrufen</string>
@@ -2647,8 +2601,7 @@
     <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro</string>
     <string name="activity_type_belly_dance">Bauchtanz</string>
     <string name="activity_type_hunting">Jagen</string>
-    <string name="pref_force_wear_location_summary">Erzwinge Unterstützung für Standort der Uhr
-\nBENUTZUNG AUF EIGENE GEFAHR</string>
+    <string name="pref_force_wear_location_summary">Trageseiten-Erkennung erzwingen\nNUR AUF EIGENE GEFAHR VERWENDEN</string>
     <string name="activity_type_outdoor_walking">Outdoor-Wandern</string>
     <string name="activity_type_rock_climbing">Bergsteigen</string>
     <string name="activity_type_skateboarding">Skateboarden</string>
@@ -2871,7 +2824,7 @@
     <string name="pref_title_huawei_account">Huawei Account</string>
     <string name="pref_summary_huawei_account">Huawei-Account, welcher für den Kopplungsprozess verwendet wird. Die Einstellung ermöglicht die Kopplung ohne Werksreset.</string>
     <string name="serbian">Serbisch</string>
-    <string name="watchface_resolution_doesnt_match">Die Auflösung des Watchface stimmt nicht mit dem Bildschirm des Geräts überein. Watchface ist %1$s Gerätebildschirm ist %2$s</string>
+    <string name="watchface_resolution_doesnt_match">Die Auflösung des Zifferblatts passt nicht zum Bildschirm des Geräts. Zifferblatt: %1$s, Bildschirm: %2$s</string>
     <string name="cyclingPowerMin">Minimale Leistung beim Radfahren</string>
     <string name="cyclingPowerMax">Maximale Leistung beim Radfahren</string>
     <string name="cyclingPowerAverage">Durchschnittliche Leistung beim Radfahren</string>
@@ -2885,7 +2838,7 @@
     <string name="pref_adaptive_noise_cancelling_title">Adaptives ANC</string>
     <string name="pref_adaptive_noise_cancelling_summary">Automatische Einstellung der ANC-Stärke in Abhängigkeit vom Umgebungsgeräuschpegel</string>
     <string name="devicetype_huawei_watchfit3">Huawei Watch Fit 3</string>
-    <string name="preferences_qhybrid_settings_summary">Ältere Einstellungen für Q Hybrid-Uhren</string>
+    <string name="preferences_qhybrid_settings_summary">Ältere Einstellungen für Q Hybrid-Smartwatches</string>
     <string name="devicetype_huawei_band9">Huawei Band 9</string>
     <string name="devicetype_huawei_watch4pro">Huawei Watch 4 (Pro)</string>
     <string name="devicetype_cycling_sensor">Sensor für Radfahrgeschwindigkeit</string>
@@ -2936,7 +2889,7 @@
     <string name="pref_summary_garmin_default_reply_suffix">Zusätzlich zu dem in Gadgetbridge eingestellten Suffix angefügt</string>
     <string name="none">Keine</string>
     <string name="garmin_agps_url_i">AGPS %1$d URL</string>
-    <string name="pref_garmin_agps_help">Die folgende Liste enthält alle URLs, über die die Smartwatch AGPS-Updates anfordert. Du kannst eine Datei aus dem Telefonspeicher auswählen, die an die Smartwatch gesendet wird, wenn sie ein Update anfordert.</string>
+    <string name="pref_garmin_agps_help">Diese Liste zeigt alle von der Smartwatch angeforderten AGPS-URLs. Du kannst eine Datei vom Telefon auswählen, die bei Bedarf an die Smartwatch übertragen wird.</string>
     <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
     <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
     <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
@@ -2970,7 +2923,7 @@
     <string name="default_percentage">Standard (%1$d%%)</string>
     <string name="devicetype_garmin_forerunner_255">Garmin Forerunner 255</string>
     <string name="dashboard_calendar_month_goals_reached_title">% des Schrittziels erreicht</string>
-    <string name="pref_fetch_unknown_files_summary">Holt unbekannte Aktivitätsdateien von der Uhr. Sie werden nicht verarbeitet, sondern im Telefon gespeichert.</string>
+    <string name="pref_fetch_unknown_files_summary">Unbekannte Aktivitätsdateien von der Smartwatch abrufen. Sie werden nicht verarbeitet, aber im Telefonspeicher gespeichert.</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d Tag</item>
         <item quantity="other">%d Tage</item>
@@ -3031,9 +2984,9 @@
     <string name="sleep_colored_stats_deep">Tief</string>
     <string name="sleep_colored_stats_light">Leicht</string>
     <string name="sleep_colored_stats_rem">REM</string>
-    <string name="sleep_colored_stats_deep_avg">Tief AVG</string>
-    <string name="sleep_colored_stats_light_avg">Leicht AVG</string>
-    <string name="sleep_colored_stats_rem_avg">REM AVG</string>
+    <string name="sleep_colored_stats_deep_avg">Ø Tiefschlaf</string>
+    <string name="sleep_colored_stats_light_avg">Ø Leichtschlaf</string>
+    <string name="sleep_colored_stats_rem_avg">Ø REM-Schlaf</string>
     <string name="hrv_status_day_avg">Tagesdurchschnitt</string>
     <string name="hrv_status_balanced">Ausgewogen</string>
     <string name="hrv_status_unbalanced">Unausgewogen</string>
@@ -3105,7 +3058,7 @@
     <string name="minutes_4">4 Minuten</string>
     <string name="minutes_8">8 Minuten</string>
     <string name="minutes_7">7 Minuten</string>
-    <string name="sleep_colored_stats_awake_avg">Durchschnitt Wach</string>
+    <string name="sleep_colored_stats_awake_avg">Ø Wachzeit</string>
     <string name="minutes_150">150 Minuten</string>
     <string name="minutes_210">210 Minuten</string>
     <string name="minutes_240">240 Minuten</string>
@@ -3212,7 +3165,7 @@
     <string name="menuitem_weight">Gewicht</string>
     <string name="pref_crash_notification_title">Absturzbenachrichtigung</string>
     <string name="pref_crash_notification_summary">Zeige eine Benachrichtigung mit dem Fehler, wenn die App abstürzt</string>
-    <string name="steps_avg">Schritte durchschnittlich</string>
+    <string name="steps_avg">Ø Schritte</string>
     <string name="miscale_small_objects_title">Leichte Gegenstände</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Kontinuierliche Messung der Hauttemperatur</string>
     <string name="activity_type_mixed_martial_arts">Mixed Martial Arts</string>
@@ -3243,7 +3196,7 @@
     <string name="activity_type_frisbee">Frisbee</string>
     <string name="activity_type_judo">Judo</string>
     <string name="activity_type_table_football">Tischfußball</string>
-    <string name="distance_avg">Strecke durchschnittlich</string>
+    <string name="distance_avg">Ø Distanz</string>
     <string name="distance_total">Strecke insgesamt</string>
     <string name="estimatedSweatLoss">Geschätzter Schweißverlust</string>
     <string name="workout_set_reps">Wiederholungen</string>
@@ -3338,7 +3291,7 @@
     <string name="charts_show_balance_steps_title">Schrittbilanz anzeigen</string>
     <string name="charts_show_balance_steps_summary">Schrittmangel und -überschuss in wöchtenlichen und monatlichen Diagrammen anzeigen</string>
     <string name="respiratoryrate">Atemfrequenz</string>
-    <string name="sleep_avg">Durschnittliche Schlafenszeit</string>
+    <string name="sleep_avg">Ø Schlafdauer</string>
     <string name="lowest">Niedrigster</string>
     <string name="highest">Höchster</string>
     <string name="permission_receive_sms_summary">SMS an Gadgets weiterleiten</string>
@@ -3414,7 +3367,7 @@
     <string name="permission_bluetooth_admin_summary">Finde und verbinde Bluetooth-Geräte</string>
     <string name="prefs_title_gatt_client_api_package">BLE API Paket</string>
     <string name="backup_restore_importing">Von einem ZIP wiederherstellen …</string>
-    <string name="pref_music_management_summary">Musik auf der Uhr verwalten</string>
+    <string name="pref_music_management_summary">Musik auf der Smartwatch verwalten</string>
     <string name="prefs_summary_gatt_client_notification_intents">Änderungen der BLE Merkmale durch Intents empfangen</string>
     <string name="permission_background_location_title">Hintergrund Standort</string>
     <string name="permission_notifications_summary">Benachrichtigungen an verbundene Gadgets weiterleiten</string>
@@ -3423,7 +3376,7 @@
     <string name="music_delete">Song löschen</string>
     <string name="music_all_songs">Alle Songs</string>
     <string name="first_start_overview_title">Übersicht</string>
-    <string name="music_huawei_device_info">Unterstützte Formate: %1$s\nSpeicher der Uhr: %2$d MB</string>
+    <string name="music_huawei_device_info">Unterstützte Formate: %1$s\nSpeicher der Smartwatch: %2$d MB</string>
     <string name="music_error">Ein Fehler ist aufgetreten</string>
     <string name="pref_music_management_title">Musik verwalten</string>
     <string name="permission_displayover_summary">Wird von Bangle.js genutzt, um Apps zu starten und für andere Funktionen auf deinem Telefon</string>
@@ -3558,7 +3511,7 @@
     <string name="devicetype_casioecbs100">Casio ECB-S100</string>
     <string name="devicetype_sony_wf_c500">Sony WF-C500</string>
     <string name="lactateThresholdHeartRate">Puls an der Laktatschwelle</string>
-    <string name="sleep_score_value">Schlafscore: %1d/100</string>
+    <string name="sleep_score_value">Score: %1d/100</string>
     <string name="activity_type_mass_gymnastics">Massengymnastik</string>
     <string name="activity_type_free_sparring">Freikampf</string>
     <string name="activity_type_weiqi">Go</string>
@@ -3735,7 +3688,7 @@
     <string name="pref_heart_rate_realtime_mode">Modus zur automatischen Pulsmessung in Echtzeit</string>
     <string name="workout_revolutions">Umdrehungen</string>
     <string name="gree_pair_clipboard">Gerätename: %s\nMAC-Adresse: %s\nVerbindungsschlüssel: %s</string>
-    <string name="pref_garmin_fake_oauth_warning">Aktiviere diese Einstellung nicht, wenn du die offizielle App verwendest oder die Uhr mit dem Internet verbinden möchtest. Nachdem du diese Einstellung aktiviert hast, musst du die Uhr möglicherweise auf die Werkseinstellungen zurücksetzen, um sie erneut zu authentifizieren.</string>
+    <string name="pref_garmin_fake_oauth_warning">Aktiviere diese Einstellung nicht, wenn du die offizielle App verwenden oder die Smartwatch mit dem Internet verbinden möchtest. Nach dem Aktivieren kann ein Zurücksetzen auf Werkseinstellungen erforderlich sein, um die Uhr erneut zu authentifizieren.</string>
     <string name="gree_controller_host">Host</string>
     <string name="gree_pair_status_success">Kopplung erfolgreich.\n\nVerbindungsschlüssel: %s</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
@@ -3986,11 +3939,11 @@
     <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
     <string name="pairing_even_realities_g1_final_connect">Geräte werden eingerichtet, bitte warten …</string>
     <string name="pref_huawei_activity_reminder_progress_summary">Erinnerungen über den Fortschritt des Aktivitätsrings erhalten</string>
-    <string name="active_calories_avg">Aktiver Durchschnitt</string>
+    <string name="active_calories_avg">Ø aktive Kalorien</string>
     <string name="calorie_over_goal">Ziel überschritten: %1$d kcal</string>
     <string name="workout_swings">Schwünge</string>
     <string name="pref_huawei_activity_reminder_goal_reached_summary">Lass dich erinnern, sobald du dein Tagesziel erreicht hast</string>
     <string name="swim_style_mixed">Gemischte Lagen</string>
-    <string name="swim_style_butterfly">Schmetterlingsschwimmen</string>
+    <string name="swim_style_butterfly">Schmetterlingsstil</string>
     <string name="swim_style_drill">Technikübung</string>
 </resources>
