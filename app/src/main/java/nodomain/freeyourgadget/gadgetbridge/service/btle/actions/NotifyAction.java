@@ -16,12 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothStatusCodes;
-import android.os.Build;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +50,9 @@ public class NotifyAction extends BtLEAction {
         enableFlag = enable;
     }
 
-    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
-    private boolean writeDescriptor(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor, final byte[] value) {
+    /// shared write implementation that can be used without a BtLEAction
+    @SuppressLint("MissingPermission")
+    public static boolean writeDescriptor(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor, final byte[] value) {
         if (gatt == null) {
             LOG.error("gatt == null");
             return false;

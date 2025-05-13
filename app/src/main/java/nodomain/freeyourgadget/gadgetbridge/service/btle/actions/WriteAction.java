@@ -59,8 +59,13 @@ public class WriteAction extends BtLEAction {
         return false;
     }
 
-    @SuppressLint("MissingPermission")
     protected boolean writeValue(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        return writeCharacteristic(gatt,characteristic,value);
+    }
+
+    /// shared write implementation that can be used without a BtLEAction
+    @SuppressLint("MissingPermission")
+    public static boolean writeCharacteristic(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("writing to characteristic: {} : {}", characteristic.getUuid(), Logging.formatBytes(value));
         }
