@@ -489,9 +489,9 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
 
     @Override
     public boolean onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor,
-                                    int status) {
+                                    int status, byte[] value) {
         for (AbstractBleProfile<?> profile : mSupportedProfiles) {
-            if (profile.onDescriptorRead(gatt, descriptor, status)) {
+            if (profile.onDescriptorRead(gatt, descriptor, status, value)) {
                 return true;
             }
         }

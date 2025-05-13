@@ -197,8 +197,8 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport>
     }
 
     @Override
-    public boolean onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-        return mSupport.onDescriptorRead(gatt, descriptor, status);
+    public boolean onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status, byte[] value) {
+        return mSupport.onDescriptorRead(gatt, descriptor, status, value);
     }
 
     @Override

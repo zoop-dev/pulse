@@ -78,10 +78,10 @@ public interface GattCallback {
      * @param gatt
      * @param descriptor
      * @param status
-     * @see BluetoothGattCallback#onDescriptorRead(BluetoothGatt, BluetoothGattDescriptor, int)
+     * @see BluetoothGattCallback#onDescriptorRead(BluetoothGatt, BluetoothGattDescriptor, int, byte[])
      */
     boolean onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor,
-                          int status);
+                             int status, byte[] value);
 
     /**
      * @param gatt

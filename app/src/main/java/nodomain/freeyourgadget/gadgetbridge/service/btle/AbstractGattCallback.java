@@ -48,7 +48,7 @@ public abstract class AbstractGattCallback implements GattCallback {
     }
 
     @Override
-    public boolean onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+    public boolean onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status, byte[] value) {
         return false;
     }
 

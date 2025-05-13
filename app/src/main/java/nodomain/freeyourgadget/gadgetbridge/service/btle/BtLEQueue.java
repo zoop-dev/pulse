@@ -644,13 +644,19 @@ public final class BtLEQueue {
 
         @Override
         public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+            byte[] value = emulateMemorySafeValue(descriptor, status);
+            onDescriptorRead(gatt, descriptor, status, value);
+        }
+
+        @Override
+        public void onDescriptorRead(@NonNull BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status, @NonNull byte[] value) {
             LOG.debug("descriptor read: {} {}", descriptor.getUuid(), BleNamesResolver.getStatusString(status));
             if (!checkCorrectGattInstance(gatt, "descriptor read")) {
                 return;
             }
             if (getCallbackToUse() != null) {
                 try {
-                    getCallbackToUse().onDescriptorRead(gatt, descriptor, status);
+                    getCallbackToUse().onDescriptorRead(gatt, descriptor, status, value);
                 } catch (Throwable ex) {
                     LOG.error("onDescriptorRead failed", ex);
                 }
@@ -751,6 +757,18 @@ public final class BtLEQueue {
                                               int status){
             if(status == BluetoothGatt.GATT_SUCCESS) {
                 byte[] value = characteristic.getValue();
+                if (value != null) {
+                    return value.clone();
+                }
+            }
+            return EMPTY;
+        }
+
+        /// helper to emulate Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU on older APIs
+        private byte[] emulateMemorySafeValue(BluetoothGattDescriptor descriptor,
+                                              int status){
+            if(status == BluetoothGatt.GATT_SUCCESS) {
+                byte[] value = descriptor.getValue();
                 if (value != null) {
                     return value.clone();
                 }
