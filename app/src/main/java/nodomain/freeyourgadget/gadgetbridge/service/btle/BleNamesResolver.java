@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothProfile;
 import android.util.SparseArray;
 
 import java.util.HashMap;
@@ -74,6 +75,23 @@ public class BleNamesResolver {
         return mCharacteristics.containsKey(uuid);
     }
 
+    /// lookup description for numeric BluetoothProfile.STATE_...
+    static public String getStateString(int state) {
+        switch (state) {
+            case BluetoothProfile.STATE_DISCONNECTED:
+                return "STATE_DISCONNECTED";
+            case BluetoothProfile.STATE_CONNECTING:
+                return "STATE_CONNECTING";
+            case BluetoothProfile.STATE_CONNECTED:
+                return "STATE_CONNECTED";
+            case BluetoothProfile.STATE_DISCONNECTING:
+                return "STATE_DISCONNECTING";
+            default:
+                return "state_" + state;
+        }
+    }
+
+    /// lookup description for numeric BluetoothDevice.BOND_...
     static public String getBondStateString(int state) {
         switch (state) {
             case BluetoothDevice.BOND_NONE:

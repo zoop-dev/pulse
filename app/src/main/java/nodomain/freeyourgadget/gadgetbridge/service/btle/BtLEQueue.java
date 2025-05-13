@@ -514,7 +514,7 @@ public final class BtLEQueue {
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            LOG.debug("connection state change, newState: {} {}", newState, BleNamesResolver.getStatusString(status));
+            LOG.debug("connection state change, newState: {} {}", BleNamesResolver.getStateString(newState), BleNamesResolver.getStatusString(status));
 
             synchronized (mGattMonitor) {
                 if (mBluetoothGatt == null) {
