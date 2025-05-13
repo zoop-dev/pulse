@@ -1419,8 +1419,8 @@
     <string name="sony_speak_to_chat_timeout_long">Довга (1 хв)</string>
     <string name="sony_connect_two_devices">Одночасне підʼєднання до 2 пристроїв</string>
     <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
-    <string name="sony_speak_to_chat">Голосові повідомлення у чат</string>
-    <string name="sony_speak_to_chat_sensitivity">Чутливість розпізнавання голосу</string>
+    <string name="sony_speak_to_chat">Режим Speak-to-chat</string>
+    <string name="sony_speak_to_chat_sensitivity">Чутливість виявлення голосу</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Автоматична</string>
     <string name="sony_speak_to_chat_sensitivity_high">Висока</string>
     <string name="sony_speak_to_chat_focus_on_voice">Зосередитися на голосі</string>
@@ -1966,7 +1966,7 @@
     <string name="ftp_server_stop_summary">Зупинити FTP-сервер з годинника</string>
     <string name="ftp_server_status">Стан FTP-сервера</string>
     <string name="croatian">Хорватська</string>
-    <string name="sony_speak_to_chat_summary">Автоматично вимикати шумопоглинання, коли ви починаєте говорити.</string>
+    <string name="sony_speak_to_chat_summary">Автоматично вимикати шумопоглинання під час спілкування.</string>
     <string name="pref_morning_updates_title">Ранкові оновлення</string>
     <string name="pref_morning_updates_summary">Показувати оновлення щоранку</string>
     <string name="pref_morning_updates_categories_title">Категорії ранкових оновлень</string>
