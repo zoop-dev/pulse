@@ -1069,7 +1069,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
                     break;
 
                 default:
-                    LOG.warn("Unsupported setting %s", config);
+                    LOG.warn("Unsupported setting {}", config);
                     return;
             }
 

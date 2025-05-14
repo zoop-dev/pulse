@@ -171,7 +171,7 @@ public class NutKey {
         // trying to determine if we can do with just those,
         // or need to continue
         byte[] key1a2aresult = passwordGeneration(deviceMac, challenge, key1a, key2a);
-        LOG.debug("Result1a2a:02 %s\n", bytesToHex2(key1a2aresult));
+        LOG.debug("Result1a2a:02 {}\n", bytesToHex2(key1a2aresult));
 
         if (java.util.Arrays.equals(key1a2aresult, cleanResponse)) {
             LOG.debug("Found key1a & key2a are correct, DONE!");
@@ -180,7 +180,7 @@ public class NutKey {
         // Unsuccessful, let's try key1a with key2b
 
         byte[] key1a2bresult = passwordGeneration(deviceMac, challenge, key1a, key2b);
-        LOG.debug("Result1a2b:02 %s\n", bytesToHex2(key1a2bresult));
+        LOG.debug("Result1a2b:02 {}\n", bytesToHex2(key1a2bresult));
 
         if (java.util.Arrays.equals(key1a2bresult, cleanResponse)) {
             LOG.debug("Found key1a & key2b are correct, DONE!");
@@ -192,7 +192,7 @@ public class NutKey {
         // key1 = c + (key2 XOR (2^64 - 1) + orig1
         BigInteger key1b2a = c.add(key2a.xor(max64)).add(new BigInteger(1, original1));
         byte[] key1b2aresult = passwordGeneration(deviceMac, challenge, key1b2a, key2a);
-        LOG.debug("Result1b2a:02 %s\n", bytesToHex2(key1b2aresult));
+        LOG.debug("Result1b2a:02 {}\n", bytesToHex2(key1b2aresult));
 
         if (java.util.Arrays.equals(key1b2aresult, cleanResponse)) {
             LOG.debug("Found key1b2a & key2b are correct, DONE!");
@@ -201,7 +201,7 @@ public class NutKey {
 
         BigInteger key1b2b = c.add(key2b.xor(max64)).add(new BigInteger(1, original1));
         byte[] key1b2bresult = passwordGeneration(deviceMac, challenge, key1b2b, key2b);
-        LOG.debug("Result1b2b:02 %s\n", bytesToHex2(key1b2bresult));
+        LOG.debug("Result1b2b:02 {}\n", bytesToHex2(key1b2bresult));
 
         if (java.util.Arrays.equals(key1b2bresult, cleanResponse)) {
             LOG.debug("Found key1b2b & key2b are correct, DONE!");
