@@ -80,7 +80,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
         else
         {
             UUID charUuid = characteristic.getUuid();
-            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS)) {
+            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS) && status == BluetoothGatt.GATT_SUCCESS) {
                 LOG.info("TODAY STEPS data: {}", Logging.formatBytes(value));
                 receivedSteps[0] = true;
                 decodeSteps(0, value);
