@@ -16,6 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
+import lineageos.weather.util.WeatherUtils;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 public class MoyoungWeatherForecast {
@@ -32,7 +36,13 @@ public class MoyoungWeatherForecast {
     public MoyoungWeatherForecast(WeatherSpec.Daily forecast)
     {
         conditionId = MoyoungConstants.openWeatherConditionToMoyoungConditionId(forecast.conditionCode);
-        minTemp = (byte)(forecast.minTemp - 273); // Kelvin -> Celcius
-        maxTemp = (byte)(forecast.maxTemp - 273); // Kelvin -> Celcius
+        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+            minTemp = (byte)WeatherUtils.celsiusToFahrenheit(forecast.minTemp - 273); // Kelvin -> Fahrenheit
+            maxTemp = (byte)WeatherUtils.celsiusToFahrenheit(forecast.maxTemp - 273); // Kelvin -> Fahrenheit
+        } else {
+            minTemp = (byte)(forecast.minTemp - 273); // Kelvin -> Celcius
+            maxTemp = (byte)(forecast.maxTemp - 273); // Kelvin -> Celcius
+        }
     }
 }

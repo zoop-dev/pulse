@@ -19,6 +19,10 @@ package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import lineageos.weather.util.WeatherUtils;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -44,7 +48,12 @@ public class MoyoungWeatherToday {
     public MoyoungWeatherToday(WeatherSpec weatherSpec)
     {
         conditionId = MoyoungConstants.openWeatherConditionToMoyoungConditionId(weatherSpec.currentConditionCode);
-        currentTemp = (byte)(weatherSpec.currentTemp - 273); // Kelvin -> Celcius
+        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+            currentTemp = (byte)WeatherUtils.celsiusToFahrenheit(weatherSpec.currentTemp - 273); // Kelvin -> Fahrenheit
+        } else {
+            currentTemp = (byte)(weatherSpec.currentTemp - 273); // Kelvin -> Celcius
+        }
         pm25 = null;
         lunar_or_festival = StringUtils.pad("", 4);
         city = StringUtils.pad(weatherSpec.location.substring(0, 4), 4);
