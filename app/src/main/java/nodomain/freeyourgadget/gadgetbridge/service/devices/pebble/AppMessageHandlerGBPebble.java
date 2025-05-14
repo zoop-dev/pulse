@@ -31,7 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSendBytes;
 
 public class AppMessageHandlerGBPebble extends AppMessageHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppMessageHandlerMisfit.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AppMessageHandlerGBPebble.class);
 
     private static final int KEY_FIND_PHONE_START = 1;
     private static final int KEY_FIND_PHONE_STOP = 2;

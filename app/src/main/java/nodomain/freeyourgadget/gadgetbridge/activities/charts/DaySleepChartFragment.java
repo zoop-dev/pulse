@@ -64,7 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
 public class DaySleepChartFragment extends AbstractActivityChartFragment<DaySleepChartFragment.MyChartsData> {
-    protected static final Logger LOG = LoggerFactory.getLogger(ActivitySleepChartFragment.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(DaySleepChartFragment.class);
 
     private LineChart mActivityChart;
     private ImageView sleepStagesGauge;

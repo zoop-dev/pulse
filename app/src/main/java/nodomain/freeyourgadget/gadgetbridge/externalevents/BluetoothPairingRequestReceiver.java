@@ -28,10 +28,9 @@ import org.slf4j.LoggerFactory;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 public class BluetoothPairingRequestReceiver extends BroadcastReceiver {
-    private static final Logger LOG = LoggerFactory.getLogger(BluetoothConnectReceiver.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BluetoothPairingRequestReceiver.class);
 
     final DeviceCommunicationService service;
 

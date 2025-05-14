@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
  * create an instance of this fragment.
  */
 public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
-    protected static final Logger LOG = LoggerFactory.getLogger(AbstractDashboardVO2MaxWidget.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(DashboardSleepScoreWidget.class);
     public DashboardSleepScoreWidget() {
         super(R.string.sleep_score, "sleep");
     }

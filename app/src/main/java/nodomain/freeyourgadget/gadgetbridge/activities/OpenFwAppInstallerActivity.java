@@ -30,11 +30,10 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class OpenFwAppInstallerActivity extends AbstractGBActivity {
-    private static final Logger LOG = LoggerFactory.getLogger(AppManagerActivity.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OpenFwAppInstallerActivity.class);
     private int READ_REQUEST_CODE = 42;
     private GBDevice device;
 

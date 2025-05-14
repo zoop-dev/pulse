@@ -32,7 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 
 public class CmfDataUploader implements CmfCharacteristic.Handler {
-    private static final Logger LOG = LoggerFactory.getLogger(CmfWatchProSupport.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CmfDataUploader.class);
 
     private final CmfWatchProSupport mSupport;
 

@@ -37,7 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSportsAct
 
 public class HuamiActivitySummaryParser implements ActivitySummaryParser {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HuamiActivityDetailsParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HuamiActivitySummaryParser.class);
     protected ActivitySummaryData summaryData = new ActivitySummaryData();
 
     public BaseActivitySummary parseBinaryData(BaseActivitySummary summary, final boolean forDetails) {

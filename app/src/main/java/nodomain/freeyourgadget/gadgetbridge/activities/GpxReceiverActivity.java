@@ -35,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class GpxReceiverActivity extends AbstractGBActivity {
-    private static final Logger LOG = LoggerFactory.getLogger(ActivitySummaryDetail.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GpxReceiverActivity.class);
     boolean toOverwrite = false;
     ArrayList<FileToProcess> fileList = new ArrayList<>();
 
