@@ -1953,7 +1953,7 @@
     <string name="pref_sleep_mode_smart_enable_title">Intelligent aktivieren</string>
     <string name="pref_sleep_mode_sleep_screen_summary">Zeigt beim Aufwecken im Schlafmodus den Schlafbildschirm an, um Ablenkungen zu vermeiden</string>
     <string name="activity_prefs_target_weight_kg">Zielgewicht in kg</string>
-    <string name="menuitem_membership_cards">Mitgliedskarten</string>
+    <string name="menuitem_membership_cards">Vorteilskarten</string>
     <string name="menuitem_eject_water">Wasser auswerfen</string>
     <string name="menuitem_unsupported">[NICHT UNTERSTÜTZT] %s</string>
     <string name="pref_title_lower_button_short_press_action">Untere Taste kurzes Drücken</string>
@@ -2173,7 +2173,7 @@
     <string name="loyalty_cards_install">Catima installieren</string>
     <string name="loyalty_cards_sync_groups_only">Nur bestimmte Gruppen synchronisieren</string>
     <string name="loyalty_cards_sync_summary">Tippen, um Karten zur Smartwatch zu senden</string>
-    <string name="loyalty_cards_sync_title">Kundenkarten synchronisieren</string>
+    <string name="loyalty_cards_sync_title">Vorteilskarten synchronisieren</string>
     <string name="loyalty_cards_catima_not_compatible">Die installierte Catima-Version ist nicht mit Gadgetbridge kompatibel. Bitte aktualisiere Catima und Gadgetbridge auf die neuesten Versionen.</string>
     <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge benötigt Leseberechtigungen für Catima-Karten, um diese zu synchronisieren. Tippe auf diese Schaltfläche, um sie zu erteilen.</string>
     <string name="pref_title_mb_intents">Direktes Übertragen von Medienschaltflächen-Intents</string>
@@ -2181,13 +2181,13 @@
     <string name="pai_day">Erhöhung des Tages-PAI</string>
     <string name="loyalty_cards_install_catima_fail">App Store konnte nicht geöffnet werden, um Catima zu installieren</string>
     <string name="loyalty_cards_sync_starred">Nur markierte Karten synchronisieren</string>
-    <string name="loyalty_cards_catima_not_installed">Catima wird für die Verwaltung der Kundenkarten benötigt</string>
+    <string name="loyalty_cards_catima_not_installed">Catima wird für die Verwaltung der Vorteilskarten benötigt</string>
     <string name="loyalty_cards_sync_options">Synchronisationsoptionen</string>
     <string name="loyalty_cards_sync">Synchronisieren</string>
     <string name="loyalty_cards_open_catima">Catima öffnen</string>
     <string name="loyalty_cards_catima_permissions_title">Fehlende Berechtigungen</string>
-    <string name="loyalty_cards">Kundenkarten</string>
-    <string name="loyalty_cards_syncing">Synchronisieren der %d Kundenkarten mit dem Gerät</string>
+    <string name="loyalty_cards">Vorteilskarten</string>
+    <string name="loyalty_cards_syncing">Synchronisieren der %d Vorteilskarten mit dem Gerät</string>
     <string name="loyalty_cards_catima">Catima</string>
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
