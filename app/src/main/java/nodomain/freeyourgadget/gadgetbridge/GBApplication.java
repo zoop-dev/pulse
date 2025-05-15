@@ -426,6 +426,10 @@ public class GBApplication extends Application {
         return VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     }
 
+    public static boolean isRedVelvetCakeOrLater() {
+        return VERSION.SDK_INT >= Build.VERSION_CODES.R;
+    }
+
     public static boolean isRunningTwelveOrLater() {
         return VERSION.SDK_INT >= 31;  // Build.VERSION_CODES.S, but our target SDK is lower
     }
