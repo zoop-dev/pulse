@@ -28,7 +28,6 @@ import android.content.Context;
 import androidx.annotation.CallSuper;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,8 +56,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBlePro
  * @see BtLEQueue
  */
 public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport implements GattCallback, GattServerCallback {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractBTLEDeviceSupport.class);
-
     private int mMTU = 23;
     private BtLEQueue mQueue;
     private Map<UUID, BluetoothGattCharacteristic> mAvailableCharacteristics;
@@ -202,13 +199,13 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
      */
     public TransactionBuilder performInitialized(String taskName) throws IOException {
         if (!isConnected()) {
-            LOG.debug("Connecting to device for {}", taskName);
+            logger.debug("Connecting to device for {}", taskName);
             if (!connect()) {
                 throw new IOException("1: Unable to connect to device: " + getDevice());
             }
         }
         if (!isInitialized()) {
-            LOG.debug("Initializing device for {}", taskName);
+            logger.debug("Initializing device for {}", taskName);
             // first, add a transaction that performs device initialization
             TransactionBuilder builder = createTransactionBuilder("Initialize device");
             builder.add(new CheckInitializedAction(gbDevice));

@@ -57,7 +57,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBlePro
 public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSupport
         implements GattCallback, GattServerCallback {
     public static final String BASE_UUID = "0000%s-0000-1000-8000-00805f9b34fb";
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractBTLEMultiDeviceSupport.class);
 
     private final int deviceCount;
     private final Set<UUID>[] mSupportedServices;
@@ -278,13 +277,13 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
                     "Requested device index " + deviceIdx + " doesn't exist.");
         }
         if (!isConnected()) {
-            LOG.debug("Connecting to device for {}", taskName);
+            logger.debug("Connecting to device for {}", taskName);
             if (!connect()) {
                 throw new IOException("1: Unable to connect to device: " + getDevice(deviceIdx));
             }
         }
         if (!devices[deviceIdx].isInitialized()) {
-            LOG.debug("Initializing device for {}", taskName);
+            logger.debug("Initializing device for {}", taskName);
             // first, add a transaction that performs device initialization
             TransactionBuilder builder = createTransactionBuilder("Initialize device");
             builder.add(new CheckInitializedAction(devices[deviceIdx]));
