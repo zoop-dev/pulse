@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/connection_over_bt_classic" />
-
     <SwitchPreferenceCompat
-        android:icon="@drawable/ic_bluetooth"
+        android:icon="@drawable/ic_bluetooth_connected"
         android:key="prefs_key_device_reconnect_on_acl"
         android:layout="@layout/preference_checkbox"
         android:title="@string/autoconnect_from_device_title"
