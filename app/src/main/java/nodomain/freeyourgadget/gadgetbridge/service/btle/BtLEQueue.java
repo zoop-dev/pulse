@@ -329,7 +329,7 @@ public final class BtLEQueue {
     }
 
     private void handleDisconnected(int status) {
-        LOG.debug("handleDisconnected: {}", status);
+        LOG.debug("handleDisconnected: {}", BleNamesResolver.getStatusString(status));
         internalGattCallback.reset();
         mTransactions.clear();
         mPauseTransaction = false;
@@ -514,7 +514,9 @@ public final class BtLEQueue {
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            LOG.debug("connection state change, newState: {} {}", BleNamesResolver.getStateString(newState), BleNamesResolver.getStatusString(status));
+            LOG.debug("connection state change, newState: {} {} {}",
+                    BleNamesResolver.getStateString(newState), BleNamesResolver.getStatusString(status),
+                    BleNamesResolver.getBondStateString(gatt.getDevice().getBondState()));
 
             synchronized (mGattMonitor) {
                 if (mBluetoothGatt == null) {
@@ -527,12 +529,12 @@ public final class BtLEQueue {
             }
 
             if (status != BluetoothGatt.GATT_SUCCESS) {
-                LOG.warn("connection state event with error status {}", status);
+                LOG.warn("connection state event with error status {}", BleNamesResolver.getStatusString(status));
             }
 
             switch (newState) {
                 case BluetoothProfile.STATE_CONNECTED:
-                    LOG.info("Connected to GATT server. ({})", BleNamesResolver.getBondStateString(gatt.getDevice().getBondState()));
+                    LOG.info("Connected to GATT server.");
                     setDeviceConnectionState(State.CONNECTED);
                     // Attempts to discover services after successful connection.
                     List<BluetoothGattService> cachedServices = gatt.getServices();
@@ -578,7 +580,7 @@ public final class BtLEQueue {
                     mConnectionLatch.countDown();
                 }
             } else {
-                LOG.warn("onServicesDiscovered received: {}", status);
+                LOG.warn("onServicesDiscovered received: {}", BleNamesResolver.getStatusString(status));
             }
         }
 
@@ -809,7 +811,7 @@ public final class BtLEQueue {
             }
 
             if (status != BluetoothGatt.GATT_SUCCESS) {
-                LOG.warn("gatt server connection state event with error status {}", status);
+                LOG.warn("gatt server connection state event with error status {}", BleNamesResolver.getStatusString(status));
             }
         }
 

@@ -94,6 +94,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingInterface;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
@@ -903,7 +904,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                     final BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     if (device != null) {
                         final int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
-                        LOG.debug("Bond state: {}", bondState);
+                        LOG.debug("Bond state: {}", BleNamesResolver.getBondStateString(bondState));
 
                         if (bondState == BluetoothDevice.BOND_BONDED) {
                             BondingUtil.handleDeviceBonded((BondingInterface) context, getCandidateFromMAC(device));

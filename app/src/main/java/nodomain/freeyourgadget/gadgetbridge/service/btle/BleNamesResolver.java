@@ -107,31 +107,99 @@ public class BleNamesResolver {
 
     /// lookup description for numeric status used by {@link android.bluetooth.BluetoothGattCallback}
     static public String getStatusString(int status) {
+        // android.bluetooth.BluetoothGatt's numbers are incomplete
+        // numeric values taken from GattStatus in https://android.googlesource.com/platform/system/bt/+/ea7ab70a711e642653dd5922b83aa04a53af9e0e/stack/include/gatt_api.h
         switch (status) {
             case BluetoothGatt.GATT_SUCCESS:
-                return "SUCCESS";
+                return "GATT_SUCCESS";
+            case 0x01:
+                return "GATT_INVALID_HANDLE";
             case BluetoothGatt.GATT_READ_NOT_PERMITTED:
-                return "READ_NOT_PERMITTED";
+                return "GATT_READ_NOT_PERMITTED";
             case BluetoothGatt.GATT_WRITE_NOT_PERMITTED:
-                return "WRITE_NOT_PERMITTED";
+                return "GATT_WRITE_NOT_PERMITTED";
+            case 0x04:
+                return "GATT_INVALID_PDU";
             case BluetoothGatt.GATT_INSUFFICIENT_AUTHENTICATION:
-                return "INSUFFICIENT_AUTHENTICATION";
+                return "GATT_INSUFFICIENT_AUTHENTICATION";
             case BluetoothGatt.GATT_REQUEST_NOT_SUPPORTED:
-                return "REQUEST_NOT_SUPPORTED";
+                return "GATT_REQUEST_NOT_SUPPORTED";
             case BluetoothGatt.GATT_INVALID_OFFSET:
-                return "INVALID_OFFSET";
+                return "GATT_INVALID_OFFSET";
             case BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION:
-                return "INSUFFICIENT_AUTHORIZATION";
+                return "GATT_INSUFFICIENT_AUTHORIZATION";
+            case 0x09:
+                return "GATT_PREPARE_Q_FULL";
+            case 0x0a:
+                return "GATT_NOT_FOUND";
+            case 0x0b:
+                return "GATT_NOT_LONG";
+            case 0x0c:
+                return "GATT_INSUF_KEY_SIZE";
             case BluetoothGatt.GATT_INVALID_ATTRIBUTE_LENGTH:
                 return "GATT_INVALID_ATTRIBUTE_LENGTH";
+            case 0x0e:
+                return "GATT_ERR_UNLIKELY";
             case BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION:
-                return "INSUFFICIENT_ENCRYPTION";
+                return "GATT_INSUFFICIENT_ENCRYPTION";
+            case 0x10:
+                return "GATT_UNSUPPORT_GRP_TYPE";
+            case 0x11:
+                return "GATT_INSUF_RESOURCE";
+            case 0x12:
+                return "GATT_DATABASE_OUT_OF_SYNC";
+            case 0x13:
+                return "GATT_VALUE_NOT_ALLOWED";
+            case 0x87:
+                return "GATT_ILLEGAL_PARAMETER";
+            case 0x7f:
+                return "GATT_TOO_SHORT";
+            case 0x80:
+                return "GATT_NO_RESOURCES";
+            case 0x81:
+                return "GATT_INTERNAL_ERROR";
+            case 0x82:
+                return "GATT_WRONG_STATE";
+            case 0x83:
+                return "GATT_DB_FULL";
+            case 0x84:
+                return "GATT_BUSY";
+            case 0x85:
+                return "GATT_ERROR";
+            case 0x86:
+                return "GATT_CMD_STARTED";
+            case 0x88:
+                return "GATT_PENDING";
+            case 0x89:
+                return "GATT_AUTH_FAIL";
+            case 0x8a:
+                return "GATT_MORE";
+            case 0x8b:
+                return "GATT_INVALID_CFG";
+            case 0x8c:
+                return "GATT_SERVICE_STARTED";
+            case 0x8d:
+                return "GATT_ENCRYPED_NO_MITM";
+            case 0x8e:
+                return "GATT_NOT_ENCRYPTED";
             case BluetoothGatt.GATT_CONNECTION_CONGESTED:
-                return "CONNECTION_CONGESTED";
+                return "GATT_CONNECTION_CONGESTED";
+            case 0x90:
+                return "GATT_DUP_REG";
+            case 0x91:
+                return "GATT_ALREADY_OPEN";
+            case 0x92:
+                return "GATT_CANCEL";
             case BluetoothGatt.GATT_CONNECTION_TIMEOUT:
-                return "CONNECTION_TIMEOUT";
+                return "GATT_CONNECTION_TIMEOUT";
+            case 0xFD:
+                return "GATT_CCC_CFG_ERR";
+            case 0xFE:
+                return "GATT_PRC_IN_PROGRESS";
+            case 0xFF:
+                return "GATT_OUT_OF_RANGE";
             case BluetoothGatt.GATT_FAILURE:
-                return "FAILURE";
+                return "GATT_FAILURE";
             default:
                 return "failed_" + status;
         }
@@ -401,7 +469,7 @@ public class BleNamesResolver {
         mServices.put("6a4e2800-667b-11e3-949a-0800200c9a66", "(Propr: Garmin ML)");
         mServices.put("86f61000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman State)");
         mServices.put("86f65000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Request)");
-		mServices.put("86f66000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
+        mServices.put("86f66000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
         mServices.put("8d53dc1d-1db7-4cd3-868b-8a527460aa84", "(Propr: SMP - Simple Management Protocol)");
 
         // source https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/uuids/characteristic_uuids.yaml
@@ -928,7 +996,7 @@ public class BleNamesResolver {
         mCharacteristics.put("86f61001-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman State)");
         mCharacteristics.put("86f65001-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Command)");
         mCharacteristics.put("86f65002-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Response)");
-		mCharacteristics.put("86f66001-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
+        mCharacteristics.put("86f66001-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
         mCharacteristics.put("da2e7828-fbce-4e01-ae9e-261174997c48", "(Propr: SMP - Simple Management Protocol)");
 
         mValueFormats.put(52, "32bit float");
