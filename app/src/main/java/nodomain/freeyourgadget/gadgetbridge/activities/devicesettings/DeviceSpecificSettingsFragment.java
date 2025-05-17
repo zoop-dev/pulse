@@ -1258,59 +1258,65 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
         Set<String> deviceActionsFellSleepSelection = prefs.getStringSet(PREF_DEVICE_ACTION_FELL_SLEEP_SELECTIONS, Collections.emptySet());
         final Preference deviceActionsFellSleep = findPreference(PREF_DEVICE_ACTION_FELL_SLEEP_SELECTIONS);
-        final Preference deviceActionsFellSleepBroadcast = findPreference(PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST);
+        final Preference deviceActionsFellSleepBroadcastAction = findPreference(PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST_ACTION);
+        final Preference deviceActionsFellSleepBroadcastPackage = findPreference(PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST_PACKAGE);
         boolean deviceActionsFellSleepSelectionBroadcast = deviceActionsFellSleepSelection.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
         if (deviceActionsFellSleep != null) {
-            deviceActionsFellSleep.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newVal) {
-                    final Set<String> newValSet = (Set<String>) newVal;
-                    final boolean broadcast = newValSet.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
-                    Objects.requireNonNull(deviceActionsFellSleepBroadcast).setEnabled(broadcast);
-                    return true;
-                }
+            deviceActionsFellSleep.setOnPreferenceChangeListener((preference, newVal) -> {
+                final Set<String> newValSet = (Set<String>) newVal;
+                final boolean broadcast = newValSet.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
+                Objects.requireNonNull(deviceActionsFellSleepBroadcastAction).setEnabled(broadcast);
+                Objects.requireNonNull(deviceActionsFellSleepBroadcastPackage).setEnabled(broadcast);
+                return true;
             });
         }
-        if (deviceActionsFellSleepBroadcast != null) {
-            deviceActionsFellSleepBroadcast.setEnabled(deviceActionsFellSleepSelectionBroadcast);
+        if (deviceActionsFellSleepBroadcastAction != null) {
+            deviceActionsFellSleepBroadcastAction.setEnabled(deviceActionsFellSleepSelectionBroadcast);
+        }
+        if (deviceActionsFellSleepBroadcastPackage != null) {
+            deviceActionsFellSleepBroadcastPackage.setEnabled(deviceActionsFellSleepSelectionBroadcast);
         }
 
         Set<String> deviceActionsWokeUpSelection = prefs.getStringSet(PREF_DEVICE_ACTION_WOKE_UP_SELECTIONS, Collections.emptySet());
         final Preference deviceActionsWokeUp = findPreference(PREF_DEVICE_ACTION_WOKE_UP_SELECTIONS);
-        final Preference deviceActionsWokeUpBroadcast = findPreference(PREF_DEVICE_ACTION_WOKE_UP_BROADCAST);
+        final Preference deviceActionsWokeUpBroadcastAction = findPreference(PREF_DEVICE_ACTION_WOKE_UP_BROADCAST_ACTION);
+        final Preference deviceActionsWokeUpBroadcastPackage = findPreference(PREF_DEVICE_ACTION_WOKE_UP_BROADCAST_PACKAGE);
         boolean deviceActionsWokeUpSelectionBroadcast = deviceActionsWokeUpSelection.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
         if (deviceActionsWokeUp != null) {
-            deviceActionsWokeUp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newVal) {
-                    final Set<String> newValSet = (Set<String>) newVal;
-                    final boolean broadcast = newValSet.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
-                    Objects.requireNonNull(deviceActionsWokeUpBroadcast).setEnabled(broadcast);
-                    return true;
-                }
+            deviceActionsWokeUp.setOnPreferenceChangeListener((preference, newVal) -> {
+                final Set<String> newValSet = (Set<String>) newVal;
+                final boolean broadcast = newValSet.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
+                Objects.requireNonNull(deviceActionsWokeUpBroadcastAction).setEnabled(broadcast);
+                Objects.requireNonNull(deviceActionsWokeUpBroadcastPackage).setEnabled(broadcast);
+                return true;
             });
         }
-        if (deviceActionsWokeUpBroadcast != null) {
-            deviceActionsWokeUpBroadcast.setEnabled(deviceActionsWokeUpSelectionBroadcast);
+        if (deviceActionsWokeUpBroadcastAction != null) {
+            deviceActionsWokeUpBroadcastAction.setEnabled(deviceActionsWokeUpSelectionBroadcast);
+        }
+        if (deviceActionsWokeUpBroadcastPackage != null) {
+            deviceActionsWokeUpBroadcastPackage.setEnabled(deviceActionsWokeUpSelectionBroadcast);
         }
 
         Set<String> deviceActionsStartNonWearSelection = prefs.getStringSet(PREF_DEVICE_ACTION_START_NON_WEAR_SELECTIONS, Collections.emptySet());
         final Preference deviceActionsStartNonWear = findPreference(PREF_DEVICE_ACTION_START_NON_WEAR_SELECTIONS);
-        final Preference deviceActionsStartNonWearBroadcast = findPreference(PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST);
+        final Preference deviceActionsStartNonWearBroadcastAction = findPreference(PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST_ACTION);
+        final Preference deviceActionsStartNonWearBroadcastPackage = findPreference(PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST_PACKAGE);
         boolean deviceActionsStartNonWearSelectionBroadcast = deviceActionsStartNonWearSelection.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
         if (deviceActionsStartNonWear != null) {
-            deviceActionsStartNonWear.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newVal) {
-                    final Set<String> newValSet = (Set<String>) newVal;
-                    final boolean broadcast = newValSet.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
-                    Objects.requireNonNull(deviceActionsStartNonWearBroadcast).setEnabled(broadcast);
-                    return true;
-                }
+            deviceActionsStartNonWear.setOnPreferenceChangeListener((preference, newVal) -> {
+                final Set<String> newValSet = (Set<String>) newVal;
+                final boolean broadcast = newValSet.contains(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
+                Objects.requireNonNull(deviceActionsStartNonWearBroadcastAction).setEnabled(broadcast);
+                Objects.requireNonNull(deviceActionsStartNonWearBroadcastPackage).setEnabled(broadcast);
+                return true;
             });
         }
-        if (deviceActionsStartNonWearBroadcast != null) {
-            deviceActionsStartNonWearBroadcast.setEnabled(deviceActionsStartNonWearSelectionBroadcast);
+        if (deviceActionsStartNonWearBroadcastAction != null) {
+            deviceActionsStartNonWearBroadcastAction.setEnabled(deviceActionsStartNonWearSelectionBroadcast);
+        }
+        if (deviceActionsStartNonWearBroadcastPackage != null) {
+            deviceActionsStartNonWearBroadcastPackage.setEnabled(deviceActionsStartNonWearSelectionBroadcast);
         }
 
         // this is to ensure that Control Center device cards are refreshed on preference changes

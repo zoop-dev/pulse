@@ -32,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class GBDeviceEventWearState extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventWearState.class);
@@ -59,7 +60,9 @@ public class GBDeviceEventWearState extends GBDeviceEvent {
             LOG.debug("WEAR_STATE state is not NOT_WEARING, aborting further evaluation");
         }
 
-        Set<String> actionOnUnwear = GBApplication.getDevicePrefs(device).getStringSet(
+        final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+
+        Set<String> actionOnUnwear = devicePrefs.getStringSet(
                 DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_START_NON_WEAR_SELECTIONS,
                 Collections.emptySet()
         );
@@ -69,11 +72,16 @@ public class GBDeviceEventWearState extends GBDeviceEvent {
             return;
         }
 
-        String broadcastMessage = GBApplication.getDevicePrefs(device).getString(
-                DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST,
+        String broadcastMessage = devicePrefs.getString(
+                DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST_ACTION,
                 context.getString(R.string.prefs_events_forwarding_startnonwear_broadcast_default_value)
         );
 
-        handleDeviceAction(context, device, actionOnUnwear, broadcastMessage);
+        String broadcastPackage = devicePrefs.getString(
+                DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST_PACKAGE,
+                ""
+        );
+
+        handleDeviceAction(context, device, actionOnUnwear, broadcastMessage, broadcastPackage);
     }
 }

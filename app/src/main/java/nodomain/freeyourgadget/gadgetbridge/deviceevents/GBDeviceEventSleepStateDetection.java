@@ -32,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class GBDeviceEventSleepStateDetection extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventSleepStateDetection.class);
@@ -54,32 +55,37 @@ public class GBDeviceEventSleepStateDetection extends GBDeviceEvent {
             return;
         }
 
-        final String actionPreferenceKey, messagePreferenceKey;
+        final String actionPreferenceKey, messagePreferenceKey, packagePreferenceKey;
         final int defaultBroadcastMessageResource;
 
         switch (this.sleepState) {
             case AWAKE:
                 actionPreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_WOKE_UP_SELECTIONS;
-                messagePreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_WOKE_UP_BROADCAST;
+                messagePreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_WOKE_UP_BROADCAST_ACTION;
+                packagePreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_WOKE_UP_BROADCAST_PACKAGE;
                 defaultBroadcastMessageResource = R.string.prefs_events_forwarding_wokeup_broadcast_default_value;
                 break;
             case ASLEEP:
                 actionPreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_FELL_SLEEP_SELECTIONS;
-                messagePreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST;
+                messagePreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST_ACTION;
+                packagePreferenceKey = DeviceSettingsPreferenceConst.PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST_PACKAGE;
                 defaultBroadcastMessageResource = R.string.prefs_events_forwarding_fellsleep_broadcast_default_value;
                 break;
             default:
-                LOG.warn("Unable to deduce action and broadcast message preference key for sleep state {}", this.sleepState);
+                LOG.error("Unable to deduce action and broadcast message preference key for sleep state {}", this.sleepState);
                 return;
         }
 
-        final Set<String> actions = GBApplication.getDevicePrefs(device).getStringSet(actionPreferenceKey, Collections.emptySet());
+        final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+
+        final Set<String> actions = devicePrefs.getStringSet(actionPreferenceKey, Collections.emptySet());
 
         if (actions.isEmpty()) {
             return;
         }
 
-        String broadcastMessage = GBApplication.getDevicePrefs(device).getString(messagePreferenceKey, context.getString(defaultBroadcastMessageResource));
-        handleDeviceAction(context, device, actions, broadcastMessage);
+        String broadcastMessage = devicePrefs.getString(messagePreferenceKey, context.getString(defaultBroadcastMessageResource));
+        String broadcastPackage = devicePrefs.getString(packagePreferenceKey, "");
+        handleDeviceAction(context, device, actions, broadcastMessage, broadcastPackage);
     }
 }

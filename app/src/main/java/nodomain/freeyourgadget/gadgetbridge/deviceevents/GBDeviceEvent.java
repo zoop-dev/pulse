@@ -26,6 +26,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,7 @@ public abstract class GBDeviceEvent {
      * @param actions
      * @param message
      */
-    protected void handleDeviceAction(final Context context, final GBDevice device, Set<String> actions, String message) {
+    protected void handleDeviceAction(final Context context, final GBDevice device, Set<String> actions, String message, String broadcastPackage) {
         if (actions.isEmpty()) {
             return;
         }
@@ -76,7 +77,12 @@ public abstract class GBDeviceEvent {
             if (message != null) {
                 Intent in = new Intent();
                 in.setAction(message);
-                LOG.info("Sending broadcast {}", message);
+                if (StringUtils.isNotBlank(broadcastPackage)) {
+                    in.setPackage(broadcastPackage);
+                    LOG.info("Sending broadcast {} to {}", message, broadcastPackage);
+                } else {
+                    LOG.info("Sending broadcast {}", message);
+                }
                 context.getApplicationContext().sendBroadcast(in);
             }
         }

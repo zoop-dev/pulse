@@ -23,6 +23,11 @@
                 android:key="prefs_events_forwarding_fellsleep_broadcast"
                 android:title="@string/prefs_events_forwarding_broadcast_title"
                 app:useSimpleSummaryProvider="true" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="prefs_events_forwarding_fellsleep_broadcast_package"
+                android:title="@string/prefs_events_forwarding_broadcast_package"
+                app:useSimpleSummaryProvider="true" />
         </PreferenceCategory>
 
         <PreferenceCategory
@@ -39,6 +44,11 @@
                 android:defaultValue="@string/prefs_events_forwarding_wokeup_broadcast_default_value"
                 android:key="prefs_events_forwarding_wokeup_broadcast"
                 android:title="@string/prefs_events_forwarding_broadcast_title"
+                app:useSimpleSummaryProvider="true" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="prefs_events_forwarding_wokeup_broadcast_package"
+                android:title="@string/prefs_events_forwarding_broadcast_package"
                 app:useSimpleSummaryProvider="true" />
         </PreferenceCategory>
 
@@ -57,6 +67,11 @@
                 android:defaultValue="@string/prefs_events_forwarding_startnonwear_broadcast_default_value"
                 android:key="prefs_events_forwarding_startnonwear_broadcast"
                 android:title="@string/prefs_events_forwarding_broadcast_title"
+                app:useSimpleSummaryProvider="true" />
+            <EditTextPreference
+                android:defaultValue=""
+                android:key="prefs_events_forwarding_startnonwear_broadcast_package"
+                android:title="@string/prefs_events_forwarding_broadcast_package"
                 app:useSimpleSummaryProvider="true" />
         </PreferenceCategory>
 

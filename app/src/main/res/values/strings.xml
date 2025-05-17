@@ -2598,6 +2598,7 @@
     <string name="prefs_events_forwarding_startnonwear">On Not Wearing</string>
     <string name="prefs_events_forwarding_startnonwear_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.StartNonWear</string>
     <string name="prefs_events_forwarding_broadcast_title">Broadcast message</string>
+    <string name="prefs_events_forwarding_broadcast_package">Broadcast package</string>
     <string name="prefs_events_forwarding_action_title">Run action</string>
     <string name="pref_header_filter">Sports Activities Filter</string>
     <string name="pref_header_statistics">Sports Activities Statistics</string>
