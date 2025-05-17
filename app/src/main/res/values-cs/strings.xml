@@ -4042,4 +4042,5 @@
     <string name="calorie_under_goal">Pod cílem: %1$d kcal</string>
     <string name="calorie_over_goal">Nad cílem: %1$d kcal</string>
     <string name="pairing_even_realities_g1_final_connect">Nastavování zařízení, čekejte prosím…</string>
+    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
 </resources>
