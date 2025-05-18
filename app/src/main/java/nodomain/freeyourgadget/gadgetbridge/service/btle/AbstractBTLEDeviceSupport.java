@@ -1,5 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Böhler, Arjan Schrijver, Carsten Pfeiffer,
-    Daniel Dakhno, Daniele Gobbetti, Johannes Krude, JohnnySun, José Rebelo
+/*  Copyright (C) 2015-2025 Andreas Böhler, Arjan Schrijver, Carsten Pfeiffer,
+    Daniel Dakhno, Daniele Gobbetti, Johannes Krude, JohnnySun, José Rebelo,
+    Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -369,7 +370,14 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
             bleApi.initializeDevice(builder);
         }
 
-        initializeDevice(builder).queue(getQueue());
+        initializeDevice(builder);
+
+        boolean lowPower = getDevicePrefs().getConnectionPriorityLowPower();
+        // have to explicitly request normal ("balanced") as some Android devices remember the last
+        // request. Else low power would become a set once option.
+        builder.requestConnectionPriority(lowPower ? BluetoothGatt.CONNECTION_PRIORITY_LOW_POWER : BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
+
+        builder.queue(getQueue());
     }
 
     @Override

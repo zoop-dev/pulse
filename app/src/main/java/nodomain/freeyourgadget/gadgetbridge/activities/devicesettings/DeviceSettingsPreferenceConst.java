@@ -624,4 +624,5 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_DISPLAY_ENABLED_ALL_DAY = "display_all_day";
     public static final String PREF_DISPLAY_ON_START = "display_on_start";
     public static final String PREF_DISPLAY_ON_END = "display_on_end";
+    public static final String PREF_CONNECTION_PRIORITY_LOW_POWER = "connection_priority_low_power";
 }

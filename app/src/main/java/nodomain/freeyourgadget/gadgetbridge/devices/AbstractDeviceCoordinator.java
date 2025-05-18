@@ -1,7 +1,7 @@
-/*  Copyright (C) 2015-2024 akasaka / Genjitsu Labs, Alicia Hormann, Andreas
+/*  Copyright (C) 2015-2025 akasaka / Genjitsu Labs, Alicia Hormann, Andreas
     Shimokawa, Arjan Schrijver, Carsten Pfeiffer, Daniel Dakhno, Daniele Gobbetti,
     Davis Mosenkovs, Dmitry Markin, José Rebelo, Matthieu Baerts, Nephiel,
-    Petr Vaněk, Taavi Eomäe, Johannes Krude
+    Petr Vaněk, Taavi Eomäe, Johannes Krude, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -798,6 +798,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         }
         if (connectionType.usesBluetoothClassic()) {
             settings = ArrayUtils.insert(0, settings, R.xml.devicesettings_reconnect_bl_classic);
+        }
+
+        if (connectionType.usesBluetoothLE() || connectionType.usesBluetoothClassic()){
+            settings = ArrayUtils.add(settings, R.xml.devicesettings_connection_priority_low_power);
         }
 
         return settings;

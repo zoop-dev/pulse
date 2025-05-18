@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:icon="@drawable/ic_low_priority"
+        android:key="connection_priority_low_power"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/connection_priority_low_power_title"
+        android:summary="@string/connection_priority_low_power_summary"
+        android:defaultValue="false" />
+</PreferenceScreen>

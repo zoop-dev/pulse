@@ -1,6 +1,6 @@
-/*  Copyright (C) 2016-2024 Andreas Shimokawa, Anemograph, Carsten Pfeiffer,
+/*  Copyright (C) 2016-2025 Andreas Shimokawa, Anemograph, Carsten Pfeiffer,
     Daniel Dakhno, Daniele Gobbetti, Davis Mosenkovs, Dikay900, Felix Konstantin
-    Maurer, José Rebelo, Petr Vaněk, Johannes Krude
+    Maurer, José Rebelo, Petr Vaněk, Johannes Krude, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -118,6 +118,10 @@ public class DevicePrefs extends Prefs {
 
     public boolean allowHighMtu() {
         return getBoolean(PREF_ALLOW_HIGH_MTU, true);
+    }
+
+    public boolean getConnectionPriorityLowPower() {
+        return getBoolean(PREF_CONNECTION_PRIORITY_LOW_POWER, false);
     }
 
     public DeviceCoordinator.ConnectionType getForcedConnectionTypeFromPrefs() {
