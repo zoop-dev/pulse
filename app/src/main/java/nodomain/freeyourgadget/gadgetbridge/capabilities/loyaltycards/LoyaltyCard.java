@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -132,6 +133,7 @@ public class LoyaltyCard implements Serializable, Comparable<LoyaltyCard> {
         return lastUsed;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return String.format(
