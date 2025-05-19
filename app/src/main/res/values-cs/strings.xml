@@ -982,7 +982,7 @@
     <string name="pref_header_statistics">Statistiky sportovních aktivit</string>
     <string name="pref_header_filter">Filtr sportovních aktivit</string>
     <string name="prefs_events_forwarding_action_title">Spustit akci</string>
-    <string name="prefs_events_forwarding_broadcast_title">Vysílací broadcast zpráva</string>
+    <string name="prefs_events_forwarding_broadcast_title">Vysílat zprávu</string>
     <string name="prefs_events_forwarding_startnonwear">Při nenošení</string>
     <string name="prefs_events_forwarding_wokeup">Při probuzení</string>
     <string name="prefs_events_forwarding_fellsleep">Při usnutí</string>
@@ -4043,4 +4043,5 @@
     <string name="calorie_over_goal">Nad cílem: %1$d kcal</string>
     <string name="pairing_even_realities_g1_final_connect">Nastavování zařízení, čekejte prosím…</string>
     <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
+    <string name="prefs_events_forwarding_broadcast_package">Vysílat balíček</string>
 </resources>
