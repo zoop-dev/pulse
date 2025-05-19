@@ -157,6 +157,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.VolleyUtils;
 
 public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(BangleJSDeviceSupport.class);
@@ -190,6 +191,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
 
     // used to make HTTP requests and handle responses
     private RequestQueue requestQueue = null;
+    private RequestQueue insecureRequestQueue = null;
 
     /// Maximum amount of characters to store in receiveHistory
     public static final int MAX_RECEIVE_HISTORY_CHARS = 100000;
@@ -240,13 +242,32 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         if (requestQueue != null) {
             requestQueue.stop();
         }
+        if (insecureRequestQueue != null) {
+            insecureRequestQueue.stop();
+        }
     }
 
-    private RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(getContext());
+    private RequestQueue getRequestQueue(final boolean insecure) {
+        if (insecure) {
+            if (insecureRequestQueue == null) {
+                try {
+                    insecureRequestQueue = Volley.newRequestQueue(
+                            getContext(),
+                            VolleyUtils.createInsecureHurlStack()
+                    );
+                } catch (final Exception e) {
+                    LOG.error("Failed to initialized insecure request queue", e);
+                    // fallback to secure one
+                    return getRequestQueue(false);
+                }
+            }
+            return insecureRequestQueue;
+        } else {
+            if (requestQueue == null) {
+                requestQueue = Volley.newRequestQueue(getContext());
+            }
+            return requestQueue;
         }
-        return requestQueue;
     }
 
     private void addReceiveHistory(String s) {
@@ -886,7 +907,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         }
         final String id = _id;
 
-        if (! BuildConfig.INTERNET_ACCESS) {
+        if (!BuildConfig.INTERNET_ACCESS) {
             uartTxJSONError("http", "Internet access not enabled, check Gadgetbridge Device Settings", id);
             return;
         }
@@ -898,7 +919,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         }
 
         String url = json.getString("url");
-
+        final boolean insecure = json.optBoolean("insecure", false);
         int method = Request.Method.GET;
         if (json.has("method")) {
             String m = json.getString("method").toLowerCase(Locale.US);
@@ -1008,7 +1029,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             int timeout = json.getInt("timeout");
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(timeout, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
-        RequestQueue queue = getRequestQueue();
+        RequestQueue queue = getRequestQueue(insecure);
         queue.add(stringRequest);
     }
 
@@ -2401,6 +2422,20 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             uartTxJSON("onSetNavigationInfo", o);
         } catch (JSONException e) {
             LOG.info("JSONException: " + e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void onTestNewFunction() {
+        try {
+            final JSONObject json = new JSONObject();
+            //json.put("t", "http");
+            //json.put("url", "https://example.com/");
+            //json.put("url", "https://192.168.1.2:4443");
+            //json.put("insecure", true);
+            //handleHttp(json);
+        } catch (final Exception e) {
+            LOG.error("Failed to test new function", e);
         }
     }
 }
