@@ -27,6 +27,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2NfcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
@@ -484,6 +485,7 @@ public enum DeviceType {
     NUTMINI(NutCoordinator.class),
     VIVOMOVE_HR(GarminVivomoveHrCoordinator.class),
     GARMIN_EDGE_130_PLUS(GarminEdge130PlusCoordinator.class),
+    GARMIN_EDGE_EXPLORE_2(GarminEdgeExplore2Coordinator.class),
     GARMIN_ENDURO_3(GarminEnduro3Coordinator.class),
     GARMIN_EPIX_PRO(GarminEpixProCoordinator.class),
     GARMIN_FENIX_5(GarminFenix5Coordinator.class),
