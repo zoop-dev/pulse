@@ -69,6 +69,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.NodeList;
@@ -970,19 +973,18 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                         JSONObject o = new JSONObject();
                         if (xmlPath.length() != 0) {
                             try {
-                                InputSource inputXML = new InputSource(new StringReader(response));
-                                XPath xPath = XPathFactory.newInstance().newXPath();
+                                Document doc = Jsoup.parse(response);
+                                Elements result = doc.selectXpath(xmlPath);
                                 if (xmlReturn.equals("array")) {
-                                    NodeList result = (NodeList) xPath.evaluate(xmlPath, inputXML, XPathConstants.NODESET);
                                     response = null; // don't add it below
                                     JSONArray arr = new JSONArray();
-                                    if (result != null) {
-                                        for (int i = 0; i < result.getLength(); i++)
-                                            arr.put(result.item(i).getTextContent());
-                                    }
+                                    for (int i = 0; i < result.size(); i++)
+                                        arr.put(result.get(i).text());
                                     o.put("resp", arr);
-                                } else {
-                                    response = xPath.evaluate(xmlPath, inputXML);
+                                } else { // else return only first!
+                                    response = "";
+                                    if (!result.isEmpty())
+                                        response = result.get(0).text();
                                 }
                             } catch (Exception error) {
                                 uartTxJSONError("http", error.toString(), id);
