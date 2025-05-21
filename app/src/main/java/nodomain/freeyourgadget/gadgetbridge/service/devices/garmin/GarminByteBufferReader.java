@@ -31,6 +31,14 @@ public class GarminByteBufferReader {
         return byteBuffer.position();
     }
 
+    public void setPosition(final int position) {
+        byteBuffer.position(position);
+    }
+
+    public int getLimit() {
+        return byteBuffer.limit();
+    }
+
     public int readShort() {
         return Short.toUnsignedInt(byteBuffer.getShort());
     }

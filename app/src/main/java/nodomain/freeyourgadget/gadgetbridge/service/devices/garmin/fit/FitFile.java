@@ -106,9 +106,13 @@ public class FitFile {
         }
         garminByteBufferReader.setByteOrder(ByteOrder.LITTLE_ENDIAN);
         final int fileCrc = garminByteBufferReader.readShort();
-        final int actualCrc = ChecksumCalculator.computeCrc(fileContents, 0, fileContents.length - 2);
+        final int actualCrc = ChecksumCalculator.computeCrc(fileContents, 0, garminByteBufferReader.getPosition() - 2);
         if (fileCrc != actualCrc) {
             throw new FitParseException("Wrong CRC for FIT file: got " + actualCrc + " expected " + fileCrc);
+        }
+        if (garminByteBufferReader.getPosition() < garminByteBufferReader.getLimit()) {
+            LOG.warn("There are {} bytes after the fit file", garminByteBufferReader.getLimit() - garminByteBufferReader.getPosition());
+            // TODO a fit file should actually be multiple fit files
         }
         return new FitFile(header, dataRecords);
     }
