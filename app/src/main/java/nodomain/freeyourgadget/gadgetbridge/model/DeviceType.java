@@ -50,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.FireBolttTalkCoordin
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.R50ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.RainbuvvyT97Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ViranC29Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.KT80Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.bandwpseries.BandWPSeriesDeviceCoordinator;
@@ -683,6 +684,7 @@ public enum DeviceType {
     COLMI_V89(ColmiV89Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
     C20(C20Coordinator.class),
+    KT80(KT80Coordinator.class),
     KSIX_VENTURE(KsixVentureCoordinator.class),
     FIREBOLTT_TALK(FireBolttTalkCoordinator.class),
     VIRAN_C29(ViranC29Coordinator.class),
