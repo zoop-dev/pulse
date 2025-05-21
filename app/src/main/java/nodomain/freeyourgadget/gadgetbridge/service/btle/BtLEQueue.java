@@ -351,7 +351,39 @@ public final class BtLEQueue {
         // reconnecting automatically, so we try to fix this by re-creating mBluetoothGatt.
         // Not sure if this actually works without re-initializing the device...
         if (mBluetoothGatt != null) {
-            if (!maybeReconnect()) {
+            boolean forceDisconnect;
+            if (status == 0x81 || status == 0x85) {
+                // Bluetooth stack has a fundamental problem:
+                // 0x81 129 GATT_INTERNAL_ERROR
+                // 0x85 133 GATT_ERROR
+                forceDisconnect = true;
+            } else if (status == BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION) {
+                // a Bluetooth bonding / pairing issue
+                // some devices report this state instead of GATT_CONNECTION_TIMEOUT
+                forceDisconnect = true;
+            } else {
+                forceDisconnect = false;
+            }
+
+            if (forceDisconnect) {
+                LOG.warn("unhealthy disconnect {} {}",
+                        mBluetoothGatt.getDevice().getAddress(),
+                        BleNamesResolver.getStatusString(status));
+
+                disconnect();
+
+                if (mAutoReconnect) {
+                    // don't reconnect immediately to give the Bluetooth stack some time to settle down
+                    // use BluetoothConnectReceiver or AutoConnectIntervalReceiver instead
+                    if (scanReconnect) {
+                        LOG.info("Waiting for BLE scan before attempting reconnection...");
+                        setDeviceConnectionState(State.WAITING_FOR_SCAN);
+                    } else {
+                        LOG.info("Enabling automatic ble reconnect...");
+                        setDeviceConnectionState(State.WAITING_FOR_RECONNECT);
+                    }
+                }
+            } else if (!maybeReconnect()) {
                 disconnect(); // ensure that we start over cleanly next time
             }
         }
