@@ -1966,7 +1966,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             Calendar sunset = Calendar.getInstance();
             sunset.setTimeInMillis(weatherSpec.sunSet * 1000L);
             ByteBuffer packetSunriseSunset = ByteBuffer.allocate(9 + weatherSpec.location.getBytes(StandardCharsets.UTF_8).length);
-            packetSunriseSunset.put(new byte[]{0x00, 0x00});
+            packetSunriseSunset.put((byte) 0x00);
+            packetSunriseSunset.put(weatherToday.conditionId);
             packetSunriseSunset.put(weatherToday.currentTemp);
             packetSunriseSunset.put(new byte[]{0x00, 0x00});
             packetSunriseSunset.put((byte) sunrise.get(Calendar.HOUR_OF_DAY));
