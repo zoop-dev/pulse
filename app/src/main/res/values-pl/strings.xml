@@ -4067,4 +4067,9 @@
     <string name="calorie_under_goal">Poniżej celu: %1$d kcal</string>
     <string name="active_calories_avg">Średnia aktywnych kalorii</string>
     <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
+    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
+    <string name="connection_priority_low_power_title">Żądanie niskiej mocy</string>
+    <string name="connection_priority_low_power_summary">Zmniejszenie priorytetu bluetooth i parametrów połączenia szybkości transmisji danych.</string>
+    <string name="prefs_events_forwarding_broadcast_package">Pakiet transmisji</string>
+    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
 </resources>
