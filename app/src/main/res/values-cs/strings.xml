@@ -4045,4 +4045,7 @@
     <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
     <string name="prefs_events_forwarding_broadcast_package">Vysílat balíček</string>
     <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
+    <string name="connection_priority_low_power_summary">Snížit prioritu Bluetooth a parametry datového toku.</string>
+    <string name="connection_priority_low_power_title">Požádat o nízkou spotřebu</string>
+    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
 </resources>
