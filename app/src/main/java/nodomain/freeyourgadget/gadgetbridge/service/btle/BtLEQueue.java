@@ -564,6 +564,11 @@ public final class BtLEQueue {
                 LOG.warn("connection state event with error status {}", BleNamesResolver.getStatusString(status));
             }
 
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                callback.onConnectionStateChange(gatt, status, newState);
+            }
+
             switch (newState) {
                 case BluetoothProfile.STATE_CONNECTED:
                     LOG.info("Connected to GATT server.");
