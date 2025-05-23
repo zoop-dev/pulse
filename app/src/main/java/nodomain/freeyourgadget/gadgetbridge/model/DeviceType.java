@@ -30,6 +30,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner630Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2NfcCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchfit4pro.HuaweiWatchFit4ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
@@ -627,6 +628,7 @@ public enum DeviceType {
     HUAWEIWATCHFIT(HuaweiWatchFitCoordinator.class),
     HUAWEIWATCHFIT2(HuaweiWatchFit2Coordinator.class),
     HUAWEIWATCHFIT3(HuaweiWatchFit3Coordinator.class),
+    HUAWEIWATCHFIT4PRO(HuaweiWatchFit4ProCoordinator.class),
     HUAWEIWATCHULTIMATE(HuaweiWatchUltimateCoordinator.class),
     HUAWEIWATCH3(HuaweiWatch3Coordinator.class),
     HUAWEIWATCH4PRO(HuaweiWatch4ProCoordinator.class),
