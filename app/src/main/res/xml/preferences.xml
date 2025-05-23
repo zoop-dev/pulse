@@ -14,7 +14,7 @@
             android:key="general_autostartonboot"
             android:layout="@layout/preference_checkbox"
             android:title="@string/pref_title_general_autostartonboot"
-            app:iconSpaceReserved="false" />
+            android:icon="@drawable/ic_autoplay" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
@@ -22,14 +22,14 @@
             android:layout="@layout/preference_checkbox"
             android:summary="@string/pref_show_changelog_summary"
             android:title="@string/pref_show_changelog"
-            app:iconSpaceReserved="false" />
+            android:icon="@drawable/ic_receipt" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="general_autoconnectonbluetooth"
             android:layout="@layout/preference_checkbox"
             android:title="@string/pref_title_general_autoconnectonbluetooth"
-            app:iconSpaceReserved="false" />
+            android:icon="@drawable/ic_bluetooth_searching" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
@@ -37,12 +37,11 @@
             android:layout="@layout/preference_checkbox"
             android:summary="@string/pref_summary_general_reconnectonlytoconnected"
             android:title="@string/pref_title_general_reconnectonlytoconnected"
-            app:iconSpaceReserved="false" />
+            android:icon="@drawable/ic_bluetooth_connected" />
 
         <PreferenceCategory
             android:key="language_category"
-            android:title="@string/language_and_region_prefs"
-            app:iconSpaceReserved="false">
+            android:title="@string/language_and_region_prefs">
             <ListPreference
                 android:defaultValue="default"
                 android:entries="@array/pref_language_options"
@@ -50,7 +49,7 @@
                 android:key="language"
                 android:summary="%s"
                 android:title="@string/pref_title_language"
-                app:iconSpaceReserved="false" />
+                android:icon="@drawable/ic_translate" />
             <ListPreference
                 android:defaultValue="metric"
                 android:entries="@array/pref_entries_unit_system"
@@ -58,11 +57,11 @@
                 android:key="measurement_system"
                 android:summary="%s"
                 android:title="@string/pref_title_unit_system"
-                app:iconSpaceReserved="false" />
+                android:icon="@drawable/ic_straighten" />
             <PreferenceScreen
                 android:key="pref_screen_rtl"
                 android:title="@string/preferences_rtl_settings"
-                app:iconSpaceReserved="false">
+                android:icon="@drawable/ic_format_textdirection_r_to_l">
                 <SwitchPreferenceCompat
                     android:defaultValue="false"
                     android:key="rtl"
@@ -90,31 +89,29 @@
 
         <PreferenceCategory
             android:key="pref_key_datetime"
-            android:title="@string/pref_header_datetime"
-            app:iconSpaceReserved="false">
+            android:title="@string/pref_header_datetime">
             <SwitchPreferenceCompat
                 android:defaultValue="true"
                 android:key="datetime_synconconnect"
                 android:layout="@layout/preference_checkbox"
                 android:summary="@string/pref_summary_datetime_syctimeonconnect"
                 android:title="@string/pref_title_datetime_syctimeonconnect"
-                app:iconSpaceReserved="false" />
+                android:icon="@drawable/ic_update" />
         </PreferenceCategory>
 
         <PreferenceCategory
-            android:title="@string/pref_header_location"
-            app:iconSpaceReserved="false">
+            android:title="@string/pref_header_location">
             <Preference
                 android:key="location_aquire"
                 android:title="@string/pref_title_location_aquire"
-                app:iconSpaceReserved="false" />
+                android:icon="@drawable/ic_gps_location" />
             <EditTextPreference
                 android:defaultValue="0"
                 android:inputType="numberDecimal|numberSigned"
                 android:key="location_latitude"
                 android:maxLength="7"
                 android:title="@string/pref_title_location_latitude"
-                app:iconSpaceReserved="false"
+                android:icon="@drawable/ic_swap_vert"
                 app:useSimpleSummaryProvider="true" />
             <EditTextPreference
                 android:defaultValue="0"
@@ -122,7 +119,7 @@
                 android:key="location_longitude"
                 android:maxLength="7"
                 android:title="@string/pref_title_location_longitude"
-                app:iconSpaceReserved="false"
+                android:icon="@drawable/ic_swap_horiz"
                 app:useSimpleSummaryProvider="true" />
             <SwitchPreferenceCompat
                 android:defaultValue="true"
@@ -131,7 +128,7 @@
                 android:layout="@layout/preference_checkbox"
                 android:summary="@string/pref_summary_location_keep_uptodate"
                 android:title="@string/pref_title_location_keep_uptodate"
-                app:iconSpaceReserved="false" />
+                android:icon="@drawable/ic_move" />
         </PreferenceCategory>
     </PreferenceScreen>
 
