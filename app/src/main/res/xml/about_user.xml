@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
-        app:iconSpaceReserved="false"
         android:key="pref_category_activity_personal"
         android:title="@string/activity_prefs_about_you">
 
@@ -10,17 +9,17 @@
             android:key="mi_user_alias"
             android:maxLength="17"
             android:title="@string/miband_prefs_alias"
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_badge"
             app:useSimpleSummaryProvider="true" />
 
         <nodomain.freeyourgadget.gadgetbridge.util.XDatePreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_calendar_month"
             android:defaultValue="2000-01-01"
             android:key="activity_user_date_of_birth"
             android:title="@string/activity_prefs_date_birth" />
 
         <ListPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_wc"
             android:defaultValue="2"
             android:entries="@array/gender"
             android:entryValues="@array/gender_values"
@@ -30,7 +29,7 @@
 
         <!--TODO: support localized heights and weights -->
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_height"
             android:inputType="number"
             android:key="activity_user_height_cm"
             android:maxLength="3"
@@ -38,7 +37,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_weight"
             android:inputType="number"
             android:key="activity_user_weight_kg"
             android:maxLength="3"
@@ -46,7 +45,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_footprint"
             android:inputType="number"
             android:key="activity_user_step_length_cm"
             android:maxLength="3"
@@ -56,12 +55,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:iconSpaceReserved="false"
         android:key="pref_category_targets"
         android:title="@string/activity_prefs_goals">
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_monitor_weight"
             android:inputType="number"
             android:key="activity_user_goal_weight_kg"
             android:maxLength="3"
@@ -69,7 +67,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_steps"
             android:defaultValue="10000"
             android:inputType="number"
             android:key="fitness_goal"
@@ -78,7 +76,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_airline_seat_flat"
             android:inputType="number"
             android:key="activity_user_sleep_duration"
             android:maxLength="2"
@@ -86,7 +84,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_calories"
             android:defaultValue="350"
             android:inputType="number"
             android:key="activity_user_calories_burnt"
@@ -95,7 +93,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_distance"
             android:defaultValue="5000"
             android:inputType="number"
             android:key="activity_user_distance_meters"
@@ -104,7 +102,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_cardio_load"
             android:defaultValue="60"
             android:inputType="number"
             android:key="activity_user_activetime_minutes"
@@ -113,7 +111,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_emoji_people"
             android:defaultValue="12"
             android:inputType="number"
             android:key="activity_user_goal_standing_hours"
@@ -122,7 +120,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:iconSpaceReserved="false"
+            android:icon="@drawable/ic_calories"
             android:defaultValue="30"
             android:inputType="number"
             android:key="activity_user_goal_fat_burn_time_minutes"
