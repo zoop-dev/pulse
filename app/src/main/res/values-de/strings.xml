@@ -3947,4 +3947,9 @@
     <string name="swim_style_butterfly">Schmetterlingsstil</string>
     <string name="swim_style_drill">Technikübung</string>
     <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
+    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
+    <string name="prefs_events_forwarding_broadcast_package">Broadcast-Datenpaket</string>
+    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="connection_priority_low_power_title">Niedriger Energieverbrauch</string>
+    <string name="connection_priority_low_power_summary">Energiesparende Verbindungseinstellungen – langsamer, aber stromsparend.</string>
 </resources>
