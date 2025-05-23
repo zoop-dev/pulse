@@ -23,6 +23,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DeviceConfig;
+import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class GetProductInformationRequest extends Request {
@@ -53,6 +54,11 @@ public class GetProductInformationRequest extends Request {
         getDevice().setFirmwareVersion(((DeviceConfig.ProductInfo.Response) receivedPacket).softwareVersion);
         getDevice().setFirmwareVersion2(((DeviceConfig.ProductInfo.Response) receivedPacket).hardwareVersion);
         getDevice().setModel(((DeviceConfig.ProductInfo.Response) receivedPacket).productModel);
+
+        getDevice().addDeviceInfo(new GenericItem("NAME: ", ((DeviceConfig.ProductInfo.Response) receivedPacket).deviceName));
+        getDevice().addDeviceInfo(new GenericItem("PKG: ", ((DeviceConfig.ProductInfo.Response) receivedPacket).packageName));
+        getDevice().addDeviceInfo(new GenericItem("SN: ", ((DeviceConfig.ProductInfo.Response) receivedPacket).serialNumber));
+        getDevice().addDeviceInfo(new GenericItem("RC: ", String.valueOf(((DeviceConfig.ProductInfo.Response) receivedPacket).regionCode)));
 
         supportProvider.getHuaweiCoordinator().setOtaSoftwareVersion(((DeviceConfig.ProductInfo.Response) receivedPacket).softwareVersion);
         supportProvider.getHuaweiCoordinator().setOtaSignatureLength(((DeviceConfig.ProductInfo.Response) receivedPacket).otaSignatureLength);

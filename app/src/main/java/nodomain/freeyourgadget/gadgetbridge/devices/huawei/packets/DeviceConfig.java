@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets;
 
+import androidx.annotation.NonNull;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -176,7 +178,7 @@ public class DeviceConfig {
     public static class SupportedCommands {
         public static final byte id = 0x03;
 
-        public static final TreeMap<Integer, byte[]> commandsPerService = new TreeMap<Integer, byte[]>() {{
+        public static final TreeMap<Integer, byte[]> commandsPerService = new TreeMap<>() {{
             put(0x01, new byte[] {0x04, 0x07, 0x08, 0x09, 0x0A, 0x0D, 0x0E, 0x10, 0x11, 0x12, 0x13, 0x14, 0x1B, 0x1A, 0x1D, 0x21, 0x22, 0x23, 0x24, 0x29, 0x2A, 0x2B, 0x32, 0x2E, 0x31, 0x30, 0x35, 0x36, 0x37, 0x2F});
             put(0x02, new byte[] {0x01, 0x04, 0x05, 0x06, 0x07, 0x08});
             put(0x03, new byte[] {0x01, 0x03, 0x04});
@@ -279,6 +281,7 @@ public class DeviceConfig {
                 public int service;
                 public byte[] commands;
 
+                @NonNull
                 @Override
                 public String toString() {
                     StringBuilder sb = new StringBuilder();
@@ -454,7 +457,11 @@ public class DeviceConfig {
 
             public String hardwareVersion;
             public String softwareVersion;
+            public String serialNumber;
             public String productModel;
+            public String packageName;
+            public String deviceName;
+            public int regionCode;
             public int otaSignatureLength = 256;
 
             public Response(ParamsProvider paramsProvider) {
@@ -469,7 +476,20 @@ public class DeviceConfig {
                 if (this.tlv.contains(0x03))
                     this.hardwareVersion = this.tlv.getString(0x03);
                 this.softwareVersion = this.tlv.getString(0x07);
+
+                if(this.tlv.contains(0x09))
+                    this.serialNumber = this.tlv.getString(0x09);
+
                 this.productModel = this.tlv.getString(0x0A).trim();
+
+                if(this.tlv.contains(0x0F))
+                    this.packageName = this.tlv.getString(0x0F);
+
+                if(this.tlv.contains(0x11))
+                    this.deviceName = this.tlv.getString(0x11);
+
+                if(this.tlv.contains(0x14))
+                    this.regionCode = this.tlv.getAsInteger(0x14);
 
                 if(this.tlv.contains(0x27))
                     this.otaSignatureLength = this.tlv.getAsInteger(0x27);
@@ -1198,6 +1218,7 @@ public class DeviceConfig {
                     this.token = GB.hexStringToByteArray(payload.getString("token"));
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step1Data{" +
@@ -1216,6 +1237,7 @@ public class DeviceConfig {
                     this.returnCodeMac = GB.hexStringToByteArray(payload.getString("returnCodeMac"));
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step2Data{" +
@@ -1233,6 +1255,7 @@ public class DeviceConfig {
                     this.encAuthToken = GB.hexStringToByteArray(payload.getString("encAuthToken"));
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step3Data{" +
@@ -1250,6 +1273,7 @@ public class DeviceConfig {
                         this.data = tlv.getString(0x01);
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step4Data{" +
@@ -1334,6 +1358,7 @@ public class DeviceConfig {
                         this.serviceType = payload.getString("serviceType");
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step1Data{" +
@@ -1360,6 +1385,7 @@ public class DeviceConfig {
                         this.isDeviceLevel = payload.getBoolean("isDeviceLevel");
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step2Data{" +
@@ -1379,6 +1405,7 @@ public class DeviceConfig {
                     this.encData = GB.hexStringToByteArray(payload.getString("encData"));
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step3Data{" +
@@ -1397,6 +1424,7 @@ public class DeviceConfig {
                     this.encResult = GB.hexStringToByteArray(payload.getString("encResult"));
                 }
 
+                @NonNull
                 @Override
                 public String toString() {
                     return "Step4Data{" +
