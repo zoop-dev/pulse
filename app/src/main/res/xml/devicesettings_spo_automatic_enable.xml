@@ -3,7 +3,7 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
-        android:icon="@drawable/ic_heart"
+        android:icon="@drawable/ic_spo2"
         android:key="spo_automatic_enable"
         android:layout="@layout/preference_checkbox"
         android:title="@string/pref_spo_automatic_enable" />

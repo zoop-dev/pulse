@@ -116,6 +116,7 @@
                 android:defaultValue="false"
                 android:key="spo2_all_day_monitoring_enabled"
                 android:layout="@layout/preference_checkbox"
+                android:icon="@drawable/ic_spo2"
                 android:summary="@string/prefs_spo2_monitoring_description"
                 android:title="@string/prefs_spo2_monitoring_title" />
 
@@ -126,6 +127,7 @@
                 android:entryValues="@array/prefs_spo2_alert_threshold_values"
                 android:key="spo2_low_alert_threshold"
                 android:summary="%s"
+                android:icon="@drawable/ic_notifications_active"
                 android:title="@string/prefs_spo2_alert_threshold" />
         </PreferenceCategory>
     </PreferenceScreen>

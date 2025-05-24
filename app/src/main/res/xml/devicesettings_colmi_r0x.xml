@@ -17,7 +17,7 @@
             android:title="@string/prefs_stress_monitoring_title" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:icon="@drawable/baseline_bloodtype_24"
+            android:icon="@drawable/ic_spo2"
             android:key="spo2_all_day_monitoring_enabled"
             android:layout="@layout/preference_checkbox"
             android:summary="@string/prefs_spo2_monitoring_description"

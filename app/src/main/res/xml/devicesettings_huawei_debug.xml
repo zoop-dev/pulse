@@ -56,7 +56,7 @@
             android:summary="@string/pref_force_enable_heartrate_support_summary" />
 
         <SwitchPreferenceCompat
-            android:icon="@drawable/ic_heart"
+            android:icon="@drawable/ic_spo2"
             android:defaultValue="false"
             android:key="pref_force_enable_spo2_support"
             android:layout="@layout/preference_checkbox"
