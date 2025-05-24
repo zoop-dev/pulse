@@ -609,9 +609,10 @@ public final class BtLEQueue {
             }
 
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                if (getCallbackToUse() != null) {
+                final GattCallback callback = getCallbackToUse();
+                if (callback != null) {
                     // only propagate the successful event
-                    getCallbackToUse().onServicesDiscovered(gatt);
+                    callback.onServicesDiscovered(gatt);
                 }
                 if (mConnectionLatch != null) {
                     mConnectionLatch.countDown();
@@ -627,8 +628,10 @@ public final class BtLEQueue {
             if (!checkCorrectGattInstance(gatt, "characteristic write")) {
                 return;
             }
-            if (getCallbackToUse() != null) {
-                getCallbackToUse().onCharacteristicWrite(gatt, characteristic, status);
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                callback.onCharacteristicWrite(gatt, characteristic, status);
             }
             checkWaitingCharacteristic(characteristic, status);
         }
@@ -641,8 +644,9 @@ public final class BtLEQueue {
 
             LOG.debug("mtu changed to {} {}", mtu, BleNamesResolver.getStatusString(status));
 
-            if(getCallbackToUse() != null){
-                getCallbackToUse().onMtuChanged(gatt, mtu, status);
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                callback.onMtuChanged(gatt, mtu, status);
             }
 
             if (mWaitForActionResultLatch != null) {
@@ -671,9 +675,11 @@ public final class BtLEQueue {
             if (!checkCorrectGattInstance(gatt, "characteristic read")) {
                 return;
             }
-            if (getCallbackToUse() != null) {
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
                 try {
-                    getCallbackToUse().onCharacteristicRead(gatt, characteristic, value, status);
+                    callback.onCharacteristicRead(gatt, characteristic, value, status);
                 } catch (Throwable ex) {
                     LOG.error("onCharacteristicRead: {}", ex.getMessage(), ex);
                 }
@@ -693,9 +699,11 @@ public final class BtLEQueue {
             if (!checkCorrectGattInstance(gatt, "descriptor read")) {
                 return;
             }
-            if (getCallbackToUse() != null) {
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
                 try {
-                    getCallbackToUse().onDescriptorRead(gatt, descriptor, status, value);
+                    callback.onDescriptorRead(gatt, descriptor, status, value);
                 } catch (Throwable ex) {
                     LOG.error("onDescriptorRead failed", ex);
                 }
@@ -709,9 +717,11 @@ public final class BtLEQueue {
             if (!checkCorrectGattInstance(gatt, "descriptor write")) {
                 return;
             }
-            if (getCallbackToUse() != null) {
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
                 try {
-                    getCallbackToUse().onDescriptorWrite(gatt, descriptor, status);
+                    callback.onDescriptorWrite(gatt, descriptor, status);
                 } catch (Throwable ex) {
                     LOG.error("onDescriptorWrite failed", ex);
                 }
@@ -737,9 +747,11 @@ public final class BtLEQueue {
             if (!checkCorrectGattInstance(gatt, "characteristic changed")) {
                 return;
             }
-            if (getCallbackToUse() != null) {
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
                 try {
-                    getCallbackToUse().onCharacteristicChanged(gatt, characteristic, value);
+                    callback.onCharacteristicChanged(gatt, characteristic, value);
                 } catch (Throwable ex) {
                     LOG.error("onCharacteristicChanged failed", ex);
                 }
@@ -754,9 +766,11 @@ public final class BtLEQueue {
             if (!checkCorrectGattInstance(gatt, "remote rssi")) {
                 return;
             }
-            if (getCallbackToUse() != null) {
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
                 try {
-                    getCallbackToUse().onReadRemoteRssi(gatt, rssi, status);
+                    callback.onReadRemoteRssi(gatt, rssi, status);
                 } catch (Throwable ex) {
                     LOG.error("onReadRemoteRssi failed", ex);
                 }
