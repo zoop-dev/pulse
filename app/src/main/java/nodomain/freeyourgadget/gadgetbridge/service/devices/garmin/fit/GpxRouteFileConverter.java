@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
@@ -14,9 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
-import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrack;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackPoint;
-import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackSegment;
 
 public class GpxRouteFileConverter {
     private static final Logger LOG = LoggerFactory.getLogger(GpxRouteFileConverter.class);
@@ -30,11 +29,13 @@ public class GpxRouteFileConverter {
     public GpxRouteFileConverter(byte[] xmlBytes) {
         this.timestamp = System.currentTimeMillis() / 1000;
         this.gpxFile = GpxParser.parseGpx(xmlBytes);
-        try {
-            this.convertedFile = convertGpxToRoute(gpxFile);
-        } catch (Exception e) {
-            LOG.error(e.getMessage());
-            this.convertedFile = null;
+        if (this.gpxFile != null) {
+            try {
+                this.convertedFile = convertGpxToRoute(gpxFile);
+            } catch (final Exception e) {
+                LOG.error("Failed to convert gpx to route", e);
+                this.convertedFile = null;
+            }
         }
     }
 
@@ -74,23 +75,20 @@ public class GpxRouteFileConverter {
             LOG.error("Gpx file contains no Tracks.");
             return null;
         }
-        //GPX files may contain multiple tracks, we use only the first one
-        final GpxTrack track = gpxFile.getTracks().get(0);
 
-        if (track.getTrackSegments().isEmpty()) {
-            LOG.error("Gpx track contains no segment.");
-            return null;
-        }
-        //GPX track may contain multiple segments, we use only the first one
-        GpxTrackSegment gpxTrackSegment = track.getTrackSegments().get(0);
+        this.name = gpxFile.getTracks().get(0).getName();
 
-        List<GpxTrackPoint> gpxTrackPointList = gpxTrackSegment.getTrackPoints();
+        // GPX files may contain multiple tracks, we use only the first one,
+        // but we use all segments (#4855)
+        final List<GpxTrackPoint> gpxTrackPointList = gpxFile.getTracks().get(0)
+                .getTrackSegments().stream()
+                .flatMap(segment -> segment.getTrackPoints().stream())
+                .collect(Collectors.toList());
+
         if (gpxTrackPointList.isEmpty()) {
-            LOG.error("Gpx track segment contains no point");
+            LOG.error("Gpx track contains no points");
             return null;
         }
-
-        this.name = track.getName();
 
         final RecordHeader gpxDataPointRecordHeader = new RecordHeader((byte) 0x05);
         final RecordDefinition gpxDataPointRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x45), ByteOrder.BIG_ENDIAN, GlobalFITMessage.RECORD, GlobalFITMessage.RECORD.getFieldDefinitions(0, 1, 2, 5, 253), null);
