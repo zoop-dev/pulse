@@ -2663,7 +2663,7 @@
     <string name="pref_title_bottom_navigation_bar">Нижня панель навігації</string>
     <string name="pref_sleepasandroid_feat_heartrate">Пульс</string>
     <string name="bottom_nav_devices">Пристрої</string>
-    <string name="pref_dashboard_select_devices_title">Вибрати пристрої...</string>
+    <string name="pref_dashboard_select_devices_title">Обрати пристрої...</string>
     <string name="chart_cycling_point_label_distance">Сьогодні: %.1f км
 \nВсього: %.1f км</string>
     <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
@@ -3356,4 +3356,18 @@
     <string name="state_scanned">Виявлено</string>
     <string name="widget_layout_top_large_bot_wide">Великий угорі, широкий знизу</string>
     <string name="uploading">Установлення…</string>
+    <string name="pref_dashboard_widget_today_24h_title">24-годинний режим</string>
+    <string name="pref_dashboard_first_summary">Показувати зведення після запуску Gadgetbridge замість екрана пристроїв</string>
+    <string name="pref_dashboard_widget_settings">Налаштування віджетів</string>
+    <string name="pref_dashboard_widget_double_size_title">Подвійний розмір</string>
+    <string name="pref_dashboard_devices_to_include">Включені пристрої</string>
+    <string name="dashboard_settings">Налаштування зведення</string>
+    <string name="bottom_nav_dashboard">Зведення</string>
+    <string name="pref_dashboard_first_title">Спершу показувати зведення</string>
+    <string name="pref_dashboard_cards_title">Показувати віджети на картках</string>
+    <string name="devicesetting_scannable_minimum_unseen">Мінімальний час непомітності (у секундах)</string>
+    <string name="pref_dashboard_widget_today_title">Діагарама діяльності</string>
+    <string name="activity_type_worn">Одягнено</string>
+    <string name="pref_dashboard_widget_show_legend_title">Показати легенду</string>
+    <string name="pref_dashboard_widget_goals_chart_title">Діаграма цілей</string>
 </resources>
