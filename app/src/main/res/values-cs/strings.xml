@@ -4048,4 +4048,5 @@
     <string name="connection_priority_low_power_summary">Snížit prioritu Bluetooth a parametry datového toku.</string>
     <string name="connection_priority_low_power_title">Požádat o nízkou spotřebu</string>
     <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
 </resources>
