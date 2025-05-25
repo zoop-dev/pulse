@@ -5,14 +5,24 @@
 * Initial support for Amazfit Active 2 NFC
 * Initial support for Colmi R12
 * Initial support for Polar H10
-* Initial support for Garmin Edge 130 Plus, Fenix 7X Pro, Instinct 2X Tactical, Vívoactive HR
+* Initial support for Garmin Edge 130 Plus, Edge Explore 2, Fenix 7X Pro, Forerunner 630, Instinct 2X Tactical, Instinct 3 Tactical, Vívoactive HR, Vívosmart 4
 * Initial support for Oppo Enco Buds2
 * Initial support for Realme Buds Air 5 Pro, Buds T100, Buds T300
 * Initial support for Sony WF-C710N
+* Experimental support for Huawei Watch Fit 4 / 4 Pro
+* Bangle.js: Add support for insecure TLS and HTTP requests
+* Bangle.js: Add support for version 2 weather
+* Bangle.js: Use html-compatible parser for xpath queries
 * Bangle.js: Set the HTTP request timeout
 * Colmi R0x: Add support for display preferences
+* Even Realities G1: Pair as a single device
 * Garmin: Fix activity renaming
+* Garmin: Fix fetching of concatenated fit files
 * Garmin: Parse swimming workout intervals
+* Garmin: Prevent infinite loop when fetching activity data
+* Garmin: Upload all segments from first track in gpx
+* Huami: Add broadcast package to device actions
+* Huawei: Add more info to device details
 * Huawei: Configuration of goal reminders
 * Huawei: Fix crash in app list
 * Huawei: Fix message during firmware update
@@ -30,11 +40,16 @@
 * Zepp OS: Fix moon phase icon
 * Zepp OS: Fix zip files being wrongly recognized as AGPS
 * Zepp OS: Parse workout pace, cadence, strength sets
+* BLE: Add setting to request low-power connection
+* BLE: Add reconnect on gadget-initiated connection
 * Charts: Display resting metabolic rate
 * Charts: Add average day for body energy
 * Charts: Add weekly/monthly views for calories
 * Dashboard: Fix resting calories when using multiple devices
 * Intent API: Add command to set device type
+* OpenTracks: Fix detection of some versions of the app
+* Add more icons for preferences and activities
+* Fix inconsistent sleep scores
 
 #### 0.85.0
 
