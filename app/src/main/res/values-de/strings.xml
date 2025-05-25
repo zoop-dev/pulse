@@ -45,7 +45,7 @@
     <string name="fw_upgrade_notice">Du bist dabei, die %s zu installieren.</string>
     <string name="fw_multi_upgrade_notice">Du bist dabei anstelle der aktuell auf dem Mi Band vorhandenen Firmware, die Firmware %1$s und %2$s zu installieren.</string>
     <string name="miband_firmware_known">Diese Firmware wurde getestet und ist mit Gadgetbridge kompatibel.</string>
-    <string name="miband_firmware_unknown_warning">Diese Firmware wurde nicht getestet und ist möglicherweise nicht mit Gadgetbridge kompatibel.\n\nDas Flashen dieser Firmware wird ausdrücklich nicht empfohlen!</string>
+    <string name="miband_firmware_unknown_warning">Diese Firmware/AGPS-Bundle wurde nicht getestet und ist möglicherweise nicht mit Gadgetbridge kompatibel.\n\nDas Flashen wird ausdrücklich nicht empfohlen!</string>
     <string name="miband_firmware_suggest_whitelist">Wenn du trotzdem fortfahren möchtest und danach weiterhin alles wie gewünscht funktioniert, informiere bitte die Gadgetbridge-Entwickler, damit die Firmware-Version %s auf die Whitelist gesetzt wird.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Einstellungen</string>
@@ -83,8 +83,8 @@
     <string name="pref_header_privacy">Privatsphäre</string>
     <string name="pref_title_call_privacy_mode">Anzeige bei Anrufen</string>
     <string name="pref_call_privacy_mode_off">Name und Telefonnummer anzeigen</string>
-    <string name="pref_call_privacy_mode_name">Name ausblenden, aber Nummer anzeigen</string>
-    <string name="pref_call_privacy_mode_number">Nummer ausblenden, aber Name anzeigen</string>
+    <string name="pref_call_privacy_mode_name">Name ausblenden, aber Telefonummer anzeigen</string>
+    <string name="pref_call_privacy_mode_number">Telefonnummer ausblenden, aber Name anzeigen</string>
     <string name="pref_call_privacy_mode_complete">Name und Telefonnummer ausblenden</string>
     <string name="pref_blacklist_calendars">Blockierte Kalender</string>
     <string name="pref_header_cannned_messages">Gespeicherte Nachrichten</string>
@@ -1777,7 +1777,7 @@
     <string name="seconds_14">14 Sekunden</string>
     <string name="seconds_15">15 Sekunden</string>
     <string name="prefs_always_on_display">Display immer eingeschaltet</string>
-    <string name="smart">Smart</string>
+    <string name="smart">Smart (situationsabhängig)</string>
     <string name="mi2_dnd_always">Immer</string>
     <string name="devicetype_miband7">Xiaomi Smart Band 7</string>
     <string name="menuitem_countdown">Countdown</string>
@@ -2013,7 +2013,7 @@
     <string name="pref_title_lock_unlock">Sperren</string>
     <string name="pref_header_intent_api">Intent-API</string>
     <string name="pref_agps_update_time">AGPS-Aktualisierungszeit</string>
-    <string name="pref_agps_expire_time">AGP- Ablaufzeit</string>
+    <string name="pref_agps_expire_time">AGPS- Ablaufzeit</string>
     <string name="intent_api_allow_activity_sync_summary">Auslösen der Aktivitätssynchronisierung über die Intent-API erlauben</string>
     <string name="intent_api_allow_activity_sync_title">Aktivitätssynchronisierungsauslöser zulassen</string>
     <string name="sony_ambient_sound_control_button_modes">Tastenmodi für die Steuerung von Umgebungsgeräuschen</string>
@@ -2172,7 +2172,7 @@
     <string name="loyalty_cards_catima_package">Catima Paketname</string>
     <string name="loyalty_cards_install">Catima installieren</string>
     <string name="loyalty_cards_sync_groups_only">Nur bestimmte Gruppen synchronisieren</string>
-    <string name="loyalty_cards_sync_summary">Tippen, um Karten zur Smartwatch zu senden</string>
+    <string name="loyalty_cards_sync_summary">Tippe hier, um Mitgliedskarten zur Smartwatch zu senden</string>
     <string name="loyalty_cards_sync_title">Mitgliedskarten synchronisieren</string>
     <string name="loyalty_cards_catima_not_compatible">Die installierte Catima-Version ist nicht mit Gadgetbridge kompatibel. Bitte aktualisiere Catima und Gadgetbridge auf die neuesten Versionen.</string>
     <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge benötigt Leseberechtigungen für Catima-Karten, um diese zu synchronisieren. Tippe auf diese Schaltfläche, um sie zu erteilen.</string>
@@ -3877,7 +3877,7 @@
     <string name="maps">Karten</string>
     <string name="maps_settings">Karten-Einstellungen</string>
     <string name="maps_download_title">Karten herunterladen</string>
-    <string name="maps_download_summary">Klicken Sie hier, um die Kartendateien herunterzuladen. Sie sollten in dem unten ausgewählten Ordner gespeichert werden.</string>
+    <string name="maps_download_summary">Klicken Sie hier, um die Kartendateien herunterzuladen. Sie müssen danach in dem unten ausgewählten Ordner verschoben werden.</string>
     <string name="maps_track_color_title">Streckenfarbe</string>
     <string name="weather_condition_freezing_rain">Gefrierender Regen</string>
     <string name="audio_recordings">Audioaufnahmen</string>
@@ -3952,4 +3952,5 @@
     <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
     <string name="connection_priority_low_power_title">Niedriger Energieverbrauch</string>
     <string name="connection_priority_low_power_summary">Energiesparende Verbindungseinstellungen – langsamer, aber stromsparend.</string>
+    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
 </resources>
