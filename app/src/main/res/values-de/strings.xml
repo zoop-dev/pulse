@@ -3953,4 +3953,5 @@
     <string name="connection_priority_low_power_title">Niedriger Energieverbrauch</string>
     <string name="connection_priority_low_power_summary">Energiesparende Verbindungseinstellungen – langsamer, aber stromsparend.</string>
     <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
+    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
 </resources>
