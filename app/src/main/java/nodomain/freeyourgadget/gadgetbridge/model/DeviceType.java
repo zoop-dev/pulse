@@ -29,6 +29,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner630Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.GarminVivosmart4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2NfcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchfit4pro.HuaweiWatchFit4ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
@@ -552,6 +553,7 @@ public enum DeviceType {
     GARMIN_VIVOACTIVE_4S(GarminVivoActive4SCoordinator.class),
     GARMIN_VIVOACTIVE_5(GarminVivoActive5Coordinator.class),
     GARMIN_VIVOACTIVE_HR(GarminVivoActiveHrCoordinator.class),
+    GARMIN_VIVOSMART_4(GarminVivosmart4Coordinator.class),
     GARMIN_VIVOSMART_5(GarminVivosmart5Coordinator.class),
     GARMIN_VIVOSPORT(GarminVivosportCoordinator.class),
     GREE_AC(GreeAcCoordinator.class),
