@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity$PlaceholderFragment">
+
+        <TextView
+            android:id="@+id/stress_dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/stress_pie_chart"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
+
+        <GridLayout
+            android:background="@color/gauge_line_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2">
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginBottom="0dp">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/chart_stress_relaxed"
+                    android:layout_marginBottom="10dp" />
+                <TextView
+                    android:id="@+id/stress_chart_relaxed_time"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stress_relaxed"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginBottom="0dp">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/chart_stress_mild"
+                    android:layout_marginBottom="10dp" />
+                <TextView
+                    android:id="@+id/stress_chart_mild_time"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stress_mild"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginBottom="0dp">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/chart_stress_moderate"
+                    android:layout_marginBottom="10dp" />
+                <TextView
+                    android:id="@+id/stress_chart_moderate_time"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stress_moderate"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginBottom="0dp">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/chart_stress_high"
+                    android:layout_marginBottom="10dp" />
+                <TextView
+                    android:id="@+id/stress_chart_high_time"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stress_high"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </GridLayout>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/weekstresschart"
+            android:layout_width="fill_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="15dp" />
+
+    </LinearLayout>
+</ScrollView>

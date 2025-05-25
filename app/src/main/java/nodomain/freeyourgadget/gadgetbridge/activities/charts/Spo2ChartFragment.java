@@ -53,7 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-// Based on StressChartFragment
+// Based on StressDailyFragment
 
 public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.Spo2ChartsData> {
     protected static final Logger LOG = LoggerFactory.getLogger(Spo2ChartFragment.class);

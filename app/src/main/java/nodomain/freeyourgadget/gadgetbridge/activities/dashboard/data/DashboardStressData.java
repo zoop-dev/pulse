@@ -24,7 +24,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.StressChartFragment;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.StressDailyFragment;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
@@ -42,7 +42,7 @@ public class DashboardStressData implements Serializable {
         GBDevice stressDevice = null;
         double averageStress = -1;
 
-        final int[] totalTime = new int[StressChartFragment.StressType.values().length];
+        final int[] totalTime = new int[StressDailyFragment.StressType.values().length];
 
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
@@ -57,8 +57,8 @@ public class DashboardStressData implements Serializable {
                         averageStress = samples.stream()
                                 .mapToInt(StressSample::getStress)
                                 .peek(stress -> {
-                                    final StressChartFragment.StressType stressType = StressChartFragment.StressType.fromStress(stress, stressRanges);
-                                    if (stressType != StressChartFragment.StressType.UNKNOWN) {
+                                    final StressDailyFragment.StressType stressType = StressDailyFragment.StressType.fromStress(stress, stressRanges);
+                                    if (stressType != StressDailyFragment.StressType.UNKNOWN) {
                                         totalTime[stressType.ordinal() - 1] += 60;
                                     }
                                 })

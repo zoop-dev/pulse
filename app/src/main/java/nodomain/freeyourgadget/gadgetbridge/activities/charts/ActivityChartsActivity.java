@@ -177,7 +177,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
                 case "vo2max":
                     return new VO2MaxFragment();
                 case "stress":
-                    return new StressChartFragment();
+                    return StressCollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "pai":
                     return new PaiChartFragment();
                 case "stepsweek":
