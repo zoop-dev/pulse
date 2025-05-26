@@ -3954,4 +3954,13 @@
     <string name="connection_priority_low_power_summary">Energiesparende Verbindungseinstellungen – langsamer, aber stromsparend.</string>
     <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
     <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="pref_even_realities_g1_screen_location_summary">Ändert die vertikale Position der Anzeige</string>
+    <string name="pref_even_realities_g1_screen_depth_title">Bildschirmtiefe</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_title">Aktivierungswinkel</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_summary">Legt fest, wie weit der Träger den Kopf anheben muss, damit das Dashboard angezeigt wird</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_title">Winkel kalibrieren</string>
+    <string name="silent_mode">Lautlosmodus</string>
+    <string name="pref_even_realities_g1_screen_location_title">Bildschirmposition</string>
+    <string name="pref_even_realities_g1_screen_depth_summary">Ändert den Augenabstand und die scheinbare Tiefe der Anzeige</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Setzt den Winkel der Brille auf null – schaue geradeaus und tippe hier</string>
 </resources>
