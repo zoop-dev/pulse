@@ -28,7 +28,7 @@ public class ColmiR12Coordinator extends AbstractColmiR0xCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^R12_.*");
+        return Pattern.compile("^COLMI R12_.*");
     }
 
     @Override
