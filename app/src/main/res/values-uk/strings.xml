@@ -2660,7 +2660,7 @@
     <string name="folder">Тека</string>
     <string name="pref_summary_notification_times_enabled">Надсилати сповіщення лише в межах указаного часу</string>
     <string name="pref_title_wheel_diameter">Діаметр колеса</string>
-    <string name="pref_title_bottom_navigation_bar">Нижня панель навігації</string>
+    <string name="pref_title_bottom_navigation_bar">Нижня навігаційна панель</string>
     <string name="pref_sleepasandroid_feat_heartrate">Пульс</string>
     <string name="bottom_nav_devices">Пристрої</string>
     <string name="pref_dashboard_select_devices_title">Обрати пристрої...</string>
@@ -2680,8 +2680,8 @@
     <string name="battery_percentage_str">%1$s%%</string>
     <string name="pref_sleepasandroid_feat_alarms">Будильники</string>
     <string name="battery_low_notify_enabled">Сповіщати про низький заряд</string>
-    <string name="battery_low_threshold">Поріг низького заряду</string>
-    <string name="battery_full_threshold">Поріг завершення заряджання</string>
+    <string name="battery_low_threshold">Межа низького заряду</string>
+    <string name="battery_full_threshold">Межа завершення заряджання</string>
     <string name="default_percentage">Усталено (%1$d%%)</string>
     <string name="pref_header_calls_and_notifications">Виклики та сповіщення</string>
     <string name="pref_sleepasandroid_feat_notifications">Сповіщення</string>
@@ -3048,7 +3048,7 @@
     <string name="weather_condition_severe_gale">сильний вихор</string>
     <string name="aqi_level_fair">допустимий</string>
     <string name="aqi_level_unhealthy">незадовільний</string>
-    <string name="hrZoneThreshold">Анаеробний поріг</string>
+    <string name="hrZoneThreshold">Анаеробна межа</string>
     <string name="hrZoneMaximum">Найвища</string>
     <string name="average_respiration_rate">Частота дихання</string>
     <string name="stepRateMax">Найвища частота кроків</string>
@@ -3062,7 +3062,7 @@
     <string name="steps_total">Усього кроків</string>
     <string name="app_crash_share_stacktrace">Поділитися помилкою</string>
     <string name="workout_set_i">Підхід %1d</string>
-    <string name="lactateThresholdHeartRate">Лактатний поріг пульсу</string>
+    <string name="lactateThresholdHeartRate">Лактатна межа пульсу</string>
     <string name="min_respiration_rate">Мін. частота дихання</string>
     <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f фунтів</string>
     <string name="workout_set_reps">Повторень</string>
@@ -3370,4 +3370,25 @@
     <string name="activity_type_worn">Одягнено</string>
     <string name="pref_dashboard_widget_show_legend_title">Показати легенду</string>
     <string name="pref_dashboard_widget_goals_chart_title">Діаграма цілей</string>
+    <string name="devicesetting_scannable_debounce_summary">Після виявлення пристрій залишатиметься позначеним як виявлений та ігноруватиметься протягом указаного часу</string>
+    <string name="devicesetting_scannable_rssi">Найменша межа RSSI</string>
+    <string name="pref_dashboard_cards_summary">Показувати картки довкола віджетів у зведенні</string>
+    <string name="pref_auto_reply_calls_summary">Телефон автоматично прийматиме вхідні виклики</string>
+    <string name="pref_title_huawei_account">Обліковий запис Huawei</string>
+    <string name="devicesetting_scannable_minimum_unseen_summary">Після виявлення пристрій має бути прихованим протягом цього часу, перш ніж його буде знову зареєстровано</string>
+    <string name="pref_summary_huawei_account">Обліковий запис Huawei використовується під час сполучення. Його налаштування дає змогу сполучитися без скидання налаштувань.</string>
+    <string name="dashboard_calendar_month_goals_reached_title">% досягнутої мети кроків</string>
+    <string name="pref_dashboard_select_devices_summary">Об\'єднувати дані діяльностей з окремих пристроїв для загальних показників у зведенні</string>
+    <string name="pref_auto_reply_calls_delay_summary">Кількість секунд, після яких виклик автоматично прийматиметься</string>
+    <string name="pref_auto_reply_calls_delay_title">Затримка автоматичної відповіді</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Кількість хвилин, протягом яких діаграма показуватиме \"Одягнено\" після кожного успішного вимірювання пульсу</string>
+    <string name="pref_dashboard_all_devices_summary">Об\'єднувати дані діяльностей з усіх доданих пристроїв для загальних показників у зведенні</string>
+    <string name="pref_dashboard_widget_show_legend_summary">Показувати пояснення кольорів під віджетом</string>
+    <string name="error_showing_changelog">Помилка показу переліку змін</string>
+    <string name="pref_dashboard_widget_today_24h_summary">Показувати діяльність на одному 24-год. колі замість подвійного 12-год.</string>
+    <string name="devicesetting_scannable_rssi_summary">Найменша межа RSSI для виявлення</string>
+    <string name="open_camera">Відкрити камеру</string>
+    <string name="pref_dashboard_widgets_order_summary">Оберіть, які віджети ввімкнено та в якому порядку вони показуватимуться у зведенні</string>
+    <string name="pref_dashboard_widget_double_size_summary">Дозволити віджету займати дві колонки у зведенні</string>
+    <string name="pref_auto_reply_calls_title">Автоматично відповідати на виклики</string>
 </resources>
