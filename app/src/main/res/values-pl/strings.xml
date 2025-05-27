@@ -4072,4 +4072,15 @@
     <string name="connection_priority_low_power_summary">Zmniejszenie priorytetu bluetooth i parametrów połączenia szybkości transmisji danych.</string>
     <string name="prefs_events_forwarding_broadcast_package">Pakiet transmisji</string>
     <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="silent_mode">Tryb cichy</string>
+    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
+    <string name="pref_even_realities_g1_screen_depth_title">Głębia ekranu</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_title">Kąt aktywacji</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_title">Kalibracja kąta</string>
+    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="pref_even_realities_g1_screen_location_summary">Zmienia pionowe położenie wyświetlacza</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Zeruje kąt okularów, patrz prosto przed siebie i dotknij tutaj</string>
+    <string name="pref_even_realities_g1_screen_location_title">Położenie ekranu</string>
+    <string name="pref_even_realities_g1_screen_depth_summary">Zmienia separację obuoczną i pozorną głębię wyświetlacza</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_summary">Zmienia wysokość, na jaką użytkownik musi podnieść głowę, aby wyświetlić panel sterowania</string>
 </resources>
