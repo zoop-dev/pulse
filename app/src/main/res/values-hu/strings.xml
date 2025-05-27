@@ -3864,4 +3864,15 @@
     <string name="connection_priority_low_power_title">Alacsony fogyasztású üzemmód kérése</string>
     <string name="connection_priority_low_power_summary">Csökkenti a Bluetooth prioritást és az adatátviteli sebességet.</string>
     <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
+    <string name="pref_even_realities_g1_screen_location_summary">A kijelző függőleges helyzetének megváltoztatása</string>
+    <string name="pref_even_realities_g1_screen_depth_title">Színmélység</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_title">Aktiválási szög</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_title">Kalibrálási szög</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Nullázza a szemüveg szögét, nézzen egyenesen előre és koppintson ide</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_summary">Megváltoztatja, hogy a viselőnek milyen magasra kell emelnie a fejét a műszerfal megjelenítéséhez</string>
+    <string name="pref_even_realities_g1_screen_location_title">Képernyő helyzete</string>
+    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="pref_even_realities_g1_screen_depth_summary">Megváltoztatja a binokuláris elkülönítést és a kijelző látszólagos mélységét</string>
+    <string name="silent_mode">Néma mód</string>
 </resources>
