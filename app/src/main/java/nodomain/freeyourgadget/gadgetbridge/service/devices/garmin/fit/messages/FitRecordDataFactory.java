@@ -75,6 +75,8 @@ public class FitRecordDataFactory {
                 return new FitSet(recordDefinition, recordHeader);
             case 227:
                 return new FitStressLevel(recordDefinition, recordHeader);
+            case 229:
+                return new FitMaxMetData(recordDefinition, recordHeader);
             case 269:
                 return new FitSpo2(recordDefinition, recordHeader);
             case 273:
@@ -91,6 +93,8 @@ public class FitRecordDataFactory {
                 return new FitHrvSummary(recordDefinition, recordHeader);
             case 371:
                 return new FitHrvValue(recordDefinition, recordHeader);
+            case 378:
+                return new FitTrainingLoad(recordDefinition, recordHeader);
             case 397:
                 return new FitSkinTempRaw(recordDefinition, recordHeader);
             case 398:

@@ -42,6 +42,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class FitCodeGen {
     public static void main(final String[] args) throws Exception {
+        // To run this in Android Studio, right click and select "Run 'FitCodeGen.main()' with Coverage"
+        // for some reason, the classpath is broken otherwise.
         new FitCodeGen().generate();
     }
 

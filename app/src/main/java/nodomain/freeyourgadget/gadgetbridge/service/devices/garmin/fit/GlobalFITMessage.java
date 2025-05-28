@@ -436,6 +436,15 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage MAX_MET_DATA = new GlobalFITMessage(229, "MAX_MET_DATA", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT32, "update_time", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(2, BaseType.UINT16, "vo2_max", 10, 0),
+            new FieldDefinitionPrimitive(5, BaseType.ENUM, "sport"),
+            new FieldDefinitionPrimitive(6, BaseType.ENUM, "sub_sport"),
+            new FieldDefinitionPrimitive(8, BaseType.ENUM, "max_met_category"), // 0 generic
+            new FieldDefinitionPrimitive(9, BaseType.ENUM, "calibrated_data") // 1?
+    ));
+
     public static GlobalFITMessage RESPIRATION_RATE = new GlobalFITMessage(297, "RESPIRATION_RATE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT16, "respiration_rate", 100, 0), // breaths / min
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
@@ -479,6 +488,12 @@ public class GlobalFITMessage {
 
     public static GlobalFITMessage SKIN_TEMP_RAW = new GlobalFITMessage(397, "SKIN_TEMP_RAW", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.FLOAT32, "deviation"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
+    public static GlobalFITMessage TRAINING_LOAD = new GlobalFITMessage(378, "TRAINING_LOAD", Arrays.asList(
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "training_load_acute"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT16, "training_load_chronic"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -532,6 +547,7 @@ public class GlobalFITMessage {
         put(222, ALARM_SETTINGS);
         put(225, SET);
         put(227, STRESS_LEVEL);
+        put(229, MAX_MET_DATA);
         put(269, SPO2);
         put(273, SLEEP_DATA_INFO);
         put(274, SLEEP_DATA_RAW);
@@ -540,6 +556,7 @@ public class GlobalFITMessage {
         put(346, SLEEP_STATS);
         put(370, HRV_SUMMARY);
         put(371, HRV_VALUE);
+        put(378, TRAINING_LOAD);
         put(397, SKIN_TEMP_RAW);
         put(398, SKIN_TEMP_OVERNIGHT);
         put(412, NAP);
