@@ -845,6 +845,7 @@ public class DeviceConfig {
                         case 0x10: // Force EmuiBuildVersion to 0x00
                         case 0x13: // Force buildOsEnable to 0x00
                         case 0x14: // Force buildOSApiVersion to 0x00
+                        case 0x16: // Force phoneCapability to 0x00
                         default:
                             this.tlv.put(b, (byte)0);
                     }
