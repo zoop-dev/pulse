@@ -830,6 +830,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
         addPreferenceHandlerFor(PREF_DUAL_DEVICE_SUPPORT);
 
+        addPreferenceHandlerFor(PREF_DEVICE_LOGS_TOGGLE);
+
         addPreferenceHandlerFor(PREF_USER_FITNESS_GOAL);
         addPreferenceHandlerFor(PREF_USER_FITNESS_GOAL_NOTIFICATION);
         addPreferenceHandlerFor(PREF_USER_FITNESS_GOAL_SECONDARY);

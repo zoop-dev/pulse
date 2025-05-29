@@ -14,10 +14,12 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryIncrementalInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
@@ -38,6 +40,7 @@ public class G1SideManager {
     private final G1Constants.Side mySide;
     private final Handler backgroundTasksHandler;
     private final Callable<BtLEQueue> getQueueHandler;
+    private final Callable<GBDevice> getDeviceHandler;
     private final Function<GBDeviceEvent, Void> sendEventHandler;
     private final Callable<DevicePrefs> getPrefsHandler;
     private final BluetoothGattCharacteristic rx;
@@ -48,15 +51,17 @@ public class G1SideManager {
     private final Set<G1Communications.CommandHandler> commandHandlers;
     private byte globalSequence;
     private boolean isSilentModeEnabled;
-    private GBDevice.State state;
+    private GBDevice.State connectingState;
+    private boolean debugEnabled;
 
     public G1SideManager(G1Constants.Side mySide, Handler backgroundTasksHandler,
-                         Callable<BtLEQueue> getQueue, Function<GBDeviceEvent, Void> sendEvent,
-                         Callable<DevicePrefs> getPrefs,
+                         Callable<BtLEQueue> getQueue, Callable<GBDevice> getDevice,
+                         Function<GBDeviceEvent, Void> sendEvent, Callable<DevicePrefs> getPrefs,
                          BluetoothGattCharacteristic rx, BluetoothGattCharacteristic tx) {
         this.mySide = mySide;
         this.backgroundTasksHandler = backgroundTasksHandler;
         this.getQueueHandler = getQueue;
+        this.getDeviceHandler = getDevice;
         this.sendEventHandler = sendEvent;
         this.getPrefsHandler = getPrefs;
         this.rx = rx;
@@ -67,9 +72,14 @@ public class G1SideManager {
         };
 
         this.heartBeatRunner = () -> {
-            // We can send any command as a heart beat. The official app uses this one.
-            send(new G1Communications.CommandGetSilentModeSettings(null));
-            scheduleHeatBeat();
+            if (getDevice().isConnected()) {
+                // We can send any command as a heart beat. The official app uses this one.
+                send(new G1Communications.CommandGetSilentModeSettings(null));
+                scheduleHeatBeat();
+            } else {
+                // Don't reschedule if the device is disconnected.
+                LOG.debug("Stopping heartbeat runner since side is in state: {}", getDevice().getState());
+            }
         };
         this.displaySettingsPreviewCloserRunner = () -> {
             DevicePrefs prefs = getDevicePrefs();
@@ -85,12 +95,21 @@ public class G1SideManager {
         // Non Finals
         this.globalSequence = 0;
         this.isSilentModeEnabled = false;
-        this.state = GBDevice.State.CONNECTED;
+        this.connectingState = GBDevice.State.CONNECTED;
+        this.debugEnabled = false;
     }
 
     private BtLEQueue getQueue() {
         try {
             return getQueueHandler.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private GBDevice getDevice() {
+        try {
+            return getDeviceHandler.call();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -108,11 +127,19 @@ public class G1SideManager {
         }
     }
 
-    public GBDevice.State getState() {
-        return state;
+    public GBDevice.State getConnectingState() {
+        return connectingState;
     }
 
     public void initialize(TransactionBuilder transaction) {
+        // Disable device logging in the prefs. There is no way to query this state from the device
+        // so instead, it is always disabled on connection, and then if a debug message arrives, the
+        // setting will be flipped to true.
+        this.debugEnabled = false;
+        getDevicePrefs().getPreferences().edit()
+            .putBoolean(DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, this.debugEnabled)
+            .apply();
+
         // The glasses will auto disconnect after 30 seconds of no data on the wire.
         // Schedule a heartbeat task. If this is not enabled, the glasses will disconnect and be
         // useless to the user.
@@ -121,7 +148,7 @@ public class G1SideManager {
         // Schedule the battery polling.
         scheduleBatteryPolling();
 
-        state = GBDevice.State.INITIALIZED;
+        connectingState = GBDevice.State.INITIALIZED;
     }
 
     public byte getSilentModeStatus() {
@@ -142,6 +169,7 @@ public class G1SideManager {
         // These can be sent to both, but the left lens is used as the master for these settings.
         sendInTransaction(transaction, new G1Communications.CommandGetDisplaySettings(this::handleDisplaySettingsPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetBrightnessSettings(this::handleBrightnessSettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandGetSerialNumber(this::handleSerialNumberPayload));
         transaction.queue(getQueue());
     }
 
@@ -184,15 +212,17 @@ public class G1SideManager {
                 send(new G1Communications.CommandSetWearDetectionSettings(
                         prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE, true)));
                 break;
+            case DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE:
+                this.debugEnabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, false);
+                send(new G1Communications.CommandSetDebugLogSettings(this.debugEnabled));
+                break;
 
         }
     }
 
     public void onToggleSilentMode() {
         isSilentModeEnabled = !isSilentModeEnabled;
-        G1Communications.CommandHandler commandHandler =
-                new G1Communications.CommandSetSilentModeSettings(isSilentModeEnabled);
-        send(commandHandler);
+        send(new G1Communications.CommandSetSilentModeSettings(isSilentModeEnabled));
     }
 
     private void scheduleHeatBeat() {
@@ -299,6 +329,22 @@ public class G1SideManager {
         }
     }
 
+    private void updateBatteryLevel(int level, int index) {
+        evaluateGBDeviceEvent(new GBDeviceEventBatteryIncrementalInfo(index, level));
+    }
+
+    private void updateBatteryLevel(int level) {
+        updateBatteryLevel(level, mySide.getDeviceIndex());
+    }
+
+    private void updateBatteryState(BatteryState state, int index) {
+        evaluateGBDeviceEvent(new GBDeviceEventBatteryIncrementalInfo(index, state));
+    }
+
+    private void updateBatteryState(BatteryState state) {
+        updateBatteryState(state, mySide.getDeviceIndex());
+    }
+
     public boolean handlePayload(byte[] payload) {
         for (G1Communications.CommandHandler commandHandler : commandHandlers) {
             if (commandHandler.responseMatches(payload)) {
@@ -315,14 +361,14 @@ public class G1SideManager {
             }
         }
 
-        // These can come in unprompted from the glasses, call the correct handler based on what the
-        // command is.
-        if (payload.length > 1) {
-            if (payload[0] == G1Constants.CommandId.DEVICE_ACTION.id) {
-                return handleDeviceActionPayload(payload);
-            } else if (payload[0] == G1Constants.CommandId.DASHBOARD.id) {
-                return handleDashboardPayload(payload);
-            }
+        // The glasses will send unprompted messages indicating certain events happening.
+        // ex. glasses are taken off, glasses are charging, or touch pad was pressed.
+        if (G1Communications.DeviceEvent.messageMatches(payload)) {
+            return handleDeviceEventPayload(payload);
+        }
+
+        if (G1Communications.DebugLog.messageMatches(payload)) {
+            return handleDebugLogPayload(payload);
         }
 
         LOG.debug("Unhandled payload on side {}: {}",
@@ -333,11 +379,7 @@ public class G1SideManager {
     }
 
     private boolean handleBatteryPayload(byte[] payload) {
-        GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
-        batteryInfo.state = BatteryState.BATTERY_NORMAL;
-        batteryInfo.level = payload[2];
-        batteryInfo.batteryIndex = mySide.getDeviceIndex();
-        evaluateGBDeviceEvent(batteryInfo);
+        updateBatteryLevel(G1Communications.CommandGetBatteryInfo.getBatteryPercent(payload));
         return true;
     }
 
@@ -349,15 +391,32 @@ public class G1SideManager {
         int versionEnd = fwString.indexOf(',', versionStart);
         if (versionStart > -1 && versionEnd > versionStart) {
             String version = fwString.substring(versionStart, versionEnd);
-            LOG.debug("Parsed fw version: {}", version);
             GBDeviceEventVersionInfo fwInfo = new GBDeviceEventVersionInfo();
-            if (mySide == G1Constants.Side.LEFT) {
-                fwInfo.fwVersion = version;
-            } else if (mySide == G1Constants.Side.RIGHT) {
-                fwInfo.fwVersion2 = version;
-            }
-            // Actually get this some how?
-            fwInfo.hwVersion = "G1A";
+            fwInfo.hwVersion = null;
+            fwInfo.fwVersion = mySide == G1Constants.Side.LEFT ? version : null;
+            fwInfo.fwVersion2 = mySide == G1Constants.Side.RIGHT ? version : null;
+            evaluateGBDeviceEvent(fwInfo);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean handleSerialNumberPayload(byte[] payload) {
+        String serialNumber = G1Communications.CommandGetSerialNumber.getSerialNumber(payload);
+
+        // Parse the hardware information out of the serial number.
+        int shape = G1Communications.CommandGetSerialNumber.getFrameType(payload);
+        int color = G1Communications.CommandGetSerialNumber.getFrameColor(payload);
+        if (shape != -1 && color != -1) {
+            GBDeviceEventVersionInfo fwInfo = new GBDeviceEventVersionInfo();
+            fwInfo.hwVersion = GBApplication.getContext().getString(
+                    R.string.even_realities_frame_description,
+                    GBApplication.getContext().getString(color),
+                    GBApplication.getContext().getString(shape),
+                    GBApplication.getContext().getString(R.string.serial_number),
+                    serialNumber);
+            fwInfo.fwVersion = null;
+            fwInfo.fwVersion2 = null;
             evaluateGBDeviceEvent(fwInfo);
             return true;
         }
@@ -405,13 +464,48 @@ public class G1SideManager {
         return true;
     }
 
-    private boolean handleDeviceActionPayload(byte[] payload) {
-        LOG.debug("Device Action payload on side {}: {}", mySide.getDeviceIndex(), Logging.formatBytes(payload));
+    private boolean handleDeviceEventPayload(byte[] payload) {
+        switch (G1Communications.DeviceEvent.getEventId(payload)) {
+            case G1Constants.DeviceEventId.GLASSES_CHARGING:
+                updateBatteryState(
+                        G1Communications.DeviceEvent.getValue(payload) == 0x01
+                            ? BatteryState.BATTERY_CHARGING
+                            : BatteryState.BATTERY_NORMAL);
+                break;
+            case G1Constants.DeviceEventId.GLASSES_SIDE_BATTERY_LEVEL:
+                updateBatteryLevel(G1Communications.DeviceEvent.getValue(payload));
+                break;
+            case G1Constants.DeviceEventId.CASE_CHARGING:
+                updateBatteryState(
+                        G1Communications.DeviceEvent.getValue(payload) == 0x01
+                            ? BatteryState.BATTERY_CHARGING
+                            : BatteryState.BATTERY_NORMAL,
+                        G1Constants.CASE_BATTERY_INDEX);
+                break;
+            case G1Constants.DeviceEventId.CASE_BATTERY_LEVEL:
+                updateBatteryLevel(G1Communications.DeviceEvent.getValue(payload),
+                                   G1Constants.CASE_BATTERY_INDEX);
+                break;
+            case G1Constants.DeviceEventId.GLASSES_NOT_WORN_NO_CASE:
+                updateBatteryState(BatteryState.NO_BATTERY, G1Constants.CASE_BATTERY_INDEX);
+                break;
+            default:
+                LOG.debug("Device Event on side {}: {}", mySide.getDeviceIndex(),
+                          Logging.formatBytes(payload));
+                return false;
+        }
         return true;
     }
 
-    private boolean handleDashboardPayload(byte[] payload) {
-        LOG.debug("Dashboard payload on side {}: {}", mySide.getDeviceIndex(), Logging.formatBytes(payload));
+    private boolean handleDebugLogPayload(byte[] payload) {
+        // Use the local boolean so that we aren't constantly committing the same value to the prefs
+        if (!this.debugEnabled) {
+            this.debugEnabled = true;
+            // Mark the pref as enabled so that the Setting UI reflects the true state.
+            getDevicePrefs().getPreferences().edit().putBoolean(
+                    DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, this.debugEnabled).apply();
+        }
+        LOG.info("{}: {}", mySide, G1Communications.DebugLog.getMessage(payload));
         return true;
     }
 }

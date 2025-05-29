@@ -62,6 +62,12 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
         return super.toString() + "index: " + batteryIndex + ", level: " + level;
     }
 
+    protected void setDeviceValues(final GBDevice device) {
+        device.setBatteryLevel(this.level, this.batteryIndex);
+        device.setBatteryState(this.state, this.batteryIndex);
+        device.setBatteryVoltage(this.voltage, this.batteryIndex);
+    }
+
     @Override
     public void evaluate(final Context context, final GBDevice device) {
         if ((level < 0 || level > 100) && level != GBDevice.BATTERY_UNKNOWN) {
@@ -74,9 +80,7 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
                 this.level != GBDevice.BATTERY_UNKNOWN &&
                 this.level > device.getBatteryLevel(this.batteryIndex);
 
-        device.setBatteryLevel(this.level, this.batteryIndex);
-        device.setBatteryState(this.state, this.batteryIndex);
-        device.setBatteryVoltage(this.voltage, this.batteryIndex);
+        setDeviceValues(device);
 
         final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
         final BatteryConfig batteryConfig = device.getDeviceCoordinator().getBatteryConfig(device)[this.batteryIndex];

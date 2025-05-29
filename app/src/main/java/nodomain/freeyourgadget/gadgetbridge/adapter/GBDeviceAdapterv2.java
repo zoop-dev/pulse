@@ -370,6 +370,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             int batteryIcon = device.getBatteryIcon(batteryIndex);
             int batteryLabel = device.getBatteryLabel(batteryIndex); //unused for now
             batteryIcons[batteryIndex].setImageResource(R.drawable.level_list_battery);
+            batteryStatusLabels[batteryIndex].setAlpha(1.0f);
 
             if (batteryIcon != GBDevice.BATTERY_ICON_DEFAULT){
                 batteryIcons[batteryIndex].setImageResource(batteryIcon);
@@ -381,7 +382,16 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                         BatteryState.BATTERY_CHARGING_FULL.equals(batteryState)) {
                     batteryIcons[batteryIndex].setImageLevel(device.getBatteryLevel(batteryIndex) + 100);
                 } else {
-                    batteryIcons[batteryIndex].setImageLevel(device.getBatteryLevel(batteryIndex));
+                    if (BatteryState.NO_BATTERY.equals(batteryState)) {
+                        // There is a level to show, but the device has indicated that it does not
+                        // know the status of the battery. This can be used to indicate the last
+                        // known state of charge for things like a headphones case that is not
+                        // actively connected but there is a previously known level.
+                        batteryStatusLabels[batteryIndex].setAlpha(0.3f);
+                        batteryIcons[batteryIndex].setImageLevel(300);
+                    } else {
+                        batteryIcons[batteryIndex].setImageLevel(device.getBatteryLevel(batteryIndex));
+                    }
                 }
             } else if (BatteryState.NO_BATTERY.equals(batteryState) && batteryVoltage != GBDevice.BATTERY_UNKNOWN) {
                 batteryStatusLabels[batteryIndex].setText(String.format(Locale.getDefault(), "%.2f", batteryVoltage));

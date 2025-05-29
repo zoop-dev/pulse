@@ -3330,6 +3330,8 @@
     <string name="pref_app_logs_summary">Enable logs from watch apps</string>
     <string name="pref_app_logs_start_summary">Start logging from watch apps</string>
     <string name="pref_app_logs_stop_summary">Stop logging from watch apps</string>
+    <string name="pref_device_logs_summary">Enable logging from the device</string>
+    <string name="pref_device_logs_title">Device Logs</string>
     <string name="pref_app_connection_duration">App connection duration</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
@@ -3968,4 +3970,13 @@
     <string name="pref_even_realities_g1_screen_activation_angle_summary">Changes how high the wearer needs to lift their head for the dashboard to be shown</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_title">Calibrate Angle</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Zeroes the angle of the glasses, look straight ahead and tap here</string>
+    <string name="even_realities_frame_shape_G1A">G1A/Round</string>
+    <string name="even_realities_frame_shape_G1B">G1B/Square</string>
+    <string name="even_realities_frame_color_grey">Grey</string>
+    <string name="even_realities_frame_color_brown">Brown</string>
+    <string name="even_realities_frame_color_green">Green</string>
+    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_left_lens">Left Lens</string>
+    <string name="even_realities_right_lens">Right Lens</string>
+
 </resources>

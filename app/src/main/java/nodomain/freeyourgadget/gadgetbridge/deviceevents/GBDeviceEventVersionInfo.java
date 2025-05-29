@@ -60,7 +60,9 @@ public class GBDeviceEventVersionInfo extends GBDeviceEvent {
         if (fwVersion2 != null) {
             device.setFirmwareVersion2(fwVersion2);
         }
-        device.setModel(hwVersion);
+        if (hwVersion != null) {
+            device.setModel(hwVersion);
+        }
         device.sendDeviceUpdateIntent(context);
     }
 }

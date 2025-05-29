@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -168,16 +170,15 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public int getBatteryCount(final GBDevice device) {
-        ItemWithDetails right_name =
-                device.getDeviceInfo(G1Constants.Side.RIGHT.getNameKey());
-        ItemWithDetails right_address =
-                device.getDeviceInfo(G1Constants.Side.RIGHT.getAddressKey());
-        if (right_name != null && !right_name.getDetails().isEmpty() && right_address != null &&
-            !right_address.getDetails().isEmpty()) {
-            return 2;
-        } else {
-            return 1;
-        }
+        return 3;
+    }
+
+    @Override
+    public BatteryConfig[] getBatteryConfig(final GBDevice device) {
+        BatteryConfig battery1 = new BatteryConfig(0, GBDevice.BATTERY_ICON_DEFAULT, R.string.even_realities_left_lens);
+        BatteryConfig battery2 = new BatteryConfig(1, GBDevice.BATTERY_ICON_DEFAULT, R.string.even_realities_right_lens);
+        BatteryConfig battery3 = new BatteryConfig(2, R.drawable.level_list_even_realities_g1_case_battery, R.string.battery_case);
+        return new BatteryConfig[]{battery1, battery2, battery3};
     }
 
     @Override
@@ -203,12 +204,26 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
         });
     }
 
+
     @Override
-    public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
+    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
+        final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         if (device.isConnected()) {
-            return new int[]{R.xml.devicesettings_even_realities_g1_display};
-        } else {
-            return new int[]{};
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_even_realities_g1_display);
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_timeformat);
+            final List<Integer> developer =
+                    deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+            developer.add(R.xml.devicesettings_header_system);
+            developer.add(R.xml.devicesettings_debug_logs_toggle);
         }
+        return deviceSpecificSettings;
     }
+
+    ////////////////////////////////////////////////
+    // Gadget bridge feature support declarations //
+    ////////////////////////////////////////////////
+
+    @Override
+    public boolean supportsWeather() { return true; }
+
 }

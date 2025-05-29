@@ -1,0 +1,40 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+android:width="24dp"
+android:height="24dp"
+android:tint="?attr/colorControlNormal"
+android:viewportWidth="24"
+android:viewportHeight="24">
+
+    <!-- Back fill -->
+    <path
+        android:pathData="M2,11h20"
+        android:strokeWidth="12"
+        android:strokeColor="#000000"
+        android:strokeAlpha=".3" />
+
+    <!-- Side Lines -->
+    <path
+        android:strokeLineCap="round"
+        android:strokeWidth="2"
+        android:pathData="
+            M2,6v12
+            M22,6v12"
+        android:strokeColor="#000000"/>
+
+    <!-- Horizontal Lines -->
+    <path
+        android:fillType="evenOdd"
+        android:pathData="
+            M2,17 L22,17 L22,19 L2,19 Z
+            M2,13.5  L22,13.5  L22,14.5  L2,14.5  Z
+            M2,5  L22,5  L22,7  L2,7  Z
+            "
+        android:fillColor="#000000"/>
+
+    <!-- Center LED -->
+    <path
+        android:strokeLineCap="round"
+        android:strokeWidth=".5"
+        android:pathData="M11.5,15.5 h1"
+        android:strokeColor="#000000"/>
+</vector>

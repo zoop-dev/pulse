@@ -3,8 +3,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 
@@ -116,6 +118,30 @@ public class G1Communications {
         }
     }
 
+    public static class CommandSendReset extends CommandHandler {
+        public CommandSendReset() {
+            super(false, null);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] {
+                G1Constants.CommandId.SYSTEM.id,
+                G1Constants.SystemSubCommand.RESET.id
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return false;
+        }
+
+        @Override
+        public String getName() {
+            return "send_reset";
+        }
+    }
+
     public static class CommandGetFirmwareInfo extends CommandHandler {
         public CommandGetFirmwareInfo(Function<byte[], Boolean> callback) {
             super(true, callback);
@@ -123,7 +149,10 @@ public class G1Communications {
 
         @Override
         public byte[] serialize() {
-            return new byte[] { G1Constants.CommandId.FW_INFO_REQUEST.id, 0x74 };
+            return new byte[] {
+                G1Constants.CommandId.SYSTEM.id,
+                G1Constants.SystemSubCommand.GET_FW_INFO.id
+            };
         }
 
         @Override
@@ -161,6 +190,10 @@ public class G1Communications {
         public String getName() {
             return "get_battery_info";
         }
+
+         public static byte getBatteryPercent(byte[] payload) {
+            return payload[2];
+         }
     }
 
     public static class CommandSendHeartBeat extends CommandHandler {
@@ -204,9 +237,14 @@ public class G1Communications {
             this.timeMilliseconds = timeMilliseconds;
             this.use12HourFormat = use12HourFormat;
             if (weatherInfo != null) {
-                // TODO need to convert the weather spec enums to the ER enums.
-                this.weatherIcon = 0x01;
-                this.tempInCelsius = (byte) weatherInfo.currentTemp;
+                this.weatherIcon = G1Constants.fromOpenWeatherCondition(weatherInfo.currentConditionCode);
+                // Convert sunny to a moon if the current time stamp is between sunrise and sunset.
+                if (timeMilliseconds / 1000 >= weatherInfo.sunSet &&
+                    this.weatherIcon == G1Constants.WeatherId.SUNNY) {
+                    this.weatherIcon = G1Constants.WeatherId.NIGHT;
+                }
+                // Convert Kelvin -> Celsius.
+                this.tempInCelsius = (byte) (weatherInfo.currentTemp - 273);
             } else {
                 this.weatherIcon = 0x00;
                 this.tempInCelsius = 0x00;
@@ -224,11 +262,11 @@ public class G1Communications {
         public byte[] serialize() {
             byte[] packet = new byte[] {
                 G1Constants.CommandId.DASHBOARD_CONFIG.id,
-                G1Constants.DashboardConfigSubCommand.SET_TIME_AND_WEATHER.id,
+                0x15, // Length = 21 bytes
                 0x00,
                 sequence,
-                // Magic number?
-                0x01,
+                // Subcommand
+                G1Constants.DashboardConfig.SUB_COMMAND_SET_TIME_AND_WEATHER,
                 // Time 32bit place holders
                 (byte) 0x00,
                 (byte) 0x00,
@@ -246,10 +284,10 @@ public class G1Communications {
                 // Weather info
                 this.weatherIcon,
                 tempInCelsius,
-                // F/C
-                (byte)(useFahrenheit ? 0x01 : 0x00),
-                // 24H/12H
-                (byte)(use12HourFormat ? 0x01 : 0x00)
+                useFahrenheit ? G1Constants.TemperatureUnit.FAHRENHEIT
+                              : G1Constants.TemperatureUnit.CELSIUS,
+                use12HourFormat ? G1Constants.TimeFormat.TWELVE_HOUR
+                                : G1Constants.TimeFormat.TWENTY_FOUR_HOUR
             };
             BLETypeConversions.writeUint32(packet, 5, (int)(timeMilliseconds / 1000));
             BLETypeConversions.writeUint64(packet, 9, timeMilliseconds);
@@ -259,19 +297,56 @@ public class G1Communications {
 
         @Override
         public boolean responseMatches(byte[] payload) {
-            if (payload.length < 4) {
-                return false;
-            }
-
             // Command should match and the sequence should match.
-            return payload[0] == G1Constants.CommandId.DASHBOARD_CONFIG.id &&
-                   payload[1] == G1Constants.DashboardConfigSubCommand.SET_TIME_AND_WEATHER.id &&
-                   payload[3] == sequence;
+            return payload.length >= 5 &&
+                   payload[0] == G1Constants.CommandId.DASHBOARD_CONFIG.id &&
+                   payload[3] == sequence &&
+                   payload[4] == G1Constants.DashboardConfig.SUB_COMMAND_SET_TIME_AND_WEATHER;
         }
 
         @Override
         public String getName() {
             return "set_time_and_weather";
+        }
+    }
+
+    public static class CommandSetDashboardModeSettings extends CommandHandler {
+        byte mode;
+        byte secondaryPaneMode;
+        public CommandSetDashboardModeSettings(byte mode, byte secondaryPaneMode) {
+            super(true, null);
+            this.mode = mode;
+            this.secondaryPaneMode = secondaryPaneMode;
+        }
+
+        @Override
+        public boolean needsGlobalSequence() { return true; }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[]{
+                G1Constants.CommandId.DASHBOARD_CONFIG.id,
+                0x07, // Length
+                0x00, // pad
+                sequence,
+                G1Constants.DashboardConfig.SUB_COMMAND_SET_MODE,
+                mode,
+                secondaryPaneMode
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            // Command should match and the sequence should match.
+            return payload.length >= 5 &&
+                   payload[0] == G1Constants.CommandId.DASHBOARD_CONFIG.id &&
+                   payload[3] == sequence &&
+                   payload[4] == G1Constants.DashboardConfig.SUB_COMMAND_SET_MODE;
+        }
+
+        @Override
+        public String getName() {
+            return "set_dashboard_mode_settings";
         }
     }
 
@@ -373,7 +448,7 @@ public class G1Communications {
         public byte[] serialize() {
             return new byte[] {
                 G1Constants.CommandId.SET_DISPLAY_SETTINGS.id,
-                0x08, // Subcommand?
+                0x08, // Length
                 0x00,
                 sequence,
                 0x02, // Seems to be a magic number?
@@ -558,6 +633,111 @@ public class G1Communications {
         @Override
         public String getName() {
             return "set_wear_detection_settings_" + (enable ? "enabled" : "disabled");
+        }
+    }
+
+    public static class CommandGetSerialNumber extends CommandHandler {
+        public CommandGetSerialNumber(Function<byte[], Boolean> callback) {
+            super(true, callback);
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[] { G1Constants.CommandId.GET_SERIAL_NUMBER.id };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return payload.length >= 16 && payload[0] == G1Constants.CommandId.GET_SERIAL_NUMBER.id;
+        }
+
+        @Override
+        public String getName() {
+            return "get_serial_number";
+        }
+
+        public static int getFrameType(byte[] payload) {
+            String serialNumber = getSerialNumber(payload);
+            if (serialNumber.length() < 7) return -1;
+            switch(serialNumber.substring(4, 7)) {
+                case G1Constants.HardwareDescriptionKey.COLOR_GREY:
+                    return R.string.even_realities_frame_color_grey;
+                case G1Constants.HardwareDescriptionKey.COLOR_BROWN:
+                    return R.string.even_realities_frame_color_brown;
+                case G1Constants.HardwareDescriptionKey.COLOR_GREEN:
+                    return R.string.even_realities_frame_color_green;
+                default:
+                    return -1;
+            }
+        }
+
+        public static int getFrameColor(byte[] payload) {
+            String serialNumber = getSerialNumber(payload);
+            if (serialNumber.length() < 4) return -1;
+            switch(serialNumber.substring(0, 4)) {
+                case G1Constants.HardwareDescriptionKey.FRAME_ROUND:
+                    return R.string.even_realities_frame_shape_G1A;
+                case G1Constants.HardwareDescriptionKey.FRAME_SQUARE:
+                    return R.string.even_realities_frame_shape_G1B;
+                default:
+                    return -1;
+            }
+        }
+
+        public static String getSerialNumber(byte[] payload) {
+            return new String(payload, 2, 16, StandardCharsets.US_ASCII);
+        }
+    }
+
+    public static class CommandSetDebugLogSettings extends CommandHandler {
+        private final boolean enable;
+        public CommandSetDebugLogSettings(boolean enable) {
+            super(false, null);
+            this.enable = enable;
+        }
+
+        @Override
+        public byte[] serialize() {
+            return new byte[]{
+                G1Constants.CommandId.SYSTEM.id,
+                G1Constants.SystemSubCommand.SET_DEBUG_LOGGING.id,
+                enable ? G1Constants.DebugLoggingStatus.ENABLE
+                       : G1Constants.DebugLoggingStatus.DISABLE
+            };
+        }
+
+        @Override
+        public boolean responseMatches(byte[] payload) {
+            return false;
+        }
+
+        @Override
+        public String getName() {
+            return "set_debug_mode_settings_" + (enable ? "enabled" : "disabled");
+        }
+    }
+
+    public static class DebugLog {
+        public static boolean messageMatches(byte[] payload) {
+            return payload.length >= 1 && payload[0] == G1Constants.CommandId.DEBUG_LOG.id;
+        }
+
+        public static String getMessage(byte[] payload) {
+            return new String(payload, 1, payload.length-2, StandardCharsets.US_ASCII);
+        }
+    }
+
+    public static class DeviceEvent {
+        public static boolean messageMatches(byte[] payload) {
+            return payload.length >= 2 && payload[0] == G1Constants.CommandId.DEVICE_EVENT.id;
+        }
+
+        public static byte getEventId(byte[] payload) {
+            return payload[1];
+        }
+
+        public static byte getValue(byte[] payload) {
+            return payload[2];
         }
     }
 }

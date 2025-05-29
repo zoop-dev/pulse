@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case"
+        android:maxLevel="10" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case"
+        android:maxLevel="30" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case"
+        android:maxLevel="60" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case"
+        android:maxLevel="80" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case"
+        android:maxLevel="100" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case_charging"
+        android:maxLevel="110" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case_charging"
+        android:maxLevel="130" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case_charging"
+        android:maxLevel="160" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case_charging"
+        android:maxLevel="180" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case_charging"
+        android:maxLevel="200" />
+    <item
+        android:drawable="@drawable/ic_even_realities_g1_case_unknown"
+        android:maxLevel="300" />
+</level-list>
