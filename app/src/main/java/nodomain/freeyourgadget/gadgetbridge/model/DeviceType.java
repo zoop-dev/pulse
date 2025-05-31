@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplor
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner630Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.GarminVivosmart4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2NfcCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatch5.HuaweiWatch5Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchfit4pro.HuaweiWatchFit4ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
@@ -634,6 +635,7 @@ public enum DeviceType {
     HUAWEIWATCHULTIMATE(HuaweiWatchUltimateCoordinator.class),
     HUAWEIWATCH3(HuaweiWatch3Coordinator.class),
     HUAWEIWATCH4PRO(HuaweiWatch4ProCoordinator.class),
+    HUAWEIWATCH5(HuaweiWatch5Coordinator.class),
     HUAWEI_FREEBUDS5I(HuaweiFreebuds5iCoordinator.class),
     HUAWEI_FREEBUDS_PRO(HuaweiFreebudsProCoordinator.class),
     VESC(VescCoordinator.class),
