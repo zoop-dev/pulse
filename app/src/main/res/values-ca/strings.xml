@@ -241,7 +241,7 @@
     <string name="pref_screen_notification_profile_generic_navigation">Navegació</string>
     <string name="pref_screen_notification_profile_generic_social">Xarxa social</string>
     <string name="prefs_title_heartrate_measurement_interval">Mesura el ritme cardíac tot el dia</string>
-    <string name="interval_one_minute">una vegada per minut</string>
+    <string name="interval_one_minute">cada minut</string>
     <string name="interval_five_minutes">cada 5 minuts</string>
     <string name="interval_ten_minutes">cada 10 minuts</string>
     <string name="interval_thirty_minutes">cada 30 minuts</string>
@@ -364,7 +364,7 @@
     <string name="FetchActivityOperation_about_to_transfer_since">A punt de transferir dades des de %1$s</string>
     <string name="waiting_for_reconnect">S\'està esperant per reconectar</string>
     <string name="activity_prefs_about_you">Quant a vós</string>
-    <string name="activity_prefs_year_birth">Any de naixement</string>
+    <string name="activity_prefs_year_birth">Any de naixença</string>
     <string name="activity_prefs_gender">Gènere</string>
     <string name="activity_prefs_height_cm">Alçada en cm</string>
     <string name="activity_prefs_weight_kg">Pes en kg</string>
@@ -1190,7 +1190,7 @@
     <string name="fossil_hr_edit_action_delete">suprimeix</string>
     <string name="watchface_dialog_widget_preset_left">Esquerra</string>
     <string name="watchface_dialog_widget_preset_right">Dreta</string>
-    <string name="watchface_dialog_widget_color">Color:</string>
+    <string name="watchface_dialog_widget_color">Color</string>
     <string name="watchface_dialog_widget_color_white">Blanc</string>
     <string name="watchface_widget_type_battery">Bateria</string>
     <string name="prefs_autoheartrate_measurement">Mesures automàtiques del ritme cardíac</string>
@@ -1209,7 +1209,7 @@
     <string name="activity_filter_individual_items">Elements seleccionats individualment</string>
     <string name="strokes_second">b/s</string>
     <string name="swimStyle">estil de natació</string>
-    <string name="swolfIndex">índex swolf</string>
+    <string name="swolfIndex">SWOLF</string>
     <string name="set">Establir</string>
     <string name="menuitem_barometer">Baròmetre</string>
     <string name="strokes_unit">b</string>
@@ -1250,7 +1250,7 @@
 \n
 \nPROCEDIU SOTA LA VOSTRA PRÒPIA RESPONSABILITAT!</string>
     <string name="watchface_widget_type_steps">Passes</string>
-    <string name="watchface_dialog_widget_type">Tipus:</string>
+    <string name="watchface_dialog_widget_type">Tipus</string>
     <string name="watchface_dialog_widget_x_coordinate">Coordenada X (màxim 240):</string>
     <string name="title_activity_set_reminders">Configureu els recordatoris</string>
     <string name="controlcenter_start_configure_reminders">Configureu els recordatoris</string>
@@ -1532,7 +1532,7 @@
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">Estàs a punt d\'instal·lar el firmware %s al teu Amazfit Cheetah Pro.\n\nEl teu braçalet es reiniciarà després d\'instal·lar el fitxer .zip.\n\n¡CONTINUA SOTA EL TEU RISC!</string>
     <string name="fw_upgrade_notice_amazfit_band7">Estàs a punt d\'instal·lar el firmware %s al teu Amazfit Band 7.\n\nEl teu braçalet es reiniciarà després d\'instal·lar el fitxer .zip.\n\n¡CONTINUA SOTA EL TEU RISC!</string>
     <string name="fw_upgrade_notice_huawei">Estàs a punt de pujar el firmware %s al teu %s.\n\nEl teu firmware actual és %s.\n\nEl teu dispositiu es reiniciarà després de la pujada.\n\n¡CONTINUA SOTA EL TEU RISC!</string>
-    <string name="open_fw_installer_info_text">El Instal·lador de Firmware/Cares de Rellotge/Aplicacions/Fitxers et permet pujar/instal·lar fitxers compatibles (firmware, cares de rellotge, aplicacions, GPS, recursos, tipografies...) al dispositiu. Més informació al wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">L’instal·lador de firmware/caràtules/aplicacions/fitxers us permet pujar/instal·lar fitxers compatibles (firmware, caràtules, aplicacions, GPS, recursos, tipografies...) al dispositiu. Més informació al wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_warning_text">Aquesta funcionalitat pot inutilitzar (\"brick\") el teu dispositiu.. Dit açò, als desenvolupadors mai els ha passat en fer \"flashing\", però recorda que ho fas sota el teu propi risc.</string>
     <string name="search">Cerca</string>
     <string name="fw_upgrade_notice_amazfit_gtr3_pro">Estàs a punt d\'instal·lar el firmware %s al teu Amazfit GTR 3 Pro.\n\nEl teu rellotge es reiniciarà després d\'instal·lar el fitxer .zip.\n\n¡CONTINUA SOTA EL TEU PROPI RISC!</string>
@@ -1629,4 +1629,41 @@
     <string name="activity_type_diving">Busseig</string>
     <string name="chart_cycling_point_label_distance">Avui: %.1f km\nTotal: %.1f km</string>
     <string name="open_camera">Obre la càmera</string>
+    <string name="serbian_latin">Serbi (llatí)</string>
+    <string name="bahasa_melayu">Malai</string>
+    <string name="pref_title_touch_volume">Volum</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_title">Angle d\'activació</string>
+    <string name="menuitem_female_health">Salut femenina</string>
+    <string name="menuitem_calendar">Calendari</string>
+    <string name="sony_speak_to_chat_sensitivity_low">Baixa</string>
+    <string name="spo2_perc_80">80 %</string>
+    <string name="menuitem_todo">A fer</string>
+    <string name="sony_anc_optimizer_status_starting">S’està iniciant…</string>
+    <string name="zepp_os_watchface_rhythm">Ritme</string>
+    <string name="prefs_active_noise_cancelling_level_high">Alt</string>
+    <string name="menuitem_countdown">Compte enrere</string>
+    <string name="portuguese_pt">Portuguès (Portugal)</string>
+    <string name="normal">Normal</string>
+    <string name="prefs_active_noise_cancelling_level_low">Baix</string>
+    <string name="spo2_perc_90">90 %</string>
+    <string name="world_clock_label">Etiqueta</string>
+    <string name="finnish">Finès</string>
+    <string name="portuguese_br">Portuguès (Brasil)</string>
+    <string name="catalan">Català</string>
+    <string name="activity_prefs_goals">Objectius</string>
+    <string name="activity_type_freestyle">Estil lliure</string>
+    <string name="pref_title_touch_spotify">Spotify</string>
+    <string name="pref_sleepasandroid_feat_heartrate">Freqüència cardíaca</string>
+    <string name="sony_anc_optimizer_status_analyzing">S’està analitzant…</string>
+    <string name="sony_anc_optimizer_status_finished">S’està finalitzant…</string>
+    <string name="sony_speak_to_chat_sensitivity_high">Alta</string>
+    <string name="sony_speak_to_chat_sensitivity_auto">Automàtica</string>
+    <string name="activity_prefs_date_birth">Data de naixença</string>
+    <string name="spo2_perc_75">75 %</string>
+    <string name="spo2_perc_85">85 %</string>
+    <string name="spo2_off">Desactivat</string>
+    <string name="pref_screen_vibration_patterns_title">Models de vibració</string>
+    <string name="pref_screen_vibration_patterns_summary">Configureu els models de vibració per a diferents notificacions</string>
+    <string name="prefs_always_on_display_follow_watchface">L\'estil segueix la caràtula</string>
+    <string name="danish">Danès</string>
 </resources>
