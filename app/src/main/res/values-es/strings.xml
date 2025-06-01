@@ -655,7 +655,7 @@
     <string name="pref_summary_contextual_arabic">Actívelo para admitir árabe contextual</string>
     <string name="zetime_calories_type_all">Calorías quemadas activas e inactivas</string>
     <string name="pref_screen_notification_profile_low_power">Aviso de batería baja</string>
-    <string name="pref_screen_notification_profile_anti_loss">Aviso anti pérdida</string>
+    <string name="pref_screen_notification_profile_anti_loss">Aviso antipérdida</string>
     <string name="activity_prefs_calories_burnt">Objetivo diario: calorías quemadas</string>
     <string name="activity_prefs_distance_meters">Objetivo diario: distancia en metros</string>
     <string name="activity_prefs_activetime_minutes">Objetivo diario: tiempo activo en minutos</string>
@@ -1847,7 +1847,7 @@
     <string name="intent_api_allow_activity_sync_summary">Permite la activación de la sincronización de actividades a través de la API Intent</string>
     <string name="pref_workout_detection_enabled">Detección activada</string>
     <string name="pref_workout_detection_enabled_summary">Activar la detección automática de este entrenamiento</string>
-    <string name="pref_screen_vibration_patterns_summary">Configura los patrones de vibración para las distintas notificaciones</string>
+    <string name="pref_screen_vibration_patterns_summary">Configure los modelos de vibración para las distintas notificaciones</string>
     <string name="world_clock_label">Etiqueta</string>
     <string name="seconds_7">7 segundos</string>
     <string name="kind_app">Aplicación</string>
@@ -1894,7 +1894,7 @@
     <string name="pref_cover_to_mute">Pulsar para silenciar</string>
     <string name="pref_screen_notification_profile_find_device">Buscar dispositivo</string>
     <string name="pref_screen_notification_idle_alerts">Alertas de inactividad</string>
-    <string name="pref_screen_vibration_patterns_title">Patrones de vibración</string>
+    <string name="pref_screen_vibration_patterns_title">Modelos de vibración</string>
     <string name="prefs_spo2_monitoring_description">Controla automáticamente los niveles de oxígeno en sangre a lo largo del día</string>
     <string name="prefs_spo2_alert_threshold">Umbral de alerta de SPO₂</string>
     <string name="prefs_activity_monitoring_title">Seguimiento de la actividad</string>
@@ -2129,7 +2129,7 @@
     <string name="error_no_bluetooth_scan">Se debe conceder y activar el acceso al escaneo por Bluetooth para que funcione correctamente</string>
     <string name="error_no_bluetooth_connect">Se debe conceder y activar el acceso a la conexión Bluetooth para que el escaneo funcione correctamente</string>
     <string name="permission_request">%1$s le permite enviar mensajes y otros datos desde Android a su dispositivo. Para ello necesita permiso para acceder a esos datos y, sin él, podría no funcionar correctamente. \n \nAhora se mostrarán unos diálogos en Android solicitando esos permisos. \n \nToque «%2$s» para continuar.</string>
-    <string name="activity_prefs_goals">Objetivos</string>
+    <string name="activity_prefs_goals">Metas</string>
     <string name="withings_bt_calibration_previous">Anterior</string>
     <string name="activity_type_surfing">Surfear</string>
     <string name="activity_type_windsurfing">Windsurf</string>
@@ -3771,4 +3771,8 @@
     <string name="weather_condition_dust">polvo</string>
     <string name="earfun_anc_mode">Modo de ANC</string>
     <string name="weather_condition_sleet">aguanieve</string>
+    <string name="silent_mode">Modo silencioso</string>
+    <string name="pref_even_realities_g1_screen_depth_title">Profundidad de pantalla</string>
+    <string name="pref_even_realities_g1_screen_location_title">Ubicación de la pantalla</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_title">Ángulo de activación</string>
 </resources>
