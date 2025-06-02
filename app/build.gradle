@@ -86,13 +86,11 @@ android {
         // Note: update toolchain.languageVersion when changing targetSdk
         //noinspection OldTargetApi
         targetSdk = 34
-        compileSdk = 35
+        compileSdk = 36
         // Note: update sourceCompatibility and targetCompatibility when changing minSdk
         minSdk = 21
 
-        // WORKAROUND: 35.0.0 is broken if a directory in the AIDL build starts with "u" (https://issuetracker.google.com/issues/389488321)
-        // however 35 is required by com.android.tools.build:gradle:8.9.1, the latest version supported by Android Studio
-        buildToolsVersion = '35.0.1'
+        buildToolsVersion = '36.0.0'
 
         // Note: always bump BOTH versionCode and versionName!
         versionName "0.85.0"
