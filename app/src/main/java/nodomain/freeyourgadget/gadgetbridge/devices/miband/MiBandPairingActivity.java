@@ -154,7 +154,7 @@ public class MiBandPairingActivity extends AbstractGBActivity implements Bonding
                     BondingUtil.attemptToFirstConnect(getCurrentTarget().getDevice());
                 })
                 .setPositiveButton(getContext().getString(R.string.discovery_yes_pair), (dialog, which) -> {
-                    BondingUtil.tryBondThenComplete(thiz, deviceCandidate.getDevice(), deviceCandidate.getMacAddress());
+                    BondingUtil.tryBondThenComplete(thiz, deviceCandidate.getDevice());
                 })
                 .show();
     }

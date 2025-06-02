@@ -77,7 +77,7 @@ public class BondAction extends PlainAction implements BondingInterface {
     @Override
     public boolean run(BluetoothGatt gatt) {
         mMacAddress = gatt.getDevice().getAddress();
-        BondingUtil.tryBondThenComplete(this, gatt.getDevice(), gatt.getDevice().getAddress());
+        BondingUtil.tryBondThenComplete(this, gatt.getDevice());
         return true;
     }
 }

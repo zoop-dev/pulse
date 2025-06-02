@@ -216,7 +216,7 @@ public class BondingUtil {
                     .setPositiveButton(bondingInterface.getContext().getString(R.string.discovery_yes_pair), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            BondingUtil.tryBondThenComplete(bondingInterface, deviceCandidate.getDevice(), deviceCandidate.getMacAddress());
+                            BondingUtil.tryBondThenComplete(bondingInterface, deviceCandidate.getDevice());
                         }
                     })
                     .setNegativeButton(R.string.discovery_dont_pair, new DialogInterface.OnClickListener() {
@@ -227,7 +227,7 @@ public class BondingUtil {
                     })
                     .show();
         } else {
-            BondingUtil.tryBondThenComplete(bondingInterface, deviceCandidate.getDevice(), deviceCandidate.getMacAddress());
+            BondingUtil.tryBondThenComplete(bondingInterface, deviceCandidate.getDevice());
         }
         LOG.debug("Bonding initiated");
     }
@@ -318,8 +318,8 @@ public class BondingUtil {
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private static void companionDeviceManagerBond(BondingInterface bondingInterface,
-                                                   BluetoothDevice device,
-                                                   String macAddress) {
+                                                   BluetoothDevice device) {
+        final String macAddress = device.getAddress();
         BluetoothDeviceFilter deviceFilter = new BluetoothDeviceFilter.Builder()
                 .setAddress(macAddress)
                 .build();
@@ -376,7 +376,7 @@ public class BondingUtil {
     /**
      * Use this function to initiate bonding to a GBDeviceCandidate
      */
-    public static void tryBondThenComplete(final BondingInterface bondingInterface, final BluetoothDevice device, final String macAddress) {
+    public static void tryBondThenComplete(final BondingInterface bondingInterface, final BluetoothDevice device) {
         bondingInterface.registerBroadcastReceivers();
 
         final int bondState = device.getBondState();
@@ -397,7 +397,7 @@ public class BondingUtil {
                 // If CompanionDeviceManager is available, skip connection and go bond
                 // TODO: It would theoretically be nice to check if it's already been granted,
                 //  but re-bond works
-                askCompanionPairing(bondingInterface, device, macAddress);
+                askCompanionPairing(bondingInterface, device);
             } else {
                 attemptToFirstConnect(bondingInterface.getCurrentTarget().getDevice());
             }
@@ -407,7 +407,7 @@ public class BondingUtil {
         GB.toast(bondingInterface.getContext(), bondingInterface.getContext().getString(R.string.pairing_creating_bond_with, device.getName(), device.getAddress()), Toast.LENGTH_LONG, GB.INFO);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isPebble2(device) && contextIsActivity) {
-            askCompanionPairing(bondingInterface, device, macAddress);
+            askCompanionPairing(bondingInterface, device);
         } else if (isPebble2(device)) {
             // TODO: start companionDevicePairing after connecting to Pebble 2 but before writing to pairing trigger
             attemptToFirstConnect(device);
@@ -419,12 +419,12 @@ public class BondingUtil {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private static void askCompanionPairing(BondingInterface bondingInterface, BluetoothDevice device, String macAddress) {
+    private static void askCompanionPairing(BondingInterface bondingInterface, BluetoothDevice device) {
         new MaterialAlertDialogBuilder(bondingInterface.getContext())
                 .setTitle(R.string.companion_pairing_request_title)
                 .setMessage(R.string.companion_pairing_request_description)
                 .setPositiveButton(R.string.yes, (dialog, whichButton) -> {
-                    companionDeviceManagerBond(bondingInterface, device, macAddress);
+                    companionDeviceManagerBond(bondingInterface, device);
                 })
                 .setNegativeButton(R.string.no, (dialog, whichButton) -> {
                     bluetoothBond(bondingInterface, device);

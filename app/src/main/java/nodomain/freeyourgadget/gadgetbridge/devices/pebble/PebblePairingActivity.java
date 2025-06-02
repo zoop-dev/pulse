@@ -126,7 +126,7 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
                 btDevice.getBondState() == BluetoothDevice.BOND_BONDING) {
             BondingUtil.connectThenComplete(this, deviceCandidate);
         } else {
-            BondingUtil.tryBondThenComplete(this, deviceCandidate.getDevice(), deviceCandidate.getDevice().getAddress());
+            BondingUtil.tryBondThenComplete(this, deviceCandidate.getDevice());
         }
     }
 
