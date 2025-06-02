@@ -670,6 +670,7 @@
     <string name="choose_device">Choose a device</string>
     <string name="no_supported_devices_found">No supported devices found</string>
     <string name="pairing_creating_bond_with">"Creating bond with %1$s (%2$s)"</string>
+    <string name="pairing_bonding_under_way">Please allow bonding process a few moments to complete.</string>
     <string name="pairing_unable_to_pair_with">"Unable to pair with %1$s (%2$s)"</string>
     <string name="pairing_in_progress">Bonding in progress: %1$s (%2$s)</string>
     <string name="pairing_already_bonded">"Already bonded with %1$s (%2$s), connecting…"</string>

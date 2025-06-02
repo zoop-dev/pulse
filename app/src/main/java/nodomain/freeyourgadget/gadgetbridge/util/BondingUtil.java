@@ -390,6 +390,8 @@ public class BondingUtil {
         } else {
             bluetoothBond(bondingInterface, device);
         }
+
+        GB.toast(bondingInterface.getContext(), bondingInterface.getContext().getString(R.string.pairing_bonding_under_way), Toast.LENGTH_LONG, GB.INFO);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
