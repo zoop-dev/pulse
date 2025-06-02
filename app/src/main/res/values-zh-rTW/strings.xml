@@ -7,7 +7,7 @@
     <string name="controlcenter_fetch_activity_data">同步</string>
     <string name="controlcenter_find_device">尋找遺失的裝置</string>
     <string name="controlcenter_take_screenshot">擷取畫面</string>
-    <string name="controlcenter_change_led_color">更改LED顏色</string>
+    <string name="controlcenter_change_led_color">更改 LED 顏色</string>
     <string name="controlcenter_change_fm_frequency">更改 FM 頻率</string>
     <string name="controlcenter_connect">連線…</string>
     <string name="controlcenter_disconnect">中斷連線</string>
@@ -39,8 +39,8 @@
     <string name="appmanager_health_deactivate">停用</string>
     <string name="appmanager_hrm_activate">激活HRM</string>
     <string name="appmanager_hrm_deactivate">停用HRM</string>
-    <string name="appmanager_weather_activate">啟動系統天氣應用</string>
-    <string name="appmanager_weather_deactivate">停用系统天气应用</string>
+    <string name="appmanager_weather_activate">啟動系統天氣應用程式</string>
+    <string name="appmanager_weather_deactivate">停用系統天氣應用程式</string>
     <string name="fw_upgrade_notice_miband3">您即將在您的小米手環3上安裝韌體 %s
 \n
 \n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。
@@ -51,7 +51,7 @@
     <string name="miband_firmware_known">此韌體已經過測試且確認與 Gadgetbridge 相容。</string>
     <string name="title_activity_settings">設定</string>
     <string name="pref_header_general">一般設定</string>
-    <string name="pref_title_general_autoconnectonbluetooth">在藍芽開啟時連線到 Gadgetbridge 裝置</string>
+    <string name="pref_title_general_autoconnectonbluetooth">在藍牙開啟時連線到 Gadgetbridge 裝置</string>
     <string name="pref_title_general_autostartonboot">自動啟動</string>
     <string name="pref_title_general_autoreconnect">自動重新連線</string>
     <string name="pref_title_audio_player">預設音樂播放器</string>
@@ -632,8 +632,8 @@
     <string name="pref_summary_connected_advertisement">讓裝置在連線後仍可透過藍芽發現</string>
     <string name="pref_title_connected_advertisement">在連線後保持可見</string>
     <string name="calendar_year">一年</string>
-    <string name="calendar_six_months">6個月</string>
-    <string name="calendar_three_months">3個月</string>
+    <string name="calendar_six_months">6 個月</string>
+    <string name="calendar_three_months">3 個月</string>
     <string name="calendar_month">一個月</string>
     <string name="calendar_two_weeks">兩週</string>
     <string name="calendar_week">一週</string>
@@ -697,9 +697,9 @@
 \n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。
 \n
 \n過程中的風險請自負！</string>
-    <string name="about_activity_title_banglejs_main">關於Bangle.js Gadgetbridge</string>
-    <string name="gadgetbridge_running_banglejs_main">Bangle.js正在執行</string>
-    <string name="about_activity_title_banglejs_nightly">關於Bangle.js Gadgetbridge（先行版）</string>
+    <string name="about_activity_title_banglejs_main">關於 Bangle.js Gadgetbridge</string>
+    <string name="gadgetbridge_running_banglejs_main">Bangle.js 正在執行</string>
+    <string name="about_activity_title_banglejs_nightly">關於 Bangle.js Gadgetbridge（先行版）</string>
     <string name="supercars_lights_blinking_label">閃爍</string>
     <string name="mi2_prefs_button_actions">按鈕動作</string>
     <string name="prefs_disconnect_notification_summary">當與藍芽斷線時，裝置上會發出通知。</string>
@@ -721,7 +721,7 @@
     <string name="pref_header_calendar">日曆</string>
     <string name="pref_header_workout">運動</string>
     <string name="bluetooth_calls_pairing">藍牙通話配對</string>
-    <string name="pref_title_banglejs_webview_url">應用程式加載器網址</string>
+    <string name="pref_title_banglejs_webview_url">應用程式載入器網址</string>
     <string name="world_clock_no_free_slots_description">該設備沒有可用的世界時鐘插槽（總插槽數：%1$s）</string>
     <string name="title_activity_contact_details">聯絡資料</string>
     <string name="appmanager_watchface_activate">啟動</string>
@@ -739,7 +739,7 @@
     <string name="pref_header_vibration_count">振動計數</string>
     <string name="watch9_pairing_tap_hint">當你的手錶震動時，搖動設備或按下其按鈕。</string>
     <string name="pref_speak_notifications_aloud_title">大聲朗讀通知</string>
-    <string name="pref_title_notifications_ignore_low_priority">忽略低優先級通知</string>
+    <string name="pref_title_notifications_ignore_low_priority">忽略低優先順序通知</string>
     <string name="prefs_spo2_monitoring_title">血氧監測</string>
     <string name="pref_title_pebble_always_ack_pebblekit">提前 ACK PebbleKit</string>
     <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
@@ -951,19 +951,19 @@
     <string name="prefs_wena3_item_weather_statusbar">狀態欄中的天氣</string>
     <string name="prefs_wena3_button_action_item_long">長按</string>
     <string name="pref_title_notification_times_enabled">通知時間</string>
-    <string name="pref_summary_notification_times_enabled">僅在特定時間內發送通知</string>
+    <string name="pref_summary_notification_times_enabled">僅在特定時間內傳送通知</string>
     <string name="pref_title_notification_media_ignores_application_list">媒體通知忽略應用程式列表</string>
     <string name="pref_title_banglejs_text_bitmap">文字作為位圖</string>
     <string name="pref_summary_banglejs_text_bitmap">如果一個詞無法使用手錶的字體顯示，則在Gadgetbridge中將其渲染為位圖並在手錶上顯示該位圖</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">用於位圖文字渲染的大小</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">使用手機 GPS 數據</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">使用手機 GPS 資料</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">僅使用網路提供者來定位。可以減少功耗，但會降低精確度。需要重新連接。</string>
     <string name="pref_title_pebble_sync_health">同步 Pebble 健康</string>
-    <string name="pref_title_casio_alert_sms">短信通知提醒</string>
+    <string name="pref_title_casio_alert_sms">簡訊通知提醒</string>
     <string name="pref_title_casio_alert_other">其他通知的警報</string>
     <string name="pref_summary_casio_alert_other">對於其他類別的通知進行警報（振動/蜂鳴）</string>
     <string name="pref_header_navigation">導航</string>
-    <string name="toast_enable_networklocationprovider">請啟用網絡位置</string>
+    <string name="toast_enable_networklocationprovider">請啟用網路位置</string>
     <string name="toast_aqurired_networklocation">位置已獲得</string>
     <string name="pref_title_pebble_gatt_clientonly">僅限 GATT 客戶端</string>
     <string name="pref_title_device_internet_access">允許網絡訪問</string>
@@ -1132,10 +1132,10 @@
 \n請自行承擔風險進行操作！</string>
     <string name="open_fw_installer_info_text">固件/表面/應用程式/檔案安裝程式允許您將支援的檔案（固件、表面、應用程式、GPS、資源、字型等）上傳/安裝到設備上。更多資訊請參見維基：https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_warning_text">此功能有可能使您的設備變磚。不過，通過刷機，這對任何開發者來說從未發生過，但請記住，您是在自擔風險的情況下進行這項操作。</string>
-    <string name="open_fw_installer_getting_files_title">獲取固件/應用程式檔案</string>
+    <string name="open_fw_installer_getting_files_title">取得韌體/應用程式檔案</string>
     <string name="open_fw_installer_getting_files_text">由於我們無法分發韌體檔案，您需要自行獲取這些檔案。這意味著您需要在apk檔案、網路、論壇、Amazfitwatchfaces（針對Miband/Amazfit設備）等地方搜尋這些檔案。</string>
-    <string name="open_fw_installer_ensure_device_connected">請確保設備 %s 已連接</string>
-    <string name="pref_header_connection">連接</string>
+    <string name="open_fw_installer_ensure_device_connected">請確保裝置 %s 已連線</string>
+    <string name="pref_header_connection">連線</string>
     <string name="pref_summary_mb_intents">如果某些應用程式的設備媒體控制無法正常運作，請啟用此選項</string>
     <string name="pref_summary_receive_calls_watch">直接在手錶上撥打和接聽電話</string>
     <string name="bluetooth_calls">藍牙通話</string>
@@ -1146,16 +1146,16 @@
     <string name="pref_pair_bluetooth_calls_help_warning">警告：如果您啟用藍牙通話而未與第二個實例配對，通話通知可能無法正常工作。</string>
     <string name="pref_summary_notifications_pebblemsg">支持通過 PebbleKit 向 Pebble 發送通知的應用程式。</string>
     <string name="pref_title_notifications_generic_settings">Android 通知設定</string>
-    <string name="pref_summary_notifications_ignore_low_priority">不要將低優先級和最低優先級的通知發送到手錶</string>
+    <string name="pref_summary_notifications_ignore_low_priority">不要將低優先順序和最低優先順序的通知傳送到手錶</string>
     <string name="pref_summary_notifications_ignore_work_profile">不要將工作配置文件中的應用程序通知發送到手錶</string>
     <string name="pref_title_notification_prefer_long_text">偏好長通知文字</string>
-    <string name="pref_summary_notification_prefer_long_text">如果有的話，將長通知文本發送到設備</string>
+    <string name="pref_summary_notification_prefer_long_text">如果有的話，將長通知文字傳送到裝置</string>
     <string name="pref_title_notification_cache_while_disconnected">超出範圍時快取</string>
     <string name="pref_summary_notification_cache_while_disconnected">當設備重新連接後，發送錯過的通知，因為它曾經超出範圍</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">使用手機的 GPS 資料，覆寫手環裝置的 GPS 資料</string>
     <string name="pref_title_banglejs_txt_bitmap_size">文本位圖大小</string>
     <string name="pref_title_banglejs_phone_gps_network_only">僅使用網路來定位</string>
-    <string name="pref_title_banglejs_phone_gps_update_interval">GPS數據更新間隔</string>
+    <string name="pref_title_banglejs_phone_gps_update_interval">GPS 資料更新間隔</string>
     <string name="pref_blacklist_calendars">黑名單日曆</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">GPS 位置更新的間隔時間，以毫秒為單位</string>
     <string name="pref_summary_banglejs_webview_url">如果您想要自訂應用程式載入器，請在此處輸入您的 https://…/android.html URL。否則，請留空以使用 https://banglejs.com/apps</string>
@@ -2246,7 +2246,7 @@
     <string name="pref_header_health">健康</string>
     <string name="pref_sleep_mode_smart_enable_title">智慧啟用</string>
     <string name="pref_header_display">顯示</string>
-    <string name="pref_header_audio">音頻</string>
+    <string name="pref_header_audio">音訊</string>
     <string name="pref_header_generic">通用</string>
     <string name="pref_header_sound_vibration">聲音與振動</string>
     <string name="pref_header_offline_voice">離線語音</string>
@@ -2518,7 +2518,7 @@
     <string name="prefs_heartrate_alert_high_threshold">高心率警報閾值</string>
     <string name="prefs_activity_monitoring_title">活動監控</string>
     <string name="dbaccess_error_executing">執行 \'%1$s\' 時發生錯誤</string>
-    <string name="cannot_connect">無法連接: %1$s</string>
+    <string name="cannot_connect">無法連線：%1$s</string>
     <string name="pref_header_cannned_messages">預設訊息</string>
     <string name="activity_type_dodgeball">躲避球</string>
     <string name="devicetype_amazfit_gtr3_pro">Amazfit GTR 3 Pro</string>
@@ -2698,7 +2698,7 @@
     <string name="mi2_fw_installhandler_fw53_hint">您需要在安裝此固件之前安裝版本 %1$s！</string>
     <string name="activity_type_ice_hockey">冰球</string>
     <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S 太陽能</string>
-    <string name="pref_title_send_app_notifications">發送通知</string>
+    <string name="pref_title_send_app_notifications">傳送通知</string>
     <string name="pref_summary_send_app_notifications">將應用程序通知發送到設備</string>
     <string name="pref_summary_device_internet_access">允許此設備上的應用程式訪問互聯網</string>
     <string name="pref_summary_relax_firmware_checks">放鬆固件檢查</string>
@@ -3067,7 +3067,7 @@
     <string name="gps">GPS</string>
     <string name="single_band">單頻</string>
     <string name="dual_band">雙頻</string>
-    <string name="low_power_gps">低功耗GPS</string>
+    <string name="low_power_gps">低功耗 GPS</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="all_satellites">所有衛星</string>
