@@ -773,7 +773,7 @@
     <string name="maxAltitude">最大</string>
     <string name="minAltitude">最低</string>
     <string name="averageAltitude">平均</string>
-    <string name="steps">步驟</string>
+    <string name="steps">步數</string>
     <string name="caloriesBurnt">卡路里</string>
     <string name="maxSpeed">最大</string>
     <string name="minSpeed">最低</string>
@@ -957,7 +957,7 @@
     <string name="pref_summary_banglejs_text_bitmap">如果一個詞無法使用手錶的字體顯示，則在Gadgetbridge中將其渲染為位圖並在手錶上顯示該位圖</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">用於位圖文字渲染的大小</string>
     <string name="pref_title_banglejs_phone_gps_enbale">使用手機 GPS 數據</string>
-    <string name="pref_summary_banglejs_phone_gps_network_only">僅使用網路提供者來確定位置。這樣可以減少功耗，但會以準確性為代價。需要重新連接。</string>
+    <string name="pref_summary_banglejs_phone_gps_network_only">僅使用網路提供者來定位。可以減少功耗，但會降低精確度。需要重新連接。</string>
     <string name="pref_title_pebble_sync_health">同步 Pebble 健康</string>
     <string name="pref_title_casio_alert_sms">短信通知提醒</string>
     <string name="pref_title_casio_alert_other">其他通知的警報</string>
@@ -1011,7 +1011,7 @@
     <string name="devicesetting_scannable_rssi">最小RSSI閾值</string>
     <string name="prefs_password">密碼</string>
     <string name="portuguese_br">葡萄牙語（巴西）</string>
-    <string name="candidate_item_device_image">設備圖像</string>
+    <string name="candidate_item_device_image">裝置圖片</string>
     <string name="pref_title_ping_tone">嗶聲</string>
     <string name="audio_codec">音頻編碼</string>
     <string name="qhybrid_title_background_image">背景圖片</string>
@@ -1152,9 +1152,9 @@
     <string name="pref_summary_notification_prefer_long_text">如果有的話，將長通知文本發送到設備</string>
     <string name="pref_title_notification_cache_while_disconnected">超出範圍時快取</string>
     <string name="pref_summary_notification_cache_while_disconnected">當設備重新連接後，發送錯過的通知，因為它曾經超出範圍</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">使用手機的GPS數據來覆蓋手環設備的GPS數據</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">使用手機的 GPS 資料，覆寫手環裝置的 GPS 資料</string>
     <string name="pref_title_banglejs_txt_bitmap_size">文本位圖大小</string>
-    <string name="pref_title_banglejs_phone_gps_network_only">僅使用網絡來確定位置</string>
+    <string name="pref_title_banglejs_phone_gps_network_only">僅使用網路來定位</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">GPS數據更新間隔</string>
     <string name="pref_blacklist_calendars">黑名單日曆</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">GPS 位置更新的間隔時間，以毫秒為單位</string>
@@ -1561,8 +1561,8 @@
     <string name="hrv_status_poor">貧窮</string>
     <string name="activity_type_treadmill">跑步機</string>
     <string name="activity_error_no_app_for_gpx">要查看活動追蹤，請安裝可以處理 GPX 檔案的應用程式。</string>
-    <string name="share_screenshot">分享截圖</string>
-    <string name="screenshot_taken">截圖已拍攝</string>
+    <string name="share_screenshot">分享擷圖</string>
+    <string name="screenshot_taken">已擷圖</string>
     <string name="reset_index">重置獲取日期</string>
     <string name="kind_gps">GPS 韌體</string>
     <string name="kind_gps_almanac">GPS 年鑑</string>
@@ -2040,7 +2040,7 @@
     <string name="connection_over_bt_classic">通過藍牙經典連接</string>
     <string name="autoconnect_from_device_title">從設備連接的連接</string>
     <string name="autoconnect_from_device_summary">當設備（如耳機）發起連接時，建立連接</string>
-    <string name="steps_streaks">步驟條紋</string>
+    <string name="steps_streaks">步數條</string>
     <string name="steps_streaks_hint">連續幾天不間斷地達成步數目標</string>
     <string name="step_streak_longest">最長</string>
     <string name="steps_streaks_achievement_rate">成就\n率</string>
@@ -2181,8 +2181,7 @@
     <string name="pref_title_wheel_diameter">輪徑</string>
     <string name="pref_summary_cycling_persistence_interval">當前循環數據應寫入數據庫的時間間隔（以秒為單位）</string>
     <string name="pref_title_cycling_persistence_interval">持續時間</string>
-    <string name="chart_cycling_point_label_distance">今天: %.1f 公里
-\n總計: %.1f 公里</string>
+    <string name="chart_cycling_point_label_distance">今天：%.1f 公里\n總計：%.1f 公里</string>
     <string name="toast_setting_requires_reconnect">此設定將在重新連接後生效</string>
     <string name="open_camera">打開相機</string>
     <string name="toast_camera_permission_required">此功能需要相機權限。</string>
@@ -2252,8 +2251,8 @@
     <string name="pref_header_sound_vibration">聲音與振動</string>
     <string name="pref_header_offline_voice">離線語音</string>
     <string name="pref_header_time">時間</string>
-    <string name="pref_title_general_reconnectonlytoconnected">僅重新連接已連接的設備</string>
-    <string name="pref_summary_general_reconnectonlytoconnected">僅重新連接已連接的設備，而不是重新連接所有設備</string>
+    <string name="pref_title_general_reconnectonlytoconnected">僅重新連線到已連線的裝置</string>
+    <string name="pref_summary_general_reconnectonlytoconnected">僅重新連線到已連線的裝置，而非重新連線所有裝置</string>
     <string name="pref_theme_dynamic">動態顏色</string>
     <string name="pref_title_notification_delay_calls">來電通知延遲</string>
     <string name="pref_summary_notification_delay_calls">在發送來電通知到設備之前的延遲時間（以秒為單位）。</string>
@@ -2299,7 +2298,7 @@
     <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
     <string name="menuitem_widgets">小工具</string>
     <string name="ascentMeters">上坡</string>
-    <string name="watchface_widget_type_steps">步驟</string>
+    <string name="watchface_widget_type_steps">步數</string>
     <string name="scan_scanning_all_devices">掃描所有設備</string>
     <string name="sony_speak_to_chat_sensitivity_low">低</string>
     <string name="transition">過渡</string>
@@ -2375,7 +2374,7 @@
     <string name="soundcore_equalizer_reset_title">重置為預設</string>
     <string name="menuitem_readiness">準備狀態</string>
     <string name="menuitem_mi_ai">我的 AI</string>
-    <string name="qhybrid_calibration_10_steps">10 步驟</string>
+    <string name="qhybrid_calibration_10_steps">10 步</string>
     <string name="prefs_vibration_enable">啟用震動</string>
     <string name="sony_speak_to_chat">語音對話</string>
     <string name="open_fw_installer_pick_file">選擇檔案</string>
@@ -2476,7 +2475,7 @@
     <string name="heartrate_bpm_45">每分鐘45次</string>
     <string name="heartrate_bpm_105">105 拍每分鐘</string>
     <string name="backup_restore_error_export">導出為 zip 失敗</string>
-    <string name="open_fw_installer_select_file">選擇您想上傳到設備的檔案：%s</string>
+    <string name="open_fw_installer_select_file">選擇要上傳到裝置的檔案：%s</string>
     <string name="hrv_status_baseline_label">基準</string>
     <string name="devicetype_amazfit_x">Amazfit X</string>
     <string name="fw_upgrade_notice_amazfitbip3">您即將在您的 Amazfit Bip 3 上安裝 %s 韌體。
@@ -3168,7 +3167,7 @@
     <string name="steps_streaks_total_steps_hint">整個連續期間的總步數</string>
     <string name="steps_streaks_total_steps_average_hint">每日平均%d步</string>
     <string name="step_streaks_achievements_sharing_message">我每天的步數成就！</string>
-    <string name="step_streaks_achievements_sharing_title">步驟成就</string>
+    <string name="step_streaks_achievements_sharing_title">步數成就</string>
     <string name="steps_streaks_total_steps_hint_totals">歷史上記錄的總步數</string>
     <string name="voice_service_package_summary">包含處理語音命令的服務的應用程式</string>
     <string name="voice_service_class_title">語音服務類別</string>
@@ -3202,12 +3201,12 @@
     <string name="pref_title_nagivation_apps">導航應用程式</string>
     <string name="pref_header_external_integrations">外部整合</string>
     <string name="pref_header_automations">自動化</string>
-    <string name="pref_description_general">創業, 語言, 地區, 位置</string>
+    <string name="pref_description_general">啟動、語言、地區、位置</string>
     <string name="pref_description_about_you">出生日期、性別、身高、體重、目標</string>
-    <string name="pref_description_notifications">應用程序通知，白名單/黑名單</string>
+    <string name="pref_description_notifications">應用程式通知、白名單/黑名單</string>
     <string name="pref_description_user_interface">主題，主畫面</string>
     <string name="pref_description_dashboard">小工具，包含設備</string>
-    <string name="pref_description_automations">自動匯出，自動獲取</string>
+    <string name="pref_description_automations">自動匯出、自動取得</string>
     <string name="pref_description_developer_options">日誌，意圖 API</string>
     <string name="pref_description_deprecated_functionalities">將在未來版本中移除的設定</string>
     <string name="pref_header_main_screen">主畫面</string>
@@ -3403,4 +3402,5 @@
     <string name="device_with_rssi">%1$s (%2$s)</string>
     <string name="charts_show_balance_sleep_title">顯示睡眠平衡</string>
     <string name="pai_plus_num">+%d</string>
+    <string name="view_file">查看</string>
 </resources>
