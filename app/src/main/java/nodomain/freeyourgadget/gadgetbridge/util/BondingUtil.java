@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 import static androidx.core.app.ActivityCompat.startIntentSenderForResult;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.toast;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -37,6 +39,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -51,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 
 public class BondingUtil {
     public static final String STATE_DEVICE_CANDIDATE = "stateDeviceCandidate";
@@ -83,42 +87,62 @@ public class BondingUtil {
     }
 
     /**
-     * Returns a BroadcastReceiver that handles Bluetooth chance broadcasts
+     * Returns a BroadcastReceiver that handles Bluetooth bonding broadcasts
+     * @see BluetoothDevice#ACTION_BOND_STATE_CHANGED
      */
     public static BroadcastReceiver getBondingReceiver(final BondingInterface bondingInterface) {
         return new BroadcastReceiver() {
+            @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(intent.getAction())) {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     String bondingMacAddress = bondingInterface.getMacAddress();
+                    if (device == null) {
+                        LOG.error("invalid {} intent: {} is null", BluetoothDevice.ACTION_BOND_STATE_CHANGED,
+                                BluetoothDevice.EXTRA_DEVICE);
+                        return;
+                    }
 
-                    LOG.info("Bond state changed: " + device + ", state: " + device.getBondState() + ", expected address: " + bondingMacAddress);
-                    if (bondingMacAddress != null && bondingMacAddress.equals(device.getAddress())) {
-                        int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
+                    final int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE,  BluetoothDevice.ERROR);
+                    final int prevBondState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+
+                    LOG.info("Bond state changed for {} from {} to {}, target address {}",
+                            device,
+                            BleNamesResolver.getBondStateString(bondState),
+                            BleNamesResolver.getBondStateString(prevBondState),
+                            bondingMacAddress
+                    );
+
+
+                    if (bondingMacAddress == null || !bondingMacAddress.equalsIgnoreCase(device.getAddress())) {
+                        LOG.debug("ignore due to MAC address: got {} but expected {}", device.getAddress(), bondingMacAddress);
+                    } else {
                         switch (bondState) {
                             case BluetoothDevice.BOND_BONDED: {
-                                LOG.info("Bonded with " + device.getAddress());
+                                LOG.info("Bonded with {}", device.getAddress());
                                 //noinspection StatementWithEmptyBody
                                 if (isLePebble(device) || isPebble2(device) || !bondingInterface.getAttemptToConnect()) {
                                     // Do not initiate connection to LE Pebble and some others!
                                 } else {
-                                    attemptToFirstConnect(bondingInterface.getCurrentTarget().getDevice());
+                                    attemptToFirstConnect(device);
                                 }
                                 return;
                             }
                             case BluetoothDevice.BOND_NONE: {
-                                LOG.info("Not bonded with " + device.getAddress() + ", attempting to connect anyway.");
+                                LOG.info("Not bonded with {}, attempting to connect anyway.",
+                                        device.getAddress());
                                 if(bondingInterface.getAttemptToConnect())
-                                    attemptToFirstConnect(bondingInterface.getCurrentTarget().getDevice());
+                                    attemptToFirstConnect(device);
                                 return;
                             }
                             case BluetoothDevice.BOND_BONDING: {
-                                LOG.info("Bonding in progress with " + device.getAddress());
+                                LOG.info("Bonding in progress with {}", device.getAddress());
                                 return;
                             }
                             default: {
-                                LOG.warn("Unknown bond state for device " + device.getAddress() + ": " + bondState);
+                                LOG.warn("Unhandled bond state for device {}: {}", device.getAddress(),
+                                        BleNamesResolver.getBondStateString(bondState));
                                 bondingInterface.onBondingComplete(false);
                             }
                         }

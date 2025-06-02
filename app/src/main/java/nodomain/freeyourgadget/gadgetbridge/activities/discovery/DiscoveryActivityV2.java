@@ -863,6 +863,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     }
 
     private final class BluetoothReceiver extends BroadcastReceiver {
+        @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
         @Override
         public void onReceive(final Context context, final Intent intent) {
             switch (Objects.requireNonNull(intent.getAction())) {
@@ -903,10 +904,22 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                     LOG.debug("ACTION_BOND_STATE_CHANGED");
                     final BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     if (device != null) {
-                        final int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
-                        LOG.debug("Bond state: {}", BleNamesResolver.getBondStateString(bondState));
+                        final String macAddress = device.getAddress();
+                        final String targetMacAddress = getMacAddress();
+                        final int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                        final int prevBondState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+                        LOG.info("Bond state changed for {} from {} to {}, target address {}",
+                                macAddress,
+                                BleNamesResolver.getBondStateString(prevBondState),
+                                BleNamesResolver.getBondStateString(bondState),
+                                targetMacAddress
+                        );
 
-                        if (bondState == BluetoothDevice.BOND_BONDED) {
+                        if (targetMacAddress == null || !targetMacAddress.equalsIgnoreCase(macAddress)) {
+                            LOG.debug("ignore due to MAC address: got {} but expected {}", macAddress, targetMacAddress);
+                        } else if (bondState != BluetoothDevice.BOND_BONDED) {
+                            LOG.debug("ignore due bonding state: {}", BleNamesResolver.getBondStateString(bondState));
+                        } else {
                             BondingUtil.handleDeviceBonded((BondingInterface) context, getCandidateFromMAC(device));
                         }
                     }
