@@ -58,7 +58,7 @@
     <string name="pref_default">預設</string>
     <string name="pref_header_datetime">日期與時間</string>
     <string name="pref_title_datetime_syctimeonconnect">時間同步</string>
-    <string name="pref_summary_datetime_syctimeonconnect">當您 Android 裝置上的時區改變或連接到 Gadgetbridge 裝置時同步時間</string>
+    <string name="pref_summary_datetime_syctimeonconnect">當 Android 裝置的時間、時區改變或連線到 Gadgetbridge 裝置時，定期同步時間</string>
     <string name="pref_title_theme">主題</string>
     <string name="pref_theme_light">亮色</string>
     <string name="pref_theme_dark">暗色</string>
@@ -237,7 +237,7 @@
     <string name="automatic">自動</string>
     <string name="simplified_chinese">簡體中文</string>
     <string name="traditional_chinese">繁體中文</string>
-    <string name="english">英語</string>
+    <string name="english">英文</string>
     <string name="norwegian_bokmal">挪威語</string>
     <string name="spanish">西班牙文</string>
     <string name="russian">俄語</string>
@@ -572,7 +572,7 @@
     <string name="about_additional_device_support">額外裝置支援</string>
     <string name="about_contributors">貢獻者</string>
     <string name="about_core_team_title">核心團隊（按第一次程式碼貢獻順序排列）</string>
-    <string name="about_description_generic">用來取代廠商提供的閉源 Android 小裝置應用程式的離線且版權自由的替代品。</string>
+    <string name="about_description_generic">取代閉源 Android 配件應用程式的離線、無版權、自由軟體。</string>
     <string name="about_activity_title_generic">關於 Gadgetbridge</string>
     <string name="about_title">關於</string>
     <string name="activity_summaries">運動活動</string>
@@ -641,7 +641,7 @@
     <string name="battery_level">電池電量</string>
     <string name="battery_detail_activity_title">電池資訊</string>
     <string name="controlcenter_set_alias">設定別名</string>
-    <string name="find_lost_device_message">尋找 %1$s\?</string>
+    <string name="find_lost_device_message">尋找 %1$s？</string>
     <string name="controlcenter_power_off_confirm_title">關機</string>
     <string name="controlcenter_power_off_confirm_description">您確定要關閉裝置電源嗎？</string>
     <string name="check_all_applications">勾選所有應用程式</string>
@@ -929,9 +929,9 @@
     <string name="mi2_prefs_heart_rate_monitoring_alerts_summary">配置心率監測和警報閾值</string>
     <string name="prefs_shortcut_cards">快捷卡片</string>
     <string name="lefun_prefs_interface_language_title">介面語言</string>
-    <string name="english_in">英語（印度）</string>
+    <string name="english_in">英文（印度）</string>
     <string name="english_us">英文（美國）</string>
-    <string name="spanish_mx">西班牙語（墨西哥）</string>
+    <string name="spanish_mx">西班牙文（墨西哥）</string>
     <string name="georgian">喬治亞語</string>
     <string name="scandinavian">斯堪地那維亞</string>
     <string name="french_ca">法語（加拿大）</string>
@@ -1052,7 +1052,7 @@
 \n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。
 \n
 \n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfitcor2">您即將在您的 Amazfit Cor 2 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。\n\n請自行承擔風險！\n\n完全未經測試，若您的設備名稱為 \"Amazfit Band 2\"，可能需要閃存 BEATS_W 韌體。</string>
+    <string name="fw_upgrade_notice_amazfitcor2">即將在 Amazfit Cor 2 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，手環會重新啟動。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。\n\n請自行承擔風險！\n\n完全未經測試，若您的裝置名稱為「Amazfit Band 2」，可能需要刷入 BEATS_W 韌體。</string>
     <string name="fw_upgrade_notice_amazfitcor">您即將在您的 Amazfit Cor 上安裝 %s 韌體。
 \n
 \n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。
@@ -1369,7 +1369,7 @@
     <string name="lefun_prefs_hydration_reminder_summary">樂隊將會震動以提醒你喝水</string>
     <string name="lefun_prefs_antilost_summary">如果您的手機與手環斷開連接，手環將會震動</string>
     <string name="bengali">孟加拉語</string>
-    <string name="spanish_us">美國西班牙語</string>
+    <string name="spanish_us">西班牙文（美國）</string>
     <string name="common_symbols">常見符號</string>
     <string name="croatian">克羅地亞語</string>
     <string name="czech">捷克語</string>
@@ -2149,7 +2149,7 @@
     <string name="dashboard_settings">儀表板設定</string>
     <string name="bottom_nav_dashboard">儀表板</string>
     <string name="pref_dashboard_cards_summary">在儀表板上繪製小工具周圍的卡片</string>
-    <string name="pref_dashboard_devices_to_include">要包括的設備</string>
+    <string name="pref_dashboard_devices_to_include">要包含的裝置</string>
     <string name="pref_dashboard_widget_show_legend_title">顯示圖例</string>
     <string name="pref_dashboard_widget_goals_chart_title">目標圖表</string>
     <string name="pref_dashboard_all_devices_title">所有設備</string>
@@ -2229,9 +2229,9 @@
     <string name="backup_restore_restart_title">重啟</string>
     <string name="label_distance_trip">行程：%.1f 公里</string>
     <string name="label_distance_total">總計: %.1f 公里</string>
-    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (先行版)</string>
-    <string name="about_description_main_nopebble">Cloudless copyleft 自由替代品，用於供應商的閉源 Android 小工具應用程序。Gadgetbridge 的先行版本發布。此版本已將 Pebble 提供者重新命名以防止衝突，因此某些與 Pebble 相關的整合將無法正常運作，但它可以與現有的 Gadgetbridge 安裝一起安裝。</string>
-    <string name="about_description_main_nightly">Cloudless copyleft 自由替代品，用於供應商的封閉源 Android 小工具應用程式。Gadgetbridge 的夜間版本。如果您已安裝 Gadgetbridge 或 Pebble 應用程式，則無法安裝，因為 Pebble 提供者之間存在衝突。</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge（先行版）</string>
+    <string name="about_description_main_nopebble">取代閉源 Android 配件應用程式的離線、無版權、自由軟體。Gadgetbridge 的先行版。此版本已將 Pebble 提供者重新命名以防止衝突，因此某些整合了 Pebble 的功能會無法運作，但可以與已安裝的 Gadgetbridge 並存。</string>
+    <string name="about_description_main_nightly">取代閉源 Android 配件應用程式的離線、無版權、自由軟體。Gadgetbridge 的先行版。如果已安裝 Gadgetbridge 或 Pebble 應用程式，則無法安裝此版本，因為 Pebble 提供者存在衝突。</string>
     <string name="pref_title_pebble_settings">Pebble 設定</string>
     <string name="pref_title_notifications_pebblemsg">Pebble 訊息</string>
     <string name="pref_gps_header">GPS</string>
@@ -2239,8 +2239,8 @@
     <string name="minutes_60">60分鐘</string>
     <string name="mi2_prefs_button_press_count_summary">觸發事件所需的按鈕按壓次數 1。隨後相同數量的按壓會創建事件 2，依此類推。</string>
     <string name="prefs_control_center">控制中心</string>
-    <string name="english_gb">英語（英國）</string>
-    <string name="spanish_es">西班牙語（西班牙）</string>
+    <string name="english_gb">英文（英國）</string>
+    <string name="spanish_es">西班牙文（西班牙）</string>
     <string name="activity_type_push_ups">伏地挺身</string>
     <string name="activity_type_tennis">網球</string>
     <string name="pref_header_health">健康</string>
@@ -2284,8 +2284,8 @@
     <string name="prefs_heartrate_alert_threshold">心率警報閾值</string>
     <string name="seconds_6">6秒</string>
     <string name="prefs_password_enabled">密碼已啟用</string>
-    <string name="english_ca">英語（加拿大）</string>
-    <string name="extended_ascii">擴展ASCII</string>
+    <string name="english_ca">英文（加拿大）</string>
+    <string name="extended_ascii">擴充 ASCII</string>
     <string name="authentication_required">需要身份驗證</string>
     <string name="active_time">活動時間</string>
     <string name="standing_time">站立時間</string>
@@ -2315,7 +2315,7 @@
     <string name="lefun_prefs_hydration_reminder_interval_title">補水提醒間隔（以分鐘計）</string>
     <string name="lefun_prefs_antilost_title">防丟失</string>
     <string name="serbian">塞爾維亞語</string>
-    <string name="ukranian">烏克蘭語</string>
+    <string name="ukranian">烏克蘭文</string>
     <string name="pref_chart_sleep_lines_limit">在滾動之前顯示多少個睡眠會話行</string>
     <string name="activity_prefs_chart_min_session_length">最小活動長度（分鐘）</string>
     <string name="pref_title_pebble_health_store_raw">將原始記錄存儲在數據庫中</string>
@@ -2381,7 +2381,7 @@
     <string name="open_fw_installer_connect_minimum_one_device">請至少連接一個您想要發送檔案的設備。</string>
     <string name="pref_blacklist_calendars_summary">被列入黑名單的日曆將不會同步到設備</string>
     <string name="pref_summary_pebble_forceprotocol">此選項強制根據韌體版本使用最新的通知協議。知道你在做什麼！</string>
-    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (先行版)</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge（先行版）</string>
     <string name="fw_multi_upgrade_notice">您即將安裝 %1$s 和 %2$s 固件，而不是目前在您的 Mi Band 上的固件。</string>
     <string name="unbind_before_pair_message">此設備已在 Android 設定中綁定，這可能會導致某些設備配對失敗。
 \n
@@ -2444,7 +2444,7 @@
     <string name="pref_title_touch_spotify">Spotify</string>
     <string name="sony_equalizer_preset_speech">演講</string>
     <string name="pref_media_rewind">跳回</string>
-    <string name="english_au">英語（澳大利亞）</string>
+    <string name="english_au">英文（澳大利亞）</string>
     <string name="mi2_enable_text_notifications_summary"><![CDATA[需要固件 >= 1.0.1.28 並安裝 Mili_pro.ft*。]]></string>
     <string name="maximum_duration">持續時間</string>
     <string name="activity_type_free_training">免費訓練</string>
@@ -3204,10 +3204,10 @@
     <string name="pref_description_general">啟動、語言、地區、位置</string>
     <string name="pref_description_about_you">出生日期、性別、身高、體重、目標</string>
     <string name="pref_description_notifications">應用程式通知、白名單/黑名單</string>
-    <string name="pref_description_user_interface">主題，主畫面</string>
-    <string name="pref_description_dashboard">小工具，包含設備</string>
+    <string name="pref_description_user_interface">主題、主畫面</string>
+    <string name="pref_description_dashboard">小工具、包含的裝置</string>
     <string name="pref_description_automations">自動匯出、自動取得</string>
-    <string name="pref_description_developer_options">日誌，意圖 API</string>
+    <string name="pref_description_developer_options">日誌、Intent API</string>
     <string name="pref_description_deprecated_functionalities">將在未來版本中移除的設定</string>
     <string name="pref_header_main_screen">主畫面</string>
     <string name="pref_title_user_interface">使用者介面</string>
@@ -3403,4 +3403,21 @@
     <string name="charts_show_balance_sleep_title">顯示睡眠平衡</string>
     <string name="pai_plus_num">+%d</string>
     <string name="view_file">查看</string>
+    <string name="first_start_overview_title">簡介</string>
+    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="first_start_intro_tag_line">擺脫配件裝置廠商的專有應用程式和雲端服務。</string>
+    <string name="first_start_permissions_title">權限</string>
+    <string name="maps_settings">地圖設定</string>
+    <string name="maps_download_summary">點這裏下載地圖檔案。檔案應儲存至下方所選的資料夾中。</string>
+    <string name="maps_download_title">下載地圖</string>
+    <string name="first_start_intro_welcome_to">歡迎使用</string>
+    <string name="first_start_open_source_title">開源</string>
+    <string name="first_start_permissions_desc">Gadgetbridge 需要取得很多權限，才能執行所有功能。請查看以下權限及其用途。</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="permission_bluetooth_title">藍牙</string>
+    <string name="first_start_permissions_request_all_button">授予所有權限</string>
+    <string name="maps">地圖</string>
+    <string name="maps_track_color_title">路徑顏色</string>
+    <string name="first_start_permissions_request_button">授予</string>
 </resources>
