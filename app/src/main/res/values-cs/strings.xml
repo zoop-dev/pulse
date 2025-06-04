@@ -4059,4 +4059,14 @@
     <string name="pref_even_realities_g1_screen_depth_title">Hloubka obrazovky</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_title">Kalibrovat úhel</string>
     <string name="pref_even_realities_g1_screen_location_summary">Změní vertikální umístění displeje</string>
+    <string name="even_realities_frame_shape_G1A">G1A/Zaoblený</string>
+    <string name="pref_device_logs_title">Protokoly zařízení</string>
+    <string name="even_realities_frame_shape_G1B">G1B/Čtverec</string>
+    <string name="even_realities_frame_color_grey">Šedý</string>
+    <string name="even_realities_frame_color_brown">Hnědý</string>
+    <string name="even_realities_frame_color_green">Zelený</string>
+    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_left_lens">Levá čočka</string>
+    <string name="even_realities_right_lens">Pravá čočka</string>
+    <string name="pref_device_logs_summary">Povolit protokolování ze zařízení</string>
 </resources>
