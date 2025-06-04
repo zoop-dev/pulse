@@ -298,7 +298,7 @@
     <string name="menuitem_more">更多</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="widget_listing_label">狀態與鬧鐘</string>
-    <string name="pref_disable_new_ble_scanning">停用新型藍芽低功耗掃描</string>
+    <string name="pref_disable_new_ble_scanning">停用新型藍牙低功耗掃描</string>
     <string name="pref_summary_disable_new_ble_scanning">如果在掃描過程中找不到您的裝置，請勾選此選項</string>
     <string name="pref_title_transliteration">轉換文字</string>
     <string name="pref_summary_transliteration">如果您的裝置不支援您所使用的語言的字體，請啟用此功能</string>
@@ -405,12 +405,12 @@
     <string name="zetime_title_screentime">螢幕逾時（秒）</string>
     <string name="activity_prefs_alarm_min_heart_rate">最低心率</string>
     <string name="test">測試</string>
-    <string name="cannot_connect_bt_address_invalid_">無法連線。藍芽位址無效？</string>
+    <string name="cannot_connect_bt_address_invalid_">無法連線。藍牙位址無效？</string>
     <string name="n_a">不適用</string>
     <string name="pairing">正在與 %s 配對…</string>
     <string name="message_cannot_pair_no_mac">未輸入 MAC 位址，無法配對。</string>
     <string name="miband_pairing_using_dummy_userdata">未提供有效的使用者資料，目前使用假定資料。</string>
-    <string name="discovery_connected_devices_hint">請確認您的裝置可以被偵測到。已連接的裝置將無法被偵測。請在 Android 6 以上的裝置啟用位置權限（如：GPS）。請對 Gadgetbridge 停用隱私守衛，因為這可能會導致您的手機崩潰並重新啟動。如果在數分鐘後仍未找到任何裝置，請重新啟動您的手機並再試一次。</string>
+    <string name="discovery_connected_devices_hint">請確認您的裝置可以被偵測到。已連線的裝置將無法被偵測。請在 Android 6 以上的裝置啟用位置權限（如：GPS）。請對 Gadgetbridge 停用隱私守衛，因為這可能會導致您的手機崩潰並重新啟動。如果在數分鐘後仍未找到任何裝置，請重新啟動您的手機並再試一次。</string>
     <string name="discovery_note">備註：</string>
     <string name="initializing">正在初始化</string>
     <string name="pref_screen_notification_profile_low_power">低電量警告</string>
@@ -510,7 +510,7 @@
     <string name="fwapp_install_device_not_ready">檔案無法被安裝，裝置未就緒。</string>
     <string name="chart_no_data_synchronize">尚無資料。同步裝置？</string>
     <string name="pref_screen_notification_profile_calendar">日曆通知</string>
-    <string name="discovery_need_to_enter_authkey">此裝置需要一組驗證密鑰，在裝置上長按以進入設定。詳細資訊請閱讀專案 wiki。</string>
+    <string name="discovery_need_to_enter_authkey">此裝置需要一組驗證金鑰，在裝置上長按以進入設定。詳細資訊請閱讀專案 wiki。</string>
     <string name="miband_pairing_tap_hint">當您的小米手環振動並閃爍時，請連續點擊數次。</string>
     <string name="pairing_already_bonded">已與裝置 %1$s (%2$s) 完成綁定，連線中…</string>
     <string name="title_activity_mi_band_pairing">配對您的小米手環</string>
@@ -675,8 +675,8 @@
     <string name="discover_unsupported_devices_description">啟用此選項將在掃描時顯示所有發現的藍芽裝置。短按會將設備名稱和 mac 位址複製到剪貼簿。長按將開啟「新增測試裝置」對話框。有可能導致應用程式凍結。</string>
     <string name="discover_unsupported_devices">探索不支援的裝置</string>
     <string name="pref_theme_system">根據系統</string>
-    <string name="discovery_bluetooth_scan">藍芽掃描：</string>
-    <string name="discovery_bluetooth_le_scan">低功耗藍芽掃描：</string>
+    <string name="discovery_bluetooth_scan">藍牙掃描：</string>
+    <string name="discovery_bluetooth_le_scan">低功耗藍牙掃描：</string>
     <string name="fw_upgrade_notice_miband6">您即將在您的小米手環6上安裝韌體 %s 
 \n 
 \n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。 
@@ -906,12 +906,12 @@
     <string name="pairing_in_progress">正在進行綁定：%1$s (%2$s)</string>
     <string name="horizontal">水平</string>
     <string name="vertical">垂直</string>
-    <string name="busy_task_fetch_stress_data">獲取壓力數據</string>
+    <string name="busy_task_fetch_stress_data">取得壓力資料</string>
     <string name="prefs_wearmode">穿戴模式</string>
     <string name="vibration_profile_ring">戒指</string>
-    <string name="pref_screen_notification_profile_anti_loss">防丟失警告</string>
+    <string name="pref_screen_notification_profile_anti_loss">防遺失警告</string>
     <string name="pref_screen_notification_profile_todo_list">待辦事項清單</string>
-    <string name="pref_screen_notification_profile_find_device">尋找設備</string>
+    <string name="pref_screen_notification_profile_find_device">尋找裝置</string>
     <string name="pref_screen_vibration_patterns_title">振動模式</string>
     <string name="heartrate_bpm_145">145 拍每分鐘</string>
     <string name="heartrate_bpm_195">195 拍每分鐘</string>
@@ -972,7 +972,7 @@
     <string name="prefs_sensors_button_bp_calibration">校準</string>
     <string name="power_mode_normal">正常</string>
     <string name="zetime_analog_mode_handsandsteps">手和步</string>
-    <string name="zetime_title_alarm_signaling">設置警報的信號類型</string>
+    <string name="zetime_title_alarm_signaling">設定警報的訊號類型</string>
     <string name="zetime_signaling_none">靜默</string>
     <string name="zetime_signaling_vibrate">持續振動</string>
     <string name="clap_hands_to_wakeup_device_summary">再次拍手將關閉螢幕</string>
@@ -984,18 +984,18 @@
     <string name="pref_vibrate_for_alert">振動提醒</string>
     <string name="pref_agps_update_time">AGPS 更新時間</string>
     <string name="agps_status_pending">待處理</string>
-    <string name="agps_status_current">當前</string>
+    <string name="agps_status_current">目前</string>
     <string name="pref_camera_remote_summary">允許手錶觸發手機的相機</string>
     <string name="pref_morning_updates_title">早晨更新</string>
     <string name="pref_morning_updates_summary">每天早上顯示更新</string>
     <string name="pref_workout_send_gps_title">運動時發送GPS</string>
-    <string name="pref_workout_detection_title">運動檢測</string>
+    <string name="pref_workout_detection_title">運動偵測</string>
     <string name="pref_workout_detection_summary">自動偵測運動</string>
     <string name="pref_workout_detection_categories_summary">自動偵測運動類別</string>
     <string name="pref_workout_detection_alert_title">警報</string>
     <string name="pref_workout_detection_ask_first">先問我</string>
     <string name="pref_workout_detection_ask_first_summary">當檢測到此鍛鍊時，需要在監控中確認</string>
-    <string name="pref_workout_detection_time">檢測前的活躍分鐘數</string>
+    <string name="pref_workout_detection_time">偵測前的活躍分鐘數</string>
     <string name="pref_sleep_mode_title">睡眠模式</string>
     <string name="pref_sleep_mode_sleep_screen_summary">在睡眠模式下喚醒螢幕時顯示睡眠畫面，以減少干擾</string>
     <string name="_unknown_">(未知)</string>
@@ -1251,7 +1251,7 @@
     <string name="pref_workout_detection_alert_summary">當檢測到運動時通知</string>
     <string name="pref_workout_detection_enabled">已啟用偵測</string>
     <string name="pref_workout_detection_enabled_summary">啟用自動檢測此運動</string>
-    <string name="pref_workout_detection_time_summary">運動必須持續的分鐘數才能被檢測到</string>
+    <string name="pref_workout_detection_time_summary">運動必須持續的分鐘數才能被偵測到</string>
     <string name="pref_sleep_mode_sleep_screen_title">睡眠螢幕</string>
     <string name="find_my_phone_companion_warning">需要配對伴侶才能尋找手機。點擊這裡以獲取更多資訊。</string>
     <string name="tap_connected_device_for_app_mananger">點擊連接的設備以管理應用程式</string>
@@ -1266,7 +1266,7 @@
 \n%1$s
 \n版本 %2$s 由 %3$s 提供
 \n</string>
-    <string name="choose_device">選擇一個設備</string>
+    <string name="choose_device">選擇一個裝置</string>
     <string name="no_supported_devices_found">未找到支援的裝置</string>
     <string name="wearmode_band">手環</string>
     <string name="preferences_miband_1_2_warning">警告：這些偏好僅適用於 Mi Bands 1 和 2。</string>
@@ -1275,9 +1275,9 @@
     <string name="pref_cache_weather">快取天氣資訊</string>
     <string name="pref_cache_weather_summary">應用程式重啟後，天氣資訊將被快取。</string>
     <string name="pref_write_logfiles_not_available">檔案日誌初始化失敗，當前無法寫入日誌檔案。請重新啟動應用程式以再次嘗試初始化日誌檔案。</string>
-    <string name="busy_task_fetch_sports_summaries">獲取體育摘要</string>
-    <string name="busy_task_fetch_sports_details">獲取運動詳情</string>
-    <string name="busy_task_fetch_sports_details_interrupted">獲取體育詳情的過程被中斷</string>
+    <string name="busy_task_fetch_sports_summaries">取得體育摘要</string>
+    <string name="busy_task_fetch_sports_details">取得運動詳細資訊</string>
+    <string name="busy_task_fetch_sports_details_interrupted">取得體育詳細資訊的過程被中斷</string>
     <string name="pref_screen_notification_profile_inactivity">不活動通知</string>
     <string name="pref_screen_notification_idle_alerts">閒置警報</string>
     <string name="heartrate_bpm_125">125 拍每分鐘</string>
@@ -2321,9 +2321,9 @@
     <string name="pref_title_pebble_health_store_raw">將原始記錄存儲在數據庫中</string>
     <string name="soundcore_equalizer_direction_standing">站立</string>
     <string name="averageHR">心率</string>
-    <string name="busy_task_fetch_debug_logs">獲取除錯日誌</string>
-    <string name="busy_task_fetch_hr_data">獲取心率數據</string>
-    <string name="busy_task_fetch_temperature">獲取溫度數據</string>
+    <string name="busy_task_fetch_debug_logs">取得除錯日誌</string>
+    <string name="busy_task_fetch_hr_data">取得心率資料</string>
+    <string name="busy_task_fetch_temperature">取得溫度資料</string>
     <string name="world_clock_timezone">時區</string>
     <string name="estonian">愛沙尼亞語</string>
     <string name="dbmanagementactivity_export_data_title">匯出數據？</string>
@@ -2402,10 +2402,10 @@
     <string name="pref_header_device_spec_settings">設備設定</string>
     <string name="pref_title_sensors_altitude">高度校準</string>
     <string name="tap_connected_device_for_vibration">輕觸連接的設備以震動</string>
-    <string name="busy_task_fetch_pai_data">獲取PAI數據</string>
-    <string name="busy_task_fetch_spo2_data">獲取 SpO2 數據</string>
-    <string name="busy_task_fetch_sleep_respiratory_rate_data">獲取睡眠呼吸速率數據</string>
-    <string name="busy_task_fetch_statistics">獲取統計數據</string>
+    <string name="busy_task_fetch_pai_data">取得 PAI 資料</string>
+    <string name="busy_task_fetch_spo2_data">取得 SpO2 資料</string>
+    <string name="busy_task_fetch_sleep_respiratory_rate_data">取得睡眠呼吸速率資料</string>
+    <string name="busy_task_fetch_statistics">取得統計資料</string>
     <string name="pref_screen_vibration_patterns_summary">為不同的通知配置震動模式</string>
     <string name="heartrate_bpm_40">40 次每分鐘</string>
     <string name="heartrate_bpm_50">50 次每分鐘</string>
@@ -2711,7 +2711,7 @@
     <string name="spm">步/分鐘</string>
     <string name="button_reset_menu_structure">重置菜單結構</string>
     <string name="heartrate_bpm_110">110 每分鐘</string>
-    <string name="busy_task_fetch_sleep_data">獲取睡眠數據</string>
+    <string name="busy_task_fetch_sleep_data">取得睡眠資料</string>
     <string name="heartrate_bpm_100">100 每分鐘心跳次數</string>
     <string name="reminder_every_day">每天</string>
     <string name="prefs_spo2_alert_threshold">SPO2 警報閾值</string>
@@ -2878,8 +2878,8 @@
     <string name="prefs_noise_control">噪音控制</string>
     <string name="prefs_voice_detect_duration">安靜後結束於：</string>
     <string name="pref_voice_detect_duration_5">5 秒</string>
-    <string name="pref_voice_detect_duration_10">10秒</string>
-    <string name="pref_voice_detect_duration_15">15秒</string>
+    <string name="pref_voice_detect_duration_10">10 秒</string>
+    <string name="pref_voice_detect_duration_15">15 秒</string>
     <string name="thirty_days_timeline">30天時間表</string>
     <string name="sony_surround_mode_off">關</string>
     <string name="sony_anc_optimizer_status_wearing_condition">測量穿著狀況…</string>
@@ -3018,9 +3018,9 @@
     <string name="_pebble_watch_reply">回覆</string>
     <string name="activity_type_outdoor_running">戶外跑步</string>
     <string name="hrv_status_day_avg_legend">每日平均（毫秒）</string>
-    <string name="hrv_status_seven_days_avg">7天平均</string>
+    <string name="hrv_status_seven_days_avg">7 天平均</string>
     <string name="hrv_status_last_night_highest_5">昨晚 5 分鐘最大平均</string>
-    <string name="hrv_status_seven_days_avg_long">7天平均</string>
+    <string name="hrv_status_seven_days_avg_long">7 天平均</string>
     <string name="devicetype_sony_wi_sp600n">索尼 WI-SP600N</string>
     <string name="about_hash">提交 %s</string>
     <string name="pref_activity_recognize_running">認可運行</string>
@@ -3213,7 +3213,7 @@
     <string name="pref_title_user_interface">使用者介面</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. 前往您手機的藍牙設定，並與將顯示的新設備配對（名稱類似於您當前的手錶，但帶有後綴，例如「Amazfit GTR 4 - AFC8」。</string>
     <string name="prefs_hr_alarm_low">低限制</string>
-    <string name="agps_status_missing">缺失</string>
+    <string name="agps_status_missing">遺失</string>
     <string name="hrv_status">HRV 狀態</string>
     <string name="pbw_installhandler_pebble_firmware">Pebble 韌體 %1$s</string>
     <string name="pbwinstallhandler_correct_hw_revision">正確的硬體修訂</string>
