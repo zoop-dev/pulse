@@ -35,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.Amazfit
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.freebuds6.HuaweiFreebuds6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatch5.HuaweiWatch5Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchfit4pro.HuaweiWatchFit4ProCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.AdvanWatchSE1AICoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pixel.PixelBudsACoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
@@ -690,6 +691,7 @@ public enum DeviceType {
     VIRAN_C29(ViranC29Coordinator.class),
     R50PRO(R50ProCoordinator.class),
     RAINBUVVY_T97(RainbuvvyT97Coordinator.class),
+    ADVAN_WATCH_SE1_AI(AdvanWatchSE1AICoordinator.class),
     B_AND_W_P_SERIES(BandWPSeriesDeviceCoordinator.class),
     EARFUN_AIR_S(EarFunAirSCoordinator.class),
     EARFUN_AIR_PRO_4(EarFunAirPro4Coordinator.class),
