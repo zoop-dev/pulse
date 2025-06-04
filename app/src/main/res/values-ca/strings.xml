@@ -1666,4 +1666,8 @@
     <string name="pref_screen_vibration_patterns_summary">Configureu els models de vibració per a diferents notificacions</string>
     <string name="prefs_always_on_display_follow_watchface">L\'estil segueix la caràtula</string>
     <string name="danish">Danès</string>
+    <string name="pref_title_touch_spotify_galaxy_app">Spotify (només l’aplicació Galaxy Wearable)</string>
+    <string name="pref_title_touch_anc">Cancel·lació de soroll activa</string>
+    <string name="pref_title_touch_voice_assistant">Assistent de veu</string>
+    <string name="pref_title_touch_spotify_official_app">Spotify (només l’aplicació oficial)</string>
 </resources>
