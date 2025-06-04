@@ -160,7 +160,7 @@ public class PBWReader {
                     } catch (JSONException e) {
                         // no JSON at all that is a problem
                         isValid = false;
-                        e.printStackTrace();
+                        LOG.warn("exception 1 in constructor", e);
                         break;
                     }
 
@@ -190,7 +190,7 @@ public class PBWReader {
                         }
                     } catch (JSONException e) {
                         isValid = false;
-                        e.printStackTrace();
+                        LOG.warn("exception 2 in constructor", e);
                         break;
                     }
                 } else if (fileName.equals(platformDir + "pebble-app.bin")) {
@@ -320,7 +320,7 @@ public class PBWReader {
             } catch (IOException e1) {
                 // ignore
             }
-            e.printStackTrace();
+            LOG.warn("exception in getInputStreamFile", e);
         }
         return null;
     }

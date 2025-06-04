@@ -768,7 +768,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     try {
                         handleAction(intent, action, device1);
                     } catch (DeviceNotFoundException e) {
-                        e.printStackTrace();
+                        LOG.warn("exception in onStartCommand", e);
                     } catch (Exception e) {
                         LOG.error("An exception was raised while handling the action {} for the device {}: ", action, device1, e);
                     }
@@ -1187,7 +1187,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         try {
             deviceStruct = getDeviceStruct(device);
         } catch (DeviceNotFoundException e) {
-            e.printStackTrace();
+            LOG.warn("exception in getDeviceStructOrNull", e);
         }
         return deviceStruct;
     }
@@ -1221,7 +1221,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         try {
             device = getDeviceByAddress(deviceAddress);
         } catch (DeviceNotFoundException e) {
-            e.printStackTrace();
+            LOG.warn("exception in getDeviceByAddressOrNull", e);
         }
         return device;
     }
@@ -1571,7 +1571,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             try {
                 removeDeviceSupport(device);
             } catch (DeviceNotFoundException e) {
-                e.printStackTrace();
+                LOG.warn("exception in onDestroy", e);
             }
         }
         GB.removeNotification(GB.NOTIFICATION_ID, this); // need to do this because the updated notification won't be cancelled when service stops

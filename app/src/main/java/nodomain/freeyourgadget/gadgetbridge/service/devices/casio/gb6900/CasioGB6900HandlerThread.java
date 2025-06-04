@@ -56,7 +56,7 @@ public class CasioGB6900HandlerThread extends GBDeviceIoThread {
                     try {
                         waitObject.wait(waitTime);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LOG.warn("exception in run", e);
                     }
                 }
             }

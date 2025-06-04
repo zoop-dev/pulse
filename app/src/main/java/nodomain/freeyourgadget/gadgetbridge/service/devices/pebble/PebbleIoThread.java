@@ -387,7 +387,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LOG.warn("exception 1 in run", e);
                 }
             } catch (IOException e) {
                 if (e.getMessage() != null && (e.getMessage().equals("broken pipe") || e.getMessage().contains("socket closed"))) { //FIXME: this does not feel right
@@ -404,7 +404,7 @@ class PebbleIoThread extends GBDeviceIoThread {
             try {
                 mBtSocket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.warn("exception 2 in run", e);
             }
             mBtSocket = null;
         }

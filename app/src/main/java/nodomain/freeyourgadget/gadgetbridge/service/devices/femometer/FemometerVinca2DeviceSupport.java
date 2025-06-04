@@ -229,7 +229,7 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLEDeviceSupport {
             }
             builder.queue(getQueue());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("exception in onSendConfiguration", e);
         }
     }
 

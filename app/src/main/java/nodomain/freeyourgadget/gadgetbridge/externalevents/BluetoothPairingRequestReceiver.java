@@ -65,7 +65,7 @@ public class BluetoothPairingRequestReceiver extends BroadcastReceiver {
                 LOG.warn("Could not abort pairing request process");
             }
         } catch (DeviceCommunicationService.DeviceNotFoundException e) {
-            e.printStackTrace();
+            LOG.warn("exception in onReceive", e);
         }
     }
 }

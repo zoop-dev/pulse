@@ -69,7 +69,7 @@ public class PebbleReceiver extends BroadcastReceiver {
             notificationSpec.title = notificationJSON.getJSONObject(0).getString("title");
             notificationSpec.body = notificationJSON.getJSONObject(0).getString("body");
         } catch (JSONException e) {
-            e.printStackTrace();
+            LOG.warn("exception in onReceive", e);
             return;
         }
 

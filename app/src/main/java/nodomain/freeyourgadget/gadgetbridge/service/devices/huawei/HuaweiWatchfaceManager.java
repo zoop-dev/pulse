@@ -46,7 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 
 public class HuaweiWatchfaceManager
 {
-    Logger LOG = LoggerFactory.getLogger(HuaweiCoordinator.class);
+    static Logger LOG = LoggerFactory.getLogger(HuaweiCoordinator.class);
 
     public static class Resolution {
 
@@ -142,7 +142,7 @@ public class HuaweiWatchfaceManager
                 this.font_cn = parseElement(doc,"font-cn");
 
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.warn("exception in constructor", e);
             }
         }
     }

@@ -114,7 +114,7 @@ public class Watch9DeviceSupport extends AbstractBTLEDeviceSupport {
             needsAuth = false;
             new InitOperation(auth, this, builder).perform();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("exception in initializeDevice", e);
         }
 
         return builder;
@@ -389,7 +389,7 @@ public class Watch9DeviceSupport extends AbstractBTLEDeviceSupport {
             }
             builder.queue(getQueue());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("exception in onSendConfiguration", e);
         }
     }
 

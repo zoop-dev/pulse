@@ -666,7 +666,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLEDeviceSupport {
                 }
                 addSimpleConversationToQueue(message);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.warn("exception in setWorkoutActivityTypes", e);
             }
         }
 

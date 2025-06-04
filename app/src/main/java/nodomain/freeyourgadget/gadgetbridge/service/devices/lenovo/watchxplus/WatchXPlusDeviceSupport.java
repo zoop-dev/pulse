@@ -147,7 +147,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
             needsAuth = false;
             new InitOperation(auth, this, builder).perform();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("exception in initializeDevice", e);
         }
         return builder;
     }
