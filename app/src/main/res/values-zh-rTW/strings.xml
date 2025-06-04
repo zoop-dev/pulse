@@ -163,7 +163,7 @@
     <string name="pref_auto_fetch_limit_fetches_summary">每 %d 分鐘提取一次</string>
     <string name="connecting">連線中</string>
     <string name="unknown_state">未知狀態</string>
-    <string name="bluetooth_is_disabled_">藍芽已關閉。</string>
+    <string name="bluetooth_is_disabled_">已停用藍牙。</string>
     <string name="installation_failed_">安裝失敗</string>
     <string name="installation_successful">安裝成功</string>
     <string name="title_activity_discovery">裝置探索</string>
@@ -518,7 +518,7 @@
     <string name="initialized">初始化完成</string>
     <string name="gadgetbridge_running_generic">Gadgetbridge 正在執行</string>
     <string name="tap_a_device_to_connect">點擊一個裝置以進行連線</string>
-    <string name="bluetooth_is_not_supported_">藍芽不支援。</string>
+    <string name="bluetooth_is_not_supported_">不支援藍牙。</string>
     <string name="zetime_calories_type_all">涵蓋活動與未活動時消耗的卡路里</string>
     <string name="zetime_calories_type_active">僅活動時消耗的卡路里</string>
     <string name="zetime_calories_type">卡路里種類</string>
@@ -879,7 +879,7 @@
     <string name="prefs_wena3_vibration_strength_item_strong">強烈</string>
     <string name="prefs_wena3_auto_power_off_hint">該設備將根據指定的時間表自動開關機</string>
     <string name="pref_vitality_score_title">活力分數</string>
-    <string name="pref_vitality_score_daily_title">每日進展</string>
+    <string name="pref_vitality_score_daily_title">每日進度</string>
     <string name="pref_vitality_score_daily_summary">當您達到當天最大生命值點數時，獲得通知</string>
     <string name="device_state_waiting_scan">等待設備掃描</string>
     <string name="auto_reconnect_ble_scan_title">通過 BLE 掃描重新連接</string>
@@ -991,7 +991,7 @@
     <string name="pref_workout_send_gps_title">運動時發送GPS</string>
     <string name="pref_workout_detection_title">運動檢測</string>
     <string name="pref_workout_detection_summary">自動偵測運動</string>
-    <string name="pref_workout_detection_categories_summary">自動檢測的運動類別</string>
+    <string name="pref_workout_detection_categories_summary">自動偵測運動類別</string>
     <string name="pref_workout_detection_alert_title">警報</string>
     <string name="pref_workout_detection_ask_first">先問我</string>
     <string name="pref_workout_detection_ask_first_summary">當檢測到此鍛鍊時，需要在監控中確認</string>
@@ -1213,9 +1213,9 @@
     <string name="power_mode_saving">省電</string>
     <string name="power_mode_watch">只看</string>
     <string name="femometer_measurement_mode_title">測量模式</string>
-    <string name="femometer_measurement_mode_quick">快速模式 (30秒)</string>
-    <string name="femometer_measurement_mode_normal">正常模式 (60秒-90秒)</string>
-    <string name="femometer_measurement_mode_precise">精確模式 (3分鐘)</string>
+    <string name="femometer_measurement_mode_quick">快速模式（30 秒）</string>
+    <string name="femometer_measurement_mode_normal">正常模式（60 秒 - 90 秒）</string>
+    <string name="femometer_measurement_mode_precise">精確模式（3 分鐘）</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 設定</string>
     <string name="zetime_title_heartrate">心率設定</string>
     <string name="zetime_analog_mode">類比模式</string>
@@ -1227,7 +1227,7 @@
     <string name="zetime_signaling_vibrate_twice">震動兩次</string>
     <string name="zetime_signaling_beep_twice">嗶嗶兩次</string>
     <string name="zetime_signaling_vibrate_beep_once">震動並發出一次蜂鳴</string>
-    <string name="clap_hands_to_wakeup_device">拍手以提高屏幕</string>
+    <string name="clap_hands_to_wakeup_device">拍手亮起畫面</string>
     <string name="pref_explanation_authkey_new_protocol">如果您在手環上看到「將應用程式更新至最新版本」的訊息，請確保檢查上面的「新驗證協議」。點擊這裡以獲取維基中的更多詳細資訊。</string>
     <string name="prefs_hr_alarm_high">高限</string>
     <string name="pref_gps_satellite_search">衛星搜尋</string>
@@ -1249,7 +1249,7 @@
     <string name="pref_workout_keep_screen_on_title">在運動期間保持螢幕開啟</string>
     <string name="pref_workout_keep_screen_on_summary">在運動過程中，螢幕將保持開啟，亮度將自動調整以持續顯示實時運動數據</string>
     <string name="pref_workout_detection_alert_summary">當檢測到運動時通知</string>
-    <string name="pref_workout_detection_enabled">檢測已啟用</string>
+    <string name="pref_workout_detection_enabled">已啟用偵測</string>
     <string name="pref_workout_detection_enabled_summary">啟用自動檢測此運動</string>
     <string name="pref_workout_detection_time_summary">運動必須持續的分鐘數才能被檢測到</string>
     <string name="pref_sleep_mode_sleep_screen_title">睡眠螢幕</string>
@@ -3017,7 +3017,7 @@
     <string name="title_activity_vibration">振動</string>
     <string name="_pebble_watch_reply">回覆</string>
     <string name="activity_type_outdoor_running">戶外跑步</string>
-    <string name="hrv_status_day_avg_legend">每日平均 (毫秒)</string>
+    <string name="hrv_status_day_avg_legend">每日平均（毫秒）</string>
     <string name="hrv_status_seven_days_avg">7天平均</string>
     <string name="hrv_status_last_night_highest_5">昨晚 5 分鐘最大平均</string>
     <string name="hrv_status_seven_days_avg_long">7天平均</string>
@@ -3420,4 +3420,9 @@
     <string name="maps">地圖</string>
     <string name="maps_track_color_title">路徑顏色</string>
     <string name="first_start_permissions_request_button">授予</string>
+    <string name="pref_vibration_intensity">振動強度</string>
+    <string name="pref_vitality_score_7_day_title">7 天進度</string>
+    <string name="garmin_intensity_minutes">熱血時間</string>
+    <string name="activity_prefs_goal_standing_hours">每日目標：站立時數</string>
+    <string name="menuitem_alerts">提醒</string>
 </resources>
