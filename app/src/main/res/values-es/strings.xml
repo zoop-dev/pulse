@@ -3775,4 +3775,7 @@
     <string name="pref_even_realities_g1_screen_depth_title">Profundidad de pantalla</string>
     <string name="pref_even_realities_g1_screen_location_title">Ubicación de la pantalla</string>
     <string name="pref_even_realities_g1_screen_activation_angle_title">Ángulo de activación</string>
+    <string name="calorie_under_goal">Debajo de la meta: %1$d kcal</string>
+    <string name="calorie_over_goal">Encima de la meta: %1$d kcal</string>
+    <string name="body_energy_legend_average">Promedio de 30 días</string>
 </resources>
