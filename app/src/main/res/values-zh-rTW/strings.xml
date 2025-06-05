@@ -2192,7 +2192,7 @@
     <string name="folder_is_empty">資料夾是空的</string>
     <string name="folder">資料夾</string>
     <string name="url">網址</string>
-    <string name="garmin_agps_local_file">本地文件</string>
+    <string name="garmin_agps_local_file">本機檔案</string>
     <string name="pref_garmin_agps_help">以下列表包含手錶請求的所有 AGPS 更新的 URL。您可以從手機的存儲中選擇一個文件，當手錶請求更新時將其發送到手錶。</string>
     <string name="toggle_debug_mode">切換除錯模式</string>
     <string name="battery_low_notify_enabled">低電量通知</string>
@@ -3425,4 +3425,5 @@
     <string name="garmin_intensity_minutes">熱血時間</string>
     <string name="activity_prefs_goal_standing_hours">每日目標：站立時數</string>
     <string name="menuitem_alerts">提醒</string>
+    <string name="pref_garmin_fake_oauth_title">傳送假的 OAuth 答覆</string>
 </resources>
