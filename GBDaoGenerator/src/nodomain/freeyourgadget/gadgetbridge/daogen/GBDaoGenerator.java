@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(103, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(104, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -165,6 +165,7 @@ public class GBDaoGenerator {
         addMoyoungSpo2Sample(schema, user, device);
         addMoyoungBloodPressureSample(schema, user, device);
         addMoyoungSleepStageSample(schema, user, device);
+        addMoyoungStressSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
         addHuaweiStressSample(schema, user, device);
@@ -1145,6 +1146,13 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractTimeSample", sleepStageSample, user, device);
         sleepStageSample.addIntProperty("stage").notNull();
         return sleepStageSample;
+    }
+
+    private static Entity addMoyoungStressSample(Schema schema, Entity user, Entity device) {
+        Entity stressSample = addEntity(schema, "MoyoungStressSample");
+        addCommonTimeSampleProperties("AbstractStressSample", stressSample, user, device);
+        stressSample.addIntProperty(SAMPLE_STRESS).notNull().codeBeforeGetter(OVERRIDE);
+        return stressSample;
     }
 
     private static void addCommonActivitySampleProperties(String superClass, Entity activitySample, Entity user, Entity device) {

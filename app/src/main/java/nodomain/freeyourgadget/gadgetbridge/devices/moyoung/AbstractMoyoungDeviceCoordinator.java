@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungSpo2SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumDeviceVersion;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumMetricSystem;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumTimeSystem;
@@ -57,10 +58,12 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungBloodPressureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSpo2SampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
+import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.moyoung.MoyoungDeviceSupport;
 
@@ -98,6 +101,8 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
         qb.where(MoyoungSpo2SampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
         qb = session.getMoyoungBloodPressureSampleDao().queryBuilder();
         qb.where(MoyoungBloodPressureSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+        qb = session.getMoyoungStressSampleDao().queryBuilder();
+        qb.where(MoyoungStressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     @Override
@@ -123,6 +128,11 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     @Override
     public TimeSampleProvider<? extends Spo2Sample> getSpo2SampleProvider(GBDevice device, DaoSession session) {
         return new MoyoungSpo2SampleProvider(device, session);
+    }
+
+    @Override
+    public TimeSampleProvider<? extends StressSample> getStressSampleProvider(GBDevice device, DaoSession session) {
+        return new MoyoungStressSampleProvider(device, session);
     }
 
     @Override

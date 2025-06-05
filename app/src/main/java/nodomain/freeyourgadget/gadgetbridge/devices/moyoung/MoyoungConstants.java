@@ -234,6 +234,7 @@ public class MoyoungConstants {
     public static final byte ARG_ADVANCED_SET_ALARM = 0x05;
     public static final byte ARG_ADVANCED_SET_CALENDAR = 0x08;
     public static final byte ARG_ADVANCED_QUERY_STOCKS = 0x0e;
+    public static final byte ARG_ADVANCED_STRESS_PACKET = 0x11;
     public static final byte ARG_ADVANCED_QUERY_ALARMS = 0x15;
 
     public static final byte ARG_ALARM_SET = 0x00;

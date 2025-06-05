@@ -75,6 +75,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungBlood
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungHeartRateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungSpo2SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.samples.MoyoungStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumDeviceVersion;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumLanguage;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungEnumMetricSystem;
@@ -91,6 +92,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungBloodPressureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSpo2Sample;
+import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksController;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -488,6 +490,12 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
+        if (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_STRESS_PACKET)
+        {
+            handleStressPacket(payload);
+            return true;
+        }
+
         if (packetType == MoyoungConstants.CMD_QUERY_POWER_SAVING)
         {
             LOG.info("Power saving set to: {}", payload[0] == 0x01);
@@ -664,6 +672,85 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Error setting time: ", e);
+        }
+    }
+
+    private void handleStressPacket(byte[] payload) {
+        byte packetType = payload[1];
+        switch (packetType) {
+            case 0x00:
+                // Single stress measurement result
+                int stressLevel = payload[2] & 0xff;
+                try (DBHandler dbHandler = GBApplication.acquireDB()) {
+                    MoyoungStressSampleProvider sampleProvider = new MoyoungStressSampleProvider(getDevice(), dbHandler.getDaoSession());
+                    Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
+                    Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
+
+                    MoyoungStressSample sample = new MoyoungStressSample();
+                    sample.setTimestamp(System.currentTimeMillis());
+                    sample.setStress(stressLevel);
+                    sample.setDeviceId(deviceId);
+                    sample.setUserId(userId);
+
+                    sampleProvider.addSample(sample);
+                } catch (Exception e) {
+                    LOG.error("Error acquiring database for recording stress samples", e);
+                }
+                break;
+            case 0x01:
+                // Unknown
+                break;
+            case 0x02:
+                // Unknown
+                break;
+            case 0x03:
+                // Day stress measurements sync result
+                byte daysAgo = payload[2];
+                ArrayList<MoyoungStressSample> stressSamples = new ArrayList<>();
+                Calendar sampleCal = Calendar.getInstance();
+                sampleCal.add(Calendar.DAY_OF_MONTH, -daysAgo);
+                sampleCal.set(Calendar.SECOND, 0);
+                sampleCal.set(Calendar.MILLISECOND, 0);
+                int startIndex = 3;
+                for (int i = 0; i < 26; i++) {
+                    if (payload[startIndex + i] != 0x00) {
+                        // Determine time of day
+                        sampleCal.set(Calendar.HOUR_OF_DAY, Math.floorDiv(i, 2));
+                        if (i % 2 == 0) {
+                            sampleCal.set(Calendar.MINUTE, 0);
+                        } else {
+                            sampleCal.set(Calendar.MINUTE, 30);
+                        }
+                        if (sampleCal.after(Calendar.getInstance())) {
+                            continue;
+                        }
+                        LOG.info("Stress level is {} at {}", payload[startIndex + i] & 0xff, sampleCal.getTime());
+                        // Build sample object and save in database
+                        MoyoungStressSample gbSample = new MoyoungStressSample();
+                        gbSample.setTimestamp(sampleCal.getTimeInMillis());
+                        gbSample.setStress(payload[startIndex + i] & 0xff);
+                        stressSamples.add(gbSample);
+                    }
+                }
+                if (!stressSamples.isEmpty()) {
+                    try (DBHandler db = GBApplication.acquireDB()) {
+                        MoyoungStressSampleProvider sampleProvider = new MoyoungStressSampleProvider(getDevice(), db.getDaoSession());
+                        Long userId = DBHelper.getUser(db.getDaoSession()).getId();
+                        Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
+                        for (final MoyoungStressSample sample : stressSamples) {
+                            sample.setDeviceId(deviceId);
+                            sample.setUserId(userId);
+                        }
+                        LOG.info("Will persist {} stress samples", stressSamples.size());
+                        sampleProvider.addSamples(stressSamples);
+                    } catch (Exception e) {
+                        LOG.error("Error acquiring database for recording stress samples", e);
+                    }
+                }
+                break;
+            case 0x04:
+                // Unknown
+                break;
         }
     }
 
@@ -1030,6 +1117,14 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             } catch (IOException e) {
                 LOG.error("Error fetching workouts: ", e);
             }
+        }
+        try {
+            TransactionBuilder builder = performInitialized("fetchStress");
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[] { MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x00 }));
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[] { MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x01 }));
+            builder.queue(getQueue());
+        } catch (IOException e) {
+            LOG.error("Error while sending stress sync request: ", e);
         }
     }
 

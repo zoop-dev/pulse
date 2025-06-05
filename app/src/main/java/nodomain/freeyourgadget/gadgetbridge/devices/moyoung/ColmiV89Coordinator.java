@@ -80,4 +80,9 @@ public class ColmiV89Coordinator extends AbstractMoyoungDeviceCoordinator {
     public boolean supportsRemSleep() {
         return true;
     }
+
+    @Override
+    public boolean supportsStressMeasurement() {
+        return true;
+    }
 }
