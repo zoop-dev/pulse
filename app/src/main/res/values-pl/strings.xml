@@ -4083,4 +4083,14 @@
     <string name="pref_even_realities_g1_screen_location_title">Położenie ekranu</string>
     <string name="pref_even_realities_g1_screen_depth_summary">Zmienia separację obuoczną i pozorną głębię wyświetlacza</string>
     <string name="pref_even_realities_g1_screen_activation_angle_summary">Zmienia wysokość, na jaką użytkownik musi podnieść głowę, aby wyświetlić panel sterowania</string>
+    <string name="pref_device_logs_summary">Włącz rejestrowanie z urządzenia</string>
+    <string name="pref_device_logs_title">Logi urządzenia</string>
+    <string name="even_realities_frame_color_grey">Szary</string>
+    <string name="even_realities_frame_color_brown">Brązowy</string>
+    <string name="even_realities_frame_color_green">Zielony</string>
+    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_left_lens">Lewa soczewka</string>
+    <string name="even_realities_frame_shape_G1A">G1A/Okrągły</string>
+    <string name="even_realities_right_lens">Prawa soczewka</string>
+    <string name="even_realities_frame_shape_G1B">G1B/Kwadrat</string>
 </resources>
