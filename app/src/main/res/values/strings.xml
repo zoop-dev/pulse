@@ -2015,6 +2015,7 @@
     <string name="devicetype_colmi_r10">Colmi R10</string>
     <string name="devicetype_colmi_r12">Colmi R12</string>
     <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
     <string name="devicetype_colmi_v89">Colmi V89</string>
     <string name="devicetype_misirun_c17">Misirun C17</string>
     <string name="devicetype_c20">C20</string>

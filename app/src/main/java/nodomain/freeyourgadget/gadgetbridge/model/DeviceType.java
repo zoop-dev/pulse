@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.freebuds6.HuaweiFreeb
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatch5.HuaweiWatch5Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchfit4pro.HuaweiWatchFit4ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.AdvanWatchSE1AICoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV72Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pixel.PixelBudsACoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
@@ -682,6 +683,7 @@ public enum DeviceType {
     COLMI_R10(ColmiR10Coordinator.class),
     COLMI_R12(ColmiR12Coordinator.class),
     COLMI_I28_ULTRA(ColmiI28UltraCoordinator.class),
+    COLMI_V72(ColmiV72Coordinator.class),
     COLMI_V89(ColmiV89Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
     C20(C20Coordinator.class),
