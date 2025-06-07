@@ -29,6 +29,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner630Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner645MusicCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.GarminVivosmart4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2NfcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatch5.HuaweiWatch5Coordinator;
@@ -522,6 +523,7 @@ public enum DeviceType {
     GARMIN_FORERUNNER_265S(GarminForerunner265SCoordinator.class),
     GARMIN_FORERUNNER_620(GarminForerunner620Coordinator.class),
     GARMIN_FORERUNNER_630(GarminForerunner630Coordinator.class),
+    GARMIN_FORERUNNER_645_MUSIC(GarminForerunner645MusicCoordinator.class),
     GARMIN_FORERUNNER_735XT(GarminForerunner735XTCoordinator.class),
     GARMIN_FORERUNNER_955(GarminForerunner955Coordinator.class),
     GARMIN_FORERUNNER_965(GarminForerunner965Coordinator.class),
