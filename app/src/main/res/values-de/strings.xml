@@ -3963,4 +3963,16 @@
     <string name="pref_even_realities_g1_screen_location_title">Bildschirmposition</string>
     <string name="pref_even_realities_g1_screen_depth_summary">Ändert den Augenabstand und die scheinbare Tiefe der Anzeige</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Setzt den Winkel der Brille auf null – schaue geradeaus und tippe hier</string>
+    <string name="pref_device_logs_summary">Protokollierung vom Gerät aktivieren</string>
+    <string name="pref_device_logs_title">Geräteprotokolle</string>
+    <string name="even_realities_frame_shape_G1A">G1A/Rund</string>
+    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_left_lens">linke Linse</string>
+    <string name="even_realities_right_lens">rechte Linse</string>
+    <string name="even_realities_frame_shape_G1B">G1B/Eckig</string>
+    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
+    <string name="even_realities_frame_color_green">Grün</string>
+    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
+    <string name="even_realities_frame_color_grey">Grau</string>
+    <string name="even_realities_frame_color_brown">Braun</string>
 </resources>
