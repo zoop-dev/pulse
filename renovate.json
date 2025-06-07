@@ -31,8 +31,8 @@
     },
     {
       "groupName": "mapsforge",
-      "matchPackagePrefixes": [
-        "com.github.mapsforge.mapsforge"
+      "matchPackageNames": [
+        "com.github.mapsforge.mapsforge:*"
       ]
     },
     {
