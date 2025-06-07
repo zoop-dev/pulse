@@ -3975,4 +3975,6 @@
     <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
     <string name="even_realities_frame_color_grey">Grau</string>
     <string name="even_realities_frame_color_brown">Braun</string>
+    <string name="workout_active_score">Aktivitätswert</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Musik</string>
 </resources>
