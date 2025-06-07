@@ -397,7 +397,7 @@ public class CmfActivitySync {
 
         final ByteBuffer buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
 
-        final CmfWorkoutSummaryParser summaryParser = new CmfWorkoutSummaryParser(getDevice());
+        final CmfWorkoutSummaryParser summaryParser = new CmfWorkoutSummaryParser(getDevice(), getContext());
 
         while (buf.remaining() > 0) {
             final byte[] summaryBytes = new byte[bytesPerWorkout];

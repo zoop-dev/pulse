@@ -2552,6 +2552,7 @@
     <string name="average_torque_effectiveness">Torque Effectiveness</string>
     <string name="front_gear_shifts">Front shifts</string>
     <string name="rear_gear_shifts">Rear shifts</string>
+    <string name="workout_active_score">Active Score</string>
     <string name="vertical_oscillation">Vertical Oscillation</string>
     <string name="ground_contact_time">Ground Contact Time</string>
     <string name="vertical_ratio">Vertical Ratio</string>

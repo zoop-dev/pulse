@@ -93,6 +93,7 @@ public class ActivitySummaryEntries {
     public static final String AVG_TORQUE_EFFECTIVENESS = "average_torque_effectiveness";
     public static final String FRONT_GEAR_SHIFTS = "front_gear_shifts";
     public static final String REAR_GEAR_SHIFTS = "rear_gear_shifts";
+    public static final String ACTIVE_SCORE = "workout_active_score";
 
     public static final String AVG_VERTICAL_OSCILLATION = "vertical_oscillation";
     public static final String AVG_GROUND_CONTACT_TIME = "ground_contact_time";
