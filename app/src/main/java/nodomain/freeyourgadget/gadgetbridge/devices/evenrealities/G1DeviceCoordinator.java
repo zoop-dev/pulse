@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities.G1Constants;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities.G1DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 /**
@@ -159,7 +160,7 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
                     new GBDevice(right_address.getDetails(), right_name.getDetails(), null,
                                  gbDevice.getParentFolder(), gbDevice.getType());
             super.deleteDevice(rightDevice);
-            DeviceHelper.getInstance().removeBond(rightDevice);
+            BondingUtil.Unpair(GBApplication.getContext(), rightDevice.getAddress());
         }
     }
 

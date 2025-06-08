@@ -179,28 +179,4 @@ public class DeviceHelper {
         DeviceType deviceType = DeviceType.fromName(dbDevice.getTypeName());
         return deviceType.getDeviceCoordinator().createDevice(dbDevice, deviceType);
     }
-
-    /**
-     * Attempts to removing the bonding with the given device. Returns true
-     * if bonding was supposedly successful and false if anything went wrong
-     * @param device
-     * @return
-     */
-    public boolean removeBond(GBDevice device) throws GBException {
-        BluetoothAdapter defaultAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (defaultAdapter != null) {
-            BluetoothDevice remoteDevice = defaultAdapter.getRemoteDevice(device.getAddress());
-            if (remoteDevice != null) {
-                try {
-                    Method method = BluetoothDevice.class.getMethod("removeBond", (Class[]) null);
-                    Object result = method.invoke(remoteDevice, (Object[]) null);
-                    return Boolean.TRUE.equals(result);
-                } catch (Exception e) {
-                    throw new GBException("Error removing bond to device: " + device, e);
-                }
-            }
-        }
-        return false;
-    }
-
 }

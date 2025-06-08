@@ -23,8 +23,11 @@ import static nodomain.freeyourgadget.gadgetbridge.util.GB.toast;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.companion.AssociationInfo;
 import android.companion.AssociationRequest;
 import android.companion.BluetoothDeviceFilter;
 import android.companion.CompanionDeviceManager;
@@ -33,6 +36,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.net.MacAddress;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -46,16 +51,19 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 
+@SuppressLint("MissingPermission")
 public class BondingUtil {
     public static final String STATE_DEVICE_CANDIDATE = "stateDeviceCandidate";
 
@@ -463,5 +471,215 @@ public class BondingUtil {
                 }
             }
         };
+    }
+
+    public static boolean Disassociate(Context context, String mac) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            LOG.info("Disassociate - API {} < {} is too old",
+                    Build.VERSION.SDK_INT, Build.VERSION_CODES.O);
+            return false;
+        }
+
+        if (!BluetoothAdapter.checkBluetoothAddress(mac)) {
+            LOG.warn("Disassociate - mac '{}' is invalid", mac);
+            return false;
+        }
+
+        final CompanionDeviceManager manager = getCompanionDeviceManager(context);
+        if (manager == null) {
+            LOG.warn("Disassociate - CompanionDeviceManager is null");
+        } else {
+            try {
+                LOG.debug("Disassociate - {}", mac);
+                manager.disassociate(mac);
+                return true;
+            } catch (Exception e) {
+                LOG.info("Disassociate - exception {}", e.getMessage());
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean Unpair(Context context, String mac) {
+        if (!BluetoothAdapter.checkBluetoothAddress(mac)) {
+            LOG.warn("Unpair - mac '{}' is invalid", mac);
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
+            LOG.debug("Unpair - API {} < {} is too old for modern bond removal",
+                    Build.VERSION.SDK_INT, Build.VERSION_CODES.BAKLAVA);
+        } else {
+            final CompanionDeviceManager manager = getCompanionDeviceManager(context);
+            if (manager == null) {
+                LOG.warn("Unpair - CompanionDeviceManager is null");
+            } else {
+                List<AssociationInfo> associations = manager.getMyAssociations();
+                LOG.debug("Unpair - {} associations", associations.size());
+                for (AssociationInfo association : associations) {
+                    MacAddress devAddress = association.getDeviceMacAddress();
+                    String devMac = devAddress.toString();
+
+                    if (mac.equalsIgnoreCase(devMac)) {
+                        boolean removed = false;
+                        try {
+                            removed = manager.removeBond(association.getId());
+                            LOG.debug("Unpair - Modern removeBond({}) => {}",
+                                    association.getDeviceMacAddress(), removed);
+                        } catch (Exception e) {
+                            LOG.info("Unpair - Modern removeBond exception:{}", e.getMessage());
+                        }
+
+                        try {
+                            // TODO use BluetoothDevice.ACTION_BOND_STATE_CHANGED instead of sleep
+                            Thread.sleep(DELAY_AFTER_BONDING);
+                        } catch (InterruptedException ignore) {
+                        }
+
+                        if (removed) {
+                            try {
+                                manager.disassociate(association.getId());
+                            } catch (Exception e) {
+                                LOG.info("Unpair - Modern disassociate exception:{}", e.getMessage());
+                            }
+                            return true;
+                        } else {
+                            // fall back to classic
+                            return UnpairClassic(context, mac);
+                        }
+                    }
+                }
+                LOG.debug("Unpair - no matching association found");
+            }
+        }
+        return UnpairClassic(context, mac);
+    }
+
+    private static boolean UnpairClassic(Context context, String mac) {
+        final BluetoothAdapter adapter = getBluetoothAdapter(context);
+        boolean removed = false;
+        if (adapter == null) {
+            LOG.warn("UnpairClassic - BluetoothAdapter is null");
+        } else {
+            if (!adapter.isEnabled()) {
+                LOG.warn("UnpairClassic - BluetoothAdapter is disabled");
+            }
+
+            final BluetoothDevice device = adapter.getRemoteDevice(mac);
+            if (device == null) {
+                LOG.warn("UnpairClassic - BluetoothDevice is null");
+            } else {
+                int bondState = device.getBondState();
+
+                switch (bondState) {
+                    case BluetoothDevice.BOND_NONE:
+                        LOG.debug("UnpairClassic - nothing todo for {} with {}",
+                                device.getAddress(),
+                                BleNamesResolver.getBondStateString(bondState));
+                        removed = true;
+                        break;
+                    case BluetoothDevice.BOND_BONDED:
+                        LOG.debug("UnpairClassic - removeBond for {} with {}",
+                                device.getAddress(),
+                                BleNamesResolver.getBondStateString(bondState));
+                        try {
+                            Method method = device.getClass().getMethod("removeBond");
+                            Object result = method.invoke(device);
+                            removed = Boolean.TRUE.equals(result);
+                        } catch (Exception e) {
+                            LOG.warn("UnpairClassic - exception for removeBond", e);
+                        }
+                        try {
+                            // TODO use BluetoothDevice.ACTION_BOND_STATE_CHANGED instead of sleep
+                            Thread.sleep(DELAY_AFTER_BONDING);
+                        } catch (InterruptedException ignore) {
+                        }
+                        LOG.debug("UnpairClassic - result:{} success:{}",
+                                BleNamesResolver.getBondStateString(device.getBondState()), removed);
+                        break;
+                    case BluetoothDevice.BOND_BONDING:
+                        LOG.debug("UnpairClassic - cancelBondProcess for {} with {}",
+                                device.getAddress(),
+                                BleNamesResolver.getBondStateString(bondState));
+
+                        try {
+                            Method method = device.getClass().getMethod("cancelBondProcess");
+                            Object result = method.invoke(device);
+                            removed = Boolean.TRUE.equals(result);
+                        } catch (Exception e) {
+                            LOG.warn("UnpairClassic - exception for cancelBondProcess", e);
+                        }
+                        try {
+                            // TODO use BluetoothDevice.ACTION_BOND_STATE_CHANGED instead of sleep
+                            Thread.sleep(DELAY_AFTER_BONDING);
+                        } catch (InterruptedException ignore) {
+                        }
+                        break;
+                    default:
+                        LOG.debug("UnpairClassic - unhandled {} for {}",
+                                BleNamesResolver.getBondStateString(bondState),
+                                device.getAddress()
+                        );
+                }
+            }
+        }
+
+        Disassociate(context, mac);
+
+        return removed;
+    }
+
+    public static BluetoothAdapter getBluetoothAdapter(Context context) {
+        if (context == null) {
+            LOG.error("getBluetoothAdapter - context is null");
+        } else {
+            BluetoothManager manager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+            if (manager == null) {
+                LOG.warn("getBluetoothAdapter - BluetoothManager is null");
+            } else {
+                BluetoothAdapter adapter = manager.getAdapter();
+                if (adapter == null) {
+                    LOG.warn("getBluetoothAdapter - BluetoothAdapter is null");
+                } else {
+                    return adapter;
+                }
+            }
+
+            final PackageManager pm = context.getPackageManager();
+            if (pm == null) {
+                LOG.warn("getBluetoothAdapter - PackageManager is null");
+            } else {
+                LOG.warn("getBluetoothAdapter - FEATURE_BLUETOOTH available: {} ",
+                        pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH));
+                LOG.warn("getBluetoothAdapter - FEATURE_BLUETOOTH_LE available: {} ",
+                        pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE));
+            }
+        }
+        return null;
+    }
+
+    public static CompanionDeviceManager getCompanionDeviceManager(Context context) {
+        if (context == null) {
+            LOG.error("getCompanionDeviceManager - context is null");
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            LOG.debug("getCompanionDeviceManager - API {} < {} is too old",
+                    Build.VERSION.SDK_INT, Build.VERSION_CODES.O);
+        } else {
+            final CompanionDeviceManager manager = (CompanionDeviceManager) context.getSystemService(Context.COMPANION_DEVICE_SERVICE);
+            if (manager != null) {
+                return manager;
+            }
+
+            LOG.warn("getCompanionDeviceManager - CompanionDeviceManager is null");
+            final PackageManager pm = context.getPackageManager();
+            if (pm == null) {
+                LOG.warn("getCompanionDeviceManager - PackageManager is null");
+            } else {
+                LOG.warn("getCompanionDeviceManager - FEATURE_COMPANION_DEVICE_SETUP is available: {}",
+                        pm.hasSystemFeature(PackageManager.FEATURE_COMPANION_DEVICE_SETUP));
+            }
+        }
+        return null;
     }
 }

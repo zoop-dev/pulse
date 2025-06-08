@@ -126,6 +126,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.DailyTotals;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
@@ -978,7 +979,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                         try {
                             DeviceCoordinator coordinator = device.getDeviceCoordinator();
                             coordinator.deleteDevice(device);
-                            DeviceHelper.getInstance().removeBond(device);
+                            BondingUtil.Unpair(context, device.getAddress());
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                 removeDynamicShortcut(device);
                             }

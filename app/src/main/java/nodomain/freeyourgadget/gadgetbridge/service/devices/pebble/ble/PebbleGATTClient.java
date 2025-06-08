@@ -31,8 +31,10 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.NotifyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
+import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static android.bluetooth.BluetoothGattCharacteristic.FORMAT_UINT16;
@@ -217,17 +219,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private void connectToPebble(BluetoothDevice btDevice) {
         if (removeBond) {
-            try {
-                // TODO: Use BondingUtil
-                Method m = btDevice.getClass().getMethod("removeBond", (Class[]) null);
-                m.invoke(btDevice, (Object[]) null);
-            } catch (Exception e) {
-                LOG.warn(e.getMessage());
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ignore) {
-            }
+            BondingUtil.Unpair(GBApplication.getContext(), btDevice.getAddress());
         }
         if (mBluetoothGatt != null) {
             this.close();
