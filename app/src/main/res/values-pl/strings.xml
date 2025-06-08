@@ -4093,4 +4093,8 @@
     <string name="even_realities_frame_shape_G1A">G1A/Okrągły</string>
     <string name="even_realities_right_lens">Prawa soczewka</string>
     <string name="even_realities_frame_shape_G1B">G1B/Kwadrat</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
+    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
+    <string name="workout_active_score">Ocena aktywności</string>
 </resources>
