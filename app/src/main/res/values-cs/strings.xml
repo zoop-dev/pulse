@@ -4069,4 +4069,8 @@
     <string name="even_realities_left_lens">Levá čočka</string>
     <string name="even_realities_right_lens">Pravá čočka</string>
     <string name="pref_device_logs_summary">Povolit protokolování ze zařízení</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
+    <string name="workout_active_score">Aktivní skóre</string>
+    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
 </resources>
