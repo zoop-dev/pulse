@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2024 Carsten Pfeiffer, João Paulo Barraca, JohnnySun
+/*  Copyright (C) 2016-2025 Carsten Pfeiffer, João Paulo Barraca, JohnnySun, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -108,11 +108,12 @@ public class BleNamesResolver {
     /// lookup description for numeric status used by {@link android.bluetooth.BluetoothGattCallback}
     static public String getStatusString(int status) {
         // android.bluetooth.BluetoothGatt's numbers are incomplete
-        // numeric values taken from GattStatus in https://android.googlesource.com/platform/system/bt/+/ea7ab70a711e642653dd5922b83aa04a53af9e0e/stack/include/gatt_api.h
+        // numeric values taken from GattStatus in https://android.googlesource.com/platform/packages/modules/Bluetooth/+/refs/heads/main/system/stack/include/gatt_api.h
         switch (status) {
             case BluetoothGatt.GATT_SUCCESS:
                 return "GATT_SUCCESS";
             case 0x01:
+                // GATT_CONN_L2C_FAILURE is also 0x01
                 return "GATT_INVALID_HANDLE";
             case BluetoothGatt.GATT_READ_NOT_PERMITTED:
                 return "GATT_READ_NOT_PERMITTED";
@@ -127,6 +128,7 @@ public class BleNamesResolver {
             case BluetoothGatt.GATT_INVALID_OFFSET:
                 return "GATT_INVALID_OFFSET";
             case BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION:
+                // GATT_CONN_TIMEOUT is also 0x08
                 return "GATT_INSUFFICIENT_AUTHORIZATION";
             case 0x09:
                 return "GATT_PREPARE_Q_FULL";
@@ -149,7 +151,16 @@ public class BleNamesResolver {
             case 0x12:
                 return "GATT_DATABASE_OUT_OF_SYNC";
             case 0x13:
+                // GATT_CONN_TERMINATE_PEER_USER is also 0x13
                 return "GATT_VALUE_NOT_ALLOWED";
+            case 0x15:
+                return "GATT_CONN_TERMINATED_POWER_OFF";
+            case 0x16:
+                return "GATT_CONN_TERMINATE_LOCAL_HOST";
+            case 0x22:
+                return "GATT_CONN_LMP_TIMEOUT";
+            case 0x3e:
+                return "GATT_CONN_FAILED_ESTABLISHMENT";
             case 0x87:
                 return "GATT_ILLEGAL_PARAMETER";
             case 0x7f:
