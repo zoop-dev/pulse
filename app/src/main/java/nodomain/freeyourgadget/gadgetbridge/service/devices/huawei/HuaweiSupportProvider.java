@@ -143,6 +143,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetN
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetOTAChangeLog;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSmartAlarmList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWatchfaceParams;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutTotalsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCameraRemoteSetupEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDeviceReportThreshold;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendExtendedAccountRequest;
@@ -2858,6 +2859,26 @@ public class HuaweiSupportProvider {
         ), true);
         return true;
     }
+
+    public void nextWorkoutSync(List<Workout.WorkoutCount.Response.WorkoutNumbers> remainder, RequestCallback finalizeReq) {
+        if (!remainder.isEmpty()) {
+            GetWorkoutTotalsRequest nextRequest = new GetWorkoutTotalsRequest(
+                    this,
+                    remainder.remove(0),
+                    remainder
+            );
+            nextRequest.setFinalizeReq(finalizeReq);
+            // Cannot do this with nextRequest because it's in a callback
+            try {
+                nextRequest.doPerform();
+            } catch (IOException e) {
+                finalizeReq.handleException(new Request.ResponseParseException("Cannot send next request", e));
+            }
+        } else {
+            this.endOfWorkoutSync();
+        }
+    }
+
 
     public void endOfWorkoutSync() {
         this.syncState.setWorkoutSync(false);

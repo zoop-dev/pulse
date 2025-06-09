@@ -81,6 +81,15 @@ public class GetWorkoutCountRequest extends Request {
 
         Workout.WorkoutCount.Response packet = (Workout.WorkoutCount.Response) receivedPacket;
 
+        if (packet.count == 0 || packet.workoutNumbers == null || packet.error != null) {
+            if(packet.error != null) {
+                LOG.warn("Error occurred during workout sync: {}", packet.error);
+                GB.toast("Error occurred during workout sync", Toast.LENGTH_LONG, GB.WARN);
+            }
+            this.supportProvider.endOfWorkoutSync();
+            return;
+        }
+
         if (packet.count > packet.workoutNumbers.size()) {
             LOG.warn("Packet count is greater than workoutNumbers size: {} > {}", packet.count, packet.workoutNumbers.size());
             GB.toast("Workout count mismatch, after this sync is complete, try synchronising again", Toast.LENGTH_LONG, GB.WARN);
@@ -104,8 +113,6 @@ public class GetWorkoutCountRequest extends Request {
             );
             nextRequest.setFinalizeReq(this.finalizeReq);
             this.nextRequest(nextRequest);
-        } else {
-            this.supportProvider.endOfWorkoutSync();
         }
     }
 }

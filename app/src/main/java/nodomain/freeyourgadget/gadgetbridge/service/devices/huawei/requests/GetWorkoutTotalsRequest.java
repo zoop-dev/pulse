@@ -16,16 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 
+import android.widget.Toast;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GetWorkoutTotalsRequest extends Request {
     private static final Logger LOG = LoggerFactory.getLogger(GetWorkoutTotalsRequest.class);
@@ -66,8 +68,16 @@ public class GetWorkoutTotalsRequest extends Request {
 
         Workout.WorkoutTotals.Response packet = (Workout.WorkoutTotals.Response) receivedPacket;
 
+        if (packet.error != null) {
+            LOG.warn("Error {} occurred during workout pace sync. ignoring", packet.error);
+            GB.toast("Error occurred during workout sync", Toast.LENGTH_LONG, GB.WARN);
+            supportProvider.nextWorkoutSync(remainder, GetWorkoutTotalsRequest.this.finalizeReq);
+            return;
+        }
+
         if (packet.number != this.workoutNumbers.workoutNumber)
             throw new WorkoutParseException("Incorrect workout number!");
+
 
         LOG.info("Workout {} totals:", this.workoutNumbers.workoutNumber);
         LOG.info("Number  : {}", packet.number);
@@ -136,27 +146,7 @@ public class GetWorkoutTotalsRequest extends Request {
             this.nextRequest(nextRequest);
         } else {
             new HuaweiWorkoutGbParser(getDevice(), getContext()).parseWorkout(databaseId);
-            supportProvider.downloadWorkoutGpsFiles(this.workoutNumbers.workoutNumber, databaseId, new Runnable() {
-                @Override
-                public void run() {
-                    if (!remainder.isEmpty()) {
-                        GetWorkoutTotalsRequest nextRequest = new GetWorkoutTotalsRequest(
-                                GetWorkoutTotalsRequest.this.supportProvider,
-                                remainder.remove(0),
-                                remainder
-                        );
-                        nextRequest.setFinalizeReq(GetWorkoutTotalsRequest.this.finalizeReq);
-                        // Cannot do this with nextRequest because it's in a callback
-                        try {
-                            nextRequest.doPerform();
-                        } catch (IOException e) {
-                            finalizeReq.handleException(new ResponseParseException("Cannot send next request", e));
-                        }
-                    } else {
-                        supportProvider.endOfWorkoutSync();
-                    }
-                }
-            });
+            supportProvider.downloadWorkoutGpsFiles(this.workoutNumbers.workoutNumber, databaseId, () -> supportProvider.nextWorkoutSync(remainder, GetWorkoutTotalsRequest.this.finalizeReq));
         }
     }
 }

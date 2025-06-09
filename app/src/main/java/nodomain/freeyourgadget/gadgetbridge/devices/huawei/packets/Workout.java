@@ -21,7 +21,6 @@ import androidx.annotation.NonNull;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
@@ -71,12 +70,19 @@ public class Workout {
             public short count;
             public List<WorkoutNumbers> workoutNumbers;
 
+            public Integer error = null;
+
             public Response(ParamsProvider paramsProvider) {
                 super(paramsProvider);
             }
 
             @Override
             public void parseTlv() throws ParseException {
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    this.count = 0;
+                    return;
+                }
                 HuaweiTLV container = this.tlv.getObject(0x81);
 
                 this.count = container.getShort(0x02);
@@ -128,6 +134,8 @@ public class Workout {
 
         public static class Response extends HuaweiPacket {
             public byte[] rawData;
+
+            public Integer error = null;
 
             public short number;
             public byte status = -1; // TODO: enum?
@@ -192,6 +200,11 @@ public class Workout {
 
             @Override
             public void parseTlv() throws ParseException {
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    return;
+                }
+
                 HuaweiTLV container = this.tlv.getObject(0x81);
 
                 this.rawData = container.serialize();
@@ -422,6 +435,8 @@ public class Workout {
             private final byte[] bitmapLengths = {1, 2, 1, 2, 2, 4, -1, 2, 2, 2};
             private final byte[] innerBitmapLengths = {2, 2, 2, 1, 2, 1, 1, 1, 1, 2, 2, 1, 2, 2, 2, 2, 1, 1, 1, 2};
 
+            public Integer error = null;
+
             public short workoutNumber;
             public short dataNumber;
             public byte[] rawHeader;
@@ -449,6 +464,12 @@ public class Workout {
 
             @Override
             public void parseTlv() throws ParseException {
+
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    return;
+                }
+
                 HuaweiTLV container = this.tlv.getObject(0x81);
 
                 this.workoutNumber = container.getShort(0x02);
@@ -682,6 +703,8 @@ public class Workout {
                 }
             }
 
+            public Integer error = null;
+
             public short workoutNumber;
             public short paceNumber;
             public List<Block> blocks;
@@ -692,6 +715,12 @@ public class Workout {
 
             @Override
             public void parseTlv() throws ParseException {
+
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    return;
+                }
+
                 HuaweiTLV container = this.tlv.getObject(0x81);
 
                 this.workoutNumber = container.getShort(0x02);
@@ -767,6 +796,9 @@ public class Workout {
                 }
             }
 
+
+            public Integer error = null;
+
             public short workoutNumber;
             public short segmentNumber;
             public List<Block> blocks;
@@ -777,6 +809,11 @@ public class Workout {
 
             @Override
             public void parseTlv() throws ParseException {
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    return;
+                }
+
                 HuaweiTLV container = this.tlv.getObject(0x81);
 
                 this.workoutNumber = container.getShort(0x02);
@@ -846,6 +883,8 @@ public class Workout {
                 }
             }
 
+            public Integer error = null;
+
             public short spO2Number1; //TODO: meaning of this field
             public short spO2Number2; //TODO: meaning of this field
             public List<Block> blocks;
@@ -857,6 +896,10 @@ public class Workout {
             @Override
             public void parseTlv() throws ParseException {
 
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    return;
+                }
 
                 this.spO2Number1 = this.tlv.getShort(0x01);
                 this.spO2Number2 = this.tlv.getShort(0x02);
@@ -986,6 +1029,8 @@ public class Workout {
                 }
             }
 
+            public Integer error = null;
+
             public short workoutId;
             public short number; //TODO: meaning of this field
             public List<Block> blocks;
@@ -996,6 +1041,11 @@ public class Workout {
 
             @Override
             public void parseTlv() throws ParseException {
+
+                if (this.tlv.contains(0x7f)) {
+                    error = this.tlv.getAsInteger(0x7f);
+                    return;
+                }
 
                 this.workoutId = this.tlv.getShort(0x01);
                 this.number = this.tlv.getShort(0x02);
