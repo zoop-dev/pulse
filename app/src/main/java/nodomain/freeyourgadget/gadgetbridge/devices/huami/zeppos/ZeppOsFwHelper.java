@@ -294,7 +294,7 @@ public class ZeppOsFwHelper {
                     return;
             }
 
-            Bitmap icon;
+            Bitmap icon = null;
             if (StringUtils.isNotBlank(appIconPath)) {
                 final byte[] iconBytes = getFileFromZip(zipFile, "assets/" + appIconPath);
                 if (iconBytes != null) {
