@@ -4078,4 +4078,7 @@
     <string name="gatt_synchronous_writes_title">Synchronní zápisy GATT</string>
     <string name="gatt_synchronous_writes_summary">Preferovat synchronní zápisy GATT nad nesynchronními, pokud charakteristika podporuje oba.</string>
     <string name="prefs_title_gatt_settings">Obecný profil atributů</string>
+    <string name="huawei_better_audio_quality_title">Upřednostnit lepší kvalitu zvuku.</string>
+    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
+    <string name="huawei_better_audio_quality_summary">Povolit lepší zvukové kodeky (LDAC). Tím se může zlepšit kvalita zvuku, ale také zvýšit spotřeba energie a může to způsobit zpoždění.</string>
 </resources>
