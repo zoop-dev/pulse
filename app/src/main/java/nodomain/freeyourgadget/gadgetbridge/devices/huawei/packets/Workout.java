@@ -103,9 +103,6 @@ public class Workout {
                     }
                     this.workoutNumbers.add(workoutNumber);
                 }
-
-                // Has to be sorted for the timestamp-based sync start that we use in the HuaweiSupportProvider
-                this.workoutNumbers.sort(Comparator.comparingInt(o -> o.workoutNumber));
             }
         }
     }

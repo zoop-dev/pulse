@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Comparator;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
@@ -91,6 +92,9 @@ public class GetWorkoutCountRequest extends Request {
 
             packet.workoutNumbers.subList(packet.count, packet.workoutNumbers.size()).clear();
         }
+
+        // Has to be sorted for the timestamp-based sync start that we use in the HuaweiSupportProvider
+        packet.workoutNumbers.sort(Comparator.comparingInt(o -> o.workoutNumber));
 
         if (packet.count > 0) {
             GetWorkoutTotalsRequest nextRequest = new GetWorkoutTotalsRequest(
