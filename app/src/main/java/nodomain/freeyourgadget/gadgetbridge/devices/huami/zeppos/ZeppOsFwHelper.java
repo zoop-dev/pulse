@@ -23,6 +23,7 @@ import android.net.Uri;
 
 import androidx.annotation.Nullable;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -293,13 +294,20 @@ public class ZeppOsFwHelper {
                     return;
             }
 
-            Bitmap icon = null;
-            final byte[] iconBytes = getFileFromZip(zipFile, "assets/" + appIconPath);
-            if (iconBytes != null) {
-                if (BitmapUtil.isPng(iconBytes)) {
-                    icon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.length);
-                } else {
-                    icon = BitmapUtil.decodeTga(iconBytes);
+            Bitmap icon;
+            if (StringUtils.isNotBlank(appIconPath)) {
+                final byte[] iconBytes = getFileFromZip(zipFile, "assets/" + appIconPath);
+                if (iconBytes != null) {
+                    try {
+                        if (BitmapUtil.isPng(iconBytes)) {
+                            icon = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.length);
+                        } else {
+                            icon = BitmapUtil.decodeTga(iconBytes);
+                        }
+                    } catch (final Exception e) {
+                        LOG.error("Failed to decode icon from {}", appIconPath);
+                        icon = null;
+                    }
                 }
             }
 
@@ -497,9 +505,13 @@ public class ZeppOsFwHelper {
             if (entry == null) {
                 return null;
             }
+            if (entry.isDirectory()) {
+                LOG.warn("Entry for {} is a directory", path);
+                return null;
+            }
             return GBZipFile.readAllBytes(zipFile.getInputStream(entry));
         } catch (final IOException e) {
-            LOG.error("Failed to read " + path, e);
+            LOG.error("Failed to read {}", path, e);
             return null;
         }
     }
