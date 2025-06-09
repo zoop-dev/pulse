@@ -139,6 +139,9 @@ public abstract class HuaweiFreebudsCoordinator extends AbstractBLClassicDeviceC
                 && supports(device, HuaweiHeadphonesCapabilities.VoiceBoost)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_headphones_voice_boost);
         }
+        if (supports(device, HuaweiHeadphonesCapabilities.BetterAudioQuality)) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_headphones_better_audio_quality);
+        }
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }

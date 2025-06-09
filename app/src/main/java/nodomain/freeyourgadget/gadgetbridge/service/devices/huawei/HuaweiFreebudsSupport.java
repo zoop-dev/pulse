@@ -30,15 +30,19 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiFreebudsCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeadphonesCapabilities;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.HeadphoneHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetBetterAudioQualityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetProductInformationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetANCModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAudioModeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetBetterAudioQualityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetPauseWhenRemovedFromEarRequest;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -61,9 +65,23 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
         headphoneHelper = new HeadphoneHelper(getContext(), getDevice(), this);
     }
 
+    protected void initializeDeviceConfigure() {
+        try {
+            HuaweiFreebudsCoordinator coordinator = (HuaweiFreebudsCoordinator) this.gbDevice.getDeviceCoordinator();
+            if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.BetterAudioQuality)) {
+                GetBetterAudioQualityRequest req = new GetBetterAudioQualityRequest(super.getSupportProvider());
+                req.doPerform();
+            }
+
+        } catch (IOException e) {
+            GB.toast(this.getContext(), "Final initialization of Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("Final initialization of Huawei device failed", e);
+        }
+    }
+
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        LOG.info("Huawei Freebuds init" );
+        LOG.info("Huawei Freebuds init");
 
         super.getSupportProvider().setup(getDevice(), getContext());
 
@@ -76,6 +94,7 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
                 public void call() {
                     // This also (optionally) starts the battery polling
                     getSupportProvider().getBatteryLevel();
+                    initializeDeviceConfigure();
                 }
             });
             deviceProductReq.doPerform();
@@ -132,6 +151,9 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
                     break;
                 case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_VOICE_BOOST:
                     new SetVoiceBoostRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_BETTER_AUDIO_QUALITY:
+                    new SetBetterAudioQualityRequest(getSupportProvider()).doPerform();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
                     if (!GBApplication.getDevicePrefs(gbDevice).getBatteryPollingEnabled()) {

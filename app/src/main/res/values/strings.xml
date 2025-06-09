@@ -1986,6 +1986,7 @@
     <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
     <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
     <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
+    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
     <string name="devicetype_femometer_vinca2">Femometer Vinca II</string>
     <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite</string>
     <string name="devicetype_redmiwatch3active">Redmi Watch 3 Active</string>
@@ -3946,6 +3947,8 @@
     <string name="banglejs_notification_missed_call_source">Incoming call</string>
     <string name="banglejs_notification_missed_call_suppressed_caller_id">Unknown caller. ID is suppressed</string>
     <string name="huawei_voice_boost">Voice Boost</string>
+    <string name="huawei_better_audio_quality_title">Prioritise better audio quality.</string>
+    <string name="huawei_better_audio_quality_summary">Enable better audio codecs (LDAC). This should improve sound quality, but it increases power consumption and can cause delays.</string>
     <string name="maps">Maps</string>
     <string name="maps_settings">Maps settings</string>
     <string name="maps_download_title">Download Maps</string>

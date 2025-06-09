@@ -21,6 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAudioModeRequest.AudioMode;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetANCModeRequest.ANCMode;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetBetterAudioQualityRequest.AudioQualityMode;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest.VoiceBoostMode;
 
 // Information from:
@@ -151,4 +152,65 @@ public class Earphones {
             }
         }
     }
+
+    public static class SetBetterAudioQuality {
+        public static final byte id = (byte) 0xa2;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, AudioQualityMode audioQualityMode) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+                this.tlv = new HuaweiTLV().put(0x01, audioQualityMode.getCode());
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                // TODO:
+            }
+        }
+    }
+
+    public static class GetBetterAudioQuality {
+        public static final byte id = (byte) 0xa3;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+                this.tlv = new HuaweiTLV();
+            }
+        }
+
+        // TODO: this response can be async too.
+        public static class Response extends HuaweiPacket {
+            public AudioQualityMode state;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                this.state = AudioQualityMode.fromBoolean(this.tlv.getByte(0x02, (byte) 0) == 1);
+            }
+        }
+    }
+
 }

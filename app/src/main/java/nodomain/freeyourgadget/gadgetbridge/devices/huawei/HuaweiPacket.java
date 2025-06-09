@@ -687,6 +687,10 @@ public class HuaweiPacket {
                         return new Earphones.InEarStateResponse(paramsProvider).fromPacket(this);
                     case Earphones.GetAudioModeRequest.id:
                         return new Earphones.GetAudioModeRequest.Response(paramsProvider).fromPacket(this);
+                    case Earphones.SetBetterAudioQuality.id:
+                        return new Earphones.SetBetterAudioQuality.Response(paramsProvider).fromPacket(this);
+                    case Earphones.GetBetterAudioQuality.id:
+                        return new Earphones.GetBetterAudioQuality.Response(paramsProvider).fromPacket(this);
                 }
             case FileDownloadService2C.id:
                 switch (this.commandId) {

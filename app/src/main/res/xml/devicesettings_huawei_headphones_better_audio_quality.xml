@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="pref_freebuds_better_audio_quality"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/huawei_better_audio_quality_title"
+        android:summary="@string/huawei_better_audio_quality_summary" />
+</androidx.preference.PreferenceScreen>
