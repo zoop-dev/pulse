@@ -4074,4 +4074,8 @@
     <string name="workout_active_score">Aktivní skóre</string>
     <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
     <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
+    <string name="pairing_bonding_under_way">Prosím, vyčkejte několik okamžiků, než se proces vazby dokončí.</string>
+    <string name="gatt_synchronous_writes_title">Synchronní zápisy GATT</string>
+    <string name="gatt_synchronous_writes_summary">Preferovat synchronní zápisy GATT nad nesynchronními, pokud charakteristika podporuje oba.</string>
+    <string name="prefs_title_gatt_settings">Obecný profil atributů</string>
 </resources>
