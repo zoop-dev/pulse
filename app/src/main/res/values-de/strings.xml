@@ -3977,4 +3977,12 @@
     <string name="even_realities_frame_color_brown">Braun</string>
     <string name="workout_active_score">Aktivitätswert</string>
     <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Musik</string>
+    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
+    <string name="huawei_better_audio_quality_summary">Aktiviert bessere Audiocodecs wie LDAC zur Verbesserung der Klangqualität. Dies kann jedoch den Stromverbrauch erhöhen und die Übertragung verzögern.</string>
+    <string name="gatt_synchronous_writes_summary">Bevorzuge synchrone GATT-Schreibvorgänge gegenüber asynchronen, wenn eine Charakteristik beide unterstützt.</string>
+    <string name="huawei_better_audio_quality_title">Bessere Audioqualität priorisieren.</string>
+    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
+    <string name="prefs_title_gatt_settings">Bluetooth-GATT-Profil</string>
+    <string name="gatt_synchronous_writes_title">Synchrone GATT-Schreibvorgänge</string>
+    <string name="pairing_bonding_under_way">Bitte geben Sie dem Kopplungsvorgang einen Moment Zeit.</string>
 </resources>
