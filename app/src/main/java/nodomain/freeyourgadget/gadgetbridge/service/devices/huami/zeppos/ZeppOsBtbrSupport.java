@@ -139,7 +139,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
             if (packetBuffer.remaining() < 8) {
                 // not enough bytes for min packet
                 packetBuffer.reset();
-                continue;
+                break;
             }
 
             final byte preamble = packetBuffer.get();
@@ -157,7 +157,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
             if (packetBuffer.remaining() < length + 3) {
                 // not enough bytes for payload + crc + trailer
                 packetBuffer.reset();
-                continue;
+                break;
             }
             final byte[] payload = new byte[length];
             packetBuffer.get(payload);
