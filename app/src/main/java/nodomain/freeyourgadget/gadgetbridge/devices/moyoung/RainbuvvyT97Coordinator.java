@@ -27,11 +27,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RainbuvvyT97Coordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(RainbuvvyT97Coordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("T97");
+        return Pattern.compile("^T97$");
     }
 
     @Override

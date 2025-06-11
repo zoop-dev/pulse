@@ -45,8 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.Logging;
 public class MoyoungPacketIn extends MoyoungPacket {
     private static final Logger LOG = LoggerFactory.getLogger(MoyoungPacketIn.class);
 
-    public MoyoungPacketIn()
-    {
+    public MoyoungPacketIn() {
 
     }
 
@@ -56,10 +55,8 @@ public class MoyoungPacketIn extends MoyoungPacket {
      * @param fragment The incoming fragment
      * @return true if the packet is complete
      */
-    public boolean putFragment(byte[] fragment)
-    {
-        if (packet == null)
-        {
+    public boolean putFragment(byte[] fragment) {
+        if (packet == null) {
             int len = parsePacketLength(fragment);
             if (len < 0)
                 return false; // corrupted packet
@@ -67,8 +64,7 @@ public class MoyoungPacketIn extends MoyoungPacket {
         }
 
         int toCopy = Math.min(fragment.length, packet.length - position);
-        if (fragment.length > toCopy)
-        {
+        if (fragment.length > toCopy) {
             LOG.warn("Got fragment with more data than expected!");
         }
 
@@ -77,8 +73,7 @@ public class MoyoungPacketIn extends MoyoungPacket {
         return position >= packet.length;
     }
 
-    public byte[] getPacket()
-    {
+    public byte[] getPacket() {
         if (packet == null || position < packet.length)
             throw new IllegalStateException("Packet is not complete yet");
         return packet;
@@ -86,22 +81,19 @@ public class MoyoungPacketIn extends MoyoungPacket {
 
     /**
      * Parse the packet header and return the length
+     *
      * @param packetOrFragment The entire packet or it's first fragment
      * @return The packet length, or -1 if packet is corrupted
      */
-    private static int parsePacketLength(@NonNull byte[] packetOrFragment)
-    {
-        if (packetOrFragment[0] != (byte)0xFE || packetOrFragment[1] != (byte)0xEA)
-        {
+    private static int parsePacketLength(@NonNull byte[] packetOrFragment) {
+        if (packetOrFragment[0] != (byte) 0xFE || packetOrFragment[1] != (byte) 0xEA) {
             LOG.warn("Invalid packet header, ignoring! Fragment: {}", Logging.formatBytes(packetOrFragment));
             return -1;
         }
 
         int len_h = 0;
-        if (packetOrFragment[2] != 16)
-        {
-            if ((packetOrFragment[2] & 0xFF) < 32)
-            {
+        if (packetOrFragment[2] != 16) {
+            if ((packetOrFragment[2] & 0xFF) < 32) {
                 LOG.warn("Corrupted packet, unable to parse length");
                 return -1;
             }
@@ -114,16 +106,15 @@ public class MoyoungPacketIn extends MoyoungPacket {
 
     /**
      * Parse the packet
+     *
      * @param packet The complete packet
      * @return A pair containing the packet type and payload
      */
-    public static Pair<Byte, byte[]> parsePacket(@NonNull byte[] packet)
-    {
+    public static Pair<Byte, byte[]> parsePacket(@NonNull byte[] packet) {
         int len = parsePacketLength(packet);
         if (len < 0)
             return null;
-        if (len != packet.length)
-        {
+        if (len != packet.length) {
             LOG.warn("Invalid packet length!");
             return null;
         }

@@ -28,5 +28,6 @@ public abstract class MoyoungSetting<T> {
     }
 
     public abstract byte[] encode(T value);
+
     public abstract T decode(byte[] data);
 }

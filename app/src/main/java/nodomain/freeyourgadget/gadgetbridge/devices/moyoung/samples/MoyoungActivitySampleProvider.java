@@ -267,19 +267,19 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
 
     /**
      * Set the activity kind from NOT_MEASURED to new_raw_activity_kind on the given range
-     * @param timestamp_from the start timestamp
-     * @param timestamp_to the end timestamp
+     *
+     * @param timestamp_from        the start timestamp
+     * @param timestamp_to          the end timestamp
      * @param new_raw_activity_kind the activity kind to set
      */
-    public void updateActivityInRange(int timestamp_from, int timestamp_to, int new_raw_activity_kind)
-    {
+    public void updateActivityInRange(int timestamp_from, int timestamp_to, int new_raw_activity_kind) {
         // greenDAO does not provide a bulk update functionality, and manual update fails because
         // of no primary key
 
         Property timestampProperty = getTimestampSampleProperty();
         Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
         if (dbDevice == null)
-            throw new IllegalStateException();
+            throw new IllegalStateException("No device found");
         Property deviceProperty = getDeviceIdentifierSampleProperty();
 
         /*QueryBuilder<MoyoungActivitySample> qb = getSampleDao().queryBuilder();
@@ -294,7 +294,7 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
         }*/
 
         String tablename = getSampleDao().getTablename();
-        String baseSql = SqlUtils.createSqlUpdate(tablename, new String[] { getRawKindSampleProperty().columnName }, new String[] { });
+        String baseSql = SqlUtils.createSqlUpdate(tablename, new String[]{getRawKindSampleProperty().columnName}, new String[]{});
         StringBuilder builder = new StringBuilder(baseSql);
 
         List<Object> values = new ArrayList<>();

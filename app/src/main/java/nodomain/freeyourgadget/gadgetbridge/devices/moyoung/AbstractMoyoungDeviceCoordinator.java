@@ -26,9 +26,12 @@ import androidx.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -57,6 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungBloodPressureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSleepStageSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungSpo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -90,19 +94,22 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
 
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        Long deviceId = device.getId();
-        QueryBuilder<?> qb;
+        final Long deviceId = device.getId();
 
-        qb = session.getMoyoungActivitySampleDao().queryBuilder();
-        qb.where(MoyoungActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getMoyoungHeartRateSampleDao().queryBuilder();
-        qb.where(MoyoungHeartRateSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getMoyoungSpo2SampleDao().queryBuilder();
-        qb.where(MoyoungSpo2SampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getMoyoungBloodPressureSampleDao().queryBuilder();
-        qb.where(MoyoungBloodPressureSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getMoyoungStressSampleDao().queryBuilder();
-        qb.where(MoyoungStressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<>() {{
+            put(session.getMoyoungActivitySampleDao(), MoyoungActivitySampleDao.Properties.DeviceId);
+            put(session.getMoyoungHeartRateSampleDao(), MoyoungHeartRateSampleDao.Properties.DeviceId);
+            put(session.getMoyoungSpo2SampleDao(), MoyoungSpo2SampleDao.Properties.DeviceId);
+            put(session.getMoyoungBloodPressureSampleDao(), MoyoungBloodPressureSampleDao.Properties.DeviceId);
+            put(session.getMoyoungSleepStageSampleDao(), MoyoungSleepStageSampleDao.Properties.DeviceId);
+            put(session.getMoyoungStressSampleDao(), MoyoungStressSampleDao.Properties.DeviceId);
+        }};
+
+        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
+            e.getKey().queryBuilder()
+                    .where(e.getValue().eq(deviceId))
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+        }
     }
 
     @Override

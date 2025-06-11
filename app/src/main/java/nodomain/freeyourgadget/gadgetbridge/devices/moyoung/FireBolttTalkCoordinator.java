@@ -27,11 +27,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class FireBolttTalkCoordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(FireBolttTalkCoordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("FireBoltt 080");
+        return Pattern.compile("^FireBoltt 080$");
     }
 
     @Override

@@ -26,11 +26,9 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class MisirunC17Coordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(MisirunC17Coordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("C17");
+        return Pattern.compile("^C17$");
     }
 
     @Override

@@ -77,15 +77,11 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-        if (!isOperationRunning())
-        {
+        if (!isOperationRunning()) {
             LOG.error("onCharacteristicChanged but operation is not running!");
-        }
-        else
-        {
+        } else {
             UUID charUuid = characteristic.getUuid();
-            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
-            {
+            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN)) {
                 if (packetIn.putFragment(value)) {
                     Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                     packetIn = new MoyoungPacketIn();
@@ -165,8 +161,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
             MoyoungHeartRateSampleProvider provider = new MoyoungHeartRateSampleProvider(getDevice(), dbHandler.getDaoSession());
 
             LOG.info("START DATE: {}", dateRecorded.getTime());
-            while (dataBuffer.hasRemaining())
-            {
+            while (dataBuffer.hasRemaining()) {
                 int measurement = dataBuffer.get() & 0xFF;
                 if (!dataBuffer.hasRemaining())
                     dateRecorded.setTimeInMillis(firstPacketTimeInMillis); // the last sample is captured exactly at the end of measurement
@@ -176,7 +171,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
                 MoyoungHeartRateSample sample = new MoyoungHeartRateSample();
                 sample.setDevice(device);
                 sample.setUser(user);
-                sample.setTimestamp((int)(dateRecorded.getTimeInMillis() / 1000));
+                sample.setTimestamp((int) (dateRecorded.getTimeInMillis() / 1000));
                 sample.setHeartRate(measurement != 0 ? measurement : ActivitySample.NOT_MEASURED);
 
                 provider.addSample(sample);
@@ -192,7 +187,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
         try {
             TransactionBuilder builder = performInitialized("TrainingFinishedDataOperation fetch training type");
-            getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_MOVEMENT_HEART_RATE, new byte[] { }));
+            getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_MOVEMENT_HEART_RATE, new byte[]{}));
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Error fetching training data: ", e);
@@ -202,8 +197,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
         }
     }
 
-    private void handleTrainingSummaryDataPacket(byte[] payload)
-    {
+    private void handleTrainingSummaryDataPacket(byte[] payload) {
         getSupport().handleTrainingData(payload);
 
         GB.updateTransferNotification(null, getContext().getString(R.string.busy_task_fetch_training_data_finished), false, 0, getContext());

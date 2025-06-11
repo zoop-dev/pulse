@@ -39,11 +39,11 @@ public class MoyoungSettingTimeRange extends MoyoungSetting<MoyoungSettingTimeRa
         @Override
         public String toString() {
             return "TimeRange{" +
-                "start_h=" + start_h +
-                ", start_m=" + start_m +
-                ", end_h=" + end_h +
-                ", end_m=" + end_m +
-                '}';
+                    "start_h=" + start_h +
+                    ", start_m=" + start_m +
+                    ", end_h=" + end_h +
+                    ", end_m=" + end_m +
+                    '}';
         }
     }
 
@@ -71,6 +71,6 @@ public class MoyoungSettingTimeRange extends MoyoungSetting<MoyoungSettingTimeRa
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         short start = buffer.getShort();
         short end = buffer.getShort();
-        return new TimeRange((byte)(start / 60), (byte)(start % 60), (byte)(end / 60), (byte)(start % 60));
+        return new TimeRange((byte) (start / 60), (byte) (start % 60), (byte) (end / 60), (byte) (start % 60));
     }
 }

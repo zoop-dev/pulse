@@ -23,7 +23,7 @@ public class MoyoungSettingByte extends MoyoungSetting<Byte> {
 
     @Override
     public byte[] encode(Byte value) {
-        return new byte[] { value };
+        return new byte[]{value};
     }
 
     @Override

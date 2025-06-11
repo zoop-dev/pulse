@@ -23,7 +23,7 @@ public class MoyoungSettingBool extends MoyoungSetting<Boolean> {
 
     @Override
     public byte[] encode(Boolean value) {
-        return new byte[] { value ? (byte)1 : (byte)0 };
+        return new byte[]{value ? (byte) 1 : (byte) 0};
     }
 
     @Override

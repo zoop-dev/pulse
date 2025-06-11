@@ -27,8 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class ColmiV72Coordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(ColmiV72Coordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^V72$");

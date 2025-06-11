@@ -26,11 +26,9 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class C20Coordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(C20Coordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("C20");
+        return Pattern.compile("^C20$");
     }
 
     @Override

@@ -17,8 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings;
 
 public enum MoyoungEnumDominantHand implements MoyoungEnum {
-    LEFT_HAND((byte)0),
-    RIGHT_HAND((byte)1);
+    LEFT_HAND((byte) 0),
+    RIGHT_HAND((byte) 1);
 
     public final byte value;
 

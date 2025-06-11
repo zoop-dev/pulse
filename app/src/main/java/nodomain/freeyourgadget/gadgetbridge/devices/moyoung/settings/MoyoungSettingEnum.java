@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings;
 
-public class MoyoungSettingEnum<T extends Enum <?> & MoyoungEnum> extends MoyoungSetting<T> {
+public class MoyoungSettingEnum<T extends Enum<?> & MoyoungEnum> extends MoyoungSetting<T> {
     protected final Class<T> clazz;
 
     public MoyoungSettingEnum(String name, byte cmdQuery, byte cmdSet, Class<T> clazz) {
@@ -24,8 +24,7 @@ public class MoyoungSettingEnum<T extends Enum <?> & MoyoungEnum> extends Moyoun
         this.clazz = clazz;
     }
 
-    public T findByValue(byte value)
-    {
+    public T findByValue(byte value) {
         for (T e : clazz.getEnumConstants()) {
             if (e.value() == value) {
                 return e;
@@ -37,7 +36,7 @@ public class MoyoungSettingEnum<T extends Enum <?> & MoyoungEnum> extends Moyoun
 
     @Override
     public byte[] encode(T value) {
-        return new byte[] { value.value() };
+        return new byte[]{value.value()};
     }
 
     @Override

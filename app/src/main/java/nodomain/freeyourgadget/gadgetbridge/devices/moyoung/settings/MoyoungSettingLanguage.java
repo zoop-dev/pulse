@@ -36,8 +36,8 @@ public class MoyoungSettingLanguage extends MoyoungSettingEnum<MoyoungEnumLangua
         if (data.length < 5)
             throw new IllegalArgumentException("Wrong data length, should be at least 5, was " + data.length);
 
-        byte[] current = new byte[] { data[0] };
-        byte[] supported = new byte[] { data[1], data[2], data[3], data[4] };
+        byte[] current = new byte[]{data[0]};
+        byte[] supported = new byte[]{data[1], data[2], data[3], data[4]};
 
         ByteBuffer buffer = ByteBuffer.wrap(supported);
         int supportedNum = buffer.getInt();

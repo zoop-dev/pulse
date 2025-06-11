@@ -27,11 +27,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class ColmiI28UltraCoordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(ColmiI28UltraCoordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("i28 Ultra");
+        return Pattern.compile("^i28 Ultra$");
     }
 
     @Override

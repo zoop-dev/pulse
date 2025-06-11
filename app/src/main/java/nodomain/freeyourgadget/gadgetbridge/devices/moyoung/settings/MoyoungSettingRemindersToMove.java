@@ -38,11 +38,11 @@ public class MoyoungSettingRemindersToMove extends MoyoungSetting<MoyoungSetting
         @Override
         public String toString() {
             return "RemindersToMove{" +
-                "period=" + period +
-                ", steps=" + steps +
-                ", start_h=" + start_h +
-                ", end_h=" + end_h +
-                '}';
+                    "period=" + period +
+                    ", steps=" + steps +
+                    ", start_h=" + start_h +
+                    ", end_h=" + end_h +
+                    '}';
         }
     }
 

@@ -27,8 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AdvanWatchSE1AICoordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(AdvanWatchSE1AICoordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^SE1$");

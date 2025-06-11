@@ -26,11 +26,9 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class R50ProCoordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(R50ProCoordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("R50Pro");
+        return Pattern.compile("^R50Pro$");
     }
 
     @Override

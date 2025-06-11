@@ -17,8 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings;
 
 public enum MoyoungEnumMetricSystem implements MoyoungEnum {
-    METRIC_SYSTEM((byte)0),
-    IMPERIAL_SYSTEM((byte)1);
+    METRIC_SYSTEM((byte) 0),
+    IMPERIAL_SYSTEM((byte) 1);
 
     public final byte value;
 

@@ -17,8 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings;
 
 public enum MoyoungEnumTimeSystem implements MoyoungEnum {
-    TIME_SYSTEM_12((byte)0),
-    TIME_SYSTEM_24((byte)1);
+    TIME_SYSTEM_12((byte) 0),
+    TIME_SYSTEM_24((byte) 1);
 
     public final byte value;
 

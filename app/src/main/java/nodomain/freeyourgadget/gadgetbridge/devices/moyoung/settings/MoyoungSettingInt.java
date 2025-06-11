@@ -27,7 +27,7 @@ public class MoyoungSettingInt extends MoyoungSetting<Integer> {
     @Override
     public byte[] encode(Integer value) {
         ByteBuffer buffer = ByteBuffer.allocate(4);
-        buffer.order(ByteOrder.BIG_ENDIAN); // <- this is what happens when somebody in China designs a communication protocol
+        buffer.order(ByteOrder.BIG_ENDIAN);
         buffer.putInt(value);
         return buffer.array();
     }
@@ -37,7 +37,7 @@ public class MoyoungSettingInt extends MoyoungSetting<Integer> {
         if (data.length != 4)
             throw new IllegalArgumentException("Wrong data length, should be 4, was " + data.length);
         ByteBuffer buffer = ByteBuffer.wrap(data);
-        buffer.order(ByteOrder.LITTLE_ENDIAN); // <- yes, it's different here
+        buffer.order(ByteOrder.LITTLE_ENDIAN); // <- yes, it's different here since that's how the protocol is designed
         return buffer.getInt();
     }
 }

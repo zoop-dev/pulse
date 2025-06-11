@@ -24,16 +24,16 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 
 public class MoyoungSettingUserInfo extends MoyoungSetting<ActivityUser> {
     public MoyoungSettingUserInfo(String name, byte cmdSet) {
-        super(name, (byte)-1, cmdSet);
+        super(name, (byte) -1, cmdSet);
     }
 
     @Override
     public byte[] encode(ActivityUser value) {
         ByteBuffer buffer = ByteBuffer.allocate(4);
-        buffer.put((byte)value.getHeightCm());
-        buffer.put((byte)value.getWeightKg());
-        buffer.put((byte)value.getAge());
-        buffer.put((byte)value.getGender());
+        buffer.put((byte) value.getHeightCm());
+        buffer.put((byte) value.getWeightKg());
+        buffer.put((byte) value.getAge());
+        buffer.put((byte) value.getGender());
         return buffer.array();
     }
 

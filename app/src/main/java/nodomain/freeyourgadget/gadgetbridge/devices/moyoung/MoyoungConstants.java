@@ -371,24 +371,22 @@ public class MoyoungConstants {
 
     public static final TimeZone WATCH_INTERNAL_TIME_ZONE = TimeZone.getTimeZone("GMT+8");
 
-    public static int LocalTimeToWatchTime(Date localTime)
-    {
+    public static int LocalTimeToWatchTime(Date localTime) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
         String format = simpleDateFormat.format(localTime);
         simpleDateFormat.setTimeZone(WATCH_INTERNAL_TIME_ZONE);
         try {
-            return (int)(simpleDateFormat.parse(format).getTime() / 1000);
+            return (int) (simpleDateFormat.parse(format).getTime() / 1000);
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static Date WatchTimeToLocalTime(int watchTime)
-    {
+    public static Date WatchTimeToLocalTime(int watchTime) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         simpleDateFormat.setTimeZone(WATCH_INTERNAL_TIME_ZONE);
-        String format = simpleDateFormat.format(new Date((long)watchTime * 1000));
+        String format = simpleDateFormat.format(new Date((long) watchTime * 1000));
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
         try {
             return simpleDateFormat.parse(format);
@@ -412,10 +410,8 @@ public class MoyoungConstants {
     public static final byte NOTIFICATION_TYPE_MESSAGE_KAKAO = 10;
     public static final byte NOTIFICATION_TYPE_MESSAGE_OTHER = 11;
 
-    public static byte notificationType(NotificationType type)
-    {
-        switch(type)
-        {
+    public static byte notificationType(NotificationType type) {
+        switch (type) {
             case FACEBOOK:
             case FACEBOOK_MESSENGER:
                 return NOTIFICATION_TYPE_MESSAGE_FACEBOOK;

@@ -27,11 +27,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class KsixVentureCoordinator extends AbstractMoyoungDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(KsixVentureCoordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("KSIX VENTURE");
+        return Pattern.compile("^KSIX VENTURE$");
     }
 
     @Override

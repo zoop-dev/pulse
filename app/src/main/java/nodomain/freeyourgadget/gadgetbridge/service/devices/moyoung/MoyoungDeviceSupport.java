@@ -151,7 +151,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     private final Set<CalendarEvent> lastSync = new HashSet<>();
 
     public int getMtu() {
-        return super.getMTU()-3;
+        return super.getMTU() - 3;
     }
 
     public MoyoungDeviceSupport() {
@@ -188,7 +188,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         final int mtu = ((AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator()).getMtu();
-        builder.requestMtu(mtu+3);  // Add 3 bytes for the BLE overhead
+        builder.requestMtu(mtu + 3);  // Add 3 bytes for the BLE overhead
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
         builder.notify(getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN), true);
@@ -215,8 +215,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         idleUpdateHandler.removeCallbacks(updateIdleStepsRunnable);
     }
 
-    private BluetoothGattCharacteristic getTargetCharacteristicForPacketType(byte packetType)
-    {
+    private BluetoothGattCharacteristic getTargetCharacteristicForPacketType(byte packetType) {
         if (packetType == 1)
             return getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_DATA_SPECIAL_1);
         else if (packetType == 2)
@@ -225,13 +224,11 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_DATA_OUT);
     }
 
-    public void sendPacket(TransactionBuilder builder, byte[] packet)
-    {
+    public void sendPacket(TransactionBuilder builder, byte[] packet) {
         MoyoungPacketOut packetOut = new MoyoungPacketOut(packet);
 
         byte[] fragment = new byte[Math.min(packet.length, getMtu())];
-        while(packetOut.getFragment(fragment))
-        {
+        while (packetOut.getFragment(fragment)) {
             builder.write(getTargetCharacteristicForPacketType(packet[4]), fragment.clone());
         }
     }
@@ -239,14 +236,12 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         UUID charUuid = characteristic.getUuid();
-        if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS))
-        {
+        if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS)) {
             LOG.info("Update step count: {}", Logging.formatBytes(value));
             handleStepsHistory(0, value, true);
             return true;
         }
-        if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
-        {
+        if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN)) {
             if (packetIn.putFragment(value)) {
                 Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                 packetIn = new MoyoungPacketIn();
@@ -265,8 +260,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         return super.onCharacteristicChanged(gatt, characteristic, value);
     }
 
-    private boolean handlePacket(byte packetType, byte[] payload)
-    {
+    private boolean handlePacket(byte packetType, byte[] payload) {
         if (packetType == MoyoungConstants.CMD_RETURN_PRINCIPAL_SCREEN) {  // 83
             LOG.info("Return to a principal screen...");
             if (takePhotoActive) {
@@ -276,8 +270,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE)
-        {
+        if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE) {
             int heartRate = payload[0] & 0xff;
             LOG.info("Measure heart rate finished: {} BPM", heartRate);
 
@@ -303,8 +296,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
             return true;
         }
-        if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_OXYGEN)
-        {
+        if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_OXYGEN) {
             int percent = payload[0] & 0xff;
             LOG.info("Measure blood oxygen finished: {}%", percent);
 
@@ -327,8 +319,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
             return true;
         }
-        if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_PRESSURE)
-        {
+        if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_PRESSURE) {
             int dataUnknown = payload[0] & 0xff;
             int data1 = payload[1] & 0xff;
             int data2 = payload[2] & 0xff;
@@ -374,8 +365,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_LAST_DYNAMIC_RATE)
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_LAST_DYNAMIC_RATE) {
             // Training on the watch just finished and it wants us to fetch the details
             LOG.info("Starting training fetch");
             try {
@@ -386,66 +376,56 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1)
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1) {
             handleHeartRateHistory(payload);
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_NOTIFY_PHONE_OPERATION)
-        {
+        if (packetType == MoyoungConstants.CMD_NOTIFY_PHONE_OPERATION) {
             byte operation = payload[0];
-            if (operation == MoyoungConstants.ARG_OPERATION_PLAY_PAUSE)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_PLAY_PAUSE) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.PLAYPAUSE;
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_PREV_SONG)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_PREV_SONG) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.PREVIOUS;
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_NEXT_SONG)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_NEXT_SONG) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.NEXT;
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_DROP_INCOMING_CALL)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_DROP_INCOMING_CALL) {
                 GBDeviceEventCallControl callCmd = new GBDeviceEventCallControl();
                 callCmd.event = GBDeviceEventCallControl.Event.REJECT;
                 evaluateGBDeviceEvent(callCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_VOLUME_UP)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_VOLUME_UP) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.VOLUMEUP;
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_VOLUME_DOWN)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_VOLUME_DOWN) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.VOLUMEDOWN;
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_PLAY)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_PLAY) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.PLAY;
                 evaluateGBDeviceEvent(musicCmd);
                 return true;
             }
-            if (operation == MoyoungConstants.ARG_OPERATION_PAUSE)
-            {
+            if (operation == MoyoungConstants.ARG_OPERATION_PAUSE) {
                 GBDeviceEventMusicControl musicCmd = new GBDeviceEventMusicControl();
                 musicCmd.event = GBDeviceEventMusicControl.Event.PAUSE;
                 evaluateGBDeviceEvent(musicCmd);
@@ -463,8 +443,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_NOTIFY_WEATHER_CHANGE)
-        {
+        if (packetType == MoyoungConstants.CMD_NOTIFY_WEATHER_CHANGE) {
             LOG.info("Will transmit cached weather (if any) since the watch asks for it");
             if (Weather.getInstance().getWeatherSpec() != null) {
                 final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.getInstance().getWeatherSpecs());
@@ -473,10 +452,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        for (MoyoungSetting setting : queriedSettings)
-        {
-            if (setting.cmdQuery == packetType)
-            {
+        for (MoyoungSetting setting : queriedSettings) {
+            if (setting.cmdQuery == packetType) {
                 Object value = setting.decode(payload);
                 onReadConfigurationDone(setting, value, payload);
                 queriedSettings.remove(setting);
@@ -484,41 +461,35 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             }
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_ALARM_CLOCK || (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_QUERY_ALARMS))
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_ALARM_CLOCK || (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_QUERY_ALARMS)) {
             handleGetAlarmsResponse(payload);
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_STRESS_PACKET)
-        {
+        if (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_STRESS_PACKET) {
             handleStressPacket(payload);
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_POWER_SAVING)
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_POWER_SAVING) {
             LOG.info("Power saving set to: {}", payload[0] == 0x01);
             onReadConfigurationDone(getSetting("POWER_SAVING"), payload[0], null);
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_DISPLAY_WATCH_FACE)
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_DISPLAY_WATCH_FACE) {
             LOG.info("Watchface changed on watch to nr {}", payload[0]);
             onReadConfigurationDone(getSetting("DISPLAY_WATCH_FACE"), payload[0], null);
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_QUICK_VIEW)
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_QUICK_VIEW) {
             LOG.info("AOD or Lift Wrist toggle changed to: {}", payload[0] == 0x00 ? "enabled" : "disabled");
             onReadConfigurationDone(getSetting("QUICK_VIEW"), payload[0], null);
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_QUERY_DO_NOT_DISTURB_TIME)
-        {
+        if (packetType == MoyoungConstants.CMD_QUERY_DO_NOT_DISTURB_TIME) {
             LOG.info("DND setting changed to: {}", payload[0]);
             if (payload.length > 4)
                 onReadConfigurationDone(getSetting("DO_NOT_DISTURB_TIME"), payload, null);
@@ -527,14 +498,12 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_QUERY_STOCKS)
-        {
+        if (packetType == MoyoungConstants.CMD_ADVANCED_QUERY && payload[0] == MoyoungConstants.ARG_ADVANCED_QUERY_STOCKS) {
             LOG.info("Stocks queried from watch");
             return true;
         }
 
-        if (packetType == MoyoungConstants.CMD_FIND_MY_PHONE)
-        {
+        if (packetType == MoyoungConstants.CMD_FIND_MY_PHONE) {
             LOG.info("Find my phone started on watch");
             GBDeviceEventFindPhone findPhoneEvent = new GBDeviceEventFindPhone();
             findPhoneEvent.event = findMyPhoneActive ? GBDeviceEventFindPhone.Event.STOP : GBDeviceEventFindPhone.Event.START;
@@ -549,8 +518,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private void broadcastSample(MoyoungActivitySample sample) {
         Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
-            .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, sample)
-            .putExtra(DeviceService.EXTRA_TIMESTAMP, sample.getTimestamp());
+                .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, sample)
+                .putExtra(DeviceService.EXTRA_TIMESTAMP, sample.getTimestamp());
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
@@ -574,7 +543,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     private void handleBatteryInfo(BatteryInfo info) {
         LOG.warn("Battery info: {}", info);
         batteryCmd.level = (short) info.getPercentCharged();
-        if (batteryCmd.state == BatteryState.UNKNOWN) batteryCmd.state = BatteryState.BATTERY_NORMAL;
+        if (batteryCmd.state == BatteryState.UNKNOWN)
+            batteryCmd.state = BatteryState.BATTERY_NORMAL;
         handleGBDeviceEvent(batteryCmd);
     }
 
@@ -593,8 +563,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         return true;
     }
 
-    private void sendNotification(byte type, String text)
-    {
+    private void sendNotification(byte type, String text) {
         try {
             TransactionBuilder builder = performInitialized("sendNotification");
             byte[] str = text.getBytes();
@@ -660,7 +629,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     private void setTime(TransactionBuilder builder) {
         ByteBuffer buffer = ByteBuffer.allocate(5);
         buffer.putInt(MoyoungConstants.LocalTimeToWatchTime(new Date())); // The watch is hardcoded to GMT+8 internally...
-        buffer.put((byte)8); // I guess this means GMT+8 but changing it has no effect at all (it was hardcoded in the original app too)
+        buffer.put((byte) 8); // I guess this means GMT+8 but changing it has no effect at all (it was hardcoded in the original app too)
         sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SYNC_TIME, buffer.array()));
     }
 
@@ -754,8 +723,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    private void handleGetAlarmsResponse(byte[] payload)
-    {
+    private void handleGetAlarmsResponse(byte[] payload) {
         boolean payloadV2 = false;
         if (payload.length % 8 == 3) {
             payloadV2 = true;
@@ -784,14 +752,14 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             alarmsInPacket = payload.length / 8;
         }
 
-        for (int i=0; i<alarmsInPacket; i++) {
+        for (int i = 0; i < alarmsInPacket; i++) {
             byte[] alarm = new byte[8];
             buffer.get(alarm);
             saveAlarmFromPayload(alarm);
         }
 
         AbstractMoyoungDeviceCoordinator coordinator = (AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator();
-        for (int i=alarmsInPacket; i<=coordinator.getAlarmSlotCount(getDevice()); i++) {
+        for (int i = alarmsInPacket; i <= coordinator.getAlarmSlotCount(getDevice()); i++) {
             nodomain.freeyourgadget.gadgetbridge.entities.Alarm alarm = new nodomain.freeyourgadget.gadgetbridge.entities.Alarm();
             alarm.setUnused(true);
             AlarmUtils.mergeOneshotToDeviceAlarms(getDevice(), alarm, i);
@@ -834,7 +802,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         AbstractMoyoungDeviceCoordinator coordinator = (AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator();
         try {
             TransactionBuilder builder = performInitialized("onSetAlarms");
-            for(int i = 0; i < coordinator.getAlarmSlotCount(getDevice()); i++) {
+            for (int i = 0; i < coordinator.getAlarmSlotCount(getDevice()); i++) {
                 Alarm alarm = alarms.get(i);
                 if (alarm.getUnused()) {
                     byte[] packet = new byte[]{MoyoungConstants.ARG_ADVANCED_SET_ALARM, MoyoungConstants.ARG_ALARM_DELETE, (byte) i};
@@ -844,8 +812,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
                 ByteBuffer buffer = ByteBuffer.allocate(8);
                 buffer.order(ByteOrder.LITTLE_ENDIAN);
-                buffer.put((byte)i);
-                buffer.put(alarm.getEnabled() ? (byte)1 : (byte)0);
+                buffer.put((byte) i);
+                buffer.put(alarm.getEnabled() ? (byte) 1 : (byte) 0);
                 byte repetition = 0;
                 if (alarm.getRepetition(Alarm.ALARM_SUN))
                     repetition |= 1;
@@ -869,19 +837,16 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 else
                     repeat = 2;
                 buffer.put(repeat);
-                buffer.put((byte)alarm.getHour());
-                buffer.put((byte)alarm.getMinute());
-                if (repetition == 0)
-                {
+                buffer.put((byte) alarm.getHour());
+                buffer.put((byte) alarm.getMinute());
+                if (repetition == 0) {
                     // TODO: it would be possible to set an "once" alarm on a set day, but Gadgetbridge does not seem to support that
                     Calendar calendar = AlarmUtils.toCalendar(alarm);
-                    buffer.put((byte)(((calendar.get(Calendar.YEAR) - 2015) << 4) + calendar.get(Calendar.MONTH) + 1));
-                    buffer.put((byte)calendar.get(Calendar.DAY_OF_MONTH));
-                }
-                else
-                {
-                    buffer.put((byte)0);
-                    buffer.put((byte)0);
+                    buffer.put((byte) (((calendar.get(Calendar.YEAR) - 2015) << 4) + calendar.get(Calendar.MONTH) + 1));
+                    buffer.put((byte) calendar.get(Calendar.DAY_OF_MONTH));
+                } else {
+                    buffer.put((byte) 0);
+                    buffer.put((byte) 0);
                 }
                 buffer.put(repetition);
                 // Older packet type
@@ -968,7 +933,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         final TimeZone localTZ = Calendar.getInstance().getTimeZone();
         try {
             TransactionBuilder builder = performInitialized("sendWorldClocks");
-            for (byte i=1; i<getDevice().getDeviceCoordinator().getWorldClocksSlotCount(); i++) {
+            for (byte i = 1; i <= getDevice().getDeviceCoordinator().getWorldClocksSlotCount(); i++) {
                 LOG.info("Deleting world clock {}", i);
                 ByteBuffer payload = ByteBuffer.allocate(3);
                 payload.put((byte) 0x00);
@@ -1043,12 +1008,12 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("sendCalendar");
             byte[] payload = new byte[]{
-                MoyoungConstants.ARG_ADVANCED_SET_CALENDAR,
-                MoyoungConstants.ARG_CALENDAR_CLEAR
+                    MoyoungConstants.ARG_ADVANCED_SET_CALENDAR,
+                    MoyoungConstants.ARG_CALENDAR_CLEAR
             };
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, payload));
             int itemNr = 0;
-            for(CalendarEvent event : sortedEventList) {
+            for (CalendarEvent event : sortedEventList) {
                 byte[] title = event.getTitle().getBytes();
                 Calendar start = Calendar.getInstance();
                 start.setTimeInMillis(event.getBegin());
@@ -1101,16 +1066,14 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onFetchRecordedData(int dataTypes) {
-        if ((dataTypes & RecordedDataTypes.TYPE_ACTIVITY) != 0)
-        {
+        if ((dataTypes & RecordedDataTypes.TYPE_ACTIVITY) != 0) {
             try {
                 new FetchDataOperation(this).perform();
             } catch (IOException e) {
                 LOG.error("Error fetching data: ", e);
             }
         }
-        if ((dataTypes & RecordedDataTypes.TYPE_GPS_TRACKS) != 0)
-        {
+        if ((dataTypes & RecordedDataTypes.TYPE_GPS_TRACKS) != 0) {
             LOG.info("Fetching workouts from watch");
             try {
                 new FetchWorkoutsV2Operation(this).perform();
@@ -1120,8 +1083,8 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
         try {
             TransactionBuilder builder = performInitialized("fetchStress");
-            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[] { MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x00 }));
-            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[] { MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x01 }));
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[]{MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x00}));
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[]{MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x01}));
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Error while sending stress sync request: ", e);
@@ -1139,13 +1102,11 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     };
 
-    private void updateIdleSteps()
-    {
+    private void updateIdleSteps() {
         // The steps value hasn't changed for a while, so the user is not moving
         // Store this information in the database to improve the averaging over long periods of time
 
-        if (!getDevice().isConnected())
-        {
+        if (!getDevice().isConnected()) {
             LOG.warn("updateIdleSteps but device not connected?!");
             return;
         }
@@ -1156,7 +1117,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
             MoyoungActivitySampleProvider provider = new MoyoungActivitySampleProvider(getDevice(), dbHandler.getDaoSession());
 
-            int currentSampleTimestamp = (int)(Calendar.getInstance().getTimeInMillis() / 1000);
+            int currentSampleTimestamp = (int) (Calendar.getInstance().getTimeInMillis() / 1000);
 
             MoyoungActivitySample sample = new MoyoungActivitySample();
             sample.setDevice(device);
@@ -1194,9 +1155,9 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         cal.set(Calendar.SECOND, 0);
         LOG.info("Received HR history packet: index={}, daysAgo={}, startHour={}", packetIndex, daysAgo, startHour);
         int index = 1;
-        for (int hour=startHour; hour<startHour+6; hour++) {
+        for (int hour = startHour; hour < startHour + 6; hour++) {
             cal.set(Calendar.HOUR_OF_DAY, hour);
-            for (int minute=0; minute<60; minute+=5) {
+            for (int minute = 0; minute < 60; minute += 5) {
                 cal.set(Calendar.MINUTE, minute);
                 int hr = data[index] & 0xff;
                 if (HeartRateUtils.getInstance().isValidHeartRateValue(hr) && cal.getTimeInMillis() < System.currentTimeMillis()) {
@@ -1233,7 +1194,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
         try {
             TransactionBuilder builder = performInitialized("FetchHROperation");
-            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[]{(byte) (packetIndex+1)}));
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[]{(byte) (packetIndex + 1)}));
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Failed sending HR history request packet: ", e);
@@ -1241,8 +1202,10 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     public void handleStepsHistory(int daysAgo, byte[] data, boolean isRealtime) {
-        if (data.length != 9)
-            throw new IllegalArgumentException();
+        if (data.length != 9) {
+            LOG.error("steps payload should have 9 bytes, not {}", data.length);
+            return;
+        }
 
         byte[] bArr2 = new byte[3];
         System.arraycopy(data, 0, bArr2, 0, 3);
@@ -1261,8 +1224,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             MoyoungActivitySampleProvider provider = new MoyoungActivitySampleProvider(getDevice(), dbHandler.getDaoSession());
 
             Calendar thisSample = Calendar.getInstance();
-            if (daysAgo != 0)
-            {
+            if (daysAgo != 0) {
                 thisSample.add(Calendar.DATE, -daysAgo);
                 thisSample.set(Calendar.HOUR_OF_DAY, 23);
                 thisSample.set(Calendar.MINUTE, 59);
@@ -1282,8 +1244,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             int previousSteps = 0;
             int previousDistance = 0;
             int previousCalories = 0;
-            for (MoyoungActivitySample sample : provider.getAllActivitySamples(startOfDayTimestamp, thisSampleTimestamp))
-            {
+            for (MoyoungActivitySample sample : provider.getAllActivitySamples(startOfDayTimestamp, thisSampleTimestamp)) {
                 if (sample.getSteps() != ActivitySample.NOT_MEASURED)
                     previousSteps += sample.getSteps();
                 if (sample.getDistanceMeters() != ActivitySample.NOT_MEASURED)
@@ -1296,12 +1257,9 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             int newDistance = distance - previousDistance;
             int newCalories = calories - previousCalories;
 
-            if (newSteps < 0 || newDistance < 0 || newCalories < 0)
-            {
+            if (newSteps < 0 || newDistance < 0 || newCalories < 0) {
                 LOG.warn("Ignoring a sample that would generate negative values: steps += {}, distance +={}, calories += {}", newSteps, newDistance, newCalories);
-            }
-            else if (newSteps != 0 || newDistance != 0 || newCalories != 0 || daysAgo == 0)
-            {
+            } else if (newSteps != 0 || newDistance != 0 || newCalories != 0 || daysAgo == 0) {
                 MoyoungActivitySample sample = new MoyoungActivitySample();
                 sample.setDevice(device);
                 sample.setUser(user);
@@ -1315,8 +1273,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 sample.setCaloriesBurnt(newCalories);
 
                 provider.addGBActivitySample(sample);
-                if (isRealtime)
-                {
+                if (isRealtime) {
                     idleUpdateHandler.removeCallbacks(updateIdleStepsRunnable);
                     idleUpdateHandler.postDelayed(updateIdleStepsRunnable, IDLE_STEPS_INTERVAL);
                     broadcastSample(sample);
@@ -1331,11 +1288,11 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    public void handleSleepHistory(int daysAgo, byte[] data)
-    {
-        if (data.length % 3 != 0)
-            throw new IllegalArgumentException();
-
+    public void handleSleepHistory(int daysAgo, byte[] data) {
+        if (data.length % 3 != 0) {
+            LOG.error("sleep payload should be dividable by 3, but received {} bytes", data.length);
+            return;
+        }
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             MoyoungSleepStageSampleProvider provider = new MoyoungSleepStageSampleProvider(getDevice(), dbHandler.getDaoSession());
 
@@ -1344,11 +1301,10 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
             List<MoyoungSleepStageSample> samples = new ArrayList<>();
 
-            for(int i = 0; i < data.length / 3; i++)
-            {
-                int type = data[3*i];
-                int start_h = data[3*i + 1];
-                int start_m = data[3*i + 2];
+            for (int i = 0; i < data.length / 3; i++) {
+                int type = data[3 * i];
+                int start_h = data[3 * i + 1];
+                int start_m = data[3 * i + 2];
 
                 LOG.info("sleep[daysago={}][i={}] type={}, start_h={}, start_m={}", daysAgo, i, type, start_h, start_m);
 
@@ -1382,8 +1338,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    public void handleTrainingData(byte[] data)
-    {
+    public void handleTrainingData(byte[] data) {
         int protocolVersion = 0;
         int trainingBytesLength = 24;
         if (data.length % 24 == 0) {
@@ -1397,7 +1352,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             return;
         }
 
-        for(int i = 0; i < data.length / trainingBytesLength; i++) {
+        for (int i = 0; i < data.length / trainingBytesLength; i++) {
             if (protocolVersion == 1 && ArrayUtils.isAllZeros(data, trainingBytesLength * i, trainingBytesLength)) {
                 LOG.info("Skipping empty workout details packet");
                 continue;
@@ -1448,16 +1403,13 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
                 QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
                 qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(device.getId()))
-                    .where(BaseActivitySummaryDao.Properties.StartTime.eq(startTime))
-                    .where(BaseActivitySummaryDao.Properties.EndTime.eq(endTime));
+                        .where(BaseActivitySummaryDao.Properties.StartTime.eq(startTime))
+                        .where(BaseActivitySummaryDao.Properties.EndTime.eq(endTime));
                 boolean alreadyHaveThisSample = qb.count() > 0;
 
-                if (alreadyHaveThisSample)
-                {
+                if (alreadyHaveThisSample) {
                     LOG.info("Already had this training sample, ignoring");
-                }
-                else
-                {
+                } else {
                     BaseActivitySummary summary = new BaseActivitySummary();
 
                     summary.setDevice(device);
@@ -1475,7 +1427,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                     summaryDao.insert(summary);
 
                     // NOTE: The type format from device maps directly to the database format
-                    provider.updateActivityInRange((int)(startTime.getTime() / 1000), (int)(endTime.getTime() / 1000), type);
+                    provider.updateActivityInRange((int) (startTime.getTime() / 1000), (int) (endTime.getTime() / 1000), type);
                 }
             } catch (Exception ex) {
                 LOG.error("Error saving samples: ", ex);
@@ -1487,23 +1439,22 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onReset(int flags) {
-        // TODO: this shuts down the watch, rather than rebooting it - perhaps add a new operation type?
+        // TODO: this shuts down the watch, rather than rebooting it
         // (reboot is not supported, btw)
 
         try {
             TransactionBuilder builder = performInitialized("shutdown");
-            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SHUTDOWN, new byte[] { -1 }));
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SHUTDOWN, new byte[]{-1}));
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Error sending reset command: ", e);
         }
     }
 
-    private void triggerHeartRateTest(boolean start)
-    {
+    private void triggerHeartRateTest(boolean start) {
         try {
             TransactionBuilder builder = performInitialized("onHeartRateTest");
-            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE, new byte[] { start ? (byte)0 : (byte)-1 }));
+            sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE, new byte[]{start ? (byte) 0 : (byte) -1}));
             builder.queue(getQueue());
         } catch (IOException e) {
             LOG.error("Error sending heart rate test command: ", e);
@@ -1557,8 +1508,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onFindDevice(boolean start) {
-        if (start)
-        {
+        if (start) {
             try {
                 TransactionBuilder builder = performInitialized("onFindDevice");
                 sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_FIND_MY_WATCH, new byte[0]));
@@ -1573,8 +1523,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
     @SuppressWarnings("unchecked")
     private <T extends MoyoungSetting> T getSetting(String id) {
         AbstractMoyoungDeviceCoordinator coordinator = (AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator();
-        for(MoyoungSetting setting : coordinator.getSupportedSettings())
-        {
+        for (MoyoungSetting setting : coordinator.getSupportedSettings()) {
             if (setting.name.equals(id))
                 return (T) setting;
         }
@@ -1594,13 +1543,11 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         return cal;
     }
 
-    private <T> void sendSetting(TransactionBuilder builder, MoyoungSetting<T> setting, T newValue)
-    {
+    private <T> void sendSetting(TransactionBuilder builder, MoyoungSetting<T> setting, T newValue) {
         sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), setting.cmdSet, setting.encode(newValue)));
     }
 
-    private <T> void sendSetting(MoyoungSetting<T> setting, T newValue)
-    {
+    private <T> void sendSetting(MoyoungSetting<T> setting, T newValue) {
         try {
             TransactionBuilder builder = performInitialized("sendSetting");
             sendSetting(builder, setting, newValue);
@@ -1612,8 +1559,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private final Set<MoyoungSetting> queriedSettings = new HashSet<>();
 
-    private void querySetting(MoyoungSetting setting)
-    {
+    private void querySetting(MoyoungSetting setting) {
         if (queriedSettings.contains(setting))
             return;
 
@@ -1652,11 +1598,10 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                     timeSystem = MoyoungEnumTimeSystem.TIME_SYSTEM_24;
                 else if (timeSystemPref.equals(getContext().getString(R.string.p_timeformat_am_pm)))
                     timeSystem = MoyoungEnumTimeSystem.TIME_SYSTEM_12;
+                else if (DateFormat.is24HourFormat(GBApplication.getContext()))
+                    timeSystem = MoyoungEnumTimeSystem.TIME_SYSTEM_24;
                 else
-                    if (DateFormat.is24HourFormat(GBApplication.getContext()))
-                        timeSystem = MoyoungEnumTimeSystem.TIME_SYSTEM_24;
-                    else
-                        timeSystem = MoyoungEnumTimeSystem.TIME_SYSTEM_12;
+                    timeSystem = MoyoungEnumTimeSystem.TIME_SYSTEM_12;
 
                 sendSetting(getSetting("TIME_SYSTEM"), timeSystem);
                 break;
@@ -1732,7 +1677,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 
             case MoyoungConstants.PREF_MOYOUNG_DEVICE_VERSION:
                 String versionPref = prefs.getString(MoyoungConstants.PREF_MOYOUNG_DEVICE_VERSION,
-                    String.valueOf(MoyoungEnumDeviceVersion.INTERNATIONAL_EDITION.value()));
+                        String.valueOf(MoyoungEnumDeviceVersion.INTERNATIONAL_EDITION.value()));
                 byte versionNum = Byte.parseByte(versionPref);
                 MoyoungSettingEnum<MoyoungEnumDeviceVersion> versionSetting = getSetting("DEVICE_VERSION");
                 sendSetting(versionSetting, versionSetting.findByValue(versionNum));
@@ -1755,10 +1700,10 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 MoyoungSettingTimeRange.TimeRange doNotDisturb;
                 if (doNotDisturbEnabled)
                     doNotDisturb = new MoyoungSettingTimeRange.TimeRange(
-                        (byte) doNotDisturbStart.get(Calendar.HOUR_OF_DAY), (byte) doNotDisturbStart.get(Calendar.MINUTE),
-                        (byte) doNotDisturbEnd.get(Calendar.HOUR_OF_DAY), (byte) doNotDisturbEnd.get(Calendar.MINUTE));
+                            (byte) doNotDisturbStart.get(Calendar.HOUR_OF_DAY), (byte) doNotDisturbStart.get(Calendar.MINUTE),
+                            (byte) doNotDisturbEnd.get(Calendar.HOUR_OF_DAY), (byte) doNotDisturbEnd.get(Calendar.MINUTE));
                 else
-                    doNotDisturb = new MoyoungSettingTimeRange.TimeRange((byte)0, (byte)0, (byte)0, (byte)0);
+                    doNotDisturb = new MoyoungSettingTimeRange.TimeRange((byte) 0, (byte) 0, (byte) 0, (byte) 0);
 
                 sendSetting(getSetting("DO_NOT_DISTURB_TIME"), doNotDisturb);
                 break;
@@ -1776,10 +1721,10 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 MoyoungSettingTimeRange.TimeRange quickViewTime;
                 if (quickViewEnabled && quickViewScheduled)
                     quickViewTime = new MoyoungSettingTimeRange.TimeRange(
-                        (byte) quickViewStart.get(Calendar.HOUR_OF_DAY), (byte) quickViewStart.get(Calendar.MINUTE),
-                        (byte) quickViewEnd.get(Calendar.HOUR_OF_DAY), (byte) quickViewEnd.get(Calendar.MINUTE));
+                            (byte) quickViewStart.get(Calendar.HOUR_OF_DAY), (byte) quickViewStart.get(Calendar.MINUTE),
+                            (byte) quickViewEnd.get(Calendar.HOUR_OF_DAY), (byte) quickViewEnd.get(Calendar.MINUTE));
                 else
-                    quickViewTime = new MoyoungSettingTimeRange.TimeRange((byte)0, (byte)0, (byte)0, (byte)0);
+                    quickViewTime = new MoyoungSettingTimeRange.TimeRange((byte) 0, (byte) 0, (byte) 0, (byte) 0);
 
                 sendSetting(getSetting("QUICK_VIEW"), quickViewEnabled);
                 sendSetting(getSetting("QUICK_VIEW_TIME"), quickViewTime);
@@ -1804,7 +1749,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
                 byte sedentaryStart = (byte) prefs.getInt(DeviceSettingsPreferenceConst.PREF_INACTIVITY_START, 10);
                 byte sedentaryEnd = (byte) prefs.getInt(DeviceSettingsPreferenceConst.PREF_INACTIVITY_END, 22);
                 sendSetting(getSetting("REMINDERS_TO_MOVE_PERIOD"),
-                    new MoyoungSettingRemindersToMove.RemindersToMove(sedentaryPeriod, sedentarySteps, sedentaryStart, sedentaryEnd));
+                        new MoyoungSettingRemindersToMove.RemindersToMove(sedentaryPeriod, sedentarySteps, sedentaryStart, sedentaryEnd));
                 break;
 
             case "sync_calendar":
@@ -1891,8 +1836,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
 //        evaluateGBDeviceEvent(configReadEvent);
     }
 
-    public void onReadConfigurationDone(MoyoungSetting setting, Object value, byte[] data)
-    {
+    public void onReadConfigurationDone(MoyoungSetting setting, Object value, byte[] data) {
         LOG.info("CONFIG {} = {}", setting.name, value);
         Prefs prefs = getDevicePrefs();
         final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
@@ -1956,7 +1900,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             case "DO_NOT_DISTURB_TIME":
                 MoyoungSettingTimeRange.TimeRange doNotDisturb = (MoyoungSettingTimeRange.TimeRange) value;
                 if (doNotDisturb.start_h == 0 && doNotDisturb.start_m == 0 &&
-                    doNotDisturb.end_h == 0 && doNotDisturb.end_m == 0)
+                        doNotDisturb.end_h == 0 && doNotDisturb.end_m == 0)
                     eventUpdatePreferences.withPreference(
                             DeviceSettingsPreferenceConst.PREF_DO_NOT_DISTURB,
                             DeviceSettingsPreferenceConst.PREF_DO_NOT_DISTURB_OFF
@@ -1988,10 +1932,9 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             case "QUICK_VIEW_TIME":
                 boolean quickViewEnabled2 = !prefs.getString(DeviceSettingsPreferenceConst.PREF_ACTIVATE_DISPLAY_ON_LIFT, getContext().getString(R.string.p_off)).equals(getContext().getString(R.string.p_off));
                 MoyoungSettingTimeRange.TimeRange quickViewTime = (MoyoungSettingTimeRange.TimeRange) value;
-                if (quickViewEnabled2)
-                {
+                if (quickViewEnabled2) {
                     if (quickViewTime.start_h == 0 && quickViewTime.start_m == 0 &&
-                        quickViewTime.end_h == 0 && quickViewTime.end_m == 0)
+                            quickViewTime.end_h == 0 && quickViewTime.end_m == 0)
                         eventUpdatePreferences.withPreference(
                                 DeviceSettingsPreferenceConst.PREF_ACTIVATE_DISPLAY_ON_LIFT,
                                 getContext().getString(R.string.p_on)
@@ -2046,7 +1989,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             // Weather today packet
             MoyoungWeatherToday weatherToday = new MoyoungWeatherToday(weatherSpec);
             ByteBuffer packetWeatherToday = ByteBuffer.allocate(weatherToday.pm25 != null ? 21 : 19);
-            packetWeatherToday.put(weatherToday.pm25 != null ? (byte)1 : (byte)0);
+            packetWeatherToday.put(weatherToday.pm25 != null ? (byte) 1 : (byte) 0);
             packetWeatherToday.put(weatherToday.conditionId);
             packetWeatherToday.put(weatherToday.currentTemp);
             if (weatherToday.pm25 != null)
@@ -2083,13 +2026,12 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
             packetWeatherForecast.put(weatherToday.conditionId);
             packetWeatherForecast.put(weatherToday.currentTemp);
             packetWeatherForecast.put(weatherToday.currentTemp);
-            for(int i = 0; i < 7; i++)
-            {
+            for (int i = 0; i < 7; i++) {
                 MoyoungWeatherForecast forecast;
                 if (weatherSpec.forecasts.size() > i)
                     forecast = new MoyoungWeatherForecast(weatherSpec.forecasts.get(i));
                 else
-                    forecast = new MoyoungWeatherForecast(MoyoungConstants.WEATHER_HAZE, (byte)-100, (byte)-100); // I don't think there is a way to send less (my watch shows only tomorrow anyway...)
+                    forecast = new MoyoungWeatherForecast(MoyoungConstants.WEATHER_HAZE, (byte) -100, (byte) -100); // I don't think there is a way to send less (my watch shows only tomorrow anyway...)
                 packetWeatherForecast.put(forecast.conditionId);
                 packetWeatherForecast.put(forecast.maxTemp);
                 packetWeatherForecast.put(forecast.minTemp);

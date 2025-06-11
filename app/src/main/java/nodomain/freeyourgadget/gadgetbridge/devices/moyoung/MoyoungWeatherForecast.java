@@ -33,16 +33,15 @@ public class MoyoungWeatherForecast {
         this.maxTemp = maxTemp;
     }
 
-    public MoyoungWeatherForecast(WeatherSpec.Daily forecast)
-    {
+    public MoyoungWeatherForecast(WeatherSpec.Daily forecast) {
         conditionId = MoyoungConstants.openWeatherConditionToMoyoungConditionId(forecast.conditionCode);
         String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
-            minTemp = (byte)WeatherUtils.celsiusToFahrenheit(forecast.minTemp - 273); // Kelvin -> Fahrenheit
-            maxTemp = (byte)WeatherUtils.celsiusToFahrenheit(forecast.maxTemp - 273); // Kelvin -> Fahrenheit
+            minTemp = (byte) WeatherUtils.celsiusToFahrenheit(forecast.minTemp - 273); // Kelvin -> Fahrenheit
+            maxTemp = (byte) WeatherUtils.celsiusToFahrenheit(forecast.maxTemp - 273); // Kelvin -> Fahrenheit
         } else {
-            minTemp = (byte)(forecast.minTemp - 273); // Kelvin -> Celcius
-            maxTemp = (byte)(forecast.maxTemp - 273); // Kelvin -> Celcius
+            minTemp = (byte) (forecast.minTemp - 273); // Kelvin -> Celcius
+            maxTemp = (byte) (forecast.maxTemp - 273); // Kelvin -> Celcius
         }
     }
 }

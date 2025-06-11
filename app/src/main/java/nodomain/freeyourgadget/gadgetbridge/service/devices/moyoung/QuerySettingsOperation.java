@@ -63,8 +63,7 @@ public class QuerySettingsOperation extends AbstractBTLEOperation<MoyoungDeviceS
     protected void doPerform() throws IOException {
         received = new boolean[settingsToQuery.length];
         TransactionBuilder builder = performInitialized("QuerySettingsOperation");
-        for (MoyoungSetting setting : settingsToQuery)
-        {
+        for (MoyoungSetting setting : settingsToQuery) {
             if (setting.cmdQuery == -1)
                 continue;
 
@@ -75,15 +74,11 @@ public class QuerySettingsOperation extends AbstractBTLEOperation<MoyoungDeviceS
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-        if (!isOperationRunning())
-        {
+        if (!isOperationRunning()) {
             LOG.error("onCharacteristicChanged but operation is not running!");
-        }
-        else
-        {
+        } else {
             UUID charUuid = characteristic.getUuid();
-            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
-            {
+            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN)) {
                 if (packetIn.putFragment(value)) {
                     Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                     packetIn = new MoyoungPacketIn();
@@ -104,13 +99,11 @@ public class QuerySettingsOperation extends AbstractBTLEOperation<MoyoungDeviceS
     private boolean handlePacket(byte packetType, byte[] payload) {
         boolean handled = false;
         boolean receivedEverything = true;
-        for(int i = 0; i < settingsToQuery.length; i++)
-        {
+        for (int i = 0; i < settingsToQuery.length; i++) {
             MoyoungSetting setting = settingsToQuery[i];
             if (setting.cmdQuery == -1)
                 continue;
-            if (setting.cmdQuery == packetType)
-            {
+            if (setting.cmdQuery == packetType) {
                 try {
                     Object value = setting.decode(payload);
                     LOG.info("SETTING QUERY {} = {}", setting.name, value.toString());
@@ -119,8 +112,7 @@ public class QuerySettingsOperation extends AbstractBTLEOperation<MoyoungDeviceS
                 }
                 received[i] = true;
                 handled = true;
-            }
-            else if (!received[i])
+            } else if (!received[i])
                 receivedEverything = false;
         }
         if (receivedEverything)

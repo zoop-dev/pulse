@@ -17,8 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings;
 
 public enum MoyoungEnumDeviceVersion implements MoyoungEnum {
-    CHINESE_EDITION((byte)0),
-    INTERNATIONAL_EDITION((byte)1);
+    CHINESE_EDITION((byte) 0),
+    INTERNATIONAL_EDITION((byte) 1);
 
     public final byte value;
 

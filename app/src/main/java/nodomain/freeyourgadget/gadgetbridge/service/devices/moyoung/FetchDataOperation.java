@@ -58,14 +58,14 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
     @Override
     protected void doPerform() throws IOException {
         TransactionBuilder builder = performInitialized("FetchDataOperation");
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[] { MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP }));
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[] { MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP }));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[]{MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP}));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[]{MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP}));
         getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_SLEEP, new byte[0]));
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[] { MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS }));
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[] { MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS }));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[]{MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS}));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_SYNC_PAST_SLEEP_AND_STEP, new byte[]{MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_STEPS}));
         builder.read(getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_STEPS));
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_MOVEMENT_HEART_RATE, new byte[] { }));
-        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[] { 0x00 }));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_MOVEMENT_HEART_RATE, new byte[]{}));
+        getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[]{0x00}));
         builder.queue(getQueue());
 
         updateProgressAndCheckFinish();
@@ -73,12 +73,9 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
-        if (!isOperationRunning())
-        {
+        if (!isOperationRunning()) {
             LOG.error("onCharacteristicRead but operation is not running!");
-        }
-        else
-        {
+        } else {
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_STEPS) && status == BluetoothGatt.GATT_SUCCESS) {
                 LOG.info("TODAY STEPS data: {}", Logging.formatBytes(value));
@@ -93,15 +90,11 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
 
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-        if (!isOperationRunning())
-        {
+        if (!isOperationRunning()) {
             LOG.error("onCharacteristicChanged but operation is not running!");
-        }
-        else
-        {
+        } else {
             UUID charUuid = characteristic.getUuid();
-            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN))
-            {
+            if (charUuid.equals(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN)) {
                 if (packetIn.putFragment(value)) {
                     Pair<Byte, byte[]> packet = MoyoungPacketIn.parsePacket(packetIn.getPacket());
                     packetIn = new MoyoungPacketIn();
@@ -143,20 +136,17 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
                 receivedSteps[2] = true;
                 decodeSteps(2, data);
                 return true;
-            }
-            else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS) {
+            } else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_STEPS) {
                 LOG.info("YESTERDAY STEPS data: {}", Logging.formatBytes(data));
                 receivedSteps[1] = true;
                 decodeSteps(1, data);
                 return true;
-            }
-            else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP) {
+            } else if (dataType == MoyoungConstants.ARG_SYNC_DAY_BEFORE_YESTERDAY_SLEEP) {
                 LOG.info("2 DAYS AGO SLEEP data: {}", Logging.formatBytes(data));
                 receivedSleep[2] = true;
                 decodeSleep(2 - daysAgoOffset, data);
                 return true;
-            }
-            else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP) {
+            } else if (dataType == MoyoungConstants.ARG_SYNC_YESTERDAY_SLEEP) {
                 LOG.info("YESTERDAY SLEEP data: {}", Logging.formatBytes(data));
                 receivedSleep[1] = true;
                 decodeSleep(1 - daysAgoOffset, data);
@@ -170,27 +160,23 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
         return false;
     }
 
-    private void decodeSteps(int daysAgo, byte[] data)
-    {
+    private void decodeSteps(int daysAgo, byte[] data) {
         getSupport().handleStepsHistory(daysAgo, data, false);
         updateProgressAndCheckFinish();
     }
 
-    private void decodeSleep(int daysAgo, byte[] data)
-    {
+    private void decodeSleep(int daysAgo, byte[] data) {
         getSupport().handleSleepHistory(daysAgo, data);
         updateProgressAndCheckFinish();
     }
 
-    private void decodeTrainingData(byte[] data)
-    {
+    private void decodeTrainingData(byte[] data) {
         getSupport().handleTrainingData(data);
         receivedTrainingData = true;
         updateProgressAndCheckFinish();
     }
 
-    private void updateProgressAndCheckFinish()
-    {
+    private void updateProgressAndCheckFinish() {
         int count_steps = 0;
         int count_sleep = 0;
         int count_training = 0;
