@@ -3885,4 +3885,16 @@
     <string name="even_realities_right_lens">Jobb lencse</string>
     <string name="even_realities_frame_shape_G1A">G1A/Round</string>
     <string name="pref_device_logs_summary">Engedélyezi az eszköz naplózását</string>
+    <string name="huawei_better_audio_quality_title">A jobb hangminőség előtérbe helyezése.</string>
+    <string name="prefs_title_gatt_settings">Általános attribútum profil</string>
+    <string name="gatt_synchronous_writes_title">Szinkronizált GATT-írások</string>
+    <string name="gatt_synchronous_writes_summary">Előnyben részesíti a szinkronizált GATT-írást az aszinkron írással szemben, ha egy jellemző mindkettőt támogatja.</string>
+    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
+    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
+    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
+    <string name="huawei_better_audio_quality_summary">Engedélyezi a jobb hangkodekek (LDAC) használatát. Ez javítja a hangminőséget, de növeli az energiafogyasztást és késéseket okozhat.</string>
+    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="workout_active_score">Aktív pontszám</string>
+    <string name="pairing_bonding_under_way">Hagyjon néhány pillanatot a kötési folyamat befejezésére.</string>
 </resources>
