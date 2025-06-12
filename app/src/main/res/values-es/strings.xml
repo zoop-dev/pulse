@@ -3243,7 +3243,7 @@
     <string name="thirty_days_timeline">Historial de 30 días</string>
     <string name="devicetype_huawei_watchgt5">Huawei Watch GT 5 (Pro)</string>
     <string name="pref_summary_sync_birthdays">Sincroniza los cumpleaños de los contactos con los eventos del calendario</string>
-    <string name="pref_title_sync_birthdays">Sincronizar los cumpleaños</string>
+    <string name="pref_title_sync_birthdays">Sincronizar cumpleaños</string>
     <string name="devicetype_sony_wf_c700n">Sony WF-C700N</string>
     <string name="contact_birthday">El cumpleaños de %1s</string>
     <string name="birthdays">Cumpleaños</string>
@@ -3778,4 +3778,14 @@
     <string name="calorie_under_goal">Debajo de la meta: %1$d kcal</string>
     <string name="calorie_over_goal">Encima de la meta: %1$d kcal</string>
     <string name="body_energy_legend_average">Promedio de 30 días</string>
+    <string name="huawei_better_audio_quality_title">Priorizar mejor calidad de audio.</string>
+    <string name="pref_device_logs_title">Registros del dispositivo</string>
+    <string name="pref_even_realities_g1_screen_calibrate_angle_title">Calibrar ángulo</string>
+    <string name="even_realities_frame_color_green">Verde</string>
+    <string name="even_realities_frame_color_brown">Marrón</string>
+    <string name="even_realities_frame_color_grey">Gris</string>
+    <string name="even_realities_right_lens">Lente derecha</string>
+    <string name="even_realities_left_lens">Lente izquierda</string>
+    <string name="prefs_title_gatt_settings">Perfil de atributo genérico</string>
+    <string name="pref_device_version">Versión del dispositivo</string>
 </resources>
