@@ -1672,4 +1672,9 @@
     <string name="pref_title_touch_spotify_official_app">Spotify (només l’aplicació oficial)</string>
     <string name="open_fw_installer_select_file">Seleccioneu el fitxer que voleu pujar a l’aparell: %s</string>
     <string name="pref_header_display">Pantalla</string>
+    <string name="pref_watch_face">Caràtula</string>
+    <string name="even_realities_frame_color_grey">Gris</string>
+    <string name="pref_title_sync_birthdays">Sincronitza els aniversaris</string>
+    <string name="even_realities_frame_color_green">Verd</string>
+    <string name="even_realities_frame_color_brown">Marró</string>
 </resources>
