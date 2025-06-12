@@ -4081,4 +4081,21 @@
     <string name="huawei_better_audio_quality_title">Upřednostnit lepší kvalitu zvuku.</string>
     <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
     <string name="huawei_better_audio_quality_summary">Povolit lepší zvukové kodeky (LDAC). Tím se může zlepšit kvalita zvuku, ale také zvýšit spotřeba energie a může to způsobit zpoždění.</string>
+    <string name="busy_task_fetch_training_data_finished">Tréninková data načtena!</string>
+    <string name="devicetype_c20">C20</string>
+    <string name="devicetype_colmi_v89">Colmi V89</string>
+    <string name="devicetype_kt80">KT80</string>
+    <string name="devicetype_misirun_c17">Misirun C17</string>
+    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
+    <string name="devicetype_ksix_venture">KSIX Venture</string>
+    <string name="pref_device_version">Verze zařízení</string>
+    <string name="devicetype_viran_c29">Viran C29</string>
+    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
+    <string name="devicetype_r50pro">R50Pro</string>
+    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
+    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
+    <string name="pref_watch_face">Ciferník</string>
+    <string name="busy_task_fetch_training_data">Načítání tréninkových dat</string>
+    <string name="interval_twenty_minutes">každých 20 minut</string>
 </resources>
