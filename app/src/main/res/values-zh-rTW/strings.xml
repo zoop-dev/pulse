@@ -745,7 +745,7 @@
     <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
     <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
     <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_garmin_vivomove_style">Garmin Vívomove 風尚</string>
+    <string name="devicetype_garmin_vivomove_style">Garmin Vívomove Style</string>
     <string name="devicetype_garmin_vivomove_trend">Garmin Vívomove Trend</string>
     <string name="devicetype_garmin_venu_3s">Garmin Venu 3S</string>
     <string name="devicetype_garmin_fenix_5">Garmin Fenix 5</string>
@@ -1052,7 +1052,7 @@
 \n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。
 \n
 \n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfitcor2">即將在 Amazfit Cor 2 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，手環會重新啟動。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。\n\n請自行承擔風險！\n\n完全未經測試，若您的裝置名稱為「Amazfit Band 2」，可能需要刷入 BEATS_W 韌體。</string>
+    <string name="fw_upgrade_notice_amazfitcor2">即將在 Amazfit Cor 2 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，手環會重新啟動。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。\n\n請自行承擔風險！\n\n完全未經測試，若您的裝置名稱為「Amazfit Band 2」，可能需要刷入 BEATS_W 韌體</string>
     <string name="fw_upgrade_notice_amazfitcor">您即將在您的 Amazfit Cor 上安裝 %s 韌體。
 \n
 \n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。
@@ -2623,7 +2623,7 @@
     <string name="devicetype_garmin_instinct_2_solar">Garmin Instinct 2 Solar</string>
     <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
     <string name="devicetype_garmin_fenix_5_plus">Garmin Fenix 5 Plus</string>
-    <string name="devicetype_garmin_fenix_6_sapphire">Garmin Fenix 6 藍寶石</string>
+    <string name="devicetype_garmin_fenix_6_sapphire">Garmin Fenix 6 Sapphire</string>
     <string name="devicetype_garmin_instinct">Garmin Instinct</string>
     <string name="devicetype_garmin_forerunner_965">Garmin Forerunner 965</string>
     <string name="pref_title_touch_voice_assistant">語音助手</string>
@@ -2697,7 +2697,7 @@
     <string name="activity_web_view">網頁視圖活動</string>
     <string name="mi2_fw_installhandler_fw53_hint">您需要在安裝此固件之前安裝版本 %1$s！</string>
     <string name="activity_type_ice_hockey">冰球</string>
-    <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S 太陽能</string>
+    <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
     <string name="pref_title_send_app_notifications">傳送通知</string>
     <string name="pref_summary_send_app_notifications">將應用程序通知發送到設備</string>
     <string name="pref_summary_device_internet_access">允許此設備上的應用程式訪問互聯網</string>
@@ -3110,14 +3110,14 @@
     <string name="devicetype_pebble">Pebble</string>
     <string name="devicetype_garmin_fenix_7_pro">Garmin Fenix 7 Pro</string>
     <string name="devicetype_garmin_instinct_2x_solar">Garmin Instinct 2X Solar</string>
-    <string name="devicetype_garmin_instinct_2_soltac">Garmin Instinct 2 SolTac</string>
+    <string name="devicetype_garmin_instinct_2_soltac">Garmin Instinct 2 Solar 軍事戰術版</string>
     <string name="devicetype_garmin_instinct_crossover">Garmin Instinct Crossover</string>
     <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
     <string name="devicetype_garmin_forerunner_245">Garmin Forerunner 245</string>
-    <string name="devicetype_garmin_forerunner_245_music">Garmin Forerunner 245 音樂版</string>
-    <string name="devicetype_garmin_forerunner_255_music">Garmin Forerunner 255 音樂版</string>
+    <string name="devicetype_garmin_forerunner_245_music">Garmin Forerunner 245 Music</string>
+    <string name="devicetype_garmin_forerunner_255_music">Garmin Forerunner 255 Music</string>
     <string name="devicetype_garmin_forerunner_255s">Garmin Forerunner 255S</string>
-    <string name="devicetype_garmin_forerunner_255s_music">Garmin Forerunner 255S 音樂</string>
+    <string name="devicetype_garmin_forerunner_255s_music">Garmin Forerunner 255S Music</string>
     <string name="devicetype_hplus">HPlus</string>
     <string name="menuitem_dnd">DND</string>
     <string name="ft">英呎</string>
@@ -3426,4 +3426,30 @@
     <string name="activity_prefs_goal_standing_hours">每日目標：站立時數</string>
     <string name="menuitem_alerts">提醒</string>
     <string name="pref_garmin_fake_oauth_title">傳送假的 OAuth 答覆</string>
+    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="devicetype_garmin_venu_sq">Garmin Venu Sq</string>
+    <string name="devicetype_garmin_fenix_8">Garmin Fenix 8</string>
+    <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
+    <string name="devicetype_garmin_forerunner_235">Garmin Forerunner 235</string>
+    <string name="devicetype_garmin_venu_sq_2">Garmin Venu Sq 2</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
+    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
+    <string name="devicetype_garmin_instinct_2">Garmin Instinct 2</string>
+    <string name="devicetype_garmin_fenix_7">Garmin Fenix 7</string>
+    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X 軍事戰術版</string>
+    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 戰術版</string>
+    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
+    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
+    <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
+    <string name="devicetype_garmin_forerunner_55">Garmin Forerunner 55</string>
+    <string name="devicetype_garmin_forerunner_620">Garmin Forerunner 620</string>
+    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
+    <string name="devicetype_garmin_fenix_6s_sapphire">Garmin Fenix 6S Sapphire</string>
+    <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 活力版</string>
+    <string name="devicetype_garmin_fenix_6s_pro">Garmin Fenix 6S Pro</string>
 </resources>
