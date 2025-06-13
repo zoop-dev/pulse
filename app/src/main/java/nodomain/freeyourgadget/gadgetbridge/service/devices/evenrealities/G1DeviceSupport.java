@@ -8,7 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
-import android.os.Looper;
+import android.os.HandlerThread;
+import android.os.Process;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,18 +22,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
-import java.util.function.Function;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEMultiDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -50,7 +50,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  */
 public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(G1DeviceSupport.class);
-    private final Handler backgroundTasksHandler = new Handler(Looper.getMainLooper());
+    private final HandlerThread backgroundThread = new HandlerThread("even_g1_background_thread", Process.THREAD_PRIORITY_DEFAULT);
+    private Handler backgroundTasksHandler = null;
     private BroadcastReceiver intentReceiver = null;
     private final Object lensSkewLock = new Object();
     private G1SideManager leftSide = null;
@@ -96,6 +97,11 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             // never be called on the right device again. BUT we need this to connect to the right
             // device before the devices are linked.
             super.setContext(device, btAdapter, context);
+        }
+
+        if (backgroundTasksHandler == null) {
+            backgroundThread.start();
+            backgroundTasksHandler = new Handler(backgroundThread.getLooper());
         }
 
         // Register to receive silent mode intent calls from the UI.
@@ -191,8 +197,14 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     @Override
     public void dispose() {
         synchronized (ConnectionMonitor) {
-            // Remove all background tasks.
-            backgroundTasksHandler.removeCallbacksAndMessages(null);
+            if (backgroundTasksHandler != null) {
+                // Remove all background tasks.
+                backgroundTasksHandler.removeCallbacksAndMessages(null);
+
+                // Shutdown the background handler.
+                backgroundThread.quitSafely();
+                backgroundTasksHandler = null;
+            }
 
             // Kill both sides.
             leftSide = null;
@@ -223,20 +235,18 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         // support and we don't want a hard dependency on G1DeviceSupport in G1SideManager.
         Callable<BtLEQueue> getQueue = () -> this.getQueue(deviceIdx);
         Callable<GBDevice> getDevice = () -> this.getDevice(deviceIdx);
-        Function<GBDeviceEvent, Void> handleEvent = (GBDeviceEvent event) -> {
-            this.evaluateGBDeviceEvent(event);
-            return null;
-        };
 
         // Create the desired side.
         if (deviceIdx == G1Constants.Side.LEFT.getDeviceIndex()) {
             leftSide = new G1SideManager(G1Constants.Side.LEFT, backgroundTasksHandler, getQueue,
-                                         getDevice, handleEvent, this::getDevicePrefs, rx, tx,
+                                         getDevice, this::evaluateGBDeviceEvent,
+                                         this::getDevicePrefs, rx, tx,
                                          this::createTransactionBuilder);
             return leftSide;
         } else if (deviceIdx == G1Constants.Side.RIGHT.getDeviceIndex()) {
             rightSide = new G1SideManager(G1Constants.Side.RIGHT, backgroundTasksHandler, getQueue,
-                                          getDevice, handleEvent, this::getDevicePrefs, rx, tx,
+                                          getDevice, this::evaluateGBDeviceEvent,
+                                          this::getDevicePrefs, rx, tx,
                                           this::createTransactionBuilder);
             return rightSide;
         }
@@ -340,8 +350,13 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         if (leftSide == null || rightSide == null)
             return;
 
-        boolean use12HourFormat = getDevicePrefs().getTimeFormat()
-                                                  .equals(DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_12H);
+        // In  FW v1.6.0, they flipped this boolean.
+        boolean use12HourFormat =
+                getDevicePrefs().getTimeFormat()
+                          .equals(getDevice().getFirmwareVersion().compareTo("1.6.0") >= 0
+                                    ? DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_24H
+                                    : DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_12H);
+
         Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         long currentMilliseconds = c.getTimeInMillis();
         long tzOffset = TimeZone.getDefault().getOffset(currentMilliseconds);
@@ -442,5 +457,18 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     @Override
     public void onSetTime() {
         onSetTimeOrWeather();
+    }
+
+    @Override
+    public void onNotification(NotificationSpec notificationSpec) {
+        // Rewrite the App Id to the fixed one used for all notifications. See the comment in
+        // G1Constants.java for more information.
+        notificationSpec.sourceAppId = G1Constants.FIXED_NOTIFICATION_APP_ID.first;
+        leftSide.send(new G1Communications.CommandSendNotification(leftSide::send, notificationSpec));
+    }
+
+    @Override
+    public void onDeleteNotification(int id) {
+        leftSide.send(new G1Communications.CommandSendClearNotification(id));
     }
 }

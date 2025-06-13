@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:dependency="screen_on_on_notifications"
+        android:defaultValue="5"
+        android:entries="@array/screen_timeout"
+        android:entryValues="@array/screen_timeout_values"
+        android:key="screen_on_on_notifications_timeout"
+        android:icon="@drawable/ic_hourglass_empty"
+        android:summary="@string/pref_summary_screen_on_on_notifications_timeout"
+        android:title="@string/pref_title_screen_on_on_notifications_timeout" />
+</androidx.preference.PreferenceScreen>

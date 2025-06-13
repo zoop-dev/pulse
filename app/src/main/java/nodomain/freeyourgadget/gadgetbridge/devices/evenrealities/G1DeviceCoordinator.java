@@ -198,8 +198,11 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         if (device.isConnected()) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_screen_on_on_notifications);
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_screen_on_on_notifications_timeout);
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_even_realities_g1_display);
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_timeformat);
+
             final List<Integer> developer =
                     deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
             developer.add(R.xml.devicesettings_header_system);
