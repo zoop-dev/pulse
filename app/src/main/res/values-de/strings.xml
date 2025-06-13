@@ -3985,4 +3985,21 @@
     <string name="prefs_title_gatt_settings">Bluetooth-GATT-Profil</string>
     <string name="gatt_synchronous_writes_title">Synchrone GATT-Schreibvorgänge</string>
     <string name="pairing_bonding_under_way">Bitte geben Sie dem Kopplungsvorgang einen Moment Zeit.</string>
+    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_ksix_venture">KSIX Venture</string>
+    <string name="interval_twenty_minutes">alle 20 Minuten</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
+    <string name="busy_task_fetch_training_data">Abrufen der letzten Trainingsdaten</string>
+    <string name="pref_watch_face">Zifferblatt</string>
+    <string name="pref_device_version">Geräteversion</string>
+    <string name="busy_task_fetch_training_data_finished">Trainingsdaten empfangen!</string>
+    <string name="devicetype_colmi_v89">Colmi V89</string>
+    <string name="devicetype_misirun_c17">Misirun C17</string>
+    <string name="devicetype_c20">C20</string>
+    <string name="devicetype_kt80">KT80</string>
+    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
+    <string name="devicetype_viran_c29">Viran C29</string>
+    <string name="devicetype_r50pro">R50Pro</string>
+    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
+    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
 </resources>
