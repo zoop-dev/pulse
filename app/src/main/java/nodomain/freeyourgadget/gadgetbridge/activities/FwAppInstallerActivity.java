@@ -53,7 +53,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 
@@ -151,7 +150,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         progressBar.setProgress(progress);
     }
 
-    public void setProgressText(String text) {
+    public void setProgressText(CharSequence text) {
         progressText.setVisibility(View.VISIBLE);
         progressText.setText(text);
     }

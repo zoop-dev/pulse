@@ -56,6 +56,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -261,7 +262,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         }
     };
 
-    protected Map<UUID, GBDeviceApp> getCachedAppsMap(final List<UUID> uuids) {
+    protected Map<UUID, GBDeviceApp> getCachedAppsMap(final Collection<UUID> uuids) {
         final List<GBDeviceApp> cachedApps = getCachedApps(uuids);
         final Map<UUID, GBDeviceApp> cachedAppsMap = new HashMap<>();
         for (GBDeviceApp cachedApp : cachedApps) {
@@ -270,7 +271,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         return cachedAppsMap;
     }
 
-    protected List<GBDeviceApp> getCachedApps(List<UUID> uuids) {
+    protected List<GBDeviceApp> getCachedApps(Collection<UUID> uuids) {
         List<GBDeviceApp> cachedAppList = new ArrayList<>();
         File cachePath;
         try {

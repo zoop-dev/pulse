@@ -180,7 +180,7 @@ public class BLEScanService extends Service {
         );
     }
 
-    private void updateNotification(String content) {
+    private void updateNotification(CharSequence content) {
         notificationManager.notify(
                 GB.NOTIFICATION_ID_SCAN,
                 createNotification(content, R.drawable.ic_bluetooth)
@@ -204,7 +204,7 @@ public class BLEScanService extends Service {
         return createNotification(content, icon);
     }
 
-    private Notification createNotification(String content, int icon) {
+    private Notification createNotification(CharSequence content, int icon) {
 
         return new NotificationCompat
                 .Builder(this, GB.NOTIFICATION_CHANNEL_ID_SCAN_SERVICE)

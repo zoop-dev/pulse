@@ -28,7 +28,7 @@ public class SleepAnalysis {
     public static final long MIN_SESSION_LENGTH = 5 * 60;
     public static final long MAX_WAKE_PHASE_LENGTH = 2 * 60 * 60;
 
-    public List<SleepSession> calculateSleepSessions(List<? extends ActivitySample> samples) {
+    public List<SleepSession> calculateSleepSessions(Iterable<? extends ActivitySample> samples) {
         List<SleepSession> result = new ArrayList<>();
 
         ActivitySample previousSample = null;

@@ -145,7 +145,7 @@ public class CalendarReceiver extends ContentObserver {
         syncCalendar(eventList);
     }
 
-    public void syncCalendar(List<CalendarEvent> eventList) {
+    public void syncCalendar(Iterable<CalendarEvent> eventList) {
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             DaoSession session = dbHandler.getDaoSession();
             syncCalendar(eventList, session);
@@ -154,7 +154,7 @@ public class CalendarReceiver extends ContentObserver {
         }
     }
 
-    public void syncCalendar(List<CalendarEvent> eventList, DaoSession session) {
+    public void syncCalendar(Iterable<CalendarEvent> eventList, DaoSession session) {
         LOG.info("Syncing with calendar.");
         Hashtable<Long, CalendarEvent> eventTable = new Hashtable<>();
         Long deviceId = DBHelper.getDevice(mGBDevice, session).getId();

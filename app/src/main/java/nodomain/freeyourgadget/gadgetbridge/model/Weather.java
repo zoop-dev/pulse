@@ -35,6 +35,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -65,7 +66,7 @@ public class Weather {
         return weatherSpecs;
     }
 
-    public void setWeatherSpec(final List<WeatherSpec> newWeatherSpecs) {
+    public void setWeatherSpec(final Collection<WeatherSpec> newWeatherSpecs) {
         weatherSpecs.clear();
         weatherSpecs.addAll(newWeatherSpecs);
         saveToCache();

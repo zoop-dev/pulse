@@ -77,7 +77,7 @@ abstract class StressFragment<D extends ChartsData> extends AbstractChartFragmen
         return legendEntries;
     }
 
-    protected Map<StressType, Integer> calculateStressTotals(List<? extends StressSample> samples, int[] stressRanges, int sampleRate) {
+    protected Map<StressType, Integer> calculateStressTotals(Iterable<? extends StressSample> samples, int[] stressRanges, int sampleRate) {
         Map<StressType, Integer> result = new HashMap<>();
         for (StressType type : StressType.values()) {
             result.put(type, 0);
@@ -101,7 +101,7 @@ abstract class StressFragment<D extends ChartsData> extends AbstractChartFragmen
         return result;
     }
 
-    protected int calculateAverageStress(List<? extends StressSample> samples) {
+    protected int calculateAverageStress(Iterable<? extends StressSample> samples) {
         long sum = 0;
         int count = 0;
 

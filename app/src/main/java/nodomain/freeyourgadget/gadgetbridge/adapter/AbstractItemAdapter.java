@@ -29,6 +29,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -128,7 +129,7 @@ public abstract class AbstractItemAdapter<T> extends ArrayAdapter<T> {
     public void loadItems() {
     }
 
-    public void setItems(List<T> items, boolean notify) {
+    public void setItems(Collection<T> items, boolean notify) {
         this.items.clear();
         this.items.addAll(items);
         if (notify) {

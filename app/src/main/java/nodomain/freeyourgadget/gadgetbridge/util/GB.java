@@ -307,7 +307,7 @@ public class GB {
         return sb.toString();
     }
 
-    public static Notification createNotification(String text, Context context) {
+    public static Notification createNotification(CharSequence text, Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_CONNECTION_STATUS);
         builder.setTicker(text)
                 .setContentText(text)
@@ -389,7 +389,7 @@ public class GB {
     /**
      * https://stackoverflow.com/a/140861/4636860
      */
-    public static byte[] hexStringToByteArray(String s) {
+    public static byte[] hexStringToByteArray(CharSequence s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
@@ -505,7 +505,7 @@ public class GB {
         }
     }
 
-    private static Notification createTransferNotification(String title, String text, boolean ongoing,
+    private static Notification createTransferNotification(CharSequence title, CharSequence text, boolean ongoing,
                                                            int percentage, Context context) {
         Intent notificationIntent = new Intent(context, ControlCenterv2.class);
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
@@ -535,7 +535,7 @@ public class GB {
         return nb.build();
     }
 
-    public static void updateTransferNotification(String title, String text, boolean ongoing, int percentage, Context context) {
+    public static void updateTransferNotification(CharSequence title, CharSequence text, boolean ongoing, int percentage, Context context) {
         if (percentage == 100) {
             removeNotification(NOTIFICATION_ID_TRANSFER, context);
         } else {
@@ -544,7 +544,7 @@ public class GB {
         }
     }
 
-    private static Notification createInstallNotification(String text, boolean ongoing,
+    private static Notification createInstallNotification(CharSequence text, boolean ongoing,
                                                           int percentage, Context context) {
         Intent notificationIntent = new Intent(context, ControlCenterv2.class);
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
@@ -571,12 +571,12 @@ public class GB {
         return nb.build();
     }
 
-    public static void updateInstallNotification(String text, boolean ongoing, int percentage, Context context) {
+    public static void updateInstallNotification(CharSequence text, boolean ongoing, int percentage, Context context) {
         Notification notification = createInstallNotification(text, ongoing, percentage, context);
         notify(NOTIFICATION_ID_INSTALL, notification, context);
     }
 
-    private static Notification createBatteryLowNotification(String text, String bigText, Context context) {
+    private static Notification createBatteryLowNotification(CharSequence text, CharSequence bigText, Context context) {
         Intent notificationIntent = new Intent(context, ControlCenterv2.class);
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -599,7 +599,7 @@ public class GB {
         return nb.build();
     }
 
-    private static Notification createBatteryFullNotification(String text, String bigText, Context context) {
+    private static Notification createBatteryFullNotification(CharSequence text, CharSequence bigText, Context context) {
         Intent notificationIntent = new Intent(context, ControlCenterv2.class);
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -622,7 +622,7 @@ public class GB {
         return nb.build();
     }
 
-    public static void updateBatteryLowNotification(String text, String bigText, Context context) {
+    public static void updateBatteryLowNotification(CharSequence text, CharSequence bigText, Context context) {
         if (GBEnvironment.env().isLocalTest()) {
             return;
         }
@@ -634,7 +634,7 @@ public class GB {
         removeNotification(NOTIFICATION_ID_LOW_BATTERY, context);
     }
 
-    public static void updateBatteryFullNotification(String text, String bigText, Context context) {
+    public static void updateBatteryFullNotification(CharSequence text, CharSequence bigText, Context context) {
         if (GBEnvironment.env().isLocalTest()) {
             return;
         }
@@ -646,7 +646,7 @@ public class GB {
         removeNotification(NOTIFICATION_ID_FULL_BATTERY, context);
     }
 
-    public static Notification createExportFailedNotification(String text, Context context) {
+    public static Notification createExportFailedNotification(CharSequence text, Context context) {
         Intent notificationIntent = new Intent(context, SettingsActivity.class);
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -665,7 +665,7 @@ public class GB {
         return nb.build();
     }
 
-    public static void updateExportFailedNotification(String text, Context context) {
+    public static void updateExportFailedNotification(CharSequence text, Context context) {
         if (GBEnvironment.env().isLocalTest()) {
             return;
         }

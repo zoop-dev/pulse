@@ -2002,7 +2002,7 @@ public class GBApplication extends Application {
         editor.apply();
     }
 
-    public static SharedPreferences getDeviceSpecificSharedPrefs(String deviceIdentifier) {
+    public static SharedPreferences getDeviceSpecificSharedPrefs(CharSequence deviceIdentifier) {
         if (deviceIdentifier == null || deviceIdentifier.isEmpty()) {
             return null;
         }
@@ -2013,7 +2013,7 @@ public class GBApplication extends Application {
         return new DevicePrefs(getDeviceSpecificSharedPrefs(gbDevice.getAddress()), gbDevice);
     }
 
-    public static void deleteDeviceSpecificSharedPrefs(String deviceIdentifier) {
+    public static void deleteDeviceSpecificSharedPrefs(CharSequence deviceIdentifier) {
         if (deviceIdentifier == null || deviceIdentifier.isEmpty()) {
             return;
         }

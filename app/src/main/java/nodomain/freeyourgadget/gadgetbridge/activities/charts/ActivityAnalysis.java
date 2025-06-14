@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityAmount;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityAmounts;
@@ -36,7 +35,7 @@ public class ActivityAnalysis {
     // max speed determined from samples
     private int maxSpeed = 0;
 
-    public ActivityAmounts calculateActivityAmounts(List<? extends ActivitySample> samples) {
+    public ActivityAmounts calculateActivityAmounts(Iterable<? extends ActivitySample> samples) {
         ActivityAmount deepSleep = new ActivityAmount(ActivityKind.DEEP_SLEEP);
         ActivityAmount lightSleep = new ActivityAmount(ActivityKind.LIGHT_SLEEP);
         ActivityAmount remSleep = new ActivityAmount(ActivityKind.REM_SLEEP);
@@ -144,7 +143,7 @@ public class ActivityAnalysis {
         return result;
     }
 
-    int calculateTotalSteps(List<? extends ActivitySample> samples) {
+    int calculateTotalSteps(Iterable<? extends ActivitySample> samples) {
         int totalSteps = 0;
         for (ActivitySample sample : samples) {
             int steps = sample.getSteps();

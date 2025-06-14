@@ -48,28 +48,28 @@ public final class DeviceSettingsUtils {
     /**
      * Returns the preference key where to save the list of possible value for a preference, comma-separated.
      */
-    public static String getPrefPossibleValuesKey(final String key) {
+    public static String getPrefPossibleValuesKey(final CharSequence key) {
         return String.format(Locale.ROOT, "%s_possible_values", key);
     }
 
     /**
      * Returns the preference key where to save the list of entry labels for a preference, comma-separated.
      */
-    public static String getPrefPossibleValueLabelsKey(final String key) {
+    public static String getPrefPossibleValueLabelsKey(final CharSequence key) {
         return String.format(Locale.ROOT, "%s_possible_value_labels", key);
     }
 
     /**
      * Returns the preference key where to that a config was reported as supported (boolean).
      */
-    public static String getPrefKnownConfig(final String key) {
+    public static String getPrefKnownConfig(final CharSequence key) {
         return String.format(Locale.ROOT, "%s_is_known", key);
     }
 
     /**
      * Populates a list preference, or hides it if no known supported values are known.
      */
-    public static void populateOrHideListPreference(final String prefKey,
+    public static void populateOrHideListPreference(final CharSequence prefKey,
                                                     final DeviceSpecificSettingsHandler handler,
                                                     final Prefs prefs) {
         final Preference pref = handler.findPreference(prefKey);
@@ -156,7 +156,7 @@ public final class DeviceSettingsUtils {
      */
     public static void hidePrefIfNoneVisible(final DeviceSpecificSettingsHandler handler,
                                              final String prefToHide,
-                                             final List<String> subPrefs) {
+                                             final Iterable<String> subPrefs) {
         final Preference pref = handler.findPreference(prefToHide);
         if (pref == null) {
             return;

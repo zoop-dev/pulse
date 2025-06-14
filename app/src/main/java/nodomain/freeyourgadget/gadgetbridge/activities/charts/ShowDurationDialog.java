@@ -41,7 +41,7 @@ public class ShowDurationDialog extends Dialog {
         setDuration(mDuration);
     }
 
-    public void setDuration(final String duration) {
+    public void setDuration(final CharSequence duration) {
         if (mDuration != null) {
             durationLabel.setText(duration);
         } else {

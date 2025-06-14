@@ -172,7 +172,7 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
     }
 
 
-    static synchronized void rewriteAppOrderFile(String filename, List<UUID> uuids) {
+    static synchronized void rewriteAppOrderFile(String filename, Iterable<UUID> uuids) {
         try (BufferedWriter out = new BufferedWriter(new FileWriter(FileUtils.getExternalFilesDir() + "/" + filename))) {
             for (UUID uuid : uuids) {
                 out.write(uuid.toString());

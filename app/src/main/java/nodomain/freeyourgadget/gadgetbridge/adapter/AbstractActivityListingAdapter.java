@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -126,7 +127,7 @@ public abstract class AbstractActivityListingAdapter<T> extends RecyclerView.Ada
     public void loadItems() {
     }
 
-    public void setItems(List<T> items, boolean notify) {
+    public void setItems(Collection<T> items, boolean notify) {
         this.items.clear();
         this.items.addAll(items);
         this.selectedItems.clear();

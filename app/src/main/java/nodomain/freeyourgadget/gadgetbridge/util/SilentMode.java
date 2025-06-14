@@ -59,7 +59,7 @@ public class SilentMode {
         }
     }
 
-    public static void setPhoneSilentMode(final String deviceAddress, final boolean enabled) {
+    public static void setPhoneSilentMode(final CharSequence deviceAddress, final boolean enabled) {
         final RingerMode[] phoneSilentMode = getPhoneSilentMode(deviceAddress);
         final RingerMode ringerMode = phoneSilentMode[enabled ? 1 : 0];
 
@@ -68,7 +68,7 @@ public class SilentMode {
         setRingerMode(ringerMode);
     }
 
-    public static boolean isPhoneInSilenceMode(final String deviceAddress) {
+    public static boolean isPhoneInSilenceMode(final CharSequence deviceAddress) {
         final AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         final RingerMode currentRingerMode = RingerMode.fromCode(audioManager.getRingerMode());
         final RingerMode[] phoneSilentMode = getPhoneSilentMode(deviceAddress);
@@ -77,7 +77,7 @@ public class SilentMode {
         return currentRingerMode.getCode() < phoneSilentMode[0].getCode();
     }
 
-    public static RingerMode[] getPhoneSilentMode(final String deviceAddress) {
+    public static RingerMode[] getPhoneSilentMode(final CharSequence deviceAddress) {
         final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
         final String phoneSilentModePref = prefs.getString(DeviceSettingsPreferenceConst.PREF_PHONE_SILENT_MODE, "normal_silent").toUpperCase(Locale.ROOT);
         final String[] prefSplit = phoneSilentModePref.split("_");

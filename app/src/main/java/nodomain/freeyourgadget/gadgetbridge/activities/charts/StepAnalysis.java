@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -180,7 +181,7 @@ public class StepAnalysis {
         return result;
     }
 
-    public ActivitySession calculateSummary(List<ActivitySession> sessions, boolean empty) {
+    public ActivitySession calculateSummary(Collection<ActivitySession> sessions, boolean empty) {
 
         Date startTime = null;
         Date endTime = null;
@@ -221,7 +222,7 @@ public class StepAnalysis {
         return stepSessionSummary;
     }
 
-    public ActivitySession getOngoingSessions(List<ActivitySession> sessions) {
+    public ActivitySession getOngoingSessions(Iterable<ActivitySession> sessions) {
 
         for (ActivitySession session : sessions) {
             if (session.getSessionType() == ActivitySession.SESSION_ONGOING) {
@@ -231,7 +232,7 @@ public class StepAnalysis {
         return null;
     }
 
-    private int calculateSumOfInts(List<Integer> samples) {
+    private int calculateSumOfInts(Iterable<Integer> samples) {
         int result = 0;
         for (Integer sample : samples) {
             result += sample;

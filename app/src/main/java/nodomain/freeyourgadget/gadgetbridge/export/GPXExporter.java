@@ -136,7 +136,7 @@ public class GPXExporter implements ActivityTrackExporter {
         ser.endTag(NS_GPX_URI, "trk");
     }
 
-    private boolean exportTrackPoint(XmlSerializer ser, ActivityPoint point, List<ActivityPoint> trackPoints) throws IOException {
+    private boolean exportTrackPoint(XmlSerializer ser, ActivityPoint point, Iterable<ActivityPoint> trackPoints) throws IOException {
         GPSCoordinate location = point.getLocation();
         if (location == null) {
             return false; // skip invalid points, that just contain hr data, for example
@@ -171,7 +171,7 @@ public class GPXExporter implements ActivityTrackExporter {
         return true;
     }
 
-    private void exportTrackpointExtensions(XmlSerializer ser, ActivityPoint point, List<ActivityPoint> trackPoints) throws IOException {
+    private void exportTrackpointExtensions(XmlSerializer ser, ActivityPoint point, Iterable<ActivityPoint> trackPoints) throws IOException {
         if (!includeHeartRate) {
             return;
         }
@@ -211,7 +211,7 @@ public class GPXExporter implements ActivityTrackExporter {
         ser.endTag(NS_GPX_URI, "extensions");
     }
 
-    private @Nullable ActivityPoint findClosestSensibleActivityPoint(Date time, List<ActivityPoint> trackPoints) {
+    private @Nullable ActivityPoint findClosestSensibleActivityPoint(Date time, Iterable<ActivityPoint> trackPoints) {
         ActivityPoint closestPointItem = null;
         HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
 
