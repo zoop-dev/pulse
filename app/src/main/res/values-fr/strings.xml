@@ -1060,9 +1060,7 @@ Temps de sommeil préféré en heures</string>
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="descentSeconds">Descendant</string>
     <string name="activity_error_no_app_for_png">Pour partager cette capture écran, installer une application pour gérer les fichiers images.</string>
-    <string name="firmware_update_progress">Envoi en cours
-\n%1d%% à %.2fkbps (moyenne %.2fkbps)
-\nÉlément %1d de %1d</string>
+    <string name="firmware_update_progress">Envoi en cours \n%1d%% à %.2fkbps (moyenne %.2fkbps) \nÉlément %1d de %1d</string>
     <string name="devicestatus_upload_failed">L\'envoi n\'a pas réussi</string>
     <string name="devicestatus_upload_aborted">L\'envoi a avorté !</string>
     <string name="devicestatus_upload_validating">L\'envoi est en cours de validation</string>
@@ -1714,7 +1712,7 @@ Temps de sommeil préféré en heures</string>
     <string name="controlcenter_toggle_details">Afficher les détails</string>
     <string name="pref_blacklist_calendars_summary">Les calendriers bloqués ne seront pas synchronisés avec l\'appareil</string>
     <string name="controlcenter_set_preferences">Configurer les préférences</string>
-    <string name="controlcenter_connected_fraction">Connecté : %d/%d</string>
+    <string name="controlcenter_connected_fraction">Connecté : %d/%d</string>
     <string name="error_deleting_device">Erreur lors de l\'effacement de l\'appareil : %s</string>
     <string name="controlcenter_folder_name">Nom du dossier :</string>
     <string name="controlcenter_add_new_folder">Ajouter un nouveau dossier</string>
@@ -2345,11 +2343,7 @@ Temps de sommeil préféré en heures</string>
     <string name="devicetype_amazfit_falcon">Amazfit Falcon</string>
     <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (Round)</string>
     <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
-    <string name="fw_upgrade_notice_zepp_os">Vous êtes sur le point d\'installer le micro-logiciel %s dans votre %s.
-\n
-\nVotre montre va redémarrer après l\'installation du fichier .zip.
-\n
-\nA VOS RISQUES ET PÉRILS !</string>
+    <string name="fw_upgrade_notice_zepp_os">Vous êtes sur le point d\'installer le micro-logiciel %s dans votre %s. \n \nVotre montre va redémarrer après l\'installation du fichier .zip. \n \nA VOS RISQUES ET PÉRILS !</string>
     <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
     <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
     <string name="device_experimental">EXPÉRIMENTAL</string>
@@ -2926,8 +2920,7 @@ Temps de sommeil préféré en heures</string>
     <string name="device_name_bicycle_sensor">Capteur vélo</string>
     <string name="title_cycling">Cyclisme</string>
     <string name="pref_title_wheel_diameter">Diamètre de la roue</string>
-    <string name="chart_cycling_point_label_distance">Aujourd\'hui : %.1f km
-\nTotal : %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Aujourd\'hui : %.1f km \nTotal : %.1f km</string>
     <string name="toast_setting_requires_reconnect">Ce réglage prendra effet à la prochaine reconnexion</string>
     <string name="toast_camera_permission_required">La permission Appareil Photo est nécessaire pour cette fonction.</string>
     <string name="toast_camera_support_required">Le support de la Caméra est nécessaire pour cette fonction.</string>
@@ -3406,8 +3399,7 @@ Temps de sommeil préféré en heures</string>
     <string name="backup_restore_importing">Importation à partir de Zip…</string>
     <string name="backup_restore_importing_validating">Validation du fichier…</string>
     <string name="backup_restore_export_complete">Exportation accomplie</string>
-    <string name="backup_restore_warning_files">%1d fichiers échoués à être restaurés :
-\n %2s</string>
+    <string name="backup_restore_warning_files">%1d fichiers échoués à être restaurés : \n %2s</string>
     <string name="backup_restore_import_complete">Importation accomplie</string>
     <string name="label_distance_trip">Distance parcourue : %.1f km</string>
     <string name="label_distance_total">Total : %.1f km</string>
@@ -3660,7 +3652,7 @@ Temps de sommeil préféré en heures</string>
     <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
     <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
     <string name="charts_show_balance_sleep_title">Afficher équilibre sommeil</string>
-    <string name="fw_upgrade_notice_huawei">Vous êtes sur le point de télécharger le micrologiciel %s sur votre %s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
+    <string name="fw_upgrade_notice_huawei">Vous êtes sur le point de télécharger le micrologiciel %s sur votre %s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
     <string name="remote_control">Commande à distance</string>
     <string name="charts_show_balance_sleep_summary">Afficher excès/manque de sommeil dans des graphiques hebdomadaires et mensuels</string>
     <string name="charts_show_balance_steps_title">Afficher le solde de pas</string>
@@ -3721,7 +3713,7 @@ Temps de sommeil préféré en heures</string>
     <string name="copy_to_clipboard">Copier</string>
     <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
     <string name="devicetype_even_realities_g1">Even Realities G1</string>
-    <string name="gree_pair_clipboard">Nom du périphérique : %s\nAdresse Mac : %s\nLier la clé : %s</string>
+    <string name="gree_pair_clipboard">Nom du périphérique : %s\nAdresse Mac : %s\nLier la clé : %s</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
     <string name="gree_controller_host">Hôte</string>
     <string name="pref_garmin_fake_oauth_summary">Corrige certaines fonctions telles que la météo et les mises à jour AGPS sans se connecter à l’application officielle tous les 90 jours.</string>
