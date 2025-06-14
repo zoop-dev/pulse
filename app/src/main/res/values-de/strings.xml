@@ -1026,9 +1026,7 @@
     <string name="lefun_prefs_hydration_reminder_interval_title">Intervall der Trinkerinnerung (in Minuten)</string>
     <string name="lefun_prefs_hydration_reminder_summary">Das Band wird vibrieren, um dich daran zu erinnern, Wasser zu trinken</string>
     <string name="lefun_prefs_hydration_reminder_title">Trinkerinnerung</string>
-    <string name="firmware_update_progress">Upload wird ausgeführt
-\n%1d%% bei %.2fkbps (durchschnittlich %.2fkbps)
-\nTeil %1d von %1d</string>
+    <string name="firmware_update_progress">Upload wird ausgeführt \n%1d%% bei %.2fkbps (durchschnittlich %.2fkbps) \nTeil %1d von %1d</string>
     <string name="devicestatus_upload_failed">Upload ist fehlgeschlagen</string>
     <string name="devicestatus_upload_aborted">Upload wurde abgebrochen!</string>
     <string name="devicestatus_upload_validating">Upload wird überprüft</string>
@@ -2848,8 +2846,7 @@
     <string name="title_cycling">Radfahren</string>
     <string name="pref_summary_cycling_persistence_interval">Intervall in Sekunden, in dem die aktuellen Fahrraddaten in die Datenbank geschrieben werden sollen</string>
     <string name="device_name_cycling_sensor">Fahrradsensor</string>
-    <string name="chart_cycling_point_label_distance">Heute: %.1f km
-\nGesamt: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Heute: %.1f km \nGesamt: %.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="pref_title_cycling_persistence_interval">Persistenzintervall</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Audio pausieren von anderen Anwendungen</string>
