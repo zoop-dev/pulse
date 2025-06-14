@@ -144,7 +144,7 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
 
         @Override
         public int getCount() {
-            return enabledTabsList.toArray().length;
+            return enabledTabsList.size();
         }
 
         @Override

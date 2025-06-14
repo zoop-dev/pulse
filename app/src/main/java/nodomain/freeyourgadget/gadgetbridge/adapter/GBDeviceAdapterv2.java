@@ -1053,7 +1053,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         }
 
         foldersList.add(new SpinnerWithIconItem(context.getString(R.string.controlcenter_add_new_folder), 0L, R.drawable.ic_create_new_folder));
-        if (foldersList.toArray().length > 1) {
+        if (foldersList.size() > 1) {
             foldersList.add(new SpinnerWithIconItem(context.getString(R.string.controlcenter_unset_folder), 1L, R.drawable.ic_folder_delete));
         }
 

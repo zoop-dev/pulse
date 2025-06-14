@@ -46,8 +46,6 @@ import org.slf4j.LoggerFactory;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -60,12 +58,10 @@ import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepAnalysis.SleepSession;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.GaugeDrawer;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.LedColor;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -288,7 +284,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     private Triple<Float, Integer, Integer> calculateHrData(List<? extends ActivitySample> samples) {
-        if (samples.toArray().length < 1) {
+        if (samples.size() < 1) {
             return Triple.of(0f, 0, 0);
         }
 
@@ -302,13 +298,13 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 }
             }
         }
-        if (heartRateValues.toArray().length < 1) {
+        if (heartRateValues.size() < 1) {
             return Triple.of(0f, 0, 0);
         }
 
         int min = Collections.min(heartRateValues);
         int max = Collections.max(heartRateValues);
-        int count = heartRateValues.toArray().length;
+        int count = heartRateValues.size();
         float sum = calculateSumOfInts(heartRateValues);
         float average = sum / count;
         return Triple.of(average, min, max);
@@ -331,7 +327,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     private Triple<Float, Float, Float> calculateIntensityData(List<? extends ActivitySample> samples) {
-        if (samples.toArray().length < 1) {
+        if (samples.size() < 1) {
             return Triple.of(0f, 0f, 0f);
         }
 
@@ -343,7 +339,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 allIntensities.add(intensity);
             }
         }
-        if (allIntensities.toArray().length < 1) {
+        if (allIntensities.size() < 1) {
             return Triple.of(0f, 0f, 0f);
         }
 

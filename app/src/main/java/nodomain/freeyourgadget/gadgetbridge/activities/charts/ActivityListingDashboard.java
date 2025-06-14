@@ -217,7 +217,7 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
         boolean isEmptySummary = false;
         if (activitySamples != null) {
             stepSessions = stepAnalysis.calculateStepSessions(activitySamples);
-            if (stepSessions.toArray().length == 0) {
+            if (stepSessions.size() == 0) {
                 isEmptySummary = true;
             }
             stepSessionsSummary = stepAnalysis.calculateSummary(stepSessions, isEmptySummary);

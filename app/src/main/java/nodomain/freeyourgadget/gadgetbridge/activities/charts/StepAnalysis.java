@@ -146,7 +146,7 @@ public class StepAnalysis {
                         int session_length = current - starting - durationSinceLastActiveStep;
 
                         if (session_length >= MIN_SESSION_LENGTH) { //valid activity session
-                            int heartRateAverage = heartRateSum.toArray().length > 0 ? calculateSumOfInts(heartRateSum) / heartRateSum.toArray().length : 0;
+                            int heartRateAverage = heartRateSum.size() > 0 ? calculateSumOfInts(heartRateSum) / heartRateSum.size() : 0;
                             float distance = activeDistanceCm * 0.01f;
                             sessionEnd = new Date((sample.getTimestamp() - durationSinceLastActiveStep) * 1000L);
                             activityKind = detect_activity_kind(session_length, activeSteps, heartRateAverage, activeIntensity);
@@ -168,7 +168,7 @@ public class StepAnalysis {
             int session_length = current - starting - durationSinceLastActiveStep;
 
             if (session_length >= MIN_SESSION_LENGTH) {
-                int heartRateAverage = heartRateSum.toArray().length > 0 ? calculateSumOfInts(heartRateSum) / heartRateSum.toArray().length : 0;
+                int heartRateAverage = heartRateSum.size() > 0 ? calculateSumOfInts(heartRateSum) / heartRateSum.size() : 0;
                 float distance = activeDistanceCm * 0.01f;
                 sessionEnd = getDateFromSample(previousSample);
                 activityKind = detect_activity_kind(session_length, activeSteps, heartRateAverage, activeIntensity);
@@ -202,9 +202,9 @@ public class StepAnalysis {
             intensitySum += session.getIntensity();
         }
 
-        sessionCount = sessions.toArray().length;
-        if (heartRateSum.toArray().length > 0) {
-            heartRateAverage = calculateSumOfInts(heartRateSum) / heartRateSum.toArray().length;
+        sessionCount = sessions.size();
+        if (heartRateSum.size() > 0) {
+            heartRateAverage = calculateSumOfInts(heartRateSum) / heartRateSum.size();
         }
         startTime = new Date(0);
         endTime = new Date(durationSum);

@@ -205,7 +205,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
 
         @Override
         public int getCount() {
-            return enabledTabsList.toArray().length;
+            return enabledTabsList.size();
         }
 
         @Override

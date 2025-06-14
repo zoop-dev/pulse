@@ -126,7 +126,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
 
         if (activitySamples != null) {
             stepSessions = stepAnalysis.calculateStepSessions(activitySamples);
-            if (stepSessions.toArray().length == 0) {
+            if (stepSessions.size() == 0) {
                 isEmptySummary = true;
             }
             ActivitySession stepSessionsSummary = stepAnalysis.calculateSummary(stepSessions, isEmptySummary);
@@ -149,7 +149,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         }
 
         //noinspection RedundantIfStatement
-        if (mcd.getStepSessions().toArray().length == 0) {
+        if (mcd.getStepSessions().size() == 0) {
             getChartsHost().enableSwipeRefresh(true); //enable pull to refresh, might be needed
         } else {
             getChartsHost().enableSwipeRefresh(false); //disable pull to refresh as it collides with swipable view

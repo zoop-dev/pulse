@@ -99,7 +99,7 @@ public class GpxReceiverActivity extends AbstractGBActivity {
             gpx_receiver_overwrite_label.setVisibility(View.GONE);
         }
 
-        gpx_receiver_received_label.setText(String.format("%s %s", getString(R.string.gpx_receiver_files_received), fileList.toArray().length));
+        gpx_receiver_received_label.setText(String.format("%s %s", getString(R.string.gpx_receiver_files_received), fileList.size()));
         gpx_receiver_files_listing.setText(fileListingText.toString());
     }
 
