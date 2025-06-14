@@ -2664,8 +2664,7 @@
     <string name="pref_sleepasandroid_feat_heartrate">Пульс</string>
     <string name="bottom_nav_devices">Пристрої</string>
     <string name="pref_dashboard_select_devices_title">Обрати пристрої...</string>
-    <string name="chart_cycling_point_label_distance">Сьогодні: %.1f км
-\nВсього: %.1f км</string>
+    <string name="chart_cycling_point_label_distance">Сьогодні: %.1f км \nВсього: %.1f км</string>
     <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_sleepasandroid_feat_movement">Акселерометр</string>
     <string name="folder_is_empty">Тека порожня</string>
