@@ -1072,9 +1072,7 @@
     <string name="charts_min_max_heartrate_popup">Najniższe tętno: %1$d
 \nNajwyższe tętno: %2$d
 \nIntensywność ruchu: %3$s</string>
-    <string name="firmware_update_progress">Trwa przesyłanie
-\n%1d%% na %.2fkbps (średnio %.2fkbps)
-\nCzęść %1d z %1d</string>
+    <string name="firmware_update_progress">Trwa przesyłanie \n%1d%% na %.2fkbps (średnio %.2fkbps) \nCzęść %1d z %1d</string>
     <string name="devicestatus_upload_failed">Przesyłanie nie powiodło się</string>
     <string name="devicestatus_upload_aborted">Przesyłanie zostało przerwane!</string>
     <string name="devicestatus_upload_completed">Przesyłanie zostało zakończone</string>
@@ -2213,11 +2211,7 @@
     <string name="pref_title_notification_cache_while_disconnected">Pamięć podręczna poza zasięgiem</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Do określenia lokalizacji używaj tylko dostawcy sieci. Zmniejsza to zużycie energii kosztem dokładności. Konieczne jest ponowne połączenie.</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">Interwał aktualizacji danych GPS</string>
-    <string name="fw_upgrade_notice_zepp_os">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na Twoim %s.
-\n
-\nTwój zegarek zostanie ponownie uruchomiony po instalacji pliki .zip.
-\n
-\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na Twoim %s. \n \nTwój zegarek zostanie ponownie uruchomiony po instalacji pliki .zip. \n \nKONTYNUUJ NA WŁASNE RYZYKO!</string>
     <string name="pref_summary_notification_cache_while_disconnected">Wysyłanie nieodebranych powiadomień, gdy urządzenie połączy się ponownie po utracie zasięgu</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. \"Amazfit GTR 4 - AFC8\".</string>
     <string name="pref_canned_message">Wiadomość</string>
@@ -3207,8 +3201,7 @@
     <string name="toast_camera_permission_required">Ta funkcja wymaga uprawnienia do aparatu.</string>
     <string name="toast_camera_support_required">Ta funkcja wymaga wsparcia dla aparatu.</string>
     <string name="toast_camera_photo_taken">Wykonano zdjęcie i zapisano je w: %s</string>
-    <string name="chart_cycling_point_label_distance">Dzisiaj: %.1f km
-\nCałkowicie: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Dzisiaj: %.1f km \nCałkowicie: %.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
     <string name="toast_setting_requires_reconnect">Ta opcja zadziała dopiero po ponownym podłączeniu</string>
@@ -3284,8 +3277,7 @@
     <string name="backup_restore_importing">Importowanie z zip…</string>
     <string name="backup_restore_importing_database">Importowanie bazy danych…</string>
     <string name="backup_restore_importing_preferences">Importowanie preferencji…</string>
-    <string name="backup_restore_warning_files">Nie udało się przywrócić %1d plików:
-\n%2s</string>
+    <string name="backup_restore_warning_files">Nie udało się przywrócić %1d plików: \n%2s</string>
     <string name="backup_restore_export_complete">Eksport zakończony</string>
     <string name="backup_restore_error_export">Eksport do zip nie powiódł się</string>
     <string name="backup_restore_error_import">Import z zip nie powiódł się</string>
