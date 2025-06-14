@@ -711,19 +711,27 @@ public class DebugActivity extends AbstractGBActivity {
                 final CompanionDeviceManager manager = (CompanionDeviceManager) GBApplication.getContext().getSystemService(Context.COMPANION_DEVICE_SERVICE);
                 final List<String> associations = new ArrayList<>(manager.getAssociations());
                 Collections.sort(associations);
-                String companionDevicesList = String.format(Locale.ROOT, "%d companion devices", associations.size());
+                final StringBuilder sb = new StringBuilder(String.format(Locale.ROOT, "%d companion devices", associations.size()));
                 if (!associations.isEmpty()) {
-                    companionDevicesList += "\n\n" + StringUtils.join("\n", associations.toArray(new String[0]));
+                    sb.append("\n");
+                    for (final String association : associations) {
+                        sb.append("\n").append(association);
+                        final GBDevice device = GBApplication.app()
+                                .getDeviceManager()
+                                .getDeviceByAddress(association);
+                        if (device == null) {
+                            sb.append(" (Unknown)");
+                        } else {
+                            sb.append(" (").append(device.getAliasOrName()).append(")");
+                        }
+                    }
                 }
 
                 new MaterialAlertDialogBuilder(DebugActivity.this)
                         .setCancelable(false)
                         .setTitle("Companion Devices")
-                        .setMessage(companionDevicesList)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
+                        .setMessage(sb.toString())
+                        .setPositiveButton(R.string.ok, (dialog, which) -> {
                         })
                         .show();
             }
