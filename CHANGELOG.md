@@ -4,17 +4,26 @@
 
 * Initial support for Amazfit Active 2 NFC
 * Initial support for Colmi R12
+* Initial support for Da Fit / Moyoung devices - Advan Watch SE1 AI, C20 smartwatch, KT80 smartwatch, R50Pro smartwatch, Colmi i28 Ultra, Colmi V72, Colmi V89, Fire-Boltt Talk, KSIX Venture, Misirun C17, Rainbuvvy T97, Viran C29
 * Initial support for Polar H10
-* Initial support for Garmin Edge 130 Plus, Edge Explore 2, Fenix 7X Pro, Forerunner 630, Instinct 2X Tactical, Instinct 3 Tactical, Vívoactive HR, Vívosmart 4
+* Initial support for Garmin bike computers - Edge 130 Plus, Edge Explore 2
+* Initial support for Garmin Fenix 7X Pro, Forerunner 630, Forerunner 645 Music, Instinct 2X Tactical, Instinct 3 Tactical, Vívoactive HR, Vívosmart 4
+* Initial support for Huawei Freebuds 6
+* Initial support for Huawei Watch 5
 * Initial support for Oppo Enco Buds2
+* Initial support for Pixel Buds A
 * Initial support for Realme Buds Air 5 Pro, Buds T100, Buds T300
+* Initial support for Redmi Buds 6 Pro
 * Initial support for Sony WF-C710N
 * Experimental support for Huawei Watch Fit 4 / 4 Pro
 * Bangle.js: Add support for insecure TLS and HTTP requests
 * Bangle.js: Add support for version 2 weather
-* Bangle.js: Use html-compatible parser for xpath queries
 * Bangle.js: Set the HTTP request timeout
+* Bangle.js: Use html-compatible parser for xpath queries
+* CMF Watch Pro/2: Improve activity parsing
 * Colmi R0x: Add support for display preferences
+* Colmi R12: Fix bluetooth name
+* Even Realities G1: Improved support, add more settings
 * Even Realities G1: Pair as a single device
 * Garmin: Fix activity renaming
 * Garmin: Fix fetching of concatenated fit files
@@ -26,6 +35,7 @@
 * Huawei: Configuration of goal reminders
 * Huawei: Fix crash in app list
 * Huawei: Fix message during firmware update
+* Huawei: Handle workout sync errors
 * Huawei: Upload notification app icons
 * iTag/thermometer: Fix icon colors in dynamic color theme
 * Mi Smart Scale: Mark device as busy while fetching weight history
@@ -36,15 +46,18 @@
 * Zepp OS: Add missing application names
 * Zepp OS: Disable realtime steps on connection
 * Zepp OS: Experimental btrfcomm support
+* Zepp OS: Fix crash when sending music info
+* Zepp OS: Fix crash when uploading some watchfaces
 * Zepp OS: Fix DST when setting time
 * Zepp OS: Fix moon phase icon
 * Zepp OS: Fix zip files being wrongly recognized as AGPS
 * Zepp OS: Parse workout pace, cadence, strength sets
-* BLE: Add setting to request low-power connection
 * BLE: Add reconnect on gadget-initiated connection
-* Charts: Display resting metabolic rate
+* BLE: Add setting to request low-power connection
+* BLE: Fix some race conditions
 * Charts: Add average day for body energy
-* Charts: Add weekly/monthly views for calories
+* Charts: Add weekly/monthly views for calories and stress
+* Charts: Display resting metabolic rate
 * Dashboard: Fix resting calories when using multiple devices
 * Intent API: Add command to set device type
 * OpenTracks: Fix detection of some versions of the app
