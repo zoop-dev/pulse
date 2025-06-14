@@ -1055,9 +1055,7 @@
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="descentSeconds">ירידה</string>
     <string name="activity_error_no_app_for_png">כדי לשתף את צילום המסך, עליך להתקין יישומון שיכול לטפל בקובצי תמונה.</string>
-    <string name="firmware_update_progress">מתבצעת העלאה
-\n%1d%% ב־%.2f קסל״ש (ממוצע %.2f קסל״ש)
-\nחלק %1d מתוך %1d</string>
+    <string name="firmware_update_progress">מתבצעת העלאה \n%1d%% ב־%.2f קסל״ש (ממוצע %.2f קסל״ש) \nחלק %1d מתוך %1d</string>
     <string name="devicestatus_upload_failed">ההעלאה נכשלה</string>
     <string name="devicestatus_upload_aborted">ההעלאה בוטלה!</string>
     <string name="devicestatus_upload_validating">ההעלאה נבדקת</string>
@@ -2335,11 +2333,7 @@
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
 \n
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
-    <string name="fw_upgrade_notice_zepp_os">פעולה זו תתקין את הקושחה %s על ה־%s שלך.
-\n
-\nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
-\n
-\nהמשך התהליך הוא על אחריותך בלבד!</string>
+    <string name="fw_upgrade_notice_zepp_os">פעולה זו תתקין את הקושחה %s על ה־%s שלך. \n \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip. \n \nהמשך התהליך הוא על אחריותך בלבד!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (מרובע)</string>
     <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (מעוגל)</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro‎</string>
@@ -2889,8 +2883,7 @@
     <string name="open_camera">פתיחת מצלמה</string>
     <string name="toast_camera_permission_required">נחוצה הרשאה למצלמה לפעולה הזאת.</string>
     <string name="toast_setting_requires_reconnect">ההגדרה הזאת תחול לאחר חיבור מחדש</string>
-    <string name="chart_cycling_point_label_distance">היום: %.1f ק״מ
-\nסך הכול: %.1f ק״מ</string>
+    <string name="chart_cycling_point_label_distance">היום: %.1f ק״מ \nסך הכול: %.1f ק״מ</string>
     <string name="chart_cycling_point_label_speed">%.1f קמ״ש</string>
     <string name="proprietary_app_warning">היכולת הזאת דורשת התקנת יישומון קנייני</string>
     <string name="notif_battery_full_title">סוללת ההתקן מלאה!</string>
