@@ -899,9 +899,7 @@
 \nкретања</string>
     <string name="lack_of_sleep">Недостатак спавања: %1$s</string>
     <string name="devicestatus_upload_started">Отпремање је почело</string>
-    <string name="firmware_update_progress">Отпремање напредује
-\n%1d%% на %.2fkbps (просечно %.2fkbps)
-\nДео %1d од %1d</string>
+    <string name="firmware_update_progress">Отпремање напредује \n%1d%% на %.2fkbps (просечно %.2fkbps) \nДео %1d од %1d</string>
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
     <string name="fwappinstaller_connection_state">Веза са уређајем: %1$s</string>
     <string name="movement_intensity">Јачина кретања</string>
