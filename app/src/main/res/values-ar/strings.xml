@@ -721,9 +721,7 @@
     <string name="alarm_sun_short">الاح</string>
     <string name="alarm_sat_short">الس</string>
     <string name="alarm_snooze">غفوة</string>
-    <string name="firmware_update_progress">التحميل قيد التقدم
-\n%1d ٪٪ بمعدل %.2f كيلوبت في الثانية (متوسط %.2f كيلوبت في الثانية)
-\nالجزء %1d من %1d</string>
+    <string name="firmware_update_progress">التحميل قيد التقدم \n%1d ٪٪ بمعدل %.2f كيلوبت في الثانية (متوسط %.2f كيلوبت في الثانية) \nالجزء %1d من %1d</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">اقتطع الطوابع الزمنية لعملية الجلب إلى دقائق. قم بتعطيل هذا الإعداد للاحتفاظ بالطوابع الزمنية في ثوانٍ ، إذا واجهت مشكلات أثناء جلب التدريبات القصيرة جدًا.</string>
     <string name="pref_summary_keep_data_on_device">سيتم الاحتفاظ ببيانات النشاط على الجهاز حتى بعد المزامنة. يكون مفيدًا إذا تم استخدام GB مع تطبيقات أخرى. قد يتسبب هذا في نفاد ذاكرة الساعة و/أو توقف المزامنة بشكل قطعي.</string>
     <string name="portuguese">البرتغالية</string>
@@ -2341,11 +2339,7 @@
 \n
 \nأستمر على مسؤوليتك الخاصة!</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
-    <string name="fw_upgrade_notice_zepp_os">أنت على وشك تثبيت البرامج الثابتة %s على%s.
-\n
-\nستتم إعادة تشغيل ساعتك بعد تثبيت ملف zip.
-\n
-\nالاستمرار على مسؤوليتك الخاصة!</string>
+    <string name="fw_upgrade_notice_zepp_os">أنت على وشك تثبيت البرامج الثابتة %s على%s. \n \nستتم إعادة تشغيل ساعتك بعد تثبيت ملف zip. \n \nالاستمرار على مسؤوليتك الخاصة!</string>
     <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
     <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (المربعة)</string>
@@ -2958,8 +2952,7 @@
     <string name="pref_title_wheel_diameter">قطر العجلة</string>
     <string name="pref_summary_cycling_persistence_interval">الفاصل الزمني بثوانٍ عندما يجب كتابة بيانات ركوب الدراجات الحالية إلى قاعدة البيانات</string>
     <string name="pref_title_cycling_persistence_interval">معادل الفاصل الزمني</string>
-    <string name="chart_cycling_point_label_distance">اليوم: %.1f km
-\nالإجمالي: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">اليوم: %.1f km \nالإجمالي: %.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="devicetype_huawei_band9">Huawei Band 9</string>
     <string name="pref_speak_notifications_focus_exclusive_title">إيقاف الصوت مؤقتًا للتطبيقات الأخرى</string>
