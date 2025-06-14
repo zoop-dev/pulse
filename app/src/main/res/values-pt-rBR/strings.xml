@@ -1100,9 +1100,7 @@
 \nFrequência cardíaca mais alta: %2$d
 \nIntensidade do movimento: %3$s</string>
     <string name="movement_intensity">Intensidade do movimento</string>
-    <string name="firmware_update_progress">O upload está em progresso
-\n%1d%% a %.2fkbps (média de %.2fkbps)
-\nParte %1d de %1d</string>
+    <string name="firmware_update_progress">O upload está em progresso \n%1d%% a %.2fkbps (média de %.2fkbps) \nParte %1d de %1d</string>
     <string name="devicestatus_upload_failed">O upload falhou</string>
     <string name="devicestatus_upload_aborted">O upload foi abortado!</string>
     <string name="devicestatus_upload_validating">O upload está sendo validado</string>
@@ -1904,8 +1902,7 @@
     <string name="folder_is_empty">A pasta está vazia</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Pausar o áudio de outros aplicativos</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_on">A reprodução de outros aplicativos será pausada enquanto a notificação estiver sendo falada</string>
-    <string name="chart_cycling_point_label_distance">Hoje: %.1f km
-\nTotal: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Hoje: %.1f km \nTotal: %.1f km</string>
     <string name="pref_title_cycling_persistence_interval">Intervalo de persistência</string>
     <string name="prefs_password_4_digits_0_to_9_summary">A senha deve ter 4 dígitos, usando apenas números</string>
     <string name="english_ca">Inglês (Canadá)</string>
@@ -1946,11 +1943,7 @@
 \n
 \nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Usar a rede apenas para determinar a localização</string>
-    <string name="fw_upgrade_notice_zepp_os">Você está prestes a instalar o firmware %s no seu %s.
-\n
-\nSua pulseira será reiniciada após a instalação do arquivo .zip.
-\n
-\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Você está prestes a instalar o firmware %s no seu %s. \n \nSua pulseira será reiniciada após a instalação do arquivo .zip. \n \nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
     <string name="heartrate_bpm_105">105 bpm</string>
     <string name="heartrate_bpm_110">110 bpm</string>
     <string name="heartrate_bpm_40">40 bpm</string>
@@ -2426,7 +2419,7 @@
     <string name="menuitem_stress_segmented">Estresse (segmentado)</string>
     <string name="menuitem_stress_breakdown">Estresse (colapso)</string>
     <string name="backup_restore_exporting">Exportando para zip…</string>
-    <string name="backup_restore_warning_files">%1d falha ao restaurar os arquivos:  \n%2s</string>
+    <string name="backup_restore_warning_files">%1d falha ao restaurar os arquivos: \n%2s</string>
     <string name="number_selected_items">%1d selecionado</string>
     <string name="backup_restore_importing_files_i_of_n">Importando arquivos... %1d de %2d</string>
     <string name="inactivity_warnings_minimum_steps_summary">Quantidade mínima de passos que precisam ser dados durante os minutos de limite</string>
