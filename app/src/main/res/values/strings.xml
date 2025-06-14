@@ -40,7 +40,7 @@
     <string name="search">Search</string>
     <string name="find_lost_device_message">Search for %1$s?</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="controlcenter_take_screenshot">Take Screenshot</string>
     <string name="controlcenter_power_off">Power Off</string>
@@ -172,7 +172,7 @@
     <string name="fw_upgrade_notice_amazfit_trex2">You are about to install the %s firmware on your Amazfit T-Rex 2.\n\nYour band will reboot after installing the .zip file.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfit_band7">You are about to install the %s firmware on your Amazfit Band 7.\n\nYour band will reboot after installing the .zip file.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">You are about to install the %s firmware on your Amazfit Cheetah Pro.\n\nYour band will reboot after installing the .zip file.\n\nPROCEED AT YOUR OWN RISK!</string>
-    <string name="fw_upgrade_notice_zepp_os">You are about to install the %s firmware on your %s.\n\nYour watch will reboot after installing the .zip file.\n\nPROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_zepp_os">You are about to install the %1$s firmware on your %2$s.\n\nYour watch will reboot after installing the .zip file.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfitx">You are about to install the %s firmware on your Amazfit X.\n\nPlease make sure to install the .fw file, and after that the .res file. Your band will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfitneo">You are about to install the %s firmware on your Amazfit Neo.
 \n
@@ -180,7 +180,7 @@
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
-    <string name="fw_upgrade_notice_huawei">You are about to upload the %s firmware on your %s.\n\nYour current firmware is %s\n\nYour device will reboot after uploading.\n\nPROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_huawei">You are about to upload the %1$s firmware on your %2$s.\n\nYour current firmware is %s\n\nYour device will reboot after uploading.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with Gadgetbridge.</string>
     <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with Gadgetbridge.\n\nYou are DISCOURAGED from flashing it!"</string>
     <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>
@@ -943,7 +943,7 @@
     <string name="devicestatus_upload_validating">Upload is being validated</string>
     <string name="devicestatus_upload_aborted">Upload has been aborted!</string>
     <string name="devicestatus_upload_failed">Upload has failed</string>
-    <string name="firmware_update_progress">Upload is in progress\n%1d%% at %.2fkbps (average %.2fkbps)\nPart %1d of %1d</string>
+    <string name="firmware_update_progress">Upload is in progress\n%1$d%% at %2$.2fkbps (average %3$.2fkbps)\nPart %4$d of %5$d</string>
     <string name="updating_firmware">Flashing firmware…</string>
     <string name="fwapp_install_device_not_supported">File cannot be installed, device not supported.</string>
     <string name="fwapp_install_device_not_ready">File cannot be installed, device not ready.</string>
@@ -1072,8 +1072,8 @@
     <string name="sleep_score_value">Score: %1d</string>
     <string name="stats_empty_value">-</string>
     <string name="time_empty_value" translatable="false">--:--</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="stats_lowest_hr">Lowest HR</string>
     <string name="stats_highest_hr">Highest HR</string>
     <string name="stats_average_hr">Average HR</string>
@@ -2524,8 +2524,8 @@
     <string name="workout_set_i">Set %1d</string>
     <string name="workout_set_reps">Repetitions</string>
     <string name="workout_set_repetitions">%1d x</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
     <!-- activity summary units-->
     <string name="meters">m</string>
     <string name="cm">cm</string>
@@ -3263,7 +3263,7 @@
     <string name="controlcenter_set_parent_folder">Set parent folder</string>
     <string name="controlcenter_set_preferences">Set preferences</string>
     <string name="controlcenter_toggle_details">Toggle details</string>
-    <string name="controlcenter_connected_fraction">Connected: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Connected: %1$d/%2$d</string>
     <string name="error_setting_parent_folder">Error setting parent folder: %s</string>
     <string name="error_deleting_device">Error deleting device: %s</string>
     <string name="controlcenter_folder_name">Folder name:</string>
@@ -3676,7 +3676,7 @@
     <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_title_huawei_account">Huawei Account</string>
     <string name="pref_summary_huawei_account">Huawei account used in pairing process. Setting it allows to pair without factory reset.</string>
-    <string name="watchface_resolution_doesnt_match">Watchface resolution doesnt match device screen. Watchface is %1$s device screen is %2$s</string>
+    <string name="watchface_resolution_doesnt_match">Watchface resolution doesn\'t match device screen. Watchface is %1$s device screen is %2$s</string>
     <string name="device_name_bicycle_sensor">Bicycle sensor</string>
     <string name="device_name_cycling_sensor">Cycling sensor</string>
     <string name="devicetype_cycling_sensor">Cycling speed sensor</string>
@@ -3685,7 +3685,7 @@
     <string name="pref_title_wheel_diameter">Wheel diameter</string>
     <string name="pref_summary_cycling_persistence_interval">Interval in seconds when the current cycling data should be written to the database</string>
     <string name="pref_title_cycling_persistence_interval">Persistence interval</string>
-    <string name="chart_cycling_point_label_distance">Today: %.1f km\nTotal: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Today: %1$.1f km\nTotal: %2$.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="toast_setting_requires_reconnect">This setting will take effect after a reconnect</string>
 
@@ -3760,16 +3760,16 @@
     <string name="backup_restore_exporting_preferences">Exporting preferences…</string>
     <string name="backup_restore_exporting_database">Exporting database…</string>
     <string name="backup_restore_exporting_files">Exporting files…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Exporting files… %1d of %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Exporting files… %1$d of %2$d</string>
     <string name="backup_restore_exporting_finishing">Finishing export…</string>
     <string name="backup_restore_importing">Importing from zip…</string>
     <string name="backup_restore_do_not_exit">%s Please keep this screen open until the operation finishes.</string>
     <string name="backup_restore_importing_loading">Loading file…</string>
     <string name="backup_restore_importing_validating">Validating file…</string>
-    <string name="backup_restore_importing_files_i_of_n">Importing files… %1d of %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importing files… %1$d of %2$d</string>
     <string name="backup_restore_importing_database">Importing database…</string>
     <string name="backup_restore_importing_preferences">Importing preferences…</string>
-    <string name="backup_restore_warning_files">%1d files failed to be restored: \n%2s</string>
+    <string name="backup_restore_warning_files">%1$d files failed to be restored: \n%2$s</string>
     <string name="backup_restore_export_complete">Export complete</string>
     <string name="backup_restore_import_complete">Import complete</string>
     <string name="backup_restore_error_export">Export to zip failed</string>
@@ -3896,10 +3896,10 @@
     <string name="pref_garmin_fake_oauth_title">Send fake OAuth responses</string>
     <string name="pref_garmin_fake_oauth_summary">Fixes some functions such as weather and AGPS updates without connecting to the official app every 90 days.</string>
     <string name="gree_controller_host">Host</string>
-    <string name="gree_pair_info">You are about to pair with %s (%s). Please enter the Wi-Fi and host server information for pairing. See the website for more information.</string>
+    <string name="gree_pair_info">You are about to pair with %1$s (%2$s). Please enter the Wi-Fi and host server information for pairing. See the website for more information.</string>
     <string name="gree_pair_status_success">Pairing success.\n\nBind key: %s</string>
     <string name="gree_pair_status_failure">Pairing failed: %s</string>
-    <string name="gree_pair_clipboard">Device name: %s\nMac address: %s\nBind key: %s</string>
+    <string name="gree_pair_clipboard">Device name: %1$s\nMac address: %2$s\nBind key: %3$s</string>
     <string name="earfun_transparency_mode">Transparency mode</string>
     <string name="earfun_anc_mode">ANC mode</string>
     <string name="earfun_anc_mode_strong">Strong ANC</string>
@@ -4004,7 +4004,7 @@
     <string name="even_realities_frame_color_grey">Grey</string>
     <string name="even_realities_frame_color_brown">Brown</string>
     <string name="even_realities_frame_color_green">Green</string>
-    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">Left Lens</string>
     <string name="even_realities_right_lens">Right Lens</string>
 
