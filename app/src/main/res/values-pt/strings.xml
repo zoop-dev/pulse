@@ -1136,9 +1136,7 @@
 \nFrequência cardíaca mais alta: %2$d
 \nIntensidade do movimento: %3$s</string>
     <string name="movement_intensity">Intensidade do movimento</string>
-    <string name="firmware_update_progress">O envio está em progresso
-\n%1d%% a %.2fkbps (média de %.2fkbps)
-\nParte %1d de %1d</string>
+    <string name="firmware_update_progress">O envio está em progresso \n%1d%% a %.2fkbps (média de %.2fkbps) \nParte %1d de %1d</string>
     <string name="devicestatus_upload_failed">O envio falhou</string>
     <string name="devicestatus_upload_aborted">O envio foi abortado!</string>
     <string name="devicestatus_upload_validating">O envio está a ser validado</string>
@@ -1794,8 +1792,7 @@
     <string name="pref_summary_huawei_account">Conta da Huawei usada no processo de emparelhamento. A sua configuração permite emparelhar sem redefinição de fábrica.</string>
     <string name="watchface_resolution_doesnt_match">A resolução do mostrador de relógio não corresponde ao ecrã do dispositivo. Mostrador de relógio é %1$s, o ecrã do dispositivo é %2$s</string>
     <string name="pref_summary_wheel_diameter">Diâmetro da roda em polegadas. Normalmente 29, 27,5 ou 26.</string>
-    <string name="chart_cycling_point_label_distance">Hoje: %.1f km
-\nTotal: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Hoje: %.1f km \nTotal: %.1f km</string>
     <string name="realtime_settings">Configurações em tempo real</string>
     <string name="pref_fetch_unknown_files_title">Colete ficheiros desconhecidos</string>
     <string name="pref_fetch_unknown_files_summary">Colete ficheiros de atividade desconhecidos do relógio. Eles não serão processados, mas serão gravados no telefone.</string>
@@ -1941,11 +1938,7 @@
 \nA sua pulseira será reiniciada após a instalação do ficheiro .zip.
 \n
 \nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
-    <string name="fw_upgrade_notice_zepp_os">Está prestes a instalar o firmware %s no seu %s.
-\n
-\nA sua pulseira será reiniciada após a instalação do ficheiro .zip.
-\n
-\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Está prestes a instalar o firmware %s no seu %s. \n \nA sua pulseira será reiniciada após a instalação do ficheiro .zip. \n \nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Para receber chamadas por bluetooth, é necessário parear o telefone com uma segunda instância do relógio.</string>
     <string name="prefs_wena3_vibration_warning">Aviso</string>
     <string name="info_connected_count">%d dispositivos conectados</string>
