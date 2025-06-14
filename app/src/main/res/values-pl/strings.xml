@@ -1072,7 +1072,7 @@
     <string name="charts_min_max_heartrate_popup">Najniższe tętno: %1$d
 \nNajwyższe tętno: %2$d
 \nIntensywność ruchu: %3$s</string>
-    <string name="firmware_update_progress">Trwa przesyłanie \n%1d%% na %.2fkbps (średnio %.2fkbps) \nCzęść %1d z %1d</string>
+    <string name="firmware_update_progress">Trwa przesyłanie\n%1$d%% z prędkością %2$.2fkbps (średnio %3$.2fkbps)\nCzęść %4$d z %5$d</string>
     <string name="devicestatus_upload_failed">Przesyłanie nie powiodło się</string>
     <string name="devicestatus_upload_aborted">Przesyłanie zostało przerwane!</string>
     <string name="devicestatus_upload_completed">Przesyłanie zostało zakończone</string>
@@ -1756,7 +1756,7 @@
     <string name="prefs_stress_monitoring_description">Monitorowanie poziomu stresu podczas odpoczynku</string>
     <string name="controlcenter_set_preferences">Ustaw preferencje</string>
     <string name="controlcenter_toggle_details">Pokaż szczegóły</string>
-    <string name="controlcenter_connected_fraction">Połączono: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Połączono: %1$d/%2$d</string>
     <string name="activity_type_elliptical">Eliptyczna</string>
     <string name="error_deleting_device">Błąd przy usuwaniu urządzenia: %s</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
@@ -2211,7 +2211,7 @@
     <string name="pref_title_notification_cache_while_disconnected">Pamięć podręczna poza zasięgiem</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Do określenia lokalizacji używaj tylko dostawcy sieci. Zmniejsza to zużycie energii kosztem dokładności. Konieczne jest ponowne połączenie.</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">Interwał aktualizacji danych GPS</string>
-    <string name="fw_upgrade_notice_zepp_os">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na Twoim %s. \n \nTwój zegarek zostanie ponownie uruchomiony po instalacji pliki .zip. \n \nKONTYNUUJ NA WŁASNE RYZYKO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Zamierzasz zainstalować oprogramowanie sprzętowe %1$s na %2$s.\n\nZegarek uruchomi się ponownie po zainstalowaniu pliku .zip.\n\nPOSTĘPUJ NA WŁASNE RYZYKO!</string>
     <string name="pref_summary_notification_cache_while_disconnected">Wysyłanie nieodebranych powiadomień, gdy urządzenie połączy się ponownie po utracie zasięgu</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. \"Amazfit GTR 4 - AFC8\".</string>
     <string name="pref_canned_message">Wiadomość</string>
@@ -3201,7 +3201,7 @@
     <string name="toast_camera_permission_required">Ta funkcja wymaga uprawnienia do aparatu.</string>
     <string name="toast_camera_support_required">Ta funkcja wymaga wsparcia dla aparatu.</string>
     <string name="toast_camera_photo_taken">Wykonano zdjęcie i zapisano je w: %s</string>
-    <string name="chart_cycling_point_label_distance">Dzisiaj: %.1f km \nCałkowicie: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Dzisiaj: %1$.1f km\nCałkowicie: %2$.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
     <string name="toast_setting_requires_reconnect">Ta opcja zadziała dopiero po ponownym podłączeniu</string>
@@ -3231,8 +3231,8 @@
     <string name="miscale_weight_unit_imperial">Imperialna (lbs)</string>
     <string name="miscale_weight_unit_chinese">Chińska (jin)</string>
     <string name="workout_set_repetitions">%1d x</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f funty</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f funty</string>
     <string name="pref_battery_polling_interval">Interwał sondowania baterii</string>
     <string name="pref_header_deprecated_functionalities">Przestarzałe funkcje</string>
     <string name="pref_header_deprecated_functionalities_warning">Następujące funkcje są przestarzałe i niedługo zostaną usunięte z programu.
@@ -3261,12 +3261,12 @@
     <string name="backup_restore_do_not_exit">%s Nie wyłączaj tego ekranu dopóki operacja nie dobiegnie końca.</string>
     <string name="backup_restore_importing_loading">Ładowanie pliku…</string>
     <string name="backup_restore_importing_validating">Sprawdzanie pliku…</string>
-    <string name="backup_restore_importing_files_i_of_n">Importowanie plików… %1d z %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importowanie plików… %1$d z %2$d</string>
     <string name="pref_battery_polling_summary">Daliśmy z siebie wszystko, dane mogą być opóźnione z wielu powodów</string>
     <string name="error_showing_changelog">Błąd w wyświetlaniu listy zmian</string>
     <string name="prefs_title_gatt_client_notification_intents">Rozgłaszaj powiadomienia GATT poprzez API intencji BLE</string>
     <string name="backup_restore_exporting_finishing">Kończenie eksportu…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Eksportowanie plików... %1d z %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Eksportowanie plików... %1$d z %2$d</string>
     <string name="backup_restore_import_complete">Import zakończony</string>
     <string name="backup_restore_abort_import_confirmation">Przerwać import? Może to spowodować uszkodzenie danych lub nieprawidłowości w bazie danych.</string>
     <string name="activity_db_management_backup_restore_explanation">Operacje importu/eksportu pozwalają ci na zapisanie kopii zapasowej ustawień Gadgetbridge, urządzeń oraz danych w pliku zip, lub przywrócenie ich z takiego pliku.
@@ -3277,7 +3277,7 @@
     <string name="backup_restore_importing">Importowanie z zip…</string>
     <string name="backup_restore_importing_database">Importowanie bazy danych…</string>
     <string name="backup_restore_importing_preferences">Importowanie preferencji…</string>
-    <string name="backup_restore_warning_files">Nie udało się przywrócić %1d plików: \n%2s</string>
+    <string name="backup_restore_warning_files">Przywrócenie %1$d plików nie powiodło się: \n%2$s</string>
     <string name="backup_restore_export_complete">Eksport zakończony</string>
     <string name="backup_restore_error_export">Eksport do zip nie powiódł się</string>
     <string name="backup_restore_error_import">Import z zip nie powiódł się</string>
@@ -3397,8 +3397,8 @@
     <string name="contact_birthday">Urodziny: %1s</string>
     <string name="birthdays">Urodziny</string>
     <string name="pref_dnd_follow_phone_summary">Gdy tryb „bie przeszkadzać” jest włączany, lub wyłączany w telefonie, automatycznie przełącz go również na urządzeniu</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="pref_dnd_follow_phone_title">Śledź ustawienia trybu „nie przeszkadzać” w telefonie</string>
     <string name="pref_title_calendar_lookahead">Liczba kolejnych dni</string>
     <string name="pref_summary_calendar_lookahead">Synchronizuj wydarzenia z kalendarza do %1s dni</string>
@@ -3714,7 +3714,7 @@
     <string name="remote_control">Zdalne sterowanie</string>
     <string name="update_firmware_operation_check_in_progress">Sprawdzanie oprogramowania sprzętowego</string>
     <string name="update_firmware_operation_check_failed">Niepowodzenie kontroli oprogramowania sprzętowego</string>
-    <string name="fw_upgrade_notice_huawei">Zamierzasz przesłać oprogramowanie układowe %s na %s.\n\nTwoje obecne oprogramowanie układowe to %s\n\nUrządzenie zostanie ponownie uruchomione po przesłaniu.\n\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
+    <string name="fw_upgrade_notice_huawei">Zamierzasz wgrać oprogramowanie sprzętowe %1$s na urządzenie %2$s.\n\nAktualne oprogramowanie sprzętowe to %s\n\nUrządzenie uruchomi się ponownie po wgraniu oprogramowania.\n\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
     <string name="unit_repetitions">powtórzenia</string>
     <string name="unit_revolutions">obroty</string>
     <string name="unit_repetitions_per_minute">powtórzeń/min</string>
@@ -3746,10 +3746,10 @@
     <string name="devicetype_gree_ac">Klimatyzator Gree</string>
     <string name="gree_pair_status_success">Parowanie powiodło się.\n\nKlucz powiązania: %s</string>
     <string name="gree_pair_status_failure">Parowanie nie powiodło się: %s</string>
-    <string name="gree_pair_clipboard">Nazwa urządzenia: %s\nAdres MAC: %s\nKlucz powiązania: %s</string>
+    <string name="gree_pair_clipboard">Nazwa urządzenia: %1$s\nAdres MAC: %2$s\nKlucz powiązania: %3$s</string>
     <string name="copy_to_clipboard">Kopiuj</string>
     <string name="gree_controller_host">Host</string>
-    <string name="gree_pair_info">Zamierzasz sparować z %s (%s). Wprowadź informacje o Wi-Fi i serwerze hosta w celu sparowania. Więcej informacji znajdziesz na stronie internetowej.</string>
+    <string name="gree_pair_info">Zamierzasz sparować z %1$s (%2$s). Wprowadź informacje o Wi-Fi i serwerze hosta w celu sparowania. Więcej informacji znajdziesz na stronie internetowej.</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
     <string name="unit_watt">Wat</string>
     <string name="unit_joule">Dżul</string>
@@ -3839,7 +3839,7 @@
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="dual_device_mode_title">Tryb podwójnego urządzenia</string>
     <string name="dual_device_mode_summary">Zezwalaj na podłączanie słuchawek do dwóch urządzeń jednocześnie</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="catalan">Kataloński</string>
     <string name="finnish">Fiński</string>
     <string name="bahasa_melayu">Malajski</string>
@@ -4080,7 +4080,7 @@
     <string name="even_realities_frame_color_grey">Szary</string>
     <string name="even_realities_frame_color_brown">Brązowy</string>
     <string name="even_realities_frame_color_green">Zielony</string>
-    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">Lewa soczewka</string>
     <string name="even_realities_frame_shape_G1A">G1A/Okrągły</string>
     <string name="even_realities_right_lens">Prawa soczewka</string>
@@ -4097,4 +4097,21 @@
     <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
     <string name="huawei_better_audio_quality_title">Priorytetem jest lepsza jakość dźwięku.</string>
     <string name="huawei_better_audio_quality_summary">Włącz lepsze kodeki audio (LDAC). Powinno to poprawić jakość dźwięku, ale zwiększa zużycie energii i może powodować opóźnienia.</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
+    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
+    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
+    <string name="devicetype_r50pro">R50Pro</string>
+    <string name="pref_watch_face">Tarcza zegarka</string>
+    <string name="pref_device_version">Wersja urządzenia</string>
+    <string name="busy_task_fetch_training_data">Pobieranie ostatnich danych treningowych</string>
+    <string name="busy_task_fetch_training_data_finished">Dane treningowe otrzymane!</string>
+    <string name="interval_twenty_minutes">co 20 minut</string>
+    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_colmi_v89">Colmi V89</string>
+    <string name="devicetype_misirun_c17">Misirun C17</string>
+    <string name="devicetype_c20">C20</string>
+    <string name="devicetype_kt80">KT80</string>
+    <string name="devicetype_ksix_venture">KSIX Venture</string>
+    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
+    <string name="devicetype_viran_c29">Viran C29</string>
 </resources>
