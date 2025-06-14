@@ -1047,9 +1047,7 @@
     <string name="lefun_prefs_hydration_reminder_interval_title">Interval připomenutí hydratace (v minutách)</string>
     <string name="lefun_prefs_hydration_reminder_summary">Náramek vám vibracemi připomene, že se máte napít</string>
     <string name="lefun_prefs_hydration_reminder_title">Připomenutí hydratace</string>
-    <string name="firmware_update_progress">Průběh nahrávání
-\n%1d%% při %.2fkbps (průměr %.2fkbps)
-\nČást %1d z %1d</string>
+    <string name="firmware_update_progress">Průběh nahrávání \n%1d%% při %.2fkbps (průměr %.2fkbps) \nČást %1d z %1d</string>
     <string name="devicestatus_upload_failed">Došlo k chybě nahrávání</string>
     <string name="devicestatus_upload_aborted">Nahrávání přerušeno!</string>
     <string name="devicestatus_upload_validating">Kontrola nahraných dat</string>
@@ -2294,11 +2292,7 @@
     <string name="zepp_os_watchface_vibrant">Vibrant</string>
     <string name="ftp_server_summary">Nastavení FTP serveru na hodinkách</string>
     <string name="changelog_full_title">Seznam změn</string>
-    <string name="fw_upgrade_notice_zepp_os">Chystáte se nainstalovat firmware %s na váš %s.
-\n
-\nVaše hodinky se po instalaci souboru .zip restartuje.
-\n
-\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="fw_upgrade_notice_zepp_os">Chystáte se nainstalovat firmware %s na váš %s. \n \nVaše hodinky se po instalaci souboru .zip restartuje. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="stop">Stop</string>
     <string name="prefs_shortcut_cards">Přístupné Karty</string>
     <string name="prefs_control_center_summary">Vyberte položky v rozbalovacím menu ovládacího centra</string>
@@ -2852,8 +2846,7 @@
     <string name="alarm_slot_reset">Slot budíků byl nastaven na výchozí</string>
     <string name="pref_dashboard_widget_today_upside_down_summary">Ve 24h režimu vykreslit půlnoc dole a poledne na vrchu grafu</string>
     <string name="pref_sleepasandroid_feat_notifications">Oznámení</string>
-    <string name="chart_cycling_point_label_distance">Dnes: %.1f km
-\nCelkem: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Dnes: %.1f km \nCelkem: %.1f km</string>
     <string name="pref_fetch_unknown_files_summary">Načítat neznámé soubory aktivit z hodinek. Nebudou zpracovány, ale budou uloženy do telefonu.</string>
     <string name="pref_dashboard_all_devices_title">Všechna zařízení</string>
     <string name="pref_dashboard_widget_double_size_title">Dvojitá velikost</string>
@@ -3393,8 +3386,7 @@
     <string name="backup_restore_importing_preferences">Importování předvoleb…</string>
     <string name="backup_restore_restart_title">Restartovat</string>
     <string name="backup_restore_importing_database">Importování databáze…</string>
-    <string name="backup_restore_warning_files">Nepodařilo se obnovit %1d souborů:
-\n%2s</string>
+    <string name="backup_restore_warning_files">Nepodařilo se obnovit %1d souborů: \n%2s</string>
     <string name="devicetype_amazfit_trex_3">Amazfit T-Rex 3</string>
     <string name="menuitem_map">Mapa</string>
     <string name="menuitem_night_display">Noční zobrazení</string>
