@@ -7,8 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.icu.util.Calendar;
-import android.icu.util.TimeZone;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
@@ -20,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
