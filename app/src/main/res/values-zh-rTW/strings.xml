@@ -2266,9 +2266,7 @@
     <string name="controlcenter_start_configure_reminders">設定提醒</string>
     <string name="reminder_repeat">重複</string>
     <string name="reminder_delete_confirm_title">刪除提醒</string>
-    <string name="firmware_update_progress">上傳正在進行中
-\n%1d%% 速度 %.2fkbps (平均 %.2fkbps)
-\n第 %1d 部分，共 %1d 部分</string>
+    <string name="firmware_update_progress">上傳正在進行中 \n%1d%% 速度 %.2fkbps (平均 %.2fkbps) \n第 %1d 部分，共 %1d 部分</string>
     <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="pref_summary_overwrite_settings_on_connection">連接到音響時，覆蓋其上的所有設置。</string>
     <string name="application_name_banglejs_main">Please initialize the addon first by opening it from the Extensions Menu &gt; GPT for Docs, Sheets and Slides &gt; Start</string>
@@ -2599,11 +2597,7 @@
 \n安裝 .zip 文件後，您的手環將重新啟動。
 \n
 \n請自行承擔風險！</string>
-    <string name="fw_upgrade_notice_zepp_os">您即將在您的%s上安裝%s固件。
-\n
-\n安裝完.zip文件後，您的手錶將重啟。
-\n
-\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_zepp_os">您即將在您的%s上安裝%s固件。 \n \n安裝完.zip文件後，您的手錶將重啟。 \n \n請自行承擔風險！</string>
     <string name="prefs_equalizer">均衡器</string>
     <string name="copied_to_clipboard">已複製到剪貼簿</string>
     <string name="minPace">最慢的步伐</string>
