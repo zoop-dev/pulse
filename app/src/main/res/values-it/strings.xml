@@ -1065,9 +1065,7 @@
     <string name="charts_min_max_heartrate_popup">Frequenza cardiaca più bassa: %1$d
 \nFrequenza cardiaca più alta: %2$d
 \nIntensità del movimento: %3$s</string>
-    <string name="firmware_update_progress">Caricamento in corso
-\n%1d%% a %.2fkbps (media %.2fkbps)
-\nParte %1d di %1d</string>
+    <string name="firmware_update_progress">Caricamento in corso \n%1d%% a %.2fkbps (media %.2fkbps) \nParte %1d di %1d</string>
     <string name="devicestatus_upload_failed">Caricamento non riuscito</string>
     <string name="devicestatus_upload_aborted">Caricamento annullato!</string>
     <string name="devicestatus_upload_validating">Il caricamento è in fase di validazione</string>
@@ -2354,11 +2352,7 @@
     <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
     <string name="withings_calibration_text_minutes">Ora, utilizzare il quadrante per allineare la lancetta dei minuti alle 12.</string>
     <string name="withings_calibration_text_hours">Usa il quadrante sottostante per allineare la lancetta delle ore alle 12.</string>
-    <string name="fw_upgrade_notice_zepp_os">Stai per installare il firmware %s sul tuo %s.
-\n
-\nL\'orologio si riavvierà dopo l\'installazione del file .zip.
-\n
-\nPROCEDI A TUO RISCHIO E PERICOLO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Stai per installare il firmware %s sul tuo %s. \n \nL\'orologio si riavvierà dopo l\'installazione del file .zip. \n \nPROCEDI A TUO RISCHIO E PERICOLO!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Quadrato)</string>
     <string name="device_experimental">SPERIMENTALE</string>
     <string name="zepp_os_watchface_pure_white">Bianco puro</string>
