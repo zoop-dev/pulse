@@ -1078,9 +1078,7 @@
     <string name="charts_min_max_heartrate_popup">Самая низкая частота пульса: %1$d
 \nСамая высокая частота пульса: %2$d
 \nИнтенсивность движения: %3$s</string>
-    <string name="firmware_update_progress">Загрузка в процессе
-\n%1d%% при %.2fкбит/с (в среднем %.2fкбит/с)
-\nЧасть %1d из %1d</string>
+    <string name="firmware_update_progress">Загрузка в процессе \n%1d%% при %.2fкбит/с (в среднем %.2fкбит/с) \nЧасть %1d из %1d</string>
     <string name="devicestatus_upload_failed">Загрузка не удалась</string>
     <string name="devicestatus_upload_aborted">Загрузка отменена!</string>
     <string name="devicestatus_upload_validating">Загрузка проходит проверку</string>
@@ -2173,11 +2171,7 @@
 \nПосле установки .zip ваш браслет будет перезагружен.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="fw_upgrade_notice_zepp_os">Вы собираетесь установить прошивку %s на Ваш %s.
-\n
-\nПосле установки файла .zip ваши часы будут перезагружены.
-\n
-\nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
+    <string name="fw_upgrade_notice_zepp_os">Вы собираетесь установить прошивку %s на Ваш %s. \n \nПосле установки файла .zip ваши часы будут перезагружены. \n \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Вы собираетесь установить прошивку %s на Ваш Amazfit Bip 3 Pro.
 \n
 \nБудьте внимательны: сперва установите файл .fw, затем .res. После установки .fw ваши часы будут перезагружены.
@@ -2837,8 +2831,7 @@
     <string name="pref_title_wheel_diameter">Диаметр колеса</string>
     <string name="pref_summary_wheel_diameter">Диаметр колеса в дюймах. Обычно 29, 27,5 или 26.</string>
     <string name="chart_cycling_point_label_speed">%.1f км/ч</string>
-    <string name="chart_cycling_point_label_distance">Сегодня: %.1f км
-\nВсего: %.1f км</string>
+    <string name="chart_cycling_point_label_distance">Сегодня: %.1f км \nВсего: %.1f км</string>
     <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_on">Воспроизведение в других приложениях будет приостановлено при произнесении уведомления</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Приостанавливать воспроизведение</string>
