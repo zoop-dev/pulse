@@ -344,11 +344,7 @@
     <string name="pref_summary_notification_delay_calls">Fördröj innan aviseringar skickas om inkommande samtal till enheten, i sekunder.</string>
     <string name="open_fw_installer_warning_text">Denna funktion kan potentiellt orsaka att din enhet inte kan starta. Med det sagt, detta har aldrig hänt någon av utvecklarna vid flashning, kom ihåg att detta är på egen risk.</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="fw_upgrade_notice_zepp_os">Du är på väg att installera mjukvaran %s på din %s.
-\n
-\nDitt klocka kommer att starta om efter installationen av .zip-filen.
-\n
-\nFORTSÄTT PÅ EGEN RISK!</string>
+    <string name="fw_upgrade_notice_zepp_os">Du är på väg att installera mjukvaran %s på din %s. \n \nDitt klocka kommer att starta om efter installationen av .zip-filen. \n \nFORTSÄTT PÅ EGEN RISK!</string>
     <string name="pref_title_general_autoconnectonbluetooth">Anslut till Gadgetbridge-enheten när Bluetooth aktiveras</string>
     <string name="pref_title_general_autostartonboot">Starta automatiskt</string>
     <string name="pref_title_language">Språk</string>
