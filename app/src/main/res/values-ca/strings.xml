@@ -1047,9 +1047,7 @@
     <string name="lefun_prefs_hydration_reminder_title">Recordatori d\'hidratació</string>
     <string name="bip_prefs_shortcuts">Dreceres</string>
     <string name="movement_intensity">Intensitat de moviment</string>
-    <string name="firmware_update_progress">La càrrega és en procés
-\n%1d%% a %.2fkbps (mitjana %.2fkbps)
-\nPart %1d de %1d</string>
+    <string name="firmware_update_progress">La càrrega és en procés \n%1d%% a %.2fkbps (mitjana %.2fkbps) \nPart %1d de %1d</string>
     <string name="devicestatus_upload_failed">Ha fallat la càrrega</string>
     <string name="devicestatus_upload_started">Ha començat la càrrega</string>
     <string name="devicestatus_upload_completed">S\'ha completat la càrrega</string>
