@@ -1089,9 +1089,7 @@
     <string name="pref_title_lower_button_function_short">Alt Düğme kısa</string>
     <string name="pref_title_middle_button_function_short">Orta Düğme kısa</string>
     <string name="pref_title_upper_button_function_short">Üst Düğme kısa</string>
-    <string name="firmware_update_progress">Yükleme devam ediyor
-\n%%%1d, %.2fkbps hızında (ortalama %.2fkbps)
-\nBölüm %1d / %1d</string>
+    <string name="firmware_update_progress">Yükleme devam ediyor \n%%%1d, %.2fkbps hızında (ortalama %.2fkbps) \nBölüm %1d / %1d</string>
     <string name="devicestatus_upload_failed">Yükleme başarısız oldu</string>
     <string name="devicestatus_upload_aborted">Yükleme iptal edildi!</string>
     <string name="devicestatus_upload_validating">Yükleme doğrulanıyor</string>
@@ -2224,11 +2222,7 @@
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="fw_upgrade_notice_zepp_os">%s ürün yazılımını %s aygıtınıza kurmak üzeresiniz.
-\n
-\nSaatiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
-\n
-\nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
+    <string name="fw_upgrade_notice_zepp_os">%s ürün yazılımını %s aygıtınıza kurmak üzeresiniz. \n \nSaatiniz .zip dosyasını kurduktan sonra yeniden başlatılacak. \n \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="wearmode_pebble">Pebble (ayakkabı tokası)</string>
     <string name="wearmode_band">Bileklik (kol bilekliği)</string>
     <string name="wearmode_necklace">Kolye (boyun askısı)</string>
@@ -2959,8 +2953,7 @@
     <string name="pref_summary_wheel_diameter">İnç cinsinden tekerlek çapı. Genellikle 29, 27.5 veya 26.</string>
     <string name="pref_title_wheel_diameter">Tekerlek çapı</string>
     <string name="pref_title_cycling_persistence_interval">Süreklilik aralığı</string>
-    <string name="chart_cycling_point_label_distance">Bugün: %.1f km
-\nToplam: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Bugün: %.1f km \nToplam: %.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/sa</string>
     <string name="device_name_bicycle_sensor">Bisiklet sensörü</string>
     <string name="pref_summary_cycling_persistence_interval">O anki bisiklet verilerinin veri tabanına yazılması gereken saniye cinsinden aralık</string>
@@ -3394,8 +3387,7 @@
     <string name="backup_restore_do_not_exit">%s Lütfen işlem bitene kadar bu ekranı açık tutun.</string>
     <string name="backup_restore_importing_loading">Dosya yükleniyor…</string>
     <string name="backup_restore_importing_validating">Dosya doğrulanıyor…</string>
-    <string name="backup_restore_warning_files">%1d dosya geri yüklenemedi:
-\n%2s</string>
+    <string name="backup_restore_warning_files">%1d dosya geri yüklenemedi: \n%2s</string>
     <string name="backup_restore_restart_title">Yeniden başlat</string>
     <string name="activity_db_management_backup_restore_label">Yedekle ve Geri Yükle</string>
     <string name="activity_db_management_export_to_zip">Zip olarak dışa aktar</string>
@@ -3825,7 +3817,7 @@
     <string name="serbian_latin">Sırpça (Latin)</string>
     <string name="enhanced">Gelişmiş</string>
     <string name="aqi_level_unhealthy">sağlıksız</string>
-    <string name="huawei_stress_calibrate"></string>
+    <string name="huawei_stress_calibrate"/>
     <string name="huawei_stress_calibrate_start">Başlat</string>
     <string name="huawei_stress_calibrate_finish">Bitir</string>
 </resources>
