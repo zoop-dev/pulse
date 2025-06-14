@@ -499,11 +499,7 @@
 \n
 \nACȚIONEZI PE PROPRIU RISC!</string>
     <string name="vibration_profile_short">Scurt</string>
-    <string name="fw_upgrade_notice_zepp_os">Ești pe cale să instalezi firmware-ul %s pe %s.
-\n
-\nDupă instalarea fișierului .zip, brățara va reporni.
-\n
-\nACȚIONEZI PE PROPRIU RISC!</string>
+    <string name="fw_upgrade_notice_zepp_os">Ești pe cale să instalezi firmware-ul %s pe %s. \n \nDupă instalarea fișierului .zip, brățara va reporni. \n \nACȚIONEZI PE PROPRIU RISC!</string>
     <string name="wearmode_band">Bandă (brățară)</string>
     <string name="pref_summary_casio_alert_email">Alertă (vibrare/bip) pentru notificări prin e-mail</string>
     <string name="pref_title_casio_alert_call">Alertă pentru apeluri primite</string>
