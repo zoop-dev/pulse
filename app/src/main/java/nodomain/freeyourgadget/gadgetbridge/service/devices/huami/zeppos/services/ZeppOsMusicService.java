@@ -17,7 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
 import android.os.Handler;
-import android.os.Looper;
+
+import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -50,6 +51,7 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
     private static final byte BUTTON_VOLUME_DOWN = 0x06;
 
     private final Handler handler = new Handler();
+    @Nullable
     private MediaManager mediaManager;
     protected boolean isMusicAppStarted = false;
 
@@ -125,13 +127,13 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
     }
 
     public void onSetMusicState(final MusicStateSpec stateSpec) {
-        if (mediaManager.onSetMusicState(stateSpec) && isMusicAppStarted) {
+        if (mediaManager != null && mediaManager.onSetMusicState(stateSpec) && isMusicAppStarted) {
             sendMusicState(null, mediaManager.getBufferMusicStateSpec());
         }
     }
 
     public void onSetMusicInfo(final MusicSpec musicSpec) {
-        if (mediaManager.onSetMusicInfo(musicSpec) && isMusicAppStarted) {
+        if (mediaManager != null && mediaManager.onSetMusicInfo(musicSpec) && isMusicAppStarted) {
             sendMusicState(mediaManager.getBufferMusicSpec(), mediaManager.getBufferMusicStateSpec());
         }
     }
@@ -164,11 +166,12 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
      * it won't be recognized.
      */
     private void sendMusicStateDelayed() {
-        final Looper mainLooper = Looper.getMainLooper();
-        new Handler(mainLooper).postDelayed(() -> {
-            mediaManager.refresh();
-            sendMusicState(mediaManager.getBufferMusicSpec(), mediaManager.getBufferMusicStateSpec());
-            sendVolume(mediaManager.getPhoneVolume());
+        handler.postDelayed(() -> {
+            if (mediaManager != null) {
+                mediaManager.refresh();
+                sendMusicState(mediaManager.getBufferMusicSpec(), mediaManager.getBufferMusicStateSpec());
+                sendVolume(mediaManager.getPhoneVolume());
+            }
         }, 100);
     }
 
