@@ -19,10 +19,14 @@ package nodomain.freeyourgadget.gadgetbridge;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
@@ -156,16 +160,20 @@ public abstract class Logging {
         return fileLogger;
     }
 
-    public static String formatBytes(byte[] bytes) {
+    @NonNull
+    public static String formatBytes(@Nullable byte[] bytes) {
         if (bytes == null) {
             return "(null)";
+        } else if (bytes.length == 0) {
+            return "";
         }
-        StringBuilder builder = new StringBuilder(bytes.length * 5);
-        for (byte b : bytes) {
-            builder.append(String.format("0x%02x", b));
-            builder.append(" ");
+
+        final StringBuilder builder = new StringBuilder(bytes.length * 3);
+        for (final byte b : bytes) {
+            builder.append(String.format(Locale.ROOT, "%02x ", b));
         }
-        return builder.toString().trim();
+        builder.setLength(builder.length() - 1);
+        return builder.toString();
     }
 
     public static void logBytes(Logger logger, byte[] value) {
