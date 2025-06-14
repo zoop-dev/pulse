@@ -1063,9 +1063,7 @@
     <string name="pref_title_lower_button_function_short">短按底部按钮</string>
     <string name="pref_title_middle_button_function_short">短按中间按钮</string>
     <string name="pref_title_upper_button_function_short">短按上按钮</string>
-    <string name="firmware_update_progress">上传正在处理中。
-\n%1d%% 的 %.2fkbps (平均 %.2fkbps)
-\n分段 %1d 的 %1d</string>
+    <string name="firmware_update_progress">上传正在处理中。 \n%1d%% 的 %.2fkbps (平均 %.2fkbps) \n分段 %1d 的 %1d</string>
     <string name="devicestatus_upload_failed">上传已失败</string>
     <string name="devicestatus_upload_aborted">上传已放弃！</string>
     <string name="devicestatus_upload_validating">上传正在验证中</string>
@@ -2335,11 +2333,7 @@
 \n风险自担！</string>
     <string name="info_menu_structure_set">Gadgetbridge 中的菜单 JSON 结构设置</string>
     <string name="error_invalid_menu_structure">无效的 JSON 菜单结构</string>
-    <string name="fw_upgrade_notice_zepp_os">您即将在您的 %s 上安装 %s 的固件。
-\n
-\n您的手表将会在安装了 .zip 文件后重启。
-\n
-\n风险自担！</string>
+    <string name="fw_upgrade_notice_zepp_os">您即将在您的 %s 上安装 %s 的固件。 \n \n您的手表将会在安装了 .zip 文件后重启。 \n \n风险自担！</string>
     <string name="devicetype_amazfit_cheetah_square">跃我 Cheetah (方形)</string>
     <string name="devicetype_amazfit_trex_ultra">跃我 T-Rex Ultra</string>
     <string name="devicetype_amazfit_gtr_mini">跃我 GTR Mini</string>
@@ -2940,8 +2934,7 @@
     <string name="title_cycling">骑自行车</string>
     <string name="pref_title_wheel_diameter">轮径</string>
     <string name="pref_summary_cycling_persistence_interval">当前骑行数据应写入数据库的时间间隔（以秒为单位）</string>
-    <string name="chart_cycling_point_label_distance">今天：%.1f 公里
-\n总计：%.1f 公里</string>
+    <string name="chart_cycling_point_label_distance">今天：%.1f 公里 \n总计：%.1f 公里</string>
     <string name="chart_cycling_point_label_speed">%.1f 公里/小时</string>
     <string name="device_name_bicycle_sensor">自行车传感器</string>
     <string name="pref_summary_wheel_diameter">车轮直径（英寸）。 通常为 29、27.5 或 26。</string>
@@ -3378,8 +3371,7 @@
     <string name="backup_restore_importing">正在导入 zip …</string>
     <string name="backup_restore_do_not_exit">%s 请确保屏幕一直开启直至操作结束。</string>
     <string name="backup_restore_importing_loading">读取文件…</string>
-    <string name="backup_restore_warning_files">%1d 个文件恢复失败：
-\n%2s</string>
+    <string name="backup_restore_warning_files">%1d 个文件恢复失败： \n%2s</string>
     <string name="backup_restore_import_complete">导入完成</string>
     <string name="backup_restore_error_import">导入 zip 失败</string>
     <string name="backup_restore_abort_title">放弃</string>
