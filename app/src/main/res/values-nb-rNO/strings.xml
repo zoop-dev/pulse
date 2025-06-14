@@ -1057,9 +1057,7 @@
     <string name="lefun_prefs_antilost_summary">Båndet vil vibrere hvis telefonen mister tilkoblingen til båndet</string>
     <string name="lefun_prefs_hydration_reminder_summary">Båndet vil vibrere for å minne deg på å drikke vann</string>
     <string name="lefun_prefs_hydration_reminder_title">Drikkepåminnelse</string>
-    <string name="firmware_update_progress">Opplasting underveis
-\n%1d%% i %.2fkbps (gjennomsnitt %.2fkbps)
-\nDel %1d av %1d</string>
+    <string name="firmware_update_progress">Opplasting underveis \n%1d%% i %.2fkbps (gjennomsnitt %.2fkbps) \nDel %1d av %1d</string>
     <string name="devicestatus_upload_failed">Opplastingen mislyktes</string>
     <string name="devicestatus_upload_aborted">Opplasting avbrutt!</string>
     <string name="devicestatus_upload_validating">Opplastingen bekreftes</string>
