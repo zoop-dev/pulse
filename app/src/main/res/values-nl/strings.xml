@@ -1154,9 +1154,7 @@
     <string name="lefun_prefs_antilost_summary">De band zal trillen als het de verbinding met de telefoon kwijt raakt</string>
     <string name="lefun_prefs_antilost_title">Anti-verlies</string>
     <string name="lefun_prefs_hydration_reminder_summary">De band zal trillen om je te herinneren dat je wat moet drinken</string>
-    <string name="firmware_update_progress">Upload is bezig
-\n%1d%% met %.2fkbps (gemiddeld %.2fkbps)
-\nDeel %1d van %1d</string>
+    <string name="firmware_update_progress">Upload is bezig \n%1d%% met %.2fkbps (gemiddeld %.2fkbps) \nDeel %1d van %1d</string>
     <string name="devicestatus_upload_failed">Upload is mislukt</string>
     <string name="devicestatus_upload_aborted">Upload is afgebroken!</string>
     <string name="devicestatus_upload_validating">Upload wordt gecontroleerd</string>
@@ -2338,11 +2336,7 @@
 \n
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="device_experimental">EXPERIMENTEEL</string>
-    <string name="fw_upgrade_notice_zepp_os">U staat op het punt de %s-firmware op uw %s te installeren.
-\n
-\nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
-\n
-\nVERDERGAAN IS OP EIGEN RISICO!</string>
+    <string name="fw_upgrade_notice_zepp_os">U staat op het punt de %s-firmware op uw %s te installeren. \n \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand. \n \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (vierkant)</string>
     <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (rond)</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
@@ -2936,8 +2930,7 @@
     <string name="pref_title_wheel_diameter">Wieldiameter</string>
     <string name="pref_summary_cycling_persistence_interval">Interval in seconden waarin de fietsgegevens naar de database geschreven moeten worden</string>
     <string name="pref_title_cycling_persistence_interval">Volhoudings-interval</string>
-    <string name="chart_cycling_point_label_distance">Vandaag: %.1f km
-\nTotaal: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Vandaag: %.1f km \nTotaal: %.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/u</string>
     <string name="toast_camera_photo_taken">Foto is genomen en opgeslagen in: %s</string>
     <string name="folder_is_empty">Directory is leeg</string>
@@ -3385,8 +3378,7 @@
     <string name="backup_restore_importing_files_i_of_n">Importeren van bestanden… %1d van %2d</string>
     <string name="backup_restore_importing_database">Importeren van database…</string>
     <string name="backup_restore_importing_preferences">Importeren van instellingen…</string>
-    <string name="backup_restore_warning_files">%1d bestanden konden niet hersteld worden:
-\n%2s</string>
+    <string name="backup_restore_warning_files">%1d bestanden konden niet hersteld worden: \n%2s</string>
     <string name="backup_restore_export_complete">Export afgerond</string>
     <string name="backup_restore_import_complete">Import afgerond</string>
     <string name="backup_restore_error_export">Export naar zip-bestand mislukt</string>
