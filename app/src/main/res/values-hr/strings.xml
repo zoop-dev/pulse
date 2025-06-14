@@ -834,9 +834,7 @@
     <string name="devicestatus_connected">Uređaj je povezan</string>
     <string name="devicestatus_disconnecting">Uređaj se prekida!</string>
     <string name="devicestatus_upload_failed">Prijenos nije uspio</string>
-    <string name="firmware_update_progress">Prijenos je u tijeku
-\n%1d%% pri %.2fkbps (prosječno %.2fkbps)
-\nDio %1d od %1d</string>
+    <string name="firmware_update_progress">Prijenos je u tijeku \n%1d%% pri %.2fkbps (prosječno %.2fkbps) \nDio %1d od %1d</string>
     <string name="updating_firmware">Flashanje firmware…</string>
     <string name="fwapp_install_device_not_ready">Datoteka se ne može instalirati, uređaj nije spreman.</string>
     <string name="miband_fwinstaller_compatible_version">Kompatibilna verzija</string>
