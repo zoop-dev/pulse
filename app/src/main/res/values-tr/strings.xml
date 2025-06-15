@@ -353,7 +353,7 @@
     <string name="lack_of_step">Eksik adım sayısı: %1$d</string>
     <string name="language_and_region_prefs">Dil ve bölge ayarları</string>
     <string name="left">Sol</string>
-    <string name="live_activity_current_steps_per_minute">Şu anki adım sayısı/dakika</string>
+    <string name="live_activity_current_steps_per_minute">Şu anki adım sayısı/dk</string>
     <string name="live_activity_heart_rate">Kalp ritmi</string>
     <string name="live_activity_max_heart_rate">Şu anki / En yüksek kalp ritmi: %1$d / %2$d</string>
     <string name="live_activity_start_your_activity">Etkinliğinizi başlatın</string>
@@ -410,7 +410,7 @@
     <string name="mi2_prefs_inactivity_warnings_threshold">Hareketsizlik sınırı (dakika olarak)</string>
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Bilgileri değiştirmek için bileği döndür</string>
     <string name="mi3_night_mode_sunset">Gün batımında</string>
-    <string name="mi3_prefs_band_screen_unlock">Bileklik ekran kilidini açma\"</string>
+    <string name="mi3_prefs_band_screen_unlock">Bileklik ekran kilidini açma</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Bileklik ekran kilidini açmak için yukarı kaydır</string>
     <string name="mi3_prefs_night_mode">Gece modu</string>
     <string name="mi3_prefs_night_mode_summary">Geceleri bilekliğin ekran parlaklığını otomatik olarak azalt</string>
@@ -786,7 +786,7 @@
     <string name="vietnamese">Vietnamca</string>
     <string name="waiting_for_reconnect">Yeniden bağlanmak için bekliyor</string>
     <string name="warning">Dikkat!</string>
-    <string name="watch9_calibration_button">Kalibrasyon</string>
+    <string name="watch9_calibration_button">Ayar yap</string>
     <string name="watch9_calibration_hint">Aygıtınızın şu anda size gösterdiği saati ayarlayın.</string>
     <string name="watch9_pairing_tap_hint">Saatiniz titreştiğinde aygıtı sallayın veya düğmesine basın.</string>
     <string name="watch9_time_hours">Saat:</string>
@@ -1089,7 +1089,7 @@
     <string name="pref_title_lower_button_function_short">Alt Düğme kısa</string>
     <string name="pref_title_middle_button_function_short">Orta Düğme kısa</string>
     <string name="pref_title_upper_button_function_short">Üst Düğme kısa</string>
-    <string name="firmware_update_progress">Yükleme devam ediyor \n%%%1d, %.2fkbps hızında (ortalama %.2fkbps) \nBölüm %1d / %1d</string>
+    <string name="firmware_update_progress">Yükleme devam ediyor \n%1$d%%, %2$.2fkbps hızında (ortalama %3$.2fkbps) \nBölüm %4$d / %5$d</string>
     <string name="devicestatus_upload_failed">Yükleme başarısız oldu</string>
     <string name="devicestatus_upload_aborted">Yükleme iptal edildi!</string>
     <string name="devicestatus_upload_validating">Yükleme doğrulanıyor</string>
@@ -1484,7 +1484,7 @@
     <string name="minStride">En Kısa Adım</string>
     <string name="averageCadence">Ortalama Tempo</string>
     <string name="minCadence">En Düşük Tempo</string>
-    <string name="spm">adım/dak</string>
+    <string name="spm">adım/dk</string>
     <string name="pref_header_sony_equalizer_bands">Bant</string>
     <string name="sony_audio_upsampling">Ses Üst Örnekleme</string>
     <string name="sony_button_mode_right">Düğme Modu (Sağ)</string>
@@ -1725,7 +1725,7 @@
     <string name="controlcenter_add_new_folder">Yeni klasör ekle</string>
     <string name="controlcenter_set_parent_folder">Üst klasörü ayarla</string>
     <string name="controlcenter_set_preferences">Tercihleri ayarla</string>
-    <string name="controlcenter_connected_fraction">Bağlandı: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Bağlandı: %1$d/%2$d</string>
     <string name="controlcenter_toggle_details">Ayrıntıları aç/kapat</string>
     <string name="error_setting_parent_folder">Üst klasör ayarlanırken hata oluştu: %s</string>
     <string name="error_deleting_device">Aygıt silinirken hata oluştu: %s</string>
@@ -2222,7 +2222,7 @@
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="fw_upgrade_notice_zepp_os">%s ürün yazılımını %s aygıtınıza kurmak üzeresiniz. \n \nSaatiniz .zip dosyasını kurduktan sonra yeniden başlatılacak. \n \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
+    <string name="fw_upgrade_notice_zepp_os">%1$sÜrün yazılımını %2$s aygıtınıza yüklemek üzeresiniz. \n \n.zip dosyasını yükledikten sonra saatiniz yeniden başlatılacaktır.\n \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="wearmode_pebble">Pebble (ayakkabı tokası)</string>
     <string name="wearmode_band">Bileklik (kol bilekliği)</string>
     <string name="wearmode_necklace">Kolye (boyun askısı)</string>
@@ -2363,7 +2363,7 @@
     <string name="zepp_os_watchface_starry_sky">Yıldızlı gökyüzü</string>
     <string name="zepp_os_watchface_the_ultima">Nihai</string>
     <string name="maxStrokeRate">En Yüksek Kulaç Hızı</string>
-    <string name="strokes_minute">kulaç/dak</string>
+    <string name="strokes_minute">kulaç/dk</string>
     <string name="sony_protocol_v1">Sürüm 1</string>
     <string name="sony_protocol_v2">Sürüm 2</string>
     <string name="sony_protocol_v3">Sürüm 3</string>
@@ -2953,7 +2953,7 @@
     <string name="pref_summary_wheel_diameter">İnç cinsinden tekerlek çapı. Genellikle 29, 27.5 veya 26.</string>
     <string name="pref_title_wheel_diameter">Tekerlek çapı</string>
     <string name="pref_title_cycling_persistence_interval">Süreklilik aralığı</string>
-    <string name="chart_cycling_point_label_distance">Bugün: %.1f km \nToplam: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Bugün: %1$.1f km\nToplam: %2$.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/sa</string>
     <string name="device_name_bicycle_sensor">Bisiklet sensörü</string>
     <string name="pref_summary_cycling_persistence_interval">O anki bisiklet verilerinin veri tabanına yazılması gereken saniye cinsinden aralık</string>
@@ -3097,7 +3097,7 @@
     <string name="hrv_status">Kalp Ritmi Değişkenliği Durumu</string>
     <string name="hrv_status_poor">Zayıf</string>
     <string name="hrv_status_last_night">Dün gece</string>
-    <string name="hrv_status_last_night_highest_5">Dün gece 5-dak en yüksek ortalama</string>
+    <string name="hrv_status_last_night_highest_5">Dün gece 5-dk en yüksek ortalama</string>
     <string name="hrv_status_seven_days_avg_long">7 günlük ortalama</string>
     <string name="hrv_status_unit">%1$d ms</string>
     <string name="hrv_status_baseline">%1$d-%2$d ms</string>
@@ -3338,8 +3338,8 @@
     <string name="workoutSets">Set</string>
     <string name="workout_set_i">Set %1d</string>
     <string name="workout_set_repetitions">%1d x</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f paunt</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
     <string name="no_supported_devices_found">Desteklenen aygıt bulunamadı</string>
     <string name="menuitem_stress_segmented">Stres (bölümlenmiş)</string>
     <string name="menuitem_stress_breakdown">Stres (çöküş)</string>
@@ -3381,13 +3381,13 @@
     <string name="backup_restore_exporting_preferences">Tercihler dışa aktarılıyor…</string>
     <string name="backup_restore_exporting_database">Veri tabanı dışa aktarılıyor…</string>
     <string name="backup_restore_exporting_files">Dosyalar dışa aktarılıyor…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Dosyalar dışa aktarılıyor… %1d / %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Dosyalar dışa aktarılıyor… %1$d / %2$d</string>
     <string name="backup_restore_exporting_finishing">Dışa aktarma tamamlanıyor…</string>
     <string name="backup_restore_importing">Zip dosyasından içe aktarılıyor…</string>
     <string name="backup_restore_do_not_exit">%s Lütfen işlem bitene kadar bu ekranı açık tutun.</string>
     <string name="backup_restore_importing_loading">Dosya yükleniyor…</string>
     <string name="backup_restore_importing_validating">Dosya doğrulanıyor…</string>
-    <string name="backup_restore_warning_files">%1d dosya geri yüklenemedi: \n%2s</string>
+    <string name="backup_restore_warning_files">%1$d dosya geri yüklenemedi: \n%2$s</string>
     <string name="backup_restore_restart_title">Yeniden başlat</string>
     <string name="activity_db_management_backup_restore_label">Yedekle ve Geri Yükle</string>
     <string name="activity_db_management_export_to_zip">Zip olarak dışa aktar</string>
@@ -3395,7 +3395,7 @@
     <string name="activity_db_management_backup_restore_explanation">İçe/dışa aktarma işlemleri, tüm Gadgetbridge ayarlarını, aygıtlarını ve verilerini bir zip dosyasına taşımanıza veya bu dosyadan yedeklemenize olanak tanır.
 \n
 \nBir dosyayı içe aktarmak, var olan tüm verileri, aygıtları ve tercihleri kaldıracak ve bunları tamamen yedekle değiştirecektir.</string>
-    <string name="backup_restore_importing_files_i_of_n">Dosyalar içe aktarılıyor… %1d / %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Dosyalar içe aktarılıyor… %1$d / %2$d</string>
     <string name="backup_restore_importing_database">Veri tabanı içe aktarılıyor…</string>
     <string name="backup_restore_importing_preferences">Tercihler içe aktarılıyor…</string>
     <string name="backup_restore_export_complete">Dışa aktarma tamamlandı</string>
@@ -3457,12 +3457,12 @@
     <string name="number_selected_items">%1d seçildi</string>
     <string name="devicetype_garmin_fenix_8">Garmin Fenix 8</string>
     <string name="devicetype_garmin_venu_sq">Garmin Venu Sq</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="mijia_lywsd_comfort_temperature_summary">Tavsiye edilen aralık: 19 - 27</string>
     <string name="mijia_lywsd_comfort_level_title">Rahatlık Seviyesi</string>
     <string name="mijia_lywsd_comfort_level_summary">Görüntülenen emoji için sıcaklık ve nem sınırlarını yapılandırın</string>
     <string name="mijia_lywsd_comfort_humidity_title">Nem (%)</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="mijia_lywsd_comfort_temperature_title">Sıcaklık (°C)</string>
     <string name="mijia_lywsd_comfort_humidity_summary">Tavsiye edilen aralık: 20 - 85</string>
     <string name="mijia_lywsd_comfort_lower">Alt Sınır</string>
@@ -3482,7 +3482,7 @@
     <string name="max_respiration_rate">En Yüksek Solunum Hızı</string>
     <string name="min_respiration_rate">En Düşük Solunum Hızı</string>
     <string name="hrv_sdrr">Kalp Ritmi Değişkenliği SDDR</string>
-    <string name="breaths_per_min">nefes/dak</string>
+    <string name="breaths_per_min">nefes/dk</string>
     <string name="fmtPaceAverage">Hız ortalaması</string>
     <string name="devicetype_huawei_watchd2">Huawei Watch D2</string>
     <string name="devicetype_idasen">IKEA Idasen Desk</string>
@@ -3599,7 +3599,7 @@
     <string name="respiratoryrate">Solunum Hızı</string>
     <string name="activity_type_barbell">Halter</string>
     <string name="Jumps">Zıplamalar</string>
-    <string name="jumps_minute">zıplama/dakika</string>
+    <string name="jumps_minute">zıplama/dk</string>
     <string name="jumps_unit">zıplama</string>
     <string name="avgJumpRate">Ortalama Zıplama Oranı</string>
     <string name="prefs_active_noise_cancelling_transport">Aktar</string>
@@ -3722,7 +3722,7 @@
     <string name="left_right_balance">Denge</string>
     <string name="workout_revolutions">Devir</string>
     <string name="pref_garmin_fake_oauth_title">Sahte OAuth yanıtları gönderin</string>
-    <string name="gree_pair_clipboard">Cihaz adı: %s\nMAC adresi: %s\nBağlanma anahtarı: %s</string>
+    <string name="gree_pair_clipboard">Cihaz adı: %1$s\nMAC adresi: %2$s\nBağlanma anahtarı: %3$s</string>
     <string name="vertical_ratio">Dikey oran</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
@@ -3737,7 +3737,7 @@
     <string name="uploading">Yükleniyor…</string>
     <string name="pref_import_activity_files_summary">Telefon deposundan etkinlik dosyalarını elle içe aktarın</string>
     <string name="fit_file_viewer">FIT File Viewer</string>
-    <string name="fw_upgrade_notice_huawei">%s\'ye %s aygıt yazılımını yüklemek üzeresiniz.\n\nMevcut aygıt yazılımınız %s\n\nYüklendikten sonra aygıtınız yeniden başlatılacaktır.\n\nDEVAM ETMEK SİZİN SORUMLULUĞUNUZDADIR!</string>
+    <string name="fw_upgrade_notice_huawei">%1$sÜrün yazılımını %2$s aygıtınıza yüklemek üzeresiniz. \n\nMevcut aygıt yazılımınız %s\n\nYüklendikten sonra aygıtınız yeniden başlatılacaktır.\n\nDEVAM ETMEK SİZİN SORUMLULUĞUNUZDADIR!</string>
     <string name="pref_workout_send_gps_timeout_summary">Aygıtta egzersiz açık değilse GPS göndermeyi bırak (mili saniye)</string>
     <string name="activity_type_step_aerobics">Adım aerobiği</string>
     <string name="title_activity_even_realities_g1_pairing">Even G1 eşleştirme</string>
@@ -3762,7 +3762,7 @@
     <string name="pref_garmin_fake_oauth_summary">Resmi uygulamaya her 90 günde bir bağlanmadan, hava durumu ve AGPS güncellemeleriyle ilgili bazı işlevleri düzeltir.</string>
     <string name="devicetype_gree_ac">Gree klima</string>
     <string name="cycling">Bisiklete binme</string>
-    <string name="gree_pair_info">%s ( %s) ile eşleştirmek üzeresiniz. Eşleştirme için lütfen Kablosuz ve ana sunucu bilgilerini girin. Daha fazla bilgi için internet sitesini kontrol edin.</string>
+    <string name="gree_pair_info">%1$s (%2$s) ile eşleştirmek üzeresiniz. Eşleştirme için lütfen kablosuz ve ana sunucu bilgilerini girin. Daha fazla bilgi için internet sitesini kontrol edin.</string>
     <string name="pref_vibration_intensity">Titreşim yoğunluğu</string>
     <string name="weather_condition_hurricane">kasırga</string>
     <string name="aqi_level_excellent">harika</string>
@@ -3778,7 +3778,7 @@
     <string name="swim_style_butterfly">Kelebek</string>
     <string name="aqi_level_poor">kötü</string>
     <string name="workout_repetitions">Tekrar</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="weather_condition_drizzle">çise</string>
     <string name="audio_recordings">Ses kayıtları</string>
     <string name="weather_condition_thunderstorm">fırtına</string>
@@ -3817,8 +3817,20 @@
     <string name="serbian_latin">Sırpça (Latin)</string>
     <string name="enhanced">Gelişmiş</string>
     <string name="aqi_level_unhealthy">sağlıksız</string>
-    <string name="huawei_stress_calibrate"/>
+    <string name="huawei_stress_calibrate">Ayar yap</string>
     <string name="huawei_stress_calibrate_start">Başlat</string>
     <string name="huawei_stress_calibrate_finish">Bitir</string>
     <string name="maps_download_summary">Harita dosyalarını indirmek için buraya tıklayın. Aşağıdaki tercihte seçilen klasöre kaydedilmelidir.</string>
+    <string name="banglejs_notification_missed_call_source">Gelen çağrı</string>
+    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
+    <string name="pref_huawei_activity_reminders">Etkinlik hatırlatıcıları</string>
+    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
+    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
+    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="interval_twenty_minutes">her 20 dakikada bir</string>
+    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
+    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
+    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
 </resources>
