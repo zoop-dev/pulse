@@ -2333,7 +2333,7 @@
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
 \n
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
-    <string name="fw_upgrade_notice_zepp_os">פעולה זו תתקין את הקושחה %s על ה־%s שלך. \n \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip. \n \nהמשך התהליך הוא על אחריותך בלבד!</string>
+    <string name="fw_upgrade_notice_zepp_os">פעולה זו תתקין את הקושחה %1$s על ה־%2$s שלך. \n \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip. \n \nהמשך התהליך הוא על אחריותך בלבד!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (מרובע)</string>
     <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (מעוגל)</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro‎</string>
@@ -2918,7 +2918,7 @@
     <string name="minutes_60">60 דקות</string>
     <string name="sleep_colored_stats_rem">תנועת עיניים מהירה</string>
     <string name="workout_set_repetitions">%1d ×</string>
-    <string name="workout_set_repetitions_weight_kg">%1d × %2$.2f ק״ג</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d × %2$.2f ק״ג</string>
     <string name="pref_touch_tone_summary">ניגון צליל בעת נגיעה באוזניות תוך האוזן</string>
     <string name="minutes_2">2 דקות</string>
     <string name="pref_wearing_tone_summary">ניגון צליל עם הכנסת האוזנייה לאוזן</string>
@@ -3117,4 +3117,5 @@
     <string name="earfun_microphone_mode">מצב מיקרופון</string>
     <string name="earfun_advanced_audio_mode">מצב שמע מתקדם</string>
     <string name="earfun_find_headphones">איתור אוזניות</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d × %2$.2f פאונד</string>
 </resources>
