@@ -2003,7 +2003,7 @@ public class GBApplication extends Application {
     }
 
     public static SharedPreferences getDeviceSpecificSharedPrefs(CharSequence deviceIdentifier) {
-        if (deviceIdentifier == null || deviceIdentifier.isEmpty()) {
+        if (deviceIdentifier == null || deviceIdentifier.length() < 1) {
             return null;
         }
         return context.getSharedPreferences("devicesettings_" + deviceIdentifier, Context.MODE_PRIVATE);
@@ -2014,7 +2014,7 @@ public class GBApplication extends Application {
     }
 
     public static void deleteDeviceSpecificSharedPrefs(CharSequence deviceIdentifier) {
-        if (deviceIdentifier == null || deviceIdentifier.isEmpty()) {
+        if (deviceIdentifier == null || deviceIdentifier.length() < 1) {
             return;
         }
         context.getSharedPreferences("devicesettings_" + deviceIdentifier, Context.MODE_PRIVATE).edit().clear().apply();
