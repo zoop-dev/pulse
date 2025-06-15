@@ -252,7 +252,10 @@ class PebbleGATTClient extends BluetoothGattCallback {
         LOG.info("setting MTU");
         BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC);
         BluetoothGattDescriptor descriptor = characteristic.getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
-        NotifyAction.writeDescriptor(gatt, descriptor, new byte[]{0x0b, 0x01}); // unknown
+        descriptor.setValue(new byte[]{0x0b, 0x01}); // unknown
+        // descriptor is not wrote back to the device, but the characteristic is.
+        // Reason is unclear but writing back the descriptor instead of the characteristic breaks the connection.
+        WriteAction.writeCharacteristic(gatt,characteristic, characteristic.getValue());
     }
 
     private void subscribeToPPoGATT(BluetoothGatt gatt) {
