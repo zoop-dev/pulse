@@ -1047,7 +1047,7 @@
     <string name="lefun_prefs_hydration_reminder_interval_title">Interval připomenutí hydratace (v minutách)</string>
     <string name="lefun_prefs_hydration_reminder_summary">Náramek vám vibracemi připomene, že se máte napít</string>
     <string name="lefun_prefs_hydration_reminder_title">Připomenutí hydratace</string>
-    <string name="firmware_update_progress">Průběh nahrávání \n%1d%% při %.2fkbps (průměr %.2fkbps) \nČást %1d z %1d</string>
+    <string name="firmware_update_progress">Průběh nahrávání \n%1$d%% při %2$.2fkb/s (průměr %3$.2fkb/s) \nČást %4$d z %5$d</string>
     <string name="devicestatus_upload_failed">Došlo k chybě nahrávání</string>
     <string name="devicestatus_upload_aborted">Nahrávání přerušeno!</string>
     <string name="devicestatus_upload_validating">Kontrola nahraných dat</string>
@@ -1712,7 +1712,7 @@
     <string name="scandinavian">Skandinávština</string>
     <string name="quick_alarm_description">Budík z widgetu</string>
     <string name="controlcenter_set_preferences">Nastavení preferencí</string>
-    <string name="controlcenter_connected_fraction">Připojeno: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Připojeno: %1$d/%2$d</string>
     <string name="error_deleting_device">Chyba při mazání zařízení: %s</string>
     <string name="controlcenter_set_folder_title">Nastavení nebo vytvoření nové složky</string>
     <string name="auto_reconnect_ble_title">Automatické opětovné připojení k zařízení</string>
@@ -2292,7 +2292,7 @@
     <string name="zepp_os_watchface_vibrant">Vibrant</string>
     <string name="ftp_server_summary">Nastavení FTP serveru na hodinkách</string>
     <string name="changelog_full_title">Seznam změn</string>
-    <string name="fw_upgrade_notice_zepp_os">Chystáte se nainstalovat firmware %s na váš %s. \n \nVaše hodinky se po instalaci souboru .zip restartuje. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="fw_upgrade_notice_zepp_os">Chystáte se nainstalovat firmware %1$s na váš %2$s. \n \nVaše hodinky se po instalaci souboru .zip restartuje. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="stop">Stop</string>
     <string name="prefs_shortcut_cards">Přístupné Karty</string>
     <string name="prefs_control_center_summary">Vyberte položky v rozbalovacím menu ovládacího centra</string>
@@ -2846,7 +2846,7 @@
     <string name="alarm_slot_reset">Slot budíků byl nastaven na výchozí</string>
     <string name="pref_dashboard_widget_today_upside_down_summary">Ve 24h režimu vykreslit půlnoc dole a poledne na vrchu grafu</string>
     <string name="pref_sleepasandroid_feat_notifications">Oznámení</string>
-    <string name="chart_cycling_point_label_distance">Dnes: %.1f km \nCelkem: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Dnes: %1$.1f km \nCelkem: %2$.1f km</string>
     <string name="pref_fetch_unknown_files_summary">Načítat neznámé soubory aktivit z hodinek. Nebudou zpracovány, ale budou uloženy do telefonu.</string>
     <string name="pref_dashboard_all_devices_title">Všechna zařízení</string>
     <string name="pref_dashboard_widget_double_size_title">Dvojitá velikost</string>
@@ -3317,9 +3317,9 @@
     <string name="pref_header_sound">Zvuk</string>
     <string name="workoutSets">Sady</string>
     <string name="workout_set_repetitions">%1d x</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
     <string name="workout_set_i">Sada %1d</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lb</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lb</string>
     <string name="menuitem_stress_breakdown">Stres (podrobně)</string>
     <string name="menuitem_stress_simple">Stres (jednoduchý)</string>
     <string name="menuitem_stress_segmented">Stres (rozdělený)</string>
@@ -3361,7 +3361,7 @@
     <string name="activity_db_management_export_to_zip">Exportovat zip</string>
     <string name="backup_restore_exporting_finishing">Dokončování exportu…</string>
     <string name="backup_restore_importing">Importování ze souboru zip…</string>
-    <string name="backup_restore_importing_files_i_of_n">Importování souborů… %1d z %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importování souborů… %1$d z %2$d</string>
     <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
     <string name="activity_db_management_import_from_zip">Importovat zip</string>
     <string name="activity_db_management_backup_restore_explanation">Operace importu/exportu umožňují migrovat nebo zálohovat všechna nastavení Gadgetbridge, zařízení a data do a ze souboru zip.
@@ -3371,7 +3371,7 @@
     <string name="backup_restore_exporting_preferences">Exportování předvoleb…</string>
     <string name="backup_restore_exporting_database">Exportování databáze…</string>
     <string name="backup_restore_exporting_files">Exportování souborů…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Exportování souborů… %1d z %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Exportování souborů… %1$d z %2$d</string>
     <string name="backup_restore_do_not_exit">%s Ponechte tuto obrazovku otevřenou až do dokončení operace.</string>
     <string name="backup_restore_importing_loading">Načítání souboru…</string>
     <string name="backup_restore_export_complete">Export dokončen</string>
@@ -3386,7 +3386,7 @@
     <string name="backup_restore_importing_preferences">Importování předvoleb…</string>
     <string name="backup_restore_restart_title">Restartovat</string>
     <string name="backup_restore_importing_database">Importování databáze…</string>
-    <string name="backup_restore_warning_files">Nepodařilo se obnovit %1d souborů: \n%2s</string>
+    <string name="backup_restore_warning_files">Nepodařilo se obnovit %1$d souborů: \n%2$s</string>
     <string name="devicetype_amazfit_trex_3">Amazfit T-Rex 3</string>
     <string name="menuitem_map">Mapa</string>
     <string name="menuitem_night_display">Noční zobrazení</string>
@@ -3442,9 +3442,9 @@
     <string name="mijia_lywsd_comfort_humidity_title">Vlhkost (%)</string>
     <string name="mijia_lywsd_comfort_humidity_summary">Doporučený rozsah: 20 - 85</string>
     <string name="mijia_lywsd_comfort_lower">Spodní limit</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="mijia_lywsd_comfort_level_title">Úroveň pohodlí</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="devicetype_garmin_venu_sq_2">Garmin Venu Sq 2</string>
     <string name="devicetype_garmin_fenix_6s_sapphire">Garmin Fenix 6S Sapphire</string>
     <string name="mijia_lywsd_comfort_level_summary">Nastavte si omezení teploty a vlhkosti pro nastavené emotikony</string>
@@ -3690,7 +3690,7 @@
     <string name="remote_control">Vzdálené ovládání</string>
     <string name="update_firmware_operation_check_failed">Kontrola firmware selhala</string>
     <string name="update_firmware_operation_check_in_progress">Kontroluji firmware</string>
-    <string name="fw_upgrade_notice_huawei">Chystáte se nahrát firmware %s na vaše zařízení %s. \n\nVáš aktuální firmware je %s.\n\nVaše zařízení se po nahrání restartuje.\n\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="fw_upgrade_notice_huawei">Chystáte se nahrát firmware %1$s na vaše zařízení %2$s. \n\nVáš aktuální firmware je %s.\n\nVaše zařízení se po nahrání restartuje.\n\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="uploading">Nahrávání…</string>
     <string name="view_file">Zobrazit</string>
     <string name="activity_detail_inspect_file">Prozkoumat soubor</string>
@@ -3721,11 +3721,11 @@
     <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
     <string name="gree_pair_status_success">Párování bylo úspěšné.\n\nPárovací klíč: %s</string>
     <string name="gree_pair_status_failure">Párování selhalo: %s</string>
-    <string name="gree_pair_clipboard">Název zařízení: %s\nMac adresa: %s\nPárovací klíč: %s</string>
+    <string name="gree_pair_clipboard">Název zařízení: %1$s\nMac adresa: %2$s\nPárovací klíč: %3$s</string>
     <string name="devicetype_gree_ac">Gree Air Conditioner</string>
     <string name="copy_to_clipboard">Kopírovat</string>
     <string name="gree_controller_host">Hostitel</string>
-    <string name="gree_pair_info">Chystáte se provést spárování s %s (%s). Zadejte prosím informace o Wi-Fi a hostitelském serveru pro párování. Více informací najdete na webových stránkách.</string>
+    <string name="gree_pair_info">Chystáte se provést spárování s %1$s (%2$s). Zadejte prosím informace o Wi-Fi a hostitelském serveru pro párování. Více informací najdete na webových stránkách.</string>
     <string name="training_load">Tréninková zátěž</string>
     <string name="standing_count">Počet postavení</string>
     <string name="average_left_platform_center_offset">Prům. posun středu levé platformy</string>
@@ -3815,7 +3815,7 @@
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="dual_device_mode_summary">Umožnit připojení sluchátek ke dvěma zařízením současně</string>
     <string name="dual_device_mode_title">Režim duálních zařízení</string>
-    <string name="range_percentage_float">%.1f%% – %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="finnish">Finština</string>
     <string name="bahasa_melayu">Malajština</string>
     <string name="pref_vibration_intensity">Intenzita vibrací</string>
@@ -4057,7 +4057,7 @@
     <string name="even_realities_frame_color_grey">Šedý</string>
     <string name="even_realities_frame_color_brown">Hnědý</string>
     <string name="even_realities_frame_color_green">Zelený</string>
-    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">Levá čočka</string>
     <string name="even_realities_right_lens">Pravá čočka</string>
     <string name="pref_device_logs_summary">Povolit protokolování ze zařízení</string>
