@@ -3820,4 +3820,5 @@
     <string name="huawei_stress_calibrate"/>
     <string name="huawei_stress_calibrate_start">Başlat</string>
     <string name="huawei_stress_calibrate_finish">Bitir</string>
+    <string name="maps_download_summary">Harita dosyalarını indirmek için buraya tıklayın. Aşağıdaki tercihte seçilen klasöre kaydedilmelidir.</string>
 </resources>
