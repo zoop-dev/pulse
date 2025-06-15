@@ -27,10 +27,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.ScanFilter;
+import android.bluetooth.le.ScanResult;
 import android.companion.AssociationInfo;
 import android.companion.AssociationRequest;
 import android.companion.BluetoothDeviceFilter;
+import android.companion.BluetoothLeDeviceFilter;
 import android.companion.CompanionDeviceManager;
+import android.companion.DeviceFilter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -287,8 +291,16 @@ public class BondingUtil {
                 requestCode == BondingUtil.REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
 
-            BluetoothDevice deviceToPair =
-                    data.getParcelableExtra(CompanionDeviceManager.EXTRA_DEVICE);
+            final BluetoothDevice deviceToPair;
+            final Object extra = data.getParcelableExtra(CompanionDeviceManager.EXTRA_DEVICE);
+            if (extra instanceof BluetoothDevice) {
+                deviceToPair = (BluetoothDevice) extra;
+            } else if (extra instanceof final ScanResult scanResult) {
+                deviceToPair = scanResult.getDevice();
+            } else {
+                LOG.error(" handleActivityResult unexpected EXTRA_DEVICE {}", extra);
+                deviceToPair = null;
+            }
 
             if (deviceToPair != null) {
                 if (bondingInterface.getCurrentTarget().getDevice().getAddress().equals(deviceToPair.getAddress())) {
@@ -328,9 +340,26 @@ public class BondingUtil {
     private static void companionDeviceManagerBond(BondingInterface bondingInterface,
                                                    BluetoothDevice device) {
         final String macAddress = device.getAddress();
-        BluetoothDeviceFilter deviceFilter = new BluetoothDeviceFilter.Builder()
-                .setAddress(macAddress)
-                .build();
+        final int type = device.getType();
+        final DeviceFilter<?> deviceFilter;
+
+        if (type == BluetoothDevice.DEVICE_TYPE_LE || type == BluetoothDevice.DEVICE_TYPE_DUAL) {
+            LOG.debug("companionDeviceManagerBond {} type {} - treat as LE",
+                    macAddress, type);
+            ScanFilter scan = new ScanFilter.Builder()
+                    .setDeviceAddress(macAddress)
+                    .build();
+
+            deviceFilter = new BluetoothLeDeviceFilter.Builder()
+                    .setScanFilter(scan)
+                    .build();
+        } else {
+            LOG.debug("companionDeviceManagerBond {} type {} - treat as classic BT",
+                    macAddress, type);
+            deviceFilter = new BluetoothDeviceFilter.Builder()
+                    .setAddress(macAddress)
+                    .build();
+        }
 
         AssociationRequest pairingRequest = new AssociationRequest.Builder()
                 .addDeviceFilter(deviceFilter)
