@@ -1654,7 +1654,7 @@
     <string name="devicestatus_upload_completed">A feltöltés befejeződött</string>
     <string name="devicestatus_upload_validating">A feltöltés ellenőrzése folyamatban van</string>
     <string name="devicestatus_upload_aborted">A feltöltés megszakadt!</string>
-    <string name="firmware_update_progress">Feltöltés folyamatban \n%1d%% %.2fkbps sebességgel (átlag %.2fkbps) \n%1d rész %1d-ből</string>
+    <string name="firmware_update_progress">Feltöltés folyamatban\n%1$d%% kész, %2$.2fkbps sebességgel (átlag: %3$.2fkbps)\n%4$d. rész a(z) %5$d-ből</string>
     <string name="updatefirmwareoperation_failed_low_mtu">A %1$d jelenlegi MTU-értéke túl alacsony, engedélyezze a magas MTU-értéket az eszköz beállításaiban, és válassza az eszköz leválasztását/csatlakozását.</string>
     <string name="pref_title_third_party_app_device_settings">Engedélyezze a harmadik féltől származó alkalmazások beállításainak módosítását</string>
     <string name="pref_summary_third_party_app_device_settings">Lehetővé teszi a más telepített harmadik féltől származó alkalmazásoknak, hogy beállításokat állítsanak az eszközön intentek segítségével.</string>
@@ -2391,7 +2391,7 @@
     <string name="minutes_180">180 perc</string>
     <string name="stats_empty_value">-</string>
     <string name="sleep_colored_stats_light_avg">Könnyű ÁTL</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="sleep_colored_stats_rem_avg">REM ÁTL</string>
     <string name="activity_prefs_date_birth">Születési idő</string>
     <string name="activity_type_motorcycling">Motorkerékpározás</string>
@@ -2480,7 +2480,7 @@
     <string name="pref_enable_call_accept">Hívásfogadás engedélyezése</string>
     <string name="pref_summary_opentracks_packagename">GPS útvonal rögzítésének indítása/leállítása külső fitneszalkalmazásban.</string>
     <string name="step_streak_days_hint">Egymást követő napok száma, amelyeken sikerült elérni a lépéscélt</string>
-    <string name="controlcenter_connected_fraction">Kapcsolódva: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Kapcsolódva: %1$d/%2$d</string>
     <string name="connection_over_ble">Kapcsolat BLE-n keresztül</string>
     <string name="connection_over_bt_classic">Csatlakozás Bluetooth classic segítségével</string>
     <string name="autoconnect_from_device_title">Kapcsolódás az eszköztől jövő kérelemre</string>
@@ -2767,7 +2767,7 @@
     <string name="prefs_wena3_button_action_name_start_timer">Aktív időzítő indítása</string>
     <string name="pref_summary_huawei_account">A párosításkor használt Huawei-fiók. Beállítása lehetővé teszi a párosítást gyári visszaállítás nélkül.</string>
     <string name="backup_restore_exporting_database">Adatbázis exportálása…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Fájlok exportálása… %1d a %2d-ból/ből</string>
+    <string name="backup_restore_exporting_files_i_of_n">Fájlok exportálása… %1$d a(z) %2$d-ból/ből</string>
     <string name="error_no_cycling_sensor_found">nem található kerékpáros érzékelő</string>
     <string name="devicetype_miband9pro">Xiaomi Smart Band 9 Pro</string>
     <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
@@ -2836,7 +2836,7 @@
     <string name="blue">Kék</string>
     <string name="prefs_wena3_menu_icon_title">Menü ikonok</string>
     <string name="prefs_wena3_status_page_title">Állapotoldal sorrendje</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="activity_type_navigate">Navigálás</string>
     <string name="activity_type_handcycling">Kézi kerékpározás</string>
     <string name="activity_type_breathwork">Légzésgyakrolatok</string>
@@ -2927,8 +2927,8 @@
     <string name="inactivity_warnings_minimum_steps_summary">A küszöbpercek alatt megteendő lépések minimális száma</string>
     <string name="contact_phone_number">Telefonszám</string>
     <string name="devicetype_casioecbs100">Casio ECB-S100</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lbs</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
     <string name="pref_voice_detect_duration_10">10 másodperc</string>
     <string name="thirty_days_timeline">30 napos idővonal</string>
     <string name="redmi_buds_5_pro_transparency_regular">Szabályos</string>
@@ -3037,7 +3037,7 @@
     <string name="pref_title_osmand_packagename">OsmAnd csomag neve</string>
     <string name="pref_auto_reply_calls_delay_summary">Azon másodpercek száma, amelyek után a hívás automatikusan átvehető</string>
     <string name="backup_restore_importing_loading">Fájl betöltése…</string>
-    <string name="backup_restore_importing_files_i_of_n">Fájlok importálása… %1d a %2d-ból/ből</string>
+    <string name="backup_restore_importing_files_i_of_n">Fájlok importálása… %1$d a(z) %2$d-ból/ből</string>
     <string name="about_build_details_copied_to_clipboard">Az összeállítás részleteinek másolása a vágólapra</string>
     <string name="devicetype_marstek_b2500">Marstek B2500</string>
     <string name="battery_discharge_intervals">Akkumulátor lemerülési időközök</string>
@@ -3195,7 +3195,7 @@
     <string name="pref_dashboard_widget_today_upside_down_title">Éjfél alul</string>
     <string name="devicetype_cycling_sensor">Kerékpáros sebességérzékelő</string>
     <string name="pref_title_cycling_persistence_interval">Tartózkodási időköz</string>
-    <string name="chart_cycling_point_label_distance">Ma: %.1f km\nÖsszesen: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Ma: %1$.1f km\nÖsszesen: %2$.1f km</string>
     <string name="open_camera">Kamera megnyitása</string>
     <string name="toast_camera_permission_required">Ehhez a funkcióhoz kameraengedély szükséges.</string>
     <string name="pref_fetch_unknown_files_title">Ismeretlen fájlok lekérése</string>
@@ -3209,7 +3209,7 @@
     <string name="copied_to_clipboard">Vágólapra másolva</string>
     <string name="backup_restore_importing_database">Adatbázis importálása…</string>
     <string name="backup_restore_importing_preferences">Beállítások importálása…</string>
-    <string name="backup_restore_warning_files">%1d fájl helyreállítása nem sikerült: \n%2s</string>
+    <string name="backup_restore_warning_files">%1$d fájl helyreállítása nem sikerült: \n%2$s</string>
     <string name="backup_restore_export_complete">Exportálás befejeződött</string>
     <string name="backup_restore_import_complete">Importálás befejeződött</string>
     <string name="backup_restore_error_export">A zip-be történtő exportálás nem sikerült</string>
@@ -3518,7 +3518,7 @@
     <string name="unit_revolutions_per_minute">fordulat/perc</string>
     <string name="workout_repetitions">Ismétlések</string>
     <string name="workout_revolutions">Forradalmi edzés</string>
-    <string name="fw_upgrade_notice_huawei">A(z) %s firmware-t kívánja feltölteni a %s firmware-hez.\n\nA jelenlegi firmware a következő: %s\n\nAz eszköz a feltöltés után újraindul.\n\nCSAK SAJÁT FELELŐSSÉGRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_huawei">A(z) %s firmware-t kívánja feltölteni a(z) %2$s eszközre.\n\nA jelenlegi firmware a következő: %s\n\nAz eszköz a feltöltés után újraindul.\n\nCSAK SAJÁT FELELŐSSÉGRE FOLYTASSA!</string>
     <string name="poolLength">Medencehossz</string>
     <string name="swim_avg_cadence">Úszási kadenciaátlag</string>
     <string name="uploading">Feltöltés…</string>
@@ -3546,8 +3546,8 @@
     <string name="gree_pair_status_failure">Sikertelen párosítás: %s</string>
     <string name="copy_to_clipboard">Másolás</string>
     <string name="gree_controller_host">Kiszolgáló</string>
-    <string name="gree_pair_clipboard">Eszköz neve: %s\nMac-cím: %s\nHozzárendelt billentyű: %s</string>
-    <string name="gree_pair_info">Párosításra készül a következővel: %s (%s). Adja meg a Wi-Fi és a kiszolgáló információit a párosításhoz. További információkért látogasson el a weboldalra.</string>
+    <string name="gree_pair_clipboard">Eszköz neve: %1$s\nMAC-cím: %2$s\nHozzárendelt billentyű: %3$s</string>
+    <string name="gree_pair_info">Párosításra készül a következővel: %1$s (%2$s). Adja meg a Wi-Fi és a kiszolgáló információit a párosításhoz. További információkért látogasson el a weboldalra.</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
     <string name="unit_joule">Joule</string>
     <string name="training_load">Edzésterhelés</string>
@@ -3878,7 +3878,7 @@
     <string name="even_realities_frame_color_grey">Szürke</string>
     <string name="even_realities_frame_color_brown">Barna</string>
     <string name="even_realities_frame_color_green">Zöld</string>
-    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">Bal lencse</string>
     <string name="even_realities_right_lens">Jobb lencse</string>
     <string name="even_realities_frame_shape_G1A">G1A/Round</string>
