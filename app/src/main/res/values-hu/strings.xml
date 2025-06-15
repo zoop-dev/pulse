@@ -1402,7 +1402,7 @@
     <string name="fw_upgrade_notice_amazfit_gtr3">A(z) %s firmware-t kívánja telepíteni az Amazfit GTR 3 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfit_band7">A(z) %s firmware-t kívánja telepíteni az Amazfit Band 7 eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">A(z) %s firmware-t kívánja telepíteni az Amazfit Cheetah Pro eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
-    <string name="fw_upgrade_notice_zepp_os">A(z) %s firmware-t kívánja telepíteni a(z) %s eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_zepp_os">A(z) %1$s firmware-t kívánja telepíteni a(z) %2$s eszközre. \n \nA .zip fájl telepítése után az eszköz újraindul. \n \nCSAK SAJÁT FELELŐSSÉGÉRE FOLYTASSA!</string>
     <string name="open_fw_installer_info_text">A Firmware/Számlap/Alkalmazás/Fájl telepítő lehetővé teszi a támogatott fájlok (firmware, számlapok, alkalmazások, GPS, erőforrások, betűtípusok...) feltöltését/telepítését az eszközre. További információt a wikiben talál: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_connect_maximum_one_device">CSAK EGY olyan eszközt párosítson, amelyre el szeretné küldeni a fájlt.</string>
     <string name="pref_summary_general_reconnectonlytoconnected">Újrakapcsolódás csak a párosított eszközökhöz, ahelyett, hogy az összes eszközzel újracsatlakozna</string>
@@ -3637,7 +3637,7 @@
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="dual_device_mode_title">Két eszköz üzemmód</string>
     <string name="dual_device_mode_summary">Lehetővé teszi a fejhallgató egyidejű csatlakoztatását két eszközhöz</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="bahasa_melayu">Maláj nyelv</string>
     <string name="pref_vibration_intensity">Rezgésintenzitás</string>
     <string name="serbian_latin">Szerb (latin)</string>
