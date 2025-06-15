@@ -1707,7 +1707,7 @@
     <string name="prefs_password_enabled">סיסמה מופעלת</string>
     <string name="prefs_password_4_digits_1_to_4_summary">הסיסמה חייבת להיות באורך 4 ספרות ועם המספרים 1 עד 4</string>
     <string name="prefs_password_6_digits_0_to_9_summary">הסיסמה חייבת להיות באורך 6 ספרות עם מספרים בלבד</string>
-    <string name="controlcenter_connected_fraction">מחובר: %d/%d</string>
+    <string name="controlcenter_connected_fraction">מחובר: %1$d/%2$d</string>
     <string name="pref_blacklist_calendars_summary">לוחות שנה חסומים לא יסונכרנו למכשיר</string>
     <string name="prefs_password">סיסמה</string>
     <string name="error_deleting_device">שגיאה במחיקת התקן: %s</string>
@@ -2883,7 +2883,7 @@
     <string name="open_camera">פתיחת מצלמה</string>
     <string name="toast_camera_permission_required">נחוצה הרשאה למצלמה לפעולה הזאת.</string>
     <string name="toast_setting_requires_reconnect">ההגדרה הזאת תחול לאחר חיבור מחדש</string>
-    <string name="chart_cycling_point_label_distance">היום: %.1f ק״מ \nסך הכול: %.1f ק״מ</string>
+    <string name="chart_cycling_point_label_distance">היום: %1$.1f ק״מ \nסך הכול: %2$.1f ק״מ</string>
     <string name="chart_cycling_point_label_speed">%.1f קמ״ש</string>
     <string name="proprietary_app_warning">היכולת הזאת דורשת התקנת יישומון קנייני</string>
     <string name="notif_battery_full_title">סוללת ההתקן מלאה!</string>
@@ -3118,4 +3118,10 @@
     <string name="earfun_advanced_audio_mode">מצב שמע מתקדם</string>
     <string name="earfun_find_headphones">איתור אוזניות</string>
     <string name="workout_set_repetitions_weight_lbs">%1$d × %2$.2f פאונד</string>
+    <string name="devicetype_cycling_sensor">חיישן מהירות רכיבה</string>
+    <string name="title_cycling">רכיבה</string>
+    <string name="device_name_cycling_sensor">חיישן רכיבה</string>
+    <string name="pref_summary_wheel_diameter">קוטר הגלגל באינצ׳ים. בדרך כלל 29, 27.5 או 26.</string>
+    <string name="pref_title_wheel_diameter">קוטר הגלגל</string>
+    <string name="device_name_bicycle_sensor">חיישן אופניים</string>
 </resources>
