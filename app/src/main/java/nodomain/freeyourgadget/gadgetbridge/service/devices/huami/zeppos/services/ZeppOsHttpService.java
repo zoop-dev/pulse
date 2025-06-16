@@ -36,7 +36,7 @@ import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsWeather;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsWeatherHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.HttpUtils;
@@ -55,6 +55,8 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
 
     public static final byte RESPONSE_SUCCESS = 0x01;
     public static final byte RESPONSE_NO_INTERNET = 0x02;
+
+    private ZeppOsWeatherHandler weatherHandler;
 
     /**
      * A map from url to local file URI that will be served to the watch.
@@ -123,6 +125,7 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
+        this.weatherHandler = new ZeppOsWeatherHandler(getSupport().getDevice());
         urlToLocalFile.clear();
         urlDownloadCallbacks.clear();
     }
@@ -153,9 +156,13 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
         final Map<String, String> query = HttpUtils.urlQueryParameters(url);
 
         if (path.startsWith("/weather/")) {
-            final ZeppOsWeather.Response response = ZeppOsWeather.handleHttpRequest(path, query);
-            replySimpleHttpSuccess(requestId, response.getHttpStatusCode(), response.toJson());
-            return;
+            if (weatherHandler != null) {
+                final ZeppOsWeatherHandler.Response response = weatherHandler.handleHttpRequest(path, query);
+                replySimpleHttpSuccess(requestId, response.getHttpStatusCode(), response.toJson());
+                return;
+            }
+
+            LOG.error("Weather handler is null");
         }
 
         LOG.error("Unhandled simple request URL {}", url);

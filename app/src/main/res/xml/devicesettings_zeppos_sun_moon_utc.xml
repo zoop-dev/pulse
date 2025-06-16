@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_wb_sunny"
+        android:key="zeppos_sun_moon_utc"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/zepp_os_sun_moon_utc_summary"
+        android:title="@string/zepp_os_sun_moon_utc_title" />
+</androidx.preference.PreferenceScreen>

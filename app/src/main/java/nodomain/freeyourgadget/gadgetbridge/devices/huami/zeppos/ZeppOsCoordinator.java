@@ -411,6 +411,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         if (getWorldClocksSlotCount() > 0) {
             dateTime.add(R.xml.devicesettings_world_clocks);
         }
+        dateTime.add(R.xml.devicesettings_zeppos_sun_moon_utc);
 
         //
         // Display

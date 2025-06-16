@@ -47,7 +47,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiWeatherConditions;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
@@ -56,8 +58,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.Curre
  * The weather models that the bands expect as an http response to weather requests. Base URL usually
  * is https://api-mifit.huami.com.
  */
-public class ZeppOsWeather {
-    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsWeather.class);
+public class ZeppOsWeatherHandler {
+    private static final Logger LOG = LoggerFactory.getLogger(ZeppOsWeatherHandler.class);
 
     private static final Gson GSON = new GsonBuilder()
             .serializeNulls()
@@ -82,18 +84,25 @@ public class ZeppOsWeather {
             .registerTypeAdapter(TideHourlyEntry.class, new TideHourlyEntry.Serializer())
             .create();
 
-    public static Response handleHttpRequest(final String path, final Map<String, String> query) {
+    private final GBDevice device;
+
+    public ZeppOsWeatherHandler(final GBDevice device) {
+        this.device = device;
+    }
+
+    public Response handleHttpRequest(final String path, final Map<String, String> query) {
         final WeatherSpec weatherSpec = Weather.getInstance().getWeatherSpec();
 
         if (weatherSpec == null) {
             LOG.error("No weather in weather instance");
-            return new ZeppOsWeather.ErrorResponse(404, -2001, "Not found");
+            return new ZeppOsWeatherHandler.ErrorResponse(404, -2001, "Not found");
         }
 
         switch (path) {
             case "/weather/v2/forecast":
+                final boolean sunMoonInUtc = GBApplication.getDevicePrefs(device).getBoolean("zeppos_sun_moon_utc", false);
                 final int forecastDays = getQueryNum(query, "days", 10);
-                return new ForecastResponse(weatherSpec, forecastDays);
+                return new ForecastResponse(weatherSpec, forecastDays, sunMoonInUtc);
             case "/weather/index":
                 final int indexDays = getQueryNum(query, "days", 3);
                 return new IndexResponse(weatherSpec, indexDays);
@@ -110,7 +119,7 @@ public class ZeppOsWeather {
         }
 
         LOG.error("Unknown weather path {}", path);
-        return new ZeppOsWeather.ErrorResponse(404, -2001, "Not found");
+        return new ZeppOsWeatherHandler.ErrorResponse(404, -2001, "Not found");
     }
 
     private static int getQueryNum(final Map<String, String> query, final String key, final int defaultValue) {
@@ -187,7 +196,7 @@ public class ZeppOsWeather {
         public MoonRiseSet moonRiseSet = new MoonRiseSet();
         public List<Object> airQualities = new ArrayList<>();
 
-        public ForecastResponse(final WeatherSpec weatherSpec, final int days) {
+        public ForecastResponse(final WeatherSpec weatherSpec, final int days, final boolean sunMoonInUtc) {
             final int actualDays = Math.min(weatherSpec.forecasts.size(), days - 1); // leave one slot for the first day
 
             pubTime = new Date(weatherSpec.timestamp * 1000L);
@@ -204,17 +213,17 @@ public class ZeppOsWeather {
             final String currentWeatherCode = String.valueOf(mapToZeppOsWeatherCode(weatherSpec.currentConditionCode));
             weather.add(new Range(currentWeatherCode, currentWeatherCode));
             if (weatherSpec.sunRise != 0 && weatherSpec.sunSet != 0) {
-                sunRiseSet.add(getSunriseSunset(new Date(weatherSpec.sunRise * 1000L), new Date(weatherSpec.sunSet * 1000L)));
+                sunRiseSet.add(getSunriseSunset(new Date(weatherSpec.sunRise * 1000L), new Date(weatherSpec.sunSet * 1000L), sunMoonInUtc));
             } else if (weatherSpec.getLocation() != null) {
-                sunRiseSet.add(getSunriseSunset(sunriseDate, weatherSpec.getLocation()));
+                sunRiseSet.add(getSunriseSunset(sunriseDate, weatherSpec.getLocation(), sunMoonInUtc));
             } else {
-                sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation));
+                sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation, sunMoonInUtc));
             }
             sunriseDate.add(Calendar.DAY_OF_MONTH, 1);
             windDirection.add(new Range(weatherSpec.windDirection, weatherSpec.windDirection));
             windSpeed.add(new Range(Math.round(weatherSpec.windSpeed), Math.round(weatherSpec.windSpeed)));
 
-            moonRiseSet.add(weatherSpec.moonRise, weatherSpec.moonSet, weatherSpec.moonPhase);
+            moonRiseSet.add(weatherSpec.moonRise, weatherSpec.moonSet, weatherSpec.moonPhase, sunMoonInUtc);
 
             for (int i = 0; i < actualDays; i++) {
                 final WeatherSpec.Daily forecast = weatherSpec.forecasts.get(i);
@@ -223,9 +232,9 @@ public class ZeppOsWeather {
                 weather.add(new Range(weatherCode, weatherCode));
 
                 if (forecast.sunRise != 0 && forecast.sunSet != 0) {
-                    sunRiseSet.add(getSunriseSunset(new Date(forecast.sunRise * 1000L), new Date(forecast.sunSet * 1000L)));
+                    sunRiseSet.add(getSunriseSunset(new Date(forecast.sunRise * 1000L), new Date(forecast.sunSet * 1000L), sunMoonInUtc));
                 } else {
-                    sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation));
+                    sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation, sunMoonInUtc));
                 }
                 sunriseDate.add(Calendar.DAY_OF_MONTH, 1);
 
@@ -241,11 +250,11 @@ public class ZeppOsWeather {
                     windSpeed.add(new Range(0, 0));
                 }
 
-                moonRiseSet.add(forecast.moonRise, forecast.moonSet, forecast.moonPhase);
+                moonRiseSet.add(forecast.moonRise, forecast.moonSet, forecast.moonPhase, sunMoonInUtc);
             }
         }
 
-        private Range getSunriseSunset(final GregorianCalendar date, final Location location) {
+        private Range getSunriseSunset(final GregorianCalendar date, final Location location, final boolean utc) {
             final SunriseTransitSet sunriseTransitSet = SPA.calculateSunriseTransitSet(
                     date.toZonedDateTime(),
                     location.getLatitude(),
@@ -256,16 +265,17 @@ public class ZeppOsWeather {
             if (sunriseTransitSet.getSunrise() != null && sunriseTransitSet.getSunset() != null) {
                 return getSunriseSunset(
                         Date.from(sunriseTransitSet.getSunrise().toInstant()),
-                        Date.from(sunriseTransitSet.getSunset().toInstant())
+                        Date.from(sunriseTransitSet.getSunset().toInstant()),
+                        utc
                 );
             }
 
-            return getSunriseSunset(new Date(), new Date());
+            return getSunriseSunset(new Date(), new Date(), utc);
         }
 
-        private Range getSunriseSunset(final Date sunRise, final Date sunSet) {
+        private Range getSunriseSunset(final Date sunRise, final Date sunSet, final boolean utc) {
             final SimpleDateFormat sunRiseSetSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
-            sunRiseSetSdf.setTimeZone(TimeZone.getDefault());
+            sunRiseSetSdf.setTimeZone(utc ? TimeZone.getTimeZone("UTC") : TimeZone.getDefault());
 
             final String from = sunRiseSetSdf.format(sunRise);
             final String to = sunRiseSetSdf.format(sunSet);
@@ -305,16 +315,16 @@ public class ZeppOsWeather {
             }
         }
 
-        public void add(final int rise, final int set, final int phaseDegrees) {
+        public void add(final int rise, final int set, final int phaseDegrees, final boolean utc) {
             // Normalize degrees to [0, 360)
             final int degreesNormalized = (phaseDegrees % 360 + 360) % 360;
-            // Map 0–360 degrees to 1–30 lunar days
+            // Map 0-360 degrees to 1-30 lunar days
             final int lunarDay = (int) Math.floor(degreesNormalized / 360.0 * 30) + 1;
 
             moonPhaseValue.add(String.valueOf(lunarDay));
 
             final SimpleDateFormat moonRiseSetSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
-            moonRiseSetSdf.setTimeZone(TimeZone.getDefault());
+            moonRiseSetSdf.setTimeZone(utc ? TimeZone.getTimeZone("UTC") : TimeZone.getDefault());
 
             final String from = moonRiseSetSdf.format(new Date(rise * 1000L));
             final String to = moonRiseSetSdf.format(new Date(set * 1000L));
