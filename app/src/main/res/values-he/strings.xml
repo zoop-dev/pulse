@@ -1055,7 +1055,7 @@
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="descentSeconds">ירידה</string>
     <string name="activity_error_no_app_for_png">כדי לשתף את צילום המסך, עליך להתקין יישומון שיכול לטפל בקובצי תמונה.</string>
-    <string name="firmware_update_progress">מתבצעת העלאה \n%1d%% ב־%.2f קסל״ש (ממוצע %.2f קסל״ש) \nחלק %1d מתוך %1d</string>
+    <string name="firmware_update_progress">מתבצעת העלאה \n%1$d%% ב־%2$.2f קסל״ש (%3$.2f קסל״ש בממוצע)\nחלק %4$d מתוך %5$d</string>
     <string name="devicestatus_upload_failed">ההעלאה נכשלה</string>
     <string name="devicestatus_upload_aborted">ההעלאה בוטלה!</string>
     <string name="devicestatus_upload_validating">ההעלאה נבדקת</string>
@@ -3124,4 +3124,10 @@
     <string name="pref_summary_wheel_diameter">קוטר הגלגל באינצ׳ים. בדרך כלל 29, 27.5 או 26.</string>
     <string name="pref_title_wheel_diameter">קוטר הגלגל</string>
     <string name="device_name_bicycle_sensor">חיישן אופניים</string>
+    <string name="devicetype_marstek_b2500">Marstek B2500‎</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="pref_title_stable_connection">חיבור יציב</string>
+    <string name="about_build_details_copied_to_clipboard">פרטי הבנייה הועתקו ללוח הגזירים</string>
+    <string name="pref_watch_face">פני השעון</string>
+    <string name="pref_device_version">גרסת המכשיר</string>
 </resources>
