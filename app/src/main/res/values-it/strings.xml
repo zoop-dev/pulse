@@ -1065,7 +1065,7 @@
     <string name="charts_min_max_heartrate_popup">Frequenza cardiaca più bassa: %1$d
 \nFrequenza cardiaca più alta: %2$d
 \nIntensità del movimento: %3$s</string>
-    <string name="firmware_update_progress">Caricamento in corso \n%1d%% a %.2fkbps (media %.2fkbps) \nParte %1d di %1d</string>
+    <string name="firmware_update_progress">Caricamento in corso\n%1$d%% a %2$.2fkbps (media %3$.2fkbps)\nParte %4$d di %5$d</string>
     <string name="devicestatus_upload_failed">Caricamento non riuscito</string>
     <string name="devicestatus_upload_aborted">Caricamento annullato!</string>
     <string name="devicestatus_upload_validating">Il caricamento è in fase di validazione</string>
@@ -1817,7 +1817,7 @@
     <string name="sony_speak_to_chat_timeout_off">Spento</string>
     <string name="sony_speak_to_chat_sensitivity_low">Bassa</string>
     <string name="controlcenter_toggle_details">Mostra/nascondi dettagli</string>
-    <string name="controlcenter_connected_fraction">Connesso: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Connesso: %1$d/%2$d</string>
     <string name="error_deleting_device">Errore cancellando il dispositivo: %s</string>
     <string name="error_setting_parent_folder">Errore impostando la cartella superiore: %s</string>
     <string name="sony_anc_optimizer_status_starting">Avvio…</string>
@@ -2352,7 +2352,7 @@
     <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
     <string name="withings_calibration_text_minutes">Ora, utilizzare il quadrante per allineare la lancetta dei minuti alle 12.</string>
     <string name="withings_calibration_text_hours">Usa il quadrante sottostante per allineare la lancetta delle ore alle 12.</string>
-    <string name="fw_upgrade_notice_zepp_os">Stai per installare il firmware %s sul tuo %s. \n \nL\'orologio si riavvierà dopo l\'installazione del file .zip. \n \nPROCEDI A TUO RISCHIO E PERICOLO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Stai per installare il firmware %1$s sul tuo %2$s. \n \nL\'orologio si riavvierà dopo l\'installazione del file .zip. \n \nPROCEDI A TUO RISCHIO E PERICOLO!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Quadrato)</string>
     <string name="device_experimental">SPERIMENTALE</string>
     <string name="zepp_os_watchface_pure_white">Bianco puro</string>
@@ -2963,8 +2963,8 @@
     <string name="activity_type_esports">Sport elettronici</string>
     <string name="activity_type_flowriding">Simulatore di surf</string>
     <string name="busy_task_fetch_hrv_data">Recupero dati HRV</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="activity_type_stand_up_paddleboarding">Stand Up Paddle</string>
     <string name="activity_type_jumpmaster">Jumpmaster</string>
     <string name="activity_type_multisport">Sport multipli</string>
@@ -3080,8 +3080,8 @@
     <string name="devicetype_huawei_watch3">Huawei Watch 3 (Pro)</string>
     <string name="devicetype_colmi_r02">Colmi R02</string>
     <string name="devicetype_colmi_r03">Colmi R03</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d per %2$.2f libbre</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d per %2$.2f libbre</string>
     <string name="devicetype_nothing_cmf_buds_pro_2">CMF Buds Pro 2</string>
     <string name="devicetype_nothing_cmf_watch_pro_2">CMF Watch Pro 2</string>
     <string name="moondrop_touch_action_assistant">Attiva Assistente Vocale</string>
@@ -3361,7 +3361,7 @@
     <string name="pref_dashboard_widget_show_legend_summary">Mostra una legenda sotto il widget che spieghi il significato dei colori</string>
     <string name="pref_dashboard_all_devices_summary">Somma i dati delle attività di tutti i dispositivi aggiunti per i totali sul cruscotto</string>
     <string name="pref_sleepasandroid_slot_title">Registri sveglie</string>
-    <string name="chart_cycling_point_label_distance">Oggi: %.1f km\nTotale: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Oggi: %1$.1f km\nTotale: %2$.1f km</string>
     <string name="copied_to_clipboard">Copiato negli appunti</string>
     <string name="pref_sleepasandroid_enable_summary">Attiva l\'integrazione di Sleep As Android</string>
     <string name="pref_sleepasandroid_device_title">Dispositivo fornitore</string>
@@ -3440,7 +3440,7 @@
     <string name="backup_restore_restart_title">Riavvia</string>
     <string name="devicetype_ble_gatt_client">Client generico BLE GATT</string>
     <string name="pref_deprecated_media_control_summary">Invia i comandi di controllo dei media come eventi chiave invece che come controller dei media.</string>
-    <string name="backup_restore_exporting_files_i_of_n">Esportazione file... %1d di %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Esportazione file... %1$d di %2$d</string>
     <string name="backup_restore_importing_loading">Caricamento file…</string>
     <string name="backup_restore_exporting_files">Esportazione file…</string>
     <string name="backup_restore_restart_summary">%1s verrà riavviato.</string>
@@ -3460,7 +3460,7 @@
     <string name="contact_birthday">Compleanno di %1s</string>
     <string name="birthdays">Compleanni</string>
     <string name="pref_header_deprecated_functionalities">Funzionalità deprecate</string>
-    <string name="backup_restore_importing_files_i_of_n">Importazione file... %1d di %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importazione file... %1$d di %2$d</string>
     <string name="backup_restore_error_import">Importazione da zip fallita</string>
     <string name="backup_restore_abort_import_confirmation">Annullare l\'importazione? Ciò potrebbe comportare una banca dati corrotta o inconsistente.</string>
     <string name="inactivity_warnings_minimum_steps_title">Numero minimo di passi</string>
@@ -3484,7 +3484,7 @@
     <string name="label_distance_trip_mph">Parziale: %.1f mi</string>
     <string name="smart_ring_measurement_error_unknown">Errore di misura sconosciuto %d ricevuto dall\'anello</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Consentire l\'interazione con il GATT attraverso l\'API Intenti BLE</string>
-    <string name="backup_restore_warning_files">%1d file non ripristinati: \n%2s</string>
+    <string name="backup_restore_warning_files">%1$d file non ripristinati:\n%2$s</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Mostra un indicatore all\'ora corrente, per separare visivamente i dati di ieri e di oggi</string>
     <string name="backup_restore_exporting">Esportazione in formato zip…</string>
     <string name="devicetype_sony_wi_c100">Sony WI-C100</string>
@@ -3712,7 +3712,7 @@
     <string name="gatt_synchronous_writes_summary">Preferisci le scritture GATT sincrone alle scritture asincrone se una caratteristica le supporta entrambe.</string>
     <string name="prefs_title_gatt_settings">Profilo Generic Attribute</string>
     <string name="pairing_bonding_under_way">Attendi qualche istante per completare il processo di bonding.</string>
-    <string name="bahasa_melayu">Bahasa Melayu</string>
+    <string name="bahasa_melayu">Malese</string>
     <string name="activity_type_other_winter_sports">Altri sport invernali</string>
     <string name="activity_type_abs">Addominali</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
@@ -3806,7 +3806,7 @@
     <string name="activity_type_paragliding">Parapendio</string>
     <string name="activity_type_burpee">Burpee</string>
     <string name="standing_count">Conteggio in piedi</string>
-    <string name="fw_upgrade_notice_huawei">Stai per inviare il firmware %s al tuo %s.\n\nIl firmware attuale è %s\n\nIl dispositivo si riavvierà dopo l\'aggiornamento.\n\nPROCEDI A TUO RISCHIO!</string>
+    <string name="fw_upgrade_notice_huawei">Stai per inviare il firmware %1$s al tuo %2$s.\n\nIl firmware attuale è %s\n\nIl dispositivo si riavvierà dopo l\'aggiornamento.\n\nPROCEDI A TUO RISCHIO E PERICOLO!</string>
     <string name="charts_show_balance_steps_summary">Mostra eccesso/mancanza di passi nei grafici settimanali e mensili</string>
     <string name="poolLength">Lunghezza piscina</string>
     <string name="unit_repetitions_per_minute">ripetizioni/minuto</string>
@@ -3925,7 +3925,7 @@
     <string name="huawei_stress_calibrate_information">Per risultati ottimali riposati brevemente prima di iniziare e rimani fermo durante il test.\nAllaccia bene il dispositivo, con lo schermo rivolto verso l\'alto e il sensore a contatto diretto con la pelle.</string>
     <string name="huawei_stress_calibrate_start">Inizia</string>
     <string name="reset">Reset</string>
-    <string name="gree_pair_clipboard">Nome dispositivo: %s\nIndirizzo MAC: %s\nChiave di associazione: %s</string>
+    <string name="gree_pair_clipboard">Nome dispositivo: %1$s\nIndirizzo MAC: %2$s\nChiave di associazione: %3$s</string>
     <string name="pref_garmin_fake_oauth_title">Invia risposte OAuth false</string>
     <string name="pref_heart_rate_realtime_mode">Modalità misurazione frequenza cardiaca automatica in tempo reale</string>
     <string name="pref_override_features_summary">Attiva/disattiva funzionalità specifiche del dispositivo. Ciò può causare problemi e/o non far funzionare il dispositivo correttamente</string>
@@ -3964,10 +3964,10 @@
     <string name="manual_discharge_summary">quando disabilitato presuppone uno scaricamento intelligente controllato da un contatore di potenza esterno (non supportato da Gadgetbridge)</string>
     <string name="battery_minimum_charge">Carica della batteria minima in %</string>
     <string name="pref_garmin_fake_oauth_summary">Corregge alcune funzioni come gli aggiornamenti meteo e AGPS senza connettersi all\'app ufficiale ogni 90 giorni.</string>
-    <string name="gree_pair_info">Stai per eseguire l\'accoppiamento con %s (%s). Inserisci le informazioni sul Wi-Fi e sul server host per l\'accoppiamento. Visita il sito web per maggiori informazioni.</string>
+    <string name="gree_pair_info">Stai per eseguire l\'accoppiamento con %1$s (%2$s). Inserisci le informazioni sul Wi-Fi e sul server host per l\'accoppiamento. Visita il sito web per maggiori informazioni.</string>
     <string name="earfun_header_connectivity">Qualità audio e connettività</string>
     <string name="earfun_tap_action_redial">Ricomponi</string>
-    <string name="ultrahuman_breathing_stop">Interrompi</string>
+    <string name="ultrahuman_breathing_stop">Ferma</string>
     <string name="permission_disable_doze_summary">Consente l\'esecuzione in background senza essere ostacolato dalle ottimizzazioni della batteria di Android</string>
     <string name="earfun_earbud_mode_right">Solo auricolare destro</string>
     <string name="ultrahuman_breathing_title">Respirazione</string>
@@ -4040,7 +4040,7 @@
     <string name="even_realities_frame_shape_G1A">G1A/Round</string>
     <string name="even_realities_frame_shape_G1B">G1B/Square</string>
     <string name="even_realities_frame_color_grey">Grigio</string>
-    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">Lente sinistra</string>
     <string name="zepp_os_watchface_vital_orange">Vital Orange</string>
     <string name="pref_even_realities_g1_screen_location_title">Posizione schermo</string>
@@ -4048,4 +4048,41 @@
     <string name="even_realities_frame_color_green">Verde</string>
     <string name="zepp_os_watchface_vital">Vital</string>
     <string name="even_realities_right_lens">Lente destra</string>
+    <string name="weather_condition_shower_drizzle">pioggia leggera</string>
+    <string name="pairing_even_realities_g1_find_both_fail">Impossibile trovare la lente destra e sinistra. Scansiona di nuovo.</string>
+    <string name="weather_condition_shower_sleet">pioggia di nevischio</string>
+    <string name="pairing_even_realities_g1_select_next_lens">Lente %1$s selezionata per l\'accoppiamento. Sono stati trovati più candidati per la lente %2$s. Seleziona la lente %2$s dall\'elenco sottostante.</string>
+    <string name="notifications_app_icon_upload_to_device">Carica su dispositivo</string>
+    <string name="notifications_app_icon_nothing_selected">Seleziona almeno un\'app da caricare</string>
+    <string name="huawei_voice_boost">Boost vocale</string>
+    <string name="devicetype_colmi_v89">Colmi V89</string>
+    <string name="busy_task_fetch_training_data">Recupero dei dati dell\'ultimo allenamento</string>
+    <string name="pref_display_enabled_title">Display abilitato</string>
+    <string name="notifications_app_icon_uploading">Le icone saranno caricate in background. Puoi chiudere questa attività</string>
+    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
+    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
+    <string name="activity_type_back">Schiena</string>
+    <string name="pairing_even_realities_g1_invalid_device">Dispositivo Even G1 invalido: %1$s.</string>
+    <string name="pairing_even_realities_g1_bottom_hint">Sul tuo dispositivo Android appariranno diverse finestre di dialogo di associazione. In caso contrario, guarda nel pannello delle notifiche e accetta la richiesta di accoppiamento. Sia la lente sinistra che quella destra dovranno essere associate.</string>
+    <string name="activity_type_diving">Tuffi</string>
+    <string name="ultrahuman_unhandled_error_response">risposta inaspettata %2$#02x %3$#02x per l\'operazione %1$#02x</string>
+    <string name="ultrahuman_unhandled_operation_response">risposta operazione inaspettata %s</string>
+    <string name="weather_condition_shower_snow">pioggia di neve</string>
+    <string name="menuitem_water_time">Tempo in acqua</string>
+    <string name="pref_display_enabled_all_day_summary">Abilita il display per tutto il giorno. Disabilita per selezionare orari specifici qui sotto</string>
+    <string name="pref_display_enabled_all_day_title">Attivo tutto il giorno</string>
+    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
+    <string name="devicetype_misirun_c17">Misirun C17</string>
+    <string name="devicetype_c20">C20</string>
+    <string name="devicetype_kt80">KT80</string>
+    <string name="devicetype_ksix_venture">KSIX Venture</string>
+    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
+    <string name="devicetype_viran_c29">Viran C29</string>
+    <string name="devicetype_r50pro">R50Pro</string>
+    <string name="pref_watch_face">Quadrante</string>
+    <string name="pref_device_version">Versione dispositivo</string>
+    <string name="busy_task_fetch_training_data_finished">Dati dell\'allenamento ricevuti!</string>
+    <string name="interval_twenty_minutes">ogni 20 minuti</string>
+    <string name="pref_display_enabled_summary">Abilita il display dell\'anello</string>
 </resources>
