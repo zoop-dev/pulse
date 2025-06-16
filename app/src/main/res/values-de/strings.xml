@@ -914,8 +914,8 @@
     <string name="cm">cm</string>
     <string name="meters">m</string>
     <string name="laps">Runden</string>
-    <string name="averageLapPace">Durchschnittliches Rundentempo</string>
-    <string name="averageKMPaceSeconds">Tempo</string>
+    <string name="averageLapPace">Ø Rundentempo</string>
+    <string name="averageKMPaceSeconds">Ø Tempo</string>
     <string name="averageHR">Puls</string>
     <string name="maxPace">Schnellstes Tempo</string>
     <string name="minPace">Langsamstes Tempo</string>
@@ -1026,7 +1026,7 @@
     <string name="lefun_prefs_hydration_reminder_interval_title">Intervall der Trinkerinnerung (in Minuten)</string>
     <string name="lefun_prefs_hydration_reminder_summary">Das Band wird vibrieren, um dich daran zu erinnern, Wasser zu trinken</string>
     <string name="lefun_prefs_hydration_reminder_title">Trinkerinnerung</string>
-    <string name="firmware_update_progress">Upload wird ausgeführt \n%1d%% bei %.2fkbps (durchschnittlich %.2fkbps) \nTeil %1d von %1d</string>
+    <string name="firmware_update_progress">Upload wird ausgeführt\n%1$d%%bei %2$.2fkbps (durchschnittlich %3$.2fkbps)\nTeil %4$d von %5$d</string>
     <string name="devicestatus_upload_failed">Upload ist fehlgeschlagen</string>
     <string name="devicestatus_upload_aborted">Upload wurde abgebrochen!</string>
     <string name="devicestatus_upload_validating">Upload wird überprüft</string>
@@ -1644,7 +1644,7 @@
     <string name="notification_gps_text">Senden des GPS-Standorts an %1$d Geräte</string>
     <string name="controlcenter_set_parent_folder">Überordner setzen</string>
     <string name="controlcenter_toggle_details">Details anzeigen</string>
-    <string name="controlcenter_connected_fraction">Verbunden: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Verbunden: %1$d/%2$d</string>
     <string name="ukranian">Ukrainisch</string>
     <string name="info_no_devices_connected">Keine Geräte verbunden</string>
     <string name="info_connected_count">%d Geräte verbunden</string>
@@ -2246,7 +2246,7 @@
     <string name="menuitem_zepp_coach">Zepp Coach</string>
     <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">Du bist dabei, die Firmware %s auf deine Amazfit Cheetah Pro zu installieren. \n \nDeine Smartwatch wird nach der Installation der .zip-Datei neu starten. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
-    <string name="fw_upgrade_notice_zepp_os">Du bist dabei, die Firmware %s auf deiner %s zu installieren.\n\nDeine Smartwatch wird nach der Installation der .zip-Datei neu gestartet.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_zepp_os">Du bist dabei, die Firmware %1$s auf deiner %2$s.zu installieren.\n\nDeine Smartwatch wird nach der Installation der .zip-Datei neu gestartet.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Quadratisch)</string>
     <string name="device_experimental">EXPERIMENTELL</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Du bist dabei, die Firmware %s auf deiner Amazfit Bip 3 Pro zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
@@ -2774,7 +2774,7 @@
     <string name="pref_dashboard_select_devices_title">Geräte auswählen...</string>
     <string name="pref_dashboard_all_devices_summary">Kombiniere Aktivitätsdaten von allen hinzugefügten Geräten für die Gesamtzahlen auf dem Dashboard</string>
     <string name="pref_dashboard_select_devices_summary">Kombiniere Aktivitätsdaten von bestimmten Geräten für die Gesamtzahlen auf dem Dashboard</string>
-    <string name="fmtPaceDistance">Tempo %d Entfernung</string>
+    <string name="fmtPaceDistance">Tempo %d Distanz</string>
     <string name="pref_auto_reply_calls_delay_title">Automatische Antwortverzögerung</string>
     <string name="pref_auto_reply_calls_delay_summary">Anzahl der Sekunden, nach denen der Anruf automatisch entgegengenommen wird</string>
     <string name="pref_auto_reply_calls_title">Telefonanrufe automatisch annehmen</string>
@@ -2846,7 +2846,7 @@
     <string name="title_cycling">Radfahren</string>
     <string name="pref_summary_cycling_persistence_interval">Intervall in Sekunden, in dem die aktuellen Fahrraddaten in die Datenbank geschrieben werden sollen</string>
     <string name="device_name_cycling_sensor">Fahrradsensor</string>
-    <string name="chart_cycling_point_label_distance">Heute: %.1f km \nGesamt: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Heute: %1$.1f km\nGesamt: %2$.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="pref_title_cycling_persistence_interval">Persistenzintervall</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Audio pausieren von anderen Anwendungen</string>
@@ -3155,7 +3155,7 @@
     <string name="mijia_lywsd_comfort_humidity_title">Luftfeuchtigkeit (%)</string>
     <string name="average_respiration_rate">Atemfrequenz durchschnittlich</string>
     <string name="breaths_per_min">Atemzüge/min</string>
-    <string name="fmtPaceAverage">Durchschnittliches Tempo</string>
+    <string name="fmtPaceAverage">Ø Tempo</string>
     <string name="milliseconds_ms">ms</string>
     <string name="pref_summary_sync_birthdays">Geburtstage von Kontakten zusammen mit Kalender-Events synchronisieren</string>
     <string name="activity_type_board_game">Brettspiel</string>
@@ -3199,8 +3199,8 @@
     <string name="workout_set_reps">Wiederholungen</string>
     <string name="activity_detail_share_json_details">JSON-Details teilen</string>
     <string name="max_respiration_rate">Atemfrequenz max</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="pref_title_calendar_lookahead">Anzahl der Tage voraus</string>
     <string name="pref_summary_calendar_lookahead">Kalenderereignisse bis zu %1s Tagen synchronisieren</string>
     <string name="activity_type_racquetball">Racquetball</string>
@@ -3236,7 +3236,7 @@
     <string name="menuitem_stress_segmented">Stress (segmentiert)</string>
     <string name="pref_deprecated_media_control_title">Veraltete Mediensteuerung</string>
     <string name="activity_type_canoeing">Kanufahren</string>
-    <string name="backup_restore_exporting_files_i_of_n">Exportiere Dateien... %1d von %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Exportiere Dateien... %1$d von %2$d</string>
     <string name="backup_restore_exporting_finishing">Export wird abgeschlossen…</string>
     <string name="backup_restore_import_complete">Import abgeschlossen</string>
     <string name="backup_restore_abort_title">Abbrechen</string>
@@ -3324,7 +3324,7 @@
     <string name="music_new_playlist">Neue Playlist</string>
     <string name="prefs_hrv_monitoring_title">HRV Überwachung</string>
     <string name="inactivity_warnings_minimum_steps_summary">Mindestanzahl an Schritten, welche während des definierten Zeitraums gegangen werden müssen</string>
-    <string name="backup_restore_importing_files_i_of_n">Importieren von Dateien... %1d von %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importieren von Dateien... %1$d von %2$d</string>
     <string name="first_start_overview_devices">Die Geräteansicht zeigt alle Geräte an, die Sie konfiguriert haben und gibt Zugriff auf gerätespezifische Funktionen wie detaillierte Diagramme, Einstellungen, Apps und Alarme.</string>
     <string name="first_start_get_started_title">Ersteinrichtung</string>
     <string name="first_start_permissions_desc">Gadgetbridge braucht für viele Berechtigungen, damit alle Funktionen funktionieren. Überprüfe die Berechtigungen und ihre Zwecke unten.</string>
@@ -3357,7 +3357,7 @@
     <string name="music_delete_from_playlist">Aus der Playlist löschen</string>
     <string name="music_add_to_playlist">Zur Playlist hinzufügen</string>
     <string name="permission_bluetooth_summary">Zu Bluetooth-Geräten verbinden</string>
-    <string name="backup_restore_warning_files">%1d Dateien konnten nicht wiederhergestellt werden:\n%2s</string>
+    <string name="backup_restore_warning_files">%1$d Dateien konnten nicht wiederhergestellt werden:\n%2$s</string>
     <string name="label_distance_trip_mph">Trip: %.1f mi</string>
     <string name="permission_contacts_summary">Kontakte an Gadgets senden</string>
     <string name="permission_bluetooth_scan_title">Bluetooth-Scan</string>
@@ -3418,7 +3418,7 @@
     <string name="devicetype_garmin_fenix_5x_plus">Garmin Fenix 5X Plus</string>
     <string name="devicetype_micompositionscale">Mi Body Composition Scale 2</string>
     <string name="devicetype_redmi_watch_5_active">Redmi Watch 5 Active</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
     <string name="devicetype_oppo_enco_air">Oppo Enco Air</string>
     <string name="devicetype_oppo_enco_air2">Oppo Enco Air2</string>
     <string name="redmi_buds_5_pro_equalizer_band_2k">2 kHz</string>
@@ -3562,7 +3562,7 @@
     <string name="vo2max_running">Laufen VO₂ Max</string>
     <string name="vo2max_cycling">Radfahren VO₂ Max</string>
     <string name="error_no_cycling_sensor_found">kein Fahrradsensor gefunden</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
     <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
     <string name="hrv_sdrr">HRV SDRR</string>
     <string name="activity_type_muay_thai">Muay thai</string>
@@ -3595,12 +3595,12 @@
     <string name="pairing_even_realities_g1_invalid_device">Fehlerhaftes G1 Gerät: %1$s.</string>
     <string name="activity_type_barbell">Langhantel</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %s auf dein %s zu installieren.\n \nDeine aktuelle Firmware ist %s\n \nDein Gerät wird nach dem Hochladen neustarten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %1$s auf dein %2$s zu installieren.\n \nDeine aktuelle Firmware ist %s\n \nDein Gerät wird nach dem Hochladen neustarten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="update_firmware_operation_check_failed">Firmware Überprüfung fehlgeschlagen</string>
     <string name="update_firmware_operation_check_in_progress">Überprüfe Firmware</string>
     <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="uploading">Lade hoch…</string>
-    <string name="gree_pair_info">Sie sind dabei, sich mit %s (%s) zu verbinden. Bitte geben Sie die Wi-Fi- und Hostserver-Informationen für die Kopplung ein. Weitere Informationen finden Sie auf der Website.</string>
+    <string name="gree_pair_info">Sie sind dabei, sich mit %1$s (%2$s) zu verbinden. Bitte geben Sie die Wi-Fi- und Hostserver-Informationen für die Kopplung ein. Weitere Informationen finden Sie auf der Website.</string>
     <string name="gree_pair_status_failure">Kopplung fehlgeschlagen: %s</string>
     <string name="copy_to_clipboard">Kopieren</string>
     <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
@@ -3684,7 +3684,7 @@
     <string name="left_right_balance">Gleichgewicht</string>
     <string name="pref_heart_rate_realtime_mode">Modus zur automatischen Pulsmessung in Echtzeit</string>
     <string name="workout_revolutions">Umdrehungen</string>
-    <string name="gree_pair_clipboard">Gerätename: %s\nMAC-Adresse: %s\nVerbindungsschlüssel: %s</string>
+    <string name="gree_pair_clipboard">Gerätename: %1$s\nMAC-Adresse: %2$s\nVerbindungsschlüssel: %3$s</string>
     <string name="pref_garmin_fake_oauth_warning">Aktiviere diese Einstellung nicht, wenn du die offizielle App verwenden oder die Smartwatch mit dem Internet verbinden möchtest. Nach dem Aktivieren kann ein Zurücksetzen auf Werkseinstellungen erforderlich sein, um die Uhr erneut zu authentifizieren.</string>
     <string name="gree_controller_host">Host</string>
     <string name="gree_pair_status_success">Kopplung erfolgreich.\n\nVerbindungsschlüssel: %s</string>
@@ -3728,7 +3728,7 @@
     <string name="pairing_even_realities_g1_select_next_lens">%1$s-Glas zur Kopplung ausgewählt. Es wurden mehrere Kandidaten für das %2$s-Glas gefunden. Bitte wähle das %2$s-Glas aus der Liste unten aus.</string>
     <string name="pairing_even_realities_g1_find_both_fail">Rechtes und linkes Glas konnten nicht gefunden werden. Bitte erneut scannen.</string>
     <string name="front_gear_shifts">Vorderrad-Schaltvorgänge</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="average_left_power_phase_peak">Durchschnittlicher Spitzenwert der Leistungsphase links</string>
     <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="average_power_sitting">Durchschnittliche Leistung (Sitzen)</string>
@@ -3963,7 +3963,7 @@
     <string name="pref_device_logs_summary">Protokollierung vom Gerät aktivieren</string>
     <string name="pref_device_logs_title">Geräteprotokolle</string>
     <string name="even_realities_frame_shape_G1A">G1A/Rund</string>
-    <string name="even_realities_frame_description">%1s %2s (%3s: %4s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">linke Linse</string>
     <string name="even_realities_right_lens">rechte Linse</string>
     <string name="even_realities_frame_shape_G1B">G1B/Eckig</string>
