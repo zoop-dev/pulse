@@ -767,7 +767,7 @@
     <string name="pref_summary_force_white_color_scheme">Útil si su reloj tiene manecillas oscuras</string>
     <string name="find_my_phone_notification">Encuentra mi teléfono</string>
     <string name="pref_title_vibration_strength">Intensidad de la vibración</string>
-    <string name="pref_title_relax_firmware_checks">Activa esto si quieres instalar un firmware no destinado a tu dispositivo (bajo tu propio riesgo)</string>
+    <string name="pref_title_relax_firmware_checks">Active esto si quiere instalar un firmware no destinado a su dispositivo (bajo su propio riesgo)</string>
     <string name="pref_summary_relax_firmware_checks">Relajar las comprobaciones de firmware</string>
     <string name="pref_title_allow_high_mtu">Permitir MTU alta</string>
     <string name="pref_summary_custom_deviceicon">Mostrar un icono de notificación de Android específico del dispositivo en lugar del icono de Gadgetbridge cuando esté conectado</string>
@@ -1190,8 +1190,8 @@
     <string name="getting_heart_rate">Medición</string>
     <string name="blood_pressure">Presión arterial</string>
     <string name="pref_theme_black_background">Usar fondo negro en el tema oscuro</string>
-    <string name="pref_summary_huami_force_new_protocol">Activar si tu dispositivo ya no se conecta después de una actualización de firmware</string>
-    <string name="pref_title_huami_force_new_protocol">Nuevo protocolo de autenticación</string>
+    <string name="pref_summary_huami_force_new_protocol">Actívelo si el dispositivo ya no se conecta después de una actualización de firmware</string>
+    <string name="pref_title_huami_force_new_protocol">Protocolo de autenticación nuevo</string>
     <string name="menuitem_flashlight">Linterna</string>
     <string name="enable_vibrations_summary">Vibración para llamadas, mensajes, notificaciones y más</string>
     <string name="prefs_vibration_enable">Activar vibración</string>
@@ -2171,7 +2171,7 @@
     <string name="fw_upgrade_notice_amazfitbip3pro">Está a punto de instalar el firmware %s en su Amazfit Bip 3 Pro.\n\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Su reloj se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">Está a punto de instalar el firmware %s en su Amazfit Cheetah Pro.\n\nSu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
-    <string name="fw_upgrade_notice_zepp_os">Está a punto de instalar el firmware %s en su %s.\n\nSu reloj se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
+    <string name="fw_upgrade_notice_zepp_os">Está a punto de instalar el firmware %1$s en su %2$s.\n\nSu reloj se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="info_menu_structure_set">Estructura del menú JSON en GB</string>
     <string name="error_invalid_menu_structure">Estructura de menú JSON no válida</string>
     <string name="button_open_menu_companion">Abrir el menú de la aplicación complementaria</string>
@@ -3209,7 +3209,7 @@
     <string name="backup_restore_export_complete">Exportación finalizada</string>
     <string name="backup_restore_importing_database">Importando base de datos…</string>
     <string name="backup_restore_importing_preferences">Importando preferencias…</string>
-    <string name="backup_restore_warning_files">%1d archivos no pudieron ser restaurados: \n%2s</string>
+    <string name="backup_restore_warning_files">No se pudieron restaurar %1$d archivos: \n%2$s</string>
     <string name="backup_restore_import_complete">Importación finalizada</string>
     <string name="backup_restore_error_export">Falló la exportación a zip</string>
     <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
@@ -3488,7 +3488,7 @@
     <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
     <string name="battery_allow_pass_through">Permitir el paso de la batería</string>
     <string name="gree_pair_status_success">Emparejamiento exitoso.\n\nClave de vinculación: %s</string>
-    <string name="fw_upgrade_notice_huawei">Está a punto de cargar el firmware %s a su %s.\n\nSu firmware actual es %s\n\nTras la carga, su dispositivo se reiniciará.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!</string>
+    <string name="fw_upgrade_notice_huawei">Está a punto de cargar el firmware %1$s a su %2$s.\n\nSu firmware actual es %s\n\nTras la carga, su dispositivo se reiniciará.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!</string>
     <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
     <string name="pairing_even_realities_g1_working">Emparejando con %1s...</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
@@ -3629,7 +3629,7 @@
     <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
     <string name="prefs_active_noise_cancelling_level_ultra">Ultra</string>
     <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
-    <string name="range_percentage_float">%.1f %% - %.1f %%</string>
+    <string name="range_percentage_float">%1$.1f %% - %2$.1f %%</string>
     <string name="maps_settings">Configuración de mapas</string>
     <string name="devicetype_honor_watch4">Honor Watch 4 (Pro)</string>
     <string name="open_source_licenses">Licencias</string>
@@ -3784,4 +3784,8 @@
     <string name="even_realities_left_lens">Lente izquierda</string>
     <string name="prefs_title_gatt_settings">Perfil de atributo genérico</string>
     <string name="pref_device_version">Versión del dispositivo</string>
+    <string name="pairing_even_realities_g1_final_connect">Configurando dispositivos; espere…</string>
+    <string name="pref_watch_face">Esfera</string>
+    <string name="interval_twenty_minutes">cada 20 minutos</string>
+    <string name="connection_priority_low_power_title">Solicitar baja potencia</string>
 </resources>
