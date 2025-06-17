@@ -8,12 +8,10 @@ import android.os.Parcel;
 import android.text.InputFilter;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SeekBarPreference;
-import androidx.preference.SwitchPreferenceCompat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -39,7 +38,7 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
         this.device = device;
     }
 
-    public static final Creator<EarFunSettingsCustomizer> CREATOR = new Creator<EarFunSettingsCustomizer>() {
+    public static final Creator<EarFunSettingsCustomizer> CREATOR = new Creator<>() {
         @Override
         public EarFunSettingsCustomizer createFromParcel(final Parcel in) {
             final GBDevice device = in.readParcelable(EarFunSettingsCustomizer.class.getClassLoader());
@@ -60,7 +59,7 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
 
     @Override
     public void customizeSettings(DeviceSpecificSettingsHandler handler, Prefs prefs, String rootKey) {
-        addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_DEVICE_NAME, R.string.prefs_device_name, R.string.earfun_change_device_name_confirm_message);
+        DeviceSettingsUtils.addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_DEVICE_NAME, R.string.earfun_change_device_name_confirm_message);
         handler.addPreferenceHandlerFor(PREF_EARFUN_AMBIENT_SOUND_CONTROL);
         handler.addPreferenceHandlerFor(PREF_EARFUN_TRANSPARENCY_MODE);
         handler.addPreferenceHandlerFor(PREF_EARFUN_ANC_MODE);
@@ -87,12 +86,12 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
         handler.addPreferenceHandlerFor(PREF_EARFUN_EQUALIZER_BAND_16000);
         handler.addPreferenceHandlerFor(PREF_EARFUN_IN_EAR_DETECTION_MODE);
         handler.addPreferenceHandlerFor(PREF_EARFUN_TOUCH_MODE);
-        addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_CONNECT_TWO_DEVICES_MODE, R.string.earfun_connect_two_devices, R.string.earfun_reboot_confirm_message);
-        addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_ADVANCED_AUDIO_MODE, R.string.earfun_advanced_audio_mode, R.string.earfun_reboot_confirm_message);
-        addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_MICROPHONE_MODE, R.string.earfun_microphone_mode, R.string.earfun_reboot_confirm_message);
+        DeviceSettingsUtils.addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_CONNECT_TWO_DEVICES_MODE, R.string.earfun_reboot_confirm_message);
+        DeviceSettingsUtils.addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_ADVANCED_AUDIO_MODE, R.string.earfun_reboot_confirm_message);
+        DeviceSettingsUtils.addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_MICROPHONE_MODE, R.string.earfun_reboot_confirm_message);
         handler.addPreferenceHandlerFor(PREF_EARFUN_FIND_DEVICE);
         handler.addPreferenceHandlerFor(PREF_EARFUN_VOICE_PROMPT_VOLUME);
-        addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_AUDIO_CODEC, R.string.audio_codec, R.string.earfun_reboot_confirm_message);
+        DeviceSettingsUtils.addConfirmablePreferenceHandlerFor(handler, PREF_EARFUN_AUDIO_CODEC, R.string.earfun_reboot_confirm_message);
 
         EditTextPreference editTextDeviceName = handler.findPreference(PREF_EARFUN_DEVICE_NAME);
         if (editTextDeviceName != null) {
@@ -100,42 +99,6 @@ public class EarFunSettingsCustomizer implements DeviceSpecificSettingsCustomize
                 editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
             });
             editTextDeviceName.setText(device.getName());
-        }
-    }
-
-    protected void addConfirmablePreferenceHandlerFor(DeviceSpecificSettingsHandler handler, final String preferenceKey, int alertPreferenceNAme, int alertMessage) {
-        Preference pref = handler.findPreference(preferenceKey);
-        Context context = handler.getContext();
-        if (pref != null) {
-            pref.setOnPreferenceChangeListener((preference, newValue) -> {
-                String preferenceName = context.getString(alertPreferenceNAme);
-                String title = context.getString(R.string.earfun_change_confirm_title, preferenceName);
-                String message = context.getString(alertMessage);
-
-                new AlertDialog.Builder(context)
-                        .setTitle(title)
-                        .setMessage(message)
-                        .setPositiveButton(handler.getContext().getString(R.string.ok), (dialog, which) -> {
-                            if (pref instanceof EditTextPreference) {
-                                ((EditTextPreference) pref).setText(newValue.toString());
-                            }
-                            if (pref instanceof ListPreference) {
-                                ((ListPreference) pref).setValue(newValue.toString());
-                            }
-                            if (pref instanceof SwitchPreferenceCompat) {
-                                ((SwitchPreferenceCompat) pref).setChecked((Boolean) newValue);
-                            } else {
-                                LOG.error("unsupported preference type for confirmable handler: {}", pref);
-                            }
-                            handler.notifyPreferenceChanged(preferenceKey);
-                        })
-                        .setNegativeButton(handler.getContext().getString(R.string.Cancel), (dialog, which) -> {
-                            dialog.dismiss();
-                        })
-                        .create()
-                        .show();
-                return false;
-            });
         }
     }
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="auto_standby_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_auto_standby_summary"
+        android:title="@string/pref_aawireless_auto_standby_enabled"
+        app:icon="@drawable/ic_activity_sleep" />
+
+    <ListPreference
+        android:defaultValue=""
+        android:dependency="auto_standby_enabled"
+        android:entries="@array/empty_array"
+        android:entryValues="@array/empty_array"
+        android:key="auto_standby_device"
+        android:title="@string/pref_aawireless_auto_standby_device"
+        app:icon="@drawable/ic_devices_other"
+        app:useSimpleSummaryProvider="true" />
+
+</androidx.preference.PreferenceScreen>

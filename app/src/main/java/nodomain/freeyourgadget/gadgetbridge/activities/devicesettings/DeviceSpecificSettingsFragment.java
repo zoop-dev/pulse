@@ -38,12 +38,18 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst.PR
 import static nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants.PREF_MOYOUNG_DEVICE_VERSION;
 import static nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants.PREF_MOYOUNG_WATCH_FACE;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
@@ -122,6 +128,42 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         final Bundle args = getArguments() != null ? getArguments() : new Bundle();
         args.putParcelable("device", device);
         setArguments(args);
+    }
+
+    private final BroadcastReceiver mDeviceUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            if (GBDevice.ACTION_DEVICE_CHANGED.equals(intent.getAction())) {
+                final GBDevice changedDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+                if (changedDevice != null && changedDevice.equals(device)) {
+                    device = changedDevice; // update the state
+                    if (deviceSpecificSettingsCustomizer != null) {
+                        LOG.debug("{} changed, notifying customizer", changedDevice);
+                        deviceSpecificSettingsCustomizer.onDeviceChanged(DeviceSpecificSettingsFragment.this);
+                    }
+                }
+            }
+        }
+    };
+
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull final LayoutInflater inflater,
+                             final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        final IntentFilter commandFilter = new IntentFilter();
+        commandFilter.addAction(GBDevice.ACTION_DEVICE_CHANGED);
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mDeviceUpdateReceiver, commandFilter);
+
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mDeviceUpdateReceiver);
+        super.onDestroyView();
     }
 
     @Override

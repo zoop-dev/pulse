@@ -95,7 +95,7 @@ public final class BtBRQueue {
         }
     };
 
-    public BtBRQueue(BluetoothAdapter btAdapter, GBDevice gbDevice, Context context, SocketCallback socketCallback, UUID supportedService, int bufferSize) {
+    public BtBRQueue(BluetoothAdapter btAdapter, GBDevice gbDevice, Context context, SocketCallback socketCallback, @NonNull UUID supportedService, int bufferSize) {
         mBtAdapter = btAdapter;
         mGbDevice = gbDevice;
         mContext = context;

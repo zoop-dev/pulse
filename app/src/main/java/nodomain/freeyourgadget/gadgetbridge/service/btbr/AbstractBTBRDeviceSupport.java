@@ -50,8 +50,13 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     @Override
     public boolean connect() {
+        final UUID supportedService = getSupportedService();
+        if (supportedService == null) {
+            throw new NullPointerException("No supported service UUID specified");
+        }
+
         if (mQueue == null) {
-            mQueue = new BtBRQueue(getBluetoothAdapter(), getDevice(), getContext(), this, getSupportedService(), getBufferSize());
+            mQueue = new BtBRQueue(getBluetoothAdapter(), getDevice(), getContext(), this, supportedService, getBufferSize());
         }
         return mQueue.connect();
     }

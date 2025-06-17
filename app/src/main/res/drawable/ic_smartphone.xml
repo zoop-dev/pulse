@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:tint="?attr/colorControlNormal"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+
+    <!--
+        Licensed under the public domain.
+        https://www.svgrepo.com/svg/478225/smartphone-material
+    -->
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M355.3,0H156.69C125.38,0 100,25.38 100,56.69v398.63C100,486.63 125.38,512 156.69,512h198.61C386.61,512 412,486.63 412,455.31V56.69C412,25.38 386.61,0 355.3,0zM256,483.98c-8.09,0 -14.67,-6.56 -14.67,-14.67c0,-8.09 6.58,-14.66 14.67,-14.66s14.67,6.56 14.67,14.66C270.67,477.42 264.09,483.98 256,483.98zM364,424H148V64h216V424z" />
+
+</vector>

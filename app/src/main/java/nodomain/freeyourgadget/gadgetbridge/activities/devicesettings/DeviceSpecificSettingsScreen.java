@@ -21,6 +21,7 @@ import androidx.annotation.XmlRes;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public enum DeviceSpecificSettingsScreen {
+    ADVANCED_SETTINGS("pref_screen_advanced_settings", R.xml.devicesettings_root_advanced_settings),
     ACTIVITY_INFO("pref_screen_activity_info", R.xml.devicesettings_root_activity_info),
     AUDIO("pref_screen_audio", R.xml.devicesettings_root_audio),
     AUTHENTICATION("pref_screen_authentication", R.xml.devicesettings_root_authentication),

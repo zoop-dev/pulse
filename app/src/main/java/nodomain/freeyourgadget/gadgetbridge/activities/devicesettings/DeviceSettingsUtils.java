@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.devicesettings;
 
+import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
@@ -24,6 +25,9 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
+import androidx.preference.SwitchPreferenceCompat;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -240,5 +244,41 @@ public final class DeviceSettingsUtils {
             }
             return "";
         }
+    }
+
+    public static void addConfirmablePreferenceHandlerFor(final DeviceSpecificSettingsHandler handler,
+                                                          final String preferenceKey,
+                                                          final int alertMessage) {
+        final Preference pref = handler.findPreference(preferenceKey);
+        if (pref == null) {
+            return;
+        }
+        pref.setOnPreferenceChangeListener((preference, newValue) -> {
+            final Context context = handler.getContext();
+            final CharSequence preferenceName = pref.getTitle();
+            final String title = context.getString(R.string.earfun_change_confirm_title, preferenceName);
+            final String message = context.getString(alertMessage);
+
+            new MaterialAlertDialogBuilder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(handler.getContext().getString(R.string.ok), (dialog, which) -> {
+                        if (pref instanceof EditTextPreference) {
+                            ((EditTextPreference) pref).setText(newValue.toString());
+                        } else if (pref instanceof ListPreference) {
+                            ((ListPreference) pref).setValue(newValue.toString());
+                        } else if (pref instanceof SwitchPreferenceCompat) {
+                            ((SwitchPreferenceCompat) pref).setChecked((Boolean) newValue);
+                        } else {
+                            LOG.error("Unsupported preference type {} for confirmable handler: {}", pref.getClass(), pref);
+                            return;
+                        }
+                        handler.notifyPreferenceChanged(preferenceKey);
+                    })
+                    .setNegativeButton(handler.getContext().getString(R.string.Cancel), (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
+            return false;
+        });
     }
 }

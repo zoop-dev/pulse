@@ -29,6 +29,7 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.aawireless.AAWirelessCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.bandwpseries.BandWPSeriesDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSCoordinator;
@@ -576,6 +577,7 @@ public enum DeviceType {
     GARMIN_VIVOSMART_5(GarminVivosmart5Coordinator.class),
     GARMIN_VIVOSPORT(GarminVivosportCoordinator.class),
     GREE_AC(GreeAcCoordinator.class),
+    AAWIRELESS(AAWirelessCoordinator.class),
     VIBRATISSIMO(VibratissimoCoordinator.class),
     SONY_SWR12(SonySWR12DeviceCoordinator.class),
     LIVEVIEW(LiveviewCoordinator.class),

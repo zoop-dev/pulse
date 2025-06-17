@@ -325,6 +325,12 @@ public class DeviceSettingsPreferenceConst {
     public static final String WIFI_HOTSPOT_STOP = "wifi_hotspot_stop";
     public static final String WIFI_HOTSPOT_STATUS = "wifi_hotspot_status";
 
+    public static final String PREF_WIFI_FREQUENCY = "wifi_frequency";
+    public static final String PREF_WIFI_CHANNEL_2_4 = "wifi_channel_2_4";
+    public static final String PREF_WIFI_CHANNEL_5 = "wifi_channel_5";
+
+    public static final String PREF_COUNTRY = "country";
+
     public static final String PREF_APP_LOGS_START = "pref_app_logs_start";
     public static final String PREF_APP_LOGS_STOP = "pref_app_logs_stop";
     public static final String PREF_DEVICE_LOGS_TOGGLE = "device_logs_enabled";

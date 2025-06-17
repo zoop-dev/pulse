@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_smartphone"
+        android:key="screen_paired_phones"
+        android:persistent="false"
+        android:title="@string/paired_phones">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="prefer_last_connected"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_aawireless_prefer_last"
+            app:icon="@drawable/ic_bluetooth_connected" />
+
+        <PreferenceCategory
+            android:key="paired_phones_header"
+            android:title="@string/paired_phones"
+            app:iconSpaceReserved="false">
+
+            <Preference
+                android:key="no_paired_phones"
+                android:summary="@string/no_paired_phones"
+                app:iconSpaceReserved="false" />
+        </PreferenceCategory>
+
+    </PreferenceScreen>
+
+</androidx.preference.PreferenceScreen>

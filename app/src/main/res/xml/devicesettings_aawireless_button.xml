@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_touch"
+        android:key="screen_button_actions"
+        android:persistent="false"
+        android:summary="@string/mi2_prefs_button_actions_summary"
+        android:title="@string/mi2_prefs_button_actions">
+
+        <ListPreference
+            android:defaultValue="none"
+            android:entries="@array/aawireless_click_names"
+            android:entryValues="@array/aawireless_click_values"
+            android:icon="@drawable/ic_filter_1"
+            android:key="button_mode_single_click"
+            android:title="@string/single_click"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:defaultValue="none"
+            android:entries="@array/aawireless_click_names"
+            android:entryValues="@array/aawireless_click_values"
+            android:icon="@drawable/ic_filter_2"
+            android:key="button_mode_double_click"
+            android:title="@string/double_click"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            android:enabled="false"
+            android:icon="@drawable/ic_horizontal_rule"
+            android:key="button_mode_long_press_2s"
+            android:shouldDisableView="false"
+            android:summary="@string/pairing_mode"
+            android:title="@string/long_press_2_seconds" />
+
+        <Preference
+            android:enabled="false"
+            android:icon="@drawable/ic_horizontal_rule"
+            android:key="button_mode_long_press_10s"
+            android:shouldDisableView="false"
+            android:summary="@string/factory_reset"
+            android:title="@string/long_press_10_seconds" />
+    </PreferenceScreen>
+
+</androidx.preference.PreferenceScreen>

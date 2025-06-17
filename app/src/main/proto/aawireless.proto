@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package aawireless;
+
+option java_package = "nodomain.freeyourgadget.gadgetbridge.proto.aawireless";
+option java_outer_classname = "AAWirelessProto";
+
+message Status {
+  optional string macAddress = 1;
+  optional string firmwareVersion = 2;
+  optional Settings settings = 3;
+  optional CarInfo carInfo = 4;
+  optional string hardwareModel = 5;
+  repeated Phone pairedPhone = 11;
+}
+
+message Phone {
+  optional string macAddress = 1;
+  optional string name = 2;
+  optional uint32 position = 3; // 0,1,2...
+  optional bool current = 4; // 0/1 - current device? (might not be the connected one)
+  optional uint32 unk5 = 5; // 0
+}
+
+message PhonePosition {
+  optional string macAddress = 1;
+  optional uint32 position = 2;
+}
+
+message CarInfo {
+}
+
+enum WiFiFrequency {
+  FREQ_5_GHZ = 0;
+  FREQ_2_4_GHZ = 1;
+}
+
+message Settings {
+  optional uint32 unk1 = 1; // 0
+  optional uint32 unk2 = 2; // 0
+  optional bool passthrough = 3;
+  optional bool vagCrashFix = 4;
+  optional uint32 dpi = 5; // [0,300]
+  optional bool removeTapRestriction = 6;
+  optional bool developerMode = 7;
+  optional bool disableMediaSink = 8;
+  optional uint32 unk9 = 9; // 0
+  optional WiFiFrequency wifiFrequency = 10;
+  optional bool autoVideoFocus = 11;
+  optional uint32 unk12 = 12; // 20000
+  optional uint32 unk13 = 13; // 0
+  optional string unk14 = 14; // ""
+  optional string unk15 = 15; // ""
+  optional uint32 wifiChannel = 16;
+  optional uint32 unk17 = 17; // 0
+  optional string country = 18; // 2-letter
+  optional bool preferLastConnectedPhone = 19;
+  optional bool disableTtsSink = 20;
+  optional bool dongleMode = 21;
+  optional string autoStandbyDevice = 22; // mac address
+  optional uint32 unk23 = 23; // 0
+  optional uint32 unk24 = 24; // 0
+  optional bool startFix = 25;
+  // 26 is some byte array?
+  optional uint32 unk27 = 27; // 0
+  optional uint32 unk28 = 28; // 0
+  optional uint32 unk29 = 29; // 0
+  optional uint32 unk30 = 30; // 0
+  optional uint64 audioStutterFix = 31; // off 18446744073709551615, low 50, high 100, unlimited 4096
+  optional uint32 unk32 = 32; // 0
+  optional uint32 unk33 = 33; // 1
+  optional uint32 unk34 = 34; // 0
+  optional ButtonsConfig buttonsConfig = 35;
+  optional bool autoStandbyEnabled = 37;
+}
+
+message ButtonsConfig {
+  optional ButtonMode single = 1;
+  optional ButtonMode double = 2;
+  optional ButtonMode unk4 = 4; // { 1: "" }
+}
+
+message ButtonMode {
+  // only the desired one is set, nothing set for no action
+  optional string nextPhone = 2; // ""
+  optional Phone selectPhone = 3; // only mac address
+  optional string standbyOnOff = 4; // ""
+}
+
+message Ack {
+  optional uint32 status = 1; // 0 for success?
+  optional string message = 2; // "" - error msg?
+}

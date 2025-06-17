@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:tint="?attr/colorControlNormal"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+
+    <!--
+        Licensed under public domain
+        https://www.svgrepo.com/svg/478147/usb-free-material
+    -->
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M10.46,295.6c-14.02,14.02 -13.93,36.91 0.18,51.02l154.73,154.74c6.86,6.86 15.98,10.64 25.68,10.64h0c9.59,0 18.59,-3.71 25.34,-10.46L407.64,310.29L201.7,104.36L10.46,295.6zM100.48,296.98c-3.31,0 -6.42,-1.29 -8.76,-3.63l-1.78,-1.78c-2.34,-2.34 -3.63,-5.45 -3.63,-8.76c0,-3.31 1.29,-6.43 3.63,-8.77l97.64,-97.64c2.34,-2.34 5.45,-3.63 8.77,-3.63c3.31,0 6.43,1.29 8.77,3.63l1.77,1.77c4.83,4.83 4.83,12.7 0,17.53l-97.64,97.64C106.9,295.69 103.79,296.98 100.48,296.98z" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M508.68,153.91L358.09,3.32C355.95,1.18 353.11,0 350.1,0c-3.02,0 -5.86,1.18 -8,3.32L240.69,104.73l23.6,23.59l85.81,-85.81l119.38,119.38l-85.81,85.81l23.6,23.59l101.41,-101.41c2.13,-2.13 3.31,-4.96 3.32,-7.97C512.01,158.91 510.83,156.06 508.68,153.91z" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M335.78,156.91l-34.38,-34.38l34.16,-34.16l34.38,34.38z" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M423.56,176.05l-34.15,-34.15l-34.16,34.15l34.16,34.16z" />
+
+</vector>

@@ -24,7 +24,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
@@ -56,7 +55,9 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment;
+import nodomain.freeyourgadget.gadgetbridge.adapter.SimpleIconListAdapter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.RunnableListIconItem;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -577,23 +578,50 @@ public class GarminRealtimeSettingsFragment extends AbstractPreferenceFragment {
                         break;
                     case 15: // sortable + delete
                         // Add all sortable items and then continue
-                        final String moveUpStr = activity.getString(R.string.widget_move_up);
-                        final String moveDownStr = activity.getString(R.string.widget_move_down);
-                        final String deleteStr = activity.getString(R.string.appmananger_app_delete);
-
                         for (int i = 0; i < entry.getSortOptions().getEntriesCount(); i++) {
                             final GdiSettingsService.SortEntry sortEntry = entry.getSortOptions().getEntries(i);
-                            final List<String> sortableOptions = new ArrayList<>(3);
+                            final Preference sortPref = new Preference(activity);
+                            final int iFinal = i;
+
+                            final List<RunnableListIconItem> sortableOptions = new ArrayList<>(3);
                             if (i > 0) {
-                                sortableOptions.add(moveUpStr);
+                                sortableOptions.add(new RunnableListIconItem(activity.getString(R.string.widget_move_up), R.drawable.ic_arrow_upward, () -> {
+                                    sortPref.setEnabled(false);
+                                    sendChangeRequest(
+                                            GdiSettingsService.ChangeRequest.newBuilder()
+                                                    .setScreenId(screenId)
+                                                    .setEntryId(sortEntry.getId())
+                                                    .setPosition(GdiSettingsService.ChangeRequest.Position.newBuilder()
+                                                            .setIndex(iFinal - 1)
+                                                    )
+                                    );
+                                }));
                             }
                             if (i < entry.getSortOptions().getEntriesCount() - 1) {
-                                sortableOptions.add(moveDownStr);
+                                sortableOptions.add(new RunnableListIconItem(activity.getString(R.string.widget_move_down), R.drawable.ic_arrow_downward, () -> {
+                                    sortPref.setEnabled(false);
+                                    sendChangeRequest(
+                                            GdiSettingsService.ChangeRequest.newBuilder()
+                                                    .setScreenId(screenId)
+                                                    .setEntryId(sortEntry.getId())
+                                                    .setPosition(GdiSettingsService.ChangeRequest.Position.newBuilder()
+                                                            .setIndex(iFinal + 1)
+                                                    )
+                                    );
+                                }));
                             }
-                            sortableOptions.add(deleteStr);
-                            final ArrayAdapter<String> sortOptionsAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, sortableOptions);
-                            final int iFinal = i;
-                            final Preference sortPref = new Preference(activity);
+                            sortableOptions.add(new RunnableListIconItem(activity.getString(R.string.appmananger_app_delete), R.drawable.ic_delete, () -> {
+                                sortPref.setEnabled(false);
+                                sendChangeRequest(
+                                        GdiSettingsService.ChangeRequest.newBuilder()
+                                                .setScreenId(screenId)
+                                                .setEntryId(sortEntry.getId())
+                                                .setPosition(GdiSettingsService.ChangeRequest.Position.newBuilder()
+                                                        .setDelete(true)
+                                                )
+                                );
+                            }));
+                            final SimpleIconListAdapter sortOptionsAdapter = new SimpleIconListAdapter(activity, sortableOptions);
                             sortPref.setTitle(sortEntry.getTitle().getText());
                             sortPref.setPersistent(false);
                             sortPref.setIconSpaceReserved(false);
@@ -601,40 +629,8 @@ public class GarminRealtimeSettingsFragment extends AbstractPreferenceFragment {
                             sortPref.setOnPreferenceClickListener(preference -> {
                                 new MaterialAlertDialogBuilder(activity)
                                         .setTitle(sortPref.getTitle())
-                                        .setAdapter(sortOptionsAdapter, (dialogInterface, j) -> {
-                                            final String option = sortableOptions.get(j);
-                                            int moveOffset = 0;
-                                            if (option.equals(moveUpStr)) {
-                                                moveOffset = -1;
-                                            } else if (option.equals(moveDownStr)) {
-                                                moveOffset = 1;
-                                            }
-
-                                            if (moveOffset != 0) {
-                                                sortPref.setEnabled(false);
-                                                sendChangeRequest(
-                                                        GdiSettingsService.ChangeRequest.newBuilder()
-                                                                .setScreenId(screenId)
-                                                                .setEntryId(sortEntry.getId())
-                                                                .setPosition(GdiSettingsService.ChangeRequest.Position.newBuilder()
-                                                                        .setIndex(iFinal + moveOffset)
-                                                                )
-                                                );
-                                                return;
-                                            }
-
-                                            if (option.equals(deleteStr)) {
-                                                sortPref.setEnabled(false);
-                                                sendChangeRequest(
-                                                        GdiSettingsService.ChangeRequest.newBuilder()
-                                                                .setScreenId(screenId)
-                                                                .setEntryId(sortEntry.getId())
-                                                                .setPosition(GdiSettingsService.ChangeRequest.Position.newBuilder()
-                                                                        .setDelete(true)
-                                                                )
-                                                );
-                                            }
-                                        }).setNegativeButton(android.R.string.cancel, null)
+                                        .setAdapter(sortOptionsAdapter, (dialogInterface, j) -> sortableOptions.get(j).getAction().run())
+                                        .setNegativeButton(android.R.string.cancel, null)
                                         .create().show();
                                 return true;
                             });

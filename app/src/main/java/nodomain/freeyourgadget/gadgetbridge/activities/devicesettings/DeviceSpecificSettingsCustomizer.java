@@ -49,4 +49,13 @@ public interface DeviceSpecificSettingsCustomizer extends Parcelable {
      * Keys of preferences which should print its values as a summary below the preference name.
      */
     Set<String> getPreferenceKeysWithSummary();
+
+    /**
+     * Called when the associated {@link nodomain.freeyourgadget.gadgetbridge.impl.GBDevice} changes.
+     *
+     * @param handler    the {@link DeviceSpecificSettingsHandler}
+     */
+    default void onDeviceChanged(final DeviceSpecificSettingsHandler handler) {
+        // Nothing to do by default
+    }
 }

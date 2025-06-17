@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="dongle_mode"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_dongle_mode_summary"
+        android:title="@string/pref_aawireless_dongle_mode_title"
+        app:icon="@drawable/ic_usb_dongle" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="passthrough"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_passthrough_summary"
+        android:title="@string/pref_aawireless_passthrough_title"
+        app:disableDependentsState="true"
+        app:icon="@drawable/ic_arrow_depth" />
+
+    <ListPreference
+        android:defaultValue="off"
+        android:dependency="passthrough"
+        android:entries="@array/aawireless_audio_stutter_fix_names"
+        android:entryValues="@array/aawireless_audio_stutter_fix_values"
+        android:key="audio_stutter_fix"
+        android:summary="@string/pref_aawireless_audio_stutter_fix_summary"
+        android:title="@string/pref_aawireless_audio_stutter_fix_title"
+        app:icon="@drawable/ic_volume_up" />
+
+    <EditTextPreference
+        android:defaultValue="0"
+        android:dependency="passthrough"
+        android:key="dpi"
+        android:summary="@string/pref_aawireless_dpi_summary"
+        android:title="@string/dpi_dots_per_inch"
+        app:icon="@drawable/ic_font_size" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="disable_media_sink"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_disable_media_sink_summary"
+        android:title="@string/pref_aawireless_disable_media_sink_title"
+        app:icon="@drawable/ic_music_note" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="disable_tts_sink"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_disable_tts_sink_summary"
+        android:title="@string/pref_aawireless_disable_tts_sink_title"
+        app:icon="@drawable/ic_voice" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="remove_tap_restriction"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_remove_tap_restriction_summary"
+        android:title="@string/pref_aawireless_remove_tap_restriction_title"
+        app:icon="@drawable/ic_touch" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="vag_crash_fix"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_vag_crash_fix_summary"
+        android:title="@string/pref_aawireless_vag_crash_fix_title"
+        app:icon="@drawable/ic_extension" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="start_fix"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_start_fix_summary"
+        android:title="@string/pref_aawireless_start_fix_title"
+        app:icon="@drawable/ic_extension" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="developer_mode"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_developer_mode_summary"
+        android:title="@string/developer_mode"
+        app:icon="@drawable/ic_developer_mode" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="passthrough"
+        android:key="auto_video_focus"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_aawireless_auto_video_focus_summary"
+        android:title="@string/pref_aawireless_auto_video_focus_title"
+        app:icon="@drawable/ic_focus" />
+
+</androidx.preference.PreferenceScreen>
