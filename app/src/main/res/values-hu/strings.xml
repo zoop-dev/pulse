@@ -3912,4 +3912,6 @@
     <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
     <string name="pref_watch_face">Számlap</string>
     <string name="pref_device_version">Eszközverzió</string>
+    <string name="zepp_os_sun_moon_utc_summary">Engedélyezze ezt, ha az órája rossz értékeket mutat a nap- és holdidőhöz</string>
+    <string name="zepp_os_sun_moon_utc_title">Nap/hold időpontok küldése UTC-ben</string>
 </resources>
