@@ -1232,7 +1232,7 @@
     <string name="fossil_hr_new_action_cancel">iptal</string>
     <string name="fossil_hr_edit_action">Eylemi düzenle</string>
     <string name="fossil_hr_edit_action_delete">sil</string>
-    <string name="fossil_hr_commute_actions_explanation">Burada yapılandırılan eylemler, saatinizdeki İşe Gidip Gelme uygulamasında görünecektir. Bu eylemlerin ürettiği amaçların nasıl ele alınacağı hakkında bilgi için wiki sayfasını okuyun.</string>
+    <string name="fossil_hr_commute_actions_explanation">Burada yapılandırılan eylemler saatinizdeki işe gidip gelme uygulamasında görünecektir. Bu eylemler tarafından üretilen isteklerin nasıl ele alınacağı hakkında bilgi için viki\'yi okuyun.</string>
     <string name="qhybrid_calibration_100_steps">100 adım</string>
     <string name="qhybrid_calibration_10_steps">10 adım</string>
     <string name="qhybrid_calibration_1_step">1 adım</string>
@@ -1248,7 +1248,7 @@
     <string name="notification_channel_low_battery_name">Düşük pil</string>
     <string name="notification_channel_transfer_name">Veri aktarımı</string>
     <string name="qhybrid_pref_summary_external_intents">Diğer Android uygulamalarının dosya yüklemesine/üzerine yazmasına izin verir</string>
-    <string name="qhybrid_pref_title_external_intents">Tehlikeli harici amaçlara izin ver</string>
+    <string name="qhybrid_pref_title_external_intents">Tehlikeli dış isteklere izin verin</string>
     <string name="pref_summary_developer_settings">Geliştiriciler tarafından kullanılan ayarlar ve işlevler</string>
     <string name="pref_title_developer_settings">Geliştirici ayarları</string>
     <string name="qhybrid_pref_summary_actions">İşe Gidip Gelme uygulaması için eylemler</string>
@@ -1679,8 +1679,8 @@
     <string name="prefs_seamless_connection_switch_summary">Kulaklıkları eşleştirilen aygıtlar arasında otomatik olarak değiştirir</string>
     <string name="prefs_ambient_volume_right">Ortam Ses Seviyesi Sağ</string>
     <string name="pref_title_banglejs_text_bitmap">Bit Eşlem Olarak Metin</string>
-    <string name="pref_summary_device_intents">Bangle.js saat uygulamalarının Android Amaçları göndermesine ve Android\'deki diğer uygulamaların (Tasker gibi) com.banglejs.uart.tx Amacı ile Bangle.js\'ye veri göndermesine izin ver. Arka planda çalışmak için diğer uygulamalar üzerinde görüntüleme izni gerekir.</string>
-    <string name="pref_title_device_intents">Amaçlara İzin Ver</string>
+    <string name="pref_summary_device_intents">Bangle.js saat uygulamalarının Android istekleri göndermesine ve Android\'deki diğer uygulamaların (Tasker gibi) com.banglejs.uart.tx isteği ile Bangle.js\'ye veri göndermesine izin ver. Arka planda çalışmak için diğer uygulamalar üzerinde görüntüleme izni gerekir.</string>
+    <string name="pref_title_device_intents">İsteklere İzin Ver</string>
     <string name="pref_summary_device_internet_access">Bu aygıttaki uygulamaların internete erişmesine izin ver</string>
     <string name="pref_summary_banglejs_text_bitmap">Bir sözcük saatin yazı tipi kullanılarak görüntülenemiyorsa, onu Gadgetbridge\'de bir bit eşleme dönüştür ve bit eşlemi saatte görüntüle</string>
     <string name="pref_title_device_internet_access">İnternet Erişimine İzin Ver</string>
@@ -1806,15 +1806,7 @@
     <string name="prefs_hourly_chime_summary">Saat, saatte bir kez bip sesi çıkaracak</string>
     <string name="step_streaks_achievements_sharing_message">Günlük adım başarılarım!</string>
     <string name="step_streaks_achievements_sharing_title">Adım Başarıları</string>
-    <string name="permission_display_over_other_apps">%1$s, %1$s arka plandayken Bangle.js saatlerinin amaçlar aracılığıyla etkinlikleri başlatmasına izin vermek için diğer uygulamalar üzerinde görüntüleme iznine ihtiyaç duyuyor.
-\n
-\nBu, bir müzik uygulamasını başlatmak ve bir şarkı çalmak ve diğer birçok şey için kullanılabilir.
-\n
-\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Diğer uygulamalar üzerinden görüntülemeye izin ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.
-\n
-\n%1$s için izin istenmesini durdurmak için \'Ayarlar\'a gidin ve \'İzin durumunu denetle\' seçeneğinin işaretini kaldırın.
-\n
-\n%1$s\'e beklediğiniz gibi çalışması için gereken izinleri verdiğinizden emin olun.</string>
+    <string name="permission_display_over_other_apps">%1$s, %1$s arka plandayken Bangle.js saatlerinin istekler aracılığıyla etkinlikleri başlatmasına izin vermek için diğer uygulamalar üzerinde görüntüleme iznine ihtiyaç duyuyor. \n \nBu, bir müzik uygulamasını başlatmak ve bir şarkı çalmak ve diğer birçok şey için kullanılabilir. \n \nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Diğer uygulamalar üzerinden görüntülemeye izin ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun. \n \n%1$s için izin istenmesini durdurmak için \'Ayarlar\'a gidin ve \'İzin durumunu denetle\' seçeneğinin işaretini kaldırın. \n \n%1$s\'e beklediğiniz gibi çalışması için gereken izinleri verdiğinizden emin olun.</string>
     <string name="pref_header_calendar">Takvim</string>
     <string name="pref_header_health">Sağlık</string>
     <string name="pref_header_workout">Egzersiz</string>
@@ -1876,8 +1868,8 @@
     <string name="pref_summary_notifications_ignore_low_priority">Düşük ve asgari öncelikli bildirimleri saate gönderme</string>
     <string name="pref_title_notifications_ignore_low_priority">Düşük öncelikli bildirimleri yok say</string>
     <string name="devicetype_flipper_zero">Flipper zero</string>
-    <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Amaç API\'si</string>
-    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Amaç API\'si aracılığıyla Bluetooth bağlantısını denetlemeye izin verin</string>
+    <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth İstek API\'yı</string>
+    <string name="activity_prefs_summary_allow_bluetooth_intent_api">İstek API ile Bluetooth bağlantısının kontrol edilmesine izin verin</string>
     <string name="fw_upgrade_notice_amazfit_gts3">Amazfit GTS 3 aygıtınıza %s ürün yazılımını kurmak üzeresiniz. 
 \n 
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak. 
@@ -2062,13 +2054,13 @@
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="devicetype_amazfit_gts4_mini">Amazfit GTS 4 Mini</string>
     <string name="devicetype_sony_linkbuds_s">Sony LinkBuds S</string>
-    <string name="pref_header_intent_api">Amaç API\'si</string>
+    <string name="pref_header_intent_api">İstek API</string>
     <string name="intent_api_allow_activity_sync_title">Etkinlik eşzamanlama tetikleyicisine izin ver</string>
-    <string name="intent_api_allow_activity_sync_summary">Amaç API\'si aracılığıyla etkinlik eşzamanlamasının tetiklenmesine izin verin</string>
+    <string name="intent_api_allow_activity_sync_summary">İstek API ile etkinlik eşlemesi tetiklemesine izin verin</string>
     <string name="intent_api_allow_trigger_export_title">Veri tabanı dışa aktarmaya izin ver</string>
-    <string name="intent_api_allow_trigger_export_summary">Amaç API\'si aracılığıyla veri tabanı dışa aktarmanın tetiklenmesine izin verin</string>
+    <string name="intent_api_allow_trigger_export_summary">İstek API ile veri tabanı dışa aktarma tetiklemesine izin verin</string>
     <string name="intent_api_broadcast_export_title">Veri tabanı dışa aktarmada yayın gönder</string>
-    <string name="intent_api_broadcast_export_summary">Veri tabanı dışa aktarma işlemi tamamlandığında bir amaç yayınlayın</string>
+    <string name="intent_api_broadcast_export_summary">Veri tabanı dışa aktarma bittiğinde bir istek yayınlayın</string>
     <string name="sony_ambient_sound_control_button_mode_nc_off">Gürültü Engelleme, Kapalı</string>
     <string name="sony_ambient_sound_control_button_mode_as_off">Ortam Sesi, Kapalı</string>
     <string name="sony_quick_access_double_tap">Hızlı Erişim (Çift Dokunuş)</string>
@@ -2205,7 +2197,7 @@
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="busy_task_fetch_stress_data">Stres verileri getiriliyor</string>
     <string name="title_activity_set_contacts">Kişileri yapılandır</string>
-    <string name="pref_title_mb_intents">Medya Düğmesi Amaçlarını Doğrudan Yayınla</string>
+    <string name="pref_title_mb_intents">Medya Düğmesi İsteklerini Doğrudan Yayınla</string>
     <string name="pref_summary_mb_intents">Aygıt medya denetimi belirli uygulamalar için çalışmıyorsa etkinleştirin</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Konumu belirlemek için yalnızca ağı kullan</string>
     <string name="pixoo_power_saving_summary">Mikrofon bir süre sessizlik algıladıktan sonra ekran kapanacaktır</string>
@@ -2381,7 +2373,7 @@
     <string name="huawei_reparse_workout_data">Egzersiz verilerini yeniden ayrıştır</string>
     <string name="huawei_reparse_workout_data_description">Bu yalnızca belirli güncellemelerden sonra bir şeyler yapacaktır</string>
     <string name="intent_api_allow_debug_commands_title">Hata Ayıklama Komutlarına İzin Ver</string>
-    <string name="intent_api_allow_debug_commands_summary">Amaç API\'si aracılığıyla hata ayıklama menüsü komutlarının tetiklenmesine izin ver</string>
+    <string name="intent_api_allow_debug_commands_summary">İstek API ile hata ayıklama menüsü komutlarını tetiklemeye izin verin</string>
     <string name="text_receiver_activity_title">Aygıta metin gönder</string>
     <string name="danish">Danca</string>
     <string name="pref_do_not_disturb_not_wear">Giyilmediğinde rahatsız etme</string>
@@ -3001,7 +2993,7 @@
     <string name="devicetype_garmin_epix_pro">Garmin Epix Pro</string>
     <string name="devicetype_garmin_instinct_2x_solar">Garmin Instinct 2X Solar</string>
     <string name="intent_api_broadcast_activity_sync_title">Etkinlik eşzamanlaması bittiğinde yayın gönder</string>
-    <string name="intent_api_broadcast_activity_sync_summary">Herhangi bir aygıt için etkinlik eşzamanlaması bittiğinde bir amaç yayınlayın</string>
+    <string name="intent_api_broadcast_activity_sync_summary">Herhangi bir aygıt için etkinlik eşlemesi bittiğinde bir istek yayınlayın</string>
     <string name="devicetype_garmin_fenix_6_sapphire">Garmin Fenix 6 Sapphire</string>
     <string name="loading">Yükleniyor…</string>
     <string name="toggle_debug_mode">Hata ayıklama modunu aç/kapat</string>
@@ -3355,7 +3347,7 @@
     <string name="pref_title_nagivation_apps">Navigasyon uygulamaları</string>
     <string name="pref_header_automations">Otomatikleştirmeler</string>
     <string name="pref_description_automations">Otomatik dışa aktar, otomatik getir</string>
-    <string name="pref_description_developer_options">Günlükler, Amaç API\'si</string>
+    <string name="pref_description_developer_options">Günlükler, İstek API</string>
     <string name="pref_description_deprecated_functionalities">Gelecekteki bir sürümde kaldırılacak ayarlar</string>
     <string name="pref_header_main_screen">Ana ekran</string>
     <string name="pref_title_user_interface">Kullanıcı arayüzü</string>
@@ -3367,16 +3359,16 @@
     <string name="pref_description_dashboard">Widget\'lar, dahil edilecek aygıtlar</string>
     <string name="activity_prefs_date_birth">Doğum tarihi</string>
     <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
-    <string name="prefs_title_gatt_client_allow_gatt_interactions">BLE Amaç API\'si aracılığıyla GATT etkileşimine izin ver</string>
-    <string name="prefs_summary_gatt_client_device_state_updates">Amaçlar aracılığıyla BLE bağlantı durumu değişikliklerini al</string>
+    <string name="prefs_title_gatt_client_allow_gatt_interactions">BLE İstek API ile GATT etkileşimine izin verin</string>
+    <string name="prefs_summary_gatt_client_device_state_updates">İstekler yoluyla BLE bağlantı durumu değişikliklerini alın</string>
     <string name="prefs_title_gatt_client_api_package">BLE API paketi</string>
-    <string name="prefs_title_ble_intent_api">BLE Amaç API</string>
+    <string name="prefs_title_ble_intent_api">BLE İstek API</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Sürekli cilt sıcaklığı ölçümü</string>
     <string name="devicetype_ble_gatt_client">Genel BLE GATT İstemcisi</string>
-    <string name="prefs_title_gatt_client_notification_intents">BLE Amaç API\'si aracılığıyla GATT bildirim amaçlarını yayınla</string>
+    <string name="prefs_title_gatt_client_notification_intents">BLE İstek API\'si aracılığıyla GATT bildirim isteklerini yayınla</string>
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">BLE özellik okuma/yazma ve bağlanma komutlarının gönderilmesine izin ver</string>
-    <string name="prefs_summary_gatt_client_api_package">BLE Amaç API iletişimini bu paketle kısıtla</string>
-    <string name="prefs_summary_gatt_client_notification_intents">Amaçlar aracılığıyla BLE özellik değişikliklerini al</string>
+    <string name="prefs_summary_gatt_client_api_package">Bu paketle BLE İstek API iletişimini kısıtlayın</string>
+    <string name="prefs_summary_gatt_client_notification_intents">İstekler yoluyla BLE özellik değişikliklerini alın</string>
     <string name="backup_restore_exporting">Zip olarak dışa aktarılıyor…</string>
     <string name="backup_restore_exporting_preferences">Tercihler dışa aktarılıyor…</string>
     <string name="backup_restore_exporting_database">Veri tabanı dışa aktarılıyor…</string>
@@ -3833,4 +3825,31 @@
     <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
     <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
     <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
+    <string name="devicetype_colmi_r12">Colmi R12</string>
+    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
+    <string name="menuitem_real_time_heart_rate">Gerçek zamanlı kalp ritmi</string>
+    <string name="menuitem_calculator">Hesaplayıcı</string>
+    <string name="maps_not_found">Harita bulunamadı - lütfen ayarlarda geçerli bir harita klasörü seçin</string>
+    <string name="devicetype_misirun_c17">Misirun C17</string>
+    <string name="devicetype_ksix_venture">KSIX Venture</string>
+    <string name="devicetype_kt80">KT80</string>
+    <string name="devicetype_colmi_v89">Colmi V89</string>
+    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
+    <string name="menuitem_running_calculator">Koşma hesaplayıcısı</string>
+    <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
+    <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
+    <string name="maps_settings">Harita ayarları</string>
+    <string name="maps_download_title">Harita indir</string>
+    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
+    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
+    <string name="pref_device_version">Aygıt sürümü</string>
+    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
+    <string name="devicetype_c20">C20</string>
+    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
+    <string name="devicetype_viran_c29">Viran C29</string>
+    <string name="devicetype_r50pro">R50Pro</string>
+    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
+    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
 </resources>
