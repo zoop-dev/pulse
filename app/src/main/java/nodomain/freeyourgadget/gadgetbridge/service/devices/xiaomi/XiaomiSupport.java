@@ -17,8 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi;
 
 
-import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_FORCE_CONNECTION_TYPE;
-
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.location.Location;
@@ -42,7 +40,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
@@ -168,6 +165,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
         }
     }
 
+    @Override
     public void setContext(final GBDevice device, final BluetoothAdapter adapter, final Context context) {
         // FIXME unsetDynamicState unsets the fw version, which causes problems..
         if (device.getFirmwareVersion() != null) {

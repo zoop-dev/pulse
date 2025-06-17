@@ -27,7 +27,6 @@ import android.content.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
@@ -75,6 +74,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         connectToPebble(btDevice);
     }
 
+    @Override
     public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
         if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
             return;
@@ -91,6 +91,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
     }
 
+    @Override
     public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
             return;
@@ -108,6 +109,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
     }
 
+    @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
             return;
@@ -122,6 +124,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
     }
 
+    @Override
     public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
             return;
@@ -148,6 +151,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
     }
 
+    @Override
     public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor bluetoothGattDescriptor, int status) {
         if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
             return;
@@ -172,6 +176,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
     }
 
+    @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
         if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
             return;

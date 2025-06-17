@@ -42,6 +42,7 @@ public class SoundcoreLibertyIOThread extends BtClassicIoThread {
         setUpdateState(GBDevice.State.INITIALIZED);
     }
 
+    @Override
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
         return mUuidToConnect;

@@ -43,6 +43,7 @@ public class LiveviewIoThread extends BtClassicIoThread {
         super(gbDevice, context, lvProtocol, lvSupport, lvBtAdapter);
     }
 
+    @Override
     protected byte[] parseIncoming(InputStream inputStream) throws IOException {
         ByteArrayOutputStream msgStream = new ByteArrayOutputStream();
 

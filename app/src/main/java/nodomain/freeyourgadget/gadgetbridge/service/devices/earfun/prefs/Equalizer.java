@@ -163,14 +163,17 @@ public class Equalizer {
             this.settings = settings;
         }
 
+        @Override
         public String getPresetName() {
             return presetName;
         }
 
+        @Override
         public int getLocalizedPresetName() {
             return localizedPresetName;
         }
 
+        @Override
         public double[] getSettings() {
             return settings;
         }
@@ -213,14 +216,17 @@ public class Equalizer {
             this.settings = settings;
         }
 
+        @Override
         public String getPresetName() {
             return presetName;
         }
 
+        @Override
         public int getLocalizedPresetName() {
             return localizedPresetName;
         }
 
+        @Override
         public double[] getSettings() {
             return settings;
         }

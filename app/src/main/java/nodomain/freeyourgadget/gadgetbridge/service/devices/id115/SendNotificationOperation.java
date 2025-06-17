@@ -120,6 +120,7 @@ public class SendNotificationOperation extends AbstractID115Operation {
         builder.queue(getQueue());
     }
 
+    @Override
     void handleResponse(byte[] data) {
         if (!isOperationRunning()) {
             LOG.error("ignoring notification because operation is not running. Data length: " + data.length);

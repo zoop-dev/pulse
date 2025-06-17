@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,6 +77,7 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
         }
     }
 
+    @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
         requestApps(builder);
     }

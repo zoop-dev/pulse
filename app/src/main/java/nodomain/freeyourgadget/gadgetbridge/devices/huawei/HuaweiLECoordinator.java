@@ -278,6 +278,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
         return huaweiCoordinator.getStressChartParameters();
     }
 
+    @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         return huaweiCoordinator.getDeviceSpecificSettings(device);
     }

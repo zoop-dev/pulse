@@ -189,6 +189,7 @@ public class ControlActivity extends AbstractGBActivity implements JoystickView.
     public void periodicDataSender() {
         periodicDataSenderRunner = new CountDownTimer(Long.MAX_VALUE, 100) {
 
+            @Override
             public void onTick(long millisUntilFinished) {
                 periodicDataSenderRunnerIsRunning = true;
                 setLights();
@@ -210,6 +211,7 @@ public class ControlActivity extends AbstractGBActivity implements JoystickView.
                 create_intent_with_data();
             }
 
+            @Override
             public void onFinish() {
                 start();
             }

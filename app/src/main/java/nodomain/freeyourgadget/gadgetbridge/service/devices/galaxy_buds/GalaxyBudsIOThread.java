@@ -42,6 +42,7 @@ public class GalaxyBudsIOThread extends BtClassicIoThread {
     private final GalaxyBudsProtocol galaxyBudsProtocol;
     private final GBDevice gbDevice;
 
+    @Override
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
         if (gbDevice.getType().equals(DeviceType.GALAXY_BUDS)) {

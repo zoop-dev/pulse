@@ -146,12 +146,14 @@ public class HuaweiStressCalibration {
         openOrClose((byte) 3);
 
         this.measureTimer = new CountDownTimer(60000, 1000) {
+            @Override
             public void onTick(long j) {
                 if (callback != null) {
                     callback.onProgress(j);
                 }
             }
 
+            @Override
             public void onFinish() {
                 stopMeasurements(false);
             }

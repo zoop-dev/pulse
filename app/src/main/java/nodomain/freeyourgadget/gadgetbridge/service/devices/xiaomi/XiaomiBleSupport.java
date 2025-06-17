@@ -234,6 +234,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
         this.mXiaomiSupport = xiaomiSupport;
     }
 
+    @Override
     public void onAuthSuccess() {
         characteristicCommandRead.reset();
         characteristicCommandWrite.reset();
@@ -246,6 +247,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
         this.commsSupport.setContext(device, adapter, context);
     }
 
+    @Override
     public void sendCommand(final String taskName, final XiaomiProto.Command command) {
         if (this.characteristicCommandWrite == null) {
             // Can sometimes happen in race conditions when connecting + receiving calendar event or weather updates

@@ -76,6 +76,7 @@ public class Mi2FirmwareInfo extends HuamiFirmwareInfo {
         super(bytes);
     }
 
+    @Override
     protected HuamiFirmwareType determineFirmwareType(byte[] bytes) {
         if (ArrayUtils.startsWith(bytes, FT_HEADER)) {
             if (bytes[FONT_TYPE_OFFSET] == 0x00 || bytes[FONT_TYPE_OFFSET] == (byte) 0xff) {
@@ -91,10 +92,12 @@ public class Mi2FirmwareInfo extends HuamiFirmwareInfo {
         return HuamiFirmwareType.INVALID;
     }
 
+    @Override
     public boolean isGenerallyCompatibleWith(GBDevice device) {
         return isHeaderValid() && (device.getType() == DeviceType.MIBAND2 || device.getType() == DeviceType.MIBAND2_HRX);
     }
 
+    @Override
     protected Map<Integer, String> getCrcMap() {
         return crcToVersion;
     }

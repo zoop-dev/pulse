@@ -46,6 +46,7 @@ public class Ear1Support extends AbstractHeadphoneDeviceSupport {
         return false;
     }
 
+    @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new NothingProtocol(getDevice());
     }

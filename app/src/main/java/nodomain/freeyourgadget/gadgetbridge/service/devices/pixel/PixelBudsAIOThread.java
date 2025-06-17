@@ -37,6 +37,7 @@ public class PixelBudsAIOThread extends BtClassicIoThread {
         setUpdateState(GBDevice.State.INITIALIZED);
     }
 
+    @Override
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
         return UUID_DEVICE_CTRL;

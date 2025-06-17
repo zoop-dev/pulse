@@ -362,10 +362,12 @@ public class MisfitWatchAdapter extends WatchAdapter {
         logger.debug(message);
     }
 
+    @Override
     public void setActivityHand(double progress) {
         queueWrite(new SetCurrentStepCountRequest(Math.min((int) (1000000 * progress), 999999)));
     }
 
+    @Override
     public void vibrate(PlayNotificationRequest.VibrationType vibration) {
         queueWrite(new PlayNotificationRequest(vibration, -1, -1));
     }

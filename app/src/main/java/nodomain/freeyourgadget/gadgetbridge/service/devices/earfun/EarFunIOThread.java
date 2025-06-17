@@ -25,6 +25,7 @@ public class EarFunIOThread extends BtClassicIoThread {
     public static final UUID GAIA_SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final UUID GAIA_UUID = UUID.fromString("00001107-D102-11E1-9B23-00025B00A5A5");
 
+    @Override
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
         return GAIA_SPP_UUID;

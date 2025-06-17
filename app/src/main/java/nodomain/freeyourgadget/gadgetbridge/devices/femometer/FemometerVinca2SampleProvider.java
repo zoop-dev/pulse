@@ -38,11 +38,13 @@ public class FemometerVinca2SampleProvider extends AbstractTimeSampleProvider<Fe
         return getSession().getFemometerVinca2TemperatureSampleDao();
     }
 
+    @Override
     @NonNull
     protected Property getTimestampSampleProperty() {
         return FemometerVinca2TemperatureSampleDao.Properties.Timestamp;
     }
 
+    @Override
     @NonNull
     protected Property getDeviceIdentifierSampleProperty() {
         return FemometerVinca2TemperatureSampleDao.Properties.DeviceId;

@@ -438,6 +438,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
      * @param precision
      * @return
      */
+    @Override
     public byte[] getTimeBytes(Calendar calendar, TimeUnit precision) {
         byte[] bytes;
         if (precision == TimeUnit.MINUTES) {
@@ -3869,6 +3870,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         return new UpdateFirmwareOperation(uri, this);
     }
 
+    @Override
     public int getMTU() {
         return mMTU;
     }
@@ -3890,6 +3892,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         }
     }
 
+    @Override
     public int getActivitySampleSize() {
         return mActivitySampleSize;
     }
@@ -3898,6 +3901,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
         return GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean("force_new_protocol", false);
     }
 
+    @Override
     public HuamiCoordinator getCoordinator() {
         return (HuamiCoordinator) gbDevice.getDeviceCoordinator();
     }

@@ -261,6 +261,7 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLEDeviceSupport {
         return true;
     }
 
+    @Override
     public void onSendConfiguration(String config) {
         try {
             TransactionBuilder builder = performInitialized("sendConfig");

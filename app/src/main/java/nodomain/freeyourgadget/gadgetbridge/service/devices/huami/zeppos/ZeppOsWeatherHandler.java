@@ -138,6 +138,7 @@ public class ZeppOsWeatherHandler {
             this.content = content;
         }
 
+        @Override
         public String toJson() {
             return content;
         }

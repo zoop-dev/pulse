@@ -30,6 +30,7 @@ public class EarFunDeviceSupport extends AbstractHeadphoneDeviceSupport {
         return false;
     }
 
+    @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new EarFunProtocol(getDevice());
     }

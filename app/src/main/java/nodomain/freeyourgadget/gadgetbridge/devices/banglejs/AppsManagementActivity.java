@@ -214,6 +214,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         webView.loadUrl(url);
 
         webView.setWebViewClient(new WebViewClient(){
+            @Override
             public void onPageFinished(WebView view, String weburl){
                 //webView.loadUrl("javascript:showToast('WebView in Espruino')");
             }
@@ -262,6 +263,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
 
         });
         webView.setDownloadListener(new DownloadListener() {
+            @Override
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,
                                         long contentLength) {

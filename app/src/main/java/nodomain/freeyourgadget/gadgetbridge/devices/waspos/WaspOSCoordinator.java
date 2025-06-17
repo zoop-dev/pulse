@@ -141,6 +141,7 @@ public class WaspOSCoordinator extends AbstractBLEDeviceCoordinator {
     public InstallHandler findInstallHandler(Uri uri, Context context) {
         return null;
     }
+    @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_transliteration

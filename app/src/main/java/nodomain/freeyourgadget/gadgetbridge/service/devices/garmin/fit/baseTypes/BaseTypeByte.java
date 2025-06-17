@@ -23,6 +23,7 @@ public class BaseTypeByte implements BaseTypeInterface {
     }
 
 
+    @Override
     public int getByteSize() {
         return size;
     }

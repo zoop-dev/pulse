@@ -161,6 +161,7 @@ public class NotificationsHandler implements MessageHandler {
         return null;
     }
 
+    @Override
     public GFDIMessage handle(GFDIMessage message) {
         if (!enabled)
             return null;

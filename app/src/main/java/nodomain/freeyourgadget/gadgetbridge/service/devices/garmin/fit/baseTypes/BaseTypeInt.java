@@ -21,6 +21,7 @@ public class BaseTypeInt implements BaseTypeInterface {
         this.unsigned = unsigned;
     }
 
+    @Override
     public int getByteSize() {
         return size;
     }

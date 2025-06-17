@@ -5,6 +5,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
 public class EarFunAirSDeviceSupport extends EarFunDeviceSupport {
 
+    @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new EarFunAirSProtocol(getDevice());
     }

@@ -56,7 +56,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
-import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class ProtocolBufferHandler implements MessageHandler {
 
@@ -82,6 +81,7 @@ public class ProtocolBufferHandler implements MessageHandler {
         return lastProtobufRequestId;
     }
 
+    @Override
     public ProtobufMessage handle(GFDIMessage protobufMessage) {
         if (protobufMessage instanceof ProtobufMessage) {
             return processIncoming((ProtobufMessage) protobufMessage);

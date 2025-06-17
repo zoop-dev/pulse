@@ -195,6 +195,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
         return true;
     }
 
+    @Override
     public boolean supportsAppsManagement(final GBDevice device) {
         return true;
     }

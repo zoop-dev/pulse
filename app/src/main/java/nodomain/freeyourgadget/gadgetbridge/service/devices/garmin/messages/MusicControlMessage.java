@@ -42,6 +42,7 @@ public class MusicControlMessage extends GFDIMessage {
         return new MusicControlMessage(garminMessage, command);
     }
 
+    @Override
     public List<GBDeviceEvent> getGBDeviceEvent() {
         return Collections.singletonList(event);
     }

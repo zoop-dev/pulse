@@ -37,11 +37,13 @@ public class MiScaleSampleProvider extends AbstractTimeSampleProvider<MiScaleWei
         return getSession().getMiScaleWeightSampleDao();
     }
 
+    @Override
     @NonNull
     protected Property getTimestampSampleProperty() {
         return MiScaleWeightSampleDao.Properties.Timestamp;
     }
 
+    @Override
     @NonNull
     protected Property getDeviceIdentifierSampleProperty() {
         return MiScaleWeightSampleDao.Properties.DeviceId;

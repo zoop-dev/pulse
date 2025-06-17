@@ -76,6 +76,7 @@ public class TestMi1AFirmwareInfo extends CompositeMiFirmwareInfo {
         return false;
     }
 
+    @Override
     protected boolean isHeaderValid() {
         return getFirst().isHeaderValid();
     }

@@ -598,6 +598,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
         return !supportsCalendarEvents();
     }
 
+    @Override
     public boolean supportsDebugLogs() {
         return true;
     }

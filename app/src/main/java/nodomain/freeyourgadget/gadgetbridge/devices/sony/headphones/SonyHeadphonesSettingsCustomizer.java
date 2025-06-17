@@ -41,7 +41,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Parcel;
 
-import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
@@ -131,6 +130,7 @@ public class SonyHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
             final Preference ambientSoundLevel = handler.findPreference(PREF_SONY_AMBIENT_SOUND_LEVEL);
 
             final Preference.OnPreferenceChangeListener ambientSoundControlPrefListener = new Preference.OnPreferenceChangeListener() {
+                @Override
                 public boolean onPreferenceChange(Preference preference, Object newVal) {
                     boolean isAmbientSoundEnabled = AmbientSoundControl.Mode.AMBIENT_SOUND.name().toLowerCase(Locale.getDefault()).equals(newVal);
                     focusOnVoice.setEnabled(isAmbientSoundEnabled);
@@ -162,6 +162,7 @@ public class SonyHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
                         .setMessage(R.string.sony_anc_optimize_confirmation_description)
                         .setIcon(R.drawable.ic_hearing)
                         .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(final DialogInterface dialog, final int whichButton) {
                                 handler.notifyPreferenceChanged(PREF_SONY_NOISE_OPTIMIZER_START);
 

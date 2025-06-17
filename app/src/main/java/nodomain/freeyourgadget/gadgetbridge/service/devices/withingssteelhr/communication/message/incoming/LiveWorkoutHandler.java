@@ -55,6 +55,7 @@ public class LiveWorkoutHandler implements IncomingMessageHandler {
         this.support = support;
     }
 
+    @Override
     public void handleMessage(Message message) {
         List<WithingsStructure> data = message.getDataStructures();
         if (data != null) {

@@ -370,6 +370,7 @@ public class FossilWatchAdapter extends WatchAdapter {
         queueWrite(new SaveCalibrationRequest());
     }
 
+    @Override
     public void vibrate(nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest.VibrationType vibration) {
         // queueWrite(new nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest(vibration, -1, -1));
     }

@@ -50,6 +50,7 @@ public class HPlusHealthSampleProvider extends AbstractSampleProvider<HPlusHealt
         super(device, session);
     }
 
+    @Override
     public ActivityKind normalizeType(int rawType) {
         switch (rawType) {
             case HPlusDataRecord.TYPE_DAY_SLOT:
@@ -63,6 +64,7 @@ public class HPlusHealthSampleProvider extends AbstractSampleProvider<HPlusHealt
         }
     }
 
+    @Override
     public int toRawActivityKind(ActivityKind activityKind) {
         switch (activityKind) {
             case DEEP_SLEEP:
@@ -139,6 +141,7 @@ public class HPlusHealthSampleProvider extends AbstractSampleProvider<HPlusHealt
         }
 
         Collections.sort(samples, new Comparator<HPlusHealthActivitySample>() {
+            @Override
             public int compare(HPlusHealthActivitySample one, HPlusHealthActivitySample other) {
                 return one.getTimestamp() - other.getTimestamp();
             }

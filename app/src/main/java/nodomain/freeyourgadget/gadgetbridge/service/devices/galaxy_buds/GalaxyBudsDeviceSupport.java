@@ -46,6 +46,7 @@ public class GalaxyBudsDeviceSupport extends AbstractHeadphoneDeviceSupport {
         return false;
     }
 
+    @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new GalaxyBudsProtocol(getDevice());
     }

@@ -142,6 +142,7 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
         return 8;
     }
 
+    @Override
     public boolean supportsNavigation() {
         return true;
     }
@@ -157,6 +158,7 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
         // nothing to delete, yet
     }
 
+    @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_transliteration,

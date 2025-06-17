@@ -35,7 +35,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphon
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btclassic.BtClassicIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.Message;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class SonyHeadphonesIoThread extends BtClassicIoThread {
@@ -55,6 +54,7 @@ public class SonyHeadphonesIoThread extends BtClassicIoThread {
      * TODO: Implement this in a more elegant way. Ideally, we should retry every command for which we didn't get an ACK.
      */
     private final Runnable initSendRunnable = new Runnable() {
+        @Override
         public void run() {
             // If we still haven't got any reply, re-send the init
             if (!mProtocol.hasProtocolImplementation()) {

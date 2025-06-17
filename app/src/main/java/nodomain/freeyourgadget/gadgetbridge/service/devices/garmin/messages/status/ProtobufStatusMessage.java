@@ -85,6 +85,7 @@ public class ProtobufStatusMessage extends GFDIStatusMessage {
         return sendOutgoing;
     }
 
+    @Override
     protected Status getStatus() {
         return status;
     }

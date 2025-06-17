@@ -25,6 +25,7 @@ public class WeatherMessage extends GFDIMessage {
         return new WeatherMessage(format, latitude, longitude, hoursOfForecast, garminMessage);
     }
 
+    @Override
     public List<GBDeviceEvent> getGBDeviceEvent() {
         return Collections.singletonList(weatherRequestDeviceEvent);
     }

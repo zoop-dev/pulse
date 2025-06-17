@@ -287,6 +287,7 @@ public abstract class XiaomiSppPacketV2 {
                 return this;
             }
 
+            @Override
             public XiaomiSppPacketV2 build() {
                 return new DataPacket(this);
             }

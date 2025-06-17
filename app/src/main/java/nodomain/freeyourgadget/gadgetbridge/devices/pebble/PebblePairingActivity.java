@@ -249,11 +249,13 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
         super.onPause();
     }
 
+    @Override
     public void unregisterBroadcastReceivers() {
         AndroidUtils.safeUnregisterBroadcastReceiver(LocalBroadcastManager.getInstance(this), pairingReceiver);
         AndroidUtils.safeUnregisterBroadcastReceiver(this, bondingReceiver);
     }
 
+    @Override
     public void registerBroadcastReceivers() {
         LocalBroadcastManager.getInstance(this).registerReceiver(pairingReceiver, new IntentFilter(GBDevice.ACTION_DEVICE_CHANGED));
         ContextCompat.registerReceiver(this, bondingReceiver, new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED), ContextCompat.RECEIVER_EXPORTED);

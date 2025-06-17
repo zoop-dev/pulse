@@ -36,6 +36,7 @@ public abstract class AbstractMessage implements Message {
 
     private List<WithingsStructure> dataStructures = new ArrayList<WithingsStructure>();
 
+    @Override
     public List<WithingsStructure> getDataStructures() {
         return Collections.unmodifiableList(dataStructures);
     }

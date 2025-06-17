@@ -65,11 +65,13 @@ public class PebbleMisfitSampleProvider extends AbstractSampleProvider<PebbleMis
         return null;
     }
 
+    @Override
     @NonNull
     protected Property getTimestampSampleProperty() {
         return PebbleMisfitSampleDao.Properties.Timestamp;
     }
 
+    @Override
     @NonNull
     protected Property getDeviceIdentifierSampleProperty() {
         return PebbleMisfitSampleDao.Properties.DeviceId;

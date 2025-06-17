@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +69,7 @@ public class HuamiActivityDetailsParser extends AbstractHuamiActivityDetailsPars
         activityTrack.setName(createActivityName(summary));
     }
 
+    @Override
     public ActivityTrack parse(byte[] bytes) throws GBException {
         int i = 0;
         try {

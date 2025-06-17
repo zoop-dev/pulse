@@ -14,6 +14,7 @@ public class BaseTypeDouble implements BaseTypeInterface {
         this.invalid = Double.longBitsToDouble(0xFFFFFFFFFFFFFFFFL);
     }
 
+    @Override
     public int getByteSize() {
         return size;
     }

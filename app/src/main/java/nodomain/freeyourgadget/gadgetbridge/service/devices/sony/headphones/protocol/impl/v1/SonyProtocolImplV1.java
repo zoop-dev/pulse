@@ -309,6 +309,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
         return null;
     }
 
+    @Override
     public Request getButtonModes() {
         return new Request(
                 PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_GET.getMessageType(),
@@ -319,6 +320,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
         );
     }
 
+    @Override
     public Request setButtonModes(final ButtonModes config) {
         return new Request(
                 PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_SET.getMessageType(),

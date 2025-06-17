@@ -40,6 +40,7 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
     private static final Logger LOG = LoggerFactory.getLogger(HuamiActivitySummaryParser.class);
     protected ActivitySummaryData summaryData = new ActivitySummaryData();
 
+    @Override
     public BaseActivitySummary parseBinaryData(BaseActivitySummary summary, final boolean forDetails) {
         Date startTime = summary.getStartTime();
         if (startTime == null) {

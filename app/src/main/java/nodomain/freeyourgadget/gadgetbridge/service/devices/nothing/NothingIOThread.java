@@ -40,6 +40,7 @@ public class NothingIOThread extends BtClassicIoThread {
 
     private final NothingProtocol mNothingProtocol;
 
+    @Override
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
         return mNothingProtocol.UUID_DEVICE_CTRL;

@@ -126,22 +126,27 @@ public class Roidmi1Protocol extends RoidmiProtocol {
         return encodeCommand(COMMAND_SET_FREQUENCY, freq[0], freq[1]);
     }
 
+    @Override
     public byte[] encodeGetLedColor() {
         return encodeCommand(COMMAND_GET_COLOR, (byte) 0, (byte) 0);
     }
 
+    @Override
     public byte[] encodeGetFmFrequency() {
         return encodeCommand(COMMAND_GET_FREQUENCY, (byte) 0, (byte) 0);
     }
 
+    @Override
     public byte[] encodeGetVoltage() {
         return null;
     }
 
+    @Override
     public byte[] packetHeader() {
         return PACKET_HEADER;
     }
 
+    @Override
     public byte[] packetTrailer() {
         return PACKET_TRAILER;
     }

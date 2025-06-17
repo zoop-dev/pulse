@@ -146,10 +146,12 @@ public class LenovoWatchPairingActivity extends AbstractGBActivity implements Bo
         super.onPause();
     }
 
+    @Override
     public void unregisterBroadcastReceivers() {
         AndroidUtils.safeUnregisterBroadcastReceiver(LocalBroadcastManager.getInstance(this), pairingReceiver);
     }
 
+    @Override
     public void registerBroadcastReceivers() {
         LocalBroadcastManager.getInstance(this).registerReceiver(pairingReceiver, new IntentFilter(GBDevice.ACTION_DEVICE_CHANGED));
     }

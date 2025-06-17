@@ -22,7 +22,6 @@ import android.net.Uri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
@@ -52,6 +51,7 @@ public class PixooSupport extends AbstractSerialDeviceSupport {
         return false;
     }
 
+    @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new PixooProtocol(getDevice());
     }

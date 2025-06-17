@@ -48,6 +48,7 @@ public class OppoHeadphonesIoThread extends BtClassicIoThread {
     // Some devices will not reply to the first battery request, so we need to retry a few times
     private int batteryRetries = 0;
     private final Runnable batteryReqRunnable = new Runnable() {
+        @Override
         public void run() {
             final int batteryCount = getDevice().getDeviceCoordinator().getBatteryCount(getDevice());
             boolean knownBattery = false;

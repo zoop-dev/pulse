@@ -264,6 +264,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         if (mDaySlotRecords.size() > 0) {
             //Sort the samples
             Collections.sort(mDaySlotRecords, new Comparator<HPlusDataRecordDaySlot>() {
+                @Override
                 public int compare(HPlusDataRecordDaySlot one, HPlusDataRecordDaySlot other) {
                     return one.timestamp - other.timestamp;
                 }

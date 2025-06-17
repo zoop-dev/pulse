@@ -145,6 +145,7 @@ public class Roidmi3Protocol extends RoidmiProtocol {
         return new byte[0];
     }
 
+    @Override
     public byte[] encodeGetVoltage() {
         return encodeCommand(COMMAND_GET_VOLTAGE);
     }

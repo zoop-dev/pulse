@@ -96,6 +96,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 
     }
 
+    @Override
     public boolean onTouch(View v, MotionEvent e) {
         if (v.equals(this)) {
             if (e.getAction() != MotionEvent.ACTION_UP) {

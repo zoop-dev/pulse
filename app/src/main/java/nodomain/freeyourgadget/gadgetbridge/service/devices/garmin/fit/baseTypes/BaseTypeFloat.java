@@ -14,6 +14,7 @@ public class BaseTypeFloat implements BaseTypeInterface {
         this.invalid = Float.intBitsToFloat(0xFFFFFFFF);
     }
 
+    @Override
     public int getByteSize() {
         return size;
     }

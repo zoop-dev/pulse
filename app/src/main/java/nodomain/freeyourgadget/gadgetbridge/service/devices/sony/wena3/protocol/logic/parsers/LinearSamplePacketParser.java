@@ -60,6 +60,8 @@ abstract class LinearSamplePacketParser<Sample> extends SamplePacketParser<Sampl
         return new Date(startDate.getTime() + (long) msBetweenSamples * index);
     }
 
+    @Override
     abstract Sample takeSampleFromBuffer(ByteBuffer buffer);
+    @Override
     abstract boolean canTakeSampleFromBuffer(ByteBuffer buffer);
 }

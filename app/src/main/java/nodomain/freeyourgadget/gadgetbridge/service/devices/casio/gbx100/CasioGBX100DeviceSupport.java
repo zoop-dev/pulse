@@ -644,6 +644,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
         }
     }
 
+    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         LOG.debug(key + " changed");
 

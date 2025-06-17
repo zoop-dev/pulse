@@ -91,6 +91,7 @@ public abstract class Request extends AbstractBTLEOperation<LefunDeviceSupport> 
      *
      * @return the class name
      */
+    @Override
     public String getName() {
         Class thisClass = getClass();
         while (thisClass.isAnonymousClass()) thisClass = thisClass.getSuperclass();

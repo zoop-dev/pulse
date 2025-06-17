@@ -21,6 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 
 public class BohemicSmartBraceletDeviceCoordinator extends LefunDeviceCoordinator {
+    @Override
     public boolean supports(GBDeviceCandidate candidate) {
         // Since the Lefun coordinator overrides supports, we also need to
         return ".bohemic".equals(candidate.getName());

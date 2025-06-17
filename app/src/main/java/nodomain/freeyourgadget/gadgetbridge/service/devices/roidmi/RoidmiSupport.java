@@ -17,17 +17,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.roidmi;
 
-import android.net.Uri;
 import android.os.Handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.RoidmiConst;
-import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
@@ -39,6 +34,7 @@ public class RoidmiSupport extends AbstractSerialDeviceSupport {
     private final Handler handler = new Handler();
     private int infoRequestTries = 0;
     private final Runnable infosRunnable = new Runnable() {
+        @Override
         public void run() {
             infoRequestTries += 1;
 

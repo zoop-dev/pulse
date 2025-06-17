@@ -644,6 +644,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                     // init repeat handler
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
+                        @Override
                         public void run() {
                             // Actions to do after repeatDelay seconds
                             if (((isRinging) && (remainingRepeats > 0)) || ((isRinging) && (continuousRing))) {
@@ -698,6 +699,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                         // repeat missed call notification
                         final Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
+                            @Override
                             public void run() {
                                 // Actions to do after repeatDelay seconds
                                 if ((isMissedCall) && (remainingMissedRepeats > 0)) {

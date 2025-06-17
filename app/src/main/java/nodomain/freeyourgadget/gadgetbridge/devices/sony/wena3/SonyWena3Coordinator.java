@@ -258,18 +258,22 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
 
+    @Override
     public boolean supportsNotificationVibrationPatterns() {
         return true;
     }
 
+    @Override
     public boolean supportsNotificationVibrationRepetitionPatterns() {
         return true;
     }
 
+    @Override
     public boolean supportsNotificationLedPatterns() {
         return true;
     }
 
+    @Override
     public AbstractNotificationPattern[] getNotificationVibrationPatterns() {
         return new AbstractNotificationPattern[] {
                 VibrationKind.NONE, VibrationKind.BASIC,
@@ -279,6 +283,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
         };
     }
 
+    @Override
     public AbstractNotificationPattern[] getNotificationVibrationRepetitionPatterns() {
         return new AbstractNotificationPattern[] {
                 VibrationCount.ONCE, VibrationCount.TWICE, VibrationCount.THREE, VibrationCount.FOUR,
@@ -286,6 +291,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
         };
     }
 
+    @Override
     public AbstractNotificationPattern[] getNotificationLedPatterns() {
         return new AbstractNotificationPattern[] {
                 LedColor.NONE, LedColor.RED, LedColor.YELLOW, LedColor.GREEN,

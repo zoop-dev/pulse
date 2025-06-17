@@ -86,6 +86,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         return (HuaweiP2PCalendarService) manager.getRegisteredService(HuaweiP2PCalendarService.MODULE);
     }
 
+    @Override
     public String getModule() {
         return HuaweiP2PCalendarService.MODULE;
     }

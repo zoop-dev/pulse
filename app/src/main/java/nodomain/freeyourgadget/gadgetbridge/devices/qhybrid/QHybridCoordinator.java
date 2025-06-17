@@ -194,6 +194,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
      * Returns the directory containing the watch app cache.
      * @throws IOException when the external files directory cannot be accessed
      */
+    @Override
     public File getAppCacheDir() throws IOException {
         return new File(FileUtils.getExternalFilesDir(), "qhybrid-app-cache");
     }

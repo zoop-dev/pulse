@@ -196,6 +196,7 @@ public class HuaweiOTAManager {
                 firmwareCheckHandler.sendMessage(msg);
             }
 
+            @Override
             public void run() {
                 File fwFile = null;
                 int lastProgress = 0;

@@ -59,6 +59,7 @@ public class SoundcoreMotion300IOThread extends BtClassicIoThread {
         handler.postDelayed(() -> write(protocol.encodeGetDeviceInfo()), 500);
     }
 
+    @Override
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
         return UUID.fromString("0cf12d31-fac3-4553-bd80-d6832e7b3135");

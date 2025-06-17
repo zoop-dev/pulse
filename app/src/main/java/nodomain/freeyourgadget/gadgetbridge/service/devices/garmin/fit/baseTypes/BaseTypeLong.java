@@ -23,6 +23,7 @@ public class BaseTypeLong implements BaseTypeInterface {
         this.unsigned = unsigned;
     }
 
+    @Override
     public int getByteSize() {
         return size;
     }

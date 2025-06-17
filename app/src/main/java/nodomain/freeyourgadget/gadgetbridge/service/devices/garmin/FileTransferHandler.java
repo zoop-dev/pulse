@@ -66,6 +66,7 @@ public class FileTransferHandler implements MessageHandler {
         return upload.getCurrentlyUploading() != null;
     }
 
+    @Override
     public GFDIMessage handle(GFDIMessage message) {
         if (message instanceof DownloadRequestStatusMessage)
             download.processDownloadRequestStatusMessage((DownloadRequestStatusMessage) message);

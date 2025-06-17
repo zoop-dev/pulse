@@ -44,6 +44,7 @@ public class NotificationImage extends AssetFile {
     }
 
     public byte[] getImageData() { return getFileData(); }
+    @Override
     public String getFileName() { return super.getFileName(); }
     public int getWidth() { return width; }
     public int getHeight() { return height; }

@@ -1302,6 +1302,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         return encodeMessage(ENDPOINT_PHONECONTROL, pebbleCmd, 0, parts);
     }
 
+    @Override
     public byte[] encodeSetMusicState(byte state, int position, int playRate, byte shuffle, byte repeat) {
         if (mFwMajor < 3) {
             return null;

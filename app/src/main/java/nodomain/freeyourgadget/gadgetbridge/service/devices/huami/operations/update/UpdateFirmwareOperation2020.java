@@ -152,6 +152,7 @@ public class UpdateFirmwareOperation2020 extends UpdateFirmwareOperation {
     }
 
 
+    @Override
     public boolean sendFwInfo() {
         try {
             TransactionBuilder builder = performInitialized("send firmware info");

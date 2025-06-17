@@ -207,6 +207,7 @@ public class HuaweiLESupport extends AbstractBTLEDeviceSupport {
         super.dispose();
     }
 
+    @Override
     public void onTestNewFunction() {
         supportProvider.onTestNewFunction();
     }

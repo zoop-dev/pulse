@@ -258,6 +258,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
         // do not queue here, that's the job of the caller
     }
 
+    @Override
     public void sendDataChunk(final String taskName, final byte[] chunk, @Nullable final XiaomiCharacteristic.SendCallback callback) {
         LOG.debug("sendDataChunk(): encoded data chunk for task '{}': {}", taskName, GB.hexdump(chunk));
         this.commsSupport.createTransactionBuilder("send " + taskName)
