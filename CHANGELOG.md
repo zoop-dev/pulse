@@ -15,6 +15,7 @@
 * Initial support for Realme Buds Air 5 Pro, Buds T100, Buds T300
 * Initial support for Redmi Buds 6 Pro
 * Initial support for Sony WF-C710N
+* Experimental support for AAWireless
 * Experimental support for Huawei Watch Fit 4 / 4 Pro
 * Bangle.js: Add support for insecure TLS and HTTP requests
 * Bangle.js: Add support for version 2 weather
@@ -44,6 +45,7 @@
 * Oppo Headphones: Prevent crash on invalid incoming commands
 * Ultrahuman: Add basic support for breathing exercise
 * Zepp OS: Add missing application names
+* Zepp OS: Add setting for UTC sun/moon times
 * Zepp OS: Disable realtime steps on connection
 * Zepp OS: Experimental btrfcomm support
 * Zepp OS: Fix crash when sending music info
@@ -54,6 +56,7 @@
 * Zepp OS: Parse workout pace, cadence, strength sets
 * BLE: Add reconnect on gadget-initiated connection
 * BLE: Add setting to request low-power connection
+* BLE: Fix companion pairing on some devices
 * BLE: Fix some race conditions
 * Charts: Add average day for body energy
 * Charts: Add weekly/monthly views for calories and stress
