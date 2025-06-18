@@ -806,6 +806,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
 
     @Override
     public String getMacAddress() {
+        if (deviceTarget==null) return null;
         return deviceTarget.getDevice().getAddress();
     }
 
