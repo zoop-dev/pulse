@@ -2,7 +2,7 @@
 <resources>
     <string name="application_name_generic">Gadgetbridge</string>
     <string name="title_activity_controlcenter_generic">Gadgetbridge</string>
-    <string name="action_settings">Seaded</string>
+    <string name="action_settings">Seadistused</string>
     <string name="action_debug">Silumine</string>
     <string name="action_quit">Välju</string>
     <string name="action_donate">Annetamine</string>
@@ -912,7 +912,7 @@
     <string name="balanced">Tasakaalustatud</string>
     <string name="power_saving">Energiasääst</string>
     <string name="custom">Kohandatud</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="controlcenter_get_heartrate_measurement">Mõõda pulsisagedust</string>
     <string name="action_changelog">Muudatuste logi</string>
     <string name="controlcenter_power_off_confirm_title">Lülita välja</string>
