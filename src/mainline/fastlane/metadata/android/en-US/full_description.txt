@@ -1,9 +1,9 @@
-Use your smart watch, fitness tracker, and other bluetooth devices without the vendor's closed source application and without the need to create an account and transmit any of your data to the vendor's servers.
-For a full list of supported device, please refer to our Homepage or README.md in our git repository.
+Use your smart watch, fitness tracker, and other Bluetooth devices without the vendor's closed source application and without the need to create an account and transmit any of your data to the vendor's servers.
+For a full list of supported device, please refer to our Gadgets page https://gadgetbridge.org/gadgets/.
 
 You can get notifications on your wrist and (depending on the device):
 
-- collect data from the device sensors
-- control music playing on your android device
-- see the weather 
-- get directions
+- Collect data from the device sensors.
+- Control music playing on your Android device.
+- See the weather.
+- Get directions.
