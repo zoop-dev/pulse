@@ -396,7 +396,7 @@
     <string name="mi2_dnd_automatic">Automaticky (detekce spánku)</string>
     <string name="mi2_dnd_scheduled">Naplánovano (časový interval)</string>
     <string name="discovery_attempting_to_pair">Pokus o spárování %1$s</string>
-    <string name="discovery_bonding_failed_immediately">Spojení s %1$s ihned selhalo.</string>
+    <string name="discovery_bonding_failed_immediately">Spojování s %1$s ihned selhalo.</string>
     <string name="discovery_trying_to_connect_to">Pokouším se spojit s: %1$s</string>
     <string name="discovery_enable_bluetooth">Chcete-li najít zařízení, povolte funkci Bluetooth.</string>
     <string name="discovery_successfully_bonded">Spojeno s %1$s.</string>
@@ -4140,4 +4140,5 @@
     <string name="double_click">Dvojité kliknutí</string>
     <string name="pref_aawireless_dongle_confirmation">Po přepnutí režimu dongle budete muset zařízení znovu spárovat. Počkejte prosím alespoň 30 sekund, než se nastavení projeví.</string>
     <string name="pref_aawireless_auto_standby_device">Automatický režim pohotovosti</string>
+    <string name="discovery_bonding_error">Spojování selhalo: %1$s</string>
 </resources>
