@@ -287,9 +287,20 @@ public class BondingUtil {
      * Handles the activity result and checks if there's anything CompanionDeviceManager-related going on
      */
     public static void handleActivityResult(BondingInterface bondingInterface, int requestCode, int resultCode, Intent data) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-                requestCode == BondingUtil.REQUEST_CODE &&
-                resultCode == Activity.RESULT_OK) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && requestCode == REQUEST_CODE) {
+            if (resultCode != CompanionDeviceManager.RESULT_OK) {
+                final String reason = switch (resultCode) {
+                    case CompanionDeviceManager.RESULT_CANCELED -> "RESULT_CANCELED";
+                    case CompanionDeviceManager.RESULT_USER_REJECTED -> "RESULT_USER_REJECTED";
+                    case CompanionDeviceManager.RESULT_DISCOVERY_TIMEOUT -> "RESULT_DISCOVERY_TIMEOUT";
+                    case CompanionDeviceManager.RESULT_INTERNAL_ERROR -> "RESULT_INTERNAL_ERROR";
+                    case CompanionDeviceManager.RESULT_SECURITY_ERROR -> "RESULT_SECURITY_ERROR";
+                    default -> Integer.toString(resultCode);
+                };
+                LOG.warn("associating CompanionDevice {} failed: {}",
+                        bondingInterface.getMacAddress(), reason);
+                return;
+            }
 
             final BluetoothDevice deviceToPair;
             final Object extra = data.getParcelableExtra(CompanionDeviceManager.EXTRA_DEVICE);
@@ -480,8 +491,9 @@ public class BondingUtil {
         return new CompanionDeviceManager.Callback() {
             @Override
             public void onFailure(CharSequence error) {
-                LOG.error("Bonding failed immediately: {}", error);
-                toast(bondingInterface.getContext(), bondingInterface.getContext().getString(R.string.discovery_bonding_failed_immediately), Toast.LENGTH_SHORT, GB.ERROR);
+                Context context = bondingInterface.getContext();
+                String message = context.getString(R.string.discovery_bonding_error, error);
+                toast(context, message, Toast.LENGTH_SHORT, GB.ERROR);
             }
 
             @Override

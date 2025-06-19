@@ -1394,6 +1394,7 @@
     <string name="maximum_duration">Duration</string>
     <string name="discovery_attempting_to_pair">Attempting to pair with %1$s</string>
     <string name="discovery_bonding_failed_immediately">Bonding with %1$s failed immediately.</string>
+    <string name="discovery_bonding_error">Bonding failed: %1$s</string>
     <string name="discovery_trying_to_connect_to">Trying to connect to: %1$s</string>
     <string name="discovery_enable_bluetooth">Enable Bluetooth to discover devices.</string>
     <string name="discovery_successfully_bonded">Bound to %1$s.</string>
