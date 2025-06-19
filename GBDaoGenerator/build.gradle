@@ -7,14 +7,20 @@ plugins {
 base.archivesName = 'gadgetbridge-daogenerator'
 
 dependencies {
-    // https://github.com/Freeyourgadget/greenDAO/tree/fyg
-    implementation 'com.github.Freeyourgadget:greendao:1998d7cd2d21f662c6044f6ccf3b3a251bbad341'
+    // https://codeberg.org/Freeyourgadget/greenDao
+    //implementation 'com.github.Freeyourgadget:greendao:1998d7cd2d21f662c6044f6ccf3b3a251bbad341'
+    // As of 2025-06-19, this is bundled directly in the repository due to jitpack build issues
+
+    implementation 'org.freemarker:freemarker:2.3.23'
 }
 
 sourceSets {
     main {
         java {
             srcDir 'src'
+        }
+        resources {
+            srcDir 'src-template'
         }
     }
 }
