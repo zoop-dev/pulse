@@ -52,7 +52,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingInterface;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
@@ -207,11 +206,6 @@ public class MiBandPairingActivity extends AbstractGBActivity implements Bonding
     protected void onResume() {
         registerBroadcastReceivers();
         super.onResume();
-    }
-
-    @Override
-    public String getMacAddress() {
-        return deviceCandidate.getDevice().getAddress();
     }
 
     @Override

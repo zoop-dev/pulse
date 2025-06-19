@@ -85,7 +85,7 @@ public class BondingUtil {
                 if (GBDevice.ACTION_DEVICE_CHANGED.equals(intent.getAction())) {
                     GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
                     LOG.debug("Pairing receiver: device changed: " + device);
-                    if (activity.getMacAddress().equals(device.getAddress())) {
+                    if (device != null && device.getAddress().equals(activity.getMacAddress())) {
                         if (device.isInitialized()) {
                             LOG.info("Device is initialized, finish things up");
                             activity.onBondingComplete(true);
@@ -303,7 +303,7 @@ public class BondingUtil {
             }
 
             if (deviceToPair != null) {
-                if (bondingInterface.getCurrentTarget().getDevice().getAddress().equals(deviceToPair.getAddress())) {
+                if (deviceToPair.getAddress().equals(bondingInterface.getMacAddress())) {
                     if (deviceToPair.getBondState() != BluetoothDevice.BOND_BONDED) {
                         BondingUtil.bluetoothBond(bondingInterface, bondingInterface.getCurrentTarget().getDevice());
                     } else {

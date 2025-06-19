@@ -190,11 +190,6 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
     }
 
     @Override
-    public String getMacAddress() {
-        return deviceCandidate.getDevice().getAddress();
-    }
-
-    @Override
     public boolean getAttemptToConnect() {
         return true;
     }

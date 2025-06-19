@@ -116,11 +116,6 @@ public class G1PairingActivity extends AbstractGBActivity
     }
 
     @Override
-    public String getMacAddress() {
-        return currentBondingCandidate.getDevice().getAddress();
-    }
-
-    @Override
     public boolean getAttemptToConnect() {
         return true;
     }
