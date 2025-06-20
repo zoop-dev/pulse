@@ -42,6 +42,7 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
         try {
             final BluetoothDevice device = candidate.getDevice();
             final BluetoothClass deviceClass = device.getBluetoothClass();
+            if (deviceClass == null) return false;
             int deviceType = deviceClass.getDeviceClass();
             return deviceType == BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET ||
                     deviceType == BluetoothClass.Device.AUDIO_VIDEO_HEADPHONES ||

@@ -64,12 +64,15 @@ public final class BtBRQueue {
         @Override
         public void run() {
             final byte[] buffer = new byte[mBufferSize];
-            int nRead;
+            int nRead = 0;
 
             LOG.debug("Read thread started, entering loop");
 
             while (!mDisposed) {
                 try {
+                    if (mBtSocket == null)
+                        throw new IOException("mBtSocket was null");
+
                     nRead = mBtSocket.getInputStream().read(buffer);
 
                     // safety measure
