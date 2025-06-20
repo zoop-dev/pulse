@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Andreas Böhler
+/*  Copyright (C) 2023-2025 Andreas Böhler, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -33,7 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.BondingInterface;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 
 public class BondAction extends PlainAction implements BondingInterface {
-    private String mMacAddress;
+    private GBDeviceCandidate mCandidate;
     private final BroadcastReceiver pairingReceiver = BondingUtil.getPairingReceiver(this);
     private final BroadcastReceiver bondingReceiver = BondingUtil.getBondingReceiver(this);
 
@@ -44,12 +44,7 @@ public class BondAction extends PlainAction implements BondingInterface {
 
     @Override
     public GBDeviceCandidate getCurrentTarget() {
-        return null;
-    }
-
-    @Override
-    public String getMacAddress() {
-        return mMacAddress;
+        return mCandidate;
     }
 
     @Override
@@ -76,8 +71,9 @@ public class BondAction extends PlainAction implements BondingInterface {
 
     @Override
     public boolean run(BluetoothGatt gatt) {
-        mMacAddress = gatt.getDevice().getAddress();
-        BondingUtil.tryBondThenComplete(this, gatt.getDevice());
+        BluetoothDevice device = gatt.getDevice();
+        mCandidate = new GBDeviceCandidate(device, GBDevice.RSSI_UNKNOWN, null);
+        BondingUtil.tryBondThenComplete(this, device);
         return true;
     }
 }
