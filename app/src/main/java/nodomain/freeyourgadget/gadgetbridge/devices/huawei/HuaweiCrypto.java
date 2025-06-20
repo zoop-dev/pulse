@@ -131,7 +131,7 @@ public class HuaweiCrypto {
 
     public byte[] computeDigestHiChainLite(byte[] message, byte[] key, byte[] nonce) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, UnsupportedEncodingException {
         byte[] digestStep1;
-        byte[] hashKey = CryptoUtils.digest(GB.hexdump(key).getBytes("UTF-8"));
+        byte[] hashKey = CryptoUtils.digest(GB.hexdump(key).getBytes(StandardCharsets.UTF_8));
         byte[] digestSecret = getDigestSecret();
         for (int i = 0; i < digestSecret.length; i++) {
             digestSecret[i] = (byte) (((0xFF & hashKey[i]) ^ (digestSecret[i] & 0xFF)) & 0xFF);

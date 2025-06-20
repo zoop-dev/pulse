@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -188,7 +187,7 @@ public class FossilFileReader {
             byte[] filenameBytes = new byte[filenameLength - 1];
             buf.get(filenameBytes);
             buf.get();
-            list.add(new String(filenameBytes, Charset.forName("UTF8")));
+            list.add(new String(filenameBytes, StandardCharsets.UTF_8));
             int filesize = buf.getShort();
             if (cutTrailingNull) {
                 filesize -= 1;

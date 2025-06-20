@@ -29,8 +29,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
@@ -197,7 +197,7 @@ public class JSInterface {
         String prefix = device.getAddress() + this.mUuid.toString();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
-            byte[] bytes = prefix.getBytes("UTF-8");
+            byte[] bytes = prefix.getBytes(StandardCharsets.UTF_8);
             digest.update(bytes, 0, bytes.length);
             bytes = digest.digest();
             final StringBuilder sb = new StringBuilder();
@@ -205,7 +205,7 @@ public class JSInterface {
                 sb.append(String.format("%02X", aByte));
             }
             return sb.toString().toLowerCase();
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException e) {
             LOG.warn("Error definining local storage prefix", e);
             return prefix;
         }

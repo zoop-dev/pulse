@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.datastructures;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.message.Message;
@@ -75,7 +74,7 @@ public abstract class WithingsStructure {
         int stringLength = (short)(byteBuffer.get() & 255);
         byte[] stringBytes = new byte[stringLength];
         byteBuffer.get(stringBytes);
-        return new String(stringBytes, Charset.forName("UTF-8"));
+        return new String(stringBytes, StandardCharsets.UTF_8);
     }
 
     protected byte[] getNextByteArray(ByteBuffer byteBuffer) {

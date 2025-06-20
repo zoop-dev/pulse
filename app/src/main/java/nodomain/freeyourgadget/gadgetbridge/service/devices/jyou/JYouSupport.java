@@ -23,8 +23,8 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -304,26 +304,22 @@ public class JYouSupport extends AbstractBTLEDeviceSupport {
     }
 
     private byte[] stringToUTF8Bytes(String src, int byteCount) {
-        try {
-            if (src == null)
-                return null;
+        if (src == null)
+            return null;
 
-            for (int i = src.length(); i > 0; i--) {
-                String sub = src.substring(0, i);
-                byte[] subUTF8 = sub.getBytes("UTF-8");
+        for (int i = src.length(); i > 0; i--) {
+            String sub = src.substring(0, i);
+            byte[] subUTF8 = sub.getBytes(StandardCharsets.UTF_8);
 
-                if (subUTF8.length == byteCount) {
-                    return subUTF8;
-                }
-
-                if (subUTF8.length < byteCount) {
-                    byte[] largerSubUTF8 = new byte[byteCount];
-                    System.arraycopy(subUTF8, 0, largerSubUTF8, 0, subUTF8.length);
-                    return largerSubUTF8;
-                }
+            if (subUTF8.length == byteCount) {
+                return subUTF8;
             }
-        } catch (UnsupportedEncodingException e) {
-            logger.warn(e.getMessage());
+
+            if (subUTF8.length < byteCount) {
+                byte[] largerSubUTF8 = new byte[byteCount];
+                System.arraycopy(subUTF8, 0, largerSubUTF8, 0, subUTF8.length);
+                return largerSubUTF8;
+            }
         }
         return null;
     }

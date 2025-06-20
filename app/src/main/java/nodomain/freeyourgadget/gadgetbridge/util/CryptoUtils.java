@@ -151,7 +151,7 @@ public class CryptoUtils {
 
     public static byte[] pbkdf2Sha256(String key, String iv, int count, int length) throws InvalidKeySpecException, NoSuchAlgorithmException, UnsupportedEncodingException {
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        PBEKeySpec keySpec = new PBEKeySpec(key.toCharArray(), iv.getBytes("utf-8"), count, length);
+        PBEKeySpec keySpec = new PBEKeySpec(key.toCharArray(), iv.getBytes(StandardCharsets.UTF_8), count, length);
         return secretKeyFactory.generateSecret(keySpec).getEncoded();
     }
 }
