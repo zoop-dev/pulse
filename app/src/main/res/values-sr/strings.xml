@@ -698,7 +698,7 @@
     <string name="pbwinstallhandler_app_item">%1$s (%2$s)</string>
     <string name="seconds_25">25 секунди</string>
     <string name="live_activity_max_heart_rate">Тренутни / највиши срчани откуцаји: %1$d / %2$d</string>
-    <string name="dateformat_date_time"><![CDATA[TВреме и датум]]></string>
+    <string name="dateformat_date_time"><![CDATA[Време и датум]]></string>
     <string name="prefs_enable_find_phone">Укључи „Пронађи телефон“</string>
     <string name="prefs_find_phone_duration">Трајање звона у секундама</string>
     <string name="miband2_prefs_dateformat">Облик датума</string>
@@ -2287,7 +2287,7 @@
     <string name="devicetype_amazfit_cheetah_square">Амејзфит Чита (четвртан)</string>
     <string name="activity_type_latin_dance">Латински плес</string>
     <string name="devicetype_miband8active">Шаоми Смарт Банд 8 Актив</string>
-    <string name="activity_db_management_import_export_explanation">Обраде увоза/извоза користе следеће путање (видите испод) на путању Вашег уређаја. Ова путања је доступна осталим програмима Анроида и Вашем рачунару. Обратите пажњу да ова путања и садржеће датотеке се бришу уколико уклоните програм Геџетбрвно. Обухваћени подаци:\n Поставке_извоза - опште поставке\n Поставке_извоза_МАЦ - нарочите поставке уређаја\nГеџетбрвно - уређај и складиште података дејстава\n Геџетбрвно_датум - складише података извезено датумом\n *.gpx снимања ГПИксом\n *.log датотеке дневника\nОчекујте да нађете своје извезене датотеке (или место датотека које желите увести) овде:</string>
+    <string name="activity_db_management_import_export_explanation">Обраде увоза/извоза користе следеће путање (видите испод) на путању Вашег уређаја. Ова путања је доступна осталим програмима Анроида и Вашем рачунару. Обратите пажњу да ова путања и садржеће датотеке се бришу уколико уклоните програм Геџетбрвно. Обухваћени подаци:\n Поставке_извоза - опште поставке\n Поставке_извоза_МАЦ - нарочите поставке уређаја\nГеџетбрвно - уређај и складиште података дејстава\n Геџетбрвно_датум - складише података извезено датумом\n *.gpx - снимања ГПИксом\n *.log - датотеке дневника\nОчекујте да нађете своје извезене датотеке (или место датотека које желите увести) овде:</string>
     <string name="activity_type_karting">Тркање колицима</string>
     <string name="devicetype_miband8">Шаоми Смарт Банд 8</string>
     <string name="devicetype_miband9">Шаоми Смарт Банд 9</string>
@@ -2392,7 +2392,7 @@
     <string name="workout_set_reps">Понављања</string>
     <string name="backstroke">Леђно пливање</string>
     <string name="groundContactTimeAvg">Просечно време додира тла</string>
-    <string name="workout_set_repetitions"></string>
+    <string name="workout_set_repetitions"/>
     <string name="stepRateSum">Збир брзина корака</string>
     <string name="restingCalories">Калорије мировања</string>
     <string name="metabolic_rate">Разина метаболизма</string>
@@ -2408,4 +2408,28 @@
     <string name="min_respiration_rate">Најмања разина дисања</string>
     <string name="swimStyle">Начин пливања</string>
     <string name="devicetype_garmin_lily_2_active">Гармин Лини 2 Активе</string>
+    <string name="auto_reconnect_ble_scan_title">Преповежи претрагом БЛЕ</string>
+    <string name="intent_api_broadcast_activity_sync_summary">Предавај намену када се усклађивање дејстава зготови на било који уређај</string>
+    <string name="prefs_wena3_hint_background_sync">Дозволи Вени да повремено пита Геџетбрвна да преузима податке дејстава са уређаја</string>
+    <string name="pref_sleepasandroid_enable_summary">Омогући успављивање програма као усклађивање са Андроидом</string>
+    <string name="sleepasandroid_settings">Успавај се као Андроид</string>
+    <string name="pref_check_permission_status_summary">Провери и питај за недостајућа овлашћења чак и када за њима нема тренутне потребе. Онемогућите ово само уколико Ваш уређај не подржава ни једну од ових могућности. Не одобравање овлашћења може узроковати неисправности!</string>
+    <string name="activity_db_management_backup_restore_label">Складиштење и повратак података</string>
+    <string name="activity_db_management_backup_restore_explanation">Обрада података увоза/извоза Вам омогућава да пренесете или ускладиштите све поставке Геџетбрвна, уређаја и података на и из датотеке зип-а.\n\nУвоз датотеке ће уклонити све постојеће податке , уређаје, и поставке, потпуно замењујући их са подацима из складишта.</string>
+    <string name="intent_api_broadcast_export_summary">Предавај намену када извоз базе података буде зготовљен</string>
+    <string name="intent_api_allow_activity_sync_summary">Дозволи окидање усклађивања дејства преко АПИ намене</string>
+    <string name="pref_sleepasandroid_device_summary">Означите уређај погона података за успављивање као Андроид</string>
+    <string name="pref_header_deprecated_functionalities">Застареле могућности</string>
+    <string name="activity_info">Подаци о дејствима</string>
+    <string name="pref_crash_notification_title">Обавести при рушењу</string>
+    <string name="intent_api_allow_activity_sync_title">Дозволи окидач усклађивања дејства</string>
+    <string name="intent_api_allow_debug_commands_title">Дозволи наредбе исправки грешака</string>
+    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Дозволи управљање везом Блутута преко АПИ намене</string>
+    <string name="intent_api_allow_trigger_export_summary">Дозволи окидање извоза складишта података преко АПИ намене</string>
+    <string name="pref_crash_notification_summary">Када се програм сруши, приказуј обавештење са грешком</string>
+    <string name="device_state_waiting_scan">Чекам претрагу уређаја</string>
+    <string name="intent_api_broadcast_activity_sync_title">Предавај при завршетку усклађивања дејства</string>
+    <string name="activity_prefs_allow_bluetooth_intent_api">АПИ намене Блутута</string>
+    <string name="intent_api_allow_trigger_export_title">Омогући извоз складишта података</string>
+    <string name="intent_api_allow_debug_commands_summary">Дозволи окидање изборника исправки грешака преко АПИ намене</string>
 </resources>
