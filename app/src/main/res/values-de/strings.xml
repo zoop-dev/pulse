@@ -2775,9 +2775,9 @@
     <string name="pref_dashboard_all_devices_summary">Kombiniere Aktivitätsdaten von allen hinzugefügten Geräten für die Gesamtzahlen auf dem Dashboard</string>
     <string name="pref_dashboard_select_devices_summary">Kombiniere Aktivitätsdaten von bestimmten Geräten für die Gesamtzahlen auf dem Dashboard</string>
     <string name="fmtPaceDistance">Tempo %d Distanz</string>
-    <string name="pref_auto_reply_calls_delay_title">Automatische Antwortverzögerung</string>
+    <string name="pref_auto_reply_calls_delay_title">Autom. Annahme-Verzögerung</string>
     <string name="pref_auto_reply_calls_delay_summary">Anzahl der Sekunden, nach denen der Anruf automatisch entgegengenommen wird</string>
-    <string name="pref_auto_reply_calls_title">Telefonanrufe automatisch annehmen</string>
+    <string name="pref_auto_reply_calls_title">Autom. Anrufannahme</string>
     <string name="pref_auto_reply_calls_summary">Das Telefon nimmt eingehende Telefonanrufe automatisch entgegen</string>
     <string name="pref_dashboard_devices_to_include">Einzubeziehende Geräte</string>
     <string name="RunningForm">Art der Durchführung</string>
@@ -2795,7 +2795,7 @@
     <string name="widget_layout_top_wide_bot_large">Oben weit, unten groß</string>
     <string name="widget_name_untitled">Unbenanntes Widget (%1$s)</string>
     <string name="pref_speak_notifications_aloud_summary">Benachrichtigungen werden über die Kopfhörer vorgelesen</string>
-    <string name="pref_speak_notifications_aloud_title">Lautes Sprechen von Benachrichtigungen</string>
+    <string name="pref_speak_notifications_aloud_title">Benachrichtigungen vorlesen</string>
     <string name="pref_header_calls_and_notifications">Anrufe und Benachrichtigungen</string>
     <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="widget_layout_top_large_bot_wide">Oben groß, unten weit</string>
@@ -2849,7 +2849,7 @@
     <string name="chart_cycling_point_label_distance">Heute: %1$.1f km\nGesamt: %2$.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="pref_title_cycling_persistence_interval">Persistenzintervall</string>
-    <string name="pref_speak_notifications_focus_exclusive_title">Audio pausieren von anderen Anwendungen</string>
+    <string name="pref_speak_notifications_focus_exclusive_title">Andere Apps stummschalten</string>
     <string name="toast_setting_requires_reconnect">Diese Einstellung wird nach einer Neuverbindung wirksam</string>
     <string name="open_camera">Open Camera</string>
     <string name="toast_camera_permission_required">Für diese Funktion ist eine Kameraerlaubnis erforderlich.</string>
