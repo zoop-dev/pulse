@@ -142,4 +142,12 @@ public interface DeviceSupport extends EventHandler {
      * converts String in a device specific way, e.g. re-map characters for a custom font
      */
     String customStringFilter(String inputString);
+
+    /**
+     * can this DeviceSupport instance's {@link #connect} be used to re-establish a
+     * lost connection or must {@link DeviceCommunicationService#connectToDevice} call
+     * {@link #dispose}, {@link DeviceSupportFactory#createDeviceSupport} and only
+     * then {@link #connect}
+     */
+    boolean canReconnect();
 }

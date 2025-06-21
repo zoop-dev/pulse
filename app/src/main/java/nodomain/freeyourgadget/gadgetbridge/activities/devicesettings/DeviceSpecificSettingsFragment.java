@@ -1502,6 +1502,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
             deviceSpecificSettings.addRootScreen(
                     DeviceSpecificSettingsScreen.DEVELOPER,
+                    R.xml.devicesettings_device_support_can_reconnect
+            );
+
+            deviceSpecificSettings.addRootScreen(
+                    DeviceSpecificSettingsScreen.DEVELOPER,
                     R.xml.devicesettings_header_intent_api,
                     R.xml.devicesettings_settings_third_party_apps
             );

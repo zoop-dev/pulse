@@ -631,6 +631,9 @@
     <string name="prefs_title_gatt_settings">Generic Attribute Profile</string>
     <string name="gatt_synchronous_writes_title">Synchronous GATT writes</string>
     <string name="gatt_synchronous_writes_summary">Prefer synchronous GATT writes over asynchronous writes if a characteristic supports both.</string>
+    <string name="prefs_device_support_settings">Device Support</string>
+    <string name="device_support_can_reconnect_title">Reuse device support</string>
+    <string name="device_support_can_reconnect_summary">Reuse DeviceSupport instance when reconnecting the gadget.</string>
     <string name="pref_disable_new_ble_scanning">Disable new BLE scanning</string>
     <string name="pref_summary_disable_new_ble_scanning">Check this option if your device cannot be found during discovery</string>
     <string name="not_connected">Not connected</string>

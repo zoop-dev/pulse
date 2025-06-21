@@ -601,4 +601,15 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
 
     @Override
     public void onMusicOperation(int operation, int playlistIndex, String playlistName, ArrayList<Integer> musicIds) {}
+
+    @Override
+    public boolean canReconnect() {
+        final boolean defaultValue = true;
+        DevicePrefs prefs = getDevicePrefs();
+        if (prefs != null) {
+            return prefs.getBoolean(DeviceSettingsPreferenceConst.PREFS_DEVICE_SUPPORT_CAN_RECONNECT,
+                    defaultValue);
+        }
+        return defaultValue;
+    }
 }

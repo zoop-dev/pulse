@@ -1,10 +1,11 @@
-/*  Copyright (C) 2015-2024 Andreas Böhler, Andreas Shimokawa, Arjan
+/*  Copyright (C) 2015-2025 Andreas Böhler, Andreas Shimokawa, Arjan
     Schrijver, Avamander, Carsten Pfeiffer, Daniel Dakhno, Daniele Gobbetti,
     Daniel Hauck, Davis Mosenkovs, Dikay900, Dmitriy Bogdanov, Frank Slezak,
     Gabriele Monaco, Gordon Williams, ivanovlev, João Paulo Barraca, José
     Rebelo, Julien Pivotto, Kasha, keeshii, Martin, Matthieu Baerts, mvn23,
     NekoBox, Nephiel, Petr Vaněk, Sebastian Kranz, Sergey Trofimov, Steffen
-    Liebergeld, Taavi Eomäe, TylerWilliamson, Uwe Hermann, Yoran Vulker
+    Liebergeld, Taavi Eomäe, TylerWilliamson, Uwe Hermann, Yoran Vulker,
+    Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -67,7 +68,6 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCar
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmClockReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothConnectReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothPairingRequestReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CMWeatherReceiver;
@@ -263,7 +263,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
     private VolumeChangeReceiver mVolumeChangeReceiver = null;
 
-    private AlarmReceiver mAlarmReceiver = null;
     private final List<CalendarReceiver> mCalendarReceiver = new ArrayList<>();
     private CMWeatherReceiver mCMWeatherReceiver = null;
     private LineageOsWeatherReceiver mLineageOsWeatherReceiver = null;
@@ -475,7 +474,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     return;
                 }
 
-                connectToDevice(target);
+                connectToDevice(target, false);
             }
         }
     };
@@ -590,25 +589,17 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         return registeredStruct;
     }
 
-    private void connectToDevice(GBDevice device){
-        connectToDevice(device, false);
-    }
+    private void connectToDevice(@Nullable final GBDevice device, final boolean firstTime) {
+        final List<GBDevice> gbDevs = new ArrayList<>(2);
+        final boolean fromExtra;
 
-    private void connectToDevice(@Nullable final GBDevice device, boolean firstTime) {
-        final List<GBDevice> gbDevs = new ArrayList<>();
-        boolean fromExtra = false;
-
-        final Prefs prefs = getPrefs();
+        final GBPrefs prefs = getPrefs();
 
         if (device != null) {
-            if (!device.getDeviceCoordinator().isConnectable()) {
-                GB.toast("Cannot connect to Scannable Device", Toast.LENGTH_SHORT, GB.INFO);
-                return;
-            }
-
             gbDevs.add(device);
             fromExtra = true;
         } else {
+            fromExtra = false;
             List<GBDevice> gbAllDevs = GBApplication.app().getDeviceManager().getDevices();
 
             if (gbAllDevs != null && !gbAllDevs.isEmpty()) {
@@ -633,67 +624,105 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             return;
         }
 
-        for (GBDevice gbDevice : gbDevs) {
+        for (final GBDevice gbDevice : gbDevs) {
+            final String deviceAddress = gbDevice.getAddress();
+
             if (!gbDevice.getDeviceCoordinator().isConnectable()) {
                 // we cannot connect to beacons, skip this device
+                LOG.debug("connectToDevice - {} isn't connectable", deviceAddress);
+                if (fromExtra) {
+                    GB.toast("Cannot connect to Scannable Device", Toast.LENGTH_SHORT, GB.INFO);
+                }
                 continue;
             }
 
-            String btDeviceAddress = gbDevice.getAddress();
-
-            boolean autoReconnect = GBPrefs.AUTO_RECONNECT_DEFAULT;
+            final boolean autoReconnect;
             if (prefs != null && prefs.getPreferences() != null) {
-                autoReconnect = getPrefs().getAutoReconnect(gbDevice);
+                autoReconnect = prefs.getAutoReconnect(gbDevice);
                 if (!fromExtra && !autoReconnect) {
+                    LOG.debug("connectToDevice - {} neither from extra nor auto reconnect (1)",
+                            deviceAddress);
                     continue;
                 }
 
                 final Set<String> lastDeviceAddresses = new HashSet<>(prefs.getStringSet(GBPrefs.LAST_DEVICE_ADDRESSES, Collections.emptySet()));
 
-                if (!lastDeviceAddresses.contains(btDeviceAddress)) {
-                    lastDeviceAddresses.add(btDeviceAddress);
+                if (!lastDeviceAddresses.contains(deviceAddress)) {
+                    lastDeviceAddresses.add(deviceAddress);
                     prefs.getPreferences().edit().putStringSet(GBPrefs.LAST_DEVICE_ADDRESSES, lastDeviceAddresses).apply();
                 }
+            } else {
+                autoReconnect = GBPrefs.AUTO_RECONNECT_DEFAULT;
             }
 
             if (!fromExtra && !autoReconnect) {
+                LOG.debug("connectToDevice - {} neither from extra nor auto reconnect (2)",
+                        deviceAddress);
                 continue;
             }
 
             DeviceStruct registeredStruct = getDeviceStructOrNull(gbDevice);
             if (registeredStruct == null) {
+                LOG.debug("connectToDevice - {} create new device struct", deviceAddress);
                 registeredStruct = createDeviceStruct(gbDevice);
-            } else {
-                final GBDevice deviceFromStruct = registeredStruct.getDevice();
-
-                if (isDeviceConnecting(deviceFromStruct) || isDeviceConnected(deviceFromStruct)) {
-                    continue;
-                }
-
-                try {
-                    removeDeviceSupport(gbDevice);
-                } catch (final DeviceNotFoundException e) {
-                    LOG.error("connectToDevice(): Failed to remove device support: {}", e, e);
-                }
             }
 
             try {
-                final DeviceSupport deviceSupport = mFactory.createDeviceSupport(gbDevice);
+                DeviceSupport deviceSupport = registeredStruct.getDeviceSupport();
 
                 if (deviceSupport != null) {
-                    setDeviceSupport(gbDevice, deviceSupport);
+                    if (deviceSupport.isConnected()) {
+                        LOG.debug("connectToDevice - {} device support is already connected",
+                                deviceAddress);
+                        continue;
+                    }
+                    GBDevice supportDevice = deviceSupport.getDevice();
+                    if (supportDevice != null && supportDevice.isConnected()) {
+                        LOG.debug("connectToDevice - {} device is already connected",
+                                deviceAddress);
+                        continue;
+                    }
+                    if (supportDevice != null && supportDevice.isConnecting()) {
+                        LOG.debug("connectToDevice - {} device is already connecting",
+                                deviceAddress);
+                        continue;
+                    }
+                }
 
+                if (deviceSupport != null && !deviceSupport.canReconnect()) {
+                    try {
+                        LOG.debug("connectToDevice - {} dispose device support", deviceAddress);
+                        deviceSupport.dispose();
+                    } catch (final Exception e) {
+                        LOG.error("connectToDevice - {} failed to dispose device support",
+                                deviceAddress, e);
+                    }
+                    deviceSupport = null;
+                }
+
+                final boolean createSupport = (deviceSupport == null);
+                if (createSupport) {
+                    LOG.debug("connectToDevice - {} create new device support", deviceAddress);
+                    deviceSupport = mFactory.createDeviceSupport(gbDevice);
+                    registeredStruct.setDeviceSupport(deviceSupport);
+                }
+
+                if (deviceSupport != null) {
+                    final boolean connected;
                     if (firstTime) {
-                        deviceSupport.connectFirstTime();
+                        connected = deviceSupport.connectFirstTime();
                     } else {
                         deviceSupport.setAutoReconnect(autoReconnect);
                         deviceSupport.setScanReconnect(reconnectViaScan);
-                        deviceSupport.connect();
+                        connected = deviceSupport.connect();
                     }
+                    LOG.debug("connectToDevice - {} connected:{} firstTime:{}", deviceAddress,
+                            connected, firstTime);
                 } else {
                     GB.toast(this, getString(R.string.cannot_connect, "Can't create device support"), Toast.LENGTH_SHORT, GB.ERROR);
                 }
             } catch (Exception e) {
+                LOG.warn("exception in connectToDevice for {}", deviceAddress, e);
                 GB.toast(this, getString(R.string.cannot_connect, e.getMessage()), Toast.LENGTH_SHORT, GB.ERROR, e);
             }
 
@@ -1157,25 +1186,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
     }
 
-    /**
-     * Disposes the current DeviceSupport instance (if any) and sets a new device support instance
-     * (if not null).
-     *
-     * @param deviceSupport deviceSupport to reokace/add
-     */
-    private void setDeviceSupport(GBDevice device, DeviceSupport deviceSupport) throws DeviceNotFoundException {
-       DeviceStruct deviceStruct = getDeviceStruct(device);
-       DeviceSupport cachedDeviceSupport = deviceStruct.getDeviceSupport();
-       if (deviceSupport != cachedDeviceSupport && cachedDeviceSupport != null) {
-           cachedDeviceSupport.dispose();
-       }
-       deviceStruct.setDeviceSupport(deviceSupport);
-    }
-
     private void removeDeviceSupport(GBDevice device) throws DeviceNotFoundException {
         DeviceStruct struct = getDeviceStruct(device);
-        if(struct.getDeviceSupport() != null){
-            struct.getDeviceSupport().dispose();
+        DeviceSupport support = struct.getDeviceSupport();
+        if(support != null){
+            support.dispose();
         }
         struct.setDeviceSupport(null);
     }
@@ -1230,10 +1245,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
         for(DeviceStruct struct : deviceStructs){
             if(struct.getDevice().equals(device)){
-                if(struct.getDeviceSupport() == null)
+                DeviceSupport support = struct.getDeviceSupport();
+                if(support == null)
                     throw new DeviceNotFoundException(device);
 
-                return struct.getDeviceSupport();
+                return support;
             }
         }
         throw new DeviceNotFoundException(device);
@@ -1252,27 +1268,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
     }
 
-    private boolean isDeviceConnected(GBDevice device) {
-        return isDeviceConnected(device.getAddress());
-    }
-
     private boolean isDeviceConnected(String deviceAddress) {
         for(DeviceStruct struct : deviceStructs){
             if(struct.getDevice().getAddress().compareToIgnoreCase(deviceAddress) == 0){
                 return struct.getDevice().isConnected();
-            }
-        }
-        return false;
-    }
-
-    private boolean isDeviceConnecting(GBDevice device) {
-        return isDeviceConnecting(device.getAddress());
-    }
-
-    private boolean isDeviceConnecting(String deviceAddress) {
-        for(DeviceStruct struct : deviceStructs){
-            if(struct.getDevice().getAddress().compareToIgnoreCase(deviceAddress) == 0){
-                return struct.getDevice().isConnecting();
             }
         }
         return false;
@@ -1286,17 +1285,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         for(DeviceStruct struct : deviceStructs){
             if(struct.getDevice().getAddress().compareToIgnoreCase(deviceAddress) == 0){
                 return struct.getDevice().isInitialized();
-            }
-        }
-        return false;
-    }
-
-    private boolean deviceStateEquals(GBDevice device, GBDevice.State... states){
-        if((device = getDeviceByAddressOrNull(device.getAddress())) != null){
-            for(GBDevice.State possibleState : states){
-                if(device.getState() == possibleState){
-                    return true;
-                }
             }
         }
         return false;

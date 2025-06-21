@@ -621,6 +621,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREFS_KEY_DEVICE_BLE_API_CHARACTERISTIC = "prefs_device_ble_api_filter_char";
     public static final String PREFS_KEY_DEVICE_BLE_API_PACKAGE = "prefs_device_ble_api_package";
 
+    public static final String PREFS_DEVICE_SUPPORT_CAN_RECONNECT = "prefs_device_support_can_reconnect";
     public static final String PREFS_DEVICE_GATT_SYNCHRONOUS_WRITES = "prefs_device_gatt_synchronous_writes";
     public static final String PREF_BATTERY_DISCHARGE_INTERVAL1_WATT = "battery_discharge_interval1_watt";
     public static final String PREF_BATTERY_DISCHARGE_INTERVAL2_WATT = "battery_discharge_interval2_watt";

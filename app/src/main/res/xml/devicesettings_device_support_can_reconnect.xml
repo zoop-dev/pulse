@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/prefs_device_support_settings" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_cycle"
+        android:key="prefs_device_support_can_reconnect"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/device_support_can_reconnect_summary"
+        android:title="@string/device_support_can_reconnect_title" />
+</androidx.preference.PreferenceScreen>
