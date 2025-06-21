@@ -18,7 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.asteroidos;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 
@@ -53,7 +52,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.requests.SetTimeRequest;
 
 public class AsteroidOSDeviceSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(AsteroidOSDeviceSupport.class);

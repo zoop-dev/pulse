@@ -26,18 +26,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.asteroidos.AsteroidOSDeviceSupport;
 
-public class AsteroidOSDeviceCoordinator extends AbstractDeviceCoordinator {
-
+public class AsteroidOSDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public String getManufacturer() {
         return "AsteroidOS";

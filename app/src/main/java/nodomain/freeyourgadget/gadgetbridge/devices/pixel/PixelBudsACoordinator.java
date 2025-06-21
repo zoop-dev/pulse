@@ -5,13 +5,13 @@ import androidx.annotation.NonNull;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pixel.PixelBudsADeviceSupport;
 
-public class PixelBudsACoordinator extends AbstractDeviceCoordinator {
+public class PixelBudsACoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_pixel_buds_a_series;

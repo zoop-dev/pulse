@@ -18,17 +18,14 @@ package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds;
 
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.RedmiBudsDeviceSupport;
 
-public abstract class AbstractRedmiBudsCoordinator extends AbstractDeviceCoordinator {
+public abstract class AbstractRedmiBudsCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public String getManufacturer() {
         return "Xiaomi";

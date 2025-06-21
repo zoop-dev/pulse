@@ -7,13 +7,13 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.liberty.SoundcoreLiberty4NCDeviceSupport;
 
-public class SoundcoreLiberty4NCCoordinator extends AbstractDeviceCoordinator {
+public class SoundcoreLiberty4NCCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_soundcore_liberty4_nc;

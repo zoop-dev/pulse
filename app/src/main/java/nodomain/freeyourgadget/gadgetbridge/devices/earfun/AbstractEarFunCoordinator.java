@@ -2,24 +2,16 @@ package nodomain.freeyourgadget.gadgetbridge.devices.earfun;
 
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.EarFunDeviceSupport;
 
-public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinator {
+public abstract class AbstractEarFunCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public String getManufacturer() {
         return "EarFun";
-    }
-
-    @Override
-    public ConnectionType getConnectionType() {
-        return ConnectionType.BT_CLASSIC;
     }
 
     @NonNull
