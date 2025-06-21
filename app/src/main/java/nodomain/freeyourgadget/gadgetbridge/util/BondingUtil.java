@@ -1,5 +1,5 @@
-/*  Copyright (C) 2020-2024 Andreas Böhler, Arjan Schrijver, Daniel Dakhno,
-    José Rebelo, Taavi Eomäe
+/*  Copyright (C) 2020-2025 Andreas Böhler, Arjan Schrijver, Daniel Dakhno,
+    José Rebelo, Taavi Eomäe, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -310,18 +310,20 @@ public class BondingUtil {
             } else if (extra instanceof final ScanResult scanResult) {
                 deviceToPair = scanResult.getDevice();
             } else {
-                LOG.error(" handleActivityResult unexpected EXTRA_DEVICE {}", extra);
+                LOG.error("handleActivityResult unexpected EXTRA_DEVICE {}", extra);
                 deviceToPair = null;
             }
 
             if (deviceToPair != null) {
                 if (deviceToPair.getAddress().equals(bondingInterface.getMacAddress())) {
+                    StartObserving(bondingInterface.getContext(), deviceToPair.getAddress());
                     if (deviceToPair.getBondState() != BluetoothDevice.BOND_BONDED) {
                         BondingUtil.bluetoothBond(bondingInterface, bondingInterface.getCurrentTarget().getDevice());
                     } else {
                         bondingInterface.onBondingComplete(true);
                     }
                 } else {
+                    LOG.debug("handleActivityResult unexpected device {}", deviceToPair);
                     bondingInterface.onBondingComplete(false);
                 }
             }
@@ -383,6 +385,7 @@ public class BondingUtil {
         for (String association : manager.getAssociations()) {
             LOG.debug(String.format("Already associated with: %s", association));
             if (association.equals(macAddress)) {
+                StartObserving(bondingInterface.getContext(), macAddress);
                 LOG.info("The device has already been bonded through CompanionDeviceManager, using regular");
                 // If it's already "associated", we should immediately pair
                 // because the callback is never called (AFAIK?)
@@ -515,6 +518,93 @@ public class BondingUtil {
         };
     }
 
+    public static boolean StartObservingAll(Context context) {
+        return StartObserving(context, null);
+    }
+
+    public static boolean StartObserving(Context context, String mac) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            LOG.info("StartObserving - API {} < {} is too old",
+                    Build.VERSION.SDK_INT, Build.VERSION_CODES.S);
+            return false;
+        }
+
+        if (mac != null && !BluetoothAdapter.checkBluetoothAddress(mac)) {
+            LOG.warn("StartObserving - mac '{}' is invalid", mac);
+            return false;
+        }
+
+        final CompanionDeviceManager manager = getCompanionDeviceManager(context);
+        if (manager == null) {
+            LOG.warn("StartObserving - CompanionDeviceManager is null");
+            return false;
+        }
+
+        boolean success = false;
+        final List<String> addresses;
+        if (mac == null) {
+            addresses = manager.getAssociations();
+            LOG.debug("StartObserving - {} associations", addresses.size());
+        } else {
+            addresses = Collections.singletonList(mac);
+        }
+
+        for (final String address : addresses) {
+            try {
+                LOG.debug("StartObserving - {}", address);
+                manager.startObservingDevicePresence(address);
+                success = true;
+            } catch (Exception e) {
+                LOG.warn("StartObserving - exception", e);
+            }
+        }
+        return success;
+    }
+
+
+    public static boolean StopObservingAll(Context context) {
+        return StopObserving(context, null);
+    }
+
+    public static boolean StopObserving(final Context context, final String mac) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            LOG.info("StopObserving - API {} < {} is too old",
+                    Build.VERSION.SDK_INT, Build.VERSION_CODES.S);
+            return false;
+        }
+
+        if (mac != null && !BluetoothAdapter.checkBluetoothAddress(mac)) {
+            LOG.warn("StopObserving - mac '{}' is invalid", mac);
+            return false;
+        }
+
+        final CompanionDeviceManager manager = getCompanionDeviceManager(context);
+        if (manager == null) {
+            LOG.warn("StopObserving - CompanionDeviceManager is null");
+            return false;
+        }
+
+        boolean success = false;
+        final List<String> addresses;
+        if (mac == null) {
+            addresses = manager.getAssociations();
+            LOG.debug("StopObserving - {} associations", addresses.size());
+        } else {
+            addresses = Collections.singletonList(mac);
+        }
+
+        for (final String address : addresses) {
+            try {
+                LOG.debug("StopObserving - {}", address);
+                manager.stopObservingDevicePresence(address);
+                success = true;
+            } catch (Exception e) {
+                LOG.warn("StopObserving - exception {}", e.getMessage());
+            }
+        }
+        return success;
+    }
+
     public static boolean Disassociate(Context context, String mac) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             LOG.info("Disassociate - API {} < {} is too old",
@@ -532,6 +622,7 @@ public class BondingUtil {
             LOG.warn("Disassociate - CompanionDeviceManager is null");
         } else {
             try {
+                StopObserving(context, mac);
                 LOG.debug("Disassociate - {}", mac);
                 manager.disassociate(mac);
                 return true;
@@ -548,6 +639,8 @@ public class BondingUtil {
             LOG.warn("Unpair - mac '{}' is invalid", mac);
             return false;
         }
+
+        StopObserving(context, mac);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
             LOG.debug("Unpair - API {} < {} is too old for modern bond removal",

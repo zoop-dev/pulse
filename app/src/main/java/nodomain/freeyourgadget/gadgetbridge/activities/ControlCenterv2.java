@@ -28,7 +28,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.PhoneStateListener;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.MotionEvent;

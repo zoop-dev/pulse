@@ -85,6 +85,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.NotificationCollectorMonitorService;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
@@ -168,6 +169,7 @@ public class GBApplication extends Application {
 
     public static void quit() {
         GB.log("Quitting Gadgetbridge...", GB.INFO, null);
+        BondingUtil.StopObservingAll(getContext());
         Intent quitIntent = new Intent(GBApplication.ACTION_QUIT);
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
         GBApplication.deviceService().quit();
@@ -176,6 +178,7 @@ public class GBApplication extends Application {
 
     public static void restart() {
         GB.log("Restarting Gadgetbridge...", GB.INFO, null);
+        BondingUtil.StopObservingAll(getContext());
         final Intent quitIntent = new Intent(GBApplication.ACTION_QUIT);
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
         GBApplication.deviceService().quit();
@@ -288,6 +291,8 @@ public class GBApplication extends Application {
                                 .build(), context);
             }
         }
+
+        BondingUtil.StartObservingAll(getBaseContext());
     }
 
     @Override
