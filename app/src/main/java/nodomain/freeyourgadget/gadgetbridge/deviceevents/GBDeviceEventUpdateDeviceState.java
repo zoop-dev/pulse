@@ -29,7 +29,6 @@ public class GBDeviceEventUpdateDeviceState extends GBDeviceEvent {
 
     @Override
     public void evaluate(final Context context, final GBDevice device) {
-        device.setState(state);
-        device.sendDeviceUpdateIntent(context, GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        device.setUpdateState(state, context);
     }
 }

@@ -44,9 +44,7 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Locale;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -152,8 +150,7 @@ public class XiaomiAuthService extends AbstractXiaomiService {
 
                     LOG.info("Authenticated, further communications are {}", encryptionInitialized ? "encrypted" : "in plaintext");
 
-                    getSupport().getDevice().setState(GBDevice.State.INITIALIZED);
-                    getSupport().getDevice().sendDeviceUpdateIntent(getSupport().getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+                    getSupport().getDevice().setUpdateState(GBDevice.State.INITIALIZED, getSupport().getContext());
 
                     getSupport().onAuthSuccess();
                 } else {

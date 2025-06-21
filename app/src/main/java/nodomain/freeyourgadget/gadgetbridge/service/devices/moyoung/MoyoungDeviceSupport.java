@@ -115,7 +115,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
@@ -190,7 +189,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         final int mtu = ((AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator()).getMtu();
         builder.requestMtu(mtu + 3);  // Add 3 bytes for the BLE overhead
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         builder.notify(getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN), true);
         deviceInfoProfile.requestDeviceInfo(builder);
         setTime(builder);
@@ -201,7 +200,7 @@ public class MoyoungDeviceSupport extends AbstractBTLEDeviceSupport {
         batteryInfoProfile.enableNotify(builder, true);
         heartRateProfile.enableNotify(builder, true);
         builder.notify(getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_STEPS), true);
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
 
         // TODO: I would prefer this to be done when the alarms screen is open, not on initialization...
         sendPacket(builder, MoyoungPacketOut.buildPacket(mtu, MoyoungConstants.CMD_QUERY_ALARM_CLOCK, new byte[0]));

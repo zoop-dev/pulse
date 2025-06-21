@@ -43,7 +43,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
@@ -78,11 +77,11 @@ public class MiCompositionScaleDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         LOG.debug("Requesting Device Info!");
         deviceInfoProfile.requestDeviceInfo(builder);
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
 
         // Weight and body composition
         builder.setCallback(this);

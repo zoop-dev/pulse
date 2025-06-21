@@ -22,7 +22,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
@@ -77,7 +76,7 @@ public class PolarH10DeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // Enter initializing state
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         deviceInfoProfile.requestDeviceInfo(builder);
         deviceInfoProfile.enableNotify(builder, true);
@@ -93,7 +92,7 @@ public class PolarH10DeviceSupport extends AbstractBTLEDeviceSupport {
         getDevice().setFirmwareVersion2("N/A");
 
         // Enter initialized state
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         return builder;
     }
 

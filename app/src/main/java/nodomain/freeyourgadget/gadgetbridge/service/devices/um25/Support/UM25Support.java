@@ -47,7 +47,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.um25.Activity.DataActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Data.CaptureGroup;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Data.MeasurementData;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -117,7 +116,7 @@ public class UM25Support extends UM25BaseSupport {
         getDevice().setFirmwareVersion("1.0");
 
         return builder
-                .add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()))
+                .setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext())
                 .notify(getCharacteristic(UUID.fromString(UUID_CHAR)), true)
                 .add(new BtLEAction(null) {
                     @Override
@@ -137,7 +136,7 @@ public class UM25Support extends UM25BaseSupport {
                         return true;
                     }
                 })
-                .add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+                .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
     }
 
     @Override

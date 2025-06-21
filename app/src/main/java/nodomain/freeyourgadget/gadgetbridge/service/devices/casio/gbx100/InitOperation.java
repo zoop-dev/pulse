@@ -30,9 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.Casio2C2DSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gbx100.CasioGBX100DeviceSupport;
 
 public class InitOperation extends AbstractBTLEOperation<CasioGBX100DeviceSupport> {
     private static final Logger LOG = LoggerFactory.getLogger(InitOperation.class);
@@ -268,7 +266,7 @@ public class InitOperation extends AbstractBTLEOperation<CasioGBX100DeviceSuppor
 
     @Override
     protected void doPerform() throws IOException {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         enableAllFeatures(builder, true);
         requestWatchName(builder);
     }

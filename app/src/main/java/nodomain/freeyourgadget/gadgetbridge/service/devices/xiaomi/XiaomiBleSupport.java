@@ -37,7 +37,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -110,7 +109,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
             if (uuidSet == null) {
                 GB.toast(getContext(), "Failed to find known Xiaomi service", Toast.LENGTH_LONG, GB.ERROR);
                 LOG.warn("Failed to find known Xiaomi service");
-                builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.NOT_CONNECTED, getContext()));
+                builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
                 return builder;
             }
 
@@ -123,7 +122,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
             if (btCharacteristicCommandRead == null || btCharacteristicCommandWrite == null) {
                 LOG.warn("Characteristics are null, will attempt to reconnect");
-                builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+                builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
                 return builder;
             }
 
@@ -152,12 +151,12 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
             // request highest possible MTU; device should response with the highest supported MTU anyway
             builder.requestMtu(512);
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
             builder.notify(btCharacteristicCommandWrite, true);
             builder.notify(btCharacteristicCommandRead, true);
             builder.notify(btCharacteristicActivityData, true);
             builder.notify(btCharacteristicDataUpload, true);
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
 
             if (uuidSet.isEncrypted()) {
                 builder.add(new PlainAction() {

@@ -51,7 +51,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.watch9.operations.InitOperation;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
@@ -308,7 +307,7 @@ public class Watch9DeviceSupport extends AbstractBTLEDeviceSupport {
                 .enableNotificationChannels(builder)
                 .enableDoNotDisturb(builder, false)
                 .setFitnessGoal(builder);
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         builder.setCallback(this);
 
         return this;

@@ -36,7 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 
 public class ID115Support extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(ID115Support.class);
@@ -56,7 +55,7 @@ public class ID115Support extends AbstractBTLEDeviceSupport {
         normalWriteCharacteristic = getCharacteristic(ID115Constants.UUID_CHARACTERISTIC_WRITE_NORMAL);
         healthWriteCharacteristic = getCharacteristic(ID115Constants.UUID_CHARACTERISTIC_WRITE_HEALTH);
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         setTime(builder)
                 .setWrist(builder)
@@ -132,7 +131,7 @@ public class ID115Support extends AbstractBTLEDeviceSupport {
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
     }
 
     ID115Support setTime(TransactionBuilder builder) {

@@ -143,7 +143,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.AbortTransactionAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ConditionalWriteAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertNotificationProfile;
@@ -390,7 +389,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
                     new InitOperation2021(authenticate, authFlags, cryptFlags, this, builder, characteristicChunked2021Write, huami2021ChunkedEncoder, huami2021ChunkedDecoder).perform();
                 } else {
                     LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
-                    builder.add(new SetDeviceStateAction(getDevice(), State.WAITING_FOR_RECONNECT, getContext()));
+                    builder.setUpdateState(getDevice(), State.WAITING_FOR_RECONNECT, getContext());
                 }
             } else {
                 new InitOperation(authenticate, authFlags, cryptFlags, this, builder).perform();
@@ -502,7 +501,7 @@ public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
      * @param builder
      */
     public void setInitialized(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(gbDevice, State.INITIALIZED, getContext()));
+        builder.setUpdateState(gbDevice, State.INITIALIZED, getContext());
     }
 
     // MB2: AVL

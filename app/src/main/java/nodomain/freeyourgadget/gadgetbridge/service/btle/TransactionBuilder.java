@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Böhler, Andreas Shimokawa, Carsten
+/*  Copyright (C) 2015-2025 Andreas Böhler, Andreas Shimokawa, Carsten
     Pfeiffer, Damien Gaignon, Daniel Dakhno, Daniele Gobbetti, Frank Ertl,
-    José Rebelo, Johannes Krude
+    José Rebelo, Johannes Krude, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,22 +19,24 @@
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.os.Build;
+import android.content.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import java.util.Arrays;
 
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.BondAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.FunctionAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.NotifyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestConnectionPriorityAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestMtuAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 
@@ -126,6 +128,14 @@ public class TransactionBuilder {
     public TransactionBuilder add(BtLEAction action) {
         mTransaction.add(action);
         return this;
+    }
+
+    /**
+     * Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
+     */
+    public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
+        BtLEAction action = new SetDeviceStateAction(device, state, context);
+        return add(action);
     }
 
     /**

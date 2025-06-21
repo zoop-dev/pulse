@@ -28,7 +28,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.jyou.BFH16Constants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class BandWPSeriesDeviceSupport extends AbstractBTLEDeviceSupport {
@@ -55,7 +54,7 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // mark the device as initializing
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         getDevice().setBatteryLabel(R.string.left_earbud, 0);
         getDevice().setBatteryLabel(R.string.right_earbud, 1);
@@ -69,7 +68,7 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLEDeviceSupport {
         }
 
         // mark the device as initialized
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
 
         builder.notify(getCharacteristic(UUID_RPC_RESPONSE_CHARACTERISTIC), true);
         builder.notify(getCharacteristic(UUID_RPC_NOTIFICATION_CHARACTERISTIC), true);

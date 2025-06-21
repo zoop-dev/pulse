@@ -35,7 +35,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedDecoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021ChunkedEncoder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami2021Handler;
@@ -74,7 +73,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
     @Override
     protected void doPerform() {
         huamiSupport.enableNotifications(builder, true);
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         // get random auth number
         generateKeyPair();
         final byte[] sendPubKeyCommand = new byte[48 + 4];
@@ -163,7 +162,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
 
             try {
                 final TransactionBuilder builder = createTransactionBuilder("Authenticated, now initialize phase 2");
-                builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+                builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
                 builder.setCallback(null); // remove init operation as the callback
                 huamiSupport.enableFurtherNotifications(builder, true);
                 huamiSupport.setCurrentTime(builder);

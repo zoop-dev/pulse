@@ -42,7 +42,6 @@ import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.PlainAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiChannelHandler.Channel;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -70,8 +69,8 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
                         "N/A");
             }
 
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
             builder.write(XiaomiSppPacketV1.newBuilder()
                     .channel(Channel.Version)
                     .needsResponse(true)

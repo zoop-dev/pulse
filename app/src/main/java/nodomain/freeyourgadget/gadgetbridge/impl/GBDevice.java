@@ -391,11 +391,19 @@ public class GBDevice implements Parcelable {
         return mState.ordinal();
     }
 
+    /// device specific code must use {@link #setUpdateState} instead
     public void setState(State state) {
         mState = state;
         if (state.ordinal() <= State.CONNECTED.ordinal()) {
             unsetDynamicState();
         }
+    }
+
+    /// shared helper to set device state and broadcast a {@link #ACTION_DEVICE_CHANGED}
+    /// intent with subject {@link DeviceUpdateSubject#DEVICE_STATE}
+    public void setUpdateState(State deviceState, Context context){
+        setState(deviceState);
+        sendDeviceUpdateIntent(context, GBDevice.DeviceUpdateSubject.DEVICE_STATE);
     }
 
     private void unsetDynamicState() {

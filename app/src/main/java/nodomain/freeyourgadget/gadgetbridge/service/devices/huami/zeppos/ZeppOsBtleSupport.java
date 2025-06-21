@@ -50,7 +50,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
@@ -118,7 +117,7 @@ public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements Zepp
         final BluetoothGattCharacteristic characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
         if (characteristicChunked2021Write == null || characteristicChunked2021Read == null) {
             LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
             return builder;
         }
 

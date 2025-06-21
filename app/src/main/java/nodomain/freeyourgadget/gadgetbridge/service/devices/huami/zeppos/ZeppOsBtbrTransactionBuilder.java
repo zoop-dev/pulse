@@ -23,7 +23,6 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
 
 public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
@@ -47,7 +46,7 @@ public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
 
     @Override
     public void setDeviceState(final GBDevice device, final GBDevice.State deviceState, final Context context) {
-        mBuilder.add(new SetDeviceStateAction(device, deviceState, context));
+        mBuilder.setUpdateState(device, deviceState, context);
     }
 
     @Override

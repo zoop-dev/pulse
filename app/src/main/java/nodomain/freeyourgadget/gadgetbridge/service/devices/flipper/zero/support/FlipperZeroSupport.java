@@ -36,7 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
@@ -131,7 +130,7 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
             recevierRegistered = true;
         }
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         builder.read(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING));
 
         batteryInfoProfile.requestBatteryInfo(builder);
@@ -140,7 +139,7 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
         return builder
                 .notify(getCharacteristic(UUID.fromString(UUID_SERIAL_CHARACTERISTIC_RESPONSE)), true)
                 .requestMtu(512)
-                .add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+                .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
     }
 
     @Override

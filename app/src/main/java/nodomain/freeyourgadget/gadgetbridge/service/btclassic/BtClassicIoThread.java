@@ -200,8 +200,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
     }
 
     protected void setUpdateState(GBDevice.State state) {
-        gbDevice.setState(state);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        gbDevice.setUpdateState(state, getContext());
     }
 
     /**

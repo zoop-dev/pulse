@@ -32,7 +32,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 
 public class BleGattClientSupport extends AbstractBTLEDeviceSupport {
     public static final Logger logger = LoggerFactory.getLogger(BleGattClientSupport.class);
@@ -75,12 +74,12 @@ public class BleGattClientSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         readCharacteristicIfAvailable(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL, builder);
         readCharacteristicIfAvailable(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING, builder);
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
 
         return builder;
     }

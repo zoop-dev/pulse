@@ -77,7 +77,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lenovo.operations.InitOperation;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
@@ -544,7 +543,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                 //.setUnitsSettings()                             // set metric/imperial units
                 .checkInitTime(builder)
                 .syncPreferences(builder);                      // read preferences from app and set them to watch
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         builder.setCallback(this);
         return this;
     }

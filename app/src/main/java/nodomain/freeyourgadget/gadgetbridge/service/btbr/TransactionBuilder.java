@@ -16,13 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btbr;
 
+import android.content.Context;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WriteAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
 
 public class TransactionBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(TransactionBuilder.class);
@@ -54,6 +59,14 @@ public class TransactionBuilder {
     public TransactionBuilder add(BtBRAction action) {
         mTransaction.add(action);
         return this;
+    }
+
+    /**
+     * Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
+     */
+    public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
+        BtBRAction action = new SetDeviceStateAction(device, state, context);
+        return add(action);
     }
 
     /**

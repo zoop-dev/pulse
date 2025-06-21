@@ -142,7 +142,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
@@ -193,7 +192,7 @@ public class FitProDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         readCharacteristic = getCharacteristic(UUID_CHARACTERISTIC_RX);
         writeCharacteristic = getCharacteristic(UUID_CHARACTERISTIC_TX);
 
@@ -232,7 +231,7 @@ public class FitProDeviceSupport extends AbstractBTLEDeviceSupport {
         builder.write(writeCharacteristic, craftData(CMD_GROUP_BAND_INFO, CMD_RX_BAND_INFO));
         builder.wait(200);
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         return builder;
     }
 

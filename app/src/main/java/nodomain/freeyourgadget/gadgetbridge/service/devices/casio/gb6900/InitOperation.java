@@ -29,8 +29,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gb6900.CasioGB6900DeviceSupport;
 
 public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSupport> {
     private static final Logger LOG = LoggerFactory.getLogger(InitOperation.class);
@@ -47,7 +45,7 @@ public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSuppor
 
     @Override
     protected void doPerform() throws IOException {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         TransactionBuilder builder = getSupport().createTransactionBuilder("readBleSettings");
         builder.setCallback(this);
         builder.read(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_BLE_CHARACTERISTIC_UUID));

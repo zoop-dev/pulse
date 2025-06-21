@@ -43,7 +43,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.marstek.SolarEquipmentStatus
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -89,8 +88,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
                 decodeDischargeIntervalsToPreferences(value);
                 if (!is_initialized) {
                     sendCommand("set time (initial)", encodeSetCurrentTime());
-                    gbDevice.setState(GBDevice.State.INITIALIZED);
-                    gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+                    gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
                     is_initialized = true;
                 }
                 return true;
@@ -115,7 +113,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
         builder.requestMtu(512);

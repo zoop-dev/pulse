@@ -60,7 +60,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -80,7 +79,7 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         writeCharacteristic = getCharacteristic(HamaFit6900Constants.UUID_CHARACTERISTIC_TX);
 
@@ -103,7 +102,7 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLEDeviceSupport {
         builder.write(writeCharacteristic, makeSetLiftWristMessage());
         builder.write(writeCharacteristic, Message.encodeSetAlarms(new ArrayList(DBHelper.getAlarms(gbDevice))));
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
 
         return builder;
     }

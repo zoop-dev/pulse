@@ -64,7 +64,6 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.ICommunicator;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.v1.CommunicatorV1;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.v2.CommunicatorV2;
@@ -154,7 +153,7 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         if (getDevicePrefs().getBoolean(PREF_ALLOW_HIGH_MTU, true)) {
             builder.requestMtu(515);
@@ -169,7 +168,7 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
             if (!communicatorV1.initializeDevice(builder)) {
                 // Neither V1 nor V2 worked, not a Garmin device?
                 LOG.warn("Failed to find a known Garmin service");
-                builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.NOT_CONNECTED, getContext()));
+                builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
                 return builder;
             }
 
@@ -575,8 +574,7 @@ public class GarminSupport extends AbstractBTLEDeviceSupport implements ICommuni
 
         enableBatteryLevelUpdate();
 
-        gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
 
         sendOutgoingMessage("request supported file types", new SupportedFileTypesMessage());
 

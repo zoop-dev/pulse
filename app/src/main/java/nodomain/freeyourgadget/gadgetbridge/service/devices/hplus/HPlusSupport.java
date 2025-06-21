@@ -92,8 +92,7 @@ public class HPlusSupport extends AbstractBTLEDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Initializing");
 
-        gbDevice.setState(GBDevice.State.INITIALIZING);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
 
         measureCharacteristic = getCharacteristic(HPlusConstants.UUID_CHARACTERISTIC_MEASURE);
         ctrlCharacteristic = getCharacteristic(HPlusConstants.UUID_CHARACTERISTIC_CONTROL);
@@ -105,8 +104,7 @@ public class HPlusSupport extends AbstractBTLEDeviceSupport {
         //Initialize device
         sendUserInfo(builder); //Sync preferences
 
-        gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
 
         if (syncHelper == null) {
             syncHelper = new HPlusHandlerThread(getDevice(), getContext(), this);

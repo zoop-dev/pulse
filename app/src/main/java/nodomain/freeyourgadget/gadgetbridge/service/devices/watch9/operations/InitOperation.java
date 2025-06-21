@@ -30,7 +30,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.watch9.Watch9Constants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.watch9.Watch9DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -54,10 +53,10 @@ public class InitOperation extends AbstractBTLEOperation<Watch9DeviceSupport>{
     protected void doPerform() throws IOException {
         builder.notify(cmdCharacteristic, true);
         if (needsAuth) {
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
             getSupport().authorizationRequest(builder, needsAuth);
         } else {
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
             getSupport().initialize(builder);
             getSupport().performImmediately(builder);
         }
@@ -74,7 +73,7 @@ public class InitOperation extends AbstractBTLEOperation<Watch9DeviceSupport>{
                 if (ArrayUtils.equals(value, Watch9Constants.RESP_AUTHORIZATION_TASK, 5) && value[8] == 0x01) {
                     TransactionBuilder builder = getSupport().createTransactionBuilder("authInit");
                     builder.setCallback(this);
-                    builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+                    builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
                     getSupport().initialize(builder).performImmediately(builder);
                 } else {
                     return super.onCharacteristicChanged(gatt, characteristic, value);

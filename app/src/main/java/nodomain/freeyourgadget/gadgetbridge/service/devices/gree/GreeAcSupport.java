@@ -19,7 +19,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.gree.GreeAcPairingActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.AbstractGreeMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.GreeBindMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.GreeBleInfoMessage;
@@ -60,7 +59,7 @@ public class GreeAcSupport extends AbstractBTLEDeviceSupport {
 
         if (characteristicTx == null || characteristicRx == null) {
             LOG.warn("Pack characteristics are null");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.NOT_CONNECTED, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
             return builder;
         }
 

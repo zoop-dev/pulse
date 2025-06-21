@@ -35,7 +35,6 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.binary_sensor.protocol.constants.MessageId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.binary_sensor.protocol.constants.ParameterId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.binary_sensor.protocol.constants.ReportState;
@@ -146,7 +145,7 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
             if (parameter instanceof SensorState) {
                 if(getDevice().getState() != GBDevice.State.INITIALIZED){
                     new TransactionBuilder("set device state")
-                            .add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()))
+                            .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext())
                             .queue(getQueue());
                 }
 
@@ -188,7 +187,7 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
         logger.debug("initializing device");
 
         builder
-                .add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()))
+                .setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext())
                 .notify(getCharacteristic(UUID.fromString(BINARY_SENSOR_RESPONSE_CHARACTERISTIC_UUID)), true)
         ;
 

@@ -74,7 +74,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -125,33 +124,33 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
     }
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         final BluetoothGattCharacteristic btCharacteristicCommandRead = getCharacteristic(UUID_CHARACTERISTIC_CMF_COMMAND_READ);
         if (btCharacteristicCommandRead == null) {
             LOG.warn("Characteristic command read is null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
             return builder;
         }
 
         final BluetoothGattCharacteristic btCharacteristicCommandWrite = getCharacteristic(UUID_CHARACTERISTIC_CMF_COMMAND_WRITE);
         if (btCharacteristicCommandWrite == null) {
             LOG.warn("Characteristic command write is null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
             return builder;
         }
 
         final BluetoothGattCharacteristic btCharacteristicDataWrite = getCharacteristic(UUID_CHARACTERISTIC_CMF_DATA_WRITE);
         if (btCharacteristicDataWrite == null) {
             LOG.warn("Characteristic data write is null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
             return builder;
         }
 
         final BluetoothGattCharacteristic btCharacteristicDataRead = getCharacteristic(UUID_CHARACTERISTIC_CMF_DATA_READ);
         if (btCharacteristicDataRead == null) {
             LOG.warn("Characteristic data read is null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
             return builder;
         }
 
@@ -178,7 +177,7 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
             builder.notify(btCharacteristicShellRead, true);
         }
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
 
         final byte[] secretKey = getSecretKey(getDevice());
 
@@ -193,7 +192,7 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
             builder.write(getCharacteristic(UUID_CHARACTERISTIC_CMF_SHELL_WRITE), "AT GETSECRET".getBytes());
         } else {
             GB.toast(getContext(), R.string.authentication_failed_check_key, Toast.LENGTH_LONG, GB.WARN);
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.NOT_CONNECTED, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
         }
 
         return builder;
@@ -351,7 +350,7 @@ public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements Cmf
                 //sendCommand(phase2builder, CmfCommand.ALARMS_GET);
                 //sendCommand(phase2builder, CmfCommand.CALL_REMINDER_REQUEST, 0x00);
                 // TODO premature to mark as initialized?
-                phase2builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+                phase2builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
                 phase2builder.queue(getQueue());
                 return;
             case BATTERY:

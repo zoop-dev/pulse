@@ -39,7 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.devices.vesc.VescCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
 public class VescDeviceSupport extends VescBaseDeviceSupport {
@@ -76,7 +75,7 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.debug("initializing device");
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         initBroadcast();
 
@@ -90,7 +89,7 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
 
         builder.notify(this.serialReadCharacteristic, true);
 
-        return builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        return builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
     }
 
     @Override

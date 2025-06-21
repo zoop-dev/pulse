@@ -69,7 +69,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.requests.FindDeviceRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.requests.GetActivityDataRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.requests.GetBatteryLevelRequest;
@@ -121,7 +120,7 @@ public class LefunDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         builder.setCallback(this);
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         // Enable notification
         builder.notify(getCharacteristic(LefunConstants.UUID_CHARACTERISTIC_LEFUN_NOTIFY), true);
@@ -803,8 +802,7 @@ public class LefunDeviceSupport extends AbstractBTLEDeviceSupport {
      * Callback when device info has been obtained
      */
     public void completeInitialization() {
-        gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
         onReadConfiguration("");
     }
 

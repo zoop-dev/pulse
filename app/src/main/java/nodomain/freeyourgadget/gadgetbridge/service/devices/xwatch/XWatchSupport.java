@@ -51,7 +51,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -86,7 +85,7 @@ public class XWatchSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), State.INITIALIZING, getContext());
 
         enableNotifications(builder)
                 .setDateTime(builder)
@@ -103,7 +102,7 @@ public class XWatchSupport extends AbstractBTLEDeviceSupport {
      * @param builder
      */
     private void setInitialized(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), State.INITIALIZED, getContext());
     }
 
     @Override

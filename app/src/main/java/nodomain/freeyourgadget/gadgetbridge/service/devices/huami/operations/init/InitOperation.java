@@ -43,9 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
@@ -71,12 +69,12 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
     protected void doPerform() {
         huamiSupport.enableNotifications(builder, true);
         if (needsAuth) {
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
             // write key to device
             byte[] sendKey = org.apache.commons.lang3.ArrayUtils.addAll(new byte[]{HuamiService.AUTH_SEND_KEY, authFlags}, getSecretKey());
             builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUTH), sendKey);
         } else {
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
             // get random auth number
             builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUTH), requestAuthNumber());
         }
@@ -145,7 +143,7 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
             } else if ((value[1] & 0x0f) == HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER) {
                 if (value[2] == HuamiService.AUTH_SUCCESS) {
                     TransactionBuilder builder = createTransactionBuilder("Authenticated, now initialize phase 2");
-                    builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+                    builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
                     builder.setCallback(null); // remove init operation as the callback
                     huamiSupport.enableFurtherNotifications(builder, true);
                     huamiSupport.requestDeviceInfo(builder);

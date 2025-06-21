@@ -76,7 +76,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.logic.ActivitySyncPacketProcessor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.logic.parsers.BehaviorPacketParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.logic.parsers.CaloriesPacketParser;
@@ -165,7 +164,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         if(perAppNotificationSettingsRepository == null) {
             perAppNotificationSettingsRepository = new AppSpecificNotificationSettingsRepository(getDevice());
         }
@@ -192,7 +191,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
         // Finally, sync activity data
         requestActivityDataDownload(builder, false);
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         CalendarReceiver.forceSync(getDevice());
         return builder;
     }

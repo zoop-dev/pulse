@@ -463,15 +463,13 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                         }
                     }
 
-                    target.setState(GBDevice.State.SCANNED);
-                    target.sendDeviceUpdateIntent(DeviceCommunicationService.this, GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+                    target.setUpdateState(GBDevice.State.SCANNED, DeviceCommunicationService.this);
                     new Handler().postDelayed(() -> {
                         if(target.getState() != GBDevice.State.SCANNED){
                             return;
                         }
                         deviceLastScannedTimestamps.put(target.getAddress(), System.currentTimeMillis());
-                        target.setState(GBDevice.State.WAITING_FOR_SCAN);
-                        target.sendDeviceUpdateIntent(DeviceCommunicationService.this, GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+                        target.setUpdateState(GBDevice.State.WAITING_FOR_SCAN, DeviceCommunicationService.this);
                     }, timeoutSeconds * 1000);
                     return;
                 }
@@ -572,8 +570,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 continue;
             }
             createDeviceStruct(device);
-            device.setState(GBDevice.State.WAITING_FOR_SCAN);
-            device.sendDeviceUpdateIntent(this, GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+            device.setUpdateState(GBDevice.State.WAITING_FOR_SCAN, this);
         }
     }
 

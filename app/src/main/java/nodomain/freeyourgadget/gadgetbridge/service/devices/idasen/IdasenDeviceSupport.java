@@ -24,7 +24,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.devices.idasen.IdasenConstants;
@@ -128,13 +127,13 @@ public class IdasenDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
         builder.notify(getCharacteristic(IdasenConstants.CHARACTERISTIC_HEIGHT), true);
         sendCommand("dpg", IdasenConstants.CHARACTERISTIC_DPG, IdasenConstants.CMD_DPG_WAKEUP_PREP);
         sendCommand("dpg", IdasenConstants.CHARACTERISTIC_DPG, IdasenConstants.CMD_DPG_WAKEUP);
         sendCommand("dpg", IdasenConstants.CHARACTERISTIC_COMMAND, IdasenConstants.CMD_WAKEUP);
         initBroadcast();
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         return builder;
     }
 

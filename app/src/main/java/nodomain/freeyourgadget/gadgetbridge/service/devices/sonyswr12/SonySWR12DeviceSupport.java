@@ -109,8 +109,7 @@ public class SonySWR12DeviceSupport extends AbstractBTLEDeviceSupport {
         if (gbDevice.getState() != GBDevice.State.INITIALIZED) {
             gbDevice.setFirmwareVersion("N/A");
             gbDevice.setFirmwareVersion2("N/A");
-            gbDevice.setState(GBDevice.State.INITIALIZED);
-            gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+            gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
         }
     }
 

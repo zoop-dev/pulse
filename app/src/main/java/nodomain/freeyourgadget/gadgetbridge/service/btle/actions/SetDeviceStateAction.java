@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniel Dakhno
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, Daniel Dakhno, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -36,8 +36,7 @@ public class SetDeviceStateAction extends PlainAction {
 
     @Override
     public boolean run(BluetoothGatt gatt) {
-        device.setState(deviceState);
-        device.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        device.setUpdateState(deviceState, context);
         return true;
     }
 

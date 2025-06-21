@@ -83,7 +83,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
@@ -143,7 +142,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
             getDevice().setFirmwareVersion2("N/A");
         }
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
 
         if (!CommandReceiver.Registered) {
             IntentFilter exported = new IntentFilter();
@@ -181,7 +180,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
         boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
         builder.add(new UHWrite(COMMAND, powerSave ? OPERATION_ENABLE_POWERSAVE : OPERATION_DISABLE_POWERSAVE));
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
 
         return builder;
     }
