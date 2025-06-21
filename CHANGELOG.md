@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next version (WIP)
+#### 0.86.0
 
 * Initial support for Amazfit Active 2 NFC
 * Initial support for Colmi R12
