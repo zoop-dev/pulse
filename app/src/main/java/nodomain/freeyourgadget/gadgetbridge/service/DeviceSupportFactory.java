@@ -29,6 +29,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,7 @@ public class DeviceSupportFactory {
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
+    @Nullable
     public synchronized DeviceSupport createDeviceSupport(GBDevice device) throws GBException {
         DeviceSupport deviceSupport;
         String deviceAddress = device.getAddress();
@@ -78,6 +81,7 @@ public class DeviceSupportFactory {
         return null;
     }
 
+    @Nullable
     private DeviceSupport createClassNameDeviceSupport(GBDevice device) throws GBException {
         String className = device.getAddress();
         try {
@@ -115,6 +119,7 @@ public class DeviceSupportFactory {
         }
     }
 
+    @Nullable
     private DeviceSupport createBTDeviceSupport(final GBDevice gbDevice) throws GBException {
         if (mBtAdapter != null && mBtAdapter.isEnabled()) {
             try {

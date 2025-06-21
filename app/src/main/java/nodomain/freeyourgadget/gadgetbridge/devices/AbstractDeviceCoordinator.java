@@ -103,6 +103,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
      *
      * @return Pattern
      */
+    @Nullable
     protected Pattern getSupportedDeviceName() {
         return null;
     }
@@ -224,31 +225,37 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    @Nullable
     public SampleProvider<? extends ActivitySample> getSampleProvider(final GBDevice device, final DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends StressSample> getStressSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends BodyEnergySample> getBodyEnergySampleProvider(final GBDevice device, final DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends HrvSummarySample> getHrvSummarySampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends HrvValueSample> getHrvValueSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public Vo2MaxSampleProvider<? extends Vo2MaxSample> getVo2MaxSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
@@ -276,46 +283,55 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends Spo2Sample> getSpo2SampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<CyclingSample> getCyclingSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends HeartRateSample> getHeartRateMaxSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends HeartRateSample> getHeartRateRestingSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends HeartRateSample> getHeartRateManualSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends PaiSample> getPaiSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends RespiratoryRateSample> getRespiratoryRateSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends WeightSample> getWeightSampleProvider(GBDevice device, DaoSession session) {
         return null;
     }
@@ -326,6 +342,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    @Nullable
     public TimeSampleProvider<? extends SleepScoreSample> getSleepScoreProvider(final GBDevice device, final DaoSession session) {
         return null;
     }
@@ -365,6 +382,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    @Nullable
     public File getAppCacheDir() throws IOException {
         return null;
     }
@@ -382,11 +400,13 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    @Nullable
     public String getAppCacheSortFilename() {
         return null;
     }
 
     @Override
+    @Nullable
     public String getAppFileExtension() {
         return null;
     }
@@ -827,11 +847,13 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return new int[0];
     }
 
+    @Nullable
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(GBDevice device) {
         return null;
     }
 
+    @Nullable
     @Override
     public String[] getSupportedLanguageSettings(GBDevice device) {
         return null;

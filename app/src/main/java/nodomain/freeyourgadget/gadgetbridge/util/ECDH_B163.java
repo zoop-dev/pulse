@@ -34,6 +34,8 @@
 
 package nodomain.freeyourgadget.gadgetbridge.util;
 
+import androidx.annotation.Nullable;
+
 public class ECDH_B163 {
 
     static final int CURVE_DEGREE = 163;
@@ -497,6 +499,7 @@ public class ECDH_B163 {
     }
 
     // these are wrappers around the above C-style methods for Gadgetbridge to use
+    @Nullable
     public static byte[] ecdh_generate_public(byte[] privateEC) {
         byte[] pubKey = new byte[ECC_PUB_KEY_SIZE];
         if (ecdh_generate_keys(pubKey, privateEC)) {
@@ -505,6 +508,7 @@ public class ECDH_B163 {
         return null;
     }
 
+    @Nullable
     public static byte[] ecdh_generate_shared(byte[] privateEC, byte[] remotePublicEC) {
         byte[] sharedKey = new byte[ECC_PUB_KEY_SIZE];
         if (ecdh_shared_secret(privateEC, remotePublicEC, sharedKey)) {

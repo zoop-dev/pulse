@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -74,6 +75,9 @@ public class DeviceManager {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            if (action == null) {
+                return;
+            }
             switch (action) {
                 case ACTION_REFRESH_DEVICELIST: // fall through
                 case BluetoothDevice.ACTION_BOND_STATE_CHANGED:
@@ -88,7 +92,7 @@ public class DeviceManager {
                     break;
                 case GBDevice.ACTION_DEVICE_CHANGED:
                     GBDevice dev = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-                    if (dev.getAddress() != null) {
+                    if (dev != null && dev.getAddress() != null) {
                         int index = deviceList.indexOf(dev); // search by address
                         if (index >= 0) {
                             deviceList.get(index).copyFromDevice(dev);
@@ -177,6 +181,7 @@ public class DeviceManager {
         return Collections.unmodifiableList(deviceList);
     }
 
+    @Nullable
     public GBDevice getDeviceByAddress(String address){
         for(GBDevice device : deviceList){
             if(device.getAddress().compareToIgnoreCase(address) == 0){

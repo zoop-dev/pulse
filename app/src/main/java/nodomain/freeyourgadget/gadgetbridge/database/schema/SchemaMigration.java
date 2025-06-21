@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.database.schema;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,13 +69,14 @@ public class SchemaMigration {
         }
     }
 
+    @Nullable
     private DBUpdateScript getUpdateScript(SQLiteDatabase db, int version) {
         try {
             Class<?> updateClass = getClass().getClassLoader().loadClass(getClass().getPackage().getName() + "." + classNamePrefix + version);
             return (DBUpdateScript) updateClass.newInstance();
         } catch (ClassNotFoundException e) {
             return null;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (NullPointerException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Error instantiating DBUpdate class for version " + version, e);
         }
     }

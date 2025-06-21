@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.util.Pair;
 
+import androidx.annotation.Nullable;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -46,6 +48,7 @@ public class LimitedQueue<K, V> {
         }
     }
 
+    @Nullable
     synchronized public V lookup(final K id) {
         for (final Pair<K, V> entry : list) {
             if (id.equals(entry.first)) {
@@ -55,6 +58,7 @@ public class LimitedQueue<K, V> {
         return null;
     }
 
+    @Nullable
     synchronized public K lookupByValue(final V value){
         for (final Pair<K, V> entry : list) {
             if (value.equals(entry.second)) {

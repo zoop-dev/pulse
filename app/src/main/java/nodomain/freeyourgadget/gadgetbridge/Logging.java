@@ -64,6 +64,7 @@ public abstract class Logging {
         }
     }
 
+    @Nullable
     public String getLogPath() {
         if (fileLogger != null)
             return fileLogger.getFile();

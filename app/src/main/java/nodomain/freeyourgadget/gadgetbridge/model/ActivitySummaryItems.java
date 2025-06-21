@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.adapter.ActivitySummariesAdapter;
@@ -33,6 +35,7 @@ public class ActivitySummaryItems {
         this.itemsAdapter = new ActivitySummariesAdapter(context, device, activityKindFilter, dateFromFilter, dateToFilter, nameContainsFilter, deviceFilter, itemsFilter);
     }
 
+    @Nullable
     public BaseActivitySummary getItem(int position) {
         if (position == 0) return null;
         current_position = position;
@@ -43,6 +46,7 @@ public class ActivitySummaryItems {
         return itemsAdapter.getPosition(item);
     }
 
+    @Nullable
     public BaseActivitySummary getNextItem() {
         // last one is empty to avoid items behind fab
         if (current_position + 2 < itemsAdapter.getItemCount()) {
@@ -52,6 +56,7 @@ public class ActivitySummaryItems {
         return null;
     }
 
+    @Nullable
     public BaseActivitySummary getPrevItem() {
         if (current_position - 1 >= 1) { //0 is empty item for summary dashboard
             current_position -= 1;

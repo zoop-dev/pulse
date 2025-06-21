@@ -508,6 +508,7 @@ public class GBDevice implements Parcelable {
      * @param key the extra info key
      * @return the extra info value if set, null otherwise
      */
+    @Nullable
     public Object getExtraInfo(String key) {
         if (mExtraInfos == null) {
             return null;
@@ -652,6 +653,7 @@ public class GBDevice implements Parcelable {
         return !getDeviceInfos().isEmpty();
     }
 
+    @Nullable
     public ItemWithDetails getDeviceInfo(String name) {
         for (ItemWithDetails item : getDeviceInfos()) {
             if (name.equals(item.getName())) {

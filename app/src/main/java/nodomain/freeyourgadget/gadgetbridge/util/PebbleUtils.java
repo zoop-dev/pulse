@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 import android.graphics.Color;
 import android.util.SparseArray;
 
+import androidx.annotation.Nullable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,6 +120,7 @@ public class PebbleUtils {
         return new File(FileUtils.getExternalFilesDir(), "pbw-cache");
     }
 
+    @Nullable
     public static JSONObject getAppConfigurationKeys(UUID uuid) {
         try {
             File destDir = getPbwCacheDir();

@@ -17,6 +17,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
 
+import androidx.annotation.Nullable;
+
 import java.util.Collection;
 
 public class ArrayUtils {
@@ -58,6 +60,7 @@ public class ArrayUtils {
      * @return null if the given collection is null, otherwise an array of the same size as the collection
      * @throws NullPointerException when an element of the collection is null
      */
+    @Nullable
     public static int[] toIntArray(Collection<Integer> values) {
         if (values == null) {
             return null;

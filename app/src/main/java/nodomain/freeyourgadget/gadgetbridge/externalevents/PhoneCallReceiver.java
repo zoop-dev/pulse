@@ -50,9 +50,9 @@ public class PhoneCallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
-        if (intent.getAction().equals("android.intent.action.NEW_OUTGOING_CALL")) {
+        if ("android.intent.action.NEW_OUTGOING_CALL".equals(intent.getAction())) {
             mSavedNumber = intent.getExtras().getString("android.intent.extra.PHONE_NUMBER");
-        } else if (intent.getAction().equals("nodomain.freeyourgadget.gadgetbridge.MUTE_CALL")) {
+        } else if ("nodomain.freeyourgadget.gadgetbridge.MUTE_CALL".equals(intent.getAction())) {
             // Handle the mute request only if the phone is currently ringing
             if (mLastState != TelephonyManager.CALL_STATE_RINGING)
                 return;

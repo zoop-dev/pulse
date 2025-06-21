@@ -58,7 +58,7 @@ public class PebbleContentProvider extends ContentProvider {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(GBDevice.ACTION_DEVICE_CHANGED)) {
+            if (GBDevice.ACTION_DEVICE_CHANGED.equals(action)) {
                 mGBDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
             }
         }

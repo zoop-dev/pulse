@@ -29,6 +29,7 @@ import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 
@@ -296,6 +297,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
      * @return the characteristic for the given UUID or <code>null</code>
      * @see #addSupportedService(UUID)
      */
+    @Nullable
     public BluetoothGattCharacteristic getCharacteristic(UUID uuid) {
         synchronized (characteristicsMonitor) {
             if (mAvailableCharacteristics == null) {

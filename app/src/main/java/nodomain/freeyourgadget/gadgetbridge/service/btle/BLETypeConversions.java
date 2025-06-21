@@ -18,6 +18,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
+import androidx.annotation.Nullable;
+
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
@@ -453,6 +455,7 @@ public class BLETypeConversions {
     }
 
     /// compatible with FORMAT_FLOAT in {@link android.bluetooth.BluetoothGattCharacteristic#getFloatValue(int, int)}
+    @Nullable
     public static Float toFloat32(byte[] bytes, int offset) {
         if ((offset + 4) > bytes.length) {
             return null;
@@ -472,6 +475,7 @@ public class BLETypeConversions {
     }
 
     /// compatible with {@link android.bluetooth.BluetoothGattCharacteristic#getStringValue(int)}
+    @Nullable
     public static String getStringValue(final byte[] bytes, final int offset) {
         if (bytes == null || offset > bytes.length) {
             return null;

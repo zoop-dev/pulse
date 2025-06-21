@@ -18,6 +18,7 @@
 package nodomain.freeyourgadget.gadgetbridge.util;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +61,7 @@ public class AlarmUtils {
      * @param device
      * @param position
      */
+    @Nullable
     public static Alarm createDefaultAlarm(GBDevice gbDevice, int position) {
         try (DBHandler db = GBApplication.acquireDB()) {
             DaoSession daoSession = db.getDaoSession();

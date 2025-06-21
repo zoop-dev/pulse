@@ -64,6 +64,10 @@ public class BluetoothConnectReceiver extends BroadcastReceiver {
             return;
         }
         final SharedPreferences deviceSpecificPreferences = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        if (deviceSpecificPreferences == null) {
+            LOG.warn("no preferences found for connecting device {}", device.getAddress());
+            return;
+        }
         boolean reactToConnection = deviceSpecificPreferences.getBoolean(GBPrefs.DEVICE_CONNECT_BACK, false);
         reactToConnection |= gbDevice.getState() == GBDevice.State.WAITING_FOR_RECONNECT;
         reactToConnection |= gbDevice.getState() == GBDevice.State.WAITING_FOR_SCAN;

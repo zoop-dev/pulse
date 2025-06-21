@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices;
 import android.content.Context;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -12,6 +13,7 @@ public interface DeviceCardAction {
 
     String getDescription(final GBDevice device, final Context context);
 
+    @Nullable
     default String getLabel(final GBDevice device, final Context context) {
         return null;
     }

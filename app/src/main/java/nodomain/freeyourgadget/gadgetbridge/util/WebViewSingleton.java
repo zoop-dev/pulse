@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.MutableContextWrapper;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -37,6 +36,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,6 +128,7 @@ public class WebViewSingleton {
             super(looper);
         }
 
+        @Nullable
         private String getCharsetFromHeaders(String contentType) {
             if (contentType != null && contentType.toLowerCase().trim().contains("charset=")) {
                 String[] parts = contentType.toLowerCase().trim().split("=");

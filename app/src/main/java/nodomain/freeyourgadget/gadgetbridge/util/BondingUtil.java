@@ -47,6 +47,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
 
@@ -560,7 +561,7 @@ public class BondingUtil {
                 LOG.debug("Unpair - {} associations", associations.size());
                 for (AssociationInfo association : associations) {
                     MacAddress devAddress = association.getDeviceMacAddress();
-                    String devMac = devAddress.toString();
+                    String devMac = (devAddress == null) ? null : devAddress.toString();
 
                     if (mac.equalsIgnoreCase(devMac)) {
                         boolean removed = false;
@@ -671,6 +672,7 @@ public class BondingUtil {
         return removed;
     }
 
+    @Nullable
     public static BluetoothAdapter getBluetoothAdapter(Context context) {
         if (context == null) {
             LOG.error("getBluetoothAdapter - context is null");
@@ -700,6 +702,7 @@ public class BondingUtil {
         return null;
     }
 
+    @Nullable
     public static CompanionDeviceManager getCompanionDeviceManager(Context context) {
         if (context == null) {
             LOG.error("getCompanionDeviceManager - context is null");

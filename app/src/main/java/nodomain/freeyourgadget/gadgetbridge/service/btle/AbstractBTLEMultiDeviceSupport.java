@@ -27,6 +27,8 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -358,6 +360,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractDeviceSuppo
      * @return the characteristic for the given UUID or <code>null</code>
      * @see #addSupportedService(UUID, int)
      */
+    @Nullable
     public BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx) {
         validateDeviceIndex(deviceIdx);
 

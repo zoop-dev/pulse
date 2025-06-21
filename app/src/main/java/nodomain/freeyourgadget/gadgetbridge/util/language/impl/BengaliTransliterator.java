@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util.language.impl;
 
+import androidx.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -174,6 +176,7 @@ public class BengaliTransliterator implements Transliterator {
 
     private final static Pattern bengaliRegex = Pattern.compile(pattern);
 
+    @Nullable
     private static String getVal(String key) {
         if (key != null) {
             String comp = composites.get(key);

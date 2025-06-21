@@ -43,7 +43,7 @@ public class BluetoothPairingRequestReceiver extends BroadcastReceiver {
         String action = intent.getAction();
 
 
-        if (!action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)) {
+        if (!BluetoothDevice.ACTION_PAIRING_REQUEST.equals(action)) {
             return;
         }
         BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);

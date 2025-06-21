@@ -31,10 +31,11 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,7 +46,6 @@ import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -68,6 +68,7 @@ public class DeviceHelper {
 
     private final HashMap<String, DeviceType> deviceTypeCache = new HashMap<>();
 
+    @Nullable
     public GBDevice findAvailableDevice(String deviceAddress, Context context) {
         Set<GBDevice> availableDevices = getAvailableDevices(context);
         for (GBDevice availableDevice : availableDevices) {

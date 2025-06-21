@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 
 public interface BondingInterface {
@@ -39,6 +41,7 @@ public interface BondingInterface {
      **/
     void unregisterBroadcastReceivers();
 
+    @Nullable
     default String getMacAddress() {
         GBDeviceCandidate candidate = getCurrentTarget();
         if (candidate != null) {

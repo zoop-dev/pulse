@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.util.maps;
 
+import androidx.annotation.Nullable;
+
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderThemeMenuCallback;
 import org.mapsforge.map.rendertheme.XmlThemeResourceProvider;
@@ -34,6 +36,7 @@ public enum MapTheme implements XmlRenderTheme {
         return getClass().getResourceAsStream(this.path);
     }
 
+    @Nullable
     @Override
     public XmlThemeResourceProvider getResourceProvider() {
         return null;

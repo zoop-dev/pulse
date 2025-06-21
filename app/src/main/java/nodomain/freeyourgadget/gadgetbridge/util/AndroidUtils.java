@@ -66,6 +66,7 @@ public class AndroidUtils {
      * @param uuids an array of {@link ParcelUuid} elements
      * @return a {@link ParcelUuid} array instance with the same contents
      */
+    @Nullable
     public static ParcelUuid[] toParcelUuids(Parcelable[] uuids) {
         if (uuids == null) {
             return null;
@@ -341,6 +342,7 @@ public class AndroidUtils {
         GBApplication.getContext().startActivity(launchIntent);
     }
 
+    @Nullable
     public static PowerManager.WakeLock acquirePartialWakeLock(Context context, String tag, long timeout) {
         try {
             PowerManager powermanager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);

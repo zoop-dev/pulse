@@ -27,6 +27,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import java.text.ParseException;
@@ -34,9 +35,7 @@ import java.time.LocalTime;
 import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBPrefs extends Prefs {
@@ -98,6 +97,7 @@ public class GBPrefs extends Prefs {
         return getString(USER_NAME, USER_NAME_DEFAULT);
     }
 
+    @Nullable
     public Date getUserBirthday() {
         String date = getString(USER_BIRTHDAY, null);
         if (date == null) {

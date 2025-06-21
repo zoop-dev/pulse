@@ -72,6 +72,7 @@ public class Weather {
         saveToCache();
     }
 
+    @Nullable
     public JSONObject createReconstructedOWMWeatherReply() {
         final WeatherSpec weatherSpec = getWeatherSpec();
         if (weatherSpec == null) {
