@@ -1580,7 +1580,7 @@
     <string name="prefs_heartrate_alert_experimental_description">Lasse das Armband vibrieren, wenn der Puls einen Schwellenwert überschreitet, ohne dass in den letzten 10 Minuten eine offensichtliche körperliche Aktivität stattgefunden hat. Diese Funktion ist experimentell und wurde nicht umfassend getestet.</string>
     <string name="prefs_heartrate_alert_threshold">Schwellenwert für Pulsalarm</string>
     <string name="prefs_stress_monitoring_title">Stressüberwachung</string>
-    <string name="prefs_stress_monitoring_description">Stresslevel in Ruhe überwachen</string>
+    <string name="prefs_stress_monitoring_description">Stresslevel im Ruhezustand überwachen</string>
     <string name="prefs_activity_monitoring_title">Aktivitätsüberwachung</string>
     <string name="mi2_prefs_heart_rate_monitoring">Pulsüberwachung</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Pulsüberwachung konfigurieren</string>
