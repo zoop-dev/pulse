@@ -18,13 +18,18 @@ package nodomain.freeyourgadget.gadgetbridge.service.serial;
 
 import android.content.Context;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public abstract class GBDeviceIoThread extends Thread {
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
+
     protected final GBDevice gbDevice;
     private final Context context;
 
     public GBDeviceIoThread(GBDevice gbDevice, Context context) {
+        super("GBDeviceIoThread_" + THREAD_COUNTER.getAndIncrement());
         this.gbDevice = gbDevice;
         this.context = context;
     }

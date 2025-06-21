@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
@@ -17,6 +18,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class FitAsyncProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(FitAsyncProcessor.class);
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     private final Context context;
     private final GBDevice gbDevice;
@@ -67,7 +69,7 @@ public class FitAsyncProcessor {
             }
 
             FitAsyncProcessor.this.handler.post(callback::onFinish);
-        }).start();
+        }, "FitAsyncProcessor_" + THREAD_COUNTER.getAndIncrement()).start();
     }
 
     public interface Callback {

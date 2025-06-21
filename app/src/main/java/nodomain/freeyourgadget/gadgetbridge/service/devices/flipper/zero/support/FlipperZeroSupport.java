@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -47,6 +48,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.protobuf.messagefields.StringMe
 import nodomain.freeyourgadget.gadgetbridge.util.protobuf.messagefields.VarintMessageField;
 
 public class FlipperZeroSupport extends FlipperZeroBaseSupport{
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
+
     private BatteryInfoProfile batteryInfoProfile = new BatteryInfoProfile(this);
 
     private final String UUID_SERIAL_SERVICE = "8fe5b3d5-2e7f-4a98-2a48-7acc60fe0000";
@@ -74,7 +77,7 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
                         handlePlaySubGHZ(intent);
                     }
                 }
-            }).start();
+            }, "FlipperZeroSupport_" + THREAD_COUNTER.getAndIncrement()).start();
         }
     };
     boolean recevierRegistered = false;

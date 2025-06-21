@@ -47,6 +47,7 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
@@ -62,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 public final class BtLEQueue {
     private static final Logger LOG = LoggerFactory.getLogger(BtLEQueue.class);
     private static final byte[] EMPTY = new byte[0];
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     private final Object mGattMonitor;
     private final GBDevice mGbDevice;
@@ -88,7 +90,7 @@ public final class BtLEQueue {
     private final boolean mImplicitGattCallbackModify;
     private final boolean mSendWriteRequestResponse;
 
-    private Thread dispatchThread = new Thread("Gadgetbridge GATT Dispatcher") {
+    private Thread dispatchThread = new Thread("BtLEQueue_" + THREAD_COUNTER.getAndIncrement()) {
 
         @Override
         public void run() {

@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
@@ -50,6 +51,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import static android.view.View.GONE;
 
 public class QHybridAppChoserActivity extends AbstractGBActivity {
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
+
     boolean hasControl = false;
 
     private PackageConfigHelper helper;
@@ -91,7 +94,7 @@ public class QHybridAppChoserActivity extends AbstractGBActivity {
                     }
                 });
             }
-        }).start();
+        }, "QHybridAppChoserActivity_" + THREAD_COUNTER.getAndIncrement()).start();
         appList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

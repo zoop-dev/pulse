@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
@@ -50,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
  */
 public final class GBScanEventProcessor implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(GBScanEventProcessor.class);
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     private static final ParcelUuid ZERO_UUID = ParcelUuid.fromString("00000000-0000-0000-0000-000000000000");
 
@@ -97,7 +99,7 @@ public final class GBScanEventProcessor implements Runnable {
         }
 
         running = true;
-        thread = new Thread("Gadgetbridge Device Found Processor Thread") {
+        thread = new Thread("GBScanEventProcessor_" + THREAD_COUNTER.getAndIncrement()) {
             @Override
             public void run() {
                 GBScanEventProcessor.this.run();

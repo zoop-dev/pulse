@@ -38,6 +38,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
@@ -77,6 +78,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class XiaomiSupport extends AbstractDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(XiaomiSupport.class);
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     private final XiaomiAuthService authService = new XiaomiAuthService(this);
     private final XiaomiMusicService musicService = new XiaomiMusicService(this);
@@ -552,7 +554,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
                 GB.updateTransferNotification("", "", false, 100, getContext());
                 GB.signalActivityDataFinish(getDevice());
             });
-        }).start();
+        }, "XiaomiSupport_" + THREAD_COUNTER.getAndIncrement()).start();
     }
 
     public void setFeatureSupported(final String featureKey, final boolean supported) {

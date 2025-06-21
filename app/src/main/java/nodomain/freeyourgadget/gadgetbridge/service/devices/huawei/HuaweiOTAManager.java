@@ -36,6 +36,7 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -58,6 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 public class HuaweiOTAManager {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiOTAManager.class);
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     public static class UploadInfo {
         public int waitTimeout;
@@ -279,7 +281,7 @@ public class HuaweiOTAManager {
                     sendMessage(3, null);
                 }
             }
-        }).start();
+        }, "HuaweiOTAManager_" + THREAD_COUNTER.getAndIncrement()).start();
     }
 
     private short calculateFwFileId() throws Exception {

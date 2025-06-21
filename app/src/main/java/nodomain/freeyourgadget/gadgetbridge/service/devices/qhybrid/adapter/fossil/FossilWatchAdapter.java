@@ -46,6 +46,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -94,6 +95,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 public class FossilWatchAdapter extends WatchAdapter {
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
+
     private ArrayList<Request> requestQueue = new ArrayList<>();
 
     protected FossilRequest fossilRequest;
@@ -130,7 +133,7 @@ public class FossilWatchAdapter extends WatchAdapter {
             timeoutHandler = new Handler(timeoutLooper);
             Looper.loop();
         }
-    });
+    }, "FossilWatchAdapter_" + THREAD_COUNTER.getAndIncrement());
 
     private Runnable requestTimeoutRunnable = new Runnable() {
         @Override

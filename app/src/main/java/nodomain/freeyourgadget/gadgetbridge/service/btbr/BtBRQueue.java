@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -43,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public final class BtBRQueue {
     private static final Logger LOG = LoggerFactory.getLogger(BtBRQueue.class);
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
     public static final int HANDLER_SUBJECT_CONNECT = 0;
     public static final int HANDLER_SUBJECT_PERFORM_TRANSACTION = 1;
 
@@ -58,9 +60,9 @@ public final class BtBRQueue {
     private final int mBufferSize;
 
     private final Handler mWriteHandler;
-    private final HandlerThread mWriteHandlerThread = new HandlerThread("Write Thread", Process.THREAD_PRIORITY_BACKGROUND);
+    private final HandlerThread mWriteHandlerThread = new HandlerThread("BtBRQueue_write_" + THREAD_COUNTER.getAndIncrement(), Process.THREAD_PRIORITY_BACKGROUND);
 
-    private Thread readThread = new Thread("Read Thread") {
+    private Thread readThread = new Thread("BtBRQueue_read_" + THREAD_COUNTER.getAndIncrement()) {
         @Override
         public void run() {
             final byte[] buffer = new byte[mBufferSize];

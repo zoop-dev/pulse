@@ -18,6 +18,7 @@ import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -30,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.idasen.IdasenConstants;
 
 public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(IdasenDeviceSupport.class);
+    private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     public static final String COMMAND_UP = "nodomain.freeyourgadget.gadgetbridge.idasen.command.UP";
     public static final String COMMAND_DOWN = "nodomain.freeyourgadget.gadgetbridge.idasen.command.DOWN";
@@ -108,7 +110,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
                         if (cutOff == 0) {
                             LOG.warn("desk controller did not reach the desired height in time");
                         }
-                    }).start();
+                    }, "IdasenDeviceSupport_" + THREAD_COUNTER.getAndIncrement()).start();
                     break;
             }
         }
