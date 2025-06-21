@@ -74,7 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.logic.ActivitySyncPacketProcessor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.logic.parsers.BehaviorPacketParser;
@@ -134,7 +134,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class SonyWena3DeviceSupport extends AbstractBTLEDeviceSupport {
+public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final int INCOMING_CALL_ID = 3939;
     private static final Logger LOG = LoggerFactory.getLogger(SonyWena3DeviceSupport.class);
     private String lastMusicInfo = null;

@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -41,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.ValueDecoder;
  * This might or might not be up to GATT standard.
  * @param <T>
  */
-public class HealthThermometerProfile <T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
+public class HealthThermometerProfile <T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(HealthThermometerProfile.class);
 
     private static final String ACTION_PREFIX = HealthThermometerProfile.class.getName() + "_";

@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
 import java.time.ZonedDateTime;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioConstants;
 
-public abstract class CasioSupport extends AbstractBTLEDeviceSupport {
+public abstract class CasioSupport extends AbstractBTLESingleDeviceSupport {
 
     protected boolean mFirstConnect = false;
     private static final Logger LOG = LoggerFactory.getLogger(CasioSupport.class);

@@ -24,14 +24,14 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class AlertNotificationProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
+public class AlertNotificationProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AlertNotificationProfile.class);
     private int maxLength = 18; // Mi2-ism?
 

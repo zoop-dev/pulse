@@ -78,7 +78,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanDeviceStateSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -91,7 +91,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class UltrahumanDeviceSupport extends AbstractBTLEDeviceSupport {
+public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(UltrahumanDeviceSupport.class);
     private final UltrahumanBroadcastReceiver CommandReceiver;
     private int FetchTo;

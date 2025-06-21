@@ -41,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.Op
  * Note: by default all Gatt events are forwarded to AbstractBTLEDeviceSupport, subclasses may override
  * this behavior.
  */
-public abstract class AbstractBTLEOperation<T extends AbstractBTLEDeviceSupport> implements GattCallback, BTLEOperation {
+public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSupport> implements GattCallback, BTLEOperation {
     private final T mSupport;
     protected OperationStatus operationStatus = OperationStatus.INITIAL;
     private String name;

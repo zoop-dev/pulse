@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInf
 import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiScaleSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.MiScaleWeightSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -48,7 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class MiCompositionScaleDeviceSupport extends AbstractBTLEDeviceSupport {
+public class MiCompositionScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(MiCompositionScaleDeviceSupport.class);
 
     private final DeviceInfoProfile<MiCompositionScaleDeviceSupport> deviceInfoProfile;

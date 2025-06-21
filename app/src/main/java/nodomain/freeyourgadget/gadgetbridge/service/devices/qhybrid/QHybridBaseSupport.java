@@ -18,9 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid;
 
 import org.slf4j.Logger;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 
-class QHybridBaseSupport extends AbstractBTLEDeviceSupport {
+class QHybridBaseSupport extends AbstractBTLESingleDeviceSupport {
     QHybridBaseSupport(Logger logger) {
         super(logger);
     }

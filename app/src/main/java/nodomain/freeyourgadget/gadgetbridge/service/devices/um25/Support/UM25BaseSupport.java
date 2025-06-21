@@ -18,9 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Support;
 
 import org.slf4j.Logger;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 
-public class UM25BaseSupport extends AbstractBTLEDeviceSupport {
+public class UM25BaseSupport extends AbstractBTLESingleDeviceSupport {
     public UM25BaseSupport(Logger logger) {
         super(logger);
     }

@@ -26,11 +26,11 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInf
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.jyou.BFH16Constants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class BandWPSeriesDeviceSupport extends AbstractBTLEDeviceSupport {
+public class BandWPSeriesDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private static final Logger LOG = LoggerFactory.getLogger(BandWPSeriesDeviceSupport.class);
 

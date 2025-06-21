@@ -23,7 +23,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -32,7 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBlePro
 /**
  * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml
  */
-public class HeartRateProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
+public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(HeartRateProfile.class);
 
     /**

@@ -117,6 +117,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorldClocksService;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
@@ -135,7 +136,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
@@ -264,7 +264,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_WEIGHT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL;
 
-public abstract class HuamiSupport extends AbstractBTLEDeviceSupport
+public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         implements Huami2021Handler, HuamiFetcher.HuamiFetchSupport {
 
     public static final short CHUNKED2021_ENDPOINT_COMPAT = 0x0090;

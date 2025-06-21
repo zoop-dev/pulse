@@ -20,12 +20,12 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public abstract class AbstractMiBandOperation<T extends AbstractBTLEDeviceSupport> extends AbstractBTLEOperation<T> {
+public abstract class AbstractMiBandOperation<T extends AbstractBTLESingleDeviceSupport> extends AbstractBTLEOperation<T> {
     protected AbstractMiBandOperation(T support) {
         super(support);
     }

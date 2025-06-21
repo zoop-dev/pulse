@@ -46,7 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -54,7 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
 
-public class ZeppOsBtleSupport extends AbstractBTLEDeviceSupport implements ZeppOsCommunicator {
+public class ZeppOsBtleSupport extends AbstractBTLESingleDeviceSupport implements ZeppOsCommunicator {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsBtleSupport.class);
 
     private final ZeppOsSupport zeppOsSupport = new ZeppOsSupport(this);

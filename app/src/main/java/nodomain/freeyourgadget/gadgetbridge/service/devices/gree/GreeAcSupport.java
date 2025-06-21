@@ -17,7 +17,7 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.gree.GreeAcPairingActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.AbstractGreeMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.GreeBindMessage;
@@ -29,7 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.CryptoUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
-public class GreeAcSupport extends AbstractBTLEDeviceSupport {
+public class GreeAcSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(GreeAcSupport.class);
 
     public static final UUID UUID_SERVICE_GREE_PACK = UUID.fromString("0000fd06-173c-93d2-488e-fe144d2e12a2");

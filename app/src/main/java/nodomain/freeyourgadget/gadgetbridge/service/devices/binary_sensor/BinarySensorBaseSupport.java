@@ -18,9 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.binary_sensor;
 
 import org.slf4j.Logger;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 
-public class BinarySensorBaseSupport extends AbstractBTLEDeviceSupport {
+public class BinarySensorBaseSupport extends AbstractBTLESingleDeviceSupport {
     public BinarySensorBaseSupport(Logger logger) {
         super(logger);
     }

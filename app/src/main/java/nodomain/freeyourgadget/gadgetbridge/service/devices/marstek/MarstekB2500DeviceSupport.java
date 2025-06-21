@@ -41,14 +41,14 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.marstek.SolarEquipmentStatusActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
-public class MarstekB2500DeviceSupport extends AbstractBTLEDeviceSupport {
+public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
     public static final UUID UUID_CHARACTERISTIC_MAIN = UUID.fromString("0000ff02-0000-1000-8000-00805f9b34fb");
     public static final UUID UUID_SERVICE_MAIN = UUID.fromString("0000ff00-0000-1000-8000-00805f9b34fb");
     private static final byte COMMAND_PREFIX = 0x73;

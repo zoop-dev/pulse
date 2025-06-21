@@ -50,7 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
@@ -59,7 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static org.apache.commons.lang3.math.NumberUtils.min;
 
-public class TLW64Support extends AbstractBTLEDeviceSupport {
+public class TLW64Support extends AbstractBTLESingleDeviceSupport {
 
     private static final Logger LOG = LoggerFactory.getLogger(TLW64Support.class);
 

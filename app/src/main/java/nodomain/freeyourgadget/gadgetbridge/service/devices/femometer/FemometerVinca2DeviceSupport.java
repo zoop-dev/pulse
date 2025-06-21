@@ -40,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -52,7 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.healthThermometer.HealthThermometerProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.healthThermometer.TemperatureInfo;
 
-public class FemometerVinca2DeviceSupport extends AbstractBTLEDeviceSupport {
+public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private final DeviceInfoProfile<FemometerVinca2DeviceSupport> deviceInfoProfile;
     private final BatteryInfoProfile<FemometerVinca2DeviceSupport> batteryInfoProfile;

@@ -18,7 +18,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInf
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10ActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.PolarH10ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -27,7 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.Batter
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class PolarH10DeviceSupport extends AbstractBTLEDeviceSupport {
+public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private final DeviceInfoProfile<PolarH10DeviceSupport> deviceInfoProfile;
     private final BatteryInfoProfile<PolarH10DeviceSupport> batteryInfoProfile;
     private static final Logger LOG = LoggerFactory.getLogger(PolarH10DeviceSupport.class);

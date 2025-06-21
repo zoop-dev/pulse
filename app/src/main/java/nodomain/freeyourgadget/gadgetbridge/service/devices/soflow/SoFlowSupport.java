@@ -30,7 +30,7 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.util.CryptoUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class SoFlowSupport extends AbstractBTLEDeviceSupport {
+public class SoFlowSupport extends AbstractBTLESingleDeviceSupport {
 
     public static final UUID UUID_CHARACTERISICS_NOTIFICATION = UUID.fromString("60000002-0000-1000-8000-00805f9b34fb");
     public static final UUID UUID_CHARACTERISICS_WRITE = UUID.fromString("60000003-0000-1000-8000-00805f9b34fb");

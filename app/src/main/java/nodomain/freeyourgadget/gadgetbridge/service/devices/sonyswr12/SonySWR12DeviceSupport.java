@@ -35,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
@@ -63,7 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 // - get notified: -call, -notification, -notification from, -do not disturb
 // - media control: media/find phone(tap once for play pause, tap twice for next, tap triple for previous)
 
-public class SonySWR12DeviceSupport extends AbstractBTLEDeviceSupport {
+public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(SonySWR12DeviceSupport.class);
     private SonySWR12HandlerThread processor = null;
 

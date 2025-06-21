@@ -20,13 +20,13 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.Nullable;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.common.SimpleNotification;
 
-public class V2NotificationStrategy<T extends AbstractBTLEDeviceSupport> implements NotificationStrategy {
+public class V2NotificationStrategy<T extends AbstractBTLESingleDeviceSupport> implements NotificationStrategy {
     private final T support;
 
     public V2NotificationStrategy(T support) {

@@ -49,12 +49,12 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class XWatchSupport extends AbstractBTLEDeviceSupport {
+public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(XWatchSupport.class);
     private final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     TransactionBuilder builder = null;

@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 
-public class BandWBLEProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
+public class BandWBLEProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(BandWBLEProfile.class);
 
     private static final String ACTION_PREFIX = BandWBLEProfile.class.getName() + "_";

@@ -33,7 +33,7 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
@@ -50,7 +50,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
     private final XiaomiSupport mXiaomiSupport;
 
-    final AbstractBTLEDeviceSupport commsSupport = new AbstractBTLEDeviceSupport(LOG) {
+    final AbstractBTLESingleDeviceSupport commsSupport = new AbstractBTLESingleDeviceSupport(LOG) {
         @Override
         public boolean useAutoConnect() {
             return mXiaomiSupport.useAutoConnect();

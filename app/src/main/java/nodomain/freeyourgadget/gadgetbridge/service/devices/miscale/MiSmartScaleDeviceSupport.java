@@ -39,7 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiScaleSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.MiScaleWeightSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
 
-public class MiSmartScaleDeviceSupport extends AbstractBTLEDeviceSupport {
+public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(MiSmartScaleDeviceSupport.class);
 
     private static final UUID UUID_CHARACTERISTIC_CONFIG = UUID.fromString("00001542-0000-3512-2118-0009af100700");

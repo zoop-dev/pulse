@@ -25,14 +25,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 
-public class DeviceInfoProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile<T> {
+public class DeviceInfoProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(DeviceInfoProfile.class);
 
     private static final String ACTION_PREFIX = DeviceInfoProfile.class.getName() + "_";

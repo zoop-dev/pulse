@@ -45,7 +45,6 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.CheckInitializedAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -61,7 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
  * @see TransactionBuilder
  * @see BtLEQueue
  */
-public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport implements GattCallback, GattServerCallback {
+public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDeviceSupport {
     private int mMTU = 23;
     private BtLEQueue mQueue;
     private Map<UUID, BluetoothGattCharacteristic> mAvailableCharacteristics;
@@ -70,12 +69,11 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
     private final Logger logger;
 
     private final List<AbstractBleProfile<?>> mSupportedProfiles = new ArrayList<>();
-    public static final String BASE_UUID = "0000%s-0000-1000-8000-00805f9b34fb"; //this is common for all BTLE devices. see http://stackoverflow.com/questions/18699251/finding-out-android-bluetooth-le-gatt-profiles
     private final Object characteristicsMonitor = new Object();
 
     private BleIntentApi bleApi = null;
 
-    public AbstractBTLEDeviceSupport(Logger logger) {
+    public AbstractBTLESingleDeviceSupport(Logger logger) {
         this.logger = logger;
         if (logger == null) {
             throw new IllegalArgumentException("logger must not be null");
@@ -85,14 +83,10 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
     @Override
     public boolean connect() {
         if (mQueue == null) {
-            mQueue = new BtLEQueue(getBluetoothAdapter(), getDevice(), this, this, getContext(), mSupportedServerServices);
+            mQueue = new BtLEQueue(getDevice(), mSupportedServerServices, this);
             if(bleApi != null) {
                 bleApi.setQueue(mQueue);
             }
-            mQueue.setAutoReconnect(getAutoReconnect());
-            mQueue.setScanReconnect(getScanReconnect());
-            mQueue.setImplicitGattCallbackModify(getImplicitCallbackModify());
-            mQueue.setSendWriteRequestResponse(getSendWriteRequestResponse());
         }
 
         return mQueue.connect();
@@ -125,41 +119,6 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport im
         if(BleIntentApi.isEnabled(gbDevice)) {
             bleApi = new BleIntentApi(context, gbDevice);
             bleApi.handleBLEApiPrefs();
-        }
-    }
-
-
-
-    /**
-     * Returns whether the gatt callback should be implicitly set to the one on the transaction,
-     * even if it was not set directly on the transaction. If true, the gatt callback will always
-     * be set to the one in the transaction, even if null and not explicitly set to null.
-     * See <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/pulls/2912">#2912</a> for
-     * more information. This is false by default, but we are making it configurable to avoid breaking
-     * older devices that rely on this behavior, so all older devices got this overridden to true.
-     */
-    public boolean getImplicitCallbackModify() {
-        return false;
-    }
-
-    /**
-     * Whether to send a write request response to the device, if requested. The standard actually
-     * expects this to happen, but Gadgetbridge did not originally support it. This is set to true
-     * on all older devices that were not confirmed to handle the response well after this was introduced.
-     * <p>
-     * See also: <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/pulls/2831#issuecomment-941568">#2831#issuecomment-941568</a>
-     *
-     * @return whether to send write request responses, if a response is requested
-     */
-    public boolean getSendWriteRequestResponse() {
-        return true;
-    }
-
-    @Override
-    public void setAutoReconnect(boolean enable) {
-        super.setAutoReconnect(enable);
-        if (mQueue != null) {
-            mQueue.setAutoReconnect(enable);
         }
     }
 

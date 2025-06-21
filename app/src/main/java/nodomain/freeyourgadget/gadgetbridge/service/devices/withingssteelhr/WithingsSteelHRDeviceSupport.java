@@ -53,7 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.ServerTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -112,7 +112,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LANGUAGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LANGUAGE_AUTO;
 
-public class WithingsSteelHRDeviceSupport extends AbstractBTLEDeviceSupport {
+public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private static final Logger logger = LoggerFactory.getLogger(WithingsSteelHRDeviceSupport.class);
     public static final String LAST_ACTIVITY_SYNC = "lastActivitySync";

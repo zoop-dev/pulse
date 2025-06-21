@@ -34,11 +34,11 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInf
 import nodomain.freeyourgadget.gadgetbridge.devices.supercars.SuperCarsConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.CryptoUtils;
 
-public class SuperCarsSupport extends AbstractBTLEDeviceSupport {
+public class SuperCarsSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(SuperCarsSupport.class);
     public static final String COMMAND_DRIVE_CONTROL = "nodomain.freeyourgadget.gadgetbridge.supercars.command.DRIVE_CONTROL";
     public static final String EXTRA_DIRECTION = "EXTRA_DIRECTION";

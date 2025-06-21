@@ -71,7 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
@@ -79,7 +79,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 
-public class CmfWatchProSupport extends AbstractBTLEDeviceSupport implements CmfCharacteristic.Handler {
+public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implements CmfCharacteristic.Handler {
     private static final Logger LOG = LoggerFactory.getLogger(CmfWatchProSupport.class);
 
     public static final UUID UUID_SERVICE_CMF_CMD = UUID.fromString("0000fff0-0000-1000-8000-00805f9b34fb");

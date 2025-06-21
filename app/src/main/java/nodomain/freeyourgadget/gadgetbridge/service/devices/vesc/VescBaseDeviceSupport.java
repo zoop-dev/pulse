@@ -19,9 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.vesc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 
-public class VescBaseDeviceSupport extends AbstractBTLEDeviceSupport {
+public class VescBaseDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(VescBaseDeviceSupport.class);
 
     public VescBaseDeviceSupport() {

@@ -38,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.proto.SMAQ2OSSProtos;
@@ -46,7 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
+public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(SMAQ2OSSSupport.class);
 
     public BluetoothGattCharacteristic normalWriteCharacteristic = null;

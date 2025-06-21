@@ -29,14 +29,14 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 
-public class DomyosT540Support extends AbstractBTLEDeviceSupport {
+public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
 
     private static final Logger LOG = LoggerFactory.getLogger(DomyosT540Support.class);
     private static final UUID UUUD_SERVICE_DOMYOS = UUID.fromString("49535343-FE7D-4AE5-8FA9-9FAFD205E455");

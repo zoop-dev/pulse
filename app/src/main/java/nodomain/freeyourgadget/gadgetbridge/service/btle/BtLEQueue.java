@@ -63,19 +63,19 @@ public final class BtLEQueue {
     private static final Logger LOG = LoggerFactory.getLogger(BtLEQueue.class);
     private static final byte[] EMPTY = new byte[0];
 
-    private final Object mGattMonitor = new Object();
+    private final Object mGattMonitor;
     private final GBDevice mGbDevice;
     private final BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
     private BluetoothGattServer mBluetoothGattServer;
-    private final Set<BluetoothGattService> mSupportedServerServices;
+    private final Set<? extends BluetoothGattService> mSupportedServerServices;
 
-    private final BlockingQueue<AbstractTransaction> mTransactions = new LinkedBlockingQueue<>();
+    private final BlockingQueue<AbstractTransaction> mTransactions;
     private volatile boolean mDisposed;
     private volatile boolean mCrashed;
     private volatile boolean mAbortTransaction;
     private volatile boolean mAbortServerTransaction;
-    private volatile boolean mPauseTransaction = false;
+    private volatile boolean mPauseTransaction;
 
     private final Context mContext;
     private CountDownLatch mWaitForActionResultLatch;
@@ -84,10 +84,9 @@ public final class BtLEQueue {
     private BluetoothGattCharacteristic mWaitCharacteristic;
     private final InternalGattCallback internalGattCallback;
     private final InternalGattServerCallback internalGattServerCallback;
-    private boolean mAutoReconnect;
-    private boolean scanReconnect;
-    private boolean mImplicitGattCallbackModify = true;
-    private boolean mSendWriteRequestResponse = false;
+    private final AbstractBTLEDeviceSupport mDeviceSupport;
+    private final boolean mImplicitGattCallbackModify;
+    private final boolean mSendWriteRequestResponse;
 
     private Thread dispatchThread = new Thread("Gadgetbridge GATT Dispatcher") {
 
@@ -208,31 +207,25 @@ public final class BtLEQueue {
         }
     };
 
-    public BtLEQueue(BluetoothAdapter bluetoothAdapter, GBDevice gbDevice, GattCallback externalGattCallback, GattServerCallback externalGattServerCallback, Context context, Set<BluetoothGattService> supportedServerServices) {
-        mBluetoothAdapter = bluetoothAdapter;
+    public BtLEQueue(GBDevice gbDevice, Set<? extends BluetoothGattService> supportedServerServices, AbstractBTLEDeviceSupport deviceSupport) {
+        // 1) apply all settings
+        mBluetoothAdapter = deviceSupport.getBluetoothAdapter();
+        mContext = deviceSupport.getContext();
+        mDeviceSupport = deviceSupport;
         mGbDevice = gbDevice;
-        internalGattCallback = new InternalGattCallback(externalGattCallback);
-        internalGattServerCallback = new InternalGattServerCallback(externalGattServerCallback);
-        mContext = context;
+        mImplicitGattCallbackModify = deviceSupport.getImplicitCallbackModify();
+        mPauseTransaction = false;
+        mSendWriteRequestResponse = deviceSupport.getSendWriteRequestResponse();
         mSupportedServerServices = supportedServerServices;
 
+        // 2) create new objects
+        mGattMonitor = new Object();
+        mTransactions = new LinkedBlockingQueue<>();
+        internalGattCallback = new InternalGattCallback(deviceSupport);
+        internalGattServerCallback = new InternalGattServerCallback(deviceSupport);
+
+        // 3) finally start the dispatch thread
         dispatchThread.start();
-    }
-
-    public void setAutoReconnect(boolean enable) {
-        mAutoReconnect = enable;
-    }
-
-    public void setScanReconnect(boolean enable){
-        this.scanReconnect = enable;
-    }
-
-    public void setImplicitGattCallbackModify(final boolean enable) {
-        mImplicitGattCallbackModify = enable;
-    }
-
-    public void setSendWriteRequestResponse(final boolean enable) {
-        mSendWriteRequestResponse = enable;
     }
 
     private boolean isConnected() {
@@ -374,10 +367,10 @@ public final class BtLEQueue {
 
                 disconnect();
 
-                if (mAutoReconnect) {
+                if (mDeviceSupport.getAutoReconnect()) {
                     // don't reconnect immediately to give the Bluetooth stack some time to settle down
                     // use BluetoothConnectReceiver or AutoConnectIntervalReceiver instead
-                    if (scanReconnect) {
+                    if (mDeviceSupport.getScanReconnect()) {
                         LOG.info("Waiting for BLE scan before attempting reconnection...");
                         setDeviceConnectionState(State.WAITING_FOR_SCAN);
                     } else {
@@ -397,8 +390,8 @@ public final class BtLEQueue {
      * @return true if a reconnection attempt was made, or false otherwise
      */
     private boolean maybeReconnect() {
-        if (mAutoReconnect && mBluetoothGatt != null) {
-            if(scanReconnect){
+        if (mDeviceSupport.getAutoReconnect() && mBluetoothGatt != null) {
+            if(mDeviceSupport.getScanReconnect()){
                 LOG.info("Waiting for BLE scan before attempting reconnection...");
                 setDeviceConnectionState(State.WAITING_FOR_SCAN);
                 return true;
@@ -550,9 +543,10 @@ public final class BtLEQueue {
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            final int bondState = gatt.getDevice().getBondState();
             LOG.debug("connection state change, newState: {} {} {}",
                     BleNamesResolver.getStateString(newState), BleNamesResolver.getStatusString(status),
-                    BleNamesResolver.getBondStateString(gatt.getDevice().getBondState()));
+                    BleNamesResolver.getBondStateString(bondState));
 
             synchronized (mGattMonitor) {
                 if (mBluetoothGatt == null) {
@@ -577,24 +571,26 @@ public final class BtLEQueue {
                 case BluetoothProfile.STATE_CONNECTED:
                     LOG.info("Connected to GATT server.");
                     setDeviceConnectionState(State.CONNECTED);
-                    // Attempts to discover services after successful connection.
-                    List<BluetoothGattService> cachedServices = gatt.getServices();
-                    if (cachedServices != null && !cachedServices.isEmpty()) {
-                        LOG.info("Using cached services, skipping discovery");
-                        onServicesDiscovered(gatt, BluetoothGatt.GATT_SUCCESS);
-                    } else {
-                        LOG.info("Attempting to start service discovery");
-                        // discover services in the main thread (appears to fix Samsung connection problems)
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                final BluetoothGatt bluetoothGatt = mBluetoothGatt;
-                                if (bluetoothGatt != null) {
-                                    bluetoothGatt.discoverServices();
-                                }
+
+                    // discover services in the main thread (appears to fix Samsung connection problems)
+                    final long delayMillis = mDeviceSupport.getServiceDiscoveryDelay(bondState != BluetoothDevice.BOND_NONE);
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            BluetoothGatt bluetoothGatt = mBluetoothGatt;
+                            if (bluetoothGatt == null) {
+                                return;
                             }
-                        });
-                    }
+                            List<BluetoothGattService> services = bluetoothGatt.getServices();
+                            if (services != null && !services.isEmpty()) {
+                                LOG.info("Using cached services, skipping discovery");
+                                onServicesDiscovered(bluetoothGatt, BluetoothGatt.GATT_SUCCESS);
+                            } else {
+                                LOG.debug("discoverServices");
+                                bluetoothGatt.discoverServices();
+                            }
+                        }
+                    }, delayMillis);
                     break;
                 case BluetoothProfile.STATE_DISCONNECTED:
                     LOG.info("Disconnected from GATT server.");

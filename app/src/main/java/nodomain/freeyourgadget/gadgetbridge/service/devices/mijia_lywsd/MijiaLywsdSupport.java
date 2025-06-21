@@ -46,7 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MijiaLywsdRealtimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -57,7 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.hexdump;
 
-public class MijiaLywsdSupport extends AbstractBTLEDeviceSupport {
+public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(MijiaLywsdSupport.class);
 
     private static final UUID UUID_BASE_SERVICE = UUID.fromString("ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6");

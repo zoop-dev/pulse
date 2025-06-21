@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractGattCallback;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -44,7 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
  * @see nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic
  * @see https://www.bluetooth.com/specifications/assigned-numbers
  */
-public abstract class AbstractBleProfile<T extends AbstractBTLEDeviceSupport> extends AbstractGattCallback {
+public abstract class AbstractBleProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractGattCallback {
     private final T mSupport;
 
     private List<IntentListener> listeners = new ArrayList<IntentListener>(1);
