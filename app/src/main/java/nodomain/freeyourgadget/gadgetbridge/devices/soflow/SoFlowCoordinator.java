@@ -23,8 +23,6 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.soflow.SoFlowSupport;
@@ -43,11 +41,6 @@ public class SoFlowCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsFindDevice() {
         return true;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        // nothing to delete, yet
     }
 
     @Override

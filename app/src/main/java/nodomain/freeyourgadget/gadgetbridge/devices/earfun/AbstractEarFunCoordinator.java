@@ -13,10 +13,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.EarFunDeviceS
 
 public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-    }
-
-    @Override
     public String getManufacturer() {
         return "EarFun";
     }

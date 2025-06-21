@@ -75,10 +75,6 @@ public class CasioGWB5600DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice device) {
         return 5;
     }

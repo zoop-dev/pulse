@@ -67,11 +67,6 @@ public class BFH16DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice device) {
         return 3;
     }

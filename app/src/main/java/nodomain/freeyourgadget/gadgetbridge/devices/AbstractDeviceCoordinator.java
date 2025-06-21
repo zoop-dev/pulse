@@ -44,9 +44,12 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
@@ -211,13 +214,32 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     /**
      * Hook for subclasses to perform device-specific deletion logic, e.g. db cleanup.
+     * By default, it clears all data from all device-specific dao tables.
      *
      * @param gbDevice the GBDevice
      * @param device   the corresponding database Device
      * @param session  the session to use
      * @throws GBException if there was an error deleting device-specific resources
      */
-    protected abstract void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException;
+    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
+        final Long deviceId = device.getId();
+
+        final Map<AbstractDao<?, ?>, Property> daoMap = getAllDeviceDao(session);
+
+        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
+            e.getKey().queryBuilder()
+                    .where(e.getValue().eq(deviceId))
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+        }
+    }
+
+    /**
+     * Returns a map from {@link AbstractDao} to the corresponding Device ID property. All data present
+     * in these tables for a device will be deleted when the device is deleted.
+     */
+    protected Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        return Collections.emptyMap();
+    }
 
     @Override
     public boolean allowFetchActivityData(GBDevice device) {

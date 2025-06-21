@@ -81,11 +81,6 @@ public class ITagCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        // nothing to delete, yet
-    }
-
-    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_itag;
     }

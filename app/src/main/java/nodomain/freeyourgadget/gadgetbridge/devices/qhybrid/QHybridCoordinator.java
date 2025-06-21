@@ -36,7 +36,6 @@ import java.util.Collections;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -47,13 +46,12 @@ import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -62,7 +60,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.Version;
 public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(QHybridCoordinator.class);
 
-    @NonNull
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         for(ParcelUuid uuid : candidate.getServiceUuids()){
@@ -228,11 +225,6 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsFlashing() {
         return true;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
     }
 
     @Override

@@ -38,11 +38,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.binary_sensor.BinarySensorSupport;
 
 public class BinarySensorCoordinator extends AbstractBLEDeviceCoordinator {
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
     @NonNull
     @Override
     public Collection<? extends ScanFilter> createBLEScanFilters() {

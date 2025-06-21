@@ -91,11 +91,6 @@ public class FitProDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public boolean supportsScreenshots(final GBDevice device) {
         return false;
     }

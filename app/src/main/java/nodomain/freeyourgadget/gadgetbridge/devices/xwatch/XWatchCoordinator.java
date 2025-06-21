@@ -17,21 +17,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xwatch;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -41,11 +34,6 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("XWatch.*");
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
     }
 
     @Override
@@ -64,18 +52,8 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Generic";
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
     }
 
     @Override

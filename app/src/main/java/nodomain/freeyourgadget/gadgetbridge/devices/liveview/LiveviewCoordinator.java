@@ -56,9 +56,4 @@ public class LiveviewCoordinator extends AbstractBLClassicDeviceCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_liveview;
     }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        // nothing to delete, yet
-    }
 }

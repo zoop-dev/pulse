@@ -68,11 +68,6 @@ public class NutCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
     public boolean supportsRealtimeData() {
         return false; //TODO: RRSI
     }
@@ -80,10 +75,6 @@ public class NutCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsFindDevice() {
         return true;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
     }
 
     @Override

@@ -30,7 +30,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -113,11 +112,6 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        // nothing to delete, yet
-    }
-
-    @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_transliteration,
@@ -125,7 +119,6 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
                 R.xml.devicesettings_prefix_notification_with_app
         };
     }
-
 
     @Override
     public int getDeviceNameResource() {

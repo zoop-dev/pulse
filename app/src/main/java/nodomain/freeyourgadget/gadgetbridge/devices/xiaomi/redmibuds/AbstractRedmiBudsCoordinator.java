@@ -30,11 +30,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.RedmiBudsD
 
 public abstract class AbstractRedmiBudsCoordinator extends AbstractDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
-    @Override
     public String getManufacturer() {
         return "Xiaomi";
     }

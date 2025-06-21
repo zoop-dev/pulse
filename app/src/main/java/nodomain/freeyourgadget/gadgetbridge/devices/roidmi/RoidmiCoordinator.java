@@ -19,12 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.roidmi;
 
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public abstract class RoidmiCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
@@ -35,10 +31,6 @@ public abstract class RoidmiCoordinator extends AbstractBLClassicDeviceCoordinat
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_BOND;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
     }
 
     @Override

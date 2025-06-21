@@ -47,10 +47,6 @@ public class ID115Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-    }
-
-    @Override
     public boolean supports(GBDeviceCandidate candidate) {
         return candidate.supportsService(ID115Constants.UUID_SERVICE_ID115);
     }

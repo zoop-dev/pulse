@@ -58,11 +58,6 @@ public class DomyosT540Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        // nothing to delete, yet
-    }
-
-    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_domyos_t540;
     }

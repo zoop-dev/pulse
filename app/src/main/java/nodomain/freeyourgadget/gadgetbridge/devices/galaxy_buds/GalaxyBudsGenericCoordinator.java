@@ -44,11 +44,6 @@ public abstract class GalaxyBudsGenericCoordinator extends AbstractBLClassicDevi
         return true;
     }
 
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device
-            device, @NonNull DaoSession session) throws GBException {
-    }
-
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {

@@ -46,11 +46,6 @@ public abstract class HuaweiFreebudsCoordinator extends AbstractBLClassicDeviceC
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        // TODO: implement
-    }
-
-    @Override
     public String getManufacturer() {
         return "Huawei";
     }

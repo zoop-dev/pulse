@@ -139,11 +139,6 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
     public boolean supportsRealtimeData() {
         return true;
     }

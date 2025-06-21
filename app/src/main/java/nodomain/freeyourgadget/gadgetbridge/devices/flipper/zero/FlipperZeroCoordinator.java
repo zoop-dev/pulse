@@ -32,11 +32,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.flipper.zero.support
 
 public class FlipperZeroCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
-    @Override
     public boolean supports(GBDeviceCandidate candidate) {
         if (candidate.supportsService(UUID.fromString("00003082-0000-1000-8000-00805f9b34fb"))){
             return true; // TODO need to filter for flipper here

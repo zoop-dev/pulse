@@ -36,10 +36,6 @@ public class BandWPSeriesDeviceCoordinator extends AbstractBLEDeviceCoordinator 
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-    }
-
-    @Override
     public int getBatteryCount(final GBDevice device) {
         return 3;
     }

@@ -26,8 +26,6 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
@@ -50,11 +48,6 @@ public class VibratissimoCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
     public boolean supportsRealtimeData() {
         return false; // hmmm well, it has a temperature sensor :D
     }
@@ -73,11 +66,6 @@ public class VibratissimoCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public EnumSet<ServiceDeviceSupport.Flags> getInitialFlags() {
         return EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING);
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        // nothing to delete, yet
     }
 
     @Override

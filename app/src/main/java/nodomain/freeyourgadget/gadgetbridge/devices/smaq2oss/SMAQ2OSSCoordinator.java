@@ -26,12 +26,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 
@@ -42,10 +38,6 @@ public class SMAQ2OSSCoordinator extends AbstractBLEDeviceCoordinator {
         ParcelUuid service = new ParcelUuid(SMAQ2OSSConstants.UUID_SERVICE_SMAQ2OSS);
         ScanFilter filter = new ScanFilter.Builder().setServiceUuid(service).build();
         return Collections.singletonList(filter);
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
     }
 
     @Override

@@ -18,32 +18,20 @@
 /*  Based on code from BlueWatcher, https://github.com/masterjc/bluewatcher */
 package nodomain.freeyourgadget.gadgetbridge.devices.casio.gb6900;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gb6900.CasioGB6900DeviceSupport;
 
 public class CasioGB6900DeviceCoordinator extends CasioDeviceCoordinator {
-    protected static final Logger LOG = LoggerFactory.getLogger(CasioGB6900DeviceCoordinator.class);
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("CASIO.*(6900B|5600B|STB-1000).*");
@@ -55,43 +43,8 @@ public class CasioGB6900DeviceCoordinator extends CasioDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
-    }
-
-    @Override
     public boolean supportsFindDevice() {
         return true;
-    }
-
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
-    public boolean supportsActivityDataFetching() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsActivityTracking() {
-        return false;
     }
 
     @Override
@@ -100,33 +53,8 @@ public class CasioGB6900DeviceCoordinator extends CasioDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice device) {
         return 5; // 4 regular and one snooze
-    }
-
-    @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
     }
 
     @Override

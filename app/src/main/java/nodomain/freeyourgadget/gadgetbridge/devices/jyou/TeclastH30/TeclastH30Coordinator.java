@@ -20,17 +20,15 @@ package nodomain.freeyourgadget.gadgetbridge.devices.jyou.TeclastH30;
 import android.bluetooth.le.ScanFilter;
 import android.os.ParcelUuid;
 
+import androidx.annotation.NonNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.jyou.JYouConstants;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -93,11 +91,6 @@ public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public String getManufacturer() {
         return "Teclast";
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
     }
 
     @Override

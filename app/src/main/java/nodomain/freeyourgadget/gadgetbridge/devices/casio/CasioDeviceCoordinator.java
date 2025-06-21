@@ -27,8 +27,6 @@ import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioConstants;
-
 public abstract class CasioDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @NonNull
     @Override

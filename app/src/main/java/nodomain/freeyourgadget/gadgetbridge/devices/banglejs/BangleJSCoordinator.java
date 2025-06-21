@@ -179,10 +179,6 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-    }
-
-    @Override
     public Class<? extends Activity> getPairingActivity() {
         return null;
     }
@@ -190,11 +186,6 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
         return new BangleJSSampleProvider(device, session);
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
     }
 
     @Override

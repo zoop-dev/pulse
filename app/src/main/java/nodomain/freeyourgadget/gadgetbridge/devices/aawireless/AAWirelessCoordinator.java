@@ -22,14 +22,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -41,12 +38,6 @@ public class AAWirelessCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public boolean isExperimental() {
         return true;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice,
-                                @NonNull final Device device,
-                                @NonNull final DaoSession session) throws GBException {
     }
 
     @Override

@@ -56,10 +56,6 @@ public class AsteroidOSDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-    }
-
-    @Override
     public boolean supports(GBDeviceCandidate candidate) {
         if (candidate.supportsService(AsteroidOSConstants.SERVICE_UUID))
             return true;

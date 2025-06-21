@@ -45,11 +45,6 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.lefun.LefunConstants.
  */
 public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
-    @Override
     public int getBondingStyle() {
         return BONDING_STYLE_NONE;
     }
@@ -84,11 +79,6 @@ public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
         return new LefunSampleProvider(device, session);
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
     }
 
     @Override

@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.um25.Coordinator;
 
 import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
-import android.content.Context;
-import android.net.Uri;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
@@ -28,24 +26,15 @@ import androidx.annotation.NonNull;
 import java.util.Collection;
 import java.util.Collections;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.um25.Activity.DataActivity;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Support.UM25Support;
 
 public class UM25Coordinator extends AbstractBLEDeviceCoordinator {
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
     @NonNull
     @Override
     public Collection<? extends ScanFilter> createBLEScanFilters() {
@@ -70,11 +59,6 @@ public class UM25Coordinator extends AbstractBLEDeviceCoordinator {
         return new int[]{
                 R.xml.devicesettings_um25
         };
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
     }
 
     @Override

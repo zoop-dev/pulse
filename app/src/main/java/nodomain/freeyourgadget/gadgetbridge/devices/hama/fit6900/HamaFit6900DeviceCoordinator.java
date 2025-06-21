@@ -34,11 +34,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.hama.fit6900.HamaFit
 
 public final class HamaFit6900DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
-    @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^Fit6900$");
     }

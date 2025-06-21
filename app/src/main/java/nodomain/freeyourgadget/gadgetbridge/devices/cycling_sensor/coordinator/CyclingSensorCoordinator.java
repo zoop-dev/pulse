@@ -70,11 +70,6 @@ public class CyclingSensorCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Generic";
     }

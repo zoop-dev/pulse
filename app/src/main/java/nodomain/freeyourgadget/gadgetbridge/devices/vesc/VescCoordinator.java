@@ -18,18 +18,12 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.vesc;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -43,11 +37,6 @@ public class VescCoordinator extends AbstractBLEDeviceCoordinator {
     public final static String UUID_SERVICE_SERIAL_NRF = "0000ffe0-0000-1000-8000-00805f9b34fb";
     public final static String UUID_CHARACTERISTIC_SERIAL_TX_NRF = "0000ffe0-0000-1000-8000-00805f9b34fb";
     public final static String UUID_CHARACTERISTIC_SERIAL_RX_NRF = "0000ffe1-0000-1000-8000-00805f9b34fb";
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
 
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
@@ -91,11 +80,6 @@ public class VescCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_NONE;
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
     }
 
     @Override

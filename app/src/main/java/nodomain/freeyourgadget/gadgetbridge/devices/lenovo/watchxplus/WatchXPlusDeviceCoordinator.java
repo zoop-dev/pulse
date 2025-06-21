@@ -17,6 +17,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watchxplus;
 
+import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
@@ -44,15 +46,12 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.lenovo.LenovoWatchCalibrationActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.lenovo.LenovoWatchPairingActivity;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lenovo.watchxplus.WatchXPlusDeviceSupport;
-
-import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
 
 
 public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
@@ -68,11 +67,6 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
         ParcelUuid watchXpService = new ParcelUuid(WatchXPlusConstants.UUID_SERVICE_WATCHXPLUS);
         ScanFilter filter = new ScanFilter.Builder().setServiceUuid(watchXpService).build();
         return Collections.singletonList(filter);
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-
     }
 
     @Override

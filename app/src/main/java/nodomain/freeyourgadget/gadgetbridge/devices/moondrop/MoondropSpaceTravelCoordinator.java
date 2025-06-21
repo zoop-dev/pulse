@@ -58,11 +58,6 @@ public class MoondropSpaceTravelCoordinator extends AbstractBLClassicDeviceCoord
     }
 
     @Override
-    protected void deleteDevice(
-            @NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session)
-            throws GBException {}
-
-    @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings settings = new DeviceSpecificSettings();
 

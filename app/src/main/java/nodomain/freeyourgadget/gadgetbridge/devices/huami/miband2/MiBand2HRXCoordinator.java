@@ -17,9 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.miband2;
 
-import android.content.Context;
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 
 import java.util.EnumSet;
@@ -30,7 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandSettingsCustomizer;
@@ -52,11 +48,6 @@ public class MiBand2HRXCoordinator extends HuamiCoordinator {
                 HuamiConst.MI_BAND2_NAME_HRX + "|Mi Band 2i",
                 Pattern.CASE_INSENSITIVE
         );
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
-        return null;
     }
 
     @Override

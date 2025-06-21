@@ -36,11 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.nothing.Ear1Support;
 
 public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Nothing";
     }
@@ -48,11 +43,6 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     @Override
     public boolean supportsFindDevice() {
         return true;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
     }
 
     @Override

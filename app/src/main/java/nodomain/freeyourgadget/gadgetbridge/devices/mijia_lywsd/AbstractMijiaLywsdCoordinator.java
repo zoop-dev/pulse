@@ -40,11 +40,6 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public boolean supportsActivityDataFetching() {
         return false;
     }
@@ -71,11 +66,6 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
                 R.xml.devicesettings_mijia_lywsd,
                 R.xml.devicesettings_temperature_scale_cf,
         };
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        // nothing to delete, yet
     }
 
     @Override

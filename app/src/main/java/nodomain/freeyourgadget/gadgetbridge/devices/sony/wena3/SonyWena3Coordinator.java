@@ -17,8 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3;
 
 import android.bluetooth.le.ScanFilter;
-import android.content.Context;
-import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
@@ -30,7 +28,6 @@ import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -158,12 +155,6 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public TimeSampleProvider<? extends HeartRateSample> getHeartRateRestingSampleProvider(GBDevice device, DaoSession session) {
         return new SonyWena3HeartRateSampleProvider(device, session);
-    }
-
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
     }
 
     @Override

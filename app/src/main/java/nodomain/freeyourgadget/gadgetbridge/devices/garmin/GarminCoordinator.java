@@ -64,14 +64,8 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice, @NonNull final Device device, @NonNull final DaoSession session) throws GBException {
-        deleteAllActivityData(device, session);
-    }
-
-    public void deleteAllActivityData(@NonNull final Device device, @NonNull final DaoSession session) {
-        final Long deviceId = device.getId();
-
-        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
+    protected Map<AbstractDao<?, ?>, Property> getAllDeviceDao( @NonNull final DaoSession session) {
+        return new HashMap<>() {{
             put(session.getGarminActivitySampleDao(), GarminActivitySampleDao.Properties.DeviceId);
             put(session.getGarminStressSampleDao(), GarminStressSampleDao.Properties.DeviceId);
             put(session.getGarminBodyEnergySampleDao(), GarminBodyEnergySampleDao.Properties.DeviceId);
@@ -83,12 +77,6 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
             put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
             put(session.getPendingFileDao(), PendingFileDao.Properties.DeviceId);
         }};
-
-        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
-            e.getKey().queryBuilder()
-                    .where(e.getValue().eq(deviceId))
-                    .buildDelete().executeDeleteWithoutDetachingEntities();
-        }
     }
 
     @Override

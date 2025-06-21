@@ -18,10 +18,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.gree.GreeAcSupport;
 
 public class GreeAcCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice, @NonNull final Device device, @NonNull final DaoSession session) throws GBException {
-    }
-
-    @Override
     protected Pattern getSupportedDeviceName() {
         // GR-AC_10001_09_xxxx_SC
         return Pattern.compile("^GR-AC_\\d{5}_\\d{2}_[0-9a-f]{4}_SC$");

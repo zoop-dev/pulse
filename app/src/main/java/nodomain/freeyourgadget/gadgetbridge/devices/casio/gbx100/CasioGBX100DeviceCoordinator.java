@@ -93,11 +93,6 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
     public boolean supportsActivityDataFetching() {
         return true;
     }
@@ -115,11 +110,6 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     @Override
     public int getAlarmSlotCount(GBDevice device) {
         return 4;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
     }
 
     @Override

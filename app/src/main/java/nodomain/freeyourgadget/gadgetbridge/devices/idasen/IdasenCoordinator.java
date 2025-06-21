@@ -18,10 +18,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.idasen.IdasenDeviceS
 
 public class IdasenCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-    @Override
     public String getManufacturer() {
         return "IKEA";
     }

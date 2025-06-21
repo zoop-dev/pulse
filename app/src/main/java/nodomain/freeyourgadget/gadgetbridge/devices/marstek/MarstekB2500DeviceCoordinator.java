@@ -61,11 +61,6 @@ public class MarstekB2500DeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-
-    }
-
-    @Override
     public boolean supportsAppsManagement(final GBDevice device) {
         return true;
     }

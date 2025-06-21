@@ -15,10 +15,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.ecbs100.CasioE
 
 public class CasioECBS100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-    }
-
-    @Override
     public int getBondingStyle(){
         return BONDING_STYLE_BOND;
     }

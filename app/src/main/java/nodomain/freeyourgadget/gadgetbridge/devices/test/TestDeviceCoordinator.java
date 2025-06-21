@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -52,12 +51,11 @@ import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestHrvSummaryS
 import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestPaiSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestRespiratoryRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestStressSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.samples.TestTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
@@ -81,13 +79,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
-    @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice,
-                                @NonNull final Device device,
-                                @NonNull final DaoSession session) throws GBException {
-        // Nothing to do
-    }
-
     @Override
     public boolean supports(final GBDeviceCandidate candidate) {
         return false;
