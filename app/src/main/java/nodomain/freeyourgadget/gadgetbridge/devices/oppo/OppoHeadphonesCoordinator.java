@@ -62,11 +62,6 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_nothingear_disabled;
-    }
-
-    @Override
     public int getBatteryCount(final GBDevice device) {
         return 3;
     }

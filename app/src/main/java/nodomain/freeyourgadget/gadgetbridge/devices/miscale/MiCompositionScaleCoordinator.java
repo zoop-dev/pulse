@@ -75,7 +75,7 @@ public class MiCompositionScaleCoordinator extends AbstractBLEDeviceCoordinator 
 
     @Override
     public int getBondingStyle() {
-        return super.BONDING_STYLE_NONE;
+        return BONDING_STYLE_NONE;
     }
 
     @Override
@@ -133,10 +133,5 @@ public class MiCompositionScaleCoordinator extends AbstractBLEDeviceCoordinator 
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miscale;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miscale_disabled;
     }
 }

@@ -23,7 +23,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiWatch5ActiveCoordinator extends XiaomiCoordinator {
-
     @Override
     public ConnectionType getConnectionType() {
         return ConnectionType.BT_CLASSIC;
@@ -47,11 +46,6 @@ public class RedmiWatch5ActiveCoordinator extends XiaomiCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_amazfit_bip;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
     }
 
     @Override

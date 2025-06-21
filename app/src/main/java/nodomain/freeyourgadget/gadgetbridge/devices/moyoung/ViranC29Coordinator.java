@@ -44,12 +44,6 @@ public class ViranC29Coordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miwatch_disabled;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Viran";
     }

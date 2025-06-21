@@ -30,7 +30,6 @@ public class DeviceTypeTest extends TestBase {
             final DeviceCoordinator coordinator = deviceType.getDeviceCoordinator();
             Assert.assertNotEquals("Device name for " + deviceType + " is 0", 0, coordinator.getDeviceNameResource());
             Assert.assertNotEquals("Device icon for " + deviceType + " is 0", 0, coordinator.getDefaultIconResource());
-            Assert.assertNotEquals("Disabled device icon for " + deviceType + " is 0", 0, coordinator.getDisabledIconResource());
             Assert.assertNotEquals("Manufacturer for " + deviceType + " is null", null, coordinator.getManufacturer());
         }
     }

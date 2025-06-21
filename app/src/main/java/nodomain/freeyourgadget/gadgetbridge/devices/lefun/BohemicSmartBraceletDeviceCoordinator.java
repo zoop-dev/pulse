@@ -50,15 +50,4 @@ public class BohemicSmartBraceletDeviceCoordinator extends LefunDeviceCoordinato
     public int getDeviceNameResource() {
         return R.string.devicetype_bohemic_smart_bracelet;
     }
-
-
-    @Override
-    public int getDefaultIconResource() {
-        return R.drawable.ic_device_h30_h10;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_h30_h10_disabled;
-    }
 }

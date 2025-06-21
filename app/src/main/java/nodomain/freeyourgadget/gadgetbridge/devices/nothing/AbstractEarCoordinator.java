@@ -88,11 +88,6 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_nothingear_disabled;
-    }
-
-    @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
         return new EarSettingsCustomizer();
     }

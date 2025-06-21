@@ -157,9 +157,4 @@ public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_h30_h10;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_h30_h10_disabled;
-    }
 }

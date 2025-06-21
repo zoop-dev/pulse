@@ -22,7 +22,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.regex.Pattern;
 
@@ -49,12 +48,6 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
 
     }
 
-    @Nullable
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
-    }
-
     @Override
     public boolean supportsActivityDataFetching() {
         return true;
@@ -76,48 +69,13 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public int getAlarmSlotCount(GBDevice device) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
-        return false;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Generic";
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public Class<? extends Activity> getAppsManagementActivity() {
         return null;
-    }
-
-    @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
     }
 
     @Override
@@ -130,7 +88,6 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return XWatchSupport.class;
     }
-
 
     @Override
     public int getDeviceNameResource() {

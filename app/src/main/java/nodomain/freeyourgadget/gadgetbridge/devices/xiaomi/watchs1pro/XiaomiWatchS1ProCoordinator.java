@@ -51,11 +51,6 @@ public class XiaomiWatchS1ProCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miwatch_disabled;
-    }
-
-    @Override
     public boolean supportsFindDevice() {
         return false;
     }

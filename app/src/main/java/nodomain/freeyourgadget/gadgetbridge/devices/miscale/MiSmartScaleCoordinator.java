@@ -59,11 +59,6 @@ public class MiSmartScaleCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miscale_disabled;
-    }
-
-    @Override
     public int getBatteryCount(final GBDevice device) {
         return 0;
     }

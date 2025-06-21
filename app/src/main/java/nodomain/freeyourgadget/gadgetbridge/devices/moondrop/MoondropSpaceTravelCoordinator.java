@@ -53,11 +53,6 @@ public class MoondropSpaceTravelCoordinator extends AbstractBLClassicDeviceCoord
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_nothingear_disabled;
-    }
-
-    @Override
     public boolean supportsOSBatteryLevel() {
         return true;
     }

@@ -16,12 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.withingssteelhr;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.Locale;
 
@@ -49,15 +47,10 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractDeviceCoordinator 
         qb.where(WithingsSteelHRActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
-    @NonNull
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         String name = candidate.getName();
-        if (name != null && (name.toLowerCase(Locale.ROOT).startsWith("steel") || name.toLowerCase(Locale.ROOT).startsWith("activite"))) {
-            return true;
-        }
-
-        return false;
+        return name != null && (name.toLowerCase(Locale.ROOT).startsWith("steel") || name.toLowerCase(Locale.ROOT).startsWith("activite"));
     }
 
     @Override
@@ -70,13 +63,6 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractDeviceCoordinator 
     @Override
     public int getBondingStyle(){
         return BONDING_STYLE_BOND;
-    }
-
-
-    @Nullable
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
     }
 
     @Override
@@ -110,11 +96,6 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractDeviceCoordinator 
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice gbDevice) {
         return 3;
     }
@@ -145,33 +126,8 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractDeviceCoordinator 
     }
 
     @Override
-    public boolean supportsAppsManagement(GBDevice gbDevice) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
     public boolean supportsRealtimeData() {
         return true;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return false;
     }
 
     @Override
@@ -192,20 +148,13 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractDeviceCoordinator 
         return WithingsSteelHRDeviceSupport.class;
     }
 
-
     @Override
     public int getDeviceNameResource() {
         return R.string.withings_steel_hr;
     }
 
-
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_watchxplus;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_watchxplus_disabled;
     }
 }

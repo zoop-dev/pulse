@@ -26,11 +26,6 @@ public class PixelBudsACoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_galaxy_buds_pro_disabled;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Google";
     }
@@ -38,11 +33,6 @@ public class PixelBudsACoordinator extends AbstractDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("Pixel Buds A-Series.*");
-    }
-
-    @Override
-    public int getBondingStyle(){
-        return BONDING_STYLE_ASK;
     }
 
     @Override

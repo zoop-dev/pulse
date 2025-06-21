@@ -44,11 +44,6 @@ public class MiBand7ProCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_default_disabled;
-    }
-
-    @Override
     public boolean supportsPai() {
         // no PAI nor vitality score
         return false;

@@ -104,11 +104,6 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_smartring_disabled;
-    }
-
-    @Override
     public int getBondingStyle() {
         return BONDING_STYLE_NONE;
     }

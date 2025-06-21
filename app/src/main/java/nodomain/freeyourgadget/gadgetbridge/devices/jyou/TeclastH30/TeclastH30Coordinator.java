@@ -17,14 +17,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.jyou.TeclastH30;
 
-import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
-import android.content.Context;
-import android.net.Uri;
 import android.os.ParcelUuid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -34,21 +28,15 @@ import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.jyou.JYouConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.jyou.TeclastH30.TeclastH30Support;
 
 public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
-
-    protected static final Logger LOG = LoggerFactory.getLogger(TeclastH30Coordinator.class);
-
     @NonNull
     @Override
     public Collection<? extends ScanFilter> createBLEScanFilters() {
@@ -57,7 +45,6 @@ public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
         return Collections.singletonList(filter);
     }
 
-    @NonNull
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         if (candidate.supportsService(JYouConstants.UUID_SERVICE_JYOU)) {
@@ -78,18 +65,8 @@ public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
     public boolean supportsRealtimeData() {
         return true;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
     }
 
     @Override
@@ -101,36 +78,6 @@ public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return TeclastH30Support.class;
-    }
-
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
-    public boolean supportsActivityDataFetching() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsActivityTracking() {
-        return false;
-    }
-
-    @Override
-    public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
-        return null;
-    }
-
-    @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
     }
 
     @Override
@@ -149,34 +96,17 @@ public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
 
     }
-
 
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_teclast_h30;
     }
 
-
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_h30_h10;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_h30_h10_disabled;
     }
 }

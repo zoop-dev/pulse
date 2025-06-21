@@ -56,7 +56,6 @@ public class UM25Coordinator extends AbstractBLEDeviceCoordinator {
         );
     }
 
-    @NonNull
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         if(!"UM25C".equals(candidate.getName())) return false;

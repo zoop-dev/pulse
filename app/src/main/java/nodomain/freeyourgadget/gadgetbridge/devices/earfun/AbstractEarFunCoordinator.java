@@ -41,9 +41,4 @@ public abstract class AbstractEarFunCoordinator extends AbstractDeviceCoordinato
     public int getDefaultIconResource() {
         return R.drawable.ic_device_nothingear;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_nothingear_disabled;
-    }
 }

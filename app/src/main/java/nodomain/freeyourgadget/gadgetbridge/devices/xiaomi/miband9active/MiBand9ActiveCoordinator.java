@@ -48,9 +48,4 @@ public class MiBand9ActiveCoordinator extends XiaomiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_default;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_default_disabled;
-    }
 }

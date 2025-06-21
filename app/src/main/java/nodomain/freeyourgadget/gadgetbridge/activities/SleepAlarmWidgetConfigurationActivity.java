@@ -19,36 +19,24 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
 public class SleepAlarmWidgetConfigurationActivity extends Activity implements GBActivity {
@@ -57,10 +45,9 @@ public class SleepAlarmWidgetConfigurationActivity extends Activity implements G
     // if we knew which widget is calling this config activity, we could only use a single configuration
     // activity and customize the filter in getAllDevices based on the caller.
 
-    private static final Logger LOG = LoggerFactory.getLogger(SleepAlarmWidgetConfigurationActivity.class);
     int mAppWidgetId;
 
-    LinkedHashMap<String, Pair<String, Integer>> allDevices;
+    List<GBDevice> allDevices;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,10 +66,9 @@ public class SleepAlarmWidgetConfigurationActivity extends Activity implements G
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
         // make the result intent and set the result to canceled
-        Intent resultValue;
-        resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-        setResult(RESULT_CANCELED, resultValue);
+        Intent resultValueCanceled = new Intent();
+        resultValueCanceled.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        setResult(RESULT_CANCELED, resultValueCanceled);
 
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
@@ -91,60 +77,36 @@ public class SleepAlarmWidgetConfigurationActivity extends Activity implements G
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SleepAlarmWidgetConfigurationActivity.this);
         builder.setTitle(R.string.widget_settings_select_device_title);
 
-        allDevices = getAllDevices(getApplicationContext());
+        allDevices = GBApplication.app().getDeviceManager().getDevices().stream()
+                .filter(device -> {
+                    final DeviceCoordinator coordinator = device.getDeviceCoordinator();
+                    return coordinator.getAlarmSlotCount(device) > 0;
+                }).collect(Collectors.toList());
 
         List<String> list = new ArrayList<>();
-        for (Map.Entry<String, Pair<String, Integer>> item : allDevices.entrySet()) {
-            list.add(item.getKey());
+        for (GBDevice dev : allDevices) {
+            list.add(dev.getAliasOrName());
         }
         String[] allDevicesString = list.toArray(new String[0]);
 
-        builder.setSingleChoiceItems(allDevicesString, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ListView lw = ((AlertDialog) dialog).getListView();
-                int selectedItemPosition = lw.getCheckedItemPosition();
+        builder.setSingleChoiceItems(allDevicesString, 0, (dialog, which) -> {
+            ListView lw = ((AlertDialog) dialog).getListView();
+            int selectedItemPosition = lw.getCheckedItemPosition();
 
-                if (selectedItemPosition > -1) {
-                    Map.Entry<String, Pair<String, Integer>> selectedItem =
-                            (Map.Entry<String, Pair<String, Integer>>) allDevices.entrySet().toArray()[selectedItemPosition];
-                    WidgetPreferenceStorage widgetPreferenceStorage = new WidgetPreferenceStorage();
-                    widgetPreferenceStorage.saveWidgetPrefs(getApplicationContext(), String.valueOf(mAppWidgetId), selectedItem.getValue().first);
-                }
-                Intent resultValue = new Intent();
-                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-                setResult(RESULT_OK, resultValue);
-                finish();
+            if (selectedItemPosition > -1) {
+                final GBDevice selectedItem = allDevices.get(selectedItemPosition);
+                WidgetPreferenceStorage widgetPreferenceStorage = new WidgetPreferenceStorage();
+                widgetPreferenceStorage.saveWidgetPrefs(getApplicationContext(), String.valueOf(mAppWidgetId), selectedItem.getAddress());
             }
+            Intent resultValueOk = new Intent();
+            resultValueOk.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValueOk);
+            finish();
         });
         builder.setCancelable(false);
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    public LinkedHashMap getAllDevices(Context appContext) {
-        DaoSession daoSession;
-        GBApplication gbApp = (GBApplication) appContext;
-        LinkedHashMap<String, Pair<String, Integer>> newMap = new LinkedHashMap<>(1);
-        List<? extends GBDevice> devices = gbApp.getDeviceManager().getDevices();
-
-        try (DBHandler handler = GBApplication.acquireDB()) {
-            daoSession = handler.getDaoSession();
-            for (GBDevice device : devices) {
-                DeviceCoordinator coordinator = device.getDeviceCoordinator();
-                Device dbDevice = DBHelper.findDevice(device, daoSession);
-                int icon = device.getEnabledDisabledIconResource();
-                if (dbDevice != null && coordinator != null
-                        && (coordinator.getAlarmSlotCount(device) > 0)
-                        && !newMap.containsKey(device.getAliasOrName())) {
-                    newMap.put(device.getAliasOrName(), new Pair(device.getAddress(), icon));
-                }
-            }
-        } catch (Exception e) {
-            LOG.error("Error getting list of all devices: " + e);
-        }
-        return newMap;
     }
 
     @Override

@@ -160,10 +160,11 @@ public class MiBandCoordinator extends AbstractBLEDeviceCoordinator {
         return true;
     }
 
+    /** @noinspection BooleanMethodIsAlwaysInverted*/
     public static boolean hasValidUserInfo() {
         String dummyMacAddress = MiBandService.MAC_ADDRESS_FILTER_1_1A + ":00:00:00";
         try {
-            UserInfo userInfo = getConfiguredUserInfo(dummyMacAddress);
+            getConfiguredUserInfo(dummyMacAddress);
             return true;
         } catch (IllegalArgumentException ex) {
             return false;
@@ -174,13 +175,12 @@ public class MiBandCoordinator extends AbstractBLEDeviceCoordinator {
      * Returns the configured user info, or, if that is not available or invalid,
      * a default user info.
      *
-     * @param miBandAddress
      */
     public static UserInfo getAnyUserInfo(String miBandAddress) {
         try {
             return getConfiguredUserInfo(miBandAddress);
         } catch (Exception ex) {
-            LOG.error("Error creating user info from settings, using default user instead: " + ex);
+            LOG.error("Error creating user info from settings, using default user instead", ex);
             return UserInfo.getDefault(miBandAddress);
         }
     }
@@ -188,14 +188,13 @@ public class MiBandCoordinator extends AbstractBLEDeviceCoordinator {
     /**
      * Returns the user info from the user configured data in the preferences.
      *
-     * @param miBandAddress
      * @throws IllegalArgumentException when the user info can not be created
      */
     public static UserInfo getConfiguredUserInfo(String miBandAddress) throws IllegalArgumentException {
         ActivityUser activityUser = new ActivityUser();
         Prefs prefs = GBApplication.getPrefs();
 
-        UserInfo info = UserInfo.create(
+        return UserInfo.create(
                 miBandAddress,
                 prefs.getString(PREF_USER_NAME, null),
                 activityUser.getGender(),
@@ -204,7 +203,6 @@ public class MiBandCoordinator extends AbstractBLEDeviceCoordinator {
                 activityUser.getWeightKg(),
                 0
         );
-        return info;
     }
 
     public static int getWearLocation(String deviceAddress) throws IllegalArgumentException {
@@ -299,11 +297,5 @@ public class MiBandCoordinator extends AbstractBLEDeviceCoordinator {
     @DrawableRes
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miband;
-    }
-
-    @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miband_disabled;
     }
 }

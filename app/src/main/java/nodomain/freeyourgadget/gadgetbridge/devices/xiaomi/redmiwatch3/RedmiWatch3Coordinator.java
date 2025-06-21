@@ -49,11 +49,6 @@ public class RedmiWatch3Coordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
-    }
-
-    @Override
     public int getContactsSlotCount(final GBDevice device) {
         return 10; // TODO:verify
     }

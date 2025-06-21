@@ -18,12 +18,10 @@
 
 package nodomain.freeyourgadget.gadgetbridge.devices.tlw64;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.regex.Pattern;
 
@@ -40,7 +38,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.tlw64.TLW64Support;
 
 public class TLW64Coordinator extends AbstractBLEDeviceCoordinator {
-
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
     }
@@ -48,12 +45,6 @@ public class TLW64Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("Smart Bee.*");
-    }
-
-    @Nullable
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
     }
 
     @Override
@@ -72,53 +63,13 @@ public class TLW64Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice device) {
         return 3;
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
-        return false;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Toleda";
-    }
-
-    @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
     }
 
     @Override

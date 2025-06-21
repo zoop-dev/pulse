@@ -81,11 +81,6 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_headphones_disabled;
-    }
-
-    @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);

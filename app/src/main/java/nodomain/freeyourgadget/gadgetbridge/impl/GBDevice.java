@@ -621,12 +621,6 @@ public class GBDevice implements Parcelable {
         this.mBatteryLabels[index] = label;
     }
 
-    public int getEnabledDisabledIconResource(){
-        return isInitialized() ?
-                getDeviceCoordinator().getDefaultIconResource() :
-                getDeviceCoordinator().getDisabledIconResource();
-    }
-
     @NonNull
     @Override
     public String toString() {

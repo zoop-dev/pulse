@@ -44,12 +44,6 @@ public class ColaCao23Coordinator extends FitProDeviceCoordinator {
     }
 
     @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
-    }
-
-    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_colacao23;
     }

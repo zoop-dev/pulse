@@ -87,11 +87,6 @@ public class PixooCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_lovetoy_disabled;
-    }
-
-    @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_header_display,

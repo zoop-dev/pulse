@@ -90,16 +90,13 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     public SampleProvider<? extends AbstractActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
         DevicePrefs prefs = GBApplication.getDevicePrefs(device);
         int activityTracker = prefs.getInt("pebble_activitytracker", SampleProvider.PROVIDER_PEBBLE_HEALTH);
-        switch (activityTracker) {
-            case SampleProvider.PROVIDER_PEBBLE_HEALTH:
-                return new PebbleHealthSampleProvider(device, session);
-            case SampleProvider.PROVIDER_PEBBLE_MISFIT:
-                return new PebbleMisfitSampleProvider(device, session);
-            case SampleProvider.PROVIDER_PEBBLE_MORPHEUZ:
-                return new PebbleMorpheuzSampleProvider(device, session);
-            default:
-                return new PebbleHealthSampleProvider(device, session);
-        }
+        return switch (activityTracker) {
+            case SampleProvider.PROVIDER_PEBBLE_MISFIT ->
+                    new PebbleMisfitSampleProvider(device, session);
+            case SampleProvider.PROVIDER_PEBBLE_MORPHEUZ ->
+                    new PebbleMorpheuzSampleProvider(device, session);
+            default -> new PebbleHealthSampleProvider(device, session);
+        };
     }
 
     @Override
@@ -112,11 +109,6 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     public boolean supportsFlashing() { return true; }
 
     @Override
-    public boolean supportsActivityDataFetching() {
-        return false;
-    }
-
-    @Override
     public boolean supportsActivityTracking() {
         return true;
     }
@@ -124,11 +116,6 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public boolean supportsScreenshots(final GBDevice device) {
         return true;
-    }
-
-    @Override
-    public int getAlarmSlotCount(GBDevice device) {
-        return 0;
     }
 
     @Override
@@ -204,11 +191,6 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
     public boolean supportsWeather() {
         return true;
     }
@@ -275,12 +257,6 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     @DrawableRes
     public int getDefaultIconResource() {
         return R.drawable.ic_device_pebble;
-    }
-
-    @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_pebble_disabled;
     }
 
     public boolean isBackgroundJsEnabled(final GBDevice device) {

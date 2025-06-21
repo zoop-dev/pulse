@@ -21,6 +21,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -43,7 +45,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 public class BatteryInfoActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(BatteryInfoActivity.class);
@@ -90,15 +91,15 @@ public class BatteryInfoActivity extends AbstractGBActivity {
 
         batteryInfoChartFragment.setDateAndGetData(gbDevice, batteryIndex, timeFrom, timeTo);
 
-        TextView battery_status_device_name_text = (TextView) findViewById(R.id.battery_status_device_name);
-        battery_status_battery_voltage = (TextView) findViewById(R.id.battery_status_battery_voltage);
-        TextView battery_status_extra_name = (TextView) findViewById(R.id.battery_status_extra_name);
-        final TextView battery_status_date_from_text = (TextView) findViewById(R.id.battery_status_date_from_text);
-        final TextView battery_status_date_to_text = (TextView) findViewById(R.id.battery_status_date_to_text);
-        final SeekBar battery_status_time_span_seekbar = (SeekBar) findViewById(R.id.battery_status_time_span_seekbar);
-        final TextView battery_status_time_span_text = (TextView) findViewById(R.id.battery_status_time_span_text);
+        TextView battery_status_device_name_text = findViewById(R.id.battery_status_device_name);
+        battery_status_battery_voltage = findViewById(R.id.battery_status_battery_voltage);
+        TextView battery_status_extra_name = findViewById(R.id.battery_status_extra_name);
+        final TextView battery_status_date_from_text = findViewById(R.id.battery_status_date_from_text);
+        final TextView battery_status_date_to_text = findViewById(R.id.battery_status_date_to_text);
+        final SeekBar battery_status_time_span_seekbar = findViewById(R.id.battery_status_time_span_seekbar);
+        final TextView battery_status_time_span_text = findViewById(R.id.battery_status_time_span_text);
 
-        LinearLayout battery_status_date_to_layout = (LinearLayout) findViewById(R.id.battery_status_date_to_layout);
+        LinearLayout battery_status_date_to_layout = findViewById(R.id.battery_status_date_to_layout);
 
         battery_status_time_span_seekbar.setMax(5);
         battery_status_time_span_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -188,8 +189,16 @@ public class BatteryInfoActivity extends AbstractGBActivity {
         DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
 
         ImageView battery_status_device_icon = findViewById(R.id.battery_status_device_icon);
-        battery_status_device_icon.setImageResource(gbDevice.getEnabledDisabledIconResource());
-        battery_status_battery_level_text = (TextView) findViewById(R.id.battery_status_battery_level);
+        battery_status_device_icon.setImageResource(gbDevice.getDeviceCoordinator().getDefaultIconResource());
+        if (gbDevice.isInitialized()) {
+            battery_status_device_icon.setColorFilter(null);
+        } else {
+            final ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0);
+
+            battery_status_device_icon.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+        }
+        battery_status_battery_level_text = findViewById(R.id.battery_status_battery_level);
         battery_status_device_name_text.setText(gbDevice.getAliasOrName());
 
         setBatteryLabels();
@@ -218,10 +227,10 @@ public class BatteryInfoActivity extends AbstractGBActivity {
     BroadcastReceiver commandReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LOG.debug("device receiver received " + intent.getAction());
-            if (intent.getAction().equals(GBDevice.ACTION_DEVICE_CHANGED)) {
+            LOG.debug("device receiver received {}", intent.getAction());
+            if (GBDevice.ACTION_DEVICE_CHANGED.equals(intent.getAction())) {
                 GBDevice newDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-                if (newDevice.equals(gbDevice)) {
+                if (gbDevice.equals(newDevice)) {
                     gbDevice = newDevice;
                     setBatteryLabels();
                 }

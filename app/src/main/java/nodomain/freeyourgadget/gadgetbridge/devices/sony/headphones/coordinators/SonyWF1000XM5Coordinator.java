@@ -69,11 +69,6 @@ public class SonyWF1000XM5Coordinator extends SonyHeadphonesCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_galaxy_buds_disabled;
-    }
-
-    @Override
     public boolean isExperimental() {
         // Ambient Sound Control is not 100% working
         // Volume control from headphones is not working?

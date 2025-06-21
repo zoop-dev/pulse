@@ -831,9 +831,6 @@ public interface DeviceCoordinator {
     @DrawableRes
     int getDefaultIconResource();
 
-    @DrawableRes
-    int getDisabledIconResource();
-
     /**
      * Whether the device supports a variety of vibration patterns for notifications.
      */

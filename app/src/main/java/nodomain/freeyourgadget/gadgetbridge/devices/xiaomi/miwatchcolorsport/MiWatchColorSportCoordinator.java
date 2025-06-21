@@ -42,9 +42,4 @@ public class MiWatchColorSportCoordinator extends XiaomiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miwatch;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miwatch_disabled;
-    }
 }

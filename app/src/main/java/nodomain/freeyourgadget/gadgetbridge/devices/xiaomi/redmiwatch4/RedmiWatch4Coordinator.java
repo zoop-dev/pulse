@@ -51,11 +51,6 @@ public class RedmiWatch4Coordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
-    }
-
-    @Override
     public int getWorldClocksSlotCount() {
         return 20;
     }

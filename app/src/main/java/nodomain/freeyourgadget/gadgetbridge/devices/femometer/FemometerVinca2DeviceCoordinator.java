@@ -16,10 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.femometer;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.regex.Pattern;
 
@@ -71,28 +68,15 @@ public class FemometerVinca2DeviceCoordinator extends AbstractDeviceCoordinator 
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_thermometer_disabled;
-    }
-
-
-    @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
         Long deviceId = device.getId();
         QueryBuilder<?> qb = session.getFemometerVinca2TemperatureSampleDao().queryBuilder();
         qb.where(FemometerVinca2TemperatureSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
-
     @Override
     public int getBondingStyle(){
         return BONDING_STYLE_NONE;
-    }
-
-    @Nullable
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
     }
 
     @Override

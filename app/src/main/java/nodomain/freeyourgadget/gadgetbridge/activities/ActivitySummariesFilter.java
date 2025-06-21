@@ -386,14 +386,14 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
         GBApplication gbApp = (GBApplication) appContext;
         LinkedHashMap<String, Pair<Long, Integer>> newMap = new LinkedHashMap<>(1);
         List<? extends GBDevice> devices = gbApp.getDeviceManager().getDevices();
-        newMap.put(getString(R.string.activity_summaries_all_devices), new Pair<>(ALL_DEVICES, R.drawable.ic_device_default_disabled));
+        newMap.put(getString(R.string.activity_summaries_all_devices), new Pair<>(ALL_DEVICES, R.drawable.ic_device_default));
 
         try (DBHandler handler = GBApplication.acquireDB()) {
             daoSession = handler.getDaoSession();
             for (GBDevice device : devices) {
                 DeviceCoordinator coordinator = device.getType().getDeviceCoordinator();
                 Device dbDevice = DBHelper.findDevice(device, daoSession);
-                int icon = device.getEnabledDisabledIconResource();
+                int icon = device.getDeviceCoordinator().getDefaultIconResource();
                 if (dbDevice != null && coordinator != null
                         && coordinator.supportsActivityTracks()
                         && !newMap.containsKey(device.getAliasOrName())) {
@@ -402,7 +402,7 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
             }
 
         } catch (Exception e) {
-            LOG.debug("Error getting list of all devices: " + e);
+            LOG.error("Error getting list of all devices", e);
         }
         return newMap;
     }

@@ -263,9 +263,4 @@ public class HPlusCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_hplus;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_hplus_disabled;
-    }
 }

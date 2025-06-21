@@ -343,11 +343,6 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_zetime_disabled;
-    }
-
-    @Override
     public boolean supportsNavigation() {
         return isHybridHR();
     }

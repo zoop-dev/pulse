@@ -22,7 +22,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
 
 public class XiaomiWatchS1Coordinator extends XiaomiCoordinator {
-
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_xiaomi_watch_s1;
@@ -31,11 +30,6 @@ public class XiaomiWatchS1Coordinator extends XiaomiCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miwatch;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miwatch_disabled;
     }
 
     @Override

@@ -64,9 +64,4 @@ public class GalaxyBudsLiveDeviceCoordinator extends GalaxyBudsGenericCoordinato
     public int getDefaultIconResource() {
         return R.drawable.ic_device_galaxy_buds_live;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_galaxy_buds_live_disabled;
-    }
 }

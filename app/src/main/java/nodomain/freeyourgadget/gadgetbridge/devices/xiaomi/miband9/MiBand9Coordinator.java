@@ -38,11 +38,6 @@ public class MiBand9Coordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miband6_disabled;
-    }
-
-    @Override
     public ConnectionType getConnectionType() {
         return ConnectionType.BT_CLASSIC;
     }

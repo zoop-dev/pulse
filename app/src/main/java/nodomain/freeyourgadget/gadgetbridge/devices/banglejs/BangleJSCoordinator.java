@@ -274,20 +274,13 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
         return BangleJSDeviceSupport.class;
     }
 
-
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_banglejs;
     }
 
-
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_banglejs;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_banglejs_disabled;
     }
 }

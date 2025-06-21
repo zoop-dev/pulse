@@ -44,11 +44,6 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
-    }
-
-    @Override
     public boolean supportsCalendarEvents() {
         return false;
     }

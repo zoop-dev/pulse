@@ -61,11 +61,6 @@ public abstract class HuaweiFreebudsCoordinator extends AbstractBLClassicDeviceC
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_nothingear_disabled;
-    }
-
-    @Override
     public HuaweiCoordinator getHuaweiCoordinator() {
         return huaweiCoordinator;
     }

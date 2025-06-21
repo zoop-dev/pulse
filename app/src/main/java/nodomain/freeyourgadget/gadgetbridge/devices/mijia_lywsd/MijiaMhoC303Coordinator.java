@@ -37,11 +37,6 @@ public class MijiaMhoC303Coordinator extends AbstractMijiaLywsdCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_pebble_disabled;
-    }
-
-    @Override
     public boolean supportsSetTime() {
         return true;
     }

@@ -28,11 +28,6 @@ public class SoundcoreLiberty4NCCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_galaxy_buds_disabled;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Anker";
     }

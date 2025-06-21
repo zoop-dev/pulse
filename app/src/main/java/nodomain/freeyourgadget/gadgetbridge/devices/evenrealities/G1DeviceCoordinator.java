@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -34,7 +31,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities.G1Constants;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities.G1DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 /**
  * Coordinator for the Even Realities G1 smart glasses. Describes the supported capabilities of the
@@ -43,8 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
  * This class partners with G1DeviceSupport.java and G1PairingActivity.java
  */
 public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
-
-    private static final Logger LOG = LoggerFactory.getLogger(G1DeviceCoordinator.class);
 
     @NonNull
     @Override
@@ -79,12 +73,6 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @DrawableRes
     public int getDefaultIconResource() {
         return R.drawable.ic_device_even_realities_g1;
-    }
-
-    @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_even_realities_g1_disabled;
     }
 
     @Override

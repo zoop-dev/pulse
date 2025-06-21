@@ -45,11 +45,6 @@ public class MarstekB2500DeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_vesc_disabled;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Marstek";
     }
@@ -98,5 +93,4 @@ public class MarstekB2500DeviceCoordinator extends AbstractDeviceCoordinator {
     public boolean isExperimental() {
         return true;
     }
-
 }

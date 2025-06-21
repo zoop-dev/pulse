@@ -144,9 +144,4 @@ public class AmazfitCor2Coordinator extends HuamiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_default;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_default_disabled;
-    }
 }

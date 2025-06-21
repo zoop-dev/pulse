@@ -33,11 +33,6 @@ public class XiaomiWatchS3Coordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miwatch_disabled;
-    }
-
-    @Override
     public ConnectionType getConnectionType() {
         return ConnectionType.BT_CLASSIC;
     }

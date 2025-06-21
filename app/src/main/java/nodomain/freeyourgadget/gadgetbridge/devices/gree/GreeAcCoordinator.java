@@ -54,11 +54,6 @@ public class GreeAcCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_air_conditioning_disabled;
-    }
-
-    @Override
     public boolean suggestUnbindBeforePair() {
         // shouldn't matter
         return false;

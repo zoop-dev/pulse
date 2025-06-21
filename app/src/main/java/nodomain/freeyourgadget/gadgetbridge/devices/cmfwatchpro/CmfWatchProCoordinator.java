@@ -138,11 +138,6 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
         return R.drawable.ic_device_amazfit_bip;
     }
 
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
-    }
-
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {

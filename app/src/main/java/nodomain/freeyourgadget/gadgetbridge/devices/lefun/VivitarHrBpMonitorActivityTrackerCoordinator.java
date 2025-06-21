@@ -49,14 +49,4 @@ public class VivitarHrBpMonitorActivityTrackerCoordinator extends LefunDeviceCoo
     public int getDeviceNameResource() {
         return R.string.devicetype_vivitar_hr_bp_monitor_activity_tracker;
     }
-
-    @Override
-    public int getDefaultIconResource() {
-        return R.drawable.ic_device_h30_h10;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_h30_h10_disabled;
-    }
 }

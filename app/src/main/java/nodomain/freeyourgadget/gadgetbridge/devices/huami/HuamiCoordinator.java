@@ -638,9 +638,4 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_zetime;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_zetime_disabled;
-    }
 }

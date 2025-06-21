@@ -29,11 +29,6 @@ public class PolarH10DeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_default_disabled;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Polar Electro Oy";
     }
@@ -75,6 +70,4 @@ public class PolarH10DeviceCoordinator extends AbstractDeviceCoordinator {
         QueryBuilder<?> qb = session.getPolarH10ActivitySampleDao().queryBuilder();
         qb.where(PolarH10ActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
-
-
 }

@@ -177,9 +177,4 @@ public class MiBand4Coordinator extends HuamiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miband2;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miband2_disabled;
-    }
 }

@@ -37,11 +37,6 @@ public class MijiaXmwsdj04Coordinator extends AbstractMijiaLywsdCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_thermometer_disabled;
-    }
-
-    @Override
     public boolean supportsSetTime() {
         return false;
     }

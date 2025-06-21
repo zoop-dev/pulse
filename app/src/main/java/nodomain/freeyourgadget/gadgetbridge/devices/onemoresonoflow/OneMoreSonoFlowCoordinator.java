@@ -88,9 +88,4 @@ public class OneMoreSonoFlowCoordinator extends AbstractDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_headphones;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_headphones_disabled;
-    }
 }

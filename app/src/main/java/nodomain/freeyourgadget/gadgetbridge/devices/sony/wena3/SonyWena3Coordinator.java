@@ -16,13 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3;
 
-import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,25 +54,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.VibrationKind;
 
 public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
-    @Nullable
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
-    }
-
     @Override
     public String getManufacturer() {
         return "Sony";
-    }
-
-    @Override
-    public boolean supportsAppsManagement(GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
     }
 
     @NonNull
@@ -139,11 +121,6 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
     public boolean supportsActivityDataFetching() {
         return true;
     }
@@ -151,12 +128,6 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsActivityTracking() {
         return true;
-    }
-
-
-    @Override
-    public boolean supportsAppReordering() {
-        return false;
     }
 
     @Override
@@ -167,11 +138,6 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public TimeSampleProvider<? extends StressSample> getStressSampleProvider(GBDevice device, DaoSession session) {
         return new SonyWena3StressSampleProvider(device, session);
-    }
-
-    @Override
-    public boolean supportsSpo2(GBDevice device) {
-        return false;
     }
 
     @Override
@@ -201,11 +167,6 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice device) {
         return SonyWena3Constants.ALARM_SLOTS;
     }
@@ -221,18 +182,8 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
-        return false;
-    }
-
-    @Override
     public boolean supportsWeather() {
         return true;
-    }
-
-    @Override
-    public boolean isExperimental() {
-        return false;
     }
 
     @Override

@@ -132,22 +132,12 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public SampleProvider<?> getSampleProvider(GBDevice device, DaoSession session) {
-        return new UnknownSampleProvider();
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
+        return sampleProvider;
     }
 
     @Override
     public String getManufacturer() {
         return "Generic";
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
     }
 
     @NonNull
@@ -166,11 +156,5 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
     @DrawableRes
     public int getDefaultIconResource() {
         return R.drawable.ic_device_unknown;
-    }
-
-    @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_unknown_disabled;
     }
 }

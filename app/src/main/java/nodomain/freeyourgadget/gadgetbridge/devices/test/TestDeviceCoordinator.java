@@ -610,12 +610,6 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        // TODO getDisabledIconResource
-        return super.getDisabledIconResource();
-    }
-
-    @Override
     public boolean supportsNotificationVibrationPatterns() {
         return supports(getTestDevice(), TestFeature.NOTIFICATION_VIBRATION_PATTERNS);
     }

@@ -40,11 +40,6 @@ public class BleGattClientCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_scannable_disabled;
-    }
-
-    @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
 
     }

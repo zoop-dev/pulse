@@ -17,6 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watchxplus;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
 import android.content.SharedPreferences;
@@ -79,6 +80,7 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
         return BONDING_STYLE_NONE;
     }
 
+    /** @noinspection RedundantIfStatement*/
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         String macAddress = candidate.getMacAddress().toUpperCase();
@@ -190,23 +192,24 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
                 int iDuration;
 
                 try {
-                    iDuration = Integer.valueOf(duration);
+                    iDuration = Integer.parseInt(duration);
                 } catch (Exception ex) {
                     iDuration = 60;
                 }
 
                 return iDuration;
             } catch (Exception e) {
+                LOG.error("Failed to parse find phone time", e);
                 return FindPhone_ON;
             }
         }
     }
 
-
     /**
      * @param startOut out Only hour/minute are used.
      * @param endOut   out Only hour/minute are used.
      * @return True if DND hours are enabled.
+     * @noinspection DataFlowIssue
      */
     public static boolean getDNDHours(String deviceAddress, Calendar startOut, Calendar endOut) {
         SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
@@ -220,7 +223,7 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
             String start = prefs.getString(DeviceSettingsPreferenceConst.PREF_DO_NOT_DISTURB_NOAUTO_START, "01:00");
             String end = prefs.getString(DeviceSettingsPreferenceConst.PREF_DO_NOT_DISTURB_NOAUTO_END, "06:00");
 
-            DateFormat df = new SimpleDateFormat("HH:mm");
+            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("HH:mm");
 
             try {
                 startOut.setTime(df.parse(start));
@@ -228,6 +231,7 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
                 return true;
             } catch (Exception e) {
+                LOG.error("Failed to parse dnd hours", e);
                 return false;
             }
         }
@@ -237,6 +241,7 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
      * @param startOut out Only hour/minute are used.
      * @param endOut   out Only hour/minute are used.
      * @return True if DND hours are enabled.
+     * @noinspection DataFlowIssue
      */
     public static boolean getLongSitHours(String deviceAddress, Calendar startOut, Calendar endOut) {
         SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
@@ -249,7 +254,7 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
             String start = prefs.getString(DeviceSettingsPreferenceConst.PREF_INACTIVITY_START, "06:00");
             String end = prefs.getString(DeviceSettingsPreferenceConst.PREF_INACTIVITY_END, "23:00");
 
-            DateFormat df = new SimpleDateFormat("HH:mm");
+            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("HH:mm");
 
             try {
                 startOut.setTime(df.parse(start));
@@ -257,6 +262,7 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
                 return true;
             } catch (Exception e) {
+                LOG.error("Failed to parse long sit hours", e);
                 return false;
             }
         }
@@ -276,10 +282,5 @@ public class WatchXPlusDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_watchxplus;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_watchxplus_disabled;
     }
 }

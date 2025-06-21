@@ -69,9 +69,4 @@ public class SonyWFSP800NCoordinator extends SonyHeadphonesCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_sony_wf_800n;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_sony_wf_800n_disabled;
-    }
 }

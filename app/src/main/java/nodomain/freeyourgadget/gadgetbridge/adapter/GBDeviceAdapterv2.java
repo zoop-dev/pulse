@@ -31,6 +31,8 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.Icon;
 import android.os.Build;
@@ -128,7 +130,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
@@ -223,11 +224,14 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         holder.infoIcons.setVisibility(View.GONE);
         holder.deviceInfoBox.setVisibility(View.GONE);
         holder.cardViewActivityCardLayout.setVisibility(View.GONE);
-        if(countDevicesInFolder(folder.getName(), true) == 0){
-            holder.deviceImageView.setImageResource(R.drawable.ic_device_folder_disabled);
-        }else{
+        holder.deviceImageView.setImageResource(R.drawable.ic_device_folder);
 
-            holder.deviceImageView.setImageResource(R.drawable.ic_device_folder);
+        if (countDevicesInFolder(folder.getName(), true) == 0) {
+            final ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0);
+            holder.deviceImageView.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+        } else {
+            holder.deviceImageView.setColorFilter(null);
         }
         holder.deviceInfoView.setVisibility(View.GONE);
         int countInFolder = countDevicesInFolder(folder.getName(), false);
@@ -338,7 +342,15 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             }
         });
 
-        holder.deviceImageView.setImageResource(device.getEnabledDisabledIconResource());
+        holder.deviceImageView.setImageResource(device.getDeviceCoordinator().getDefaultIconResource());
+        if (device.isInitialized()) {
+            holder.deviceImageView.setColorFilter(null);
+        } else {
+            final ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0);
+
+            holder.deviceImageView.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+        }
 
         holder.deviceNameLabel.setText(getUniqueDeviceName(device));
 

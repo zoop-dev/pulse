@@ -11,11 +11,6 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_zetime_disabled;
-    }
-
-    @Override
     public boolean supportsCalendarEvents() {
         return true;
     }

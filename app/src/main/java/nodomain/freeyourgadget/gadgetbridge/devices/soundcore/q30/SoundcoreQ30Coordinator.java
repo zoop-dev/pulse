@@ -27,11 +27,6 @@ public class SoundcoreQ30Coordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_headphones_disabled;
-    }
-
-    @Override
     public String getManufacturer() {
         return "Anker";
     }

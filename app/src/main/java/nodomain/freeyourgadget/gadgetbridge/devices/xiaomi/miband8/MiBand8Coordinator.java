@@ -41,9 +41,4 @@ public class MiBand8Coordinator extends XiaomiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miband6;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_miband6_disabled;
-    }
 }

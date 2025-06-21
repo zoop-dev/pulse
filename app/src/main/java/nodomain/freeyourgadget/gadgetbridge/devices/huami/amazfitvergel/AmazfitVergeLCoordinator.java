@@ -126,9 +126,4 @@ public class AmazfitVergeLCoordinator extends HuamiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_amazfit_bip;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_amazfit_bip_disabled;
-    }
 }

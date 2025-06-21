@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds;
 
-import androidx.annotation.NonNull;
-
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -67,10 +65,5 @@ public class GalaxyBuds2DeviceCoordinator extends GalaxyBudsGenericCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_galaxy_buds_pro;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_galaxy_buds_pro_disabled;
     }
 }

@@ -25,40 +25,40 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class SpinnerWithIconAdapter extends ArrayAdapter<SpinnerWithIconItem> {
-    private static final Logger LOG = LoggerFactory.getLogger(SpinnerWithIconAdapter.class);
-    int groupid;
+    int groupId;
     Activity context;
     ArrayList<SpinnerWithIconItem> list;
     LayoutInflater inflater;
 
-    public SpinnerWithIconAdapter(Activity context, int groupid, int id, ArrayList<SpinnerWithIconItem>
+    public SpinnerWithIconAdapter(Activity context, int groupId, int id, ArrayList<SpinnerWithIconItem>
             list) {
         super(context, id, list);
         this.list = list;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.groupid = groupid;
+        this.groupId = groupId;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View itemView = inflater.inflate(groupid, parent, false);
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.spinner_item_icon);
+    @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null) {
+            convertView = inflater.inflate(groupId, parent, false);
+        }
+        ImageView imageView = convertView.findViewById(R.id.spinner_item_icon);
         imageView.setImageResource(list.get(position).getImageId());
-        TextView textView = (TextView) itemView.findViewById(R.id.spinner_item_text);
+        TextView textView = convertView.findViewById(R.id.spinner_item_text);
         textView.setText(list.get(position).getText());
 
-        return itemView;
+        return convertView;
     }
 
-    public View getDropDownView(int position, View convertView, ViewGroup
-            parent) {
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         return getView(position, convertView, parent);
 
     }

@@ -17,10 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.waspos;
 
-import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
-import android.content.Context;
-import android.net.Uri;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
@@ -31,7 +28,6 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -41,7 +37,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.waspos.WaspOSDeviceSupport;
 
 public class WaspOSCoordinator extends AbstractBLEDeviceCoordinator {
-
     @Override
     public String getManufacturer() {
         return "MicroPython";
@@ -68,68 +63,12 @@ public class WaspOSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
-    }
-
-    @Override
     public boolean supportsFindDevice() {
         return true;
     }
 
     @Override
-    public boolean supportsActivityDataFetching() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsActivityTracking() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public int getAlarmSlotCount(GBDevice device) {
-        return 0;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-
-    @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-    }
-
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
     }
 
     @Override
@@ -137,10 +76,6 @@ public class WaspOSCoordinator extends AbstractBLEDeviceCoordinator {
         return null;//new WaspOSSampleProvider(device, session);
     }
 
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
@@ -159,14 +94,8 @@ public class WaspOSCoordinator extends AbstractBLEDeviceCoordinator {
         return R.string.devicetype_waspos;
     }
 
-
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_pebble;
-    }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_pebble_disabled;
     }
 }

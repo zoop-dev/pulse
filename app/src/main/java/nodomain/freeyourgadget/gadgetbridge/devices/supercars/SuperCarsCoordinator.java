@@ -73,11 +73,6 @@ public class SuperCarsCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_supercars_disabled;
-    }
-
-    @Override
     public List<DeviceCardAction> getCustomActions() {
         return Collections.singletonList(new ControlDeviceCardAction());
     }

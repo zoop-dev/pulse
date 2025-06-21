@@ -256,9 +256,4 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
     public int getDefaultIconResource() {
         return R.drawable.ic_device_sony_overhead;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_sony_overhead_disabled;
-    }
 }

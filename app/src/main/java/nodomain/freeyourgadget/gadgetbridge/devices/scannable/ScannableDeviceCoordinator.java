@@ -60,9 +60,4 @@ public class ScannableDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_scannable;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_scannable_disabled;
-    }
 }

@@ -18,9 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
 import androidx.annotation.DrawableRes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -41,12 +38,6 @@ public class MisirunC17Coordinator extends AbstractMoyoungDeviceCoordinator {
     @DrawableRes
     public int getDefaultIconResource() {
         return R.drawable.ic_device_banglejs;
-    }
-
-    @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_banglejs_disabled;
     }
 
     @Override

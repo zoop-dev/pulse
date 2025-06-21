@@ -123,9 +123,4 @@ public class VescCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_vesc;
     }
-
-    @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_vesc_disabled;
-    }
 }

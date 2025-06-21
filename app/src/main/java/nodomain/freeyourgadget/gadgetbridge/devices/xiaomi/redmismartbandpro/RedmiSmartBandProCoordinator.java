@@ -44,11 +44,6 @@ public class RedmiSmartBandProCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_default_disabled;
-    }
-
-    @Override
     public PasswordCapabilityImpl.Mode getPasswordCapability() {
         return PasswordCapabilityImpl.Mode.NUMBERS_4_DIGITS_0_TO_9;
     }

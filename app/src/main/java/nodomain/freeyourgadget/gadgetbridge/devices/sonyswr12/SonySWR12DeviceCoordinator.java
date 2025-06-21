@@ -17,19 +17,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.sonyswr12;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -54,12 +48,6 @@ public class SonySWR12DeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     }
 
-    @Nullable
-    @Override
-    public Class<? extends Activity> getPairingActivity() {
-        return null;
-    }
-
     @Override
     public boolean supportsActivityDataFetching() {
         return true;
@@ -73,16 +61,6 @@ public class SonySWR12DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
         return new SonySWR12SampleProvider(device, session);
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
     }
 
     @Override
@@ -101,33 +79,8 @@ public class SonySWR12DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
     public boolean supportsRealtimeData() {
         return true;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return false;
     }
 
     @Override

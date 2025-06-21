@@ -948,12 +948,6 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    @DrawableRes
-    public int getDisabledIconResource() {
-        return R.drawable.ic_device_default_disabled;
-    }
-
-    @Override
     public boolean supportsNotificationVibrationPatterns() {
         return false;
     }

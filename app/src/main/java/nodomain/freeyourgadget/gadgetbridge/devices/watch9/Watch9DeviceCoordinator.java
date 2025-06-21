@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.watch9;
 
 import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
-import android.content.Context;
-import android.net.Uri;
 import android.os.ParcelUuid;
 
 import java.util.Collection;
@@ -32,13 +30,10 @@ import androidx.annotation.Nullable;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.watch9.Watch9DeviceSupport;
@@ -57,7 +52,7 @@ public class Watch9DeviceCoordinator extends AbstractBLEDeviceCoordinator {
         return Collections.singletonList(filter);
     }
 
-    @NonNull
+    /** @noinspection RedundantIfStatement*/
     @Override
     public boolean supports(GBDeviceCandidate candidate) {
         String macAddress = candidate.getMacAddress().toUpperCase();
@@ -86,74 +81,13 @@ public class Watch9DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsActivityTracking() {
-        return false;
-    }
-
-    @Override
-    public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
-        return null;
-    }
-
-    @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
-    }
-
-    @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public int getAlarmSlotCount(GBDevice device) {
         return 3; // FIXME - check the real value
-    }
-
-
-    @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
-        return false;
     }
 
     @Override
     public String getManufacturer() {
         return "Lenovo";
-    }
-
-    @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
-        return null;
-    }
-
-    @Override
-    public boolean supportsCalendarEvents() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsRealtimeData() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsWeather() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return false;
     }
 
     @NonNull
