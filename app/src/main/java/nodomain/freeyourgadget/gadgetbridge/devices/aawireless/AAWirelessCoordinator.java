@@ -74,6 +74,16 @@ public class AAWirelessCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
+    public int getDefaultIconResource() {
+        return R.drawable.ic_device_car;
+    }
+
+    @Override
+    public int getDisabledIconResource() {
+        return R.drawable.ic_device_car_disabled;
+    }
+
+    @Override
     public int getBatteryCount(final GBDevice device) {
         return 0;
     }
