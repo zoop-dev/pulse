@@ -372,8 +372,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                 leftSide.send(leftCommandHandler);
                 if (!leftCommandHandler.waitForResponsePayload()) {
                     LOG.error("Set time on left lens timed out");
-                    getDevice().setState(GBDevice.State.WAITING_FOR_RECONNECT);
-                    getDevice().sendDeviceUpdateIntent(getContext());
+                    getDevice().setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
                 }
 
                 rightSide.send(new G1Communications.CommandSetTimeAndWeather(timeMilliseconds,
@@ -416,8 +415,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                 leftSide.send(leftCommandHandler);
                 if (!leftCommandHandler.waitForResponsePayload()) {
                     LOG.error("Set dashboard on right lens timed out");
-                    getDevice().setState(GBDevice.State.WAITING_FOR_RECONNECT);
-                    getDevice().sendDeviceUpdateIntent(getContext());
+                    getDevice().setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
                 }
 
                 rightSide.send(new G1Communications.CommandSetDashboardModeSettings(
