@@ -1006,8 +1006,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
             case MiBandService.NOTIFY_AUTHENTICATION_FAILED:
                 // we get first FAILED, then NOTIFY_STATUS_MOTOR_AUTH (0x13)
                 // which means, we need to authenticate by tapping
-                getDevice().setState(State.AUTHENTICATION_REQUIRED);
-                getDevice().sendDeviceUpdateIntent(getContext());
+                getDevice().setUpdateState(State.AUTHENTICATION_REQUIRED, getContext());
                 GB.toast(getContext(), "Band needs pairing", Toast.LENGTH_LONG, GB.ERROR);
                 break;
             case MiBandService.NOTIFY_AUTHENTICATION_SUCCESS: // fall through -- not sure which one we get
@@ -1020,8 +1019,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
 
             case MiBandService.NOTIFY_STATUS_MOTOR_AUTH:
                 LOG.info("Band needs authentication (MOTOR_AUTH)");
-                getDevice().setState(State.AUTHENTICATING);
-                getDevice().sendDeviceUpdateIntent(getContext());
+                getDevice().setUpdateState(State.AUTHENTICATING, getContext());
                 break;
 
             case MiBandService.NOTIFY_SET_LATENCY_SUCCESS:
@@ -1125,8 +1123,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setConnectionState(State newState) {
-        getDevice().setState(newState);
-        getDevice().sendDeviceUpdateIntent(getContext());
+        getDevice().setUpdateState(newState, getContext());
     }
 
     private void handlePairResult(byte[] pairResult, int status) {
