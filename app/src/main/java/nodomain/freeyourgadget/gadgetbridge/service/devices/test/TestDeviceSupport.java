@@ -35,8 +35,7 @@ public class TestDeviceSupport extends AbstractDeviceSupport {
     public boolean connect() {
         LOG.info("Connecting");
 
-        getDevice().setState(GBDevice.State.CONNECTING);
-        getDevice().sendDeviceUpdateIntent(getContext());
+        getDevice().setUpdateState(GBDevice.State.CONNECTING, getContext());
 
         handler.postDelayed(() -> {
             LOG.info("Initialized");
@@ -62,8 +61,7 @@ public class TestDeviceSupport extends AbstractDeviceSupport {
             // TODO app list
             // TODO screenshots
 
-            getDevice().setState(GBDevice.State.INITIALIZED);
-            getDevice().sendDeviceUpdateIntent(getContext());
+            getDevice().setUpdateState(GBDevice.State.INITIALIZED, getContext());
         }, 1000);
 
         return true;
