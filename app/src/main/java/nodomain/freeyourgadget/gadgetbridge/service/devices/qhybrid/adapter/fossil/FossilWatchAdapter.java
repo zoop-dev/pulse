@@ -447,12 +447,10 @@ public class FossilWatchAdapter extends WatchAdapter {
                     if (!success) {
                         GB.toast("error writing notification settings", Toast.LENGTH_SHORT, GB.ERROR);
 
-                        getDeviceSupport().getDevice().setState(GBDevice.State.NOT_CONNECTED);
-                        getDeviceSupport().getDevice().sendDeviceUpdateIntent(getContext());
+                        getDeviceSupport().getDevice().setUpdateState(GBDevice.State.NOT_CONNECTED, getContext());
                     }
 
-                    getDeviceSupport().getDevice().setState(GBDevice.State.INITIALIZED);
-                    getDeviceSupport().getDevice().sendDeviceUpdateIntent(getContext());
+                    getDeviceSupport().getDevice().setUpdateState(GBDevice.State.INITIALIZED, getContext());
                 }
             }, false);
         } catch (Exception e) {
@@ -843,8 +841,7 @@ public class FossilWatchAdapter extends WatchAdapter {
     }
 
     private void setDeviceState(GBDevice.State state) {
-        getDeviceSupport().getDevice().setState(state);
-        getDeviceSupport().getDevice().sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        getDeviceSupport().getDevice().setUpdateState(state, getContext());
     }
 
     public void queueWrite(FossilRequest request, boolean priorise) {

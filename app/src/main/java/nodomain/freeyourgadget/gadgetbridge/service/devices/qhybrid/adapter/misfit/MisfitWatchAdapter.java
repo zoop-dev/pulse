@@ -114,8 +114,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
 
         queueWrite(new GetCurrentStepCountRequest());
 
-        getDeviceSupport().getDevice().setState(GBDevice.State.INITIALIZED);
-        getDeviceSupport().getDevice().sendDeviceUpdateIntent(getContext());
+        getDeviceSupport().getDevice().setUpdateState(GBDevice.State.INITIALIZED, getContext());
     }
 
 
