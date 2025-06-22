@@ -600,8 +600,7 @@ public class HuaweiSupportProvider {
             // Reconnect as no communication can succeed after this point
             final GBDevice device = getDevice();
             if (device != null) {
-                device.setState(GBDevice.State.WAITING_FOR_RECONNECT);
-                device.sendDeviceUpdateIntent(getContext());
+                device.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
             }
         }
 
@@ -906,8 +905,7 @@ public class HuaweiSupportProvider {
             initRequestQueue.get(initRequestQueue.size() - 1).setFinalizeReq(new RequestCallback() {
                 @Override
                 public void call() {
-                    gbDevice.setState(GBDevice.State.INITIALIZED);
-                    gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+                    gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
 
                     if (getHuaweiCoordinator().supportsP2PService()) {
                         if (getHuaweiCoordinator().supportsCalendar()) {
