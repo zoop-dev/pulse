@@ -339,75 +339,65 @@ public final class BtLEQueue {
             serverLatch.countDown();
         }
 
-        setDeviceConnectionState(State.NOT_CONNECTED);
-
-        // either we've been disconnected because the device is out of range
-        // or because of an explicit @{link #disconnect())
-        // To support automatic reconnection, we keep the mBluetoothGatt instance
-        // alive (we do not close() it). Unfortunately we sometimes have problems
-        // reconnecting automatically, so we try to fix this by re-creating mBluetoothGatt.
-        // Not sure if this actually works without re-initializing the device...
-        if (mBluetoothGatt != null) {
-            boolean forceDisconnect;
-            if (status == 0x81 || status == 0x85) {
+        boolean forceDisconnect;
+        switch(status){
+            case 0x81: // 0x81 129 GATT_INTERNAL_ERROR
+            case 0x85: // 0x85 133 GATT_ERROR
                 // Bluetooth stack has a fundamental problem:
-                // 0x81 129 GATT_INTERNAL_ERROR
-                // 0x85 133 GATT_ERROR
-                forceDisconnect = true;
-            } else if (status == BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION) {
+            case BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION:
+            case BluetoothGatt.GATT_INSUFFICIENT_AUTHENTICATION:
+            case BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION:
                 // a Bluetooth bonding / pairing issue
-                // some devices report this state instead of GATT_CONNECTION_TIMEOUT
+                // some devices report AUTHORIZATION instead of TIMEOUT during connection setup
+            case BluetoothGatt.GATT_CONNECTION_TIMEOUT:
                 forceDisconnect = true;
-            } else {
+                break;
+            default:
                 forceDisconnect = false;
-            }
+        }
 
-            if (forceDisconnect) {
-                LOG.warn("unhealthy disconnect {} {}",
-                        mBluetoothGatt.getDevice().getAddress(),
-                        BleNamesResolver.getStatusString(status));
-
-                disconnect();
-
-                if (mDeviceSupport.getAutoReconnect()) {
-                    // don't reconnect immediately to give the Bluetooth stack some time to settle down
-                    // use BluetoothConnectReceiver or AutoConnectIntervalReceiver instead
-                    if (mDeviceSupport.getScanReconnect()) {
-                        LOG.info("Waiting for BLE scan before attempting reconnection...");
-                        setDeviceConnectionState(State.WAITING_FOR_SCAN);
-                    } else {
-                        LOG.info("Enabling automatic ble reconnect...");
+        if (forceDisconnect) {
+            LOG.warn("unhealthy disconnect {} {}", mBluetoothGatt.getDevice().getAddress(),
+                    BleNamesResolver.getStatusString(status));
+        } else if (mBluetoothGatt != null) {
+            // try to reconnect immediately
+            if (mDeviceSupport.getAutoReconnect()) {
+                if (mDeviceSupport.getScanReconnect()) {
+                    // connect() would first disconnect() anyway
+                    forceDisconnect = true;
+                } else {
+                    LOG.info("enabling automatic immediate BLE reconnection");
+                    mPauseTransaction = false;
+                    if (mBluetoothGatt.connect()) {
                         setDeviceConnectionState(State.WAITING_FOR_RECONNECT);
+                    } else {
+                        forceDisconnect = true;
                     }
                 }
-            } else if (!maybeReconnect()) {
-                disconnect(); // ensure that we start over cleanly next time
+            } else {
+                forceDisconnect = true;
             }
         }
-    }
 
-    /**
-     * Depending on certain criteria, connects to the BluetoothGatt.
-     *
-     * @return true if a reconnection attempt was made, or false otherwise
-     */
-    private boolean maybeReconnect() {
-        if (mDeviceSupport.getAutoReconnect() && mBluetoothGatt != null) {
-            if(mDeviceSupport.getScanReconnect()){
-                LOG.info("Waiting for BLE scan before attempting reconnection...");
-                setDeviceConnectionState(State.WAITING_FOR_SCAN);
-                return true;
-            }
-
-            LOG.info("Enabling automatic ble reconnect...");
-            boolean result = mBluetoothGatt.connect();
-            mPauseTransaction = false;
-            if (result) {
-                setDeviceConnectionState(State.WAITING_FOR_RECONNECT);
-            }
-            return result;
+        if (forceDisconnect) {
+            disconnect();
         }
-        return false;
+
+        if (mBluetoothGatt == null) {
+            if (mDeviceSupport.getAutoReconnect()) {
+                // don't reconnect immediately to give the Bluetooth stack some time to settle down
+                // use BluetoothConnectReceiver or AutoConnectIntervalReceiver instead
+                if (mDeviceSupport.getScanReconnect()) {
+                    LOG.info("waiting for BLE scan before attempting reconnection");
+                    setDeviceConnectionState(State.WAITING_FOR_SCAN);
+                } else {
+                    LOG.info("enabling automatic delayed BLE reconnection");
+                    setDeviceConnectionState(State.WAITING_FOR_RECONNECT);
+                }
+            } else if (!forceDisconnect) {
+                setDeviceConnectionState(State.NOT_CONNECTED);
+            }
+        }
     }
 
     public void setPaused(boolean paused) {
