@@ -77,8 +77,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Initializing");
 
-        gbDevice.setState(GBDevice.State.INITIALIZING);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
 
         measureCharacteristic = getCharacteristic(No1F1Constants.UUID_CHARACTERISTIC_MEASURE);
         ctrlCharacteristic = getCharacteristic(No1F1Constants.UUID_CHARACTERISTIC_CONTROL);
@@ -92,8 +91,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
         builder.write(ctrlCharacteristic, new byte[]{No1F1Constants.CMD_FIRMWARE_VERSION});
         builder.write(ctrlCharacteristic, new byte[]{No1F1Constants.CMD_BATTERY});
 
-        gbDevice.setState(GBDevice.State.INITIALIZED);
-        gbDevice.sendDeviceUpdateIntent(getContext(), GBDevice.DeviceUpdateSubject.DEVICE_STATE);
+        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
 
         LOG.info("Initialization Done");
 
