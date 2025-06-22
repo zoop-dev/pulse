@@ -2521,4 +2521,6 @@
     <string name="pref_title_sync_birthdays">Sincronizar aniversários</string>
     <string name="auto_reconnect_ble_summary">Proativamente tente se conectar ao dispositivo periodicamente</string>
     <string name="activity_prefs_goal_active_calories_burnt">Meta diária: calorias ativas queimadas</string>
+    <string name="audio_recordings">Gravações de Áudio</string>
+    <string name="search">Buscar</string>
 </resources>
