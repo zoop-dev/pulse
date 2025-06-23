@@ -44,6 +44,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ServiceCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -1245,9 +1246,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED)
                 return;
 
-            startForeground(GB.NOTIFICATION_ID, GB.createNotification(getString(R.string.gadgetbridge_running), this), ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
+            ServiceCompat.startForeground(this, GB.NOTIFICATION_ID, GB.createNotification(getString(R.string.gadgetbridge_running), this), ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
         } else {
-            startForeground(GB.NOTIFICATION_ID, GB.createNotification(getString(R.string.gadgetbridge_running), this));
+            ServiceCompat.startForeground(this, GB.NOTIFICATION_ID, GB.createNotification(getString(R.string.gadgetbridge_running), this), 0);
         }
     }
 

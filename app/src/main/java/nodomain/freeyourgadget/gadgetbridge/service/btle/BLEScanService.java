@@ -42,6 +42,7 @@ import android.os.IBinder;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -218,9 +219,9 @@ public class BLEScanService extends Service {
         Notification serviceNotification = createNotification(false, 0);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            super.startForeground(GB.NOTIFICATION_ID_SCAN, serviceNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
+            ServiceCompat.startForeground(this, GB.NOTIFICATION_ID_SCAN, serviceNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
         } else {
-            super.startForeground(GB.NOTIFICATION_ID_SCAN, serviceNotification);
+            ServiceCompat.startForeground(this, GB.NOTIFICATION_ID_SCAN, serviceNotification, 0);
         }
     }
 
