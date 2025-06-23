@@ -1,0 +1,1 @@
+* Fossil/Skagen Hybrids: Fix connection failure

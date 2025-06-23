@@ -1,5 +1,9 @@
 ### Changelog
 
+#### 0.86.1
+
+* Fossil/Skagen Hybrids: Fix connection failure
+
 #### 0.86.0
 
 * Initial support for Amazfit Active 2 NFC

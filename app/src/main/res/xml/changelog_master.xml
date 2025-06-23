@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.86.1" versioncode="240">
+        <change>Fossil/Skagen Hybrids: Fix connection failure</change>
+    </release>
     <release version="0.86.0" versioncode="239">
         <change>Initial support for Amazfit Active 2 NFC</change>
         <change>Initial support for Colmi R12</change>
