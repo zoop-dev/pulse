@@ -721,7 +721,7 @@
     <string name="alarm_sun_short">الاح</string>
     <string name="alarm_sat_short">الس</string>
     <string name="alarm_snooze">غفوة</string>
-    <string name="firmware_update_progress">التحميل قيد التقدم \n%1d ٪٪ بمعدل %.2f كيلوبت في الثانية (متوسط %.2f كيلوبت في الثانية) \nالجزء %1d من %1d</string>
+    <string name="firmware_update_progress">الرفع قيد التقدم\n%1$d%% عند %2$.2f كيلوبت في الثانية (المتوسط %3$.2f كيلوبت في الثانية)\nالجزء %4$d من %5$d</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">اقتطع الطوابع الزمنية لعملية الجلب إلى دقائق. قم بتعطيل هذا الإعداد للاحتفاظ بالطوابع الزمنية في ثوانٍ ، إذا واجهت مشكلات أثناء جلب التدريبات القصيرة جدًا.</string>
     <string name="pref_summary_keep_data_on_device">سيتم الاحتفاظ ببيانات النشاط على الجهاز حتى بعد المزامنة. يكون مفيدًا إذا تم استخدام GB مع تطبيقات أخرى. قد يتسبب هذا في نفاد ذاكرة الساعة و/أو توقف المزامنة بشكل قطعي.</string>
     <string name="portuguese">البرتغالية</string>
@@ -1401,7 +1401,7 @@
     <string name="sony_sound_position_front_left">اليسار الأمامي</string>
     <string name="sony_button_mode_right">وضع الزر (يمين)</string>
     <string name="sony_button_mode_volume_control">التحكم في مستوى الصوت</string>
-    <string name="controlcenter_connected_fraction">متصل: %d/%d</string>
+    <string name="controlcenter_connected_fraction">متصل: %1$d/%2$d</string>
     <string name="pref_device_action_fitness_app_control_start">بدء تتبع تطبيق اللياقة البدنية</string>
     <string name="activity_prefs_height_cm">الارتفاع بالسنتيمتر</string>
     <string name="activity_web_view">نشاط عرض الويب</string>
@@ -2339,7 +2339,7 @@
 \n
 \nأستمر على مسؤوليتك الخاصة!</string>
     <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
-    <string name="fw_upgrade_notice_zepp_os">أنت على وشك تثبيت البرامج الثابتة %s على%s. \n \nستتم إعادة تشغيل ساعتك بعد تثبيت ملف zip. \n \nالاستمرار على مسؤوليتك الخاصة!</string>
+    <string name="fw_upgrade_notice_zepp_os">أنت على وشك تثبيت البرنامح الثابت %1$s على %2$s. \n \nستتم إعادة تشغيل ساعتك بعد تثبيت ملف zip. \n \nتابع على مسؤوليتك الخاصة!</string>
     <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
     <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (المربعة)</string>
@@ -2952,7 +2952,7 @@
     <string name="pref_title_wheel_diameter">قطر العجلة</string>
     <string name="pref_summary_cycling_persistence_interval">الفاصل الزمني بثوانٍ عندما يجب كتابة بيانات ركوب الدراجات الحالية إلى قاعدة البيانات</string>
     <string name="pref_title_cycling_persistence_interval">معادل الفاصل الزمني</string>
-    <string name="chart_cycling_point_label_distance">اليوم: %.1f km \nالإجمالي: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">اليوم: %1$.1f كم\nالإجمالي: %2$.1f كم</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="devicetype_huawei_band9">Huawei Band 9</string>
     <string name="pref_speak_notifications_focus_exclusive_title">إيقاف الصوت مؤقتًا للتطبيقات الأخرى</string>
@@ -3213,7 +3213,7 @@
     <string name="idasen_pref_value_warning">ويجب أن تتراوح القيمة بين 62 و126 سم</string>
     <string name="prefs_hrv_monitoring_description">راقب تقلب معدل ضربات القلب تلقائيًا على مدار اليوم</string>
     <string name="backup_restore_do_not_exit">%s يرجى إبقاء هذه الشاشة مفتوحة حتى تنتهي العملية.</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="activity_type_ice_skating">التزلج على الثلج</string>
     <string name="prefs_title_gatt_client_notification_intents">إذاعة نوايا إخطار الغات من خلال واجهة برمجة تطبيقات نوايا BLE</string>
     <string name="cannot_upload_watchface_too_many_watchfaces_installed">لا يمكن تحميل واجهة الساعة، تم تثبيت العديد من واجهات الساعة</string>
@@ -3222,7 +3222,7 @@
     <string name="activity_type_sky_diving">القفز في السماء</string>
     <string name="activity_type_snowshoe">حذاء جليدي</string>
     <string name="busy_task_fetch_hrv_data">جلب بيانات الـ HRV</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="miscale_small_objects_summary">قم بتخزين وزن الأشياء التي يقل وزنها عن 10 كجم</string>
     <string name="prefs_summary_gatt_client_api_package">تقييد اتصال واجهة برمجة التطبيقات نية BLE بهذه الحزمة</string>
     <string name="inactivity_warnings_minimum_steps_summary">الحد الأدنى من الخطوات التي يجب اتخاذها خلال دقائق العتبة</string>
@@ -3353,7 +3353,7 @@
     <string name="mijia_lywsd_comfort_humidity_title">الرطوبة (%)</string>
     <string name="backup_restore_exporting_database">تصدير قاعدة البيانات…</string>
     <string name="backup_restore_exporting_finishing">الانتهاء من التصدير…</string>
-    <string name="backup_restore_exporting_files_i_of_n">تصدير الملفات... %1d من %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">تصدير الملفات... %1$d من %2$d</string>
     <string name="activity_type_stand_up_paddleboarding">التجديف على الألواح في وضع الوقوف</string>
     <string name="activity_type_jumpmaster">القفز</string>
     <string name="activity_type_wakesurfing">ركوب الأمواج</string>
@@ -3369,7 +3369,7 @@
     <string name="contact_birthday">%1s يوم ميلاد</string>
     <string name="backup_restore_importing_loading">تحميل الملف…</string>
     <string name="backup_restore_importing_validating">التحقق من الملف …</string>
-    <string name="backup_restore_importing_files_i_of_n">استيراد الملفات... %1d من %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">استيراد الملفات... %1$d من %2$d</string>
     <string name="fmtPaceAverage">معدل الخطى</string>
     <string name="backup_restore_abort_title">تجاهل</string>
     <string name="mijia_lywsd_comfort_upper">الحد الأقصى</string>
@@ -3406,7 +3406,7 @@
     <string name="backup_restore_exporting_files">تصدير الملفات…</string>
     <string name="backup_restore_export_complete">تم التصدير</string>
     <string name="backup_restore_import_complete">تم الاستيراد</string>
-    <string name="backup_restore_warning_files">‏‫فشلت استعادة %1d من الملفات: \n%2s</string>
+    <string name="backup_restore_warning_files">فشل استعادة %1$d ملف:\n%2$s</string>
     <string name="backup_restore_error_export">فشل التصدير للملف المضغوط</string>
     <string name="backup_restore_restart_title">إعادة تشغيل</string>
     <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
@@ -3483,8 +3483,8 @@
     <string name="lactateThresholdHeartRate">معدل ضربات قلب عتبة اللاكتات</string>
     <string name="recoveryTime">مدة الشفاء</string>
     <string name="workoutSets">المجموعة</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f كغم</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f رطل</string>
     <string name="workout_set_i">المجموعة %1d</string>
     <string name="workout_set_repetitions">%1d x</string>
     <string name="weight_lbs">%1$.2f طن</string>
@@ -3540,6 +3540,24 @@
     <string name="respiratoryrate">المعدل التنفسي</string>
     <string name="sleep_avg">متوسط النوم</string>
     <string name="activity_prefs_goal_standing_hours">الهدف اليومي: ساعات الوقوف</string>
-    <string name="fw_upgrade_notice_huawei">أنت على وشك تحميل البرنامج الثابت %s على%s الخاص بك.\n\nالبرنامج الثابت الحالي هو %s\n\nسيتم إعادة تشغيل جهازك بعد التحميل.\n\nتابع على مسؤوليتك الخاصة!</string>
+    <string name="fw_upgrade_notice_huawei">أنت على وشك رفع البرنامج الثابت %1$s على %2$s الخاص بك.\n\nالبرنامج الثابت الحالي هو %s\n\nسيتم إعادة تشغيل جهازك بعد الرفع.\n\nتابع على مسؤوليتك الخاصة!</string>
     <string name="charts_show_balance_steps_summary">إظهار الزيادة / عدم وجود خطوات في الرسوم البيانية الأسبوعية والشهرية</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="audio_recordings">التسجيلات الصوتية</string>
+    <string name="open_source_licenses">التراخيص</string>
+    <string name="dialog_close">أغلق</string>
+    <string name="dialog_open_url">افتح URL</string>
+    <string name="pref_workout_send_gps_timeout_title">أرسل انتهاء مهلة نظام تحديد المواقع العالمي (GPS)</string>
+    <string name="pref_workout_send_gps_timeout_summary">أوقف GPS عندما لا يرسل الجهاز بيانات التمرين مفتوحة (بالمللي ثانية)</string>
+    <string name="pref_title_stable_connection">اتصال مستقر</string>
+    <string name="zepp_os_install_map_instructions">بعد بدء التثبيت على الهاتف، يجب عليك الموافقة على الساعة أيضًا.</string>
+    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="pref_watch_face">واجهة الساعة</string>
+    <string name="pref_device_version">إصدار الجهاز</string>
+    <string name="pref_vibration_intensity">شدة الاهتزاز</string>
+    <string name="connection_priority_low_power_summary">تقليل أولوية البلوتوث ومعلمات اتصال معدل البيانات.</string>
+    <string name="map_theme_osmarender">أوسمارندر</string>
+    <string name="map_theme_motorider">موتوريدر</string>
+    <string name="connection_priority_low_power_title">اطلب طاقة منخفضة</string>
 </resources>
