@@ -665,7 +665,8 @@ public class QHybridSupport extends QHybridBaseSupport {
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         super.onConnectionStateChange(gatt, status, newState);
-        watchAdapter.onConnectionStateChange(gatt, status, newState);
+        if (watchAdapter != null)
+            watchAdapter.onConnectionStateChange(gatt, status, newState);
     }
 
     //TODO toggle "Notifications when screen on" options on this check
