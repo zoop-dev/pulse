@@ -369,7 +369,8 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             // https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/2996 - sometimes we get
             // initializeDevice called but no characteristics have been fetched - try and reconnect in that case
             LOG.warn("RX/TX characteristics are null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setUpdateState(gbDevice, GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            return builder;
         }
         builder.setCallback(this);
         builder.notify(rxCharacteristic, true);
@@ -397,7 +398,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         LOG.info("Initialization Done");
 
-        requestBangleGPSPowerStatus();
+        requestBangleGPSPowerStatus(builder);
 
         return builder;
     }
@@ -510,11 +511,15 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void uartTxJSON(String taskName, JSONObject json) {
         try {
             TransactionBuilder builder = performInitialized(taskName);
-            uartTx(builder, "\u0010GB("+jsonToString(json)+")\n");
+            uartTxJSON(builder, json);
             builder.queue(getQueue());
         } catch (IOException e) {
             GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
+    }
+
+    private void uartTxJSON(TransactionBuilder builder, JSONObject json) {
+        uartTx(builder, "\u0010GB("+jsonToString(json)+")\n");
     }
 
     private void uartTxJSONError(String taskName, String message, String id) {
@@ -1277,12 +1282,12 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
       uartTx(builder, cmd+"\n");
     }
 
-    void requestBangleGPSPowerStatus() {
+    void requestBangleGPSPowerStatus(final TransactionBuilder builder) {
         try {
             JSONObject o = new JSONObject();
             o.put("t", "is_gps_active");
-            LOG.debug("Requesting gps power status: " + o.toString());
-            uartTxJSON("is_gps_active", o);
+            LOG.debug("Requesting gps power status: {}", o);
+            uartTxJSON(builder, o);
         } catch (JSONException e) {
             GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
