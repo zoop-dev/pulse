@@ -4165,4 +4165,5 @@
     <string name="pref_aawireless_dongle_mode_summary">Użyj natywnej logiki klucza sprzętowego dla Android Auto. Może to pomóc w przypadku problemów z łącznością głośnomówiącą Bluetooth. Po włączeniu tej funkcji ręczne przełączanie telefonu nie jest możliwe.</string>
     <string name="pref_aawireless_start_fix_title">Rozpocznij naprawę</string>
     <string name="pref_aawireless_vag_crash_fix_summary">Naprawiono awarię w urządzeniach VAG Technisat podczas pomijania/pauzowania utworów. Nie włączać w innych samochodach, może powodować usterki.</string>
+    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
 </resources>
