@@ -4050,4 +4050,5 @@
     <string name="pref_aawireless_auto_video_focus_summary">Android Auto beim Verbinden automatisch starten und die manuelle Bestätigung überspringen. Funktioniert möglicherweise nicht in allen Fahrzeugen.</string>
     <string name="pref_aawireless_remove_tap_restriction_summary">Mehr als 6 aufeinanderfolgende Taps zulassen. Kann die GPS-Genauigkeit beeinträchtigen.</string>
     <string name="pref_aawireless_prefer_last">Zuletzt verbundenes Telefon bevorzugen</string>
+    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
 </resources>
