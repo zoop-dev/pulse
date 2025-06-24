@@ -30,6 +30,12 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
+    public boolean suggestUnbindBeforePair() {
+        // Not needed
+        return false;
+    }
+
+    @Override
     public boolean supports(GBDeviceCandidate candidate) {
         try {
             final BluetoothDevice device = candidate.getDevice();
