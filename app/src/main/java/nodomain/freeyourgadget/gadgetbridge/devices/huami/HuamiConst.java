@@ -58,6 +58,7 @@ public class HuamiConst {
     public static final String AMAZFIT_ACTIVE_2_NFC_NAME = "Active 2 NFC (Round)";
     public static final String AMAZFIT_ACTIVE_EDGE_NAME = "Amazfit Active Edge";
     public static final String AMAZFIT_BALANCE_NAME = "Amazfit Balance";
+    public static final String AMAZFIT_BALANCE_2_NAME = "Amazfit Balance 2";
     public static final String AMAZFIT_BAND5_NAME = "Amazfit Band 5";
     public static final String AMAZFIT_BAND7_NAME = "Amazfit Band 7";
     public static final String AMAZFIT_NEO_NAME = "Amazfit Neo";
