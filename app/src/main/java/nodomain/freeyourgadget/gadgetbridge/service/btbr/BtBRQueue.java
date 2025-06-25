@@ -246,7 +246,7 @@ public final class BtBRQueue {
      * initialized and connected
      * @return true if the Bluetooth device is connected and the socket is ready, false otherwise
      */
-    private boolean isConnected() {
+    boolean isConnected() {
         return mGbDevice.isConnected() &&
                 mBtSocket != null &&
                 mBtSocket.isConnected();

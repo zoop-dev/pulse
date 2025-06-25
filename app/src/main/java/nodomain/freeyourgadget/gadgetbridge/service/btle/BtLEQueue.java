@@ -230,7 +230,7 @@ public final class BtLEQueue {
         dispatchThread.start();
     }
 
-    private boolean isConnected() {
+    boolean isConnected() {
         if (mGbDevice.isConnected()) {
             return true;
         }

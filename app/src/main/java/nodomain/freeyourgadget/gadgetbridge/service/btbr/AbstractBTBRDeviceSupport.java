@@ -88,6 +88,13 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         return new TransactionBuilder(taskName);
     }
 
+    @Override
+    public boolean isConnected(){
+        // in a multi-threaded environment the queue knows
+        // best about the up-to-date connection status
+        return (mQueue != null) && mQueue.isConnected();
+    }
+
     /**
      * Ensures that the device is connected and (only then) performs the actions of the given
      * transaction builder.
