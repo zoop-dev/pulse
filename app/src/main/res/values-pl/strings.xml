@@ -4166,4 +4166,8 @@
     <string name="pref_aawireless_start_fix_title">Rozpocznij naprawę</string>
     <string name="pref_aawireless_vag_crash_fix_summary">Naprawiono awarię w urządzeniach VAG Technisat podczas pomijania/pauzowania utworów. Nie włączać w innych samochodach, może powodować usterki.</string>
     <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
+    <string name="prefs_device_support_settings">Wsparcie dla urządzenia</string>
+    <string name="device_support_can_reconnect_title">Wsparcie dla ponownego połączenia urządzenia</string>
+    <string name="device_support_can_reconnect_summary">Ponownie używaj instancji DeviceSupport przy ponownym łączeniu urządzenia.</string>
+    <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
 </resources>
