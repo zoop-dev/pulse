@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
 import androidx.annotation.NonNull;
 
@@ -36,12 +36,12 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiActivitySampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiHrvSummarySampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiHrvValueSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSpo2SampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiStressSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiTemperatureSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiActivitySampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiHrvSummarySampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiHrvValueSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiSpo2SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiStressSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvSummarySampleDao;
@@ -60,10 +60,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.colmi.ColmiR0xDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.yawell.ring.YawellRingDeviceSupport;
 
-public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractColmiR0xCoordinator.class);
+public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoordinator {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractYawellRingCoordinator.class);
 
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
@@ -95,7 +95,7 @@ public abstract class AbstractColmiR0xCoordinator extends AbstractBLEDeviceCoord
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
-        return ColmiR0xDeviceSupport.class;
+        return YawellRingDeviceSupport.class;
     }
 
     @Override

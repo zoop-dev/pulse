@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 
-public class ColmiR02Coordinator extends AbstractColmiR0xCoordinator {
+public class ColmiR02Coordinator extends AbstractYawellRingCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(ColmiR02Coordinator.class);
 
     @Override

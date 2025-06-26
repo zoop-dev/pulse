@@ -14,43 +14,43 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples;
 
 import androidx.annotation.NonNull;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSpo2Sample;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSpo2SampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepSessionSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepSessionSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ColmiSpo2SampleProvider extends AbstractTimeSampleProvider<ColmiSpo2Sample> {
-    public ColmiSpo2SampleProvider(final GBDevice device, final DaoSession session) {
+public class ColmiSleepSessionSampleProvider extends AbstractTimeSampleProvider<ColmiSleepSessionSample> {
+    public ColmiSleepSessionSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<ColmiSpo2Sample, ?> getSampleDao() {
-        return getSession().getColmiSpo2SampleDao();
+    public AbstractDao<ColmiSleepSessionSample, ?> getSampleDao() {
+        return getSession().getColmiSleepSessionSampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return ColmiSpo2SampleDao.Properties.Timestamp;
+        return ColmiSleepSessionSampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return ColmiSpo2SampleDao.Properties.DeviceId;
+        return ColmiSleepSessionSampleDao.Properties.DeviceId;
     }
 
     @Override
-    public ColmiSpo2Sample createSample() {
-        return new ColmiSpo2Sample();
+    public ColmiSleepSessionSample createSample() {
+        return new ColmiSleepSessionSample();
     }
 }

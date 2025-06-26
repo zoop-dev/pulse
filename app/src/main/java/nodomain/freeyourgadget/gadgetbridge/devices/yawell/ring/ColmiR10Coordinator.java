@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Arjan Schrijver
+/*  Copyright (C) 2024 Arjan Schrijver
 
     This file is part of Gadgetbridge.
 
@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,21 +23,16 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 
-public class ColmiR12Coordinator extends AbstractColmiR0xCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(ColmiR12Coordinator.class);
+public class ColmiR10Coordinator extends AbstractYawellRingCoordinator {
+    private static final Logger LOG = LoggerFactory.getLogger(ColmiR10Coordinator.class);
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^COLMI R12_.*");
+        return Pattern.compile("^COLMI R10_.*");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_colmi_r12;
-    }
-
-    @Override
-    public boolean hasDisplay() {
-        return true;
+        return R.string.devicetype_colmi_r10;
     }
 }

@@ -14,43 +14,43 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples;
 
 import androidx.annotation.NonNull;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepStageSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepStageSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ColmiSleepStageSampleProvider extends AbstractTimeSampleProvider<ColmiSleepStageSample> {
-    public ColmiSleepStageSampleProvider(final GBDevice device, final DaoSession session) {
+public class ColmiHeartRateSampleProvider extends AbstractTimeSampleProvider<ColmiHeartRateSample> {
+    public ColmiHeartRateSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<ColmiSleepStageSample, ?> getSampleDao() {
-        return getSession().getColmiSleepStageSampleDao();
+    public AbstractDao<ColmiHeartRateSample, ?> getSampleDao() {
+        return getSession().getColmiHeartRateSampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return ColmiSleepStageSampleDao.Properties.Timestamp;
+        return ColmiHeartRateSampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return ColmiSleepStageSampleDao.Properties.DeviceId;
+        return ColmiHeartRateSampleDao.Properties.DeviceId;
     }
 
     @Override
-    public ColmiSleepStageSample createSample() {
-        return new ColmiSleepStageSample();
+    public ColmiHeartRateSample createSample() {
+        return new ColmiHeartRateSample();
     }
 }

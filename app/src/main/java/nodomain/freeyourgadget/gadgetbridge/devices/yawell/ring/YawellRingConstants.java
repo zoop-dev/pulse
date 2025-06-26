@@ -14,11 +14,11 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
 import java.util.UUID;
 
-public class ColmiR0xConstants {
+public class YawellRingConstants {
     public static final UUID CHARACTERISTIC_SERVICE_V1 = UUID.fromString("6e40fff0-b5a3-f393-e0a9-e50e24dcca9e");
     public static final UUID CHARACTERISTIC_SERVICE_V2 = UUID.fromString("de5bf728-d711-4e47-af26-65e3012a5dc7");
     public static final UUID CHARACTERISTIC_WRITE = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e");

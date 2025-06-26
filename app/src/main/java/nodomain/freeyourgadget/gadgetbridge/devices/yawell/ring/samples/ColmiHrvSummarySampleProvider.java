@@ -14,43 +14,43 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples;
 
 import androidx.annotation.NonNull;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvSummarySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ColmiHrvValueSampleProvider extends AbstractTimeSampleProvider<ColmiHrvValueSample> {
-    public ColmiHrvValueSampleProvider(final GBDevice device, final DaoSession session) {
+public class ColmiHrvSummarySampleProvider extends AbstractTimeSampleProvider<ColmiHrvSummarySample> {
+    public ColmiHrvSummarySampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<ColmiHrvValueSample, ?> getSampleDao() {
-        return getSession().getColmiHrvValueSampleDao();
+    public AbstractDao<ColmiHrvSummarySample, ?> getSampleDao() {
+        return getSession().getColmiHrvSummarySampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return ColmiHrvValueSampleDao.Properties.Timestamp;
+        return ColmiHrvSummarySampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return ColmiHrvValueSampleDao.Properties.DeviceId;
+        return ColmiHrvSummarySampleDao.Properties.DeviceId;
     }
 
     @Override
-    public ColmiHrvValueSample createSample() {
-        return new ColmiHrvValueSample();
+    public ColmiHrvSummarySample createSample() {
+        return new ColmiHrvSummarySample();
     }
 }

@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,14 +36,14 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiActivitySampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiHeartRateSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiHrvValueSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSleepSessionSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSleepStageSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiSpo2SampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiStressSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples.ColmiTemperatureSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiActivitySampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiHrvValueSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiSleepSessionSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiSleepStageSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiSpo2SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiStressSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSample;
@@ -59,15 +59,15 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.colmi.ColmiR0xDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.yawell.ring.YawellRingDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class ColmiR0xPacketHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(ColmiR0xPacketHandler.class);
+public class YawellRingPacketHandler {
+    private static final Logger LOG = LoggerFactory.getLogger(YawellRingPacketHandler.class);
 
-    public static void hrIntervalSettings(ColmiR0xDeviceSupport support, byte[] value) {
-        if (value[1] == ColmiR0xConstants.PREF_WRITE) return;  // ignore empty response when writing setting
+    public static void hrIntervalSettings(YawellRingDeviceSupport support, byte[] value) {
+        if (value[1] == YawellRingConstants.PREF_WRITE) return;  // ignore empty response when writing setting
         boolean enabled = value[2] == 0x01;
         int minutes = value[3];
         LOG.info("Received HR interval preference: {} minutes, enabled={}", minutes, enabled);
@@ -79,7 +79,7 @@ public class ColmiR0xPacketHandler {
         support.evaluateGBDeviceEvent(eventUpdatePreferences);
     }
 
-    public static void spo2Settings(ColmiR0xDeviceSupport support, byte[] value) {
+    public static void spo2Settings(YawellRingDeviceSupport support, byte[] value) {
         boolean enabled = value[2] == 0x01;
         LOG.info("Received SpO2 preference: {}", enabled ? "enabled" : "disabled");
         GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
@@ -90,7 +90,7 @@ public class ColmiR0xPacketHandler {
         support.evaluateGBDeviceEvent(eventUpdatePreferences);
     }
 
-    public static void stressSettings(ColmiR0xDeviceSupport support, byte[] value) {
+    public static void stressSettings(YawellRingDeviceSupport support, byte[] value) {
         boolean enabled = value[2] == 0x01;
         LOG.info("Received stress preference: {}", enabled ? "enabled" : "disabled");
         GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
@@ -101,7 +101,7 @@ public class ColmiR0xPacketHandler {
         support.evaluateGBDeviceEvent(eventUpdatePreferences);
     }
 
-    public static void hrvSettings(ColmiR0xDeviceSupport support, byte[] value) {
+    public static void hrvSettings(YawellRingDeviceSupport support, byte[] value) {
         boolean enabled = value[2] == 0x01;
         LOG.info("Received HRV preference: {}", enabled ? "enabled" : "disabled");
         GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
@@ -112,7 +112,7 @@ public class ColmiR0xPacketHandler {
         support.evaluateGBDeviceEvent(eventUpdatePreferences);
     }
 
-    public static void tempSettings(ColmiR0xDeviceSupport support, byte[] value) {
+    public static void tempSettings(YawellRingDeviceSupport support, byte[] value) {
         boolean enabled = value[3] == 0x01;
         LOG.info("Received temperature preference: {}", enabled ? "enabled" : "disabled");
         GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
@@ -175,7 +175,7 @@ public class ColmiR0xPacketHandler {
         }
     }
 
-    public static void realtimeHeartRate(GBDevice device, Context context, ColmiLiveActivityContext hrmContext, byte[] value) {
+    public static void realtimeHeartRate(GBDevice device, Context context, YawellRingLiveActivityContext hrmContext, byte[] value) {
         int hrResponse = value[1] & 0xff;
         LOG.info("Received realtime heart rate response: {} bpm", hrResponse);
 
@@ -217,7 +217,7 @@ public class ColmiR0xPacketHandler {
         }
     }
 
-    public static void liveActivity(GBDevice device, Context context, ColmiLiveActivityContext liveActivityContext, byte[] value) {
+    public static void liveActivity(GBDevice device, Context context, YawellRingLiveActivityContext liveActivityContext, byte[] value) {
         // Live activity will report cumulative values over the day
         int steps = BLETypeConversions.toUint32(value[4], value[3], value[2], (byte) 0);
         int calories = BLETypeConversions.toUint32(value[7], value[6], value[5], (byte) 0) / 10;
@@ -248,7 +248,7 @@ public class ColmiR0xPacketHandler {
     }
 
     @NonNull
-    public static Runnable liveActivityPulse(GBDevice device, Context context, ColmiLiveActivityContext liveActivityContext) {
+    public static Runnable liveActivityPulse(GBDevice device, Context context, YawellRingLiveActivityContext liveActivityContext) {
         return () -> {
             Calendar calendar = Calendar.getInstance();
             int sampleTimestamp = (int) (calendar.getTimeInMillis() / 1000);

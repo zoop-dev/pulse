@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples;
 
 import androidx.annotation.NonNull;
 
@@ -23,36 +23,34 @@ import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiTemperatureSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ColmiTemperatureSampleProvider extends AbstractTimeSampleProvider<ColmiTemperatureSample> {
-    public ColmiTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
+public class ColmiHrvValueSampleProvider extends AbstractTimeSampleProvider<ColmiHrvValueSample> {
+    public ColmiHrvValueSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<ColmiTemperatureSample, ?> getSampleDao() {
-        return getSession().getColmiTemperatureSampleDao();
+    public AbstractDao<ColmiHrvValueSample, ?> getSampleDao() {
+        return getSession().getColmiHrvValueSampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return ColmiTemperatureSampleDao.Properties.Timestamp;
+        return ColmiHrvValueSampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return ColmiTemperatureSampleDao.Properties.DeviceId;
+        return ColmiHrvValueSampleDao.Properties.DeviceId;
     }
 
     @Override
-    public ColmiTemperatureSample createSample() {
-        return new ColmiTemperatureSample();
+    public ColmiHrvValueSample createSample() {
+        return new ColmiHrvValueSample();
     }
 }

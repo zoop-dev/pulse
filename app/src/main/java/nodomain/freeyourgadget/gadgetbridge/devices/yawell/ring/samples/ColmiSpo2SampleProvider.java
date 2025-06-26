@@ -14,43 +14,43 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples;
 
 import androidx.annotation.NonNull;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiStressSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiStressSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSpo2Sample;
+import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSpo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ColmiStressSampleProvider extends AbstractTimeSampleProvider<ColmiStressSample> {
-    public ColmiStressSampleProvider(final GBDevice device, final DaoSession session) {
+public class ColmiSpo2SampleProvider extends AbstractTimeSampleProvider<ColmiSpo2Sample> {
+    public ColmiSpo2SampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<ColmiStressSample, ?> getSampleDao() {
-        return getSession().getColmiStressSampleDao();
+    public AbstractDao<ColmiSpo2Sample, ?> getSampleDao() {
+        return getSession().getColmiSpo2SampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return ColmiStressSampleDao.Properties.Timestamp;
+        return ColmiSpo2SampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return ColmiStressSampleDao.Properties.DeviceId;
+        return ColmiSpo2SampleDao.Properties.DeviceId;
     }
 
     @Override
-    public ColmiStressSample createSample() {
-        return new ColmiStressSample();
+    public ColmiSpo2Sample createSample() {
+        return new ColmiSpo2Sample();
     }
 }

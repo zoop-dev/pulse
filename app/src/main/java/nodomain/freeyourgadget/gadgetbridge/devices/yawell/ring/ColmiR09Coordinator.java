@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +22,28 @@ import org.slf4j.LoggerFactory;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ColmiR10Coordinator extends AbstractColmiR0xCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(ColmiR10Coordinator.class);
+public class ColmiR09Coordinator extends AbstractYawellRingCoordinator {
+    private static final Logger LOG = LoggerFactory.getLogger(ColmiR09Coordinator.class);
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^COLMI R10_.*");
+        return Pattern.compile("R09_.*");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_colmi_r10;
+        return R.string.devicetype_colmi_r09;
+    }
+
+    @Override
+    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsContinuousTemperature(final GBDevice device) {
+        return true;
     }
 }

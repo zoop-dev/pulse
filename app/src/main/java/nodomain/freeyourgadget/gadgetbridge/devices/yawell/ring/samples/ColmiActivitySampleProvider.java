@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.colmi.samples;
+package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Map;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.colmi.ColmiR0xConstants;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellRingConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSample;
@@ -176,13 +176,13 @@ public class ColmiActivitySampleProvider extends AbstractSampleProvider<ColmiAct
 
     final ActivityKind sleepStageToActivityKind(final int sleepStage) {
         switch (sleepStage) {
-            case ColmiR0xConstants.SLEEP_TYPE_LIGHT:
+            case YawellRingConstants.SLEEP_TYPE_LIGHT:
                 return ActivityKind.LIGHT_SLEEP;
-            case ColmiR0xConstants.SLEEP_TYPE_DEEP:
+            case YawellRingConstants.SLEEP_TYPE_DEEP:
                 return ActivityKind.DEEP_SLEEP;
-            case ColmiR0xConstants.SLEEP_TYPE_REM:
+            case YawellRingConstants.SLEEP_TYPE_REM:
                 return ActivityKind.REM_SLEEP;
-            case ColmiR0xConstants.SLEEP_TYPE_AWAKE:
+            case YawellRingConstants.SLEEP_TYPE_AWAKE:
                 return ActivityKind.AWAKE_SLEEP;
             default:
                 return ActivityKind.UNKNOWN;
