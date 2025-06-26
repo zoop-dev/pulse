@@ -2432,4 +2432,6 @@
     <string name="activity_prefs_allow_bluetooth_intent_api">АПИ намене Блутута</string>
     <string name="intent_api_allow_trigger_export_title">Омогући извоз складишта података</string>
     <string name="intent_api_allow_debug_commands_summary">Дозволи окидање изборника исправки грешака преко АПИ намене</string>
+    <string name="device_support_can_reconnect_summary">Поново употреби примерак подршке уређаја приликом преповезивања са уређајем.</string>
+    <string name="discovery_bonding_error">Нисам успео да се упарим: %1$s</string>
 </resources>
