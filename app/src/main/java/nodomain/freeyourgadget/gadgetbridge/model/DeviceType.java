@@ -41,12 +41,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.casio.gwb5600.CasioGMWB5000D
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.gwb5600.CasioGWB5600DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.CmfWatchPro2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.CmfWatchProCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR02Coordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR03Coordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR06Coordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR09Coordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR10Coordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR12Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cycling_sensor.coordinator.CyclingSensorCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.divoom.PixooCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.domyos.DomyosT540Coordinator;
@@ -359,6 +353,14 @@ import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watchs1active.XiaomiW
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watchs1pro.XiaomiWatchS1ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watchs3.XiaomiWatchS3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xwatch.XWatchCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR02Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR03Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR06Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR09Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR10Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR12Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellR10Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellR11Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.zetime.ZeTimeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gatt_client.BleGattClientCoordinator;
 
@@ -682,6 +684,8 @@ public enum DeviceType {
     FEMOMETER_VINCA2(FemometerVinca2DeviceCoordinator.class),
     PIXOO(PixooCoordinator.class),
     HAMA_FIT6900(HamaFit6900DeviceCoordinator.class),
+    YAWELL_R10(YawellR10Coordinator.class),
+    YAWELL_R11(YawellR11Coordinator.class),
     COLMI_R02(ColmiR02Coordinator.class),
     COLMI_R03(ColmiR03Coordinator.class),
     COLMI_R06(ColmiR06Coordinator.class),

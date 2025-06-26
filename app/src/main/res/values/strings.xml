@@ -2015,6 +2015,8 @@
     <string name="devicetype_redmi_watch_5_active">Redmi Watch 5 Active</string>
     <string name="devicetype_redmi_watch_5_lite">Redmi Watch 5 Lite</string>
     <string name="devicetype_aawireless">AAWireless</string>
+    <string name="devicetype_yawell_r10">Yawell R10</string>
+    <string name="devicetype_yawell_r11">Yawell R11</string>
     <string name="devicetype_colmi_r02">Colmi R02</string>
     <string name="devicetype_colmi_r03">Colmi R03</string>
     <string name="devicetype_colmi_r06">Colmi R06</string>
