@@ -621,11 +621,14 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
 
         if (gbDevs.isEmpty()) {
+            LOG.warn("No devices to connect to");
             return;
         }
 
         for (final GBDevice gbDevice : gbDevs) {
             final String deviceAddress = gbDevice.getAddress();
+
+            LOG.debug("Will attempt to connect to {}", gbDevice);
 
             if (!gbDevice.getDeviceCoordinator().isConnectable()) {
                 // we cannot connect to beacons, skip this device

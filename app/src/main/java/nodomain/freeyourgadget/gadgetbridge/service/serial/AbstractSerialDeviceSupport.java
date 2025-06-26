@@ -18,7 +18,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.serial;
 
 import android.location.Location;
-import android.os.Bundle;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -52,6 +54,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
  * to create the device specific message for the respective events and sends them to the device via {@link #sendToDevice(byte[])}.
  */
 public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractSerialDeviceSupport.class);
+
     private GBDeviceProtocol gbDeviceProtocol;
     protected GBDeviceIoThread gbDeviceIOThread;
 
@@ -89,7 +93,8 @@ public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport 
      * Lazily creates and returns the GBDeviceIoThread instance to be used.
      */
     public synchronized GBDeviceIoThread getDeviceIOThread() {
-        if (gbDeviceIOThread == null) {
+        if (gbDeviceIOThread == null || !gbDeviceIOThread.isAlive()) {
+            LOG.debug("Creating new IO thread");
             gbDeviceIOThread = createDeviceIOThread();
         }
         return gbDeviceIOThread;

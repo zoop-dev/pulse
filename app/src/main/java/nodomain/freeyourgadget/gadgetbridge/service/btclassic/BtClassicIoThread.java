@@ -33,6 +33,7 @@ import java.io.OutputStream;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
@@ -55,17 +56,10 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
     @Override
     public void quit() {
         mQuit = true;
-        if (mBtSocket != null) {
-            try {
-                mBtSocket.close();
-            } catch (IOException e) {
-                LOG.error(e.getMessage());
-            }
-        }
+        cleanup();
     }
 
     private boolean mIsConnected = false;
-
 
     public BtClassicIoThread(GBDevice gbDevice, Context context, GBDeviceProtocol deviceProtocol, AbstractSerialDeviceSupport deviceSupport, BluetoothAdapter btAdapter) {
         super(gbDevice, context);
@@ -87,7 +81,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
             mOutStream.write(bytes);
             mOutStream.flush();
         } catch (IOException e) {
-            LOG.error("Error writing.", e);
+            LOG.error("Error writing", e);
         }
     }
 
@@ -104,7 +98,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
             LOG.info("Ready for a new message exchange.");
 
             try {
-                GBDeviceEvent deviceEvents[] = mProtocol.decodeResponse(parseIncoming(mInStream));
+                GBDeviceEvent[] deviceEvents = mProtocol.decodeResponse(parseIncoming(mInStream));
                 if (deviceEvents == null) {
                     LOG.info("unhandled message");
                 } else {
@@ -118,25 +112,17 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
             } catch (SocketTimeoutException ignore) {
                 LOG.debug("socket timeout, we can't help but ignore this");
             } catch (IOException e) {
-                LOG.info(e.getMessage());
+                LOG.error("Bluetooth socket closed, will quit IO Thread", e);
                 mIsConnected = false;
-                mBtSocket = null;
-                mInStream = null;
-                mOutStream = null;
-                LOG.info("Bluetooth socket closed, will quit IO Thread");
                 break;
             }
         }
 
         mIsConnected = false;
-        if (mBtSocket != null) {
-            try {
-                mBtSocket.close();
-            } catch (IOException e) {
-                LOG.error(e.getMessage());
-            }
-            mBtSocket = null;
-        }
+
+        cleanup();
+
+
         setUpdateState(GBDevice.State.NOT_CONNECTED);
     }
 
@@ -147,13 +133,13 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
 
         try {
             BluetoothDevice btDevice = mBtAdapter.getRemoteDevice(gbDevice.getAddress());
-            ParcelUuid uuids[] = btDevice.getUuids();
+            ParcelUuid[] uuids = btDevice.getUuids();
             if (uuids == null) {
-                LOG.warn("Device provided no UUIDs to connect to, giving up: " + gbDevice);
+                LOG.warn("Device provided no UUIDs to connect to, giving up: {}", gbDevice);
                 return false;
             }
             for (ParcelUuid uuid : uuids) {
-                LOG.info("found service UUID " + uuid);
+                LOG.info("found service UUID {}", uuid);
             }
             mBtSocket = btDevice.createRfcommSocketToServiceRecord(getUuidToConnect(uuids));
             mBtSocket.connect();
@@ -162,18 +148,13 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
             setUpdateState(GBDevice.State.CONNECTED);
         } catch (IOException e) {
             LOG.error("Server socket cannot be started.", e);
-            //LOG.error(e.getMessage());
+            cleanup();
             setUpdateState(originalState);
-            mInStream = null;
-            mOutStream = null;
-            mBtSocket = null;
             return false;
         } catch (SecurityException e) {
             LOG.error("Could not connect to device.", e);
+            cleanup();
             setUpdateState(originalState);
-            mInStream = null;
-            mOutStream = null;
-            mBtSocket = null;
             return false;
         }
 
@@ -191,8 +172,6 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
      * Returns the uuid to connect to.
      * Default implementation returns the first of the given uuids that were
      * read from the remote device.
-     * @param uuids
-     * @return
      */
     @NonNull
     protected UUID getUuidToConnect(@NonNull ParcelUuid[] uuids) {
@@ -203,11 +182,34 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
         gbDevice.setUpdateState(state, getContext());
     }
 
+    private void cleanup() {
+        if (mOutStream != null) {
+            try {
+                mOutStream.close();
+            } catch (final Exception ignored) {
+            }
+            mOutStream = null;
+        }
+
+        if (mInStream != null) {
+            try {
+                mInStream.close();
+            } catch (final Exception ignored) {
+            }
+            mInStream = null;
+        }
+
+        if (mBtSocket != null) {
+            try {
+                mBtSocket.close();
+            } catch (final IOException ignored) {
+            }
+            mBtSocket = null;
+        }
+    }
+
     /**
      * Returns an incoming message for consuming by the GBDeviceProtocol
-     * @return
-     * @throws IOException
-     * @param inStream
      */
     protected abstract byte[] parseIncoming(InputStream inStream) throws IOException;
 }
