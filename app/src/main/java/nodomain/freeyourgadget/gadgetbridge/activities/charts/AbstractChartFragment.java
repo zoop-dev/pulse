@@ -368,12 +368,18 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         protected void onPostExecute(final Object o) {
             super.onPostExecute(o);
             final FragmentActivity activity = getActivity();
-            if (activity != null && !activity.isFinishing() && !activity.isDestroyed()) {
-                updateChartsnUIThread(chartsData);
-                renderCharts();
-            } else {
+            if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
                 LOG.info("Not rendering charts because activity is not available anymore");
+                return;
             }
+            if (getTaskError() != null) {
+                // Async task failed - we will have no data, so avoid NPE crashes
+                // a log + toast were already displayed by the DBAccess class
+                return;
+            }
+
+            updateChartsnUIThread(chartsData);
+            renderCharts();
         }
     }
 

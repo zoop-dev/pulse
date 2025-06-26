@@ -20,6 +20,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +65,10 @@ public abstract class DBAccess extends AsyncTask {
         }
     }
 
-
+    @Nullable
+    public Exception getTaskError() {
+        return mError;
+    }
 
     protected void displayError(Throwable error) {
         GB.toast(getContext(), getContext().getString(R.string.dbaccess_error_executing, error.getMessage()), Toast.LENGTH_LONG, GB.ERROR, error);
