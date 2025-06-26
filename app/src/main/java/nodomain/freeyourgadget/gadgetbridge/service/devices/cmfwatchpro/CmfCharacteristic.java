@@ -185,6 +185,7 @@ public class CmfCharacteristic {
             case AUTH_PAIR_REQUEST:
             case AUTH_PAIR_REPLY:
             case DATA_CHUNK_WRITE_AGPS:
+            case DATA_CHUNK_WRITE_FIRMWARE:
             case DATA_CHUNK_WRITE_WATCHFACE:
                 return false;
         }

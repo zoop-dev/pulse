@@ -94,6 +94,10 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     public static final UUID UUID_CHARACTERISTIC_CMF_SHELL_WRITE = UUID.fromString("77d4ff01-2fe2-2334-0d35-9ccd078f529c");
     public static final UUID UUID_CHARACTERISTIC_CMF_SHELL_READ = UUID.fromString("77d4ff02-2fe2-2334-0d35-9ccd078f529c");
 
+    public static final UUID UUID_SERVICE_CMF_FIRMWARE = UUID.fromString("02f00000-0000-0000-0000-00000000fe00");
+    public static final UUID UUID_CHARACTERISTIC_CMF_FIRMWARE_WRITE = UUID.fromString("02f00000-0000-0000-0000-00000000ff01");
+    public static final UUID UUID_CHARACTERISTIC_CMF_FIRMWARE_READ = UUID.fromString("02f00000-0000-0000-0000-00000000ff02");
+
     // An a5 byte is used a lot in single payloads, probably as a "proof of encryption"?
     public static final byte A5 = (byte) 0xa5;
 
@@ -101,6 +105,10 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     private CmfCharacteristic characteristicCommandWrite;
     private CmfCharacteristic characteristicDataRead;
     private CmfCharacteristic characteristicDataWrite;
+    @Nullable
+    private CmfCharacteristic characteristicFirmwareRead;
+    @Nullable
+    private CmfCharacteristic characteristicFirmwareWrite;
 
     private final byte[] authRandom1 = new byte[16];
     private final byte[] authAppSecret = new byte[16];
@@ -116,12 +124,14 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         addSupportedService(UUID_SERVICE_CMF_CMD);
         addSupportedService(UUID_SERVICE_CMF_DATA);
         addSupportedService(UUID_SERVICE_CMF_SHELL);
+        addSupportedService(UUID_SERVICE_CMF_FIRMWARE);
     }
 
     @Override
     public boolean useAutoConnect() {
         return true;
     }
+
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
@@ -164,17 +174,34 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
             LOG.warn("Characteristic shell read is null");
         }
 
+        final BluetoothGattCharacteristic btCharacteristicFirmwareWrite = getCharacteristic(UUID_CHARACTERISTIC_CMF_FIRMWARE_WRITE);
+        if (btCharacteristicFirmwareWrite == null) {
+            LOG.warn("Characteristic firmware write is null");
+        }
+
+        final BluetoothGattCharacteristic btCharacteristicFirmwareRead = getCharacteristic(UUID_CHARACTERISTIC_CMF_FIRMWARE_READ);
+        if (btCharacteristicFirmwareRead == null) {
+            LOG.warn("Characteristic firmware read is null");
+        }
+
         dataUploader = new CmfDataUploader(this);
 
         characteristicCommandRead = new CmfCharacteristic(btCharacteristicCommandRead, this);
         characteristicCommandWrite = new CmfCharacteristic(btCharacteristicCommandWrite, null);
         characteristicDataRead = new CmfCharacteristic(btCharacteristicDataRead, dataUploader);
         characteristicDataWrite = new CmfCharacteristic(btCharacteristicDataWrite, null);
+        if (btCharacteristicFirmwareRead != null && btCharacteristicFirmwareWrite != null) {
+            characteristicFirmwareRead = new CmfCharacteristic(btCharacteristicFirmwareRead, dataUploader);
+            characteristicFirmwareWrite = new CmfCharacteristic(btCharacteristicFirmwareWrite, null);
+        }
 
         builder.notify(btCharacteristicCommandRead, true);
         builder.notify(btCharacteristicDataRead, true);
         if (btCharacteristicShellRead != null) {
             builder.notify(btCharacteristicShellRead, true);
+        }
+        if (btCharacteristicFirmwareRead != null) {
+            builder.notify(btCharacteristicFirmwareRead, true);
         }
 
         builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
@@ -186,6 +213,12 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
             characteristicCommandWrite.setSessionKey(secretKey);
             characteristicDataRead.setSessionKey(secretKey);
             characteristicDataWrite.setSessionKey(secretKey);
+            if (characteristicFirmwareRead != null) {
+                characteristicFirmwareRead.setSessionKey(secretKey);
+            }
+            if (characteristicFirmwareWrite != null) {
+                characteristicFirmwareWrite.setSessionKey(secretKey);
+            }
 
             sendCommand(builder, CmfCommand.AUTH_PHONE_NAME, ArrayUtils.addAll(new byte[]{A5}, Build.MODEL.getBytes(StandardCharsets.UTF_8)));
         } else if (btCharacteristicShellWrite != null) {
@@ -221,6 +254,9 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         } else if (characteristicUUID.equals(characteristicDataRead.getCharacteristicUUID())) {
             characteristicDataRead.onCharacteristicChanged(value);
             return true;
+        } else if (characteristicFirmwareRead != null && characteristicUUID.equals(characteristicFirmwareRead.getCharacteristicUUID())) {
+            characteristicFirmwareRead.onCharacteristicChanged(value);
+            return true;
         } else if (characteristicUUID.equals(UUID_CHARACTERISTIC_CMF_SHELL_READ)) {
             handleShellCommand(value);
             return true;
@@ -255,6 +291,10 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         }
 
         switch (cmd) {
+            case DATA_TRANSFER_FIRMWARE_INIT_1_REPLY:
+                // This one comes in the command characteristic because of reasons
+                dataUploader.onCommand(cmd, payload);
+                return;
             case AUTH_PAIR_REPLY:
                 final byte[] authRandom2 = ArrayUtils.subarray(payload, 0, 16);
                 final byte[] signedAuthRandom2 = ArrayUtils.subarray(payload, 16, 48);
@@ -326,6 +366,12 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
                     characteristicCommandWrite.setSessionKey(sessionKey);
                     characteristicDataRead.setSessionKey(sessionKey);
                     characteristicDataWrite.setSessionKey(sessionKey);
+                    if (characteristicFirmwareRead != null) {
+                        characteristicFirmwareRead.setSessionKey(sessionKey);
+                    }
+                    if (characteristicFirmwareWrite != null) {
+                        characteristicFirmwareWrite.setSessionKey(sessionKey);
+                    }
                 } catch (final Exception e) {
                     LOG.error("Failed to compute session key from auth nonce", e);
                     return;
@@ -449,6 +495,12 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     public void sendData(final String taskName, final CmfCommand cmd, final byte... payload) {
         final TransactionBuilder builder = createTransactionBuilder(taskName);
         characteristicDataWrite.sendCommand(builder, cmd, payload);
+        builder.queue(getQueue());
+    }
+
+    public void sendFirmware(final String taskName, final CmfCommand cmd, final byte... payload) {
+        final TransactionBuilder builder = createTransactionBuilder(taskName);
+        characteristicFirmwareWrite.sendCommand(builder, cmd, payload);
         builder.queue(getQueue());
     }
 

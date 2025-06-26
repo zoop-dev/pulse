@@ -45,7 +45,7 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
     @Override
     public void onCommand(final CmfCommand cmd, final byte[] payload) {
         switch (cmd) {
-            case DATA_TRANSFER_WATCHFACE_INIT_1_REPLY:
+            case DATA_TRANSFER_WATCHFACE_INIT_1_REPLY: {
                 if (payload[0] != 0x01) {
                     LOG.warn("Got unexpected transfer init 1 reply {}", payload[0]);
                     fwHelper = null;
@@ -63,7 +63,30 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
                         buf.array()
                 );
                 return;
+            }
+            case DATA_TRANSFER_FIRMWARE_INIT_1_REPLY: {
+                if (payload[0] != 0x01) {
+                    LOG.warn("Got unexpected firmware init 2 reply {}", payload[0]);
+                    fwHelper = null;
+                    return;
+                }
+
+                final ByteBuffer buf = ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN);
+                // FIXME version a.b.c.d... how to know? this was from 11.0.0.57
+                buf.put((byte) (0x0b));
+                buf.put((byte) (0x00));
+                buf.put((byte) (0x00));
+                buf.put((byte) (0x39));
+
+                mSupport.sendFirmware(
+                        "transfer firmware init request",
+                        CmfCommand.DATA_TRANSFER_FIRMWARE_INIT_2_REQUEST,
+                        buf.array()
+                );
+                return;
+            }
             case DATA_TRANSFER_AGPS_INIT_REPLY:
+            case DATA_TRANSFER_FIRMWARE_INIT_2_REPLY:
             case DATA_TRANSFER_WATCHFACE_INIT_2_REPLY:
                 if (payload[0] != 0x01) {
                     LOG.warn("Got unexpected transfer 2 init reply {}", payload[0]);
@@ -77,6 +100,11 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
                 return;
             case DATA_TRANSFER_WATCHFACE_FINISH_ACK_1:
                 handleAck1(CmfCommand.DATA_TRANSFER_WATCHFACE_FINISH_ACK_2, payload);
+                return;
+            case DATA_TRANSFER_FIRMWARE_FINISH_ACK_1:
+                // TODO: Confirm if this is being sent in the right characteristic, although it looks
+                //  like it does not matter, since it restarts right away
+                handleAck1(CmfCommand.DATA_TRANSFER_FIRMWARE_FINISH_ACK_2, payload);
                 return;
             case DATA_TRANSFER_AGPS_FINISH_ACK_1:
                 handleAck1(CmfCommand.DATA_TRANSFER_AGPS_FINISH_ACK_2, payload);
@@ -94,6 +122,13 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
                     return;
                 }
                 handleChunkRequest(CmfCommand.DATA_CHUNK_WRITE_WATCHFACE, payload);
+                return;
+            case DATA_CHUNK_REQUEST_FIRMWARE:
+                if (fwHelper == null || !fwHelper.isFirmware()) {
+                    LOG.warn("We are not sending firmware - refusing request");
+                    return;
+                }
+                handleChunkRequest(CmfCommand.DATA_CHUNK_WRITE_FIRMWARE, payload);
                 return;
         }
 
@@ -123,6 +158,18 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
             return;
         }
 
+        /* FIXME: This is disabled until we figure out how to send the firmware version
+        if (fwHelper.isFirmware()) {
+            mSupport.sendCommand(
+                    "transfer firmware init request",
+                    CmfCommand.DATA_TRANSFER_FIRMWARE_INIT_1_REQUEST,
+                    (byte) 0xa5
+            );
+
+            return;
+        }
+        */
+
         LOG.warn("Unsupported fwHelper for {}", fwHelper.getUri());
         fwHelper = null;
     }
@@ -137,11 +184,19 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
 
         final TransactionBuilder builder = mSupport.createTransactionBuilder("send chunk offset " + offset);
         updateProgress(builder, progress, true);
-        mSupport.sendData(
-                "transfer watchface init request",
-                commandReply,
-                ArrayUtils.subarray(fwHelper.getBytes(), offset, offset + length)
-        );
+        if (commandReply == CmfCommand.DATA_CHUNK_WRITE_FIRMWARE) {
+            mSupport.sendFirmware(
+                    "send firmware chunk",
+                    commandReply,
+                    ArrayUtils.subarray(fwHelper.getBytes(), offset, offset + length)
+            );
+        } else {
+            mSupport.sendData(
+                    "send data chunk",
+                    commandReply,
+                    ArrayUtils.subarray(fwHelper.getBytes(), offset, offset + length)
+            );
+        }
     }
 
     private void handleAck1(final CmfCommand commandReply, final byte[] payload) {
