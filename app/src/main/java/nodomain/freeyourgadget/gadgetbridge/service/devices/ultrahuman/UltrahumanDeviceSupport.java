@@ -730,9 +730,9 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
 
         @Override
-        protected boolean writeValue(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-            LOG.debug("GB>>UH write {} {}", Characteristic, StringUtils.bytesToHex(value));
-            return super.writeValue(gatt, characteristic, value);
+        public boolean run(BluetoothGatt gatt) {
+            LOG.debug("GB>>UH write {} {}", Characteristic, StringUtils.bytesToHex(getValue()));
+            return super.run(gatt);
         }
     }
 
@@ -754,24 +754,28 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     /// calculate date/time on the fly to avoid setting an outdated value
     private class UHSetTime extends UHWrite {
+        private byte[] actual;
+
         UHSetTime(UltrahumanCharacteristic chara) {
             super(chara);
         }
 
         @Override
-        protected boolean writeValue(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-            final Calendar calendar = DateTimeUtils.getCalendarUTC();
-            final long millis = calendar.getTimeInMillis();
-            final long epoc = Math.round(millis / 1000.0d);
+        public byte[] getValue(){
+            if (actual == null){
+                final Calendar calendar = DateTimeUtils.getCalendarUTC();
+                final long millis = calendar.getTimeInMillis();
+                final long epoc = Math.round(millis / 1000.0d);
 
-            byte[] command = new byte[]{
-                    OPERATION_SETTIME,
-                    (byte) (epoc & 0xff),
-                    (byte) ((epoc >> 8) & 0xff),
-                    (byte) ((epoc >> 16) & 0xff),
-                    (byte) ((epoc >> 24) & 0xff)
-            };
-            return super.writeValue(gatt, characteristic, command);
+                actual = new byte[]{
+                        OPERATION_SETTIME,
+                        (byte) (epoc & 0xff),
+                        (byte) ((epoc >> 8) & 0xff),
+                        (byte) ((epoc >> 16) & 0xff),
+                        (byte) ((epoc >> 24) & 0xff)
+                };
+            }
+            return actual;
         }
     }
 }

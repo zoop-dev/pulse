@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, José Rebelo, Uwe Hermann, Thomas Kuehne
 
     This file is part of Gadgetbridge.
@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothStatusCodes;
 
@@ -30,11 +29,12 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 
 /**
- * Invokes a write operation on a given GATT characteristic.
+ * Invokes a write operation on a given {@link BluetoothGattCharacteristic}.
  * The result status will be made available asynchronously through the
- * {@link BluetoothGattCallback}
+ * {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
  */
 public class WriteAction extends BtLEAction {
     private static final Logger LOG = LoggerFactory.getLogger(WriteAction.class);
@@ -52,24 +52,23 @@ public class WriteAction extends BtLEAction {
         int properties = characteristic.getProperties();
         //TODO: expectsResult should return false if PROPERTY_WRITE_NO_RESPONSE is true, but this leads to timing issues
         if ((properties & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0 || ((properties & BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0)) {
-            return writeValue(gatt, characteristic, value);
+            return writeCharacteristicImp(gatt, characteristic, getValue());
         }
 
         LOG.error("WriteAction for non-writeable characteristic {}", characteristic.getUuid());
         return false;
     }
 
-    protected boolean writeValue(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-        return writeCharacteristic(gatt,characteristic,value);
-    }
-
     /// shared write implementation that can be used without a BtLEAction
-    @SuppressLint("MissingPermission")
     public static boolean writeCharacteristic(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("writing to characteristic: {} : {}", characteristic.getUuid(), Logging.formatBytes(value));
+            LOG.debug("writing to characteristic: {} - {}", characteristic.getUuid(), Logging.formatBytes(value));
         }
+        return writeCharacteristicImp(gatt, characteristic, value);
+    }
 
+    @SuppressLint("MissingPermission")
+    private static boolean writeCharacteristicImp(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (GBApplication.isRunningTiramisuOrLater()) {
             // use API introduced in SDK level 33 to catch exceptions and more specific errors
             try {
@@ -90,12 +89,20 @@ public class WriteAction extends BtLEAction {
         return false;
     }
 
-    public final byte[] getValue() {
+    public byte[] getValue() {
         return value;
     }
 
     @Override
     public boolean expectsResult() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        BluetoothGattCharacteristic characteristic = getCharacteristic();
+        String uuid = characteristic == null ? "(null)" : characteristic.getUuid().toString();
+        return getCreationTime() + ": " + getClass().getSimpleName() + " " + uuid + " - "
+                + Logging.formatBytes(getValue());
     }
 }
