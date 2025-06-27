@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -113,6 +114,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.language.LanguageUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.language.Transliterator;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_STRESS_TEST_CONNECT_COUNT;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_STRESS_TEST_CONNECT_PARALLEL;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_STRESS_TEST_DISPOSE;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.*;
 
 public class DeviceCommunicationService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -695,7 +699,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 if (deviceSupport != null && !deviceSupport.canReconnect()) {
                     try {
                         LOG.debug("connectToDevice - {} dispose device support", deviceAddress);
-                        deviceSupport.dispose();
+                        if (BuildConfig.DEBUG) {
+                            stressTestDispose(deviceSupport);
+                        } else {
+                            deviceSupport.dispose();
+                        }
                     } catch (final Exception e) {
                         LOG.error("connectToDevice - {} failed to dispose device support",
                                 deviceAddress, e);
@@ -717,7 +725,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     } else {
                         deviceSupport.setAutoReconnect(autoReconnect);
                         deviceSupport.setScanReconnect(reconnectViaScan);
-                        connected = deviceSupport.connect();
+                        if (BuildConfig.DEBUG) {
+                            connected = stressTestConnect(deviceSupport);
+                        } else {
+                            connected = deviceSupport.connect();
+                        }
                     }
                     LOG.debug("connectToDevice - {} connected:{} firstTime:{}", deviceAddress,
                             connected, firstTime);
@@ -1193,7 +1205,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         DeviceStruct struct = getDeviceStruct(device);
         DeviceSupport support = struct.getDeviceSupport();
         if(support != null){
-            support.dispose();
+            if (BuildConfig.DEBUG) {
+                stressTestDispose(support);
+            } else {
+                support.dispose();
+            }
         }
         struct.setDeviceSupport(null);
     }
@@ -1606,5 +1622,77 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             devices[i] = deviceStructs.get(i).getDevice();
         }
         return devices;
+    }
+
+    private static void stressTestDispose(DeviceSupport deviceSupport) {
+        SharedPreferences pref = GBApplication.getDeviceSpecificSharedPrefs(deviceSupport.getDevice().getAddress());
+        final boolean extra = pref.getBoolean(PREF_DEVICE_STRESS_TEST_DISPOSE, false);
+
+        LOG.debug("stress test - dispose(normal)");
+        deviceSupport.dispose();
+        if (extra) {
+            LOG.debug("stress test - dispose(extra)");
+            deviceSupport.dispose();
+        }
+    }
+
+    private static boolean stressTestConnect(DeviceSupport deviceSupport) {
+        SharedPreferences pref = GBApplication.getDeviceSpecificSharedPrefs(deviceSupport.getDevice().getAddress());
+
+        final int extras = pref.getInt(PREF_DEVICE_STRESS_TEST_CONNECT_COUNT, 0);
+        final boolean parallel = pref.getBoolean(PREF_DEVICE_STRESS_TEST_CONNECT_PARALLEL, false);
+
+        LOG.debug("stress test - connect() extras:{} parallel:{}", extras, parallel);
+
+        StressTestConnect[] testers = new StressTestConnect[extras+1];
+        for (int i = 0; i < testers.length; i++) {
+            testers[i] = new StressTestConnect(i, deviceSupport);
+        }
+
+        if (parallel) {
+            // parallel calls
+            for (int i = 0; i < testers.length; i++) {
+                testers[i].start();
+            }
+            for (int i = testers.length - 1; 0 <= i; i--) {
+                // reverse order to increase chances that something "interesting" happens
+                try {
+                    testers[i].join(0L);
+                } catch (final Throwable t) {
+                    LOG.debug("stress test - connect(#{}) join exception", i, t);
+                }
+            }
+            LOG.debug("stress test - connect() parallel => {}", testers[0].result);
+            return testers[0].result;
+        } else {
+            // serial calls
+            for (int i = 0; i < testers.length; i++) {
+                testers[i].run();
+            }
+            LOG.debug("stress test - connect() serial => {}", testers[0].result);
+            return testers[0].result;
+        }
+    }
+
+    private static class StressTestConnect extends Thread {
+        private final int i;
+        private final DeviceSupport support;
+        boolean result;
+
+        StressTestConnect(int index, DeviceSupport deviceSupport) {
+            i = index;
+            support = deviceSupport;
+        }
+
+        @Override
+        public void run() {
+            LOG.debug("stress test - connect(#{})", i);
+            try {
+                result = support.connect();
+                LOG.debug("stress test - connect(#{}) => {}", i, result);
+            } catch (Throwable t) {
+                LOG.error("stress test - connect(#{}) exception", i, t);
+            }
+        }
     }
 }

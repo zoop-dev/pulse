@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/device_stress_test_category" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_skull"
+        android:key="pref_device_stress_test_dispose"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/device_stress_test_dispose_summary"
+        android:title="@string/device_stress_test_dispose_title" />
+
+    <SeekBarPreference
+        android:defaultValue="0"
+        android:icon="@drawable/ic_skull"
+        android:key="pref_device_stress_test_connect_count"
+        android:max="20"
+        android:summary="@string/device_stress_test_connect_count_summary"
+        android:title="@string/device_stress_test_connect_count_title"
+        app:showSeekBarValue="true" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_skull"
+        android:key="pref_device_stress_test_connect_parallel"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/device_stress_test_connect_parallel_summary"
+        android:title="@string/device_stress_test_connect_parallel_title" />
+</PreferenceScreen>

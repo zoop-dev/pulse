@@ -69,6 +69,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment;
@@ -1526,6 +1527,12 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.DEVELOPER,
                         R.xml.devicesettings_gatt_synchronous_writes
+                );
+            }
+            if(BuildConfig.DEBUG) {
+                deviceSpecificSettings.addRootScreen(
+                        DeviceSpecificSettingsScreen.DEVELOPER,
+                        R.xml.devicesettings_stress_test
                 );
             }
         }
