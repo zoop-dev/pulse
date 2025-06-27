@@ -61,7 +61,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
     protected void doPerform() throws IOException {
         byte[] command = new byte[1];
         command[0] = Casio2C2DSupport.FEATURE_SETTING_FOR_USER_PROFILE;
-        TransactionBuilder builder = performInitialized("getConfiguration");
+        TransactionBuilder builder = performInitialized("getConfiguration-Get1");
         builder.setCallback(this);
         support.writeAllFeaturesRequest(builder, command);
         builder.queue(getQueue());
@@ -88,7 +88,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
         byte[] command = new byte[1];
         command[0] = Casio2C2DSupport.FEATURE_SETTING_FOR_BASIC;
         try {
-            TransactionBuilder builder = performInitialized("getConfiguration");
+            TransactionBuilder builder = performInitialized("getConfiguration-Get2");
             builder.setCallback(this);
             support.writeAllFeaturesRequest(builder, command);
             builder.queue(getQueue());
