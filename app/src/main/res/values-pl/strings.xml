@@ -4170,4 +4170,10 @@
     <string name="device_support_can_reconnect_title">Wsparcie dla ponownego połączenia urządzenia</string>
     <string name="device_support_can_reconnect_summary">Ponownie używaj instancji DeviceSupport przy ponownym łączeniu urządzenia.</string>
     <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
+    <string name="devicetype_yawell_r10">Yawell R10</string>
+    <string name="devicetype_yawell_r11">Yawell R11</string>
+    <string name="pref_calendar_amount_events_to_sync_title">Liczba wydarzeń kalendarza do zsynchronizowania</string>
+    <string name="pref_calendar_maximum_title_characters_title">Maksymalna liczba znaków w tytule wydarzenia</string>
+    <string name="pref_calendar_maximum_description_characters_title">Maksymalna liczba znaków w opisie zdarzenia</string>
+    <string name="pref_calendar_target_app_title">Aplikacja docelowa na zegarku dla wydarzeń w kalendarzu</string>
 </resources>
