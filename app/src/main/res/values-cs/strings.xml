@@ -4141,4 +4141,15 @@
     <string name="pref_aawireless_dongle_confirmation">Po přepnutí režimu dongle budete muset zařízení znovu spárovat. Počkejte prosím alespoň 30 sekund, než se nastavení projeví.</string>
     <string name="pref_aawireless_auto_standby_device">Automatický režim pohotovosti</string>
     <string name="discovery_bonding_error">Spojování selhalo: %1$s</string>
+    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
+    <string name="device_support_can_reconnect_summary">Znovu použít instanci DeviceSupport po opětovném připojení gadgetu.</string>
+    <string name="devicetype_yawell_r10">Yawell R10</string>
+    <string name="device_support_can_reconnect_title">Znovu použít podporu zařízení</string>
+    <string name="devicetype_yawell_r11">Yawell R11</string>
+    <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
+    <string name="prefs_device_support_settings">Podpora zařízení</string>
+    <string name="pref_calendar_amount_events_to_sync_title">Počet událostí v kalendáři k synchronizaci</string>
+    <string name="pref_calendar_maximum_title_characters_title">Max. počet znaků v názvu události</string>
+    <string name="pref_calendar_maximum_description_characters_title">Max. počet znaků v popisu události</string>
+    <string name="pref_calendar_target_app_title">Aplikace, ze které načítat události kalendáře</string>
 </resources>
