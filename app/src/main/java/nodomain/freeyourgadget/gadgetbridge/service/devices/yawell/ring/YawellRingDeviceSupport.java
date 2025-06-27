@@ -105,15 +105,17 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        backgroundTasksHandler.removeCallbacksAndMessages(null);
+        synchronized (ConnectionMonitor) {
+            backgroundTasksHandler.removeCallbacksAndMessages(null);
 
-        LOG.info("Stopping live activity timeout scheduler");
-        if(liveActivityContext.getRealtimeStepsScheduler() != null) {
-            liveActivityContext.getRealtimeStepsScheduler().shutdown();
-            liveActivityContext.setRealtimeStepsScheduler(null);
+            LOG.info("Stopping live activity timeout scheduler");
+            if (liveActivityContext.getRealtimeStepsScheduler() != null) {
+                liveActivityContext.getRealtimeStepsScheduler().shutdown();
+                liveActivityContext.setRealtimeStepsScheduler(null);
+            }
+
+            super.dispose();
         }
-
-        super.dispose();
     }
 
     @Override

@@ -226,8 +226,10 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
         @Override
         public void dispose() {
-            mXiaomiSupport.onDisconnect();
-            super.dispose();
+            synchronized (ConnectionMonitor) {
+                mXiaomiSupport.onDisconnect();
+                super.dispose();
+            }
         }
     };
 

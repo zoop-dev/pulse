@@ -195,19 +195,21 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
 
     @Override
     public void dispose() {
-        // Remove all background tasks.
-        backgroundTasksHandler.removeCallbacksAndMessages(null);
+        synchronized (ConnectionMonitor) {
+            // Remove all background tasks.
+            backgroundTasksHandler.removeCallbacksAndMessages(null);
 
-        // Kill both sides.
-        leftSide = null;
-        rightSide = null;
+            // Kill both sides.
+            leftSide = null;
+            rightSide = null;
 
-        // Stop listening for intent actions
-        if (intentReceiver != null) {
-            getContext().unregisterReceiver(intentReceiver);
+            // Stop listening for intent actions
+            if (intentReceiver != null) {
+                getContext().unregisterReceiver(intentReceiver);
+            }
+
+            super.dispose();
         }
-
-        super.dispose();
     }
 
     @Override

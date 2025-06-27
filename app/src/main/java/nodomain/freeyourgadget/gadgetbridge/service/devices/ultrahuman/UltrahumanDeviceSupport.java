@@ -119,12 +119,14 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        if (CommandReceiver.Registered) {
-            CommandReceiver.Registered = false;
-            getContext().unregisterReceiver(CommandReceiver);
-        }
+        synchronized (ConnectionMonitor) {
+            if (CommandReceiver.Registered) {
+                CommandReceiver.Registered = false;
+                getContext().unregisterReceiver(CommandReceiver);
+            }
 
-        super.dispose();
+            super.dispose();
+        }
     }
 
     @Override

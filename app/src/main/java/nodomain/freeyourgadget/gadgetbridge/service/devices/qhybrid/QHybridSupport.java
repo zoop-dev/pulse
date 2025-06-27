@@ -463,12 +463,14 @@ public class QHybridSupport extends QHybridBaseSupport {
 
     @Override
     public void dispose() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commandReceiver);
-        GBApplication.getContext().unregisterReceiver(globalCommandReceiver);
-        if (watchAdapter != null) {
-            watchAdapter.dispose();
+        synchronized (ConnectionMonitor) {
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commandReceiver);
+            GBApplication.getContext().unregisterReceiver(globalCommandReceiver);
+            if (watchAdapter != null) {
+                watchAdapter.dispose();
+            }
+            super.dispose();
         }
-        super.dispose();
     }
 
     @Override

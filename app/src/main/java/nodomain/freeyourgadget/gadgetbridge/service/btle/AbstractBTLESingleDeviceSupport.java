@@ -72,6 +72,9 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
     private final List<AbstractBleProfile<?>> mSupportedProfiles = new ArrayList<>();
     private final Object characteristicsMonitor = new Object();
 
+    /// used to guard {@link #connect()}, {@link #disconnect()} and {@link #dispose()}
+    protected final Object ConnectionMonitor = new Object();
+
     private BleIntentApi bleApi = null;
 
     public AbstractBTLESingleDeviceSupport(Logger logger) {
@@ -81,21 +84,33 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         }
     }
 
+    /// Device specific code usually should {@code synchronize()} on {@link #ConnectionMonitor}.
+    /// @see AbstractBTLEDeviceSupport#connect()
+    @CallSuper
     @Override
     public boolean connect() {
-        if (mQueue == null) {
-            mQueue = new BtLEQueue(getDevice(), mSupportedServerServices, this);
-            if(bleApi != null) {
-                bleApi.setQueue(mQueue);
+        synchronized (ConnectionMonitor) {
+            if (mQueue == null) {
+                mQueue = new BtLEQueue(getDevice(), mSupportedServerServices, this);
+                if (bleApi != null) {
+                    bleApi.setQueue(mQueue);
+                }
             }
-        }
 
-        return mQueue.connect();
+            return mQueue.connect();
+        }
     }
 
+    /// Disconnects, but doesn't dispose.
+    /// <p>
+    /// Device specific code usually should {@code synchronize()} on {@link #ConnectionMonitor}.
+    /// </p>
+    @CallSuper
     public void disconnect() {
-        if (mQueue != null) {
-            mQueue.disconnect();
+        synchronized (ConnectionMonitor) {
+            if (mQueue != null) {
+                mQueue.disconnect();
+            }
         }
     }
 
@@ -134,15 +149,20 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         return builder;
     }
 
+    /// Device specific code usually should {@code synchronize()} on {@link #ConnectionMonitor}.
+    /// @see AbstractBTLEDeviceSupport#dispose()
+    @CallSuper
     @Override
     public void dispose() {
-        if (mQueue != null) {
-            mQueue.dispose();
-            mQueue = null;
-        }
+        synchronized (ConnectionMonitor) {
+            if (mQueue != null) {
+                mQueue.dispose();
+                mQueue = null;
+            }
 
-        if(bleApi != null) {
-            bleApi.dispose();
+            if (bleApi != null) {
+                bleApi.dispose();
+            }
         }
     }
 

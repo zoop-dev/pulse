@@ -235,8 +235,10 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commandReceiver);
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commandReceiver);
+        }
     }
 
     BroadcastReceiver commandReceiver = new BroadcastReceiver() {

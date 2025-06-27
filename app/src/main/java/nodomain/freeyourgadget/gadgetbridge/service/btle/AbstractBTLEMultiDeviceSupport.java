@@ -28,6 +28,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -73,6 +74,9 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
     private final BleIntentApi[] bleApis;
     private final GBDevice[] devices;
     private final Map<UUID, BluetoothGattCharacteristic>[] mAvailableCharacteristics;
+
+    /// used to guard {@link #connect()}, {@link #disconnect()} and {@link #dispose()}
+    protected final Object ConnectionMonitor = new Object();
 
     public AbstractBTLEMultiDeviceSupport(Logger logger, int deviceCount) {
         this.logger = logger;
@@ -133,28 +137,40 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         throw new IllegalArgumentException("No sub device with address: " + address);
     }
 
+    /// Device specific code usually should {@code synchronize()} on {@link #ConnectionMonitor}.
+    /// @see AbstractBTLEDeviceSupport#connect()
+    @CallSuper
     @Override
     public boolean connect() {
         // Connect to the queue for each device.
-        for (int i = 0; i < deviceCount; i++) {
-            if (mQueues[i] == null && devices[i] != null) {
-                mQueues[i] = new BtLEQueue(devices[i], mSupportedServerServices[i], this);
-                if (bleApis[i] != null) {
-                    bleApis[i].setQueue(mQueues[i]);
+        synchronized (ConnectionMonitor) {
+            for (int i = 0; i < deviceCount; i++) {
+                if (mQueues[i] == null && devices[i] != null) {
+                    mQueues[i] = new BtLEQueue(devices[i], mSupportedServerServices[i], this);
+                    if (bleApis[i] != null) {
+                        bleApis[i].setQueue(mQueues[i]);
+                    }
                 }
-            }
 
-            if (mQueues[i] != null && !mQueues[i].connect()) {
-                return false;
+                if (mQueues[i] != null && !mQueues[i].connect()) {
+                    return false;
+                }
             }
         }
         return true;
     }
 
+    /// Disconnects, but doesn't dispose.
+    /// <p>
+    /// Device specific code usually should {@code synchronize()} on {@link #ConnectionMonitor}.
+    /// </p>
+    @CallSuper
     public void disconnect() {
-        for (BtLEQueue queue : mQueues) {
-            if (queue != null) {
-                queue.disconnect();
+        synchronized (ConnectionMonitor) {
+            for (BtLEQueue queue : mQueues) {
+                if (queue != null) {
+                    queue.disconnect();
+                }
             }
         }
     }
@@ -196,15 +212,20 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         return builder;
     }
 
+    /// Device specific code usually should {@code synchronize()} on {@link #ConnectionMonitor}.
+    /// @see AbstractBTLEDeviceSupport#dispose()
+    @CallSuper
     @Override
     public void dispose() {
-        for (int i = 0; i < deviceCount; i++) {
-            if (mQueues[i] != null) {
-                mQueues[i].dispose();
-                mQueues[i] = null;
-            }
-            if (bleApis[i] != null) {
-                bleApis[i].dispose();
+        synchronized (ConnectionMonitor) {
+            for (int i = 0; i < deviceCount; i++) {
+                if (mQueues[i] != null) {
+                    mQueues[i].dispose();
+                    mQueues[i] = null;
+                }
+                if (bleApis[i] != null) {
+                    bleApis[i].dispose();
+                }
             }
         }
     }

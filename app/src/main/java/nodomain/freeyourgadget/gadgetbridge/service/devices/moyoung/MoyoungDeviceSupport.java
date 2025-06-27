@@ -210,8 +210,10 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
-        idleUpdateHandler.removeCallbacks(updateIdleStepsRunnable);
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            idleUpdateHandler.removeCallbacks(updateIdleStepsRunnable);
+        }
     }
 
     private BluetoothGattCharacteristic getTargetCharacteristicForPacketType(byte packetType) {

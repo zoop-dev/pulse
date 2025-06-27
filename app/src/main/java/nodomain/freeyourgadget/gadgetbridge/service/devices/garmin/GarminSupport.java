@@ -134,9 +134,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     public void dispose() {
-        LOG.info("Garmin dispose()");
-        GBLocationService.stop(getContext(), getDevice());
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            LOG.info("Garmin dispose()");
+            GBLocationService.stop(getContext(), getDevice());
+            super.dispose();
+        }
     }
 
     public void addFileToDownloadList(FileTransferHandler.DirectoryEntry directoryEntry) {

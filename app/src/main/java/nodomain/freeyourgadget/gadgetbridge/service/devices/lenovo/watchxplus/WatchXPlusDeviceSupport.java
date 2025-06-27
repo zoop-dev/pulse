@@ -2066,9 +2066,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
-        broadcastManager.unregisterReceiver(broadcastReceiver);
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
+            broadcastManager.unregisterReceiver(broadcastReceiver);
+            super.dispose();
+        }
     }
 
     private static double onSamplingInterval(int i, int i2) {

@@ -82,10 +82,12 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        LOG.info("Dispose");
-        close();
+        synchronized (ConnectionMonitor) {
+            LOG.info("Dispose");
+            close();
 
-        super.dispose();
+            super.dispose();
+        }
     }
 
     @Override

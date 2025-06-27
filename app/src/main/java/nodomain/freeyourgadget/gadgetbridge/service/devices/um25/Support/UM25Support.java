@@ -141,10 +141,12 @@ public class UM25Support extends UM25BaseSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
-        LocalBroadcastManager.getInstance(getContext())
-                .unregisterReceiver(resetReceiver);
-        executor.shutdown();
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            LocalBroadcastManager.getInstance(getContext())
+                    .unregisterReceiver(resetReceiver);
+            executor.shutdown();
+        }
     }
 
     private void startLoop(){

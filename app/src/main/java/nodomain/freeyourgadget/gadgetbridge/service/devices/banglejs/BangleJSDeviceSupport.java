@@ -147,7 +147,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDevic
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -212,11 +211,13 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
-        stopGlobalUartReceiver();
-        stopLocationUpdate();
-        stopRequestQueue();
-        handler.removeCallbacksAndMessages(null);
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            stopGlobalUartReceiver();
+            stopLocationUpdate();
+            stopRequestQueue();
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
     private void stopGlobalUartReceiver(){

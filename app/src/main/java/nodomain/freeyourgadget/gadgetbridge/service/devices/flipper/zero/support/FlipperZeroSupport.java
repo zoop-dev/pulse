@@ -157,11 +157,13 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
 
     @Override
     public void dispose() {
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            super.dispose();
 
-        if(recevierRegistered) {
-            getContext().unregisterReceiver(receiver);
-            recevierRegistered = false;
+            if (recevierRegistered) {
+                getContext().unregisterReceiver(receiver);
+                recevierRegistered = false;
+            }
         }
     }
 

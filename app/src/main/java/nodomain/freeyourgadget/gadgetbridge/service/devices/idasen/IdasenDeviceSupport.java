@@ -123,8 +123,10 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commandReceiver);
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commandReceiver);
+        }
     }
 
     @Override

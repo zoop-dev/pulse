@@ -107,8 +107,10 @@ public class ZeppOsBtleSupport extends AbstractBTLESingleDeviceSupport implement
 
     @Override
     public void dispose() {
-        zeppOsSupport.dispose();
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            zeppOsSupport.dispose();
+            super.dispose();
+        }
     }
 
     @Override

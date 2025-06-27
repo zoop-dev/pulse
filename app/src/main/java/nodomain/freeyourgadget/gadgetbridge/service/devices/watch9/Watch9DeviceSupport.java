@@ -466,9 +466,11 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
-        broadcastManager.unregisterReceiver(broadcastReceiver);
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
+            broadcastManager.unregisterReceiver(broadcastReceiver);
+            super.dispose();
+        }
     }
 
     @Override

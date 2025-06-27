@@ -72,10 +72,12 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            super.dispose();
 
-        LocalBroadcastManager.getInstance(getContext())
-                .unregisterReceiver(stateRequestReceiver);
+            LocalBroadcastManager.getInstance(getContext())
+                    .unregisterReceiver(stateRequestReceiver);
+        }
     }
 
     BroadcastReceiver stateRequestReceiver = new BroadcastReceiver() {

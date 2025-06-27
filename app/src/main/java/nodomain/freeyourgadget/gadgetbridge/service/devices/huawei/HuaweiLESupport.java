@@ -203,8 +203,10 @@ public class HuaweiLESupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void dispose() {
-        supportProvider.dispose();
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            supportProvider.dispose();
+            super.dispose();
+        }
     }
 
     @Override
