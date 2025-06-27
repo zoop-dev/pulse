@@ -19,7 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 import android.bluetooth.BluetoothGatt;
 
 /**
- * An action that will cause the queue to sleep for the specified time.
+ * An action that will cause the queue to {@link Thread#sleep(long) sleep} for the specified time.
  * Note that this is usually a bad idea, since it will not be able to process messages
  * during that time. It is also likely to cause race conditions.
  */
@@ -39,5 +39,10 @@ public class WaitAction extends PlainAction {
         } catch (InterruptedException e) {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return getCreationTime() + ": " + getClass().getSimpleName() + " " + mMillis + " ms";
     }
 }

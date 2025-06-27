@@ -31,11 +31,13 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -517,11 +519,11 @@ public final class BtLEQueue {
         GattCallback mTransactionGattCallback;
         private final GattCallback mExternalGattCallback;
 
-        public InternalGattCallback(GattCallback externalGattCallback) {
+        InternalGattCallback(GattCallback externalGattCallback) {
             mExternalGattCallback = externalGattCallback;
         }
 
-        public void setTransactionGattCallback(@Nullable GattCallback callback) {
+        void setTransactionGattCallback(@Nullable GattCallback callback) {
             mTransactionGattCallback = callback;
         }
 
@@ -539,6 +541,10 @@ public final class BtLEQueue {
             LOG.debug("connection state change, newState: {} {} {}",
                     BleNamesResolver.getStateString(newState), BleNamesResolver.getStatusString(status),
                     BleNamesResolver.getBondStateString(bondState));
+
+            if (!checkCorrectGattInstance(gatt, "onConnectionStateChange")) {
+                return;
+            }
 
             synchronized (mGattMonitor) {
                 if (mBluetoothGatt == null) {
@@ -597,7 +603,9 @@ public final class BtLEQueue {
 
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-            if (!checkCorrectGattInstance(gatt, "services discovered: " + BleNamesResolver.getStatusString(status))) {
+            LOG.debug("services discovered: {}", BleNamesResolver.getStatusString(status));
+
+            if (!checkCorrectGattInstance(gatt, "onServicesDiscovered")) {
                 return;
             }
 
@@ -630,13 +638,13 @@ public final class BtLEQueue {
             checkWaitingCharacteristic(characteristic, status);
         }
 
-
-
         @Override
         public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
-            super.onMtuChanged(gatt, mtu, status);
-
             LOG.debug("mtu changed to {} {}", mtu, BleNamesResolver.getStatusString(status));
+
+            if (!checkCorrectGattInstance(gatt, "onMtuChanged")) {
+                return;
+            }
 
             final GattCallback callback = getCallbackToUse();
             if (callback != null) {
@@ -661,13 +669,15 @@ public final class BtLEQueue {
         public void onCharacteristicRead(@NonNull BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic,
                                          @NonNull byte[] value, int status) {
-            LOG.debug(
-                    "characteristic read: {} {} {}",
-                    characteristic.getUuid(),
-                    BleNamesResolver.getStatusString(status),
-                    status == BluetoothGatt.GATT_SUCCESS ? ": " + Logging.formatBytes(value) : ""
-            );
-            if (!checkCorrectGattInstance(gatt, "characteristic read")) {
+            if (LOG.isDebugEnabled()) {
+                String content = Logging.formatBytes(value);
+                LOG.debug(
+                        "characteristic read: {} {} - {}", characteristic.getUuid(),
+                        BleNamesResolver.getStatusString(status), content
+                );
+            }
+
+            if (!checkCorrectGattInstance(gatt, "onCharacteristicRead")) {
                 return;
             }
 
@@ -690,8 +700,13 @@ public final class BtLEQueue {
 
         @Override
         public void onDescriptorRead(@NonNull BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status, @NonNull byte[] value) {
-            LOG.debug("descriptor read: {} {}", descriptor.getUuid(), BleNamesResolver.getStatusString(status));
-            if (!checkCorrectGattInstance(gatt, "descriptor read")) {
+            if (LOG.isDebugEnabled()) {
+                String content = Logging.formatBytes(value);
+                LOG.debug("descriptor read: {} {} - {}", descriptor.getUuid(),
+                        BleNamesResolver.getStatusString(status), content);
+            }
+
+            if (!checkCorrectGattInstance(gatt, "onDescriptorRead")) {
                 return;
             }
 
@@ -737,7 +752,7 @@ public final class BtLEQueue {
                                             @NonNull byte[] value) {
             if (LOG.isDebugEnabled()) {
                 String content = Logging.formatBytes(value);
-                LOG.debug("characteristic changed: {} value: {}", characteristic.getUuid(), content);
+                LOG.debug("characteristic changed: {} - {}", characteristic.getUuid(), content);
             }
             if (!checkCorrectGattInstance(gatt, "characteristic changed")) {
                 return;
@@ -757,7 +772,7 @@ public final class BtLEQueue {
 
         @Override
         public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
-            LOG.debug("remote rssi: {} {}", rssi, BleNamesResolver.getStatusString(status));
+            LOG.debug("read remote rssi: {} {}", rssi, BleNamesResolver.getStatusString(status));
             if (!checkCorrectGattInstance(gatt, "remote rssi")) {
                 return;
             }
@@ -772,6 +787,96 @@ public final class BtLEQueue {
             }
         }
 
+        @Override
+        public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+            LOG.debug("reliable write completed: {}", BleNamesResolver.getStatusString(status));
+
+            if (!checkCorrectGattInstance(gatt, "onReliableWriteCompleted")) {
+                return;
+            }
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                try {
+                    callback.onReliableWriteCompleted(gatt, status);
+                } catch (Throwable ex) {
+                    LOG.error("onReliableWriteCompleted failed", ex);
+                }
+            }
+
+            final CountDownLatch latch = mWaitForActionResultLatch;
+            if (latch != null) {
+                latch.countDown();
+            }
+        }
+
+        @Override
+        @RequiresApi(Build.VERSION_CODES.O)
+        public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+            LOG.debug("phy read: tx={} rx={} {}", txPhy, rxPhy,
+                    BleNamesResolver.getStatusString(status));
+
+            if (!checkCorrectGattInstance(gatt, "onPhyRead")) {
+                return;
+            }
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                try {
+                    callback.onPhyRead(gatt, txPhy, rxPhy, status);
+                } catch (Throwable ex) {
+                    LOG.error("onPhyRead failed", ex);
+                }
+            }
+
+            final CountDownLatch latch = mWaitForActionResultLatch;
+            if (latch != null) {
+                latch.countDown();
+            }
+        }
+
+        @Override
+        @RequiresApi(Build.VERSION_CODES.O)
+        public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+            LOG.debug("phy updated: tx={} rx={} {}", txPhy, rxPhy,
+                    BleNamesResolver.getStatusString(status));
+
+            if (!checkCorrectGattInstance(gatt, "onPhyUpdate")) {
+                return;
+            }
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                try {
+                    callback.onPhyUpdate(gatt, txPhy, rxPhy, status);
+                } catch (Throwable ex) {
+                    LOG.error("onPhyUpdate failed", ex);
+                }
+            }
+
+            // not all updates are triggered by GB:
+            // can't use mWaitForActionResultLatch here
+        }
+
+        @Override
+        @RequiresApi(Build.VERSION_CODES.S)
+        public void onServiceChanged(@NonNull BluetoothGatt gatt) {
+            LOG.debug("service changed");
+
+            if (!checkCorrectGattInstance(gatt, "onServiceChanged")) {
+                return;
+            }
+
+            final GattCallback callback = getCallbackToUse();
+            if (callback != null) {
+                try {
+                    callback.onServiceChanged(gatt);
+                } catch (Throwable ex) {
+                    LOG.error("onServiceChanged failed", ex);
+                }
+            }
+        }
+
         private void checkWaitingCharacteristic(BluetoothGattCharacteristic characteristic, int status) {
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 if (characteristic != null) {
@@ -779,7 +884,7 @@ public final class BtLEQueue {
                 }
                 mAbortTransaction = true;
             }
-            final BluetoothGattCharacteristic waitCharacteristic = BtLEQueue.this.mWaitCharacteristic;
+            final BluetoothGattCharacteristic waitCharacteristic = mWaitCharacteristic;
             if (characteristic != null && waitCharacteristic != null && characteristic.getUuid().equals(waitCharacteristic.getUuid())) {
                 final CountDownLatch resultLatch = mWaitForActionResultLatch;
                 if (resultLatch != null) {
@@ -795,7 +900,7 @@ public final class BtLEQueue {
             }
         }
 
-        public void reset() {
+        void reset() {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("internal gatt callback set to null");
             }
@@ -803,7 +908,7 @@ public final class BtLEQueue {
         }
 
         /// helper to emulate Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU on older APIs
-        private byte[] emulateMemorySafeValue(BluetoothGattCharacteristic characteristic,
+        private static byte[] emulateMemorySafeValue(BluetoothGattCharacteristic characteristic,
                                               int status){
             if(status == BluetoothGatt.GATT_SUCCESS) {
                 byte[] value = characteristic.getValue();
@@ -815,7 +920,7 @@ public final class BtLEQueue {
         }
 
         /// helper to emulate Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU on older APIs
-        private byte[] emulateMemorySafeValue(BluetoothGattDescriptor descriptor,
+        private static byte[] emulateMemorySafeValue(BluetoothGattDescriptor descriptor,
                                               int status){
             if(status == BluetoothGatt.GATT_SUCCESS) {
                 byte[] value = descriptor.getValue();

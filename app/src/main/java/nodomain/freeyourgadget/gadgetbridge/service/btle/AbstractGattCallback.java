@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer, Daniel Dakhno
+/*  Copyright (C) 2015-2025 Carsten Pfeiffer, Daniel Dakhno, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
+
+import androidx.annotation.NonNull;
 
 /**
  * Base class for GattCallbacks wishing to just implement a few of the methods.
@@ -63,5 +65,21 @@ public abstract class AbstractGattCallback implements GattCallback {
 
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+    }
+
+    @Override
+    public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+    }
+
+    @Override
+    public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status){
+    }
+
+    @Override
+    public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status){
+    }
+
+    @Override
+    public void onServiceChanged(@NonNull BluetoothGatt gatt){
     }
 }

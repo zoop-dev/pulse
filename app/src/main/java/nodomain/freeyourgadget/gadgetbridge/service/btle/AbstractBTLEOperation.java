@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Damien
-    Gaignon, Daniel Dakhno, Uwe Hermann
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, Damien
+    Gaignon, Daniel Dakhno, Uwe Hermann, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -21,6 +21,11 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -29,17 +34,18 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 
 /**
- * Abstract base class for a BTLEOperation, i.e. an operation that does more than
+ * Abstract base class for a {@link BTLEOperation}, i.e. an operation that does more than
  * just sending a few bytes to the device. It typically involves exchanging many messages
  * between the mobile and the device.
- * <p/>
- * One operation may execute multiple @{link Transaction transactions} with each
- * multiple @{link BTLEAction actions}.
- * <p/>
- * This class implements GattCallback so that subclasses may override those methods
+ * <p>
+ * One operation may execute multiple {@link Transaction transactions} with each
+ * multiple {@link BtLEAction actions}.
+ * <p>
+ * This class implements {@link GattCallback} so that subclasses may override those methods
  * to handle those events.
- * Note: by default all Gatt events are forwarded to AbstractBTLEDeviceSupport, subclasses may override
- * this behavior.
+ * <p>
+ * Note: by default all Gatt events are forwarded to {@link AbstractBTLESingleDeviceSupport},
+ * subclasses may override this behavior.
  */
 public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSupport> implements GattCallback, BTLEOperation {
     private final T mSupport;
@@ -53,9 +59,7 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
     /**
      * Performs this operation. The whole operation is asynchronous, i.e.
      * this method quickly returns before the actual operation is finished.
-     * Calls #prePerform() and, if successful, #doPerform().
-     *
-     * @throws IOException
+     * Calls {@link #prePerform()} and, if successful, {@link #doPerform()}.
      */
     @Override
     public final void perform() throws IOException {
@@ -66,42 +70,32 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
     }
 
     /**
-     * Hook for subclasses to perform something before #doPerform() is invoked.
-     *
-     * @throws IOException
+     * Hook for subclasses to perform something before {@link #doPerform()} is invoked.
      */
     protected void prePerform() throws IOException {
     }
 
     /**
-     * Subclasses must implement this. When invoked, #prePerform() returned
+     * Subclasses must implement this. When invoked, {@link #prePerform()} returned
      * successfully.
-     * Note that subclasses HAVE TO call #operationFinished() when the entire
+     * Note that subclasses HAVE TO call {@link #operationFinished()} when the entire
      * operation is done (successful or not).
-     *
-     * @throws IOException
      */
     protected abstract void doPerform() throws IOException;
 
     /**
      * You MUST call this method when the operation has finished, either
      * successfully or unsuccessfully.
-     *
+     * <p>
      * Subclasses must ensure that the {@link BtLEQueue queue's}'s gatt callback (set on the transaction builder by {@link #performInitialized(String)})
      * is being unset, otherwise it will continue to receive events until another transaction is being executed by the queue.
-     *
-     * @throws IOException
      */
     protected void operationFinished() throws IOException {
     }
 
     /**
-     * Delegates to the DeviceSupport instance and additionally sets this instance as the Gatt
-     * callback for the transaction.
-     *
-     * @param taskName
-     * @return
-     * @throws IOException
+     * Delegates to the {@link AbstractBTLESingleDeviceSupport#performInitialized(String)} instance
+     * and additionally sets this instance as the {@link GattCallback} for the transaction.
      */
     public TransactionBuilder performInitialized(String taskName) throws IOException {
         TransactionBuilder builder = mSupport.performInitialized(taskName);
@@ -109,20 +103,27 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
         return builder;
     }
 
+    /**
+     * Delegates to the {@link AbstractBTLESingleDeviceSupport#createTransactionBuilder(String)}
+     * instance and additionally sets this instance as the {@link GattCallback} for the transaction.
+     */
     public TransactionBuilder createTransactionBuilder(String taskName) {
-        TransactionBuilder builder = getSupport().createTransactionBuilder(taskName);
+        TransactionBuilder builder = mSupport.createTransactionBuilder(taskName);
         builder.setCallback(this);
         return builder;
     }
 
+    /// Delegates to {@link AbstractBTLESingleDeviceSupport#performImmediately(TransactionBuilder)}
     public void performImmediately(TransactionBuilder builder) throws IOException {
         mSupport.performImmediately(builder);
     }
 
+    /// Delegates to {@link AbstractBTLESingleDeviceSupport#getContext()}
     protected Context getContext() {
         return mSupport.getContext();
     }
 
+    /// Delegates to {@link AbstractBTLESingleDeviceSupport#getDevice()}
     protected GBDevice getDevice() {
         return mSupport.getDevice();
     }
@@ -143,10 +144,12 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
         return getClass().getSimpleName();
     }
 
+    /// Delegates to {@link AbstractBTLESingleDeviceSupport#getCharacteristic(UUID)}
     protected BluetoothGattCharacteristic getCharacteristic(UUID uuid) {
         return mSupport.getCharacteristic(uuid);
     }
 
+    /// Delegates to {@link AbstractBTLESingleDeviceSupport#getQueue()}
     protected BtLEQueue getQueue() {
         return mSupport.getQueue();
     }
@@ -170,7 +173,6 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
         return mSupport;
     }
 
-    // All Gatt callbacks delegated to MiBandSupport
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         mSupport.onConnectionStateChange(gatt, status, newState);
@@ -214,5 +216,28 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
         mSupport.onMtuChanged(gatt, mtu, status);
+    }
+
+    @Override
+    public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+        mSupport.onReliableWriteCompleted(gatt, status);
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Override
+    public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+        mSupport.onPhyRead(gatt, txPhy, rxPhy, status);
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Override
+    public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+        mSupport.onPhyUpdate(gatt, txPhy, rxPhy, status);
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    @Override
+    public void onServiceChanged(@NonNull BluetoothGatt gatt) {
+        mSupport.onServiceChanged(gatt);
     }
 }

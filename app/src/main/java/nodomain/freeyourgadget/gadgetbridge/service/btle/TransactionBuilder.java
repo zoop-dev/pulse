@@ -20,12 +20,14 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
+import android.os.Build;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.util.Arrays;
 
@@ -34,9 +36,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.BondAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.FunctionAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.NotifyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadPhyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestConnectionPriorityAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestMtuAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetPreferredPhyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 
@@ -50,6 +54,7 @@ public class TransactionBuilder {
         mTransaction = new Transaction(taskName);
     }
 
+    /// @see ReadAction
     public TransactionBuilder read(BluetoothGattCharacteristic characteristic) {
         if (characteristic == null) {
             LOG.warn("Unable to read characteristic: null");
@@ -59,6 +64,7 @@ public class TransactionBuilder {
         return add(action);
     }
 
+    /// @see WriteAction
     public TransactionBuilder write(BluetoothGattCharacteristic characteristic, byte[] data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
@@ -79,23 +85,27 @@ public class TransactionBuilder {
         return this;
     }
 
+    /// @see RequestMtuAction
     public TransactionBuilder requestMtu(int mtu){
         return add(
                 new RequestMtuAction(mtu)
         );
     }
 
+    /// @see RequestConnectionPriorityAction
     public TransactionBuilder requestConnectionPriority(int priority){
         return add(
                 new RequestConnectionPriorityAction(priority)
         );
     }
 
+    /// @see BondAction
     public TransactionBuilder bond() {
         BondAction action = new BondAction();
         return add(action);
     }
 
+    /// @see NotifyAction
     public TransactionBuilder notify(BluetoothGattCharacteristic characteristic, boolean enable) {
         if (characteristic == null) {
             LOG.warn("Unable to notify characteristic: null");
@@ -120,7 +130,7 @@ public class TransactionBuilder {
         return add(action);
     }
 
-    // Runs the given function/lambda
+    /// @see FunctionAction
     public TransactionBuilder run(FunctionAction.Function function) {
         return add(new FunctionAction(function));
     }
@@ -135,6 +145,26 @@ public class TransactionBuilder {
      */
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtLEAction action = new SetDeviceStateAction(device, state, context);
+        return add(action);
+    }
+
+    /**
+     * Read the current transmitter PHY and receiver PHY of the connection.
+     * @see ReadPhyAction
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public TransactionBuilder readPhy() {
+        BtLEAction action = new ReadPhyAction();
+        return add(action);
+    }
+
+    /**
+     * Set the preferred PHY of the connection.
+     * @see SetPreferredPhyAction
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public TransactionBuilder setPreferredPhy(int txPhy, int rxPhy, int phyOptions) {
+        BtLEAction action = new SetPreferredPhyAction(txPhy, rxPhy, phyOptions);
         return add(action);
     }
 

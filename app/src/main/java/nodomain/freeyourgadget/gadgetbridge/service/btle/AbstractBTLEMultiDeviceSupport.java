@@ -28,6 +28,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -44,7 +45,6 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.CheckInitializedAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 /**
  * Abstract base class for all devices connected through Bluetooth Low Energy (LE) aka
  * Bluetooth Smart.
- * <p/>
+ * <p>
  * The connection to the device and all communication is made with a generic {@link BtLEQueue}.
  * Messages to the device are encoded as {@link BtLEAction actions} or {@link BtLEServerAction actions}
  * that are grouped with a {@link Transaction} or {@link ServerTransaction} and sent via {@link BtLEQueue}.
@@ -552,6 +552,23 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
                                             boolean preparedWrite, boolean responseNeeded,
                                             int offset, byte[] value) {
         return false;
+    }
+
+    @Override
+    public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+    }
+
+    @Override
+    public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status){
+    }
+
+    @Override
+    public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status){
+    }
+
+    @Override
+    public void onServiceChanged(@NonNull BluetoothGatt gatt){
+        logger.warn("onServiceChanged is NOT supported by AbstractBTLEMultiDeviceSupport");
     }
 
     /**

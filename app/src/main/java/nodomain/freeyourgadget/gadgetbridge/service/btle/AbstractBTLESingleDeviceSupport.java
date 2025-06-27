@@ -29,6 +29,7 @@ import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -467,6 +468,27 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
     @Override
     public boolean onDescriptorWriteRequest(BluetoothDevice device, int requestId, BluetoothGattDescriptor descriptor, boolean preparedWrite, boolean responseNeeded, int offset, byte[] value) {
         return false;
+    }
+
+
+    @Override
+    public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+
+    }
+
+    @Override
+    public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status){
+
+    }
+
+    @Override
+    public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status){
+
+    }
+
+    @Override
+    public void onServiceChanged(@NonNull BluetoothGatt gatt){
+        logger.warn("onServiceChanged is NOT supported by AbstractBTLESingleDeviceSupport");
     }
 
     /**

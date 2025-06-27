@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Andreas Shimokawa, Daniel Dakhno
+/*  Copyright (C) 2025 Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -14,24 +14,31 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 
-/// Calls {@link BluetoothGatt#requestMtu(int)}. Results are returned to
-/// {@link GattCallback#onMtuChanged(BluetoothGatt, int, int)}
-public class RequestMtuAction extends BtLEAction {
-    private final int mtu;
 
-    public RequestMtuAction(int mtu) {
+/// Calls {@link BluetoothGatt#readPhy()}.  The result will be made available asynchronously through
+/// {@link GattCallback#onPhyRead(BluetoothGatt, int, int, int)}
+@RequiresApi(api = Build.VERSION_CODES.O)
+public class ReadPhyAction extends BtLEAction {
+    private static final Logger LOG = LoggerFactory.getLogger(ReadPhyAction.class);
+
+    public ReadPhyAction() {
         super(null);
-        this.mtu = mtu;
     }
-
 
     @Override
     public boolean expectsResult() {
@@ -41,11 +48,17 @@ public class RequestMtuAction extends BtLEAction {
     @SuppressLint("MissingPermission")
     @Override
     public boolean run(BluetoothGatt gatt) {
-        return gatt.requestMtu(this.mtu);
+        try {
+            gatt.readPhy();
+            return true;
+        } catch (final Throwable ex) {
+            LOG.warn("BluetoothGatt.readPhy failed", ex);
+            return false;
+        }
     }
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + " mtu=" + mtu;
+        return getCreationTime() + ": " + getClass().getSimpleName();
     }
 }

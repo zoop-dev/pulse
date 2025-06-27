@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
@@ -26,7 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 
 /**
- * Invokes a read operation on a given GATT characteristic.
+ * Invokes a read operation on a given {@link BluetoothGattCharacteristic}.
  * The result will be made available asynchronously through
  * {@link GattCallback#onCharacteristicRead}
  */
@@ -37,6 +38,7 @@ public class ReadAction extends BtLEAction {
         super(characteristic);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public boolean run(BluetoothGatt gatt) {
         int properties = getCharacteristic().getProperties();
@@ -50,5 +52,12 @@ public class ReadAction extends BtLEAction {
     @Override
     public boolean expectsResult() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        BluetoothGattCharacteristic characteristic = getCharacteristic();
+        String uuid = characteristic == null ? "(null)" : characteristic.getUuid().toString();
+        return getCreationTime() + ": " + getClass().getSimpleName() + " " + uuid;
     }
 }

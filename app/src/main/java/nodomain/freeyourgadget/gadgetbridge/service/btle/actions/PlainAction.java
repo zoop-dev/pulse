@@ -16,11 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
+import android.bluetooth.BluetoothGattCharacteristic;
+
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
 /**
  * An abstract non-BTLE action. It performs no bluetooth operation,
- * does not have a BluetoothGattCharacteristic instance and expects no result.
+ * does not have a {@link BluetoothGattCharacteristic} instance and expects no result.
  */
 public abstract class PlainAction extends BtLEAction {
 
