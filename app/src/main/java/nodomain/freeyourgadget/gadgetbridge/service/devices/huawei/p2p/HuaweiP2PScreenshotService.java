@@ -316,7 +316,7 @@ public class HuaweiP2PScreenshotService extends HuaweiBaseP2PService {
     }
 
     private boolean saveBitmap(String filename, Bitmap bitmap) {
-        if (Build.VERSION.SDK_INT < 29)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
             return saveBitmapOld(filename, bitmap);
         return saveMediaStore(filename, bitmap);
     }

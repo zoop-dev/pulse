@@ -473,11 +473,11 @@ public class GBApplication extends Application {
     }
 
     public static boolean isRunningTwelveOrLater() {
-        return VERSION.SDK_INT >= 31;  // Build.VERSION_CODES.S, but our target SDK is lower
+        return VERSION.SDK_INT >= Build.VERSION_CODES.S;
     }
 
     public static boolean isRunningTiramisuOrLater() {
-        return VERSION.SDK_INT >= 33; // Build.VERSION_CODES.TIRAMISU
+        return VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU;
     }
 
     public static boolean isRunningPieOrLater() {

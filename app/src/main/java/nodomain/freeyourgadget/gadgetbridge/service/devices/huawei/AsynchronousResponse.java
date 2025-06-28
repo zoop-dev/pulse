@@ -327,7 +327,7 @@ public class AsynchronousResponse {
                         // TODO: probably best to send back an error code, though I wouldn't know which
                         return;
                     }
-                    if (Build.VERSION.SDK_INT > 28) {
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                         if (volume < audioManager.getStreamMinVolume(AudioManager.STREAM_MUSIC)) {
                             LOG.warn("Music - Received volume is too low: 0x"
                                     + Integer.toHexString(volume)
