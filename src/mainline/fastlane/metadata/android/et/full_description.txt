@@ -1,0 +1,9 @@
+Kasuta oma nutikella, fitness-trackerit ja muid bluetooth-seadmeid ilma seadmetootja suletud lähtekoodiga rakenduseta ja ilma vajaduseta luua konto ning edastada oma andmeid tootja serveritesse.
+Toetatavate seadmete täieliku nimekirja leiad meie kodulehelt või README.md failist meie lähtekoodi hoidlast gitis.
+
+Sa võid saada teateid oma nutiseadmesse ja (sõltuvalt seadmest):
+
+- koguda andmeid seadme anduritelt
+- juhtida muusikaesitust oma Androidi seadmes
+- vaadata ilmateadet
+- juhatada teed
