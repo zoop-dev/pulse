@@ -41,6 +41,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
@@ -195,17 +196,53 @@ public class GBApplication extends Application {
         context = this;
         // don't do anything here, add it to onCreate instead
 
-        //if (BuildConfig.DEBUG) {
-        //    // detect everything
-        //    //StrictMode.enableDefaults();
-        //    // detect closeable objects
-        //    //StrictMode.setVmPolicy(
-        //    //        new StrictMode.VmPolicy.Builder()
-        //    //                .detectLeakedClosableObjects()
-        //    //                .penaltyLog()
-        //    //                .build()
-        //    //);
-        //}
+        if (BuildConfig.DEBUG) {
+            StrictMode.ThreadPolicy.Builder thread = new StrictMode.ThreadPolicy.Builder();
+            thread.detectCustomSlowCalls();
+            thread.permitDiskReads(); // log requires disk access
+            thread.permitDiskWrites(); // log requires disk access
+            thread.detectNetwork();
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                thread.detectResourceMismatches();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                thread.detectUnbufferedIo();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                thread.detectExplicitGc();
+            }
+            StrictMode.setThreadPolicy(thread.penaltyLog().build());
+
+            StrictMode.VmPolicy.Builder vm = new StrictMode.VmPolicy.Builder();
+            vm.detectLeakedSqlLiteObjects();
+            vm.detectLeakedClosableObjects();
+            vm.detectLeakedRegistrationObjects();
+            vm.detectFileUriExposure();
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                vm.detectCleartextNetwork();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vm.detectContentUriWithoutPermission();
+                vm.detectUntaggedSockets();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                // androidx.appcompat causes:
+                // NonSdkApiUsedViolation: Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V
+                // vm.detectNonSdkApiUsage();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                vm.detectImplicitDirectBoot();
+                vm.detectCredentialProtectedWhileLocked();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                vm.detectIncorrectContextUse();
+                vm.detectUnsafeIntentLaunch();
+            }
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+                vm.detectBlockedBackgroundActivityLaunch();
+            }
+            StrictMode.setVmPolicy(vm.penaltyLog().build());
+        }
     }
 
     public static Logging getLogging() {
