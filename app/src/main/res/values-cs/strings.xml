@@ -4152,4 +4152,5 @@
     <string name="pref_calendar_maximum_title_characters_title">Max. počet znaků v názvu události</string>
     <string name="pref_calendar_maximum_description_characters_title">Max. počet znaků v popisu události</string>
     <string name="pref_calendar_target_app_title">Aplikace, ze které načítat události kalendáře</string>
+    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
 </resources>
