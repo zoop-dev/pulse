@@ -4127,4 +4127,15 @@
     <string name="pref_aawireless_audio_stutter_fix_low">Laag</string>
     <string name="pref_aawireless_audio_stutter_fix_summary">Overschrijf de audiobuffer om stotterende audio op te lossen</string>
     <string name="pref_aawireless_audio_stutter_fix_title">Audiostotter-oplossing</string>
+    <string name="pref_aawireless_audio_stutter_fix_unlimited">Ongelimiteerd</string>
+    <string name="pref_aawireless_auto_standby_enabled">Automatische standby ingeschakeld</string>
+    <string name="pref_aawireless_auto_standby_device">Automatisch standby van apparaat</string>
+    <string name="pref_aawireless_auto_standby_summary">Automatisch inschakelen van standby-modus wanneer het apparaat niet met een telefoon verbonden is. Schakel dit in wanneer de USB-poort in uw auto stroom heeft terwijl het contact uitgeschakeld is.</string>
+    <string name="pref_aawireless_auto_video_focus_summary">Open Android Auto automatisch bij het maken van verbinding, zodat de vraag op het autoscherm overgeslagen wordt. Werkt niet bij alle auto\'s.</string>
+    <string name="pref_aawireless_auto_video_focus_title">Android Auto automatisch openen</string>
+    <string name="pref_aawireless_developer_mode_summary">Opties voor app-ontwikkelaars</string>
+    <string name="pref_aawireless_disable_media_sink_summary">Sta afspelen van media via een ander Bluetooth-apparaat toe</string>
+    <string name="pref_aawireless_disable_media_sink_title">Schakel media-sink uit</string>
+    <string name="pref_aawireless_disable_tts_sink_summary">Sta afspelen van spraakinstructies via een ander Bluetooth-apparaat toe</string>
+    <string name="pref_aawireless_disable_tts_sink_title">TTS-sink uitschakelen</string>
 </resources>
