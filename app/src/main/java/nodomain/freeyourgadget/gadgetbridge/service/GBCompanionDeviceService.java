@@ -18,8 +18,10 @@
 package nodomain.freeyourgadget.gadgetbridge.service;
 
 import android.companion.AssociationInfo;
+import android.companion.CompanionDeviceManager;
 import android.companion.CompanionDeviceService;
 import android.companion.DevicePresenceEvent;
+import android.net.MacAddress;
 import android.os.Build;
 
 import androidx.annotation.DeprecatedSinceApi;
@@ -30,14 +32,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothConnectReceiver;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
-import nodomain.freeyourgadget.gadgetbridge.service.receivers.AutoConnectIntervalReceiver;
+import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 
 
 /**
- * For now this service only ensures that GB is less likely to get killed.
- * See {@link #maybeConnect}. Android API documentation:
+ * Potentially {@link BluetoothConnectReceiver#observedDevice(String) reconnects} observed
+ * companion devices. Android API documentation:
  * <blockquote>
  * The system binding CompanionDeviceService elevates the priority of the process that the service
  * is running in, and thus may prevent the Low-memory killer from killing the process at expense of
@@ -52,8 +52,8 @@ public class GBCompanionDeviceService extends CompanionDeviceService {
     @Override
     public void onDeviceAppeared(@NonNull String address) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            LOG.debug("onDeviceAppeared address:{}", address);
-            maybeConnect();
+            LOG.debug("observed device {} via onDeviceAppeared(old {})", address, Build.VERSION.SDK_INT);
+            BluetoothConnectReceiver.observedDevice(address);
         }
     }
 
@@ -68,8 +68,12 @@ public class GBCompanionDeviceService extends CompanionDeviceService {
     @Override
     public void onDeviceAppeared(@NonNull AssociationInfo associationInfo) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
-            LOG.debug("onDeviceAppeared association:{}", associationInfo.getDeviceMacAddress());
-            maybeConnect();
+            MacAddress mac = associationInfo.getDeviceMacAddress();
+            if (mac != null) {
+                String address = mac.toString();
+                LOG.debug("observed device {} via onDeviceAppeared(new {})", address, Build.VERSION.SDK_INT);
+                BluetoothConnectReceiver.observedDevice(address);
+            }
         }
     }
 
@@ -95,29 +99,31 @@ public class GBCompanionDeviceService extends CompanionDeviceService {
                     "EVENT_SELF_MANAGED_DISAPPEARED";
             default -> Integer.toString(code);
         };
-        LOG.debug("onDevicePresenceEvent {} association:{}", type, event.getAssociationId());
 
         switch (code) {
             case DevicePresenceEvent.EVENT_BLE_APPEARED:
             case DevicePresenceEvent.EVENT_BT_CONNECTED:
             case DevicePresenceEvent.EVENT_SELF_MANAGED_APPEARED:
-                maybeConnect();
+                CompanionDeviceManager manager = BondingUtil.getCompanionDeviceManager(getBaseContext());
+                if (manager == null) {
+                    LOG.error("CompanionDeviceManager is null");
+                    return;
+                }
+                for (final AssociationInfo info : manager.getMyAssociations()) {
+                    if (info.getId() == event.getAssociationId()) {
+                        MacAddress mac = info.getDeviceMacAddress();
+                        if (mac != null) {
+                            String address = mac.toString();
+                            LOG.debug("observed device {} via {}", address, type);
+                            BluetoothConnectReceiver.observedDevice(address);
+                            return;
+                        }
+                    }
+                }
+                LOG.warn("no matching AssociationInfo for {}", event);
                 break;
+            default:
+                LOG.debug("onDevicePresenceEvent {} association:{}", type, event.getAssociationId());
         }
-    }
-
-    /**
-     * FIXME {@link DeviceCommunicationService#connectToDevice} has to play nicer with
-     *  concurrent reconnect triggers before code can be added here
-     *  <ol>
-     *  <li>{@link AutoConnectIntervalReceiver}</li>
-     *  <li>{@link BluetoothConnectReceiver}</li>
-     *  <li>{@link DeviceService#ACTION_CONNECT}</li>
-     *  <li>device specific - e.g. {@link BtLEQueue#maybeReconnect}'s {@code mBluetoothGatt.connect}</li>
-     *  </ol>
-     */
-    private void maybeConnect() {
-        // TODO check DEVICE_CONNECT_BACK, WAITING_FOR_RECONNECT and WAITING_FOR_SCAN
-        //  and conditionally try to establish a connection
     }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2024 Andreas Shimokawa, Daniel Dakhno, José Rebelo
+/*  Copyright (C) 2016-2025 Andreas Shimokawa, Daniel Dakhno, José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
+import static nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State.WAITING_FOR_RECONNECT;
+import static nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State.WAITING_FOR_SCAN;
+
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
@@ -33,10 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 public class BluetoothConnectReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(BluetoothConnectReceiver.class);
 
-    final DeviceCommunicationService service;
-
-    public BluetoothConnectReceiver(final DeviceCommunicationService service) {
-        this.service = service;
+    public BluetoothConnectReceiver(final DeviceCommunicationService ignored) {
     }
 
     @Override
@@ -56,26 +57,38 @@ public class BluetoothConnectReceiver extends BroadcastReceiver {
             return;
         }
 
-        LOG.info("connection attempt detected from {}", device.getAddress());
+        final String address = device.getAddress();
+        LOG.debug("observed device {} via ACL_CONNECTED", address);
 
-        final GBDevice gbDevice = GBApplication.app().getDeviceManager().getDeviceByAddress(device.getAddress());
+       observedDevice(address);
+    }
+
+    public static void observedDevice(String address) {
+        final DeviceManager manager = GBApplication.app().getDeviceManager();
+        final GBDevice gbDevice = manager.getDeviceByAddress(address);
         if (gbDevice == null) {
-            LOG.info("Connected device {} unknown", device.getAddress());
+            LOG.debug("observed non-GB device {}", address);
             return;
         }
-        final SharedPreferences deviceSpecificPreferences = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
-        if (deviceSpecificPreferences == null) {
-            LOG.warn("no preferences found for connecting device {}", device.getAddress());
-            return;
+
+        final GBDevice.State state = gbDevice.getState();
+        if (state == WAITING_FOR_RECONNECT || state == WAITING_FOR_SCAN) {
+            LOG.debug("re-connecting to observed device due to state {}", state);
+        } else {
+            final SharedPreferences pref = GBApplication.getDeviceSpecificSharedPrefs(address);
+            if (pref == null) {
+                LOG.warn("no preferences found for connecting device {}", address);
+                return;
+            }
+
+            if (pref.getBoolean(GBPrefs.DEVICE_CONNECT_BACK, false)) {
+                LOG.debug("re-connecting to observed device due DEVICE_CONNECT_BACK preference");
+            } else {
+                LOG.info("ignoring observed device {} {}", address, state);
+                return;
+            }
         }
-        boolean reactToConnection = deviceSpecificPreferences.getBoolean(GBPrefs.DEVICE_CONNECT_BACK, false);
-        reactToConnection |= gbDevice.getState() == GBDevice.State.WAITING_FOR_RECONNECT;
-        reactToConnection |= gbDevice.getState() == GBDevice.State.WAITING_FOR_SCAN;
-        if (!reactToConnection) {
-            LOG.info("Ignoring connection attempt from {}", device.getAddress());
-            return;
-        }
-        LOG.info("Will re-connect to {} ({})", gbDevice.getAddress(), gbDevice.getName());
+
         GBApplication.deviceService(gbDevice).connect();
     }
 }
