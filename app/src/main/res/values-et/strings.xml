@@ -62,14 +62,14 @@
 \nEi soovita seda teie Mi Bandile paigaldada!</string>
     <string name="title_activity_settings">Seaded</string>
     <string name="pref_header_general">Üldised seaded</string>
-    <string name="pref_title_general_autoconnectonbluetooth">Ühendu seadmega kui Bluetooth lülitatakse sisse</string>
+    <string name="pref_title_general_autoconnectonbluetooth">Bluetoothi sisselülitamisel loo ühendus Gadgetbridge\'i seadme(te)ga</string>
     <string name="pref_title_general_autostartonboot">Käivitu automaatselt</string>
     <string name="pref_title_general_autoreconnect">Taasühendu automaatselt</string>
     <string name="pref_title_audio_player">Eelistatud heli mängija</string>
     <string name="pref_default">Vaikeväärtus</string>
     <string name="pref_header_datetime">Kuupäev ja kellaaeg</string>
     <string name="pref_title_datetime_syctimeonconnect">Sünkrooni aega</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Sünkrooni seadme aeg ühendumise ajal või siis kui Androidis aeg või ajatsoon muutub</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Sünkrooni kellaaeg Gadgetbridge seadme(te)ga ühendumise ajal, samuti siis kui Androidi seadmes aeg või ajavöönd muutub ning samuti perioodiliselt</string>
     <string name="miband_firmware_suggest_whitelist">Kui te siiski soovite jätkata ja seade jätkab tööd ka hiljem palun andke Gadgetbridge\'i arendajatele teada, et nad lisaksid %s versiooni toetatud püsivarade nimekirja.</string>
     <string name="pref_title_charts_swipe">Luba viiped vasakule/paremale graafikute vaates</string>
     <string name="pref_title_theme">Teema</string>
@@ -108,7 +108,7 @@
     <string name="pref_title_canned_reply_suffix">Ühine järelliide</string>
     <string name="pref_header_development">Arendajate seaded</string>
     <string name="pref_title_development_miaddr">Mi Band\'i aadress</string>
-    <string name="pref_title_canned_messages_set">Uuenda Pebble\'l</string>
+    <string name="pref_title_canned_messages_set">Uuenda seadmes</string>
     <string name="pref_title_pebble_settings">Pebble\'i seaded</string>
     <string name="pref_header_activitytrackers">Aktiivsusmonitorid</string>
     <string name="pref_title_pebble_activitytracker">Eelistatud aktiivsusmonitor</string>
@@ -136,7 +136,7 @@
     <string name="pref_title_enable_calendar_sync">Sünkrooni kalender</string>
     <string name="pref_summary_enable_calendar_sync">Saada kalendri sündmused ajajoonele</string>
     <string name="pref_title_autoremove_notifications">Eemalda automaatselt eemaldatud teatised</string>
-    <string name="pref_summary_autoremove_notifications">Teatised eemaldatakse automaatselt Pebble\'st kui need eemaldatakse Androidi seadmest</string>
+    <string name="pref_summary_autoremove_notifications">Teavituste eemaldamisel telefonist eemaldatakse nad seadmest automaatselt</string>
     <string name="pref_title_pebble_privacy_mode">Privaatsusrežiim</string>
     <string name="pref_pebble_privacy_mode_off">Tavalised teatised</string>
     <string name="pref_pebble_privacy_mode_content">Nihuta teatise tekst ekraanilt välja</string>
@@ -332,7 +332,7 @@
     <string name="user_feedback_miband_set_alarms_ok">Äratused saadeti seadmesse.</string>
     <string name="chart_no_data_synchronize">Andmeid pole. Kas sünkroonida seade\?</string>
     <string name="miband_prefs_fitness_goal">Päevane sammude eesmärk</string>
-    <string name="controlcenter_start_activitymonitor">Sinu aktiivsus (ALFA)</string>
+    <string name="controlcenter_start_activitymonitor">Sinu aktiivsus</string>
     <string name="notif_battery_low_title">Nutiseadme aku laetuse tase on madal!</string>
     <string name="notif_battery_low_bigtext_last_charge_time">Viimane laadimine: %s 
 \n</string>
@@ -342,7 +342,7 @@
     <string name="weekstepschart_steps_a_week">Samme nädalas</string>
     <string name="activity_sleepchart_activity_and_sleep">Tegevus</string>
     <string name="updating_firmware">Püsivara uuendamine…</string>
-    <string name="fwapp_install_device_not_ready">Faile ei saa paigaldada, seade pole valmis.</string>
+    <string name="fwapp_install_device_not_ready">Faili ei saa paigaldada, seade pole valmis.</string>
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
     <string name="miband_fwinstaller_compatible_version">Ühilduv versioon</string>
     <string name="miband_fwinstaller_untested_version">Testimata versioon!</string>
@@ -368,7 +368,7 @@
     <string name="miband_fwinstaller_incompatible_version">Mitteühilduv püsivara</string>
     <string name="miband2_prefs_dateformat">Kuupäeva vorming</string>
     <string name="dateformat_time">Kellaaeg</string>
-    <string name="dateformat_date_time">Kellaaeg ja kuupäev</string>
+    <string name="dateformat_date_time"><![CDATA[Kellaaeg ja kuupäev]]></string>
     <string name="mi2_prefs_button_actions">Nupu toimingud</string>
     <string name="mi2_prefs_button_actions_summary">Mära nupu vajutamise toimingud</string>
     <string name="mi2_prefs_button_press_count">Nupu vajutamise arv</string>
@@ -414,7 +414,7 @@
     <string name="activity_prefs_charts">Diagrammi seaded</string>
     <string name="activity_prefs_chart_max_heart_rate">Maksimaalne pulss</string>
     <string name="activity_prefs_chart_min_heart_rate">Minimaalne pulss</string>
-    <string name="notif_battery_low">%1$s autase madal</string>
+    <string name="notif_battery_low">%1$s akutase madal</string>
     <string name="lack_of_sleep">Unepuudus: %1$s</string>
     <string name="overslept">Ülemagamine: %1$s</string>
     <string name="zetime_date_format_1">AA/KK/PP</string>
@@ -563,7 +563,7 @@
     <string name="mi2_dnd_automatic">Automaatne (unejälgimine)</string>
     <string name="mi3_night_mode_sunset">Päikeseloojangul</string>
     <string name="mi2_dnd_off">Väljas</string>
-    <string name="mi2_enable_text_notifications_summary">Vajalik on püsivaraversioon &gt;= 1.0.1.28 ja Mili_pro.ft* eelnev paigaldamine.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Vajalik on püsivara versioon >= 1.0.1.28 ja Mili_pro.ft* eelnev paigaldamine.]]></string>
     <string name="mi2_enable_text_notifications">Sõnumite teavitused</string>
     <string name="mi2_fw_installhandler_fw53_hint">Te peate paigaldama versiooni %1$s enne selle püsivara paigaldamist!</string>
     <string name="miband2_prefs_timeformat">Mi2: Ajaformaat</string>
@@ -632,7 +632,7 @@
     <string name="menuitem_alipay">Alipay</string>
     <string name="menuitem_settings">Seadistused</string>
     <string name="menuitem_compass">Kompass</string>
-    <string name="menuitem_timer">Taimer</string>
+    <string name="menuitem_timer">Pöördloendus</string>
     <string name="menuitem_alarm">Äratus</string>
     <string name="menuitem_breathing">Hingamine</string>
     <string name="menuitem_weather">Ilmateade</string>
@@ -693,8 +693,8 @@
     <string name="Cancel">Tühista</string>
     <string name="activity_type_unknown">Teadmata tegevus</string>
     <string name="activity_type_not_worn">Seadet ei kantud</string>
-    <string name="activity_DB_import_button">Impordi andmebaas</string>
-    <string name="activity_DB_ExportButton">Ekspordi andmebaas</string>
+    <string name="activity_DB_import_button">Impordi andmeid</string>
+    <string name="activity_DB_ExportButton">Ekspordi andmed</string>
     <string name="activity_DB_empty_button">Tühjenda andmebaas</string>
     <string name="devicetype_pebble">Pebble</string>
     <string name="devicetype_roidmi">Roidmi</string>
@@ -718,7 +718,7 @@
     <string name="discovery_trying_to_connect_to">Üritan ühenduda seadmega: %1$s</string>
     <string name="discovery_attempting_to_pair">Üritan paaritada %1$s -ga</string>
     <string name="maximum_duration">Kestvus</string>
-    <string name="menuitem_activity">Tegevused</string>
+    <string name="menuitem_activity">Treeningute ajalugu</string>
     <string name="menuitem_notifications">Teavitused</string>
     <string name="menuitem_status">Staatus</string>
     <string name="devicetype_amazfit_gts">Amazfit GTS</string>
@@ -769,8 +769,8 @@
     <string name="error_exporting_device_preferences">Viga seadmespetsiifliste sätete eksportimisel</string>
     <string name="pref_check_permission_status_summary">Kontrolli ja küsi ligipääse isegi siis kui neid pole koheselt vaja. Lülita see välja kui su kasutatavad seadmed päriselt mitte ühtegi nendest funktsionaalsustest ei kasuta. Ligipääsu mitteandmine võib probleeme põhjustada!</string>
     <string name="pref_check_permission_status">Kontrolli ligipääsude staatust</string>
-    <string name="error_background_service_reason">Taustal töötava teenuse käivitamine ebaõnnestus sest tekkis erind:</string>
-    <string name="device_requires_key">VÕTI VAJALIK</string>
+    <string name="error_background_service_reason">Taustal töötava teenuse käivitamine ei õnnestunud vea tõttu - lisateavet leiad siit.\n\nViga:</string>
+    <string name="device_requires_key">VÕTI VAJALIK, SISESTAMISEKS VAJUTA PIKALT</string>
     <string name="device_is_currently_bonded">JUBA PAARITATUD</string>
     <string name="error_background_service_reason_truncated">Taustal töötava teenuse käivitamine ebaõnnestus sest…</string>
     <string name="error_background_service">Taustal töötava teenuse käivitamine ebaõnnestus</string>
@@ -805,8 +805,8 @@
     <string name="activity_type_biking">Jalgrattasõit</string>
     <string name="activity_summaries">Tegevused</string>
     <string name="activity_db_management_merge_old_title">Vana versiooni andmebaasi kustutamine</string>
-    <string name="title_activity_db_management">Andmebaasihaldus</string>
-    <string name="action_db_management">Andmebaasihaldus</string>
+    <string name="title_activity_db_management">Andmehaldus</string>
+    <string name="action_db_management">Andmehaldus</string>
     <string name="activity_prefs_activetime_minutes">Päevane eesmärk: aktiivsusminuteid</string>
     <string name="activity_prefs_distance_meters">Päevane eesmärk: vahemaa meetrites</string>
     <string name="activity_prefs_calories_burnt">Päevane eesmärk: põletatud kaloreid</string>
@@ -832,13 +832,13 @@
     <string name="miband_prefs_hr_sleep_detection">Kasuta südame löögisageduse andurit, et muuta unetuvastust paremaks</string>
     <string name="miband_prefs_reserve_alarm_calendar">Mitu äratust on reserveeritud tulevikus toimuvate sündmuste jaoks</string>
     <string name="fwinstaller_firmware_not_compatible_to_device">See püsivara ei ole sobilik sellele seadmele</string>
-    <string name="you_slept">Te magasite %1$s kuni %2$s</string>
+    <string name="you_slept">%1$s - %2$s</string>
     <string name="live_activity_max_heart_rate">Praegune / Maksimaalne südame löögisagedus: %1$d / %2$d</string>
-    <string name="pref_summary_keep_data_on_device">Hoiab aktiivsusandmed Mi Band\'il isegi pärast sünkroonimist. Kasulik, kui kasutate GB koos teiste sarnaste rakendustega.</string>
+    <string name="pref_summary_keep_data_on_device">"Hoiab aktiivsusandmed seadmes isegi pärast sünkroonimist. Kasulik, kui GB on kasutusel koos teiste sarnaste rakendustega. See aga võib põhjustada olukorra, kus nutikellas tekib andmeruumi puudus ja/või  sünkroonimine ei toimi korralikult."</string>
     <string name="pref_summary_dont_ack_transfers">Kui Band\'ile kinnitust ei saada siis aktiivsusandmeid ei kustutata. Kasulik, kui kasutate GBd koos teiste sarnaste rakendustega.</string>
     <string name="steps">Samme</string>
     <string name="caloriesBurnt">Kaloreid</string>
-    <string name="activity_filter_name_contains">Nimi</string>
+    <string name="activity_filter_name_contains">Silt</string>
     <string name="activity_filter_filter_title">Filter</string>
     <string name="activity_summaries_statistics">Statistika</string>
     <string name="sonyswr12_settings_title">Sony SWR12 sätted</string>
@@ -898,7 +898,7 @@
     <string name="first_start_welcome_title">Tere tulemast</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">Eilsed andmed</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
-    <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
+    <string name="application_name_main_nightly">Gadgetbridge (igaöine testversioon)</string>
     <string name="about_activity_title_main_nightly">Gadgetbridge Nightly teave</string>
     <string name="pref_dashboard_widget_today_yesterday_data_summary">Kuva eilsed andmed praeguse kellaaja ja kesköö vahelisel ajal tuhmina</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Kuva praegusel kellaajal indikaator, et eilse ja tänase andmed visuaalselt eraldada</string>
@@ -939,7 +939,7 @@
     <string name="calendar_three_months">3 kuud</string>
     <string name="calendar_six_months">6 kuud</string>
     <string name="calendar_year">Aasta</string>
-    <string name="debugactivity_confirm_remove_device_preferences">See lähtestab kõigi ühendatud seadmete seadme-eelistused. Oled sa kindel?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Järgnevaga lähtestad kõigi ühendatud seadmete seadmekohased eelistused. Oled sa kindel?</string>
     <string name="appmanager_item_outdated">(aegunud)</string>
     <string name="title_activity_notification_management">Märguannete seaded</string>
     <string name="check_all_applications">Märgi kõik rakendused</string>
@@ -949,7 +949,7 @@
     <string name="fw_upgrade_notice_amazfit_gtr3_pro">Oled paigaldamas %s püsivara oma Amazfit GTR 3 Pro\'le.\n\nPärast .zip faili paigaldamist kell taaskäivitub.\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="fw_upgrade_notice_amazfit_trex2">Oled paigaldamas %s püsivara oma Amazfit T-Rex 2\'le.\n\nPärast .zip faili paigaldamist kell taaskäivitub.\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="pref_header_time">Aeg</string>
-    <string name="debugactivity_confirm_remove_device_preferences_title">Kas eemaldada seadme eelistused?</string>
+    <string name="debugactivity_confirm_remove_device_preferences_title">Kas eemaldame seadme eelistused?</string>
     <string name="pref_header_sound">Heli</string>
     <string name="pref_header_workout">Trenn</string>
     <string name="pref_header_equalizer">Ekvalaiser</string>
@@ -1023,4 +1023,58 @@
     <string name="prefs_heartrate_alert_low_threshold">Madala pulsi hoiatuslävi</string>
     <string name="getting_heart_rate">Mõõtmine</string>
     <string name="heart_rate_result">Mõõtmistulemused</string>
+    <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="audio_recordings">Helisalvestised</string>
+    <string name="minutes_6">6 minutit</string>
+    <string name="minutes_7">7 minutit</string>
+    <string name="minutes_8">8 minutit</string>
+    <string name="minutes_9">9 minutit</string>
+    <string name="minutes_2">2 minutit</string>
+    <string name="minutes_3">3 minutit</string>
+    <string name="minutes_4">4 minutit</string>
+    <string name="minutes_15">15 minutit</string>
+    <string name="minutes_20">20 minutit</string>
+    <string name="minutes_45">45 minutit</string>
+    <string name="minutes_60">60 minutit</string>
+    <string name="minutes_75">75 minutit</string>
+    <string name="minutes_90">90 minutit</string>
+    <string name="minutes_120">120 minutit</string>
+    <string name="minutes_150">150 minutit</string>
+    <string name="minutes_180">180 minutit</string>
+    <string name="minutes_210">210 minutit</string>
+    <string name="minutes_240">240 minutit</string>
+    <string name="minutes_255">255 minutit</string>
+    <string name="stress_average">Keskmine</string>
+    <string name="pref_title_third_party_app_device_settings">Luba kolmandate osapoolte rakendustel muuta seadistusi</string>
+    <string name="blood_pressure">Vererõhk</string>
+    <string name="respiratoryrate">Hingamissagedus</string>
+    <string name="fwapp_install_device_not_supported">Faili ei saa paigaldada, seade pole toetatud.</string>
+    <string name="charts_activity_list">Tegevuste loend</string>
+    <string name="notif_battery_full">%1$s aku on laetud</string>
+    <string name="prefs_sounds">Helid</string>
+    <string name="prefs_sounds_summary">Seadista, millal seade annab helisignaaliga märku</string>
+    <string name="devicestatus_disconnecting">Seadme ühendus on katkestamisel!</string>
+    <string name="devicestatus_disconnected">Seadme ühendus on katkestatud!</string>
+    <string name="devicestatus_connecting">Seade on ühendumas</string>
+    <string name="devicestatus_connected">Seade on ühendatud</string>
+    <string name="devicestatus_upload_starting">Üleslaadimine on algamas</string>
+    <string name="devicestatus_upload_started">Üleslaadimine on alanud</string>
+    <string name="devicestatus_upload_completed">Üleslaadimine on lõppenud</string>
+    <string name="devicestatus_upload_validating">Üleslaaditud andmed on kontrollimisel</string>
+    <string name="devicestatus_upload_aborted">Üleslaadimine on katkestatud!</string>
+    <string name="devicestatus_upload_failed">Üleslaadimine ei õnnestunud</string>
+    <string name="firmware_update_progress">Üleslaadimine on töös\n%1$d%% at %2$.2fkbps (keskmine %3$.2fkbps)\nOsis %4$d / %5$d</string>
+    <string name="num_min">%d min</string>
+    <string name="active_calories">Aktiivseid kaloreid</string>
+    <string name="seconds_6">6 sekundit</string>
+    <string name="seconds_7">7 sekundit</string>
+    <string name="seconds_8">8 sekundit</string>
+    <string name="seconds_9">9 sekundit</string>
+    <string name="seconds_11">11 sekundit</string>
+    <string name="seconds_12">12 sekundit</string>
+    <string name="seconds_13">13 sekundit</string>
+    <string name="seconds_14">14 sekundit</string>
+    <string name="seconds_15">15 sekundit</string>
+    <string name="seconds_25">25 sekundit</string>
 </resources>
