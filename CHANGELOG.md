@@ -1,5 +1,16 @@
 ### Changelog
 
+#### Next release (WIP)
+
+* Initial support for Garmin Descent Mk3
+* Initial support for Redmi Watch 5
+* Initial support for Yawell rings R10 and R11
+* Experimental support for Amazfit Balance 2
+* CMF Watch Pro: Firmware update
+* Fossil/Skagen Hybrids: Add calendar support
+* Charts: Fix crash if database fetch fails
+* BLE: Improved connection and reconnection
+
 #### 0.86.1
 
 * Fossil/Skagen Hybrids: Fix connection failure
