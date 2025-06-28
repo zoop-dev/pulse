@@ -37,10 +37,10 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInf
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSendBytes;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDeviceState;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Configuration.Config;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Configuration.StrengthTarget;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Gestures.InteractionType;
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Gestures.Position;
+import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.prefs.Configuration.Config;
+import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.prefs.Configuration.StrengthTarget;
+import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.prefs.Gestures.InteractionType;
+import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.prefs.Gestures.Position;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;

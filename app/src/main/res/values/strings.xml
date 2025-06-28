@@ -2012,6 +2012,7 @@
     <string name="devicetype_redmi_watch_2_lite">Redmi Watch 2 Lite</string>
     <string name="devicetype_redmi_smart_band_pro">Redmi Smart Band Pro</string>
     <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
+    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
     <string name="devicetype_redmi_watch_5_active">Redmi Watch 5 Active</string>
     <string name="devicetype_redmi_watch_5_lite">Redmi Watch 5 Lite</string>
     <string name="devicetype_aawireless">AAWireless</string>

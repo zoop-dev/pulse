@@ -9,7 +9,7 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 
 import android.content.SharedPreferences;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.redmibuds.prefs.Configuration;
+import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.prefs.Configuration;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiBuds3ProProtocol extends RedmiBudsProtocol {
