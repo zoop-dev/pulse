@@ -184,7 +184,8 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
             // first, add a transaction that performs device initialization
             TransactionBuilder builder = createTransactionBuilder("Initialize device");
             builder.add(new CheckInitializedAction(gbDevice));
-            initializeDevice(builder).queue(getQueue());
+            initializeDevice(builder);
+            builder.queue(getQueue());
         }
         return createTransactionBuilder(taskName);
     }
