@@ -87,6 +87,8 @@ public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        packetBuffer.clear();
+
         final IntentFilter commandFilter = new IntentFilter();
         commandFilter.addAction(AAWirelessPrefs.ACTION_PHONE_SWITCH);
         commandFilter.addAction(AAWirelessPrefs.ACTION_PHONE_SORT);
