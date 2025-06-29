@@ -1103,6 +1103,8 @@
         <item>@string/menuitem_real_time_heart_rate</item>
         <item>@string/menuitem_watch_storage_space</item>
         <item>@string/menuitem_water_time</item>
+        <item>@string/activity_type_meditation</item>
+        <item>@string/menuitem_zepp_flow</item>
         <!-- dummy item -->
         <item>@string/menuitem_more</item>
     </string-array>
@@ -1166,6 +1168,8 @@
         <item>real_time_heart_rate</item>
         <item>watch_storage_space</item>
         <item>water_time</item>
+        <item>meditation</item>
+        <item>zepp_flow</item>
         <!-- dummy item -->
         <item>more</item>
     </string-array>
@@ -1206,6 +1210,7 @@
         <item>@string/menuitem_workout_shortcuts</item>
         <item>@string/menuitem_apps_shortcuts</item>
         <item>@string/menuitem_alexa</item>
+        <item>@string/menuitem_zepp_flow</item>
     </string-array>
 
     <string-array name="pref_zepp_os_shortcut_cards_values">
@@ -1244,6 +1249,7 @@
         <item>workout_shortcuts</item>
         <item>apps_shortcuts</item>
         <item>alexa</item>
+        <item>zepp_flow</item>
     </string-array>
 
     <string-array name="pref_huami2021_control_center">

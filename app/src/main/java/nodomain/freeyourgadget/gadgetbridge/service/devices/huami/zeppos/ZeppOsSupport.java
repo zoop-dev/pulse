@@ -313,7 +313,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             }
         }
 
-        LOG.warn("Unhandled config {}, will pass to HuamiSupport", config);
+        LOG.warn("Unhandled config {}", config);
 
         super.onSendConfiguration(config);
     }

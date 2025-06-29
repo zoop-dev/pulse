@@ -93,6 +93,7 @@ public class ZeppOsShortcutCardsService extends AbstractZeppOsService {
         ZEPP_PAY("37", "1"),
         CALORIES("38", "1"),
         HRV("1047865", "1"),
+        ZEPP_FLOW("1074698", "1"),
         ;
 
         private final String appNum;

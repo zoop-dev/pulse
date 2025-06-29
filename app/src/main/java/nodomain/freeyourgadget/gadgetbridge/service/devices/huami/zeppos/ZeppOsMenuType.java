@@ -25,7 +25,7 @@ public class ZeppOsMenuType {
      * These somewhat match the ones in HuamiMenuType, but not all. The band sends and
      * receives those as 8-digit upper case hex strings.
      */
-    public static final Map<String, String> displayItemNameLookup = new HashMap<String, String>() {{
+    public static final Map<String, String> displayItemNameLookup = new HashMap<>() {{
         put("00000001", "personal_activity_intelligence");
         put("00000002", "hr");
         put("00000003", "workout");
@@ -81,9 +81,11 @@ public class ZeppOsMenuType {
         put("000F4258", "real_time_heart_rate");
         put("000F4263", "watch_storage_space");
         put("000F4259", "water_time");
+        put("000F653B", "meditation");
+        put("0010660A", "zepp_flow");
     }};
 
-    public static final Map<String, String> shortcutsNameLookup = new HashMap<String, String>() {{
+    public static final Map<String, String> shortcutsNameLookup = new HashMap<>() {{
         put("00000001", "hr");
         put("00000002", "weather");
         put("00000003", "pai");
