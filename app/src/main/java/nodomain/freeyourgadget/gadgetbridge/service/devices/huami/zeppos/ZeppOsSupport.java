@@ -862,8 +862,6 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             communicator.requestDeviceInfo(builder);
         }
 
-        final ZeppOsCoordinator coordinator = getCoordinator();
-
         for (AbstractZeppOsService service : mServiceMap.values()) {
             if (mSupportedServices.contains(service.getEndpoint())) {
                 // Only initialize supported services

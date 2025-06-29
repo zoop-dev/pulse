@@ -137,7 +137,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
         write(builder, CMD_CAPABILITIES_REQUEST);
-        requestAllConfigs(builder);
     }
 
     @Override
@@ -276,12 +275,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return;
         }
 
+        final ZeppOsTransactionBuilder builder = createTransactionBuilder("configs request");
         for (int i = 0; i < numGroups; i++) {
             final ConfigGroup configGroup = ConfigGroup.fromValue(payload[3 + i]);
             LOG.debug("Got supported config group {}: {}", String.format("0x%02x", payload[3 + i]), configGroup);
+            requestConfig(builder, configGroup);
         }
-
-        // TODO: We should only request supported config groups
+        builder.queue(getSupport());
     }
 
     private boolean sentFitnessGoal = false;
@@ -335,12 +335,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             // We need to send the fitness goal after we got the protocol version
             getSupport().onSendConfiguration(PREF_USER_FITNESS_GOAL);
             sentFitnessGoal = true;
-        }
-    }
-
-    public void requestAllConfigs(final ZeppOsTransactionBuilder builder) {
-        for (final ConfigGroup configGroup : ConfigGroup.values()) {
-            requestConfig(builder, configGroup);
         }
     }
 
