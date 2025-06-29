@@ -47,39 +47,56 @@ public class ZeppOsDeviceInfoService extends AbstractZeppOsService {
 
     @Override
     public void handlePayload(final byte[] payload) {
+        if (payload[0] != CMD_REPLY) {
+            LOG.warn("Unexpected device info payload byte {}", String.format("0x%02x", payload[0]));
+            return;
+        }
+
+        final GBDeviceEventVersionInfo versionInfo = decodeDeviceInfo(payload);
+        evaluateGBDeviceEvent(versionInfo);
+    }
+
+    public static GBDeviceEventVersionInfo decodeDeviceInfo(final byte[] payload) {
         final ByteBuffer buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
 
-        final byte cmd = buf.get();
-        if (cmd != CMD_REPLY) {
-            LOG.warn("Unexpected device info payload byte {}", String.format("0x%02x", cmd));
-            return;
+        final GBDeviceEventVersionInfo versionInfo = new GBDeviceEventVersionInfo();
+
+        if (buf.get() != CMD_REPLY) {
+            throw new IllegalArgumentException("not a device info reply payload");
         }
 
         final byte one = buf.get();
         if (one != 1) {
             LOG.warn("Unexpected device info payload 2nd byte {}", String.format("0x%02x", one));
-            return;
+            return versionInfo;
         }
 
-        final int unk1 = buf.getInt(); // 0x000000ff
-        final int unk2 = buf.getInt(); // 0x00000000
+        // Active 2:    0x00000000000000ff
+        // Helio Strap: 0x000000000000007f
+        // Probably some flags?
+        // Assume the first 4 bits indicate the first 4 fields, since the last bit in the helio did
+        // not seem to change the order, but there is less data
 
-        if (unk1 != 0x000000ff || unk2 != 0x00000000) {
-            LOG.error("Unexpected unk values {}/{}", String.format("0x%08x", unk1), String.format("0x%08x", unk2));
-            return;
+        final long flags = buf.getLong();
+
+        if ((flags & 1) != 0) {
+            final int unk3count = buf.get() & 0xff;
+            buf.get(new byte[unk3count]);
         }
 
-        final int unk3count = buf.get() & 0xff;
-        buf.get(new byte[unk3count]);
+        if ((flags & 2) != 0) {
+            final String serialNumber = StringUtils.untilNullTerminator(buf);
+        }
 
-        final String serialNumber = StringUtils.untilNullTerminator(buf);
-        final String hwVersion = StringUtils.untilNullTerminator(buf);
-        final String fwVersion = StringUtils.untilNullTerminator(buf);
+        if ((flags & 4) != 0) {
+            versionInfo.hwVersion = StringUtils.untilNullTerminator(buf);
+        }
 
-        final GBDeviceEventVersionInfo versionInfo = new GBDeviceEventVersionInfo();
-        versionInfo.fwVersion = fwVersion;
-        versionInfo.hwVersion = hwVersion;
-        evaluateGBDeviceEvent(versionInfo);
+        if ((flags & 8) != 0) {
+            versionInfo.fwVersion = StringUtils.untilNullTerminator(buf);
+        }
+
+        return versionInfo;
     }
 
     public void requestDeviceInfo(final ZeppOsTransactionBuilder builder) {
