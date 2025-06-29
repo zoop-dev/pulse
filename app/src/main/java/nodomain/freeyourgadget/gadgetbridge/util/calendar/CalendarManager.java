@@ -154,28 +154,30 @@ public class CalendarManager {
                 );
 
                 // Query reminders for this event
-                final Cursor reminderCursor = mContext.getContentResolver().query(
+                try (Cursor reminderCursor = mContext.getContentResolver().query(
                         CalendarContract.Reminders.CONTENT_URI,
                         null,
                         CalendarContract.Reminders.EVENT_ID + " = ?",
                         new String[]{String.valueOf(evtCursor.getLong(evtCursor.getColumnIndexOrThrow(Instances.EVENT_ID)))},
                         null
-                );
+                )) {
+                    if (reminderCursor != null && reminderCursor.getCount() > 0) {
+                        final List<Long> reminders = new ArrayList<>();
+                        while (reminderCursor.moveToNext()) {
+                            int minutes = reminderCursor.getInt(reminderCursor.getColumnIndexOrThrow(CalendarContract.Reminders.MINUTES));
+                            int method = reminderCursor.getInt(reminderCursor.getColumnIndexOrThrow(CalendarContract.Reminders.METHOD));
+                            LOG.trace("Reminder Method: {}, Minutes: {}", method, minutes);
 
-                if (reminderCursor != null && reminderCursor.getCount() > 0) {
-                    final List<Long> reminders = new ArrayList<>();
-                    while (reminderCursor.moveToNext()) {
-                        int minutes = reminderCursor.getInt(reminderCursor.getColumnIndexOrThrow(CalendarContract.Reminders.MINUTES));
-                        int method = reminderCursor.getInt(reminderCursor.getColumnIndexOrThrow(CalendarContract.Reminders.METHOD));
-                        LOG.debug("Reminder Method: {}, Minutes: {}", method, minutes);
+                            if (method == 1) //METHOD_ALERT
+                                reminders.add(calEvent.getBegin() - minutes * 60 * 1000L);
 
-                        if (method == 1) //METHOD_ALERT
-                            reminders.add(calEvent.getBegin() - minutes * 60 * 1000L);
+                        }
+                        reminderCursor.close();
 
+                        calEvent.setRemindersAbsoluteTs(reminders);
                     }
-                    reminderCursor.close();
-
-                    calEvent.setRemindersAbsoluteTs(reminders);
+                } catch (final Exception e) {
+                    LOG.warn("failed to get reminder for event", e);
                 }
 
                 if (!calendarIsBlacklisted(calEvent.getUniqueCalName())) {
