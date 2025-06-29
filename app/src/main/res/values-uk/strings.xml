@@ -3491,5 +3491,17 @@
     <string name="first_start_open_source_text">Gadgetbridge це застосунок з відкритим початковим кодом. Розроблений спільнотою для спільноти.\n\nМожете зробити свій внесок у код, документацію, тестування та донати.\n\nGadgetbridge не містить реклами та не стежить за вами. Всі дані зберігаються локально на вашому Android пристрої, так з приватністю все добре на 100%.\n\nЗавітайте на наш сайт за більш повною інформацією, документацією та посиланнями на наші канали комунікацій.</string>
     <string name="first_start_permissions_title">Дозволи</string>
     <string name="first_start_permissions_desc">Gadgetbridge потребує багато дозволів для виконання усіх своїх функцій. Перегляньте мету надання кожного дозволу нижче.</string>
-    <string name="first_start_permissions_request_all_button">Запитати усі дозволи</string>
+    <string name="first_start_permissions_request_all_button">Запит на всі дозволи</string>
+    <string name="first_start_permissions_request_button">Запит</string>
+    <string name="first_start_get_started_title">Почнімо</string>
+    <string name="first_start_get_started_desc">Для початку, додайте свій перший пристрій прямо з цього екрану, відновіть резервну копію чи почніть з чистого листа.</string>
+    <string name="first_start_get_started_add_first_device_button">Додати перший пристрій</string>
+    <string name="first_start_get_started_restore_button">Відновити резервну копію</string>
+    <string name="first_start_get_started_go_to_app_button">Перейти до застосунку</string>
+    <string name="permission_notifications_summary">Перенаправляємо сповіщення під\'єднаним пристроям</string>
+    <string name="permission_manage_dnd_title">Керувати режимом \"Не турбувати\"</string>
+    <string name="permission_manage_dnd_summary">Міняємо політику сповіщень режиму \"Не турбувати\"</string>
+    <string name="permission_displayover_title">Показувати поверх інших додатків</string>
+    <string name="permission_displayover_summary">Використовується Bangle.js щоб запускати застосунки та інші функції вашого телефона</string>
+    <string name="permission_fine_location_title">Точне міцевизначення</string>
 </resources>
