@@ -107,7 +107,9 @@ public class XiaomiScheduleService extends AbstractXiaomiService {
                 handleAlarms(cmd.getSchedule().getAlarms());
                 return;
             case CMD_ALARMS_CREATE:
-                pendingAlarmAcks--;
+                if (pendingAlarmAcks > 0) {
+                    pendingAlarmAcks--;
+                }
                 LOG.debug("Got alarms create ack, remaining {}", pendingAlarmAcks);
                 if (pendingAlarmAcks <= 0) {
                     LOG.debug("Requesting alarms after all acks");
@@ -127,8 +129,10 @@ public class XiaomiScheduleService extends AbstractXiaomiService {
                 handleReminders(cmd.getSchedule().getReminders());
                 return;
             case CMD_REMINDERS_CREATE:
-                pendingReminderAcks--;
-                LOG.debug("Got alarms create ack, remaining {}", pendingReminderAcks);
+                if (pendingReminderAcks > 0) {
+                    pendingReminderAcks--;
+                }
+                LOG.debug("Got reminders create ack, remaining {}", pendingReminderAcks);
                 if (pendingReminderAcks <= 0) {
                     LOG.debug("Requesting reminders after all acks");
                     requestReminders();
@@ -141,6 +145,11 @@ public class XiaomiScheduleService extends AbstractXiaomiService {
 
     @Override
     public void initialize() {
+        watchAlarms.clear();
+        watchReminders.clear();
+        pendingAlarmAcks = 0;
+        pendingReminderAcks = 0;
+
         if (getCoordinator().supportsAlarms()) {
             requestAlarms();
         }

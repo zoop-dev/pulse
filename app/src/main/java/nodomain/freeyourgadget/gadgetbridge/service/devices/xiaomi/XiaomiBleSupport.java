@@ -68,6 +68,8 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
         @Override
         protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+            XiaomiBleSupport.this.reset();
+
             XiaomiUuids.XiaomiBleUuidSet uuidSet = null;
             BluetoothGattCharacteristic btCharacteristicCommandRead = null;
             BluetoothGattCharacteristic btCharacteristicCommandWrite = null;
@@ -314,6 +316,18 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
     @Override
     public boolean connect() {
         return commsSupport.connect();
+    }
+
+    @Override
+    public void reset() {
+        if (characteristicCommandRead != null)
+            characteristicCommandRead.reset();
+        if (characteristicCommandWrite != null)
+            characteristicCommandWrite.reset();
+        if (characteristicDataUpload != null)
+            characteristicDataUpload.reset();
+        if (characteristicActivityData != null)
+            characteristicActivityData.reset();
     }
 
     @Override

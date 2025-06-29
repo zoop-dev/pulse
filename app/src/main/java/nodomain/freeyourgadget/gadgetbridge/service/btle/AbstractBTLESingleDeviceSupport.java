@@ -124,7 +124,9 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
     }
 
     /**
-     * Subclasses should populate the given builder to initialize the device (if necessary).
+     * Subclasses should populate the given builder to initialize the device (if necessary). This
+     * function might be called multiple times for the same support instance (eg. in the case of a
+     * reconnection), and should ensure that any state is also reset as required.
      *
      * @return the same builder as passed as the argument
      */

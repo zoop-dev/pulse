@@ -95,7 +95,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
     private String cachedFirmwareVersion = null;
     private XiaomiConnectionSupport connectionSupport = null;
 
-    private final Map<Integer, AbstractXiaomiService> mServiceMap = new LinkedHashMap<Integer, AbstractXiaomiService>() {{
+    private final Map<Integer, AbstractXiaomiService> mServiceMap = new LinkedHashMap<>() {{
         put(XiaomiAuthService.COMMAND_TYPE, authService);
         put(XiaomiMusicService.COMMAND_TYPE, musicService);
         put(XiaomiHealthService.COMMAND_TYPE, healthService);
@@ -160,6 +160,10 @@ public class XiaomiSupport extends AbstractDeviceSupport {
 
     @Override
     public void dispose() {
+        for (final AbstractXiaomiService service : mServiceMap.values()) {
+            service.dispose();
+        }
+
         if (this.connectionSupport != null) {
             XiaomiConnectionSupport connectionSupport = this.connectionSupport;
             this.connectionSupport = null;

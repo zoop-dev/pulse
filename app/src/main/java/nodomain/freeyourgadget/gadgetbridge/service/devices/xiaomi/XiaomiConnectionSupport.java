@@ -29,6 +29,7 @@ public abstract class XiaomiConnectionSupport {
     public void onAuthSuccess() {}
     public abstract void onUploadProgress(int textRsrc, int progressPercent, boolean ongoing);
     public abstract void runOnQueue(String taskName, Runnable run);
+    public abstract void reset();
     public abstract void dispose();
     public abstract void setContext(final GBDevice device, final BluetoothAdapter adapter, final Context context);
     public abstract void sendCommand(final String taskName, final XiaomiProto.Command command);

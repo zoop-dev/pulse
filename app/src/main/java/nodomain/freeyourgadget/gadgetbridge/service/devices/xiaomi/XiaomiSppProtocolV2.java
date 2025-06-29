@@ -53,6 +53,11 @@ public class XiaomiSppProtocolV2 extends AbstractXiaomiSppProtocol {
     }
 
     @Override
+    public void reset() {
+        packetSequenceCounter.set(0);
+    }
+
+    @Override
     public int findNextPacketOffset(byte[] buffer) {
         for (int i = 1; i < buffer.length; i++) {
             if (buffer[i] == PACKET_PREAMBLE[0])

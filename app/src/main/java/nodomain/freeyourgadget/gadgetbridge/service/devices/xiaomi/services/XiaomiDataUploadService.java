@@ -56,6 +56,13 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
     }
 
     @Override
+    public void initialize() {
+        callback = null;
+        currentType = 0;
+        currentBytes = null;
+    }
+
+    @Override
     public void handleCommand(final XiaomiProto.Command cmd) {
         switch (cmd.getSubtype()) {
             case CMD_UPLOAD_START:

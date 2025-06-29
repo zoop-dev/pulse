@@ -40,6 +40,7 @@ public abstract class AbstractXiaomiSppProtocol {
         }
     };
 
+    public abstract void reset();
     public abstract int findNextPacketOffset(final byte[] buffer);
     public abstract ParseResult processPacket(final byte[] buffer);
     public abstract byte[] encodePacket(Channel channel, byte[] chunk);

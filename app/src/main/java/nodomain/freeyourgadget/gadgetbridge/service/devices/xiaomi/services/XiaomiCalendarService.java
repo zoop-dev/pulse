@@ -57,6 +57,7 @@ public class XiaomiCalendarService extends AbstractXiaomiService {
 
     @Override
     public void initialize() {
+        lastSync.clear();
         syncCalendar();
     }
 

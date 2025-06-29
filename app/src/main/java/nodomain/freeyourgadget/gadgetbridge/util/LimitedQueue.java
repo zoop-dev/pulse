@@ -67,4 +67,8 @@ public class LimitedQueue<K, V> {
         }
         return null;
     }
+
+    synchronized public void clear() {
+        list.clear();
+    }
 }

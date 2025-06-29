@@ -118,6 +118,12 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
 
     @Override
     public void initialize() {
+        fwHelper = null;
+        handler.removeCallbacksAndMessages(null);
+        currentWearingState = WearingState.UNKNOWN;
+        currentBatteryState = BatteryState.UNKNOWN;
+        currentSleepDetectionState = SleepState.UNKNOWN;
+
         // Request device info and configs
         getSupport().sendCommand("get device info", COMMAND_TYPE, CMD_DEVICE_INFO);
         getSupport().sendCommand("get device status", COMMAND_TYPE, CMD_DEVICE_STATE_GET);
@@ -132,6 +138,11 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
         getSupport().sendCommand("get workout types", COMMAND_TYPE, CMD_WORKOUT_TYPES_GET);
 
         rearmBatteryStateRequestTimer();
+    }
+
+    @Override
+    public void dispose() {
+        handler.removeCallbacksAndMessages(null);
     }
 
     @Override

@@ -74,6 +74,9 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
     @Override
     public void initialize() {
+        cachedWeatherLocations.clear();
+        locationsInitialized = false;
+
         // since temperature unit is app-wide instead of device-specific, update device setting during init
         setMeasurementSystem();
 

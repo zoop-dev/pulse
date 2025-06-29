@@ -193,6 +193,11 @@ public class XiaomiHealthService extends AbstractXiaomiService {
 
     @Override
     public void initialize() {
+        gpsStarted = false;
+        gpsFixAcquired = false;
+        workoutStarted = false;
+        gpsTimeoutHandler.removeCallbacksAndMessages(null);
+
         setUserInfo();
         getSupport().sendCommand("get spo2 config", COMMAND_TYPE, CMD_CONFIG_SPO2_GET);
         getSupport().sendCommand("get heart rate config", COMMAND_TYPE, CMD_CONFIG_HEART_RATE_GET);
@@ -205,6 +210,7 @@ public class XiaomiHealthService extends AbstractXiaomiService {
 
     @Override
     public void dispose() {
+        gpsTimeoutHandler.removeCallbacksAndMessages(null);
         activityFetcher.dispose();
     }
 

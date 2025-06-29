@@ -62,6 +62,8 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
 
         @Override
         protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
+            XiaomiSppSupport.this.reset();
+
             // FIXME unsetDynamicState unsets the fw version, which causes problems..
             if (getDevice().getFirmwareVersion() == null) {
                 getDevice().setFirmwareVersion(mXiaomiSupport.getCachedFirmwareVersion() != null ?
@@ -102,7 +104,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
         }
     };
 
-    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
     private final XiaomiSupport mXiaomiSupport;
     private final Map<Channel, XiaomiChannelHandler> mChannelHandlers = new HashMap<>();
     private final Handler mVersionResponseTimeoutHandler = new Handler(Looper.getMainLooper());
@@ -291,6 +293,13 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
         if (mProtocol.initializeSession()) {
             mXiaomiSupport.getAuthService().startEncryptedHandshake();
         }
+    }
+
+    @Override
+    public void reset() {
+        buffer.reset();
+        // FIXME this is a bit ugly, reset the protocol back to V1 so we're able to parse the version packet
+        mProtocol = new XiaomiSppProtocolV1(this);
     }
 
     class VersionTimeoutRunnable implements Runnable {

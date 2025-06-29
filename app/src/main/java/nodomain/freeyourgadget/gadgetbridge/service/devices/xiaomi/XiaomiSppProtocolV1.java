@@ -42,6 +42,12 @@ public class XiaomiSppProtocolV1 extends AbstractXiaomiSppProtocol {
     }
 
     @Override
+    public void reset() {
+        frameCounter.set(0);
+        encryptionCounter.set(0);
+    }
+
+    @Override
     public int findNextPacketOffset(byte[] buffer) {
         for (int i = 1; i < buffer.length; i++) {
             // just check for the first byte, the processPacket method checks the full magic
