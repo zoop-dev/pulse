@@ -4051,4 +4051,15 @@
     <string name="pref_aawireless_remove_tap_restriction_summary">Mehr als 6 aufeinanderfolgende Taps zulassen. Kann die GPS-Genauigkeit beeinträchtigen.</string>
     <string name="pref_aawireless_prefer_last">Zuletzt verbundenes Telefon bevorzugen</string>
     <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
+    <string name="prefs_device_support_settings">Geräteunterstützung</string>
+    <string name="device_support_can_reconnect_title">Geräteunterstützung wiederverwenden</string>
+    <string name="device_support_can_reconnect_summary">Wiederverwendung der Geräteunterstützungsinstanz beim erneuten Verbinden des Gadgets.</string>
+    <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
+    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
+    <string name="devicetype_yawell_r10">Yawell R10</string>
+    <string name="devicetype_yawell_r11">Yawell R11</string>
+    <string name="pref_calendar_amount_events_to_sync_title">Anzahl der zu synchronisierenden Kalenderereignisse</string>
+    <string name="pref_calendar_maximum_title_characters_title">Maximale Zeichenanzahl im Ereignistitel</string>
+    <string name="pref_calendar_maximum_description_characters_title">Maximale Zeichenanzahl in der Ereignisbeschreibung</string>
+    <string name="pref_calendar_target_app_title">Ziel-App auf der Uhr für Kalenderereignisse</string>
 </resources>
