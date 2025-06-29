@@ -3527,5 +3527,6 @@
     <string name="permission_receive_sms_summary">Пересилаємо СМС на пристрої</string>
     <string name="permission_send_sms_title">Посилати СМС</string>
     <string name="permission_send_sms_summary">Посилати СМС (шаблонні відповіді) з гаджетів</string>
-    <string name="permission_read_call_log_title">Переглядати історію дзвінків</string>
+    <string name="permission_read_call_log_title">Читати історію дзвінків</string>
+    <string name="permission_read_call_log_summary">Перенаправляємо історію дзвінків на пристрої</string>
 </resources>
