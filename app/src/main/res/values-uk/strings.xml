@@ -3491,5 +3491,5 @@
     <string name="first_start_open_source_text">Gadgetbridge це застосунок з відкритим початковим кодом. Розроблений спільнотою для спільноти.\n\nМожете зробити свій внесок у код, документацію, тестування та донати.\n\nGadgetbridge не містить реклами та не стежить за вами. Всі дані зберігаються локально на вашому Android пристрої, так з приватністю все добре на 100%.\n\nЗавітайте на наш сайт за більш повною інформацією, документацією та посиланнями на наші канали комунікацій.</string>
     <string name="first_start_permissions_title">Дозволи</string>
     <string name="first_start_permissions_desc">Gadgetbridge потребує багато дозволів для виконання усіх своїх функцій. Перегляньте мету надання кожного дозволу нижче.</string>
-    <string name="first_start_permissions_request_all_button">Запросити усі дозволи</string>
+    <string name="first_start_permissions_request_all_button">Запитати усі дозволи</string>
 </resources>
