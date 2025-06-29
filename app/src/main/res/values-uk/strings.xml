@@ -3511,5 +3511,9 @@
     <string name="permission_bluetooth_summary">Під\'єднуємося до Bluetooth пристроїв</string>
     <string name="permission_bluetooth_admin_title">Адміністрування Bluetooth</string>
     <string name="permission_bluetooth_admin_summary">Шукаємо та під\'єднуємо Bluetooth пристрої</string>
-    <string name="permission_bluetooth_scan_title">Bluetooth сканування</string>
+    <string name="permission_bluetooth_scan_title">Пошук Bluetooth пристроїв</string>
+    <string name="permission_bluetooth_scan_summary">Шукаємо нові Bluetooth пристрої</string>
+    <string name="permission_bluetooth_connect_title">З\'єднання по Bluetooth</string>
+    <string name="permission_bluetooth_connect_summary">Під\'єднуємося до вже пов\'язаних Bluetooth пристроїв</string>
+    <string name="permission_post_notification_title">Нотифікації про дописи</string>
 </resources>
