@@ -370,6 +370,8 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             setMtu(MIN_MTU);
         }
 
+        fetcher.reset();
+
         try {
             byte authFlags = getAuthFlags();
             byte cryptFlags = getCryptFlags();
@@ -379,10 +381,14 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             characteristicChunked2021Read = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_READ);
             if (characteristicChunked2021Read != null && huami2021ChunkedDecoder == null) {
                 huami2021ChunkedDecoder = new Huami2021ChunkedDecoder(this, force2021Protocol());
+            } else if (huami2021ChunkedDecoder != null) {
+                huami2021ChunkedDecoder.reset();
             }
             characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
             if (characteristicChunked2021Write != null && huami2021ChunkedEncoder == null) {
                 huami2021ChunkedEncoder = new Huami2021ChunkedEncoder(mMTU);
+            } else if (huami2021ChunkedDecoder != null) {
+                huami2021ChunkedEncoder.reset();
             }
             if (force2021Protocol()) {
                 if (characteristicChunked2021Write != null && characteristicChunked2021Read != null) {
