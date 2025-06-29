@@ -172,6 +172,8 @@ public class ZeppOsWatchfaceService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
+        watchfaces.clear();
+
         requestWatchfaces(builder);
         requestCurrentWatchface(builder);
     }

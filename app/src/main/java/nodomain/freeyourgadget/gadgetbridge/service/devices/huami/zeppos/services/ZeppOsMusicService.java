@@ -116,6 +116,9 @@ public class ZeppOsMusicService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
+        handler.removeCallbacksAndMessages(null);
+        isMusicAppStarted = false;
+
         if (mediaManager == null) {
             mediaManager = new MediaManager(getContext());
         }

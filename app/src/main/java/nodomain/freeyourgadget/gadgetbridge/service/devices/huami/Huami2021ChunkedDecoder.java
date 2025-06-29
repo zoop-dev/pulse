@@ -108,8 +108,7 @@ public class Huami2021ChunkedDecoder {
                 if (sharedSessionKey == null) {
                     // Should never happen
                     LOG.warn("Got encrypted message, but there's no shared session key");
-                    currentHandle = null;
-                    currentType = 0;
+                    reset();
                     return false;
                 }
 
@@ -121,9 +120,8 @@ public class Huami2021ChunkedDecoder {
                     buf = CryptoUtils.decryptAES(buf, messagekey);
                     buf = ArrayUtils.subarray(buf, 0, currentLength);
                 } catch (Exception e) {
-                    LOG.warn("error decrypting " + e);
-                    currentHandle = null;
-                    currentType = 0;
+                    LOG.warn("error decrypting {}", e.getMessage());
+                    reset();
                     return false;
                 }
             }
@@ -139,10 +137,14 @@ public class Huami2021ChunkedDecoder {
             } catch (final Exception e) {
                 LOG.error("Failed to handle payload", e);
             }
-            currentHandle = null;
-            currentType = 0;
+            reset();
         }
 
         return needsAck;
+    }
+
+    public void reset() {
+        currentHandle = null;
+        currentType = 0;
     }
 }

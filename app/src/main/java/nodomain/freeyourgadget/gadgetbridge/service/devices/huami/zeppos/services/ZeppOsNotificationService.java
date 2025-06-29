@@ -104,6 +104,9 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
+        mNotificationReplyAction.clear();
+        mNotificationPictures.clear();
+
         write(builder, NOTIFICATION_CMD_CAPABILITIES_REQUEST);
     }
 

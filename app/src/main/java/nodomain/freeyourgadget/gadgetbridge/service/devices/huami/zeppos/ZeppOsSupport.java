@@ -257,10 +257,6 @@ public class ZeppOsSupport extends AbstractDeviceSupport
         this.communicator = communicator;
     }
 
-    ZeppOsCommunicator getCommunicator() {
-        return communicator;
-    }
-
     @Override
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
         super.setContext(gbDevice, btAdapter, context);
@@ -297,6 +293,10 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     }
 
     protected void initializeDevice(final ZeppOsTransactionBuilder builder) {
+        huami2021ChunkedEncoder.reset();
+        huami2021ChunkedDecoder.reset();
+        fetcher.reset();
+
         builder.setDeviceState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
 
         authenticationService.startAuthentication(builder);

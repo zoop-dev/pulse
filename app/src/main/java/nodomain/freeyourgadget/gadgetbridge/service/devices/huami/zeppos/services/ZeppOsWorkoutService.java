@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiUtils;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 
 public class ZeppOsWorkoutService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsWorkoutService.class);
@@ -72,6 +73,13 @@ public class ZeppOsWorkoutService extends AbstractZeppOsService {
     @Override
     public short getEndpoint() {
         return ENDPOINT;
+    }
+
+    @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        workoutNeedsGps = false;
+        workoutActivityKind = ActivityKind.UNKNOWN;
+        lastPhoneGpsSent = 0;
     }
 
     @Override

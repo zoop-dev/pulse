@@ -129,6 +129,11 @@ public class ZeppOsFindDeviceService extends AbstractZeppOsService {
 
     @Override
     public void initialize(final ZeppOsTransactionBuilder builder) {
+        findWatchHandler.removeCallbacksAndMessages(null);
+        findPhoneHandler.removeCallbacksAndMessages(null);
+        findingWatch = false;
+        findPhoneStarted = false;
+
         write(builder, CMD_CAPABILITIES_REQUEST);
     }
 

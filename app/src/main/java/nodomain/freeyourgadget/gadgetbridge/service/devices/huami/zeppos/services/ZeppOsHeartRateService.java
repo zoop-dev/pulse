@@ -92,6 +92,11 @@ public class ZeppOsHeartRateService extends AbstractZeppOsService {
     }
 
     @Override
+    public void initialize(final ZeppOsTransactionBuilder builder) {
+        realtimeHandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
     public void dispose() {
         realtimeHandler.removeCallbacksAndMessages(null);
     }

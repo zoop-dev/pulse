@@ -124,6 +124,8 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        packetBuffer.clear();
+
         write(builder, CMD_CHANNELS_GET, new byte[]{});
         scheduleNextPing(25 * 60 * 1000L);
         return builder;

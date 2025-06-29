@@ -154,4 +154,9 @@ public class Huami2021ChunkedEncoder {
             count++;
         }
     }
+
+    public void reset() {
+        writeHandle = 0;
+        encryptedSequenceNr = 0;
+    }
 }

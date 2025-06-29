@@ -45,6 +45,11 @@ public class HuamiFetcher {
         this.mSupport = mSupport;
     }
 
+    public void reset() {
+        fetchOperationQueue.clear();
+        currentOperation = null;
+    }
+
     public void onFetchRecordedData(final int dataTypes) {
         final GBDevice gbDevice = mSupport.getDevice();
         final DeviceCoordinator coordinator = mSupport.getCoordinator();
