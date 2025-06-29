@@ -3515,5 +3515,17 @@
     <string name="permission_bluetooth_scan_summary">Шукаємо нові Bluetooth пристрої</string>
     <string name="permission_bluetooth_connect_title">З\'єднання по Bluetooth</string>
     <string name="permission_bluetooth_connect_summary">Під\'єднуємося до вже пов\'язаних Bluetooth пристроїв</string>
-    <string name="permission_post_notification_title">Нотифікації про дописи</string>
+    <string name="permission_post_notification_title">Посилати нотифікації</string>
+    <string name="permission_post_notification_summary">Посилати постійну нотифікацію для підтримання служби запущеною</string>
+    <string name="permission_internet_access_title">Доступ до Інтернету</string>
+    <string name="permission_internet_access_summary">Синхронізація з онлайн-ресурсами</string>
+    <string name="permission_contacts_title">Контакти</string>
+    <string name="permission_contacts_summary">Посилаємо контакти на пристрої</string>
+    <string name="permission_calendar_title">Календар</string>
+    <string name="permission_calendar_summary">Посилаємо календар на гаджети</string>
+    <string name="permission_receive_sms_title">Отримувати СМС</string>
+    <string name="permission_receive_sms_summary">Пересилаємо СМС на пристрої</string>
+    <string name="permission_send_sms_title">Посилати СМС</string>
+    <string name="permission_send_sms_summary">Посилати СМС (шаблонні відповіді) з гаджетів</string>
+    <string name="permission_read_call_log_title">Переглядати історію дзвінків</string>
 </resources>
