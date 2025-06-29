@@ -60,6 +60,11 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
+    public boolean supportsHrvMeasurement(final GBDevice device) {
+        return true;
+    }
+
+    @Override
     public int getWorldClocksSlotCount() {
         return 0;
     }
