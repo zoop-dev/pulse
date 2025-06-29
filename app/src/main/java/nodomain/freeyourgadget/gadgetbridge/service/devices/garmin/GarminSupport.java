@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -18,8 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -86,6 +87,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SetF
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SupportedFileTypesMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SystemEventMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.NotificationSubscriptionStatusMessage;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -627,7 +629,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 }
 
                 final DownloadRequestMessage downloadRequestMessage = fileTransferHandler.downloadDirectoryEntry(directoryEntry);
-                LOG.debug("Will download file: {}", directoryEntry.getFileName());
+                LOG.debug("Will download file: {}", directoryEntry.getOutputPath());
                 sendOutgoingMessage("download file " + directoryEntry.getFileIndex(), downloadRequestMessage);
                 return;
             }
@@ -806,19 +808,42 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     private boolean alreadyDownloaded(final FileTransferHandler.DirectoryEntry entry) {
-        final Optional<File> file = getFile(entry.getFileName());
+        // Current filename
+        final Optional<File> file = getFile(entry.getOutputPath());
         if (file.isPresent()) {
             if (file.get().length() == 0) {
-                LOG.warn("File {} is empty", entry.getFileName());
+                LOG.warn("File {} is empty", entry.getOutputPath());
                 return false;
             }
             return true;
         }
 
-        final Optional<File> legacyFile = getFile(entry.getLegacyFileName());
-        if (legacyFile.isPresent()) {
-            if (legacyFile.get().length() == 0) {
-                LOG.warn("Legacy file {} is empty", entry.getFileName());
+        // Legacy filename 1, before we had per-type/year folder
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat legacyDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
+        final StringBuilder sbLegacy1 = new StringBuilder(entry.getFiletype().name());
+        if (entry.getFileDate().getTime() != GarminTimeUtils.GARMIN_TIME_EPOCH * 1000L) {
+            sbLegacy1.append("_").append(legacyDateFormat.format(entry.getFileDate()));
+        }
+        sbLegacy1.append("_").append(entry.getFileIndex()).append(entry.getFiletype().isFitFile() ? ".fit" : ".bin");
+        final String legacyName1 = sbLegacy1.toString();
+        final Optional<File> legacyFile1 = getFile(legacyName1);
+        if (legacyFile1.isPresent()) {
+            if (legacyFile1.get().length() == 0) {
+                LOG.warn("Legacy file 1 {} is empty", legacyName1);
+                return false;
+            }
+            return true;
+        }
+
+        // Legacy filename 2
+        final String legacyName2 = entry.getFiletype().name() + "_" +
+                entry.getFileIndex() + "_" +
+                legacyDateFormat.format(entry.getFileDate()) +
+                (entry.getFiletype().isFitFile() ? ".fit" : ".bin");
+        final Optional<File> legacyFile2 = getFile(legacyName2);
+        if (legacyFile2.isPresent()) {
+            if (legacyFile2.get().length() == 0) {
+                LOG.warn("Legacy file 2 {} is empty", legacyName2);
                 return false;
             }
             return true;
@@ -998,7 +1023,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         LOG.info("Parsing all fit files from storage");
 
-        final File[] fitFiles;
+        final List<File> fitFiles;
         try {
             final File exportDir = getWritableExportDirectory();
 
@@ -1008,13 +1033,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 return;
             }
 
-            fitFiles = exportDir.listFiles((dir, name) -> name.endsWith(".fit"));
-            if (fitFiles == null) {
-                LOG.error("fitFiles is null for {}", exportDir);
-                GB.toast(getContext(), "fitFiles is null for " + exportDir, Toast.LENGTH_LONG, GB.ERROR);
-                return;
-            }
-            if (fitFiles.length == 0) {
+            fitFiles = FileUtils.listRecursive(exportDir, (dir, name) -> name.endsWith(".fit"));
+            if (fitFiles.isEmpty()) {
                 LOG.error("No fit files found in {}", exportDir);
                 GB.toast(getContext(), "No fit files found in " + exportDir, Toast.LENGTH_LONG, GB.ERROR);
                 return;
@@ -1024,6 +1044,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             GB.toast(getContext(), "Failed to parse from storage", Toast.LENGTH_LONG, GB.ERROR, e);
             return;
         }
+
+        LOG.debug("Got {} fit files to parse", fitFiles.size());
 
         GB.toast(getContext(), "Check notification for progress", Toast.LENGTH_LONG, GB.INFO);
 
@@ -1039,16 +1061,16 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         final long[] lastNotificationUpdateTs = new long[]{System.currentTimeMillis()};
         final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), getDevice());
-        fitAsyncProcessor.process(Arrays.asList(fitFiles), new FitAsyncProcessor.Callback() {
+        fitAsyncProcessor.process(fitFiles, new FitAsyncProcessor.Callback() {
             @Override
             public void onProgress(final int i) {
                 final long now = System.currentTimeMillis();
                 if (now - lastNotificationUpdateTs[0] > 1500L) {
                     lastNotificationUpdateTs[0] = now;
                     GB.updateTransferNotification(
-                            "Parsing fit files", "File " + i + " of " + fitFiles.length,
+                            "Parsing fit files", "File " + i + " of " + fitFiles.size(),
                             true,
-                            (i * 100) / fitFiles.length, getContext()
+                            (i * 100) / fitFiles.size(), getContext()
                     );
                 }
             }

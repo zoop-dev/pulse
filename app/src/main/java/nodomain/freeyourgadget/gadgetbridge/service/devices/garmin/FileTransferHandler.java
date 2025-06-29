@@ -144,11 +144,13 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
         }
 
         private void saveFileToExternalStorage() {
-            File dir;
+            File deviceDir;
             File outputFile;
             try {
-                dir = deviceSupport.getWritableExportDirectory();
-                outputFile = new File(dir, currentlyDownloading.getFileName());
+                deviceDir = deviceSupport.getWritableExportDirectory();
+                outputFile = new File(deviceDir, currentlyDownloading.directoryEntry.getOutputPath());
+                final File parentFile = outputFile.getParentFile();
+                parentFile.mkdirs();
                 FileUtils.copyStreamToFile(new ByteArrayInputStream(currentlyDownloading.dataHolder.array()), outputFile);
                 outputFile.setLastModified(currentlyDownloading.directoryEntry.fileDate.getTime());
             } catch (final IOException e) {
@@ -316,10 +318,6 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
             return Math.min(maxBlockSize, GFDIMessage.getMaxPacketSize()); //TODO: can we use GFDIMessage.getMaxPacketSize() directly?
         }
 
-        public String getFileName() {
-            return directoryEntry.getFileName();
-        }
-
         private void setSize(DownloadRequestStatusMessage downloadRequestStatusMessage) {
             if (0 != getDataSize())
                 throw new IllegalStateException("Data size already set");
@@ -366,7 +364,8 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
     }
 
     public static class DirectoryEntry {
-        private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
+        private static final SimpleDateFormat SDF_FULL = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
+        private static final SimpleDateFormat SDF_YEAR = new SimpleDateFormat("yyyy", Locale.ROOT);
 
         private final int fileIndex;
         private final FileType.FILETYPE filetype;
@@ -394,19 +393,41 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
             return filetype;
         }
 
-        public String getFileName() {
+        public Date getFileDate() {
+            return fileDate;
+        }
+
+        /**
+         * Builds the output path.
+         * Format: [FILE_TYPE]/[YEAR]/[FILE_TYPE]_[yyyy-MM-dd_HH-mm-ss]_[INDEX].[fit/bin]
+         */
+        public String getOutputPath() {
+            // [FILE_TYPE]/
             final StringBuilder sb = new StringBuilder(getFiletype().name());
+            sb.append("/");
+
+            // If we have a valid date, place the file inside a folder for each year
+            // [YEAR]/
             if (fileDate.getTime() != GarminTimeUtils.GARMIN_TIME_EPOCH * 1000L) {
-                sb.append("_").append(SDF.format(fileDate));
+                sb.append(SDF_YEAR.format(fileDate));
+                sb.append("/");
             }
-            sb.append("_").append(getFileIndex()).append(getFiletype().isFitFile() ? ".fit" : ".bin");
+
+            // Finally, the filename
+            sb.append(getFileName());
             return sb.toString();
         }
 
-        public String getLegacyFileName() {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            String dateString = dateFormat.format(fileDate);
-            return getFiletype().name() + "_" + getFileIndex() + "_" + dateString + (getFiletype().isFitFile() ? ".fit" : ".bin");
+        /**
+         * [FILE_TYPE]_[yyyy-MM-dd_HH-mm-ss]_[INDEX].[fit/bin]
+         */
+        public String getFileName() {
+            final StringBuilder sb = new StringBuilder(getFiletype().name());
+            if (fileDate.getTime() != GarminTimeUtils.GARMIN_TIME_EPOCH * 1000L) {
+                sb.append("_").append(SDF_FULL.format(fileDate));
+            }
+            sb.append("_").append(getFileIndex()).append(getFiletype().isFitFile() ? ".fit" : ".bin");
+            return sb.toString();
         }
 
         @NonNull

@@ -37,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -329,6 +330,26 @@ public class FileUtils {
             }
         }
         return out.toByteArray();
+    }
+
+    public static List<File> listRecursive(final File dir, final FilenameFilter filter) {
+        final List<File> ret = new ArrayList<>();
+        listRecursive(ret, dir, filter);
+        return ret;
+    }
+
+    private static void listRecursive(final List<File> ret, final File dir, final FilenameFilter filter) {
+        final File[] files = dir.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
+                listRecursive(ret, file, filter);
+            } else if (filter.accept(dir, file.getName())) {
+                ret.add(file);
+            }
+        }
     }
 
     public static boolean deleteRecursively(File dir) {
