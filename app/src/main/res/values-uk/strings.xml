@@ -3503,5 +3503,13 @@
     <string name="permission_manage_dnd_summary">Міняємо політику сповіщень режиму \"Не турбувати\"</string>
     <string name="permission_displayover_title">Показувати поверх інших додатків</string>
     <string name="permission_displayover_summary">Використовується Bangle.js щоб запускати застосунки та інші функції вашого телефона</string>
-    <string name="permission_fine_location_title">Точне міцевизначення</string>
+    <string name="permission_fine_location_title">Точне місцевизначення</string>
+    <string name="permission_fine_location_summary">Шукаємо Bluetooth пристрої</string>
+    <string name="permission_background_location_title">Фонове місцевизначення</string>
+    <string name="permission_background_location_summary">Шукаємо Bluetooth пристрої у фоні та пересилаємо координати конкретним гаджетам</string>
+    <string name="permission_bluetooth_title">Bluetooth</string>
+    <string name="permission_bluetooth_summary">Під\'єднуємося до Bluetooth пристроїв</string>
+    <string name="permission_bluetooth_admin_title">Адміністрування Bluetooth</string>
+    <string name="permission_bluetooth_admin_summary">Шукаємо та під\'єднуємо Bluetooth пристрої</string>
+    <string name="permission_bluetooth_scan_title">Bluetooth сканування</string>
 </resources>
