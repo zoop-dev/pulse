@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Message;
 import android.os.RemoteException;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -45,9 +43,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
 
 public class GBWebClient extends WebViewClient {
@@ -84,12 +82,8 @@ public class GBWebClient extends WebViewClient {
         if (requestedUri.getHost() != null && (StringUtils.indexOfAny(requestedUri.getHost(), AllowedDomains) != -1)) {
             if (WebViewSingleton.getInstance().internetHelperBound) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
-                Bundle bundle = new Bundle();
-                bundle.putString("URL", requestedUri.toString());
-                Message webRequest = Message.obtain();
-                webRequest.setData(bundle);
                 try {
-                    return WebViewSingleton.getInstance().send(webRequest);
+                    return WebViewSingleton.getInstance().send(requestedUri);
                 } catch (RemoteException | InterruptedException e) {
                     LOG.warn("Error downloading data from " + requestedUri, e);
                 }

@@ -17,6 +17,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.ACTION_CONNECT;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,8 +57,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInt
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
-
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.ACTION_CONNECT;
 
 public class ExternalPebbleJSActivity extends AbstractGBActivity {
 
@@ -188,9 +188,10 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         webSettings.setDomStorageEnabled(true);
         //needed for localstorage
         webSettings.setDatabaseEnabled(true);
-        // #3373 #3424 - Fix configuration for pebble apps
-        // TODO: this should use a WebViewAssetLoader
+        //allow local js files access
+        webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccess(true);
+        webSettings.setAllowFileAccessFromFileURLs(true);
 
         JSInterface gbJSInterface = new JSInterface(device, uuid);
         myWebView.addJavascriptInterface(gbJSInterface, "GBjs");

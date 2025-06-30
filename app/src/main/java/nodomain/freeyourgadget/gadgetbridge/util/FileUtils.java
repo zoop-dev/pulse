@@ -22,7 +22,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,9 +43,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -461,5 +463,28 @@ public class FileUtils {
         }
 
         return null;
+    }
+
+    @Nullable
+    public static String md5sum(final InputStream is) {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+        } catch (final NoSuchAlgorithmException e) {
+            GB.log("Failed to get MD5 digest instance", GB.ERROR, e);
+            return null;
+        }
+
+        try {
+            final byte[] buffer = new byte[8192];
+            int read;
+            while ((read = is.read(buffer)) > 0) {
+                digest.update(buffer, 0, read);
+            }
+            return String.format("%1$32s", GB.hexdump(digest.digest())).replace(' ', '0').toLowerCase(Locale.ROOT);
+        } catch (final IOException e) {
+            GB.log("Error reading file", GB.ERROR, e);
+            return null;
+        }
     }
 }

@@ -24,27 +24,21 @@ import android.content.Intent;
 import android.content.MutableContextWrapper;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Message;
-import android.os.Messenger;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
@@ -52,6 +46,11 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBChromeClient;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBWebClient;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInterface;
+import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest;
+import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders;
+import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse;
+import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback;
+import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService;
 
 public class WebViewSingleton {
 
@@ -62,12 +61,10 @@ public class WebViewSingleton {
     private MutableContextWrapper contextWrapper;
     private Looper mainLooper;
     private UUID currentRunningUUID;
-    private Messenger internetHelper = null;
+    private IHttpService internetHelper = null;
     public boolean internetHelperBound;
     private boolean internetHelperInstalled;
-    private CountDownLatch latch;
     private WebResourceResponse internetResponse;
-    private Messenger internetHelperListener;
 
     private WebViewSingleton() {
     }
@@ -77,7 +74,7 @@ public class WebViewSingleton {
         public void onServiceConnected(ComponentName className, IBinder service) {
             LOG.info("internet helper service bound");
             internetHelperBound = true;
-            internetHelper = new Messenger(service);
+            internetHelper = IHttpService.Stub.asInterface(service);
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -104,9 +101,11 @@ public class WebViewSingleton {
             webSettings.setDomStorageEnabled(true);
             //needed for localstorage
             webSettings.setDatabaseEnabled(true);
-            // #3373 #3424 - Fix configuration for pebble apps
-            // TODO: this should use a WebViewAssetLoader
+            //allow local js files access
+            webSettings.setAllowContentAccess(true);
             webSettings.setAllowFileAccess(true);
+            webSettings.setAllowFileAccessFromFileURLs(true);
+            webSettings.setAllowUniversalAccessFromFileURLs(true);
         }
     }
 
@@ -114,44 +113,42 @@ public class WebViewSingleton {
         return instance;
     }
 
-    public WebResourceResponse send(Message webRequest) throws RemoteException, InterruptedException {
-        webRequest.replyTo = internetHelperListener;
-        latch = new CountDownLatch(1); //the messenger should run on a single thread, hence we don't need to be worried about concurrency. This approach however is certainly not ideal.
-        internetHelper.send(webRequest);
-        latch.await();
-        return internetResponse;
-    }
+    public WebResourceResponse send(Uri webRequest) throws RemoteException, InterruptedException {
+        final HttpHeaders httpHeaders = new HttpHeaders();
+        final HttpGetRequest httpGetRequest = new HttpGetRequest(webRequest.toString(), httpHeaders);
+        final CountDownLatch latch = new CountDownLatch(1);
+        final Capsule<WebResourceResponse> internetResponseCapsule = new Capsule<>();
+        try {
+            internetHelper.get(httpGetRequest, new IHttpCallback.Stub() {
+                @Override
+                public void onResponse(HttpResponse response) throws RemoteException {
+                    response.getHeaders().addHeader("Access-Control-Allow-Origin", "*");
+                    WebResourceResponse internetResponse = new WebResourceResponse(
+                            response.getHeaders().get("content-type"),
+                            response.getHeaders().get("content-encoding"),
+                            response.getStatus(), "OK",
+                            response.getHeaders().toMap(),
+                            new ParcelFileDescriptor.AutoCloseInputStream(response.getBody())
+                    );
+                    internetResponseCapsule.set(internetResponse);
+                    latch.countDown();
+                }
 
-    //Internet helper inbound (responses) handler
-    private class IncomingHandler extends Handler {
-        public IncomingHandler(Looper looper) {
-            super(looper);
+                @Override
+                public void onException(String message) throws RemoteException {
+                    throw new RuntimeException(message);
+                }
+            });
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
-        @Nullable
-        private String getCharsetFromHeaders(String contentType) {
-            if (contentType != null && contentType.toLowerCase().trim().contains("charset=")) {
-                String[] parts = contentType.toLowerCase().trim().split("=");
-                if (parts.length > 0)
-                    return parts[1];
-            }
-            return null;
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle data = msg.getData();
-            LOG.debug("WEBVIEW: internet helper returned: " + data.getString("response"));
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Access-Control-Allow-Origin", "*");
-
-            internetResponse = new WebResourceResponse(data.getString("content-type"), data.getString("content-encoding"), 200, "OK",
-                    headers,
-                    new ByteArrayInputStream(data.getString("response").getBytes(Charset.forName(getCharsetFromHeaders(data.getString("content-type")))))
-            );
-
-            latch.countDown();
-        }
+        return internetResponseCapsule.get();
     }
 
     @NonNull
@@ -162,6 +159,7 @@ public class WebViewSingleton {
 
     /**
      * Checks that the webview is up and the given app is running.
+     *
      * @param uuid the uuid of the application expected to be running
      * @throws IllegalStateException when the webview is not active or the app is not running
      */
@@ -197,24 +195,17 @@ public class WebViewSingleton {
             });
             if (contextWrapper != null && !internetHelperBound && !internetHelperInstalled) {
                 String internetHelperPkg = "nodomain.freeyourgadget.internethelper";
-                String internetHelperCls = internetHelperPkg + ".MyService";
+                String internetHelperCls = internetHelperPkg + ".HttpService";
                 try {
                     contextWrapper.getPackageManager().getApplicationInfo(internetHelperPkg, 0);
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(internetHelperPkg, internetHelperCls));
-                    contextWrapper.getApplicationContext().bindService(intent, internetHelperConnection, Context.BIND_AUTO_CREATE);
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Looper.prepare();
-                            internetHelperListener = new Messenger(new IncomingHandler(Looper.myLooper()));
-                            Looper.loop();
-                        }
-                    });
-                    thread.start();
                     internetHelperInstalled = true;
-                }
-                catch (PackageManager.NameNotFoundException e) {
+
+                    final Intent intent1 = new Intent("nodomain.freeyourgadget.internethelper.HttpService");
+                    intent1.setPackage("nodomain.freeyourgadget.internethelper");
+                    contextWrapper.getApplicationContext().bindService(intent1, internetHelperConnection, Context.BIND_AUTO_CREATE);
+                } catch (PackageManager.NameNotFoundException e) {
                     internetHelperInstalled = false;
                     LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.");
                 }
@@ -278,6 +269,7 @@ public class WebViewSingleton {
     public interface WebViewRunnable {
         /**
          * Called in the main thread with a non-null webView webView
+         *
          * @param webView the webview, never null
          */
         void invoke(WebView webView);
