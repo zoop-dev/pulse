@@ -840,7 +840,7 @@
     <string name="bip_prefs_shotcuts_summary">Elija los atajos en la pantalla de la pulsera</string>
     <string name="bip_prefs_shortcuts">Atajos</string>
     <string name="baseAltitude">Altitud base</string>
-    <string name="averageStrokesPerSecond">Promedio brazada</string>
+    <string name="averageStrokesPerSecond">Promedio de brazadas</string>
     <string name="averageStrokeDistance">Distancia promedio de brazada</string>
     <string name="averageStride">Zancada promedio</string>
     <string name="distanceMeters">Distancia</string>
@@ -944,7 +944,7 @@
     <string name="prefs_key_vibration">Vibración de las teclas</string>
     <string name="prefs_autolight">Luz automática</string>
     <string name="Swimming">Natación</string>
-    <string name="Strokes">Pulsaciones</string>
+    <string name="Strokes">Brazadas</string>
     <string name="km">km</string>
     <string name="bpm">lat/min</string>
     <string name="minutes_km">min/km</string>
@@ -956,8 +956,8 @@
     <string name="swolfIndex">SWOLF</string>
     <string name="swolf_index">índice swolf</string>
     <string name="seconds">seg</string>
-    <string name="strokes_unit">p</string>
-    <string name="strokes_second">p/s</string>
+    <string name="strokes_unit">brz</string>
+    <string name="strokes_second">brz/s</string>
     <string name="km_h">km/h</string>
     <string name="meters_second">m/s</string>
     <string name="steps_unit">pasos</string>
@@ -2316,17 +2316,17 @@
     <string name="busy_task_fetch_statistics">Recuperando estadísticas</string>
     <string name="busy_task_fetch_temperature">Recuperando datos de temperatura</string>
     <string name="call_rejection_method_ignore">Ignorar (silencio)</string>
-    <string name="avgStrokeRate">Tasa media de carrera</string>
+    <string name="avgStrokeRate">Tasa promedio de brazadas</string>
     <string name="zepp_os_watchface_city_of_speed">Velocidad en ciudad</string>
     <string name="call_rejection_method_reject">Rechazar</string>
     <string name="pref_call_rejection_method_title">Método de rechazo de llamadas</string>
     <string name="fossil_hr_nav_app_not_installed_notify_text">Se ha iniciado la navegación pero la aplicación de navegación no está instalada en el reloj. Instálela desde el Gestor de aplicaciones.</string>
     <string name="yard">yarda</string>
-    <string name="strokes_minute">serie/min</string>
+    <string name="strokes_minute">brz/min</string>
     <string name="pref_call_rejection_method_summary">Qué acción se realiza cuando se rechaza una llamada entrante desde el reloj</string>
-    <string name="maxStrokeRate">Frecuencia máxima de carrera</string>
-    <string name="laneLength">Longitud de la pista</string>
-    <string name="strokes">Total de carreras</string>
+    <string name="maxStrokeRate">Tasa máxima de brazadas</string>
+    <string name="laneLength">Longitud de la calle</string>
+    <string name="strokes">Total de brazadas</string>
     <string name="fossil_hr_nav_app_not_installed_notify_title">La aplicación de navegación no está instalada en el reloj</string>
     <string name="devicetype_amazfit_active_edge">Amazfit Active Edge</string>
     <string name="charts_legend_spo2_average">Promedio de oxígeno en sangre</string>
@@ -3788,4 +3788,5 @@
     <string name="pref_watch_face">Esfera</string>
     <string name="interval_twenty_minutes">cada 20 minutos</string>
     <string name="connection_priority_low_power_title">Solicitar baja potencia</string>
+    <string name="swimming_stroke">Brazada</string>
 </resources>
