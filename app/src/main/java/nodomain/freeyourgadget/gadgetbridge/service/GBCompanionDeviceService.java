@@ -57,6 +57,12 @@ public class GBCompanionDeviceService extends CompanionDeviceService {
         }
     }
 
+    @DeprecatedSinceApi(api = Build.VERSION_CODES.TIRAMISU)
+    @Override
+    public void onDeviceDisappeared(@NonNull String address) {
+        // nop - the super is abstract in older versions
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @DeprecatedSinceApi(api = Build.VERSION_CODES.BAKLAVA)
     @Override
@@ -65,6 +71,13 @@ public class GBCompanionDeviceService extends CompanionDeviceService {
             LOG.debug("onDeviceAppeared association:{}", associationInfo.getDeviceMacAddress());
             maybeConnect();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    @DeprecatedSinceApi(api = Build.VERSION_CODES.BAKLAVA)
+    @Override
+    public void onDeviceDisappeared(@NonNull AssociationInfo associationInfo) {
+        // nop - the super is abstract in older versions
     }
 
     @RequiresApi(api = Build.VERSION_CODES.BAKLAVA)
