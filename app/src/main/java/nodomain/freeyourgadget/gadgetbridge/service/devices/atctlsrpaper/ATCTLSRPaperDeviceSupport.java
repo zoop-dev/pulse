@@ -13,8 +13,10 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.UUID;
@@ -28,8 +30,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAc
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public static final UUID UUID_SERVICE_MAIN = UUID.fromString("00001337-0000-1000-8000-00805f9b34fb");
@@ -88,11 +92,15 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
                         handleNextBlockRequest(value);
                         return true;
                     case (byte) 0xc7:
-                        handleFinishUploadRequest(true);
+                        handleFinishUploadRequest(false, true);
                         return true;
                     case (byte) 0xc8:
-                        handleFinishUploadRequest(false);
+                        handleFinishUploadRequest(false, false);
                         return true;
+                    case (byte) 0xc9:
+                        handleFinishUploadRequest(true, true);
+                        return true;
+
                 }
             }
         }
@@ -150,16 +158,22 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         return buffer;
     }
 
-    private void handleFinishUploadRequest(boolean success) {
+    private void handleFinishUploadRequest(boolean is_firmware, boolean success) {
         if (!success) {
             GB.toast(getContext().getString(R.string.same_image_already_on_device), Toast.LENGTH_LONG, GB.WARN);
         }
         final TransactionBuilder builder = new TransactionBuilder("finish upload");
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x03});
+        builder.add(new SetProgressAction(getContext().getString(R.string.sending_image), false, 100, getContext()));
+        if (!is_firmware) {
+            builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x03});
+        }
+        builder.queue(getQueue());
+
         if (getDevice().isBusy()) {
             getDevice().unsetBusyTask();
             getDevice().sendDeviceUpdateIntent(getContext());
         }
+        image_payload = null;
         current_chunk = -1;
         current_block = -1;
         blocks_total = -1;
@@ -213,54 +227,69 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onInstallApp(Uri uri) {
         try {
-            if (epaper_width == 0 || epaper_height == 0 || epaper_colors == 0) {
-                LOG.error("epaper config unknown");
-                return;
-            }
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(GBApplication.getContext().getContentResolver(), uri);
-            final Bitmap bmpResized = Bitmap.createBitmap(epaper_width, epaper_height, Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(bmpResized);
-            final Rect rect = new Rect(0, 0, epaper_width, epaper_height);
-            canvas.rotate(180,canvas.getWidth()/2.0f, canvas.getHeight()/2.0f);
-            canvas.drawBitmap(bitmap, null, rect, null);
-            Matrix matrix = new Matrix();
-            matrix.postRotate(180);
+            boolean is_firmware = false;
+            UriHelper uriHelper = UriHelper.get(uri, getContext());
+            if (uriHelper.getFileName().endsWith(".bin")) {
+                InputStream in = new BufferedInputStream(uriHelper.openInputStream());
+                image_payload = FileUtils.readAll(in, 262144);
+                if (image_payload[8] == 0x4b && image_payload[9] == 0x4e && image_payload[10] == 0x4c && image_payload[11] == 0x54) {
+                    is_firmware = true;
+                } else {
+                    image_payload = null;
+                    LOG.error("firmware magic not found");
+                    return;
+                }
+            } else {
+                if (epaper_width == 0 || epaper_height == 0 || epaper_colors == 0) {
+                    LOG.error("epaper config unknown");
+                    return;
+                }
+
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(GBApplication.getContext().getContentResolver(), uri);
+                final Bitmap bmpResized = Bitmap.createBitmap(epaper_width, epaper_height, Bitmap.Config.ARGB_8888);
+                final Canvas canvas = new Canvas(bmpResized);
+                final Rect rect = new Rect(0, 0, epaper_width, epaper_height);
+                canvas.rotate(180, canvas.getWidth() / 2.0f, canvas.getHeight() / 2.0f);
+                canvas.drawBitmap(bitmap, null, rect, null);
+                Matrix matrix = new Matrix();
+                matrix.postRotate(180);
 
 
-            image_payload = new byte[((epaper_width * epaper_height) / 8) * epaper_colors];
+                image_payload = new byte[((epaper_width * epaper_height) / 8) * epaper_colors];
 
-            // FIXME: different models with different colors
-            int[] colors = new int[]{
-                    0x000000, // black
-                    0xff0000, // red
-                    0xffff00, // yellow
-            };
+                // FIXME: different models with different colors
+                int[] colors = new int[]{
+                        0x000000, // black
+                        0xff0000, // red
+                        0xffff00, // yellow
+                };
 
-            int nr_planes = (epaper_colors > 1) ? 2 : 1;
-            for (int plane = 0; plane < nr_planes; plane++) {
-                int byte_offset = 0;
-                int buffer_offset = plane * epaper_width * epaper_height / 8;
-                int color = colors[plane];
-                for (int y = 0; y < epaper_height; y++) {
-                    int bit_pos = 0;
-                    int packed_byte = 0;
-                    for (int x = 0; x < epaper_width; x++) {
-                        int pixel = bmpResized.getPixel(x, y);
-                        // put the third color in all planes;
-                        if ((pixel & 0xffffff) == color || (epaper_colors > 2 && (pixel & 0xffffff) == colors[2])) {
-                            packed_byte |= (1 << (7 - bit_pos));
-                        }
-                        bit_pos++;
-                        if (bit_pos == 8) {
-                            image_payload[buffer_offset + byte_offset++] = (byte) (packed_byte & 0xff);
-                            bit_pos = 0;
-                            packed_byte = 0;
+                int nr_planes = (epaper_colors > 1) ? 2 : 1;
+                for (int plane = 0; plane < nr_planes; plane++) {
+                    int byte_offset = 0;
+                    int buffer_offset = plane * epaper_width * epaper_height / 8;
+                    int color = colors[plane];
+                    for (int y = 0; y < epaper_height; y++) {
+                        int bit_pos = 0;
+                        int packed_byte = 0;
+                        for (int x = 0; x < epaper_width; x++) {
+                            int pixel = bmpResized.getPixel(x, y);
+                            // put the third color in all planes;
+                            if ((pixel & 0xffffff) == color || (epaper_colors > 2 && (pixel & 0xffffff) == colors[2])) {
+                                packed_byte |= (1 << (7 - bit_pos));
+                            }
+                            bit_pos++;
+                            if (bit_pos == 8) {
+                                image_payload[buffer_offset + byte_offset++] = (byte) (packed_byte & 0xff);
+                                bit_pos = 0;
+                                packed_byte = 0;
+                            }
                         }
                     }
                 }
             }
 
-            int crc32 = CheckSums.getCRC32(image_payload);
+            int crc32 = is_firmware ? 123 : CheckSums.getCRC32(image_payload);
             ByteBuffer buf = ByteBuffer.allocate(19);
             buf.order(ByteOrder.LITTLE_ENDIAN);
             buf.put((byte) 0x00);
@@ -268,7 +297,11 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
             buf.put((byte) 0xff);
             buf.putLong(crc32 & 0xffffffffL);
             buf.putInt(image_payload.length);
-            buf.put((byte) ((epaper_colors == 1) ? 0x20 : 0x21));
+            if (is_firmware)
+                buf.put((byte) 0x03);
+            else
+                buf.put((byte) ((epaper_colors == 1) ? 0x20 : 0x21));
+
             buf.put((byte) 0x00);
             buf.putShort((byte) 0x00);
 
