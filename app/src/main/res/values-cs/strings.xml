@@ -4153,4 +4153,7 @@
     <string name="pref_calendar_maximum_description_characters_title">Max. počet znaků v popisu události</string>
     <string name="pref_calendar_target_app_title">Aplikace, ze které načítat události kalendáře</string>
     <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
+    <string name="devicetype_amazfit_helio_strap">Amazfit Helio Strap</string>
+    <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
+    <string name="menuitem_zepp_flow">Zepp Flow</string>
 </resources>
