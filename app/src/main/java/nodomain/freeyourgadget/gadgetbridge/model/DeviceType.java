@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.aawireless.AAWirelessCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.atctlsrpaper.ATCTLSRPaperCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.bandwpseries.BandWPSeriesDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.binary_sensor.coordinator.BinarySensorCoordinator;
@@ -719,7 +720,8 @@ public enum DeviceType {
     MARSTEK_B2500(MarstekB2500DeviceCoordinator.class),
     GENERIC_HEADPHONES(GenericHeadphonesCoordinator.class),
     TEST(TestDeviceCoordinator.class),
-    ULTRAHUMAN_RING_AIR(UltrahumanDeviceCoordinator.class);
+    ULTRAHUMAN_RING_AIR(UltrahumanDeviceCoordinator.class),
+    ATC_TLSR_PAPER(ATCTLSRPaperCoordinator.class);
 
     private DeviceCoordinator coordinator;
 

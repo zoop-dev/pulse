@@ -1,0 +1,292 @@
+package nodomain.freeyourgadget.gadgetbridge.service.devices.atctlsrpaper;
+
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.widget.Toast;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.UUID;
+
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
+import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+
+public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
+    public static final UUID UUID_SERVICE_MAIN = UUID.fromString("00001337-0000-1000-8000-00805f9b34fb");
+    public static final UUID UUID_CHARACTERISTIC_MAIN = UUID.fromString("00001337-0000-1000-8000-00805f9b34fb");
+    private static final Logger LOG = LoggerFactory.getLogger(ATCTLSRPaperDeviceSupport.class);
+    private static final byte[] COMMAND_GET_CONFIGURATION = new byte[]{0x00, 0x05};
+
+    private int epaper_width = 0;
+    private int epaper_height = 0;
+    private int epaper_colors = 0;
+
+    private byte[] image_payload = null;
+    private byte[] block_data = null;
+    private int blocks_total = -1;
+    private int current_block = -1;
+    private int current_chunk = -1;
+
+
+    public ATCTLSRPaperDeviceSupport() {
+        super(LOG);
+        addSupportedService(UUID_SERVICE_MAIN);
+    }
+
+    protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
+        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        getDevice().setFirmwareVersion("N/A");
+        getDevice().setFirmwareVersion2("N/A");
+        builder.requestMtu(512);
+        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_MAIN), true);
+        builder.wait(300);
+        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_GET_CONFIGURATION);
+        return builder;
+    }
+
+    @Override
+    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+        super.onCharacteristicChanged(gatt, characteristic, value);
+
+        UUID characteristicUUID = characteristic.getUuid();
+
+        LOG.info("Characteristic changed UUID: {}", characteristicUUID);
+        LOG.info("Characteristic changed value: {}", StringUtils.bytesToHex(characteristic.getValue()));
+        if (characteristicUUID.equals(UUID_CHARACTERISTIC_MAIN)) {
+            if (value[0] == 0x00) {
+                switch (value[1]) {
+                    case 0x05:
+                        handleConfigResponse(value);
+                        return true;
+                    case (byte) 0xc4:
+                        handleNextChunkRequest(false);
+                        return true;
+                    case (byte) 0xc5:
+                        handleNextChunkRequest(true);
+                        return true;
+                    case (byte) 0xc6:
+                        handleNextBlockRequest(value);
+                        return true;
+                    case (byte) 0xc7:
+                        handleFinishUploadRequest(true);
+                        return true;
+                    case (byte) 0xc8:
+                        handleFinishUploadRequest(false);
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private int getCheckSum(byte[] buffer) {
+        int sum = 0;
+        for (byte val : buffer) {
+            sum += val & 0xff;
+        }
+        return sum;
+    }
+
+    private byte[] encodeBlock(byte[] image, int block_nr) {
+        int block_length = 4096;
+        if (image.length < block_nr * 4096) {
+            return null;
+        }
+        if (image.length < (block_nr + 1) * 4096) {
+            block_length = image.length % 4096;
+        }
+        byte[] buffer = new byte[block_length + 4];
+        buffer[0] = 0; // length filled in later
+        buffer[1] = 0; // length filled in later
+        buffer[2] = 0; // checksum filled in later
+        buffer[3] = 0; // checksum filled in later
+        System.arraycopy(image, block_nr * 4096, buffer, 4, block_length);
+        long checksum = getCheckSum(buffer) & 0xffffffffL;
+        buffer[0] = (byte) (block_length & 0xff);
+        buffer[1] = (byte) ((block_length >> 8) & 0xff);
+        buffer[2] = (byte) (checksum & 0xff);
+        buffer[3] = (byte) ((checksum >> 8) & 0xff);
+        return buffer;
+
+    }
+
+    private byte[] encodeImageChunk(byte[] block, int block_nr, int chunk_nr) {
+        int chunk_length = 230;
+        if (block.length < chunk_nr * 230) {
+            return null;
+        }
+        if (block.length < (chunk_nr + 1) * 230) {
+            chunk_length = block.length % 230;
+        }
+        byte[] buffer = new byte[235];
+        buffer[0] = 0; // command filled in later
+        buffer[1] = 0; // command filled in later
+        buffer[2] = 0; // checksum filled in later
+        buffer[3] = (byte) block_nr;
+        buffer[4] = (byte) chunk_nr;
+        System.arraycopy(block, chunk_nr * 230, buffer, 5, chunk_length);
+        buffer[2] = (byte) getCheckSum(buffer);
+        buffer[1] = 0x65; // command
+        return buffer;
+    }
+
+    private void handleFinishUploadRequest(boolean success) {
+        if (!success) {
+            GB.toast(getContext().getString(R.string.same_image_already_on_device), Toast.LENGTH_LONG, GB.WARN);
+        }
+        final TransactionBuilder builder = new TransactionBuilder("finish upload");
+        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x03});
+        if (getDevice().isBusy()) {
+            getDevice().unsetBusyTask();
+            getDevice().sendDeviceUpdateIntent(getContext());
+        }
+        current_chunk = -1;
+        current_block = -1;
+        blocks_total = -1;
+    }
+
+    private void handleNextBlockRequest(byte[] value) {
+        final TransactionBuilder builder = new TransactionBuilder("send image start");
+        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x02});
+        current_chunk = 0;
+        current_block = value[11];
+        block_data = encodeBlock(image_payload, current_block);
+        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), encodeImageChunk(block_data, current_block, current_chunk));
+        int progressPercent = (int) ((((float) current_block) / blocks_total) * 100);
+        builder.add(new SetProgressAction(getContext().getString(R.string.sending_image), true, progressPercent, getContext()));
+        builder.queue(getQueue());
+    }
+
+    private void handleNextChunkRequest(boolean success) {
+        final TransactionBuilder builder = new TransactionBuilder("send image chunk");
+        if (success) {
+            current_chunk++; // only send next chunk when successful, else resend last chunk
+        }
+        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), encodeImageChunk(block_data, current_block, current_chunk));
+        builder.queue(getQueue());
+    }
+
+    private void handleConfigResponse(byte[] value) {
+        ByteBuffer buf = ByteBuffer.wrap(value);
+        buf.order(ByteOrder.LITTLE_ENDIAN);
+
+        buf.position(6);
+        int version = buf.getInt();
+
+        buf.position(21);
+        boolean is_wh_swapped = buf.get() == 0x01;
+
+        buf.position(24);
+        epaper_width = buf.getShort();
+        epaper_height = buf.getShort();
+
+        buf.position(32);
+        epaper_colors = buf.get();
+
+        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped);
+
+        final TransactionBuilder builder = new TransactionBuilder("set initialized");
+        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.queue(getQueue());
+    }
+
+    @Override
+    public void onInstallApp(Uri uri) {
+        try {
+            if (epaper_width == 0 || epaper_height == 0 || epaper_colors == 0) {
+                LOG.error("epaper config unknown");
+                return;
+            }
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(GBApplication.getContext().getContentResolver(), uri);
+            final Bitmap bmpResized = Bitmap.createBitmap(epaper_width, epaper_height, Bitmap.Config.ARGB_8888);
+            final Canvas canvas = new Canvas(bmpResized);
+            final Rect rect = new Rect(0, 0, epaper_width, epaper_height);
+            canvas.rotate(180,canvas.getWidth()/2.0f, canvas.getHeight()/2.0f);
+            canvas.drawBitmap(bitmap, null, rect, null);
+            Matrix matrix = new Matrix();
+            matrix.postRotate(180);
+
+
+            image_payload = new byte[((epaper_width * epaper_height) / 8) * epaper_colors];
+
+            // FIXME: different models with different colors
+            int[] colors = new int[]{
+                    0x000000, // black
+                    0xff0000, // red
+                    0xffff00, // yellow
+            };
+
+            int nr_planes = (epaper_colors > 1) ? 2 : 1;
+            for (int plane = 0; plane < nr_planes; plane++) {
+                int byte_offset = 0;
+                int buffer_offset = plane * epaper_width * epaper_height / 8;
+                int color = colors[plane];
+                for (int y = 0; y < epaper_height; y++) {
+                    int bit_pos = 0;
+                    int packed_byte = 0;
+                    for (int x = 0; x < epaper_width; x++) {
+                        int pixel = bmpResized.getPixel(x, y);
+                        // put the third color in all planes;
+                        if ((pixel & 0xffffff) == color || (epaper_colors > 2 && (pixel & 0xffffff) == colors[2])) {
+                            packed_byte |= (1 << (7 - bit_pos));
+                        }
+                        bit_pos++;
+                        if (bit_pos == 8) {
+                            image_payload[buffer_offset + byte_offset++] = (byte) (packed_byte & 0xff);
+                            bit_pos = 0;
+                            packed_byte = 0;
+                        }
+                    }
+                }
+            }
+
+            int crc32 = CheckSums.getCRC32(image_payload);
+            ByteBuffer buf = ByteBuffer.allocate(19);
+            buf.order(ByteOrder.LITTLE_ENDIAN);
+            buf.put((byte) 0x00);
+            buf.put((byte) 0x64);
+            buf.put((byte) 0xff);
+            buf.putLong(crc32 & 0xffffffffL);
+            buf.putInt(image_payload.length);
+            buf.put((byte) ((epaper_colors == 1) ? 0x20 : 0x21));
+            buf.put((byte) 0x00);
+            buf.putShort((byte) 0x00);
+
+            final TransactionBuilder builder = new TransactionBuilder("send image prepare");
+            builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), buf.array());
+            builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.sending_image), getContext()));
+            builder.queue(getQueue());
+            blocks_total = image_payload.length / 4096 + 1;
+
+        } catch (FileNotFoundException e) {
+            LOG.error("could not find file");
+        } catch (IOException e) {
+            LOG.error("error decoding file");
+        }
+    }
+
+    @Override
+    public boolean useAutoConnect() {
+        return false;
+    }
+}
