@@ -1082,7 +1082,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_title_upper_button_function_short">Appui court bouton du haut</string>
     <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="activity_prefs_step_length_cm">Longueur de pas en cm</string>
-    <string name="menuitem_spo2">SpO2</string>
+    <string name="menuitem_spo2">SpO₂</string>
     <string name="qhybrid_calibration_align_hint">Utiliser les boutons ci-dessous pour aligner les aiguilles du bracelet sur midi.</string>
     <string name="gps_track">Trace GPS</string>
     <string name="about_version">Version %s</string>
@@ -1816,7 +1816,7 @@ Temps de sommeil préféré en heures</string>
     <string name="prefs_relaxation_reminder_description">Fais vibrer le bracelet pour vous avertir si le taux de stress est supérieur à 80</string>
     <string name="prefs_spo2_monitoring_title">Surveillance de l\'oxygénation du sang</string>
     <string name="prefs_spo2_monitoring_description">Surveille automatiquement le taux d\'oxygénation du sang durant la journée</string>
-    <string name="prefs_spo2_alert_threshold">Seuil d\'alerte SPO2</string>
+    <string name="prefs_spo2_alert_threshold">Seuil d\'alerte SpO₂</string>
     <string name="seconds_11">11 secondes</string>
     <string name="seconds_12">12 secondes</string>
     <string name="seconds_13">13 secondes</string>
@@ -2274,7 +2274,7 @@ Temps de sommeil préféré en heures</string>
     <string name="busy_task_fetch_sports_details">Récupération des détails d\'activité</string>
     <string name="busy_task_fetch_debug_logs">Récupération des logs de dépannage</string>
     <string name="busy_task_fetch_pai_data">Récupération des données RAI</string>
-    <string name="busy_task_fetch_spo2_data">Récupération des données SpO2</string>
+    <string name="busy_task_fetch_spo2_data">Récupération des données SpO₂</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">Récupération des données du rythme respiratoire</string>
     <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
@@ -2617,7 +2617,7 @@ Temps de sommeil préféré en heures</string>
     <string name="widget_layout_top_2_bot_1">2 hauts, 1 bas</string>
     <string name="widget_layout_top_2_bot_2">2 hauts, 2 bas</string>
     <string name="menuitem_buzzer_intensity">Intensité du buzzer</string>
-    <string name="pref_spo_automatic_enable">Permettre la mesure automatique du SpO2</string>
+    <string name="pref_spo_automatic_enable">Permettre la mesure automatique du SpO₂</string>
     <string name="devicetype_huawei_watchgt3">Huawei Watch GT 3 (Pro)</string>
     <string name="devicetype_redmi_smart_band_2">Redmi Smart Band 2</string>
     <string name="flatDistance">Distance à plat</string>
@@ -2820,7 +2820,7 @@ Temps de sommeil préféré en heures</string>
     <string name="companion_pairing_request_title">Appareil compagnon</string>
     <string name="pref_force_enable_heartrate_support_summary">Forcer la prise en charge du rythme cardiaque
 \nUTILISER À VOS RISQUES ET PÉRILS</string>
-    <string name="pref_force_enable_spo2_support">Forcer la prise en charge du SpO2</string>
+    <string name="pref_force_enable_spo2_support">Forcer la prise en charge du SpO₂</string>
     <string name="device_state_waiting_scan">En attente du scan des appareils</string>
     <string name="devicetype_amazfit_bip3">Amazfit Bip 3</string>
     <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate</string>
@@ -2845,8 +2845,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_adaptive_noise_cancelling_summary">Régler la forte de l\'ANC automatiquement selon le niveau de bruit ambiant</string>
     <string name="huawei_trusleep_warning">Avertissement : activer cette option fera apparaitre tous les sommeils comme sommeil léger dans GadgetBridge ! Cliquer ici pour plus de détails.</string>
     <string name="pref_force_enable_heartrate_support">Forcer la prise en charge du rythme cardiaque</string>
-    <string name="pref_force_enable_spo2_support_summary">Forcer la prise en charge du SpO2
-\nUTILISER À VOS RISQUES ET PÉRILS</string>
+    <string name="pref_force_enable_spo2_support_summary">Forcer la prise en charge du SpO₂ \nUTILISER À VOS RISQUES ET PÉRILS</string>
     <string name="widget_name_colored_tile">%1$s (tuile colorée)</string>
     <string name="scan_scanning_single_device">Scan d\'un appareil</string>
     <string name="companion_pairing_request_description">Pairer cet appareil comme compagnon ?
@@ -2857,7 +2856,7 @@ Temps de sommeil préféré en heures</string>
     <string name="swolfMax">Swolf maximum</string>
     <string name="swolfMin">Swolf minimum</string>
     <string name="degrees">degrés</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
+    <string name="pref_sleepasandroid_feat_spo2">SpO₂</string>
     <string name="bottom_nav_devices">Appareils</string>
     <string name="pref_dashboard_widget_settings">Réglages des widgets</string>
     <string name="pref_dashboard_widget_show_legend_title">Afficher la légende</string>
@@ -3638,7 +3637,7 @@ Temps de sommeil préféré en heures</string>
     <string name="permission_disable_doze_summary">Permet de fonctionner en arrière-plan sans entrave par les optimisations de batterie Android</string>
     <string name="weekly_total">Total semaine</string>
     <string name="devicetype_marstek_b2500">Marstek B2500</string>
-    <string name="watchface_widget_type_sp02">SpO2</string>
+    <string name="watchface_widget_type_sp02">SpO₂</string>
     <string name="activity_type_upper_body">Haut du corps</string>
     <string name="activity_type_lower_body">Bas du corps</string>
     <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
@@ -3773,4 +3772,6 @@ Temps de sommeil préféré en heures</string>
     <string name="huawei_stress_calibrate_start">Démarrer</string>
     <string name="huawei_stress_calibrate_finish">Terminé</string>
     <string name="banglejs_notification_missed_call_title">Appel manqué</string>
+    <string name="range_percentage">%1$d %% - %2$d %%</string>
+    <string name="range_percentage_float">%1$.1f %% - %2$.1f %%</string>
 </resources>
