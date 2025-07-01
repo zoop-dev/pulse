@@ -1675,4 +1675,13 @@
     <string name="pref_title_sync_birthdays">Sincronitza els aniversaris</string>
     <string name="even_realities_frame_color_green">Verd</string>
     <string name="even_realities_frame_color_brown">Marró</string>
+    <string name="pref_aawireless_auto_video_focus_title">Inicia l\'Android Auto automàticament</string>
+    <string name="pref_aawireless_audio_stutter_fix_unlimited">Il·limitat</string>
+    <string name="paired_phones">Telèfons aparellats</string>
+    <string name="pairing_mode">Mode d\'aparellament</string>
+    <string name="advanced_settings">Paràmetres avançats</string>
+    <string name="country">País</string>
+    <string name="developer_mode">Mode de desenvolupament</string>
+    <string name="wifi_frequency_2_4_ghz">2,4 GHz</string>
+    <string name="wifi_frequency_5_ghz">5 GHz</string>
 </resources>
