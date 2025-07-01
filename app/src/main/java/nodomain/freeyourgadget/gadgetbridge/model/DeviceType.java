@@ -120,6 +120,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVe
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVenuCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVenuSq2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVenuSqCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVenuX1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive4SCoordinator;
@@ -583,6 +584,7 @@ public enum DeviceType {
     GARMIN_VENU_2_PLUS(GarminVenu2PlusCoordinator.class),
     GARMIN_VENU_3(GarminVenu3Coordinator.class),
     GARMIN_VENU_3S(GarminVenu3SCoordinator.class),
+    GARMIN_VENU_X1(GarminVenuX1Coordinator.class),
     GARMIN_VIVOACTIVE_3(GarminVivoActive3Coordinator.class),
     GARMIN_VIVOACTIVE_4(GarminVivoActive4Coordinator.class),
     GARMIN_VIVOACTIVE_4S(GarminVivoActive4SCoordinator.class),
