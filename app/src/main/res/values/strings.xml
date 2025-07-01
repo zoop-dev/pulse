@@ -2081,6 +2081,7 @@
     <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
     <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker">Vivitar HR &amp; BP Monitor Activity Tracker</string>
     <string name="devicetype_hama_fit6900">Hama Fit6900</string>
+    <string name="devicetype_generic_thermal_printer">Thermal Printer</string>
     <!-- Menus on the smart device -->
     <string name="menuitem_nothing">Nothing</string>
     <string name="menuitem_status">Status</string>
@@ -4102,4 +4103,6 @@
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">BLE Advertising Interval</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Enable OEPL protocol</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Disable this if only using BLE to save power</string>
+    <string name="activity_print__image_print_button">Print</string>
+    <string name="activity_print_image_apply_dithering_switch">Apply Dithering</string>
 </resources>
