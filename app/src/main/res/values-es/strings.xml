@@ -3789,4 +3789,17 @@
     <string name="interval_twenty_minutes">cada 20 minutos</string>
     <string name="connection_priority_low_power_title">Solicitar baja potencia</string>
     <string name="swimming_stroke">Brazada</string>
+    <string name="wifi_frequency_2_4_ghz">2,4 GHz</string>
+    <string name="wifi_frequency_5_ghz">5 GHz</string>
+    <string name="country">País</string>
+    <string name="advanced_settings">Configuración avanzada</string>
+    <string name="developer_mode">Modo de desarrollo</string>
+    <string name="factory_reset">Restablecimiento de fábrica</string>
+    <string name="dpi_dots_per_inch">PPP de la pantalla</string>
+    <string name="no_paired_phones">No hay ningún teléfono emparejado</string>
+    <string name="paired_phones">Teléfonos emparejados</string>
+    <string name="pairing_mode">Modo de emparejamiento</string>
+    <string name="pref_aawireless_auto_video_focus_title">Iniciar Android Auto automáticamente</string>
+    <string name="pref_aawireless_prefer_last">Preferir último teléfono conectado</string>
+    <string name="sending_image">enviando imagen</string>
 </resources>
