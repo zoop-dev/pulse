@@ -33,7 +33,6 @@ import java.io.OutputStream;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
@@ -51,7 +50,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
     private BluetoothSocket mBtSocket = null;
     private InputStream mInStream = null;
     private OutputStream mOutStream = null;
-    private boolean mQuit = false;
+    private volatile boolean mQuit = false;
 
     @Override
     public void quit() {

@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
@@ -62,20 +63,21 @@ public final class GBScanEventProcessor implements Runnable {
 
     private boolean discoverUnsupported = false;
 
-    private volatile boolean running = false;
+    private final AtomicBoolean running;
     private Thread thread = null;
 
     private final Callback callback;
 
     public GBScanEventProcessor(final Callback callback) {
         this.callback = callback;
+        running = new AtomicBoolean(false);
     }
 
     @Override
     public void run() {
         LOG.info("Device Found Processor Thread started.");
 
-        while (running) {
+        while (running.get()) {
             try {
                 LOG.debug("Polling found devices queue, current size = {}", eventsToProcessQueue.size());
                 final String candidateAddress = eventsToProcessQueue.take();
@@ -93,12 +95,11 @@ public final class GBScanEventProcessor implements Runnable {
     }
 
     public void start() {
-        if (running) {
+        if (running.getAndSet(true)) {
             LOG.warn("Already running!");
             return;
         }
 
-        running = true;
         thread = new Thread("GBScanEventProcessor_" + THREAD_COUNTER.getAndIncrement()) {
             @Override
             public void run() {
@@ -109,7 +110,7 @@ public final class GBScanEventProcessor implements Runnable {
     }
 
     public void stop() {
-        running = false;
+        running.set(false);
 
         if (thread != null) {
             thread.interrupt();

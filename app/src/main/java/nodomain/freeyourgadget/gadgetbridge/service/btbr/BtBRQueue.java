@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -54,7 +55,7 @@ public final class BtBRQueue {
     private final SocketCallback mCallback;
     private final UUID mService;
 
-    private volatile boolean mDisposed;
+    private final AtomicBoolean mDisposed;
 
     private final Context mContext;
     private final int mBufferSize;
@@ -70,7 +71,7 @@ public final class BtBRQueue {
 
             LOG.debug("Read thread started, entering loop");
 
-            while (!mDisposed) {
+            while (!mDisposed.get()) {
                 try {
                     if (mBtSocket == null)
                         throw new IOException("mBtSocket was null");
@@ -107,6 +108,7 @@ public final class BtBRQueue {
         mCallback = socketCallback;
         mService = supportedService;
         mBufferSize = bufferSize;
+        mDisposed = new AtomicBoolean(false);
 
         mWriteHandlerThread.start();
 
@@ -272,11 +274,10 @@ public final class BtBRQueue {
     }
 
     public void dispose() {
-        if (mDisposed) {
+        if (mDisposed.getAndSet(true)) {
             return;
         }
 
-        mDisposed = true;
         disconnect();
 
         if (readThread != null && readThread.isAlive()) {
