@@ -4147,7 +4147,7 @@
     <string name="device_support_can_reconnect_summary">重新连接穿戴设备时复用设备支持实例。</string>
     <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
     <string name="devicetype_amazfit_balance_2">跃我 Balance 2</string>
-    <string name="devicetype_amazfit_helio_strap">Amazfit Helio Strap</string>
+    <string name="devicetype_amazfit_helio_strap">跃我 Helio Strap</string>
     <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
     <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
     <string name="devicetype_yawell_r10">雅威尔 R10</string>
