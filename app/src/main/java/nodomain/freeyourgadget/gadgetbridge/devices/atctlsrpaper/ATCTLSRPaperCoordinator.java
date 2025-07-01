@@ -1,10 +1,14 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.atctlsrpaper;
 
+import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -38,6 +42,14 @@ public class ATCTLSRPaperCoordinator extends AbstractDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("ATC_.*");
+    }
+
+    @NonNull
+    @Override
+    public Collection<? extends ScanFilter> createBLEScanFilters() {
+        ParcelUuid ATCTLSRPaperService = new ParcelUuid(ATCTLSRPaperDeviceSupport.UUID_SERVICE_MAIN);
+        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(ATCTLSRPaperService).build();
+        return Collections.singletonList(filter);
     }
 
     @Override
