@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer, José Rebelo
+/*  Copyright (C) 2015-2025 Carsten Pfeiffer, José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -32,9 +32,6 @@ import androidx.core.app.NotificationCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
-
-import ch.qos.logback.classic.LoggerContext;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
@@ -51,19 +48,29 @@ public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
         mNotifyOnCrash = notifyOnCrash;
     }
 
+    /// Log and notify the unhandled exception
+    /// Flushing and closing the log is handled by {@link GBApplication.ShutdownHook}
     @Override
     public void uncaughtException(@NonNull Thread thread, @NonNull Throwable ex) {
-        LOG.error("Uncaught exception", ex);
-        // flush the log buffers and stop logging
-        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-        loggerContext.stop();
+        // This method is only called if something is seriously wrong so be very generous
+        // with try-catch.
+        try {
+            LOG.error("Uncaught exception in {}", thread.getName(), ex);
+        } catch (Throwable ignored) {
+        }
 
         if (mNotifyOnCrash) {
-            showNotification(ex);
+            try {
+                showNotification(ex);
+            } catch (Throwable ignored) {
+            }
         }
 
         if (mDelegate != null) {
-            mDelegate.uncaughtException(thread, ex);
+            try {
+                mDelegate.uncaughtException(thread, ex);
+            }catch (Throwable ignored){
+            }
         } else {
             System.exit(1);
         }

@@ -1,8 +1,8 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Damien Gaignon, Daniel Dakhno, Daniele Gobbetti, Davis Mosenkovs,
     Dmitriy Bogdanov, Joel Beckmeyer, José Rebelo, Kornél Schmidt, Ludovic
     Jozeau, Martin, Martin.JM, mvn23, Normano64, odavo32nof, Pauli Salmenrinne,
-    Pavel Elagin, Petr Vaněk, Saul Nunez, Taavi Eomäe, x29a
+    Pavel Elagin, Petr Vaněk, Saul Nunez, Taavi Eomäe, x29a, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -65,6 +65,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import ch.qos.logback.core.spi.LifeCycle;
 import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
@@ -113,6 +114,7 @@ import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_ID_ERROR
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
+import org.slf4j.LoggerFactory;
 
 /**
  * Main Application class that initializes and provides access to certain things like
@@ -122,6 +124,7 @@ public class GBApplication extends Application {
     // Since this class must not log to slf4j, we use plain android.util.Log
     private static final String TAG = "GBApplication";
     public static final String DATABASE_NAME = "Gadgetbridge";
+    private static volatile ShutdownHook SHUTDOWN_HOOK;
 
     private static GBApplication context;
     private static final Lock dbLock = new ReentrantLock();
@@ -167,6 +170,24 @@ public class GBApplication extends Application {
 
     private long lastAutoExportTimestamp = 0;
     private long autoExportScheduledTimestamp = 0;
+
+
+    /// flush the log buffer and stop file logging
+    private static final class ShutdownHook implements Runnable {
+        @Override
+        public void run() {
+            try {
+                logging.stopFileLogger();
+            } catch (Throwable ignored) {
+            }
+
+            try {
+                LifeCycle lifeCycle = (LifeCycle) LoggerFactory.getILoggerFactory();
+                lifeCycle.stop();
+            } catch (Throwable ignored) {
+            }
+        }
+    }
 
     public static void quit() {
         GB.log("Quitting Gadgetbridge...", GB.INFO, null);
@@ -359,6 +380,15 @@ public class GBApplication extends Application {
 
     public static void setupLogging(boolean enabled) {
         logging.setupLogging(enabled);
+
+        // prepare for log shutdown
+        if(SHUTDOWN_HOOK == null) {
+            //noinspection NonThreadSafeLazyInitialization
+            SHUTDOWN_HOOK = new ShutdownHook();
+            Thread thread = new Thread(SHUTDOWN_HOOK, "shutdownHook");
+            Runtime runtime = Runtime.getRuntime();
+            runtime.addShutdownHook(thread);
+        }
     }
 
     public static String getLogPath() {

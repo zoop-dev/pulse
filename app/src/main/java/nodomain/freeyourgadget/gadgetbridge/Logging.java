@@ -121,7 +121,7 @@ public abstract class Logging {
         fileLogger = fileAppender;
     }
 
-    private void stopFileLogger() {
+    void stopFileLogger() {
         if (fileLogger == null) {
             return;
         }
