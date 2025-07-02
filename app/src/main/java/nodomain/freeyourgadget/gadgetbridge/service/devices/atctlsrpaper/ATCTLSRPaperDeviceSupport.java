@@ -60,6 +60,7 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(ATCTLSRPaperDeviceSupport.class);
     private static final byte[] COMMAND_GET_CONFIGURATION = new byte[]{0x00, 0x05};
 
+    private static final byte[] COMMAND_CONFIGURE_HS_154_BWRY_JD = new byte[]{0x00, 0x10, 0x26, 0x00, 0x6C, 0x00, 0x05, 0x00, 0x01, 0x01, 0x00, (byte) 0xC8, 0x00, (byte) 0xC8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x01, 0x02, 0x01, 0x10, 0x03, (byte) 0x80, 0x01, 0x02, 0x00, 0x00, 0x00, 0x04, 0x03, 0x00, 0x00, (byte) 0x80, 0x03, 0x40, 0x01, 0x20, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0x10, 0x01, 0x08, 0x03, (byte) 0x80, 0x00, 0x00, 0x01, 0x02, 0x02, 0x02, 0x40, 0x02, 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     private int epaper_width = 0;
     private int epaper_height = 0;
     private int epaper_colors = 0;
@@ -239,6 +240,10 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         buf.position(32);
         epaper_colors = buf.get();
 
+        if (epaper_width == 200 && epaper_height == 200 && model == 0x26) {
+            model = 10000; //HACK for unsupported HS 154 BWRY JD
+        }
+
         LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model);
 
         SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).edit();
@@ -258,7 +263,12 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
             if (DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL.equals(config)) {
                 SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
                 String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL, "1");
-                builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, Byte.parseByte(display_model)});
+                int model = Integer.parseInt(display_model);
+                if (model == 10000) {// HACK: this is for the HS 213 BWRY JD type
+                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_CONFIGURE_HS_154_BWRY_JD);
+                } else {
+                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, (byte) model});
+                }
             }
             builder.queue(getQueue());
         } catch (IOException e) {

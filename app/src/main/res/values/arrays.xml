@@ -5019,6 +5019,9 @@
         <item name="31">HS 583 BWY UC</item>
         <item name="6">HS 750 BWY UC</item>
 
+        <!-- hack, not officially in the list -->
+        <item name="10000">HS 154 BWRY JD</item>
+
         <item name="38">HS 200 BWRY JD</item>
         <item name="17">HS 350 BWRY JD</item>
         <item name="37">HS 750 BWRY JD</item>
@@ -5032,6 +5035,8 @@
 
         <item name="36">WO 290 BWRY JD</item>
         <item name="39">WO 290 BWRY JD V2</item>
+
+
     </string-array>
 
     <string-array name="atc_tlsr_paper_models_values">
@@ -5067,6 +5072,9 @@
         <item>2</item>
         <item>31</item>
         <item>6</item>
+
+        <!-- hack, not officially in the list -->
+        <item>10000</item>
 
         <item>38</item>
         <item>17</item>
