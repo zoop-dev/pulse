@@ -4985,4 +4985,101 @@
         <item>90</item>
     </string-array>
 
+    <string-array name="atc_tlsr_paper_models">
+        <item name="29">Gici 213 BW SSD</item>
+        <item name="13">Gici 213 BW ST</item>
+        <item name="30">Gici 213 BW UC</item>
+
+        <item name="11">Gici 213 BWR SSD</item>
+        <item name="28">Gici 213 BWR UC</item>
+        <item name="12">Gici 290 BWR SSD</item>
+        <item name="22">Gici 420 BWR SSD</item>
+
+        <item name="25">HS 213 BW SSD</item>
+        <item name="10">HS 213 BW UC</item>
+        <item name="32">HS 350 BW SSD</item>
+        <item name="4">HS 350 BW UC</item>
+
+        <item name="18">HS 154 BWR H SSD</item>
+        <item name="16">HS 213 BWR SSD</item>
+        <item name="19">HS 213 BWR UC</item>
+        <item name="9">HS 266 BWR SSD</item>
+        <item name="33">HS 266 BWR SSD Offset</item>
+        <item name="24">HS 290 BWR SSD</item>
+        <item name="8">HS 350 BWR SSD</item>
+        <item name="7">HS 350 BWR UC</item>
+        <item name="20">HS 420 BWR SSD</item>
+        <item name="21">HS 420 BWR UC</item>
+
+        <item name="5">HS 200 BWY SSD</item>
+        <item name="35">HS 346 BWY UC</item>
+        <item name="3">HS 350 BWY SSD</item>
+        <item name="1">HS 350 BWY UC</item>
+        <item name="2">HS 350 BWY UC Inverted</item>
+        <item name="31">HS 583 BWY UC</item>
+        <item name="6">HS 750 BWY UC</item>
+
+        <item name="38">HS 200 BWRY JD</item>
+        <item name="17">HS 350 BWRY JD</item>
+        <item name="37">HS 750 BWRY JD</item>
+
+        <item name="26">TI 581 BW</item>
+        <item name="27">TI 581 BWR</item>
+        <item name="34">TI 581 BWR UC</item>
+        <item name="14">TI 970 BWR</item>
+        <item name="15">TI 1200 BWR</item>
+        <item name="23">TI 1200 BWR V2</item>
+
+        <item name="36">WO 290 BWRY JD</item>
+        <item name="39">WO 290 BWRY JD V2</item>
+    </string-array>
+
+    <string-array name="atc_tlsr_paper_models_values">
+        <item>29</item>
+        <item>13</item>
+        <item>30</item>
+
+        <item>11</item>
+        <item>28</item>
+        <item>12</item>
+        <item>22</item>
+
+        <item>25</item>
+        <item>10</item>
+        <item>32</item>
+        <item>4</item>
+
+        <item>18</item>
+        <item>16</item>
+        <item>19</item>
+        <item>9</item>
+        <item>33</item>
+        <item>24</item>
+        <item>8</item>
+        <item>7</item>
+        <item>20</item>
+        <item>21</item>
+
+        <item>5</item>
+        <item>35</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>31</item>
+        <item>6</item>
+
+        <item>38</item>
+        <item>17</item>
+        <item>37</item>
+
+        <item>26</item>
+        <item>27</item>
+        <item>34</item>
+        <item>14</item>
+        <item>15</item>
+        <item>23</item>
+
+        <item>36</item>
+        <item>39</item>
+    </string-array>
 </resources>

@@ -649,4 +649,6 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_DEVICE_STRESS_TEST_CONNECT_COUNT = "pref_device_stress_test_connect_count";
     public static final String PREF_DEVICE_STRESS_TEST_CONNECT_PARALLEL = "pref_device_stress_test_connect_parallel";
     public static final String PREF_DEVICE_STRESS_TEST_DISPOSE = "pref_device_stress_test_dispose";
+
+    public static final String PREF_ATC_TSLR_PAPER_MODEL = "pref_atc_tslr_paper_model";
 }

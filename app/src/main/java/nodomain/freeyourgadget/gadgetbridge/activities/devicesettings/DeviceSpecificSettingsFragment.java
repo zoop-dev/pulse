@@ -967,6 +967,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_CALENDAR_MAX_DESC_LENGTH);
         addPreferenceHandlerFor(PREF_CALENDAR_TARGET_APP);
 
+        addPreferenceHandlerFor(PREF_ATC_TSLR_PAPER_MODEL);
+
         final Preference dischargeIntervalsSet = findPreference(PREF_BATTERY_DISCHARGE_INTERVALS_SET);
         if (dischargeIntervalsSet != null) {
             dischargeIntervalsSet.setOnPreferenceClickListener(preference -> {

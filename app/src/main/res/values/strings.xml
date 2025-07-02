@@ -4085,4 +4085,5 @@
     <string name="pref_calendar_target_app_title">Target app on watch for calendar events</string>
     <string name="same_image_already_on_device">same image already on device</string>
     <string name="sending_image">sending image</string>
+    <string name="pref_atc_tlsr_model_title">Display Model</string>
 </resources>

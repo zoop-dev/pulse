@@ -1,7 +1,25 @@
+/*  Copyright (C) 2025 Andreas Shimokawa
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
 package nodomain.freeyourgadget.gadgetbridge.service.devices.atctlsrpaper;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -23,6 +41,7 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -207,6 +226,9 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         buf.position(6);
         int version = buf.getInt();
 
+        buf.position(17);
+        int model = buf.getShort();
+
         buf.position(21);
         boolean is_wh_swapped = buf.get() == 0x01;
 
@@ -217,11 +239,31 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         buf.position(32);
         epaper_colors = buf.get();
 
-        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped);
+        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model);
+
+        SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).edit();
+        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL, String.valueOf(model));
+        editor.apply();
 
         final TransactionBuilder builder = new TransactionBuilder("set initialized");
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
         builder.queue(getQueue());
+    }
+
+    @Override
+    public void onSendConfiguration(String config) {
+        TransactionBuilder builder;
+        try {
+            builder = performInitialized("Sending configuration for option: " + config);
+            if (DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL.equals(config)) {
+                SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
+                String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL, "1");
+                builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, Byte.parseByte(display_model)});
+            }
+            builder.queue(getQueue());
+        } catch (IOException e) {
+            GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
+        }
     }
 
     @Override
