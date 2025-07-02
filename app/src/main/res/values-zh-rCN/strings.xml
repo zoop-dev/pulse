@@ -2655,7 +2655,7 @@
     <string name="prefs_password_4_digits_0_to_9_summary">密码必须为 4 位数字，且只能使用数字</string>
     <string name="devicetype_mijia_mho_c303">米家 MHO-C303</string>
     <string name="sony_protocol_v1">版本 1</string>
-    <string name="devicetype_miband8pro">小米手环 8 Pro</string>
+    <string name="devicetype_miband8pro">小米手环8 Pro</string>
     <string name="flatDistance">平面距离</string>
     <string name="protocol_version">协议版本</string>
     <string name="devicetype_xiaomi_watch_s3">小米手表 S3</string>
@@ -2883,7 +2883,7 @@
     <string name="widget_layout_top_wide_bot_large">上面宽，下面大</string>
     <string name="widget_layout_top_large_bot_wide">上面大，下面宽</string>
     <string name="widget_name_colored_tile">%1$s （彩色磁贴）</string>
-    <string name="devicetype_redmi_watch_4">红米手表 4</string>
+    <string name="devicetype_redmi_watch_4">红米手表4</string>
     <string name="pref_speak_notifications_aloud_summary">通知将通过耳机大声朗读</string>
     <string name="pref_speak_notifications_aloud_title">大声说出通知</string>
     <string name="widget_name_untitled">无标题小部件（%1$s）</string>
@@ -3411,7 +3411,7 @@
     <string name="vo2max_running">跑步最大摄氧量</string>
     <string name="thirty_days_timeline">30 天时间线</string>
     <string name="devicetype_miband9">小米手环9</string>
-    <string name="devicetype_redmi_watch_5_active">红米手表 5 Active</string>
+    <string name="devicetype_redmi_watch_5_active">红米手表5 Active</string>
     <string name="devicetype_huawei_watchgt5">华为 Watch GT 5 (Pro)</string>
     <string name="pref_title_sync_birthdays">同步生日</string>
     <string name="birthdays">生日</string>
@@ -3620,7 +3620,7 @@
     <string name="redmi_buds_5_pro_equalizer_5">5 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
-    <string name="devicetype_miband9pro">小米手环 9 Pro</string>
+    <string name="devicetype_miband9pro">小米手环9 Pro</string>
     <string name="music_multiselect_limit">已达到选择多于一项的限制</string>
     <string name="sleep_avg">平均睡眠</string>
     <string name="respiratoryrate">呼吸频率</string>
@@ -3707,7 +3707,7 @@
     <string name="activity_detail_inspect_file">检查文件</string>
     <string name="fit_file_viewer">FIT 文件查看器</string>
     <string name="pref_garmin_fake_oauth_summary">修复了一些功能，例如天气和AGP的更新，而无需每90天连接到官方应用程序。</string>
-    <string name="devicetype_miband9active">小米智能手环9 活动版</string>
+    <string name="devicetype_miband9active">小米手环9 Active</string>
     <string name="pref_garmin_fake_oauth_title">发送假的OAuth回复</string>
     <string name="devicetype_sony_wh_ult900n">索尼 WH-ULT900N</string>
     <string name="devicetype_garmin_lily_2_active">佳明 Lily 2 活动版</string>
@@ -4025,10 +4025,10 @@
     <string name="pref_huawei_activity_reminder_stand_summary">如果您 1 小时未站立，则会收到提醒</string>
     <string name="even_realities_right_lens">右镜片</string>
     <string name="silent_mode">静音模式</string>
-    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="devicetype_garmin_vivosmart_4">佳明 Vívosmart 4</string>
     <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
-    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
-    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
+    <string name="devicetype_realme_buds_t100">真我 Buds T100</string>
+    <string name="devicetype_realme_buds_t300">真我 Buds T300</string>
     <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
     <string name="devicetype_amazfit_active_2_nfc">跃我 Active 2 NFC</string>
     <string name="devicetype_sony_wf_c710n">索尼 WF-C710N</string>
@@ -4047,10 +4047,10 @@
     <string name="pref_aawireless_developer_mode_summary">启用应用开发</string>
     <string name="pref_aawireless_disable_media_sink_summary">允许通过其他蓝牙设备播放媒体</string>
     <string name="pref_aawireless_disable_media_sink_title">禁用媒体接收</string>
-    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
+    <string name="devicetype_garmin_instinct_3_tactical">佳明 Instinct 3 Tactical</string>
     <string name="calorie_under_goal">低于目标：%1$d 千卡</string>
     <string name="discovery_bonding_error">配对失败：%1$s</string>
-    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
+    <string name="devicetype_garmin_edge_explore_2">佳明 Edge Explore 2</string>
     <string name="resting_calories_total">静息总计</string>
     <string name="pref_even_realities_g1_screen_location_title">屏幕位置</string>
     <string name="pref_even_realities_g1_screen_activation_angle_summary">更改佩戴者抬头以显示仪表盘的高度</string>
@@ -4067,7 +4067,7 @@
     <string name="pairing_bonding_under_way">请允许配对过程完成几秒钟。</string>
     <string name="busy_task_fetch_training_data_finished">训练数据已接收！</string>
     <string name="devicetype_huawei_freebuds_6">华为 FreeBuds 6</string>
-    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
+    <string name="devicetype_redmi_buds_6_pro">红米 Buds 6 Pro</string>
     <string name="devicetype_aawireless">AAWireless</string>
     <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
     <string name="devicetype_colmi_v72">Colmi V72</string>
@@ -4126,7 +4126,7 @@
     <string name="wifi_frequency">Wi-Fi 频率</string>
     <string name="active_calories_avg">活跃平均</string>
     <string name="calorie_over_goal">超出目标：%1$d 千卡</string>
-    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="devicetype_garmin_forerunner_645_music">佳明 Forerunner 645 Music</string>
     <string name="devicetype_huawei_watchfit4pro">华为 Watch Fit 4（Pro）</string>
     <string name="devicetype_pixel_buds_a_series">Pixel Buds A 系列</string>
     <string name="devicetype_huawei_watch5">华为 Watch 5</string>
@@ -4141,15 +4141,15 @@
     <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
     <string name="connection_priority_low_power_title">请求低功耗</string>
     <string name="connection_priority_low_power_summary">降低蓝牙优先级和数据速率连接参数。</string>
-    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="devicetype_garmin_forerunner_630">佳明 Forerunner 630</string>
     <string name="prefs_device_support_settings">设备支持</string>
     <string name="device_support_can_reconnect_title">复用设备支持</string>
     <string name="device_support_can_reconnect_summary">重新连接穿戴设备时复用设备支持实例。</string>
-    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
+    <string name="devicetype_garmin_descent_mk3">佳明 Descent Mk3</string>
     <string name="devicetype_amazfit_balance_2">跃我 Balance 2</string>
     <string name="devicetype_amazfit_helio_strap">跃我 Helio Strap</string>
-    <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
-    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
+    <string name="devicetype_garmin_forerunner_945">佳明 Forerunner 945</string>
+    <string name="devicetype_redmi_watch_5">红米手表5</string>
     <string name="devicetype_yawell_r10">雅威尔 R10</string>
     <string name="devicetype_yawell_r11">雅威尔 R11</string>
     <string name="devicetype_atc_tlsr_paper">ATC_TLSR_Paper</string>
@@ -4160,4 +4160,6 @@
     <string name="pref_calendar_target_app_title">手表日历事件的目标应用</string>
     <string name="same_image_already_on_device">设备上已存在相同图片</string>
     <string name="sending_image">正在发送图片</string>
+    <string name="devicetype_miband10">小米手环10</string>
+    <string name="devicetype_garmin_venu_x1">佳明 Venu X1</string>
 </resources>
