@@ -1849,7 +1849,7 @@
     <string name="spo2_perc_90">90%</string>
     <string name="spo2_off">关闭</string>
     <string name="spo2_perc_80">80%</string>
-    <string name="devicetype_miband7">小米智能手环7</string>
+    <string name="devicetype_miband7">小米手环7</string>
     <string name="prefs_relaxation_reminder_title">放松提醒</string>
     <string name="menuitem_workout_history">锻炼历史</string>
     <string name="pref_sleep_breathing_quality_monitoring">睡眠呼吸质量监测</string>
@@ -2524,7 +2524,7 @@
     <string name="pref_sleep_mode_schedule_summary">发出一个提醒并在就寝时间进入睡眠模式。 在预定的起床时间，起床闹钟将会响起。</string>
     <string name="pref_title_casio_alert_sms">短信通知提醒</string>
     <string name="menuitem_alerts">提醒</string>
-    <string name="devicetype_miband7pro">小米智能手环 7 Pro</string>
+    <string name="devicetype_miband7pro">小米手环7 Pro</string>
     <string name="devicetype_xiaomi_watch_s1_active">小米手表 S1 运动版</string>
     <string name="devicetype_mi_watch_color_sport">小米手表彩色运动版</string>
     <string name="devicetype_pixoo">Pixoo</string>
@@ -2779,7 +2779,7 @@
     <string name="scan_scanning_single_device">正在扫描一个设备</string>
     <string name="scan_scanning_multiple_devices">正在扫描 %d 个设备</string>
     <string name="notification_channel_scan_service_name">扫描服务</string>
-    <string name="devicetype_miband8active">小米智能手环8 运动版</string>
+    <string name="devicetype_miband8active">小米手环8 运动版</string>
     <string name="pref_wide_area_tap_summary">识别脸颊和耳朵之间的轻拍</string>
     <string name="pref_wide_area_tap_title">大范围触击</string>
     <string name="pref_header_sony_sound_control">声音控制</string>
