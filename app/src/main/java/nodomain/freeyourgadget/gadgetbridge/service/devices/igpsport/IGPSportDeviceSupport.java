@@ -180,6 +180,12 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         builder.write(writeCharacteristic, factoryGetBatterydata);
 
+        Factory.factory_msg.Builder snFfactoryBuilder = Factory.factory_msg.newBuilder();
+        snFfactoryBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY);
+        snFfactoryBuilder.setFactoryOperateType(Factory.FACTORY_OPERATE_TYPE.enum_FACTORY_OPERATE_TYPE_SN_GET);
+        byte[] factoryGetSNdata = craftData(snFfactoryBuilder.getServiceType().getNumber(), 0xff, snFfactoryBuilder.getFactoryOperateType().getNumber(), snFfactoryBuilder.build().toByteArray());
+        builder.write(writeCharacteristic, factoryGetSNdata);
+
         // set device firmware to prevent the following error when you (later) try to save data to database and
         // device firmware has not been set yet
         // Error executing 'the bind value at index 2 is null'java.lang.IllegalArgumentException: the bind value at index 2 is null
@@ -280,6 +286,11 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         Factory.factory_msg factoryMsg = Factory.factory_msg.parseFrom(data);
         if (factoryMsg.hasBattaryMsg()) {
             gbDevice.setBatteryLevel(factoryMsg.getBattaryMsg().getPowerPercent());
+        }
+        if (factoryMsg.getFactorySnMsgList().size() > 0) {
+            // save serial to volatile address now, need to find way to use it as identifier in database
+            // instead of MAc, because MAC changes on rebind for this devices
+            gbDevice.setVolatileAddress(factoryMsg.getFactorySnMsg(0).getSn());
         }
     }
 
