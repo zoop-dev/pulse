@@ -25,11 +25,11 @@ import android.util.SparseArray;
 import java.util.HashMap;
 
 public class BleNamesResolver {
-    private static HashMap<String, String> mServices = new HashMap<>();
-    private static HashMap<String, String> mCharacteristics = new HashMap<>();
-    private static SparseArray<String> mValueFormats = new SparseArray<>();
-    private static SparseArray<String> mAppearance = new SparseArray<>();
-    private static SparseArray<String> mHeartRateSensorLocation = new SparseArray<>();
+    private static HashMap<String, String> mServices = new HashMap<>(100);
+    private static HashMap<String, String> mCharacteristics = new HashMap<>(600);
+    private static SparseArray<String> mValueFormats = new SparseArray<>(10);
+    private static SparseArray<String> mAppearance = new SparseArray<>(20);
+    private static SparseArray<String> mHeartRateSensorLocation = new SparseArray<>(10);
 
     static public String resolveServiceName(final String uuid) {
         String result = mServices.get(uuid);
@@ -363,6 +363,17 @@ public class BleNamesResolver {
         }
     }
 
+    /// lookup description for numeric {@link BluetoothGatt#requestConnectionPriority} priorities
+    public static String getConnectionPriorityString(int priority){
+        return switch (priority) {
+            case BluetoothGatt.CONNECTION_PRIORITY_BALANCED -> "CONNECTION_PRIORITY_BALANCED";
+            case BluetoothGatt.CONNECTION_PRIORITY_HIGH -> "CONNECTION_PRIORITY_HIGH";
+            case BluetoothGatt.CONNECTION_PRIORITY_LOW_POWER -> "CONNECTION_PRIORITY_LOW_POWER";
+            case BluetoothGatt.CONNECTION_PRIORITY_DCK -> "CONNECTION_PRIORITY_DCK";
+            default -> "priority_" + priority;
+        };
+    }
+
     static public String getCharacteristicPropertyString(int property) {
         StringBuilder builder = new StringBuilder();
         if (BluetoothGattCharacteristic.PROPERTY_BROADCAST == (BluetoothGattCharacteristic.PROPERTY_BROADCAST & property)) {
@@ -484,6 +495,8 @@ public class BleNamesResolver {
         mServices.put("86f65000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Request)");
         mServices.put("86f66000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
         mServices.put("8d53dc1d-1db7-4cd3-868b-8a527460aa84", "(Propr: SMP - Simple Management Protocol)");
+        mServices.put("6e40fff0-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: NUS - Nordic UART Service)");
+        mServices.put("de5bf728-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Serial)");
 
         // source https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/uuids/characteristic_uuids.yaml
         mCharacteristics.put("00002a00-0000-1000-8000-00805f9b34fb", "Device Name");
@@ -1015,6 +1028,10 @@ public class BleNamesResolver {
         mCharacteristics.put("86f65002-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Response)");
         mCharacteristics.put("86f66001-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
         mCharacteristics.put("da2e7828-fbce-4e01-ae9e-261174997c48", "(Propr: SMP - Simple Management Protocol)");
+        mCharacteristics.put("6e400002-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: Nordic UART TX)");
+        mCharacteristics.put("6e400003-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: Nordic UART RX)");
+        mCharacteristics.put("de5bf729-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Notify)");
+        mCharacteristics.put("de5bf72a-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Write)");
 
         mValueFormats.put(52, "32bit float");
         mValueFormats.put(50, "16bit float");

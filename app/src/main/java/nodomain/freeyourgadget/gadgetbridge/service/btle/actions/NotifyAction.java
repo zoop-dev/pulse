@@ -142,7 +142,7 @@ public class NotifyAction extends BtLEAction {
         BluetoothGattCharacteristic characteristic = getCharacteristic();
         String uuid = characteristic == null ? "(null)" : characteristic.getUuid().toString();
 
-        return getCreationTime() + ": " + getClass().getSimpleName() + " " + uuid +
+        return getCreationTime() + " " + getClass().getSimpleName() + " " + uuid +
                 (enableFlag ? " enable" : " disable");
     }
 }

@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
 /// Calls {@link BluetoothGatt#requestConnectionPriority(int)}.
@@ -43,6 +44,7 @@ public class RequestConnectionPriorityAction extends BtLEAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + " priority=" + priority;
+        return getCreationTime() + " " + getClass().getSimpleName() + " " +
+                BleNamesResolver.getConnectionPriorityString(priority);
     }
 }

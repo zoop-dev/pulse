@@ -16,9 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 public abstract class AbstractTransaction {
     private final String mName;
@@ -33,14 +31,15 @@ public abstract class AbstractTransaction {
     }
 
     protected String getCreationTime() {
-        return DateFormat.getTimeInstance(DateFormat.MEDIUM).format(new Date(creationTimestamp));
+        return DateTimeUtils.formatLocalTime(creationTimestamp);
     }
 
     public abstract int getActionCount();
 
     @Override
     public String toString() {
-        return String.format(Locale.US, "%s: Transaction task: %s with %d actions", getCreationTime(), getTaskName(), getActionCount());
+        return getCreationTime() + " " + getClass().getSimpleName() + " with "
+                + getActionCount() + " actions for " + getTaskName();
     }
 
 }

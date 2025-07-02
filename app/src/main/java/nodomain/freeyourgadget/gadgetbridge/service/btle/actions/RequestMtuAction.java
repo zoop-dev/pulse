@@ -46,6 +46,6 @@ public class RequestMtuAction extends BtLEAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + " mtu=" + mtu;
+        return getCreationTime() + " " + getClass().getSimpleName() + " mtu=" + mtu;
     }
 }

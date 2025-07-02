@@ -43,6 +43,6 @@ public class WaitAction extends PlainAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + " " + mMillis + " ms";
+        return getCreationTime() + " " + getClass().getSimpleName() + " " + mMillis + " ms";
     }
 }

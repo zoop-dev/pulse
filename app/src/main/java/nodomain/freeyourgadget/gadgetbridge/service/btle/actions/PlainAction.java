@@ -37,6 +37,6 @@ public abstract class PlainAction extends BtLEAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName();
+        return getCreationTime() + " " + getClass().getSimpleName();
     }
 }

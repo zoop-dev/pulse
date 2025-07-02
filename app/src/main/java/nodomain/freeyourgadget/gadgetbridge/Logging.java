@@ -17,6 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,14 @@ public abstract class Logging {
             } else {
                 stopFileLogger();
             }
-            getLogger().info("Gadgetbridge version: {}-{}", BuildConfig.VERSION_NAME, BuildConfig.GIT_HASH_SHORT);
+            getLogger().info("Gadgetbridge version: {}-{} {} {}", BuildConfig.VERSION_NAME,
+                    BuildConfig.GIT_HASH_SHORT, BuildConfig.FLAVOR, BuildConfig.BUILD_TYPE);
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                getLogger().info("Android: SDK_INT={}", Build.VERSION.SDK_INT);
+            } else {
+                getLogger().info("Android: SDK_INT_FULL={} SECURITY_PATCH={}", Build.VERSION.SDK_INT_FULL, Build.VERSION.SECURITY_PATCH);
+            }
         } catch (Exception ex) {
             Log.e("GBApplication", "External files dir not available, cannot log to file", ex);
             stopFileLogger();

@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
-import java.util.Date;
-
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 /**
@@ -67,12 +65,12 @@ public abstract class BtLEAction {
     }
 
     protected String getCreationTime() {
-        return DateTimeUtils.formatDateTime(new Date(creationTimestamp));
+        return DateTimeUtils.formatLocalTime(creationTimestamp);
     }
 
     public String toString() {
         BluetoothGattCharacteristic characteristic = getCharacteristic();
         String uuid = characteristic == null ? "(null)" : characteristic.getUuid().toString();
-        return getCreationTime() + ": " + getClass().getSimpleName() + " on characteristic: " + uuid;
+        return getCreationTime() + " " + getClass().getSimpleName() + " on characteristic " + uuid;
     }
 }

@@ -64,6 +64,6 @@ public class SetProgressAction extends PlainAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + ": " + text + "; " + percentage + "%";
+        return getCreationTime() + " " + getClass().getSimpleName() + ": " + text + "; " + percentage + "%";
     }
 }

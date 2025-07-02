@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.Nullable;
 
@@ -49,11 +48,6 @@ public class ServerTransaction extends AbstractTransaction {
 
     public boolean isEmpty() {
         return mActions.isEmpty();
-    }
-
-    @Override
-    public String toString() {
-        return String.format(Locale.US, "%s: Transaction task: %s with %d actions", getCreationTime(), getTaskName(), mActions.size());
     }
 
     public void setCallback(@Nullable GattServerCallback callback) {

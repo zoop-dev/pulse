@@ -58,6 +58,6 @@ public class ReadAction extends BtLEAction {
     public String toString() {
         BluetoothGattCharacteristic characteristic = getCharacteristic();
         String uuid = characteristic == null ? "(null)" : characteristic.getUuid().toString();
-        return getCreationTime() + ": " + getClass().getSimpleName() + " " + uuid;
+        return getCreationTime() + " " + getClass().getSimpleName() + " " + uuid;
     }
 }

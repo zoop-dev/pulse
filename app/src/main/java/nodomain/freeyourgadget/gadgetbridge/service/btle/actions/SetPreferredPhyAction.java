@@ -70,7 +70,7 @@ public class SetPreferredPhyAction extends BtLEAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + " tx=" + mTxPhy
+        return getCreationTime() + " " + getClass().getSimpleName() + " tx=" + mTxPhy
                 + " rx=" + mRxPhy + " opt=" + mPhyOptions;
     }
 }

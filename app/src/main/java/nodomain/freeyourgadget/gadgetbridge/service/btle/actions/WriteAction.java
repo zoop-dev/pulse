@@ -30,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
  * Invokes a write operation on a given {@link BluetoothGattCharacteristic}.
@@ -111,7 +112,7 @@ public class WriteAction extends BtLEAction {
     public String toString() {
         BluetoothGattCharacteristic characteristic = getCharacteristic();
         String uuid = characteristic == null ? "(null)" : characteristic.getUuid().toString();
-        return getCreationTime() + ": " + getClass().getSimpleName() + " " + uuid + " - "
-                + Logging.formatBytes(getValue());
+        return getCreationTime() + " " + getClass().getSimpleName() + " " + uuid + " - "
+                + GB.hexdump(getValue());
     }
 }

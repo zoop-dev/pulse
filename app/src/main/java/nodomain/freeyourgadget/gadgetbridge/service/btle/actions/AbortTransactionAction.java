@@ -28,9 +28,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbortTransactionAction extends PlainAction {
     private static final Logger LOG = LoggerFactory.getLogger(AbortTransactionAction.class);
 
-    public AbortTransactionAction() {
-    }
-
     @Override
     public boolean run(BluetoothGatt gatt) {
         if (shouldAbort()) {
@@ -44,6 +41,6 @@ public abstract class AbortTransactionAction extends PlainAction {
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getSimpleName() + ": aborting? " + shouldAbort();
+        return getCreationTime() + " " + getClass().getSimpleName() + " abort=" + shouldAbort();
     }
 }
