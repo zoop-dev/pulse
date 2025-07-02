@@ -2655,7 +2655,7 @@
     <string name="prefs_password_4_digits_0_to_9_summary">密码必须为 4 位数字，且只能使用数字</string>
     <string name="devicetype_mijia_mho_c303">米家 MHO-C303</string>
     <string name="sony_protocol_v1">版本 1</string>
-    <string name="devicetype_miband8pro">小米智能手环 8 Pro</string>
+    <string name="devicetype_miband8pro">小米手环 8 Pro</string>
     <string name="flatDistance">平面距离</string>
     <string name="protocol_version">协议版本</string>
     <string name="devicetype_xiaomi_watch_s3">小米手表 S3</string>
@@ -2779,7 +2779,7 @@
     <string name="scan_scanning_single_device">正在扫描一个设备</string>
     <string name="scan_scanning_multiple_devices">正在扫描 %d 个设备</string>
     <string name="notification_channel_scan_service_name">扫描服务</string>
-    <string name="devicetype_miband8active">小米手环8 运动版</string>
+    <string name="devicetype_miband8active">小米手环8 Active</string>
     <string name="pref_wide_area_tap_summary">识别脸颊和耳朵之间的轻拍</string>
     <string name="pref_wide_area_tap_title">大范围触击</string>
     <string name="pref_header_sony_sound_control">声音控制</string>
@@ -3410,7 +3410,7 @@
     <string name="devicetype_garmin_forerunner_265s">佳明 Forerunner 265S</string>
     <string name="vo2max_running">跑步最大摄氧量</string>
     <string name="thirty_days_timeline">30 天时间线</string>
-    <string name="devicetype_miband9">小米智能手环 9</string>
+    <string name="devicetype_miband9">小米手环9</string>
     <string name="devicetype_redmi_watch_5_active">红米手表 5 Active</string>
     <string name="devicetype_huawei_watchgt5">华为 Watch GT 5 (Pro)</string>
     <string name="pref_title_sync_birthdays">同步生日</string>
