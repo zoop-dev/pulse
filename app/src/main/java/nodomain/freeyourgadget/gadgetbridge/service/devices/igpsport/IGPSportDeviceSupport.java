@@ -1,6 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
 
+import static nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX;
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
@@ -13,12 +15,14 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -51,7 +55,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
@@ -73,6 +79,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     public final DeviceInfoProfile<IGPSportDeviceSupport> deviceInfoProfile;
     public final BatteryInfoProfile<IGPSportDeviceSupport> batteryInfoProfile;
     private IGPSportRoutesManager routeManager;
+    private IGPSportDownloadManager downloadManager;
 
 
     private int mtuSize=247; //FIXME use actual device mtu
@@ -80,6 +87,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         super(LOG);
 
         routeManager = new IGPSportRoutesManager(this);
+        downloadManager = new IGPSportDownloadManager(this);
 
         addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
         addSupportedService(GattService.UUID_SERVICE_BATTERY_SERVICE);
@@ -90,9 +98,9 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             public void notify(Intent intent) {
                 String action = intent.getAction();
                 if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
-                    handleDeviceInfo((nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo) intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
+                    handleDeviceInfo((DeviceInfo) intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
                 } else if (BatteryInfoProfile.ACTION_BATTERY_INFO.equals(action)) {
-                    handleBatteryInfo((nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo) intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
+                    handleBatteryInfo((BatteryInfo) intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
                 }
             }
         };
@@ -109,7 +117,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_SERVICE);
         addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX);
         addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_SERVICE);
-        addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX);
+        addSupportedService(UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX);
         addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_SERVICE);
         addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FOURTH_RX);
         addSupportedService(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FORTH_SERVICE);
@@ -130,7 +138,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
 
-    public void handleBatteryInfo(nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo info) {
+    public void handleBatteryInfo(BatteryInfo info) {
         LOG.debug("iGPSport battery info: " + info);
         batteryCmd.level = (short) info.getPercentCharged();
         handleGBDeviceEvent(batteryCmd);
@@ -147,7 +155,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX), true);
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_SECOND_RX), true);
-        builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX), true);
+        builder.notify(getCharacteristic(UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX), true);
         builder.notify(getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FOURTH_RX), true);
 
         builder.setCallback(this);
@@ -211,40 +219,70 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
 
         byte[] data = characteristic.getValue();
+        if (downloadManager.needMoreData()) {
+            if (characteristicUUID.compareTo(UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX) == 0 ) {
+                downloadManager.addData(data);
+            }
+        }
+
         if (data[0] == IGPSportConstants.DATA_HEADER) {
 
             if (data != null && data.length > 20) {
                 byte mainService = data[1];
                 byte mainOperation = data[4];
-                int dataSize = ByteBuffer.wrap(data, 7, 2).getShort();
 
-                byte[] pbData = new byte[dataSize];
-                System.arraycopy(data, 20, pbData, 0, dataSize);
+                if (data[3] == (byte)0xff) {
+                    int dataSize = ByteBuffer.wrap(data, 7, 2).getShort();
 
-                try {
+                    byte[] pbData = new byte[dataSize];
+                    System.arraycopy(data, 20, pbData, 0, dataSize);
+
+                    try {
+                        switch (mainService) {
+                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
+                                handleFactoryData(pbData);
+                                break;
+                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
+                                handleFirmwareData(pbData);
+                                break;
+
+                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
+                                if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_LIST_SEND_VALUE) {
+                                    downloadManager.setFilesAvaliable(pbData);
+                                }
+                                break;
+                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
+                                if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET_VALUE) {
+                                    routeManager.handleRouteNumber(pbData);
+                                } else if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_SEND_VALUE) {
+                                    routeManager.handleRouteList(pbData);
+                                }
+                                break;
+                            default:
+                                LOG.error("Unknown general operation received");
+                        }
+                    } catch (InvalidProtocolBufferException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (data[3] == (byte)0x55) {
                     switch (mainService) {
-                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
-                            handleFactoryData(pbData);
-                            break;
-                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
-                            handleFirmwareData(pbData);
-                            break;
-                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
-                            if(mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET_VALUE) {
-                                routeManager.handleRouteNumber(pbData);
-                            } else if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_SEND_VALUE) {
-                                routeManager.handleRouteList(pbData);
+                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
+                            if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
+                                downloadManager.startDownload();
+                                downloadManager.addData(data);
                             }
                             break;
+                        default:
+                            LOG.error("Unknown file operation received");
                     }
-                } catch (InvalidProtocolBufferException e) {
-                    throw new RuntimeException(e);
                 }
 
             }
         }
 
         if (data[0] == 0x02) {
+
+
             //0215FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFF55
             byte mainService = data[1];
             byte mainOperation = data[4];
@@ -256,7 +294,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                         gbDevice.sendDeviceUpdateIntent(getContext());
                         TransactionBuilder builder = new TransactionBuilder("Route  upload finished");
                         if (result == 0) {
-                            builder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction(
+                            builder.add(new SetProgressAction(
                                     "Route upload completed",
                                     false,
                                     100,
@@ -264,7 +302,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                             ));
                             handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Route upload completed", Toast.LENGTH_LONG, GB.INFO));
                         } else {
-                            builder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction(
+                            builder.add(new SetProgressAction(
                                     "Route upload failed",
                                     false,
                                     0,
@@ -273,6 +311,12 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                             handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Failed to upload route", Toast.LENGTH_LONG, GB.ERROR));
                         }
                         builder.queue(getQueue());
+                    }
+                    break;
+
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
+                    if(mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
+                        LOG.info("Got reply from file service"); // Do we have to do something here?
                     }
                     break;
             }
@@ -380,7 +424,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             insDataMsgBuilder.setName(notificationSpec.title);
         if (notificationSpec.body != null)
             insDataMsgBuilder.setContent(notificationSpec.body);
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date());
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
         insDataMsgBuilder.setTime(timeStamp);
         insMsgBuilder.setInsDataMsg(insDataMsgBuilder);
         byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
@@ -408,7 +452,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         Ins.ins_data_message.Builder insDataMsgBuilder = Ins.ins_data_message.newBuilder();
         insDataMsgBuilder.setTelNum(ByteString.copyFromUtf8(callSpec.number));
         insDataMsgBuilder.setName(callSpec.name);
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date());
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
         insDataMsgBuilder.setTime(timeStamp);
         insMsgBuilder.setInsDataMsg(insDataMsgBuilder);
         byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
@@ -421,11 +465,10 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         TransactionBuilder builder = this.createTransactionBuilder("onfetchfitness");
         CyclingData.cycling_data_msg.Builder cycleDataMsg = CyclingData.cycling_data_msg.newBuilder();
         cycleDataMsg.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA);
-//        cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_LIST_GET);
+        cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_LIST_GET);
 //        cycleDataMsg.setListMsg(Common.file_list_get_message.newBuilder().setFileIndexStart(0).setFileIndexEnd(11) );
-        cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_GET);
-        cycleDataMsg.addCyclingDataFileFlagMsg( CyclingData.cycling_data_file_flag_message.newBuilder().setTimestamp(1092299406) ); //FIXME: hardcoded value from commented request above
-
+//        cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_GET);
+//        cycleDataMsg.addCyclingDataFileFlagMsg( CyclingData.cycling_data_file_flag_message.newBuilder().setTimestamp(1092299406) ); //FIXME: hardcoded value from commented request above
 
         byte[] cycleDataMsgBytes = craftData(cycleDataMsg.getServiceType().getNumber(), 0xff, cycleDataMsg.getCyclingDataOperateType().getNumber(), cycleDataMsg.build().toByteArray(), true);
 
@@ -563,6 +606,10 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public File getWritableExportDirectory() throws IOException {
+        return getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice());
     }
 
 }
