@@ -84,7 +84,7 @@ public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSuppor
         try {
             TransactionBuilder builder = getSupport().createTransactionBuilder("writeBleInit");
             builder.setCallback(this);
-            builder.write(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_BLE_CHARACTERISTIC_UUID), mBleSettings);
+            builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_BLE_CHARACTERISTIC_UUID), mBleSettings);
             getSupport().performImmediately(builder);
         } catch(IOException e) {
             LOG.error("Error writing BLE settings: " + e.getMessage());

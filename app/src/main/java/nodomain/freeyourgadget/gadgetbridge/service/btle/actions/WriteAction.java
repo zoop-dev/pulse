@@ -40,10 +40,16 @@ public class WriteAction extends BtLEAction {
     private static final Logger LOG = LoggerFactory.getLogger(WriteAction.class);
 
     private final byte[] value;
+    private final boolean legacyCompat;
 
     public WriteAction(BluetoothGattCharacteristic characteristic, byte[] value) {
+        this(characteristic, value, false);
+    }
+
+    public WriteAction(BluetoothGattCharacteristic characteristic, byte[] value, boolean legacyCompat) {
         super(characteristic);
         this.value = value;
+        this.legacyCompat = legacyCompat;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class WriteAction extends BtLEAction {
         int properties = characteristic.getProperties();
         //TODO: expectsResult should return false if PROPERTY_WRITE_NO_RESPONSE is true, but this leads to timing issues
         if ((properties & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0 || ((properties & BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0)) {
-            return writeCharacteristicImp(gatt, characteristic, getValue());
+            return writeCharacteristicImp(gatt, characteristic, getValue(), legacyCompat);
         }
 
         LOG.error("WriteAction for non-writeable characteristic {}", characteristic.getUuid());
@@ -64,14 +70,17 @@ public class WriteAction extends BtLEAction {
         if (LOG.isDebugEnabled()) {
             LOG.debug("writing to characteristic: {} - {}", characteristic.getUuid(), Logging.formatBytes(value));
         }
-        return writeCharacteristicImp(gatt, characteristic, value);
+        return writeCharacteristicImp(gatt, characteristic, value, false);
     }
 
     @SuppressLint("MissingPermission")
-    private static boolean writeCharacteristicImp(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
+    private static boolean writeCharacteristicImp(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, boolean legacyCompat) {
         if (GBApplication.isRunningTiramisuOrLater()) {
             // use API introduced in SDK level 33 to catch exceptions and more specific errors
             try {
+                if (legacyCompat) {
+                    characteristic.setValue(value);
+                }
                 final int status = gatt.writeCharacteristic(characteristic, value, characteristic.getWriteType());
                 if (status == BluetoothStatusCodes.SUCCESS) {
                     return true;

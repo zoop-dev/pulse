@@ -18,6 +18,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.os.Build;
@@ -61,6 +62,23 @@ public class TransactionBuilder {
             return this;
         }
         ReadAction action = new ReadAction(characteristic);
+        return add(action);
+    }
+
+    /// Use this only if <strong>ALL</strong> conditions are true:
+    /// <ol>
+    /// <li>characteristic has write type {@link BluetoothGattCharacteristic#WRITE_TYPE_NO_RESPONSE},</li>
+    /// <li>custom {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
+    /// uses {@link BluetoothGattCharacteristic#getValue()} and</li>
+    /// <li>no {@link BluetoothGatt#beginReliableWrite()} was used.</li>
+    /// </ol>
+    /// @see WriteAction
+    public TransactionBuilder writeLegacy(BluetoothGattCharacteristic characteristic, byte[] data) {
+        if (characteristic == null) {
+            LOG.warn("Unable to write characteristic: null");
+            return this;
+        }
+        WriteAction action = new WriteAction(characteristic, data, true);
         return add(action);
     }
 

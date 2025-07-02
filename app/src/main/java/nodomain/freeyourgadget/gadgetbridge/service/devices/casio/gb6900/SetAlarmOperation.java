@@ -118,7 +118,7 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
 
             try {
                 TransactionBuilder builder = performInitialized("setAlarm");
-                builder.write(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_ALM_CHARACTERISTIC_UUID), data);
+                builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_ALM_CHARACTERISTIC_UUID), data);
                 builder.queue(getQueue());
             } catch(IOException e) {
                 LOG.error("Error setting alarm: " + e.getMessage());

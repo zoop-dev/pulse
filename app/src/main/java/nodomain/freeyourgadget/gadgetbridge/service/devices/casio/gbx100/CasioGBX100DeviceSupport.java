@@ -402,7 +402,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
 
         try {
             TransactionBuilder builder = performInitialized("showNotification");
-            builder.write(getCharacteristic(CasioConstants.CASIO_NOTIFICATION_CHARACTERISTIC_UUID), copy);
+            builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_NOTIFICATION_CHARACTERISTIC_UUID), copy);
             LOG.info("Showing notification, title: {} message: {}", title, message);
             builder.queue(getQueue());
         } catch (IOException e) {

@@ -131,11 +131,11 @@ public abstract class Casio2C2DSupport extends CasioSupport {
         if (!requests.isEmpty()) {
             LOG.warn("writing while waiting for a response may lead to incorrect received responses");
         }
-        builder.write(getCharacteristic(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID), arr);
+        builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID), arr);
     }
 
     public void writeAllFeaturesRequest(TransactionBuilder builder, byte[] arr) {
-        builder.write(getCharacteristic(CasioConstants.CASIO_READ_REQUEST_FOR_ALL_FEATURES_CHARACTERISTIC_UUID), arr);
+        builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_READ_REQUEST_FOR_ALL_FEATURES_CHARACTERISTIC_UUID), arr);
     }
 
     public interface ResponseHandler {

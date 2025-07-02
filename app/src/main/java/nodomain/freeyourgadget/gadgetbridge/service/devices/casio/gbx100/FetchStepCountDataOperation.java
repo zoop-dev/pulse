@@ -65,7 +65,7 @@ public class FetchStepCountDataOperation  extends AbstractBTLEOperation<CasioGBX
         try {
             TransactionBuilder builder = performInitialized("requestStepCountDate");
             builder.setCallback(this);
-            builder.write(getCharacteristic(CasioConstants.CASIO_DATA_REQUEST_SP_CHARACTERISTIC_UUID), command);
+            builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_DATA_REQUEST_SP_CHARACTERISTIC_UUID), command);
             builder.queue(getQueue());
         } catch(IOException e) {
             LOG.error("Error requesting step count data", e);
@@ -78,7 +78,7 @@ public class FetchStepCountDataOperation  extends AbstractBTLEOperation<CasioGBX
         try {
             TransactionBuilder builder = performInitialized("writeStepCountAck");
             builder.setCallback(this);
-            builder.write(getCharacteristic(CasioConstants.CASIO_DATA_REQUEST_SP_CHARACTERISTIC_UUID), command);
+            builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_DATA_REQUEST_SP_CHARACTERISTIC_UUID), command);
             builder.queue(getQueue());
         } catch(IOException e) {
             LOG.error("Error writing step count ack", e);
