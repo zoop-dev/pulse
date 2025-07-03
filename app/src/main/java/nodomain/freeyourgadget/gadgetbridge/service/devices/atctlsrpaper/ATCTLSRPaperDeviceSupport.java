@@ -240,14 +240,18 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         buf.position(32);
         epaper_colors = buf.get();
 
+        buf.position(41);
+        int ble_adv_interval = buf.getShort() & 0xffff;
+
         if (epaper_width == 200 && epaper_height == 200 && model == 0x26) {
             model = 10000; //HACK for unsupported HS 154 BWRY JD
         }
 
-        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model);
+        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={} ble_adv_interval={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model, ble_adv_interval);
 
         SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).edit();
-        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL, String.valueOf(model));
+        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL, String.valueOf(model));
+        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL, String.valueOf(ble_adv_interval));
         editor.apply();
 
         final TransactionBuilder builder = new TransactionBuilder("set initialized");
@@ -257,22 +261,31 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSendConfiguration(String config) {
-        TransactionBuilder builder;
-        try {
-            builder = performInitialized("Sending configuration for option: " + config);
-            if (DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL.equals(config)) {
-                SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
-                String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TSLR_PAPER_MODEL, "1");
-                int model = Integer.parseInt(display_model);
-                if (model == 10000) {// HACK: this is for the HS 213 BWRY JD type
-                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_CONFIGURE_HS_154_BWRY_JD);
-                } else {
-                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, (byte) model});
+        if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL.equals(config)
+                || DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL.equals(config)
+        ) {
+            TransactionBuilder builder;
+            SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
+            try {
+                builder = performInitialized("Sending configuration for option: " + config);
+                if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL.equals(config)) {
+                    String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL, "1");
+                    int model = Integer.parseInt(display_model);
+                    if (model == 10000) {// HACK: this is for the HS 213 BWRY JD type
+                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_CONFIGURE_HS_154_BWRY_JD);
+                    } else {
+                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, (byte) model});
+                    }
                 }
+                if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL.equals(config)) {
+                    String bt_adv_interval = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL, "1000");
+                    int interval = Integer.parseInt(bt_adv_interval);
+                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x08, (byte) (interval & 0xff), (byte) ((interval >> 8) & 0xff)});
+                }
+                builder.queue(getQueue());
+            } catch (IOException e) {
+                GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
             }
-            builder.queue(getQueue());
-        } catch (IOException e) {
-            GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

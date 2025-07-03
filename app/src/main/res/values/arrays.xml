@@ -5090,4 +5090,26 @@
         <item>36</item>
         <item>39</item>
     </string-array>
+
+    <string-array name="atc_tlsr_paper_ble_adv_interval">
+        <item name="1000">625ms</item>
+        <item name="3200">2000ms</item>
+        <item name="4000">2500ms</item>
+        <item name="5000">3125ms</item>
+        <item name="6000">3750ms</item>
+        <item name="7000">4375ms</item>
+        <item name="8000">5000ms</item>
+        <item name="10000">6250ms</item>
+    </string-array>
+
+    <string-array name="atc_tlsr_paper_ble_adv_interval_values">
+        <item>1000</item>
+        <item>3200</item>
+        <item>4000</item>
+        <item>5000</item>
+        <item>6000</item>
+        <item>7000</item>
+        <item>8000</item>
+        <item>10000</item>
+      </string-array>
 </resources>

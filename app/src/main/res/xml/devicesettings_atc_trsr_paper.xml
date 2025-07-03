@@ -4,7 +4,14 @@
         android:defaultValue="1"
         android:entries="@array/atc_tlsr_paper_models"
         android:entryValues="@array/atc_tlsr_paper_models_values"
-        android:key="pref_atc_tslr_paper_model"
+        android:key="pref_atc_tlsr_paper_model"
         android:summary="%s"
         android:title="@string/pref_atc_tlsr_model_title" />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/atc_tlsr_paper_ble_adv_interval"
+        android:entryValues="@array/atc_tlsr_paper_ble_adv_interval_values"
+        android:key="pref_atc_tlsr_ble_adv_interval"
+        android:summary="%s"
+        android:title="@string/pref_atc_tlsr_ble_adv_interval_title" />
 </androidx.preference.PreferenceScreen>
