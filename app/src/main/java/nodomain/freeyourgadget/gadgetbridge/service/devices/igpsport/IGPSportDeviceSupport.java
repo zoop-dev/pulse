@@ -541,17 +541,25 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         Config.config_msg.Builder configMsgBuilder = Config.config_msg.newBuilder();
         configMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CONFIG);
         configMsgBuilder.setConfigSeviceType(Config.CONFIG_SERVICE_TYPE.enum_CONFIG_SERVICE_TYPE_UNIT);
+        configMsgBuilder.setConfigOperateType(Config.CONFIG_OPERATE_TYPE.enum_CONFIG_OPERATE_TYPE_SET);
 
         Config.unit_msg.Builder unitMsgBuilder = Config.unit_msg.newBuilder();
 
         //unitMsgBuilder.setUnitItem()  ??? need all unit items?
         String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
-            unitMsgBuilder.setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH);
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_DISTANCE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_ELEVATION).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_WEIGHT).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_TEMPERATURE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
         } else {
-            unitMsgBuilder.setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC);
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_DISTANCE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_ELEVATION).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_WEIGHT).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_TEMPERATURE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
         }
         configMsgBuilder.addUnitMessage(unitMsgBuilder);
+
         byte[] confMsgBytes = craftData(configMsgBuilder.getServiceType().getNumber(),
                 configMsgBuilder.getConfigSeviceType().getNumber(),
                 configMsgBuilder.getConfigOperateType().getNumber(),
@@ -564,7 +572,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         Config.config_msg.Builder configMsgBuilder = Config.config_msg.newBuilder();
         configMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CONFIG);
         configMsgBuilder.setConfigSeviceType(Config.CONFIG_SERVICE_TYPE.enum_CONFIG_SERVICE_TYPE_USER);
-        configMsgBuilder.setConfigOperateType(Config.CONFIG_OPERATE_TYPE.enum_CONFIG_OPERATE_TYPE_SEND);
+        configMsgBuilder.setConfigOperateType(Config.CONFIG_OPERATE_TYPE.enum_CONFIG_OPERATE_TYPE_SET);
 
         Config.user_data_msg.Builder userDataMsgBuilder = Config.user_data_msg.newBuilder();
 
