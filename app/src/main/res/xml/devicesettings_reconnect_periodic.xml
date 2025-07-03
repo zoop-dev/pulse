@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/connection_over_ble" />
-
     <SwitchPreferenceCompat
         android:icon="@drawable/ic_bluetooth_searching"
         android:key="prefs_key_device_auto_reconnect"

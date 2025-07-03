@@ -246,6 +246,9 @@ class PebbleIoThread extends GBDeviceIoThread {
             if (GBApplication.getPrefs().getAutoReconnect(getDevice()) && !mQuit) {
                 LOG.debug("Failed to connect IO thread, will wait for reconnect");
                 gbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            } else {
+                LOG.debug("Failed to connect IO thread, disconnecting");
+                gbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, getContext());
             }
             return;
         }
@@ -402,10 +405,10 @@ class PebbleIoThread extends GBDeviceIoThread {
 
         if (mQuit || !GBApplication.getPrefs().getAutoReconnect(getDevice())) {
             LOG.debug("Exited read thread loop, disconnecting");
-            gbDevice.setState(GBDevice.State.NOT_CONNECTED);
+            gbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, getContext());
         } else {
             LOG.debug("Exited read thread loop, will wait for reconnect");
-            gbDevice.setState(GBDevice.State.WAITING_FOR_RECONNECT);
+            gbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
         }
 
         if (((PebbleCoordinator) gbDevice.getDeviceCoordinator()).isBackgroundJsEnabled(gbDevice)) {

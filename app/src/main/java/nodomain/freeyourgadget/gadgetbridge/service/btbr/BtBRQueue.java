@@ -63,43 +63,54 @@ public final class BtBRQueue {
     private final Handler mWriteHandler;
     private final HandlerThread mWriteHandlerThread = new HandlerThread("BtBRQueue_write_" + THREAD_COUNTER.getAndIncrement(), Process.THREAD_PRIORITY_BACKGROUND);
 
-    private Thread readThread = new Thread("BtBRQueue_read_" + THREAD_COUNTER.getAndIncrement()) {
-        @Override
-        public void run() {
-            final byte[] buffer = new byte[mBufferSize];
-            int nRead = 0;
+    private Thread readThread;
 
-            LOG.debug("Read thread started, entering loop");
+    private Thread createReadThread() {
+        return new Thread("BtBRQueue_read_" + THREAD_COUNTER.getAndIncrement()) {
+            @Override
+            public void run() {
+                final byte[] buffer = new byte[mBufferSize];
+                int nRead;
 
-            while (!mDisposed.get()) {
-                try {
-                    if (mBtSocket == null)
-                        throw new IOException("mBtSocket was null");
+                LOG.debug("Read thread started, entering loop");
 
-                    nRead = mBtSocket.getInputStream().read(buffer);
+                while (!mDisposed.get()) {
+                    try {
+                        if (mBtSocket == null)
+                            throw new IOException("mBtSocket was null");
 
-                    // safety measure
-                    if (nRead == -1) {
-                        throw new IOException("End of stream");
+                        nRead = mBtSocket.getInputStream().read(buffer);
+
+                        // safety measure
+                        if (nRead == -1) {
+                            throw new IOException("End of stream");
+                        }
+                    } catch (IOException ex) {
+                        LOG.error("IO exception while reading message from socket, breaking out of read thread", ex);
+                        break;
                     }
-                } catch (IOException ex) {
-                    LOG.error("IO exception while reading message from socket, breaking out of read thread: ", ex);
-                    break;
+
+                    LOG.debug("Received {} bytes: {}", nRead, GB.hexdump(buffer, 0, nRead));
+
+                    try {
+                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead));
+                    } catch (Throwable ex) {
+                        LOG.error("Failed to process received bytes in onSocketRead callback: ", ex);
+                    }
                 }
 
-                LOG.debug("Received {} bytes: {}", nRead, GB.hexdump(buffer, 0, nRead));
+                cleanup();
 
-                try {
-                    mCallback.onSocketRead(Arrays.copyOf(buffer, nRead));
-                } catch (Throwable ex) {
-                    LOG.error("Failed to process received bytes in onSocketRead callback: ", ex);
+                if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                    LOG.debug("Exited read thread loop, disconnecting");
+                    mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                } else {
+                    LOG.debug("Exited read thread loop, will wait for reconnect");
+                    mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
                 }
             }
-
-            LOG.debug("Exited read thread loop, disconnecting");
-            GBApplication.deviceService(mGbDevice).disconnect();
-        }
-    };
+        };
+    }
 
     public BtBRQueue(BluetoothAdapter btAdapter, GBDevice gbDevice, Context context, SocketCallback socketCallback, @NonNull UUID supportedService, int bufferSize) {
         mBtAdapter = btAdapter;
@@ -125,21 +136,29 @@ public final class BtBRQueue {
                             LOG.info("Connected to RFCOMM socket for {}", mGbDevice.getName());
                             setDeviceConnectionState(GBDevice.State.CONNECTED);
 
-                            // update thread names to show device names in logs
-                            readThread.setName(String.format(Locale.ENGLISH,
-                                    "Read Thread for %s", mGbDevice.getName()));
-                            mWriteHandlerThread.setName(String.format(Locale.ENGLISH,
-                                    "Write Thread for %s", mGbDevice.getName()));
+                            if (readThread == null || !readThread.isAlive()) {
+                                readThread = createReadThread();
+                            }
 
                             // now that connect has been created, start the threads
                             readThread.start();
                             onConnectionEstablished();
                         } catch (IOException e) {
                             LOG.error("IO exception while establishing socket connection: ", e);
-                            setDeviceConnectionState(GBDevice.State.NOT_CONNECTED);
+
+                            if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                                mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                            } else {
+                                mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                            }
                         } catch (SecurityException e) {
                             LOG.error("Security exception while establishing socket connection: ", e);
-                            setDeviceConnectionState(GBDevice.State.NOT_CONNECTED);
+
+                            if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                                mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                            } else {
+                                mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                            }
                         }
 
                         return;
@@ -172,7 +191,7 @@ public final class BtBRQueue {
                                 }
                             }
                         } catch (Throwable ex) {
-                            LOG.error("IO Write Thread died: " + ex.getMessage(), ex);
+                            LOG.error("IO Write Thread died: ", ex);
                         }
 
                         return;
@@ -213,7 +232,7 @@ public final class BtBRQueue {
         } catch (IOException e) {
             LOG.error("Unable to connect to RFCOMM endpoint: ", e);
             setDeviceConnectionState(originalState);
-            mBtSocket = null;
+            cleanup();
             return false;
         }
 
@@ -268,9 +287,19 @@ public final class BtBRQueue {
     }
 
     private void setDeviceConnectionState(GBDevice.State newState) {
-        LOG.debug("New device connection state: " + newState);
+        LOG.debug("New device connection state: {}", newState);
         mGbDevice.setState(newState);
         mGbDevice.sendDeviceUpdateIntent(mContext, GBDevice.DeviceUpdateSubject.CONNECTION_STATE);
+    }
+
+    private void cleanup() {
+        if (mBtSocket != null) {
+            try {
+                mBtSocket.close();
+            } catch (final IOException ignored) {
+            }
+            mBtSocket = null;
+        }
     }
 
     public void dispose() {
