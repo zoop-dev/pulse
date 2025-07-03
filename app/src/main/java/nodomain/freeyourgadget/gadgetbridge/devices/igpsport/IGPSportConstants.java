@@ -22,6 +22,7 @@ public class IGPSportConstants {
 
 
     public static final byte DATA_HEADER = (byte) 0x01;
+    public static final byte DATA_HEADER_SIZE = (byte) 20;
 
 
     public static final byte[] DATA_TEMPLATE = {
