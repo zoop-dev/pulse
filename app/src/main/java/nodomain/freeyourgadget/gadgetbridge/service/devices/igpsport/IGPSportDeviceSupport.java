@@ -85,6 +85,8 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
 
     private int mtuSize=247; //FIXME use actual device mtu
+    boolean partialPacketInProgress = false;
+    ByteBuffer partialBuffer = ByteBuffer.allocate(mtuSize);
     public IGPSportDeviceSupport() {
         super(LOG);
 
@@ -207,6 +209,43 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         return builder;
     }
 
+    private void parseProtobufPacket(byte[] value) {
+        LOG.info("Parsing complete packet: " + GB.hexdump(value));
+        byte mainService = value[1];
+        byte mainOperation = value[4];
+        int dataSize = ByteBuffer.wrap(value, 7, 2).getShort();
+        byte[] pbData = new byte[dataSize];
+        System.arraycopy(value, DATA_HEADER_SIZE, pbData, 0, dataSize);
+
+        try {
+            switch (mainService) {
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
+                    handleFactoryData(pbData);
+                    break;
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
+                    handleFirmwareData(pbData);
+                    break;
+
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
+                    if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_LIST_SEND_VALUE) {
+                        downloadManager.setFilesAvaliable(pbData);
+                    }
+                    break;
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
+                    if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET_VALUE) {
+                        routeManager.handleRouteNumber(pbData);
+                    } else if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_SEND_VALUE) {
+                        routeManager.handleRouteList(pbData);
+                    }
+                    break;
+                default:
+                    LOG.error("Unknown general operation received");
+            }
+        } catch (InvalidProtocolBufferException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
 
@@ -227,71 +266,66 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             }
         }
 
-        if (value[0] == IGPSportConstants.DATA_HEADER) {
-
-            if (value != null && value.length > DATA_HEADER_SIZE) {
-                byte mainService = value[1];
-                byte mainOperation = value[4];
-
-                if (value[3] == (byte)0xff) {
-                    int dataSize = ByteBuffer.wrap(value, 7, 2).getShort();
-
-                    byte[] pbData = new byte[dataSize];
-                    System.arraycopy(value, DATA_HEADER_SIZE, pbData, 0, dataSize);
-
-                    try {
-                        switch (mainService) {
-                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FACTORY_VALUE:
-                                handleFactoryData(pbData);
-                                break;
-                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FIRMWARE_VALUE:
-                                handleFirmwareData(pbData);
-                                break;
-
-                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
-                                if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_LIST_SEND_VALUE) {
-                                    downloadManager.setFilesAvaliable(pbData);
-                                }
-                                break;
-                            case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
-                                if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_NUM_GET_VALUE) {
-                                    routeManager.handleRouteNumber(pbData);
-                                } else if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_SEND_VALUE) {
-                                    routeManager.handleRouteList(pbData);
-                                }
-                                break;
-                            default:
-                                LOG.error("Unknown general operation received");
-                        }
-                    } catch (InvalidProtocolBufferException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if (value[3] == (byte)0x55) {
-                    switch (mainService) {
-                        case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
-                            if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
-                                downloadManager.startDownload();
-                                downloadManager.addData(value);
-                            }
-                            break;
-                        default:
-                            LOG.error("Unknown file operation received");
-                    }
-                }
-
+        if(partialPacketInProgress) {
+            LOG.info("Waiting for partial packet, adding current data");
+            partialBuffer.put(value);
+            if (partialBuffer.remaining() > 0) {
+                LOG.info("Need even more data for partial packet");
+                return true;
+            } else {
+                LOG.info("Partial packet completed going to parse it.");
+                partialBuffer.flip();
+                byte[] finalData = new byte[partialBuffer.remaining()];
+                partialBuffer.get(finalData);
+                parseProtobufPacket(finalData);
+                partialPacketInProgress=false;
+                partialBuffer.clear();
+                parseProtobufPacket(finalData);
+                return true;
             }
         }
 
-        if (value[0] == 0x02) {
+        byte mainService = value[1];
+        byte mainOperation = value[4];
 
 
-            //0215FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFF55
-            byte mainService = value[1];
-            byte mainOperation = value[4];
+        // 01 - header protobuf packets
+        if ((value[0] == (byte) 0x01) && ( value[3] == (byte)0xff)) {
+            int dataSize = ByteBuffer.wrap(value, 7, 2).getShort();
+            if (dataSize+DATA_HEADER_SIZE > value.length) {
+                LOG.info("Partial packet detected, creating buffer for it");
+                partialPacketInProgress = true;
+                partialBuffer = ByteBuffer.allocate(dataSize+DATA_HEADER_SIZE);
+                partialBuffer.put(value);
+                return true;
+            }
+            parseProtobufPacket(value);
+            return true;
+
+        }
+
+        // 01 - header files packets
+        if (value[3] == (byte)0x55) {
+            switch (mainService) {
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
+                    if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
+                        downloadManager.startDownload();
+                        downloadManager.addData(value);
+                    }
+                    break;
+                default:
+                    LOG.error("Unknown file operation received");
+            }
+        }
+
+
+        // 02-header -- results of operations from device
+        //0215FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFF55
+        if (value[0] == (byte) 0x03) {
             byte result = value[7];
             switch (mainService) {
                 case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION_VALUE:
-                    if(mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
+                    if (mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
                         gbDevice.unsetBusyTask();
                         gbDevice.sendDeviceUpdateIntent(getContext());
                         TransactionBuilder builder = new TransactionBuilder("Route  upload finished");
@@ -317,15 +351,17 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                     break;
 
                 case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
-                    if(mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
+                    if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
                         LOG.info("Got reply from file service"); // Do we have to do something here?
                     }
                     break;
             }
         }
 
-        if (value[0] == 0x03) {
-            byte mainService = value[1];
+
+
+        // 03-header -- requests from device
+        if (value[0] == (byte) 0x03) {
             byte secondService = value[2];
             if (mainService == Common.service_type_index.enum_SERVICE_TYPE_INDEX_BACK_VALUE) {
                 switch (secondService) {
@@ -353,11 +389,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             if (mainService == PeripheralCommon.PERIPHERAL_SERVICE_TYPE.PST_HR_VALUE) {
                 LOG.info("Device transmitting its config");
             }
-
-
         }
-
-
 
         return true;
     }
