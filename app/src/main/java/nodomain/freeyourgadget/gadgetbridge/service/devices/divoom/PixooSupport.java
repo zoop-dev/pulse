@@ -19,26 +19,14 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.divoom;
 
 import android.net.Uri;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
 public class PixooSupport extends AbstractSerialDeviceSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(PixooSupport.class);
-
-
     @Override
     public void onSendConfiguration(String config) {
         super.onSendConfiguration(config);
-    }
-
-    @Override
-    public boolean connect() {
-        getDeviceIOThread().start();
-        return true;
     }
 
     @Override

@@ -55,8 +55,10 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
 
     @Override
     public void dispose() {
-        super.dispose();
-        unregisterSunriseSunsetAlarmReceiver();
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            unregisterSunriseSunsetAlarmReceiver();
+        }
     }
 
     private void registerSunriseSunsetAlarmReceiver() {
@@ -79,8 +81,13 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
 
     @Override
     public boolean connect() {
-        getDeviceIOThread().start();
-        registerSunriseSunsetAlarmReceiver();
+        synchronized (ConnectionMonitor) {
+            final PebbleIoThread deviceIOThread = getDeviceIOThread();
+            if (!deviceIOThread.isAlive()) {
+                deviceIOThread.start();
+            }
+            registerSunriseSunsetAlarmReceiver();
+        }
         return true;
     }
 

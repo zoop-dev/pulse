@@ -25,7 +25,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 
 public abstract class AbstractHeadphoneDeviceSupport extends AbstractSerialDeviceSupport implements HeadphoneHelper.Callback {
-
     private HeadphoneHelper headphoneHelper;
 
     @Override
@@ -45,12 +44,6 @@ public abstract class AbstractHeadphoneDeviceSupport extends AbstractSerialDevic
     }
 
     @Override
-    public boolean connect() {
-        getDeviceIOThread().start();
-        return true;
-    }
-
-    @Override
     public void onSendConfiguration(String config) {
         if (!headphoneHelper.onSendConfiguration(config))
             super.onSendConfiguration(config);
@@ -58,8 +51,10 @@ public abstract class AbstractHeadphoneDeviceSupport extends AbstractSerialDevic
 
     @Override
     public void dispose() {
-        if (headphoneHelper != null)
-            headphoneHelper.dispose();
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            if (headphoneHelper != null)
+                headphoneHelper.dispose();
+            super.dispose();
+        }
     }
 }

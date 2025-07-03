@@ -5,13 +5,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
 public class PixelBudsADeviceSupport extends AbstractSerialDeviceSupport {
-
-    @Override
-    public boolean connect() {
-        getDeviceIOThread().start();
-        return true;
-    }
-
     @Override
     public boolean useAutoConnect() {
         return false;

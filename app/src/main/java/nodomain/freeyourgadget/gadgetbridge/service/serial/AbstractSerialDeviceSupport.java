@@ -56,6 +56,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractSerialDeviceSupport.class);
 
+    /// used to guard {@link #connect()} and {@link #dispose()}
+    protected final Object ConnectionMonitor = new Object();
+
     private GBDeviceProtocol gbDeviceProtocol;
     protected GBDeviceIoThread gbDeviceIOThread;
 
@@ -70,12 +73,25 @@ public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport 
     protected abstract GBDeviceIoThread createDeviceIOThread();
 
     @Override
+    public boolean connect() {
+        synchronized (ConnectionMonitor) {
+            final GBDeviceIoThread deviceIOThread = getDeviceIOThread();
+            if (!deviceIOThread.isAlive()) {
+                deviceIOThread.start();
+            }
+            return true;
+        }
+    }
+
+    @Override
     public void dispose() {
-        // currently only one thread allowed
-        if (gbDeviceIOThread != null) {
-            gbDeviceIOThread.quit();
-            gbDeviceIOThread.interrupt();
-            gbDeviceIOThread = null;
+        synchronized (ConnectionMonitor) {
+            // currently only one thread allowed
+            if (gbDeviceIOThread != null) {
+                gbDeviceIOThread.quit();
+                gbDeviceIOThread.interrupt();
+                gbDeviceIOThread = null;
+            }
         }
     }
 

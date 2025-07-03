@@ -36,6 +36,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
  * @see nodomain.freeyourgadget.gadgetbridge.service.btclassic.BtClassicIoThread
  */
 public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport implements SocketCallback {
+
+    /// used to guard {@link #connect()}, {@link #disconnect()} and {@link #dispose()}
+    protected final Object ConnectionMonitor = new Object();
+
     private BtBRQueue mQueue;
     private UUID mSupportedService = null;
     private int mBufferSize = 1024;
@@ -50,20 +54,24 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     @Override
     public boolean connect() {
-        final UUID supportedService = getSupportedService();
-        if (supportedService == null) {
-            throw new NullPointerException("No supported service UUID specified");
-        }
+        synchronized (ConnectionMonitor) {
+            final UUID supportedService = getSupportedService();
+            if (supportedService == null) {
+                throw new NullPointerException("No supported service UUID specified");
+            }
 
-        if (mQueue == null) {
-            mQueue = new BtBRQueue(getBluetoothAdapter(), getDevice(), getContext(), this, supportedService, getBufferSize());
+            if (mQueue == null) {
+                mQueue = new BtBRQueue(getBluetoothAdapter(), getDevice(), getContext(), this, supportedService, getBufferSize());
+            }
+            return mQueue.connect();
         }
-        return mQueue.connect();
     }
 
     public void disconnect() {
-        if (mQueue != null) {
-            mQueue.disconnect();
+        synchronized (ConnectionMonitor) {
+            if (mQueue != null) {
+                mQueue.disconnect();
+            }
         }
     }
 
@@ -80,9 +88,11 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     @Override
     public void dispose() {
-        if (mQueue != null) {
-            mQueue.dispose();
-            mQueue = null;
+        synchronized (ConnectionMonitor) {
+            if (mQueue != null) {
+                mQueue.dispose();
+                mQueue = null;
+            }
         }
     }
 
@@ -91,7 +101,7 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     }
 
     @Override
-    public boolean isConnected(){
+    public boolean isConnected() {
         // in a multi-threaded environment the queue knows
         // best about the up-to-date connection status
         return (mQueue != null) && mQueue.isConnected();

@@ -17,12 +17,6 @@ public class SoundcoreQ30DeviceSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public boolean connect() {
-        getDeviceIOThread().start();
-        return true;
-    }
-
-    @Override
     public boolean useAutoConnect() {
         return false;
     }

@@ -101,13 +101,15 @@ public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
 
     @Override
     public void dispose() {
-        try {
-            getContext().unregisterReceiver(commandReceiver);
-        } catch (final Exception e) {
-            LOG.warn("Failed to unregister receiver", e);
-        }
+        synchronized (ConnectionMonitor) {
+            try {
+                getContext().unregisterReceiver(commandReceiver);
+            } catch (final Exception e) {
+                LOG.warn("Failed to unregister receiver", e);
+            }
 
-        super.dispose();
+            super.dispose();
+        }
     }
 
     @Override

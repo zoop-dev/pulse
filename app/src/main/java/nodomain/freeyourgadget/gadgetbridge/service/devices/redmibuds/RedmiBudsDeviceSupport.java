@@ -34,12 +34,6 @@ public class RedmiBudsDeviceSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public boolean connect() {
-        getDeviceIOThread().start();
-        return true;
-    }
-
-    @Override
     public boolean useAutoConnect() {
         return false;
     }

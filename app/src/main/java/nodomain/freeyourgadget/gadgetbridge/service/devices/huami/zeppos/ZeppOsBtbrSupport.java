@@ -117,9 +117,11 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
 
     @Override
     public void dispose() {
-        zeppOsSupport.dispose();
-        pingHandler.removeCallbacksAndMessages(null);
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            zeppOsSupport.dispose();
+            pingHandler.removeCallbacksAndMessages(null);
+            super.dispose();
+        }
     }
 
     @Override

@@ -79,11 +79,14 @@ public class RoidmiSupport extends AbstractSerialDeviceSupport {
 
     @Override
     public boolean connect() {
-        getDeviceIOThread().start();
-
-        requestDeviceInfos(1500);
-
-        return true;
+        synchronized (ConnectionMonitor) {
+            final RoidmiIoThread deviceIOThread = getDeviceIOThread();
+            if (!deviceIOThread.isAlive()) {
+                deviceIOThread.start();
+                requestDeviceInfos(1500);
+            }
+            return true;
+        }
     }
 
     @Override
@@ -104,7 +107,7 @@ public class RoidmiSupport extends AbstractSerialDeviceSupport {
 
     @Override
     public void onSendConfiguration(final String config) {
-        LOG.debug("onSendConfiguration " + config);
+        LOG.debug("onSendConfiguration {}", config);
 
         final RoidmiIoThread roidmiIoThread = getDeviceIOThread();
         final RoidmiProtocol roidmiProtocol = (RoidmiProtocol) getDeviceProtocol();
@@ -120,7 +123,7 @@ public class RoidmiSupport extends AbstractSerialDeviceSupport {
                 roidmiIoThread.write(roidmiProtocol.encodeGetVoltage());
                 break;
             default:
-                LOG.error("Invalid Roidmi configuration " + config);
+                LOG.error("Invalid Roidmi configuration {}", config);
                 break;
         }
     }

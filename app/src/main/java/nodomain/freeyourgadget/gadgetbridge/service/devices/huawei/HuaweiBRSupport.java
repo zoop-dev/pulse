@@ -199,8 +199,10 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
 
     @Override
     public void dispose() {
-        supportProvider.dispose();
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            supportProvider.dispose();
+            super.dispose();
+        }
     }
 
     @Override

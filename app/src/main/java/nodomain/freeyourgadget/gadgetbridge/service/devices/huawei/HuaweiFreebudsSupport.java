@@ -108,9 +108,11 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
 
     @Override
     public void dispose() {
-        if (headphoneHelper != null)
-            headphoneHelper.dispose();
-        super.dispose();
+        synchronized (ConnectionMonitor) {
+            if (headphoneHelper != null)
+                headphoneHelper.dispose();
+            super.dispose();
+        }
     }
 
     @Override

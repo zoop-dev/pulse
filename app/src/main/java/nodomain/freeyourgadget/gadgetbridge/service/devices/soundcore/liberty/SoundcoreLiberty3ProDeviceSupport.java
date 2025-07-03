@@ -10,12 +10,6 @@ public class SoundcoreLiberty3ProDeviceSupport extends AbstractSerialDeviceSuppo
     public static final UUID UUID_DEVICE_CTRL = UUID.fromString("0cf12d31-fac3-4553-bd80-d6832e7b3952");
 
     @Override
-    public boolean connect() {
-        getDeviceIOThread().start();
-        return true;
-    }
-
-    @Override
     public boolean useAutoConnect() {
         return false;
     }

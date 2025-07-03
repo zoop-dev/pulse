@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -171,12 +170,10 @@ public final class BtBRQueue {
                                 return;
                             }
 
-                            if (!(msg.obj instanceof Transaction)) {
+                            if (!(msg.obj instanceof Transaction transaction)) {
                                 LOG.error("msg.obj is not an instance of Transaction");
                                 return;
                             }
-
-                            Transaction transaction = (Transaction) msg.obj;
 
                             for (BtBRAction action : transaction.getActions()) {
                                 if (LOG.isDebugEnabled()) {
@@ -212,8 +209,15 @@ public final class BtBRQueue {
      */
     @SuppressLint("MissingPermission")
     public boolean connect() {
-        if (isConnected()) {
-            LOG.warn("Ignoring connect() because already connected.");
+        final GBDevice.State state = mGbDevice.getState();
+        if (state.equalsOrHigherThan(GBDevice.State.CONNECTING)) {
+            LOG.warn("connect - ignored, state is {}", state);
+            return false;
+        } else if (mBtSocket != null) {
+            LOG.warn("connect - ignored, mBtSocket isn't null");
+            return false;
+        } else if (mDisposed.get()) {
+            LOG.error("connect - ignored, this BtBRQueue has already been disposed");
             return false;
         }
 
@@ -304,6 +308,7 @@ public final class BtBRQueue {
 
     public void dispose() {
         if (mDisposed.getAndSet(true)) {
+            LOG.warn("dispose() was called repeatedly");
             return;
         }
 
