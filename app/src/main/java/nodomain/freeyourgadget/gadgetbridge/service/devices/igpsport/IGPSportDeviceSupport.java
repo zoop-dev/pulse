@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
 
+import static nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants.DATA_HEADER_SIZE;
 import static nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX;
 
 import android.bluetooth.BluetoothGatt;
@@ -50,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.GeneralFileOperation;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.PeripheralCommon;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.RoutePlan;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -218,24 +220,24 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         LOG.info("Characteristic changed UUID: " + characteristicUUID);
         LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
 
-        byte[] data = characteristic.getValue();
+
         if (downloadManager.needMoreData()) {
             if (characteristicUUID.compareTo(UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX) == 0 ) {
-                downloadManager.addData(data);
+                downloadManager.addData(value);
             }
         }
 
-        if (data[0] == IGPSportConstants.DATA_HEADER) {
+        if (value[0] == IGPSportConstants.DATA_HEADER) {
 
-            if (data != null && data.length > 20) {
-                byte mainService = data[1];
-                byte mainOperation = data[4];
+            if (value != null && value.length > DATA_HEADER_SIZE) {
+                byte mainService = value[1];
+                byte mainOperation = value[4];
 
-                if (data[3] == (byte)0xff) {
-                    int dataSize = ByteBuffer.wrap(data, 7, 2).getShort();
+                if (value[3] == (byte)0xff) {
+                    int dataSize = ByteBuffer.wrap(value, 7, 2).getShort();
 
                     byte[] pbData = new byte[dataSize];
-                    System.arraycopy(data, 20, pbData, 0, dataSize);
+                    System.arraycopy(value, DATA_HEADER_SIZE, pbData, 0, dataSize);
 
                     try {
                         switch (mainService) {
@@ -264,12 +266,12 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                     } catch (InvalidProtocolBufferException e) {
                         throw new RuntimeException(e);
                     }
-                } else if (data[3] == (byte)0x55) {
+                } else if (value[3] == (byte)0x55) {
                     switch (mainService) {
                         case Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA_VALUE:
                             if (mainOperation == CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_SEND_VALUE) {
                                 downloadManager.startDownload();
-                                downloadManager.addData(data);
+                                downloadManager.addData(value);
                             }
                             break;
                         default:
@@ -280,13 +282,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             }
         }
 
-        if (data[0] == 0x02) {
+        if (value[0] == 0x02) {
 
 
             //0215FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFF55
-            byte mainService = data[1];
-            byte mainOperation = data[4];
-            byte result = data[7];
+            byte mainService = value[1];
+            byte mainOperation = value[4];
+            byte result = value[7];
             switch (mainService) {
                 case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION_VALUE:
                     if(mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
@@ -322,7 +324,42 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
             }
         }
 
-        return false;
+        if (value[0] == 0x03) {
+            byte mainService = value[1];
+            byte secondService = value[2];
+            if (mainService == Common.service_type_index.enum_SERVICE_TYPE_INDEX_BACK_VALUE) {
+                switch (secondService) {
+                    case Back.BACK_SERVICE_TYPE.enum_BACK_SERVICE_TYPE_WEATHER_VALUE:
+                        LOG.info("Device asking for weather");
+                        handleWeather();
+                        break;
+                    case Back.BACK_SERVICE_TYPE.enum_BACK_SERVICE_TYPE_EPHEMERIS_VALUE:
+                        LOG.error("Device asking for ephemeris, not implemented");
+                        break;
+                    default:
+                        LOG.info("Unknown request");
+
+                }
+            }
+
+            if (mainService == Common.service_type_index.enum_SERVICE_TYPE_INDEX_DEV_STATUS_VALUE) {
+                LOG.info("Device sending its status " + value[7]);
+            }
+
+            if (mainService == Common.service_type_index.enum_SERVICE_TYPE_INDEX_CONFIG_VALUE) {
+                LOG.info("Device transmitting its config");
+            }
+
+            if (mainService == PeripheralCommon.PERIPHERAL_SERVICE_TYPE.PST_HR_VALUE) {
+                LOG.info("Device transmitting its config");
+            }
+
+
+        }
+
+
+
+        return true;
     }
 
 
@@ -370,7 +407,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         result[9] = (byte) CheckSums.getCRC8(data);
         byte[] header = Arrays.copyOfRange(result, 0, 19);
         result[19] = (byte)CheckSums.getCRC8(header);
-        System.arraycopy(data, 0, result, 20, data.length);
+        System.arraycopy(data, 0, result, DATA_HEADER_SIZE, data.length);
         //debug
         LOG.info(GB.hexdump(result), "crafted packet");
         return result;
@@ -391,7 +428,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         byte[] header = Arrays.copyOfRange(result, 0, 19);
         result[19] = (byte)CheckSums.getCRC8(header);
 
-        ByteBuffer buf = ByteBuffer.wrap(result, 20,4);
+        ByteBuffer buf = ByteBuffer.wrap(result, DATA_HEADER_SIZE,4);
         buf.putInt(data.length);
 
         System.arraycopy(data, 0, result, 24, data.length);
@@ -577,8 +614,21 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+        if (!weatherSpecs.isEmpty()) {
+            WeatherSpec weatherSpec = weatherSpecs.get(0);
+            handleWeather(weatherSpec);
+        }
+    }
 
+    private void handleWeather() {
+        // Send weather
+        final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.Weather.getInstance().getWeatherSpecs());
+        if (!specs.isEmpty()) {
+            handleWeather(specs.get(0));
+        }
+    }
+
+    private void handleWeather(WeatherSpec weatherSpec) {
         try {
             TransactionBuilder builder = performInitialized("set weather");
             Back.back_msg.Builder weatherMsg = Back.back_msg.newBuilder();
@@ -605,7 +655,6 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public File getWritableExportDirectory() throws IOException {
