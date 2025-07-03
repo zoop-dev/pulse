@@ -4085,6 +4085,8 @@
     <string name="pref_calendar_target_app_title">Target app on watch for calendar events</string>
     <string name="same_image_already_on_device">same image already on device</string>
     <string name="sending_image">sending image</string>
-    <string name="pref_atc_tlsr_model_title">Display Model</string>
-    <string name="pref_atc_tlsr_ble_adv_interval_title">BLE Advertising Interval</string>
+    <string name="pref_atc_tlsr_paper_model_title">Display Model</string>
+    <string name="pref_atc_tlsr_paper_ble_adv_interval_title">BLE Advertising Interval</string>
+    <string name="pref_atc_tlsr_paper_oepl_protocol_enable_title">Enable OEPL protocol</string>
+    <string name="pref_atc_tlsr_paper_oepl_protocol_enable_summary">Disable this if only using BLE to save power</string>
 </resources>

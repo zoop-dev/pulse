@@ -969,6 +969,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
         addPreferenceHandlerFor(PREF_ATC_TLSR_PAPER_MODEL);
         addPreferenceHandlerFor(PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL);
+        addPreferenceHandlerFor(PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE);
 
         final Preference dischargeIntervalsSet = findPreference(PREF_BATTERY_DISCHARGE_INTERVALS_SET);
         if (dischargeIntervalsSet != null) {

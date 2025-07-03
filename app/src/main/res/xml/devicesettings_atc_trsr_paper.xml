@@ -6,12 +6,18 @@
         android:entryValues="@array/atc_tlsr_paper_models_values"
         android:key="pref_atc_tlsr_paper_model"
         android:summary="%s"
-        android:title="@string/pref_atc_tlsr_model_title" />
+        android:title="@string/pref_atc_tlsr_paper_model_title" />
     <ListPreference
-        android:defaultValue="1"
+        android:defaultValue="3200"
         android:entries="@array/atc_tlsr_paper_ble_adv_interval"
         android:entryValues="@array/atc_tlsr_paper_ble_adv_interval_values"
-        android:key="pref_atc_tlsr_ble_adv_interval"
+        android:key="pref_atc_tlsr_paper_ble_adv_interval"
         android:summary="%s"
-        android:title="@string/pref_atc_tlsr_ble_adv_interval_title" />
+        android:title="@string/pref_atc_tlsr_paper_ble_adv_interval_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="pref_atc_tlsr_paper_oepl_protocol_enable"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_atc_tlsr_paper_oepl_protocol_enable_summary"
+        android:title="@string/pref_atc_tlsr_paper_oepl_protocol_enable_title" />
 </androidx.preference.PreferenceScreen>

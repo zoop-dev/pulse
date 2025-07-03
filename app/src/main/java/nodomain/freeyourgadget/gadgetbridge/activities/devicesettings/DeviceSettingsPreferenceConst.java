@@ -651,5 +651,6 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_DEVICE_STRESS_TEST_DISPOSE = "pref_device_stress_test_dispose";
 
     public static final String PREF_ATC_TLSR_PAPER_MODEL = "pref_atc_tlsr_paper_model";
-    public static final String PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL = "pref_atc_tlsr_ble_adv_interval";
+    public static final String PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL = "pref_atc_tlsr_paper_ble_adv_interval";
+    public static final String PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE = "pref_atc_tlsr_paper_oepl_protocol_enable";
 }

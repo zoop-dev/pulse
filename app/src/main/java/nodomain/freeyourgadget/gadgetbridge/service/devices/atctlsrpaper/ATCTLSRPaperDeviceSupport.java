@@ -59,8 +59,10 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public static final UUID UUID_CHARACTERISTIC_MAIN = UUID.fromString("00001337-0000-1000-8000-00805f9b34fb");
     private static final Logger LOG = LoggerFactory.getLogger(ATCTLSRPaperDeviceSupport.class);
     private static final byte[] COMMAND_GET_CONFIGURATION = new byte[]{0x00, 0x05};
-
+    private static final byte[] COMMAND_ENABLE_OEPL = new byte[]{0x00, 0x06};
+    private static final byte[] COMMAND_DISABLE_OEPL = new byte[]{0x00, 0x07};
     private static final byte[] COMMAND_CONFIGURE_HS_154_BWRY_JD = new byte[]{0x00, 0x10, 0x26, 0x00, 0x6C, 0x00, 0x05, 0x00, 0x01, 0x01, 0x00, (byte) 0xC8, 0x00, (byte) 0xC8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x01, 0x02, 0x01, 0x10, 0x03, (byte) 0x80, 0x01, 0x02, 0x00, 0x00, 0x00, 0x04, 0x03, 0x00, 0x00, (byte) 0x80, 0x03, 0x40, 0x01, 0x20, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0x10, 0x01, 0x08, 0x03, (byte) 0x80, 0x00, 0x00, 0x01, 0x02, 0x02, 0x02, 0x40, 0x02, 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
     private int epaper_width = 0;
     private int epaper_height = 0;
     private int epaper_colors = 0;
@@ -240,6 +242,9 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         buf.position(32);
         epaper_colors = buf.get();
 
+        buf.position(35);
+        boolean oepl_enabled = buf.get() == 0x01;
+
         buf.position(41);
         int ble_adv_interval = buf.getShort() & 0xffff;
 
@@ -247,11 +252,12 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
             model = 10000; //HACK for unsupported HS 154 BWRY JD
         }
 
-        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={} ble_adv_interval={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model, ble_adv_interval);
+        LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={} ble_adv_interval={}, oepl_enabled={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model, ble_adv_interval, oepl_enabled);
 
         SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).edit();
         editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL, String.valueOf(model));
         editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL, String.valueOf(ble_adv_interval));
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE, oepl_enabled);
         editor.apply();
 
         final TransactionBuilder builder = new TransactionBuilder("set initialized");
@@ -263,6 +269,7 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onSendConfiguration(String config) {
         if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL.equals(config)
                 || DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL.equals(config)
+                || DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE.equals(config)
         ) {
             TransactionBuilder builder;
             SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
@@ -280,8 +287,17 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL.equals(config)) {
                     String bt_adv_interval = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL, "1000");
                     int interval = Integer.parseInt(bt_adv_interval);
-                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x08, (byte) (interval & 0xff), (byte) ((interval >> 8) & 0xff)});
+                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x08, (byte) ((interval >> 8) & 0xff), (byte) (interval & 0xff)});
                 }
+                if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE.equals(config)) {
+                    boolean enable_oepl_protocol = sharedPrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE, true);
+                    if (enable_oepl_protocol) {
+                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_ENABLE_OEPL);
+                    } else {
+                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_DISABLE_OEPL);
+                    }
+                }
+
                 builder.queue(getQueue());
             } catch (IOException e) {
                 GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
