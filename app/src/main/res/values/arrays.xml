@@ -4985,7 +4985,7 @@
         <item>90</item>
     </string-array>
 
-    <string-array name="atc_tlsr_paper_models">
+    <string-array name="atc_ble_oepl_models">
         <item name="29">Gici 213 BW SSD</item>
         <item name="13">Gici 213 BW ST</item>
         <item name="30">Gici 213 BW UC</item>
@@ -5039,7 +5039,7 @@
 
     </string-array>
 
-    <string-array name="atc_tlsr_paper_models_values">
+    <string-array name="atc_ble_oepl_models_values">
         <item>29</item>
         <item>13</item>
         <item>30</item>
@@ -5091,7 +5091,7 @@
         <item>39</item>
     </string-array>
 
-    <string-array name="atc_tlsr_paper_ble_adv_interval">
+    <string-array name="atc_ble_oepl_ble_adv_interval">
         <item name="1000">625ms</item>
         <item name="3200">2000ms</item>
         <item name="4000">2500ms</item>
@@ -5102,7 +5102,7 @@
         <item name="10000">6250ms</item>
     </string-array>
 
-    <string-array name="atc_tlsr_paper_ble_adv_interval_values">
+    <string-array name="atc_ble_oepl_ble_adv_interval_values">
         <item>1000</item>
         <item>3200</item>
         <item>4000</item>

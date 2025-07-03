@@ -2051,7 +2051,7 @@
     <string name="devicetype_bandw_pseries">Bowers and Wilkins P series</string>
     <string name="devicetype_earfun_air_s">EarFun Air S</string>
     <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
-    <string name="devicetype_atc_tlsr_paper">ATC_TLSR_Paper</string>
+    <string name="devicetype_atc_ble_oepl">ATC_BLE_OEPL</string>
     <string name="choose_auto_export_location">Choose export location</string>
     <string name="notification_channel_name">General</string>
     <string name="notification_channel_high_priority_name">High-priority</string>
@@ -4085,8 +4085,8 @@
     <string name="pref_calendar_target_app_title">Target app on watch for calendar events</string>
     <string name="same_image_already_on_device">same image already on device</string>
     <string name="sending_image">sending image</string>
-    <string name="pref_atc_tlsr_paper_model_title">Display Model</string>
-    <string name="pref_atc_tlsr_paper_ble_adv_interval_title">BLE Advertising Interval</string>
-    <string name="pref_atc_tlsr_paper_oepl_protocol_enable_title">Enable OEPL protocol</string>
-    <string name="pref_atc_tlsr_paper_oepl_protocol_enable_summary">Disable this if only using BLE to save power</string>
+    <string name="pref_atc_ble_oepl_model_title">Display Model</string>
+    <string name="pref_atc_ble_oepl_ble_adv_interval_title">BLE Advertising Interval</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Enable OEPL protocol</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Disable this if only using BLE to save power</string>
 </resources>

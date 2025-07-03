@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-package nodomain.freeyourgadget.gadgetbridge.devices.atctlsrpaper;
+package nodomain.freeyourgadget.gadgetbridge.devices.atcbleoepl;
 
 import android.content.Context;
 import android.net.Uri;
@@ -24,11 +24,11 @@ import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class ATCTLSRPaperInstallHandler implements InstallHandler {
+public class ATCBLEOEPLInstallHandler implements InstallHandler {
     private final Context mContext;
     private final Uri mUri;
 
-    public ATCTLSRPaperInstallHandler(Uri uri, Context context) {
+    public ATCBLEOEPLInstallHandler(Uri uri, Context context) {
         mContext = context;
         mUri = uri;
     }

@@ -5,7 +5,7 @@
 * Initial support for Garmin Descent Mk3
 * Initial support for Redmi Watch 5
 * Initial support for Yawell rings R10 and R11
-* Initial support for ATC_TLSR_Paper (experimental)
+* Initial support for ATC_BLE_OEPL (experimental)
 * Experimental support for Amazfit Balance 2
 * CMF Watch Pro: Firmware update
 * Fossil/Skagen Hybrids: Add calendar support

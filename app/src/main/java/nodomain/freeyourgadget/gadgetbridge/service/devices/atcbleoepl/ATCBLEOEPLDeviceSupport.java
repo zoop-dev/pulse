@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-package nodomain.freeyourgadget.gadgetbridge.service.devices.atctlsrpaper;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.atcbleoepl;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -54,10 +54,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
-public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
+public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public static final UUID UUID_SERVICE_MAIN = UUID.fromString("00001337-0000-1000-8000-00805f9b34fb");
     public static final UUID UUID_CHARACTERISTIC_MAIN = UUID.fromString("00001337-0000-1000-8000-00805f9b34fb");
-    private static final Logger LOG = LoggerFactory.getLogger(ATCTLSRPaperDeviceSupport.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ATCBLEOEPLDeviceSupport.class);
     private static final byte[] COMMAND_GET_CONFIGURATION = new byte[]{0x00, 0x05};
     private static final byte[] COMMAND_ENABLE_OEPL = new byte[]{0x00, 0x06};
     private static final byte[] COMMAND_DISABLE_OEPL = new byte[]{0x00, 0x07};
@@ -74,7 +74,7 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int current_chunk = -1;
 
 
-    public ATCTLSRPaperDeviceSupport() {
+    public ATCBLEOEPLDeviceSupport() {
         super(LOG);
         addSupportedService(UUID_SERVICE_MAIN);
     }
@@ -255,9 +255,9 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
         LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={} ble_adv_interval={}, oepl_enabled={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model, ble_adv_interval, oepl_enabled);
 
         SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).edit();
-        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL, String.valueOf(model));
-        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL, String.valueOf(ble_adv_interval));
-        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE, oepl_enabled);
+        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_MODEL, String.valueOf(model));
+        editor.putString(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL, String.valueOf(ble_adv_interval));
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE, oepl_enabled);
         editor.apply();
 
         final TransactionBuilder builder = new TransactionBuilder("set initialized");
@@ -267,16 +267,16 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSendConfiguration(String config) {
-        if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL.equals(config)
-                || DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL.equals(config)
-                || DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE.equals(config)
+        if (DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_MODEL.equals(config)
+                || DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL.equals(config)
+                || DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE.equals(config)
         ) {
             TransactionBuilder builder;
             SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
             try {
                 builder = performInitialized("Sending configuration for option: " + config);
-                if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL.equals(config)) {
-                    String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_MODEL, "1");
+                if (DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_MODEL.equals(config)) {
+                    String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_MODEL, "1");
                     int model = Integer.parseInt(display_model);
                     if (model == 10000) {// HACK: this is for the HS 213 BWRY JD type
                         builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_CONFIGURE_HS_154_BWRY_JD);
@@ -284,13 +284,13 @@ public class ATCTLSRPaperDeviceSupport extends AbstractBTLESingleDeviceSupport {
                         builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, (byte) model});
                     }
                 }
-                if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL.equals(config)) {
-                    String bt_adv_interval = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_BLE_ADV_INTERVAL, "1000");
+                if (DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL.equals(config)) {
+                    String bt_adv_interval = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL, "1000");
                     int interval = Integer.parseInt(bt_adv_interval);
                     builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x08, (byte) ((interval >> 8) & 0xff), (byte) (interval & 0xff)});
                 }
-                if (DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE.equals(config)) {
-                    boolean enable_oepl_protocol = sharedPrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_ATC_TLSR_PAPER_OEPL_PROTOCOL_ENABLE, true);
+                if (DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE.equals(config)) {
+                    boolean enable_oepl_protocol = sharedPrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE, true);
                     if (enable_oepl_protocol) {
                         builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_ENABLE_OEPL);
                     } else {

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-package nodomain.freeyourgadget.gadgetbridge.devices.atctlsrpaper;
+package nodomain.freeyourgadget.gadgetbridge.devices.atcbleoepl;
 
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
@@ -33,12 +33,12 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.atctlsrpaper.ATCTLSRPaperDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.atcbleoepl.ATCBLEOEPLDeviceSupport;
 
-public class ATCTLSRPaperCoordinator extends AbstractDeviceCoordinator {
+public class ATCBLEOEPLCoordinator extends AbstractDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_atc_tlsr_paper;
+        return R.string.devicetype_atc_ble_oepl;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ATCTLSRPaperCoordinator extends AbstractDeviceCoordinator {
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
-        return ATCTLSRPaperDeviceSupport.class;
+        return ATCBLEOEPLDeviceSupport.class;
     }
 
     @Override
@@ -65,8 +65,8 @@ public class ATCTLSRPaperCoordinator extends AbstractDeviceCoordinator {
     @NonNull
     @Override
     public Collection<? extends ScanFilter> createBLEScanFilters() {
-        ParcelUuid ATCTLSRPaperService = new ParcelUuid(ATCTLSRPaperDeviceSupport.UUID_SERVICE_MAIN);
-        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(ATCTLSRPaperService).build();
+        ParcelUuid ATCBLEOEPLService = new ParcelUuid(ATCBLEOEPLDeviceSupport.UUID_SERVICE_MAIN);
+        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(ATCBLEOEPLService).build();
         return Collections.singletonList(filter);
     }
 
@@ -77,14 +77,14 @@ public class ATCTLSRPaperCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public InstallHandler findInstallHandler(final Uri uri, final Context context) {
-        ATCTLSRPaperInstallHandler installHandler = new ATCTLSRPaperInstallHandler(uri, context);
+        ATCBLEOEPLInstallHandler installHandler = new ATCBLEOEPLInstallHandler(uri, context);
         return installHandler.isValid() ? installHandler : null;
     }
 
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
-                R.xml.devicesettings_atc_trsr_paper
+                R.xml.devicesettings_atc_ble_oepl
         };
     }
 }
