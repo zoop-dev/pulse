@@ -144,7 +144,7 @@
     <string name="pref_title_notification_use_as_deny">Забрањивање обавештења означених програма</string>
     <string name="pref_title_transliteration">Пресловљавање</string>
     <string name="pref_summary_transliteration">Омогућите ово ако Вам уређај нема подршку за словолик Вашег језика</string>
-    <string name="pref_title_banglejs_text_bitmap">Писмо као битмапе</string>
+    <string name="pref_title_banglejs_text_bitmap">Писмо као биткарте</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Величина писма битмапе</string>
     <string name="always">Увек</string>
     <string name="never">Никада</string>
@@ -272,7 +272,7 @@
     <string name="prefs_activity_recognition">Поставке препознавања дејстава</string>
     <string name="timeformat_24h">24Ч</string>
     <string name="pref_screen_notification_profile_alarm_clock">Будилник</string>
-    <string name="controlcenter_add_new_folder">Додај нову фасциклу</string>
+    <string name="controlcenter_add_new_folder">Додај нови омот</string>
     <string name="activity_type_activity">Дејство</string>
     <string name="add_test_device">Додај пробни уређај</string>
     <string name="menuitem_alarm">Ларма</string>
@@ -395,24 +395,24 @@
 \nкораци</string>
     <string name="step_streaks_achievements_sharing_message">Моја дневна достигнућа корачањем!</string>
     <string name="steps_streaks_total_steps_hint">Укупни број корака у целој путањи</string>
-    <string name="controlcenter_set_folder_title">Постави или створи нову фасциклу</string>
-    <string name="controlcenter_unset_folder">Раздеси фасциклу</string>
+    <string name="controlcenter_set_folder_title">Постави или створи нови омот</string>
+    <string name="controlcenter_unset_folder">Раздеси омот</string>
     <string name="watchface_dialog_widget_timezone">Временска област</string>
     <string name="sony_equalizer_preset_bright">Светло</string>
     <string name="pref_media_next">Следећа трака</string>
     <string name="watchface_widget_type_custom">Произвољна справица</string>
     <string name="sony_button_mode_off">Искључи</string>
     <string name="controlcenter_set_preferences">Постави својства</string>
-    <string name="controlcenter_set_parent_folder">Постави родитељску фасциклу</string>
+    <string name="controlcenter_set_parent_folder">Постави родитељски омот</string>
     <string name="pref_summary_opentracks_packagename">Користи се за покретање/заустављање снимања стазе ГПС-а у спољњем програму вежбања.</string>
     <string name="pref_title_opentracks_packagename">Име пакета Опентрака</string>
     <string name="info_connected_count">%d уређаја је повезано</string>
     <string name="info_no_devices_connected">Нема повезаних уређаја</string>
     <string name="watchface_setting_light_up_on_notification">Осветли при новом обавештењу</string>
     <string name="watchface_dialog_pre_setting_position">претпостави положај на %s</string>
-    <string name="controlcenter_folder_name">Име фасцикле:</string>
+    <string name="controlcenter_folder_name">Име омота:</string>
     <string name="error_deleting_device">Десила се грешка при брисању уређаја: %s</string>
-    <string name="error_setting_parent_folder">Десила се грешка при постављању родитељске фасцикле: %s</string>
+    <string name="error_setting_parent_folder">Десила се грешка при постављању родитељског омота: %s</string>
     <string name="controlcenter_connected_fraction">Повезан: %d/%d</string>
     <string name="controlcenter_toggle_details">Прекидач приказа појединости</string>
     <string name="supercars_lights_blinking_label">Трептање</string>
@@ -806,7 +806,7 @@
     <string name="prefs_always_on_display">Увек на заслону</string>
     <string name="prefs_password_6_digits_0_to_9_summary">Лозинка мора имати 6 бројева, коришћењем само бројева</string>
     <string name="mi3_prefs_night_mode">Ноћни рад</string>
-    <string name="mi3_prefs_band_screen_unlock_summary">Обришите ради откључавања заслона уређаја</string>
+    <string name="mi3_prefs_band_screen_unlock_summary">Превуците ради откључавања заслона уређаја</string>
     <string name="traditional_chinese">Традиционални Кинески</string>
     <string name="activity_prefs_year_birth">Година рођења</string>
     <string name="activity_prefs_gender">Пол</string>
@@ -2434,4 +2434,14 @@
     <string name="intent_api_allow_debug_commands_summary">Дозволи окидање изборника исправки грешака преко АПИ намене</string>
     <string name="device_support_can_reconnect_summary">Поново употреби примерак подршке уређаја приликом преповезивања са уређајем.</string>
     <string name="discovery_bonding_error">Нисам успео да се упарим: %1$s</string>
+    <string name="prefs_device_support_settings">Подршка уређаја</string>
+    <string name="device_support_can_reconnect_title">Поново употреби подршку уређаја</string>
+    <string name="maps_not_found">Нисам пронашао карте - молим, означите ваљани омот карата у поставкама</string>
+    <string name="maps">Карте</string>
+    <string name="maps_settings">Поставке карата</string>
+    <string name="maps_download_title">Преузми карте</string>
+    <string name="maps_track_color_title">Боја трага</string>
+    <string name="folder">Омот</string>
+    <string name="maps_download_summary">Кликните овде ради преузимања датотека карата. Требају бити сачуване у омоту означеном испод.</string>
+    <string name="no_folder_selected">Нема изабраних омота</string>
 </resources>
