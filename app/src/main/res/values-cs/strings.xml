@@ -4167,5 +4167,5 @@
     <string name="pref_atc_ble_oepl_model_title">Model displeje</string>
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">Interval propagace BLE</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Povolit protokol OEPL</string>
-    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Zakažte, pokud pouze používáte BLE k úspoře energie</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Zakažte, pokud pouze používáte BLE pro úsporu energie</string>
 </resources>
