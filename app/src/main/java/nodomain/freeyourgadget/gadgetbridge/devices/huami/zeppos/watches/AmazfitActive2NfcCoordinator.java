@@ -23,7 +23,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
  * This seems to be the same as the Active 2, but with NFC. The bluetooth name is different, but the
  * device sources seem to be similar.
  */
-public class AmazfitActive2NfcCoordinator extends AmazfitActive2Coordinator {
+public class AmazfitActive2NfcCoordinator extends AmazfitActive2RoundCoordinator {
     @Override
     public String getDeviceBluetoothName() {
         return HuamiConst.AMAZFIT_ACTIVE_2_NFC_NAME;

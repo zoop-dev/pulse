@@ -1780,6 +1780,8 @@
     <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
     <string name="devicetype_amazfit_active">Amazfit Active</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
+    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Round)</string>
+    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Square)</string>
     <string name="devicetype_amazfit_active_2_nfc">Amazfit Active 2 NFC</string>
     <string name="devicetype_amazfit_active_edge">Amazfit Active Edge</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Square)</string>

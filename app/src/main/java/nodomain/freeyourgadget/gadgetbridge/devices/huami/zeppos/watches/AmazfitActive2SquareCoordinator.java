@@ -21,33 +21,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class AmazfitActive2Coordinator extends ZeppOsCoordinator {
+public class AmazfitActive2SquareCoordinator extends ZeppOsCoordinator {
+    @Override
+    public boolean isExperimental() {
+        // untested
+        return true;
+    }
+
     @Override
     public String getDeviceBluetoothName() {
-        return HuamiConst.AMAZFIT_ACTIVE_2_NAME;
+        return "Active 2 (Square)";
     }
 
     @Override
     public Set<Integer> getDeviceSources() {
         return new HashSet<>(Arrays.asList(
-                8913152, // chinese mainland version
-                8913153,
-                8913155, // chinese mainland version
-                8913159,
-                10092800,
-                10092801,
-                10092803,
-                10092807
+                9830656, // chinese mainland version
+                9830657,
+                9830659
         ));
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_amazfit_active_2;
+        return R.string.devicetype_amazfit_active_2_square;
     }
 
     @Override
