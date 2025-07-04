@@ -66,7 +66,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int epaper_width = 0;
     private int epaper_height = 0;
     private int epaper_colors = 0;
-
+    private boolean is_bwy = false;
     private byte[] image_payload = null;
     private byte[] block_data = null;
     private int blocks_total = -1;
@@ -248,9 +248,25 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         buf.position(41);
         int ble_adv_interval = buf.getShort() & 0xffff;
 
+        // check for black/white/yellow models
+        switch (model) {
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 6:
+            case 31:
+            case 35:
+                is_bwy = true;
+                break;
+            default:
+                is_bwy = false;
+        }
+
         if (epaper_width == 200 && epaper_height == 200 && model == 0x26) {
             model = 10000; //HACK for unsupported HS 154 BWRY JD
         }
+
 
         LOG.info("decoded data: version={}, width={}, height={}, nr_colors={}, w/h swapped={}, model={} ble_adv_interval={}, oepl_enabled={}", version, epaper_width, epaper_height, epaper_colors, is_wh_swapped, model, ble_adv_interval, oepl_enabled);
 
@@ -341,7 +357,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 // FIXME: different models with different colors
                 int[] colors = new int[]{
                         0x000000, // black
-                        0xff0000, // red
+                        is_bwy ? 0xffff00 : 0xff0000, // yellow or red
                         0xffff00, // yellow
                 };
 
