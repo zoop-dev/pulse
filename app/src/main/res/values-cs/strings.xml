@@ -4159,4 +4159,13 @@
     <string name="devicetype_atc_tlsr_paper">ATC_TLSR_Paper</string>
     <string name="same_image_already_on_device">stejný obrázek se již nachází na zařízení</string>
     <string name="sending_image">odesílání obrázku</string>
+    <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
+    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Round)</string>
+    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Square)</string>
+    <string name="devicetype_garmin_venu_x1">Garmin Venu X1</string>
+    <string name="devicetype_atc_ble_oepl">ATC_BLE_OEPL</string>
+    <string name="pref_atc_ble_oepl_model_title">Model displeje</string>
+    <string name="pref_atc_ble_oepl_ble_adv_interval_title">Interval propagace BLE</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Povolit protokol OEPL</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Zakažte, pokud pouze používáte BLE k úspoře energie</string>
 </resources>
