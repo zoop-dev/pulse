@@ -27,11 +27,11 @@ import java.io.IOException;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioConstants;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.Casio2C2DSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gbx100.CasioGBX100DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.BcdUtil;
 
@@ -54,7 +54,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
     @Override
     protected void prePerform() throws IOException {
         super.prePerform();
-        getDevice().setBusyTask("GetConfigurationOperation starting..."); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.busy_task_fetch_configuration, getContext()); // mark as busy quickly to avoid interruptions from the outside
     }
 
     @Override

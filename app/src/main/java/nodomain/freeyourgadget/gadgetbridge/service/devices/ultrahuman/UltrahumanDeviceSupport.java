@@ -192,8 +192,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
         String title = getContext().getString(R.string.busy_task_fetch_activity_data);
         GB.updateTransferNotification(title, "", true, 0, getContext());
 
-        String task = getContext().getString(R.string.busy_task_fetch_activity_data);
-        getDevice().setBusyTask(task);
+        getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
 
         TransactionBuilder builder = createTransactionBuilder("onFetchRecordedData");

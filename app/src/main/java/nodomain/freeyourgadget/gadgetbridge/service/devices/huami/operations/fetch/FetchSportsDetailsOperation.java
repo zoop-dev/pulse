@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.GregorianCalendar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -68,9 +69,10 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
         this.fetchCount = fetchCount;
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_sports_details);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_sports_details;
     }
 
     @Override

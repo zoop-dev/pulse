@@ -59,7 +59,7 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
 
     @Override
     protected void prePerform() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_activity_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
     }
 

@@ -85,7 +85,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
             throw new IOException("Not a Zepp OS coordinator for " + getDevice().getAddress());
         }
 
-        getDevice().setBusyTask("Operation starting..."); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.updating_firmware, getContext()); // mark as busy quickly to avoid interruptions from the outside
         ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("fw update starting");
         enableOtherNotifications(builder, false);
         enableNeededNotifications(builder, true);
@@ -224,7 +224,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
 
     public void sendFwInfo() {
         ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send firmware info");
-        builder.setBusy(getDevice(), getContext().getString(R.string.updating_firmware), getContext());
+        builder.setBusy(getDevice(), R.string.updating_firmware, getContext());
         builder.write(HuamiService.UUID_CHARACTERISTIC_FIRMWARE_CONTROL, buildFirmwareInfoCommand());
         builder.queue(getSupport());
     }

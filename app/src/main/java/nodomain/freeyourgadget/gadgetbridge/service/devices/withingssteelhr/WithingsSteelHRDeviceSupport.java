@@ -243,7 +243,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
                 return;
             }
 
-            getDevice().setBusyTask("Syncing");
+            getDevice().setBusyTask(R.string.busy_task_syncing, getContext());
             syncInProgress = true;
             addSimpleConversationToQueue(new WithingsMessage(WithingsMessageType.INITIAL_CONNECT));
             addSimpleConversationToQueue(new WithingsMessage(WithingsMessageType.GET_ANCS_STATUS));

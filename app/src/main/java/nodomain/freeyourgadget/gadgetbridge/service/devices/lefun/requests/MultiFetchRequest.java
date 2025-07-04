@@ -20,6 +20,8 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.lefun.LefunConstants;
@@ -52,7 +54,7 @@ public abstract class MultiFetchRequest extends Request {
         if (getDevice().isBusy()) {
             throw new IllegalStateException("Device is busy");
         }
-        builder.add(new SetDeviceBusyAction(getDevice(), getOperationName(), getContext()));
+        builder.setBusyTask(getDevice(), getOperationName(), getContext());
         builder.wait(1000); // Wait a bit (after previous operation), or device sometimes won't respond
     }
 
@@ -105,5 +107,5 @@ public abstract class MultiFetchRequest extends Request {
      * Gets the display operation name
      * @return the operation name
      */
-    protected abstract String getOperationName();
+    protected abstract @StringRes int getOperationName();
 }

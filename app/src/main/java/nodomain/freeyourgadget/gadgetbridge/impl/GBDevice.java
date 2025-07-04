@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Daniel Dakhno, Daniele Gobbetti, José Rebelo, Petr Vaněk, Taavi
-    Eomäe, Uwe Hermann
+    Eomäe, Uwe Hermann, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -27,6 +27,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -355,19 +356,21 @@ public class GBDevice implements Parcelable {
      * Marks the device as busy, performing a certain task. While busy, no other operations will
      * be performed on the device.
      * <p/>
-     * Note that nested busy tasks are not supported, every single call to #setBusyTask()
-     * or unsetBusy() has an effect.
+     * Note that nested busy tasks are not supported, every single call to {@link #setBusyTask(int, Context)}
+     * or {@link #unsetBusyTask()} has an effect.
      *
-     * @param task a textual name of the task to be performed, possibly displayed to the user
+     * @param taskRes string resource for the task to be performed, possibly displayed to the user
      */
-    public void setBusyTask(String task) {
-        if (task == null) {
-            throw new IllegalArgumentException("busy task must not be null");
+    public void setBusyTask(@StringRes int taskRes, @NonNull Context context) {
+        String task = context.getString(taskRes);
+
+        if (mBusyTask == null) {
+            LOG.info("Mark device as busy: {}", task);
+        } else if (task.equals(mBusyTask)) {
+            LOG.debug("Device already busy with: {}", task);
+        } else {
+            LOG.warn("Mark device as busy: {}, but device was already busy with: {}", task, mBusyTask);
         }
-        if (mBusyTask != null) {
-            LOG.warn("Attempt to mark device as busy with: {}, but is already busy with: {}", task, mBusyTask);
-        }
-        LOG.info("Mark device as busy: {}", task);
         mBusyTask = task;
     }
 

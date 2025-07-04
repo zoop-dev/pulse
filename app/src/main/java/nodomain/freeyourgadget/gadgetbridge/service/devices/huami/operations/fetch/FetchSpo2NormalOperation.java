@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fe
 
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +53,10 @@ public class FetchSpo2NormalOperation extends AbstractRepeatingFetchOperation {
         super(fetcher, HuamiFetchDataType.SPO2_NORMAL);
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_spo2_data);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_spo2_data;
     }
 
     @Override

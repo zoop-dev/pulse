@@ -58,7 +58,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
     @Override
     protected void prePerform() throws IOException {
         super.prePerform();
-        getDevice().setBusyTask("SetConfigurationOperation starting..."); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.busy_task_configuring, getContext()); // mark as busy quickly to avoid interruptions from the outside
     }
 
     @Override

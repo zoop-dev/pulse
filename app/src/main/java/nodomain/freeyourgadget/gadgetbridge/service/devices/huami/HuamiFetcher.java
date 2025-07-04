@@ -169,7 +169,7 @@ public class HuamiFetcher {
         if (currentOperation != null) {
             LOG.debug("Performing next operation {}", currentOperation.getName());
 
-            getDevice().setBusyTask(currentOperation.taskDescription()); // mark as busy quickly to avoid interruptions from the outside
+            getDevice().setBusyTask(currentOperation.taskDescription(), getContext()); // mark as busy quickly to avoid interruptions from the outside
             getDevice().sendDeviceUpdateIntent(getContext());
 
             if (!wasFetching) {

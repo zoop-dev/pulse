@@ -238,7 +238,7 @@ public class HuaweiP2PAppIcon extends HuaweiBaseP2PService {
         fileInfo.setFileUploadCallback(new HuaweiUploadManager.FileUploadCallback() {
             @Override
             public void onUploadStart() {
-                manager.getSupportProvider().getDevice().setBusyTask(manager.getSupportProvider().getContext().getString(R.string.updating_firmware));
+                manager.getSupportProvider().getDevice().setBusyTask(R.string.updating_firmware, manager.getSupportProvider().getContext());
                 manager.getSupportProvider().getDevice().sendDeviceUpdateIntent(manager.getSupportProvider().getContext());
             }
 

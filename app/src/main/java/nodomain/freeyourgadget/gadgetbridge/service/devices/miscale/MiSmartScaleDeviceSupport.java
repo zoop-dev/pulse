@@ -44,7 +44,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
@@ -227,7 +226,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         GB.updateTransferNotification(fetchMessage,"", true, 0, getContext());
 
-        builder.add(new SetDeviceBusyAction(getDevice(), fetchMessage, getContext()));
+        builder.setBusyTask(getDevice(), R.string.busy_task_fetch_weight_data, getContext());
         builder.notify(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), true);
         // Query weight measurements saved by the scale
         sendHistoryCommand(builder, CMD_HISTORY_START, true);

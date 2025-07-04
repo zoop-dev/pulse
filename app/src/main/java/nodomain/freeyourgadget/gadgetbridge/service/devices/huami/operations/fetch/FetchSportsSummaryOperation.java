@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fe
 
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +53,10 @@ public class FetchSportsSummaryOperation extends AbstractFetchOperation {
         this.fetchCount = fetchCount;
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_sports_summaries);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_sports_summaries;
     }
 
     @Override

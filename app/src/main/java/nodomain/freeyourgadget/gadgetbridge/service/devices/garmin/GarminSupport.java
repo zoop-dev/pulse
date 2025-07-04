@@ -616,7 +616,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             if (!gbDevice.isBusy()) {
                 isBusyFetching = true;
                 GB.updateTransferNotification(getContext().getString(R.string.busy_task_fetch_activity_data), "", true, 0, getContext());
-                getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_activity_data));
+                getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
                 getDevice().sendDeviceUpdateIntent(getContext());
             }
 

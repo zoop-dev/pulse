@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +46,10 @@ public class FetchDebugLogsOperation extends AbstractFetchOperation {
         super(fetcher, HuamiFetchDataType.DEBUG_LOGS);
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_debug_logs);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_debug_logs;
     }
 
     @Override

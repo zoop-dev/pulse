@@ -267,7 +267,7 @@ public class XiaomiWatchfaceService extends AbstractXiaomiService implements Xia
 
     private void setDeviceBusy() {
         final GBDevice device = getSupport().getDevice();
-        device.setBusyTask(getSupport().getContext().getString(R.string.uploading_watchface));
+        device.setBusyTask(R.string.uploading_watchface, getSupport().getContext());
         device.sendDeviceUpdateIntent(getSupport().getContext());
     }
 

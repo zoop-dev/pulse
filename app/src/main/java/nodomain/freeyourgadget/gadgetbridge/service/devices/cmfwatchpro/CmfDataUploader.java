@@ -236,7 +236,7 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
 
     private void setDeviceBusy() {
         final GBDevice device = mSupport.getDevice();
-        device.setBusyTask(mSupport.getContext().getString(R.string.updating_firmware));
+        device.setBusyTask(R.string.updating_firmware, mSupport.getContext());
         device.sendDeviceUpdateIntent(mSupport.getContext());
     }
 

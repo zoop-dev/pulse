@@ -141,7 +141,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
@@ -740,7 +739,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onFetchRecordedData(int dataTypes) {
         indicateFinishedFetchingOperation();
         TransactionBuilder builder = new TransactionBuilder("fetch data1");
-        builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.busy_task_fetch_activity_data), getContext()));
+        builder.setBusyTask(getDevice(), R.string.busy_task_fetch_activity_data, getContext());
         builder.write(writeCharacteristic, craftData(CMD_GROUP_RECEIVE_SPORTS_DATA, CMD_REQUEST_STEPS_DATA1, VALUE_ON));
         builder.queue(getQueue());
     }

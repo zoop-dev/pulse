@@ -308,7 +308,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     }
                     break;
                 case YawellRingConstants.CMD_SYNC_HRV:
-                    getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_hrv_data));
+                    getDevice().setBusyTask(R.string.busy_task_fetch_hrv_data, getContext());
                     YawellRingPacketHandler.historicalHRV(getDevice(), getContext(), value, daysAgo);
                     if (!getDevice().isBusy()) {
                         if (daysAgo < 6) {
@@ -738,7 +738,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void fetchHistoryActivity() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_activity_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
         syncingDay = Calendar.getInstance();
         syncingDay.add(Calendar.DAY_OF_MONTH, 0 - daysAgo);
@@ -752,7 +752,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void fetchHistoryHR() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_hr_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_hr_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
         syncingDay = Calendar.getInstance();
         if (daysAgo != 0) {
@@ -773,7 +773,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void fetchHistoryStress() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_stress_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_stress_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
         syncingDay = Calendar.getInstance();
         byte[] stressHistoryRequest = buildPacket(new byte[]{YawellRingConstants.CMD_SYNC_STRESS});
@@ -782,7 +782,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void fetchHistorySpo2() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_spo2_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_spo2_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
         byte[] spo2HistoryRequest = new byte[]{
                 YawellRingConstants.CMD_BIG_DATA_V2,
@@ -798,7 +798,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void fetchHistorySleep() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_sleep_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_sleep_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
         byte[] sleepHistoryRequest = new byte[]{
                 YawellRingConstants.CMD_BIG_DATA_V2,
@@ -833,7 +833,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void fetchTemperature() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_temperature));
+        getDevice().setBusyTask(R.string.busy_task_fetch_temperature, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
         byte[] temperatureHistoryRequest = new byte[]{
                 YawellRingConstants.CMD_BIG_DATA_V2,

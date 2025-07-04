@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.requests;
 
+import androidx.annotation.StringRes;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.lefun.LefunConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.lefun.commands.GetActivityDataCommand;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.LefunDeviceSupport;
@@ -79,7 +82,7 @@ public class GetActivityDataRequest extends MultiFetchRequest {
     }
 
     @Override
-    protected String getOperationName() {
-        return "Getting activity data";
+    protected @StringRes int getOperationName() {
+        return R.string.busy_task_fetch_activity_data;
     }
 }

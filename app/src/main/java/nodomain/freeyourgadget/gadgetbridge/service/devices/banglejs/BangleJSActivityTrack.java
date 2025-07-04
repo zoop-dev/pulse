@@ -281,7 +281,7 @@ class BangleJSActivityTrack {
 
     private static void signalFetchingStarted(GBDevice device, Context context) {
         GB.updateTransferNotification(context.getString(R.string.activity_detail_start_label) + " : " + context.getString(R.string.busy_task_fetch_sports_details),"", true, 0, context);
-        device.setBusyTask(context.getString(R.string.busy_task_fetch_sports_details));
+        device.setBusyTask(R.string.busy_task_fetch_sports_details, context);
         GB.toast(context.getString(R.string.activity_detail_start_label) + " : " + context.getString(R.string.busy_task_fetch_sports_details), Toast.LENGTH_SHORT, GB.INFO);
     }
 

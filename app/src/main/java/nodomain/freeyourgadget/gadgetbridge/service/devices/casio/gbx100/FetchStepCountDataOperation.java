@@ -88,7 +88,7 @@ public class FetchStepCountDataOperation  extends AbstractBTLEOperation<CasioGBX
     @Override
     protected void prePerform() throws IOException {
         super.prePerform();
-        getDevice().setBusyTask("FetchStepCountDataOperation starting..."); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.busy_task_fetch_steps, getContext()); // mark as busy quickly to avoid interruptions from the outside
         GB.updateTransferNotification(null, getContext().getString(R.string.busy_task_fetch_activity_data), true, 0, getContext());
     }
 

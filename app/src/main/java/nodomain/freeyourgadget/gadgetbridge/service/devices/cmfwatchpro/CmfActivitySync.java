@@ -123,7 +123,7 @@ public class CmfActivitySync {
             case 0x01:
                 LOG.debug("Got activity fetch ack 1, starting step 2");
                 GB.updateTransferNotification(getContext().getString(R.string.busy_task_fetch_activity_data), "", true, 0, getContext());
-                getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_activity_data));
+                getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
                 mSupport.sendCommand("fetch recorded data step 2", CmfCommand.ACTIVITY_FETCH_2, CmfWatchProSupport.A5);
                 break;
             case 0x02:

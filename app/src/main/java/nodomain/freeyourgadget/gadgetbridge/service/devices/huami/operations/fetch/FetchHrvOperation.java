@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fe
 
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,9 +49,10 @@ public class FetchHrvOperation extends AbstractRepeatingFetchOperation {
         super(fetcher, HuamiFetchDataType.HRV);
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_hrv_data);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_hrv_data;
     }
 
     @Override

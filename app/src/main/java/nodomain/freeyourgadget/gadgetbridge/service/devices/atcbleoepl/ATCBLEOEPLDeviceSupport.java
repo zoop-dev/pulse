@@ -47,7 +47,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
@@ -431,7 +430,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             final TransactionBuilder builder = new TransactionBuilder("send image prepare");
             builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), buf.array());
-            builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.sending_image), getContext()));
+            builder.setBusyTask(getDevice(), R.string.sending_image, getContext());
             builder.queue(getQueue());
             blocks_total = image_payload.length / 4096 + 1;
 

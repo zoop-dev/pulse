@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.AbstractMoyoungDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSetting;
@@ -55,7 +56,7 @@ public class QuerySettingsOperation extends AbstractBTLEOperation<MoyoungDeviceS
 
     @Override
     protected void prePerform() {
-        getDevice().setBusyTask("Querying settings"); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.busy_task_fetch_configuration, getContext()); // mark as busy quickly to avoid interruptions from the outside
         getDevice().sendDeviceUpdateIntent(getContext());
     }
 

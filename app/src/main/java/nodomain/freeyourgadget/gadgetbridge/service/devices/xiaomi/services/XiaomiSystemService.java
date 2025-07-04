@@ -953,7 +953,7 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
 
     private void setDeviceBusy() {
         final GBDevice device = getSupport().getDevice();
-        device.setBusyTask(getSupport().getContext().getString(R.string.updating_firmware));
+        device.setBusyTask(R.string.updating_firmware, getSupport().getContext());
         device.sendDeviceUpdateIntent(getSupport().getContext());
     }
 

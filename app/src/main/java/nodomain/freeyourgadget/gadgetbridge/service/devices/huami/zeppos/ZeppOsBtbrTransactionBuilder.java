@@ -18,11 +18,12 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
 
 public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
@@ -50,8 +51,8 @@ public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
     }
 
     @Override
-    public void setBusy(final GBDevice device, final String string, final Context context) {
-        mBuilder.add(new SetDeviceBusyAction(device, string, context));
+    public void setBusy(final GBDevice device, @StringRes final int stringRes, final Context context) {
+        mBuilder.setBusyTask(device, stringRes, context);
     }
 
     @Override

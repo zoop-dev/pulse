@@ -189,9 +189,9 @@ public class HuaweiUploadManager {
     public void setDeviceBusy() {
         final GBDevice device = support.getDevice();
         if(fileUploadInfo != null && fileUploadInfo.fileType == FileUpload.Filetype.watchface) {
-            device.setBusyTask(support.getContext().getString(R.string.uploading_watchface));
+            device.setBusyTask(R.string.uploading_watchface, support.getContext());
         } else {
-            device.setBusyTask(support.getContext().getString(R.string.updating_firmware));
+            device.setBusyTask(R.string.updating_firmware, support.getContext());
         }
         device.sendDeviceUpdateIntent(support.getContext());
     }

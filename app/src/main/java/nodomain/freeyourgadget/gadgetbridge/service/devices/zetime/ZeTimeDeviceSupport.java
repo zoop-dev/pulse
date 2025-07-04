@@ -1890,7 +1890,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("readConfiguration");
 
             if (!getDevice().isBusy()) {
-                getDevice().setBusyTask("readConfiguration");
+                getDevice().setBusyTask(R.string.busy_task_fetch_configuration, getContext());
             }
 
             byte[] configRead1 = {

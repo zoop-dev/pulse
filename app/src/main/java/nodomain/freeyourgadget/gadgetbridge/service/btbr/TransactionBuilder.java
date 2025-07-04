@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Damien Gaignon
+/*  Copyright (C) 2022-2025 Damien Gaignon, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -23,11 +23,13 @@ import org.slf4j.LoggerFactory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WriteAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
 
 public class TransactionBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(TransactionBuilder.class);
@@ -66,6 +68,14 @@ public class TransactionBuilder {
      */
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtBRAction action = new SetDeviceStateAction(device, state, context);
+        return add(action);
+    }
+
+    /// Set the device as busy or not ({@code taskName = 0}).
+    /// @see SetDeviceBusyAction#SetDeviceBusyAction
+    public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
+                                          @NonNull final Context context) {
+        BtBRAction action = new SetDeviceBusyAction(device, taskName, context);
         return add(action);
     }
 

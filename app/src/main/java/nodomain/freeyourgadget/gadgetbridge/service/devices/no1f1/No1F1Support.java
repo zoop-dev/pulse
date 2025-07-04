@@ -52,7 +52,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -462,7 +461,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
         firstTimestamp = 0;
         try {
             TransactionBuilder builder = performInitialized("fetchActivityData");
-            builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.busy_task_fetch_activity_data), getContext()));
+            builder.setBusyTask(getDevice(), R.string.busy_task_fetch_activity_data, getContext());
             byte[] msg = new byte[]{
                     type,
                     (byte) 0xfa

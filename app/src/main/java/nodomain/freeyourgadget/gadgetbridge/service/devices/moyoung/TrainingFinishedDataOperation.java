@@ -65,7 +65,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
 
     @Override
     protected void prePerform() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_training_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_training_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
     }
 

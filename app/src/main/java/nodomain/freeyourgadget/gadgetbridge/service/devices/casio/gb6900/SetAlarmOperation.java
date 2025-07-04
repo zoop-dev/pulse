@@ -26,11 +26,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioConstants;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gb6900.CasioGB6900DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 
 public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSupport> {
@@ -45,7 +45,7 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
     @Override
     protected void prePerform() throws IOException {
         super.prePerform();
-        getDevice().setBusyTask("SetAlarmOperation starting..."); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.busy_task_setting_alarms, getContext()); // mark as busy quickly to avoid interruptions from the outside
     }
 
     private void getSettingForAlarm() {

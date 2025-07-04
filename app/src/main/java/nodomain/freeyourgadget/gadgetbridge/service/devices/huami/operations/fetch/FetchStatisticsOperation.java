@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch;
 
+import androidx.annotation.StringRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +38,10 @@ public class FetchStatisticsOperation extends AbstractRepeatingFetchOperation {
         super(fetcher, HuamiFetchDataType.STATISTICS);
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_statistics);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_statistics;
     }
 
     @Override

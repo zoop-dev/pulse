@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Damien Gaignon
+/*  Copyright (C) 2022-2025 Damien Gaignon, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,21 +19,23 @@ package nodomain.freeyourgadget.gadgetbridge.service.btbr.actions;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class SetDeviceBusyAction extends PlainAction {
     private final GBDevice device;
     private final Context context;
-    private final String busyTask;
+    private final @StringRes int busyTask;
 
     /**
      * When run, will mark the device as busy (or not busy).
      *
      * @param device   the device to mark
-     * @param busyTask the task name to set as busy task, or null to mark as not busy
+     * @param busyTask string resource for the busy task name, or {@code 0} to mark as not busy
      * @param context
      */
-    public SetDeviceBusyAction(GBDevice device, String busyTask, Context context) {
+    public SetDeviceBusyAction(GBDevice device, @StringRes int busyTask, Context context) {
         this.device = device;
         this.busyTask = busyTask;
         this.context = context;
@@ -41,13 +43,20 @@ public class SetDeviceBusyAction extends PlainAction {
 
     @Override
     public boolean run(BluetoothSocket socket) {
-        device.setBusyTask(busyTask);
+        if (busyTask == 0) {
+            device.unsetBusyTask();
+        } else {
+            device.setBusyTask(busyTask, context);
+        }
         device.sendDeviceUpdateIntent(context);
+
         return true;
     }
 
     @Override
     public String toString() {
-        return getCreationTime() + ": " + getClass().getName() + ": " + busyTask;
+        return getCreationTime() + ": " + getClass().getName() + ": "
+                + (busyTask == 0 ? "<none>" : context.getString(busyTask));
+
     }
 }

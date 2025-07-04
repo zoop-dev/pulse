@@ -51,7 +51,7 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
 
     @Override
     protected void prePerform() {
-        getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_activity_data));
+        getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
         getDevice().sendDeviceUpdateIntent(getContext());
     }
 

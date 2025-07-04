@@ -586,7 +586,7 @@ public class HuaweiOTAManager {
     public void setDeviceBusy() {
         final GBDevice device = support.getDevice();
         if (device != null && device.isConnected()) {
-            device.setBusyTask(support.getContext().getString(R.string.updating_firmware));
+            device.setBusyTask(R.string.updating_firmware, support.getContext());
             device.sendDeviceUpdateIntent(support.getContext());
         }
     }

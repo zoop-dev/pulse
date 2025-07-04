@@ -445,7 +445,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             handler = new PineTimeInstallHandler(uri, getContext());
 
             if (handler.isValid()) {
-                gbDevice.setBusyTask("firmware upgrade");
+                gbDevice.setBusyTask(R.string.updating_firmware, getContext());
                 DfuServiceInitiator starter = new DfuServiceInitiator(getDevice().getAddress())
                         .setDeviceName(getDevice().getName())
                         .setKeepBond(true)

@@ -29,7 +29,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiFirmwareInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareType;
@@ -156,7 +155,7 @@ public class UpdateFirmwareOperation2020 extends UpdateFirmwareOperation {
     public boolean sendFwInfo() {
         try {
             TransactionBuilder builder = performInitialized("send firmware info");
-            builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.updating_firmware), getContext()));
+            builder.setBusyTask(getDevice(), R.string.updating_firmware, getContext());
             int fwSize = getFirmwareInfo().getSize();
             byte[] sizeBytes = BLETypeConversions.fromUint32(fwSize);
             byte[] bytes = buildFirmwareInfoCommand();

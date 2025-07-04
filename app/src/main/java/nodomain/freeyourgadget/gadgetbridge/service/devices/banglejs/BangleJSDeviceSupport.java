@@ -830,7 +830,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         final String state = json.getString("state");
         if ("start".equals(state)) {
             GB.updateTransferNotification(getContext().getString(R.string.busy_task_fetch_activity_data),"", true, 0, getContext());
-            getDevice().setBusyTask(getContext().getString(R.string.busy_task_fetch_activity_data));
+            getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
         } else if ("end".equals(state)) {
             saveLastSyncTimestamp(System.currentTimeMillis() - 1000L * 60);
             getDevice().unsetBusyTask();

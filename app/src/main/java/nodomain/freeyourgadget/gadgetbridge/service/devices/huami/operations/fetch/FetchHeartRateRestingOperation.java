@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fe
 
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +53,10 @@ public class FetchHeartRateRestingOperation extends AbstractRepeatingFetchOperat
         super(fetcher, HuamiFetchDataType.RESTING_HEART_RATE);
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_hr_data);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_hr_data;
     }
 
     @Override

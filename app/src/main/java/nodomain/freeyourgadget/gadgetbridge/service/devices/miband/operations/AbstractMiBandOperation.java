@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -33,7 +34,7 @@ public abstract class AbstractMiBandOperation<T extends AbstractBTLESingleDevice
     @Override
     protected void prePerform() throws IOException {
         super.prePerform();
-        getDevice().setBusyTask("Operation starting..."); // mark as busy quickly to avoid interruptions from the outside
+        getDevice().setBusyTask(R.string.busy_task_busy, getContext()); // mark as busy quickly to avoid interruptions from the outside
         TransactionBuilder builder = performInitialized("disabling some notifications");
         enableOtherNotifications(builder, false);
         enableNeededNotifications(builder, true);

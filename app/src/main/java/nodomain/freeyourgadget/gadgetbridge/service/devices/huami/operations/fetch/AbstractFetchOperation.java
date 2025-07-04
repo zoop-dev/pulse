@@ -22,12 +22,12 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -93,7 +93,8 @@ public abstract class AbstractFetchOperation {
     /**
      * A task description, to display in notifications and device card.
      */
-    public abstract String taskDescription();
+    @StringRes
+    public abstract int taskDescription();
 
     protected abstract void startFetching();
 
@@ -210,7 +211,7 @@ public abstract class AbstractFetchOperation {
         setStartTimestamp(startTimestamp);
         LOG.info("Will transfer {} packets since {}", expectedDataLength, DateTimeUtils.formatIso8601(startTimestamp.getTime()));
 
-        GB.updateTransferNotification(taskDescription(),
+        GB.updateTransferNotification(getContext().getString(taskDescription()),
                 getContext().getString(R.string.FetchActivityOperation_about_to_transfer_since,
                         DateFormat.getDateTimeInstance().format(startTimestamp.getTime())), true, 0, getContext());
 

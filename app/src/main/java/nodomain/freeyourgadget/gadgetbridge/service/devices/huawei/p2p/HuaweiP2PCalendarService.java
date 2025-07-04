@@ -366,7 +366,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
             public void onUploadStart() {
                 // TODO: set device as busy in this case. But maybe exists another way to do this. Currently user see text on device card.
                 // Also text should be changed
-                manager.getSupportProvider().getDevice().setBusyTask(manager.getSupportProvider().getContext().getString(R.string.updating_firmware));
+                manager.getSupportProvider().getDevice().setBusyTask(R.string.updating_firmware, manager.getSupportProvider().getContext());
                 manager.getSupportProvider().getDevice().sendDeviceUpdateIntent(manager.getSupportProvider().getContext());
             }
 

@@ -33,12 +33,10 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
-import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.AbstractMiFirmwareInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.MiBandSupport;
@@ -361,7 +359,7 @@ public class UpdateFirmwareOperation extends AbstractMiBand1Operation {
             try {
                 TransactionBuilder builder = performInitialized("send firmware info");
 //                getSupport().setLowLatency(builder);
-                builder.add(new SetDeviceBusyAction(getDevice(), getContext().getString(R.string.updating_firmware), getContext()));
+                builder.setBusyTask(getDevice(), R.string.updating_firmware, getContext());
                 builder.add(new FirmwareInfoSentAction()); // Note: *before* actually sending the info, otherwise it's too late!
                 builder.write(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT), getFirmwareInfo());
                 builder.queue(getQueue());

@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
 import android.content.Context;
 
+import androidx.annotation.StringRes;
+
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -27,7 +29,7 @@ public interface ZeppOsTransactionBuilder {
 
     void setDeviceState(final GBDevice device, final GBDevice.State deviceState, final Context context);
 
-    void setBusy(final GBDevice device, final String string, final Context context);
+    void setBusy(final GBDevice device, @StringRes final int stringRes, final Context context);
 
     void notify(final UUID characteristic, final boolean enable);
 

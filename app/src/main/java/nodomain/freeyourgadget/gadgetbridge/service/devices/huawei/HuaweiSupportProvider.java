@@ -1417,11 +1417,11 @@ public class HuaweiSupportProvider {
         final GetSleepDataCountRequest getSleepDataCountRequest;
         if (isBLE()) {
             nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("FetchRecordedData");
-            leBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction(gbDevice, context.getString(R.string.busy_task_fetch_activity_data), context));
+            leBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
             getSleepDataCountRequest = new GetSleepDataCountRequest(this, leBuilder, sleepStart, end);
         } else {
             nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchRecordedData");
-            brBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction(gbDevice, context.getString(R.string.busy_task_fetch_activity_data), context));
+            brBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
             getSleepDataCountRequest = new GetSleepDataCountRequest(this, brBuilder, sleepStart, end);
         }
 
@@ -1556,11 +1556,11 @@ public class HuaweiSupportProvider {
         final GetWorkoutCountRequest getWorkoutCountRequest;
         if (isBLE()) {
             nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("FetchWorkoutData");
-            leBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction(gbDevice, context.getString(R.string.busy_task_fetch_activity_data), context));
+            leBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
             getWorkoutCountRequest = new GetWorkoutCountRequest(this, leBuilder, start, end);
         } else {
             nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchWorkoutData");
-            brBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction(gbDevice, context.getString(R.string.busy_task_fetch_activity_data), context));
+            brBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
             getWorkoutCountRequest = new GetWorkoutCountRequest(this, brBuilder, start, end);
         }
 
@@ -3010,7 +3010,7 @@ public class HuaweiSupportProvider {
 
     public void onTestNewFunction() {
         // Show to user
-        gbDevice.setBusyTask("Downloading files...");
+        gbDevice.setBusyTask(R.string.busy_task_downloading, getContext());
         gbDevice.sendDeviceUpdateIntent(getContext());
 
         HuaweiTruSleepParser.SleepFileDownloadCallback callback = new HuaweiTruSleepParser.SleepFileDownloadCallback(this) {

@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.StringRes;
 
 import java.util.Arrays;
 
@@ -40,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadPhyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestConnectionPriorityAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestMtuAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetPreferredPhyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WaitAction;
@@ -183,6 +185,14 @@ public class TransactionBuilder {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public TransactionBuilder setPreferredPhy(int txPhy, int rxPhy, int phyOptions) {
         BtLEAction action = new SetPreferredPhyAction(txPhy, rxPhy, phyOptions);
+        return add(action);
+    }
+
+    /// Set the device as busy or not ({@code taskName = 0}).
+    /// @see SetDeviceBusyAction#SetDeviceBusyAction
+    public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
+                                          @NonNull final Context context) {
+        BtLEAction action = new SetDeviceBusyAction(device, taskName, context);
         return add(action);
     }
 

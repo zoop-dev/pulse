@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fe
 
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,9 +52,10 @@ public class FetchSleepRespiratoryRateOperation extends AbstractRepeatingFetchOp
         super(fetcher, HuamiFetchDataType.SLEEP_RESPIRATORY_RATE);
     }
 
+    @StringRes
     @Override
-    public String taskDescription() {
-        return getContext().getString(R.string.busy_task_fetch_sleep_respiratory_rate_data);
+    public int taskDescription() {
+        return R.string.busy_task_fetch_sleep_respiratory_rate_data;
     }
 
     @Override
