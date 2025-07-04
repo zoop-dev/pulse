@@ -354,7 +354,6 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
                 image_payload = new byte[((epaper_width * epaper_height) / 8) * epaper_colors];
 
-                // FIXME: different models with different colors
                 int[] colors = new int[]{
                         0x000000, // black
                         is_bwy ? 0xffff00 : 0xff0000, // yellow or red

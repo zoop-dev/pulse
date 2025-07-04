@@ -5023,6 +5023,7 @@
         <item name="10000">HS 154 BWRY JD</item>
 
         <item name="38">HS 200 BWRY JD</item>
+        <item name="40">HS 260 BWRY JD</item>
         <item name="17">HS 350 BWRY JD</item>
         <item name="37">HS 750 BWRY JD</item>
 
@@ -5077,6 +5078,7 @@
         <item>10000</item>
 
         <item>38</item>
+        <item>40</item>
         <item>17</item>
         <item>37</item>
 
