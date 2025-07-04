@@ -37,7 +37,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
@@ -47,7 +46,7 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     private static final Logger LOG = LoggerFactory.getLogger(GenericThermalPrinterSupport.class);
     public static final String INTENT_ACTION_PRINT_BITMAP = "print_bitmap";
     public static final String INTENT_EXTRA_URI = "picture_uri";
-    public static final String INTENT_EXTRA_BITMAP = "picture";
+    public static final String INTENT_EXTRA_BITMAP_CACHE_FILE_PATH = "bitmap_cache_file_path";
     public static final String INTENT_EXTRA_APPLY_DITHERING = "apply_dithering";
 
     public static final UUID discoveryService = UUID.fromString("0000af30-0000-1000-8000-00805f9b34fb");
@@ -78,12 +77,19 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
             public void onReceive(Context context, Intent intent) {
                 switch (intent.getAction()) {
                     case INTENT_ACTION_PRINT_BITMAP:
-                        byte[] bitmapData = intent.getByteArrayExtra(INTENT_EXTRA_BITMAP);
-                        if (bitmapData != null) {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
-                            boolean dither = intent.getBooleanExtra(INTENT_EXTRA_APPLY_DITHERING, false);
-                            printImage(bitmap, dither);
+
+                        String picturePath = intent.getStringExtra(INTENT_EXTRA_BITMAP_CACHE_FILE_PATH);
+                        if (picturePath.isEmpty()) {
+                            LOG.error("Cannot print: picturePath is empty");
+                            return;
                         }
+                        Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                        if (bitmap == null) {
+                            LOG.error("Cannot print: bitmap is null");
+                            return;
+                        }
+                        boolean dither = intent.getBooleanExtra(INTENT_EXTRA_APPLY_DITHERING, false);
+                        printImage(bitmap, dither);
                 }
             }
         };
@@ -164,17 +170,17 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         return (byte) (crc & 0xFF);
     }
 
-    private byte[] encodePictureToPrinterCommands(BitSet imageBits, int imageWidth) {
-        final int maxOctets = imageWidth / 8;
+    private byte[] encodePictureToPrinterCommands(BitSet imageBits, int imageWidth, int imageHeight) {
+        final int maxOctetsPerRow = (imageWidth + 7) / 8; //always round up
         final ByteBuffer result = ByteBuffer.allocate(imageBits.length() + 1000);
 
-        for (int row = 0; row < (imageBits.length() / imageWidth); row++) {
+        for (int row = 0; row < imageHeight; row++) {
             boolean rowRLE = useRunLengthEncoding;
-            final ByteBuffer rowContent = ByteBuffer.allocate(maxOctets);
+            final ByteBuffer rowContent = ByteBuffer.allocate(maxOctetsPerRow);
             final BitSet rowBits = imageBits.get(row * imageWidth, row * imageWidth + imageWidth);
             if (useRunLengthEncoding) {
                 try {
-                    rowContent.put(EncodingUtils.encodeRowRLE(rowBits, maxOctets));
+                    rowContent.put(EncodingUtils.encodeRowRLE(rowBits, maxOctetsPerRow));
                 } catch (BufferOverflowException e) {
                     //if compressed data is bigger than uncompressed, we use uncompressed
                     rowRLE = false;
@@ -204,14 +210,14 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         }
         final BitmapToBitSet bitmapToBitSet = new BitmapToBitSet(bitmap);
 
-        final ByteBuffer result = ByteBuffer.allocate(500 + (Math.round(bitmap.getWidth() / 8) + 8) * bitmap.getHeight()); //TODO: approximate better?
+        final ByteBuffer result = ByteBuffer.allocate(500 + (int) (Math.ceil(bitmap.getWidth() / 8) + 8) * bitmap.getHeight()); //TODO: approximate better?
 
         result.put(PrinterCommand.intensity(PRINT_INTENSITY));
         result.put(PrinterCommand.printSpeed.message(new byte[]{PRINT_SPEED}));
         result.put(PrinterCommand.printType.message(new byte[]{PRINT_TYPE}));
         result.put(PrinterCommand.quality(5));
 
-        result.put(encodePictureToPrinterCommands(bitmapToBitSet.toBlackAndWhite(applyDithering), bitmapToBitSet.getWidth()));
+        result.put(encodePictureToPrinterCommands(bitmapToBitSet.toBlackAndWhite(applyDithering), bitmapToBitSet.getWidth(), bitmapToBitSet.getHeight()));
         result.put(PrinterCommand.feedPaper(72));
 
         result.put(PrinterCommand.getDevState.message(new byte[]{0})); //to get back the current device status
@@ -526,8 +532,8 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         }
 
         private static ByteBuffer encodeRowPlain(BitSet rowBits) {
-            final ByteBuffer rowContent = ByteBuffer.allocate(rowBits.size() / 8);
-            for (int octetIdx = 0; octetIdx < rowBits.size() / 8; octetIdx++) {
+            final ByteBuffer rowContent = ByteBuffer.allocate((rowBits.length() + 7) / 8);
+            for (int octetIdx = 0; octetIdx < (rowBits.length() + 7) / 8; octetIdx++) {
                 final int bitIdx = octetIdx * 8;
                 rowContent.put(readBitsAsInt(rowBits.get(bitIdx, bitIdx + 8)));
             }
