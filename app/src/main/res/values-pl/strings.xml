@@ -4186,4 +4186,11 @@
     <string name="same_image_already_on_device">ten sam obraz już na urządzeniu</string>
     <string name="sending_image">wysyłanie obrazu</string>
     <string name="pref_atc_tlsr_model_title">Typ wyświetlacza</string>
+    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Round)</string>
+    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Square)</string>
+    <string name="devicetype_atc_ble_oepl">ATC_BLE_OEPL</string>
+    <string name="pref_atc_ble_oepl_model_title">Model wyświetlania</string>
+    <string name="pref_atc_ble_oepl_ble_adv_interval_title">Interwał ogłaszania BLE</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Włącz protokół OEPL</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Wyłącz tę opcję, jeśli używasz tylko BLE, aby oszczędzać energię</string>
 </resources>
