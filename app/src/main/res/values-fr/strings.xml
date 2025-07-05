@@ -1738,7 +1738,7 @@ Temps de sommeil préféré en heures</string>
     <string name="open_fw_installer_info_text_title">Installateur de fichier</string>
     <string name="open_fw_installer_select_file">Sélectionner un fichier à envoyer à votre appareil : %s</string>
     <string name="open_fw_installer_warning_title">Avertissement</string>
-    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices,...) dans l\'appareil. Pour plus d\'information se reporter au wiki : https ://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices,...) dans l\'appareil. Pour plus d\'information se reporter au wiki : https ://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_warning_text">Cette fonction a la capacité de rendre inopérant/endommager votre appareil. Cela étant dit, cela ne s\'est jamais produit pour aucun des développeurs, mais rappelez-vous que vous faites cela à vos risques et périls.</string>
     <string name="open_fw_installer_ensure_device_connected">Assurez-vous que l\'appareil %s est bien connecté</string>
     <string name="open_fw_installer_connect_maximum_one_device">Merci de connecter UN SEUL appareil vers lequel vous souhaitez envoyer le fichier.</string>
