@@ -20,29 +20,20 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
@@ -53,7 +44,6 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Config;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
-import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.GeneralFileOperation;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.PeripheralCommon;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.RoutePlan;
@@ -86,6 +76,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     public final BatteryInfoProfile<IGPSportDeviceSupport> batteryInfoProfile;
     private IGPSportRoutesManager routeManager;
     private IGPSportDownloadManager downloadManager;
+    private IGPSportWeather weatherManager;
 
 
     private int mtuSize=247; //FIXME use actual device mtu
@@ -96,6 +87,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         routeManager = new IGPSportRoutesManager(this);
         downloadManager = new IGPSportDownloadManager(this);
+        weatherManager = new IGPSportWeather(this);
 
         addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
         addSupportedService(GattService.UUID_SERVICE_BATTERY_SERVICE);
@@ -660,7 +652,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
         if (!weatherSpecs.isEmpty()) {
             WeatherSpec weatherSpec = weatherSpecs.get(0);
-            handleWeather(weatherSpec);
+            weatherManager.handleWeather(weatherSpec);
         }
     }
 
@@ -668,81 +660,10 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         // Send weather
         final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.Weather.getInstance().getWeatherSpecs());
         if (!specs.isEmpty()) {
-            handleWeather(specs.get(0));
+            weatherManager.handleWeather(specs.get(0));
         }
     }
 
-    private void handleWeather(WeatherSpec weatherSpec) {
-        //example weather packet
-        //010302ff02ffff00fe3601ffffffffffffffff04080310021802221508ac021012180b20002a0a323032342d30382d3330221508ac021015180a20002a0a323032342d30382d3331221408651019180c20002a0a323032342d30392d30312a20081310651812200b2a10323032342d30382d33302030333a34373201303a0132322108651011180d2210323032342d30382d33302030353a30302a0331353832023133322108651012180d2210323032342d30382d33302030363a30302a033136373202313332210865101018112210323032342d30382d33302030373a30302a0331373932023133322208ac02100f18332210323032342d30382d33302030383a30302a03323031320231333a0308e807
-
-        try {
-            LocalDateTime currentTime = LocalDateTime.now();
-            DateTimeFormatter formatterNow = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            TransactionBuilder builder = performInitialized("set weather");
-            Back.back_msg.Builder weatherMsg = Back.back_msg.newBuilder();
-            Back.weather_current_data_message.Builder currentWeatherMsg =Back.weather_current_data_message.newBuilder();
-            currentWeatherMsg.setCurDayMinTemp(weatherSpec.todayMinTemp-273);
-            currentWeatherMsg.setCurDayMaxTemp(weatherSpec.todayMaxTemp-273);
-            currentWeatherMsg.setCurTemperature(weatherSpec.currentTemp-273);
-            currentWeatherMsg.setCurWeather(weatherSpec.currentConditionCode);
-            currentWeatherMsg.setWindDeg(String.valueOf(weatherSpec.windDirection));
-            currentWeatherMsg.setWindSpd(String.valueOf(Math.round(weatherSpec.windSpeed)));
-            currentWeatherMsg.setTime(currentTime.format(formatterNow));
-
-            int currentDay=0;
-
-            for (final WeatherSpec.Daily forecast : weatherSpec.forecasts) {
-
-                LocalDateTime now = LocalDateTime.now();
-                currentDay++;
-                LocalDateTime tomorrow = now.plusDays(currentDay);
-                DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE; //"yyyy-MM-dd"
-                weatherMsg.addThreeDaysMsg(Back.weather_three_days_data_message.newBuilder()
-                        .setWeatherIndex(forecast.conditionCode)
-                        .setRainProb(forecast.precipProbability)
-                        .setMaxTemp(forecast.maxTemp-273)
-                        .setMinTemp(forecast.minTemp-273)
-                        .setDate(tomorrow.format(formatter)).build());
-
-                if (currentDay > 2) //we only need 3 days
-                    break;
-            }
-
-            int currentHour=0;
-            for (final WeatherSpec.Hourly hourly : weatherSpec.hourly) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                weatherMsg.addThreeHoursMsg(Back.weather_three_hour_data_memsage.newBuilder()
-                        .setWatherIndex(hourly.conditionCode)
-                        .setRainProb(hourly.precipProbability)
-                        .setTemp(hourly.temp-273)
-                        .setTime(sdf.format(new Date(hourly.timestamp * 1000L)))
-                        .setWindDeg(String.valueOf(hourly.windDirection))
-                        .setWindSpd(String.valueOf(Math.round(hourly.windSpeed))).build());
-                currentHour++;
-                if (currentHour > 3 ) // its called three hour weather but shows actually 4 entries
-                    break;
-            }
-
-
-            weatherMsg.setCurMsg(currentWeatherMsg);
-            weatherMsg.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_BACK);
-            weatherMsg.setBackOperateType(Back.BACK_OPERATE_TYPE.enum_BACK_OPERATE_TYPE_SEND);
-            weatherMsg.setBackServiceType(Back.BACK_SERVICE_TYPE.enum_BACK_SERVICE_TYPE_WEATHER);
-
-
-
-            byte[] weatherBytes = craftData(weatherMsg.getServiceType().getNumber(),
-                    weatherMsg.getBackServiceType().getNumber(),
-                    weatherMsg.getBackOperateType().getNumber(),
-                    weatherMsg.build().toByteArray());
-            builder.writeChunkedData(writeCharacteristicFourth, weatherBytes, getMTU());
-            builder.queue(getQueue());
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public File getWritableExportDirectory() throws IOException {
         return getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice());
