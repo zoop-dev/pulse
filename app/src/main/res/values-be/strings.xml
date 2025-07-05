@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="application_name_generic">Gadgetbridge</string>
+    <string name="title_activity_controlcenter_generic">Gadgetbridge</string>
+    <string name="about_activity_title_generic">Аб Gadgetbridge</string>
+    <string name="about_description_generic">Бясхмарная і свабодная замена закрытым прыкладанняў ад пастаўшчыкоў.</string>
+    <string name="gadgetbridge_running_generic">Gadgetbridge запушчаны</string>
+    <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="about_activity_title_banglejs_main">Аб Bangle.js Gadgetbridge</string>
+    <string name="about_description_banglejs_main">Прыкладанне-кампаньён для Bangle.js пабудавана на аснове праекта Gadgetbridge з дададзеным доступам у Інтэрнэт.\n \nУ адпаведнасці з палітыкай крамы Google Play, мы не можам размясціць спасылку для ахвяраванняў у самым дадатку, але калі вам падабаецца гэта дадатак, калі ласка, разгледзьце магчымасць ахвяравання праз хатнюю старонку Gadgetbridge ніжэй.</string>
+    <string name="gadgetbridge_running_banglejs_main">Bangle.js выконваецца</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="about_activity_title_banglejs_nightly">Аб Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js запушчаны</string>
+    <string name="application_name_main_nightly">Gadgetbridge (начны)</string>
+    <string name="title_activity_controlcenter_main_nightly">Начны Gadgetbridge</string>
+    <string name="about_activity_title_main_nightly">Аб Начным Gadgetbridge</string>
+    <string name="about_description_main_nightly">\"Бясхмарная\" свабодная альтэрнатыва закрытым прыкладанням ад вытворцаў гаджэтаў. \"Начныя\" зборкі Gadgetbridge. Начныя зборкі Gadgetbridge. Іх нельга ўсталяваць, калі прыкладанне Gadgetbridge ці Pebble ужо ўсталявана, з-за канфлікту правайдэра Pebble.</string>
+    <string name="gadgetbridge_running_main_nightly">Nightly GB запушчаны</string>
 </resources>
