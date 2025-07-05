@@ -65,35 +65,31 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     private final int PRINT_SPEED = 10;
     private final int PRINT_TYPE = 0; //1 also observed
 
+    private final BroadcastReceiver printCommandReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case INTENT_ACTION_PRINT_BITMAP:
+
+                    String picturePath = intent.getStringExtra(INTENT_EXTRA_BITMAP_CACHE_FILE_PATH);
+                    if (picturePath.isEmpty()) {
+                        LOG.error("Cannot print: picturePath is empty");
+                        return;
+                    }
+                    Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                    if (bitmap == null) {
+                        LOG.error("Cannot print: bitmap is null");
+                        return;
+                    }
+                    boolean dither = intent.getBooleanExtra(INTENT_EXTRA_APPLY_DITHERING, false);
+                    printImage(bitmap, dither);
+            }
+        }
+    };
+
     public GenericThermalPrinterSupport() {
         super(LOG);
-
         addSupportedService(UUID.fromString("0000ae30-0000-1000-8000-00805f9b34fb"));
-
-        IntentFilter commandFilter = new IntentFilter();
-        commandFilter.addAction(INTENT_ACTION_PRINT_BITMAP);
-        BroadcastReceiver commandReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (intent.getAction()) {
-                    case INTENT_ACTION_PRINT_BITMAP:
-
-                        String picturePath = intent.getStringExtra(INTENT_EXTRA_BITMAP_CACHE_FILE_PATH);
-                        if (picturePath.isEmpty()) {
-                            LOG.error("Cannot print: picturePath is empty");
-                            return;
-                        }
-                        Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
-                        if (bitmap == null) {
-                            LOG.error("Cannot print: bitmap is null");
-                            return;
-                        }
-                        boolean dither = intent.getBooleanExtra(INTENT_EXTRA_APPLY_DITHERING, false);
-                        printImage(bitmap, dither);
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(GBApplication.getContext()).registerReceiver(commandReceiver, commandFilter);
 
     }
 
@@ -346,9 +342,17 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
 
+        registerPrintCommandReceiver();
+
         LOG.debug("Connected to: " + gbDevice.getName());
 
         return builder;
+    }
+
+    private void registerPrintCommandReceiver() {
+        IntentFilter commandFilter = new IntentFilter();
+        commandFilter.addAction(INTENT_ACTION_PRINT_BITMAP);
+        LocalBroadcastManager.getInstance(GBApplication.getContext()).registerReceiver(printCommandReceiver, commandFilter);
     }
 
     public void send(String taskname, byte[] command) {
@@ -364,6 +368,13 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         sendTestPrint();
     }
 
+    @Override
+    public void dispose() {
+        synchronized (ConnectionMonitor) {
+            super.dispose();
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(printCommandReceiver);
+        }
+    }
     private void sendTestPrint() {
         Bitmap bitmap = BitmapFactory.decodeResource(GBApplication.app().getResources(), R.drawable.ic_launcher);
 
