@@ -4103,6 +4103,8 @@
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">BLE Advertising Interval</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Enable OEPL protocol</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Disable this if only using BLE to save power</string>
-    <string name="activity_print__image_print_button">Print</string>
+    <string name="activity_print_image_print_button">Print</string>
     <string name="activity_print_image_apply_dithering_switch">Apply Dithering</string>
+    <string name="activity_print_image_upscale_switch">Upscale image</string>
+    <string name="activity_print_label_print_size">Print size (px): %1$d x %2$d</string>
 </resources>

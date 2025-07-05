@@ -44,10 +44,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(GenericThermalPrinterSupport.class);
+    public static final int IMAGE_WIDTH = 384;
     public static final String INTENT_ACTION_PRINT_BITMAP = "print_bitmap";
     public static final String INTENT_EXTRA_URI = "picture_uri";
     public static final String INTENT_EXTRA_BITMAP_CACHE_FILE_PATH = "bitmap_cache_file_path";
     public static final String INTENT_EXTRA_APPLY_DITHERING = "apply_dithering";
+    public static final String INTENT_EXTRA_UPSCALE = "upscale";
 
     public static final UUID discoveryService = UUID.fromString("0000af30-0000-1000-8000-00805f9b34fb");
     private final UUID writeCharUUID = UUID.fromString("0000ae01-0000-1000-8000-00805f9b34fb");
@@ -60,7 +62,6 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     private boolean useRunLengthEncoding = false;
     private boolean canPrint = false;
 
-    private final int IMAGE_WIDTH = 384;
     private final int PRINT_INTENSITY = 8000;
     private final int PRINT_SPEED = 10;
     private final int PRINT_TYPE = 0; //1 also observed
@@ -76,7 +77,11 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
                         LOG.error("Cannot print: picturePath is empty");
                         return;
                     }
-                    Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                    final Bitmap incoming = BitmapFactory.decodeFile(picturePath);
+                    final Bitmap bitmap = intent.getBooleanExtra(INTENT_EXTRA_UPSCALE, false) ?
+                            Bitmap.createScaledBitmap(incoming, IMAGE_WIDTH, (int) (IMAGE_WIDTH * (float) incoming.getHeight() / incoming.getWidth()), true)
+                            : incoming;
+
                     if (bitmap == null) {
                         LOG.error("Cannot print: bitmap is null");
                         return;

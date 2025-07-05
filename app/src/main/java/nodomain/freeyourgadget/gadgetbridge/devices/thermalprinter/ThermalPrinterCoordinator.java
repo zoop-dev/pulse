@@ -97,7 +97,7 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
 
         @Override
         public String getDescription(final GBDevice device, final Context context) {
-            return context.getString(R.string.activity_print__image_print_button);
+            return context.getString(R.string.activity_print_image_print_button);
         }
 
         @Override

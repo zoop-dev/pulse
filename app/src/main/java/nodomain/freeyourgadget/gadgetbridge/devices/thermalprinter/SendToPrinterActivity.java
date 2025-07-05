@@ -41,9 +41,11 @@ public class SendToPrinterActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(SendToPrinterActivity.class);
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private Bitmap bitmap;
+    private Bitmap incoming;
     private ImageView previewImage;
     private ImageView incomingImage;
     private MaterialSwitch dithering;
+    private MaterialSwitch upscale;
     private BitmapToBitSet bitmapToBitSet;
     private File printPicture = null;
 
@@ -67,6 +69,7 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         Button sendToPrinter = findViewById(R.id.sendToPrinterButton);
         dithering = findViewById(R.id.switchDithering);
         final TextView warning = findViewById(R.id.warning_devices);
+        upscale = findViewById(R.id.switchUpscale);
 
         final List<GBDevice> devices = ((GBApplication) getApplicationContext()).getDeviceManager().getSelectedDevices();
         GBDevice device = devices.get(0);
@@ -100,6 +103,17 @@ public class SendToPrinterActivity extends AbstractGBActivity {
             }
         });
 
+        upscale.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                float aspectRatio = (float) incoming.getHeight() / incoming.getWidth();
+                bitmap = Bitmap.createScaledBitmap(incoming, GenericThermalPrinterSupport.IMAGE_WIDTH, (int) (GenericThermalPrinterSupport.IMAGE_WIDTH * aspectRatio), true);
+            } else {
+                bitmap = incoming;
+            }
+
+            updatePreview();
+        });
+
         printPicture = new File(getCacheDir(), "temp_bitmap.png");
         final Uri uri = getIntent().getParcelableExtra(GenericThermalPrinterSupport.INTENT_EXTRA_URI);
         if (uri != null) {
@@ -123,16 +137,15 @@ public class SendToPrinterActivity extends AbstractGBActivity {
             cleanUpPrintPictureCache();
             try {
                 UriHelper uriHelper = UriHelper.get(uri, getApplicationContext());
-                Bitmap incoming;
 
                 try (InputStream stream = uriHelper.openInputStream()) {
                     incoming = BitmapFactory.decodeStream(stream);
                 }
 
                 Bitmap scaledBitmap;
-                if (incoming.getWidth() > 384) {
+                if (incoming.getWidth() > GenericThermalPrinterSupport.IMAGE_WIDTH) {
                     float aspectRatio = (float) incoming.getHeight() / incoming.getWidth();
-                    scaledBitmap = Bitmap.createScaledBitmap(incoming, 384, (int) (384 * aspectRatio), true);
+                    scaledBitmap = Bitmap.createScaledBitmap(incoming, GenericThermalPrinterSupport.IMAGE_WIDTH, (int) (GenericThermalPrinterSupport.IMAGE_WIDTH * aspectRatio), true);
                 } else {
                     scaledBitmap = incoming;
                 }
@@ -143,6 +156,8 @@ public class SendToPrinterActivity extends AbstractGBActivity {
                     LOG.error("Failed to save picture to print: {}", e.getMessage());
                 }
                 runOnUiThread(() -> {
+                    upscale.setEnabled(incoming.getWidth() <= GenericThermalPrinterSupport.IMAGE_WIDTH);
+                    upscale.setChecked(false);
                     bitmap = scaledBitmap;
                     updatePreview();
                 });
@@ -159,6 +174,9 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         bitmapToBitSet = new BitmapToBitSet(bitmap);
         bitmapToBitSet.toBlackAndWhite(dithering.isChecked());
 
+        TextView imageSizeText = findViewById(R.id.imageSizeText);
+        imageSizeText.setText(getString(R.string.activity_print_label_print_size, bitmap.getWidth(), bitmap.getHeight()));
+
         previewImage.setImageBitmap(bitmapToBitSet.getPreview());
     }
 
@@ -166,6 +184,7 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         Intent intent = new Intent(GenericThermalPrinterSupport.INTENT_ACTION_PRINT_BITMAP);
         intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_BITMAP_CACHE_FILE_PATH, printPicture.getAbsolutePath());
         intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_APPLY_DITHERING, dithering.isChecked());
+        intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_UPSCALE, upscale.isChecked());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
