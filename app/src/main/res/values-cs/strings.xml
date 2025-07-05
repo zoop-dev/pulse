@@ -1734,7 +1734,7 @@
     <string name="open_fw_installer_info_text_title">Instalátor souborů</string>
     <string name="open_fw_installer_select_file">Vyberte soubor, který chcete nahrát do zařízení: %s</string>
     <string name="open_fw_installer_getting_files_text">Vzhledem k tomu, že soubory firmwaru nemůžeme distribuovat, budete si je muset obstarat sami. To znamená, že budete muset hledat soubory v souborech apk, na internetu, na fórech, na Amazfitwatchfaces (pro zařízení Miband/Amazfit) atd.</string>
-    <string name="open_fw_installer_info_text">Instalátor firmware/ciferníků/aplikací/souborů umožňuje nahrát/instalovat do zařízení podporované soubory (firmware, ciferníky, aplikace, GPS, zdroje, fonty...). Další informace naleznete na wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Instalátor firmware/ciferníků/aplikací/souborů umožňuje nahrát/instalovat do zařízení podporované soubory (firmware, ciferníky, aplikace, GPS, zdroje, fonty…). Další informace naleznete na wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="steps_streaks_streak_days">Dny
 \nSérie</string>
     <string name="steps_streaks_average_steps">Průměr
@@ -2850,7 +2850,7 @@
     <string name="pref_fetch_unknown_files_summary">Načítat neznámé soubory aktivit z hodinek. Nebudou zpracovány, ale budou uloženy do telefonu.</string>
     <string name="pref_dashboard_all_devices_title">Všechna zařízení</string>
     <string name="pref_dashboard_widget_double_size_title">Dvojitá velikost</string>
-    <string name="pref_dashboard_select_devices_title">Vybrat zařízení...</string>
+    <string name="pref_dashboard_select_devices_title">Vybrat zařízení…</string>
     <string name="pref_dashboard_first_title">Zobrazit nejprve nástěnku</string>
     <string name="pref_sleepasandroid_feat_alarms">Budíky</string>
     <string name="pref_dashboard_widget_show_legend_title">Zobrazit legendu</string>
@@ -4168,4 +4168,12 @@
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">Interval propagace BLE</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Povolit protokol OEPL</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Zakažte, pokud pouze používáte BLE pro úsporu energie</string>
+    <string name="busy_task_busy">Pracuji…</string>
+    <string name="busy_task_configuring">Nastavování</string>
+    <string name="busy_task_downloading">Stahování</string>
+    <string name="busy_task_fetch_configuration">Načítání konfigurace</string>
+    <string name="busy_task_fetch_ppg">Načítání PPG</string>
+    <string name="busy_task_fetch_steps">Načítání kroků</string>
+    <string name="busy_task_setting_alarms">Nastavování budíků</string>
+    <string name="busy_task_syncing">Synchronizace</string>
 </resources>
