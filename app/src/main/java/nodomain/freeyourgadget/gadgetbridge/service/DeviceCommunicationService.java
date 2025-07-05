@@ -719,20 +719,29 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
 
                 if (deviceSupport != null) {
-                    final boolean connected;
-                    if (firstTime) {
-                        connected = deviceSupport.connectFirstTime();
-                    } else {
-                        deviceSupport.setAutoReconnect(autoReconnect);
-                        deviceSupport.setScanReconnect(reconnectViaScan);
-                        if (BuildConfig.DEBUG) {
-                            connected = stressTestConnect(deviceSupport);
+                    try {
+                        final boolean connected;
+                        if (firstTime) {
+                            connected = deviceSupport.connectFirstTime();
                         } else {
-                            connected = deviceSupport.connect();
+                            deviceSupport.setAutoReconnect(autoReconnect);
+                            deviceSupport.setScanReconnect(reconnectViaScan);
+                            if (BuildConfig.DEBUG) {
+                                connected = stressTestConnect(deviceSupport);
+                            } else {
+                                connected = deviceSupport.connect();
+                            }
                         }
+                        LOG.debug("connectToDevice - {} connected:{} firstTime:{}", deviceAddress,
+                                connected, firstTime);
+                    } catch (Exception e) {
+                        try {
+                            deviceSupport.dispose();
+                        } catch (Exception ignored) {
+                        }
+                        registeredStruct.setDeviceSupport(null);
+                        throw e;
                     }
-                    LOG.debug("connectToDevice - {} connected:{} firstTime:{}", deviceAddress,
-                            connected, firstTime);
                 } else {
                     GB.toast(this, getString(R.string.cannot_connect, "Can't create device support"), Toast.LENGTH_SHORT, GB.ERROR);
                 }
