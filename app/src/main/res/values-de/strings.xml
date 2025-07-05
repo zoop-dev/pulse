@@ -4062,4 +4062,13 @@
     <string name="pref_calendar_maximum_title_characters_title">Maximale Zeichenanzahl im Ereignistitel</string>
     <string name="pref_calendar_maximum_description_characters_title">Maximale Zeichenanzahl in der Ereignisbeschreibung</string>
     <string name="pref_calendar_target_app_title">Ziel-App auf der Uhr für Kalenderereignisse</string>
+    <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
+    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Rund)</string>
+    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Quadratisch)</string>
+    <string name="devicetype_amazfit_helio_strap">Amazfit Helio Strap</string>
+    <string name="devicetype_garmin_venu_x1">Garmin Venu X1</string>
+    <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
+    <string name="menuitem_zepp_flow">Zepp Flow</string>
+    <string name="same_image_already_on_device">dasselbe Bild ist bereits auf dem Gerät</string>
+    <string name="sending_image">Bild wird gesendet</string>
 </resources>
