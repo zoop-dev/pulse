@@ -53,7 +53,7 @@ public abstract class RealtimeSamplesSupport {
             return; // already running
         }
         realtimeStorageTimer = new Timer("Mi Band Realtime Storage Timer");
-        realtimeStorageTimer.scheduleAtFixedRate(new TimerTask() {
+        realtimeStorageTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 triggerCurrentSample();

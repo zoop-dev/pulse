@@ -123,7 +123,7 @@ public class SleepAsAndroidSender {
         stopTracking();
 
         accDataScheduler = Executors.newSingleThreadScheduledExecutor();
-        accDataScheduler.scheduleAtFixedRate(new Runnable() {
+        accDataScheduler.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
                 aggregateAndSendAccelData();

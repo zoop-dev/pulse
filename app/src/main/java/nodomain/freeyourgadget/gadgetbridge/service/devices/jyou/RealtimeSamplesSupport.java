@@ -42,7 +42,7 @@ public abstract class RealtimeSamplesSupport {
             return; // already running
         }
         realtimeStorageTimer = new Timer("JYou Realtime Storage Timer");
-        realtimeStorageTimer.scheduleAtFixedRate(new TimerTask() {
+        realtimeStorageTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 triggerCurrentSample();

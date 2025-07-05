@@ -323,7 +323,7 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
 
     private ScheduledExecutorService startActivityPulse(int interval) {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(new Runnable() {
+        service.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
                 FragmentActivity activity = LiveActivityFragment.this.getActivity();

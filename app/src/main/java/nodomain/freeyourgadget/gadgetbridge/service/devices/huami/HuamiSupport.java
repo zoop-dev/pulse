@@ -1512,7 +1512,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             int loopInterval = getFindDeviceInterval();
             LOG.info("Sending find device, interval: " + loopInterval);
             findDeviceLoopTimer = new Timer("Huami Find Loop Timer");
-            findDeviceLoopTimer.scheduleAtFixedRate(new TimerTask() {
+            findDeviceLoopTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     sendFindDeviceCommand(true);
@@ -1998,7 +1998,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 currentButtonTimerActivationTime = currentButtonPressTime;
                 LOG.info("Activating button timer");
                 buttonActionTimer = new Timer("Huami Button Action Timer");
-                buttonActionTimer.scheduleAtFixedRate(new TimerTask() {
+                buttonActionTimer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         processButtonAction();

@@ -778,7 +778,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     private ScheduledExecutorService startRawSensors() {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(new Runnable() {
+        service.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
                 if (rawSensor) {
