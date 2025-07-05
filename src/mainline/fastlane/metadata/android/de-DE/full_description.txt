@@ -5,4 +5,3 @@ Du kannst Benachrichtigungen an deinem Handgelenk erhalten, sowie (je nach Gerä
 - Die Musikwiedergabe auf deinem Android Gerät steuern
 - Wettervorhersagen angezeigt bekommen
 - Navigiert werden
-
