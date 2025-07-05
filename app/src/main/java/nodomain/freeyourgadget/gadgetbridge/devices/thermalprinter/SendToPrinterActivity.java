@@ -112,6 +112,12 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executor.shutdown();
+    }
+
     private void processUriAsync(Uri uri) {
         executor.execute(() -> {
             cleanUpPrintPictureCache();
