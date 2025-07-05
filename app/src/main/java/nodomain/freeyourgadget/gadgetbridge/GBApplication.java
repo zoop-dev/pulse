@@ -49,6 +49,7 @@ import android.util.TypedValue;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.File;
@@ -333,7 +334,11 @@ public class GBApplication extends Application {
             }
             try {
                 //the following will ensure the notification manager is kept alive
-                startService(new Intent(this, NotificationCollectorMonitorService.class));
+                Intent serviceIntent = new Intent(context, NotificationCollectorMonitorService.class);
+
+                //ContextCompat starts a background service on android < O automatically despite the method name
+                ContextCompat.startForegroundService(context, serviceIntent);
+
             } catch (IllegalStateException e) {
                 String message = e.toString();
                 final Intent instructionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gadgetbridge.org/basics/topics/background-service/"));
