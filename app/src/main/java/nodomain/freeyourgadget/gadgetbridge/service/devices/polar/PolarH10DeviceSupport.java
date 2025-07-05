@@ -112,7 +112,7 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
 
         LOG.info("Characteristic changed UUID: {}", characteristicUUID);
-        LOG.info("Characteristic changed value: {}", StringUtils.bytesToHex(characteristic.getValue()));
+        LOG.info("Characteristic changed value: {}", StringUtils.bytesToHex(value));
 
         return false;
     }

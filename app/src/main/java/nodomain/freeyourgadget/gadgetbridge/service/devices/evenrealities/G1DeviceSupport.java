@@ -292,7 +292,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             if (getDevice(G1Constants.Side.LEFT.getDeviceIndex()) != null) {
                 String leftAddress = getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getAddress();
                 if (address.equals(leftAddress) && leftSide != null) {
-                    return leftSide.handlePayload(characteristic.getValue());
+                    return leftSide.handlePayload(payload);
                 }
             }
 
@@ -300,13 +300,13 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                 String rightAddress =
                         getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getAddress();
                 if (address.equals(rightAddress) && rightSide != null) {
-                    return rightSide.handlePayload(characteristic.getValue());
+                    return rightSide.handlePayload(payload);
                 }
             }
         }
 
         // Not handled by either side.
-        LOG.debug("Unhandled payload: {}", Logging.formatBytes(characteristic.getValue()));
+        LOG.debug("Unhandled payload: {}", Logging.formatBytes(payload));
         return false;
     }
 

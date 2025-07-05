@@ -100,7 +100,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         UUID characteristicUUID = characteristic.getUuid();
 
         LOG.info("Characteristic changed UUID: {}", characteristicUUID);
-        LOG.info("Characteristic changed value: {}", StringUtils.bytesToHex(characteristic.getValue()));
+        LOG.info("Characteristic changed value: {}", StringUtils.bytesToHex(value));
         if (characteristicUUID.equals(UUID_CHARACTERISTIC_MAIN)) {
             if (value[0] == 0x00) {
                 switch (value[1]) {
