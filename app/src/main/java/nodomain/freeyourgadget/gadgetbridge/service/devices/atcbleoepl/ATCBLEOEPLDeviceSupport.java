@@ -22,7 +22,9 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -343,10 +345,36 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(GBApplication.getContext().getContentResolver(), uri);
+                int src_width = bitmap.getWidth();
+                int src_height = bitmap.getHeight();
+                float src_aspect = (float) src_width / src_height;
+                float dst_aspect = (float) epaper_width / epaper_height;
+                int dst_height;
+                int dst_width;
+                if (dst_aspect > src_aspect) {
+                    // scale to height
+                    dst_height = epaper_height;
+                    dst_width = (int) (epaper_height * src_aspect);
+                } else {
+                    // scale to width
+                    dst_width = epaper_width;
+                    dst_height = (int) (epaper_width * src_aspect);
+
+                }
                 final Bitmap bmpResized = Bitmap.createBitmap(epaper_width, epaper_height, Bitmap.Config.ARGB_8888);
                 final Canvas canvas = new Canvas(bmpResized);
-                final Rect rect = new Rect(0, 0, epaper_width, epaper_height);
+
+                // FIXME: make rotation optional
                 canvas.rotate(180, canvas.getWidth() / 2.0f, canvas.getHeight() / 2.0f);
+
+                // Fill background white
+                Paint paint = new Paint();
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(Color.WHITE);
+                canvas.drawRect(0, 0, epaper_width, epaper_height, paint);
+
+                // Draw centered
+                final Rect rect = new Rect((epaper_width - dst_width) / 2, (epaper_height - dst_height) / 2, epaper_width - (epaper_width - dst_width) / 2, epaper_height - (epaper_height - dst_height) / 2);
                 canvas.drawBitmap(bitmap, null, rect, null);
                 Matrix matrix = new Matrix();
                 matrix.postRotate(180);
