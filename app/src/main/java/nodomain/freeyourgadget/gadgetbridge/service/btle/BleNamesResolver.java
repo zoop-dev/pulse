@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -398,6 +399,16 @@ public class BleNamesResolver {
             builder.setLength(builder.length() - 1);
         }
         return builder.toString();
+    }
+
+    static public String getAdapterStateString(int state) {
+        return switch (state) {
+            case BluetoothAdapter.STATE_OFF -> "STATE_OFF";
+            case BluetoothAdapter.STATE_TURNING_ON -> "STATE_TURNING_ON";
+            case BluetoothAdapter.STATE_ON -> "STATE_ON";
+            case BluetoothAdapter.STATE_TURNING_OFF -> "STATE_TURNING_OFF";
+            default -> "state_" + state;
+        };
     }
 
     static {

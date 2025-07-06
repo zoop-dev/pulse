@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 public class BluetoothStateChangeReceiver extends BroadcastReceiver {
@@ -47,7 +48,13 @@ public class BluetoothStateChangeReceiver extends BroadcastReceiver {
         final String action = intent.getAction();
 
         if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
-            if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_ON) {
+            final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
+            final int prevState = intent.getIntExtra(BluetoothAdapter.EXTRA_PREVIOUS_STATE, -1);
+            LOG.info("bluetooth adapter state changed from {} to {}",
+                    BleNamesResolver.getAdapterStateString(prevState),
+                    BleNamesResolver.getAdapterStateString(state));
+
+            if (state == BluetoothAdapter.STATE_ON) {
                 final Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
 
@@ -62,15 +69,13 @@ public class BluetoothStateChangeReceiver extends BroadcastReceiver {
                     return;
                 }
 
-                LOG.info("Bluetooth turned on (ACTION_STATE_CHANGED) => connecting...");
                 GBApplication.deviceService().connect();
-            } else if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF) {
+            } else if (state == BluetoothAdapter.STATE_OFF) {
                 if (!DeviceCommunicationService.isRunning(context)) {
                     // Prevent starting the service if it isn't yet running
                     LOG.debug("DeviceCommunicationService not running, ignoring bluetooth off");
                     return;
                 }
-                LOG.info("Bluetooth turned off => disconnecting...");
                 GBApplication.deviceService().disconnect();
             }
         } else if (ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED.equals(action)) {
