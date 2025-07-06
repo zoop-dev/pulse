@@ -3130,4 +3130,6 @@
     <string name="about_build_details_copied_to_clipboard">פרטי הבנייה הועתקו ללוח הגזירים</string>
     <string name="pref_watch_face">פני השעון</string>
     <string name="pref_device_version">גרסת המכשיר</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorider</string>
 </resources>
