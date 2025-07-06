@@ -3,6 +3,8 @@ import java.nio.file.Files
 plugins {
     id 'com.android.application'
     id 'com.google.protobuf'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
 }
 
 tasks.withType(Test).configureEach {
@@ -76,6 +78,10 @@ android {
         coreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
     }
 
     namespace = 'nodomain.freeyourgadget.gadgetbridge'
@@ -223,15 +229,18 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.15.1"
     testImplementation "org.hamcrest:hamcrest-library:3.0"
 
+    implementation 'androidx.core:core-ktx:1.16.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.0"
+
     implementation "androidx.appcompat:appcompat:1.7.1"
-    implementation "androidx.preference:preference:1.2.1"
+    implementation "androidx.preference:preference-ktx:1.2.1"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.recyclerview:recyclerview:1.4.0"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.gridlayout:gridlayout:1.1.0"
-    implementation "androidx.palette:palette:1.0.0"
-    implementation "androidx.activity:activity:1.10.1"
-    implementation "androidx.fragment:fragment:1.8.8"
+    implementation "androidx.palette:palette-ktx:1.0.0"
+    implementation "androidx.activity:activity-ktx:1.10.1"
+    implementation "androidx.fragment:fragment-ktx:1.8.8"
     implementation "androidx.viewpager2:viewpager2:1.1.0"
 
     // Not latest version because of https://github.com/material-components/material-components-android/issues/3924
@@ -275,10 +284,6 @@ dependencies {
 
     // Android SDK bundles org.json, but we need an actual implementation to replace the stubs in tests
     testImplementation 'org.json:json:20250517'
-
-    // Fix Duplicate class build error for conflicting kotlin-stdlib versions
-    // does not seem to be currently needed, as it uses the latest across all transitive
-    //implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     // Needed for Armenian transliteration
     implementation 'org.ahocorasick:ahocorasick:0.6.3'
