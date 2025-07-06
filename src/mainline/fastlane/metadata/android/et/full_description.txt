@@ -3,7 +3,7 @@ Toetatavate seadmete täieliku nimekirja leiad meie kodulehelt https://gadgetbri
 
 Sa võid saada teateid oma nutiseadmesse ja (sõltuvalt seadmest):
 
-- koguda andmeid seadme anduritelt
-- juhtida muusikaesitust oma Androidi seadmes
-- vaadata ilmateadet
-- juhatada teed
+- koguda andmeid seadme anduritelt,
+- juhtida muusikaesitust oma Androidi seadmes,
+- vaadata ilmateadet,
+- juhatada teed.
