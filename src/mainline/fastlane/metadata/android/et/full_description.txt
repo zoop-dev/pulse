@@ -1,5 +1,5 @@
 Kasuta oma nutikella, fitness-trackerit ja muid bluetooth-seadmeid ilma seadmetootja suletud lähtekoodiga rakenduseta ja ilma vajaduseta luua konto ning edastada oma andmeid tootja serveritesse.
-Toetatavate seadmete täieliku nimekirja leiad meie kodulehelt või README.md failist meie lähtekoodi hoidlast gitis.
+Toetatavate seadmete täieliku nimekirja leiad meie kodulehelt https://gadgetbridge.org/gadgets/.
 
 Sa võid saada teateid oma nutiseadmesse ja (sõltuvalt seadmest):
 
