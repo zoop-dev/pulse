@@ -4176,4 +4176,6 @@
     <string name="busy_task_fetch_steps">Načítání kroků</string>
     <string name="busy_task_setting_alarms">Nastavování budíků</string>
     <string name="busy_task_syncing">Synchronizace</string>
+    <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
+    <string name="devicetype_h59">H59</string>
 </resources>
