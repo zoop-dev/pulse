@@ -3070,7 +3070,7 @@
     <string name="pref_dashboard_widget_double_size_summary">Pozwól widżetowi zająć dwie kolumny na pulpicie</string>
     <string name="pref_dashboard_widget_today_24h_summary">Pokazuj aktywność w pojedyńczym 24h okręgu zamiast podwójnego 12h okręgu</string>
     <string name="pref_auto_reply_calls_delay_title">Automatyczne opóźnienie odpowiedzi</string>
-    <string name="pref_dashboard_select_devices_title">Wybierz urządzenia...</string>
+    <string name="pref_dashboard_select_devices_title">Wybierz urządzenia…</string>
     <string name="scan_scanning_all_devices">Skanowanie wszystkich urządzeń</string>
     <string name="companion_pairing_request_title">Urządzenie towarzyszące</string>
     <string name="dashboard_settings">Ustawienia pulpitu</string>
@@ -3735,7 +3735,7 @@
     <string name="pref_garmin_fake_oauth_summary">Naprawia niektóre funkcje, takie jak pogoda i aktualizacje AGPS, bez konieczności łączenia się z oficjalną aplikacją co 90 dni.</string>
     <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
-    <string name="pairing_even_realities_g1_working">Parowanie z %1s...</string>
+    <string name="pairing_even_realities_g1_working">Parowanie z %1s…</string>
     <string name="pairing_even_realities_g1_find_both_fail">Nie udało się znaleźć ani prawej, ani lewej soczewki. Proszę zeskanować ponownie.</string>
     <string name="pairing_even_realities_g1_invalid_device">Urządzenie Even G1 jest uszkodzone: %1$s.</string>
     <string name="devicetype_even_realities_g1">Even Realities G1</string>
@@ -4053,7 +4053,7 @@
     <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
     <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
     <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
-    <string name="pairing_even_realities_g1_final_connect">Konfigurowanie urządzeń, proszę czekać...</string>
+    <string name="pairing_even_realities_g1_final_connect">Konfigurowanie urządzeń, proszę czekać…</string>
     <string name="calorie_over_goal">Powyżej celu: %1$d kcal</string>
     <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
     <string name="calorie_under_goal">Poniżej celu: %1$d kcal</string>
@@ -4193,4 +4193,14 @@
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">Interwał ogłaszania BLE</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Włącz protokół OEPL</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Wyłącz tę opcję, jeśli używasz tylko BLE, aby oszczędzać energię</string>
+    <string name="busy_task_busy">Zajęty…</string>
+    <string name="busy_task_configuring">Konfigurowanie</string>
+    <string name="busy_task_downloading">Pobieranie</string>
+    <string name="busy_task_fetch_configuration">Pobieranie konfiguracji</string>
+    <string name="busy_task_fetch_ppg">Pobieranie PPG</string>
+    <string name="busy_task_fetch_steps">Pobieranie kroków</string>
+    <string name="busy_task_setting_alarms">Ustawianie alarmów</string>
+    <string name="busy_task_syncing">Synchronizowanie</string>
+    <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
+    <string name="devicetype_h59">H59</string>
 </resources>
