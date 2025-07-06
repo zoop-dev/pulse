@@ -47,6 +47,7 @@ import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
 import android.util.TypedValue;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -810,7 +811,8 @@ public class GBApplication extends Application {
         }
     }
 
-    private void migratePrefs(int oldVersion) {
+    @VisibleForTesting
+    protected void migratePrefs(int oldVersion) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
 
         // this comes before all other migrations since the new column DeviceTypeName was added as non-null

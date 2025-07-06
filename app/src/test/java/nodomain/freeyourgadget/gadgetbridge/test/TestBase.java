@@ -27,12 +27,12 @@ import static nodomain.freeyourgadget.gadgetbridge.Logging.PROP_LOGFILES_DIR;
 /**
  * Base class for all testcases in Gadgetbridge that are supposed to run locally
  * with robolectric.
- *
+ * <p>
  * Important: To run them, create a run configuration and execute them in the Gadgetbridge/app/
  * directory.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 21)
+@Config(sdk = 21, application = GBTestApplication.class)
 public abstract class TestBase {
     protected static File logFilesDir;
 

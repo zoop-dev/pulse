@@ -28,6 +28,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.UUID;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.BtBRQueue;
 
@@ -37,28 +39,28 @@ public class TestBtBRQueue {
     @Test
     public void connect() {
         GBDevice device = Mockito.mock(GBDevice.class);
-        when(device.isConnected()).thenReturn(false);
+        when(device.getState()).thenReturn(GBDevice.State.NOT_CONNECTED);
 
         BluetoothDevice btDevice = Mockito.mock(BluetoothDevice.class);
 
         BluetoothAdapter btAdapter = Mockito.mock(BluetoothAdapter.class);
         when(btAdapter.getRemoteDevice((String) any())).thenReturn(btDevice);
 
-        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, null, 512);
+        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, UUID.randomUUID(), 512);
         Assert.assertTrue(queue.connect());
     }
 
     @Test
     public void reconnect() {
         GBDevice device = Mockito.mock(GBDevice.class);
-        when(device.isConnected()).thenReturn(false);
+        when(device.getState()).thenReturn(GBDevice.State.NOT_CONNECTED);
 
         BluetoothDevice btDevice = Mockito.mock(BluetoothDevice.class);
 
         BluetoothAdapter btAdapter = Mockito.mock(BluetoothAdapter.class);
         when(btAdapter.getRemoteDevice((String) any())).thenReturn(btDevice);
 
-        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, null, 512);
+        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, UUID.randomUUID(), 512);
         Assert.assertTrue(queue.connect());
 
         queue.disconnect();

@@ -129,6 +129,16 @@ public final class BtBRQueue {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case HANDLER_SUBJECT_CONNECT: {
+                        if (mBtSocket == null) {
+                            LOG.error("Got request to connect to RFCOMM socket, but it is null");
+                            if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                                mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                            } else {
+                                mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                            }
+                            return;
+                        }
+
                         try {
                             mBtSocket.connect();
 
