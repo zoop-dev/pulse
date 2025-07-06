@@ -3778,5 +3778,6 @@ Temps de sommeil préféré en heures</string>
     <string name="audio_recordings">Enregistrements audio</string>
     <string name="open_source_licenses">Licences</string>
     <string name="map_theme_osmarender">Osmarender</string>
-    <string name="map_theme_motorider">Motorider</string>
+    <string name="map_theme_motorider">Motard</string>
+    <string name="pref_device_version">Version de l\'appareil</string>
 </resources>
