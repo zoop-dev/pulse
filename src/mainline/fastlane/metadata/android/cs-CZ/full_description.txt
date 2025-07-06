@@ -1,9 +1,9 @@
 Používejte své chytré hodinky, fitness tracker a další Bluetooth zařízení bez proprietární aplikace od výrobce, bez nutnosti vytvářet si účet a přenášet jakákoli data na servery výrobce.
-Úplný seznam podporovaných zařízení naleznete na naší domovské stránce nebo v souboru README.md v našem git repozitáři.
+Úplný seznam podporovaných zařízení naleznete na naší stránce s gadgety: https://gadgetbridge.org/gadgets/.
 
 Na svém zápěstí můžete dostávat oznámení a (v závislosti na zařízení):
 
-- sbírat data ze senzorů zařízení
-- ovládat přehrávání hudby na vašem zařízení Android
-- podívat se na počasí
-- získávat navigační pokyny
+- Sbírat data ze senzorů zařízení.
+- Ovládat přehrávání hudby na vašem zařízení Android.
+- Podívat se na počasí.
+- Získávat navigační pokyny.
