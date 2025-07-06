@@ -24,6 +24,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ProviderInfo;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
@@ -273,13 +274,25 @@ public class CalendarReceiver extends ContentObserver {
     }
 
     public void registerBroadcastReceivers() {
-        mContext.getContentResolver().registerContentObserver(CalendarContract.Events.CONTENT_URI, true, this);
+        try {
+            final ProviderInfo providerInfo = mContext.getPackageManager().resolveContentProvider(CalendarContract.AUTHORITY, 0);
+            if (providerInfo != null) {
+                mContext.getContentResolver().registerContentObserver(CalendarContract.Events.CONTENT_URI, true, this);
+            }
+        } catch (final Exception e) {
+            LOG.error("Failed to register calendar content observer", e);
+        }
+
         // Add a receiver to allow us to quickly force as calendar sync (without having to provide data)
         ContextCompat.registerReceiver(mContext, mForceSyncReceiver, new IntentFilter(ACTION_FORCE_SYNC), RECEIVER_NOT_EXPORTED);
     }
 
     public void dispose() {
-        mContext.getContentResolver().unregisterContentObserver(this);
+        try {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        } catch (final Exception e) {
+            LOG.error("Failed to unregister calendar content observer", e);
+        }
         mContext.unregisterReceiver(mForceSyncReceiver);
         mSyncHandler.removeCallbacksAndMessages(null);
     }
