@@ -145,6 +145,8 @@ public final class BtBRQueue {
                         } catch (IOException e) {
                             LOG.error("IO exception while establishing socket connection: ", e);
 
+                            cleanup();
+
                             if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
                                 mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
                             } else {
@@ -152,6 +154,8 @@ public final class BtBRQueue {
                             }
                         } catch (SecurityException e) {
                             LOG.error("Security exception while establishing socket connection: ", e);
+
+                            cleanup();
 
                             if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
                                 mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
