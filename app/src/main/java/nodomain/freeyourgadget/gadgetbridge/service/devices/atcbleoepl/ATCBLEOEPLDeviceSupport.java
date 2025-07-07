@@ -30,6 +30,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.android.nQuant.PnnLABQuantizer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +69,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int epaper_width = 0;
     private int epaper_height = 0;
     private int epaper_colors = 0;
-    private boolean is_bwy = false;
+    private int model;
     private byte[] image_payload = null;
     private byte[] block_data = null;
     private int blocks_total = -1;
@@ -231,7 +233,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         int version = buf.getInt();
 
         buf.position(17);
-        int model = buf.getShort();
+        model = buf.getShort();
 
         buf.position(21);
         boolean is_wh_swapped = buf.get() == 0x01;
@@ -248,21 +250,6 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         buf.position(41);
         int ble_adv_interval = buf.getShort() & 0xffff;
-
-        // check for black/white/yellow models
-        switch (model) {
-            case 1:
-            case 2:
-            case 3:
-            case 5:
-            case 6:
-            case 31:
-            case 35:
-                is_bwy = true;
-                break;
-            default:
-                is_bwy = false;
-        }
 
         if (epaper_width == 200 && epaper_height == 200 && model == 0x26) {
             model = 10000; //HACK for unsupported HS 154 BWRY JD
@@ -322,6 +309,49 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
     }
 
+    private int[] getPalette() {
+        // check for black/white/yellow models
+        if (epaper_colors == 1) {
+            return new int[]{
+                    0x000000, // black
+                    0xffffff, // white
+            };
+        }
+        switch (model) {
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 6:
+            case 31:
+            case 35:
+                return new int[]{
+                        0x000000, // black
+                        0xffff00, // yellow
+                        0xffffff, // white
+                };
+            case 17:
+            case 36:
+            case 37:
+            case 38:
+            case 39:
+            case 40:
+            case 10000:
+                return new int[]{
+                        0x000000, // black
+                        0xff0000, // red
+                        0xffff00, // yellow
+                        0xffffff, // white
+                };
+            default:
+                return new int[]{
+                        0x000000, // black
+                        0xff0000, // red
+                        0xffffff, // white
+                };
+        }
+    }
+
     @Override
     public void onInstallApp(Uri uri) {
         try {
@@ -378,27 +408,27 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 Matrix matrix = new Matrix();
                 matrix.postRotate(180);
 
+                int[] palette = getPalette();
+
+                // dither and convert to colors in palette
+                int[] pixels = new int[epaper_height * epaper_width];
+                bmpResized.getPixels(pixels, 0, epaper_width, 0, 0, epaper_width, epaper_height);
+                final PnnLABQuantizer pnnLABQuantizer = new PnnLABQuantizer(bmpResized);
+                int[] dithered_pixels = pnnLABQuantizer.dither(pixels, palette, epaper_width, epaper_height, false);
 
                 image_payload = new byte[((epaper_width * epaper_height) / 8) * epaper_colors];
-
-                int[] colors = new int[]{
-                        0x000000, // black
-                        is_bwy ? 0xffff00 : 0xff0000, // yellow or red
-                        0xffff00, // yellow
-                };
-
                 int nr_planes = (epaper_colors > 1) ? 2 : 1;
                 for (int plane = 0; plane < nr_planes; plane++) {
                     int byte_offset = 0;
                     int buffer_offset = plane * epaper_width * epaper_height / 8;
-                    int color = colors[plane];
+                    int color = palette[plane];
                     for (int y = 0; y < epaper_height; y++) {
                         int bit_pos = 0;
                         int packed_byte = 0;
                         for (int x = 0; x < epaper_width; x++) {
-                            int pixel = bmpResized.getPixel(x, y);
+                            int pixel = dithered_pixels[y * epaper_width + x];
                             // put the third color in all planes;
-                            if ((pixel & 0xffffff) == color || (epaper_colors > 2 && (pixel & 0xffffff) == colors[2])) {
+                            if ((pixel & 0xffffff) == color || (epaper_colors > 2 && (pixel & 0xffffff) == palette[2])) {
                                 packed_byte |= (1 << (7 - bit_pos));
                             }
                             bit_pos++;

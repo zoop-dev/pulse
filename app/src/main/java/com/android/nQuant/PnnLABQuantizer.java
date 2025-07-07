@@ -494,7 +494,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
     }
 
     @Override
-    protected int[] dither(final int[] cPixels, int[] palette, int width, int height, boolean dither) {
+    public int[] dither(final int[] cPixels, int[] palette, int width, int height, boolean dither) {
         Ditherable ditherable = getDitherFn();
         if (hasSemiTransparency)
             weight *= -1;
