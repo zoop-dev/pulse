@@ -3780,4 +3780,10 @@ Temps de sommeil préféré en heures</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motard</string>
     <string name="pref_device_version">Version de l\'appareil</string>
+    <string name="service_notification_collector_service_text">Surveiller les notifications en arrière-plan</string>
+    <string name="service_notification_collector_service_title">Superviseur de notifications Gadgetbridge</string>
+    <string name="activity_print_image_upscale_switch">Agrandir l\'image</string>
+    <string name="activity_print_image_apply_dithering_switch">Appliquer un tramage</string>
+    <string name="activity_print_image_print_button">Imprimer</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Désactivez ceci seulement quand vous utilisez BLE pour économiser de l\'énergie</string>
 </resources>
