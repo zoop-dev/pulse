@@ -4178,4 +4178,7 @@
     <string name="busy_task_syncing">Synchronizace</string>
     <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
     <string name="devicetype_h59">H59</string>
+    <string name="devicetype_garmin_forerunner_165_music">Garmin Forerunner 165 Music</string>
+    <string name="devicetype_generic_thermal_printer">Termální tiskárna</string>
+    <string name="activity_print_image_print_button">Tisk</string>
 </resources>
