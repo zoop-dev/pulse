@@ -43,7 +43,7 @@ public class ATCBLEOEPLCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public int getDefaultIconResource() {
-        return R.drawable.ic_device_default;
+        return R.drawable.ic_device_bluetooth_printer;
     }
 
     @Override
