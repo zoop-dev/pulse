@@ -387,8 +387,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 } else {
                     // scale to width
                     dst_width = epaper_width;
-                    dst_height = (int) (epaper_width * src_aspect);
-
+                    dst_height = (int) (epaper_width * (1/src_aspect));
                 }
                 final Bitmap bmpResized = Bitmap.createBitmap(epaper_width, epaper_height, Bitmap.Config.ARGB_8888);
                 final Canvas canvas = new Canvas(bmpResized);
