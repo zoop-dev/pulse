@@ -3785,5 +3785,19 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_print_image_upscale_switch">Agrandir l\'image</string>
     <string name="activity_print_image_apply_dithering_switch">Appliquer un tramage</string>
     <string name="activity_print_image_print_button">Imprimer</string>
-    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Désactivez ceci seulement quand vous utilisez BLE pour économiser de l\'énergie</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Désactivez ceci seulement lorsque vous utilisez BLE pour économiser de l\'énergie</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Activer le protocole OEPL</string>
+    <string name="pref_atc_ble_oepl_ble_adv_interval_title">Intervalle des notifications BLE</string>
+    <string name="pref_atc_ble_oepl_model_title">Afficher le modèle</string>
+    <string name="sending_image">envoi d\'une image</string>
+    <string name="same_image_already_on_device">une image identique est déjà présente sur l\'appareil</string>
+    <string name="pref_calendar_target_app_title">App responsable de la surveillance des événements du calendrier</string>
+    <string name="pref_calendar_maximum_description_characters_title">Nombre maximum de caractères dans la description d\'un événement</string>
+    <string name="pref_calendar_maximum_title_characters_title">Nombre maximum de caractères dans le titre d\'un événement</string>
+    <string name="pref_calendar_amount_events_to_sync_title">Nombre d\'événements du calendrier à synchroniser</string>
+    <string name="wifi_frequency">Fréquence Wi-Fi</string>
+    <string name="wifi_frequency_5_ghz">5 GHz</string>
+    <string name="wifi_frequency_2_4_ghz">2.4 GHz</string>
+    <string name="wifi_channel">Réseau Wi-Fi</string>
+    <string name="switch_to_phone">Basculer sur %1$s</string>
 </resources>
