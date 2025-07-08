@@ -3132,4 +3132,10 @@
     <string name="pref_device_version">גרסת המכשיר</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>
+    <string name="service_notification_collector_service_text">מעקב אחר התראות ברקע</string>
+    <plurals name="amount_of_days">
+        <item quantity="one">יום</item>
+        <item quantity="two">יומיים</item>
+        <item quantity="other">%d ימים</item>
+    </plurals>
 </resources>
