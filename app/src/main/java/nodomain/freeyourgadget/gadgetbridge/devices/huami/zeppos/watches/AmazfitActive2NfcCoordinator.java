@@ -16,8 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 
+import java.util.Collections;
+import java.util.List;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 
 /**
  * This seems to be the same as the Active 2, but with NFC. The bluetooth name is different, but the
@@ -25,8 +27,9 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
  */
 public class AmazfitActive2NfcCoordinator extends AmazfitActive2RoundCoordinator {
     @Override
-    public String getDeviceBluetoothName() {
-        return HuamiConst.AMAZFIT_ACTIVE_2_NFC_NAME;
+    public List<String> getDeviceBluetoothNames() {
+        // FIXME migrate device type to normal active 2
+        return Collections.singletonList("Active 2 NFC (Round)");
     }
 
     @Override

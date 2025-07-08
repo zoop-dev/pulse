@@ -94,7 +94,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
         fwHelper = new ZeppOsFwHelper(
                 uri,
                 getContext(),
-                ((ZeppOsCoordinator) coordinator).getDeviceBluetoothName(),
+                ((ZeppOsCoordinator) coordinator).getDeviceBluetoothNames(),
                 ((ZeppOsCoordinator) coordinator).getDeviceSources()
         );
 
@@ -150,7 +150,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
                     //    break;
                     case UpdateFirmwareOperation2020.REPLY_UPDATE_PROGRESS:
                         int offset = (value[2] & 0xff) | ((value[3] & 0xff) << 8) | ((value[4] & 0xff) << 16) | ((value[5] & 0xff) << 24);
-                        LOG.info("update progress " + offset + " bytes");
+                        LOG.info("update progress {} bytes", offset);
                         sendFirmwareDataChunk(offset);
                         break;
                     case UpdateFirmwareOperation2020.COMMAND_COMPLETE_TRANSFER:

@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.straps;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -30,8 +31,8 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public String getDeviceBluetoothName() {
-        return "Amazfit Helio Strap"; // no mac address at the end
+    public List<String> getDeviceBluetoothNames() {
+        return Collections.singletonList("Amazfit Helio Strap"); // no mac address at the end
     }
 
     @Override

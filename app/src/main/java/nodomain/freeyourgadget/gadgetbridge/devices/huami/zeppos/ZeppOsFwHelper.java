@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.zip.CRC32;
@@ -60,7 +61,7 @@ public class ZeppOsFwHelper {
 
     private final Uri uri;
     private final Context context;
-    private final String deviceName;
+    private final List<String> deviceNames;
     private final Set<Integer> deviceSources;
 
     private HuamiFirmwareType firmwareType = HuamiFirmwareType.INVALID;
@@ -69,10 +70,10 @@ public class ZeppOsFwHelper {
     private String version = "Unknown";
     private GBDeviceApp gbDeviceApp = null;
 
-    public ZeppOsFwHelper(final Uri uri, final Context context, final String deviceName, final Set<Integer> deviceSources) {
+    public ZeppOsFwHelper(final Uri uri, final Context context, final List<String> deviceNames, final Set<Integer> deviceSources) {
         this.uri = uri;
         this.context = context;
-        this.deviceName = deviceName;
+        this.deviceNames = deviceNames;
         this.deviceSources = deviceSources;
 
         processUri();
@@ -445,12 +446,15 @@ public class ZeppOsFwHelper {
             return false;
         }
 
-        if (!searchString(firmwareBin, deviceName)) {
-            LOG.warn("Failed to find {} in fwBytes", deviceName);
-            return false;
+        for (String deviceName : deviceNames) {
+            if (searchString(firmwareBin, deviceName)) {
+                return true;
+            }
         }
 
-        return true;
+        LOG.warn("Failed to find any known device names {} in fwBytes", deviceNames);
+
+        return false;
     }
 
     public static String getFirmwareVersion(final byte[] firmwareBin) {

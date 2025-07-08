@@ -77,7 +77,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.service
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public abstract class ZeppOsCoordinator extends HuamiCoordinator {
-    public abstract String getDeviceBluetoothName();
+    public abstract List<String> getDeviceBluetoothNames();
 
     public abstract Set<Integer> getDeviceSources();
 
@@ -100,7 +100,17 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         // only be used for calls, and Gadgetbridge can't use for pairing.
         // **Additionally**, it was also reported on some issues such as #4827 that some devices
         // only broadcast the one with the mac address, which Gadgetbridge can use for pairing...
-        return Pattern.compile("^" + Pattern.quote(getDeviceBluetoothName()) + "([- ]+[A-Z0-9]{4})?$");
+        final StringBuilder sb = new StringBuilder();
+        sb.append("^(");
+        final List<String> deviceBluetoothNames = getDeviceBluetoothNames();
+        for (String name : deviceBluetoothNames) {
+            sb.append(Pattern.quote(name)).append("|");
+        }
+        sb.setLength(sb.length() - 1); // remove last |
+        sb.append(")");
+        sb.append("([- ]+[A-Z0-9]{4})?$");
+
+        return Pattern.compile(sb.toString());
     }
 
     @NonNull
@@ -149,7 +159,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         final ZeppOsFwInstallHandler fwInstallHandler = new ZeppOsFwInstallHandler(
                 uri,
                 context,
-                getDeviceBluetoothName(),
+                getDeviceBluetoothNames(),
                 getDeviceSources()
         );
         return fwInstallHandler.isValid() ? fwInstallHandler : null;

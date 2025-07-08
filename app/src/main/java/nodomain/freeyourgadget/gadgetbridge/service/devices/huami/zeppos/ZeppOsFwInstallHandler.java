@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -52,10 +53,10 @@ public class ZeppOsFwInstallHandler implements InstallHandler {
 
     private final ZeppOsFwHelper mHelper;
 
-    public ZeppOsFwInstallHandler(final Uri uri, final Context context, final String deviceName, final Set<Integer> deviceSources) {
+    public ZeppOsFwInstallHandler(final Uri uri, final Context context, final List<String> deviceNames, final Set<Integer> deviceSources) {
         mUri = uri;
         mContext = context;
-        mHelper = new ZeppOsFwHelper(uri, context, deviceName, deviceSources);
+        mHelper = new ZeppOsFwHelper(uri, context, deviceNames, deviceSources);
     }
 
     @Override

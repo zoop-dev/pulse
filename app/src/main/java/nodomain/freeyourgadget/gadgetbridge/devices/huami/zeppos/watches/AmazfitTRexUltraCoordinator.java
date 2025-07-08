@@ -17,18 +17,19 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AmazfitTRexUltraCoordinator extends ZeppOsCoordinator {
     @Override
-    public String getDeviceBluetoothName() {
-        return HuamiConst.AMAZFIT_TREX_ULTRA;
+    public List<String> getDeviceBluetoothNames() {
+        return Collections.singletonList("Amazfit T-Rex Ultra");
     }
 
     @Override
