@@ -264,7 +264,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 6;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse freestyle summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -327,7 +327,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 8;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse indoor cycling summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -392,7 +392,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 4;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse outdoor walking v1 summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -442,8 +442,11 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 6:
                 headerSize = 9;
                 break;
+            case 9:
+                headerSize = 13;
+                break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse outdoor walking v2 summary version {}", fileId.getVersion());
                 return null;
         }
         final XiaomiSimpleActivityParser.Builder builder = new XiaomiSimpleActivityParser.Builder();
@@ -532,7 +535,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 7;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse outdoor cycling summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -587,7 +590,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 4;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse hiit summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -625,7 +628,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 5;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse pool swimming summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -673,7 +676,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 4;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse elliptical summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -714,7 +717,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 5;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse rowing summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -755,7 +758,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 9;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse treadmill summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -808,7 +811,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 5;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse outdoor cycling v2 summary version {}", fileId.getVersion());
                 return null;
         }
 
@@ -847,7 +850,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
                 headerSize = 5;
                 break;
             default:
-                LOG.warn("Unable to parse workout summary version {}", fileId.getVersion());
+                LOG.warn("Unable to parse jump roping summary version {}", fileId.getVersion());
                 return null;
         }
 
