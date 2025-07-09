@@ -366,6 +366,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.xwatch.XWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR02Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR03Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR06Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR07Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR09Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR10Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR12Coordinator;
@@ -708,6 +709,7 @@ public enum DeviceType {
     COLMI_R02(ColmiR02Coordinator.class),
     COLMI_R03(ColmiR03Coordinator.class),
     COLMI_R06(ColmiR06Coordinator.class),
+    COLMI_R07(ColmiR07Coordinator.class),
     COLMI_R09(ColmiR09Coordinator.class),
     COLMI_R10(ColmiR10Coordinator.class),
     COLMI_R12(ColmiR12Coordinator.class),
