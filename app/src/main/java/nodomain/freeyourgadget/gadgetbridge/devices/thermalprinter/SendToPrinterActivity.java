@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,15 +42,39 @@ import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 public class SendToPrinterActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(SendToPrinterActivity.class);
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    GenericThermalPrinterSupport.PrintAlignment alignment = GenericThermalPrinterSupport.PrintAlignment.ALIGN_CENTER;
     private Bitmap bitmap;
     private Bitmap incoming;
     private ImageView previewImage;
-    private ImageView incomingImage;
     private MaterialSwitch dithering;
     private MaterialSwitch upscale;
-    private BitmapToBitSet bitmapToBitSet;
-    private File printPicture = null;
+    private final GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
+        private static final int SWIPE_THRESHOLD = 100;
 
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true; // needed to enable fling detection
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            float diffX = e2.getX() - e1.getX();
+
+            if (Math.abs(diffX) > Math.abs(e2.getY() - e1.getY())) {
+                if (Math.abs(diffX) > SWIPE_THRESHOLD) {
+                    if (diffX > 0) {
+                        alignment = alignment == GenericThermalPrinterSupport.PrintAlignment.ALIGN_LEFT ? GenericThermalPrinterSupport.PrintAlignment.ALIGN_CENTER : GenericThermalPrinterSupport.PrintAlignment.ALIGN_RIGHT;
+                    } else {
+                        alignment = alignment == GenericThermalPrinterSupport.PrintAlignment.ALIGN_RIGHT ? GenericThermalPrinterSupport.PrintAlignment.ALIGN_CENTER : GenericThermalPrinterSupport.PrintAlignment.ALIGN_LEFT;
+                    }
+                    updatePreview();
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+    private File printPicture = null;
     ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -58,13 +84,13 @@ public class SendToPrinterActivity extends AbstractGBActivity {
                 }
             }
     );
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_print_image);
-        incomingImage = findViewById(R.id.incomingImage);
         previewImage = findViewById(R.id.convertedImage);
         Button sendToPrinter = findViewById(R.id.sendToPrinterButton);
         dithering = findViewById(R.id.switchDithering);
@@ -88,6 +114,9 @@ public class SendToPrinterActivity extends AbstractGBActivity {
                 sendToPrinter.setEnabled(false);
         }
 
+        gestureDetector = new GestureDetector(this, gestureListener);
+
+        previewImage.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
         dithering.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,9 +198,7 @@ public class SendToPrinterActivity extends AbstractGBActivity {
     }
 
     private void updatePreview() {
-        incomingImage.setImageBitmap(bitmap);
-
-        bitmapToBitSet = new BitmapToBitSet(bitmap);
+        final BitmapToBitSet bitmapToBitSet = new BitmapToBitSet(GenericThermalPrinterSupport.createAlignedBitmap(bitmap, alignment));
         bitmapToBitSet.toBlackAndWhite(dithering.isChecked());
 
         TextView imageSizeText = findViewById(R.id.imageSizeText);
@@ -185,6 +212,7 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_BITMAP_CACHE_FILE_PATH, printPicture.getAbsolutePath());
         intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_APPLY_DITHERING, dithering.isChecked());
         intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_UPSCALE, upscale.isChecked());
+        intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_ALIGNMENT, alignment);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

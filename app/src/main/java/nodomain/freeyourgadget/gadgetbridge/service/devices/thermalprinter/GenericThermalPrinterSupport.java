@@ -43,15 +43,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateA
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(GenericThermalPrinterSupport.class);
     public static final int IMAGE_WIDTH = 384;
     public static final String INTENT_ACTION_PRINT_BITMAP = "print_bitmap";
     public static final String INTENT_EXTRA_URI = "picture_uri";
     public static final String INTENT_EXTRA_BITMAP_CACHE_FILE_PATH = "bitmap_cache_file_path";
     public static final String INTENT_EXTRA_APPLY_DITHERING = "apply_dithering";
     public static final String INTENT_EXTRA_UPSCALE = "upscale";
-
+    public static final String INTENT_EXTRA_ALIGNMENT = "alignment";
     public static final UUID discoveryService = UUID.fromString("0000af30-0000-1000-8000-00805f9b34fb");
+    private static final Logger LOG = LoggerFactory.getLogger(GenericThermalPrinterSupport.class);
     private final UUID writeCharUUID = UUID.fromString("0000ae01-0000-1000-8000-00805f9b34fb");
     private final UUID notifCharUUID = UUID.fromString("0000ae02-0000-1000-8000-00805f9b34fb");
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -59,13 +59,11 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         LOG.info("Running retrieving battery through runner.");
         send("getDevState", PrinterCommand.getDevState.message(new byte[]{0x00}));
     };
-    private boolean useRunLengthEncoding = false;
-    private boolean canPrint = false;
-
     private final int PRINT_INTENSITY = 8000;
     private final int PRINT_SPEED = 10;
     private final int PRINT_TYPE = 0; //1 also observed
-
+    private boolean useRunLengthEncoding = false;
+    private boolean canPrint = false;
     private final BroadcastReceiver printCommandReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -87,7 +85,8 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
                         return;
                     }
                     boolean dither = intent.getBooleanExtra(INTENT_EXTRA_APPLY_DITHERING, false);
-                    printImage(bitmap, dither);
+                    PrintAlignment alignment = (PrintAlignment) intent.getSerializableExtra(INTENT_EXTRA_ALIGNMENT);
+                    printImage(bitmap, dither, alignment);
             }
         }
     };
@@ -98,19 +97,7 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
 
     }
 
-    private static byte[] byteBufferToArray(final ByteBuffer input) {
-        input.flip();
-        final byte[] result = new byte[input.limit()];
-        input.get(result);
-        return result;
-    }
-
-    @Override
-    public void onNotification(NotificationSpec notificationSpec) {
-//        printImage(createNotificationBitmap(notificationSpec), true);
-    }
-
-    public Bitmap createNotificationBitmap(NotificationSpec spec) {
+    private static Bitmap createBitmapFromString(String text) {
         float textSize = 24f; // Approx 10pt at 200 dpi
 
         // Prepare the paint for drawing text
@@ -118,22 +105,6 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         textPaint.setColor(0xFF000000); // Black color
         textPaint.setTextSize(textSize);
         textPaint.setTypeface(Typeface.DEFAULT);
-
-        StringBuilder textBuilder = new StringBuilder();
-        if (spec.sender != null) {
-            textBuilder.append("Sender: ").append(spec.sender).append("\n");
-        }
-        if (spec.title != null) {
-            textBuilder.append("Title: ").append(spec.title).append("\n");
-        }
-        if (spec.subject != null) {
-            textBuilder.append("Subject: ").append(spec.subject).append("\n\n");
-        }
-        if (spec.body != null) {
-            textBuilder.append(spec.body);
-        }
-
-        String text = textBuilder.toString();
 
         // Create StaticLayout to handle text wrapping
         StaticLayout staticLayout = new StaticLayout(text, textPaint, IMAGE_WIDTH,
@@ -144,13 +115,20 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         int bitmapHeight = staticLayout.getHeight();
 
         // Create the bitmap
-        Bitmap bitmap = Bitmap.createBitmap(IMAGE_WIDTH, bitmapHeight, Bitmap.Config.ARGB_8888);
+        final Bitmap bitmap = Bitmap.createBitmap(IMAGE_WIDTH, bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
         // Draw the text onto the canvas using the StaticLayout
         staticLayout.draw(canvas);
 
         return bitmap;
+    }
+
+    private static byte[] byteBufferToArray(final ByteBuffer input) {
+        input.flip();
+        final byte[] result = new byte[input.limit()];
+        input.get(result);
+        return result;
     }
 
     private static int getCrc8(final byte[] seq) {
@@ -169,6 +147,53 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         }
 
         return (byte) (crc & 0xFF);
+    }
+
+    @Override
+    public void onNotification(NotificationSpec notificationSpec) {
+//        printImage(createNotificationBitmap(notificationSpec), true, PrintAlignment.ALIGN_LEFT);
+    }
+
+    public Bitmap createNotificationBitmap(NotificationSpec spec) {
+
+        StringBuilder textBuilder = new StringBuilder();
+        if (spec.sender != null) {
+            textBuilder.append("Sender: ").append(spec.sender).append("\n");
+        }
+        if (spec.title != null) {
+            textBuilder.append("Title: ").append(spec.title).append("\n");
+        }
+        if (spec.subject != null) {
+            textBuilder.append("Subject: ").append(spec.subject).append("\n\n");
+        }
+        if (spec.body != null) {
+            textBuilder.append(spec.body);
+        }
+
+        return createBitmapFromString(textBuilder.toString());
+    }
+
+    public void printImage(Bitmap bitmap, boolean applyDithering, PrintAlignment alignment) {
+        if (!canPrint) {
+            LOG.error("Printer cannot print.");
+            return;
+        }
+
+        final BitmapToBitSet bitmapToBitSet = new BitmapToBitSet(createAlignedBitmap(bitmap, alignment));
+
+        final ByteBuffer result = ByteBuffer.allocate(500 + (int) (Math.ceil(bitmap.getWidth() / 8) + 8) * bitmap.getHeight()); //TODO: approximate better?
+
+        result.put(PrinterCommand.intensity(PRINT_INTENSITY));
+        result.put(PrinterCommand.printSpeed.message(new byte[]{PRINT_SPEED}));
+        result.put(PrinterCommand.printType.message(new byte[]{PRINT_TYPE}));
+        result.put(PrinterCommand.quality(5));
+
+        result.put(encodePictureToPrinterCommands(bitmapToBitSet.toBlackAndWhite(applyDithering), bitmapToBitSet.getWidth(), bitmapToBitSet.getHeight()));
+        result.put(PrinterCommand.feedPaper(72));
+
+        result.put(PrinterCommand.getDevState.message(new byte[]{0})); //to get back the current device status
+
+        send("Print...", byteBufferToArray(result));
     }
 
     private byte[] encodePictureToPrinterCommands(BitSet imageBits, int imageWidth, int imageHeight) {
@@ -204,26 +229,27 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         return false;
     }
 
-    public void printImage(Bitmap bitmap, boolean applyDithering) {
-        if (!canPrint) {
-            LOG.error("Printer cannot print.");
-            return;
+    public static Bitmap createAlignedBitmap(Bitmap bitmap, PrintAlignment alignment) {
+        if (bitmap.getWidth() >= IMAGE_WIDTH) {
+            return bitmap;
+        } else {//handle alignment
+            Bitmap alignedBitmap = Bitmap.createBitmap(IMAGE_WIDTH, bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(alignedBitmap);
+            canvas.drawColor(Color.WHITE);
+
+            switch (alignment) {
+                case ALIGN_LEFT -> canvas.drawBitmap(bitmap, 0, 0, new Paint());
+                case ALIGN_CENTER ->
+                        canvas.drawBitmap(bitmap, (alignedBitmap.getWidth() - bitmap.getWidth()) / 2, 0, new Paint());
+                case ALIGN_RIGHT ->
+                        canvas.drawBitmap(bitmap, alignedBitmap.getWidth() - bitmap.getWidth(), 0, new Paint());
+            }
+            return alignedBitmap;
         }
-        final BitmapToBitSet bitmapToBitSet = new BitmapToBitSet(bitmap);
+    }
 
-        final ByteBuffer result = ByteBuffer.allocate(500 + (int) (Math.ceil(bitmap.getWidth() / 8) + 8) * bitmap.getHeight()); //TODO: approximate better?
-
-        result.put(PrinterCommand.intensity(PRINT_INTENSITY));
-        result.put(PrinterCommand.printSpeed.message(new byte[]{PRINT_SPEED}));
-        result.put(PrinterCommand.printType.message(new byte[]{PRINT_TYPE}));
-        result.put(PrinterCommand.quality(5));
-
-        result.put(encodePictureToPrinterCommands(bitmapToBitSet.toBlackAndWhite(applyDithering), bitmapToBitSet.getWidth(), bitmapToBitSet.getHeight()));
-        result.put(PrinterCommand.feedPaper(72));
-
-        result.put(PrinterCommand.getDevState.message(new byte[]{0})); //to get back the current device status
-
-        send("Print...", byteBufferToArray(result));
+    private void sendTestPrint() {
+        printImage(createBitmapFromString(ZonedDateTime.now().toString()), false, PrintAlignment.ALIGN_CENTER);
     }
 
     @Override
@@ -380,27 +406,6 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(printCommandReceiver);
         }
     }
-    private void sendTestPrint() {
-        Bitmap bitmap = BitmapFactory.decodeResource(GBApplication.app().getResources(), R.drawable.ic_launcher);
-
-        Bitmap newBitmap = Bitmap.createBitmap(IMAGE_WIDTH, bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(newBitmap);
-        canvas.drawColor(Color.WHITE);
-
-        // Calculate the top-left coordinates for centering the original Bitmap
-        int posLeft = 0;
-        int posMiddle = (newBitmap.getWidth() - bitmap.getWidth()) / 2;
-        int posRight = newBitmap.getWidth() - bitmap.getWidth();
-
-        int left = posRight;
-        int top = (newBitmap.getHeight() - bitmap.getHeight()) / 2;
-
-        canvas.drawBitmap(bitmap, left, top, new Paint());
-
-        canvas.drawText(ZonedDateTime.now().toString(), newBitmap.getHeight(), 0, new Paint());
-
-        printImage(newBitmap, false);
-    }
 
     @Override
     public void onSendConfiguration(String config) {
@@ -436,6 +441,12 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     @Override
     public void onInstallApp(Uri uri) {
         //we just abuse the install functionality to start our own activity
+    }
+
+    public enum PrintAlignment {
+        ALIGN_LEFT,
+        ALIGN_CENTER,
+        ALIGN_RIGHT
     }
 
     private enum PrinterCommand {

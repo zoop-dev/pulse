@@ -18,41 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/sendToPrinterButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:text="@string/activity_print_image_print_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/warning_devices" />
 
-            <ImageView
-                android:id="@+id/incomingImage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/imageSizeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/activity_print_label_print_size"
-                app:layout_constraintTop_toBottomOf="@+id/incomingImage"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switchUpscale"
@@ -62,7 +28,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:text="@string/activity_print_image_upscale_switch"
-                app:layout_constraintTop_toBottomOf="@id/imageSizeText"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -92,15 +58,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/switchDithering" />
 
             <TextView
+                android:id="@+id/imageSizeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/activity_print_label_print_size"
+                app:layout_constraintTop_toBottomOf="@+id/convertedImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <TextView
                 android:id="@+id/warning_devices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text=""
-                app:layout_constraintTop_toBottomOf="@+id/convertedImage"
+                app:layout_constraintTop_toBottomOf="@+id/imageSizeText"
                 tools:layout_editor_absoluteX="0dp" />
 
+            <Button
+                android:id="@+id/sendToPrinterButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/activity_print_image_print_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/warning_devices" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
