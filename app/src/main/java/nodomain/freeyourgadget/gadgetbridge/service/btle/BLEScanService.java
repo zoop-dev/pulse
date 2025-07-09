@@ -40,6 +40,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
@@ -427,5 +428,19 @@ public class BLEScanService extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    public void onTimeout(int startId) {
+        LOG.info("onTimeout startId={}", startId);
+        super.onTimeout(startId);
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    public void onTimeout(int startId, int fgsType) {
+        LOG.info("onTimeout startId={} fgsType={}", startId, fgsType);
+        super.onTimeout(startId, fgsType);
     }
 }

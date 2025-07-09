@@ -17,12 +17,20 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.pinetime;
 
 import android.app.Activity;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import no.nordicsemi.android.dfu.DfuBaseService;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 
 public class PineTimeDFUService extends DfuBaseService {
+    private static final Logger LOG = LoggerFactory.getLogger(PineTimeDFUService.class);
+
     @Override
     protected Class<? extends Activity> getNotificationTarget() {
         return FwAppInstallerActivity.class;
@@ -31,5 +39,19 @@ public class PineTimeDFUService extends DfuBaseService {
     @Override
     protected boolean isDebug() {
         return BuildConfig.DEBUG;
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    public void onTimeout(int startId) {
+        LOG.info("onTimeout startId={}", startId);
+        super.onTimeout(startId);
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    public void onTimeout(int startId, int fgsType) {
+        LOG.info("onTimeout startId={} fgsType={}", startId, fgsType);
+        super.onTimeout(startId, fgsType);
     }
 }

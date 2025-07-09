@@ -23,9 +23,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Process;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import org.slf4j.Logger;
@@ -112,5 +114,19 @@ public class NotificationCollectorMonitorService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    public void onTimeout(int startId) {
+        LOG.info("onTimeout startId={}", startId);
+        super.onTimeout(startId);
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    public void onTimeout(int startId, int fgsType) {
+        LOG.info("onTimeout startId={} fgsType={}", startId, fgsType);
+        super.onTimeout(startId, fgsType);
     }
 }

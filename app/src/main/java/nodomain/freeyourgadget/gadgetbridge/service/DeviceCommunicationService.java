@@ -45,6 +45,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ServiceCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -1631,6 +1632,20 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             devices[i] = deviceStructs.get(i).getDevice();
         }
         return devices;
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    public void onTimeout(int startId) {
+        LOG.info("onTimeout startId={}", startId);
+        super.onTimeout(startId);
+    }
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    public void onTimeout(int startId, int fgsType) {
+        LOG.info("onTimeout startId={} fgsType={}", startId, fgsType);
+        super.onTimeout(startId, fgsType);
     }
 
     private static void stressTestDispose(DeviceSupport deviceSupport) {
