@@ -38,6 +38,7 @@ import android.text.SpannableString;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -368,7 +369,8 @@ public class GB {
 
     public static final char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
 
-    public static String hexdump(byte[] buffer, int offset, int length) {
+    @NonNull
+    public static String hexdump(@NonNull byte[] buffer, int offset, int length) {
         if (length == -1) {
             length = buffer.length - offset;
         }
@@ -382,7 +384,11 @@ public class GB {
         return new String(hexChars);
     }
 
-    public static String hexdump(byte[] buffer) {
+    @NonNull
+    public static String hexdump(@Nullable byte[] buffer) {
+        if (buffer == null) {
+            return "(null)";
+        }
         return hexdump(buffer, 0, buffer.length);
     }
 
