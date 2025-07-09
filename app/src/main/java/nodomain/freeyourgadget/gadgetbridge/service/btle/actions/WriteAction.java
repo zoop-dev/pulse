@@ -76,12 +76,9 @@ public class WriteAction extends BtLEAction {
 
     @SuppressLint("MissingPermission")
     private static boolean writeCharacteristicImp(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, boolean legacyCompat) {
-        if (GBApplication.isRunningTiramisuOrLater()) {
+        if (GBApplication.isRunningTiramisuOrLater() && !legacyCompat) {
             // use API introduced in SDK level 33 to catch exceptions and more specific errors
             try {
-                if (legacyCompat) {
-                    characteristic.setValue(value);
-                }
                 final int status = gatt.writeCharacteristic(characteristic, value, characteristic.getWriteType());
                 if (status == BluetoothStatusCodes.SUCCESS) {
                     return true;
