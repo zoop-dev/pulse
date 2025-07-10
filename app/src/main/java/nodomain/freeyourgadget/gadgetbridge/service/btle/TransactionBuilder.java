@@ -75,7 +75,7 @@ public class TransactionBuilder {
     /// <li>no {@link BluetoothGatt#beginReliableWrite()} was used.</li>
     /// </ol>
     /// @see WriteAction
-    public TransactionBuilder writeLegacy(BluetoothGattCharacteristic characteristic, byte[] data) {
+    public TransactionBuilder writeLegacy(BluetoothGattCharacteristic characteristic, byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
             return this;
@@ -85,7 +85,7 @@ public class TransactionBuilder {
     }
 
     /// @see WriteAction
-    public TransactionBuilder write(BluetoothGattCharacteristic characteristic, byte[] data) {
+    public TransactionBuilder write(BluetoothGattCharacteristic characteristic, byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
             return this;

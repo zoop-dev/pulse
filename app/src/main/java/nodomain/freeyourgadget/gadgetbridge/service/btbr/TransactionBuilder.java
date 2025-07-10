@@ -41,7 +41,7 @@ public class TransactionBuilder {
         mTransaction = new Transaction(taskName);
     }
 
-    public TransactionBuilder write(byte[] data) {
+    public TransactionBuilder write(byte... data) {
         WriteAction action = new WriteAction(data);
         return add(action);
     }
