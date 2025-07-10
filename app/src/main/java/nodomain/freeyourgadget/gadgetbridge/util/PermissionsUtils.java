@@ -20,6 +20,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.companion.CompanionDeviceManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -48,6 +49,7 @@ import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 
@@ -75,10 +77,19 @@ public class PermissionsUtils {
     public static ArrayList<PermissionDetails> getRequiredPermissionsList(Activity activity) {
         ArrayList<PermissionDetails> permissionsList = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            permissionsList.add(new PermissionDetails(
-                    CUSTOM_PERM_IGNORE_BATT_OPTIM,
-                    activity.getString(R.string.permission_disable_doze_title),
-                    activity.getString(R.string.permission_disable_doze_summary)));
+            int companionDevicesCount = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                final CompanionDeviceManager manager = (CompanionDeviceManager) GBApplication.getContext().getSystemService(Context.COMPANION_DEVICE_SERVICE);
+                companionDevicesCount = manager.getAssociations().size();
+            }
+            if (companionDevicesCount == 0) {
+                permissionsList.add(new PermissionDetails(
+                        CUSTOM_PERM_IGNORE_BATT_OPTIM,
+                        activity.getString(R.string.permission_disable_doze_title),
+                        activity.getString(R.string.permission_disable_doze_summary)));
+            } else {
+                LOG.info("Not requesting explicit battery optimization exemption due to paired Companion devices");
+            }
         }
         permissionsList.add(new PermissionDetails(
                 CUSTOM_PERM_NOTIFICATION_LISTENER,
