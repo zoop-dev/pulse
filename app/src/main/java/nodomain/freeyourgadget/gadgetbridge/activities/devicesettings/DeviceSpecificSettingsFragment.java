@@ -257,7 +257,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         }
         final BatteryConfig[] batteryConfigs = coordinator.getBatteryConfig(device);
         for (final BatteryConfig batteryConfig : batteryConfigs) {
-            if (batteryConfigs.length > 1 || coordinator.addBatteryPollingSettings()) {
+            if (batteryConfigs.length > 1) {
                 final Preference prefHeader = new PreferenceCategory(requireContext());
                 prefHeader.setKey("pref_battery_header_" + batteryConfig.getBatteryIndex());
                 prefHeader.setIconSpaceReserved(false);
