@@ -1668,10 +1668,10 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
                 sendMsgToWatch(builder, doNotDisturb);
             } catch (Exception e) {
-                LOG.error("Unexpected exception in ZeTimeDeviceSupport.setDoNotDisturb: " + e.getMessage());
+                LOG.error("Unexpected exception in ZeTimeDeviceSupport.setDoNotDisturb: " + e.getLocalizedMessage());
             }
         } catch (Exception e) {
-            LOG.error("Unexpected exception in ZeTimeDeviceSupport.setDoNotDisturb: " + e.getMessage());
+            LOG.error("Unexpected exception in ZeTimeDeviceSupport.setDoNotDisturb: " + e.getLocalizedMessage());
         }
     }
 
@@ -1793,10 +1793,10 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     inactivity[9] = (byte) calendar_end.get(Calendar.HOUR_OF_DAY);
                     inactivity[10] = (byte) calendar_end.get(Calendar.MINUTE);
                 } catch (Exception e) {
-                    LOG.error("Unexpected exception in ZeTimeDeviceSupport.setInactivityAlert: " + e.getMessage());
+                    LOG.error("Unexpected exception in ZeTimeDeviceSupport.setInactivityAlert: " + e.getLocalizedMessage());
                 }
             } catch (Exception e) {
-                LOG.error("Unexpected exception in ZeTimeDeviceSupport.setInactivityAlert: " + e.getMessage());
+                LOG.error("Unexpected exception in ZeTimeDeviceSupport.setInactivityAlert: " + e.getLocalizedMessage());
             }
         }
 

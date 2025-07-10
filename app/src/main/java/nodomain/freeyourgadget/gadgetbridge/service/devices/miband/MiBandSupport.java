@@ -799,7 +799,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
         try {
             new UpdateFirmwareOperation(uri, this).perform();
         } catch (IOException ex) {
-            GB.toast(getContext(), "Firmware cannot be installed: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(getContext(), "Firmware cannot be installed: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
     }
 

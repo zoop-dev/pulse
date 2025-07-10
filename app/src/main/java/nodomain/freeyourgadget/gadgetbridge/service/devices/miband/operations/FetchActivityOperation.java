@@ -394,7 +394,7 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
                 activityStruct.bufferFlushed(minutes);
             }
         } catch (Exception ex) {
-            GB.toast(getContext(), ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(getContext(), ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
     }
 

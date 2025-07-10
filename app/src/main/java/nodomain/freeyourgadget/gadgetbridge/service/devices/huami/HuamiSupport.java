@@ -1562,7 +1562,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             createUpdateFirmwareOperation(uri).perform();
         } catch (IOException ex) {
-            GB.toast(getContext(), "Firmware cannot be installed: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(getContext(), "Firmware cannot be installed: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
     }
 

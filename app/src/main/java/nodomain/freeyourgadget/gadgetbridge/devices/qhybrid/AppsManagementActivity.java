@@ -34,13 +34,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.PopupMenuCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -93,7 +91,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
                 return;
             }
         } catch (JSONException e) {
-            toast(e.getMessage());
+            toast(e.getLocalizedMessage());
             finish();
             return;
         }

@@ -133,7 +133,7 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
                 steps += stepsDelta;
                 lastTimestamp = timestamp;
             } catch (Exception ex) {
-                GB.toast(LiveActivityFragment.this.getContext(), ex.getMessage(), Toast.LENGTH_SHORT, GB.ERROR, ex);
+                GB.toast(LiveActivityFragment.this.getContext(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT, GB.ERROR, ex);
             }
         }
 

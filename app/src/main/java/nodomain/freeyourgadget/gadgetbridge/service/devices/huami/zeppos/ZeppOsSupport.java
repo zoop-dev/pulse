@@ -514,7 +514,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                     firmwareUpdateOperation.perform();
                 }
             } catch (final Exception e) {
-                GB.toast(getContext(), "AGPS install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+                GB.toast(getContext(), "AGPS install error: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
 
             return;
@@ -529,7 +529,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                         fileTransferService
                 ).perform();
             } catch (final Exception e) {
-                GB.toast(getContext(), "Gpx install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+                GB.toast(getContext(), "Gpx install error: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
 
             return;
@@ -549,7 +549,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                         fileTransferService
                 ).perform();
             } catch (final Exception e) {
-                GB.toast(getContext(), "Music install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+                GB.toast(getContext(), "Music install error: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
 
             return;
@@ -565,7 +565,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             firmwareUpdateOperation = new ZeppOsFirmwareUpdateOperation(uri, this);
             firmwareUpdateOperation.perform();
         } catch (final IOException ex) {
-            GB.toast(getContext(), "Firmware install error: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(getContext(), "Firmware install error: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
     }
 

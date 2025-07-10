@@ -1143,7 +1143,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 }
             });
         } catch (IllegalAccessException e) {
-            GB.toast("error getting key: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast("error getting key: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -1176,7 +1176,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 }
             });
         } catch (IllegalAccessException e) {
-            GB.toast("error getting key: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast("error getting key: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             this.handleAuthenticationResult(false);
         }
     }

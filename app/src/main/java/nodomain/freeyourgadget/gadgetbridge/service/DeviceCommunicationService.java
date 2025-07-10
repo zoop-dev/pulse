@@ -748,7 +748,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
             } catch (Exception e) {
                 LOG.warn("exception in connectToDevice for {}", deviceAddress, e);
-                GB.toast(this, getString(R.string.cannot_connect, e.getMessage()), Toast.LENGTH_SHORT, GB.ERROR, e);
+                GB.toast(this, getString(R.string.cannot_connect, e.getLocalizedMessage()), Toast.LENGTH_SHORT, GB.ERROR, e);
             }
 
             registeredStruct.getDevice().sendDeviceUpdateIntent(this);

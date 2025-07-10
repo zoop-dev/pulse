@@ -591,7 +591,7 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         try {
             AndroidUtils.viewFile(gpxFile.getPath(), "application/gpx+xml", context);
         } catch (final Exception e) {
-            GB.toast(getApplicationContext(), "Unable to display GPX track: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(getApplicationContext(), "Unable to display GPX track: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -605,7 +605,7 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         try {
             AndroidUtils.shareFile(context, gpxFile);
         } catch (final Exception e) {
-            GB.toast(context, "Unable to share GPX track: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Unable to share GPX track: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -620,7 +620,7 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         try {
             AndroidUtils.shareBytesAsFile(context, rawSummaryFilename, summary.getRawSummaryData());
         } catch (final Exception e) {
-            GB.toast(context, "Unable to share GPX track: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Unable to share GPX track: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -633,7 +633,7 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         try {
             AndroidUtils.shareFile(context, new File(summary.getRawDetailsPath()));
         } catch (final Exception e) {
-            GB.toast(context, "Unable to share raw details: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Unable to share raw details: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -648,7 +648,7 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         try {
             AndroidUtils.shareBytesAsFile(context, jsonSummaryFilename, summary.getSummaryData().getBytes(StandardCharsets.UTF_8));
         } catch (final Exception e) {
-            GB.toast(context, "Unable to share json details: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Unable to share json details: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

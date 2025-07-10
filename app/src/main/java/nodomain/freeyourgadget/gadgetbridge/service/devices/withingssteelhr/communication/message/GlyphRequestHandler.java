@@ -56,7 +56,7 @@ public class GlyphRequestHandler implements IncomingMessageHandler {
             support.sendToDevice(reply);
         } catch (Exception e) {
             logger.error("Failed to respond to glyph request.", e);
-            GB.toast("Failed to respond to glyph request:" + e.getMessage(), Toast.LENGTH_LONG, GB.WARN);
+            GB.toast("Failed to respond to glyph request:" + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.WARN);
         }
     }
 

@@ -71,6 +71,6 @@ public abstract class DBAccess extends AsyncTask {
     }
 
     protected void displayError(Throwable error) {
-        GB.toast(getContext(), getContext().getString(R.string.dbaccess_error_executing, error.getMessage()), Toast.LENGTH_LONG, GB.ERROR, error);
+        GB.toast(getContext(), getContext().getString(R.string.dbaccess_error_executing, error.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, error);
     }
 }

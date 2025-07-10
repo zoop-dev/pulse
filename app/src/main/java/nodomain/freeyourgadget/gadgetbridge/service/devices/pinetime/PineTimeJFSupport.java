@@ -469,7 +469,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.fwinstaller_firmware_not_compatible_to_device)));
             }
         } catch (Exception ex) {
-            GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
             if (gbDevice.isBusy() && gbDevice.getBusyTask().equals("firmware upgrade")) {
                 gbDevice.unsetBusyTask();
             }

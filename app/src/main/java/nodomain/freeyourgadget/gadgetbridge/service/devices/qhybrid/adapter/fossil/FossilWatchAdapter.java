@@ -496,14 +496,14 @@ public class FossilWatchAdapter extends WatchAdapter {
         try {
             uriHelper = UriHelper.get(uri, getContext());
         } catch (IOException e) {
-            GB.toast(getContext(), "Could not open firmare: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(getContext(), "Could not open firmare: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
         if (uriHelper != null) {
             try (InputStream in = new BufferedInputStream(uriHelper.openInputStream())) {
                 byte[] firmwareBytes = FileUtils.readAll(in, 1024 * 2024); // 2MB
                 queueWrite(new FirmwareFilePutRequest(firmwareBytes, this));
             } catch (Exception e) {
-                GB.toast(getContext(), "Firmware cannot be installed: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+                GB.toast(getContext(), "Firmware cannot be installed: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
         }
     }

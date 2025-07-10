@@ -104,7 +104,7 @@ public class OpenTracksController extends Activity {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            GB.toast(e.getMessage(), Toast.LENGTH_LONG, GB.WARN);
+            GB.toast(e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.WARN);
         }
     }
 

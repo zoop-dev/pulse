@@ -105,7 +105,7 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
                 }
             }
         } catch (final Exception e) {
-            GB.toast(getContext(), "Error saving raw bytes: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(getContext(), "Error saving raw bytes: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             return false;
         }
 
@@ -154,7 +154,7 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
                 dbHandler.getDaoSession().getBaseActivitySummaryDao().update(summary);
             }
         } catch (final Exception e) {
-            GB.toast(getContext(), "Error saving activity details: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(getContext(), "Error saving activity details: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             // #4549 - we do not return false here, since this might cause the same activity to be fetched over and over again
             // the raw details are persisted above, we can always re-process if needed
         }

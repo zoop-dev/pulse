@@ -208,7 +208,7 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
                 try {
                     showActivityDetail(position);
                 } catch (Exception e) {
-                    GB.toast(getApplicationContext(), "Unable to display Activity Detail, maybe the activity is not available yet: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+                    GB.toast(getApplicationContext(), "Unable to display Activity Detail, maybe the activity is not available yet: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                 }
             }
         });

@@ -996,7 +996,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                 removeDynamicShortcut(device);
                             }
                         } catch (Exception ex) {
-                            GB.toast(context, context.getString(R.string.error_deleting_device, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+                            GB.toast(context, context.getString(R.string.error_deleting_device, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                         } finally {
                             Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
@@ -1120,7 +1120,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                             device.setParentFolder(parentFolder);
                             expandedFolderName = parentFolder;
                         } catch (Exception ex) {
-                            GB.toast(context, context.getString(R.string.error_setting_parent_folder, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+                            GB.toast(context, context.getString(R.string.error_setting_parent_folder, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                         } finally {
                             Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
@@ -1187,7 +1187,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                             dbDevice.update();
                             device.setAlias(alias);
                         } catch (Exception ex) {
-                            GB.toast(context, context.getString(R.string.error_setting_alias) + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+                            GB.toast(context, context.getString(R.string.error_setting_alias) + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
                         } finally {
                             Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
                             LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);

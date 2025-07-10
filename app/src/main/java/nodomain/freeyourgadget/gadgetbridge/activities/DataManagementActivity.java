@@ -304,7 +304,7 @@ public class DataManagementActivity extends AbstractGBActivity {
             File myFile = new File(myPath, "Export_preference");
             ImportExportSharedPreferences.exportToFile(sharedPrefs, myFile);
         } catch (IOException ex) {
-            GB.toast(this, getString(R.string.dbmanagementactivity_error_exporting_shared, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(this, getString(R.string.dbmanagementactivity_error_exporting_shared, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
         try (DBHandler lockHandler = GBApplication.acquireDB()) {
             List<Device> activeDevices = DBHelper.getActiveDevices(lockHandler.getDaoSession());
@@ -331,7 +331,7 @@ public class DataManagementActivity extends AbstractGBActivity {
             File myFile = new File(myPath, "Export_preference");
             ImportExportSharedPreferences.importFromFile(sharedPrefs, myFile);
         } catch (Exception ex) {
-            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
 
         try (DBHandler lockHandler = GBApplication.acquireDB()) {
@@ -377,7 +377,7 @@ public class DataManagementActivity extends AbstractGBActivity {
                             File destFile = helper.exportDB(dbHandler, dir);
                             GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_exported_to, destFile.getAbsolutePath()), Toast.LENGTH_LONG, GB.INFO);
                         } catch (Exception ex) {
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_exporting_db, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_exporting_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                         }
                     }
                 })
@@ -407,7 +407,7 @@ public class DataManagementActivity extends AbstractGBActivity {
                             helper.validateDB(sqLiteOpenHelper);
                             GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_import_successful), Toast.LENGTH_LONG, GB.INFO);
                         } catch (Exception ex) {
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                         }
                         importShared();
                     }
@@ -495,7 +495,7 @@ public class DataManagementActivity extends AbstractGBActivity {
                             }
                             GB.toast(getString(R.string.dbmanagementactivity_export_finished), Toast.LENGTH_SHORT, GB.INFO);
                         } catch (Exception ex) {
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_cleaning_export_directory, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_cleaning_export_directory, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                         }
                     }
                 })
