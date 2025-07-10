@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec.Action;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleNotification;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
@@ -501,6 +502,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     @Override
     public byte[] encodeNotification(NotificationSpec notificationSpec) {
+        final PebbleNotification pebbleNotification = new PebbleNotification(notificationSpec);
         int id = notificationSpec.getId() != -1 ? notificationSpec.getId() : mRandom.nextInt();
         String title;
         String subtitle = null;
@@ -522,7 +524,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         if (mFwMajor >= 3 || mForceProtocol || notificationSpec.type != NotificationType.GENERIC_EMAIL) {
             // 3.x notification
             return encodeNotification(id, (int) (ts & 0xffffffffL), title, subtitle, notificationSpec.body,
-                    notificationSpec.type, notificationSpec.pebbleColor,
+                    pebbleNotification,
                     notificationSpec.cannedReplies, notificationSpec.attachedActions);
         } else {
             // 1.x notification on FW 2.X
@@ -820,17 +822,14 @@ public class PebbleProtocol extends GBDeviceProtocol {
     }
 
     private byte[] encodeNotification(int id, int timestamp, String title, String subtitle, String body,
-                                      NotificationType notificationType, byte backgroundColor, String[] cannedReplies, ArrayList<Action> attachedActions) {
+                                      PebbleNotification pebbleNotification, String[] cannedReplies, ArrayList<Action> attachedActions) {
         final short NOTIFICATION_PIN_LENGTH = 46;
         final short ACTION_LENGTH_MIN = 6;
 
         String[] parts = {title, subtitle, body};
 
-        if(notificationType == null) {
-            notificationType = NotificationType.UNKNOWN;
-        }
-
-        int icon_id = notificationType.icon;
+        final int icon_id = pebbleNotification.getIcon();
+        final byte backgroundColor = pebbleNotification.getColor();
 
         // Calculate length first
         int actions_count = 0;

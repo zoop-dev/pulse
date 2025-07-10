@@ -146,7 +146,6 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 notificationSpec.sourceName = context.getApplicationInfo()
                         .loadLabel(context.getPackageManager())
                         .toString();
-                notificationSpec.pebbleColor = notificationSpec.type.color;
                 notificationSpec.attachedActions = new ArrayList<>();
                 if (notificationSpec.type == NotificationType.GENERIC_SMS) {
                     // REPLY action

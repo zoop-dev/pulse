@@ -72,7 +72,6 @@ public class TextReceiverActivity extends AbstractGBActivity {
         notificationSpec.sourceAppId = BuildConfig.APPLICATION_ID;
         notificationSpec.sourceName = appName;
         notificationSpec.type = NotificationType.UNKNOWN;
-        notificationSpec.pebbleColor = notificationSpec.type.color;
 
         GBApplication.deviceService().onNotification(notificationSpec);
         finish();

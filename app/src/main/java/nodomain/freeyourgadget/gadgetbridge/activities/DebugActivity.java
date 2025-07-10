@@ -129,7 +129,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
 public class DebugActivity extends AbstractGBActivity {
@@ -215,7 +214,6 @@ public class DebugActivity extends AbstractGBActivity {
                         .loadLabel(getApplicationContext().getPackageManager())
                         .toString();
                 notificationSpec.type = NotificationType.sortedValues()[sendTypeSpinner.getSelectedItemPosition()];
-                notificationSpec.pebbleColor = notificationSpec.type.color;
                 notificationSpec.attachedActions = new ArrayList<>();
 
                 // DISMISS action
@@ -230,7 +228,7 @@ public class DebugActivity extends AbstractGBActivity {
                     replyAction.title = getString(R.string._pebble_watch_reply);
                     replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
                     notificationSpec.attachedActions.add(replyAction);
-                } else if (notificationSpec.type == NotificationType.CONVERSATIONS) {
+                } else if ("generic_chat".equals(notificationSpec.type.getGenericType())) {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();
                     replyAction.title = getString(R.string._pebble_watch_reply);

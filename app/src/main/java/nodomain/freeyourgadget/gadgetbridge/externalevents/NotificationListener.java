@@ -429,9 +429,6 @@ public class NotificationListener extends NotificationListenerService {
             notificationSpec.type = NotificationType.UNKNOWN;
         }
 
-        // Get color
-        notificationSpec.pebbleColor = getPebbleColorForNotification(notificationSpec);
-
         LOG.info(
                 "Processing notification {}, age: {}, source: {}, flags: {}",
                 notificationSpec.getId(),
@@ -1163,45 +1160,6 @@ public class NotificationListener extends NotificationListenerService {
 
         return (notification.flags & Notification.FLAG_ONGOING_EVENT) == Notification.FLAG_ONGOING_EVENT;
 
-    }
-
-
-    /**
-     * Get the notification color that should be used for this Pebble notification.
-     * <p>
-     * Note that this method will *not* edit the NotificationSpec passed in. It will only evaluate the PebbleColor.
-     * <p>
-     * See Issue #815 on GitHub to see how notification colors are set.
-     *
-     * @param notificationSpec The NotificationSpec to read from.
-     * @return Returns a PebbleColor that best represents this notification.
-     */
-    private byte getPebbleColorForNotification(NotificationSpec notificationSpec) {
-        String appId = notificationSpec.sourceAppId;
-        NotificationType existingType = notificationSpec.type;
-
-        // If the notification type is known, return the associated color.
-        if (existingType != NotificationType.UNKNOWN) {
-            return existingType.color;
-        }
-
-        // Otherwise, we go and attempt to find the color from the app icon.
-        Drawable icon;
-        try {
-            icon = NotificationUtils.getAppIcon(getApplicationContext(), appId);
-            Objects.requireNonNull(icon);
-        } catch (Exception ex) {
-            // If we can't get the icon, we go with the default defined above.
-            LOG.warn("Could not get icon for AppID " + appId, ex);
-            return PebbleColor.IslamicGreen;
-        }
-
-        Bitmap bitmapIcon = BitmapUtil.convertDrawableToBitmap(icon);
-        int iconPrimaryColor = new Palette.Builder(bitmapIcon)
-                .generate()
-                .getVibrantColor(Color.parseColor("#aa0000"));
-
-        return PebbleUtils.getPebbleColor(iconPrimaryColor);
     }
 
     private static class NotificationAction {
