@@ -2085,7 +2085,7 @@ public class GBApplication extends Application {
         if (deviceIdentifier == null || deviceIdentifier.length() < 1) {
             return null;
         }
-        return context.getSharedPreferences("devicesettings_" + deviceIdentifier, Context.MODE_PRIVATE);
+        return context.getSharedPreferences("devicesettings_" + deviceIdentifier.toString().toUpperCase(Locale.ROOT), Context.MODE_PRIVATE);
     }
 
     public static DevicePrefs getDevicePrefs(GBDevice gbDevice) {
@@ -2096,7 +2096,7 @@ public class GBApplication extends Application {
         if (deviceIdentifier == null || deviceIdentifier.length() < 1) {
             return;
         }
-        context.getSharedPreferences("devicesettings_" + deviceIdentifier, Context.MODE_PRIVATE).edit().clear().apply();
+        context.getSharedPreferences("devicesettings_" + deviceIdentifier.toString().toUpperCase(Locale.ROOT), Context.MODE_PRIVATE).edit().clear().apply();
     }
 
 
