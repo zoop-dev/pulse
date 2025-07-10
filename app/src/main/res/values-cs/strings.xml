@@ -4186,4 +4186,5 @@
     <string name="activity_print_label_print_size">Velikost tisku (px): %1$d x %2$d</string>
     <string name="service_notification_collector_service_title">Monitor oznámení Gadgetbridge</string>
     <string name="service_notification_collector_service_text">Monitorování oznámení na pozadí</string>
+    <string name="devicetype_colmi_r07">Colmi R07</string>
 </resources>
