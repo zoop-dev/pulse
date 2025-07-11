@@ -65,6 +65,13 @@ public class Workout {
                 public short spO2Count = 0;
                 public short sectionsCount = 0;
 
+                //NOTE: trajectoriesData and divingData can be 0 or 1.
+                // 1 mean that data is present
+                // trajectoriesData is related to _gps.bin and _pdr.bin. If 1 one or both those files are present
+                // divingData is related to diving, but I don't know how it should be used for now.
+                public byte trajectoriesData = 0;
+                public byte divingData = 0;
+
             }
 
             public short count;
@@ -107,6 +114,13 @@ public class Workout {
                     if (subContainerTlv.contains(0x0d)) {
                         workoutNumber.sectionsCount = subContainerTlv.getShort(0x0d);
                     }
+                    if (subContainerTlv.contains(0x0e)) {
+                        workoutNumber.trajectoriesData = subContainerTlv.getByte(0x0e);
+                    }
+                    if (subContainerTlv.contains(0x0f)) {
+                        workoutNumber.divingData = subContainerTlv.getByte(0x0f);
+                    }
+
                     this.workoutNumbers.add(workoutNumber);
                 }
             }
