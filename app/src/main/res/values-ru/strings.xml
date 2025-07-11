@@ -3914,6 +3914,9 @@
     <string name="busy_task_setting_alarms">Установка будильников</string>
     <string name="busy_task_fetch_training_data">Получение последних данных о тренировках</string>
     <string name="busy_task_busy">Занят…</string>
-    <string name="busy_task_configuring">Конфигурирование</string>
-    <string name="busy_task_fetch_configuration">Получение конфигурации</string>
+    <string name="busy_task_configuring">Настройка</string>
+    <string name="busy_task_fetch_configuration">Получение настроек</string>
+    <string name="busy_task_downloading">Скачивание</string>
+    <string name="busy_task_fetch_ppg">Получение PPG</string>
+    <string name="busy_task_fetch_steps">Получение шагов</string>
 </resources>
