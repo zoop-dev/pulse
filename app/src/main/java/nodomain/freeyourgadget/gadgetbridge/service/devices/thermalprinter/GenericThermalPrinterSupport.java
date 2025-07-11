@@ -389,7 +389,7 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
 
     public void send(String taskname, byte[] command) {
         TransactionBuilder builder = createTransactionBuilder(taskname);
-        builder.writeChunkedData(getCharacteristic(writeCharUUID), command, 123);
+        builder.writeChunkedData(getCharacteristic(writeCharUUID), command, getMTU() - 3);
         builder.queue();
     }
 

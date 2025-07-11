@@ -529,8 +529,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
     }
 
     /**
-     * Gets the current MTU, or 0 if unknown
-     * @return the current MTU, 0 if unknown
+     * Get the current MTU, or the minimum 23 if unknown
      */
     public int getMTU() {
         return mMTU;
