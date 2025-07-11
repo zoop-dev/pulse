@@ -51,7 +51,7 @@ public class SleepDetailsParser extends XiaomiActivityParser {
     @Override
     public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
         // Seems to come both as DetailType.DETAILS (version 2) and DetailType.SUMMARY (version 4)
-        if (fileId.getVersion() > 4) {
+        if (fileId.getVersion() > 5) {
             LOG.warn("Unknown sleep details version {}", fileId.getVersion());
             return false;
         }
@@ -68,6 +68,9 @@ public class SleepDetailsParser extends XiaomiActivityParser {
         }
 
         final byte header = buf.get();
+        if (fileId.getVersion() > 4) {
+            buf.get();
+        }
 
         final int isAwake = buf.get() & 0xff; // 0/1 - more correctly this would be !isSleepFinish
         final int bedTime = buf.getInt();
