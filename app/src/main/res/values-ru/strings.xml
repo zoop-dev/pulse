@@ -2171,7 +2171,7 @@
 \nПосле установки .zip ваш браслет будет перезагружен.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="fw_upgrade_notice_zepp_os">Вы собираетесь установить прошивку %s на Ваш %s. \n \nПосле установки файла .zip ваши часы будут перезагружены. \n \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
+    <string name="fw_upgrade_notice_zepp_os">Вы собираетесь установить прошивку %1$s на Ваш %2$s. \n \nПосле установки файла .zip ваши часы будут перезагружены. \n \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Вы собираетесь установить прошивку %s на Ваш Amazfit Bip 3 Pro.
 \n
 \nБудьте внимательны: сперва установите файл .fw, затем .res. После установки .fw ваши часы будут перезагружены.
@@ -2762,7 +2762,7 @@
     <string name="pref_force_enable_spo2_support">Поддержка замеров SpO2</string>
     <string name="pref_dashboard_widget_double_size_summary">Разрешите виджету занимать две колонки на приборной панели</string>
     <string name="pref_dashboard_widget_show_legend_summary">Показывать значения цветов под виджетом</string>
-    <string name="pref_dashboard_select_devices_title">Выберите устройства...</string>
+    <string name="pref_dashboard_select_devices_title">Выберите устройства…</string>
     <string name="pref_dashboard_widgets_order_summary">Выберите, какие виджеты будут включены и в каком порядке они будут отображаться на приборной панели</string>
     <string name="pref_dashboard_widget_today_24h_summary">Показывать активность в одном 24-часовом кружке вместо двойного 12ч</string>
     <string name="pref_auto_reply_calls_title">Принимать звонки автоматически</string>
@@ -3919,4 +3919,6 @@
     <string name="busy_task_downloading">Скачивание</string>
     <string name="busy_task_fetch_ppg">Получение PPG</string>
     <string name="busy_task_fetch_steps">Получение шагов</string>
+    <string name="busy_task_fetch_training_data_finished">Данные о тренировках получены!</string>
+    <string name="pairing_even_realities_g1_final_connect">Настройка устройств. Подождите…</string>
 </resources>
