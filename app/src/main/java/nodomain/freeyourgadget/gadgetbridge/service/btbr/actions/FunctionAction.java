@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2025 Johannes Krude, Thomas Kuehne
+/*  Copyright (C) 2025 Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -14,9 +14,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
+package nodomain.freeyourgadget.gadgetbridge.service.btbr.actions;
 
-import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothSocket;
 
 import androidx.annotation.NonNull;
 
@@ -25,39 +25,37 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Predicate;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.BtBRAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.SocketCallback;
 
-/// Invokes the given function and expects no {@link GattCallback} result.
+/// Invokes the given function and expects no {@link SocketCallback} result.
 /// The transaction is aborted if the function throws an {@link Exception} or, if applicable,
 /// returns {@code false}.
-public class FunctionAction extends BtLEAction {
+public class FunctionAction extends BtBRAction {
     private static final Logger LOG = LoggerFactory.getLogger(FunctionAction.class);
 
     private final Runnable mRunnable;
-    private final Predicate<? super BluetoothGatt> mPredicate;
+    private final Predicate<? super BluetoothSocket> mPredicate;
 
     public FunctionAction(@NonNull Runnable runnable) {
-        super(null);
         mPredicate = null;
         mRunnable = runnable;
     }
 
-    public FunctionAction(@NonNull Predicate<? super BluetoothGatt> predicate) {
-        super(null);
+    public FunctionAction(@NonNull Predicate<? super BluetoothSocket> predicate) {
         mPredicate = predicate;
         mRunnable = null;
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(BluetoothSocket socket) {
         try {
             final boolean success;
             if (mRunnable != null) {
                 mRunnable.run();
                 success = true;
             } else if (mPredicate != null) {
-                success = mPredicate.test(gatt);
+                success = mPredicate.test(socket);
                 if (!success) {
                     LOG.info("aborting transaction because function returned false");
                 }

@@ -118,23 +118,14 @@ public class UM25Support extends UM25BaseSupport {
         return builder
                 .setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext())
                 .notify(getCharacteristic(UUID.fromString(UUID_CHAR)), true)
-                .add(new BtLEAction(null) {
-                    @Override
-                    public boolean expectsResult() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean run(BluetoothGatt gatt) {
-                        logger.debug("initialized, starting timers");
-                        LocalBroadcastManager.getInstance(getContext())
-                                .registerReceiver(
-                                        resetReceiver,
-                                        new IntentFilter(ACTION_RESET_STATS)
-                                );
-                        startLoop();
-                        return true;
-                    }
+                .run(() -> {
+                    logger.debug("initialized, starting timers");
+                    LocalBroadcastManager.getInstance(getContext())
+                            .registerReceiver(
+                                    resetReceiver,
+                                    new IntentFilter(ACTION_RESET_STATS)
+                            );
+                    startLoop();
                 })
                 .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
     }

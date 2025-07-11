@@ -32,6 +32,7 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.BondAction;
@@ -58,6 +59,7 @@ public class TransactionBuilder {
     }
 
     /// @see ReadAction
+    @NonNull
     public TransactionBuilder read(BluetoothGattCharacteristic characteristic) {
         if (characteristic == null) {
             LOG.warn("Unable to read characteristic: null");
@@ -75,6 +77,7 @@ public class TransactionBuilder {
     /// <li>no {@link BluetoothGatt#beginReliableWrite()} was used.</li>
     /// </ol>
     /// @see WriteAction
+    @NonNull
     public TransactionBuilder writeLegacy(BluetoothGattCharacteristic characteristic, byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
@@ -85,6 +88,7 @@ public class TransactionBuilder {
     }
 
     /// @see WriteAction
+    @NonNull
     public TransactionBuilder write(BluetoothGattCharacteristic characteristic, byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
@@ -94,6 +98,7 @@ public class TransactionBuilder {
         return add(action);
     }
 
+    @NonNull
     public TransactionBuilder writeChunkedData(BluetoothGattCharacteristic characteristic, byte[] data, int chunkSize) {
         for (int start = 0; start < data.length; start += chunkSize) {
             int end = start + chunkSize;
@@ -106,6 +111,7 @@ public class TransactionBuilder {
     }
 
     /// @see RequestMtuAction
+    @NonNull
     public TransactionBuilder requestMtu(int mtu){
         return add(
                 new RequestMtuAction(mtu)
@@ -113,6 +119,7 @@ public class TransactionBuilder {
     }
 
     /// @see RequestConnectionPriorityAction
+    @NonNull
     public TransactionBuilder requestConnectionPriority(int priority){
         return add(
                 new RequestConnectionPriorityAction(priority)
@@ -120,12 +127,14 @@ public class TransactionBuilder {
     }
 
     /// @see BondAction
+    @NonNull
     public TransactionBuilder bond() {
         BondAction action = new BondAction();
         return add(action);
     }
 
     /// @see NotifyAction
+    @NonNull
     public TransactionBuilder notify(BluetoothGattCharacteristic characteristic, boolean enable) {
         if (characteristic == null) {
             LOG.warn("Unable to notify characteristic: null");
@@ -145,17 +154,34 @@ public class TransactionBuilder {
      * during that time. It is also likely to cause race conditions.
      * @param millis the number of milliseconds to sleep
      */
+    @NonNull
     public TransactionBuilder wait(int millis) {
         WaitAction action = new WaitAction(millis);
         return add(action);
     }
 
-    /// @see FunctionAction
-    public TransactionBuilder run(FunctionAction.Function function) {
-        return add(new FunctionAction(function));
+    /// Causes the {@link BtLEQueue} to execute the {@link Predicate} and expect no {@link GattCallback} result.
+    /// The {@link Transaction} is aborted if the predicate throws an {@link Exception} or returns {@code false}.
+    ///
+    /// @see #run(Runnable)
+    @NonNull
+    public TransactionBuilder run(@NonNull Predicate<? super BluetoothGatt> predicate) {
+        BtLEAction action = new FunctionAction(predicate);
+        return add(action);
     }
 
-    public TransactionBuilder add(BtLEAction action) {
+    /// Causes the {@link BtLEQueue} to execute the {@link Runnable} and expect no {@link GattCallback} result.
+    /// The {@link Transaction} is aborted if the runnable throws an {@link Exception}.
+    ///
+    /// @see #run(Predicate)
+    @NonNull
+    public TransactionBuilder run(@NonNull Runnable runnable) {
+        BtLEAction action = new FunctionAction(runnable);
+        return add(action);
+    }
+
+    @NonNull
+    public TransactionBuilder add(@NonNull BtLEAction action) {
         mTransaction.add(action);
         return this;
     }
@@ -163,6 +189,7 @@ public class TransactionBuilder {
     /**
      * Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
      */
+    @NonNull
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtLEAction action = new SetDeviceStateAction(device, state, context);
         return add(action);
@@ -173,6 +200,7 @@ public class TransactionBuilder {
      * @see ReadPhyAction
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
+    @NonNull
     public TransactionBuilder readPhy() {
         BtLEAction action = new ReadPhyAction();
         return add(action);
@@ -183,6 +211,7 @@ public class TransactionBuilder {
      * @see SetPreferredPhyAction
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
+    @NonNull
     public TransactionBuilder setPreferredPhy(int txPhy, int rxPhy, int phyOptions) {
         BtLEAction action = new SetPreferredPhyAction(txPhy, rxPhy, phyOptions);
         return add(action);
@@ -190,6 +219,7 @@ public class TransactionBuilder {
 
     /// Set the device as busy or not ({@code taskName = 0}).
     /// @see SetDeviceBusyAction#SetDeviceBusyAction
+    @NonNull
     public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
                                           @NonNull final Context context) {
         BtLEAction action = new SetDeviceBusyAction(device, taskName, context);

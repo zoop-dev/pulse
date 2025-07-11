@@ -161,21 +161,9 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
             builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
 
             if (uuidSet.isEncrypted()) {
-                builder.add(new PlainAction() {
-                    @Override
-                    public boolean run(BluetoothGatt gatt) {
-                        mXiaomiSupport.getAuthService().startEncryptedHandshake();
-                        return true;
-                    }
-                });
+                builder.run(() -> mXiaomiSupport.getAuthService().startEncryptedHandshake());
             } else {
-                builder.add(new PlainAction() {
-                    @Override
-                    public boolean run(BluetoothGatt gatt) {
-                        mXiaomiSupport.getAuthService().startClearTextHandshake();
-                        return true;
-                    }
-                });
+                builder.run(() -> mXiaomiSupport.getAuthService().startClearTextHandshake());
             }
 
             return builder;
@@ -335,13 +323,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
     @Override
     public void runOnQueue(String taskName, Runnable runnable) {
         final TransactionBuilder b = commsSupport.createTransactionBuilder("run task " + taskName + " on queue");
-        b.add(new PlainAction() {
-            @Override
-            public boolean run(BluetoothGatt gatt) {
-                runnable.run();
-                return true;
-            }
-        });
+        b.run(runnable);
         b.queue(commsSupport.getQueue());
     }
 

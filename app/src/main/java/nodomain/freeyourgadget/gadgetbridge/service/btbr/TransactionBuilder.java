@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btbr;
 
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 
 import org.slf4j.Logger;
@@ -25,7 +26,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
+import java.util.function.Predicate;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.FunctionAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WriteAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
@@ -41,6 +45,7 @@ public class TransactionBuilder {
         mTransaction = new Transaction(taskName);
     }
 
+    @NonNull
     public TransactionBuilder write(byte... data) {
         WriteAction action = new WriteAction(data);
         return add(action);
@@ -53,11 +58,33 @@ public class TransactionBuilder {
      * during that time. It is also likely to cause race conditions.
      * @param millis the number of milliseconds to sleep
      */
+    @NonNull
     public TransactionBuilder wait(int millis) {
         WaitAction action = new WaitAction(millis);
         return add(action);
     }
 
+    /// Causes the {@link BtBRQueue} to execute the {@link Predicate} and expect no {@link SocketCallback} result.
+    /// The {@link Transaction} is aborted if the predicate throws an {@link Exception} or returns {@code false}.
+    ///
+    /// @see #run(Runnable)
+    @NonNull
+    public TransactionBuilder run(@NonNull Predicate<? super BluetoothSocket> predicate) {
+        BtBRAction action = new FunctionAction(predicate);
+        return add(action);
+    }
+
+    /// Causes the {@link BtBRQueue} to execute the {@link Runnable} and expect no {@link SocketCallback} result.
+    /// The {@link Transaction} is aborted if the runnable throws an {@link Exception}.
+    ///
+    /// @see #run(Predicate)
+    @NonNull
+    public TransactionBuilder run(@NonNull Runnable runnable) {
+        BtBRAction action = new FunctionAction(runnable);
+        return add(action);
+    }
+
+    @NonNull
     public TransactionBuilder add(BtBRAction action) {
         mTransaction.add(action);
         return this;
@@ -66,6 +93,7 @@ public class TransactionBuilder {
     /**
      * Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
      */
+    @NonNull
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtBRAction action = new SetDeviceStateAction(device, state, context);
         return add(action);
@@ -73,6 +101,7 @@ public class TransactionBuilder {
 
     /// Set the device as busy or not ({@code taskName = 0}).
     /// @see SetDeviceBusyAction#SetDeviceBusyAction
+    @NonNull
     public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
                                           @NonNull final Context context) {
         BtBRAction action = new SetDeviceBusyAction(device, taskName, context);

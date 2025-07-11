@@ -81,13 +81,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
                     .frameSerial(0)
                     .build()
                     .encode(null, null));
-            builder.add(new PlainAction() {
-                @Override
-                public boolean run(BluetoothSocket socket) {
-                    mVersionResponseTimeoutHandler.postDelayed(new VersionTimeoutRunnable(), 5000L);
-                    return true;
-                }
-            });
+            builder.run(() -> mVersionResponseTimeoutHandler.postDelayed(new VersionTimeoutRunnable(), 5000L));
 
             return builder;
         }
@@ -161,13 +155,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
         }
 
         final TransactionBuilder b = commsSupport.createTransactionBuilder("run task " + taskName + " on queue");
-        b.add(new PlainAction() {
-            @Override
-            public boolean run(BluetoothSocket socket) {
-                runnable.run();
-                return true;
-            }
-        });
+        b.run(runnable);
         b.queue(commsSupport.getQueue());
     }
 

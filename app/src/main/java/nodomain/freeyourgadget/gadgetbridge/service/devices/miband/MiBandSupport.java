@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -65,6 +66,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.FunctionAction;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -570,12 +572,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
 
     private void onAlarmClock(NotificationSpec notificationSpec) {
         alarmClockRinging = true;
-        AbortTransactionAction abortAction = new AbortTransactionAction() {
-            @Override
-            protected boolean shouldAbort() {
-                return !isAlarmClockRinging();
-            }
-        };
+        BtLEAction abortAction = new FunctionAction(bluetoothGatt -> isAlarmClockRinging());
         String message = NotificationUtils.getPreferredTextFor(notificationSpec, 40, 40, getContext());
         SimpleNotification simpleNotification = new SimpleNotification(message, AlertCategory.HighPriorityAlert, null);
         performPreferredNotification("alarm clock ringing", simpleNotification, MiBandConst.ORIGIN_ALARM_CLOCK, abortAction);
@@ -636,12 +633,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
     public void onSetCallState(CallSpec callSpec) {
         if (callSpec.command == CallSpec.CALL_INCOMING) {
             telephoneRinging = true;
-            AbortTransactionAction abortAction = new AbortTransactionAction() {
-                @Override
-                protected boolean shouldAbort() {
-                    return !isTelephoneRinging();
-                }
-            };
+            BtLEAction abortAction = new FunctionAction(bluetoothGatt -> isTelephoneRinging());
             String message = NotificationUtils.getPreferredTextFor(callSpec);
             SimpleNotification simpleNotification = new SimpleNotification(message, AlertCategory.IncomingCall, null);
             performPreferredNotification("incoming call", simpleNotification, MiBandConst.ORIGIN_INCOMING_CALL, abortAction);
@@ -719,12 +711,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
         isLocatingDevice = start;
 
         if (start) {
-            AbortTransactionAction abortAction = new AbortTransactionAction() {
-                @Override
-                protected boolean shouldAbort() {
-                    return !isLocatingDevice;
-                }
-            };
+            BtLEAction abortAction = new FunctionAction(bluetoothGatt -> isLocatingDevice);
             SimpleNotification simpleNotification = new SimpleNotification(getContext().getString(R.string.find_device_you_found_it), AlertCategory.HighPriorityAlert, null);
             performDefaultNotification("locating device", simpleNotification, (short) 255, abortAction);
         }
