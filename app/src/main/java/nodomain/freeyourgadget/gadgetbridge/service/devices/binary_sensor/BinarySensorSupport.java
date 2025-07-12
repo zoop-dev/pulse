@@ -146,7 +146,7 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
         for (Parameter parameter : response.getParameters()) {
             if (parameter instanceof SensorState) {
                 if(getDevice().getState() != GBDevice.State.INITIALIZED){
-                    new TransactionBuilder("set device state")
+                    createTransactionBuilder("set device state")
                             .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext())
                             .queue(getQueue());
                 }
@@ -171,7 +171,7 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
     }
 
     private void sendPacketToDevice(byte[] data) {
-        TransactionBuilder builder = new TransactionBuilder("BSS control");
+        TransactionBuilder builder = createTransactionBuilder("BSS control");
         sendPacketToDevice(data, builder);
         builder.queue(getQueue());
     }

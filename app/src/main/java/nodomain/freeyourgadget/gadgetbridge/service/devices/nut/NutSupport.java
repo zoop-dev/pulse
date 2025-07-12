@@ -457,7 +457,7 @@ public class NutSupport extends AbstractBTLESingleDeviceSupport {
     private void writeCharacteristic(String taskName, UUID charac, byte[] data) {
         BluetoothGattCharacteristic characteristic = getCharacteristic(charac);
 
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         builder.write(characteristic, data);
         builder.queue(getQueue());
     }
@@ -471,7 +471,7 @@ public class NutSupport extends AbstractBTLESingleDeviceSupport {
     private void readCharacteristic(String taskName, UUID charac) {
         BluetoothGattCharacteristic characteristic = getCharacteristic(charac);
 
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         builder.read(characteristic);
         builder.queue(getQueue());
     }

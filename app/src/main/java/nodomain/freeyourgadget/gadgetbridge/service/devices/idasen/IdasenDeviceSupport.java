@@ -95,7 +95,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
                         // needs to get from the lowest to the highest point.
                         int cutOff = 100;
                         do {
-                            TransactionBuilder builder = new TransactionBuilder("height");
+                            TransactionBuilder builder = createTransactionBuilder("height");
 
                             builder.write(characteristic, setHeightRequest);
                             builder.queue(getQueue());
@@ -168,7 +168,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void readCharacteristic(String taskName, UUID charac) {
         BluetoothGattCharacteristic characteristic = getCharacteristic(charac);
 
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         builder.read(characteristic);
         builder.queue(getQueue());
     }
@@ -200,7 +200,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void sendCommand(String taskName, UUID charac,  byte[] contents) {
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         BluetoothGattCharacteristic characteristic = getCharacteristic(charac);
         if (characteristic != null) {
             builder.write(characteristic, contents);

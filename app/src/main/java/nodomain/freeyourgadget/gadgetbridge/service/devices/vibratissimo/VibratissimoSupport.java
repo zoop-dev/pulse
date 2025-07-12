@@ -118,7 +118,7 @@ public class VibratissimoSupport extends AbstractBTLESingleDeviceSupport {
         BluetoothGattCharacteristic characteristic2 = getCharacteristic(UUID.fromString("00001526-1212-efde-1523-785feabcd123"));
         BluetoothGattCharacteristic characteristic1 = getCharacteristic(UUID.fromString("00001524-1212-efde-1523-785feabcd123"));
 
-        TransactionBuilder builder = new TransactionBuilder("vibration");
+        TransactionBuilder builder = createTransactionBuilder("vibration");
         builder.write(characteristic1, new byte[]{0x03, (byte) 0x80});
 
         builder.write(characteristic2, new byte[]{(byte) intensity, 0x00});

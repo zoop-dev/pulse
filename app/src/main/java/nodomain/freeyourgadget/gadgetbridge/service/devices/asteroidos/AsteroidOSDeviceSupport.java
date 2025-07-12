@@ -121,7 +121,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
         AsteroidOSNotification notif = new AsteroidOSNotification(notificationSpec);
-        TransactionBuilder builder = new TransactionBuilder("send notification");
+        TransactionBuilder builder = createTransactionBuilder("send notification");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.NOTIFICATION_UPDATE_CHAR, notif.toString().getBytes(StandardCharsets.UTF_8));
         builder.queue(getQueue());
     }
@@ -129,14 +129,14 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onDeleteNotification(int id) {
         AsteroidOSNotification notif = new AsteroidOSNotification(id);
-        TransactionBuilder builder = new TransactionBuilder("delete notification");
+        TransactionBuilder builder = createTransactionBuilder("delete notification");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.NOTIFICATION_UPDATE_CHAR, notif.toString().getBytes(StandardCharsets.UTF_8));
         builder.queue(getQueue());
     }
 
     @Override
     public void onSetTime() {
-        TransactionBuilder builder = new TransactionBuilder("set time");
+        TransactionBuilder builder = createTransactionBuilder("set time");
         onSetTime(builder);
         builder.queue(getQueue());
     }
@@ -157,14 +157,14 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onSetCallState(CallSpec callSpec) {
         AsteroidOSNotification call = new AsteroidOSNotification(callSpec);
-        TransactionBuilder builder = new TransactionBuilder("send call");
+        TransactionBuilder builder = createTransactionBuilder("send call");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.NOTIFICATION_UPDATE_CHAR, call.toString().getBytes(StandardCharsets.UTF_8));
         builder.queue(getQueue());
     }
 
     @Override
     public void onSetMusicState(MusicStateSpec stateSpec) {
-        TransactionBuilder builder = new TransactionBuilder("set music state");
+        TransactionBuilder builder = createTransactionBuilder("set music state");
         if (stateSpec.state == MusicStateSpec.STATE_PLAYING) {
             safeWriteToCharacteristic(builder, AsteroidOSConstants.MEDIA_PLAYING_CHAR, new byte[]{1});
         } else {
@@ -175,7 +175,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSetMusicInfo(MusicSpec musicSpec) {
-        TransactionBuilder builder = new TransactionBuilder("send music information");
+        TransactionBuilder builder = createTransactionBuilder("send music information");
         // Send title
         {
             byte[] track_bytes;
@@ -208,7 +208,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSetPhoneVolume(float volume) {
-        TransactionBuilder builder = new TransactionBuilder("send volume information");
+        TransactionBuilder builder = createTransactionBuilder("send volume information");
         byte volByte = (byte) Math.round(volume);
         safeWriteToCharacteristic(builder, AsteroidOSConstants.MEDIA_VOLUME_CHAR, new byte[]{volByte});
         builder.queue(getQueue());
@@ -226,7 +226,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
         WeatherSpec weatherSpec = weatherSpecs.get(0);
         AsteroidOSWeather asteroidOSWeather = new AsteroidOSWeather(weatherSpec);
-        TransactionBuilder builder = new TransactionBuilder("send weather info");
+        TransactionBuilder builder = createTransactionBuilder("send weather info");
         // Send city name
         safeWriteToCharacteristic(builder, AsteroidOSConstants.WEATHER_CITY_CHAR, asteroidOSWeather.getCityName());
         // Send conditions

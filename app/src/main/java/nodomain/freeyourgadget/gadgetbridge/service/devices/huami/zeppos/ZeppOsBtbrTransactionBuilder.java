@@ -32,7 +32,7 @@ public class ZeppOsBtbrTransactionBuilder implements ZeppOsTransactionBuilder {
 
     public ZeppOsBtbrTransactionBuilder(final ZeppOsBtbrSupport mSupport, final String taskName) {
         this.mSupport = mSupport;
-        this.mBuilder = new TransactionBuilder(taskName);
+        this.mBuilder = mSupport.createTransactionBuilder(taskName);
     }
 
     public ZeppOsBtbrTransactionBuilder(final ZeppOsBtbrSupport mSupport, final TransactionBuilder builder) {

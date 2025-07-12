@@ -53,7 +53,7 @@ public class TransactionBuilder {
     private final Transaction mTransaction;
     private boolean mQueued;
 
-    public TransactionBuilder(String taskName) {
+    TransactionBuilder(String taskName) {
         mTransaction = new Transaction(taskName);
     }
 

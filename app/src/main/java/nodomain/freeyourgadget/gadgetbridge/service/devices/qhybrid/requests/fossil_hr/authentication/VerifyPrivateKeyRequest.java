@@ -90,7 +90,7 @@ public class VerifyPrivateKeyRequest extends AuthenticationRequest {
 
                 System.arraycopy(result, 0, payload, 3, 16);
 
-                new TransactionBuilder("send encrypted random numbers")
+                adapter.getDeviceSupport().createTransactionBuilder("send encrypted random numbers")
                         .write(characteristic, payload)
                         .queue(this.adapter.getDeviceSupport().getQueue());
             } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {

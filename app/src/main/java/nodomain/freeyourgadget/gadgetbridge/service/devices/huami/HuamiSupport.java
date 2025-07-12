@@ -1684,7 +1684,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             case HuamiDeviceEvent.ALARM_TOGGLED:
             case HuamiDeviceEvent.ALARM_CHANGED:
                 LOG.info("An alarm was toggled or changed");
-                TransactionBuilder builder = new TransactionBuilder("requestAlarms");
+                TransactionBuilder builder = createTransactionBuilder("requestAlarms");
                 requestAlarms(builder);
                 builder.queue(getQueue());
                 break;

@@ -129,7 +129,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void sendCommand(String taskName, byte[] contents) {
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         BluetoothGattCharacteristic characteristic = getCharacteristic(UUID_CHARACTERISTIC_MAIN);
         if (characteristic != null && contents != null) {
             builder.write(characteristic, contents);

@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -43,6 +44,7 @@ public class G1SideManager {
     private final Callable<GBDevice> getDeviceHandler;
     private final Function<GBDeviceEvent, Void> sendEventHandler;
     private final Callable<DevicePrefs> getPrefsHandler;
+    private final BiFunction<String, Integer, TransactionBuilder> createTransactionBuilder;
     private final BluetoothGattCharacteristic rx;
     private final BluetoothGattCharacteristic tx;
     private final Runnable batteryRunner;
@@ -57,13 +59,15 @@ public class G1SideManager {
     public G1SideManager(G1Constants.Side mySide, Handler backgroundTasksHandler,
                          Callable<BtLEQueue> getQueue, Callable<GBDevice> getDevice,
                          Function<GBDeviceEvent, Void> sendEvent, Callable<DevicePrefs> getPrefs,
-                         BluetoothGattCharacteristic rx, BluetoothGattCharacteristic tx) {
+                         BluetoothGattCharacteristic rx, BluetoothGattCharacteristic tx,
+                         BiFunction<String, Integer, TransactionBuilder> createTransactionBuilder) {
         this.mySide = mySide;
         this.backgroundTasksHandler = backgroundTasksHandler;
         this.getQueueHandler = getQueue;
         this.getDeviceHandler = getDevice;
         this.sendEventHandler = sendEvent;
         this.getPrefsHandler = getPrefs;
+        this.createTransactionBuilder = createTransactionBuilder;
         this.rx = rx;
         this.tx = tx;
         this.batteryRunner = () -> {
@@ -163,7 +167,7 @@ public class G1SideManager {
 
     public void postInitializeLeft() {
         TransactionBuilder transaction =
-                new TransactionBuilder("post_initialize_left_" + mySide.getDeviceIndex());
+                createTransactionBuilder.apply("post_initialize_left", mySide.getDeviceIndex());
         postInitializeCommon(transaction);
 
         // These can be sent to both, but the left lens is used as the master for these settings.
@@ -175,7 +179,7 @@ public class G1SideManager {
 
     public void postInitializeRight() {
         TransactionBuilder transaction =
-                new TransactionBuilder( "post_initialize_right_" + mySide.getDeviceIndex());
+                createTransactionBuilder.apply( "post_initialize_right", mySide.getDeviceIndex());
         postInitializeCommon(transaction);
 
         // This settings are only sent to the right lens in the official app, so we copy that.
@@ -277,7 +281,7 @@ public class G1SideManager {
 
     public void send(G1Communications.CommandHandler command) {
         TransactionBuilder transaction =
-                new TransactionBuilder(command.getName() + "_" + mySide.getDeviceIndex());
+                createTransactionBuilder.apply(command.getName(), mySide.getDeviceIndex());
         sendInTransaction(transaction, command);
         transaction.queue(getQueue());
     }

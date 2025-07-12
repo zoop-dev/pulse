@@ -402,7 +402,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
         //the band does not like to answer when asked together for both hw info, so ask now,
         // after data is already received
 
-        TransactionBuilder builder = new TransactionBuilder("notification");
+        TransactionBuilder builder = createTransactionBuilder("notification");
         builder.write(writeCharacteristic, craftData(CMD_GROUP_BAND_INFO, CMD_RX_BAND_INFO));
         builder.queue(getQueue());
 
@@ -432,7 +432,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onSetCallState(CallSpec callSpec) {
         LOG.debug("FitPro send call notification");
-        TransactionBuilder builder = new TransactionBuilder("CALL");
+        TransactionBuilder builder = createTransactionBuilder("CALL");
 
         if (callSpec.command == CallSpec.CALL_INCOMING) {
 
@@ -530,7 +530,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     public void sendAck(byte command_group, byte length_high, byte length_low, byte command) {
         LOG.debug(" ACKing data: " + nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils.arrayToString(new byte[]{command_group}) + " " + nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils.arrayToString(new byte[]{command}));
-        TransactionBuilder builder = new TransactionBuilder("notification");
+        TransactionBuilder builder = createTransactionBuilder("notification");
         short size = (short) (ByteBuffer.wrap(new byte[]{length_high, length_low}).getShort() + 3);
         byte[] sizeArray = ByteBuffer.allocate(2).putShort(size).array();
         builder.write(writeCharacteristic, new byte[]{FitProConstants.DATA_HEADER_ACK, 0, 5, command_group, 1, sizeArray[0], sizeArray[1], 1});
@@ -557,7 +557,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
 
         byte currentConditionCode = Weather.mapToFitProCondition(weatherSpec.currentConditionCode);
-        TransactionBuilder builder = new TransactionBuilder("weather");
+        TransactionBuilder builder = createTransactionBuilder("weather");
         writeChunkedData(builder, craftData(CMD_GROUP_GENERAL, CMD_WEATHER, new byte[]{(byte) todayMin, (byte) todayMax, (byte) currentConditionCode, (byte) weatherUnit}));
         builder.queue(getQueue());
     }
@@ -570,7 +570,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
         LOG.debug("FitPro notification: " + notificationSpec.type);
-        TransactionBuilder builder = new TransactionBuilder("notification");
+        TransactionBuilder builder = createTransactionBuilder("notification");
         byte icon = NOTIFICATION_ICON_SMS;
         switch (notificationSpec.type) {
             case GENERIC_SMS:
@@ -738,7 +738,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onFetchRecordedData(int dataTypes) {
         indicateFinishedFetchingOperation();
-        TransactionBuilder builder = new TransactionBuilder("fetch data1");
+        TransactionBuilder builder = createTransactionBuilder("fetch data1");
         builder.setBusyTask(getDevice(), R.string.busy_task_fetch_activity_data, getContext());
         builder.write(writeCharacteristic, craftData(CMD_GROUP_RECEIVE_SPORTS_DATA, CMD_REQUEST_STEPS_DATA1, VALUE_ON));
         builder.queue(getQueue());
@@ -868,7 +868,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onSetTime() {
         LOG.debug("FitPro set date and time");
-        TransactionBuilder builder = new TransactionBuilder("Set date and time");
+        TransactionBuilder builder = createTransactionBuilder("Set date and time");
         setTime(builder);
         builder.queue(getQueue());
     }
@@ -964,14 +964,14 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
 
         getQueue().clear();
-        TransactionBuilder builder = new TransactionBuilder("resetting");
+        TransactionBuilder builder = createTransactionBuilder("resetting");
         builder.write(writeCharacteristic, command);
         builder.queue(getQueue());
     }
 
     @Override
     public void onHeartRateTest() {
-        TransactionBuilder builder = new TransactionBuilder("notification");
+        TransactionBuilder builder = createTransactionBuilder("notification");
         builder.write(writeCharacteristic, craftData(CMD_GROUP_GENERAL, CMD_HEART_RATE_MEASUREMENT, VALUE_ON));
         builder.queue(getQueue());
     }
@@ -980,7 +980,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onFindDevice(boolean start) {
         getQueue().clear();
         LOG.debug("FitPro find device");
-        TransactionBuilder builder = new TransactionBuilder("searching");
+        TransactionBuilder builder = createTransactionBuilder("searching");
         builder.write(writeCharacteristic, craftData(CMD_GROUP_GENERAL, CMD_FIND_BAND, start ? VALUE_ON : VALUE_OFF));
         builder.queue(getQueue());
     }

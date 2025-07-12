@@ -207,7 +207,7 @@ public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
         command[3] = getChecksum(command);
         BluetoothGattCharacteristic characteristic = getCharacteristic(UUUD_CHARACTERISTICS_WRITE);
 
-        TransactionBuilder builder = new TransactionBuilder("beep");
+        TransactionBuilder builder = createTransactionBuilder("beep");
         builder.write(characteristic, command);
         builder.queue(getQueue());
 
@@ -247,7 +247,7 @@ public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
                 buf.get(); // ??
                 boolean workoutStarted = buf.get() > 0;
 
-                TransactionBuilder builder = new TransactionBuilder("send update");
+                TransactionBuilder builder = createTransactionBuilder("send update");
 
                 if (buttonCode == 6 || buttonCode == 7) {
                     if (workoutStarted || buttonCode == 7) {
@@ -295,7 +295,7 @@ public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onTestNewFunction() {
-        TransactionBuilder builder = new TransactionBuilder("xxx");
+        TransactionBuilder builder = createTransactionBuilder("xxx");
         //setDisplayValues(builder, 1, 10, 10, 10, 10);
         //writeChunked(builder, COMMAND_SET_DISPLAY);
 

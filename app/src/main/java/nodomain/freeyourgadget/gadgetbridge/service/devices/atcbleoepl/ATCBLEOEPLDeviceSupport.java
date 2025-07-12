@@ -187,7 +187,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (!success) {
             GB.toast(getContext().getString(R.string.same_image_already_on_device), Toast.LENGTH_LONG, GB.WARN);
         }
-        final TransactionBuilder builder = new TransactionBuilder("finish upload");
+        final TransactionBuilder builder = createTransactionBuilder("finish upload");
         builder.add(new SetProgressAction(getContext().getString(R.string.sending_image), false, 100, getContext()));
         if (!is_firmware) {
             builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x03});
@@ -205,7 +205,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void handleNextBlockRequest(byte[] value) {
-        final TransactionBuilder builder = new TransactionBuilder("send image start");
+        final TransactionBuilder builder = createTransactionBuilder("send image start");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x02});
         current_chunk = 0;
         current_block = value[11];
@@ -217,7 +217,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void handleNextChunkRequest(boolean success) {
-        final TransactionBuilder builder = new TransactionBuilder("send image chunk");
+        final TransactionBuilder builder = createTransactionBuilder("send image chunk");
         if (success) {
             current_chunk++; // only send next chunk when successful, else resend last chunk
         }
@@ -264,7 +264,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         editor.putBoolean(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE, oepl_enabled);
         editor.apply();
 
-        final TransactionBuilder builder = new TransactionBuilder("set initialized");
+        final TransactionBuilder builder = createTransactionBuilder("set initialized");
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
         builder.queue(getQueue());
     }
@@ -457,7 +457,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
             buf.put((byte) 0x00);
             buf.putShort((byte) 0x00);
 
-            final TransactionBuilder builder = new TransactionBuilder("send image prepare");
+            final TransactionBuilder builder = createTransactionBuilder("send image prepare");
             builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), buf.array());
             builder.setBusyTask(getDevice(), R.string.sending_image, getContext());
             builder.queue(getQueue());

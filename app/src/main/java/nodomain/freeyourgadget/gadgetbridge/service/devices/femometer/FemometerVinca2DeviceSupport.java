@@ -175,7 +175,7 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
 
     @Override
     public void onSetTime() {
-        TransactionBuilder builder = new TransactionBuilder("set time");
+        TransactionBuilder builder = createTransactionBuilder("set time");
         setCurrentTime(builder);
         builder.queue(getQueue());
     }

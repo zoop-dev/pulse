@@ -1011,7 +1011,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         evaluateGBDeviceEvent(versionCmd);
 
-        TransactionBuilder builder = new TransactionBuilder("setDeviceInitialized");
+        TransactionBuilder builder = createTransactionBuilder("setDeviceInitialized");
         builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
         try {
             performConnected(builder.getTransaction());

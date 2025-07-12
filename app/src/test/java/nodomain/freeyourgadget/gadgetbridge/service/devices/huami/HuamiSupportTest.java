@@ -38,8 +38,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 public class HuamiSupportTest {
     @Test
     public void testSetCurrentTime() {
-        final TransactionBuilder testTransactionBuilder = new TransactionBuilder("test");
         final HuamiSupport huamiSupport = createSupport();
+        final TransactionBuilder testTransactionBuilder = huamiSupport.createTransactionBuilder("test");
 
         huamiSupport.setCurrentTime(testTransactionBuilder);
         final WriteAction action = (WriteAction) testTransactionBuilder.getTransaction().getActions().get(0);

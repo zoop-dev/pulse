@@ -702,14 +702,14 @@ public class FossilWatchAdapter extends WatchAdapter {
         try {
             if (!this.supportsExtendedVibration()) {
                 if (start) {
-                    new TransactionBuilder("vibrate find")
+                    getDeviceSupport().createTransactionBuilder("vibrate find")
                             .write(
                                     getDeviceSupport().getCharacteristic(UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d")),
                                     new byte[]{(byte) 0x01, (byte) 0x04, (byte) 0x30, (byte) 0x75, (byte) 0x00, (byte) 0x00}
                             )
                             .queue(getDeviceSupport().getQueue());
                 } else {
-                    new TransactionBuilder("vibrate find")
+                    getDeviceSupport().createTransactionBuilder("vibrate find")
                             .write(
                                     getDeviceSupport().getCharacteristic(UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d")),
                                     new byte[]{(byte) 0x02, (byte) 0x05, (byte) 0x04}
@@ -817,7 +817,7 @@ public class FossilWatchAdapter extends WatchAdapter {
             log("dropping requetst " + request.getName());
             return;
         }
-        new TransactionBuilder("requestMtu")
+        getDeviceSupport().createTransactionBuilder("requestMtu")
                 .requestMtu(512)
                 .queue(getDeviceSupport().getQueue());
 
@@ -865,7 +865,7 @@ public class FossilWatchAdapter extends WatchAdapter {
         log("executing request: " + request.getName());
         restartRequestTimeout();
         this.fossilRequest = request;
-        new TransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
+        getDeviceSupport().createTransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
 
         if (request.isFinished()) {
             this.fossilRequest = null;
@@ -881,7 +881,7 @@ public class FossilWatchAdapter extends WatchAdapter {
             return;
         }
         restartRequestTimeout();
-        new TransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
+        getDeviceSupport().createTransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
 
         queueNextRequest();
     }

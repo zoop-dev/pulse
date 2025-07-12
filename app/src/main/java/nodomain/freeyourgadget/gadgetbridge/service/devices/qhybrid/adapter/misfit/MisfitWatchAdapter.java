@@ -314,7 +314,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
                 break;
             case UPLOAD:
                 for (byte[] packet : this.uploadFileRequest.packets) {
-                    new TransactionBuilder("File upload").write(characteristic, packet).queue(getDeviceSupport().getQueue());
+                    getDeviceSupport().createTransactionBuilder("File upload").write(characteristic, packet).queue(getDeviceSupport().getQueue());
                 }
                 break;
             case UPLOADED:
@@ -495,7 +495,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
     }
 
     private void queueWrite(Request request) {
-        new TransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
+        getDeviceSupport().createTransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
         // if (request instanceof FileRequest) this.fileRequest = request;
 
         if (!request.expectsResponse()) {

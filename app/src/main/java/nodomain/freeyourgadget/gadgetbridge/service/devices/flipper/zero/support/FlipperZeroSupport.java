@@ -168,7 +168,7 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
     }
 
     private void sendSerialData(byte[] data){
-        new TransactionBuilder("send serial data")
+        createTransactionBuilder("send serial data")
                 .write(getCharacteristic(UUID.fromString(UUID_SERIAL_CHARACTERISTIC_WRITE)), data)
                 .queue(getQueue());
     }

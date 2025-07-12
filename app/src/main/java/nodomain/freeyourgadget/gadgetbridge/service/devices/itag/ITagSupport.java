@@ -116,7 +116,7 @@ public class ITagSupport extends AbstractBTLESingleDeviceSupport {
         getQueue().clear();
         BluetoothGattCharacteristic characteristic = getCharacteristic(ITagConstants.UUID_LINK_LOSS_ALERT_LEVEL);
 
-        TransactionBuilder builder = new TransactionBuilder("beeping");
+        TransactionBuilder builder = createTransactionBuilder("beeping");
         builder.write(characteristic, new byte[]{(byte) intensity});
         builder.queue(getQueue());
     }

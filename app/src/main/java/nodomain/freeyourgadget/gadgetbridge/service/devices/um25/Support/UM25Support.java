@@ -91,7 +91,7 @@ public class UM25Support extends UM25BaseSupport {
             if(!ACTION_RESET_STATS.equals(intent.getAction())){
                 return;
             }
-            new TransactionBuilder("reset stats")
+            createTransactionBuilder("reset stats")
                     .write(getCharacteristic(UUID.fromString(UUID_CHAR)), COMMAND_RESET_STATS)
                     .queue(getQueue());
         }
@@ -162,7 +162,7 @@ public class UM25Support extends UM25BaseSupport {
 
         logger.debug("sending read command");
         buffer.reset();
-        new TransactionBuilder("send read command")
+        createTransactionBuilder("send read command")
                 .write(getCharacteristic(UUID.fromString(UUID_CHAR)), COMMAND_UPDATE)
                 .queue(getQueue());
         logger.debug("sent command");

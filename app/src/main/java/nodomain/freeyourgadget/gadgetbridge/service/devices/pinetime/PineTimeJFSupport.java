@@ -298,7 +298,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
-        TransactionBuilder builder = new TransactionBuilder("notification");
+        TransactionBuilder builder = createTransactionBuilder("notification");
 
         String message;
         String source = null;
@@ -341,7 +341,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     @Override
     public void onSetNavigationInfo(NavigationInfoSpec navigationInfoSpec) {
-        TransactionBuilder builder = new TransactionBuilder("navigation info");
+        TransactionBuilder builder = createTransactionBuilder("navigation info");
         if (navigationInfoSpec.instruction == null) {
             navigationInfoSpec.instruction = "";
         }
@@ -413,7 +413,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         byte[] bytesCurrentTime = BLETypeConversions.calendarToCurrentTime(now, 0);
         byte[] bytesLocalTime = BLETypeConversions.calendarToLocalTime(now);
 
-        TransactionBuilder builder = new TransactionBuilder("set time");
+        TransactionBuilder builder = createTransactionBuilder("set time");
         builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), bytesCurrentTime);
         builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_LOCAL_TIME), bytesLocalTime);
         builder.queue(getQueue());
@@ -422,7 +422,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     @Override
     public void onSetCallState(CallSpec callSpec) {
         if (callSpec.command == CallSpec.CALL_INCOMING) {
-            TransactionBuilder builder = new TransactionBuilder("incomingcall");
+            TransactionBuilder builder = createTransactionBuilder("incomingcall");
 
             String message;
             if (isFirmwareAtLeastVersion0_15() && callSpec.sourceName != null) {
@@ -631,7 +631,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                 baos.write(new byte[9]);
             }
 
-            TransactionBuilder builder = new TransactionBuilder("set world clocks");
+            TransactionBuilder builder = createTransactionBuilder("set world clocks");
             builder.write(getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTIC_WORLD_TIME), baos.toByteArray());
             builder.queue(getQueue());
         } catch (Exception e) {

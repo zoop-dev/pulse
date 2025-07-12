@@ -74,7 +74,7 @@ public class CommunicatorV1 implements ICommunicator {
 
         final byte[] payload = cobsCoDec.encode(message);
 
-        final TransactionBuilder builder = new TransactionBuilder(taskName);
+        final TransactionBuilder builder = mSupport.createTransactionBuilder(taskName);
         int remainingBytes = payload.length;
         if (remainingBytes > maxWriteSize - 1) {
             int position = 0;

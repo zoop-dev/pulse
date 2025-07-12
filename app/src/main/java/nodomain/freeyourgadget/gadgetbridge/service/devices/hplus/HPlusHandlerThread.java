@@ -164,7 +164,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
             if (!mHPlusSupport.isConnected())
                 mHPlusSupport.connect();
 
-            TransactionBuilder builder = new TransactionBuilder("startSyncDayStats");
+            TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("startSyncDayStats");
 
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_DEVICE_ID});
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_VERSION});
@@ -182,7 +182,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
 
     public void sendHello() {
         try {
-            TransactionBuilder builder = new TransactionBuilder("hello");
+            TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("hello");
             builder.write(mHPlusSupport.ctrlCharacteristic, HPlusConstants.CMD_ACTION_HELLO);
             mHPlusSupport.performConnected(builder.getTransaction());
 
@@ -540,7 +540,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
      */
     private void requestNextSleepData() {
         try {
-            TransactionBuilder builder = new TransactionBuilder("requestSleepStats");
+            TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("requestSleepStats");
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_SLEEP});
             mHPlusSupport.performConnected(builder.getTransaction());
         } catch (Exception e) {
@@ -595,7 +595,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         byte[] msg = new byte[]{HPlusConstants.CMD_GET_ACTIVE_DAY, hour, minute, nextHour, nextMinute};
         try {
 
-            TransactionBuilder builder = new TransactionBuilder("getNextDaySlot");
+            TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("getNextDaySlot");
             builder.write(mHPlusSupport.ctrlCharacteristic, msg);
             mHPlusSupport.performConnected(builder.getTransaction());
         } catch (Exception e) {
@@ -608,7 +608,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
      */
     public void requestDaySummaryData() {
         try {
-            TransactionBuilder builder = new TransactionBuilder("startSyncDaySummary");
+            TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("startSyncDaySummary");
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_DAY_DATA});
             mHPlusSupport.performConnected(builder.getTransaction());
         } catch (Exception e) {

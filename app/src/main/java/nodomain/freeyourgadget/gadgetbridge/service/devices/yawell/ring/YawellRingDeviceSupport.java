@@ -464,7 +464,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void sendWrite(String taskName, byte[] contents) {
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         BluetoothGattCharacteristic characteristic = getCharacteristic(YawellRingConstants.CHARACTERISTIC_WRITE);
         if (characteristic != null) {
             builder.write(characteristic, contents);
@@ -473,7 +473,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void sendCommand(String taskName, byte[] contents) {
-        TransactionBuilder builder = new TransactionBuilder(taskName);
+        TransactionBuilder builder = createTransactionBuilder(taskName);
         BluetoothGattCharacteristic characteristic = getCharacteristic(YawellRingConstants.CHARACTERISTIC_COMMAND);
         if (characteristic != null) {
             builder.write(characteristic, contents);

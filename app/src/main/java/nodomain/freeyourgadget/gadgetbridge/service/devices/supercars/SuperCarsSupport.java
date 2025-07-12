@@ -156,7 +156,7 @@ public class SuperCarsSupport extends AbstractBTLESingleDeviceSupport {
                                 SuperCarsConstants.Direction direction) {
 
         byte[] command = craft_packet(speed, direction, movement, light);
-        TransactionBuilder builder = new TransactionBuilder("send data");
+        TransactionBuilder builder = createTransactionBuilder("send data");
         BluetoothGattCharacteristic writeCharacteristic = getCharacteristic(SuperCarsConstants.CHARACTERISTIC_UUID_FFF1);
         builder.write(writeCharacteristic, encryptData(command));
         builder.queue(getQueue());

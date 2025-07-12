@@ -83,7 +83,7 @@ public class FilePutRawRequest extends FossilRequest {
                     }
                     state = UploadState.UPLOADING;
 
-                    TransactionBuilder transactionBuilder = new TransactionBuilder("file upload");
+                    TransactionBuilder transactionBuilder = adapter.getDeviceSupport().createTransactionBuilder("file upload");
                     BluetoothGattCharacteristic uploadCharacteristic = adapter.getDeviceSupport().getCharacteristic(UUID.fromString("3dda0004-957f-7d4a-34a6-74696673696d"));
 
                     this.prepareFilePackets(this.file);
@@ -124,7 +124,7 @@ public class FilePutRawRequest extends FossilRequest {
                     buffer2.put((byte) 4);
                     buffer2.putShort(this.handle);
 
-                    new TransactionBuilder("file close")
+                    adapter.getDeviceSupport().createTransactionBuilder("file close")
                             .write(
                                     adapter.getDeviceSupport().getCharacteristic(UUID.fromString("3dda0003-957f-7d4a-34a6-74696673696d")),
                                     buffer2.array()

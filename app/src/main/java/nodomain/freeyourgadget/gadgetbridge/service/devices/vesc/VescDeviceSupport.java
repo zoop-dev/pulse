@@ -288,7 +288,7 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
     }
 
     public void queryPacket(byte[] data) {
-        new TransactionBuilder("write serial packet")
+        createTransactionBuilder("write serial packet")
                 .write(this.serialWriteCharacteristic, data)
                 .queue(getQueue());
     }

@@ -236,11 +236,13 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         // Create the desired side.
         if (deviceIdx == G1Constants.Side.LEFT.getDeviceIndex()) {
             leftSide = new G1SideManager(G1Constants.Side.LEFT, backgroundTasksHandler, getQueue,
-                                         getDevice, handleEvent, this::getDevicePrefs, rx, tx);
+                                         getDevice, handleEvent, this::getDevicePrefs, rx, tx,
+                                         this::createTransactionBuilder);
             return leftSide;
         } else if (deviceIdx == G1Constants.Side.RIGHT.getDeviceIndex()) {
             rightSide = new G1SideManager(G1Constants.Side.RIGHT, backgroundTasksHandler, getQueue,
-                                          getDevice, handleEvent, this::getDevicePrefs, rx, tx);
+                                          getDevice, handleEvent, this::getDevicePrefs, rx, tx,
+                                          this::createTransactionBuilder);
             return rightSide;
         }
 

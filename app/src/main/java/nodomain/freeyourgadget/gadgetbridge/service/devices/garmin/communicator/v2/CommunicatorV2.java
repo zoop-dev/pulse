@@ -108,7 +108,7 @@ public class CommunicatorV2 implements ICommunicator {
         }
         final byte[] payload = cobsCoDec.encode(message);
 //        LOG.debug("SENDING MESSAGE: {} - COBS ENCODED: {}", GB.hexdump(message), GB.hexdump(payload));
-        final TransactionBuilder builder = new TransactionBuilder(taskName);
+        final TransactionBuilder builder = mSupport.createTransactionBuilder(taskName);
         int remainingBytes = payload.length;
         if (remainingBytes > maxWriteSize - 1) {
             int position = 0;
@@ -161,7 +161,7 @@ public class CommunicatorV2 implements ICommunicator {
     public void onHeartRateTest() {
         realtimeHrOneShot = true;
         if (realtimeHrHandle == 0) {
-            new TransactionBuilder("heart rate test")
+            mSupport.createTransactionBuilder("heart rate test")
                     .write(characteristicSend, registerService(Service.REALTIME_HR, false))
                     .queue(this.mSupport.getQueue());
         }
@@ -181,12 +181,12 @@ public class CommunicatorV2 implements ICommunicator {
 
     private boolean toggleService(final Service service, final int currentHandle, final boolean enable) {
         if (enable && currentHandle == 0) {
-            new TransactionBuilder(service + " = true")
+            mSupport.createTransactionBuilder(service + " = true")
                     .write(characteristicSend, registerService(service, false))
                     .queue(this.mSupport.getQueue());
             return true;
         } else if (!enable && currentHandle != 0) {
-            new TransactionBuilder(service + " = false")
+            mSupport.createTransactionBuilder(service + " = false")
                     .write(characteristicSend, closeService(service, currentHandle))
                     .queue(this.mSupport.getQueue());
             return true;
@@ -245,7 +245,7 @@ public class CommunicatorV2 implements ICommunicator {
                         break;
                     case REALTIME_ACCELEROMETER:
                         this.realtimeAccelHandle = handle;
-                        new TransactionBuilder("start realtime accel")
+                        mSupport.createTransactionBuilder("start realtime accel")
                                 .write(characteristicSend, new byte[]{(byte) handle, 0x01})
                                 .queue(this.mSupport.getQueue());
                         break;
@@ -303,7 +303,7 @@ public class CommunicatorV2 implements ICommunicator {
                 this.realtimeSpo2Handle = 0;
                 this.realtimeRespirationHandle = 0;
                 this.realtimeHrvHandle = 0;
-                new TransactionBuilder("open GFDI")
+                mSupport.createTransactionBuilder("open GFDI")
                         .write(characteristicSend, registerService(Service.GFDI, false))
                         .queue(this.mSupport.getQueue());
                 break;
