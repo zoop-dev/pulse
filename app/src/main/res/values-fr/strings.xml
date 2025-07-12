@@ -3826,5 +3826,21 @@ Temps de sommeil préféré en heures</string>
     <string name="earfun_connect_two_devices">Double connexion d’appareil</string>
     <string name="earfun_connect_two_devices_hint">Connectez-vous à deux appareils Bluetooth simultanément. Pour un signal stable, évitez d’utiliser la connexion double appareil et le mode LDAP en même temps.</string>
     <string name="earfun_advanced_audio_mode">Mode audio avancé</string>
-    <string name="earfun_advanced_audio_mode_hint">&lt;b&gt;Google Fast Pair&lt;/b&gt; air&lt;/b&gt; offre un jumelage d’appareils instantanément.\n\n&lt;b&gt;LE Audio&lt;/b&gt; fournit une qualité sonore améliorée, une consommation d’énergie réduite et une prise en charge de plusieurs flux audio.</string>
+    <string name="earfun_advanced_audio_mode_hint">&lt;b&gt;Google Fast Pair&lt;/b&gt; air&lt;/b&gt; offre un jumelage d’appareils instantanément.\n&lt;b&gt;LE Audio&lt;/b&gt; fournit une qualité sonore améliorée, une consommation d’énergie réduite et une prise en charge de plusieurs flux audio.</string>
+    <string name="earfun_microphone_mode_hint">Lors de l’utilisation du microphone du casque, il peut soit basculer automatiquement entre les écouteurs gauche et droit, soit rester fixé d’un côté selon votre préférence.</string>
+    <string name="earfun_find_headphones_hint">Cette option émet un son fort à travers le casque audio pour aider à le localiser. Évitez de porter le casque pour éviter d’éventuels dommages auditifs.</string>
+    <string name="earfun_find_headphones">Trouver casque audio</string>
+    <string name="earfun_in_ear_detection_hint">Lorsqu’elle est activée, la détection intra-auriculaire reprend automatiquement l’audio lorsque les écouteurs sont portés et met en pause la lecture lorsqu’ils sont retirés.</string>
+    <string name="earfun_audio_codec_hint"><b>LDAC</b> est un codec haute résolution pour une qualité son supérieure.\n<b>aptX</b> assure une faible latence et un streaming audio haute fidélité..\n<b>aptX Adaptive</b> ajuste le débit binaire dynamiquement en fonction du contenu et de la connexion.\n<b>aptX Adaptive Lossless</b> fournit un son sans perte pour la musique haute résolution.\n<b>Connexion stable</b> minimise le bégaiement sonore ou les sauts.</string>
+    <string name="earfun_voice_prompt_volume">Volume de l’invite vocale</string>
+    <string name="earfun_header_audio_experience">Expérience audio</string>
+    <string name="earfun_header_connectivity">Qualité audio et connectivité</string>
+    <string name="ultrahuman_airplane_mode_unknown">erreur inconnue %#02x - mode avion NON activé</string>
+    <string name="ultrahuman_breathing_title">Respiration</string>
+    <string name="ultrahuman_breathing_start">Commencer</string>
+    <string name="ultrahuman_unhandled_error_response">réponse non gérée %2$#02x %3$#02x pour l’opération %1$#02x</string>
+    <string name="ultrahuman_unhandled_operation_response">réponse d’opération non gérée %s</string>
+    <string name="huawei_stress_test_enable">Test de résistance automatique</string>
+    <string name="huawei_stress_test_enable_summary">Activer ou désactiver le test de stress automatique</string>
+    <string name="huawei_stress_no_calibration_data">Pas de données initiales - calibrer d’abord</string>
 </resources>
