@@ -252,6 +252,7 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
         setupGpsPreference(handler, prefs);
         setupButtonClickPreferences(handler);
 
+        // Since we populate the values dynamically, we need to sort it here
         final Preference languagePref = handler.findPreference("language");
         if (languagePref != null) {
             DeviceSettingsUtils.sortListPreference((ListPreference) languagePref);

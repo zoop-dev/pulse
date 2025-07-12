@@ -212,7 +212,8 @@ public final class DeviceSettingsUtils {
         }
 
         // Sort, keeping "auto" at the top
-        Arrays.sort(combined, 1, length, Comparator.comparing(o -> o[0]));
+        final boolean hasAuto = "auto".contentEquals(entryValues[0]);
+        Arrays.sort(combined, hasAuto ? 1 : 0, length, Comparator.comparing(o -> o[0]));
 
         // Reassign sorted values
         for (int i = 0; i < length; i++) {

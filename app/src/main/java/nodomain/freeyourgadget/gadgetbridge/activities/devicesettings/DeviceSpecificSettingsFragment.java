@@ -402,6 +402,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 languageListPreference.setEntries(entries);
                 languageListPreference.setEntryValues(values);
             }
+
+            DeviceSettingsUtils.sortListPreference(languageListPreference);
         }
 
         String disconnectNotificationState = prefs.getString(PREF_DISCONNECT_NOTIFICATION, PREF_DO_NOT_DISTURB_OFF);
