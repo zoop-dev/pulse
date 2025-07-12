@@ -3873,5 +3873,8 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_huawei_activity_reminder_progress_title">Progrès</string>
     <string name="pref_huawei_activity_reminder_progress_summary">Obtenir des rappels au sujet des progrès sur l’anneau d’activité</string>
     <string name="pref_huawei_activity_reminder_goal_reached_title">Objectif atteint</string>
-    <string name="pref_huawei_activity_reminder_goal_reached_summary">Recevez un rappel lorsque vous complétez un anneau</string>
+    <string name="pref_huawei_activity_reminder_goal_reached_summary">Recevez un rappel lorsque vous complétez des anneaux</string>
+    <string name="body_energy_legend_average">Moyenne sur 30 jours</string>
+    <string name="pref_even_realities_g1_screen_location_title">Emplacement de l\'écran</string>
+    <string name="pref_even_realities_g1_screen_location_summary">Change la position verticale de l’affichage</string>
 </resources>
