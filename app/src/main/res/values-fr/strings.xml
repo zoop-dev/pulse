@@ -3900,5 +3900,13 @@ Temps de sommeil préféré en heures</string>
     <string name="paired_phones">Téléphones jumelés</string>
     <string name="pairing_mode">Mode d\'appairage</string>
     <string name="pref_aawireless_audio_stutter_fix_high">Haut</string>
-    <string name="pref_aawireless_audio_stutter_fix_low">Bas</string>
+    <string name="pref_aawireless_audio_stutter_fix_low">Faible</string>
+    <string name="pref_aawireless_audio_stutter_fix_summary">Surcharger le tampon audio pour corriger le bégaiement audio</string>
+    <string name="pref_aawireless_audio_stutter_fix_title">Correction bégaiement audio</string>
+    <string name="pref_aawireless_audio_stutter_fix_unlimited">Illimité(e)</string>
+    <string name="pref_aawireless_prefer_last">Préférer le dernier téléphone connecté</string>
+    <string name="pref_aawireless_remove_tap_restriction_summary">Permettre plus de 6 tapes en succession. Peut affecter la précision du GPS.</string>
+    <string name="pref_aawireless_remove_tap_restriction_title">Supprimer restriction de tapes</string>
+    <string name="pref_aawireless_start_fix_summary">Solution de contournement - activez cette option si la LED est bleu fixe, mais qu’Android Auto ne démarre pas.</string>
+    <string name="activity_print_label_print_size">Taille d’impression (px): %1$d x %2$d</string>
 </resources>
