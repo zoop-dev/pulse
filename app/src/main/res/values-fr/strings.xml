@@ -3800,4 +3800,27 @@ Temps de sommeil préféré en heures</string>
     <string name="wifi_frequency_2_4_ghz">2.4 GHz</string>
     <string name="wifi_channel">Réseau Wi-Fi</string>
     <string name="switch_to_phone">Basculer sur %1$s</string>
+    <string name="pref_watch_face">Cadran de montre</string>
+    <string name="pref_workout_send_gps_timeout_title">Envoyer délai d’attente GPS</string>
+    <string name="prefs_title_gatt_settings">Profil d’attribut générique</string>
+    <string name="busy_task_busy">Occupé(e)…</string>
+    <string name="busy_task_configuring">En configuration</string>
+    <string name="busy_task_downloading">En téléchargement</string>
+    <string name="busy_task_fetch_configuration">Récupère configuration</string>
+    <string name="busy_task_fetch_ppg">Récupère PPG</string>
+    <string name="busy_task_fetch_steps">Récupère pas</string>
+    <string name="busy_task_syncing">Synchronisation</string>
+    <string name="pairing_bonding_under_way">Veuillez patienter quelques instants avant de terminer le processus de liaison.</string>
+    <string name="pairing_even_realities_g1_final_connect">Configuration des appareils, veuillez patienter…</string>
+    <string name="busy_task_fetch_weight_data">Récupération données de poids</string>
+    <string name="busy_task_fetch_training_data">Récupération dernières données d’entraînement</string>
+    <string name="busy_task_fetch_training_data_finished">Données d’entraînement reçues !</string>
+    <string name="interval_twenty_minutes">toutes les 20 minutes</string>
+    <string name="music_upload_failed">Échec envoi musique</string>
+    <string name="music_upload_complete">Envoi musique réussi</string>
+    <string name="music_upload_in_progress">Envoi de musique</string>
+    <string name="stats_average_hr">HR moyen</string>
+    <string name="silent_mode">Mode silence</string>
+    <string name="earfun_low_latency_mode">Mode latence faible</string>
+    <string name="earfun_low_latency_mode_hint">"Le mode à latence faible  réduit le décalage audio en utilisant un tampon plus petit, bien que cela puisse parfois entraîner une connexion moins stable."</string>
 </resources>
