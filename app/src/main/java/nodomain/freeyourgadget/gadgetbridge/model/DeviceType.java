@@ -270,6 +270,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moondrop.MoondropSpaceTravel
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.AdvanWatchSE1AICoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.C20Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiI28UltraCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiP76Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV72Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV89Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.FireBolttTalkCoordinator;
@@ -727,6 +728,7 @@ public enum DeviceType {
     COLMI_R12(ColmiR12Coordinator.class),
     H59(H59Coordinator.class),
     COLMI_I28_ULTRA(ColmiI28UltraCoordinator.class),
+    COLMI_P76(ColmiP76Coordinator.class),
     COLMI_V72(ColmiV72Coordinator.class),
     COLMI_V89(ColmiV89Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
