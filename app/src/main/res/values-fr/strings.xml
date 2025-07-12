@@ -3822,5 +3822,9 @@ Temps de sommeil préféré en heures</string>
     <string name="stats_average_hr">HR moyen</string>
     <string name="silent_mode">Mode silence</string>
     <string name="earfun_low_latency_mode">Mode latence faible</string>
-    <string name="earfun_low_latency_mode_hint">"Le mode à latence faible  réduit le décalage audio en utilisant un tampon plus petit, bien que cela puisse parfois entraîner une connexion moins stable."</string>
+    <string name="earfun_low_latency_mode_hint">Le mode à latence faible réduit le décalage audio en utilisant un tampon plus petit, bien que cela puisse parfois entraîner une connexion moins stable.</string>
+    <string name="earfun_connect_two_devices">Double connexion d’appareil</string>
+    <string name="earfun_connect_two_devices_hint">Connectez-vous à deux appareils Bluetooth simultanément. Pour un signal stable, évitez d’utiliser la connexion double appareil et le mode LDAP en même temps.</string>
+    <string name="earfun_advanced_audio_mode">Mode audio avancé</string>
+    <string name="earfun_advanced_audio_mode_hint">&lt;b&gt;Google Fast Pair&lt;/b&gt; air&lt;/b&gt; offre un jumelage d’appareils instantanément.\n\n&lt;b&gt;LE Audio&lt;/b&gt; fournit une qualité sonore améliorée, une consommation d’énergie réduite et une prise en charge de plusieurs flux audio.</string>
 </resources>
