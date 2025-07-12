@@ -114,7 +114,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
         // Gadgetbridge doesn't seem to do this itself, so we force it to set its time
-        onSetTime();
+        onSetTime(builder);
         return builder;
     }
 
@@ -136,6 +136,12 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSetTime() {
+        TransactionBuilder builder = new TransactionBuilder("set time");
+        onSetTime(builder);
+        builder.queue(getQueue());
+    }
+
+    private void onSetTime(TransactionBuilder builder) {
         GregorianCalendar now = BLETypeConversions.createCalendar();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write((byte) now.get(Calendar.YEAR) - 1900);
@@ -144,9 +150,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         baos.write((byte) now.get(Calendar.HOUR_OF_DAY));
         baos.write((byte) now.get(Calendar.MINUTE));
         baos.write((byte) now.get(Calendar.SECOND));
-        TransactionBuilder builder = new TransactionBuilder("set time");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.TIME_SET_CHAR, baos.toByteArray());
-        builder.queue(getQueue());
     }
 
 
