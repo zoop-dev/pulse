@@ -213,6 +213,10 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_HEARTRATE_STRESS_RELAXATION_REMINDER = "heartrate_stress_relaxation_reminder";
     public static final String PREF_HEARTRATE_SLEEP_BREATHING_QUALITY_MONITORING = "heartrate_sleep_breathing_quality_monitoring";
     public static final String PREF_SPO2_ALL_DAY_MONITORING = "spo2_all_day_monitoring_enabled";
+    public static final String PREF_SPO2_MEASUREMENT_INTERVAL = "spo2_measurement_interval";
+    public static final String PREF_SPO2_MEASUREMENT_TIME = "spo2_measurement_time";
+    public static final String PREF_SPO2_MEASUREMENT_START = "spo2_measurement_start";
+    public static final String PREF_SPO2_MEASUREMENT_END = "spo2_measurement_end";
     public static final String PREF_SPO2_LOW_ALERT_THRESHOLD = "spo2_low_alert_threshold";
     public static final String PREF_HRV_ALL_DAY_MONITORING = "hrv_all_day_monitoring_enabled";
     public static final String PREF_TEMPERATURE_ALL_DAY_MONITORING = "continuous_skin_temperature_measurement";
@@ -611,10 +615,12 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_POWER_SAVING = "pref_key_power_saving";
     public static final String PREF_FORCE_CONNECTION_TYPE = "pref_force_connection_type";
 
+    public static final String PREF_ENABLE_CALL_REJECT = "enable_call_reject";
     public static final String PREF_AUTO_REPLY_INCOMING_CALL = "pref_auto_reply_phonecall";
     public static final String PREF_AUTO_REPLY_INCOMING_CALL_DELAY = "pref_auto_reply_phonecall_delay";
     public static final String PREF_SPEAK_NOTIFICATIONS_ALOUD = "pref_speak_notifications_aloud";
     public static final String PREF_SPEAK_NOTIFICATIONS_FOCUS_EXCLUSIVE = "pref_speak_notifications_focus_exclusive";
+    public static final String PREF_ENABLE_SMS_QUICK_REPLY = "enable_sms_quick_reply";
 
     public static final String PREF_CYCLING_SENSOR_PERSISTENCE_INTERVAL = "pref_cycling_persistence_interval";
     public static final String PREF_CYCLING_SENSOR_WHEEL_DIAMETER = "pref_cycling_wheel_diameter";

@@ -96,7 +96,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractDeviceCoordinator.class);
 
-    private Pattern supportedDeviceName = null;
+    protected Pattern supportedDeviceName = null;
 
     /**
      * This method should return a Regexp pattern that will matched against a found device
@@ -237,7 +237,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
      * Returns a map from {@link AbstractDao} to the corresponding Device ID property. All data present
      * in these tables for a device will be deleted when the device is deleted.
      */
-    protected Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
         return Collections.emptyMap();
     }
 

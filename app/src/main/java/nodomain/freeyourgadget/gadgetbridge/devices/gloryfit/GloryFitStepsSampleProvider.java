@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025  Thomas Kuehne
+/*  Copyright (C) 2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -15,42 +15,43 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-package nodomain.freeyourgadget.gadgetbridge.devices;
+package nodomain.freeyourgadget.gadgetbridge.devices.gloryfit;
 
 import androidx.annotation.NonNull;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import nodomain.freeyourgadget.gadgetbridge.entities.GenericSpo2Sample;
-import nodomain.freeyourgadget.gadgetbridge.entities.GenericSpo2SampleDao;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GenericSpo2SampleProvider extends AbstractTimeSampleProvider<GenericSpo2Sample> {
-    public GenericSpo2SampleProvider(final GBDevice device, final DaoSession session) {
+public class GloryFitStepsSampleProvider extends AbstractTimeSampleProvider<GloryFitStepsSample> {
+    public GloryFitStepsSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<GenericSpo2Sample, ?> getSampleDao() {
-        return getSession().getGenericSpo2SampleDao();
+    public AbstractDao<GloryFitStepsSample, ?> getSampleDao() {
+        return getSession().getGloryFitStepsSampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return GenericSpo2SampleDao.Properties.Timestamp;
+        return GloryFitStepsSampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return GenericSpo2SampleDao.Properties.DeviceId;
+        return GloryFitStepsSampleDao.Properties.DeviceId;
     }
 
     @Override
-    public GenericSpo2Sample createSample() {
-        return new GenericSpo2Sample();
+    public GloryFitStepsSample createSample() {
+        return new GloryFitStepsSample();
     }
 }

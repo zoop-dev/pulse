@@ -300,6 +300,7 @@ tasks.register('cleanGenerated', Delete) {
     delete fileTree('src/main/java/nodomain/freeyourgadget/gadgetbridge/entities') {
         include '**/*.java'
         exclude '**/Abstract*.java'
+        exclude '**/GenericActivitySample.java'
     }
 }
 

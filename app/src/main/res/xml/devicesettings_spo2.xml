@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_spo2"
+        android:key="pref_screen_spo2"
+        android:persistent="false"
+        android:title="@string/pref_header_spo2">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_spo2"
+            android:key="spo2_all_day_monitoring_enabled"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_spo2_monitoring_description"
+            android:title="@string/prefs_spo2_monitoring_title" />
+
+        <ListPreference
+            android:defaultValue="600"
+            android:dependency="spo2_all_day_monitoring_enabled"
+            android:entries="@array/prefs_spo2_measurement_interval"
+            android:entryValues="@array/prefs_spo2_measurement_interval_values"
+            android:key="spo2_measurement_interval"
+            android:summary="%s"
+            android:title="@string/pref_title_time_interval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="spo2_all_day_monitoring_enabled"
+            android:key="spo2_measurement_time"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_summary_time_interval"
+            android:title="@string/pref_title_time_interval" />
+
+        <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+            android:defaultValue="06:00"
+            android:dependency="spo2_measurement_time"
+            android:key="spo2_measurement_start"
+            android:title="@string/mi2_prefs_do_not_disturb_start" />
+
+        <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+            android:defaultValue="22:00"
+            android:dependency="spo2_measurement_time"
+            android:key="spo2_measurement_end"
+            android:title="@string/mi2_prefs_do_not_disturb_end" />
+
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>

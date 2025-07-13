@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -73,6 +74,12 @@ public class GBDeviceEventFindPhone extends GBDeviceEvent {
             default:
                 LOG.warn("unknown GBDeviceEventFindPhone");
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "event: " + event;
     }
 
     private void handleGBDeviceEventFindPhoneStart(final Context context, final boolean ring) {

@@ -265,6 +265,7 @@
     <string name="pref_title_notification_wake_on_open">Auto wake and unlock</string>
     <string name="pref_summary_notification_wake_on_open">Wake and unlock the Android device when the gadget sends a OPEN response back. Needs to be in a trusted state.</string>
     <string name="pref_summary_receive_calls_watch">Perform and receive calls directly on the watch</string>
+    <string name="phone_calls">Phone calls</string>
     <string name="bluetooth_calls">Bluetooth calls</string>
     <string name="bluetooth_calls_pairing">Bluetooth calls pairing</string>
     <string name="bluetooth_calls_settings">Bluetooth calls settings</string>
@@ -823,6 +824,11 @@
     <string name="spo2_perc_90">90%</string>
     <string name="spo2_off">Off</string>
     <string name="interval_one_hour">once an hour</string>
+    <string name="interval_1_hour">every 1 hour</string>
+    <string name="interval_2_hour">every 2 hours</string>
+    <string name="interval_3_hour">every 3 hours</string>
+    <string name="interval_4_hour">every 4 hours</string>
+    <string name="interval_6_hour">every 6 hours</string>
     <string name="stats_title">Speed zones</string>
     <string name="stats_x_axis_label">Total minutes</string>
     <string name="stats_y_axis_label">Steps per minute</string>
@@ -1144,6 +1150,7 @@
     <string name="mi2_prefs_inactivity_warnings_summary">The band will vibrate when you have been inactive for a while</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Inactivity threshold (in minutes)</string>
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Disable inactivity warnings for a time interval</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Disable inactivity warnings during the lunch break (12:00 - 14:00)</string>
     <string name="hydration_dnd_summary">Disable hydration warnings for a time interval</string>
     <string name="mi2_prefs_heart_rate_monitoring">Heart Rate Monitoring</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Configure heart rate monitoring</string>
@@ -1193,8 +1200,8 @@
     <string name="lefun_prefs_interface_language_title">Interface language</string>
     <string name="automatic">Automatic</string>
     <string name="manual">Manual</string>
-    <string name="simplified_chinese">Simplified Chinese</string>
-    <string name="traditional_chinese">Traditional Chinese</string>
+    <string name="simplified_chinese">Chinese (Simplified)</string>
+    <string name="traditional_chinese">Chinese (Traditional)</string>
     <string name="english">English</string>
     <string name="english_au">English (Australia)</string>
     <string name="english_ca">English (Canada)</string>
@@ -3276,6 +3283,8 @@
     <string name="pref_enable_call_accept_summary">Enable accepting calls from the device</string>
     <string name="pref_enable_call_reject">Enable rejecting calls</string>
     <string name="pref_enable_call_reject_summary">Enable rejecting calls from the device</string>
+    <string name="pref_enable_sms_quick_reply_title">Enable SMS replies</string>
+    <string name="pref_enable_sms_quick_reply_summary">Allow rejecting calls with an SMS reply</string>
 
     <string name="pref_disable_find_phone_with_dnd">Disable find my phone when do not disturb is active</string>
 
@@ -4121,4 +4130,8 @@
     <string name="activity_print_label_print_size">Print size (px): %1$d x %2$d</string>
     <string name="service_notification_collector_service_title">Gadgetbridge Notification Monitor</string>
     <string name="service_notification_collector_service_text">Monitoring notifications in background</string>
+    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
+    <string name="devicetype_dotn_p66d">Dotn P66D</string>
+    <string name="pref_title_time_interval">Time interval</string>
+    <string name="pref_summary_time_interval">Restrict to specific intervals</string>
 </resources>

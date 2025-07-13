@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2024 Andreas Shimokawa
+/*  Copyright (C) 2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -14,13 +14,14 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.model;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.gloryfit
 
-public class CannedMessagesSpec {
-    public static final int TYPE_GENERIC = 0;
-    public static final int TYPE_REJECTEDCALLS = 1;
-    public static final int TYPE_NEWSMS = 2;
+import nodomain.freeyourgadget.gadgetbridge.R
 
-    public int type;
-    public String[] cannedMessages;
+enum class GloryFitFetchType(val descriptionRes: Int) {
+    STEPS(R.string.busy_task_fetch_steps),
+    HEART_RATE(R.string.busy_task_fetch_hr_data),
+    SPO2(R.string.busy_task_fetch_spo2_data),
+    SLEEP(R.string.busy_task_fetch_sleep_data),
+    ;
 }

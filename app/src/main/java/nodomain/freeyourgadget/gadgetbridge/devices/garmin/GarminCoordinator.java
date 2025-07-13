@@ -64,7 +64,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected Map<AbstractDao<?, ?>, Property> getAllDeviceDao( @NonNull final DaoSession session) {
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao( @NonNull final DaoSession session) {
         return new HashMap<>() {{
             put(session.getGarminActivitySampleDao(), GarminActivitySampleDao.Properties.DeviceId);
             put(session.getGarminStressSampleDao(), GarminStressSampleDao.Properties.DeviceId);

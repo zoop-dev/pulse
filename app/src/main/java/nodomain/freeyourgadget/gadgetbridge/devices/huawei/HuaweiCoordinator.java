@@ -334,7 +334,8 @@ public class HuaweiCoordinator {
         // Other
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_find_phone);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_disable_find_phone_with_dnd);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_allow_accept_reject_calls);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_allow_accept_calls);
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_allow_reject_calls);
 
         // Camera control
         if (supportsCameraRemote())

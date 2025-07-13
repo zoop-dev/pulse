@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -28,21 +29,14 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.Contact;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class ContactDetails extends AbstractGBActivity {
-    private static final Logger LOG = LoggerFactory.getLogger(ContactDetails.class);
-
     private Contact contact;
     private GBDevice device;
 
@@ -64,9 +58,9 @@ public class ContactDetails extends AbstractGBActivity {
 
         contactName = findViewById(R.id.contact_name);
         contactNumber = findViewById(R.id.contact_number);
+        contactNumber.setInputType(InputType.TYPE_CLASS_PHONE);
 
         device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
-        final DeviceCoordinator coordinator = device.getDeviceCoordinator();
 
         contactName.addTextChangedListener(new TextWatcher() {
             @Override

@@ -17,15 +17,13 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.app_specific_notifications;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -36,7 +34,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.AppSpecificNotificationSetting;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBActivity {
     private AppSpecificNotificationSettingsRepository repository = null;
@@ -45,13 +42,16 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
     private GBDevice mDevice;
     private DeviceCoordinator mCoordinator;
 
-    private List<String> mLedPatternValues = new ArrayList<>();
-    private List<String> mVibrationPatternValues = new ArrayList<>();
-    private List<String> mVibrationCountValues = new ArrayList<>();
+    private final List<String> mLedPatternValues = new ArrayList<>();
+    private final List<String> mVibrationPatternValues = new ArrayList<>();
+    private final List<String> mVibrationCountValues = new ArrayList<>();
 
     private Spinner mSpinnerLedPattern;
     private Spinner mSpinnerVibrationPattern;
     private Spinner mSpinnerVibrationCount;
+    private TextView mTextViewLedColorTitle;
+    private TextView mTextViewVibration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +61,8 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
         mSpinnerLedPattern = findViewById(R.id.spinnerLedType);
         mSpinnerVibrationPattern = findViewById(R.id.spinnerVibraType);
         mSpinnerVibrationCount = findViewById(R.id.spinnerVibraCount);
+        mTextViewLedColorTitle = findViewById(R.id.textViewLedColorTitle);
+        mTextViewVibration = findViewById(R.id.textViewVibration);
 
         mDevice = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
         mCoordinator = mDevice.getDeviceCoordinator();
@@ -78,27 +80,32 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
             mVibrationCountValues.add(p.getValue());
 
         if(!mCoordinator.supportsNotificationLedPatterns()) {
-            mSpinnerLedPattern.setEnabled(false);
+            mTextViewLedColorTitle.setVisibility(View.GONE);
+            mSpinnerLedPattern.setVisibility(View.GONE);
         } else {
             mSpinnerLedPattern.setAdapter(
                     createAdapterFromArrayAddingDefault(mCoordinator.getNotificationLedPatterns())
             );
         }
 
-        if(!mCoordinator.supportsNotificationVibrationPatterns()) {
-            mSpinnerVibrationPattern.setEnabled(false);
+        if (!mCoordinator.supportsNotificationVibrationPatterns()) {
+            mSpinnerVibrationPattern.setVisibility(View.GONE);
         } else {
             mSpinnerVibrationPattern.setAdapter(
                     createAdapterFromArrayAddingDefault(mCoordinator.getNotificationVibrationPatterns())
             );
         }
 
-        if(!mCoordinator.supportsNotificationVibrationRepetitionPatterns()) {
-            mSpinnerVibrationCount.setEnabled(false);
+        if (!mCoordinator.supportsNotificationVibrationRepetitionPatterns()) {
+            mSpinnerVibrationCount.setVisibility(View.GONE);
         } else {
             mSpinnerVibrationCount.setAdapter(
                     createAdapterFromArrayAddingDefault(mCoordinator.getNotificationVibrationRepetitionPatterns())
             );
+        }
+
+        if (!mCoordinator.supportsNotificationVibrationPatterns() && !mCoordinator.supportsNotificationVibrationRepetitionPatterns()) {
+            mTextViewVibration.setVisibility(View.GONE);
         }
 
         String title = getIntent().getStringExtra(AppSpecificNotificationSettingsAppListAdapter.STRING_EXTRA_PACKAGE_TITLE);
@@ -152,7 +159,7 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
         allOptions.add(getString(R.string.pref_default));
         for(AbstractNotificationPattern s: array) allOptions.add(s.getUserReadableName(getApplicationContext()));
 
-        return new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allOptions);
+        return new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, allOptions);
     }
 
     private void saveSettings() {

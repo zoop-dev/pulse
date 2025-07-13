@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_reply"
+        android:key="enable_sms_quick_reply"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_enable_sms_quick_reply_summary"
+        android:title="@string/pref_enable_sms_quick_reply_title" />
+</PreferenceScreen>

@@ -192,6 +192,13 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
 
         // KTrip
         put("org.kde.ktrip", NotificationType.TRANSIT);
+
+        // Others
+        put("com.vkontakte.android", NotificationType.VK);
+        put("com.tencent.mobileqq", NotificationType.QQ);
+        put("com.tumblr", NotificationType.TUMBLR);
+        put("com.pinterest", NotificationType.PINTEREST);
+        put("com.google.android.youtube", NotificationType.YOUTUBE);
     }
 
 }

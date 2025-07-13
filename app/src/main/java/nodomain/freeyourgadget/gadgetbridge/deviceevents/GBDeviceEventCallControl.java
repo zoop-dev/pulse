@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +54,12 @@ public class GBDeviceEventCallControl extends GBDeviceEvent {
         callIntent.putExtra("event", event.ordinal());
         callIntent.setPackage(context.getPackageName());
         context.sendBroadcast(callIntent);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "event: " + event;
     }
 
     public enum Event {

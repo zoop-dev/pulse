@@ -394,7 +394,7 @@ public class AsynchronousResponse {
                     callControlEvent.event = GBDeviceEventCallControl.Event.REJECT;
                     LOG.info("Rejected call");
 
-                    if (!prefs.getBoolean("enable_call_reject", true)) {
+                    if (!prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_ENABLE_CALL_REJECT, true)) {
                         LOG.info("Disabled rejecting calls, ignoring");
                         return;
                     }

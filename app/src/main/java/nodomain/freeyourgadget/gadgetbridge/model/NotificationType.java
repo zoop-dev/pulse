@@ -54,7 +54,13 @@ public enum NotificationType {
     DELTACHAT,
     ELEMENT,
     ELEMENTX,
-    MOLLY;
+    MOLLY,
+    VK,
+    QQ,
+    TUMBLR,
+    PINTEREST,
+    YOUTUBE,
+    ;
 
 
     /**

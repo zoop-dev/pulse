@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(104, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(106, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -166,6 +166,7 @@ public class GBDaoGenerator {
         addMoyoungBloodPressureSample(schema, user, device);
         addMoyoungSleepStageSample(schema, user, device);
         addMoyoungStressSample(schema, user, device);
+        addGloryFitStepsSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
         addHuaweiStressSample(schema, user, device);
@@ -204,6 +205,7 @@ public class GBDaoGenerator {
         addGenericStressSample(schema, user, device);
         addGenericHrvValueSample(schema, user, device);
         addGenericTemperatureSample(schema, user, device);
+        addGenericSleepStageSample(schema, user, device);
 
         new DaoGenerator().generateAll(schema, "app/src/main/java");
     }
@@ -1155,6 +1157,19 @@ public class GBDaoGenerator {
         return stressSample;
     }
 
+    private static Entity addGloryFitStepsSample(Schema schema, Entity user, Entity device) {
+        Entity sleepStageSample = addEntity(schema, "GloryFitStepsSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sleepStageSample, user, device);
+        sleepStageSample.addIntProperty("totalSteps").notNull();
+        sleepStageSample.addIntProperty("runningStart").notNull();
+        sleepStageSample.addIntProperty("runningEnd").notNull();
+        sleepStageSample.addIntProperty("runningSteps").notNull();
+        sleepStageSample.addIntProperty("walkingStart").notNull();
+        sleepStageSample.addIntProperty("walkingEnd").notNull();
+        sleepStageSample.addIntProperty("walkingSteps").notNull();
+        return sleepStageSample;
+    }
+
     private static void addCommonActivitySampleProperties(String superClass, Entity activitySample, Entity user, Entity device) {
         activitySample.setSuperclass(superClass);
         activitySample.addImport(MAIN_PACKAGE + ".devices.SampleProvider");
@@ -1873,5 +1888,13 @@ public class GBDaoGenerator {
         temperatureSample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
         temperatureSample.addIntProperty(SAMPLE_TEMPERATURE_TYPE).notNull();
         return temperatureSample;
+    }
+
+    private static Entity addGenericSleepStageSample(Schema schema, Entity user, Entity device) {
+        Entity sleepStageSample = addEntity(schema, "GenericSleepStageSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sleepStageSample, user, device);
+        sleepStageSample.addIntProperty("duration").notNull();
+        sleepStageSample.addIntProperty("stage").notNull();
+        return sleepStageSample;
     }
 }

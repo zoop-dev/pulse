@@ -499,6 +499,8 @@ public class BleNamesResolver {
         mServices.put("02f00000-0000-0000-0000-00000000ffe0", "(Propr: Nothing CMF Data");
         mServices.put("02f00000-0000-0000-0000-00000000fe00", "(Propr: Nothing CMF Firmware");
         mServices.put("77d4e67c-2fe2-2334-0d35-9ccd078f529c", "(Propr: Nothing CMF Shell");
+        mServices.put("000055ff-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Command");
+        mServices.put("000056ff-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Data");
         mServices.put("9b012401-bc30-ce9a-e111-0f67e491abde", "(Propr: Garmin GFDI V0)");
         mServices.put("6a4e2401-667b-11e3-949a-0800200c9a66", "(Propr: Garmin GFDI V1)");
         mServices.put("6a4e2800-667b-11e3-949a-0800200c9a66", "(Propr: Garmin ML)");
@@ -1006,6 +1008,10 @@ public class BleNamesResolver {
         mCharacteristics.put("77d4ff02-2fe2-2334-0d35-9ccd078f529c", "(Propr: Nothing CMF Shell Read");
         mCharacteristics.put("02f00000-0000-0000-0000-00000000ff01", "(Propr: Nothing CMF Firmware Write");
         mCharacteristics.put("02f00000-0000-0000-0000-00000000ff02", "(Propr: Nothing CMF Firmware Read");
+        mCharacteristics.put("000033f1-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Command Write");
+        mCharacteristics.put("000033f2-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Command Read");
+        mCharacteristics.put("000034f1-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Data Write");
+        mCharacteristics.put("000034f2-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Data Read");
         mCharacteristics.put("00010203-0405-0607-0809-0a0b0c0d2b12", "(Propr: Telink OTA Write)");
         mCharacteristics.put("ebe0ccb7-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd TIME)");
         mCharacteristics.put("ebe0ccc4-7a0a-4b0c-8a1a-6ff2997da3a6", "(Propr: Lywsd BATTERY)");

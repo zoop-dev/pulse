@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -222,5 +223,26 @@ public class StringUtils {
             result.append(parts[index].charAt(0)).append(".");
         }
         return result.toString();
+    }
+
+    public static byte[] truncateUtf16BE(final String str, final int maxBytes) {
+        final byte[] utf16Bytes = str.getBytes(StandardCharsets.UTF_16BE);
+
+        // UTF-16 code units are 2 bytes, so truncate at even boundary
+        int limit = Math.min(maxBytes, utf16Bytes.length);
+        if (limit % 2 != 0) {
+            limit -= 1;
+        }
+
+        // Check for surrogate pair at the cut point
+        int highByte = utf16Bytes[limit - 2] & 0xFF;
+        int lowByte = utf16Bytes[limit - 1] & 0xFF;
+        int lastCodeUnit = (highByte << 8) | lowByte;
+        // If it's a high surrogate (0xD800 to 0xDBFF), remove 2 more bytes to drop the full pair
+        if (lastCodeUnit >= 0xD800 && lastCodeUnit <= 0xDBFF) {
+            limit -= 2;
+        }
+
+        return Arrays.copyOfRange(utf16Bytes, 0, limit);
     }
 }

@@ -282,4 +282,36 @@ public final class DeviceSettingsUtils {
             return false;
         });
     }
+
+    public static void populateWithBpmRange(final CharSequence prefKey,
+                                            final DeviceSpecificSettingsHandler handler,
+                                            final int rangeMin,
+                                            final int rangeMax) {
+        final Preference pref = handler.findPreference(prefKey);
+        if (pref == null) {
+            return;
+        }
+
+        if (rangeMin >= rangeMax) {
+            throw new IllegalArgumentException("Invalid range [" + rangeMin + ", " + rangeMax + "]");
+        }
+
+        final CharSequence[] entries = new CharSequence[rangeMax - rangeMin + 2];
+        final CharSequence[] values = new CharSequence[rangeMax - rangeMin + 2];
+        entries[0] = handler.getContext().getString(R.string.off);
+        values[0] = "0";
+
+        for (int i = 1, bpm = rangeMin; bpm <= rangeMax; i++, bpm++) {
+            entries[i] = handler.getContext().getString(R.string.bpm_value_unit, bpm);
+            values[i] = String.valueOf(bpm);
+        }
+
+        if (pref instanceof ListPreference) {
+            ((ListPreference) pref).setEntries(entries);
+            ((ListPreference) pref).setEntryValues(values);
+        } else if (pref instanceof MultiSelectListPreference) {
+            ((MultiSelectListPreference) pref).setEntries(entries);
+            ((MultiSelectListPreference) pref).setEntryValues(values);
+        }
+    }
 }

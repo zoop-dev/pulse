@@ -158,7 +158,7 @@ public class CameraActivity extends AppCompatActivity {
 
         GBDeviceEventCameraRemote.Event event = GBDeviceEventCameraRemote.intToEvent(intent.getIntExtra(intentExtraEvent, 0));
 
-        LOG.info("Camera received event: " + event.name());
+        LOG.info("Camera received event: {}", event);
 
         // Nothing to do for unknown events
 
@@ -176,6 +176,10 @@ public class CameraActivity extends AppCompatActivity {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     contentValues
             ).build();
+            if (imageCapture == null) {
+                LOG.error("imageCapture is null");
+                return;
+            }
             imageCapture.takePicture(outputFileOptions, ContextCompat.getMainExecutor(this), new ImageCapture.OnImageSavedCallback() {
                 @Override
                 public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {

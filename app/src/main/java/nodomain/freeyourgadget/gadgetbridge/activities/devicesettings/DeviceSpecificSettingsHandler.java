@@ -20,6 +20,7 @@ import android.content.Context;
 
 import androidx.activity.result.ActivityResultCaller;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -35,6 +36,7 @@ public interface DeviceSpecificSettingsHandler extends ActivityResultCaller {
      * @param preferenceKey the preference key.
      * @return the preference, if found.
      */
+    @Nullable
     <T extends Preference> T findPreference(@NonNull CharSequence preferenceKey);
 
     /**

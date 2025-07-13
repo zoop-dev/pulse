@@ -137,6 +137,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.Gar
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.GarminVivosmart5Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosport.GarminVivosportCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_headphones.GenericHeadphonesCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.DotnP66DCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.OukitelBT103Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gree.GreeAcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hama.fit6900.HamaFit6900DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hplus.EXRIZUK8Coordinator;
@@ -698,6 +700,8 @@ public enum DeviceType {
     OPPO_ENCO_AIR(OppoEncoAirCoordinator.class),
     OPPO_ENCO_AIR2(OppoEncoAir2Coordinator.class),
     OPPO_ENCO_BUDS2(OppoEncoBuds2Coordinator.class),
+    OUKITEL_BT103(OukitelBT103Coordinator.class),
+    DOTN_P66D(DotnP66DCoordinator.class),
     REALME_BUDS_T110(RealmeBudsT110Coordinator.class),
     REALME_BUDS_T100(RealmeBudsT100Coordinator.class),
     REALME_BUDS_T300(RealmeBudsT300Coordinator.class),

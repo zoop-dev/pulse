@@ -1,2 +1,3 @@
 *.java
 !Abstract*.java
+!GenericActivitySample.java

@@ -40,7 +40,6 @@ public class PebbleNotification {
 
     private byte setColor(NotificationType notificationType) {
         return switch (notificationType) {
-            case UNKNOWN -> PebbleColor.DarkCandyAppleRed;
             case AMAZON -> PebbleColor.ChromeYellow;
             case BBM -> PebbleColor.DarkGray;
             case CONVERSATIONS -> PebbleColor.Inchworm;
@@ -64,12 +63,12 @@ public class PebbleNotification {
             case WECHAT -> PebbleColor.KellyGreen;
             case YAHOO_MAIL -> PebbleColor.Indigo;
             case ELEMENT, ELEMENTX -> PebbleColor.Malachite;
+            default -> PebbleColor.DarkCandyAppleRed;
         };
     }
 
     private int setIcon(NotificationType notificationType) {
         return switch (notificationType) {
-            case UNKNOWN -> PebbleIconID.NOTIFICATION_GENERIC;
             case AMAZON -> PebbleIconID.NOTIFICATION_AMAZON;
             case BBM -> PebbleIconID.NOTIFICATION_BLACKBERRY_MESSENGER;
             case CONVERSATIONS, HIPCHAT, RIOT, SIGNAL, WIRE, THREEMA, KONTALK,
@@ -107,6 +106,7 @@ public class PebbleNotification {
             case WHATSAPP -> PebbleIconID.NOTIFICATION_WHATSAPP;
             case YAHOO_MAIL -> PebbleIconID.NOTIFICATION_YAHOO_MAIL;
             case COL_REMINDER -> PebbleIconID.NOTIFICATION_REMINDER;
+            default -> PebbleIconID.NOTIFICATION_GENERIC;
         };
     }
 

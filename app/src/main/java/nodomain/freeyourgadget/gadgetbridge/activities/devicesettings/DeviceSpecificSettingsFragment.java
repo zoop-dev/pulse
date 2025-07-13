@@ -603,6 +603,10 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_HEARTRATE_STRESS_RELAXATION_REMINDER);
         addPreferenceHandlerFor(PREF_HEARTRATE_SLEEP_BREATHING_QUALITY_MONITORING);
         addPreferenceHandlerFor(PREF_SPO2_ALL_DAY_MONITORING);
+        addPreferenceHandlerFor(PREF_SPO2_MEASUREMENT_INTERVAL);
+        addPreferenceHandlerFor(PREF_SPO2_MEASUREMENT_TIME);
+        addPreferenceHandlerFor(PREF_SPO2_MEASUREMENT_START);
+        addPreferenceHandlerFor(PREF_SPO2_MEASUREMENT_END);
         addPreferenceHandlerFor(PREF_SPO2_LOW_ALERT_THRESHOLD);
         addPreferenceHandlerFor(PREF_HRV_ALL_DAY_MONITORING);
         addPreferenceHandlerFor(PREF_TEMPERATURE_ALL_DAY_MONITORING);
@@ -662,6 +666,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_NOTIFICATION_DELAY_CALLS);
         addPreferenceHandlerFor(PREF_CALL_REJECT_METHOD);
         addPreferenceHandlerFor(PREF_AUTO_REPLY_INCOMING_CALL);
+        addPreferenceHandlerFor(PREF_ENABLE_CALL_REJECT);
+        addPreferenceHandlerFor(PREF_ENABLE_SMS_QUICK_REPLY);
 
         addPreferenceHandlerFor(PREF_SLEEP_MODE_SLEEP_SCREEN);
         addPreferenceHandlerFor(PREF_SLEEP_MODE_SMART_ENABLE);

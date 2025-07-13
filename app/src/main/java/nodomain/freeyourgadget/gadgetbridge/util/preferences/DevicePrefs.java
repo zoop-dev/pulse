@@ -25,6 +25,8 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
@@ -72,6 +74,7 @@ public class DevicePrefs extends Prefs {
         return getBoolean("fetch_unknown_files", false);
     }
 
+    @NonNull
     public String getTimeFormat() {
         String timeFormat = getString(DeviceSettingsPreferenceConst.PREF_TIMEFORMAT, DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_AUTO);
         if (DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_AUTO.equals(timeFormat)) {
@@ -135,5 +138,13 @@ public class DevicePrefs extends Prefs {
 
         // either set to default, unknown option selected, or has not been set
         return DeviceCoordinator.ConnectionType.BOTH;
+    }
+
+    public int getHeartRateHighThreshold() {
+        return getInt(DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_HIGH_THRESHOLD, 0);
+    }
+
+    public int getHeartRateLowThreshold() {
+        return getInt(DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_LOW_THRESHOLD, 0);
     }
 }
