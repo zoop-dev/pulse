@@ -28,11 +28,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AmazfitBalance2Coordinator extends ZeppOsCoordinator {
     @Override
-    public boolean isExperimental() {
-        return true;
-    }
-
-    @Override
     public List<String> getDeviceBluetoothNames() {
         return Collections.singletonList("Amazfit Balance 2");
     }
