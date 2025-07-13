@@ -605,7 +605,7 @@
     <string name="zepp_os_watchface_emerald_moonlight">மரகத நிலவொளி</string>
     <string name="pref_title_contextual_arabic">சூழல் அரபு</string>
     <string name="widget_5_minutes">5 நிமிடங்கள்</string>
-    <string name="hr_widget_heart_rate">இதய துடிப்பு</string>
+    <string name="hr_widget_heart_rate">நாடி துடிப்பு</string>
     <string name="minCadence">மணித்துளி</string>
     <string name="qhybrid_pref_title_actions">செயல்கள்</string>
     <string name="qhybrid_pref_summary_actions">பயண பயன்பாட்டிற்கான செயல்கள்</string>
@@ -690,8 +690,8 @@
     <string name="device_hw">வன்பொருள் திருத்தம்: %1$s</string>
     <string name="device_fw">ஃபார்ம்வேர் பதிப்பு: %1$s</string>
     <string name="updatefirmwareoperation_firmware_not_sent">ஃபார்ம்வேர் அனுப்பப்படவில்லை</string>
-    <string name="charts_legend_heartrate">இதய துடிப்பு</string>
-    <string name="live_activity_heart_rate">இதய துடிப்பு</string>
+    <string name="charts_legend_heartrate">நாடி துடிப்பு</string>
+    <string name="live_activity_heart_rate">நாடி துடிப்பு</string>
     <string name="activity_prefs_calories_burnt">நாள்தோறும் இலக்கு: கலோரிகள் எரிக்கப்பட்டன</string>
     <string name="activity_prefs_distance_meters">நாள்தோறும் இலக்கு: மீட்டர் தூரம்</string>
     <string name="activity_db_management_merge_old_title">மரபு தரவுத்தள நீக்கு</string>
@@ -1605,7 +1605,7 @@
     <string name="first_start_intro_tag_line">கேசெட் விற்பனையாளர்களின் தனியுரிம பயன்பாடுகள் மற்றும் முகில் சேவைகளிலிருந்து விடுபடுங்கள்.</string>
     <string name="first_start_overview_title">கண்ணோட்டம்</string>
     <string name="first_start_overview_dashboard">இன்று நீங்கள் எவ்வாறு செய்கிறீர்கள் என்பதைப் பற்றிய விரைவான யோசனையைப் பெற டாச்போர்டு உங்களை அனுமதிக்கிறது. காலண்டர் பார்வை ஒரு மாதம் முழுவதும் உங்கள் இலக்குகளின் நிலையை காட்டுகிறது.</string>
-    <string name="menuitem_hr">இதய துடிப்பு</string>
+    <string name="menuitem_hr">நாடி துடிப்பு</string>
     <string name="menuitem_mutephone">முடக்கு தொலைபேசி</string>
     <string name="menuitem_barometer">காற்றழுத்தமானி</string>
     <string name="menuitem_flashlight">ஒளிரும் விளக்கு</string>
@@ -2007,7 +2007,7 @@
     <string name="activity_prefs_about_you">உங்களைப் பற்றி</string>
     <string name="activity_prefs_height_inches">அங்குல உயரம்</string>
     <string name="activity_prefs_chart_max_heart_rate">அதிகபட்ச இதய துடிப்பு</string>
-    <string name="activity_prefs_chart_min_heart_rate">குறைந்த இதய துடிப்பு</string>
+    <string name="activity_prefs_chart_min_heart_rate">குறைந்த நாடி துடிப்பு</string>
     <string name="pref_charts_range_on">விளக்கப்படங்கள் வரம்பு ஒரு மாதத்திற்கு அமைக்கப்பட்டுள்ளது</string>
     <string name="weekstepschart_steps_a_month">மாதத்திற்கு படிகள்</string>
     <string name="pref_title_pebble_health_store_raw">மூல பதிவை தரவுத்தளத்தில் சேமிக்கவும்</string>
@@ -2158,7 +2158,7 @@
     <string name="zetime_title_heartrate">இதய துடிப்பு அமைப்புகள்</string>
     <string name="zetime_title_heart_rate_alarm">இதய துடிப்பு அலாரம்</string>
     <string name="activity_prefs_alarm_max_heart_rate">அதிகபட்ச இதய துடிப்பு</string>
-    <string name="activity_prefs_alarm_min_heart_rate">குறைந்த இதய துடிப்பு</string>
+    <string name="activity_prefs_alarm_min_heart_rate">குறைந்த நாடி துடிப்பு</string>
     <string name="zetime_activity_tracking_summary">செயல்பாட்டு கண்காணிப்பை மாற்றுவது, உங்கள் படிகளை எண்ணும்.</string>
     <string name="zetime_handmove_display_summary">காட்சியை செயல்படுத்த அல்லது செயலிழக்க உங்கள் மணிக்கட்டை சுழற்றுங்கள்.</string>
     <string name="zetime_calories_type_all">செயலில் மற்றும் செயலற்ற எரிந்த கலோரிகள்</string>
@@ -2680,7 +2680,7 @@
     <string name="gpx_route_upload_in_progress">சிபிஎக்ச் வழியைப் பதிவேற்றுகிறது</string>
     <string name="updatefirmwareoperation_failed_low_mtu">%1$d இன் தற்போதைய MTU மிகக் குறைவு, தயவுசெய்து சாதன அமைப்புகளில் அதிக MTU ஐ இயக்கவும், சாதனத்தைத் துண்டிக்கவும்/மீண்டும் இணைக்கவும்.</string>
     <string name="calories">கலோரிகள்</string>
-    <string name="heart_rate">இதய துடிப்பு</string>
+    <string name="heart_rate">நாடி துடிப்பு</string>
     <string name="active_calories_short">செயலில்</string>
     <string name="no_limit">வரம்பு இல்லை</string>
     <string name="seconds_9">9 விநாடிகள்</string>
@@ -2946,7 +2946,7 @@
     <string name="maxSpeed">பெருமம்</string>
     <string name="maxPace">வேகமான விரைவு</string>
     <string name="totalStride">மொத்த முன்னேற்றம்</string>
-    <string name="averageHR">இதய துடிப்பு</string>
+    <string name="averageHR">நாடி துடிப்பு</string>
     <string name="averageKMPaceSeconds">விரைவு</string>
     <string name="HeartRateZones">இதய துடிப்பு மண்டலங்கள்</string>
     <string name="hrZoneNa">இதற்கில்லை</string>
