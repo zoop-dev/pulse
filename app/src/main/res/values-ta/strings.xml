@@ -2670,7 +2670,7 @@
     <string name="devicestatus_connecting">சாதனம் இணைக்கிறது</string>
     <string name="devicestatus_upload_starting">பதிவேற்றம் தொடங்குகிறது</string>
     <string name="devicestatus_upload_aborted">பதிவேற்றம் கைவிடப்பட்டது!</string>
-    <string name="firmware_update_progress">பதிவேற்றம் செயலில் உள்ளது \n%1$d %% %2 $ .2fkbps (சராசரி %3 $ .2fkbps) \nபகுதி %4 $ டி %5 $ டி</string>
+    <string name="firmware_update_progress">பதிவேற்றம் செயலில் உள்ளது \n%1$d %% %2$.2ffகிபை/நொடிக்கு (சராசரி %3 $ .2fkbps) \nபகுதி %4$d இல் %5$d</string>
     <string name="miband_fwinstaller_compatible_version">இணக்கமான பதிப்பு</string>
     <string name="pbw_installhandler_pebble_firmware">கூழாங்கல் நிலைபொருள் %1$s</string>
     <string name="pbwinstallhandler_correct_hw_revision">சரியான வன்பொருள் திருத்தம்</string>
