@@ -393,7 +393,7 @@
     <string name="hrZoneThreshold">வாசல்</string>
     <string name="foreFootLandings">முன் தரையிறக்கம்</string>
     <string name="fmtPaceDistance">விரைவு %d தூரம்</string>
-    <string name="fmtPacePace">விரைவு %d விரைவு</string>
+    <string name="fmtPacePace">விரைவு %d வேகம்</string>
     <string name="qhybrid_calibration_100_steps">100 படிகள்</string>
     <string name="hybridhr_widget_bg_dashed_circle">கோடு வட்டம்</string>
     <string name="pref_title_touch_spotify">Spotify</string>
@@ -548,7 +548,7 @@
     <string name="dbmanagementactivity_error_importing_shared">விருப்பத்தை இறக்குமதி செய்வதில் பிழை: %1$s</string>
     <string name="activity_db_management_autoexport_enabled_no">ஆட்டோ எக்ச்போர்ட் இயக்கப்படவில்லை.</string>
     <string name="activity_db_management_autoexport_scheduled_no">ஆட்டோ எக்ச்போர்ட் திட்டமிடப்படவில்லை.</string>
-    <string name="activity_DB_delete_legacy_button">பழைய டி.பி.</string>
+    <string name="activity_DB_delete_legacy_button">பழைய டி.பி நீக்கு</string>
     <string name="Cancel">ரத்துசெய்</string>
     <string name="start">தொடங்கு</string>
     <string name="set">கணம்</string>
@@ -654,7 +654,7 @@
     <string name="live_activity_steps_per_minute_history">நிமிட வரலாற்றுக்கு படிகள்</string>
     <string name="abstract_chart_fragment_kind_activity">செய்கைப்பாடு</string>
     <string name="sleep_colored_stats_deep_avg">ஆழமான சராசரி</string>
-    <string name="sleep_colored_stats_light_avg">லைட் ஏ.வி.சி.</string>
+    <string name="sleep_colored_stats_light_avg">லைட் ஏ.வி.சி</string>
     <string name="stats_lowest_hr">குறைந்த மனிதவள</string>
     <string name="device_not_connected">இணைக்கப்படவில்லை.</string>
     <string name="pref_sleep_breathing_quality_monitoring">தூக்கம் சுவாச தர கண்காணிப்பு</string>
@@ -779,7 +779,7 @@
     <string name="fmtPaceCorrection">விரைவு %d திருத்தம்</string>
     <string name="strokes_minute">str/min</string>
     <string name="calories_unit">கிலோகலோரி</string>
-    <string name="seconds_km">நொடி/கி.மீ.</string>
+    <string name="seconds_km">நொடி/கி.மீ</string>
     <string name="Swimming">நீச்சல்</string>
     <string name="Distance">தூரம்</string>
     <string name="activity_detail_end_label">முடிவு</string>
@@ -973,10 +973,10 @@
     <string name="redmi_buds_5_pro_equalizer_band_500">500 எர்ட்ச்</string>
     <string name="redmi_buds_5_pro_equalizer_band_1k">1 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_2k">2 kHz</string>
-    <string name="redmi_buds_5_pro_equalizer_neg6">-6 டி.பி.</string>
-    <string name="redmi_buds_5_pro_equalizer_neg3">-3 டி.பி.</string>
-    <string name="redmi_buds_5_pro_equalizer_neg2">-2 டி.பி.</string>
-    <string name="redmi_buds_5_pro_equalizer_neg1">-1 டி.பி.</string>
+    <string name="redmi_buds_5_pro_equalizer_neg6">-6 டி.பி</string>
+    <string name="redmi_buds_5_pro_equalizer_neg3">-3 டி.பி</string>
+    <string name="redmi_buds_5_pro_equalizer_neg2">-2 டி.பி</string>
+    <string name="redmi_buds_5_pro_equalizer_neg1">-1 டி.பி</string>
     <string name="redmi_buds_5_pro_equalizer_zero">0 டி.பி.</string>
     <string name="sony_anc_optimize_description">ஒலி ரத்துசெய்யும் உகப்பாக்கியைத் தொடங்க சொடுக்கு செய்க.</string>
     <string name="sony_sound_position_off">அணை</string>
@@ -1043,7 +1043,7 @@
     <string name="soundcore_equalizer_band8">பேண்ட் 8</string>
     <string name="pref_screen_auto_brightness_title">ஆட்டோ ஒளி</string>
     <string name="distance_format_meters">### மீ</string>
-    <string name="distance_format_kilometers">###.#கி.மீ.</string>
+    <string name="distance_format_kilometers">###.#கி.மீ</string>
     <string name="idasen_control_button_mid">நடுப்பகுதி</string>
     <string name="idasen_control_button_stand">நிற்க</string>
     <string name="steps_streaks_since_date">%s என்பதால்</string>
@@ -1191,7 +1191,7 @@
     <string name="minutes_6">6 நிமிடங்கள்</string>
     <string name="minutes_7">7 நிமிடங்கள்</string>
     <string name="abstract_chart_fragment_kind_light_sleep">லேசான தூக்கம்</string>
-    <string name="sleep_avg">ச்லீப் ஏ.வி.சி.</string>
+    <string name="sleep_avg">ச்லீப் ஏ.வி.சி</string>
     <string name="mi2_prefs_button_press_broadcast_summary">நிகழ்வுடன் அனுப்பப்பட்ட ஒளிபரப்பு செய்தி. ஒவ்வொரு செய்திக்கும் அளவுரு `பொத்தான்_ஐடி` தானாக சேர்க்கப்படும்.</string>
     <string name="mi2_prefs_inactivity_warnings">செயலற்ற எச்சரிக்கைகள்</string>
     <string name="silent_mode_vibrate_silent">அதிர்வு / அமைதியானது</string>
@@ -1400,7 +1400,7 @@
     <string name="sleep_colored_stats_light">ஒளி</string>
     <string name="sleep_colored_stats_rem">ரெம்</string>
     <string name="sleep_colored_stats_rem_avg">ரெம் ஆகச்ட்</string>
-    <string name="sleep_colored_stats_awake_avg">விழித்தெழு ஏ.வி.சி.</string>
+    <string name="sleep_colored_stats_awake_avg">விழித்தெழு ஏ.வி.சி</string>
     <string name="stats_empty_value">-</string>
     <string name="bip_prefs_shotcuts_summary">பேண்ட் திரையில் குறுக்குவழிகளைத் தேர்வுசெய்க</string>
     <string name="estonian">எச்டோனிய</string>
@@ -1452,7 +1452,7 @@
     <string name="hrv_status_seven_days_avg">7 நாள் சராசரி</string>
     <string name="hrv_status_unbalanced">சமநிலையற்றது</string>
     <string name="hrv_status_low">குறைந்த</string>
-    <string name="steps_distance_unit">%$ 1, 2f கி.மீ.</string>
+    <string name="steps_distance_unit">%1$,.2f கி.மீ</string>
     <string name="activity_type_treadmill">டிரெட்மில்</string>
     <string name="activity_type_exercise">உடற்பயிற்சி</string>
     <string name="share">பங்கு</string>
@@ -1668,7 +1668,7 @@
     <string name="pref_header_sony_device_info">சாதன செய்தி</string>
     <string name="stress_relaxed">நிதானமாக</string>
     <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
-    <string name="redmi_buds_5_pro_equalizer_neg5">-5 டி.பி.</string>
+    <string name="redmi_buds_5_pro_equalizer_neg5">-5 டி.பி</string>
     <string name="sony_ambient_sound_focus_voice">குரலில் கவனம் செலுத்துங்கள்</string>
     <string name="sony_surround_mode">சரவுண்ட் பயன்முறை</string>
     <string name="sony_equalizer_preset_bass_boost">பாச் பூச்ட்</string>
@@ -1886,7 +1886,7 @@
     <string name="widget_layout_top_wide_bot_large">மேலே அகலமானது, கீழே பெரியது</string>
     <string name="pref_developer_add_test_activities_title">சோதனை நடவடிக்கைகளைச் சேர்க்கவும்</string>
     <string name="backup_restore_restart_title">மறுதொடக்கம்</string>
-    <string name="label_distance_trip">பயணம்: %.1f எஃப் கி.மீ.</string>
+    <string name="label_distance_trip">பயணம்: %.1f கி.மீ</string>
     <string name="label_distance_total">மொத்தம்: %.1f kmm</string>
     <string name="label_distance_trip_mph">பயணம்: %.1f மைல்</string>
     <string name="menuitem_workout">பயிற்சி</string>
@@ -1903,7 +1903,7 @@
     <string name="devicetype_sony_wf_1000xm5">சோனி WF-1000XM5</string>
     <string name="devicetype_sony_wf_c500">சோனி WF-C500</string>
     <string name="devicetype_sony_wi_sp600n">சோனி WI-SP600N</string>
-    <string name="devicetype_soundcore_liberty4_nc">சவுண்ட்கோர் லிபர்ட்டி 4 என்.சி.</string>
+    <string name="devicetype_soundcore_liberty4_nc">சவுண்ட்கோர் லிபர்ட்டி 4 என்.சி</string>
     <string name="devicetype_honor_watchgspro">ஆனர் வாட்ச் சிஎச் புரோ</string>
     <string name="devicetype_huawei_band_aw70">அவாய் பேண்ட் (AW70)</string>
     <string name="devicetype_huawei_band6">அவாய் பேண்ட் 6</string>
@@ -2065,7 +2065,7 @@
     <string name="pref_crash_notification_summary">பயன்பாடு செயலிழக்கும்போது, பிழையுடன் அறிவிப்பைக் காண்பி</string>
     <string name="pref_check_permission_status">இசைவு நிலையை சரிபார்க்கவும்</string>
     <string name="error_background_service_reason_truncated">பின்னணி சேவையைத் தொடங்குவது தோல்வியடைந்தது…</string>
-    <string name="workout_set_reps">மறுபடியும் மறுபடியும்</string>
+    <string name="workout_set_reps">மறுநிகழ்வுகள்</string>
     <string name="workout_set_repetitions_weight_kg">%1$d ஃச் %2 $ .2f kg</string>
     <string name="yard">முற்றம்</string>
     <string name="milliseconds_ms">எம்.எச்</string>
@@ -2162,7 +2162,7 @@
     <string name="zetime_activity_tracking_summary">செயல்பாட்டு கண்காணிப்பை மாற்றுவது, உங்கள் படிகளை எண்ணும்.</string>
     <string name="zetime_handmove_display_summary">காட்சியை செயல்படுத்த அல்லது செயலிழக்க உங்கள் மணிக்கட்டை சுழற்றுங்கள்.</string>
     <string name="zetime_calories_type_all">செயலில் மற்றும் செயலற்ற எரிந்த கலோரிகள்</string>
-    <string name="zetime_prefs_inactivity_repetitions">மறுபடியும் மறுபடியும்</string>
+    <string name="zetime_prefs_inactivity_repetitions">மறுநிகழ்வுகள்</string>
     <string name="zetime_signaling_vibrate_beep">தொடர்ச்சியான அதிர்வு மற்றும் பீப்பிங்</string>
     <string name="zetime_signaling_beep_twice">இரண்டு முறை பீப்</string>
     <string name="clap_hands_to_wakeup_device">திரையை மாற்ற கைதட்டவும்</string>
@@ -2399,7 +2399,7 @@
     <string name="fw_upgrade_notice_amazfitbip3">உங்கள் AMAZFIT BIP 3 இல் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n தயவுசெய்து .fw கோப்பை நிறுவுவதை உறுதிசெய்து கொள்ளுங்கள், அதன் பிறகு .res கோப்பை. .Fw கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: முன்னர் நிறுவப்பட்டதைப் போலவே இருந்தால் .res ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">உங்கள் AMAZFIT BIP 3 Pro இல் %s FARMWARE ஐ நிறுவ உள்ளீர்கள்.\n\n தயவுசெய்து .fw கோப்பை நிறுவுவதை உறுதிசெய்து கொள்ளுங்கள், அதன் பிறகு .res கோப்பை. .Fw கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: முன்னர் நிறுவப்பட்டதைப் போலவே இருந்தால் .res ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="fw_upgrade_notice_amazfitcor">உங்கள் அமாச்ஃபிட் கோரில் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n தயவுசெய்து .fw கோப்பை நிறுவுவதை உறுதிசெய்து கொள்ளுங்கள், அதன் பிறகு .res கோப்பை. .Fw கோப்பை நிறுவிய பின் உங்கள் இசைக்குழு மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: முன்னர் நிறுவப்பட்டதைப் போலவே இருந்தால் நீங்கள் நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">"உங்கள் அமாச்ஃபிட் கோர் 2 இல் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n தயவுசெய்து .fw கோப்பை நிறுவுவதை உறுதிசெய்து கொள்ளுங்கள், அதன் பிறகு .res கோப்பை. .Fw கோப்பை நிறுவிய பின் உங்கள் இசைக்குழு மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: முன்னர் நிறுவப்பட்டதைப் போலவே இருந்தால் .res ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!\n\n முற்றிலும் சோதிக்கப்படாதது, உங்கள் சாதனத்தின் பெயர் மச்ஃபிட் பேண்ட் 2  என்றால் நீங்கள் ஒரு பீட்ச்_டபிள்யூ ஃபார்ம்வேரை ஒளிரச் செய்ய வேண்டும்"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">உங்கள் அமாச்ஃபிட் கோர் 2 இல் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n தயவுசெய்து .fw கோப்பை நிறுவுவதை உறுதிசெய்து கொள்ளுங்கள், அதன் பிறகு .res கோப்பை. .Fw கோப்பை நிறுவியபின் உங்கள் இசைக்குழு மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: முன்னர் நிறுவப்பட்டதைப் போலவே இருந்தால் .res ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!\n\n முற்றிலும் சோதிக்கப்படாதது, உங்கள் சாதனத்தின் பெயர் மச்ஃபிட் பேண்ட் 2 என்றால் நீங்கள் ஒரு பீட்ச்_டபிள்யூ ஃபார்ம்வேரை ஒளிரச் செய்ய வேண்டும்</string>
     <string name="fw_upgrade_notice_amazfitgtr">உங்கள் AMAZFIT GTR இல் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n .Fw கோப்பு, பின்னர் .res கோப்பு மற்றும் இறுதியாக .gps கோப்பை நிறுவுவதை உறுதிசெய்க. .Fw கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: இந்த கோப்புகள் முன்பு நிறுவப்பட்டதைப் போலவே இருந்தால் நீங்கள் .res மற்றும் .gps ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="fw_upgrade_notice_amazfit_trex">உங்கள் அமாச்ஃபிட் டி-ரெக்சில் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n .Fw கோப்பு, பின்னர் .res கோப்பு மற்றும் இறுதியாக .gps கோப்பை நிறுவுவதை உறுதிசெய்க. .Fw கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: இந்த கோப்புகள் முன்பு நிறுவப்பட்டதைப் போலவே இருந்தால் நீங்கள் .res மற்றும் .gps ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="fw_upgrade_notice_amazfitvergel">உங்கள் அமாச்ஃபிட் வெர்ச் லைட்டில் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n .Fw கோப்பு, பின்னர் .res கோப்பு மற்றும் இறுதியாக .gps கோப்பை நிறுவுவதை உறுதிசெய்க. .Fw கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: இந்த கோப்புகள் முன்பு நிறுவப்பட்டதைப் போலவே இருந்தால் நீங்கள் .res மற்றும் .gps ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
@@ -2853,7 +2853,7 @@
     <string name="hrv_status_seven_days_avg_status">நிலை</string>
     <string name="hrv_status_poor">ஏழை</string>
     <string name="hrv_status_last_night">நேற்று இரவு</string>
-    <string name="hrv_status_last_night_highest_5">நேற்று இரவு 5-நிமிட மேக்ச் ஏ.வி.சி.</string>
+    <string name="hrv_status_last_night_highest_5">நேற்று இரவு 5-நிமிட குறை மிகுதி சராசரி</string>
     <string name="hrv_status_seven_days_avg_long">7 நாள் சராசரி</string>
     <string name="share_screenshot">திரை காட்சி பகிரவும்</string>
     <string name="kind_gpx_route">சிபிஎக்ச் பாதை</string>
@@ -2894,7 +2894,7 @@
     <string name="devicetype_sony_wh_1000xm4">சோனி WH-1000XM4</string>
     <string name="devicetype_sony_wf_1000xm4">சோனி WF-1000XM4</string>
     <string name="devicetype_huawei_band9">அவாய் பேண்ட் 9</string>
-    <string name="devicetype_huawei_watch_gt">அவாய் வாட்ச் சி.டி.</string>
+    <string name="devicetype_huawei_watch_gt">அவாய் வாட்ச் சி.டி</string>
     <string name="devicetype_huawei_band4pro">அவாய் பேண்ட் 4 (புரோ)</string>
     <string name="devicetype_huawei_watchgt2">அவாய் வாட்ச் சி.டி 2 (புரோ)</string>
     <string name="devicetype_huawei_watchgt2e">அவாய் வாட்ச் சி.டி 2 இ</string>
@@ -2968,7 +2968,7 @@
     <string name="cyclingPowerMax">அதிகபட்ச சைக்கிள் ஓட்டுதல் ஆற்றல்</string>
     <string name="workout_set_i">%1D அமைக்கவும்</string>
     <string name="jumps_unit">தாவல்கள்</string>
-    <string name="minutes_km">என்/கி.மீ.</string>
+    <string name="minutes_km">குறை/கி.மீ</string>
     <string name="Strokes">பக்கவாதம்</string>
     <string name="prefs_events_forwarding_startnonwear">அணியாமல்</string>
     <string name="prefs_events_forwarding_broadcast_title">ஒளிபரப்பு செய்தி</string>
@@ -3021,7 +3021,7 @@
     <string name="pref_header_heartrate_sleep">தூங்கு</string>
     <string name="stress_mild">லேசான</string>
     <string name="redmi_buds_5_pro_equalizer_band_16k">16 கிலோஎர்ட்ச்</string>
-    <string name="redmi_buds_5_pro_equalizer_neg4">-4 டி.பி.</string>
+    <string name="redmi_buds_5_pro_equalizer_neg4">-4 டி.பி</string>
     <string name="redmi_buds_5_pro_adaptive_sound_description">காது வடிவம் மற்றும் சூழலுக்கு ஏற்ப ஒலியை சரிசெய்கிறது</string>
     <string name="redmi_buds_5_pro_equalizer_1">1 டி.பி.</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 டி.பி.</string>
@@ -3140,7 +3140,7 @@
     <string name="not_set">அமைக்கப்படவில்லை</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_off">அறிவிப்பு பேசப்படும்போது பிற பயன்பாடுகளின் பின்னணி அளவு குறைக்கப்படும்</string>
     <string name="pref_sleepasandroid_device_summary">ஆண்ட்ராய்டு தரவு வழங்குநராக சாதனமாக சாதனத்தைத் தேர்ந்தெடுக்கவும்</string>
-    <string name="pref_summary_fossil_hr_nav_foreground">வழிசெலுத்தல் பயன்பாடு வழிசெலுத்தல் அறிவுறுத்தலைப் பெறும்போது தானாகவே முன்னணியில் வர வேண்டுமா?</string>
+    <string name="pref_summary_fossil_hr_nav_foreground">வழிசெலுத்தல் பயன்பாடு வழிசெலுத்தல் அறிவுறுத்தலைப் பெறும்போது தானாகவே முன்னணியில் வர வேண்டுமா</string>
     <string name="pref_force_connection_type_description">உங்கள் சாதனம் கேசெட் பிரிட்சுக்கு பதிலளிக்காவிட்டால் இணைப்பு வகையை கட்டாயப்படுத்த முயற்சி செய்யலாம்</string>
     <string name="device_state_waiting_scan">சாதன ச்கேன் காத்திருக்கிறது</string>
     <string name="auto_reconnect_ble_scan_summary">குருட்டு இணைப்பு முயற்சிகளுக்கு பதிலாக சாதன ச்கேன் காத்திருங்கள்</string>
@@ -3201,7 +3201,7 @@
     <string name="devicetype_watch9">வாட்ச் 9</string>
     <string name="devicetype_watchx">ஃச் ஐப் பாருங்கள்</string>
     <string name="devicetype_mykronoz_zetime">MYKRONOZ ZETIME</string>
-    <string name="pref_title_notifications_repetitions">மறுபடியும் மறுபடியும்</string>
+    <string name="pref_title_notifications_repetitions">மறுநிகழ்வுகள்</string>
     <string name="pref_title_notifications_call">தொலைபேசி அழைப்புகள்</string>
     <string name="pref_header_sound">ஒலி</string>
     <string name="pref_theme_system">மண்டலம்</string>
@@ -3337,7 +3337,7 @@
     <string name="widget_listing_label">நிலை மற்றும் அலாரங்கள்</string>
     <string name="widget_set_alarm_after">அலாரத்தை அமைக்கவும்:</string>
     <string name="about_additional_device_support">கூடுதல் சாதன உதவி</string>
-    <string name="about_additional_contributions">குறியீடு, மொழிபெயர்ப்புகள், உதவி, சிந்தனைகள், உந்துதல், பிழை அறிக்கைகள், பணம்…</string>
+    <string name="about_additional_contributions">குறியீடு, மொழிபெயர்ப்புகள், உதவி, சிந்தனைகள், உந்துதல், பிழை அறிக்கைகள், பணம்… ✊</string>
     <string name="minAltitude">சிறுமம்</string>
     <string name="ascentSeconds">ஏறுதல்</string>
     <string name="sports_activity_quick_filter_select">காலம்</string>
@@ -3465,10 +3465,10 @@
     <string name="state_scanned">ச்கேன்</string>
     <string name="loading">ஏற்றுகிறது…</string>
     <string name="range_percentage">%1$d %% -%2$d %%</string>
-    <string name="range_percentage_float">%1 $ .1f %% -%2 $ .1f %%</string>
-    <string name="range_degrees">% $ 1 º -% $ 2º</string>
+    <string name="range_percentage_float">%1$.1f%% -%2$.1f%%</string>
+    <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="audio_recordings">ஆடியோ பதிவுகள்</string>
-    <string name="fw_upgrade_notice_huawei">உங்கள் %2$s இல் %1$s ஃபார்ம்வேரை பதிவேற்ற உள்ளீர்கள். \n\nஉங்கள் தற்போதைய ஃபார்ம்வேர் %s \n\nபதிவேற்றிய பின் உங்கள் சாதனம் மறுதொடக்கம் செய்யும். \n\nஉங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
+    <string name="fw_upgrade_notice_huawei">உங்கள் %1$s இல் %2$s ஃபார்ம்வேரை பதிவேற்ற உள்ளீர்கள். \n\nஉங்கள் தற்போதைய ஃபார்ம்வேர் %s \n\nபதிவேற்றிய பின் உங்கள் சாதனம் மறுதொடக்கம் செய்யும். \n\nஉங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="open_source_licenses">உரிமங்கள்</string>
     <string name="dialog_close">மூடு</string>
     <string name="dialog_open_url">திறந்த முகவரி</string>
@@ -3519,7 +3519,7 @@
     <string name="bahasa_melayu">மலாய்</string>
     <string name="activity_prefs_goal_standing_hours">நாள்தோறும் இலக்கு: நிற்கும் நேரம்</string>
     <string name="notifications_dismiss_all">அனைத்தையும் நிராகரிக்கவும்</string>
-    <string name="mi2_enable_text_notifications_summary">&lt;!</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 மற்றும் Mili_pro.ft* நிறுவப்பட்டது.]]></string>
     <string name="enhanced">மேம்படுத்தப்பட்டது</string>
     <string name="discovery_bonding_error">பிணைப்பு தோல்வியுற்றது: %1$s</string>
     <string name="copy_to_clipboard">நகலெடு</string>
@@ -3628,7 +3628,7 @@
     <string name="weather_condition_light_intensity_drizzle_rain">ஒளி தீவிரம் தூறல் மழை</string>
     <string name="weather_condition_drizzle_rain">தூறல் மழை</string>
     <string name="weather_condition_heavy_intensity_drizzle_rain">கனமான தீவிரம் தூறல் மழை</string>
-    <string name="weather_condition_shower_rain_and_drizzle">மழை மழை மற்றும் தூறல்</string>
+    <string name="weather_condition_shower_rain_and_drizzle">மழைத் தூறல் மற்றும் தூறல்</string>
     <string name="weather_condition_heavy_shower_rain_and_drizzle">கனரக மழை மற்றும் தூறல்</string>
     <string name="weather_condition_shower_drizzle">மழை தூறல்</string>
     <string name="weather_condition_light_rain">லேசான மழை</string>
@@ -3637,10 +3637,10 @@
     <string name="weather_condition_very_heavy_rain">மிகவும் கனமான மழை</string>
     <string name="weather_condition_extreme_rain">தீவிர மழை</string>
     <string name="weather_condition_freezing_rain">உறைபனி மழை</string>
-    <string name="weather_condition_light_intensity_shower_rain">ஒளி தீவிரம் மழை மழை</string>
-    <string name="weather_condition_shower_rain">மழை மழை</string>
-    <string name="weather_condition_heavy_intensity_shower_rain">கனமான தீவிரம் மழை மழை</string>
-    <string name="weather_condition_ragged_shower_rain">கந்தல் மழை மழை</string>
+    <string name="weather_condition_light_intensity_shower_rain">சிறு தீவிர மழைத் தூறல்</string>
+    <string name="weather_condition_shower_rain">மழைத் தூறல்</string>
+    <string name="weather_condition_heavy_intensity_shower_rain">கனமான தீவிர மழைத் தூறல்</string>
+    <string name="weather_condition_ragged_shower_rain">கந்தல் மழைத் தூறல்</string>
     <string name="weather_condition_light_snow">ஒளி பனி</string>
     <string name="weather_condition_snow">பனி</string>
     <string name="weather_condition_light_shower_snow">லைட் சவர் பனி</string>
@@ -3697,7 +3697,7 @@
     <string name="strokes_per_length">பக்கவாதம்/நீளம்</string>
     <string name="restingCalories">கலோரிகளை ஓய்வெடுக்கும்</string>
     <string name="metabolic_rate">வளர்சிதை மாற்ற விகிதம்</string>
-    <string name="active_calories_avg">ஆக்டிவ் ஏ.வி.சி.</string>
+    <string name="active_calories_avg">ஆக்டிவ் ஏ.வி.சி</string>
     <string name="active_calories_total">செயலில் மொத்தம்</string>
     <string name="resting_calories_total">மொத்தம்</string>
     <string name="calorie_over_goal">மேலே இலக்கு: %1$d கிலோகலோரி</string>
@@ -3742,7 +3742,7 @@
     <string name="ground_contact_time">நிலத்தடி தொடர்பு நேரம்</string>
     <string name="vertical_ratio">செங்குத்து விகிதம்</string>
     <string name="ground_contact_time_balance">தரை தொடர்பு நேர சமநிலை</string>
-    <string name="workout_repetitions">மறுபடியும் மறுபடியும்</string>
+    <string name="workout_repetitions">மறுநிகழ்வுகள்</string>
     <string name="workout_revolutions">புரட்சிகள்</string>
     <string name="workout_swings">ஊசலாடுகிறது</string>
     <string name="swimming_stroke">பக்கவாதம்</string>
