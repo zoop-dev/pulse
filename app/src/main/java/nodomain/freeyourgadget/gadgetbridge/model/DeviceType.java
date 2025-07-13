@@ -129,6 +129,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive5Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActiveHrCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivomove.GarminVivomoveHrCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivomove.GarminVivomoveSportCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivomove.GarminVivomoveStyleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivomove.GarminVivomoveTrendCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.GarminVivosmart4Coordinator;
@@ -583,6 +584,7 @@ public enum DeviceType {
     GARMIN_INSTINCT_3(GarminInstinct3Coordinator.class),
     GARMIN_INSTINCT_3_TACTICAL(GarminInstinct3TacticalCoordinator.class),
     GARMIN_LILY_2_ACTIVE(GarminLily2ActiveCoordinator.class),
+    GARMIN_VIVOMOVE_SPORT(GarminVivomoveSportCoordinator.class),
     GARMIN_VIVOMOVE_STYLE(GarminVivomoveStyleCoordinator.class),
     GARMIN_VIVOMOVE_TREND(GarminVivomoveTrendCoordinator.class),
     GARMIN_VENU(GarminVenuCoordinator.class),
