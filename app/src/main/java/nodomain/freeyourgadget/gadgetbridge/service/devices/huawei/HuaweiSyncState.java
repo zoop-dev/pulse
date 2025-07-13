@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
+import android.util.Log;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,10 @@ class HuaweiSyncState {
         this.supportProvider = supportProvider;
     }
 
+    private boolean isSyncActive() {
+        return !activitySync && !p2pSync && !workoutSync && workoutGpsDownload == 0;
+    }
+
     public void addActivitySyncToQueue() {
         LOG.debug("Add activity type to sync queue");
         if (syncQueue.contains(RecordedDataTypes.TYPE_ACTIVITY))
@@ -46,10 +52,22 @@ class HuaweiSyncState {
         return syncQueue.get(0);
     }
 
-    public void setActivitySync(boolean state) {
-        LOG.debug("Set activity sync state to {}", state);
-        this.activitySync = state;
-        if (!state && !this.p2pSync) {
+    public boolean startActivitySync() {
+        synchronized(this) {
+            if (isSyncActive()) {
+                LOG.warn("Attempted to start activity sync while another sync is still active");
+                return false;
+            }
+            this.activitySync = true;
+        }
+        LOG.debug("Set activity sync state to true");
+        return true;
+    }
+
+    public void stopActivitySync() {
+        LOG.debug("Set activity sync state to false");
+        this.activitySync = false;
+        if (!p2pSync) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
             supportProvider.fetchRecodedDataFromQueue();
         }
@@ -57,6 +75,7 @@ class HuaweiSyncState {
     }
 
     public void setP2pSync(boolean state) {
+        // We cannot do the syncActive check for the P2P sync as it runs in parallel with the activity sync
         LOG.debug("Set p2p sync state to {}", state);
         this.p2pSync = state;
         if (!state && !this.activitySync) {
@@ -66,10 +85,22 @@ class HuaweiSyncState {
         updateState();
     }
 
-    public void setWorkoutSync(boolean state) {
-        LOG.debug("Set workout sync state to {}", state);
-        this.workoutSync = state;
-        if (!state && this.workoutGpsDownload == 0) {
+    public boolean startWorkoutSync() {
+        synchronized (this) {
+            if (isSyncActive()) {
+                LOG.warn("Attempted to start workout sync while another sync is still active");
+                return false;
+            }
+            this.workoutSync = true;
+        }
+        LOG.debug("Set workout sync state to true");
+        return true;
+    }
+
+    public void stopWorkoutSync() {
+        LOG.debug("Set workout sync state to false");
+        this.workoutSync = false;
+        if (workoutGpsDownload != 0) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_GPS_TRACKS);
             supportProvider.fetchRecodedDataFromQueue();
         }
@@ -96,7 +127,7 @@ class HuaweiSyncState {
     }
 
     public void updateState(boolean needSync) {
-        if (!activitySync && !p2pSync && !workoutSync && workoutGpsDownload == 0) {
+        if (!isSyncActive()) {
             if (supportProvider.getDevice().isBusy()) {
                 supportProvider.getDevice().unsetBusyTask();
                 supportProvider.getDevice().sendDeviceUpdateIntent(supportProvider.getContext());

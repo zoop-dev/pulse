@@ -1383,10 +1383,6 @@ public class HuaweiSupportProvider {
         if (dataType == -1)
             return; // Empty queue
 
-        // TODO: Properly solve TOCTOU
-        // To make TOCTOU window smaller, set as busy
-        gbDevice.setBusyTask(R.string.busy_task_fetch_activity_data, context);
-
         if (dataType == RecordedDataTypes.TYPE_ACTIVITY) {
             fetchActivityData();
         } else if (dataType == RecordedDataTypes.TYPE_GPS_TRACKS) {
@@ -1395,7 +1391,9 @@ public class HuaweiSupportProvider {
     }
 
     private void fetchActivityData() {
-        syncState.setActivitySync(true);
+        // Only run the sync if accepted by the sync manager
+        if (!syncState.startActivitySync())
+            return;
         fetchActivityDataP2P();
 
         int sleepStart = 0;
@@ -1449,13 +1447,13 @@ public class HuaweiSupportProvider {
             @Override
             public void call() {
                 if (!(downloadTruSleepData(start, end) && downloadStressData(start, end)))
-                    syncState.setActivitySync(false);
+                    syncState.stopActivitySync();
             }
 
             @Override
             public void handleException(Request.ResponseParseException e) {
                 LOG.error("Fitness totals exception", e);
-                syncState.setActivitySync(false);
+                syncState.stopActivitySync();
             }
         });
 
@@ -1467,14 +1465,14 @@ public class HuaweiSupportProvider {
                     getFitnessTotalsRequest.doPerform();
                 } catch (IOException e) {
                     LOG.error("Exception on starting fitness totals request", e);
-                    syncState.setActivitySync(false);
+                    syncState.stopActivitySync();
                 }
             }
 
             @Override
             public void handleException(Request.ResponseParseException e) {
                 LOG.error("Step data count exception", e);
-                syncState.setActivitySync(false);
+                syncState.stopActivitySync();
             }
         });
 
@@ -1485,14 +1483,14 @@ public class HuaweiSupportProvider {
                     getStepDataCountRequest.doPerform();
                 } catch (IOException e) {
                     LOG.error("Exception on starting step data count request", e);
-                    syncState.setActivitySync(false);
+                    syncState.stopActivitySync();
                 }
             }
 
             @Override
             public void handleException(Request.ResponseParseException e) {
                 LOG.error("Sleep data count exception", e);
-                syncState.setActivitySync(false);
+                syncState.stopActivitySync();
             }
         });
 
@@ -1500,7 +1498,7 @@ public class HuaweiSupportProvider {
             getSleepDataCountRequest.doPerform();
         } catch (IOException e) {
             LOG.error("Exception on starting sleep data count request", e);
-            syncState.setActivitySync(false);
+            syncState.stopActivitySync();
         }
     }
 
@@ -1520,7 +1518,8 @@ public class HuaweiSupportProvider {
     }
 
     private void fetchWorkoutData() {
-        syncState.setWorkoutSync(true);
+        if (!syncState.startWorkoutSync())
+            return;
 
         int start = 0;
         int end = (int) (System.currentTimeMillis() / 1000);
@@ -2894,13 +2893,13 @@ public class HuaweiSupportProvider {
                             }
 
                         }
-                        syncState.setActivitySync(false);
+                        syncState.stopActivitySync();
                     }
 
                     @Override
                     public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
                         super.downloadException(e);
-                        syncState.setActivitySync(false);
+                        syncState.stopActivitySync();
                     }
                 }
         ), true);
@@ -2924,14 +2923,14 @@ public class HuaweiSupportProvider {
 
                 if (statusData == null || statusData.length == 0) {
                     LOG.debug("Sleep state file empty");
-                    syncState.setActivitySync(false);
+                    syncState.stopActivitySync();
                     return;
                 }
 
                 HuaweiTruSleepParser.TruSleepStatus[] results = HuaweiTruSleepParser.parseState(statusData);
                 if (results.length == 0) {
                     LOG.debug("No sleep results");
-                    syncState.setActivitySync(false);
+                    syncState.stopActivitySync();
                     return;
                 }
                 for (HuaweiTruSleepParser.TruSleepStatus status : results)
@@ -2939,6 +2938,8 @@ public class HuaweiSupportProvider {
 
 //                HuaweiTruSleepParser.TruSleepData data = HuaweiTruSleepParser.parseData(sleepData);
 //                HuaweiTruSleepParser.analyze(this.provider, results, data);
+
+                syncState.stopActivitySync();
             }
         };
 
@@ -2987,13 +2988,13 @@ public class HuaweiSupportProvider {
                         } else {
                             LOG.debug("Stress file empty");
                         }
-                        syncState.setActivitySync(false);
+                        syncState.stopActivitySync();
                     }
 
                     @Override
                     public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
                         super.downloadException(e);
-                        syncState.setActivitySync(false);
+                        syncState.stopActivitySync();
                     }
                 }
         ), true);
@@ -3021,7 +3022,7 @@ public class HuaweiSupportProvider {
 
 
     public void endOfWorkoutSync() {
-        this.syncState.setWorkoutSync(false);
+        this.syncState.stopWorkoutSync();
     }
 
     public void downloadWorkoutGpsFiles(short workoutId, Long databaseId, Runnable extraCallbackAction) {
