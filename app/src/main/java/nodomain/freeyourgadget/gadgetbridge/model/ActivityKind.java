@@ -313,6 +313,10 @@ public enum ActivityKind {
     STEP_AEROBICS(0x0400010e, R.string.activity_type_step_aerobics),
     EQUESTRIAN(0x0400010f, R.string.activity_type_equestrian),
     ATHLETICS(0x04000110, R.string.activity_type_athletics),
+    FREE_DIVING(0x04000111, R.string.activity_type_free_diving, R.drawable.ic_activity_diving),
+    APNEA_TRAINING(0x04000112, R.string.activity_type_apnea_training),
+    APNEA_TEST(0x04000113, R.string.activity_type_apnea_test),
+    SCUBA_DIVING(0x04000114, R.string.activity_type_scuba_diving, R.drawable.ic_activity_diving),
     ;
 
     private final int code;

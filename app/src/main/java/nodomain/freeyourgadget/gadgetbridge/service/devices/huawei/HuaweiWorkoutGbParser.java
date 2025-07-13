@@ -129,6 +129,10 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
         INDOOR_WALK(13, ActivityKind.INDOOR_WALKING),
         HIKING(14, ActivityKind.HIKING),
         JUMP_ROPING(21, ActivityKind.JUMP_ROPING),
+        FREE_DIVING(22, ActivityKind.FREE_DIVING),
+        APNEA_TRAINING(23, ActivityKind.APNEA_TRAINING),
+        APNEA_TEST(24, ActivityKind.APNEA_TEST),
+        SCUBA_DIVING(25, ActivityKind.SCUBA_DIVING),
         PING_PONG(128, ActivityKind.PINGPONG),
         BADMINTON(129, ActivityKind.BADMINTON),
         TENNIS(130, ActivityKind.TENNIS),
@@ -811,20 +815,32 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 summaryData.add(ActivitySummaryEntries.HR_MAX, maxHeartRatePeak, ActivitySummaryEntries.UNIT_BPM);
             }
 
-            if(summaryMinAltitude != null) {
-                summaryData.add(ActivitySummaryEntries.ALTITUDE_MIN, summaryMinAltitude / 10.0f, ActivitySummaryEntries.UNIT_METERS);
-            }
+            if (type == ActivityKind.FREE_DIVING || type == ActivityKind.SCUBA_DIVING) {
+                /* BOTH summaryMaxAltitude AND elevationLoss CORRESPOND TO MAX_DEPTH
+                if(summaryMaxAltitude != null) {
+                    summaryData.add(ActivitySummaryEntries.MAX_DEPTH, summaryMaxAltitude / 10.0f, ActivitySummaryEntries.UNIT_METERS);
+                }
+                */
 
-            if(summaryMaxAltitude != null) {
-                summaryData.add(ActivitySummaryEntries.ALTITUDE_MAX, summaryMaxAltitude / 10.0f, ActivitySummaryEntries.UNIT_METERS);
-            }
-            if(elevationGain != null) {
-                summaryData.add(ActivitySummaryEntries.ELEVATION_GAIN, elevationGain / 10.0f, ActivitySummaryEntries.UNIT_METERS);
-            }
-            if(elevationLoss != null) {
-                summaryData.add(ActivitySummaryEntries.ELEVATION_LOSS, elevationLoss / 10.0f, ActivitySummaryEntries.UNIT_METERS);
-            }
+                if(elevationLoss != null) {
+                    summaryData.add(ActivitySummaryEntries.MAX_DEPTH, elevationLoss / 10.0f, ActivitySummaryEntries.UNIT_METERS);
+                }
 
+            } else {
+                if(summaryMinAltitude != null) {
+                    summaryData.add(ActivitySummaryEntries.ALTITUDE_MIN, summaryMinAltitude / 10.0f, ActivitySummaryEntries.UNIT_METERS);
+                }
+
+                if(summaryMaxAltitude != null) {
+                    summaryData.add(ActivitySummaryEntries.ALTITUDE_MAX, summaryMaxAltitude / 10.0f, ActivitySummaryEntries.UNIT_METERS);
+                }
+                if(elevationGain != null) {
+                    summaryData.add(ActivitySummaryEntries.ELEVATION_GAIN, elevationGain / 10.0f, ActivitySummaryEntries.UNIT_METERS);
+                }
+                if(elevationLoss != null) {
+                    summaryData.add(ActivitySummaryEntries.ELEVATION_LOSS, elevationLoss / 10.0f, ActivitySummaryEntries.UNIT_METERS);
+                }
+            }
 
             final LinkedHashMap<String, ActivitySummaryTableRowEntry> pacesTable = new LinkedHashMap<>();
 

@@ -1715,6 +1715,10 @@
     <string name="activity_type_step_aerobics">Step aerobics</string>
     <string name="activity_type_equestrian">Equestrian</string>
     <string name="activity_type_athletics">Athletics</string>
+    <string name="activity_type_free_diving">Free Diving</string>
+    <string name="activity_type_apnea_training">Apnea Training</string>
+    <string name="activity_type_apnea_test">Apnea Test</string>
+    <string name="activity_type_scuba_diving">SCUBA Diving</string>
     <string name="activity_summaries">Sport Activities</string>
     <string name="activity_summary_detail">Sport Activity Detail</string>
     <string name="activity_summary_edit_name_title">Edit label</string>
@@ -2710,6 +2714,11 @@
     <string name="swim_style_drill">Drill</string>
     <string name="swim_style_mixed">Mixed</string>
     <string name="workout_intervals">Intervals</string>
+    <!-- Diving params -->
+    <string name="diving_maximum_diving_depth">Maximum Diving Depth</string>
+    <string name="diving_water_type">Water Type</string>
+    <string name="diving_gas">Gas</string>
+
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="qhybrid_calibration_align_hint">Use the buttons below to align the watch hands to 12:00.</string>
     <string name="lorem_ipsum" translatable="false">Lorem Ipsum</string>
