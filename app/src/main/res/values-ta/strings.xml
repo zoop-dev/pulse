@@ -290,7 +290,7 @@
     <string name="pref_title_lower_button_short_press_action">கீழ் பொத்தான் குறுகிய அழுத்த நடவடிக்கை</string>
     <string name="pref_qhybrid_save_raw_activity_files">மூல செயல்பாட்டு கோப்புகளை சேமிக்கவும்</string>
     <string name="device_requires_key">விசை தேவை, நுழைய நீண்ட செய்தித் தாள்</string>
-    <string name="minHR">குறைந்த இதய துடிப்பு</string>
+    <string name="minHR">குறைந்த நாடிதுடிப்பு</string>
     <string name="lactateThresholdHeartRate">லாக்டேட் வாசல் இதய துடிப்பு</string>
     <string name="swolfMin">குறைந்தபட்ச ச்வோல்ஃப்</string>
     <string name="cyclingPowerAverage">சராசரி சைக்கிள் ஓட்டுதல் ஆற்றல்</string>
@@ -352,7 +352,7 @@
     <string name="pref_summary_authkey">நீங்கள் இணைக்க விரும்பும் உங்கள் அனைத்து ஆண்ட்ராய்டு சாதனங்களிலும் பொதுவான விசைக்கு அங்கீகார விசையை மாற்றவும். எல்லா சாதனங்களுக்கும் முந்தைய இயல்புநிலை விசை 0123456789@abcde</string>
     <string name="pref_gps_band">சி.பி.எச் பேண்ட்</string>
     <string name="clock">கடிகை</string>
-    <string name="simplified_chinese">எளிமைப்படுத்தப்பட்ட சீன</string>
+    <string name="simplified_chinese">சீன (எளிமை)</string>
     <string name="english">ஆங்கிலம்</string>
     <string name="norwegian_bokmal">நார்வேசியன் பொக்மால்</string>
     <string name="accuracy">துல்லியம்</string>
@@ -1289,7 +1289,7 @@
     <string name="mi2_prefs_do_not_disturb">தொந்தரவு செய்ய வேண்டாம்</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">இதய துடிப்பு கண்காணிப்பை உள்ளமைக்கவும்</string>
     <string name="mi3_prefs_night_mode">இரவு முறை</string>
-    <string name="traditional_chinese">பாரம்பரிய சீன</string>
+    <string name="traditional_chinese">சீன (பாரம்பரிய)</string>
     <string name="english_gb">ஆங்கிலம் (ஐக்கிய முடியரசு)</string>
     <string name="persian">பெர்சியன்</string>
     <string name="activity_type_swimming">நீச்சல்</string>
@@ -1635,7 +1635,7 @@
     <string name="averageSpeed">சராசரி விரைவு</string>
     <string name="groundContactTimeAvg">சராசரி தரை தொடர்பு நேரம்</string>
     <string name="unknownDataEncountered">அறியப்படாத தரவு சந்தித்தது</string>
-    <string name="workout_set_repetitions_weight_lbs">%1$d ஃச் %2 $ .2f பவுண்ட்</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f பவுண்ட்</string>
     <string name="steps_unit">படிகள்</string>
     <string name="meters_second">எம்/கள்</string>
     <string name="jumps_minute">தாவல்கள்/நிமிடம்</string>
@@ -2066,7 +2066,7 @@
     <string name="pref_check_permission_status">இசைவு நிலையை சரிபார்க்கவும்</string>
     <string name="error_background_service_reason_truncated">பின்னணி சேவையைத் தொடங்குவது தோல்வியடைந்தது…</string>
     <string name="workout_set_reps">மறுநிகழ்வுகள்</string>
-    <string name="workout_set_repetitions_weight_kg">%1$d ஃச் %2 $ .2f kg</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2fகிகி</string>
     <string name="yard">முற்றம்</string>
     <string name="milliseconds_ms">எம்.எச்</string>
     <string name="activity_filter_reset_filter">வடிகட்டியை மீட்டமை</string>
@@ -2934,8 +2934,8 @@
     <string name="permission_request">ஆண்ட்ராய்டு இலிருந்து உங்கள் சாதனத்திற்கு செய்திகளையும் பிற தரவையும் அனுப்ப %1$s உங்களை அனுமதிக்கிறது. இதைச் செய்ய அந்த தரவை அணுக இசைவு தேவைப்படுகிறது, அது இல்லாமல், அது சரியாக செயல்படாது.\n\n அந்த அனுமதிகளைக் கோரும் சில ஆண்ட்ராய்டு உரையாடல்கள் உங்களுக்கு இப்போது வழங்கப்படும்.\n\n தொடர \'%2$s\' ஐத் தட்டவும்.</string>
     <string name="permission_granting_mandatory">இந்த அனுமதிகள் அனைத்தும் தேவை மற்றும் வழங்கப்படாவிட்டால் உறுதியற்ற தன்மை ஏற்படக்கூடும்</string>
     <string name="permission_notification_listener">உங்கள் தொலைபேசியின் திரை முடக்கப்படும்போது அவற்றை உங்கள் கடிகாரத்தில் காண்பிப்பதற்காக %1$s அறிவிப்புகளுக்கான அணுகல் தேவை.\n\n தயவுசெய்து \'%2$s\' பின்னர் \'%1$s\' ஐத் தட்டவும், \'அறிவிப்பு அணுகலை அனுமதிக்கவும்\' என்பதை இயக்கவும், பின்னர்%1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
-    <string name="permission_notification_policy_access">உங்கள் தொலைபேசியின் திரை முடக்கப்பட்டிருக்கும் போது உங்கள் கடிகாரத்தில் அவர்களை மதிக்க அமைப்புகளைத் தொந்தரவு செய்யாத 1 $ s அணுகல் தேவை.\n\n தயவுசெய்து \'%2$s\' பின்னர் \'%1$s\' ஐத் தட்டவும், \'தொந்தரவு செய்ய வேண்டாம்\' என்று இயக்கவும், பின்னர்%1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
-    <string name="permission_location">உங்கள் திரை முடக்கப்பட்டிருந்தாலும் கூட உங்கள் கடிகாரத்துடன் இணைக்க அனுமதிக்க, பின்னணியில் உங்கள் இருப்பிடத்தை அணுக 1 $ S கள் தேவை.\n\n பின்வரும் திரையில் \' %2$s\' ஐத் தேர்வுசெய்து, %1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
+    <string name="permission_notification_policy_access">உங்கள் தொலைபேசியின் திரை முடக்கப்பட்டிருக்கும்போது உங்கள் கடிகாரத்தில் அவர்களை மதிக்க அமைப்புகளைத் தொந்தரவு செய்யாத %1$s அணுகல் தேவை.\n\n தயவுசெய்து \'%2$s\' பின்னர் \'%1$s\' ஐத் தட்டவும், \'தொந்தரவு செய்ய வேண்டாம்\' என்று இயக்கவும், பின்னர்%1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
+    <string name="permission_location">உங்கள் திரை முடக்கப்பட்டிருந்தாலும் கூட உங்கள் கடிகாரத்துடன் இணைக்க அனுமதிக்க, பின்னணியில் உங்கள் இருப்பிடத்தை அணுக %1$s தேவை.\n\n பின்வரும் திரையில் \' %2$s\' ஐத் தேர்வுசெய்து, %1$s க்கு திரும்ப \'பின்\' என்பதைத் தட்டவும்.</string>
     <string name="pref_check_permission_status_summary">உடனடியாக தேவையில்லை என்றாலும் கூட காணாமல் போன அனுமதிகளைக் கேளுங்கள். இந்த அம்சங்களில் எதையும் உங்கள் சாதனங்கள் உண்மையில் ஆதரிக்கவில்லை என்றால் மட்டுமே இதை முடக்கு. இசைவு வழங்காதது சிக்கல்களை ஏற்படுத்தக்கூடும்!</string>
     <string name="sonyswr12_settings_low_vibration_summary">கைக்கடிகாரத்தில் அதிர்வுகளின் குறைந்த தீவிரத்தை இயக்கவும்</string>
     <string name="sonyswr12_settings_stamina">ஆற்றல் சேமிப்பு முறை</string>
@@ -2946,7 +2946,7 @@
     <string name="maxSpeed">பெருமம்</string>
     <string name="maxPace">வேகமான விரைவு</string>
     <string name="totalStride">மொத்த முன்னேற்றம்</string>
-    <string name="averageHR">நாடி துடிப்பு</string>
+    <string name="averageHR">நாடிதுடிப்பு</string>
     <string name="averageKMPaceSeconds">விரைவு</string>
     <string name="HeartRateZones">இதய துடிப்பு மண்டலங்கள்</string>
     <string name="hrZoneNa">இதற்கில்லை</string>
@@ -3453,7 +3453,7 @@
     <string name="pref_dashboard_select_devices_title">சாதனங்களைத் தேர்ந்தெடு…</string>
     <string name="dashboard_calendar_month_goals_reached_title">படிகளின் % இலக்கு அடைந்தது</string>
     <string name="pref_title_garmin_default_reply_suffix">முன் வரையறுக்கப்பட்ட பதில் பின்னொட்டைப் பயன்படுத்தவும்</string>
-    <string name="chart_cycling_point_label_distance">இன்று: %$. 1f கி.மீ.\nமொத்தம்: %2 $ .1f kmm</string>
+    <string name="chart_cycling_point_label_distance">இன்று: %1$.1fகி.மீ\nமொத்தம்: %2$.1fகி.மீ</string>
     <string name="toast_camera_support_required">இந்த செயல்பாட்டிற்கு கேமரா உதவி தேவை.</string>
     <string name="pref_battery_polling_interval_format">ஒவ்வொரு %1$s நிமிடங்களும்</string>
     <string name="battery_polling_failed_start">பேட்டரி வாக்குப்பதிவைத் தொடங்குவதில் தோல்வி</string>
@@ -3690,7 +3690,7 @@
     <string name="aqi_level_unhealthy">ஆரோக்கியமற்ற</string>
     <string name="aqi_level_very_unhealthy">மிகவும் ஆரோக்கியமற்ற</string>
     <string name="aqi_level_dangerous">ஆபத்தானது</string>
-    <string name="appwidget_setting_alarm">%1 $ 02D க்கு அலாரம் அமைத்தல்: %2 $ 02D</string>
+    <string name="appwidget_setting_alarm">%1$02d:%2$02d க்கு அலாரம் அமைத்தல்</string>
     <string name="error_version_check_extreme_caution">எச்சரிக்கை: பதிப்பு தகவல்களைச் சரிபார்க்கும்போது பிழை! நீங்கள் தொடரக்கூடாது! பார்த்த பதிப்பு பெயர் \"%s\"</string>
     <string name="poolLength">பூல் நீளம்</string>
     <string name="swim_avg_cadence">ஏ.வி.சி நீச்சல் கேடென்ச்</string>
@@ -3764,8 +3764,8 @@
     <string name="prefs_active_noise_cancelling_transport">போக்குவரத்து</string>
     <string name="prefs_active_noise_cancelling_indoor">உட்புறம்</string>
     <string name="prefs_active_noise_cancelling_outdoor">வெளிப்புறம்</string>
-    <string name="weight_kg">%1 $ .2f கிலோ</string>
-    <string name="weight_lbs">%1 $ .2f பவுண்ட்</string>
+    <string name="weight_kg">%1$.2f கிலோ</string>
+    <string name="weight_lbs">%1$.2f பவுண்ட்</string>
     <string name="devicetype_onemore_sonoflow">1 மோர் சோனோஃப்ளோ</string>
     <string name="pref_heart_rate_realtime_mode">நிகழ்நேர தானியங்கி இதய துடிப்பு அளவீட்டு முறை</string>
     <string name="pref_heart_rate_realtime_mode_summary">இயக்கப்பட்டிருந்தால், நிகழ்நேர பயன்முறையைப் பயன்படுத்துகிறது, இல்லையெனில் அறிவுள்ள பயன்முறையைப் பயன்படுத்துகிறது. இந்த பயன்முறை அதிக சக்தியைப் பயன்படுத்துகிறது.</string>
@@ -3781,7 +3781,7 @@
     <string name="uploading">பதிவேற்றுதல்…</string>
     <string name="pref_override_features_title">ஆதரிக்கப்பட்ட அம்சங்களை மேலெழுதவும்</string>
     <string name="pref_override_features_summary">குறிப்பிட்ட சாதன அம்சங்களை இயக்கவும்/முடக்கவும். இது சிக்கல்களை ஏற்படுத்தும் மற்றும்/அல்லது உங்கள் சாதனம் தவறாக செயல்படக்கூடும்</string>
-    <string name="garmin_agps_url_i">AGPS %$ 1 டி முகவரி</string>
+    <string name="garmin_agps_url_i">AGPS %1$d முகவரி</string>
     <string name="maps_not_found">வரைபடங்கள் எதுவும் கிடைக்கவில்லை - தயவுசெய்து அமைப்புகளில் செல்லுபடியாகும் வரைபடக் கோப்புறையைத் தேர்ந்தெடுக்கவும்</string>
     <string name="pref_import_activity_files_title">செயல்பாட்டு கோப்புகளை இறக்குமதி செய்க</string>
     <string name="pref_import_activity_files_summary">தொலைபேசி சேமிப்பகத்திலிருந்து செயல்பாட்டு கோப்புகளை கைமுறையாக இறக்குமதி செய்யுங்கள்</string>
@@ -3844,7 +3844,7 @@
     <string name="ultrahuman_breathing_title">சுவாசம்</string>
     <string name="ultrahuman_breathing_start">தொடங்கு</string>
     <string name="ultrahuman_breathing_stop">நிறுத்து</string>
-    <string name="ultrahuman_unhandled_error_response">செயல்படாத பதில் %2 $#02x %3 $#02x செயல்பாட்டிற்கு %1 $#02x</string>
+    <string name="ultrahuman_unhandled_error_response">செயல்படாத பதில் %2$#02x %3$#02x செயல்பாட்டிற்கு %1$#02x</string>
     <string name="ultrahuman_unhandled_operation_response">தடையற்ற செயல்பாட்டு பதில் %s</string>
     <string name="huawei_stress_test_enable">தானியங்கி அழுத்த சோதனை</string>
     <string name="huawei_stress_test_enable_summary">தானியங்கி அழுத்த சோதனையை இயக்கவும் அல்லது முடக்கவும்</string>
@@ -3904,7 +3904,7 @@
     <string name="even_realities_frame_color_grey">சாம்பல்</string>
     <string name="even_realities_frame_color_brown">பழுப்பு</string>
     <string name="even_realities_frame_color_green">பச்சை</string>
-    <string name="even_realities_frame_description">%1$s %2$s ( %3$s: %4 $ s)</string>
+    <string name="even_realities_frame_description">%1$s %2$s (%3$s : %4$s)</string>
     <string name="even_realities_left_lens">இடது லென்ச்</string>
     <string name="even_realities_right_lens">வலது லென்ச்</string>
     <string name="pref_aawireless_dongle_confirmation">டாங்கிள் பயன்முறையை மாற்றியமைத்த பிறகு, நீங்கள் மீண்டும் சாதனத்தை இணைக்க வேண்டும். அமைப்பு பயன்படுத்த குறைந்தபட்சம் 30 வினாடிகள் காத்திருங்கள்.</string>
