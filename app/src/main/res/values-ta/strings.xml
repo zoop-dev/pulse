@@ -290,7 +290,7 @@
     <string name="pref_title_lower_button_short_press_action">கீழ் பொத்தான் குறுகிய அழுத்த நடவடிக்கை</string>
     <string name="pref_qhybrid_save_raw_activity_files">மூல செயல்பாட்டு கோப்புகளை சேமிக்கவும்</string>
     <string name="device_requires_key">விசை தேவை, நுழைய நீண்ட செய்தித் தாள்</string>
-    <string name="minHR">இதய துடிப்பு</string>
+    <string name="minHR">குறைந்த இதய துடிப்பு</string>
     <string name="lactateThresholdHeartRate">லாக்டேட் வாசல் இதய துடிப்பு</string>
     <string name="swolfMin">குறைந்தபட்ச ச்வோல்ஃப்</string>
     <string name="cyclingPowerAverage">சராசரி சைக்கிள் ஓட்டுதல் ஆற்றல்</string>
@@ -991,7 +991,7 @@
     <string name="uploadwatchfaceoperation_in_progress">வாட்ச்ஃபேசைப் பதிவேற்றுகிறது</string>
     <string name="pref_dashboard_widget_show_legend_title">புராணக்கதை காட்டு</string>
     <string name="pref_dashboard_widget_double_size_summary">டாச்போர்டில் இரண்டு நெடுவரிசைகளை எடுக்க விட்செட்டை அனுமதிக்கவும்</string>
-    <string name="pref_sleepasandroid_feat_heartrate">இதய துடிப்பு</string>
+    <string name="pref_sleepasandroid_feat_heartrate">நாடி துடிப்பு</string>
     <string name="backup_restore_restart_summary">%1s இப்போது மறுதொடக்கம் செய்யும்.</string>
     <string name="pref_auto_reply_calls_summary">தொலைபேசி தானாகவே உள்வரும் தொலைபேசி அழைப்புகளை எடுக்கும்</string>
     <string name="error_no_cycling_sensor_found">சைக்கிள் ஓட்டுதல் சென்சார் எதுவும் கிடைக்கவில்லை</string>
@@ -2007,7 +2007,7 @@
     <string name="activity_prefs_about_you">உங்களைப் பற்றி</string>
     <string name="activity_prefs_height_inches">அங்குல உயரம்</string>
     <string name="activity_prefs_chart_max_heart_rate">அதிகபட்ச இதய துடிப்பு</string>
-    <string name="activity_prefs_chart_min_heart_rate">இதய துடிப்பு</string>
+    <string name="activity_prefs_chart_min_heart_rate">குறைந்த இதய துடிப்பு</string>
     <string name="pref_charts_range_on">விளக்கப்படங்கள் வரம்பு ஒரு மாதத்திற்கு அமைக்கப்பட்டுள்ளது</string>
     <string name="weekstepschart_steps_a_month">மாதத்திற்கு படிகள்</string>
     <string name="pref_title_pebble_health_store_raw">மூல பதிவை தரவுத்தளத்தில் சேமிக்கவும்</string>
@@ -2158,7 +2158,7 @@
     <string name="zetime_title_heartrate">இதய துடிப்பு அமைப்புகள்</string>
     <string name="zetime_title_heart_rate_alarm">இதய துடிப்பு அலாரம்</string>
     <string name="activity_prefs_alarm_max_heart_rate">அதிகபட்ச இதய துடிப்பு</string>
-    <string name="activity_prefs_alarm_min_heart_rate">இதய துடிப்பு</string>
+    <string name="activity_prefs_alarm_min_heart_rate">குறைந்த இதய துடிப்பு</string>
     <string name="zetime_activity_tracking_summary">செயல்பாட்டு கண்காணிப்பை மாற்றுவது, உங்கள் படிகளை எண்ணும்.</string>
     <string name="zetime_handmove_display_summary">காட்சியை செயல்படுத்த அல்லது செயலிழக்க உங்கள் மணிக்கட்டை சுழற்றுங்கள்.</string>
     <string name="zetime_calories_type_all">செயலில் மற்றும் செயலற்ற எரிந்த கலோரிகள்</string>
@@ -2670,7 +2670,7 @@
     <string name="devicestatus_connecting">சாதனம் இணைக்கிறது</string>
     <string name="devicestatus_upload_starting">பதிவேற்றம் தொடங்குகிறது</string>
     <string name="devicestatus_upload_aborted">பதிவேற்றம் கைவிடப்பட்டது!</string>
-    <string name="firmware_update_progress">பதிவேற்றம் செயலில் உள்ளது \n%1$d %% %2$.2ffகிபை/நொடிக்கு (சராசரி %3 $ .2fkbps) \nபகுதி %4$d இல் %5$d</string>
+    <string name="firmware_update_progress">பதிவேற்றம் செயலில் உள்ளது \n%1$d %% இல் %2$.2fகிபை/நொடிக்கு (சராசரி %3$.2fகிபை/நொடிக்கு) \n%4$d பகுதி %5$d இல்</string>
     <string name="miband_fwinstaller_compatible_version">இணக்கமான பதிப்பு</string>
     <string name="pbw_installhandler_pebble_firmware">கூழாங்கல் நிலைபொருள் %1$s</string>
     <string name="pbwinstallhandler_correct_hw_revision">சரியான வன்பொருள் திருத்தம்</string>
@@ -2966,7 +2966,7 @@
     <string name="paceCorrection">திருத்தம்</string>
     <string name="fmtPaceTypeAverage">வேக வகை %d சராசரி</string>
     <string name="cyclingPowerMax">அதிகபட்ச சைக்கிள் ஓட்டுதல் ஆற்றல்</string>
-    <string name="workout_set_i">%1D அமைக்கவும்</string>
+    <string name="workout_set_i">%1d அமை</string>
     <string name="jumps_unit">தாவல்கள்</string>
     <string name="minutes_km">குறை/கி.மீ</string>
     <string name="Strokes">பக்கவாதம்</string>
@@ -3341,7 +3341,7 @@
     <string name="minAltitude">சிறுமம்</string>
     <string name="ascentSeconds">ஏறுதல்</string>
     <string name="sports_activity_quick_filter_select">காலம்</string>
-    <string name="watchface_widget_type_heart_rate">இதய துடிப்பு</string>
+    <string name="watchface_widget_type_heart_rate">நாடி துடிப்பு</string>
     <string name="button_watchface_preview">கடிகாரத்தில் முன்னோட்டம்</string>
     <string name="button_watchface_save_apply">சேமித்து விண்ணப்பிக்கவும்</string>
     <string name="appmanager_app_edit">தொகு</string>
