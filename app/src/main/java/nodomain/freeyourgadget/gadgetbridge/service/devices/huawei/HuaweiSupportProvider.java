@@ -1383,6 +1383,10 @@ public class HuaweiSupportProvider {
         if (dataType == -1)
             return; // Empty queue
 
+        // TODO: Properly solve TOCTOU
+        // To make TOCTOU window smaller, set as busy
+        gbDevice.setBusyTask(R.string.busy_task_fetch_activity_data, context);
+
         if (dataType == RecordedDataTypes.TYPE_ACTIVITY) {
             fetchActivityData();
         } else if (dataType == RecordedDataTypes.TYPE_GPS_TRACKS) {

@@ -25,6 +25,7 @@ class HuaweiSyncState {
     }
 
     public void addActivitySyncToQueue() {
+        LOG.debug("Add activity type to sync queue");
         if (syncQueue.contains(RecordedDataTypes.TYPE_ACTIVITY))
             LOG.info("Activity type sync already queued, ignoring");
         else
@@ -32,6 +33,7 @@ class HuaweiSyncState {
     }
 
     public void addWorkoutSyncToQueue() {
+        LOG.debug("Add workout type to sync queue");
         if (syncQueue.contains(RecordedDataTypes.TYPE_GPS_TRACKS))
             LOG.info("Workout type sync already queued, ignoring");
         else

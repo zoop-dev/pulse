@@ -67,21 +67,23 @@ public class GetWorkoutSectionsRequest extends Request {
 
         Workout.WorkoutSections.Response packet = (Workout.WorkoutSections.Response) receivedPacket;
 
-        if (packet.error != null) {
-            LOG.warn("Error {} occurred during workout swim segments sync. ignoring", packet.error);
+        if (packet.error == null) {
+            LOG.info("Workout {} section {}:", this.workoutNumbers.workoutNumber, this.number);
+            LOG.info("workoutId  : {}", packet.workoutId);
+            LOG.info("number     : {}", packet.number);
+            LOG.info("Block num  : {}", packet.blocks.size());
+            LOG.info("Blocks     : {}", Arrays.toString(packet.blocks.toArray()));
+
+            supportProvider.addWorkoutSectionsData(this.databaseId, packet.blocks, this.number);
+        } else if (packet.error == 0x0001E079) {
+            // We don't know why it often returns this error, but it seems to be normal, so we ignore it
+            LOG.warn("Error 0001E079 occurred during workout swim segments sync. This seems to be normal, so it's ignored.");
+        } else {
+            LOG.warn("Error {} occurred during workout swim segments sync. Skipping workout", packet.error);
             GB.toast("Error occurred during workout sync", Toast.LENGTH_LONG, GB.WARN);
             supportProvider.nextWorkoutSync(remainder, GetWorkoutSectionsRequest.this.finalizeReq);
             return;
         }
-
-
-        LOG.info("Workout {} section {}:", this.workoutNumbers.workoutNumber, this.number);
-        LOG.info("workoutId  : {}", packet.workoutId);
-        LOG.info("number     : {}", packet.number);
-        LOG.info("Block num  : {}", packet.blocks.size());
-        LOG.info("Blocks     : {}", Arrays.toString(packet.blocks.toArray()));
-
-        supportProvider.addWorkoutSectionsData(this.databaseId, packet.blocks, this.number);
 
         if (this.workoutNumbers.sectionsCount > this.number + 1) {
             GetWorkoutSectionsRequest nextRequest = new GetWorkoutSectionsRequest(
