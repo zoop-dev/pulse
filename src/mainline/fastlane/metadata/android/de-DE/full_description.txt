@@ -2,6 +2,7 @@ Nutze deine Smartwatch, deinen Fitness-Tracker und andere Bluetooth-Geräte ohne
 Eine vollständige Liste der unterstützten Geräte findest du auf unserer Gadget-Seite: https://gadgetbridge.org/gadgets/.
 
 Du kannst Benachrichtigungen direkt am Handgelenk erhalten und (je nach Gerät):
+
 Daten von den Sensors des Geräts sammeln.
 Die Musikwiedergabe auf deinem Android-Gerät steuern.
 Das Wetter anzeigen.
