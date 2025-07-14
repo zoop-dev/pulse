@@ -992,7 +992,7 @@
     <string name="sports_activity_quick_filter_this_week">Diese Woche</string>
     <string name="no">Nein</string>
     <string name="yes">Ja</string>
-    <string name="averageSpeed">Durchschnittliche Geschwindigkeit</string>
+    <string name="averageSpeed">∅ Geschwindigkeit</string>
     <string name="about_links">Links</string>
     <string name="activity_type_badminton">Badminton</string>
     <string name="activity_type_pingpong">Tischtennis</string>
@@ -2424,7 +2424,7 @@
     <string name="pref_force_smart_alarm">Intelligenten Alarm erzwingen</string>
     <string name="notification_channel_connection_status_name">Status der Verbindung</string>
     <string name="pref_force_dnd_support">Unterstützung von \"Bitte-Nicht-Stören\" erzwingen</string>
-    <string name="charts_legend_spo2_average">Durchschnittlicher Blutsauerstoff</string>
+    <string name="charts_legend_spo2_average">∅ Blutsauerstoff</string>
     <string name="pref_disable_find_phone_with_dnd">Telefon suchen deaktivieren, wenn Bitte-Nicht-Stören aktiv ist</string>
     <string name="pref_enable_call_reject">Ablehnen von Anrufen aktivieren</string>
     <string name="pref_spo_automatic_enable">Automatische SpO2-Messung aktivieren</string>
@@ -3153,7 +3153,7 @@
     <string name="activity_type_checkers">Dame (Brettspiel)</string>
     <string name="mijia_lywsd_comfort_level_title">Komfort-Level</string>
     <string name="mijia_lywsd_comfort_humidity_title">Luftfeuchtigkeit (%)</string>
-    <string name="average_respiration_rate">Atemfrequenz durchschnittlich</string>
+    <string name="average_respiration_rate">Atemfrequenz ∅</string>
     <string name="breaths_per_min">Atemzüge/min</string>
     <string name="fmtPaceAverage">Ø Tempo</string>
     <string name="milliseconds_ms">ms</string>
@@ -3608,7 +3608,7 @@
     <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="activity_prefs_goal_standing_hours">Tagesziel: Stehzeiten</string>
     <string name="poolLength">Pool länge</string>
-    <string name="swim_avg_cadence">Durchschnittliche Schwimmkadenz</string>
+    <string name="swim_avg_cadence">∅ Schwimmkadenz</string>
     <string name="unit_revolutions_per_minute">Umdrehungen/min</string>
     <string name="unit_repetitions_per_minute">Wiederholungen/min</string>
     <string name="unit_repetitions">Wiederholungen</string>
@@ -3709,7 +3709,7 @@
     <string name="huawei_stress_calibrate">Kalibrieren</string>
     <string name="huawei_voice_boost">Sprachverstärkung</string>
     <string name="huawei_stress_calibrate_information">Für optimale Ergebnisse ruhe dich vor dem Test eine Weile aus und bleibe während des Tests möglichst still.\n Befestige das Gerät fest, mit dem Display nach oben und dem Sensor in direktem Kontakt mit deiner Haut.</string>
-    <string name="stats_average_hr">Durchschnitt Puls</string>
+    <string name="stats_average_hr">∅ Puls</string>
     <string name="huawei_stress_calibrate_summary">Automatische Stressmessung kalibrieren</string>
     <string name="huawei_stress_calibrate_in_progress">Stresskalibrierung läuft bereits</string>
     <string name="banglejs_notification_missed_call_title">Verpasster Anruf</string>
@@ -4104,5 +4104,17 @@
     <string name="pref_enable_sms_quick_reply_title">SMS-Antworten aktivieren</string>
     <string name="pref_enable_sms_quick_reply_summary">Anrufe mit SMS ablehnen erlauben</string>
     <string name="pref_atc_ble_oepl_model_title">Display-Modell</string>
-    <string name="pref_atc_ble_oepl_ble_adv_interval_title">„BLE-Sendeintervall</string>
+    <string name="pref_atc_ble_oepl_ble_adv_interval_title">BLE-Sendeintervall</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">OEPL-Protokoll aktivieren</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Deaktivieren, wenn nur BLE zum Stromsparen genutzt wird</string>
+    <string name="activity_print_image_print_button">Drucken</string>
+    <string name="activity_print_image_apply_dithering_switch">Dithering anwenden</string>
+    <string name="activity_print_image_upscale_switch">Bild hochskalieren</string>
+    <string name="activity_print_label_print_size">Druckgröße (px): %1$d x %2$d</string>
+    <string name="service_notification_collector_service_title">Gadgetbridge Benachrichtigungsmonitor</string>
+    <string name="service_notification_collector_service_text">Hintergrundüberwachung von Benachrichtigungen</string>
+    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
+    <string name="devicetype_dotn_p66d">Dotn P66D</string>
+    <string name="pref_title_time_interval">Zeitintervall</string>
+    <string name="pref_summary_time_interval">Auf bestimmte Intervalle beschränken</string>
 </resources>
