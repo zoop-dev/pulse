@@ -2771,7 +2771,7 @@
     <string name="pref_dashboard_widget_today_24h_title">24h-Modus</string>
     <string name="pref_dashboard_widget_double_size_title">Doppelte Größe</string>
     <string name="pref_dashboard_widget_show_legend_title">Legende anzeigen</string>
-    <string name="pref_dashboard_select_devices_title">Geräte auswählen...</string>
+    <string name="pref_dashboard_select_devices_title">Geräte auswählen…</string>
     <string name="pref_dashboard_all_devices_summary">Kombiniere Aktivitätsdaten von allen hinzugefügten Geräten für die Gesamtzahlen auf dem Dashboard</string>
     <string name="pref_dashboard_select_devices_summary">Kombiniere Aktivitätsdaten von bestimmten Geräten für die Gesamtzahlen auf dem Dashboard</string>
     <string name="fmtPaceDistance">Tempo %d Distanz</string>
@@ -4089,5 +4089,18 @@
     <string name="activity_type_free_diving">Freitauchen</string>
     <string name="activity_type_apnea_training">Apnoe-Training</string>
     <string name="activity_type_apnea_test">Apnoe-Test</string>
-    <string name="activity_type_scuba_diving">Gerätetauchen</string>
+    <string name="activity_type_scuba_diving">Sporttauchen</string>
+    <string name="devicetype_garmin_vivomove_sport">Garmin Vívomove Sport</string>
+    <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
+    <string name="devicetype_garmin_forerunner_165_music">Garmin Forerunner 165 Music</string>
+    <string name="devicetype_garmin_vivosmart_3">Garmin Vívosmart 3</string>
+    <string name="devicetype_colmi_r07">Colmi R07</string>
+    <string name="devicetype_h59">H59</string>
+    <string name="devicetype_atc_ble_oepl">ATC_BLE_OEPL</string>
+    <string name="devicetype_generic_thermal_printer">Thermodrucker</string>
+    <string name="diving_maximum_diving_depth">Maximale Tauchtiefe</string>
+    <string name="diving_water_type">Wassertyp</string>
+    <string name="diving_gas">Gas</string>
+    <string name="pref_enable_sms_quick_reply_title">SMS-Antworten aktivieren</string>
+    <string name="pref_enable_sms_quick_reply_summary">Anrufe mit SMS ablehnen erlauben</string>
 </resources>
