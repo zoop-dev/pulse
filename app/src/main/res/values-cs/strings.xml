@@ -446,11 +446,11 @@
     <string name="interval_five_minutes">Každých 5 minut</string>
     <string name="interval_ten_minutes">Každých 10 minut</string>
     <string name="interval_thirty_minutes">Každých 30 minut</string>
-    <string name="interval_one_hour">Jednou za hodinu</string>
+    <string name="interval_one_hour">jednou za hodinu</string>
     <string name="notif_export_failed_title">Export databáze selhal! Zkontrolujte nastavení.</string>
     <string name="automatic">Automaticky</string>
-    <string name="simplified_chinese">Zjednodušená čínština</string>
-    <string name="traditional_chinese">Tradiční čínština</string>
+    <string name="simplified_chinese">Čínština (zjednodušená)</string>
+    <string name="traditional_chinese">Čínština (tradiční)</string>
     <string name="english">Angličtina</string>
     <string name="spanish">Španělština</string>
     <string name="activity_web_view">Webové zobrazení aktivit</string>
@@ -4187,4 +4187,22 @@
     <string name="service_notification_collector_service_title">Monitor oznámení Gadgetbridge</string>
     <string name="service_notification_collector_service_text">Monitorování oznámení na pozadí</string>
     <string name="devicetype_colmi_r07">Colmi R07</string>
+    <string name="phone_calls">Telefonní hovory</string>
+    <string name="interval_1_hour">každou hodinu</string>
+    <string name="interval_2_hour">každé 2 hodiny</string>
+    <string name="interval_3_hour">každé 3 hodiny</string>
+    <string name="interval_4_hour">každé 4 hodiny</string>
+    <string name="interval_6_hour">každých 6 hodin</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Zakázat varování o neaktivitě během obědové pauzy (12:00–14:00)</string>
+    <string name="activity_type_free_diving">Volné potápění</string>
+    <string name="activity_type_apnea_training">Trénování apnoe</string>
+    <string name="activity_type_apnea_test">Zkouška apnoe</string>
+    <string name="activity_type_scuba_diving">Přístrojové potápění</string>
+    <string name="devicetype_garmin_vivomove_sport">Garmin Vívomove Sport</string>
+    <string name="devicetype_garmin_vivosmart_3">Garmin Vívosmart 3</string>
+    <string name="diving_maximum_diving_depth">Maximální hloubka potápění</string>
+    <string name="diving_water_type">Typ vody</string>
+    <string name="diving_gas">Plyn</string>
+    <string name="pref_enable_sms_quick_reply_title">Povolit odpovědi na SMS</string>
+    <string name="pref_enable_sms_quick_reply_summary">Povolit odmítání hovorů SMS odpovědí</string>
 </resources>
