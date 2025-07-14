@@ -439,7 +439,7 @@
     <string name="pref_header_auto_export">Automatický export</string>
     <string name="pref_title_auto_export_enabled">Zapnout automatický export</string>
     <string name="pref_title_auto_export_location">Složka pro uložení</string>
-    <string name="pref_title_auto_export_interval">Časový interval</string>
+    <string name="pref_title_auto_export_interval">Exportovat interval</string>
     <string name="pref_summary_auto_export_interval">Exportovat každou %d. hodinu</string>
     <string name="prefs_title_heartrate_measurement_interval">Celodenní měření tepu</string>
     <string name="interval_one_minute">Jednou za minutu</string>
@@ -4203,6 +4203,10 @@
     <string name="diving_maximum_diving_depth">Maximální hloubka potápění</string>
     <string name="diving_water_type">Typ vody</string>
     <string name="diving_gas">Plyn</string>
-    <string name="pref_enable_sms_quick_reply_title">Povolit odpovědi na SMS</string>
+    <string name="pref_enable_sms_quick_reply_title">Povolit SMS odpovědi</string>
     <string name="pref_enable_sms_quick_reply_summary">Povolit odmítání hovorů SMS odpovědí</string>
+    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
+    <string name="devicetype_dotn_p66d">Dotn P66D</string>
+    <string name="pref_title_time_interval">Časový interval</string>
+    <string name="pref_summary_time_interval">Omezit na určité intervaly</string>
 </resources>
