@@ -4103,4 +4103,6 @@
     <string name="diving_gas">Gas</string>
     <string name="pref_enable_sms_quick_reply_title">SMS-Antworten aktivieren</string>
     <string name="pref_enable_sms_quick_reply_summary">Anrufe mit SMS ablehnen erlauben</string>
+    <string name="pref_atc_ble_oepl_model_title">Display-Modell</string>
+    <string name="pref_atc_ble_oepl_ble_adv_interval_title">„BLE-Sendeintervall</string>
 </resources>
