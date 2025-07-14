@@ -396,7 +396,7 @@
     <string name="fmtPacePace">விரைவு %d வேகம்</string>
     <string name="qhybrid_calibration_100_steps">100 படிகள்</string>
     <string name="hybridhr_widget_bg_dashed_circle">கோடு வட்டம்</string>
-    <string name="pref_title_touch_spotify">Spotify</string>
+    <string name="pref_title_touch_spotify">சுபாடிபை</string>
     <string name="soundcore_equalizer_band9">பேண்ட் 9</string>
     <string name="mijia_lywsd_comfort_level_title">ஆறுதல் நிலை</string>
     <string name="pref_summary_prefix_notification_with_app">மூல பயன்பாட்டின் பெயருடன் முன்னொட்டு அறிவிப்பு தலைப்பு</string>
@@ -777,7 +777,7 @@
     <string name="hrZoneAnaerobic">காற்றில்லா</string>
     <string name="TrainingEffect">பயிற்சி விளைவு</string>
     <string name="fmtPaceCorrection">விரைவு %d திருத்தம்</string>
-    <string name="strokes_minute">str/min</string>
+    <string name="strokes_minute">அடி/நிமையம்</string>
     <string name="calories_unit">கிலோகலோரி</string>
     <string name="seconds_km">நொடி/கி.மீ</string>
     <string name="Swimming">நீச்சல்</string>
@@ -943,7 +943,7 @@
     <string name="workout_set_repetitions">%1d ஃச்</string>
     <string name="meters">மீ</string>
     <string name="seconds">நொடி</string>
-    <string name="strokes_second">str/s</string>
+    <string name="strokes_second">அடி/நொடி</string>
     <string name="activity_detail_start_label">தொடங்கு</string>
     <string name="activity_detail_duration_label">காலம்</string>
     <string name="activity_detail_share_raw_details">மூல விவரங்களைப் பகிரவும்</string>
@@ -971,8 +971,8 @@
     <string name="redmi_buds_5_pro_equalizer_band_125">125 எர்ட்ச்</string>
     <string name="redmi_buds_5_pro_equalizer_band_250">250 எர்ட்ச்</string>
     <string name="redmi_buds_5_pro_equalizer_band_500">500 எர்ட்ச்</string>
-    <string name="redmi_buds_5_pro_equalizer_band_1k">1 kHz</string>
-    <string name="redmi_buds_5_pro_equalizer_band_2k">2 kHz</string>
+    <string name="redmi_buds_5_pro_equalizer_band_1k">1 கிஎட்சு</string>
+    <string name="redmi_buds_5_pro_equalizer_band_2k">2 கிஎட்சு</string>
     <string name="redmi_buds_5_pro_equalizer_neg6">-6 டி.பி</string>
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 டி.பி</string>
     <string name="redmi_buds_5_pro_equalizer_neg2">-2 டி.பி</string>
@@ -1667,7 +1667,7 @@
     <string name="vo2max_cycling">சைக்கிள் ஓட்டுதல் VO₂ MAX</string>
     <string name="pref_header_sony_device_info">சாதன செய்தி</string>
     <string name="stress_relaxed">நிதானமாக</string>
-    <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
+    <string name="redmi_buds_5_pro_equalizer_band_4k">4 கிஎட்சு</string>
     <string name="redmi_buds_5_pro_equalizer_neg5">-5 டி.பி</string>
     <string name="sony_ambient_sound_focus_voice">குரலில் கவனம் செலுத்துங்கள்</string>
     <string name="sony_surround_mode">சரவுண்ட் பயன்முறை</string>
@@ -1851,7 +1851,7 @@
     <string name="share_log_warning">கேசெட் பிரிட்ச் பதிவுகள் கோப்புகளை நினைவில் வைத்துக் கொள்ளுங்கள், அவை சுகாதார தரவு, தனித்துவமான அடையாளங்காட்டிகள் (சாதனத்தின் மேக் முகவரி போன்றவை), இசை விருப்பத்தேர்வுகள் உள்ளிட்ட பல தனிப்பட்ட தகவல்களைக் கொண்டிருக்கலாம். பொது வெளியீட்டு அறிக்கையில் தாக்கல் செய்யுங்கள்.</string>
     <string name="pref_invalid_frequency_title">தவறான அதிர்வெண்</string>
     <string name="widget_settings_select_device_title">சாதனத்தைத் தேர்ந்தெடுக்கவும்</string>
-    <string name="appwidget_text">Zzz</string>
+    <string name="appwidget_text">ஔஔஔ</string>
     <string name="add_widget">விட்செட்டைச் சேர்க்கவும்</string>
     <string name="qhybrid_vibration_strength">அதிர்வு வலிமை:</string>
     <string name="pref_show_changelog">தொடக்கத்தில் சேஞ்ச்லாக் காட்டு</string>
@@ -1881,7 +1881,7 @@
     <string name="devicetype_miband2_hrx">MI பேண்ட் HRX</string>
     <string name="prefs_wena3_vibration_strength_item_medium">சராசரி</string>
     <string name="prefs_wena3_home_icon_title">முகப்புத் திரை சின்னங்கள்</string>
-    <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
+    <string name="prefs_wena3_home_icon_name_qrio">க்ரியோ</string>
     <string name="prefs_wena3_home_icon_name_edy">எடி இருப்பு</string>
     <string name="widget_layout_top_wide_bot_large">மேலே அகலமானது, கீழே பெரியது</string>
     <string name="pref_developer_add_test_activities_title">சோதனை நடவடிக்கைகளைச் சேர்க்கவும்</string>
@@ -1925,7 +1925,7 @@
     <string name="activeSeconds">செயலில்</string>
     <string name="stepRateAvg">சராசரி படி வீதம்</string>
     <string name="laneLength">சந்து நீளம்</string>
-    <string name="strokes_unit">str</string>
+    <string name="strokes_unit">அடி</string>
     <string name="milliseconds">மில்லி விநாடிகள்</string>
     <string name="swim_style">நீச்சல் நடை</string>
     <string name="laps_unit">மடியில்</string>
@@ -2884,7 +2884,7 @@
     <string name="devicetype_garmin_vivoactive_3">கார்மின் வுவோஆக்டிவ் 3</string>
     <string name="devicetype_garmin_vivoactive_4">கார்மின் வுவோஆக்டிவ் 4</string>
     <string name="devicetype_hplus">Hplus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
+    <string name="devicetype_makibes_f68">மேக்கிப்ச் எப்68</string>
     <string name="devicetype_huawei_watchgt4">அவாய் வாட்ச் சிடி 4</string>
     <string name="devicetype_exrizu_k8">வெற்று</string>
     <string name="devicetype_qhybrid">புதைபடிவ Q கலப்பின</string>
@@ -2906,7 +2906,7 @@
     <string name="devicetype_sg2">இந்த டெய்ர் எச்சி 2</string>
     <string name="menuitem_nothing">எதுவும் இல்லை</string>
     <string name="menuitem_aqi">காற்றின் தர அட்டவணை</string>
-    <string name="menuitem_zepp_pay">Zepp Pay</string>
+    <string name="menuitem_zepp_pay">செப் பே</string>
     <string name="menuitem_thermometer">வெப்பமானி</string>
     <string name="menuitem_sleep">தூங்கு</string>
     <string name="menuitem_countdown">கவுண்டவுன்</string>
@@ -3959,7 +3959,7 @@
     <string name="pref_calendar_maximum_description_characters_title">நிகழ்வு விளக்கத்தில் அதிகபட்ச எழுத்துக்கள்</string>
     <string name="pref_calendar_target_app_title">காலண்டர் நிகழ்வுகளுக்கான கண்காணிப்பில் இலக்கு பயன்பாடு</string>
     <string name="phone_calls">தொலைபேசி அழைப்புகள்</string>
-    <string name="pairing_even_realities_g1_working">%1S உடன் இணைத்தல்…</string>
+    <string name="pairing_even_realities_g1_working">%1s உடன் இணைத்தல்…</string>
     <string name="pairing_even_realities_g1_final_connect">சாதனங்களை அமைத்தல், தயவுசெய்து காத்திருங்கள்…</string>
     <string name="busy_task_busy">பிசியாக…</string>
     <string name="busy_task_configuring">உள்ளமைத்தல்</string>
@@ -3968,7 +3968,7 @@
     <string name="busy_task_fetch_ppg">பிபிசி பெறுதல்</string>
     <string name="busy_task_fetch_steps">படிகளைப் பெறுதல்</string>
     <string name="busy_task_setting_alarms">அலாரங்களை அமைத்தல்</string>
-    <string name="busy_task_syncing">ஒத்திசைவு</string>
+    <string name="busy_task_syncing">ஒத்திசைகிறது</string>
     <string name="interval_1_hour">ஒவ்வொரு 1 மணி நேரமும்</string>
     <string name="interval_2_hour">ஒவ்வொரு 2 மணி நேரமும்</string>
     <string name="interval_3_hour">ஒவ்வொரு 3 மணி நேரமும்</string>
