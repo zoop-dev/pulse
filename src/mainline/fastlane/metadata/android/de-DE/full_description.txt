@@ -1,7 +1,8 @@
-Nutze deine Pebble/Mi Band/Amazfit Bip/Hplus, ohne die proprietäre App des Herstellers, ohne ein Benutzerkonto zu erstellen, und ohne irgendwelche Daten an die Server des Herstellers zu senden.
+Nutze deine Smartwatch, deinen Fitness-Tracker und andere Bluetooth-Geräte ohne die geschlossene Hersteller-App, ohne ein Konto erstellen zu müssen und ohne dass deine Daten an die Server des Herstellers übertragen werden.
+Eine vollständige Liste der unterstützten Geräte findest du auf unserer Gadget-Seite: https://gadgetbridge.org/gadgets/.
 
-Du kannst Benachrichtigungen an deinem Handgelenk erhalten, sowie (je nach Gerät):
-- Daten der Gerätesensoren sammeln
-- Die Musikwiedergabe auf deinem Android Gerät steuern
-- Wettervorhersagen angezeigt bekommen
-- Navigiert werden
+Du kannst Benachrichtigungen direkt am Handgelenk erhalten und (je nach Gerät):
+Daten von den Sensors des Geräts sammeln.
+Die Musikwiedergabe auf deinem Android-Gerät steuern.
+Das Wetter anzeigen.
+Navigationsanweisungen erhalten.
