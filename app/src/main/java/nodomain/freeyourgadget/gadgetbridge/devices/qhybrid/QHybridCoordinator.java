@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,11 +50,13 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.parser.HybridHRWorkoutSummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
 
@@ -90,6 +93,17 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsActivityTracking() {
         return true;
+    }
+
+    @Override
+    public boolean supportsActivityTracks() {
+        return isHybridHR();
+    }
+
+    @Override
+    @Nullable
+    public ActivitySummaryParser getActivitySummaryParser(GBDevice device, Context context) {
+        return new HybridHRWorkoutSummaryParser();
     }
 
     @Override

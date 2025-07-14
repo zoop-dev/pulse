@@ -111,6 +111,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.FossilHRInstallHandl
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationHRConfiguration;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRSpo2Sample;
@@ -1253,9 +1255,9 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                             Device device = DBHelper.getDevice(getDeviceSupport().getDevice(), dbHandler.getDaoSession());
                             Long deviceId = device.getId();
                             ActivityFileParser parser = new ActivityFileParser();
-                            Map.Entry<ArrayList<ActivityEntry>, ArrayList<HybridHRSpo2Sample>> parsedEntries = parser.parseFile(fileData);
+                            parser.parseFile(fileData);
                             // Activities
-                            ArrayList<ActivityEntry> entries = parsedEntries.getKey();
+                            ArrayList<ActivityEntry> entries = parser.getActivitySamples();
                             HybridHRActivitySampleProvider provider = new HybridHRActivitySampleProvider(getDeviceSupport().getDevice(), dbHandler.getDaoSession());
                             HybridHRActivitySample[] samples = new HybridHRActivitySample[entries.size()];
                             for (int i = 0; i < entries.size(); i++) {
@@ -1263,13 +1265,22 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                             }
                             provider.addGBActivitySamples(samples);
                             // SpO2, should be empty for an unsupported device
-                            ArrayList<HybridHRSpo2Sample> spo2Samples = parsedEntries.getValue();
+                            ArrayList<HybridHRSpo2Sample> spo2Samples = parser.getSpo2Samples();
                             HybridHRSpo2SampleProvider spo2Provider = new HybridHRSpo2SampleProvider(getDeviceSupport().getDevice(), dbHandler.getDaoSession());
                             for (HybridHRSpo2Sample sample : spo2Samples) {
                                 sample.setDevice(device);
                                 sample.setUser(user);
                             }
                             spo2Provider.addSamples(spo2Samples);
+                            // Workout summaries
+                            ArrayList<BaseActivitySummary> workoutSummaries = parser.getWorkoutSummaries();
+                            LOG.debug("WORKOUT SUMMARIES FOUND: {}", workoutSummaries);
+                            BaseActivitySummaryDao summaryDao = provider.getSession().getBaseActivitySummaryDao();
+                            for (BaseActivitySummary summary : workoutSummaries) {
+                                summary.setDevice(device);
+                                summary.setUser(user);
+                                summaryDao.insert(summary);
+                            }
 
                             if (saveRawActivityFiles) {
                                 writeFile(String.valueOf(System.currentTimeMillis()), fileData);
@@ -1279,8 +1290,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                             GB.signalActivityDataFinish(getDeviceSupport().getDevice());
                             LOG.debug("Synchronized activity data");
                         } catch (Exception ex) {
-                            GB.toast(getContext(), "Error saving steps data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
-                            LOG.error("Error saving steps data: ", ex);
+                            GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                            LOG.error("Error saving activity data: ", ex);
                             GB.updateTransferNotification(null, "Data transfer failed", false, 0, getContext());
                         }
                         getDeviceSupport().getDevice().unsetBusyTask();

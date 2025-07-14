@@ -150,4 +150,21 @@ public class ArrayUtils {
     {
         return isAllZeros(array, 0, array.length);
     }
+
+    /**
+     * Check if a byte array contains only 0xFF values
+     * @param array The array to check
+     * @param startIndex The starting position
+     * @param length Number of elements to check
+     * @return true if all checked elements were == 0xFF, false otherwise
+     */
+    public static boolean isAllFF(byte[] array, int startIndex, int length)
+    {
+        for(int i = startIndex; i < startIndex + length; i++)
+        {
+            if ((array[i] & 0xFF) != 0xFF)
+                return false;
+        }
+        return true;
+    }
 }
