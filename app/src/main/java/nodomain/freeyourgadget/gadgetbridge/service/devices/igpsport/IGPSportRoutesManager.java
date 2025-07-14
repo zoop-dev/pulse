@@ -29,6 +29,11 @@ public class IGPSportRoutesManager {
     Logger LOG = LoggerFactory.getLogger(IGPSportRoutesManager.class);
     private IGPSportDeviceSupport support = null;
     private HashMap<UUID, RouteInfo> installedRouteHash = new HashMap<>();
+    private int waitRoutes = 0;
+    private final List<GBDeviceApp> gbDeviceApps = new ArrayList<>();
+    private int fileListSupportNumMax = 0;
+    private int fileNumber = 0;
+    int startFile = 0;
 
     public class RouteInfo {
         private int id=0;
@@ -153,16 +158,14 @@ public class IGPSportRoutesManager {
     }
 
     public void handleRouteList(byte[] pbData) throws InvalidProtocolBufferException {
-        installedRouteHash.clear();
         RoutePlan.route_plan_data_msg routeplatMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
 
         List<RoutePlan.route_plan_info_message> routeList = routeplatMsg.getRoutePlanInfoMsgList();
-        final List<GBDeviceApp> gbDeviceApps = new ArrayList<>();
+
 
         for (final RoutePlan.route_plan_info_message routeMsg : routeList) {
 
             final UUID uuid = toRouteUUID(String.valueOf(routeMsg.getId()));
-
             installedRouteHash.put(uuid, new RouteInfo(routeMsg, uuid));
             GBDeviceApp gbDeviceApp = new GBDeviceApp(
                     uuid,
@@ -173,24 +176,24 @@ public class IGPSportRoutesManager {
             );
             gbDeviceApps.add(gbDeviceApp);
         }
+        waitRoutes -= gbDeviceApps.size();
 
-        final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
-        appInfoCmd.apps = gbDeviceApps.toArray(new GBDeviceApp[0]);
-        support.evaluateGBDeviceEvent(appInfoCmd);
+        if (waitRoutes <= 0) {
+            final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
+            appInfoCmd.apps = gbDeviceApps.toArray(new GBDeviceApp[0]);
+            support.evaluateGBDeviceEvent(appInfoCmd);
+        } else {
+            requestFiles();
+        }
 
     }
 
-    public void handleRouteNumber(byte[] pbData) throws InvalidProtocolBufferException {
-        RoutePlan.route_plan_data_msg routeplanMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
-        int fileNumber = routeplanMsg.getRouteListGetMsg().getFileNum();
-        int fileListSupportNumMax = routeplanMsg.getRouteListGetMsg().getFileListSupportNumMax();
-        if (fileNumber == 0)
-            return;
+    private void requestFiles() {
 
-        int startFile = 0;
-        int endFile =  (fileNumber > fileListSupportNumMax ? fileListSupportNumMax - 1 : fileNumber);
-
+        int endFile = (fileNumber > fileListSupportNumMax ? fileListSupportNumMax - 1 : fileNumber)+startFile;
         TransactionBuilder builder = new TransactionBuilder("get files list");
+
+
         RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
         routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
         routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
@@ -198,11 +201,28 @@ public class IGPSportRoutesManager {
         byte[] routePlan2ndBytes = support.craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
 
         //FIXME: add loop to handle all files
-        //startFile = endFile + 1;
-        //fileNumber -= fileListSupportNumMax;
+        startFile = endFile + 1;
+        fileNumber -= fileListSupportNumMax;
 
         builder.write(support.writeCharacteristicFourth, routePlan2ndBytes);
         builder.queue(support.getQueue());
+    }
+
+    public void handleRouteNumber(byte[] pbData) throws InvalidProtocolBufferException {
+        RoutePlan.route_plan_data_msg routeplanMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
+        fileNumber = routeplanMsg.getRouteListGetMsg().getFileNum();
+        waitRoutes = fileNumber;
+        gbDeviceApps.clear();
+        installedRouteHash.clear();
+        fileListSupportNumMax = routeplanMsg.getRouteListGetMsg().getFileListSupportNumMax();
+        if (fileNumber == 0)
+            return;
+
+        startFile = 0;
+
+        requestFiles();
+
+
 
     }
 
