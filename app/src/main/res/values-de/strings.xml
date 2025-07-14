@@ -1855,7 +1855,7 @@
     <string name="devicetype_super_cars">Shell Racing</string>
     <string name="watchface_setting_button_move_hands">Zeiger bewegen</string>
     <string name="aerobicTrainingEffect">Aerober Effekt</string>
-    <string name="HeartRateZones">Pulsbereichszonen</string>
+    <string name="HeartRateZones">Pulsbereiche</string>
     <string name="hrZoneNa">K.A.</string>
     <string name="hrZoneAerobic">Aerob</string>
     <string name="hrZoneWarmUp">Aufwärmen</string>
@@ -1920,7 +1920,7 @@
     <string name="pref_text_to_speech">Text in Sprache</string>
     <string name="offline_voice_respond_turn_wrist">Reagiert beim Drehen des Handgelenks</string>
     <string name="offline_voice_respond_screen_on">Reagieren, wenn Bildschirm an ist</string>
-    <string name="offline_voice_response_during_screen_lighting">Reagieren, solange der Bildschirm leuchtet</string>
+    <string name="offline_voice_response_during_screen_lighting">Reagieren, wenn Bildschirm an ist</string>
     <string name="pref_agps_expiry_reminder_enabled">AGPS-Ablauferinnerung</string>
     <string name="pref_agps_expiry_reminder_time">AGPS-Ablauferinnerungszeit</string>
     <string name="all_satellites">Alle Satelliten</string>
