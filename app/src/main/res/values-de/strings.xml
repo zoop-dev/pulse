@@ -317,7 +317,7 @@
     <string name="mi2_prefs_activate_display_on_lift">Anzeige beim Anheben aktivieren</string>
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Handgelenk drehen, um die Information zu wechseln</string>
     <string name="mi2_prefs_do_not_disturb">Bitte nicht stören</string>
-    <string name="mi2_prefs_do_not_disturb_summary">Benachrichtigungen werden während Aktivität blockiert.</string>
+    <string name="mi2_prefs_do_not_disturb_summary">Benachrichtigungen werden während Aktivität blockiert</string>
     <string name="mi2_prefs_inactivity_warnings">Inaktivitätswarnungen</string>
     <string name="mi2_prefs_inactivity_warnings_summary">Die Smartwatch vibriert, wenn du eine Zeit lang inaktiv warst</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Grenzwert für Inaktivität (in Minuten)</string>
@@ -1675,7 +1675,7 @@
     <string name="pref_explanation_authkey">Einige Geräte erfordern einen speziellen Pairing-Schlüssel für die erste Initialisierung des Geräts. Tippe hier für weitere Details im Wiki.</string>
     <string name="pref_explanation_authkey_new_protocol">Erscheint auf dem Band die Meldung „App auf die neueste Version aktualisieren“, überprüfe bitte, ob oben das „Neue Authentifizierungsprotokoll“ aktiviert ist. Für weitere Details tippe hier, um das Wiki zu öffnen.</string>
     <string name="prefs_password">Passwort</string>
-    <string name="prefs_password_summary">Sperre das Band mit einem Passwort, wenn du es vom Handgelenk abnimmst</string>
+    <string name="prefs_password_summary">Band/Smartwatch beim Ablegen per Passwort sperren</string>
     <string name="prefs_password_enabled">Passwort aktiviert</string>
     <string name="prefs_password_4_digits_1_to_4_summary">Das Passwort muss 4 Ziffern haben, wobei die Zahlen 1 bis 4 verwendet werden müssen</string>
     <string name="prefs_password_6_digits_0_to_9_summary">Das Passwort muss 6 Ziffern haben und darf nur Zahlen enthalten</string>
@@ -1760,7 +1760,7 @@
     <string name="pref_header_calendar">Kalender</string>
     <string name="pref_header_connection">Verbindung</string>
     <string name="pref_title_screen_on_on_notifications">Bildschirm ein bei Benachrichtigungen</string>
-    <string name="pref_summary_screen_on_on_notifications">Bildschirm des Bandes/Smartwatch bei Benachrichtigungen einschalten</string>
+    <string name="pref_summary_screen_on_on_notifications">Display von Band/Smartwatch bei Benachrichtigungen aktivieren</string>
     <string name="spo2_perc_80">80 %</string>
     <string name="spo2_perc_85">85 %</string>
     <string name="spo2_perc_90">90 %</string>
@@ -1807,7 +1807,7 @@
     <string name="seconds_7">7 Sekunden</string>
     <string name="seconds_8">8 Sekunden</string>
     <string name="seconds_9">9 Sekunden</string>
-    <string name="prefs_always_on_display_summary">Display des Bandes/Smartwatch immer eingeschaltet lassen</string>
+    <string name="prefs_always_on_display_summary">Display von Bandes/Smartwatch immer eingeschaltet lassen</string>
     <string name="menuitem_workout_history">Trainingsverlauf</string>
     <string name="prefs_screen_timeout">Bildschirmzeitlimit</string>
     <string name="pref_title_notifications_ignore_low_priority">Benachrichtigungen mit niedriger Priorität ignorieren</string>
@@ -1912,15 +1912,15 @@
     <string name="accuracy">Genauigkeit</string>
     <string name="pref_sleep_mode_sleep_screen_title">Schlafbildschirm</string>
     <string name="buttons_on_right">Tasten auf der rechten Seite</string>
-    <string name="menuitem_offline_voice">Offline Stimme</string>
+    <string name="menuitem_offline_voice">Offline-Sprachsteuerung</string>
     <string name="menuitem_screen_always_lit">Bildschirm leuchtet immer</string>
     <string name="pref_header_sound_vibration">Ton &amp; Vibration</string>
     <string name="single_band">Einzelband</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="pref_text_to_speech">Text in Sprache</string>
     <string name="offline_voice_respond_turn_wrist">Reagiert beim Drehen des Handgelenks</string>
-    <string name="offline_voice_respond_screen_on">Reagieren bei eingeschaltetem Bildschirm</string>
-    <string name="offline_voice_response_during_screen_lighting">Reagieren bei Bildschirmbeleuchtung</string>
+    <string name="offline_voice_respond_screen_on">Reagieren, wenn Bildschirm an ist</string>
+    <string name="offline_voice_response_during_screen_lighting">Reagieren, solange der Bildschirm leuchtet</string>
     <string name="pref_agps_expiry_reminder_enabled">AGPS-Ablauferinnerung</string>
     <string name="pref_agps_expiry_reminder_time">AGPS-Ablauferinnerungszeit</string>
     <string name="all_satellites">Alle Satelliten</string>
@@ -1929,7 +1929,7 @@
     <string name="pref_workout_detection_sensitivity">Empfindlichkeit</string>
     <string name="pref_enable_unsupported_settings_title">Nicht unterstützte Einstellungen aktivieren</string>
     <string name="menuitem_bluetooth">Bluetooth</string>
-    <string name="pref_header_offline_voice">Offline Stimme</string>
+    <string name="pref_header_offline_voice">Offline-Sprachsteuerung</string>
     <string name="pref_agps_header">AGPS</string>
     <string name="pref_sleep_mode_title">Schlafmodus</string>
     <string name="vibration_profile_default">Standard</string>
