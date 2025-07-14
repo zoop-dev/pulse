@@ -2962,6 +2962,8 @@ public class HuaweiSupportProvider {
         if (!getHuaweiCoordinator().supportsAutoStress())
             return false;
 
+        syncState.setStressSync(true);
+
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.rriFileRequest(
                 getHuaweiCoordinator().getSupportsRriNewSync(),
                 start,
@@ -2988,13 +2990,13 @@ public class HuaweiSupportProvider {
                         } else {
                             LOG.debug("Stress file empty");
                         }
-                        syncState.stopActivitySync();
+                        syncState.setStressSync(false);
                     }
 
                     @Override
                     public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
                         super.downloadException(e);
-                        syncState.stopActivitySync();
+                        syncState.setStressSync(false);
                     }
                 }
         ), true);

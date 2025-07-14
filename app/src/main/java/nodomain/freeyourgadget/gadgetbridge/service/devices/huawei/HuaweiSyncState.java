@@ -19,6 +19,7 @@ class HuaweiSyncState {
 
     private boolean activitySync = false;
     private boolean p2pSync = false;
+    private boolean stressSync = false;
     private boolean workoutSync = false;
     private int workoutGpsDownload = 0;
 
@@ -27,7 +28,25 @@ class HuaweiSyncState {
     }
 
     private boolean isSyncActive() {
-        return !activitySync && !p2pSync && !workoutSync && workoutGpsDownload == 0;
+        return activitySync || p2pSync || stressSync || workoutSync || workoutGpsDownload != 0;
+    }
+
+    private String activeSync() {
+        StringBuilder retv = new StringBuilder();
+        if (activitySync)
+            retv.append("activitySync,");
+        if (p2pSync)
+            retv.append("p2pSync,");
+        if (stressSync)
+            retv.append("stressSync,");
+        if (workoutSync)
+            retv.append("workoutSync,");
+        if (workoutGpsDownload != 0) {
+            retv.append("workoutGpsDownload:");
+            retv.append(workoutGpsDownload);
+            retv.append(",");
+        }
+        return retv.toString();
     }
 
     public void addActivitySyncToQueue() {
@@ -55,7 +74,7 @@ class HuaweiSyncState {
     public boolean startActivitySync() {
         synchronized(this) {
             if (isSyncActive()) {
-                LOG.warn("Attempted to start activity sync while another sync is still active");
+                LOG.warn("Attempted to start activity sync while another sync is still active: {}", activeSync());
                 return false;
             }
             this.activitySync = true;
@@ -67,7 +86,7 @@ class HuaweiSyncState {
     public void stopActivitySync() {
         LOG.debug("Set activity sync state to false");
         this.activitySync = false;
-        if (!p2pSync) {
+        if (!p2pSync && !this.stressSync) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
             supportProvider.fetchRecodedDataFromQueue();
         }
@@ -78,7 +97,18 @@ class HuaweiSyncState {
         // We cannot do the syncActive check for the P2P sync as it runs in parallel with the activity sync
         LOG.debug("Set p2p sync state to {}", state);
         this.p2pSync = state;
-        if (!state && !this.activitySync) {
+        if (!state && !this.activitySync && !this.stressSync) {
+            this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
+            supportProvider.fetchRecodedDataFromQueue();
+        }
+        updateState();
+    }
+
+    public void setStressSync(boolean state) {
+        // We cannot do the syncActive check for the stress sync as it runs in parallel with the activity sync (sleep file specifically)
+        LOG.debug("Set stress sync state to {}", state);
+        this.stressSync = state;
+        if (!state && !this.activitySync && !this.p2pSync) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
             supportProvider.fetchRecodedDataFromQueue();
         }
@@ -88,7 +118,7 @@ class HuaweiSyncState {
     public boolean startWorkoutSync() {
         synchronized (this) {
             if (isSyncActive()) {
-                LOG.warn("Attempted to start workout sync while another sync is still active");
+                LOG.warn("Attempted to start workout sync while another sync is still active: {}", activeSync());
                 return false;
             }
             this.workoutSync = true;
@@ -100,7 +130,7 @@ class HuaweiSyncState {
     public void stopWorkoutSync() {
         LOG.debug("Set workout sync state to false");
         this.workoutSync = false;
-        if (workoutGpsDownload != 0) {
+        if (workoutGpsDownload == 0) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_GPS_TRACKS);
             supportProvider.fetchRecodedDataFromQueue();
         }
