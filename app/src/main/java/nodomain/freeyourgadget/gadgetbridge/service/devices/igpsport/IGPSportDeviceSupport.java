@@ -350,6 +350,14 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                         LOG.info("Got reply from file service"); // Do we have to do something here?
                     }
                     break;
+                //0207FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFFE7  - route deletion success
+                case Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN_VALUE:
+                    if (mainOperation == RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_FILE_DEL_VALUE) {
+                        LOG.info("File removed, refresh list"); // Do we have to do something here?
+                        routeManager.requestRouteList();
+                    }
+                    break;
+
             }
         }
 
