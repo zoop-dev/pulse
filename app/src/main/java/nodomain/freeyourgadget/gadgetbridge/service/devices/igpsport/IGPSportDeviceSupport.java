@@ -276,7 +276,6 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                 parseProtobufPacket(finalData);
                 partialPacketInProgress=false;
                 partialBuffer.clear();
-                parseProtobufPacket(finalData);
                 return true;
             }
         }
@@ -317,7 +316,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
         // 02-header -- results of operations from device
         //0215FFFF03FFFF00FFFFFFFFFFFFFFFFFFFFFF55
-        if (value[0] == (byte) 0x03) {
+        if (value[0] == (byte) 0x02) {
             byte result = value[7];
             switch (mainService) {
                 case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION_VALUE:
