@@ -1925,7 +1925,7 @@
     <string name="activeSeconds">செயலில்</string>
     <string name="stepRateAvg">சராசரி படி வீதம்</string>
     <string name="laneLength">சந்து நீளம்</string>
-    <string name="strokes_unit">அடி</string>
+    <string name="strokes_unit">உதை</string>
     <string name="milliseconds">மில்லி விநாடிகள்</string>
     <string name="swim_style">நீச்சல் நடை</string>
     <string name="laps_unit">மடியில்</string>
