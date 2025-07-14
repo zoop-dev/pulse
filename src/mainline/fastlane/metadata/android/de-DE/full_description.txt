@@ -3,7 +3,7 @@ Eine vollständige Liste der unterstützten Geräte findest du auf unserer Gadge
 
 Du kannst Benachrichtigungen direkt am Handgelenk erhalten und (je nach Gerät):
 
-Daten von den Sensors des Geräts sammeln.
-Die Musikwiedergabe auf deinem Android-Gerät steuern.
-Das Wetter anzeigen.
-Navigationsanweisungen erhalten.
+- Daten von den Sensors des Geräts sammeln.
+- Die Musikwiedergabe auf deinem Android-Gerät steuern.
+- Das Wetter anzeigen.
+- Navigationsanweisungen erhalten.
