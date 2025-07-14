@@ -182,16 +182,25 @@ public class IGPSportRoutesManager {
 
     public void handleRouteNumber(byte[] pbData) throws InvalidProtocolBufferException {
         RoutePlan.route_plan_data_msg routeplanMsg = RoutePlan.route_plan_data_msg.parseFrom(pbData);
-        int fileNumber = 0;
-        if (routeplanMsg.getRouteListGetMsg().getFileNum() > 0)
-            fileNumber = routeplanMsg.getRouteListGetMsg().getFileNum();
+        int fileNumber = routeplanMsg.getRouteListGetMsg().getFileNum();
+        int fileListSupportNumMax = routeplanMsg.getRouteListGetMsg().getFileListSupportNumMax();
+        if (fileNumber == 0)
+            return;
+
+        int startFile = 0;
+        int endFile =  (fileNumber > fileListSupportNumMax ? fileListSupportNumMax - 1 : fileNumber);
 
         TransactionBuilder builder = new TransactionBuilder("get files list");
         RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
         routePlan2ndBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_ROUTE_PLAN);
         routePlan2ndBuilder.setRoutePlanOperateType(RoutePlan.ROUTE_PLAN_OPERATE_TYPE.enum_ROUTE_PLAN_OPERATE_TYPE_LIST_GET);
-        routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexEnd(0).setFileIndexEnd(fileNumber));
+        routePlan2ndBuilder.setRouteListGetMsg(Common.file_list_get_message.newBuilder().setFileIndexStart(startFile).setFileIndexEnd(endFile));
         byte[] routePlan2ndBytes = support.craftData(routePlan2ndBuilder.getServiceType().getNumber(), 0xff, routePlan2ndBuilder.getRoutePlanOperateType().getNumber(), routePlan2ndBuilder.build().toByteArray());
+
+        //FIXME: add loop to handle all files
+        //startFile = endFile + 1;
+        //fileNumber -= fileListSupportNumMax;
+
         builder.write(support.writeCharacteristicFourth, routePlan2ndBytes);
         builder.queue(support.getQueue());
 
