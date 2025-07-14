@@ -97,7 +97,7 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     }
 
     public TransactionBuilder createTransactionBuilder(String taskName) {
-        return new TransactionBuilder(taskName);
+        return new TransactionBuilder(taskName, this);
     }
 
     @Override

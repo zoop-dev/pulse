@@ -113,6 +113,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         return getQueue(0);
     }
 
+    @Override
     public BtLEQueue getQueue(int deviceIdx) {
         validateDeviceIndex(deviceIdx);
         return mQueues[deviceIdx];
@@ -147,9 +148,6 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
             for (int i = 0; i < deviceCount; i++) {
                 if (mQueues[i] == null && devices[i] != null) {
                     mQueues[i] = new BtLEQueue(devices[i], mSupportedServerServices[i], this);
-                    if (bleApis[i] != null) {
-                        bleApis[i].setQueue(mQueues[i]);
-                    }
                 }
 
                 if (mQueues[i] != null && !mQueues[i].connect()) {
@@ -197,7 +195,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         devices[0] = device;
         for (int i = 0; i < deviceCount; i++) {
             if (devices[i] != null && BleIntentApi.isEnabled(device)) {
-                bleApis[i] = new BleIntentApi(context, device);
+                bleApis[i] = new BleIntentApi(this, i);
                 bleApis[i].handleBLEApiPrefs();
             }
         }
@@ -231,7 +229,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
     }
 
     public TransactionBuilder createTransactionBuilder(String taskName, int deviceIdx) {
-        return new TransactionBuilder(taskName + "_" + deviceIdx);
+        return new TransactionBuilder(taskName + "_" + deviceIdx, this, deviceIdx);
     }
 
     public ServerTransactionBuilder createServerTransactionBuilder(String taskName) {
@@ -271,7 +269,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
             TransactionBuilder builder = createTransactionBuilder("Initialize device", deviceIdx);
             builder.add(new CheckInitializedAction(devices[deviceIdx]));
             initializeDevice(builder, deviceIdx);
-            builder.queue(getQueue(deviceIdx));
+            builder.queue();
         }
         return createTransactionBuilder(taskName, deviceIdx);
     }
@@ -339,6 +337,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
      * @return the characteristic for the given UUID or <code>null</code>
      * @see #addSupportedService(UUID, int)
      */
+    @Override
     @Nullable
     public BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx) {
         validateDeviceIndex(deviceIdx);
@@ -460,7 +459,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         // request. Else low power would become a set once option.
         builder.requestConnectionPriority(lowPower ? BluetoothGatt.CONNECTION_PRIORITY_LOW_POWER : BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
 
-        builder.queue(getQueue(deviceIdx));
+        builder.queue();
     }
 
     @Override

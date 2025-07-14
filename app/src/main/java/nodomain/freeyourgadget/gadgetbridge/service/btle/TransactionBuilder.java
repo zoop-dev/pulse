@@ -20,6 +20,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.content.Context;
 import android.os.Build;
 
@@ -32,6 +33,7 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -52,11 +54,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 public class TransactionBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(TransactionBuilder.class);
 
+    private final AbstractBTLEDeviceSupport mDeviceSupport;
+    private final int mDeviceIdx;
     private final Transaction mTransaction;
     private boolean mQueued;
 
-    TransactionBuilder(String taskName) {
+    TransactionBuilder(String taskName, AbstractBTLEDeviceSupport deviceSupport, int deviceIdx) {
         mTransaction = new Transaction(taskName);
+        mDeviceSupport = deviceSupport;
+        mDeviceIdx = deviceIdx;
     }
 
     /// @see ReadAction
@@ -68,6 +74,11 @@ public class TransactionBuilder {
         }
         ReadAction action = new ReadAction(characteristic);
         return add(action);
+    }
+
+    /// @see ReadAction
+    public TransactionBuilder read(UUID characteristic) {
+        return read(mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx));
     }
 
     /// Use this only if <strong>ALL</strong> conditions are true:
@@ -97,6 +108,11 @@ public class TransactionBuilder {
         }
         WriteAction action = new WriteAction(characteristic, data);
         return add(action);
+    }
+
+    /// @see WriteAction
+    public TransactionBuilder write(UUID characteristic, byte... data) {
+        return write(mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx), data);
     }
 
     @NonNull
@@ -141,12 +157,16 @@ public class TransactionBuilder {
             LOG.warn("Unable to notify characteristic: null");
             return this;
         }
-        NotifyAction action = createNotifyAction(characteristic, enable);
+        NotifyAction action = new NotifyAction(characteristic, enable);
         return add(action);
     }
 
-    protected NotifyAction createNotifyAction(BluetoothGattCharacteristic characteristic, boolean enable) {
-        return new NotifyAction(characteristic, enable);
+    /// Enables or disables notifications for a given {@link BluetoothGattCharacteristic}.
+    /// The result will be made available asynchronously through the
+    /// {@link GattCallback#onDescriptorWrite(BluetoothGatt, BluetoothGattDescriptor, int)}.
+    @NonNull
+    public TransactionBuilder notify(UUID characteristic, boolean enable) {
+        return notify(mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx), enable);
     }
 
     /**
@@ -188,19 +208,35 @@ public class TransactionBuilder {
     }
 
     /**
-     * Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
+     * @deprecated use {@link #setDeviceState(GBDevice.State)}
      */
+    @Deprecated
     @NonNull
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtLEAction action = new SetDeviceStateAction(device, state, context);
         return add(action);
     }
 
-    /// updates the progress bar
-    /// @see SetProgressAction#SetProgressAction
+    /// Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
+    @NonNull
+    public TransactionBuilder setDeviceState(GBDevice.State state) {
+        BtLEAction action = new SetDeviceStateAction(mDeviceSupport.getDevice(), state, mDeviceSupport.getContext());
+        return add(action);
+    }
+
+    /// @deprecated use {@link #setProgress(int, boolean, int)}
+    @Deprecated
     @NonNull
     public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage, @NonNull Context context) {
         BtLEAction action = new SetProgressAction(textRes, ongoing, percentage, context);
+        return add(action);
+    }
+
+    /// updates the progress bar
+    /// @see SetProgressAction#SetProgressAction
+    @NonNull
+    public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage) {
+        BtLEAction action = new SetProgressAction(textRes, ongoing, percentage, mDeviceSupport.getContext());
         return add(action);
     }
 
@@ -226,12 +262,20 @@ public class TransactionBuilder {
         return add(action);
     }
 
-    /// Set the device as busy or not ({@code taskName = 0}).
-    /// @see SetDeviceBusyAction#SetDeviceBusyAction
+    /// @deprecated use {@link #setBusyTask(int)}
+    @Deprecated
     @NonNull
     public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
                                           @NonNull final Context context) {
         BtLEAction action = new SetDeviceBusyAction(device, taskName, context);
+        return add(action);
+    }
+
+    /// Set the device as busy or not ({@code taskName = 0}).
+    /// @see SetDeviceBusyAction#SetDeviceBusyAction
+    @NonNull
+    public TransactionBuilder setBusyTask(@StringRes final int taskName) {
+        BtLEAction action = new SetDeviceBusyAction(mDeviceSupport.getDevice(), taskName, mDeviceSupport.getContext());
         return add(action);
     }
 
@@ -251,19 +295,25 @@ public class TransactionBuilder {
         return mTransaction.getGattCallback();
     }
 
-    /**
-     * To be used as the final step to execute the transaction by the given queue.
-     *
-     * @param queue
-     */
+    /// @deprecated use {@link #queue()}
+    @Deprecated
     public void queue(BtLEQueue queue) {
+        queue();
+    }
+
+    /**
+     * To be used as the final step to execute the transaction by the queue.
+     */
+    public void queue() {
         if (mQueued) {
             throw new IllegalStateException("This builder had already been queued. You must not reuse it.");
         }
         mQueued = true;
+        BtLEQueue queue = mDeviceSupport.getQueue(mDeviceIdx);
         queue.add(mTransaction);
     }
 
+    @NonNull
     public Transaction getTransaction() {
         return mTransaction;
     }

@@ -18,8 +18,14 @@
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
 import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothProfile;
 import android.os.Build;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 
@@ -73,4 +79,9 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport
             return bonded ? 1000L : 300L;
         }
     }
+
+    abstract BtLEQueue getQueue(int deviceIdx);
+
+    @Nullable
+    abstract BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx);
 }

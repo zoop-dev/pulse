@@ -92,9 +92,6 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         synchronized (ConnectionMonitor) {
             if (mQueue == null) {
                 mQueue = new BtLEQueue(getDevice(), mSupportedServerServices, this);
-                if (bleApi != null) {
-                    bleApi.setQueue(mQueue);
-                }
             }
 
             return mQueue.connect();
@@ -133,7 +130,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         super.setContext(gbDevice, btAdapter, context);
 
         if(BleIntentApi.isEnabled(gbDevice)) {
-            bleApi = new BleIntentApi(context, gbDevice);
+            bleApi = new BleIntentApi(this, 0);
             bleApi.handleBLEApiPrefs();
         }
     }
@@ -167,7 +164,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
     }
 
     public TransactionBuilder createTransactionBuilder(String taskName) {
-        return new TransactionBuilder(taskName);
+        return new TransactionBuilder(taskName, this, 0);
     }
 
     @Override
@@ -205,7 +202,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
             TransactionBuilder builder = createTransactionBuilder("Initialize device");
             builder.add(new CheckInitializedAction(gbDevice));
             initializeDevice(builder);
-            builder.queue(getQueue());
+            builder.queue();
         }
         return createTransactionBuilder(taskName);
     }
@@ -257,6 +254,14 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         return mQueue;
     }
 
+    @Override
+    BtLEQueue getQueue(int deviceIdx){
+        if(deviceIdx != 0){
+            throw new IllegalArgumentException("deviceIdx is " + deviceIdx);
+        }
+        return getQueue();
+    }
+
     /**
      * Subclasses should call this method to add services they support.
      * Only supported services will be queried for characteristics.
@@ -295,6 +300,15 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
             }
             return mAvailableCharacteristics.get(uuid);
         }
+    }
+
+    @Nullable
+    @Override
+    BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx){
+        if(deviceIdx != 0){
+            throw new IllegalArgumentException("deviceIdx is " + deviceIdx);
+        }
+        return getCharacteristic(uuid);
     }
 
     private void gattServicesDiscovered(List<BluetoothGattService> discoveredGattServices) {
@@ -388,7 +402,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         // request. Else low power would become a set once option.
         builder.requestConnectionPriority(lowPower ? BluetoothGatt.CONNECTION_PRIORITY_LOW_POWER : BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
 
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
