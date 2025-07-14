@@ -301,7 +301,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
 
             int progressPercent = (int) ((((float) (offset + chunkLength)) / len) * 100);
 
-            builder.setProgress(getContext().getString(R.string.updatefirmwareoperation_update_in_progress), true, progressPercent, getContext());
+            builder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent, getContext());
 
             builder.queue(getSupport());
 

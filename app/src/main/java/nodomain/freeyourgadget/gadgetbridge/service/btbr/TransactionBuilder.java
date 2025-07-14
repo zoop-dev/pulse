@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.FunctionAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WriteAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
@@ -96,6 +97,14 @@ public class TransactionBuilder {
     @NonNull
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtBRAction action = new SetDeviceStateAction(device, state, context);
+        return add(action);
+    }
+
+    /// updates the progress bar
+    /// @see SetProgressAction#SetProgressAction
+    @NonNull
+    public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage, @NonNull Context context) {
+        BtBRAction action = new SetProgressAction(textRes, ongoing, percentage, context);
         return add(action);
     }
 

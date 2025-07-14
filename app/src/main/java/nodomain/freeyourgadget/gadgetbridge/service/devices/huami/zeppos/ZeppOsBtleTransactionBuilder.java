@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 
 public class ZeppOsBtleTransactionBuilder implements ZeppOsTransactionBuilder {
     private final ZeppOsBtleSupport mSupport;
@@ -41,8 +40,8 @@ public class ZeppOsBtleTransactionBuilder implements ZeppOsTransactionBuilder {
     }
 
     @Override
-    public void setProgress(final String text, final boolean ongoing, final int percentage, final Context context) {
-        mBuilder.add(new SetProgressAction(text, ongoing, percentage, context));
+    public void setProgress(@StringRes final int textRes, final boolean ongoing, final int percentage, final Context context) {
+        mBuilder.setProgress(textRes, ongoing, percentage, context);
     }
 
     @Override

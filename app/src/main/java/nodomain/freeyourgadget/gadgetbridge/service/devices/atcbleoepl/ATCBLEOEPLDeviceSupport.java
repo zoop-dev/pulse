@@ -50,7 +50,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -188,7 +187,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
             GB.toast(getContext().getString(R.string.same_image_already_on_device), Toast.LENGTH_LONG, GB.WARN);
         }
         final TransactionBuilder builder = createTransactionBuilder("finish upload");
-        builder.add(new SetProgressAction(getContext().getString(R.string.sending_image), false, 100, getContext()));
+        builder.setProgress(R.string.sending_image, false, 100, getContext());
         if (!is_firmware) {
             builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x03});
         }
@@ -212,7 +211,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         block_data = encodeBlock(image_payload, current_block);
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), encodeImageChunk(block_data, current_block, current_chunk));
         int progressPercent = (int) ((((float) current_block) / blocks_total) * 100);
-        builder.add(new SetProgressAction(getContext().getString(R.string.sending_image), true, progressPercent, getContext()));
+        builder.setProgress(R.string.sending_image, true, progressPercent, getContext());
         builder.queue(getQueue());
     }
 

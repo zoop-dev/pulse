@@ -90,7 +90,7 @@ public class ZeppOsGpxRouteUploadOperation extends AbstractZeppOsOperation<ZeppO
     private void updateProgress(final int progressPercent) {
         try {
             final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send gpx route upload progress");
-            builder.setProgress(getContext().getString(R.string.gpx_route_upload_in_progress), true, progressPercent, getContext());
+            builder.setProgress(R.string.gpx_route_upload_in_progress, true, progressPercent, getContext());
             builder.queue(getSupport());
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);

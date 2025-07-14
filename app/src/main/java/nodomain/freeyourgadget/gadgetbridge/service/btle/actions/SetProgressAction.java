@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -20,15 +20,12 @@ import android.bluetooth.BluetoothGatt;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.StringRes;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class SetProgressAction extends PlainAction {
-    private static final Logger LOG = LoggerFactory.getLogger(SetProgressAction.class);
 
     private final String text;
     private final boolean ongoing;
@@ -38,14 +35,13 @@ public class SetProgressAction extends PlainAction {
     /**
      * When run, will update the progress notification.
      *
-     * @param text
-     * @param ongoing
-     * @param percentage
-     * @param context
+     * @param textRes Text shown in the notification
+     * @param ongoing State of action, true when the action is still being performed
+     * @param percentage Current percentage indicating how far along the action has progressed
+     * @param context Context in which to create the notification
      */
-
-    public SetProgressAction(String text, boolean ongoing, int percentage, Context context) {
-        this.text = text;
+    public SetProgressAction(@StringRes int textRes, boolean ongoing, int percentage, Context context) {
+        this.text = context.getString(textRes);;
         this.ongoing = ongoing;
         this.percentage = percentage;
         this.context = context;
@@ -53,7 +49,6 @@ public class SetProgressAction extends PlainAction {
 
     @Override
     public boolean run(BluetoothGatt gatt) {
-        LOG.info(toString());
         GB.updateInstallNotification(this.text, this.ongoing, this.percentage, this.context);
 
         final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(context);

@@ -37,7 +37,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.AbstractMiFirmwareInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.MiBandSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
@@ -321,7 +320,7 @@ public class UpdateFirmwareOperation extends AbstractMiBand1Operation {
                 int progressPercent = (int) ((((float) firmwareProgress) / len) * 100);
                 if ((i > 0) && (i % 50 == 0)) {
                     builder.write(characteristicControlPoint, new byte[]{MiBandService.COMMAND_SYNC});
-                    builder.add(new SetProgressAction(getContext().getString(R.string.updatefirmwareoperation_update_in_progress), true, progressPercent, getContext()));
+                    builder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent, getContext());
                 }
             }
 

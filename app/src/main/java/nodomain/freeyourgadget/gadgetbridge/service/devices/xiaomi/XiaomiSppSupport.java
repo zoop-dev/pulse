@@ -20,7 +20,6 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.Xiaomi
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSppPacketV1.OPCODE_READ;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,8 +40,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.PlainAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiChannelHandler.Channel;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -135,12 +132,12 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
     public void onUploadProgress(final int textRsrc, final int progressPercent, final boolean ongoing) {
         try {
             final TransactionBuilder builder = commsSupport.createTransactionBuilder("send data upload progress");
-            builder.add(new SetProgressAction(
-                    commsSupport.getContext().getString(textRsrc),
+            builder.setProgress(
+                    textRsrc,
                     ongoing,
                     progressPercent,
                     commsSupport.getContext()
-            ));
+            );
             builder.queue(commsSupport.getQueue());
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);

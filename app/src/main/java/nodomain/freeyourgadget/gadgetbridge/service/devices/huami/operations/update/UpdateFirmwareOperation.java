@@ -36,7 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiFirmwareInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
@@ -255,7 +254,7 @@ public class UpdateFirmwareOperation extends AbstractMiBandOperation<HuamiSuppor
                 int progressPercent = (int) ((((float) firmwareProgress) / len) * 100);
                 if ((i > 0) && (i % 100 == 0)) {
                     builder.write(fwCControlChar, new byte[]{HuamiService.COMMAND_FIRMWARE_UPDATE_SYNC});
-                    builder.add(new SetProgressAction(getContext().getString(R.string.updatefirmwareoperation_update_in_progress), true, progressPercent, getContext()));
+                    builder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent, getContext());
                 }
             }
 

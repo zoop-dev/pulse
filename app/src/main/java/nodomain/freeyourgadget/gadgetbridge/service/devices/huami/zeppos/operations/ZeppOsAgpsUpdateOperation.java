@@ -132,7 +132,7 @@ public class ZeppOsAgpsUpdateOperation extends AbstractZeppOsOperation<ZeppOsSup
     private void updateProgress(final int progressPercent) {
         try {
             final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send agps update progress");
-            builder.setProgress(getContext().getString(R.string.updatefirmwareoperation_update_in_progress), true, progressPercent, getContext());
+            builder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent, getContext());
             builder.queue(getSupport());
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);

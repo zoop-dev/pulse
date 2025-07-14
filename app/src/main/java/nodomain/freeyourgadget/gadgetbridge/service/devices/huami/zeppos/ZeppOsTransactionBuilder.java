@@ -25,7 +25,7 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public interface ZeppOsTransactionBuilder {
-    void setProgress(final String text, final boolean ongoing, final int percentage, final Context context);
+    void setProgress(@StringRes final int textRes, final boolean ongoing, final int percentage, final Context context);
 
     void setDeviceState(final GBDevice device, final GBDevice.State deviceState, final Context context);
 

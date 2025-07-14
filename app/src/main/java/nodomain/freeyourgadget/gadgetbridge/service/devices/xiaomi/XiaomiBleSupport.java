@@ -36,8 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class XiaomiBleSupport extends XiaomiConnectionSupport {
@@ -291,12 +289,12 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
     public void onUploadProgress(int textRsrc, int progressPercent, boolean ongoing) {
         try {
             final TransactionBuilder builder = commsSupport.createTransactionBuilder("send data upload progress");
-            builder.add(new SetProgressAction(
-                    commsSupport.getContext().getString(textRsrc),
+            builder.setProgress(
+                    textRsrc,
                     ongoing,
                     progressPercent,
                     commsSupport.getContext()
-            ));
+            );
             builder.queue(commsSupport.getQueue());
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);

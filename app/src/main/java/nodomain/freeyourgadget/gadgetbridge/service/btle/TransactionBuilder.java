@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestMtuActio
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetPreferredPhyAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 
@@ -192,6 +193,14 @@ public class TransactionBuilder {
     @NonNull
     public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
         BtLEAction action = new SetDeviceStateAction(device, state, context);
+        return add(action);
+    }
+
+    /// updates the progress bar
+    /// @see SetProgressAction#SetProgressAction
+    @NonNull
+    public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage, @NonNull Context context) {
+        BtLEAction action = new SetProgressAction(textRes, ongoing, percentage, context);
         return add(action);
     }
 

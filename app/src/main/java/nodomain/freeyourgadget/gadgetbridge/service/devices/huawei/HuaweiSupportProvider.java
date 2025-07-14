@@ -2608,20 +2608,20 @@ public class HuaweiSupportProvider {
         try {
             if (isBLE()) {
                 nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("FetchRecordedData");
-                leBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction(
-                        context.getString(textRsrc),
+                leBuilder.setProgress(
+                        textRsrc,
                         ongoing,
                         progressPercent,
                         context
-                ));
+                );
                 leBuilder.queue(leSupport.getQueue());
             } else {
                 nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchRecordedData");
-                brBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction(
-                        context.getString(textRsrc),
+                brBuilder.setProgress(
+                        textRsrc,
                         ongoing,
                         progressPercent,
-                        context));
+                        context);
                 brBuilder.queue(brSupport.getQueue());
 
             }

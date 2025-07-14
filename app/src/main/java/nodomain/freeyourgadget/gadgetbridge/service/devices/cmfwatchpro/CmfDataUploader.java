@@ -29,7 +29,6 @@ import java.util.Random;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 
 public class CmfDataUploader implements CmfCharacteristic.Handler {
     private static final Logger LOG = LoggerFactory.getLogger(CmfDataUploader.class);
@@ -226,12 +225,12 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
             uploadMessage = R.string.updating_firmware;
         }
 
-        builder.add(new SetProgressAction(
-                mSupport.getContext().getString(uploadMessage),
+        builder.setProgress(
+                uploadMessage,
                 ongoing,
                 progressPercent,
                 mSupport.getContext()
-        ));
+        );
     }
 
     private void setDeviceBusy() {
