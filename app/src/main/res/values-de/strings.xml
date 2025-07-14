@@ -317,7 +317,7 @@
     <string name="mi2_prefs_activate_display_on_lift">Anzeige beim Anheben aktivieren</string>
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Handgelenk drehen, um die Information zu wechseln</string>
     <string name="mi2_prefs_do_not_disturb">Bitte nicht stören</string>
-    <string name="mi2_prefs_do_not_disturb_summary">Wenn das Band aktiv ist, erhält es keine Benachrichtigungen</string>
+    <string name="mi2_prefs_do_not_disturb_summary">Benachrichtigungen werden während Aktivität blockiert.</string>
     <string name="mi2_prefs_inactivity_warnings">Inaktivitätswarnungen</string>
     <string name="mi2_prefs_inactivity_warnings_summary">Die Smartwatch vibriert, wenn du eine Zeit lang inaktiv warst</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Grenzwert für Inaktivität (in Minuten)</string>
@@ -1712,7 +1712,7 @@
     <string name="note">Hinweis</string>
     <string name="step_streak_total">Insgesamt</string>
     <string name="steps_streaks_since_date">Seit %s</string>
-    <string name="step_streak_average_steps_hint">Durchschnittliche Schritte pro Tag der Serie</string>
+    <string name="step_streak_average_steps_hint">∅ Schritte pro Tag der Serie</string>
     <string name="steps_streaks_total_days_hint_totals">Prozentualer Anteil der Tage mit erreichtem Ziel im Verhältnis zu allen Tagen mit Schritten</string>
     <string name="steps_streaks_total_steps">Insgesamte
 \nSchritte</string>
@@ -1723,11 +1723,11 @@
     <string name="steps_streaks_hint">Serie von aufeinanderfolgenden Tagen ohne Unterbrechung, an denen das Schrittziel erreicht wird</string>
     <string name="step_streak_ongoing">Laufend</string>
     <string name="step_streak_longest">Längste</string>
-    <string name="steps_streaks_total_steps_average_hint">Durchschnittliche %d Schritte pro Tag</string>
+    <string name="steps_streaks_total_steps_average_hint">∅ %d Schritte pro Tag</string>
     <string name="step_streak_days_hint">Anzahl der aufeinanderfolgenden Tage, an denen das Schrittziel erreicht wurde</string>
     <string name="steps_streaks_total_steps_hint">Gesamtzahl der Schritte in der gesamten Serie</string>
     <string name="steps_streaks_total_steps_hint_totals">Gesamtzahl der jemals aufgezeichneten Schritte</string>
-    <string name="steps_streaks_average_steps">∅ \nSchritte</string>
+    <string name="steps_streaks_average_steps">∅\nSchritte</string>
     <string name="steps_streaks_achievement_rate">Leistung
 \nBewertung</string>
     <string name="watchface_setting_button_toggle_widgets">Widgets umschalten</string>
