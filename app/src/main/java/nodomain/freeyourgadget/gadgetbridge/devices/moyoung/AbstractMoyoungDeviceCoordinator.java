@@ -32,7 +32,6 @@ import java.util.Map;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
@@ -56,7 +55,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSett
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingTimeRange;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.settings.MoyoungSettingUserInfo;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungBloodPressureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungHeartRateSampleDao;
@@ -72,6 +70,17 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.moyoung.MoyoungDeviceSupport;
 
 public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDeviceCoordinator {
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao( @NonNull final DaoSession session) {
+        return new HashMap<>() {{
+            put(session.getMoyoungActivitySampleDao(), MoyoungActivitySampleDao.Properties.DeviceId);
+            put(session.getMoyoungHeartRateSampleDao(), MoyoungHeartRateSampleDao.Properties.DeviceId);
+            put(session.getMoyoungSpo2SampleDao(), MoyoungSpo2SampleDao.Properties.DeviceId);
+            put(session.getMoyoungBloodPressureSampleDao(), MoyoungBloodPressureSampleDao.Properties.DeviceId);
+            put(session.getMoyoungSleepStageSampleDao(), MoyoungSleepStageSampleDao.Properties.DeviceId);
+            put(session.getMoyoungStressSampleDao(), MoyoungStressSampleDao.Properties.DeviceId);
+        }};
+    }
 
     @NonNull
     @Override
@@ -90,26 +99,6 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_LAZY;
-    }
-
-    @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        final Long deviceId = device.getId();
-
-        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<>() {{
-            put(session.getMoyoungActivitySampleDao(), MoyoungActivitySampleDao.Properties.DeviceId);
-            put(session.getMoyoungHeartRateSampleDao(), MoyoungHeartRateSampleDao.Properties.DeviceId);
-            put(session.getMoyoungSpo2SampleDao(), MoyoungSpo2SampleDao.Properties.DeviceId);
-            put(session.getMoyoungBloodPressureSampleDao(), MoyoungBloodPressureSampleDao.Properties.DeviceId);
-            put(session.getMoyoungSleepStageSampleDao(), MoyoungSleepStageSampleDao.Properties.DeviceId);
-            put(session.getMoyoungStressSampleDao(), MoyoungStressSampleDao.Properties.DeviceId);
-        }};
-
-        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
-            e.getKey().queryBuilder()
-                    .where(e.getValue().eq(deviceId))
-                    .buildDelete().executeDeleteWithoutDetachingEntities();
-        }
     }
 
     @Override
