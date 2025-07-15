@@ -79,11 +79,11 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLESingleDeviceSupp
 
     @Override
     public TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         writeCharacteristic = getCharacteristic(HamaFit6900Constants.UUID_CHARACTERISTIC_TX);
 
-        builder.notify(getCharacteristic(HamaFit6900Constants.UUID_CHARACTERISTIC_RX), true);
+        builder.notify(HamaFit6900Constants.UUID_CHARACTERISTIC_RX, true);
         builder.setCallback(this);
 
         builder.write(writeCharacteristic, Message.encodeGetBatteryStatus());
@@ -102,7 +102,7 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLESingleDeviceSupp
         builder.write(writeCharacteristic, makeSetLiftWristMessage());
         builder.write(writeCharacteristic, Message.encodeSetAlarms(new ArrayList(DBHelper.getAlarms(gbDevice))));
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         return builder;
     }
@@ -376,7 +376,7 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLESingleDeviceSupp
         try {
             TransactionBuilder builder = performInitialized(taskName);
             builder.write(writeCharacteristic, message);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error(taskName, ex);
             return false;

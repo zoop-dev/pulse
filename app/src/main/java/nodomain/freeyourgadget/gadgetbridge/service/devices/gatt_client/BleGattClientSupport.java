@@ -74,12 +74,12 @@ public class BleGattClientSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         readCharacteristicIfAvailable(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL, builder);
         readCharacteristicIfAvailable(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING, builder);
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         return builder;
     }

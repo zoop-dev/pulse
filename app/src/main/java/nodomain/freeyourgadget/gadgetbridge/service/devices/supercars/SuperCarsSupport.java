@@ -53,8 +53,8 @@ public class SuperCarsSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
-        builder.notify(getCharacteristic(SuperCarsConstants.CHARACTERISTIC_UUID_FFF4), true); //for battery
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
+        builder.notify(SuperCarsConstants.CHARACTERISTIC_UUID_FFF4, true); //for battery
         builder.setCallback(this);
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
 
@@ -63,7 +63,7 @@ public class SuperCarsSupport extends AbstractBTLESingleDeviceSupport {
         broadcastManager.registerReceiver(commandReceiver, filter);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         LOG.debug("Connected to: " + gbDevice.getName());
         return builder;
     }
@@ -159,7 +159,7 @@ public class SuperCarsSupport extends AbstractBTLESingleDeviceSupport {
         TransactionBuilder builder = createTransactionBuilder("send data");
         BluetoothGattCharacteristic writeCharacteristic = getCharacteristic(SuperCarsConstants.CHARACTERISTIC_UUID_FFF1);
         builder.write(writeCharacteristic, encryptData(command));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private byte[] craft_packet(SuperCarsConstants.Speed speed,

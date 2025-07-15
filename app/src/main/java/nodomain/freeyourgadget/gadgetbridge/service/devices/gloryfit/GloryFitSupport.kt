@@ -77,10 +77,10 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     private val mBatteryStateRequestRunnable: Runnable = Runnable {
         val builder = createTransactionBuilder("get battery")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(CMD_BATTERY)
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun useAutoConnect(): Boolean {
@@ -96,19 +96,19 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     override fun initializeDevice(builder: TransactionBuilder): TransactionBuilder {
         fetcher.reset()
 
-        builder.setUpdateState(device, GBDevice.State.INITIALIZING, context)
+        builder.setDeviceState(GBDevice.State.INITIALIZING)
 
         builder.requestMtu(247)
 
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_READ), true)
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_READ), true)
+        builder.notify(UUID_CHARACTERISTIC_GLORYFIT_CMD_READ, true)
+        builder.notify(UUID_CHARACTERISTIC_GLORYFIT_DATA_READ, true)
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(CMD_VERSION)
         )
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(CMD_BATTERY)
         )
         if (GBApplication.getPrefs().syncTime()) {
@@ -129,7 +129,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         setEnableSmsReply(builder)
 
         // FIXME this is probably too early
-        builder.setUpdateState(device, GBDevice.State.INITIALIZED, context)
+        builder.setDeviceState(GBDevice.State.INITIALIZED)
 
         return builder
     }
@@ -341,11 +341,11 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
                     val builder = createTransactionBuilder("sms reply ack")
                     builder.write(
-                        getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+                        UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
                         CMD_SMS_QUICK_REPLY,
                         SMS_QUICK_REPLY_SUCCESS
                     )
-                    builder.queue(queue)
+                    builder.queue()
                 } else {
                     LOG.warn("Unhandled sms quick reply command")
                 }
@@ -425,13 +425,13 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             }
         }
 
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onFindPhone(start: Boolean) {
         val builder = createTransactionBuilder("find phone $start")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_ACTION,
                 ACTION_FIND_PHONE,
@@ -439,7 +439,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
                 if (start) 0x01 else 0x00
             )
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onFindDevice(start: Boolean) {
@@ -455,8 +455,8 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             buf.put(0x01) // ?
 
             val builder = createTransactionBuilder("find device")
-            builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
-            builder.queue(queue)
+            builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
+            builder.queue()
         }
     }
 
@@ -496,7 +496,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         val builder = createTransactionBuilder("set contacts")
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
             *byteArrayOf(
                 CMD_CONTACTS,
                 CONTACTS_START,
@@ -521,7 +521,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
                 buf.put(2, numAdded.toByte())
                 builder.write(
-                    getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+                    UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
                     *buf.array()
                 )
                 buf.position(0)
@@ -543,20 +543,20 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
             buf.put(2, numAdded.toByte())
             builder.write(
-                getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+                UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
                 *buf.array()
             )
         }
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
             *byteArrayOf(
                 CMD_CONTACTS,
                 CONTACTS_END,
                 0xfd.toByte()
             )
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetAlarms(alarms: ArrayList<out Alarm>) {
@@ -590,10 +590,10 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             buf.put(0x00) // ?
             buf.put((i + 1).toByte()) // alarm index, starting at 1
 
-            builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array().clone())
+            builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array().clone())
         }
 
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onNotification(notificationSpec: NotificationSpec) {
@@ -641,7 +641,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
         if (vibrationKind != VibrationKind.NONE) {
             builder.write(
-                getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+                UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
                 *byteArrayOf(
                     CMD_VIBRATE,
                     0x00,
@@ -655,7 +655,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             )
         }
 
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetTime() {
@@ -665,7 +665,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
         val builder = createTransactionBuilder("set time")
         setTime(builder)
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetCallState(callSpec: CallSpec) {
@@ -692,7 +692,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             )
 
             builder.write(
-                getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+                UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
                 *byteArrayOf(
                     CMD_VIBRATE,
                     0x00,
@@ -712,11 +712,11 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             buf.put(callerBytes.size.toByte())
             buf.put(callerBytes)
             builder.write(
-                getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+                UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
                 *buf.array()
             )
 
-            builder.queue(queue)
+            builder.queue()
 
             return
         }
@@ -724,14 +724,14 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         val builder = createTransactionBuilder("call end")
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_CALL_STATUS,
                 CALL_END
             )
         )
 
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetCannedMessages(cannedMessagesSpec: CannedMessagesSpec) {
@@ -755,12 +755,12 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             buf.put(i.toByte())
             buf.put(messageBytes.size.toByte())
             buf.put(messageBytes)
-            builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE), *buf.array())
+            builder.write(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE, *buf.array())
             // TODO do we need to throttle?
         }
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
             *byteArrayOf(
                 CMD_CANNED_MESSAGES,
                 CANNED_MESSAGES_END,
@@ -768,7 +768,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             )
         )
 
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetMusicState(stateSpec: MusicStateSpec?) {
@@ -784,7 +784,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
         val builder = createTransactionBuilder("set music state")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
             *byteArrayOf(
                 CMD_MUSIC,
                 MUSIC_STATE_2,
@@ -802,14 +802,14 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             )
         )
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_ACTION,
                 ACTION_MUSIC_VOLUME,
                 mMediaManager!!.phoneVolume.toByte()
             )
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetMusicInfo(musicSpec: MusicSpec?) {
@@ -819,36 +819,36 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
         val builder = createTransactionBuilder("set music info")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
             *byteArrayOf(
                 CMD_MUSIC,
                 MUSIC_STATE_1
             )
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSetPhoneVolume(volume: Float) {
         val builder = createTransactionBuilder("set phone volume")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_ACTION,
                 ACTION_MUSIC_VOLUME,
                 volume.toInt().toByte()
             )
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onReset(flags: Int) {
         if ((flags and GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
             val builder = createTransactionBuilder("factory reset")
             builder.write(
-                getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+                UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
                 CMD_FACTORY_RESET
             )
-            builder.queue(queue)
+            builder.queue()
         }
     }
 
@@ -863,7 +863,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     override fun onSetHeartRateMeasurementInterval(seconds: Int) {
         val builder = createTransactionBuilder("set heart rate measurement interval = $seconds")
         setHeartRateMeasurementInterval(builder)
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onSendWeather(weatherSpecs: ArrayList<WeatherSpec?>?) {
@@ -880,7 +880,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     ) {
         val builder = createTransactionBuilder("camera status change to $event")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_CAMERA,
                 when (event) {
@@ -893,7 +893,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
                 }
             )
         )
-        builder.queue(queue)
+        builder.queue()
     }
 
     override fun onFetchRecordedData(dataTypes: Int) {
@@ -912,7 +912,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(timestamp.get(Calendar.HOUR_OF_DAY).toByte())
         buf.put(timestamp.get(Calendar.MINUTE).toByte())
         buf.put(timestamp.get(Calendar.SECOND).toByte())
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     private fun setUserInfo(builder: TransactionBuilder) {
@@ -965,7 +965,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(0x01) // ?
         buf.put(heartRateAlertLow)
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     fun setGoalSteps(builder: TransactionBuilder) {
@@ -983,7 +983,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(0x00) // ?
         buf.putShort(stepsCoerced)
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     fun setGoalCalories(builder: TransactionBuilder) {
@@ -999,7 +999,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(0x01) // ?
         buf.putShort(caloriesCoerced)
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     fun setGoalDistance(builder: TransactionBuilder) {
@@ -1018,7 +1018,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(0x00) // ?
         buf.putShort(distanceCoerced)
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     private fun setSedentaryReminder(builder: TransactionBuilder) {
@@ -1056,7 +1056,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         }
         buf.put(if (lunchBreak) 0x01 else 0x00) // 12:00 - 14:00 hardcoded
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     private fun setLanguage(builder: TransactionBuilder) {
@@ -1076,7 +1076,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         LOG.debug("Setting language to {} -> {}", localeString, language)
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_LANGUAGE,
                 LANGUAGE_SET,
@@ -1100,14 +1100,14 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(if (metric) 0x01 else 0x02)
         buf.put(if (timeFormat24h) 0x01 else 0x02)
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE), *buf.array())
+        builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())
     }
 
     private fun setHeartRateMeasurementInterval(builder: TransactionBuilder) {
         val enabled = devicePrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_HEARTRATE_AUTOMATIC_ENABLE, false)
         LOG.debug("Setting heart rate measurement enabled = {}", enabled)
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_HEART_RATE,
                 if (enabled) HEART_RATE_MEASURING_ON else HEART_RATE_MEASURING_OFF
@@ -1134,7 +1134,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         bufEnabled.putShort((intervalSeconds / 60).toShort())
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *bufEnabled.array()
         )
 
@@ -1148,7 +1148,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         bufTimeInterval.put(endTime.minute.toByte())
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *bufTimeInterval.array()
         )
     }
@@ -1158,7 +1158,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         // but if we disable it, the watch shows the button anyway and freezes?
         LOG.debug("Setting enable call reject button")
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_CALL_REJECT_WITH_BUTTON,
                 0x08, // 0x00 for disabled
@@ -1175,7 +1175,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         val enabled = devicePrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_ENABLE_SMS_QUICK_REPLY, true)
         LOG.debug("Setting enable sms reply = {}", enabled)
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(
                 CMD_SMS_QUICK_REPLY,
                 if (enabled) 0x01 else 0x00,
@@ -1221,7 +1221,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
                 truncatedPayload.copyOfRange(byteIdx, endPos)
             )
             builder.write(
-                getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+                UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
                 *buf.array().copyOfRange(0, buf.position())
             )
             byteIdx = endPos
@@ -1231,7 +1231,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         LOG.debug("Sending notification in {} chunks", chunkIdx)
 
         builder.write(
-            getCharacteristic(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE),
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
             *byteArrayOf(CMD_NOTIFICATION, 0xfd.toByte())
         )
     }

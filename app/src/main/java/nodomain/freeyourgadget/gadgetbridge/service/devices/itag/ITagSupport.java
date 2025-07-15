@@ -80,7 +80,7 @@ public class ITagSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         requestDeviceInfo(builder);
         setInitialized(builder);
         batteryInfoProfile.requestBatteryInfo(builder);
@@ -93,7 +93,7 @@ public class ITagSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
 
@@ -118,7 +118,7 @@ public class ITagSupport extends AbstractBTLESingleDeviceSupport {
 
         TransactionBuilder builder = createTransactionBuilder("beeping");
         builder.write(characteristic, new byte[]{(byte) intensity});
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override

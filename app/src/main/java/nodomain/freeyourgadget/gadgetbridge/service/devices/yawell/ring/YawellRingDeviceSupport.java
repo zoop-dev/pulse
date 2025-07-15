@@ -150,17 +150,17 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         if (getDevice().getFirmwareVersion() == null) {
             getDevice().setFirmwareVersion(getCachedFirmwareVersion() != null ? getCachedFirmwareVersion() : "N/A");
         }
         deviceInfoProfile.requestDeviceInfo(builder);
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
-        builder.notify(getCharacteristic(YawellRingConstants.CHARACTERISTIC_NOTIFY_V1), true);
-        builder.notify(getCharacteristic(YawellRingConstants.CHARACTERISTIC_NOTIFY_V2), true);
+        builder.notify(YawellRingConstants.CHARACTERISTIC_NOTIFY_V1, true);
+        builder.notify(YawellRingConstants.CHARACTERISTIC_NOTIFY_V2, true);
 
         // Delay initialization with 2 seconds to give the ring time to settle
         backgroundTasksHandler.removeCallbacksAndMessages(null);
@@ -468,7 +468,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
         BluetoothGattCharacteristic characteristic = getCharacteristic(YawellRingConstants.CHARACTERISTIC_WRITE);
         if (characteristic != null) {
             builder.write(characteristic, contents);
-            builder.queue(getQueue());
+            builder.queue();
         }
     }
 
@@ -477,7 +477,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
         BluetoothGattCharacteristic characteristic = getCharacteristic(YawellRingConstants.CHARACTERISTIC_COMMAND);
         if (characteristic != null) {
             builder.write(characteristic, contents);
-            builder.queue(getQueue());
+            builder.queue();
         }
     }
 

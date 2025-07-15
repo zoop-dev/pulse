@@ -59,16 +59,16 @@ public class HealthThermometerProfile <T extends AbstractBTLESingleDeviceSupport
     }
 
     public void requestMeasurementInterval(TransactionBuilder builder) {
-        builder.read(getCharacteristic(UUID_CHARACTERISTIC_MEASUREMENT_INTERVAL));
+        builder.read(UUID_CHARACTERISTIC_MEASUREMENT_INTERVAL);
     }
 
     public void setMeasurementInterval(TransactionBuilder builder, byte[] value) {
-        builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_MEASUREMENT_INTERVAL), value);
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_MEASUREMENT_INTERVAL, value);
     }
 
     @Override
     public void enableNotify(TransactionBuilder builder, boolean enable) {
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_TEMPERATURE_MEASUREMENT), enable);
+        builder.notify(UUID_CHARACTERISTIC_TEMPERATURE_MEASUREMENT, enable);
     }
 
     @Override

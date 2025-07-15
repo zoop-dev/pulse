@@ -133,7 +133,7 @@ public class ZeppOsAlarmsService extends AbstractZeppOsService {
             anyAlarmEnabled |= alarm.getEnabled();
             sendAlarm(alarm, builder);
         }
-        builder.queue(getSupport());
+        builder.queue();
         if (anyAlarmEnabled) {
             GB.toast(getContext(), getContext().getString(R.string.user_feedback_miband_set_alarms_ok), Toast.LENGTH_SHORT, GB.INFO);
         } else {

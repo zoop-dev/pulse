@@ -444,11 +444,11 @@ public class HuaweiSupportProvider {
         final BluetoothGattCharacteristic characteristicRead = leSupport.getCharacteristic(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_READ);
         if (characteristicRead == null) {
             LOG.warn("Read characteristic is null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext()));
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
         builder.notify(characteristicRead, true);
-        builder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+        builder.setDeviceState(GBDevice.State.AUTHENTICATING);
         final GetLinkParamsRequest linkParamsReq = new GetLinkParamsRequest(this, builder);
         initializeDevice(linkParamsReq);
         getCoordinator().setDevice(this.gbDevice);
@@ -458,7 +458,7 @@ public class HuaweiSupportProvider {
     protected nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder initializeDevice(nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder builder) {
         setup(brSupport.getDevice(), brSupport.getContext());
         builder.setCallback(brSupport);
-        builder.add(new nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction(getDevice(), GBDevice.State.AUTHENTICATING, getContext()));
+        builder.setDeviceState(GBDevice.State.AUTHENTICATING);
         final GetLinkParamsRequest linkParamsReq = new GetLinkParamsRequest(this, builder);
         initializeDevice(linkParamsReq);
         getCoordinator().setDevice(this.gbDevice);
@@ -681,12 +681,12 @@ public class HuaweiSupportProvider {
             nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("Initializing");
             leBuilder.setCallback(leSupport);
             if (!GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean("force_new_protocol", false))
-                leBuilder.notify(leSupport.getCharacteristic(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_READ), true);
-            leBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction(gbDevice, GBDevice.State.INITIALIZING, context));
+                leBuilder.notify(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_READ, true);
+            leBuilder.setDeviceState(GBDevice.State.INITIALIZING);
         } else {
             nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("Initializing");
             brBuilder.setCallback(brSupport);
-            brBuilder.add(new nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction(gbDevice, GBDevice.State.INITIALIZING, context));
+            brBuilder.setDeviceState(GBDevice.State.INITIALIZING);
         }
         try {
             if (firstConnection) {
@@ -1417,11 +1417,11 @@ public class HuaweiSupportProvider {
         final GetSleepDataCountRequest getSleepDataCountRequest;
         if (isBLE()) {
             nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("FetchRecordedData");
-            leBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
+            leBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
             getSleepDataCountRequest = new GetSleepDataCountRequest(this, leBuilder, sleepStart, end);
         } else {
             nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchRecordedData");
-            brBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
+            brBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
             getSleepDataCountRequest = new GetSleepDataCountRequest(this, brBuilder, sleepStart, end);
         }
 
@@ -1556,11 +1556,11 @@ public class HuaweiSupportProvider {
         final GetWorkoutCountRequest getWorkoutCountRequest;
         if (isBLE()) {
             nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("FetchWorkoutData");
-            leBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
+            leBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
             getWorkoutCountRequest = new GetWorkoutCountRequest(this, leBuilder, start, end);
         } else {
             nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchWorkoutData");
-            brBuilder.setBusyTask(gbDevice, R.string.busy_task_fetch_activity_data, context);
+            brBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
             getWorkoutCountRequest = new GetWorkoutCountRequest(this, brBuilder, start, end);
         }
 
@@ -2611,18 +2611,16 @@ public class HuaweiSupportProvider {
                 leBuilder.setProgress(
                         textRsrc,
                         ongoing,
-                        progressPercent,
-                        context
+                        progressPercent
                 );
-                leBuilder.queue(leSupport.getQueue());
+                leBuilder.queue();
             } else {
                 nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchRecordedData");
                 brBuilder.setProgress(
                         textRsrc,
                         ongoing,
-                        progressPercent,
-                        context);
-                brBuilder.queue(brSupport.getQueue());
+                        progressPercent);
+                brBuilder.queue();
 
             }
 

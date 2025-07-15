@@ -505,7 +505,7 @@ public class QHybridSupport extends QHybridBaseSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         this.useActivityHand = GBApplication.getPrefs().getBoolean("QHYBRID_USE_ACTIVITY_HAND", false);
         getDevice().addDeviceInfo(new GenericItem(ITEM_USE_ACTIVITY_HAND, String.valueOf(this.useActivityHand)));
@@ -516,16 +516,16 @@ public class QHybridSupport extends QHybridBaseSupport {
         }
 
         for (int i = 2; i <= 7; i++)
-            builder.notify(getCharacteristic(UUID.fromString("3dda000" + i + "-957f-7d4a-34a6-74696673696d")), true);
+            builder.notify(UUID.fromString("3dda000" + i + "-957f-7d4a-34a6-74696673696d"), true);
 
-        builder.notify(getCharacteristic(UUID.fromString("010541ae-efe8-11c0-91c0-105d1a1155f0")), true);
-        builder.notify(getCharacteristic(UUID.fromString("fef9589f-9c21-4d19-9fc0-105d1a1155f0")), true);
-        builder.notify(getCharacteristic(UUID.fromString("842d2791-0d20-4ce4-1ada-105d1a1155f0")), true);
+        builder.notify(UUID.fromString("010541ae-efe8-11c0-91c0-105d1a1155f0"), true);
+        builder.notify(UUID.fromString("fef9589f-9c21-4d19-9fc0-105d1a1155f0"), true);
+        builder.notify(UUID.fromString("842d2791-0d20-4ce4-1ada-105d1a1155f0"), true);
 
         builder
-                .read(getCharacteristic(UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")))
-                .read(getCharacteristic(UUID.fromString("00002a26-0000-1000-8000-00805f9b34fb")))
-                .read(getCharacteristic(UUID.fromString("00002a24-0000-1000-8000-00805f9b34fb")))
+                .read(UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb"))
+                .read(UUID.fromString("00002a26-0000-1000-8000-00805f9b34fb"))
+                .read(UUID.fromString("00002a24-0000-1000-8000-00805f9b34fb"))
                 // .notify(getCharacteristic(UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb")), true)
         ;
 

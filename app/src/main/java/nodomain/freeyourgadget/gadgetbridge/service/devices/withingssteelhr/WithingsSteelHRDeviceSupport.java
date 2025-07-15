@@ -182,7 +182,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         logger.debug("Starting initialization...");
         conversationQueue = new ConversationQueue(this);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
         BluetoothGattCharacteristic characteristic = getCharacteristic(WithingsUUID.WITHINGS_WRITE_CHARACTERISTIC_UUID);
@@ -433,7 +433,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
 
             byte[] rawData = message.getRawData();
             builder.writeChunkedData(characteristic, rawData, mtuSize - 4);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
             logger.warn("Could not send message because of " + e.getMessage());
         }
@@ -466,8 +466,8 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
 
     public void finishInitialization() {
         TransactionBuilder builder = createTransactionBuilder("setupFinished");
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
-        builder.queue(getQueue());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+        builder.queue();
         logger.debug("Finished initialization.");
     }
 

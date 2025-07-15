@@ -326,7 +326,7 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
                 // TODO encode
             }
 
-            builder.queue(getSupport());
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to send voice reply", e);
         }

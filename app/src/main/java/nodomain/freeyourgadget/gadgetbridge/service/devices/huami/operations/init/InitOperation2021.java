@@ -73,7 +73,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
     @Override
     protected void doPerform() {
         huamiSupport.enableNotifications(builder, true);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         // get random auth number
         generateKeyPair();
         final byte[] sendPubKeyCommand = new byte[48 + 4];
@@ -162,7 +162,7 @@ public class InitOperation2021 extends InitOperation implements Huami2021Handler
 
             try {
                 final TransactionBuilder builder = createTransactionBuilder("Authenticated, now initialize phase 2");
-                builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+                builder.setDeviceState(GBDevice.State.INITIALIZING);
                 builder.setCallback(null); // remove init operation as the callback
                 huamiSupport.enableFurtherNotifications(builder, true);
                 huamiSupport.setCurrentTime(builder);

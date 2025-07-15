@@ -281,7 +281,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             LOG.debug("Got supported config group {}: {}", String.format("0x%02x", payload[3 + i]), configGroup);
             requestConfig(builder, configGroup);
         }
-        builder.queue(getSupport());
+        builder.queue();
     }
 
     private boolean sentFitnessGoal = false;

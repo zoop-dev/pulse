@@ -120,7 +120,7 @@ public class FileEncryptedPutRequest extends FossilRequest implements FileEncryp
                         GB.toast("error encrypting file", Toast.LENGTH_LONG, GB.ERROR, e);
                     }
 
-                    transactionBuilder.queue(adapter.getDeviceSupport().getQueue());
+                    transactionBuilder.queue();
                     break;
                 }
                 case 8: {
@@ -152,10 +152,10 @@ public class FileEncryptedPutRequest extends FossilRequest implements FileEncryp
 
                     adapter.getDeviceSupport().createTransactionBuilder("file close")
                             .write(
-                                    adapter.getDeviceSupport().getCharacteristic(UUID.fromString("3dda0003-957f-7d4a-34a6-74696673696d")),
+                                    UUID.fromString("3dda0003-957f-7d4a-34a6-74696673696d"),
                                     buffer2.array()
                             )
-                            .queue(adapter.getDeviceSupport().getQueue());
+                            .queue();
 
                     this.state = UploadState.CLOSING;
                     break;

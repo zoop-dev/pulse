@@ -58,15 +58,15 @@ public class DeviceInfoProfile<T extends AbstractBTLESingleDeviceSupport> extend
     }
 
     public void requestDeviceInfo(final TransactionBuilder builder) {
-        builder.read(getCharacteristic(UUID_CHARACTERISTIC_MANUFACTURER_NAME_STRING))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_MODEL_NUMBER_STRING))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_SERIAL_NUMBER_STRING))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_HARDWARE_REVISION_STRING))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_SOFTWARE_REVISION_STRING))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_SYSTEM_ID))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_IEEE_11073_20601_REGULATORY_CERTIFICATION_DATA_LIST))
-                .read(getCharacteristic(UUID_CHARACTERISTIC_PNP_ID));
+        builder.read(UUID_CHARACTERISTIC_MANUFACTURER_NAME_STRING)
+                .read(UUID_CHARACTERISTIC_MODEL_NUMBER_STRING)
+                .read(UUID_CHARACTERISTIC_SERIAL_NUMBER_STRING)
+                .read(UUID_CHARACTERISTIC_HARDWARE_REVISION_STRING)
+                .read(UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING)
+                .read(UUID_CHARACTERISTIC_SOFTWARE_REVISION_STRING)
+                .read(UUID_CHARACTERISTIC_SYSTEM_ID)
+                .read(UUID_CHARACTERISTIC_IEEE_11073_20601_REGULATORY_CERTIFICATION_DATA_LIST)
+                .read(UUID_CHARACTERISTIC_PNP_ID);
     }
 
     @Override

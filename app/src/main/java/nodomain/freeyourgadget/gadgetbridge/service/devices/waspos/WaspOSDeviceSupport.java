@@ -70,7 +70,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Initializing");
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         rxCharacteristic = getCharacteristic(WaspOSConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX);
         txCharacteristic = getCharacteristic(WaspOSConstants.UUID_CHARACTERISTIC_NORDIC_UART_TX);
@@ -86,7 +86,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         // get version
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         LOG.info("Initialization Done");
 
@@ -112,7 +112,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized(taskName);
             uartTx(builder, "\u0010GB("+json.toString()+")\n");
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -272,7 +272,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("setTime");
             setTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
             GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }

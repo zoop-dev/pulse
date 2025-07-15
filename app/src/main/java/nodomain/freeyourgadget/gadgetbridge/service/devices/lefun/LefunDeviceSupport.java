@@ -120,10 +120,10 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         builder.setCallback(this);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         // Enable notification
-        builder.notify(getCharacteristic(LefunConstants.UUID_CHARACTERISTIC_LEFUN_NOTIFY), true);
+        builder.notify(LefunConstants.UUID_CHARACTERISTIC_LEFUN_NOTIFY, true);
 
         // Init device (get version info, battery level, and set time)
         try {

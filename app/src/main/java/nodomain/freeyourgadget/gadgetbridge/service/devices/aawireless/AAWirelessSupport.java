@@ -160,7 +160,7 @@ public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
     private void sendCommand(final String taskName, final short command, final byte[] payload) {
         final TransactionBuilder builder = createTransactionBuilder(taskName);
         sendCommand(builder, command, payload);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void handleCommand(final short command, final byte[] payload) throws Exception {

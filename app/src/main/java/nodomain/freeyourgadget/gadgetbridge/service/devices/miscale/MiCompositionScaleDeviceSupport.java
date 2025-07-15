@@ -77,15 +77,15 @@ public class MiCompositionScaleDeviceSupport extends AbstractBTLESingleDeviceSup
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         LOG.debug("Requesting Device Info!");
         deviceInfoProfile.requestDeviceInfo(builder);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         // Weight and body composition
         builder.setCallback(this);
-        builder.notify(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BODY_COMPOSITION_MEASUREMENT), true);
+        builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_BODY_COMPOSITION_MEASUREMENT, true);
 
         return builder;
     }

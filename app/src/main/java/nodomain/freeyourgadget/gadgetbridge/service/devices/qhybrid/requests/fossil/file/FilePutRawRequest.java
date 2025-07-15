@@ -94,7 +94,7 @@ public class FilePutRawRequest extends FossilRequest {
                         onPacketWritten(transactionBuilder, i, packetCount);
                     }
 
-                    transactionBuilder.queue(adapter.getDeviceSupport().getQueue());
+                    transactionBuilder.queue();
                     break;
                 }
                 case 8: {
@@ -126,10 +126,10 @@ public class FilePutRawRequest extends FossilRequest {
 
                     adapter.getDeviceSupport().createTransactionBuilder("file close")
                             .write(
-                                    adapter.getDeviceSupport().getCharacteristic(UUID.fromString("3dda0003-957f-7d4a-34a6-74696673696d")),
+                                    UUID.fromString("3dda0003-957f-7d4a-34a6-74696673696d"),
                                     buffer2.array()
                             )
-                            .queue(adapter.getDeviceSupport().getQueue());
+                            .queue();
 
                     this.state = UploadState.CLOSING;
                     break;

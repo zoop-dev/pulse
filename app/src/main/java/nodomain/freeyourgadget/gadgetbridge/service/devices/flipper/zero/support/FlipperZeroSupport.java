@@ -133,16 +133,16 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
             recevierRegistered = true;
         }
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
-        builder.read(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING));
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
+        builder.read(GattCharacteristic.UUID_CHARACTERISTIC_FIRMWARE_REVISION_STRING);
 
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
 
         return builder
-                .notify(getCharacteristic(UUID.fromString(UUID_SERIAL_CHARACTERISTIC_RESPONSE)), true)
+                .notify(UUID.fromString(UUID_SERIAL_CHARACTERISTIC_RESPONSE), true)
                 .requestMtu(512)
-                .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+                .setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     @Override
@@ -169,8 +169,8 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
 
     private void sendSerialData(byte[] data){
         createTransactionBuilder("send serial data")
-                .write(getCharacteristic(UUID.fromString(UUID_SERIAL_CHARACTERISTIC_WRITE)), data)
-                .queue(getQueue());
+                .write(UUID.fromString(UUID_SERIAL_CHARACTERISTIC_WRITE), data)
+                .queue();
     }
 
     private RootMessageField createMainRequest(int requestFieldNumber, MessageField... children){

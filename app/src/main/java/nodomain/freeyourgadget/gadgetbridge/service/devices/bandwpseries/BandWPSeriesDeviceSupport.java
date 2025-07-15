@@ -54,7 +54,7 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // mark the device as initializing
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         getDevice().setBatteryLabel(R.string.left_earbud, 0);
         getDevice().setBatteryLabel(R.string.right_earbud, 1);
@@ -68,10 +68,10 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
 
         // mark the device as initialized
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
-        builder.notify(getCharacteristic(UUID_RPC_RESPONSE_CHARACTERISTIC), true);
-        builder.notify(getCharacteristic(UUID_RPC_NOTIFICATION_CHARACTERISTIC), true);
+        builder.notify(UUID_RPC_RESPONSE_CHARACTERISTIC, true);
+        builder.notify(UUID_RPC_NOTIFICATION_CHARACTERISTIC, true);
         BandWBLEProfile.requestFirmware(builder);
         BandWBLEProfile.requestDeviceName(builder);
         BandWBLEProfile.requestBatteryLevels(builder);

@@ -123,7 +123,7 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("setTime");
             setTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
             GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -148,7 +148,7 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     bandAlarmList.add(bandAlarm);
             }
             builder.write(alarmCharacteristic, new BandAlarms(bandAlarmList).toByteArray());
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
             GB.toast(getContext(), "Error setting alarms: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -180,10 +180,10 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onFetchRecordedData(int dataTypes) {
         try {
             TransactionBuilder builder = performInitialized("fetchActivity");
-            builder.notify(getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_EVENT), true);
+            builder.notify(SonySWR12Constants.UUID_CHARACTERISTIC_EVENT, true);
             ControlPointWithValue flushControl = new ControlPointWithValue(CommandCode.FLUSH_ACTIVITY, 0);
-            builder.write(getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT), flushControl.toByteArray());
-            builder.queue(getQueue());
+            builder.write(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT, flushControl.toByteArray());
+            builder.queue();
         } catch (Exception e) {
             LOG.error("failed to fetch activity data", e);
         }
@@ -193,10 +193,10 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onEnableRealtimeHeartRateMeasurement(boolean enable) {
         try {
             TransactionBuilder builder = performInitialized("HeartRateTest");
-            builder.notify(getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_EVENT), enable);
+            builder.notify(SonySWR12Constants.UUID_CHARACTERISTIC_EVENT, enable);
             ControlPointWithValue controlPointHeart = new ControlPointWithValue(CommandCode.HEARTRATE_REALTIME, enable ? 1 : 0);
-            builder.write(getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT), controlPointHeart.toByteArray());
-            builder.queue(getQueue());
+            builder.write(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT, controlPointHeart.toByteArray());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to read heart rate from Sony device", ex);
         }
@@ -212,16 +212,16 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     int status = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(config, false) ? 1 : 0;
                     TransactionBuilder builder = performInitialized(config);
                     ControlPointWithValue vibrationControl = new ControlPointWithValue(CommandCode.STAMINA_MODE, status);
-                    builder.write(getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT), vibrationControl.toByteArray());
-                    builder.queue(getQueue());
+                    builder.write(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT, vibrationControl.toByteArray());
+                    builder.queue();
                     break;
                 }
                 case DeviceSettingsPreferenceConst.PREF_SONYSWR12_LOW_VIBRATION: {
                     boolean isEnabled = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(config, false);
                     TransactionBuilder builder = performInitialized(config);
                     ControlPointLowVibration vibrationControl = new ControlPointLowVibration(isEnabled);
-                    builder.write(getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT), vibrationControl.toByteArray());
-                    builder.queue(getQueue());
+                    builder.write(SonySWR12Constants.UUID_CHARACTERISTIC_CONTROL_POINT, vibrationControl.toByteArray());
+                    builder.queue();
                     break;
                 }
                 case DeviceSettingsPreferenceConst.PREF_SONYSWR12_SMART_INTERVAL: {

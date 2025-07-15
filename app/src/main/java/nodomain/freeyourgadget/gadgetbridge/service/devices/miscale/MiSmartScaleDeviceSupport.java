@@ -111,18 +111,18 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         deviceInfoProfile.requestDeviceInfo(builder);
 
         if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true))
             setTime(builder);
 
-        builder.notify(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_WEIGHT_MEASUREMENT), true);
+        builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_WEIGHT_MEASUREMENT, true);
 
         fetchWeightHistory(builder);
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         return builder;
     }
@@ -144,8 +144,8 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
             // Acknowledge weight history reception
             sendHistoryCommand(builder, CMD_HISTORY_COMPLETE, false);
             sendHistoryCommand(builder, CMD_HISTORY_END, true);
-            builder.notify(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), false);
-            builder.queue(getQueue());
+            builder.notify(UUID_CHARACTERISTIC_WEIGHT_HISTORY, false);
+            builder.queue();
             getDevice().unsetBusyTask();
             GB.updateTransferNotification(null, "", false, 100, getContext());
             getDevice().sendDeviceUpdateIntent(getContext());
@@ -175,7 +175,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("reset");
 
             setConfigValue(builder, CFG_RESET_HISTORY, (byte)0x00);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error", e);
         }
@@ -198,7 +198,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 setConfigValue(builder, CFG_SMALL_OBJECTS, enabled ? (byte)0x01: (byte)0x00);
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error", e);
         }
@@ -218,7 +218,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         final TransactionBuilder builder = createTransactionBuilder("fetch weight history");
         fetchWeightHistory(builder);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     public void fetchWeightHistory(final TransactionBuilder builder) {
@@ -226,25 +226,25 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         GB.updateTransferNotification(fetchMessage,"", true, 0, getContext());
 
-        builder.setBusyTask(getDevice(), R.string.busy_task_fetch_weight_data, getContext());
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), true);
+        builder.setBusyTask(R.string.busy_task_fetch_weight_data);
+        builder.notify(UUID_CHARACTERISTIC_WEIGHT_HISTORY, true);
         // Query weight measurements saved by the scale
         sendHistoryCommand(builder, CMD_HISTORY_START, true);
         sendHistoryCommand(builder, CMD_HISTORY_QUERY, false);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void setTime(TransactionBuilder builder) {
         GregorianCalendar now = BLETypeConversions.createCalendar();
         byte[] time = BLETypeConversions.calendarToCurrentTime(now, 0);
 
-        builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), time);
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, time);
     }
 
     private void setConfigValue(TransactionBuilder builder, byte config, byte value) {
         byte[] data = new byte[] { (byte)0x06, config, (byte)0x00, value };
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_CONFIG), data);
+        builder.write(UUID_CHARACTERISTIC_CONFIG, data);
     }
 
     private void sendHistoryCommand(TransactionBuilder builder, byte cmd, boolean includeUserId) {
@@ -256,7 +256,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (includeUserId)
             buf.putInt((int)userId);
 
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_WEIGHT_HISTORY), buf.array());
+        builder.write(UUID_CHARACTERISTIC_WEIGHT_HISTORY, buf.array());
     }
 
     private void saveMeasurements(List<WeightMeasurement> measurements) {

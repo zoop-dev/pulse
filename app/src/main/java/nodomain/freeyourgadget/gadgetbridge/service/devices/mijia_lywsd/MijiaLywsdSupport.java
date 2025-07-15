@@ -99,7 +99,7 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         requestDeviceInfo(builder);
 
         final boolean supportsSetTime = getCoordinator().supportsSetTime();
@@ -389,7 +389,7 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     @Override
@@ -410,7 +410,7 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
         try {
             builder = performInitialized("Set time");
             setTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error setting time on LYWSD02", e);
             GB.toast("Error setting time on LYWSD02", Toast.LENGTH_LONG, GB.ERROR, e);
@@ -503,7 +503,7 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
                     break;
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error setting configuration on LYWSD02", e);
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);

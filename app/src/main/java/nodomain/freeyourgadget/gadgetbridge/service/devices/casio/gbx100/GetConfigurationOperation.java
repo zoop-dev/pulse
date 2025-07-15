@@ -64,7 +64,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
         TransactionBuilder builder = performInitialized("getConfiguration-Get1");
         builder.setCallback(this);
         support.writeAllFeaturesRequest(builder, command);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
                 TransactionBuilder builder = performInitialized("finished operation");
                 builder.wait(0);
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException ex) {
                 LOG.info("Error resetting Gatt callback: " + ex.getMessage());
             }
@@ -91,7 +91,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<CasioGBX100
             TransactionBuilder builder = performInitialized("getConfiguration-Get2");
             builder.setCallback(this);
             support.writeAllFeaturesRequest(builder, command);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.info("Error requesting Casio configuration");
         }

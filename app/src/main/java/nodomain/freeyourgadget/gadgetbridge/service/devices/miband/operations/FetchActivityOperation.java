@@ -176,9 +176,9 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
 
         TransactionBuilder builder = performInitialized("fetch activity data");
         getSupport().setLowLatency(builder);
-        builder.setBusyTask(getDevice(), R.string.busy_task_fetch_activity_data, getContext());
-        builder.write(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT), fetch);
-        builder.queue(getQueue());
+        builder.setBusyTask(R.string.busy_task_fetch_activity_data);
+        builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, fetch);
+        builder.queue();
     }
 
     @Override
@@ -328,8 +328,8 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
             GB.toast(getContext(), "error buffering activity data: remaining bytes: " + activityStruct.activityDataRemainingBytes + ", received: " + value.length, Toast.LENGTH_LONG, GB.ERROR);
             try {
                 TransactionBuilder builder = performInitialized("send stop sync data");
-                builder.write(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT), new byte[]{MiBandService.COMMAND_STOP_SYNC_DATA});
-                builder.queue(getQueue());
+                builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, new byte[]{MiBandService.COMMAND_STOP_SYNC_DATA});
+                builder.queue();
                 GB.updateTransferNotification(null,"Data transfer failed", false, 0, getContext());
                 handleActivityFetchFinish();
 
@@ -434,8 +434,8 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
         };
         try {
             TransactionBuilder builder = performInitialized("send acknowledge");
-            builder.write(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT), ack);
-            builder.queue(getQueue());
+            builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, ack);
+            builder.queue();
 
             // flush to the DB after queueing the ACK
             flushActivityDataHolder();
@@ -446,9 +446,9 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
                 //if we are not clearing miband's data, we have to stop the sync
                 if (prefs.getBoolean("keep_activity_data_on_device", false)) {
                     builder = performInitialized("send acknowledge");
-                    builder.write(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT), new byte[]{MiBandService.COMMAND_STOP_SYNC_DATA});
+                    builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, new byte[]{MiBandService.COMMAND_STOP_SYNC_DATA});
                     getSupport().setHighLatency(builder);
-                    builder.queue(getQueue());
+                    builder.queue();
                 }
                 handleActivityFetchFinish();
             }

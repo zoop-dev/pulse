@@ -54,7 +54,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.WatchAdapter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Request;
@@ -314,7 +313,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
                 break;
             case UPLOAD:
                 for (byte[] packet : this.uploadFileRequest.packets) {
-                    getDeviceSupport().createTransactionBuilder("File upload").write(characteristic, packet).queue(getDeviceSupport().getQueue());
+                    getDeviceSupport().createTransactionBuilder("File upload").write(characteristic, packet).queue();
                 }
                 break;
             case UPLOADED:
@@ -495,7 +494,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
     }
 
     private void queueWrite(Request request) {
-        getDeviceSupport().createTransactionBuilder(request.getClass().getSimpleName()).write(getDeviceSupport().getCharacteristic(request.getRequestUUID()), request.getRequestData()).queue(getDeviceSupport().getQueue());
+        getDeviceSupport().createTransactionBuilder(request.getClass().getSimpleName()).write(request.getRequestUUID(), request.getRequestData()).queue();
         // if (request instanceof FileRequest) this.fileRequest = request;
 
         if (!request.expectsResponse()) {

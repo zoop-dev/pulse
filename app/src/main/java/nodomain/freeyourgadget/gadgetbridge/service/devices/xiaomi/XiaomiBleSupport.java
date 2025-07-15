@@ -109,7 +109,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
             if (uuidSet == null) {
                 GB.toast(getContext(), "Failed to find known Xiaomi service", Toast.LENGTH_LONG, GB.ERROR);
                 LOG.warn("Failed to find known Xiaomi service");
-                builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
+                builder.setDeviceState(GBDevice.State.NOT_CONNECTED);
                 return builder;
             }
 
@@ -122,7 +122,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
             if (btCharacteristicCommandRead == null || btCharacteristicCommandWrite == null) {
                 LOG.warn("Characteristics are null, will attempt to reconnect");
-                builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+                builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
                 return builder;
             }
 
@@ -151,12 +151,12 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
 
             // request highest possible MTU; device should response with the highest supported MTU anyway
             builder.requestMtu(512);
-            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+            builder.setDeviceState(GBDevice.State.INITIALIZING);
             builder.notify(btCharacteristicCommandWrite, true);
             builder.notify(btCharacteristicCommandRead, true);
             builder.notify(btCharacteristicActivityData, true);
             builder.notify(btCharacteristicDataUpload, true);
-            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
+            builder.setDeviceState(GBDevice.State.AUTHENTICATING);
 
             if (uuidSet.isEncrypted()) {
                 builder.run(() -> mXiaomiSupport.getAuthService().startEncryptedHandshake());
@@ -292,10 +292,9 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
             builder.setProgress(
                     textRsrc,
                     ongoing,
-                    progressPercent,
-                    commsSupport.getContext()
+                    progressPercent
             );
-            builder.queue(commsSupport.getQueue());
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);
         }
@@ -322,7 +321,7 @@ public class XiaomiBleSupport extends XiaomiConnectionSupport {
     public void runOnQueue(String taskName, Runnable runnable) {
         final TransactionBuilder b = commsSupport.createTransactionBuilder("run task " + taskName + " on queue");
         b.run(runnable);
-        b.queue(commsSupport.getQueue());
+        b.queue();
     }
 
     @Override

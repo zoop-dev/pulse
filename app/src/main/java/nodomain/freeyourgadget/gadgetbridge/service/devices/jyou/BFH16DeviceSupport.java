@@ -102,7 +102,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Initializing BFH16");
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         measureCharacteristic = getCharacteristic(BFH16Constants.BFH16_SERVICE1_NOTIFY);
         ctrlCharacteristic = getCharacteristic(BFH16Constants.BFH16_SERVICE1_WRITE);
@@ -112,7 +112,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         syncSettings(builder);
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         LOG.info("Initialization BFH16 Done");
 
@@ -199,7 +199,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
                         alarms.get(i).getEnabled() ? cal.get(Calendar.MINUTE) : -1
                 ));
             }
-            builder.queue(getQueue());
+            builder.queue();
             GB.toast(getContext(), "Alarm settings applied - do note that the current device does not support day specification", Toast.LENGTH_LONG, GB.INFO);
         } catch(IOException e) {
             LOG.warn(e.getMessage());
@@ -212,7 +212,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("SetTime");
             syncDateAndTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.warn(e.getMessage());
         }
@@ -226,7 +226,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     BFH16Constants.CMD_VIBRATE, 0, start ? 1 : 0
             ));
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
             LOG.warn(e.getMessage());
         }
@@ -284,7 +284,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     BFH16Constants.CMD_ACTION_REBOOT_DEVICE, 0, 0
             ));
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
             LOG.warn(e.getMessage());
         }
@@ -298,7 +298,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     BFH16Constants.CMD_MEASURE_HEART, 0, 1
             ));
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
             LOG.warn(e.getMessage());
         }
@@ -313,7 +313,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     BFH16Constants.CMD_MEASURE_HEART, 0, enable ? 1 : 0
             ));
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
             LOG.warn(e.getMessage());
         }
@@ -327,7 +327,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     BFH16Constants.CMD_VIBRATE, 0, 1
             ));
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
             LOG.warn(e.getMessage());
         }
@@ -391,7 +391,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
                 builder.write(ctrlCharacteristic, currentPacket);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(e.getMessage());
         }

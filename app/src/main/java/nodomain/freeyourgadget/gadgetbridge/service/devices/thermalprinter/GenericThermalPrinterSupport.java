@@ -360,18 +360,18 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     }
 
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         builder.setCallback(this);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
         builder.requestMtu(512);
-        builder.notify(getCharacteristic(notifCharUUID), true);
+        builder.notify(notifCharUUID, true);
 
-        builder.write(getCharacteristic(writeCharUUID), PrinterCommand.getDevInfo.message(new byte[]{0x00}));
+        builder.write(writeCharUUID, PrinterCommand.getDevInfo.message(new byte[]{0x00}));
 
-        builder.write(getCharacteristic(writeCharUUID), PrinterCommand.getDevState.message(new byte[]{0x00}));
+        builder.write(writeCharUUID, PrinterCommand.getDevState.message(new byte[]{0x00}));
 
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         registerPrintCommandReceiver();
 
@@ -389,7 +389,7 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     public void send(String taskname, byte[] command) {
         TransactionBuilder builder = createTransactionBuilder(taskname);
         builder.writeChunkedData(getCharacteristic(writeCharUUID), command, 123);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
 

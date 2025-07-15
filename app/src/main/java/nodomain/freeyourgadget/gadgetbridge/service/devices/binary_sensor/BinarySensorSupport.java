@@ -147,8 +147,8 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
             if (parameter instanceof SensorState) {
                 if(getDevice().getState() != GBDevice.State.INITIALIZED){
                     createTransactionBuilder("set device state")
-                            .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext())
-                            .queue(getQueue());
+                            .setDeviceState(GBDevice.State.INITIALIZED)
+                            .queue();
                 }
 
                 SensorState stateParameter = (SensorState) parameter;
@@ -167,13 +167,13 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
         fullData[0] = 0x00;
         System.arraycopy(data, 0, fullData, 1, data.length);
 
-        builder.write(getCharacteristic(UUID.fromString(BINARY_SENSOR_CONTROL_CHARACTERISTIC_UUID)), fullData);
+        builder.write(UUID.fromString(BINARY_SENSOR_CONTROL_CHARACTERISTIC_UUID), fullData);
     }
 
     private void sendPacketToDevice(byte[] data) {
         TransactionBuilder builder = createTransactionBuilder("BSS control");
         sendPacketToDevice(data, builder);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -189,8 +189,8 @@ public class BinarySensorSupport extends BinarySensorBaseSupport {
         logger.debug("initializing device");
 
         builder
-                .setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext())
-                .notify(getCharacteristic(UUID.fromString(BINARY_SENSOR_RESPONSE_CHARACTERISTIC_UUID)), true)
+                .setDeviceState(GBDevice.State.INITIALIZING)
+                .notify(UUID.fromString(BINARY_SENSOR_RESPONSE_CHARACTERISTIC_UUID), true)
         ;
 
         SetSensorRequest setSensorRequest = new SetSensorRequest(SensorType.SENSOR_TYPE_OPENING_CLOSING, ReportState.REPORT_STATUS_ENABLED);

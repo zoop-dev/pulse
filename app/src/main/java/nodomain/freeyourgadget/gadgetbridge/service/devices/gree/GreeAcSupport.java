@@ -59,13 +59,13 @@ public class GreeAcSupport extends AbstractBTLESingleDeviceSupport {
 
         if (characteristicTx == null || characteristicRx == null) {
             LOG.warn("Pack characteristics are null");
-            builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
+            builder.setDeviceState(GBDevice.State.NOT_CONNECTED);
             return builder;
         }
 
         characteristicTx.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
 
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_PACK_RX), true);
+        builder.notify(UUID_CHARACTERISTIC_PACK_RX, true);
 
         final String mac = getDevice().getAddress().trim().replace(":", "").toLowerCase(Locale.ROOT);
         writeMessage(builder, new GreeBindMessage(mac.substring(mac.length() - 4)));
@@ -172,7 +172,7 @@ public class GreeAcSupport extends AbstractBTLESingleDeviceSupport {
 
             final TransactionBuilder builder = createTransactionBuilder("setup wifi");
             writeMessage(builder, new GreeWlanMessage(host, psw, ssid, 1));
-            builder.queue(getQueue());
+            builder.queue();
 
             return;
         }

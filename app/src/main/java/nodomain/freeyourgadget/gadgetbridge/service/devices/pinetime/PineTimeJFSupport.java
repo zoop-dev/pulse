@@ -336,7 +336,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         AlertNotificationProfile<?> profile = new AlertNotificationProfile<>(this);
         profile.setMaxLength(MaxNotificationLength);
         profile.newAlert(builder, alert, OverflowStrategy.TRUNCATE);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -398,7 +398,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         }
 
         safeWriteToCharacteristic(builder, PineTimeJFConstants.UUID_CHARACTERISTICS_NAVIGATION_FLAGS, iconname.getBytes(StandardCharsets.UTF_8));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -414,9 +414,9 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         byte[] bytesLocalTime = BLETypeConversions.calendarToLocalTime(now);
 
         TransactionBuilder builder = createTransactionBuilder("set time");
-        builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), bytesCurrentTime);
-        builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_LOCAL_TIME), bytesLocalTime);
-        builder.queue(getQueue());
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, bytesCurrentTime);
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_LOCAL_TIME, bytesLocalTime);
+        builder.queue();
     }
 
     @Override
@@ -435,7 +435,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             AlertNotificationProfile<?> profile = new AlertNotificationProfile<>(this);
             profile.setMaxLength(MaxNotificationLength);
             profile.newAlert(builder, alert, OverflowStrategy.TRUNCATE);
-            builder.queue(getQueue());
+            builder.queue();
         }
     }
 
@@ -486,24 +486,24 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         requestDeviceInfo(builder);
         if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true)) {
             onSetTime();
         }
         setWorldClocks();
-        builder.notify(getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTICS_MUSIC_EVENT), true);
+        builder.notify(PineTimeJFConstants.UUID_CHARACTERISTICS_MUSIC_EVENT, true);
         BluetoothGattCharacteristic alertNotificationEventCharacteristic = getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTIC_ALERT_NOTIFICATION_EVENT);
         if (alertNotificationEventCharacteristic != null) {
             builder.notify(alertNotificationEventCharacteristic, true);
         }
 
         if (getSupportedServices().contains(PineTimeJFConstants.UUID_SERVICE_MOTION)) {
-            builder.notify(getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTIC_MOTION_STEP_COUNT), true);
+            builder.notify(PineTimeJFConstants.UUID_CHARACTERISTIC_MOTION_STEP_COUNT, true);
             //builder.notify(getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTIC_MOTION_RAW_XYZ_VALUES), false); // issue #2527
         }
 
-        builder.notify(getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT), true);
+        builder.notify(PineTimeJFConstants.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, true);
 
         setInitialized(builder);
         batteryInfoProfile.requestBatteryInfo(builder);
@@ -541,7 +541,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                 safeWriteToCharacteristic(builder, PineTimeJFConstants.UUID_CHARACTERISTICS_MUSIC_TRACK_TOTAL, intToBytes(musicSpec.trackCount));
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
             LOG.error("Error sending music info", e);
         }
@@ -576,7 +576,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                 safeWriteToCharacteristic(builder, PineTimeJFConstants.UUID_CHARACTERISTICS_MUSIC_SHUFFLE, intToBytes(stateSpec.repeat));
             }
 
-            builder.queue(getQueue());
+            builder.queue();
 
         } catch (Exception e) {
             LOG.error("Error sending music state", e);
@@ -632,8 +632,8 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             }
 
             TransactionBuilder builder = createTransactionBuilder("set world clocks");
-            builder.write(getCharacteristic(PineTimeJFConstants.UUID_CHARACTERISTIC_WORLD_TIME), baos.toByteArray());
-            builder.queue(getQueue());
+            builder.write(PineTimeJFConstants.UUID_CHARACTERISTIC_WORLD_TIME, baos.toByteArray());
+            builder.queue();
         } catch (Exception e) {
             LOG.error("Error sending world clocks", e);
         }
@@ -747,7 +747,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         // Current condition
@@ -777,7 +777,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         // Current temperature
@@ -803,7 +803,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         // 24h temperature forecast
@@ -861,7 +861,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         // Current weather condition
@@ -887,7 +887,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         if (mapOpenWeatherConditionToPineTimeObscuration(weatherSpec.currentConditionCode) != WeatherData.ObscurationType.Length) {
@@ -912,7 +912,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         if (mapOpenWeatherConditionToPineTimeSpecial(weatherSpec.currentConditionCode) != WeatherData.SpecialType.Length) {
@@ -936,7 +936,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         if (mapOpenWeatherConditionToCloudCover(weatherSpec.currentConditionCode) != -1) {
@@ -960,7 +960,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     PineTimeJFConstants.UUID_CHARACTERISTIC_WEATHER_DATA,
                     encodedBytes);
 
-            builder.queue(getQueue());
+            builder.queue();
         }
 
         LOG.debug("Wrote weather data");
@@ -987,7 +987,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             PineTimeJFConstants.UUID_CHARACTERISTIC_SIMPLE_WEATHER_DATA,
             currentPacket.array());
 
-        currentBuilder.queue(getQueue());
+        currentBuilder.queue();
 
         if (weatherSpec.forecasts == null) {
             return;
@@ -1009,7 +1009,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                 PineTimeJFConstants.UUID_CHARACTERISTIC_SIMPLE_WEATHER_DATA,
                 forecastPacket.array());
 
-        forecastBuilder.queue(getQueue());
+        forecastBuilder.queue();
     }
 
     @Override
@@ -1051,7 +1051,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     private void requestDeviceInfo(TransactionBuilder builder) {

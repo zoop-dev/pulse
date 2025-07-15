@@ -350,16 +350,16 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     @Override
     public void setActivityNotifications(final boolean control, final boolean data) {
         final TransactionBuilder builder = createTransactionBuilder("set activity notifications: " + control + " " + data);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL), control);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA), data);
-        builder.queue(getQueue());
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL, control);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_DATA, data);
+        builder.queue();
     }
 
     @Override
     public void writeActivityControl(final String name, final byte[] value) {
         final TransactionBuilder builder = createTransactionBuilder(name);
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL), value);
-        builder.queue(getQueue());
+        builder.write(HuamiService.UUID_CHARACTERISTIC_5_ACTIVITY_CONTROL, value);
+        builder.queue();
     }
 
     @Override
@@ -395,7 +395,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                     new InitOperation2021(authenticate, authFlags, cryptFlags, this, builder, characteristicChunked2021Write, huami2021ChunkedEncoder, huami2021ChunkedDecoder).perform();
                 } else {
                     LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
-                    builder.setUpdateState(getDevice(), State.WAITING_FOR_RECONNECT, getContext());
+                    builder.setDeviceState(State.WAITING_FOR_RECONNECT);
                 }
             } else {
                 new InitOperation(authenticate, authFlags, cryptFlags, this, builder).perform();
@@ -489,7 +489,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     public void setCurrentTime(TransactionBuilder builder) {
         final Calendar now = createCalendar();
         byte[] bytes = getTimeBytes(now, TimeUnit.SECONDS);
-        builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), bytes);
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, bytes);
     }
 
     /**
@@ -507,15 +507,15 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
      * @param builder
      */
     public void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(gbDevice, State.INITIALIZED, getContext());
+        builder.setDeviceState(State.INITIALIZED);
     }
 
     // MB2: AVL
     // TODO: tear down the notifications on quit
     public HuamiSupport enableNotifications(TransactionBuilder builder, boolean enable) {
-        builder.notify(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_NOTIFICATION), enable);
+        builder.notify(MiBandService.UUID_CHARACTERISTIC_NOTIFICATION, enable);
         // Notify CHARACTERISTIC9 to receive random auth code
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUTH), enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_AUTH, enable);
         if (characteristicChunked2021Read != null) {
             builder.notify(characteristicChunked2021Read, enable);
         }
@@ -524,12 +524,12 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     }
 
     public void enableFurtherNotifications(TransactionBuilder builder, boolean enable) {
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), enable);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO), enable);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUDIO), enable);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUDIODATA), enable);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_DEVICEEVENT), enable);
-        builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_WORKOUT), enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION, enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO, enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_AUDIO, enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_AUDIODATA, enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_DEVICEEVENT, enable);
+        builder.notify(HuamiService.UUID_CHARACTERISTIC_WORKOUT, enable);
         if (characteristicChunked2021Read != null) {
             builder.notify(characteristicChunked2021Read, enable);
         }
@@ -699,7 +699,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized("enable heart rate sleep support: " + enable);
             setHeartrateSleepSupport(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error toggling heart rate sleep support: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -713,7 +713,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             minuteInterval = Math.max(0,minuteInterval);
             TransactionBuilder builder = performInitialized("set heart rate interval to: " + minuteInterval + " minutes");
             setHeartrateMeasurementInterval(builder, minuteInterval);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error toggling heart rate sleep support: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -809,7 +809,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized(task);
             sendDefaultNotification(builder, simpleNotification, repeat, extraAction);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to send notification to MI device", ex);
         }
@@ -825,7 +825,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
             getNotificationStrategy().sendCustomNotification(profile, simpleNotification, 0, 0, 0, 0, extraAction, builder);
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to send notification to device", ex);
         }
@@ -859,7 +859,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 anyAlarmEnabled |= alarm.getEnabled();
                 queueAlarm(alarm, builder);
             }
-            builder.queue(getQueue());
+            builder.queue();
             if (anyAlarmEnabled) {
                 GB.toast(getContext(), getContext().getString(R.string.user_feedback_miband_set_alarms_ok), Toast.LENGTH_SHORT, GB.INFO);
             } else {
@@ -1000,7 +1000,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 profile.setMaxLength(maxLength);
                 profile.newAlert(builder, alert);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to send notification to device", ex);
         }
@@ -1026,7 +1026,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
         sendReminders(builder, reminders);
 
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void sendReminders(final TransactionBuilder builder) {
@@ -1132,7 +1132,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
         sendWorldClocks(builder, clocks);
 
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void setWorldClocks(final TransactionBuilder builder) {
@@ -1162,7 +1162,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             //TODO: once we have a common strategy for sending events (e.g. EventHandler), remove this call from here. Meanwhile it does no harm.
             // = we should genaralize the pebble calender code
             sendCalendarEvents(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to set time on Huami device", ex);
         }
@@ -1199,7 +1199,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             try {
                 TransactionBuilder builder = performInitialized("incoming call");
                 writeToChunked(builder, 0, buf.array());
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException e) {
                 LOG.error("Unable to send incoming call");
             }
@@ -1207,7 +1207,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             try {
                 TransactionBuilder builder = performInitialized("end call");
                 writeToChunked(builder, 0, new byte[]{3, 3, 0, 0, 0, 0});
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException e) {
                 LOG.error("Unable to send end call");
             }
@@ -1218,7 +1218,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized("stop notification");
             getNotificationStrategy().stopCurrentNotification(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error stopping call notification");
         }
@@ -1247,7 +1247,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                     buf.put((byte) 0x00);
                     writeToChunked2021(builder, (short) 0x0013, buf.array(), false);
                 }
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException ex) {
                 LOG.error("Unable to set canned messages on Huami device", ex);
             }
@@ -1317,7 +1317,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             final TransactionBuilder builder = performInitialized("send volume");
             writeToChunked(builder, 3, volumeCommand);
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final IOException e) {
             LOG.error("Unable to send volume", e);
         }
@@ -1337,7 +1337,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized("send playback info");
             writeToChunked(builder, 3, encodeMusicState(getContext(), musicSpec, musicStateSpec, false));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Unable to send playback state");
         }
@@ -1441,14 +1441,14 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             } else {
                 sendReboot(builder);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to reset", ex);
         }
     }
 
     public void sendReboot(TransactionBuilder builder) {
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_FIRMWARE_CONTROL), new byte[] { HuamiService.COMMAND_FIRMWARE_REBOOT});
+        builder.write(HuamiService.UUID_CHARACTERISTIC_FIRMWARE_CONTROL, HuamiService.COMMAND_FIRMWARE_REBOOT);
     }
 
     public void sendFactoryReset(TransactionBuilder builder) {
@@ -1466,7 +1466,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             builder.write(characteristicHRControlPoint, stopHeartMeasurementContinuous);
             builder.write(characteristicHRControlPoint, stopHeartMeasurementManual);
             builder.write(characteristicHRControlPoint, startHeartMeasurementManual);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to read heart rate from Huami device", ex);
         }
@@ -1486,7 +1486,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             } else {
                 builder.write(characteristicHRControlPoint, stopHeartMeasurementContinuous);
             }
-            builder.queue(getQueue());
+            builder.queue();
             enableRealtimeSamplesTimer(enable);
         } catch (IOException ex) {
             LOG.error("Unable to enable realtime heart rate measurement", ex);
@@ -1531,7 +1531,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized("find huami");
             builder.write(characteristic, start ? new byte[] {3} : new byte[] {0});
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("error while sending find Huami device command", e);
         }
@@ -1547,10 +1547,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized(enable ? "Enabling realtime steps notifications" : "Disabling realtime steps notifications");
             if (enable) {
-                builder.read(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_7_REALTIME_STEPS));
+                builder.read(HuamiService.UUID_CHARACTERISTIC_7_REALTIME_STEPS);
             }
-            builder.notify(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_7_REALTIME_STEPS), enable);
-            builder.queue(getQueue());
+            builder.notify(HuamiService.UUID_CHARACTERISTIC_7_REALTIME_STEPS, enable);
+            builder.queue();
             enableRealtimeSamplesTimer(enable);
         } catch (IOException e) {
             LOG.error("Unable to change realtime steps notification to: " + enable, e);
@@ -1572,7 +1572,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             TransactionBuilder builder = performInitialized("Vibrate once");
             builder.write(characteristic,new byte[] {3});
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("error while sending simple vibrate command", e);
         }
@@ -1686,7 +1686,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 LOG.info("An alarm was toggled or changed");
                 TransactionBuilder builder = createTransactionBuilder("requestAlarms");
                 requestAlarms(builder);
-                builder.queue(getQueue());
+                builder.queue();
                 break;
             case HuamiDeviceEvent.FELL_ASLEEP:
                 LOG.info("Fell asleep");
@@ -1905,7 +1905,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             final TransactionBuilder builder = performInitialized("send phone gps location");
             writeToChunked(builder, 6, buf.array());
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final IOException e) {
             LOG.error("Unable to send location", e);
         }
@@ -1927,7 +1927,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             TransactionBuilder builder = performInitialized("acknowledge find phone");
 
             writeToConfiguration(builder,AmazfitBipService.COMMAND_ACK_FIND_PHONE_IN_PROGRESS);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error while ending acknowledge find phone", ex);
         }
@@ -1943,7 +1943,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             final TransactionBuilder builder = performInitialized("send phone silent mode");
             sendPhoneSilentMode(builder, enabled);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final Exception ex) {
             LOG.error("Error while sending phone silent mode", ex);
         }
@@ -2255,7 +2255,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             final TransactionBuilder builder = createTransactionBuilder("send chunked ack");
             builder.write(characteristicChunked2021Read, new byte[] {0x04, 0x00, handle, 0x01, count});
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to send chunked ack", e);
         }
@@ -2730,7 +2730,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                     setPassword(builder);
                     break;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -2743,7 +2743,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             final TransactionBuilder builder = performInitialized("test request");
             writeToConfiguration(builder, HuamiService.COMMAND_REQUEST_WORKOUT_ACTIVITY_TYPES);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("onTestNewFunction failed", e);
         }
@@ -2862,10 +2862,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             if (characteristicChunked != null) {
                 writeToChunked(builder, 1, buf.array());
             } else {
-                builder.write(getCharacteristic(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER), buf.array());
+                builder.write(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER, buf.array());
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending current weather", ex);
         }
@@ -2893,10 +2893,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             if (characteristicChunked != null) {
                 writeToChunked(builder, 1, buf.array());
             } else {
-                builder.write(getCharacteristic(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER), buf.array());
+                builder.write(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER, buf.array());
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Error sending air quality");
         }
@@ -2969,10 +2969,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             if (characteristicChunked != null) {
                 writeToChunked(builder, 1, buf.array());
             } else {
-                builder.write(getCharacteristic(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER), buf.array());
+                builder.write(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER, buf.array());
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending weather forecast", ex);
         }
@@ -2992,10 +2992,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             if (characteristicChunked != null) {
                 writeToChunked(builder, 1, buf.array());
             } else {
-                builder.write(getCharacteristic(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER), buf.array());
+                builder.write(AmazfitBipService.UUID_CHARACTERISTIC_WEATHER, buf.array());
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending current forecast location", ex);
         }
@@ -3020,7 +3020,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 buf.put(humidityString.getBytes());
                 buf.put((byte) 0);
                 writeToChunked(builder, 1, buf.array());
-                builder.queue(getQueue());
+                builder.queue();
             } catch (Exception ex) {
                 LOG.error("Error sending wind/humidity", ex);
             }
@@ -3054,7 +3054,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                         buf.put((byte) sunriseTransitSet.getSunset().getMinute());
 
                         writeToChunked(builder, 1, buf.array());
-                        builder.queue(getQueue());
+                        builder.queue();
                     } catch (Exception ex) {
                         LOG.error("Error sending sunset/sunrise", ex);
                     }
@@ -3753,7 +3753,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         try {
             final TransactionBuilder builder = createTransactionBuilder(taskName);
             writeToChunked2021(builder, type, data, encrypt);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to {}", taskName, e);
         }
@@ -3764,7 +3764,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             data = ArrayUtils.insert(0, data, (byte) 1);
             writeToChunked2021(builder, CHUNKED2021_ENDPOINT_COMPAT, data, true);
         } else {
-            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), data);
+            builder.write(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION, data);
         }
     }
 
@@ -3926,7 +3926,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 try {
                     TransactionBuilder builder = performInitialized("allow sms reply");
                     writeToChunked2021(builder, ZeppOsCannedMessagesService.ENDPOINT, new byte[]{(byte) ZeppOsCannedMessagesService.CMD_REPLY_SMS_ALLOW, 0x01}, false);
-                    builder.queue(getQueue());
+                    builder.queue();
                 } catch (IOException e) {
                     LOG.error("Unable to allow sms reply");
                 }
@@ -3953,7 +3953,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                         TransactionBuilder builder = performInitialized("ack sms reply");
                         byte[] ackSentCommand = new byte[]{ZeppOsCannedMessagesService.CMD_REPLY_SMS_ACK, 0x01};
                         writeToChunked2021(builder, ZeppOsCannedMessagesService.ENDPOINT, ackSentCommand, false);
-                        builder.queue(getQueue());
+                        builder.queue();
                     } catch (IOException e) {
                         LOG.error("Unable to ack sms reply");
                     }

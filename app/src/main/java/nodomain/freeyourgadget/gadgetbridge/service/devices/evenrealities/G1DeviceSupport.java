@@ -119,8 +119,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         if (rx == null || tx == null) {
             // If the characteristics are not received from the device reconnect and try again.
             LOG.warn("RX/TX characteristics are null, will attempt to reconnect");
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT,
-                                                 getContext()));
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             GB.toast(getContext(), "Failed to connect to Glasses, waiting for reconnect.",
                      Toast.LENGTH_LONG, GB.ERROR);
             return builder;
@@ -138,8 +137,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         // Paranoid protection from a bad index being passed in.
         if (side == null) {
             LOG.error("Device index is not left or right: {}", deviceIdx);
-            builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT,
-                                                 getContext()));
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             GB.toast(getContext(), "Unable to manage connection to device.", Toast.LENGTH_LONG,
                      GB.ERROR);
             return builder;
@@ -157,8 +155,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         // will lock up in a half initialized state because GB thinks the left side is initialized,
         // after because the right ran first.
         if (side.getConnectingState() == GBDevice.State.CONNECTED) {
-            builder.add(new SetDeviceStateAction(getDevice(deviceIdx), GBDevice.State.INITIALIZING,
-                                                 getContext()));
+            builder.setDeviceState(GBDevice.State.INITIALIZING);
             side.initialize(builder);
         }
 
@@ -174,8 +171,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
 
                 // Both sides are initialized. The whole device is initialized, don't use a device
                 // index here. Device 0 is the device that the reset of GB sees.
-                builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED,
-                                                     getContext()));
+                builder.setDeviceState(GBDevice.State.INITIALIZED);
                 // This means that both sides have been connected to and basic info has been collected.
                 // These next steps require that both sides are ready which is why they are done post
                 // individual initialization. We don't know what thread we are handling the update state

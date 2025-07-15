@@ -27,7 +27,7 @@ public abstract class AbstractMiBand1Operation extends AbstractMiBandOperation<M
 
     @Override
     protected void enableOtherNotifications(TransactionBuilder builder, boolean enable) {
-        builder.notify(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_REALTIME_STEPS), enable)
-                .notify(getCharacteristic(MiBandService.UUID_CHARACTERISTIC_SENSOR_DATA), enable);
+        builder.notify(MiBandService.UUID_CHARACTERISTIC_REALTIME_STEPS, enable)
+                .notify(MiBandService.UUID_CHARACTERISTIC_SENSOR_DATA, enable);
     }
 }

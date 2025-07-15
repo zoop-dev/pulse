@@ -109,7 +109,7 @@ public class AmazfitNeoSupport extends MiBand5Support {
             TransactionBuilder builder = performInitialized("HeartRateTest");
             enableNotifyHeartRateMeasurements(true, builder);
             builder.write(characteristicHRControlPoint, new byte[]{ 0x15, 0x01, 0x01 });
-            builder.queue(getQueue());
+            builder.queue();
             heartRateTestStarted = true;
         } catch (IOException ex) {
             LOG.error("Unable to read heart rate from Huami device", ex);
@@ -142,7 +142,7 @@ public class AmazfitNeoSupport extends MiBand5Support {
                 builder.write(characteristicHRControlPoint, new byte[] { 0x15, 0x01, 0x00 });
                 heartRateRealtimeStarted = false;
             }
-            builder.queue(getQueue());
+            builder.queue();
             enableRealtimeSamplesTimer(enable);
         } catch (IOException ex) {
             LOG.error("Unable to enable realtime heart rate measurement", ex);

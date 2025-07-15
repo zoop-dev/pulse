@@ -230,7 +230,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
                     try {
                         TransactionBuilder builder = performInitialized("writeCurrentTime");
                         writeCurrentTime(builder, ZonedDateTime.now());
-                        builder.queue(getQueue());
+                        builder.queue();
                     } catch (IOException e) {
                         LOG.warn("writing current time failed: " + e.getMessage());
                     }
@@ -404,7 +404,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
             TransactionBuilder builder = performInitialized("showNotification");
             builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_NOTIFICATION_CHARACTERISTIC_UUID), copy);
             LOG.info("Showing notification, title: {} message: {}", title, message);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("showNotification failed", e);
         }
@@ -546,7 +546,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
             TransactionBuilder builder = performInitialized("setAlarm");
             writeAllFeatures(builder, data1);
             writeAllFeatures(builder, data2);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.error("Error setting alarm: " + e.getMessage());
         }
@@ -558,7 +558,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
         try {
             TransactionBuilder builder = performInitialized("onSetTime");
             writeCurrentTime(builder, ZonedDateTime.now());
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("onSetTime failed: " + e.getMessage());
         }
@@ -638,7 +638,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
         try {
             TransactionBuilder builder = performInitialized("onTestNewFunction");
             writeAllFeaturesRequest(builder, data);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.error("Error setting alarm: " + e.getMessage());
         }

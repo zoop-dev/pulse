@@ -78,7 +78,7 @@ public class VibratissimoSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         requestDeviceInfo(builder);
         setInitialized(builder);
         batteryInfoProfile.requestBatteryInfo(builder);
@@ -91,7 +91,7 @@ public class VibratissimoSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
 
@@ -122,7 +122,7 @@ public class VibratissimoSupport extends AbstractBTLESingleDeviceSupport {
         builder.write(characteristic1, new byte[]{0x03, (byte) 0x80});
 
         builder.write(characteristic2, new byte[]{(byte) intensity, 0x00});
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override

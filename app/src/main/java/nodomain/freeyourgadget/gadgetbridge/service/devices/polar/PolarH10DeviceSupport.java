@@ -76,7 +76,7 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // Enter initializing state
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         deviceInfoProfile.requestDeviceInfo(builder);
         deviceInfoProfile.enableNotify(builder, true);
@@ -84,15 +84,15 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
 
-        builder.notify(getCharacteristic(UUID_SERVICE_BATTERY_SERVICE), true);
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT), true);
+        builder.notify(UUID_SERVICE_BATTERY_SERVICE, true);
+        builder.notify(UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, true);
 
         // Set defaults
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
 
         // Enter initialized state
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         return builder;
     }
 

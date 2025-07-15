@@ -119,7 +119,7 @@ public abstract class ZeppOsFileTransferImpl {
             final ZeppOsTransactionBuilder builder = mSupport.createZeppOsTransactionBuilder("enable file transfer v3 notifications");
             builder.notify(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND, true);
             builder.notify(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_RECEIVE, true);
-            builder.queue(mSupport);
+            builder.queue();
         }
 
         mSupport.evaluateGBDeviceEvent(new GBDeviceEventUpdatePreferences(PREF_SUPPORTED_SERVICES, new HashSet<>(supportedServices)));

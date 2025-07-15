@@ -140,7 +140,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("showNotification");
             byte[] command = Watch9Constants.CMD_NOTIFICATION_TASK;
             command[1] = (byte) (isStopNotification ? 0x04 : 0x01);
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                             Watch9Constants.TASK,
                             Conversion.toByteArr32(notificationChannel)));
@@ -151,7 +151,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private Watch9DeviceSupport enableNotificationChannels(TransactionBuilder builder) {
-        builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(Watch9Constants.CMD_NOTIFICATION_SETTINGS,
                         Watch9Constants.WRITE_VALUE,
                         new byte[]{(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF}));
@@ -160,7 +160,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     public Watch9DeviceSupport authorizationRequest(TransactionBuilder builder, boolean firstConnect) {
-        builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(Watch9Constants.CMD_AUTHORIZATION_TASK,
                         Watch9Constants.TASK,
                         new byte[]{(byte) (firstConnect ? 0x00 : 0x01)})); //possibly not the correct meaning
@@ -169,7 +169,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private Watch9DeviceSupport enableDoNotDisturb(TransactionBuilder builder, boolean active) {
-        builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(Watch9Constants.CMD_DO_NOT_DISTURB_SETTINGS,
                         Watch9Constants.WRITE_VALUE,
                         new byte[]{(byte) (active ? 0x01 : 0x00)}));
@@ -180,7 +180,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void enableCalibration(boolean enable) {
         try {
             TransactionBuilder builder = performInitialized("enableCalibration");
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_CALIBRATION_INIT_TASK,
                             Watch9Constants.TASK,
                             new byte[]{(byte) (enable ? 0x01 : 0x00)}));
@@ -193,7 +193,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void holdCalibration() {
         try {
             TransactionBuilder builder = performInitialized("holdCalibration");
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_CALIBRATION_KEEP_ALIVE,
                             Watch9Constants.KEEP_ALIVE));
             performImmediately(builder);
@@ -207,7 +207,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
             isCalibrationActive = true;
             TransactionBuilder builder = performInitialized("calibrate");
             int handsPosition = ((hour % 12) * 60 + minute) * 60 + second;
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_CALIBRATION_TASK,
                             Watch9Constants.TASK,
                             Conversion.toByteArr16(handsPosition)));
@@ -221,7 +221,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void getTime() {
         try {
             TransactionBuilder builder = performInitialized("getTime");
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_TIME_SETTINGS,
                             Watch9Constants.READ_VALUE));
             performImmediately(builder);
@@ -265,7 +265,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     (byte) timezoneOffsetIndustrialMinutes,
                     (byte) (calendar.get(Calendar.DAY_OF_WEEK) - 1)
             };
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_TIME_SETTINGS,
                             Watch9Constants.WRITE_VALUE,
                             time));
@@ -276,7 +276,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     public Watch9DeviceSupport getFirmwareVersion(TransactionBuilder builder) {
-        builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(Watch9Constants.CMD_FIRMWARE_INFO,
                         Watch9Constants.READ_VALUE));
 
@@ -284,7 +284,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private Watch9DeviceSupport getBatteryState(TransactionBuilder builder) {
-        builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(Watch9Constants.CMD_BATTERY_INFO,
                         Watch9Constants.READ_VALUE));
 
@@ -293,7 +293,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private Watch9DeviceSupport setFitnessGoal(TransactionBuilder builder) {
         int fitnessGoal = new ActivityUser().getStepsGoal();
-        builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(Watch9Constants.CMD_FITNESS_GOAL_SETTINGS,
                         Watch9Constants.WRITE_VALUE,
                         Conversion.toByteArr16(fitnessGoal)));
@@ -307,7 +307,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 .enableNotificationChannels(builder)
                 .enableDoNotDisturb(builder, false)
                 .setFitnessGoal(builder);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         builder.setCallback(this);
 
         return this;
@@ -325,7 +325,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
             for (Alarm alarm : alarms) {
                 setAlarm(alarm, alarm.getPosition() + 1, builder);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("Unable to set alarms", e);
         }
@@ -335,7 +335,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void deleteAlarm(TransactionBuilder builder, int index) {
         if (0 < index && index < 4) {
             byte[] alarmValue = new byte[]{(byte) index, 0x00, 0x00, 0x00, 0x00, 0x00};
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_ALARM_SETTINGS,
                             Watch9Constants.WRITE_VALUE,
                             alarmValue));
@@ -354,7 +354,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     (byte) (alarm.getEnabled() ? 0x01 : 0x00),
                     0x00 // TODO: Unknown
             };
-            builder.write(getCharacteristic(Watch9Constants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_ALARM_SETTINGS,
                             Watch9Constants.WRITE_VALUE,
                             alarmValue));
@@ -386,7 +386,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     setFitnessGoal(builder);
                     break;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("exception in onSendConfiguration", e);
         }

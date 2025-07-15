@@ -68,8 +68,8 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
                         "N/A");
             }
 
-            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
-            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
+            builder.setDeviceState(GBDevice.State.INITIALIZING);
+            builder.setDeviceState(GBDevice.State.AUTHENTICATING);
             builder.write(XiaomiSppPacketV1.newBuilder()
                     .channel(Channel.Version)
                     .needsResponse(true)
@@ -135,10 +135,9 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
             builder.setProgress(
                     textRsrc,
                     ongoing,
-                    progressPercent,
-                    commsSupport.getContext()
+                    progressPercent
             );
-            builder.queue(commsSupport.getQueue());
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);
         }
@@ -153,7 +152,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
 
         final TransactionBuilder b = commsSupport.createTransactionBuilder("run task " + taskName + " on queue");
         b.run(runnable);
-        b.queue(commsSupport.getQueue());
+        b.queue();
     }
 
     private void skipBuffer(int newStart) {
@@ -228,7 +227,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
         try {
             final TransactionBuilder builder = this.commsSupport.createTransactionBuilder("send " + taskName);
             sendCommand(builder, command);
-            builder.queue(this.commsSupport.getQueue());
+            builder.queue();
         } catch (final Exception ex) {
             LOG.error("Caught unexpected exception while sending command, device may not have been informed!", ex);
         }
@@ -249,7 +248,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
         LOG.debug("sendDataChunk(): encoded data chunk for task '{}': {}", taskName, GB.hexdump(chunk));
         this.commsSupport.createTransactionBuilder("send " + taskName)
             .write(mProtocol.encodePacket(Channel.Data, chunk))
-            .queue(commsSupport.getQueue());
+            .queue();
 
         if (callback != null) {
             // callback puts a SetProgressAction onto the queue

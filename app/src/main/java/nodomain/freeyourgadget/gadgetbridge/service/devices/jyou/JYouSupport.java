@@ -63,7 +63,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         logger.info("Initializing");
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         BluetoothGattCharacteristic measureCharacteristic = getCharacteristic(JYouConstants.UUID_CHARACTERISTIC_MEASURE);
         ctrlCharacteristic = getCharacteristic(JYouConstants.UUID_CHARACTERISTIC_CONTROL);
@@ -73,7 +73,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
 
         syncSettings(builder);
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         logger.info("Initialization Done");
 
@@ -268,7 +268,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     JYouConstants.CMD_SET_HEARTRATE_AUTO, 0, enable ? 1 : 0
             ));
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
             logger.warn(e.getMessage());
         }

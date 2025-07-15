@@ -257,7 +257,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
             final byte[] part = ArrayUtils.subarray(payload, i, i + partSize);
             builder.write(HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3_SEND, part);
         }
-        builder.queue(mSupport);
+        builder.queue();
 
         request.setProgress(request.getProgress() + chunk.length);
         request.setIndex(request.getIndex() + 1);
@@ -355,7 +355,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
                             (byte) 0x00
                     }
             );
-            builder.queue(mSupport);
+            builder.queue();
 
             if (currentReceiveChunkIsLast) {
                 final byte[] data;

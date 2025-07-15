@@ -87,7 +87,7 @@ public class CommunicatorV1 implements ICommunicator {
         } else {
             builder.write(characteristicSend, payload);
         }
-        builder.queue(this.mSupport.getQueue());
+        builder.queue();
     }
 
     @Override

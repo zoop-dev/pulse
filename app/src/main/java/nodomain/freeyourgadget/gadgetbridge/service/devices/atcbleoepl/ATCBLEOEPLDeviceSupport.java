@@ -82,13 +82,13 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
         builder.requestMtu(512);
-        builder.notify(getCharacteristic(UUID_CHARACTERISTIC_MAIN), true);
+        builder.notify(UUID_CHARACTERISTIC_MAIN, true);
         builder.wait(300);
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_GET_CONFIGURATION);
+        builder.write(UUID_CHARACTERISTIC_MAIN, COMMAND_GET_CONFIGURATION);
         return builder;
     }
 
@@ -187,11 +187,11 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
             GB.toast(getContext().getString(R.string.same_image_already_on_device), Toast.LENGTH_LONG, GB.WARN);
         }
         final TransactionBuilder builder = createTransactionBuilder("finish upload");
-        builder.setProgress(R.string.sending_image, false, 100, getContext());
+        builder.setProgress(R.string.sending_image, false, 100);
         if (!is_firmware) {
-            builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x03});
+            builder.write(UUID_CHARACTERISTIC_MAIN, new byte[]{0x00, 0x03});
         }
-        builder.queue(getQueue());
+        builder.queue();
 
         if (getDevice().isBusy()) {
             getDevice().unsetBusyTask();
@@ -205,14 +205,14 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private void handleNextBlockRequest(byte[] value) {
         final TransactionBuilder builder = createTransactionBuilder("send image start");
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x02});
+        builder.write(UUID_CHARACTERISTIC_MAIN, new byte[]{0x00, 0x02});
         current_chunk = 0;
         current_block = value[11];
         block_data = encodeBlock(image_payload, current_block);
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), encodeImageChunk(block_data, current_block, current_chunk));
+        builder.write(UUID_CHARACTERISTIC_MAIN, encodeImageChunk(block_data, current_block, current_chunk));
         int progressPercent = (int) ((((float) current_block) / blocks_total) * 100);
-        builder.setProgress(R.string.sending_image, true, progressPercent, getContext());
-        builder.queue(getQueue());
+        builder.setProgress(R.string.sending_image, true, progressPercent);
+        builder.queue();
     }
 
     private void handleNextChunkRequest(boolean success) {
@@ -220,8 +220,8 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (success) {
             current_chunk++; // only send next chunk when successful, else resend last chunk
         }
-        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), encodeImageChunk(block_data, current_block, current_chunk));
-        builder.queue(getQueue());
+        builder.write(UUID_CHARACTERISTIC_MAIN, encodeImageChunk(block_data, current_block, current_chunk));
+        builder.queue();
     }
 
     private void handleConfigResponse(byte[] value) {
@@ -264,8 +264,8 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         editor.apply();
 
         final TransactionBuilder builder = createTransactionBuilder("set initialized");
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
-        builder.queue(getQueue());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+        builder.queue();
     }
 
     @Override
@@ -282,26 +282,26 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     String display_model = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_MODEL, "1");
                     int model = Integer.parseInt(display_model);
                     if (model == 10000) {// HACK: this is for the HS 213 BWRY JD type
-                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_CONFIGURE_HS_154_BWRY_JD);
+                        builder.write(UUID_CHARACTERISTIC_MAIN, COMMAND_CONFIGURE_HS_154_BWRY_JD);
                     } else {
-                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x04, 0x00, (byte) model});
+                        builder.write(UUID_CHARACTERISTIC_MAIN, new byte[]{0x00, 0x04, 0x00, (byte) model});
                     }
                 }
                 if (DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL.equals(config)) {
                     String bt_adv_interval = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL, "1000");
                     int interval = Integer.parseInt(bt_adv_interval);
-                    builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), new byte[]{0x00, 0x08, (byte) ((interval >> 8) & 0xff), (byte) (interval & 0xff)});
+                    builder.write(UUID_CHARACTERISTIC_MAIN, new byte[]{0x00, 0x08, (byte) ((interval >> 8) & 0xff), (byte) (interval & 0xff)});
                 }
                 if (DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE.equals(config)) {
                     boolean enable_oepl_protocol = sharedPrefs.getBoolean(DeviceSettingsPreferenceConst.PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE, true);
                     if (enable_oepl_protocol) {
-                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_ENABLE_OEPL);
+                        builder.write(UUID_CHARACTERISTIC_MAIN, COMMAND_ENABLE_OEPL);
                     } else {
-                        builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), COMMAND_DISABLE_OEPL);
+                        builder.write(UUID_CHARACTERISTIC_MAIN, COMMAND_DISABLE_OEPL);
                     }
                 }
 
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException e) {
                 GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
             }
@@ -457,9 +457,9 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
             buf.putShort((byte) 0x00);
 
             final TransactionBuilder builder = createTransactionBuilder("send image prepare");
-            builder.write(getCharacteristic(UUID_CHARACTERISTIC_MAIN), buf.array());
-            builder.setBusyTask(getDevice(), R.string.sending_image, getContext());
-            builder.queue(getQueue());
+            builder.write(UUID_CHARACTERISTIC_MAIN, buf.array());
+            builder.setBusyTask(R.string.sending_image);
+            builder.queue();
             blocks_total = image_payload.length / 4096 + 1;
 
         } catch (FileNotFoundException e) {

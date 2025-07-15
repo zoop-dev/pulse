@@ -69,14 +69,14 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
     protected void doPerform() {
         huamiSupport.enableNotifications(builder, true);
         if (needsAuth) {
-            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
+            builder.setDeviceState(GBDevice.State.AUTHENTICATING);
             // write key to device
             byte[] sendKey = org.apache.commons.lang3.ArrayUtils.addAll(new byte[]{HuamiService.AUTH_SEND_KEY, authFlags}, getSecretKey());
-            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUTH), sendKey);
+            builder.write(HuamiService.UUID_CHARACTERISTIC_AUTH, sendKey);
         } else {
-            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+            builder.setDeviceState(GBDevice.State.INITIALIZING);
             // get random auth number
-            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_AUTH), requestAuthNumber());
+            builder.write(HuamiService.UUID_CHARACTERISTIC_AUTH, requestAuthNumber());
         }
     }
 
@@ -143,7 +143,7 @@ public class InitOperation extends AbstractBTLEOperation<HuamiSupport> {
             } else if ((value[1] & 0x0f) == HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER) {
                 if (value[2] == HuamiService.AUTH_SUCCESS) {
                     TransactionBuilder builder = createTransactionBuilder("Authenticated, now initialize phase 2");
-                    builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+                    builder.setDeviceState(GBDevice.State.INITIALIZING);
                     builder.setCallback(null); // remove init operation as the callback
                     huamiSupport.enableFurtherNotifications(builder, true);
                     huamiSupport.requestDeviceInfo(builder);

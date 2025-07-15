@@ -118,7 +118,7 @@ public class ZeppOsHeartRateService extends AbstractZeppOsService {
         final ZeppOsTransactionBuilder builder = createTransactionBuilder("HeartRateTest");
         builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, true);
         write(builder, new byte[]{CMD_REALTIME_SET, REALTIME_MODE_START});
-        builder.queue(getSupport());
+        builder.queue();
 
         realtimeHandler.removeCallbacksAndMessages(null);
         scheduleContinue();
@@ -140,7 +140,7 @@ public class ZeppOsHeartRateService extends AbstractZeppOsService {
         final ZeppOsTransactionBuilder builder = createTransactionBuilder("set realtime heart rate measurement = " + enable);
         builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, enable);
         write(builder, new byte[]{CMD_REALTIME_SET, hrCmd});
-        builder.queue(getSupport());
+        builder.queue();
 
         realtimeHandler.removeCallbacksAndMessages(null);
         if (enable) {

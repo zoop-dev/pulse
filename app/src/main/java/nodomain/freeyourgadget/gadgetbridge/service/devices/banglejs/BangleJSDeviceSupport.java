@@ -290,7 +290,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                             try {
                                 TransactionBuilder builder = performInitialized("TX");
                                 uartTx(builder, data);
-                                builder.queue(queue);
+                                builder.queue();
                             } catch (IOException e) {
                                 GB.toast(getContext(), "Error in TX: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
                             }
@@ -341,7 +341,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                         try {
                             TransactionBuilder builder = performInitialized("TX");
                             uartTx(builder, data);
-                            builder.queue(getQueue());
+                            builder.queue();
                         } catch (IOException e) {
                             GB.toast(getContext(), "Error in TX: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
                         }
@@ -362,7 +362,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             sleepAsAndroidSender = new SleepAsAndroidSender(gbDevice);
         }
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         rxCharacteristic = getCharacteristic(BangleJSConstants.UUID_CHARACTERISTIC_NORDIC_UART_RX);
         txCharacteristic = getCharacteristic(BangleJSConstants.UUID_CHARACTERISTIC_NORDIC_UART_TX);
@@ -370,7 +370,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             // https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/2996 - sometimes we get
             // initializeDevice called but no characteristics have been fetched - try and reconnect in that case
             LOG.warn("RX/TX characteristics are null, will attempt to reconnect");
-            builder.setUpdateState(gbDevice, GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
         builder.setCallback(this);
@@ -390,7 +390,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         //sendSettings(builder);
 
         // get version
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         if (getDevice().getFirmwareVersion() == null) {
             getDevice().setFirmwareVersion("N/A");
             getDevice().setFirmwareVersion2("N/A");
@@ -513,7 +513,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized(taskName);
             uartTxJSON(builder, json);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -1551,7 +1551,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             //TODO: once we have a common strategy for sending events (e.g. EventHandler), remove this call from here. Meanwhile it does no harm.
             // = we should generalize the pebble calender code
             forceCalendarSync();
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
             GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -1835,7 +1835,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             final TransactionBuilder builder = performInitialized("screenshot");
             uartTx(builder, "\u0010g.dump()\n");
-            builder.queue(getQueue());
+            builder.queue();
         } catch (final IOException e) {
             GB.toast(getContext(), "Failed to get screenshot: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }

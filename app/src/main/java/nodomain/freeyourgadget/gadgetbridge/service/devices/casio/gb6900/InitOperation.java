@@ -45,10 +45,10 @@ public class InitOperation extends AbstractBTLEOperation<CasioGB6900DeviceSuppor
 
     @Override
     protected void doPerform() throws IOException {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         TransactionBuilder builder = getSupport().createTransactionBuilder("readBleSettings");
         builder.setCallback(this);
-        builder.read(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_BLE_CHARACTERISTIC_UUID));
+        builder.read(CasioConstants.CASIO_SETTING_FOR_BLE_CHARACTERISTIC_UUID);
         getSupport().performImmediately(builder);
     }
 

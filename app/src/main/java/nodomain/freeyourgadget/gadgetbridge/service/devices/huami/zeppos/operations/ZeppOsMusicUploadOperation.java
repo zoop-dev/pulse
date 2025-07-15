@@ -98,8 +98,8 @@ public class ZeppOsMusicUploadOperation extends AbstractZeppOsOperation<ZeppOsSu
     private void updateProgress(final int progressPercent) {
         try {
             final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send music upload progress");
-            builder.setProgress(R.string.music_upload_in_progress, true, progressPercent, getContext());
-            builder.queue(getSupport());
+            builder.setProgress(R.string.music_upload_in_progress, true, progressPercent);
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);
         }

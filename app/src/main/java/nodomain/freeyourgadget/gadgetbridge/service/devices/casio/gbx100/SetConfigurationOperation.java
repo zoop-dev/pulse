@@ -68,7 +68,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
         TransactionBuilder builder = performInitialized("getConfiguration-Set1");
         builder.setCallback(this);
         support.writeAllFeaturesRequest(builder, command);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -151,7 +151,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
                         TransactionBuilder builder = performInitialized("setConfiguration-Set1");
                         builder.setCallback(this);
                         support.writeAllFeatures(builder, data);
-                        builder.queue(getQueue());
+                        builder.queue();
                     } catch (IOException e) {
                         LOG.info("Error writing configuration to Casio watch");
                     }
@@ -192,7 +192,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
                         TransactionBuilder builder = performInitialized("setConfiguration-Set2");
                         builder.setCallback(this);
                         support.writeAllFeatures(builder, data);
-                        builder.queue(getQueue());
+                        builder.queue();
                     } catch (IOException e) {
                         LOG.info("Error writing configuration to Casio watch");
                     }
@@ -239,7 +239,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
                         TransactionBuilder builder = performInitialized("setConfiguration-Set3");
                         builder.setCallback(this);
                         support.writeAllFeatures(builder, data);
-                        builder.queue(getQueue());
+                        builder.queue();
                     } catch (IOException e) {
                         LOG.info("Error writing configuration to Casio watch");
                     }
@@ -263,7 +263,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
                 TransactionBuilder builder = performInitialized("finished operation");
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
                 builder.wait(0);
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException ex) {
                 LOG.info("Error resetting Gatt callback: " + ex.getMessage());
             }
@@ -277,7 +277,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
             TransactionBuilder builder = performInitialized("getConfiguration-Set2");
             builder.setCallback(this);
             support.writeAllFeaturesRequest(builder, command);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.info("Error requesting Casio configuration");
         }
@@ -290,7 +290,7 @@ public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX10
             TransactionBuilder builder = performInitialized("getConfiguration-Set3");
             builder.setCallback(this);
             support.writeAllFeaturesRequest(builder, command);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.info("Error requesting Casio configuration");
         }

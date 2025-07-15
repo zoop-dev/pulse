@@ -121,7 +121,7 @@ public class CommunicatorV2 implements ICommunicator {
         } else {
             builder.write(characteristicSend, ArrayUtils.addAll(new byte[]{(byte) gfdiHandle}, payload));
         }
-        builder.queue(this.mSupport.getQueue());
+        builder.queue();
     }
 
     @Override
@@ -163,7 +163,7 @@ public class CommunicatorV2 implements ICommunicator {
         if (realtimeHrHandle == 0) {
             mSupport.createTransactionBuilder("heart rate test")
                     .write(characteristicSend, registerService(Service.REALTIME_HR, false))
-                    .queue(this.mSupport.getQueue());
+                    .queue();
         }
     }
 
@@ -183,12 +183,12 @@ public class CommunicatorV2 implements ICommunicator {
         if (enable && currentHandle == 0) {
             mSupport.createTransactionBuilder(service + " = true")
                     .write(characteristicSend, registerService(service, false))
-                    .queue(this.mSupport.getQueue());
+                    .queue();
             return true;
         } else if (!enable && currentHandle != 0) {
             mSupport.createTransactionBuilder(service + " = false")
                     .write(characteristicSend, closeService(service, currentHandle))
-                    .queue(this.mSupport.getQueue());
+                    .queue();
             return true;
         }
 
@@ -247,7 +247,7 @@ public class CommunicatorV2 implements ICommunicator {
                         this.realtimeAccelHandle = handle;
                         mSupport.createTransactionBuilder("start realtime accel")
                                 .write(characteristicSend, new byte[]{(byte) handle, 0x01})
-                                .queue(this.mSupport.getQueue());
+                                .queue();
                         break;
                     case REALTIME_SPO2:
                         this.realtimeSpo2Handle = handle;
@@ -305,7 +305,7 @@ public class CommunicatorV2 implements ICommunicator {
                 this.realtimeHrvHandle = 0;
                 mSupport.createTransactionBuilder("open GFDI")
                         .write(characteristicSend, registerService(Service.GFDI, false))
-                        .queue(this.mSupport.getQueue());
+                        .queue();
                 break;
             case UNK_RESP:
                 LOG.debug("Received unknown. Message: {}", message.array());

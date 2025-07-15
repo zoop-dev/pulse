@@ -488,7 +488,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
 
         GB.updateTransferNotification(null, getContext().getString(R.string.busy_task_fetch_activity_data), true, 0, getContext());
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         this.mControlCharacteristic = getCharacteristic(MakibesHR3Constants.UUID_CHARACTERISTIC_CONTROL);
         this.mReportCharacteristic = getCharacteristic(MakibesHR3Constants.UUID_CHARACTERISTIC_REPORT);
@@ -505,7 +505,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
 
         this.requestFitness(builder);
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");

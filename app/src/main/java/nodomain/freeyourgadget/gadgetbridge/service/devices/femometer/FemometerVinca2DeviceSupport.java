@@ -142,7 +142,7 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         // Init Battery
         batteryInfoProfile.requestBatteryInfo(builder);
@@ -164,12 +164,12 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
         setCurrentTime(builder);
 
         // Init Thermometer
-        builder.notify(getCharacteristic(CONFIGURATION_SERVICE_INDICATION_CHARACTERISTIC), true);
+        builder.notify(CONFIGURATION_SERVICE_INDICATION_CHARACTERISTIC, true);
         healthThermometerProfile.enableNotify(builder, true);
         healthThermometerProfile.setMeasurementInterval(builder, new byte[]{(byte) 0x01, (byte) 0x00});
 
         // mark the device as initialized
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         return builder;
     }
 
@@ -177,14 +177,14 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
     public void onSetTime() {
         TransactionBuilder builder = createTransactionBuilder("set time");
         setCurrentTime(builder);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void setCurrentTime(TransactionBuilder builder) {
         // Same Code as in PineTime (without the local time)
         GregorianCalendar now = BLETypeConversions.createCalendar();
         byte[] bytesCurrentTime = BLETypeConversions.calendarToCurrentTime(now, 0);
-        builder.write(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME), bytesCurrentTime);
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_CURRENT_TIME, bytesCurrentTime);
     }
 
     @Override
@@ -199,10 +199,10 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
                     (byte) alarm.getMinute()                   // third byte: minute
             };
 
-            builder.write(getCharacteristic(CONFIGURATION_SERVICE_ALARM_CHARACTERISTIC), alarm_bytes);
-            builder.write(getCharacteristic(CONFIGURATION_SERVICE_SETTING_CHARACTERISTIC), byteArray(0x01));
+            builder.write(CONFIGURATION_SERVICE_ALARM_CHARACTERISTIC, alarm_bytes);
+            builder.write(CONFIGURATION_SERVICE_SETTING_CHARACTERISTIC, byteArray(0x01));
             // read-request on char1 results in given alarm
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to apply setting ", e);
         }
@@ -227,7 +227,7 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
                     int value = "c".equals(scale) ? 0x0a : 0x0b;
                     applySetting(byteArray(value), null);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("exception in onSendConfiguration", e);
         }
@@ -270,11 +270,11 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
     private void applySetting(byte[] value, byte[] confirmation) {
         try {
             TransactionBuilder builder = performInitialized("applyThermometerSetting");
-            builder.write(getCharacteristic(CONFIGURATION_SERVICE_SETTING_CHARACTERISTIC), value);
+            builder.write(CONFIGURATION_SERVICE_SETTING_CHARACTERISTIC, value);
             if (confirmation != null) {
-                builder.write(getCharacteristic(CONFIGURATION_SERVICE_SETTING_CHARACTERISTIC), confirmation);
+                builder.write(CONFIGURATION_SERVICE_SETTING_CHARACTERISTIC, confirmation);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to apply setting ", e);
         }

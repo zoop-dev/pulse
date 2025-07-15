@@ -38,7 +38,7 @@ public abstract class AbstractMiBandOperation<T extends AbstractBTLESingleDevice
         TransactionBuilder builder = performInitialized("disabling some notifications");
         enableOtherNotifications(builder, false);
         enableNeededNotifications(builder, true);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class AbstractMiBandOperation<T extends AbstractBTLESingleDevice
                 TransactionBuilder builder = performInitialized("reenabling disabled notifications");
                 handleFinished(builder);
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException ex) {
                 GB.toast(getContext(), "Error enabling Mi Band notifications, you may need to connect and disconnect", Toast.LENGTH_LONG, GB.ERROR, ex);
             }

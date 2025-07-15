@@ -78,9 +78,9 @@ public class SoFlowSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         aesKey = getSecretKey();
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         requestDeviceInfo(builder);
-        builder.notify(getCharacteristic(UUID_CHARACTERISICS_NOTIFICATION), true);
+        builder.notify(UUID_CHARACTERISICS_NOTIFICATION, true);
         writeEncrypted(builder, COMMAND_REQUEST_SESSION);
         setInitialized(builder);
         return builder;
@@ -92,13 +92,13 @@ public class SoFlowSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     private void writeEncrypted(TransactionBuilder builder, byte[] data) {
         try {
             LOG.debug("will encrypt " + GB.hexdump(data));
-            builder.write(getCharacteristic(UUID_CHARACTERISICS_WRITE), CryptoUtils.encryptAES(data, aesKey));
+            builder.write(UUID_CHARACTERISICS_WRITE, CryptoUtils.encryptAES(data, aesKey));
         } catch (Exception e) {
             LOG.error("error while encrypting data");
         }
@@ -198,7 +198,7 @@ public class SoFlowSupport extends AbstractBTLESingleDeviceSupport {
                     writeEncrypted(builder, COMMAND_UNLOCK);
                 }
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -223,7 +223,7 @@ public class SoFlowSupport extends AbstractBTLESingleDeviceSupport {
         try {
             builder = performInitialized("request unknown");
             writeEncrypted(builder,COMMAND_REQUEST_LOCK);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }

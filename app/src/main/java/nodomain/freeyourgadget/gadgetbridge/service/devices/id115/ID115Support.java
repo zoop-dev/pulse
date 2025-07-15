@@ -55,7 +55,7 @@ public class ID115Support extends AbstractBTLESingleDeviceSupport {
         normalWriteCharacteristic = getCharacteristic(ID115Constants.UUID_CHARACTERISTIC_WRITE_NORMAL);
         healthWriteCharacteristic = getCharacteristic(ID115Constants.UUID_CHARACTERISTIC_WRITE_HEALTH);
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         setTime(builder)
                 .setWrist(builder)
@@ -88,7 +88,7 @@ public class ID115Support extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("time");
             setTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.warn("Unable to send current time", e);
         }
@@ -125,13 +125,13 @@ public class ID115Support extends AbstractBTLESingleDeviceSupport {
             builder.write(normalWriteCharacteristic, new byte[] {
                     ID115Constants.CMD_ID_DEVICE_RESTART, ID115Constants.CMD_KEY_REBOOT
             });
-            builder.queue(getQueue());
+            builder.queue();
         } catch(Exception e) {
         }
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     ID115Support setTime(TransactionBuilder builder) {
@@ -222,7 +222,7 @@ public class ID115Support extends AbstractBTLESingleDeviceSupport {
                     ID115Constants.CMD_KEY_NOTIFY_STOP,
                     1
             });
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.warn("Unable to stop call notification", e);
         }

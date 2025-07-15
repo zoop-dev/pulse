@@ -119,7 +119,7 @@ public class ZeppOsBtleSupport extends AbstractBTLESingleDeviceSupport implement
         final BluetoothGattCharacteristic characteristicChunked2021Write = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER_2021_WRITE);
         if (characteristicChunked2021Write == null || characteristicChunked2021Read == null) {
             LOG.warn("Chunked 2021 characteristics are null, will attempt to reconnect");
-            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
 

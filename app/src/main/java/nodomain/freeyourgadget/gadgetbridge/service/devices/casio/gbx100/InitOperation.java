@@ -261,12 +261,12 @@ public class InitOperation extends AbstractBTLEOperation<CasioGBX100DeviceSuppor
     }
 
     private void enableAllFeatures(TransactionBuilder builder, boolean enable) {
-        builder.notify(getCharacteristic(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID), enable);
+        builder.notify(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID, enable);
     }
 
     @Override
     protected void doPerform() throws IOException {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         enableAllFeatures(builder, true);
         requestWatchName(builder);
     }

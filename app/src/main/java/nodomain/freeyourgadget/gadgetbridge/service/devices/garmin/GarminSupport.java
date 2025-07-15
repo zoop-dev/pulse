@@ -157,7 +157,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         if (getDevicePrefs().getBoolean(PREF_ALLOW_HIGH_MTU, true)) {
             builder.requestMtu(515);
@@ -172,7 +172,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             if (!communicatorV1.initializeDevice(builder)) {
                 // Neither V1 nor V2 worked, not a Garmin device?
                 LOG.warn("Failed to find a known Garmin service");
-                builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
+                builder.setDeviceState(GBDevice.State.NOT_CONNECTED);
                 return builder;
             }
 

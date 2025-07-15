@@ -98,7 +98,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
                             TransactionBuilder builder = createTransactionBuilder("height");
 
                             builder.write(characteristic, setHeightRequest);
-                            builder.queue(getQueue());
+                            builder.queue();
                             try {
                                 Thread.sleep(300);
                             } catch (InterruptedException e) {
@@ -131,13 +131,13 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
-        builder.notify(getCharacteristic(IdasenConstants.CHARACTERISTIC_HEIGHT), true);
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
+        builder.notify(IdasenConstants.CHARACTERISTIC_HEIGHT, true);
         sendCommand("dpg", IdasenConstants.CHARACTERISTIC_DPG, IdasenConstants.CMD_DPG_WAKEUP_PREP);
         sendCommand("dpg", IdasenConstants.CHARACTERISTIC_DPG, IdasenConstants.CMD_DPG_WAKEUP);
         sendCommand("dpg", IdasenConstants.CHARACTERISTIC_COMMAND, IdasenConstants.CMD_WAKEUP);
         initBroadcast();
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         return builder;
     }
 
@@ -170,7 +170,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         TransactionBuilder builder = createTransactionBuilder(taskName);
         builder.read(characteristic);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void initBroadcast() {
@@ -204,7 +204,7 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
         BluetoothGattCharacteristic characteristic = getCharacteristic(charac);
         if (characteristic != null) {
             builder.write(characteristic, contents);
-            builder.queue(getQueue());
+            builder.queue();
         }
     }
 }

@@ -189,8 +189,8 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         final int mtu = ((AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator()).getMtu();
         builder.requestMtu(mtu + 3);  // Add 3 bytes for the BLE overhead
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
-        builder.notify(getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN), true);
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
+        builder.notify(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN, true);
         deviceInfoProfile.requestDeviceInfo(builder);
         setTime(builder);
         setMeasurementSystem(builder);
@@ -199,8 +199,8 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
         heartRateProfile.enableNotify(builder, true);
-        builder.notify(getCharacteristic(MoyoungConstants.UUID_CHARACTERISTIC_STEPS), true);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.notify(MoyoungConstants.UUID_CHARACTERISTIC_STEPS, true);
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         // TODO: I would prefer this to be done when the alarms screen is open, not on initialization...
         sendPacket(builder, MoyoungPacketOut.buildPacket(mtu, MoyoungConstants.CMD_QUERY_ALARM_CLOCK, new byte[0]));
@@ -572,7 +572,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             payload[0] = type;
             System.arraycopy(str, 0, payload, 1, str.length);
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SEND_MESSAGE, payload));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending notification: ", e);
         }
@@ -639,7 +639,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("onSetTime");
             setTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error setting time: ", e);
         }
@@ -860,7 +860,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 bufferNewProtocol.put(buffer.array(), 0, 8);
                 sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, bufferNewProtocol.array()));
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error setting alarms: ", e);
         }
@@ -892,7 +892,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("sendMusicState");
             byte[] payload = new byte[]{(byte) (stateSpec.state == MusicStateSpec.STATE_PLAYING ? 0x01 : 0x00)};
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SET_MUSIC_STATE, payload));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending music state: ", e);
         }
@@ -923,7 +923,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     (byte) (16 * volumeFraction)
             }));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending music info: ", e);
         }
@@ -957,7 +957,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_CMD, payload.array()));
                 currentNr++;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending world clocks: ", e);
         }
@@ -1040,7 +1040,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     MoyoungConstants.ARG_CALENDAR_FINISHED
             };
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, payload));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending notification: ", e);
         }
@@ -1059,7 +1059,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     MoyoungConstants.ARG_CALENDAR_DISABLE
             };
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, payload));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error while disabling calendar: ", e);
         }
@@ -1086,7 +1086,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("fetchStress");
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[]{MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x00}));
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_ADVANCED_QUERY, new byte[]{MoyoungConstants.ARG_ADVANCED_STRESS_PACKET, 0x03, 0x01}));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error while sending stress sync request: ", e);
         }
@@ -1196,7 +1196,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("FetchHROperation");
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[]{(byte) (packetIndex + 1)}));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Failed sending HR history request packet: ", e);
         }
@@ -1446,7 +1446,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("shutdown");
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SHUTDOWN, new byte[]{-1}));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending reset command: ", e);
         }
@@ -1456,7 +1456,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("onHeartRateTest");
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_TRIGGER_MEASURE_HEARTRATE, new byte[]{start ? (byte) 0 : (byte) -1}));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending heart rate test command: ", e);
         }
@@ -1513,7 +1513,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             try {
                 TransactionBuilder builder = performInitialized("onFindDevice");
                 sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_FIND_MY_WATCH, new byte[0]));
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException e) {
                 LOG.error("Error while finding device: ", e);
             }
@@ -1552,7 +1552,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("sendSetting");
             sendSetting(builder, setting, newValue);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending setting: ", e);
         }
@@ -1567,7 +1567,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("querySetting");
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), setting.cmdQuery, new byte[0]));
-            builder.queue(getQueue());
+            builder.queue();
             queriedSettings.add(setting);
         } catch (IOException e) {
             LOG.error("Error querying setting: ", e);
@@ -2039,7 +2039,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             }
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SET_WEATHER_FUTURE, packetWeatherForecast.array()));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error sending weather: ", e);
         }

@@ -165,7 +165,7 @@ public class CmfPreferences {
         final TransactionBuilder builder = mSupport.createTransactionBuilder("set measurement system");
         mSupport.sendCommand(builder, CmfCommand.UNIT_LENGTH, cmd);
         mSupport.sendCommand(builder, CmfCommand.UNIT_TEMPERATURE, cmd);
-        builder.queue(mSupport.getQueue());
+        builder.queue();
     }
 
     private void setLanguage() {
@@ -346,7 +346,7 @@ public class CmfPreferences {
 
         mSupport.sendCommand(builder, CmfCommand.CALL_REMINDER_REQUEST, new byte[]{0x01, (byte) (enabled ? 0x01 : 0x00)});
 
-        builder.queue(mSupport.getQueue());
+        builder.queue();
     }
 
     private void setActivityTypes() {

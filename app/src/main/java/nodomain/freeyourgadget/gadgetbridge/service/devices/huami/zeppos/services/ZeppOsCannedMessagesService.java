@@ -135,7 +135,7 @@ public class ZeppOsCannedMessagesService extends AbstractZeppOsService {
             buf.put(cannedMessage.getBytes(StandardCharsets.UTF_8));
             write(builder, buf.array());
         }
-        builder.queue(getSupport());
+        builder.queue();
     }
 
     public void requestCannedMessages(final ZeppOsTransactionBuilder builder) {

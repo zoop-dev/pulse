@@ -104,12 +104,12 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
 
-        builder.notify(getCharacteristic(AsteroidOSConstants.MEDIA_COMMANDS_CHAR), true);
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.notify(AsteroidOSConstants.MEDIA_COMMANDS_CHAR, true);
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
@@ -123,7 +123,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         AsteroidOSNotification notif = new AsteroidOSNotification(notificationSpec);
         TransactionBuilder builder = createTransactionBuilder("send notification");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.NOTIFICATION_UPDATE_CHAR, notif.toString().getBytes(StandardCharsets.UTF_8));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -131,14 +131,14 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         AsteroidOSNotification notif = new AsteroidOSNotification(id);
         TransactionBuilder builder = createTransactionBuilder("delete notification");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.NOTIFICATION_UPDATE_CHAR, notif.toString().getBytes(StandardCharsets.UTF_8));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
     public void onSetTime() {
         TransactionBuilder builder = createTransactionBuilder("set time");
         onSetTime(builder);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void onSetTime(TransactionBuilder builder) {
@@ -159,7 +159,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         AsteroidOSNotification call = new AsteroidOSNotification(callSpec);
         TransactionBuilder builder = createTransactionBuilder("send call");
         safeWriteToCharacteristic(builder, AsteroidOSConstants.NOTIFICATION_UPDATE_CHAR, call.toString().getBytes(StandardCharsets.UTF_8));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -170,7 +170,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         } else {
             safeWriteToCharacteristic(builder, AsteroidOSConstants.MEDIA_PLAYING_CHAR, new byte[]{0});
         }
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -203,7 +203,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 artist_bytes = "\"\"".getBytes(StandardCharsets.UTF_8);
             safeWriteToCharacteristic(builder, AsteroidOSConstants.MEDIA_ARTIST_CHAR, artist_bytes);
         }
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -211,7 +211,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         TransactionBuilder builder = createTransactionBuilder("send volume information");
         byte volByte = (byte) Math.round(volume);
         safeWriteToCharacteristic(builder, AsteroidOSConstants.MEDIA_VOLUME_CHAR, new byte[]{volByte});
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -236,7 +236,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         // Send max temps
         safeWriteToCharacteristic(builder, AsteroidOSConstants.WEATHER_MAX_TEMPS_CHAR, asteroidOSWeather.getMaxTemps());
         // Flush queue
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override

@@ -70,7 +70,7 @@ public class QuerySettingsOperation extends AbstractBTLEOperation<MoyoungDeviceS
 
             getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), setting.cmdQuery, new byte[0]));
         }
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override

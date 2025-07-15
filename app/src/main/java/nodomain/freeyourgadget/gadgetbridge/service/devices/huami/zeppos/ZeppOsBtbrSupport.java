@@ -259,7 +259,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                 sessionNonce = RandomUtils.insecure().randomInt();
                 final TransactionBuilder builder = createTransactionBuilder("session start");
                 write(builder, CMD_SESSION_START, BLETypeConversions.fromUint32(sessionNonce));
-                builder.queue(getQueue());
+                builder.queue();
                 return;
             }
             case CMD_SESSION_START_ACK: {
@@ -287,7 +287,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
 
                 final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("auth phase 1");
                 zeppOsSupport.initializeDevice(builder);
-                builder.queue(zeppOsSupport);
+                builder.queue();
 
                 return;
             }
@@ -336,7 +336,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
                     // untested, based on what we see in the watch->phone ack when requested
                     final TransactionBuilder builder = createTransactionBuilder("channel ack");
                     write(builder, CMD_CHANNEL_ACK, new byte[]{session, seqNumRx, 0x01 /* ok */, 0x00 /* ? */});
-                    builder.queue(getQueue());
+                    builder.queue();
                 }
                 return;
             }
@@ -361,7 +361,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
 
                 final TransactionBuilder builder = createTransactionBuilder("pong");
                 write(builder, CMD_PONG, new byte[]{session, 0x01, 0x00, 0x00});
-                builder.queue(getQueue());
+                builder.queue();
 
                 // When we send a ping, watch replies with a pong. However, we never actually saw it happen
                 // in the other direction, and sending the pong is not enough. The official app will
@@ -409,7 +409,7 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     private void sendPing() {
         final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("ping with request apps");
         zeppOsSupport.requestApps(builder);
-        builder.queue(zeppOsSupport);
+        builder.queue();
     }
 
     // =============================================================================================

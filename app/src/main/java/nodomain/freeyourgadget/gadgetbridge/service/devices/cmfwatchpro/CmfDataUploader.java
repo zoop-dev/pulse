@@ -214,7 +214,7 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
     private void updateProgress(final int progressPercent, boolean ongoing) {
         final TransactionBuilder builder = mSupport.createTransactionBuilder("update data upload progress to " + progressPercent);
         updateProgress(builder, progressPercent, ongoing);
-        builder.queue(mSupport.getQueue());
+        builder.queue();
     }
 
     private void updateProgress(final TransactionBuilder builder, final int progressPercent, boolean ongoing) {
@@ -228,8 +228,7 @@ public class CmfDataUploader implements CmfCharacteristic.Handler {
         builder.setProgress(
                 uploadMessage,
                 ongoing,
-                progressPercent,
-                mSupport.getContext()
+                progressPercent
         );
     }
 

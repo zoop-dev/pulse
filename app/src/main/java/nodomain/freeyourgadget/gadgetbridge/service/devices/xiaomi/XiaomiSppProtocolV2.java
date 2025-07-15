@@ -49,7 +49,7 @@ public class XiaomiSppProtocolV2 extends AbstractXiaomiSppProtocol {
                 .setSequenceNumber(sequenceNumber)
                 .build()
                 .encode(null));
-        b.queue(support.commsSupport.getQueue());
+        b.queue();
     }
 
     @Override
@@ -138,7 +138,7 @@ public class XiaomiSppProtocolV2 extends AbstractXiaomiSppProtocol {
                 .setSequenceNumber(0)
                 .build()
                 .encode(null));
-        builder.queue(support.commsSupport.getQueue());
+        builder.queue();
         return false;
     }
 

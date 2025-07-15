@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -123,7 +122,7 @@ public abstract class AbstractZeppOsService {
     protected void withTransactionBuilder(final String taskName, final Consumer<ZeppOsTransactionBuilder> consumer) {
         final ZeppOsTransactionBuilder builder = createTransactionBuilder(taskName);
         consumer.accept(builder);
-        builder.queue(mSupport);
+        builder.queue();
     }
 
     @Nullable

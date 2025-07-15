@@ -26,7 +26,6 @@ import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.lefun.LefunConstants;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.lefun.LefunDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -54,7 +53,7 @@ public abstract class MultiFetchRequest extends Request {
         if (getDevice().isBusy()) {
             throw new IllegalStateException("Device is busy");
         }
-        builder.setBusyTask(getDevice(), getOperationName(), getContext());
+        builder.setBusyTask(getOperationName());
         builder.wait(1000); // Wait a bit (after previous operation), or device sometimes won't respond
     }
 
@@ -66,7 +65,7 @@ public abstract class MultiFetchRequest extends Request {
             super.operationFinished();
             TransactionBuilder builder = performInitialized("Finishing operation");
             builder.setCallback(null);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to reset callback", Toast.LENGTH_SHORT,
                     GB.ERROR, e);

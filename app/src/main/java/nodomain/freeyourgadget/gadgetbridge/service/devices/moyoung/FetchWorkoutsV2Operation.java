@@ -67,7 +67,7 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
     protected void doPerform() throws IOException {
         TransactionBuilder builder = performInitialized("FetchWorkoutsV2Operation");
         getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_V2_WORKOUT, new byte[]{MoyoungConstants.CMD_QUERY_V2_WORKOUT_LIST_REQUEST}));
-        builder.queue(getQueue());
+        builder.queue();
 
         updateProgressAndCheckFinish();
     }
@@ -199,7 +199,7 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
                     (byte) workoutId
             };
             getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_V2_WORKOUT, payload));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error while sending workout details request: ", e);
         }
@@ -213,7 +213,7 @@ public class FetchWorkoutsV2Operation extends AbstractBTLEOperation<MoyoungDevic
             payload.put((byte) workoutId);
             payload.putShort((short) index);
             getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_V2_WORKOUT, payload.array()));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error while sending workout HR request: ", e);
         }

@@ -134,33 +134,33 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         final BluetoothGattCharacteristic btCharacteristicCommandRead = getCharacteristic(UUID_CHARACTERISTIC_CMF_COMMAND_READ);
         if (btCharacteristicCommandRead == null) {
             LOG.warn("Characteristic command read is null, will attempt to reconnect");
-            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
 
         final BluetoothGattCharacteristic btCharacteristicCommandWrite = getCharacteristic(UUID_CHARACTERISTIC_CMF_COMMAND_WRITE);
         if (btCharacteristicCommandWrite == null) {
             LOG.warn("Characteristic command write is null, will attempt to reconnect");
-            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
 
         final BluetoothGattCharacteristic btCharacteristicDataWrite = getCharacteristic(UUID_CHARACTERISTIC_CMF_DATA_WRITE);
         if (btCharacteristicDataWrite == null) {
             LOG.warn("Characteristic data write is null, will attempt to reconnect");
-            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
 
         final BluetoothGattCharacteristic btCharacteristicDataRead = getCharacteristic(UUID_CHARACTERISTIC_CMF_DATA_READ);
         if (btCharacteristicDataRead == null) {
             LOG.warn("Characteristic data read is null, will attempt to reconnect");
-            builder.setUpdateState(getDevice(), GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+            builder.setDeviceState(GBDevice.State.WAITING_FOR_RECONNECT);
             return builder;
         }
 
@@ -204,7 +204,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
             builder.notify(btCharacteristicFirmwareRead, true);
         }
 
-        builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
+        builder.setDeviceState(GBDevice.State.AUTHENTICATING);
 
         final byte[] secretKey = getSecretKey(getDevice());
 
@@ -222,10 +222,10 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
 
             sendCommand(builder, CmfCommand.AUTH_PHONE_NAME, ArrayUtils.addAll(new byte[]{A5}, Build.MODEL.getBytes(StandardCharsets.UTF_8)));
         } else if (btCharacteristicShellWrite != null) {
-            builder.write(getCharacteristic(UUID_CHARACTERISTIC_CMF_SHELL_WRITE), "AT GETSECRET".getBytes());
+            builder.write(UUID_CHARACTERISTIC_CMF_SHELL_WRITE, "AT GETSECRET".getBytes());
         } else {
             GB.toast(getContext(), R.string.authentication_failed_check_key, Toast.LENGTH_LONG, GB.WARN);
-            builder.setUpdateState(getDevice(), GBDevice.State.NOT_CONNECTED, getContext());
+            builder.setDeviceState(GBDevice.State.NOT_CONNECTED);
         }
 
         return builder;
@@ -396,8 +396,8 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
                 //sendCommand(phase2builder, CmfCommand.ALARMS_GET);
                 //sendCommand(phase2builder, CmfCommand.CALL_REMINDER_REQUEST, 0x00);
                 // TODO premature to mark as initialized?
-                phase2builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
-                phase2builder.queue(getQueue());
+                phase2builder.setDeviceState(GBDevice.State.INITIALIZED);
+                phase2builder.queue();
                 return;
             case BATTERY:
                 final int battery = payload[0] & 0xff;
@@ -485,7 +485,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     public void sendCommand(final String taskName, final CmfCommand cmd, final byte... payload) {
         final TransactionBuilder builder = createTransactionBuilder(taskName);
         sendCommand(builder, cmd, payload);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     public void sendCommand(final TransactionBuilder builder, final CmfCommand cmd, final byte... payload) {
@@ -495,13 +495,13 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     public void sendData(final String taskName, final CmfCommand cmd, final byte... payload) {
         final TransactionBuilder builder = createTransactionBuilder(taskName);
         characteristicDataWrite.sendCommand(builder, cmd, payload);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     public void sendFirmware(final String taskName, final CmfCommand cmd, final byte... payload) {
         final TransactionBuilder builder = createTransactionBuilder(taskName);
         characteristicFirmwareWrite.sendCommand(builder, cmd, payload);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void handleShellCommand(final byte[] bytes) {
@@ -579,7 +579,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     public void onSetGpsLocation(final Location location) {
         final TransactionBuilder builder = createTransactionBuilder("set gps location");
         sendGpsCoords(builder, location);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void sendGpsCoords(final TransactionBuilder builder, final Location location) {
@@ -644,7 +644,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     public void onSetTime() {
         final TransactionBuilder builder = createTransactionBuilder("set time");
         setTime(builder);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void setTime(final TransactionBuilder builder) {

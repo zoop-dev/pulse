@@ -68,7 +68,7 @@ public class FetchActivityOperation extends AbstractID115Operation {
 
         TransactionBuilder builder = performInitialized("send activity fetch request");
         builder.write(controlCharacteristic, cmd);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override

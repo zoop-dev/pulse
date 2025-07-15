@@ -85,7 +85,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), State.INITIALIZING, getContext());
+        builder.setDeviceState(State.INITIALIZING);
 
         enableNotifications(builder)
                 .setDateTime(builder)
@@ -102,7 +102,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
      * @param builder
      */
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), State.INITIALIZED, getContext());
+        builder.setDeviceState(State.INITIALIZED);
     }
 
     @Override
@@ -177,7 +177,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
             BluetoothGattCharacteristic deviceData = getCharacteristic(XWatchService.UUID_WRITE);
             byte[] data = new byte[]{XWatchService.COMMAND_NOTIFICATION, XWatchService.COMMAND_NOTIFICATION_MESSAGE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
             builder.write(deviceData, crcChecksum(data));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to send message notification on XWatch device", ex);
         }
@@ -193,7 +193,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("Set date and time");
             setDateTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to set time and date on XWatch device", ex);
         }
@@ -208,7 +208,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                 BluetoothGattCharacteristic deviceData = getCharacteristic(XWatchService.UUID_WRITE);
                 byte[] data = new byte[]{XWatchService.COMMAND_NOTIFICATION, XWatchService.COMMAND_NOTIFICATION_PHONE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
                 builder.write(deviceData, crcChecksum(data));
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException ex) {
                 LOG.error("Unable to send call notification on XWatch device", ex);
             }
@@ -374,7 +374,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                         try {
                             builder = performInitialized("fetchActivityData");
                             requestDetailedData(builder);
-                            builder.queue(getQueue());
+                            builder.queue();
                         } catch (IOException e) {
                             GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
                         }
@@ -428,7 +428,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                 (byte) 0};
 
         fetch = XWatchSupport.crcChecksum(fetch);
-        builder.write(getCharacteristic(XWatchService.UUID_WRITE), fetch);
+        builder.write(XWatchService.UUID_WRITE, fetch);
     }
 
     private void requestDetailedData(TransactionBuilder builder) {
@@ -449,7 +449,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                 (byte) 0};
 
         fetch = XWatchSupport.crcChecksum(fetch);
-        builder.write(getCharacteristic(XWatchService.UUID_WRITE), fetch);
+        builder.write(XWatchService.UUID_WRITE, fetch);
     }
 
     private int getTimestampFromData(byte year, byte month, byte day, byte hoursminutes) {

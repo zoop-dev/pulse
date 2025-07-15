@@ -127,18 +127,18 @@ public class CyclingSensorSupport extends CyclingSensorBaseSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         BluetoothGattCharacteristic measurementCharacteristic =
                 getCharacteristic(UUID_CYCLING_SENSOR_CSC_MEASUREMENT);
 
-        builder.add(new NotifyAction(measurementCharacteristic, true));
+        builder.notify(measurementCharacteristic, true);
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         batteryCharacteristic = getCharacteristic(BatteryInfoProfile.UUID_CHARACTERISTIC_BATTERY_LEVEL);
 
         if(batteryCharacteristic != null){
-            builder.add(new ReadAction(batteryCharacteristic));
+            builder.read(batteryCharacteristic);
         }
 
         loadConfiguration();

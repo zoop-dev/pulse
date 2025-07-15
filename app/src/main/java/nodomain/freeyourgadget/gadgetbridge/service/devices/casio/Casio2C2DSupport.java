@@ -267,7 +267,7 @@ public abstract class Casio2C2DSupport extends CasioSupport {
     }
 
     public void requestFeature(TransactionBuilder builder, FeatureRequest request, ResponseHandler handler) {
-        builder.notify(getCharacteristic(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID), true);
+        builder.notify(CasioConstants.CASIO_ALL_FEATURES_CHARACTERISTIC_UUID, true);
         writeAllFeaturesRequest(builder, request.getData());
         builder.run(() -> requests.add(new RequestWithHandler(request, handler)));
     }
@@ -481,7 +481,7 @@ public abstract class Casio2C2DSupport extends CasioSupport {
             writeAllFeatures(builder, data);
         }
         builder.run(() -> GB.toast(getContext(), getContext().getString(R.string.user_feedback_set_settings_ok), Toast.LENGTH_SHORT, GB.INFO));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     public abstract class DeviceItems<Item> extends DeviceSetting {

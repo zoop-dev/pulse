@@ -231,8 +231,8 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
     public void readTxPowerLevel() {
         try {
             TransactionBuilder builder = performInitialized("readTxPowerLevel");
-            builder.read(getCharacteristic(CasioConstants.TX_POWER_LEVEL_CHARACTERISTIC_UUID));
-            builder.queue(getQueue());
+            builder.read(CasioConstants.TX_POWER_LEVEL_CHARACTERISTIC_UUID);
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("readTxPowerLevel failed: " + e.getMessage());
         }
@@ -464,7 +464,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
 
             builder.writeLegacy(getCharacteristic(CasioConstants.ALERT_CHARACTERISTIC_UUID), msg);
             LOG.info("Showing notification, title: " + title + " message (not sent): " + message);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("showNotification failed: " + e.getMessage());
         }
@@ -512,7 +512,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
             TransactionBuilder builder = performInitialized("SetTime");
             writeCasioLocalTimeInformation(builder);
             writeCasioCurrentTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch(IOException e) {
             LOG.warn("onSetTime failed: " + e.getMessage());
         }
@@ -564,7 +564,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
             arr[2] = 1;
             System.arraycopy(bInfo, 0, arr, 3, len);
             builder.writeLegacy(getCharacteristic(CasioConstants.MORE_ALERT_FOR_LONG_UUID), arr);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("sendMusicInfo failed: " + e.getMessage());
         }
@@ -598,7 +598,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
                 BluetoothGattCharacteristic charact = service.getCharacteristic(CasioConstants.ALERT_LEVEL_CHARACTERISTIC_UUID);
                 builder.writeLegacy(charact, value);
                 LOG.info("onFindDevice sent");
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException e) {
                 LOG.warn("showNotification failed: " + e.getMessage());
             }

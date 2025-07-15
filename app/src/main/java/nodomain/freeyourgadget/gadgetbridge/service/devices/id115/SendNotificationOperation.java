@@ -117,7 +117,7 @@ public class SendNotificationOperation extends AbstractID115Operation {
 
         TransactionBuilder builder = performInitialized("send notification chunk");
         builder.write(controlCharacteristic, cmd);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override

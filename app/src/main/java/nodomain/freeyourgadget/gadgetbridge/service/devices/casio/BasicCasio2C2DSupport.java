@@ -35,7 +35,7 @@ public abstract class BasicCasio2C2DSupport extends Casio2C2DSupport {
             return builder;
         }
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         super.initializeDevice(builder);
 
@@ -62,10 +62,10 @@ public abstract class BasicCasio2C2DSupport extends Casio2C2DSupport {
         requestFeatures(builder, requests, responses -> {
             TransactionBuilder clockBuilder = createTransactionBuilder("setClocks");
             setClocks(clockBuilder, responses);
-            clockBuilder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
-            clockBuilder.queue(getQueue());
+            clockBuilder.setDeviceState(GBDevice.State.INITIALIZED);
+            clockBuilder.queue();
         });
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void setClocks(TransactionBuilder builder, Map<FeatureRequest, byte[]> responses) {

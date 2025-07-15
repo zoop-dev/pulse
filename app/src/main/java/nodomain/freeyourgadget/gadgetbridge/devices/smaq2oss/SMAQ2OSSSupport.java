@@ -63,7 +63,7 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
         normalWriteCharacteristic = getCharacteristic(SMAQ2OSSConstants.UUID_CHARACTERISTIC_WRITE_NORMAL);
         normalWriteCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         setTime(builder)
                 .setInitialized(builder);
@@ -71,7 +71,7 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
 
-        builder.notify(getCharacteristic(SMAQ2OSSConstants.UUID_CHARACTERISTIC_NOTIFY_NORMAL), true);
+        builder.notify(SMAQ2OSSConstants.UUID_CHARACTERISTIC_NOTIFY_NORMAL, true);
 
         return builder;
     }
@@ -172,7 +172,7 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
 
             builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_NOTIFICATION,notification.build().toByteArray()));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending notification", ex);
         }
@@ -203,7 +203,7 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
 
             builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_CALL_NOTIFICATION,callnotif.build().toByteArray()));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending call state", ex);
         }
@@ -231,7 +231,7 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
 
             builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_SET_MUSIC_INFO,musicInfo.build().toByteArray()));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending music info", ex);
         }
@@ -279,14 +279,14 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
             }
 
             builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_SET_WEATHER,setWeather.build().toByteArray()));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception ex) {
             LOG.error("Error sending current weather", ex);
         }
     }
 
     private void setInitialized(TransactionBuilder builder) {
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     byte[] createMessage(byte msgid, byte[] data){

@@ -128,7 +128,7 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
 
         builder.write(characteristic, *cmd)
 
-        builder.queue(mSupport.queue)
+        builder.queue()
     }
 
     fun handleSleepInfo(value: ByteArray) {

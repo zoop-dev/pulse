@@ -94,19 +94,19 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Initializing");
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         measureCharacteristic = getCharacteristic(HPlusConstants.UUID_CHARACTERISTIC_MEASURE);
         ctrlCharacteristic = getCharacteristic(HPlusConstants.UUID_CHARACTERISTIC_CONTROL);
 
 
-        builder.notify(getCharacteristic(HPlusConstants.UUID_CHARACTERISTIC_MEASURE), true);
+        builder.notify(HPlusConstants.UUID_CHARACTERISTIC_MEASURE, true);
         builder.setCallback(this);
         builder.notify(measureCharacteristic, true);
         //Initialize device
         sendUserInfo(builder); //Sync preferences
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         if (syncHelper == null) {
             syncHelper = new HPlusHandlerThread(getDevice(), getContext(), this);
@@ -424,7 +424,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
 
             setCurrentDate(builder);
             setCurrentTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
 
         }
@@ -447,7 +447,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
 
                 Calendar t = AlarmUtils.toCalendar(alarm);
                 setAlarm(builder, t);
-                builder.queue(getQueue());
+                builder.queue();
 
                 GB.toast(getContext(), getContext().getString(R.string.user_feedback_miband_set_alarms_ok), Toast.LENGTH_SHORT, GB.INFO);
 
@@ -455,7 +455,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             }
 
             setAlarm(builder, null);
-            builder.queue(getQueue());
+            builder.queue();
 
             GB.toast(getContext(), getContext().getString(R.string.user_feedback_all_alarms_disabled), Toast.LENGTH_SHORT, GB.INFO);
         } catch (Exception e) {
@@ -503,7 +503,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
 
             TransactionBuilder builder = performInitialized("Shutdown");
             builder.write(ctrlCharacteristic, new byte[]{HPlusConstants.CMD_SHUTDOWN, HPlusConstants.ARG_SHUTDOWN_EN});
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
 
         }
@@ -516,7 +516,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("HeartRateTest");
 
             builder.write(ctrlCharacteristic, new byte[]{HPlusConstants.CMD_SET_HEARTRATE_STATE, HPlusConstants.ARG_HEARTRATE_MEASURE_ON}); //Set Real Time... ?
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
 
         }
@@ -534,7 +534,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
                 state = HPlusConstants.ARG_HEARTRATE_ALLDAY_OFF;
 
             builder.write(ctrlCharacteristic, new byte[]{HPlusConstants.CMD_SET_ALLDAY_HRM, state});
-            builder.queue(getQueue());
+            builder.queue();
         } catch (Exception e) {
 
         }
@@ -546,7 +546,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("findMe");
 
             setFindMe(builder, start);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error toggling Find Me: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -565,7 +565,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
                 msg[i + 1] = (byte) "Gadgetbridge".charAt(i);
 
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error setting Vibration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -587,7 +587,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
                     setUnit(builder);
                     break;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -640,7 +640,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             };
 
             builder.write(ctrlCharacteristic, weatherInfo);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error toggling Send Weather: " + e.getLocalizedMessage(), Toast.LENGTH_LONG,
                     GB.ERROR);
@@ -710,7 +710,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
                 builder.write(ctrlCharacteristic, msg);
             }
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error showing incoming call: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
 
@@ -777,7 +777,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             msg[2] = (byte) remaining;
 
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error showing device Notification: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
 

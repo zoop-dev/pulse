@@ -198,11 +198,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             bArr[3] = (byte) ((int) mPosition);
             bArr[4] = (byte) (mMessageId >> 8);
             bArr[5] = (byte) mMessageId;
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_NOTIFICATION_CANCEL,
                             WatchXPlusConstants.WRITE_VALUE,
                             bArr));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to cancel notification ", e);
         }
@@ -353,12 +353,12 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
                 messagePart[0] = (byte) notificationChannel;
                 messagePart[1] = (byte) messageIndex;
-                builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+                builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                           WatchXPlusConstants.KEEP_ALIVE,
                           messagePart));
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to send notification ", e);
         }
@@ -370,7 +370,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      * TODO add settings to choose notification channels
      */
     private WatchXPlusDeviceSupport enableNotificationChannels(TransactionBuilder builder) {
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_NOTIFICATION_SETTINGS,
                         WatchXPlusConstants.WRITE_VALUE,
                         new byte[]{(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF}));
@@ -379,7 +379,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     public void authorizationRequest(TransactionBuilder builder, boolean firstConnect) {
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_AUTHORIZATION_TASK,
                         WatchXPlusConstants.TASK,
                         new byte[]{(byte) (firstConnect ? 0x00 : 0x01)})); //possibly not the correct meaning
@@ -389,7 +389,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void enableCalibration(boolean enable) {
         try {
             TransactionBuilder builder = performInitialized("enableCalibration");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_CALIBRATION_INIT_TASK,
                             WatchXPlusConstants.TASK,
                             new byte[]{(byte) (enable ? 0x01 : 0x00)}));
@@ -402,7 +402,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void holdCalibration() {
         try {
             TransactionBuilder builder = performInitialized("holdCalibration");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_CALIBRATION_KEEP_ALIVE,
                             WatchXPlusConstants.KEEP_ALIVE));
             performImmediately(builder);
@@ -416,7 +416,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             isCalibrationActive = true;
             TransactionBuilder builder = performInitialized("calibrate");
             int handsPosition = ((hour % 12) * 60 + minute) * 60 + second;
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_CALIBRATION_TASK,
                             WatchXPlusConstants.TASK,
                             Conversion.toByteArr16(handsPosition)));
@@ -429,7 +429,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private WatchXPlusDeviceSupport checkInitTime(TransactionBuilder builder) {
         LOG.info(" Check init time ");
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_TIME_SETTINGS,
                         WatchXPlusConstants.READ_VALUE));
         return this;
@@ -438,10 +438,10 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void getTime() {
         try {
             TransactionBuilder builder = performInitialized("getTime");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_TIME_SETTINGS,
                             WatchXPlusConstants.READ_VALUE));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to get device time ", e);
         }
@@ -499,11 +499,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     (byte) timezoneOffsetIndustrialMinutes,
                     (byte) (calendar.get(Calendar.DAY_OF_WEEK) - 1)
             };
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_TIME_SETTINGS,
                             WatchXPlusConstants.WRITE_VALUE,
                             time));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to set time ", e);
         }
@@ -513,7 +513,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      * @param builder - transaction builder
      */
     private WatchXPlusDeviceSupport getFirmwareVersion(TransactionBuilder builder) {
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_FIRMWARE_INFO,
                         WatchXPlusConstants.READ_VALUE));
 
@@ -524,7 +524,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      * @param builder - transaction builder
      */
     private WatchXPlusDeviceSupport getBatteryState(TransactionBuilder builder) {
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_BATTERY_INFO,
                         WatchXPlusConstants.READ_VALUE));
 
@@ -543,7 +543,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 //.setUnitsSettings()                             // set metric/imperial units
                 .checkInitTime(builder)
                 .syncPreferences(builder);                      // read preferences from app and set them to watch
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         builder.setCallback(this);
         return this;
     }
@@ -567,7 +567,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             for (Alarm alarm : alarms) {
                 setAlarm(alarm, alarm.getPosition() + 1, builder);
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to set alarms ", e);
         }
@@ -577,7 +577,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void deleteAlarm(TransactionBuilder builder, int index) {
         if (0 < index && index < 4) {
             byte[] alarmValue = new byte[]{(byte) index, 0x00, 0x00, 0x00, 0x00, 0x00};
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_ALARM_SETTINGS,
                             WatchXPlusConstants.WRITE_VALUE,
                             alarmValue));
@@ -596,7 +596,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     (byte) (alarm.getEnabled() ? 0x01 : 0x00),
                     0x00 // TODO: Unknown
             };
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_ALARM_SETTINGS,
                             WatchXPlusConstants.WRITE_VALUE,
                             alarmValue));
@@ -765,7 +765,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private WatchXPlusDeviceSupport setFitnessGoal(TransactionBuilder builder) {
         int fitnessGoal = new ActivityUser().getStepsGoal();
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_FITNESS_GOAL_SETTINGS,
                         WatchXPlusConstants.WRITE_VALUE,
                         Conversion.toByteArr16(fitnessGoal)));
@@ -789,7 +789,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         bArr[2] = (byte) age;           // byte[10]
         bArr[3] = (byte) gender;        // byte[11]
 
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(command,
                         WatchXPlusConstants.WRITE_VALUE,
                         bArr));
@@ -813,10 +813,10 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         // get battery state
         try {
             builder = performInitialized("getBatteryInfo");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_BATTERY_INFO,
                         WatchXPlusConstants.READ_VALUE));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to retrieve battery data ", e);
         }
@@ -824,14 +824,14 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             builder = performInitialized("fetchData");
 
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_DAY_STEPS_INFO,
                             WatchXPlusConstants.READ_VALUE));
 
 //            Fetch heart rate data samples count
             requestDataCount(DataType.HEART_RATE);
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to retrieve recorded data ", e);
         }
@@ -899,7 +899,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     setDNDHours(builder);
                     break;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Failed to send config", e);
         }
@@ -944,7 +944,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         bArr[8] = (byte) (period >> 8);      // byte[16]
         bArr[9] = (byte) period;             // byte[17]
 
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(command, WatchXPlusConstants.WRITE_VALUE, bArr));
         // set long sit reminder state (enabled, disabled)
         setLongSitSwitch(builder, enable);
@@ -978,7 +978,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      */
     private void setLongSitSwitch(TransactionBuilder tbuilder, boolean enable) {
         LOG.info(" Setting Long sit reminder switch to: " + enable);
-        tbuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        tbuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_INACTIVITY_REMINDER_SWITCH,
                         WatchXPlusConstants.WRITE_VALUE,
                         new byte[]{(byte) (enable ? 0x01 : 0x00)}));
@@ -1004,7 +1004,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
          bArr[1] = (byte) minuteStart;      // byte[09]
          bArr[2] = (byte) hourEnd;          // byte[10]
          bArr[3] = (byte) minuteEnd;        // byte[11]
-         builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+         builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
               buildCommand(command, WatchXPlusConstants.WRITE_VALUE, bArr));
          // set DND state (enabled, disabled)
          setDNDHoursSwitch(builder, enable);
@@ -1016,7 +1016,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      */
     private void setDNDHoursSwitch(TransactionBuilder tbuilder, boolean enable) {
             LOG.info(" Setting DND switch to: " + enable);
-            tbuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            tbuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_SET_DND_HOURS_SWITCH,
                         WatchXPlusConstants.WRITE_VALUE,
                         new byte[]{(byte) (enable ? 0x01 : 0x00)}));
@@ -1060,11 +1060,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         LOG.info(" setting power mode to: " + setWatchPowerMode);
         try {
             TransactionBuilder builder = performInitialized("setWatchPowerMode");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_POWER_MODE,
                             WatchXPlusConstants.TASK,
                             bArr));
-            builder.queue(getQueue());
+            builder.queue();
         }   catch (IOException e) {
             LOG.warn(" Unable to set power mode ", e);
         }
@@ -1078,10 +1078,10 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         LOG.info(" Get units from watch... ");
         try {
             TransactionBuilder builder = performInitialized("getUnits");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_SET_UNITS,
                             WatchXPlusConstants.READ_VALUE));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to get units ", e);
         }
@@ -1108,11 +1108,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         bArr[2] = (byte) 0x00;  // temperature unit (do nothing)
         try {
             TransactionBuilder builder = performInitialized("setUnits");
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_SET_UNITS,
                             WatchXPlusConstants.WRITE_VALUE,
                             bArr));
-            builder.queue(getQueue());
+            builder.queue();
         }   catch (IOException e) {
             LOG.warn(" Unable to set units ", e);
         }
@@ -1122,7 +1122,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      * @param builder - transaction builder
      */
     private WatchXPlusDeviceSupport getBloodPressureCalibrationStatus(TransactionBuilder builder) {
-        builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_IS_BP_CALIBRATED,
                         WatchXPlusConstants.READ_VALUE));
 
@@ -1156,11 +1156,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             bArr[3] = (byte) (mLowP >> 8);        // byte[11]
             bArr[4] = (byte) mLowP;               // byte[12]
 
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                             WatchXPlusConstants.TASK,
                             bArr));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to send BP Calibration ", e);
         }
@@ -1203,10 +1203,10 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             byte[] command = WatchXPlusConstants.CMD_BLOOD_PRESSURE_MEASURE;
 
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                             WatchXPlusConstants.TASK, new byte[]{0x01}));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to request BP Measure ", e);
         }
@@ -1370,11 +1370,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             weatherInfo[2] = (byte) todayMinTemp;
             weatherInfo[3] = (byte) todayMaxTemp;
             weatherInfo[4] = (byte) currentTemp;
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                             WatchXPlusConstants.KEEP_ALIVE,
                             weatherInfo));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to set weather ", e);
         }
@@ -1487,12 +1487,12 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             builder = performInitialized("requestDataCount");
 
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_RETRIEVE_DATA_COUNT,
                             WatchXPlusConstants.READ_VALUE,
                             dataType.getValue()));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to send request to retrieve recorded data ", e);
         }
@@ -1520,12 +1520,12 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             byte[] index = Conversion.toByteArr16(i);
             byte[] req = BLETypeConversions.join(dataType.getValue(), index);
             currentDataType = dataType;
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_RETRIEVE_DATA_DETAILS,
                             WatchXPlusConstants.READ_VALUE,
                             req));
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn( "Unable to request data details ", e);
         }
@@ -1569,11 +1569,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             byte[] req = BLETypeConversions.join(dataType.getValue(), ts);
             req = BLETypeConversions.join(req, Conversion.toByteArr16(0));
             requestedDataTimestamp = timestamp;
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                             WatchXPlusConstants.READ_VALUE,
                             req));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to request data content ", e);
         }
@@ -1586,11 +1586,11 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("removeDataContentForTimestamp");
             byte[] ts = Conversion.toByteArr32(timestamp);
             byte[] req = BLETypeConversions.join(dataType.getValue(), ts);
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(command,
                             WatchXPlusConstants.TASK,
                             req));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to remove data content ", e);
         }
@@ -1718,9 +1718,9 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("handleAck");
 
-            builder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+            builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand());
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn(" Unable to response to ACK ", e);
         }
@@ -1993,7 +1993,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         liftScreen[1] = 0x00;
         liftScreen[2] = 0x00;
         liftScreen[3] = b;              //byte[11]
-        transactionBuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        transactionBuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_SHAKE_SWITCH,
                              WatchXPlusConstants.WRITE_VALUE,
                              liftScreen));
@@ -2002,7 +2002,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     // command to set disconnect reminder
     private void setDisconnectReminder(TransactionBuilder transactionBuilder) {
         boolean enable = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()).getBoolean(DeviceSettingsPreferenceConst.PREF_DISCONNECTNOTIF_NOSHED, false);
-        transactionBuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        transactionBuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_DISCONNECT_REMIND,
                         WatchXPlusConstants.WRITE_VALUE,
                         new byte[]{(byte) (enable ? 0x01 : 0x00)}));
@@ -2010,7 +2010,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
 // Request status of Lift Wrist to Light Screen, and Shake to Ignore/Reject Call
     private void getShakeStatus(TransactionBuilder transactionBuilder) {
-        transactionBuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        transactionBuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_SHAKE_SWITCH,
                         WatchXPlusConstants.READ_VALUE));
     }
@@ -2028,7 +2028,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         bArr[1] = (byte) mAltitude;             // bytr[9]
         bArr[2] = (byte) (mAirPressure >> 8);   // bytr[10]
         bArr[3] = (byte) mAirPressure;          // bytr[11]
-        transactionBuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        transactionBuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_ALTITUDE,
                         WatchXPlusConstants.WRITE_VALUE,
                         bArr));
@@ -2058,7 +2058,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
         byte[] bArr = new byte[2];
         bArr[0] = setLanguage;           //byte[08] language
         bArr[1] = setTimeMode;           //byte[09] time
-        transactionBuilder.write(getCharacteristic(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE),
+        transactionBuilder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                 buildCommand(WatchXPlusConstants.CMD_TIME_LANGUAGE,
                         WatchXPlusConstants.WRITE_VALUE,
                         bArr));

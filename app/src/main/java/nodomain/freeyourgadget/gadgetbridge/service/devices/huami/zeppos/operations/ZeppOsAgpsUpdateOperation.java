@@ -120,7 +120,7 @@ public class ZeppOsAgpsUpdateOperation extends AbstractZeppOsOperation<ZeppOsSup
             try {
                 final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("request agps config");
                 configService.requestConfig(builder, ZeppOsConfigService.ConfigGroup.AGPS);
-                builder.queue(getSupport());
+                builder.queue();
             } catch (final Exception e) {
                 LOG.error("Failed to request agps config", e);
             }
@@ -132,8 +132,8 @@ public class ZeppOsAgpsUpdateOperation extends AbstractZeppOsOperation<ZeppOsSup
     private void updateProgress(final int progressPercent) {
         try {
             final ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("send agps update progress");
-            builder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent, getContext());
-            builder.queue(getSupport());
+            builder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent);
+            builder.queue();
         } catch (final Exception e) {
             LOG.error("Failed to update progress notification", e);
         }

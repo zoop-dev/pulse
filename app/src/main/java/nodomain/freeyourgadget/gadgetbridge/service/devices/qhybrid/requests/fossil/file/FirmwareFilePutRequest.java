@@ -32,7 +32,7 @@ public class FirmwareFilePutRequest extends FilePutRawRequest {
     @Override
     public void onPacketWritten(TransactionBuilder transactionBuilder, int packetNr, int packetCount) {
         int progressPercent = (int) ((((float) packetNr) / packetCount) * 100);
-        transactionBuilder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent, GBApplication.getContext());
+        transactionBuilder.setProgress(R.string.updatefirmwareoperation_update_in_progress, true, progressPercent);
     }
 
     @Override

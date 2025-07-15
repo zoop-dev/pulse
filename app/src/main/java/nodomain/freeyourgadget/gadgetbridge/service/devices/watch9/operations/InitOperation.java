@@ -53,10 +53,10 @@ public class InitOperation extends AbstractBTLEOperation<Watch9DeviceSupport>{
     protected void doPerform() throws IOException {
         builder.notify(cmdCharacteristic, true);
         if (needsAuth) {
-            builder.setUpdateState(getDevice(), GBDevice.State.AUTHENTICATING, getContext());
+            builder.setDeviceState(GBDevice.State.AUTHENTICATING);
             getSupport().authorizationRequest(builder, needsAuth);
         } else {
-            builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+            builder.setDeviceState(GBDevice.State.INITIALIZING);
             getSupport().initialize(builder);
             getSupport().performImmediately(builder);
         }
@@ -73,7 +73,7 @@ public class InitOperation extends AbstractBTLEOperation<Watch9DeviceSupport>{
                 if (ArrayUtils.equals(value, Watch9Constants.RESP_AUTHORIZATION_TASK, 5) && value[8] == 0x01) {
                     TransactionBuilder builder = getSupport().createTransactionBuilder("authInit");
                     builder.setCallback(this);
-                    builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+                    builder.setDeviceState(GBDevice.State.INITIALIZING);
                     getSupport().initialize(builder).performImmediately(builder);
                 } else {
                     return super.onCharacteristicChanged(gatt, characteristic, value);

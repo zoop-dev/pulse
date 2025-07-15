@@ -40,7 +40,6 @@ import java.util.Queue;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -200,7 +199,7 @@ public class XiaomiCharacteristic {
         }
         final TransactionBuilder tb = mSupport.createTransactionBuilder(String.format("send nack with missing chunks %s", missingChunks));
         tb.write(bluetoothGattCharacteristic, bb.array());
-        tb.queue(mSupport.getQueue());
+        tb.queue();
     }
 
     private void cancelTimeoutTask() {
@@ -326,7 +325,7 @@ public class XiaomiCharacteristic {
                                 sendChunk(builder, i, chunkPayloadSize);
                             }
 
-                            builder.queue(mSupport.getQueue());
+                            builder.queue();
                             return;
                         }
                         case 2: {
@@ -467,7 +466,7 @@ public class XiaomiCharacteristic {
             final TransactionBuilder builder = b == null ? mSupport.createTransactionBuilder("send chunked start for " + currentPayload.getTaskName()) : b;
             builder.write(bluetoothGattCharacteristic, buf.array());
             if (b == null) {
-                builder.queue(mSupport.getQueue());
+                builder.queue();
             }
         } else {
             LOG.debug("Sending {} - single", currentPayload.getTaskName());
@@ -493,7 +492,7 @@ public class XiaomiCharacteristic {
             final TransactionBuilder builder = b == null ? mSupport.createTransactionBuilder("send single command for " + currentPayload.getTaskName()) : b;
             builder.write(bluetoothGattCharacteristic, buf.array());
             if (b == null) {
-                builder.queue(mSupport.getQueue());
+                builder.queue();
             }
         }
     }
@@ -511,19 +510,19 @@ public class XiaomiCharacteristic {
     private void sendAck() {
         final TransactionBuilder builder = mSupport.createTransactionBuilder("send ack");
         builder.write(bluetoothGattCharacteristic, PAYLOAD_ACK);
-        builder.queue(mSupport.getQueue());
+        builder.queue();
     }
 
     private void sendChunkStartAck() {
         final TransactionBuilder builder = mSupport.createTransactionBuilder("send chunked start ack");
         builder.write(bluetoothGattCharacteristic, new byte[]{0x00, 0x00, 0x01, 0x01});
-        builder.queue(mSupport.getQueue());
+        builder.queue();
     }
 
     private void sendChunkEndAck() {
         final TransactionBuilder builder = mSupport.createTransactionBuilder("send chunked end ack");
         builder.write(bluetoothGattCharacteristic, new byte[]{0x00, 0x00, 0x01, 0x00});
-        builder.queue(mSupport.getQueue());
+        builder.queue();
     }
 
     public void setMtu(final int newMtu) {

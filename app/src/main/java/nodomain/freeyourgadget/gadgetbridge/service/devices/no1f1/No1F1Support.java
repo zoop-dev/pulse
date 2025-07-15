@@ -76,7 +76,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Initializing");
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         measureCharacteristic = getCharacteristic(No1F1Constants.UUID_CHARACTERISTIC_MEASURE);
         ctrlCharacteristic = getCharacteristic(No1F1Constants.UUID_CHARACTERISTIC_CONTROL);
@@ -90,7 +90,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
         builder.write(ctrlCharacteristic, new byte[]{No1F1Constants.CMD_FIRMWARE_VERSION});
         builder.write(ctrlCharacteristic, new byte[]{No1F1Constants.CMD_BATTERY});
 
-        builder.setUpdateState(gbDevice, GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         LOG.info("Initialization Done");
 
@@ -164,7 +164,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("setTime");
             setTime(builder);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -206,7 +206,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                 };
                 builder.write(ctrlCharacteristic, alarmMessage);
             }
-            builder.queue(getQueue());
+            builder.queue();
             if (anyAlarmEnabled) {
                 GB.toast(getContext(), getContext().getString(R.string.user_feedback_miband_set_alarms_ok), Toast.LENGTH_SHORT, GB.INFO);
             } else {
@@ -242,7 +242,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                     (byte) 0x11
             };
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error starting heart rate measurement: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -266,7 +266,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                     setDisplaySettings(builder);
                     break;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast("Error setting configuration", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -389,7 +389,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                     1
             };
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("Unable to set vibration", e);
         }
@@ -403,7 +403,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                     (byte) iconId
             };
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error showing icon: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -435,7 +435,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
             System.arraycopy(bytes, 0, msg, 2, length);
             builder.write(ctrlCharacteristic, msg);
 
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error showing notificaton: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -449,7 +449,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                     No1F1Constants.NOTIFICATION_STOP
             };
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.warn("Unable to stop notification", e);
         }
@@ -461,13 +461,13 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
         firstTimestamp = 0;
         try {
             TransactionBuilder builder = performInitialized("fetchActivityData");
-            builder.setBusyTask(getDevice(), R.string.busy_task_fetch_activity_data, getContext());
+            builder.setBusyTask(R.string.busy_task_fetch_activity_data);
             byte[] msg = new byte[]{
                     type,
                     (byte) 0xfa
             };
             builder.write(ctrlCharacteristic, msg);
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }

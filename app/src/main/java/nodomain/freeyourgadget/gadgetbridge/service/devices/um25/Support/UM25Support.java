@@ -45,7 +45,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.um25.Activity.DataActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Data.CaptureGroup;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Data.MeasurementData;
@@ -92,8 +91,8 @@ public class UM25Support extends UM25BaseSupport {
                 return;
             }
             createTransactionBuilder("reset stats")
-                    .write(getCharacteristic(UUID.fromString(UUID_CHAR)), COMMAND_RESET_STATS)
-                    .queue(getQueue());
+                    .write(UUID.fromString(UUID_CHAR), COMMAND_RESET_STATS)
+                    .queue();
         }
     };
 
@@ -116,8 +115,8 @@ public class UM25Support extends UM25BaseSupport {
         getDevice().setFirmwareVersion("1.0");
 
         return builder
-                .setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext())
-                .notify(getCharacteristic(UUID.fromString(UUID_CHAR)), true)
+                .setDeviceState(GBDevice.State.INITIALIZING)
+                .notify(UUID.fromString(UUID_CHAR), true)
                 .run(() -> {
                     logger.debug("initialized, starting timers");
                     LocalBroadcastManager.getInstance(getContext())
@@ -127,7 +126,7 @@ public class UM25Support extends UM25BaseSupport {
                             );
                     startLoop();
                 })
-                .setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+                .setDeviceState(GBDevice.State.INITIALIZED);
     }
 
     @Override
@@ -154,8 +153,8 @@ public class UM25Support extends UM25BaseSupport {
         logger.debug("sending read command");
         buffer.reset();
         createTransactionBuilder("send read command")
-                .write(getCharacteristic(UUID.fromString(UUID_CHAR)), COMMAND_UPDATE)
-                .queue(getQueue());
+                .write(UUID.fromString(UUID_CHAR), COMMAND_UPDATE)
+                .queue();
         logger.debug("sent command");
     }
 

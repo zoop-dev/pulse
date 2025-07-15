@@ -56,22 +56,22 @@ public class BandWBLEProfile<T extends AbstractBTLESingleDeviceSupport> extends 
 
     public void setAncModeState(final TransactionBuilder builder, final boolean mode) throws IOException {
         BandWPSeriesRequest req = new BandWPSeriesRequest((byte) 0x03, (byte) 0x02).addToPayload(mode ? ANC_MODE_ON : ANC_MODE_OFF);
-        builder.write(getCharacteristic(UUID_RPC_REQUEST_CHARACTERISTIC), req.finishAndGetBytes());
+        builder.write(UUID_RPC_REQUEST_CHARACTERISTIC, req.finishAndGetBytes());
     }
 
     public void setVptLevel(final TransactionBuilder builder, final int level) throws IOException {
         BandWPSeriesRequest req = new BandWPSeriesRequest((byte) 0x03, (byte) 0x04).addToPayload(level);
-        builder.write(getCharacteristic(UUID_RPC_REQUEST_CHARACTERISTIC), req.finishAndGetBytes());
+        builder.write(UUID_RPC_REQUEST_CHARACTERISTIC, req.finishAndGetBytes());
     }
 
     public void setVptEnabled(final TransactionBuilder builder, final boolean mode) throws IOException {
         BandWPSeriesRequest req = new BandWPSeriesRequest((byte) 0x03, (byte) 0x06).addToPayload(mode);
-        builder.write(getCharacteristic(UUID_RPC_REQUEST_CHARACTERISTIC), req.finishAndGetBytes());
+        builder.write(UUID_RPC_REQUEST_CHARACTERISTIC, req.finishAndGetBytes());
     }
 
     public void setWearSensorEnabled(final TransactionBuilder builder, final boolean mode) throws IOException {
         BandWPSeriesRequest req = new BandWPSeriesRequest((byte) 0x0a, (byte) 0x02).addToPayload(mode);
-        builder.write(getCharacteristic(UUID_RPC_REQUEST_CHARACTERISTIC), req.finishAndGetBytes());
+        builder.write(UUID_RPC_REQUEST_CHARACTERISTIC, req.finishAndGetBytes());
     }
 
     private void sendRequest(final TransactionBuilder builder, byte namespace, byte commandID) {
@@ -82,7 +82,7 @@ public class BandWBLEProfile<T extends AbstractBTLESingleDeviceSupport> extends 
             LOG.error("Failed to send request: namespace {}, commandID {}", namespace, commandID);
             return;
         }
-        builder.write(getCharacteristic(UUID_RPC_REQUEST_CHARACTERISTIC), req.finishAndGetBytes());
+        builder.write(UUID_RPC_REQUEST_CHARACTERISTIC, req.finishAndGetBytes());
     }
 
 }

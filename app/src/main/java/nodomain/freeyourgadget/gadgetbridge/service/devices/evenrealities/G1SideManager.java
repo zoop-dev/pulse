@@ -174,7 +174,7 @@ public class G1SideManager {
         sendInTransaction(transaction, new G1Communications.CommandGetDisplaySettings(this::handleDisplaySettingsPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetBrightnessSettings(this::handleBrightnessSettingsPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetSerialNumber(this::handleSerialNumberPayload));
-        transaction.queue(getQueue());
+        transaction.queue();
     }
 
     public void postInitializeRight() {
@@ -187,7 +187,7 @@ public class G1SideManager {
         // This setting uses the right lens as the master for the setting simply to balance the amount
         // of commands being sent to the left vs right.
         sendInTransaction(transaction, new G1Communications.CommandGetWearDetectionSettings(this::handleWearDetectionSettingsPayload));
-        transaction.queue(getQueue());
+        transaction.queue();
     }
 
     public void onSendConfiguration(String config) {
@@ -283,7 +283,7 @@ public class G1SideManager {
         TransactionBuilder transaction =
                 createTransactionBuilder.apply(command.getName(), mySide.getDeviceIndex());
         sendInTransaction(transaction, command);
-        transaction.queue(getQueue());
+        transaction.queue();
     }
 
     private void sendInTransaction(TransactionBuilder transaction, G1Communications.CommandHandler command) {

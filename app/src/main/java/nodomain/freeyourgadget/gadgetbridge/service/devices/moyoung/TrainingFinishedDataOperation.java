@@ -133,7 +133,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
         try {
             TransactionBuilder builder = performInitialized("TrainingFinishedDataOperation");
             getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_LAST_DYNAMIC_RATE, new byte[0]));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error fetching training data: ", e);
             GB.toast(getContext(), "Error fetching training data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
@@ -188,7 +188,7 @@ public class TrainingFinishedDataOperation extends AbstractBTLEOperation<Moyoung
         try {
             TransactionBuilder builder = performInitialized("TrainingFinishedDataOperation fetch training type");
             getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_MOVEMENT_HEART_RATE, new byte[]{}));
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             LOG.error("Error fetching training data: ", e);
             GB.toast(getContext(), "Error fetching training data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);

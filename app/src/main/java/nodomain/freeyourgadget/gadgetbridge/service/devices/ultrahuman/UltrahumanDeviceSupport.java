@@ -144,7 +144,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
             getDevice().setFirmwareVersion2("N/A");
         }
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZING, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         if (!CommandReceiver.Registered) {
             IntentFilter exported = new IntentFilter();
@@ -182,7 +182,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
         boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
         builder.add(new UHWrite(COMMAND, powerSave ? OPERATION_ENABLE_POWERSAVE : OPERATION_DISABLE_POWERSAVE));
 
-        builder.setUpdateState(getDevice(), GBDevice.State.INITIALIZED, getContext());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         return builder;
     }
@@ -661,7 +661,7 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private void enqueue(final TransactionBuilder builder) {
         if (isConnected()) {
-            builder.queue(getQueue());
+            builder.queue();
         } else {
             GB.toast(getContext(), R.string.devicestatus_disconnected, Toast.LENGTH_LONG, GB.ERROR);
         }

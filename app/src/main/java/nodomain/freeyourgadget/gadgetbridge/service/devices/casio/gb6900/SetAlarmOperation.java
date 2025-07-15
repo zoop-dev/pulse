@@ -53,8 +53,8 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
             try {
                 TransactionBuilder builder = performInitialized("getSettingForAlarm");
                 builder.setCallback(this);
-                builder.read(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_ALM_CHARACTERISTIC_UUID));
-                builder.queue(getQueue());
+                builder.read(CasioConstants.CASIO_SETTING_FOR_ALM_CHARACTERISTIC_UUID);
+                builder.queue();
             } catch (IOException ex) {
                 LOG.info("Error retrieving alarm settings: " + ex.getMessage());
             }
@@ -75,7 +75,7 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
                 TransactionBuilder builder = performInitialized("finished operation");
                 builder.wait(0);
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
-                builder.queue(getQueue());
+                builder.queue();
             } catch (IOException ex) {
                 LOG.info("Error resetting Gatt callback: " + ex.getMessage());
             }
@@ -119,7 +119,7 @@ public class SetAlarmOperation extends AbstractBTLEOperation<CasioGB6900DeviceSu
             try {
                 TransactionBuilder builder = performInitialized("setAlarm");
                 builder.writeLegacy(getCharacteristic(CasioConstants.CASIO_SETTING_FOR_ALM_CHARACTERISTIC_UUID), data);
-                builder.queue(getQueue());
+                builder.queue();
             } catch(IOException e) {
                 LOG.error("Error setting alarm: " + e.getMessage());
             }
