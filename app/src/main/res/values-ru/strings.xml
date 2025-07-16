@@ -4161,5 +4161,7 @@
     <string name="pref_atc_ble_oepl_model_title">Модель дисплея</string>
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">Интервал передачи BLE</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Включить протокол OEPL</string>
-    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Отключите это, если используете только BLE для экономии энергии.</string>
+    <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Отключите это, если используете только BLE для экономии энергии</string>
+    <string name="activity_print_image_print_button">Печать</string>
+    <string name="activity_print_image_apply_dithering_switch">Применить дизеринг</string>
 </resources>
