@@ -3921,4 +3921,15 @@
     <string name="busy_task_fetch_steps">Получение шагов</string>
     <string name="busy_task_fetch_training_data_finished">Данные о тренировках получены!</string>
     <string name="pairing_even_realities_g1_final_connect">Настройка устройств. Подождите…</string>
+    <string name="phone_calls">Телефонные звонки</string>
+    <string name="pref_watch_face">Циферблат</string>
+    <string name="pref_device_version">Версия устройства</string>
+    <string name="connection_priority_low_power_title">Низкое энергопотребление</string>
+    <string name="connection_priority_low_power_summary">Уменьшает приоритет и скорость передачи данных bluetooth.</string>
+    <string name="prefs_title_gatt_settings">Общий профиль атрибутов</string>
+    <string name="gatt_synchronous_writes_title">Синхронные записи GATT</string>
+    <string name="gatt_synchronous_writes_summary">Предпочитайте синхронные записи GATT над асинхронными, если характеристика поддерживает оба варианта.</string>
+    <string name="prefs_device_support_settings">Поддержка устройств</string>
+    <string name="device_support_can_reconnect_title">Повторное использование поддержки устройств</string>
+    <string name="device_support_can_reconnect_summary">Повторно используйте экземпляр DeviceSupport при повторном подключении устройства.</string>
 </resources>
