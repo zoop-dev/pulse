@@ -4082,5 +4082,11 @@
     <string name="ground_contact_time">Время контакта с землей</string>
     <string name="vertical_ratio">Вертикальное соотношение</string>
     <string name="ground_contact_time_balance">Баланс времени контакта с землей</string>
-    <string name="workout_swings">Колебания</string>
+    <string name="workout_swings">Махов</string>
+    <string name="swimming_stroke">Гребков</string>
+    <string name="activity_detail_inspect_file">Просмотреть файл</string>
+    <string name="prefs_events_forwarding_broadcast_package">Пакет трансляции</string>
+    <string name="swim_style_butterfly">Баттерфляй</string>
+    <string name="swim_style_drill">Упражнение</string>
+    <string name="swim_style_mixed">Смешанные</string>
 </resources>
