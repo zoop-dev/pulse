@@ -3996,5 +3996,9 @@
     <string name="zepp_os_watchface_vital">Vital</string>
     <string name="zepp_os_sun_moon_utc_title">Отправить время восхода/захода солнца в UTC</string>
     <string name="zepp_os_sun_moon_utc_summary">Включите это, если ваши часы отображают неправильные значения для времени восхода и захода солнца</string>
-    <string name="weather_condition_light_intensity_shower_rain">небольшой дождь</string>
+    <string name="weather_condition_light_intensity_shower_rain">небольшой дождь лёгкой интенсивности</string>
+    <string name="weather_condition_shower_rain">небольшой дождь</string>
+    <string name="weather_condition_heavy_intensity_shower_rain">небольшой дождь высокой интенсивности</string>
+    <string name="weather_condition_ragged_shower_rain">Прерывистый небольшой дождь</string>
+    <string name="weather_condition_light_snow">небольшой снег</string>
 </resources>
