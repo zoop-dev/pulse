@@ -4088,5 +4088,13 @@
     <string name="prefs_events_forwarding_broadcast_package">Пакет трансляции</string>
     <string name="swim_style_butterfly">Баттерфляй</string>
     <string name="swim_style_drill">Упражнение</string>
-    <string name="swim_style_mixed">Смешанные</string>
+    <string name="swim_style_mixed">Смешанный</string>
+    <string name="workout_intervals">Интервалы</string>
+    <string name="diving_maximum_diving_depth">Максимальная глубина погружения</string>
+    <string name="diving_water_type">Тип воды</string>
+    <string name="diving_gas">Газ</string>
+    <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
+    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
+    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
+    <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
 </resources>
