@@ -4163,5 +4163,15 @@
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Включить протокол OEPL</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_summary">Отключите это, если используете только BLE для экономии энергии</string>
     <string name="activity_print_image_print_button">Печать</string>
-    <string name="activity_print_image_apply_dithering_switch">Применить дизеринг</string>
+    <string name="activity_print_image_apply_dithering_switch">Применить рассеивание</string>
+    <string name="activity_print_label_print_size">Размер печати (пикс.): %1$d x %2$d</string>
+    <string name="service_notification_collector_service_title">Монитор уведомлений Gadgetbridge</string>
+    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
+    <string name="devicetype_dotn_p66d">Dotn P66D</string>
+    <string name="pref_title_time_interval">Интервал времени</string>
+    <string name="pref_summary_time_interval">Ограничить до определенных интервалов</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Включить устаревшую службу мониторинга сборщика уведомлений</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Принудительно использует вторую фоновую службу для поддержания работы монитора уведомлений. Активируйте эту опцию, если Gadgetbridge перестает получать уведомления.\nОбратите внимание, что это может привести к появлению второго постоянного уведомления.\nПерезапустите приложение после изменения настройки.</string>
+    <string name="pref_display_enabled_title">Дисплей включен</string>
+    <string name="pref_display_enabled_summary">Включить дисплей на кольце</string>
 </resources>
