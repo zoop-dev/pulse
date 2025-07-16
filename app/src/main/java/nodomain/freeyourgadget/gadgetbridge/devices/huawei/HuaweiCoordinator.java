@@ -53,6 +53,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
@@ -132,6 +134,10 @@ public class HuaweiCoordinator {
         QueryBuilder<HuaweiWorkoutSummarySample> qb2 = session.getHuaweiWorkoutSummarySampleDao().queryBuilder();
         List<HuaweiWorkoutSummarySample> workouts = qb2.where(HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId)).build().list();
         for (HuaweiWorkoutSummarySample sample : workouts) {
+            session.getHuaweiWorkoutSummaryAdditionalValuesSampleDao().queryBuilder().where(
+                    HuaweiWorkoutSummaryAdditionalValuesSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
+            ).buildDelete().executeDeleteWithoutDetachingEntities();
+
             session.getHuaweiWorkoutDataSampleDao().queryBuilder().where(
                     HuaweiWorkoutDataSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
             ).buildDelete().executeDeleteWithoutDetachingEntities();

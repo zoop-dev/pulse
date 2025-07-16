@@ -291,7 +291,7 @@ public class HeartRateZonesConfig {
         return getHHRZone(heartRate);
     }
 
-    public static boolean isCalculateMethodValidFroType(int type, int method) {
+    public static boolean isCalculateMethodValidForPostureType(int type, int method) {
         if(method == CALCULATE_METHOD_LTHR && type == TYPE_UPRIGHT) {
             return true;
         }

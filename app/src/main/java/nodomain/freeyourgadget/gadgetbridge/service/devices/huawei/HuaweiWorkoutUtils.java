@@ -54,7 +54,7 @@ public class HuaweiWorkoutUtils {
         return Collections.unmodifiableMap(result);
     }
 
-    public static Integer getHRZoneTypeByActivity(ActivityKind type) {
+    public static Integer getHRZonePostureTypeByActivity(ActivityKind type) {
         if(activityHRZoneType.containsKey(type)) {
             return activityHRZoneType.get(type);
         }

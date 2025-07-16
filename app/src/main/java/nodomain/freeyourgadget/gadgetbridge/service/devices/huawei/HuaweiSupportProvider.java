@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -95,6 +96,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSectionsSample
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSectionsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSample;
@@ -1906,8 +1909,18 @@ public class HuaweiSupportProvider {
                     packet.tripped
             );
 
-
             db.getDaoSession().getHuaweiWorkoutSummarySampleDao().insertOrReplace(summarySample);
+
+            // We should completely replace values. Delete all and insert again.
+            final DeleteQuery<HuaweiWorkoutSummaryAdditionalValuesSample> tableDeleteQuery =  db.getDaoSession().getHuaweiWorkoutSummaryAdditionalValuesSampleDao().queryBuilder()
+                    .where(HuaweiWorkoutSummaryAdditionalValuesSampleDao.Properties.WorkoutId.eq(workoutId))
+                    .buildDelete();
+            tableDeleteQuery.executeDeleteWithoutDetachingEntities();
+
+            for (Map.Entry<String, String> entry : packet.additionalValues.entrySet()) {
+                HuaweiWorkoutSummaryAdditionalValuesSample summarySampleAdditionalValue = new HuaweiWorkoutSummaryAdditionalValuesSample(summarySample.getWorkoutId(), entry.getKey(), entry.getValue());
+                db.getDaoSession().getHuaweiWorkoutSummaryAdditionalValuesSampleDao().insertOrReplace(summarySampleAdditionalValue);
+            }
 
             return summarySample.getWorkoutId();
         } catch (Exception e) {

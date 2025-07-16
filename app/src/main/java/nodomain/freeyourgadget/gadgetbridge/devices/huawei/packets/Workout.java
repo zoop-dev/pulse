@@ -21,7 +21,9 @@ import androidx.annotation.NonNull;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
@@ -127,6 +129,15 @@ public class Workout {
         }
     }
 
+    public static final Map<Integer, String> huaweiIdToKey;
+
+    static {
+        huaweiIdToKey = new HashMap<>();
+        huaweiIdToKey.put(300010027, "waterType");
+        huaweiIdToKey.put(300010024, "avgDepth");
+        huaweiIdToKey.put(300010037, "postureType");
+    }
+
     public static class WorkoutTotals {
         public static final byte id = 0x08;
 
@@ -207,6 +218,8 @@ public class Workout {
 
             public int longestStreak = -1;
             public int tripped = -1;
+
+            public Map<String, String> additionalValues = new HashMap<>();
 
             public Response(ParamsProvider paramsProvider) {
                 super(paramsProvider);
@@ -309,6 +322,16 @@ public class Workout {
                     this.trainingPoints = container.getShort(0x63);
                 if (container.contains(0x66))
                     this.recoveryHeartRates = container.getBytes(0x66);
+
+                for (HuaweiTLV subTlv : container.getObjects(0xe7)) {
+                    if(subTlv.contains(0x68) && subTlv.contains(0x69)) {
+                        int tag = subTlv.getInteger(0x68);
+                        String value = subTlv.getString(0x69); // The watch returns this value always as string.
+                        String key = huaweiIdToKey.get(tag);
+                        if(key != null)
+                            additionalValues.put(key, value);
+                    }
+                }
             }
         }
     }

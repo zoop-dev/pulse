@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(106, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(107, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -175,6 +175,7 @@ public class GBDaoGenerator {
         addUltrahumanDeviceStateSample(schema, user, device);
 
         Entity huaweiWorkoutSummary = addHuaweiWorkoutSummarySample(schema, user, device);
+        addHuaweiWorkoutSummaryAdditionalValuesSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutDataSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutPaceSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutSwimSegmentsSample(schema, huaweiWorkoutSummary);
@@ -1621,6 +1622,21 @@ public class GBDaoGenerator {
 
         return workoutSummary;
     }
+
+    private static Entity addHuaweiWorkoutSummaryAdditionalValuesSample(Schema schema, Entity summaryEntity) {
+        Entity workoutDataSample = addEntity(schema, "HuaweiWorkoutSummaryAdditionalValuesSample");
+
+        workoutDataSample.setJavaDoc("Contains Huawei Workout Summary Additional Values  samples (multiple per workout)");
+
+        Property id = workoutDataSample.addLongProperty("workoutId").primaryKey().notNull().getProperty();
+        workoutDataSample.addToOne(summaryEntity, id);
+
+        workoutDataSample.addStringProperty("key").notNull().primaryKey();
+        workoutDataSample.addStringProperty("value").notNull();
+
+        return workoutDataSample;
+    }
+
 
     private static Entity addHuaweiWorkoutDataSample(Schema schema, Entity summaryEntity) {
         Entity workoutDataSample = addEntity(schema, "HuaweiWorkoutDataSample");
