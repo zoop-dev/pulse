@@ -332,31 +332,39 @@ public class GBApplication extends Application {
                     bif.addAction(BluetoothStateChangeReceiver.ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED);
                 registerReceiver(bluetoothStateChangeReceiver, bif);
             }
-            try {
-                //the following will ensure the notification manager is kept alive
-                Intent serviceIntent = new Intent(context, NotificationCollectorMonitorService.class);
-
-                //ContextCompat starts a background service on android < O automatically despite the method name
-                ContextCompat.startForegroundService(context, serviceIntent);
-
-            } catch (IllegalStateException e) {
-                String message = e.toString();
-                final Intent instructionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gadgetbridge.org/basics/topics/background-service/"));
-                final PendingIntent pi = PendingIntentUtils.getActivity(context, 0, instructionsIntent, PendingIntent.FLAG_ONE_SHOT, false);
-                GB.notify(NOTIFICATION_ID_ERROR,
-                        new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
-                                .setSmallIcon(R.drawable.ic_notification)
-                                .setContentTitle(getString(R.string.error_background_service))
-                                .setContentText(getString(R.string.error_background_service_reason_truncated))
-                                .setContentIntent(pi)
-                                .setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(getString(R.string.error_background_service_reason) + " \"" + message + "\""))
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .build(), context);
-            }
+            startNotificationCollectorMonitorService();
         }
 
         BondingUtil.StartObservingAll(getBaseContext());
+    }
+
+    private void startNotificationCollectorMonitorService() {
+        if (!prefs.getBoolean("prefs_key_enable_deprecated_notificationcollectormonitor", false)) {
+            return;
+        }
+        Log.i(TAG, "Starting the deprecated NotificationCollectorMonitorService foreground service.");
+        try {
+            //the following will ensure the notification manager is kept alive
+            Intent serviceIntent = new Intent(context, NotificationCollectorMonitorService.class);
+
+            //ContextCompat starts a background service on android < O automatically despite the method name
+            ContextCompat.startForegroundService(context, serviceIntent);
+
+        } catch (IllegalStateException e) {
+            String message = e.toString();
+            final Intent instructionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gadgetbridge.org/basics/topics/background-service/"));
+            final PendingIntent pi = PendingIntentUtils.getActivity(context, 0, instructionsIntent, PendingIntent.FLAG_ONE_SHOT, false);
+            GB.notify(NOTIFICATION_ID_ERROR,
+                    new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
+                            .setSmallIcon(R.drawable.ic_notification)
+                            .setContentTitle(getString(R.string.error_background_service))
+                            .setContentText(getString(R.string.error_background_service_reason_truncated))
+                            .setContentIntent(pi)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(getString(R.string.error_background_service_reason) + " \"" + message + "\""))
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .build(), context);
+        }
     }
 
     @Override

@@ -451,6 +451,13 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
+        <SwitchPreferenceCompat
+            android:key="prefs_key_enable_deprecated_notificationcollectormonitor"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_key_enable_deprecated_notificationcollectormonitor_summary"
+            android:title="@string/prefs_key_enable_deprecated_notificationcollectormonitor_title"
+            app:iconSpaceReserved="false" />
+
         <PreferenceCategory
             android:key="pref_header_media_control"
             android:title="@string/pref_deprecated_media_control_title"
