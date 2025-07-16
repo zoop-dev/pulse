@@ -23,24 +23,40 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 
 
 public class OpenTracksContentObserver extends ContentObserver {
+    private static final Logger LOG = LoggerFactory.getLogger(OpenTracksContentObserver.class);
+
     private Context mContext;
     private Uri tracksUri;
+    private Uri trackpointsUri;
     private int protocolVersion;
     private int totalTimeMillis;
     private float totalDistanceMeter;
+    private final List<ActivityPoint> activityPoints;
 
     private long previousTimeMillis = 0;
     private float previousDistanceMeter = 0;
+    private long lastTrackPointId;
 
     public int getTotalTimeMillis() {
         return totalTimeMillis;
     }
     public float getTotalDistanceMeter() {
         return totalDistanceMeter;
+    }
+    public List<ActivityPoint> getActivityPoints() {
+        return activityPoints;
     }
 
     public long getTimeMillisChange() {
@@ -59,13 +75,16 @@ public class OpenTracksContentObserver extends ContentObserver {
         return distanceMeterDelta;
     }
 
-
-    public OpenTracksContentObserver(Context context, final Uri tracksUri, final int protocolVersion) {
+    public OpenTracksContentObserver(Context context, final Uri tracksUri, final Uri trackpointsUri, final int protocolVersion) {
         super(new Handler());
         this.mContext = context;
         this.tracksUri = tracksUri;
+        this.trackpointsUri = trackpointsUri;
         this.protocolVersion = protocolVersion;
         this.previousTimeMillis = System.currentTimeMillis();
+        this.activityPoints = new ArrayList<>();
+
+        LOG.debug("Initializing OpenTracksContentObserver...");
     }
 
     @Override
@@ -79,6 +98,21 @@ public class OpenTracksContentObserver extends ContentObserver {
                 final TrackStatistics statistics = new TrackStatistics(tracks);
                 totalTimeMillis = statistics.getTotalTimeMillis();
                 totalDistanceMeter = statistics.getTotalDistanceMeter();
+            }
+        }
+        if (trackpointsUri.toString().startsWith(uri.toString())) {
+            final TrackPointsBySegments trackPointsBySegments = TrackPoint.readTrackPointsBySegments(mContext.getContentResolver(), trackpointsUri, lastTrackPointId, protocolVersion);
+            if (!trackPointsBySegments.isEmpty()) {
+                for (List<TrackPoint> segment : trackPointsBySegments.segments()) {
+                    for (TrackPoint trackPoint : segment) {
+                        lastTrackPointId = trackPoint.getTrackPointId();
+                        ActivityPoint activityPoint = new ActivityPoint();
+                        activityPoint.setLocation(new GPSCoordinate(trackPoint.getLongitude(), trackPoint.getLatitude()));
+                        activityPoint.setTime(new Date());
+                        activityPoints.add(activityPoint);
+                        LOG.debug("Trackpoint received from OpenTracks: {}/{}", trackPoint.getLatitude(), trackPoint.getLongitude());
+                    }
+                }
             }
         }
     }

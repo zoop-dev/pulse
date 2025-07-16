@@ -27,10 +27,21 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
+import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -76,10 +87,13 @@ public class OpenTracksController extends Activity {
                 gbApp.getOpenTracksObserver().unregister();
             }
             Uri tracksUri = uris.get(0);
+            Uri trackpointsUri = uris.get(1);
             LOG.info("Registering OpenTracksContentObserver with tracks URI: " + tracksUri);
-            gbApp.setOpenTracksObserver(new OpenTracksContentObserver(this, tracksUri, protocolVersion));
+            LOG.info("Registering OpenTracksContentObserver with trackpoints URI: " + trackpointsUri);
+            gbApp.setOpenTracksObserver(new OpenTracksContentObserver(this, tracksUri, trackpointsUri, protocolVersion));
             try {
                 getContentResolver().registerContentObserver(tracksUri, false, gbApp.getOpenTracksObserver());
+                getContentResolver().registerContentObserver(trackpointsUri, false, gbApp.getOpenTracksObserver());
             } catch (final SecurityException se) {
                 LOG.error("Error registering OpenTracksContentObserver", se);
             }
@@ -138,6 +152,7 @@ public class OpenTracksController extends Activity {
         sendIntent(context, "de.dennisguse.opentracks.publicapi.StopRecording", null, null);
         OpenTracksContentObserver openTracksObserver = GBApplication.app().getOpenTracksObserver();
         if (openTracksObserver != null) {
+            saveToGpx(openTracksObserver.getActivityPoints());
             openTracksObserver.finish();
         }
         GBApplication.app().setOpenTracksObserver(null);
@@ -149,6 +164,25 @@ public class OpenTracksController extends Activity {
             startRecording(context);
         } else {
             stopRecording(context);
+        }
+    }
+
+    private static void saveToGpx(List<ActivityPoint> activityPoints) {
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+        final String gpxName = sdf.format(new Date());
+
+        final ActivityTrack activityTrack = new ActivityTrack();
+        activityTrack.setName(gpxName);
+        activityTrack.addTrackPoints(activityPoints);
+
+        try {
+            final File gpxDir = FileUtils.getExternalFilesDir();
+            final File gpxFile = new File(gpxDir, gpxName + ".gpx");
+            final GPXExporter gpxExporter = new GPXExporter();
+            gpxExporter.performExport(activityTrack, gpxFile);
+            LOG.info("Saved GPX received from OpenTracks to {}", gpxFile.getPath());
+        } catch (IOException | ActivityTrackExporter.GPXTrackEmptyException e) {
+            LOG.error("Error while writing generated GPX file", e);
         }
     }
 }
