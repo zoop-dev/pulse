@@ -3929,7 +3929,21 @@
     <string name="prefs_title_gatt_settings">Общий профиль атрибутов</string>
     <string name="gatt_synchronous_writes_title">Синхронные записи GATT</string>
     <string name="gatt_synchronous_writes_summary">Предпочитайте синхронные записи GATT над асинхронными, если характеристика поддерживает оба варианта.</string>
-    <string name="prefs_device_support_settings">Поддержка устройств</string>
-    <string name="device_support_can_reconnect_title">Повторное использование поддержки устройств</string>
-    <string name="device_support_can_reconnect_summary">Повторно используйте экземпляр DeviceSupport при повторном подключении устройства.</string>
+    <string name="prefs_device_support_settings">Поддержка устройства</string>
+    <string name="device_support_can_reconnect_title">Повторное использование поддержки устройства</string>
+    <string name="device_support_can_reconnect_summary">Повторно использование экземпляра DeviceSupport при повторном подключении устройства.</string>
+    <string name="pairing_bonding_under_way">Пожалуйста, дайте процессу связывания несколько минут для завершения.</string>
+    <string name="interval_twenty_minutes">каждые 20 минут</string>
+    <string name="interval_1_hour">каждый час</string>
+    <string name="interval_2_hour">каждые 2 часа</string>
+    <string name="interval_3_hour">каждые 3 часа</string>
+    <string name="interval_4_hour">каждые 4 часа</string>
+    <string name="interval_6_hour">каждые 6 часов</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Отключить предупреждения о неактивности во время обеденного перерыва (12:00 - 14:00)</string>
+    <string name="silent_mode">Беззвучный режим</string>
+    <string name="discovery_bonding_error">Ошибка связывания: %1$s</string>
+    <string name="activity_type_free_diving">Фридайвинг</string>
+    <string name="activity_type_apnea_training">Тренировка апноэ</string>
+    <string name="activity_type_apnea_test">Проверка апноэ</string>
+    <string name="activity_type_scuba_diving">Дайвинг</string>
 </resources>
