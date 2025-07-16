@@ -457,8 +457,8 @@
     <string name="mi2_prefs_do_not_disturb_start">Начальное время</string>
     <string name="mi2_prefs_do_not_disturb_end">Время окончания</string>
     <string name="automatic">Автоматически</string>
-    <string name="simplified_chinese">Китайский упрощённый</string>
-    <string name="traditional_chinese">Китайский традиционный</string>
+    <string name="simplified_chinese">Китайский (упрощенный)</string>
+    <string name="traditional_chinese">Китайский (традиционный)</string>
     <string name="english">Английский язык</string>
     <string name="prefs_title_heartrate_measurement_interval">Замер пульса на протяжении дня</string>
     <string name="interval_one_minute">раз в минуту</string>
@@ -1471,7 +1471,7 @@
     <string name="pref_title_banglejs_text_bitmap">Текст в виде растровых изображений</string>
     <string name="open_fw_installer_pick_file">Выбрать файл</string>
     <string name="pref_title_device_internet_access">Разрешить доступ в Интернет</string>
-    <string name="open_fw_installer_info_text">Программа установки Прошивки/Часового интерфейса/Приложения/Файла позволяет загружать/устанавливать поддерживаемые файлы (прошивку, часовые интерфейсы, приложения, GPS, ресурсы, шрифты...) на устройство. Дополнительную информацию можно найти в вики: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Программа установки Прошивки/Часового интерфейса/Приложения/Файла позволяет загружать/устанавливать поддерживаемые файлы (прошивку, часовые интерфейсы, приложения, GPS, ресурсы, шрифты…) на устройство. Дополнительную информацию можно найти в вики: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="fw_upgrade_notice_amazfit_gtr3">Вы собираетесь установить прошивку %s на свой Amazfit GTR 3.
 \n
 \nПосле установки файла .zip ваш браслет будет перезагружен.
@@ -2044,7 +2044,7 @@
     <string name="ftp_server_configuration">Конфигурация сервера FTP</string>
     <string name="steps_streaks_total_steps_hint">Всего шагов за хождение в дни подряд</string>
     <string name="step_streak_ongoing">Текущий</string>
-    <string name="controlcenter_connected_fraction">Подключено: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Подключено: %1$d/%2$d</string>
     <string name="ftp_server">Сервер FTP</string>
     <string name="ftp_server_summary">Контролируйте сервер FTP с часов</string>
     <string name="address">Адрес</string>
@@ -2831,7 +2831,7 @@
     <string name="pref_title_wheel_diameter">Диаметр колеса</string>
     <string name="pref_summary_wheel_diameter">Диаметр колеса в дюймах. Обычно 29, 27,5 или 26.</string>
     <string name="chart_cycling_point_label_speed">%.1f км/ч</string>
-    <string name="chart_cycling_point_label_distance">Сегодня: %.1f км \nВсего: %.1f км</string>
+    <string name="chart_cycling_point_label_distance">Сегодня: %1$.1f км \nВсего: %2$.1f км</string>
     <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_on">Воспроизведение в других приложениях будет приостановлено при произнесении уведомления</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Приостанавливать воспроизведение</string>
@@ -3501,7 +3501,7 @@
     <string name="soundcore_equalizer_reset_summary">Верните все полосы эквалайзера к настройкам по умолчанию</string>
     <string name="soundcore_equalizer_band6">Группа 6</string>
     <string name="backup_restore_exporting">Экспорт в zip…</string>
-    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f фунтов</string>
     <string name="soundcore_ldac_mode_title">Режим LDAC</string>
     <string name="soundcore_ldac_mode_summary">Включение LDAC сократит время работы от аккумулятора и может привести к нестабильности соединения</string>
     <string name="soundcore_equalizer_direction_standing">Стоя</string>
@@ -3563,10 +3563,10 @@
     <string name="prefs_hrv_monitoring_title">Мониторинг HRV</string>
     <string name="inactivity_warnings_minimum_steps_summary">Минимальное количество шагов, которое необходимо сделать в течение пороговых минут</string>
     <string name="backup_restore_exporting_files">Экспорт файлов…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Экспорт файлов... %1d из %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Экспорт файлов… %1$d из %2$d</string>
     <string name="backup_restore_exporting_finishing">Завершение экспорта…</string>
     <string name="backup_restore_importing">Импорт из zip…</string>
-    <string name="backup_restore_importing_files_i_of_n">Импорт файлов... %1d из %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Импорт файлов… %1$d из %2$d</string>
     <string name="backup_restore_importing_database">Импорт базы данных…</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Индикатор текущего времени</string>
     <string name="music_huawei_device_info">Поддерживаемые форматы: %1$s\nОбъем памяти: %2$d МБ</string>
@@ -3753,11 +3753,11 @@
     <string name="prefs_active_noise_cancelling_transport">Транспорт</string>
     <string name="prefs_active_noise_cancelling_outdoor">На улице</string>
     <string name="earfun_transparency_mode">Прозрачность</string>
-    <string name="gree_pair_clipboard">Название устройства: %s\nMAC-адрес: %s\nКлюч сопряжения: %s</string>
+    <string name="gree_pair_clipboard">Название устройства: %1$s\nMAC-адрес: %2$s\nКлюч сопряжения: %3$s</string>
     <string name="gree_pair_status_failure">Ошибка сопряжения: %s</string>
     <string name="earfun_anc_mode">Шумоподавление</string>
     <string name="pref_garmin_fake_oauth_warning">Не включайте, если собираетесь использовать официальное приложение или подключать часы к интернету. После включения этой настройки нужно будет выполнить сброс часов до заводских настроек, чтобы повторно аутентифицироваться.</string>
-    <string name="gree_pair_info">Вы собираетесь подключиться к %s (%s). Введите, пожалуйста, информацию о Wi-Fi и хост-сервере. Более подробную информацию можно найти на сайте.</string>
+    <string name="gree_pair_info">Вы собираетесь подключиться к %1$s (%2$s). Введите, пожалуйста, информацию о Wi-Fi и хост-сервере. Более подробную информацию можно найти на сайте.</string>
     <string name="zepp_os_watchface_elegant">Элегантный</string>
     <string name="zepp_os_watchface_deep_space">Глубокое пространство</string>
     <string name="zepp_os_watchface_silver_shadows">Серебряные тени</string>
@@ -3979,4 +3979,8 @@
     <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
     <string name="devicetype_colmi_v72">Colmi V72</string>
     <string name="devicetype_colmi_v89">Colmi V89</string>
+    <string name="devicetype_misirun_c17">Misirun C17</string>
+    <string name="devicetype_c20">C20</string>
+    <string name="devicetype_kt80">KT80</string>
+    <string name="devicetype_ksix_venture">KSIX Venture</string>
 </resources>
