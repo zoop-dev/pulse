@@ -4209,4 +4209,6 @@
     <string name="devicetype_dotn_p66d">Dotn P66D</string>
     <string name="pref_title_time_interval">Časový interval</string>
     <string name="pref_summary_time_interval">Omezit na určité intervaly</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Povolit zastaralou Službu monitoru sběrače oznámení</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Vynutí použití druhé služby na popředí pro udržení monitoru oznámení v provozu. Tuto možnost aktivujte, pokud Gadgetbridge přestal přijímat oznámení.\nUpozorňujeme, že funkce může způsobit zobrazení druhého trvalého oznámení.\nPo přepnutí restartujte aplikaci.</string>
 </resources>
