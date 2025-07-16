@@ -1078,7 +1078,7 @@
     <string name="charts_min_max_heartrate_popup">Самая низкая частота пульса: %1$d
 \nСамая высокая частота пульса: %2$d
 \nИнтенсивность движения: %3$s</string>
-    <string name="firmware_update_progress">Загрузка в процессе \n%1d%% при %.2fкбит/с (в среднем %.2fкбит/с) \nЧасть %1d из %1d</string>
+    <string name="firmware_update_progress">Загрузка в процессе \n%1$d%% при %2$.2fкбит/с (в среднем %3$.2fкбит/с) \nЧасть %4$d из %5$d</string>
     <string name="devicestatus_upload_failed">Загрузка не удалась</string>
     <string name="devicestatus_upload_aborted">Загрузка отменена!</string>
     <string name="devicestatus_upload_validating">Загрузка проходит проверку</string>
@@ -1495,7 +1495,7 @@
     <string name="pref_title_banglejs_webview_url">URL-адрес загрузчика приложения</string>
     <string name="check_all_applications">Отметить все приложения</string>
     <string name="pref_title_opentracks_packagename">Название пакета OpenTracks</string>
-    <string name="permission_location">Приложение %1$s нуждается в доступе к вашему местоположению в фоновом режиме, чтобы оставаться на связи с вашими часами даже при выключенном экране.\n\n\nПожалуйста, выберите \"%2$s\" на следующем экране, затем нажмите \"Назад\", чтобы вернуться к %1$s.</string>
+    <string name="permission_location">Приложение %1$s нуждается в доступе к вашему местоположению в фоновом режиме, чтобы оставаться на связи с вашими часами даже при выключенном экране.\n\nПожалуйста, выберите \"%2$s\" на следующем экране, затем нажмите \"Назад\", чтобы вернуться к %1$s.</string>
     <string name="pref_summary_opentracks_packagename">Используется для запуска/остановки записи GPS-трека во внешнем фитнес-приложении.</string>
     <string name="pref_title_notification_delay_calls">Задержка уведомления о вызове</string>
     <string name="pref_title_notifications_generic_settings">Настройки уведомлений Android</string>
@@ -3230,7 +3230,7 @@
     <string name="music_new_playlist">Создать плейлист</string>
     <string name="music_rename_playlist">Переименовать плейлист</string>
     <string name="permission_manage_dnd_title">Управление режимом «не беспокоить»</string>
-    <string name="date_placeholders__date__time">%1s %1s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="miscale_weight_unit_summary">Укажите единицу массы для отображения замеров</string>
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 дБ</string>
     <string name="redmi_buds_5_pro_equalizer_neg4">-4 дБ</string>
@@ -3242,7 +3242,7 @@
     <string name="first_start_permissions_title">Разрешения</string>
     <string name="first_start_overview_title">Обзор</string>
     <string name="mijia_lywsd_comfort_upper">Верхняя граница</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="pref_music_management_title">Управление музыкой</string>
     <string name="pref_music_management_summary">Управление сохранённой музыкой</string>
     <string name="music_delete_confirm_description">Вы точно хотите удалить «%1$s»?</string>
@@ -3368,7 +3368,7 @@
     <string name="activity_type_sledding">Катание на санях</string>
     <string name="activity_type_mass_gymnastics">Массовая гимнастика</string>
     <string name="activity_type_orienteering">Ориентирование</string>
-    <string name="bpm_value_unit">%1$d уд./мин.</string>
+    <string name="bpm_value_unit">%1$d уд./мин</string>
     <string name="steps_distance_unit">%1$,.2f км</string>
     <string name="hrv_status_baseline">%1$d-%2$d мс</string>
     <string name="hrv_status_baseline_label">Базовая линия</string>
@@ -3501,7 +3501,7 @@
     <string name="soundcore_equalizer_reset_summary">Верните все полосы эквалайзера к настройкам по умолчанию</string>
     <string name="soundcore_equalizer_band6">Группа 6</string>
     <string name="backup_restore_exporting">Экспорт в zip…</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
     <string name="soundcore_ldac_mode_title">Режим LDAC</string>
     <string name="soundcore_ldac_mode_summary">Включение LDAC сократит время работы от аккумулятора и может привести к нестабильности соединения</string>
     <string name="soundcore_equalizer_direction_standing">Стоя</string>
@@ -3538,7 +3538,7 @@
     <string name="distance_total">Расстояние Всего</string>
     <string name="workout_set_i">Установить %1d</string>
     <string name="workout_set_repetitions">%1d x</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f кг</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f кг</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Непрерывное измерение температуры кожи</string>
     <string name="pref_header_deprecated_functionalities">Утраченные функциональные возможности</string>
     <string name="prefs_title_gatt_client_api_package">Пакет BLE API</string>
@@ -3546,7 +3546,7 @@
     <string name="prefs_summary_gatt_client_device_state_updates">Получение изменений состояния BLE-соединения через намерения</string>
     <string name="soundcore_adaptive_direction_title">Адаптивное направление</string>
     <string name="soundcore_equalizer_preset_balanced">Сбалансированный</string>
-    <string name="pref_header_deprecated_functionalities_warning">Следующие функции устарели и будут удалены из программного обеспечения в ближайшее время.\n\nЕсли вам нужно включить одну из следующих настроек, обязательно свяжитесь с командой проекта.</string>
+    <string name="pref_header_deprecated_functionalities_warning">Следующие функции устарели и будут удалены из программного обеспечения в ближайшее время.\nЕсли вам нужно включить одну из следующих настроек, обязательно свяжитесь с командой проекта.</string>
     <string name="devicetype_ble_gatt_client">Общий клиент BLE GATT</string>
     <string name="moondrop_equalizer_preset_basshead">Бассоголовый</string>
     <string name="moondrop_equalizer_preset_reference">Ссылка</string>
@@ -3569,7 +3569,7 @@
     <string name="backup_restore_importing_files_i_of_n">Импорт файлов... %1d из %2d</string>
     <string name="backup_restore_importing_database">Импорт базы данных…</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Индикатор текущего времени</string>
-    <string name="music_huawei_device_info">Поддерживаемые форматы: %1$s\n\nОбъем памяти: %2$d МБ</string>
+    <string name="music_huawei_device_info">Поддерживаемые форматы: %1$s\nОбъем памяти: %2$d МБ</string>
     <string name="first_start_open_source_title">Открытый исходный код</string>
     <string name="permission_manage_dnd_summary">Изменение политики уведомлений DND</string>
     <string name="permission_fine_location_summary">Сканирование для устройств Bluetooth</string>
@@ -3622,7 +3622,7 @@
     <string name="backup_restore_do_not_exit">%s Пожалуйста, держите этот экран открытым до завершения операции.</string>
     <string name="backup_restore_importing_loading">Загрузка файла…</string>
     <string name="backup_restore_importing_validating">Проверка файла…</string>
-    <string name="backup_restore_warning_files">Не удалось восстановить %1d файлов: \n\n%2s</string>
+    <string name="backup_restore_warning_files">Не удалось восстановить %1$d файлов: \n%2$s</string>
     <string name="backup_restore_abort_import_confirmation">Прервать импорт? Это может привести к повреждению или несогласованности базы данных.</string>
     <string name="backup_restore_import_complete">Импорт завершен</string>
     <string name="backup_restore_error_export">Экспорт в zip не удался</string>
@@ -3699,7 +3699,7 @@
     <string name="left_right_balance">Баланс</string>
     <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="unit_repetitions">повторений</string>
-    <string name="pairing_even_realities_g1_working">Сопряжение с %1s...</string>
+    <string name="pairing_even_realities_g1_working">Сопряжение с %1s…</string>
     <string name="pref_workout_send_gps_timeout_title">Тайм-аут отправки GPS-координат</string>
     <string name="spo2_perc_75">75%</string>
     <string name="activity_type_deadlift">Становая тяга</string>
@@ -3718,7 +3718,7 @@
     <string name="activity_type_diving">Дайвинг</string>
     <string name="activity_type_powerboating">Водно-моторный спорт</string>
     <string name="activity_type_equestrian">Конный спорт</string>
-    <string name="fw_upgrade_notice_huawei">"Вы собираетесь обновить ПО до версии %s  Ваших  %s.\n\nТекущая версия ПО: %s.\n\nПосле обновления устройство будет перезагружено.\n\nПРОДОЛЖАЙТЕ НА СВОЙ СТРАХ И РИСК!"</string>
+    <string name="fw_upgrade_notice_huawei">Вы собираетесь загрузить прошивку %1$s на ваше устройство %2$s.\n\nВаша текущая прошивка: %s\n\nВаше устройство перезагрузится после загрузки.\n\nПРОДОЛЖАЙТЕ НА СВОЙ РИСК!</string>
     <string name="activity_type_other_water_sports">Другой водный спорт</string>
     <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
     <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
@@ -3948,5 +3948,35 @@
     <string name="activity_type_scuba_diving">Дайвинг с аквалангом</string>
     <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
     <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
-    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Round)</string>
+    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Круглый)</string>
+    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Квадратный)</string>
+    <string name="devicetype_amazfit_active_2_nfc">Amazfit Active 2 NFC</string>
+    <string name="devicetype_amazfit_helio_strap">Amazfit Helio Strap</string>
+    <string name="devicetype_garmin_vivomove_sport">Garmin Vívomove Sport</string>
+    <string name="devicetype_garmin_venu_x1">Garmin Venu X1</string>
+    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
+    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
+    <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
+    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
+    <string name="devicetype_garmin_forerunner_165_music">Garmin Forerunner 165 Music</string>
+    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
+    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
+    <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
+    <string name="devicetype_garmin_vivosmart_3">Garmin Vívosmart 3</string>
+    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
+    <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
+    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
+    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
+    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
+    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
+    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
+    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
+    <string name="devicetype_aawireless">AAWireless</string>
+    <string name="devicetype_yawell_r10">Yawell R10</string>
+    <string name="devicetype_yawell_r11">Yawell R11</string>
+    <string name="devicetype_colmi_r07">Colmi R07</string>
+    <string name="devicetype_h59">H59</string>
+    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
+    <string name="devicetype_colmi_v72">Colmi V72</string>
+    <string name="devicetype_colmi_v89">Colmi V89</string>
 </resources>
