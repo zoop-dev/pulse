@@ -4105,6 +4105,17 @@
     <string name="earfun_anc_mode_ai_ear_adaptive">Активное шумоподавление для ушей</string>
     <string name="earfun_anc_mode_wind_noise_cancelling">Шумоподавление ветрового шума</string>
     <string name="earfun_tap_action_noise_control_all_modes">Управление шумом (все режимы)</string>
-    <string name="earfun_tap_action_noise_control_normal_wind">Управление шумом (нормальный режим, ветровой шум)</string>
+    <string name="earfun_tap_action_noise_control_normal_wind">Управление шумом (нормальный, ветровой шум)</string>
     <string name="earfun_tap_action_noise_control_normal_ambient">Управление шумом (нормальный, окружающие звуки)</string>
+    <string name="earfun_tap_action_noise_control_wind_ambient">Управление шумом (ветровой шум, окружающие звуки)</string>
+    <string name="earfun_tap_action_redial">Повторный набор</string>
+    <string name="earfun_in_ear_detection_hint">Когда включено, функция автоматически возобновляет воспроизведение аудио при надевании наушников и ставит его на паузу при их снятии.</string>
+    <string name="earfun_header_connectivity">Качество звука и подключение</string>
+    <string name="ultrahuman_airplane_mode_unknown">неизвестная ошибка %#02x – режим полёта НЕ активирован</string>
+    <string name="ultrahuman_breathing_title">Дыхание</string>
+    <string name="ultrahuman_breathing_start">Начать</string>
+    <string name="ultrahuman_breathing_stop">Стоп</string>
+    <string name="ultrahuman_unhandled_error_response">получен необработанный код ответа %2$#02x %3$#02x для операции %1$#02x</string>
+    <string name="ultrahuman_unhandled_operation_response">получен необработанный код ответа %s</string>
+    <string name="huawei_stress_calibrate_information">Для достижения оптимальных результатов отдохните перед началом теста и оставайтесь неподвижными во время его проведения. \n Убедитесь, что устройство плотно зафиксировано, экран обращен вверх, а сенсор находится в прямом контакте с вашей кожей</string>
 </resources>
