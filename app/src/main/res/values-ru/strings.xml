@@ -4101,5 +4101,6 @@
     <string name="pref_enable_sms_quick_reply_summary">Разрешить отклонение звонков с ответом по SMS</string>
     <string name="pref_device_logs_summary">Включить ведение журналов с устройства</string>
     <string name="pref_device_logs_title">Журналы устройства</string>
-    <string name="earfun_anc_mode_ai_environment_adaptive">AI адаптивное шумоподавление окружающей среды</string>
+    <string name="earfun_anc_mode_ai_environment_adaptive">AI шумоподавление окружающей среды</string>
+    <string name="earfun_anc_mode_ai_ear_adaptive">AI шумоподавление</string>
 </resources>
