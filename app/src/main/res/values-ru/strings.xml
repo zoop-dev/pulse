@@ -3948,4 +3948,5 @@
     <string name="activity_type_scuba_diving">Дайвинг с аквалангом</string>
     <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
     <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
+    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Round)</string>
 </resources>
