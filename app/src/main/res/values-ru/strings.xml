@@ -4047,7 +4047,7 @@
     <string name="aqi_level_dangerous">опасный</string>
     <string name="restingCalories">Калории в состоянии покоя</string>
     <string name="metabolic_rate">Метаболизм</string>
-    <string name="active_calories_avg">Средние активные калории</string>
+    <string name="active_calories_avg">Ср. активные калории</string>
     <string name="active_calories_total">Всего активных калорий</string>
     <string name="resting_calories_total">Всего калорий в состоянии покоя</string>
     <string name="calorie_over_goal">Превышение цели: %1$d ккал</string>
@@ -4056,4 +4056,12 @@
     <string name="standing_count">Количество стоя</string>
     <string name="average_left_platform_center_offset">Ср. смещение центра левой платформы</string>
     <string name="average_right_platform_center_offset">Ср. смещение центра правой платформы</string>
+    <string name="average_left_power_phase">Средняя фаза мощности (левая)</string>
+    <string name="average_left_power_phase_peak">Пик средней фазы мощности (левая)</string>
+    <string name="average_right_power_phase">Средняя фаза мощности (правая)</string>
+    <string name="average_right_power_phase_peak">Пик средней фазы мощности (правая)</string>
+    <string name="average_power">Средняя мощность</string>
+    <string name="average_power_sitting">Средняя мощность (сидя)</string>
+    <string name="average_power_standing">Средняя мощность (стоя)</string>
+    <string name="average_cadence_sitting">Средняя каденция (сидя)</string>
 </resources>
