@@ -170,7 +170,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_VERSION});
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_CURR_DATA});
 
-            mHPlusSupport.performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (Exception e) {
             LOG.warn("HPlus: Synchronization exception: " + e);
         }
@@ -184,7 +184,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         try {
             TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("hello");
             builder.write(mHPlusSupport.ctrlCharacteristic, HPlusConstants.CMD_ACTION_HELLO);
-            mHPlusSupport.performConnected(builder.getTransaction());
+            builder.queueConnected();
 
         } catch (Exception e) {
 
@@ -542,7 +542,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         try {
             TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("requestSleepStats");
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_SLEEP});
-            mHPlusSupport.performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (Exception e) {
 
         }
@@ -597,7 +597,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
 
             TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("getNextDaySlot");
             builder.write(mHPlusSupport.ctrlCharacteristic, msg);
-            mHPlusSupport.performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (Exception e) {
 
         }
@@ -610,7 +610,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
         try {
             TransactionBuilder builder = mHPlusSupport.createTransactionBuilder("startSyncDaySummary");
             builder.write(mHPlusSupport.ctrlCharacteristic, new byte[]{HPlusConstants.CMD_GET_DAY_DATA});
-            mHPlusSupport.performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (Exception e) {
 
         }

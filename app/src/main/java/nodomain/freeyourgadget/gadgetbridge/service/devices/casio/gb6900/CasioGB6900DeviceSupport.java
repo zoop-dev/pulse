@@ -317,7 +317,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
                 {
                     TransactionBuilder builder = createTransactionBuilder("writeCasioCurrentTime");
                     writeCasioCurrentTime(builder);
-                    performConnected(builder.getTransaction());
+                    builder.queueConnected();
                     handled = true;
                 } catch (IOException e) {
                     LOG.warn("handleTimeRequests::writeCasioCurrentTime failed: " + e.getMessage());
@@ -328,7 +328,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
                 {
                     TransactionBuilder builder = createTransactionBuilder("writeCasioLocalTimeInformation");
                     writeCasioLocalTimeInformation(builder);
-                    performConnected(builder.getTransaction());
+                    builder.queueConnected();
                     handled = true;
                 } catch (IOException e) {
                     LOG.warn("handleTimeRequests::writeCasioLocalTimeInformation failed: " + e.getMessage());
@@ -343,7 +343,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
         {
             TransactionBuilder builder = createTransactionBuilder("writeCasioVirtualServerFeature");
             writeCasioVirtualServerFeature(builder);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             LOG.warn("handleServerFeatureRequests failed: " + e.getMessage());
         }

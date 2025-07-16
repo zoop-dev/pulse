@@ -177,7 +177,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
     /**
      * Send commands like this to the device:
      * <p>
-     * <code>performInitialized("sms notification").write(someCharacteristic, someByteArray).queue(getQueue());</code>
+     * <code>performInitialized("sms notification").write(someCharacteristic, someByteArray).queue();</code>
      * </p>
      * This will asynchronously
      * <ul>
@@ -186,7 +186,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
      * <li>execute the commands collected with the returned transaction builder</li>
      * </ul>
      *
-     * @see #performConnected(Transaction)
+     * @see TransactionBuilder#queueConnected()
      * @see #initializeDevice(TransactionBuilder)
      */
     public TransactionBuilder performInitialized(String taskName) throws IOException {
@@ -220,15 +220,8 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         return createServerTransactionBuilder(taskName);
     }
 
-    /**
-     * Ensures that the device is connected and (only then) performs the actions of the given
-     * transaction builder.
-     * <p>
-     * In contrast to {@link #performInitialized(String)}, no initialization sequence is performed
-     * with the device, only the actions of the given builder are executed.
-     * @throws IOException if unable to connect to the device
-     * @see #performInitialized(String)
-     */
+    /// @deprecated use {@link TransactionBuilder#queueConnected()}
+    @Deprecated
     public void performConnected(Transaction transaction) throws IOException {
         if (!isConnected()) {
             if (!connect()) {
@@ -238,11 +231,8 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         getQueue().add(transaction);
     }
 
-    /**
-     * Performs the actions of the given transaction as soon as possible,
-     * that is, before any other queued transactions, but after the actions
-     * of the currently executing transaction.
-     */
+    /// @deprecated use {@link TransactionBuilder#queueImmediately()}
+    @Deprecated
     public void performImmediately(TransactionBuilder builder) throws IOException {
         if (!isConnected()) {
             throw new IOException("Not connected to device: " + getDevice());

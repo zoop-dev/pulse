@@ -67,7 +67,7 @@ public abstract class Request extends AbstractBTLEOperation<LefunDeviceSupport> 
                 .getCharacteristic(LefunConstants.UUID_CHARACTERISTIC_LEFUN_WRITE);
         builder.write(characteristic, createRequest());
         if (isSelfQueue())
-            getSupport().performConnected(builder.getTransaction());
+            builder.queueConnected();
     }
 
     /**

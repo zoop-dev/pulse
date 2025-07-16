@@ -211,7 +211,7 @@ public class Y5Support extends JYouSupport {
                     JYouConstants.CMD_SET_HEARTRATE_AUTO, 0, 0
 
             ));
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch(Exception e) {
             LOG.warn(e.getMessage());
         }
@@ -224,7 +224,7 @@ public class Y5Support extends JYouSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     JYouConstants.CMD_ACTION_HEARTRATE_SWITCH, 0, enable ? 1 : 0
             ));
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
             enableRealtimeSamplesTimer(enable);
         } catch (Exception e) {
             LOG.warn(e.getMessage());

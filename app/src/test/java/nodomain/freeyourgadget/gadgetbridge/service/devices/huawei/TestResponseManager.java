@@ -104,16 +104,6 @@ public class TestResponseManager {
         }
 
         @Override
-        public void performConnected(Transaction transaction) throws IOException {
-
-        }
-
-        @Override
-        public void performConnected(nodomain.freeyourgadget.gadgetbridge.service.btle.Transaction transaction) throws IOException {
-
-        }
-
-        @Override
         public void evaluateGBDeviceEvent(GBDeviceEvent deviceEvent) {
 
         }

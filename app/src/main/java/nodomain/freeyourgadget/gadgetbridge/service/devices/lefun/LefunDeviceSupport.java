@@ -162,7 +162,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             SendNotificationRequest request = new SendNotificationRequest(this, builder);
             request.setNotification(notificationSpec);
             request.perform();
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to send notification", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -176,7 +176,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             SetTimeRequest request = new SetTimeRequest(this, builder);
             request.perform();
             inProgressRequests.add(request);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to set time", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -197,7 +197,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 request.setMinute(alarm.getMinute());
                 request.perform();
                 inProgressRequests.add(request);
-                performConnected(builder.getTransaction());
+                builder.queueConnected();
             } catch (IOException e) {
                 GB.toast(getContext(), "Failed to set alarm", Toast.LENGTH_SHORT,
                         GB.ERROR, e);
@@ -215,7 +215,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     SendCallNotificationRequest request = new SendCallNotificationRequest(this, builder);
                     request.setCallNotification(callSpec);
                     request.perform();
-                    performConnected(builder.getTransaction());
+                    builder.queueConnected();
                 } catch (IOException e) {
                     GB.toast(getContext(), "Failed to send call notification", Toast.LENGTH_SHORT,
                             GB.ERROR, e);
@@ -257,7 +257,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.setPpgType(LefunConstants.PPG_TYPE_HEART_RATE);
             request.perform();
             inProgressRequests.add(request);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to start heart rate test", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -272,7 +272,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 FindDeviceRequest request = new FindDeviceRequest(this, builder);
                 request.perform();
                 inProgressRequests.add(request);
-                performConnected(builder.getTransaction());
+                builder.queueConnected();
             } catch (IOException e) {
                 GB.toast(getContext(), "Failed to initiate find device", Toast.LENGTH_SHORT,
                         GB.ERROR, e);
@@ -450,7 +450,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.perform();
             inProgressRequests.add(request);
             if (!givenBuilder)
-                performConnected(builder.getTransaction());
+                builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to set settings", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -473,7 +473,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.perform();
             inProgressRequests.add(request);
             if (!givenBuilder)
-                performConnected(builder.getTransaction());
+                builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to send profile", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -492,7 +492,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.setCmd(cmd);
             request.perform();
             inProgressRequests.add(request);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to set enabled features", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -511,7 +511,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.setInterval(period);
             request.perform();
             inProgressRequests.add(request);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to set sedentary reminder interval", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -530,7 +530,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.setInterval(period);
             request.perform();
             inProgressRequests.add(request);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to set hydration reminder interval", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -549,7 +549,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             request.setLanguage(language);
             request.perform();
             inProgressRequests.add(request);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to set language", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -649,7 +649,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             getHydrationReminderIntervalRequest.perform();
             inProgressRequests.add(getHydrationReminderIntervalRequest);
 
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Failed to retrieve settings", Toast.LENGTH_SHORT,
                     GB.ERROR, e);
@@ -1013,7 +1013,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
             try {
                 request.perform();
                 if (!request.isSelfQueue())
-                    performConnected(request.getTransactionBuilder().getTransaction());
+                    request.getTransactionBuilder().queueConnected();
             } catch (IOException e) {
                 GB.toast(getContext(), "Failed to run next queued request", Toast.LENGTH_SHORT,
                         GB.ERROR, e);

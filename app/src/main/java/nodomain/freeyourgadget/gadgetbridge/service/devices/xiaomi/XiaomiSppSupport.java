@@ -234,7 +234,7 @@ public class XiaomiSppSupport extends XiaomiConnectionSupport {
     }
 
     public void sendCommand(final TransactionBuilder builder, final XiaomiProto.Command command) {
-        LOG.debug("sendCommand(): encoded command for task '{}': {}", builder.getTransaction().getTaskName(), GB.hexdump(command.toByteArray()));
+        LOG.debug("sendCommand(): encoded command for task '{}': {}", builder.getTaskName(), GB.hexdump(command.toByteArray()));
         if (command.getType() == XiaomiAuthService.COMMAND_TYPE) {
             builder.write(mProtocol.encodePacket(Channel.Authentication, command.toByteArray()));
         } else {

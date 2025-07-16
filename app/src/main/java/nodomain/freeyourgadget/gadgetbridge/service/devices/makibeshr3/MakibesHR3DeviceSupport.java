@@ -232,7 +232,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
                 sender, message);
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception ex) {
             LoggerFactory.getLogger(this.getClass()).error("notification failed");
         }
@@ -245,7 +245,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         this.setDateTime(transactionBuilder);
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception ex) {
             LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
         }
@@ -298,7 +298,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         }
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception ex) {
             LoggerFactory.getLogger(this.getClass()).error("setalarms failed");
         }
@@ -315,7 +315,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         }
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception ex) {
             LoggerFactory.getLogger(this.getClass()).error("call state failed");
         }
@@ -329,7 +329,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
             this.factoryReset(transactionBuilder);
 
             try {
-                this.performConnected(transactionBuilder.getTransaction());
+                transactionBuilder.queueConnected();
             } catch (Exception ex) {
                 LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
             }
@@ -338,7 +338,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
             this.reboot(transactionBuilder);
 
             try {
-                this.performConnected(transactionBuilder.getTransaction());
+                transactionBuilder.queueConnected();
             } catch (Exception ex) {
                 LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
             }
@@ -352,7 +352,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         this.setEnableRealTimeHeartRate(transactionBuilder, enable);
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception e) {
             LOG.debug("ERROR");
         }
@@ -402,7 +402,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         this.findDevice(transactionBuilder);
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception e) {
             LOG.debug("ERROR");
         }
@@ -460,7 +460,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         }
 
         try {
-            this.performConnected(transactionBuilder.getTransaction());
+            transactionBuilder.queueConnected();
         } catch (Exception ex) {
             LOG.warn(ex.getMessage());
         }

@@ -22,10 +22,13 @@ import android.content.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -37,8 +40,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateA
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
 
 public class TransactionBuilder {
-    private static final Logger LOG = LoggerFactory.getLogger(TransactionBuilder.class);
-
     private final AbstractBTBRDeviceSupport mDeviceSupport;
     private final Transaction mTransaction;
     private boolean mQueued;
@@ -60,9 +61,10 @@ public class TransactionBuilder {
      * Note that this is usually a bad idea, since it will not be able to process messages
      * during that time. It is also likely to cause race conditions.
      * @param millis the number of milliseconds to sleep
+     * @see Thread#sleep(long)
      */
     @NonNull
-    public TransactionBuilder wait(int millis) {
+    public TransactionBuilder wait(@IntRange(from = 0L) int millis) {
         WaitAction action = new WaitAction(millis);
         return add(action);
     }
@@ -161,6 +163,8 @@ public class TransactionBuilder {
 
     /**
      * To be used as the final step to execute the transaction by the queue.
+     * @throws IllegalStateException if this builder has already been queued
+     * @see #queueConnected()
      */
     public void queue() {
         if (mQueued) {
@@ -171,9 +175,28 @@ public class TransactionBuilder {
         queue.add(mTransaction);
     }
 
+    @VisibleForTesting
     @NonNull
     public Transaction getTransaction() {
         return mTransaction;
     }
 
+    public String getTaskName() {
+        return mTransaction.getTaskName();
+    }
+
+    /// Ensures that the device is connected and (only then) performs the actions of the given
+    /// transaction builder.
+    ///
+    /// @throws IOException if unable to connect to the device
+    /// @throws IllegalStateException if this builder has already been queued
+    /// @see #queue()
+    public void queueConnected() throws IOException {
+        if (!mDeviceSupport.isConnected()) {
+            if (!mDeviceSupport.connect()) {
+                throw new IOException("Unable to connect to device: " + mDeviceSupport.getDevice());
+            }
+        }
+        queue();
+    }
 }

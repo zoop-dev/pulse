@@ -232,7 +232,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                 builder = performInitialized("fetchActivityData");
             }
             requestSummarizedData(builder);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -324,7 +324,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
 
             try {
                 requestDetailedData(builder);
-                performConnected(builder.getTransaction());
+                builder.queueConnected();
             } catch (IOException e) {
                 GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
             }

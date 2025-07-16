@@ -58,7 +58,7 @@ public class InitOperation extends AbstractBTLEOperation<Watch9DeviceSupport>{
         } else {
             builder.setDeviceState(GBDevice.State.INITIALIZING);
             getSupport().initialize(builder);
-            getSupport().performImmediately(builder);
+            builder.queueImmediately();
         }
     }
 
@@ -74,7 +74,8 @@ public class InitOperation extends AbstractBTLEOperation<Watch9DeviceSupport>{
                     TransactionBuilder builder = getSupport().createTransactionBuilder("authInit");
                     builder.setCallback(this);
                     builder.setDeviceState(GBDevice.State.INITIALIZING);
-                    getSupport().initialize(builder).performImmediately(builder);
+                    getSupport().initialize(builder);
+                    builder.queueImmediately();
                 } else {
                     return super.onCharacteristicChanged(gatt, characteristic, value);
                 }

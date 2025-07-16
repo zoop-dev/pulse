@@ -141,7 +141,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
                 }
                 builder.write(ctrlCharacteristic, currentPacket);
             }
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             logger.warn(e.getMessage());
         }
@@ -205,7 +205,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
                         alarms.get(i).getEnabled() ? cal.get(Calendar.MINUTE) : -1
                 ));
             }
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
             GB.toast(getContext(), "Alarm settings applied - do note that the current device does not support day specification", Toast.LENGTH_LONG, GB.INFO);
         } catch(IOException e) {
             logger.warn(e.getMessage());
@@ -217,7 +217,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("SetTime");
             syncDateAndTime(builder);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch(IOException e) {
             logger.warn(e.getMessage());
         }
@@ -242,7 +242,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     JYouConstants.CMD_ACTION_REBOOT_DEVICE, 0, 0
             ));
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch(Exception e) {
             logger.warn(e.getMessage());
         }
@@ -255,7 +255,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, commandWithChecksum(
                     JYouConstants.CMD_ACTION_HEARTRATE_SWITCH, 0, 1
             ));
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch(Exception e) {
             logger.warn(e.getMessage());
         }

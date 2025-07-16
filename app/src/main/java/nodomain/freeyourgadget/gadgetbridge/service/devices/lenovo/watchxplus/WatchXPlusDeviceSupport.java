@@ -393,7 +393,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     buildCommand(WatchXPlusConstants.CMD_CALIBRATION_INIT_TASK,
                             WatchXPlusConstants.TASK,
                             new byte[]{(byte) (enable ? 0x01 : 0x00)}));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn(" Unable to start/stop calibration mode ", e);
         }
@@ -405,7 +405,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(WatchXPlusConstants.CMD_CALIBRATION_KEEP_ALIVE,
                             WatchXPlusConstants.KEEP_ALIVE));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn(" Unable to keep calibration mode alive ", e);
         }
@@ -420,7 +420,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     buildCommand(WatchXPlusConstants.CMD_CALIBRATION_TASK,
                             WatchXPlusConstants.TASK,
                             Conversion.toByteArr16(handsPosition)));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             isCalibrationActive = false;
             LOG.warn(" Unable to send calibration data ", e);

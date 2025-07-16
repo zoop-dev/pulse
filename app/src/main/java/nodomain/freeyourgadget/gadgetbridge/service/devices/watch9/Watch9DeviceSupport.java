@@ -144,7 +144,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     buildCommand(command,
                             Watch9Constants.TASK,
                             Conversion.toByteArr32(notificationChannel)));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send notification", e);
         }
@@ -184,7 +184,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     buildCommand(Watch9Constants.CMD_CALIBRATION_INIT_TASK,
                             Watch9Constants.TASK,
                             new byte[]{(byte) (enable ? 0x01 : 0x00)}));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to start/stop calibration mode", e);
         }
@@ -196,7 +196,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_CALIBRATION_KEEP_ALIVE,
                             Watch9Constants.KEEP_ALIVE));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to keep calibration mode alive", e);
         }
@@ -211,7 +211,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     buildCommand(Watch9Constants.CMD_CALIBRATION_TASK,
                             Watch9Constants.TASK,
                             Conversion.toByteArr16(handsPosition)));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             isCalibrationActive = false;
             LOG.warn("Unable to send calibration data", e);
@@ -224,7 +224,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(Watch9Constants.UUID_CHARACTERISTIC_WRITE,
                     buildCommand(Watch9Constants.CMD_TIME_SETTINGS,
                             Watch9Constants.READ_VALUE));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to get device time", e);
         }
@@ -269,7 +269,7 @@ public class Watch9DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     buildCommand(Watch9Constants.CMD_TIME_SETTINGS,
                             Watch9Constants.WRITE_VALUE,
                             time));
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to set time", e);
         }

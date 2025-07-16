@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Damien Gaignon
+/*  Copyright (C) 2022-2025 Damien Gaignon, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -107,16 +107,8 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         return (mQueue != null) && mQueue.isConnected();
     }
 
-    /**
-     * Ensures that the device is connected and (only then) performs the actions of the given
-     * transaction builder.
-     * <p>
-     * In contrast to {@link #performInitialized(String)}, no initialization sequence is performed
-     * with the device, only the actions of the given builder are executed.
-     * @param transaction
-     * @throws IOException if connection to the device fails
-     * @see #performInitialized(String)
-     */
+    /// @deprecated use {@link TransactionBuilder#queueConnected()}
+    @Deprecated
     public void performConnected(Transaction transaction) throws IOException {
         if (!isConnected()) {
             if (!connect()) {
@@ -126,7 +118,7 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         getQueue().add(transaction);
     }
 
-    public BtBRQueue getQueue() {
+    BtBRQueue getQueue() {
         return mQueue;
     }
 

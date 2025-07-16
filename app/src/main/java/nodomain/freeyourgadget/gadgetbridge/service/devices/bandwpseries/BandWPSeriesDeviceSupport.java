@@ -281,7 +281,7 @@ public class BandWPSeriesDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     BandWBLEProfile.setWearSensorEnabled(builder, wearSensorEnabled);
                     break;
             }
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             GB.toast("Failed to send settings update", Toast.LENGTH_SHORT, GB.ERROR);
         }

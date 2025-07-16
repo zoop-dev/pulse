@@ -1013,7 +1013,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
         TransactionBuilder builder = createTransactionBuilder("setDeviceInitialized");
         builder.setDeviceState(GBDevice.State.INITIALIZED);
         try {
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch (IOException e) {
             LOG.error("could not set device to initzialized: ", e);
         }

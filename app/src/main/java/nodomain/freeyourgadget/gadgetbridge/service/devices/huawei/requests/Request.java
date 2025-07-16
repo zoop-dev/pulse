@@ -351,11 +351,9 @@ public class Request {
             handler.postDelayed(this.timeoutRunner, this.timeout);
 
         if (!this.supportProvider.isBLE()) {
-            nodomain.freeyourgadget.gadgetbridge.service.btbr.Transaction transaction = this.builderBr.getTransaction();
-            this.supportProvider.performConnected(transaction);
+            builderBr.queueConnected();
         } else {
-            nodomain.freeyourgadget.gadgetbridge.service.btle.Transaction transaction = this.builderLe.getTransaction();
-            this.supportProvider.performConnected(transaction);
+            builderLe.queueConnected();
         }
     }
 

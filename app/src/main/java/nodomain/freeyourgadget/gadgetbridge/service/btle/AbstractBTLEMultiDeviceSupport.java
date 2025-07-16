@@ -248,7 +248,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
      * <li>execute the commands collected with the returned transaction builder</li>
      * </ul>
      *
-     * @see #performConnected(Transaction, int)
+     * @see TransactionBuilder#queueConnected()
      * @see #initializeDevice(TransactionBuilder, int)
      */
     public TransactionBuilder performInitialized(String taskName, int deviceIdx)
@@ -274,16 +274,8 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         return createTransactionBuilder(taskName, deviceIdx);
     }
 
-    /**
-     * Ensures that the device is connected and (only then) performs the actions of the given
-     * transaction builder.
-     * <p>
-     * In contrast to {@link #performInitialized(String, int)}, no initialization sequence is performed
-     * with the device, only the actions of the given builder are executed.
-     *
-     * @throws IOException if unable to connect to the device
-     * @see #performInitialized(String, int)
-     */
+    /// @deprecated use {@link TransactionBuilder#queueConnected()}
+    @Deprecated
     public void performConnected(Transaction transaction, int deviceIdx) throws IOException {
         if (!isConnected()) {
             if (!connect()) {
@@ -293,11 +285,8 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         getQueue(deviceIdx).add(transaction);
     }
 
-    /**
-     * Performs the actions of the given transaction as soon as possible,
-     * that is, before any other queued transactions, but after the actions
-     * of the currently executing transaction.
-     */
+    /// @deprecated use {@link TransactionBuilder#queueImmediately()}
+    @Deprecated
     public void performImmediately(TransactionBuilder builder, int deviceIdx) throws IOException {
         if (!isConnected()) {
             throw new IOException("Not connected to device: " + getDevice());

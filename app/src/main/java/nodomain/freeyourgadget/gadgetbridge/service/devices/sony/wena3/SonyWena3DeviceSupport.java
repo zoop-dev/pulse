@@ -279,7 +279,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     new TimeZoneSetting(tz, currentTime).toByteArray()
             );
 
-            if(b == null) performImmediately(builder);
+            if(b == null) builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send current time", e);
         }
@@ -294,7 +294,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     new MusicInfo(musicInfo != null ? musicInfo: "").toByteArray()
             );
 
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send music info", e);
         }
@@ -384,7 +384,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             builder.write(sportsCharacteristic, new ActivitySyncStartPacket().toByteArray());
 
-            if(b == null) performImmediately(builder);
+            if(b == null) builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to force request a sync", e);
         }
@@ -399,7 +399,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     weather.toByteArray()
             );
 
-            if(b == null) performImmediately(builder);
+            if(b == null) builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send current weather", e);
         }
@@ -478,7 +478,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 );
             }
 
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send call", e);
         }
@@ -572,7 +572,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     ).toByteArray()
             );
 
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send notification", e);
         }
@@ -592,7 +592,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     new NotificationRemoval(NotificationKind.APP, id).toByteArray()
             );
 
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send notification", e);
         }
@@ -661,7 +661,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 );
             }
 
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send alarms", e);
             GB.toast("Failed to save alarms", Toast.LENGTH_SHORT, GB.ERROR);
@@ -965,7 +965,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
             }
 
-            if(b == null) performImmediately(builder);
+            if(b == null) builder.queueImmediately();
         } catch (IOException e) {
             LOG.warn("Unable to send calendar events", e);
         }
@@ -1072,7 +1072,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                     return;
             }
 
-            performImmediately(builder);
+            builder.queueImmediately();
         } catch(Exception e) {
             GB.toast("Failed to send settings update", Toast.LENGTH_SHORT, GB.ERROR);
         }

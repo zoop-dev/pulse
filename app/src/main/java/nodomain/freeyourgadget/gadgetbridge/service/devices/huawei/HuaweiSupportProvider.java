@@ -127,7 +127,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PAppIcon;
@@ -364,14 +363,6 @@ public class HuaweiSupportProvider {
 
     public BluetoothGattCharacteristic getLeCharacteristic(UUID uuid) {
         return leSupport.getCharacteristic(uuid);
-    }
-
-    public void performConnected(nodomain.freeyourgadget.gadgetbridge.service.btle.Transaction transaction) throws IOException {
-        leSupport.performConnected(transaction);
-    }
-
-    public void performConnected(nodomain.freeyourgadget.gadgetbridge.service.btbr.Transaction transaction) throws IOException {
-        brSupport.performConnected(transaction);
     }
 
     public void evaluateGBDeviceEvent(GBDeviceEvent deviceEvent) {

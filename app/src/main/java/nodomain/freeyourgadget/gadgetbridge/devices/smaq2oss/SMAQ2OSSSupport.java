@@ -183,7 +183,7 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("time");
             setTime(builder);
-            performConnected(builder.getTransaction());
+            builder.queueConnected();
         } catch(IOException e) {
         }
     }

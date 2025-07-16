@@ -84,7 +84,7 @@ public abstract class AbstractSendNotificationRequest extends Request {
         }
 
         if (isSelfQueue())
-            getSupport().performConnected(builder.getTransaction());
+            builder.queueConnected();
     }
 
     @Override
