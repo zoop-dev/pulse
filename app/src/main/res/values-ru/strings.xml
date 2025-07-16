@@ -4063,5 +4063,24 @@
     <string name="average_power">Средняя мощность</string>
     <string name="average_power_sitting">Средняя мощность (сидя)</string>
     <string name="average_power_standing">Средняя мощность (стоя)</string>
-    <string name="average_cadence_sitting">Средняя каденция (сидя)</string>
+    <string name="average_cadence_sitting">Средний каденс (сидя)</string>
+    <string name="average_cadence_standing">Средняя каденс (стоя)</string>
+    <string name="max_power">Максимальная мощность</string>
+    <string name="max_power_sitting">Максимальная мощность (сидя)</string>
+    <string name="max_power_standing">Максимальная мощность (стоя)</string>
+    <string name="max_cadence_sitting">Максимальный каденс (сидя)</string>
+    <string name="max_cadence_standing">Максимальный каденс (стоя)</string>
+    <string name="normalized_power">Нормализованная мощность</string>
+    <string name="intensity_factor">Фактор интенсивности (IF)</string>
+    <string name="training_stress_score">Оценка тренировочного стресса (TSS)</string>
+    <string name="average_pedal_smoothness">Плавность</string>
+    <string name="average_torque_effectiveness">Эффективность крутящего момента</string>
+    <string name="front_gear_shifts">Передние переключения</string>
+    <string name="rear_gear_shifts">Задние переключения</string>
+    <string name="workout_active_score">Активная оценка</string>
+    <string name="vertical_oscillation">Вертикальная осцилляция</string>
+    <string name="ground_contact_time">Время контакта с землей</string>
+    <string name="vertical_ratio">Вертикальное соотношение</string>
+    <string name="ground_contact_time_balance">Баланс времени контакта с землей</string>
+    <string name="workout_swings">Колебания</string>
 </resources>
