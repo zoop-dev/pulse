@@ -3945,5 +3945,7 @@
     <string name="activity_type_free_diving">Фридайвинг</string>
     <string name="activity_type_apnea_training">Тренировка апноэ</string>
     <string name="activity_type_apnea_test">Проверка апноэ</string>
-    <string name="activity_type_scuba_diving">Плавание с аквалангом</string>
+    <string name="activity_type_scuba_diving">Дайвинг с аквалангом</string>
+    <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
+    <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
 </resources>
