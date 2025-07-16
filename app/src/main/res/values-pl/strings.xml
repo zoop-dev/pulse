@@ -4227,4 +4227,13 @@
     <string name="activity_print_image_print_button">Drukuj</string>
     <string name="activity_print_image_apply_dithering_switch">Zastosuj dithering</string>
     <string name="activity_print_image_upscale_switch">Zwiększ rozdzielczość obrazu</string>
+    <string name="activity_print_label_print_size">Rozmiar wydruku (px): %1$d × %2$d</string>
+    <string name="service_notification_collector_service_title">Monitor powiadomień Gadgetbridge</string>
+    <string name="service_notification_collector_service_text">Monitorowanie powiadomień w tle</string>
+    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
+    <string name="devicetype_dotn_p66d">Dotn P66D</string>
+    <string name="pref_title_time_interval">Interwał czasowy</string>
+    <string name="pref_summary_time_interval">Ogranicz do określonych interwałów</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Włącz przestarzałą usługę monitorowania powiadomień (Notification Collector)</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Wymusza użycie drugiej usługi pierwszoplanowej, aby utrzymać aktywność monitora powiadomień. Włącz tę opcję, jeśli Gadgetbridge przestaje odbierać powiadomienia.\nUwaga: może to spowodować wyświetlanie drugiego trwałego powiadomienia.\nUruchom ponownie aplikację po zmianie ustawienia.</string>
 </resources>
