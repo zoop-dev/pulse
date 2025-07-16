@@ -4173,7 +4173,11 @@
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Включить устаревшую службу мониторинга сборщика уведомлений</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Принудительно использует вторую фоновую службу для поддержания работы монитора уведомлений. Активируйте эту опцию, если Gadgetbridge перестает получать уведомления.\nОбратите внимание, что это может привести к появлению второго постоянного уведомления.\nПерезапустите приложение после изменения настройки.</string>
     <string name="pref_display_enabled_title">Дисплей включен</string>
-    <string name="pref_display_enabled_summary">Включает дисплей на кольце</string>
+    <string name="pref_display_enabled_summary">Включить дисплей на кольце</string>
     <string name="pref_display_enabled_all_day_title">Включен весь день</string>
-    <string name="pref_display_enabled_all_day_summary">Включить дисплей на весь день. Отключите, чтобы выбрать конкретные времена ниже.</string>
+    <string name="pref_display_enabled_all_day_summary">Включить дисплей на весь день. Отключите, чтобы выбрать конкретные времена ниже</string>
+    <string name="notifications_app_icon_upload">Загрузить иконку для уведомления приложения</string>
+    <string name="notifications_app_icon_info">Выберите приложения и нажмите \"Загрузить на устройство\". Любые ранее загруженные иконки могут быть заменены. Текущие ограничения устройства неизвестны.</string>
+    <string name="notifications_app_icon_upload_to_device">Загрузить на устройство</string>
+    <string name="notifications_app_icon_nothing_selected">Выберите хотя бы одно приложение для загрузки.</string>
 </resources>
