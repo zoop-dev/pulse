@@ -3945,5 +3945,5 @@
     <string name="activity_type_free_diving">Фридайвинг</string>
     <string name="activity_type_apnea_training">Тренировка апноэ</string>
     <string name="activity_type_apnea_test">Проверка апноэ</string>
-    <string name="activity_type_scuba_diving">Дайвинг</string>
+    <string name="activity_type_scuba_diving">Плавание с аквалангом</string>
 </resources>
