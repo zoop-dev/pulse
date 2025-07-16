@@ -43,12 +43,11 @@ import androidx.annotation.RequiresApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -76,7 +75,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     private BluetoothGattServer mBluetoothGattServer;
     private final Set<? extends BluetoothGattService> mSupportedServerServices;
 
-    private final BlockingQueue<AbstractTransaction> mTransactions;
+    private final BlockingDeque<AbstractTransaction> mTransactions;
     private final AtomicBoolean mDisposed;
     private volatile boolean mAbortTransaction;
     private volatile boolean mAbortServerTransaction;
@@ -105,7 +104,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
             while (!mDisposed.get() && !crashed) {
                 try {
-                    AbstractTransaction qTransaction = mTransactions.take();
+                    AbstractTransaction qTransaction = mTransactions.takeFirst();
 
                     if (!isConnected()) {
                         LOG.debug("not connected, waiting for connection...");
@@ -230,7 +229,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         // 2) create new objects
         mDisposed = new AtomicBoolean(false);
         mGattMonitor = new Object();
-        mTransactions = new LinkedBlockingQueue<>();
+        mTransactions = new LinkedBlockingDeque<>();
         internalGattCallback = new NoThrowBluetoothGattCallback<>(new InternalGattCallback(deviceSupport));
         internalGattServerCallback = new InternalGattServerCallback(deviceSupport);
         mDispatchThread = new Thread(new DispatchRunnable(), "BtLEQueue_" + threadIdx + "_out");
@@ -477,7 +476,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     void add(Transaction transaction) {
         LOG.debug("add: {}", transaction);
         if (!transaction.isEmpty()) {
-            mTransactions.add(transaction);
+            mTransactions.addLast(transaction);
         }
     }
 
@@ -498,7 +497,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     void add(ServerTransaction transaction) {
         LOG.debug("add server: {}", transaction);
         if(!transaction.isEmpty()) {
-            mTransactions.add(transaction);
+            mTransactions.addLast(transaction);
         }
     }
 
@@ -510,12 +509,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     void insert(Transaction transaction) {
         LOG.debug("about to insert: {}", transaction);
         if (!transaction.isEmpty()) {
-            List<AbstractTransaction> tail = new ArrayList<>(mTransactions.size() + 2);
-            //mTransactions.drainTo(tail);
-            tail.addAll(mTransactions);
-            mTransactions.clear();
-            mTransactions.add(transaction);
-            mTransactions.addAll(tail);
+            mTransactions.addFirst(transaction);
         }
     }
 
