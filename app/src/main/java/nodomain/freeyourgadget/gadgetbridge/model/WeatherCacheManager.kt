@@ -1,29 +1,31 @@
 package nodomain.freeyourgadget.gadgetbridge.model
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
-import java.io.*
+import java.io.File
 
 class WeatherCacheManager(
     cacheDir: File,
     private val useCache: Boolean
 ) {
-    private val LOG = LoggerFactory.getLogger("WeatherCacheManager")
+    private val LOG = LoggerFactory.getLogger("nodomain.freeyourgadget.gadgetbridge.model.WeatherCacheManager")
     private val cacheFile = File(cacheDir, "weatherCache.bin")
-
+    private val listType = object : TypeToken<List<WeatherSpec>>() {}.type
+    private val gson: Gson = Gson()
 
     fun load(onLoaded: (List<WeatherSpec>) -> Unit) {
         if (!useCache || !cacheFile.exists()) return
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                ObjectInputStream(FileInputStream(cacheFile)).use { input ->
-                    val specs = input.readObject() as? ArrayList<WeatherSpec>
-                    specs?.let { onLoaded(it) }
-                    LOG.info("Loaded ${specs?.size ?: 0} weather specs from cache")
-                }
+                val json = cacheFile.readText()
+                val specs: List<WeatherSpec> = gson.fromJson(json, listType)
+                LOG.info("Loaded ${specs.size} weather specs from cache")
+                onLoaded(specs)
             } catch (e: Exception) {
-                LOG.error("Failed to load weather cache", e)
+                LOG.error("Failed to read weather cache file", e)
             }
         }
     }
@@ -33,9 +35,8 @@ class WeatherCacheManager(
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                ObjectOutputStream(FileOutputStream(cacheFile)).use { output ->
-                    output.writeObject(ArrayList(specs))
-                }
+                val json = gson.toJson(specs)
+                cacheFile.writeText(json)
                 LOG.info("Saved weather specs to cache: ${cacheFile.path}")
             } catch (e: Exception) {
                 LOG.error("Failed to save weather cache", e)
