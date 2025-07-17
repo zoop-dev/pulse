@@ -48,13 +48,18 @@ public class WeatherHandler {
 
         final Object weatherData;
         switch (path) {
-            case "/weather/v2/forecast/day": {
+            case "/weather/v1/forecast/day":
+            case "/weather/v2/forecast/day":
+            {
                 final int lat = getQueryNum(query, "lat", 0);
                 final int lon = getQueryNum(query, "lon", 0);
                 final int duration = getQueryNum(query, "duration", 5);
                 final String tempUnit = getQueryString(query, "tempUnit", "CELSIUS");
+
+                // Args below only in V2
                 final String provider = getQueryString(query, "provider", "dci");
                 final String speedUnit = getQueryString(query, "speedUnit", "KILOMETERS_PER_HOUR");
+
                 final List<WeatherForecastDay> ret = new ArrayList<>(duration);
                 final GregorianCalendar date = new GregorianCalendar();
                 date.setTime(new Date(weatherSpec.timestamp * 1000L));
@@ -66,14 +71,22 @@ public class WeatherHandler {
                 weatherData = ret;
                 break;
             }
-            case "/weather/v2/forecast/hour": {
+            case "/weather/v1/forecast/hour":
+            case "/weather/v2/forecast/hour":
+            {
                 final int lat = getQueryNum(query, "lat", 0);
                 final int lon = getQueryNum(query, "lon", 0);
-                final int duration = getQueryNum(query, "duration", 13);
+                final int duration = getQueryNum(query, "duration", 13); // 12 on v1
                 final String speedUnit = getQueryString(query, "speedUnit", "METERS_PER_SECOND");
                 final String tempUnit = getQueryString(query, "tempUnit", "CELSIUS");
+
+                // Properties below only in v1
+                final String pressureUnit = getQueryString(query, "pressureUnit", "MILLIBAR");
+
+                // Properties below only in v2
                 final String provider = getQueryString(query, "provider", "dci");
                 final String timesOfInterest = getQueryString(query, "timesOfInterest", "");
+
                 final List<WeatherForecastHour> ret = new ArrayList<>(duration);
                 for (int i = 0; i < Math.min(duration, weatherSpec.hourly.size()); i++) {
                     ret.add(new WeatherForecastHour(weatherSpec.hourly.get(i), tempUnit, speedUnit));
@@ -81,11 +94,14 @@ public class WeatherHandler {
                 weatherData = ret;
                 break;
             }
-            case "/weather/v2/current": {
+            case "/weather/v1/current":
+            case "/weather/v2/current":
+            {
                 final int lat = getQueryNum(query, "lat", 0);
                 final int lon = getQueryNum(query, "lon", 0);
                 final String tempUnit = getQueryString(query, "tempUnit", "CELSIUS");
                 final String speedUnit = getQueryString(query, "speedUnit", "METERS_PER_SECOND");
+                // only in v2
                 final String provider = getQueryString(query, "provider", "dci");
                 weatherData = new WeatherForecastCurrent(weatherSpec, tempUnit, speedUnit);
                 break;
@@ -185,12 +201,12 @@ public class WeatherHandler {
         public Wind wind;
         public Integer icon;
         public WeatherValue dewPoint;
-        public Float uvIndex; // 3 decimal places
+        public Float uvIndex; // 3 decimal places on v2, 1 on v1
         public Integer relativeHumidity;
         public WeatherValue feelsLikeTemperature;
         public WeatherValue visibility;
         public WeatherValue pressure;
-        public Object airQuality;
+        public Object airQuality; // only in v2
         public Integer cloudCover;
         //public WeatherValue ceilingHeight; // 4700 / FOOT
 
