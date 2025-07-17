@@ -60,6 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBudsLiveDe
 import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBudsProDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdge130PlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminETrexSeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.descent.GarminDescentMk3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.enduro.GarminEnduro3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix.GarminEpixProCoordinator;
@@ -533,6 +534,7 @@ public enum DeviceType {
     VIVOMOVE_HR(GarminVivomoveHrCoordinator.class),
     GARMIN_EDGE_130_PLUS(GarminEdge130PlusCoordinator.class),
     GARMIN_EDGE_EXPLORE_2(GarminEdgeExplore2Coordinator.class),
+    GARMIN_ETREX_SE(GarminETrexSeCoordinator.class),
     GARMIN_ENDURO_3(GarminEnduro3Coordinator.class),
     GARMIN_EPIX_PRO(GarminEpixProCoordinator.class),
     GARMIN_DESCENT_MK3(GarminDescentMk3Coordinator.class),
