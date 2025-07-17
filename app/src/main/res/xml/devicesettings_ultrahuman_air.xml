@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_spo2"
+        android:key="spo2_all_day_monitoring_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summaryOn="@string/prefs_spo2_monitoring_description"
+        android:title="@string/prefs_spo2_monitoring_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_update"
+        android:key="time_sync"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_datetime_syctimeonconnect"
+        android:title="@string/pref_title_datetime_syctimeonconnect" />
+</androidx.preference.PreferenceScreen>

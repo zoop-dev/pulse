@@ -2,7 +2,7 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
         android:defaultValue="true"
-        android:icon="@drawable/ic_sync"
+        android:icon="@drawable/ic_update"
         android:key="time_sync"
         android:layout="@layout/preference_checkbox"
         android:title="@string/pref_time_sync" />

@@ -19,7 +19,10 @@ package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 
 import java.util.UUID;
 
-public class UltrahumanConstants {
+public final class UltrahumanConstants {
+    private UltrahumanConstants() {
+    }
+
     public static final String ACTION_AIRPLANE_MODE = "nodomain.freeyourgadget.gadgetbridge.ultrahuman.action.AIRPLANE_MODE";
     public static final String ACTION_CHANGE_EXERCISE = "nodomain.freeyourgadget.gadgetbridge.ultrahuman.action.CHANGE_EXERCISE";
     public static final String ACTION_EXERCISE_UPDATE = "nodomain.freeyourgadget.gadgetbridge.ultrahuman.action.EXERCISE_UPDATE";

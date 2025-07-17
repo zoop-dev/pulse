@@ -17,7 +17,11 @@
 
 package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 
+import android.content.SharedPreferences;
+
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +31,9 @@ import java.util.regex.Pattern;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider;
@@ -40,7 +45,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.samples.UltrahumanActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHrvValueSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericSpo2SampleDao;
@@ -49,7 +53,9 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSampleDao
 import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanDeviceStateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
@@ -57,43 +63,64 @@ import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.ultrahuman.UltrahumanDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
+    public GBDevice createDevice(GBDeviceCandidate candidate, DeviceType deviceType) {
+        GBDevice gbDevice = super.createDevice(candidate, deviceType);
+
+        DevicePrefs devicePreferences = GBApplication.getDevicePrefs(gbDevice);
+        SharedPreferences preferences = devicePreferences.getPreferences();
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // a low powered BLE gadget with gadget initiated connections
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_CONNECTION_PRIORITY_LOW_POWER, true);
+        editor.putBoolean(GBPrefs.DEVICE_CONNECT_BACK, true);
+        editor.putBoolean(GBPrefs.DEVICE_AUTO_RECONNECT, true);
+
+        // when the battery is low the gadget loses it's clock
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_TIME_SYNC, true);
+
+        // O2 measurement with smart rings is still work in progress
+        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
+
+        editor.apply();
+
+        return gbDevice;
+    }
+
+    @NonNull
+    @Override
     public List<DeviceCardAction> getCustomActions() {
-        ArrayList<DeviceCardAction> list = new ArrayList<>();
+        List<DeviceCardAction> list = new ArrayList<>(2);
         list.add(new UltrahumanDeviceCardAction(R.drawable.ic_flight, R.string.ultrahuman_airplane_mode_title, R.string.ultrahuman_airplane_mode_question, UltrahumanConstants.ACTION_AIRPLANE_MODE));
         list.add(new UltrahumanDeviceCardAction(R.drawable.ic_pulmonology, R.string.ultrahuman_breathing_title, UltrahumanBreathingActivity.class));
-
         return list;
     }
 
+    @NonNull
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        final Long deviceId = device.getId();
-
-        final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
-            put(session.getGenericHeartRateSampleDao(), GenericHeartRateSampleDao.Properties.DeviceId);
-            put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
-            put(session.getGenericSpo2SampleDao(), GenericSpo2SampleDao.Properties.DeviceId);
-            put(session.getGenericStressSampleDao(), GenericStressSampleDao.Properties.DeviceId);
-            put(session.getGenericTemperatureSampleDao(), GenericTemperatureSampleDao.Properties.DeviceId);
-            put(session.getUltrahumanActivitySampleDao(), UltrahumanActivitySampleDao.Properties.DeviceId);
-            put(session.getUltrahumanDeviceStateSampleDao(), UltrahumanDeviceStateSampleDao.Properties.DeviceId);
-        }};
-
-        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
-            e.getKey().queryBuilder()
-                    .where(e.getValue().eq(deviceId))
-                    .buildDelete().executeDeleteWithoutDetachingEntities();
-        }
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(7);
+        map.put(session.getGenericHeartRateSampleDao(), GenericHeartRateSampleDao.Properties.DeviceId);
+        map.put(session.getGenericHrvValueSampleDao(), GenericHrvValueSampleDao.Properties.DeviceId);
+        map.put(session.getGenericSpo2SampleDao(), GenericSpo2SampleDao.Properties.DeviceId);
+        map.put(session.getGenericStressSampleDao(), GenericStressSampleDao.Properties.DeviceId);
+        map.put(session.getGenericTemperatureSampleDao(), GenericTemperatureSampleDao.Properties.DeviceId);
+        map.put(session.getUltrahumanActivitySampleDao(), UltrahumanActivitySampleDao.Properties.DeviceId);
+        map.put(session.getUltrahumanDeviceStateSampleDao(), UltrahumanDeviceStateSampleDao.Properties.DeviceId);
+        return map;
     }
 
+    @DrawableRes
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_smartring;
     }
 
+    @StringRes
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_ultrahuma_ring_air;
@@ -142,10 +169,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
-        return new int[]{
-                R.xml.devicesettings_time_sync,
-                R.xml.devicesettings_power_saving
-        };
+        return new int[]{R.xml.devicesettings_ultrahuman_air};
     }
 
     @Override
@@ -156,6 +180,11 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean isExperimental() {
         return true;
+    }
+
+    @Override
+    public boolean suggestUnbindBeforePair() {
+        return false;
     }
 
     @Override

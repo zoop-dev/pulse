@@ -179,8 +179,8 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.add(new UHSetTime(COMMAND));
         }
 
-        boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
-        builder.add(new UHWrite(COMMAND, powerSave ? OPERATION_ENABLE_POWERSAVE : OPERATION_DISABLE_POWERSAVE));
+        boolean spo2 = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
+        builder.add(new UHWrite(COMMAND, spo2 ? OPERATION_DISABLE_POWERSAVE : OPERATION_ENABLE_POWERSAVE));
 
         builder.setDeviceState(GBDevice.State.INITIALIZED);
 
@@ -407,9 +407,9 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onSendConfiguration(String config) {
         if (DeviceSettingsPreferenceConst.PREF_TIME_SYNC.equals(config)) {
             onSetTime();
-        } else if (DeviceSettingsPreferenceConst.PREF_POWER_SAVING.equals(config)) {
-            boolean powerSave = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_POWER_SAVING, true);
-            sendCommand("onSetPowerSaveMode", powerSave ? OPERATION_ENABLE_POWERSAVE : OPERATION_DISABLE_POWERSAVE);
+        } else if (DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING.equals(config)) {
+            boolean spo2 = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
+            sendCommand("onSendConfiguration-SPO2", spo2 ? OPERATION_DISABLE_POWERSAVE : OPERATION_ENABLE_POWERSAVE);
         } else {
             super.onSendConfiguration(config);
         }
