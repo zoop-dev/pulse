@@ -3277,8 +3277,8 @@
     <string name="activity_type_billiard_pool">Бассейн</string>
     <string name="activity_type_water_scooter">Водный скутер</string>
     <string name="hrv_status_day_avg_legend">Среднесуточное значение (мс)</string>
-    <string name="sleep_colored_stats_awake_avg">Пробуждение AVG</string>
-    <string name="sleep_colored_stats_rem_avg">REM AVG</string>
+    <string name="sleep_colored_stats_awake_avg">Бодрствование (ср.)</string>
+    <string name="sleep_colored_stats_rem_avg">БДГ (среднее)</string>
     <string name="activity_type_bocce">Хоккей с мячом</string>
     <string name="activity_type_hula_hoop">Обруч</string>
     <string name="devicetype_miband9pro">Xiaomi Smart Band 9 Pro</string>
@@ -3292,7 +3292,7 @@
     <string name="activity_type_cardio">Кардио</string>
     <string name="activity_type_platform_tennis">Теннис на платформе</string>
     <string name="activity_type_board_game">Настольная игра</string>
-    <string name="sleep_colored_stats_deep_avg">Глубокий AVG</string>
+    <string name="sleep_colored_stats_deep_avg">Глубокий (среднее)</string>
     <string name="respiratoryrate">Частота дыхания</string>
     <string name="active_calories_goal">Активная цель</string>
     <string name="total_calories_burnt">Всего сгорело</string>
@@ -3329,7 +3329,7 @@
     <string name="busy_task_fetch_hrv_data">Получение данных HRV</string>
     <string name="pref_title_calendar_lookahead">Количество дней вперед</string>
     <string name="pref_summary_calendar_lookahead">Синхронизация до %1s дней событий календаря</string>
-    <string name="sleep_colored_stats_light_avg">Легкий AVG</string>
+    <string name="sleep_colored_stats_light_avg">Легкий (среднее)</string>
     <string name="activity_type_esports">Эспорт</string>
     <string name="activity_type_wall_ball">Настенный мяч</string>
     <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
@@ -4179,5 +4179,10 @@
     <string name="notifications_app_icon_upload">Загрузить иконку для уведомления приложения</string>
     <string name="notifications_app_icon_info">Выберите приложения и нажмите \"Загрузить на устройство\". Любые ранее загруженные иконки могут быть заменены. Текущие ограничения устройства неизвестны.</string>
     <string name="notifications_app_icon_upload_to_device">Загрузить на устройство</string>
-    <string name="notifications_app_icon_nothing_selected">Выберите хотя бы одно приложение для загрузки.</string>
+    <string name="notifications_app_icon_nothing_selected">Выберите хотя бы одно приложение для загрузки</string>
+    <string name="notifications_app_icon_uploading">Иконки будут загружаться в фоновом режиме. Вы можете закрыть эту активность</string>
+    <string name="notifications_app_icon_uploading_confirm_description">Вы уверены, что хотите загрузить %1$d иконок приложений?</string>
+    <string name="pref_notifications_app_icon_upload_title">Загрузка иконок уведомлений для приложений</string>
+    <string name="pref_notifications_app_icon_upload_summary">Загрузить иконки уведомлений для приложений</string>
+    <string name="body_energy_legend_average">Среднее за 30 дней</string>
 </resources>
