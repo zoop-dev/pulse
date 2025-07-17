@@ -3278,7 +3278,7 @@
     <string name="activity_type_water_scooter">Водный скутер</string>
     <string name="hrv_status_day_avg_legend">Среднесуточное значение (мс)</string>
     <string name="sleep_colored_stats_awake_avg">Бодрствование (ср.)</string>
-    <string name="sleep_colored_stats_rem_avg">БДГ (среднее)</string>
+    <string name="sleep_colored_stats_rem_avg">БДГ (ср.)</string>
     <string name="activity_type_bocce">Хоккей с мячом</string>
     <string name="activity_type_hula_hoop">Обруч</string>
     <string name="devicetype_miband9pro">Xiaomi Smart Band 9 Pro</string>
@@ -3292,11 +3292,11 @@
     <string name="activity_type_cardio">Кардио</string>
     <string name="activity_type_platform_tennis">Теннис на платформе</string>
     <string name="activity_type_board_game">Настольная игра</string>
-    <string name="sleep_colored_stats_deep_avg">Глубокий (среднее)</string>
+    <string name="sleep_colored_stats_deep_avg">Глубокий (ср.)</string>
     <string name="respiratoryrate">Частота дыхания</string>
     <string name="active_calories_goal">Активная цель</string>
     <string name="total_calories_burnt">Всего сгорело</string>
-    <string name="sleep_avg">Сон AVG</string>
+    <string name="sleep_avg">Сон (ср.)</string>
     <string name="lowest">Самый низкий</string>
     <string name="highest">Самый высокий</string>
     <string name="activity_type_navigate">Навигация</string>
@@ -3329,7 +3329,7 @@
     <string name="busy_task_fetch_hrv_data">Получение данных HRV</string>
     <string name="pref_title_calendar_lookahead">Количество дней вперед</string>
     <string name="pref_summary_calendar_lookahead">Синхронизация до %1s дней событий календаря</string>
-    <string name="sleep_colored_stats_light_avg">Легкий (среднее)</string>
+    <string name="sleep_colored_stats_light_avg">Легкий (ср.)</string>
     <string name="activity_type_esports">Эспорт</string>
     <string name="activity_type_wall_ball">Настенный мяч</string>
     <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
@@ -3458,7 +3458,7 @@
     <string name="lactateThresholdHeartRate">Лактатный порог Частота сердечных сокращений</string>
     <string name="moondrop_touch_earbud">Наушники</string>
     <string name="prefs_summary_gatt_client_notification_intents">Получение изменений характеристик BLE через намерения</string>
-    <string name="distance_avg">Расстояние AVG</string>
+    <string name="distance_avg">Расстояние (ср.)</string>
     <string name="pref_voice_passthrough_level">Уровень прохода</string>
     <string name="vo2max_running">Бег VO₂ Макс</string>
     <string name="redmi_buds_5_pro_equalizer_band_125">125 Гц</string>
@@ -3468,7 +3468,7 @@
     <string name="soundcore_equalizer_direction">Направление устройства</string>
     <string name="soundcore_equalizer_reset_title">Сброс настроек по умолчанию</string>
     <string name="idasen_pref_mid_height">Высота среднего положения (в сантиметрах)</string>
-    <string name="steps_avg">Шаги AVG</string>
+    <string name="steps_avg">Шаги (ср.)</string>
     <string name="devicetype_nothing_cmf_buds_pro_2">CMF Buds Pro 2</string>
     <string name="weight_lbs">%1$.2f lbs</string>
     <string name="soundcore_button_brightness">Кнопка Яркость</string>
@@ -4047,7 +4047,7 @@
     <string name="aqi_level_dangerous">опасный</string>
     <string name="restingCalories">Калории в состоянии покоя</string>
     <string name="metabolic_rate">Метаболизм</string>
-    <string name="active_calories_avg">Ср. активные калории</string>
+    <string name="active_calories_avg">Активные (ср.)</string>
     <string name="active_calories_total">Всего активных калорий</string>
     <string name="resting_calories_total">Всего калорий в состоянии покоя</string>
     <string name="calorie_over_goal">Превышение цели: %1$d ккал</string>
