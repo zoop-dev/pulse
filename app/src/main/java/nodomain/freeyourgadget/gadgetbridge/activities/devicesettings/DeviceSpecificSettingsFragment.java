@@ -853,7 +853,9 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDCORE_ANC_MODE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_TOUCH_TONE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_WEARING_TONE);
+        addPreferenceHandlerFor(PREF_SOUNDCORE_BATTERY_LOW_TONE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_WEARING_DETECTION);
+        addPreferenceHandlerFor(PREF_SOUNDCORE_CONTROL_TOUCH_DISABLED);
         addPreferenceHandlerFor(PREF_SOUNDCORE_CONTROL_SINGLE_TAP_DISABLED);
         addPreferenceHandlerFor(PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_DISABLED);
         addPreferenceHandlerFor(PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_DISABLED);
@@ -870,6 +872,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDCORE_BUTTON_BRIGHTNESS);
         addPreferenceHandlerFor(PREF_SOUNDCORE_AUTO_POWER_OFF);
         addPreferenceHandlerFor(PREF_SOUNDCORE_LDAC_MODE);
+        addPreferenceHandlerFor(PREF_SOUNDCORE_GAMING_MODE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_ADAPTIVE_DIRECTION);
         addPreferenceHandlerFor(PREF_SOUNDCORE_EQUALIZER_PRESET);
         addPreferenceHandlerFor(PREF_SOUNDCORE_EQUALIZER_DIRECTION);

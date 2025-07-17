@@ -4333,11 +4333,19 @@
         <item>100</item>
     </string-array>
 
-    <string-array name="soundcore_auto_power_off_names">
+    <string-array name="soundcore_motion_auto_power_off_names">
         <item>@string/pref_button_action_disabled</item>
         <item>@string/minutes_5</item>
         <item>@string/minutes_10</item>
         <item>@string/minutes_20</item>
+        <item>@string/minutes_60</item>
+    </string-array>
+
+    <string-array name="soundcore_aerofit_auto_power_off_names">
+        <item>@string/pref_button_action_disabled</item>
+        <item>@string/minutes_10</item>
+        <item>@string/minutes_20</item>
+        <item>@string/minutes_30</item>
         <item>@string/minutes_60</item>
     </string-array>
 

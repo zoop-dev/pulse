@@ -2012,6 +2012,7 @@
     <string name="devicetype_soundcore_liberty4_nc" translatable="false">Soundcore Liberty 4 NC</string>
     <string name="devicetype_soundcore_motion300" translatable="false">Soundcore Motion 300</string>
     <string name="devicetype_soundcore_q30" translatable="false">Soundcore Q30</string>
+    <string name="devicetype_soundcore_aerofit2" translatable="false">Soundcore AeroFit 2</string>
     <string name="devicetype_pixel_buds_a_series" translatable="false">Pixel Buds A-Series</string>
     <string name="devicetype_moondrop_space_travel" translatable="false">Moondrop Space Travel</string>
     <string name="devicetype_binary_sensor">Binary sensor</string>
@@ -3235,6 +3236,12 @@
     <string name="soundcore_button_brightness_high">High</string>
     <string name="soundcore_ldac_mode_title">LDAC Mode</string>
     <string name="soundcore_ldac_mode_summary">Enabling LDAC will decrease the battery life and might lead to connection instability</string>
+    <string name="soundcore_auto_power_off_title">Auto Power Off</string>
+    <string name="soundcore_auto_power_off_summary">When disconnectiong from the phone, the device will power off after the specified timeout</string>
+    <string name="soundcore_battery_low_tone_title">Low Battery Tone</string>
+    <string name="soundcore_battery_low_tone_summary">Hear the prompt tone when the battery level is below 20% and 10%</string>
+    <string name="soundcore_gaming_mode_title">Gaming Mode</string>
+    <string name="soundcore_gaming_mode_summary">Reduce Latency and enhance sounds of footsteps and voices. May reduce connection stability.</string>
     <string name="soundcore_adaptive_direction_title">Adaptive Direction</string>
     <string name="soundcore_adaptive_direction_summary">Adjust equalizer preset automatically based on device direction</string>
     <string name="soundcore_equalizer_preset">Preset</string>

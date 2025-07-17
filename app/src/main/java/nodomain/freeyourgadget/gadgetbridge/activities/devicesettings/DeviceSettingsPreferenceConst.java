@@ -445,6 +445,8 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SOUNDCORE_WEARING_DETECTION = "pref_soundcore_wearing_detection";
     public static final String PREF_SOUNDCORE_WEARING_TONE = "pref_soundcore_wearing_tone";
     public static final String PREF_SOUNDCORE_TOUCH_TONE = "pref_soundcore_touch_tone";
+    public static final String PREF_SOUNDCORE_BATTERY_LOW_TONE = "pref_soundcore_battery_low_tone";
+    public static final String PREF_SOUNDCORE_CONTROL_TOUCH_DISABLED = "pref_soundcore_control_touch_disabled";
     public static final String PREF_SOUNDCORE_CONTROL_SINGLE_TAP_DISABLED = "pref_soundcore_control_single_tap_disabled";
     public static final String PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_DISABLED = "pref_soundcore_control_double_tap_disabled";
     public static final String PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_DISABLED = "pref_soundcore_control_triple_tap_disabled";
@@ -461,6 +463,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SOUNDCORE_BUTTON_BRIGHTNESS = "pref_soundcore_button_brightness";
     public static final String PREF_SOUNDCORE_AUTO_POWER_OFF = "pref_soundcore_auto_power_off";
     public static final String PREF_SOUNDCORE_LDAC_MODE = "pref_soundcore_ldac_mode";
+    public static final String PREF_SOUNDCORE_GAMING_MODE = "pref_soundcore_gaming_mode";
     public static final String PREF_SOUNDCORE_ADAPTIVE_DIRECTION = "pref_soundcore_adaptive_direction";
     public static final String PREF_SOUNDCORE_EQUALIZER_PRESET = "pref_soundcore_equalizer_preset";
     public static final String PREF_SOUNDCORE_EQUALIZER_CUSTOM = "pref_soundcore_equalizer_custom";
