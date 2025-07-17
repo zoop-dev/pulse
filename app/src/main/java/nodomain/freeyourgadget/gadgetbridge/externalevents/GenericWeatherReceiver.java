@@ -84,7 +84,7 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
             }
 
             LOG.info("Got generic weather for {} locations", weathers.size());
-            Weather.getInstance().setWeatherSpec(weathers);
+            Weather.INSTANCE.setWeatherSpec(weathers);
             GBApplication.deviceService().onSendWeather(weathers);
         } catch (final Exception e) {
             GB.toast("Gadgetbridge received broken or incompatible weather data", Toast.LENGTH_SHORT, GB.ERROR, e);

@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 public class ParcelableWeather2 implements Parcelable {
@@ -99,7 +99,7 @@ public class ParcelableWeather2 implements Parcelable {
                     condition.put("id", forecastConditionCode);
                     condition.put("main", forecastBundle.getString("weather_condition_text"));
                     condition.put("description", forecastBundle.getString("weather_condition_text"));
-                    condition.put("icon", Weather.mapToOpenWeatherMapIcon(forecastConditionCode));
+                    condition.put("icon", WeatherMapper.INSTANCE.mapToOpenWeatherMapIcon(forecastConditionCode));
                     weather.put(condition);
 
                     main.put("temp", forecastBundle.getInt("weather_current_temp"));

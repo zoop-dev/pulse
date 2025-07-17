@@ -34,6 +34,7 @@ import java.util.Collections;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 
@@ -113,8 +114,8 @@ public class OmniJawsObserver extends ContentObserver {
                         if (i == 0) {
 
                             weatherSpec.location = c.getString(0);
-                            weatherSpec.currentConditionCode = Weather.mapToOpenWeatherMapCondition(c.getInt(2));
-                            weatherSpec.currentCondition = Weather.getConditionString(mContext, weatherSpec.currentConditionCode);
+                            weatherSpec.currentConditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(2));
+                            weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.currentConditionCode);
                             //alternatively the following would also be possible
                             //weatherSpec.currentCondition = c.getString(1);
 
@@ -132,14 +133,14 @@ public class OmniJawsObserver extends ContentObserver {
                             WeatherSpec.Daily gbForecast = new WeatherSpec.Daily();
                             gbForecast.minTemp = toKelvin(c.getFloat(5));
                             gbForecast.maxTemp = toKelvin(c.getFloat(6));
-                            gbForecast.conditionCode = Weather.mapToOpenWeatherMapCondition(c.getInt(8));
+                            gbForecast.conditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(8));
                             weatherSpec.forecasts.add(gbForecast);
                         }
                     }
                 }
 
                 ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
-                Weather.getInstance().setWeatherSpec(weatherSpecs);
+                Weather.INSTANCE.setWeatherSpec(weatherSpecs);
                 GBApplication.deviceService().onSendWeather(weatherSpecs);
 
             } finally {

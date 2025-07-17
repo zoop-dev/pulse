@@ -136,7 +136,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -556,7 +556,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
             weatherUnit = 1;
         }
 
-        byte currentConditionCode = Weather.mapToFitProCondition(weatherSpec.currentConditionCode);
+        byte currentConditionCode = WeatherMapper.INSTANCE.mapToFitProCondition(weatherSpec.currentConditionCode);
         TransactionBuilder builder = createTransactionBuilder("weather");
         writeChunkedData(builder, craftData(CMD_GROUP_GENERAL, CMD_WEATHER, new byte[]{(byte) todayMin, (byte) todayMax, (byte) currentConditionCode, (byte) weatherUnit}));
         builder.queue();

@@ -356,7 +356,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
 
         // Pull the weather into a local variable so that if it changes between the two lenses being
         // updated, we won't end up with a skewed value.
-        @Nullable WeatherSpec weather = Weather.getInstance().getWeatherSpec();
+        @Nullable WeatherSpec weather = Weather.INSTANCE.getWeatherSpec();
 
         // Run in the background in case the command hangs and this was run from the UI thread.
         backgroundTasksHandler.post(() -> {

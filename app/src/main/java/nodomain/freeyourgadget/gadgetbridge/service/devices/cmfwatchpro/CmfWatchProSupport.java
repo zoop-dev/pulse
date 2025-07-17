@@ -71,7 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -813,7 +813,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         final int payloadLength = (7 * 9) + (24 * 2) + (supportsSunriseSunset ? 32 : 30) + (supportsSunriseSunset ? 7 * 8 : 0);
         final ByteBuffer buf = ByteBuffer.allocate(payloadLength).order(ByteOrder.BIG_ENDIAN);
         // start with the current day's weather
-        buf.put(Weather.mapToCmfCondition(weatherSpec.currentConditionCode));
+        buf.put(WeatherMapper.INSTANCE.mapToCmfCondition(weatherSpec.currentConditionCode));
         buf.put((byte) (weatherSpec.currentTemp - 273 + 100)); // convert Kelvin to C, add 100
         buf.put((byte) (weatherSpec.todayMaxTemp - 273 + 100)); // convert Kelvin to C, add 100
         buf.put((byte) (weatherSpec.todayMinTemp - 273 + 100)); // convert Kelvin to C, add 100
@@ -828,7 +828,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         for (int i = 0; i < 6; i++) {
             if (i < maxForecastsAvailable) {
                 WeatherSpec.Daily forecastDay = weatherSpec.forecasts.get(i);
-                buf.put((byte) (Weather.mapToCmfCondition(forecastDay.conditionCode)));  // weather condition flag
+                buf.put((byte) (WeatherMapper.INSTANCE.mapToCmfCondition(forecastDay.conditionCode)));  // weather condition flag
                 buf.put((byte) (forecastDay.maxTemp - 273 + 100)); // temp in C (not shown in future days' forecasts)
                 buf.put((byte) (forecastDay.maxTemp - 273 + 100)); // max temp in C, + 100
                 buf.put((byte) (forecastDay.minTemp - 273 + 100)); // min temp in C, + 100
@@ -858,7 +858,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
                 buf.put((byte) forecastHr.conditionCode); // condition
             } else {
                 buf.put((byte) (weatherSpec.currentTemp - 273 + 100)); // assume current temp
-                buf.put((byte) (Weather.mapToCmfCondition(weatherSpec.currentConditionCode))); // current condition
+                buf.put((byte) (WeatherMapper.INSTANCE.mapToCmfCondition(weatherSpec.currentConditionCode))); // current condition
             }
         }
         // place name - watch scrolls after ~10 chars. Pad up to 32 bytes.

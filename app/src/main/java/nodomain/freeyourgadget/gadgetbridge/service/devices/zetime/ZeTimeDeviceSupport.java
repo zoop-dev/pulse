@@ -62,7 +62,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -617,9 +617,9 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
             LOG.warn("We do not have a sane fw version string available, firmware too old/new?");
         }
         if (newWeather) {
-            weather[9] = Weather.mapToZeTimeCondition(weatherSpec.currentConditionCode);
+            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.currentConditionCode);
         } else {
-            weather[9] = Weather.mapToZeTimeConditionOld(weatherSpec.currentConditionCode);
+            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.currentConditionCode);
         }
         for (int forecast = 0; forecast < 3; forecast++) {
             weather[10 + (forecast * 5)] = 0; // celsius
@@ -627,9 +627,9 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
             weather[12 + (forecast * 5)] = (byte) (weatherSpec.forecasts.get(forecast).minTemp - 273);
             weather[13 + (forecast * 5)] = (byte) (weatherSpec.forecasts.get(forecast).maxTemp - 273);
             if (newWeather) {
-                weather[14 + (forecast * 5)] = Weather.mapToZeTimeCondition(weatherSpec.forecasts.get(forecast).conditionCode);
+                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.forecasts.get(forecast).conditionCode);
             } else {
-                weather[14 + (forecast * 5)] = Weather.mapToZeTimeConditionOld(weatherSpec.forecasts.get(forecast).conditionCode);
+                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.forecasts.get(forecast).conditionCode);
             }
         }
         System.arraycopy(weatherSpec.location.getBytes(StandardCharsets.UTF_8), 0, weather, 25, weatherSpec.location.getBytes(StandardCharsets.UTF_8).length);

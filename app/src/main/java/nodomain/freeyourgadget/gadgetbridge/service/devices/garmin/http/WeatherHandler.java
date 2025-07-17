@@ -23,6 +23,7 @@ import java.util.Map;
 import lineageos.weather.util.WeatherUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
@@ -39,7 +40,7 @@ public class WeatherHandler {
         final String path = request.getPath();
         final Map<String, String> query = request.getQuery();
 
-        final WeatherSpec weatherSpec = Weather.getInstance().getWeatherSpec();
+        final WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
 
         if (weatherSpec == null) {
             LOG.warn("No weather in weather instance");
@@ -160,8 +161,8 @@ public class WeatherHandler {
 
         public WeatherForecastDay(final GregorianCalendar date, final WeatherSpec.Daily dailyForecast, final String tempUnit, final String speedUnit) {
             dayOfWeek = BLETypeConversions.dayOfWeekToRawBytes(date);
-            description = Weather.getConditionString(GBApplication.getContext(), dailyForecast.conditionCode);
-            summary = Weather.getConditionString(GBApplication.getContext(), dailyForecast.conditionCode);
+            description = WeatherMapper.INSTANCE.getConditionString(GBApplication.getContext(), dailyForecast.conditionCode);
+            summary = WeatherMapper.INSTANCE.getConditionString(GBApplication.getContext(), dailyForecast.conditionCode);
             high = getTemperature(dailyForecast.maxTemp, tempUnit);
             low = getTemperature(dailyForecast.minTemp, tempUnit);
             precipProb = dailyForecast.precipProbability;
@@ -212,7 +213,7 @@ public class WeatherHandler {
 
         public WeatherForecastHour(final WeatherSpec.Hourly hourlyForecast, final String tempUnit, final String speedUnit) {
             epochSeconds = hourlyForecast.timestamp;
-            description = Weather.getConditionString(GBApplication.getContext(), hourlyForecast.conditionCode);
+            description = WeatherMapper.INSTANCE.getConditionString(GBApplication.getContext(), hourlyForecast.conditionCode);
             temp = getTemperature(hourlyForecast.temp, tempUnit);
             precipProb = hourlyForecast.precipProbability;
             wind = new Wind(getSpeed(hourlyForecast.windSpeed, speedUnit), hourlyForecast.windDirection);

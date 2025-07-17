@@ -135,7 +135,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -2877,7 +2877,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             builder = performInitialized("Sending air quality index");
             int length = 8;
             int aqi = weatherSpec.airQuality != null ? weatherSpec.airQuality.aqi : -1;
-            String aqiString = Weather.getAqiLevelString(getContext(), aqi);
+            String aqiString = WeatherMapper.INSTANCE.getAqiLevelString(getContext(), aqi);
             if (supportsConditionString) {
                 length += aqiString.getBytes().length + 1;
             }
@@ -2916,7 +2916,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 bytesPerDay = 5;
                 conditionsLength = weatherSpec.currentCondition.getBytes().length;
                 for (WeatherSpec.Daily forecast : weatherSpec.forecasts) {
-                    conditionsLength += Weather.getConditionString(getContext(), forecast.conditionCode).getBytes().length;
+                    conditionsLength += WeatherMapper.INSTANCE.getConditionString(getContext(), forecast.conditionCode).getBytes().length;
                 }
             }
 
@@ -2963,7 +2963,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 buf.put((byte) forecastMinTemp);
 
                 if (supportsConditionString) {
-                    buf.put(Weather.getConditionString(getContext(), forecast.conditionCode).getBytes());
+                    buf.put(WeatherMapper.INSTANCE.getConditionString(getContext(), forecast.conditionCode).getBytes());
                     buf.put((byte) 0);
                 }
             }

@@ -43,7 +43,7 @@ public class TinyWeatherForecastGermanyReceiver extends BroadcastReceiver {
                     if (weatherSpec != null) {
                         ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
                         weatherSpec.timestamp = (int) (System.currentTimeMillis() / 1000);
-                        Weather.getInstance().setWeatherSpec(weatherSpecs);
+                        Weather.INSTANCE.setWeatherSpec(weatherSpecs);
                         GBApplication.deviceService().onSendWeather(weatherSpecs);
                     }
                 } catch (Exception e) {

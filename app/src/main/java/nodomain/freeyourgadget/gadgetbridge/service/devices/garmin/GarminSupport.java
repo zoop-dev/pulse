@@ -284,7 +284,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     @Override
     public void evaluateGBDeviceEvent(GBDeviceEvent deviceEvent) {
         if (deviceEvent instanceof WeatherRequestDeviceEvent) {
-            WeatherSpec weather = Weather.getInstance().getWeatherSpec();
+            WeatherSpec weather = Weather.INSTANCE.getWeatherSpec();
             if (weather != null) {
                 sendWeatherConditions(weather);
             }

@@ -38,6 +38,7 @@ import cyanogenmod.weather.util.WeatherUtils;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -158,8 +159,8 @@ public class CMWeatherReceiver extends BroadcastReceiver implements CMWeatherMan
             }
             weatherSpec.windDirection = (int) weatherInfo.getWindDirection();
 
-            weatherSpec.currentConditionCode = Weather.mapToOpenWeatherMapCondition(CMtoYahooCondintion(weatherInfo.getConditionCode()));
-            weatherSpec.currentCondition = Weather.getConditionString(mContext, weatherSpec.currentConditionCode);
+            weatherSpec.currentConditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(CMtoYahooCondintion(weatherInfo.getConditionCode()));
+            weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.currentConditionCode);
             weatherSpec.currentHumidity = (int) weatherInfo.getHumidity();
 
             weatherSpec.forecasts = new ArrayList<>();
@@ -174,11 +175,11 @@ public class CMWeatherReceiver extends BroadcastReceiver implements CMWeatherMan
                     gbForecast.maxTemp = (int) cmForecast.getHigh() + 273;
                     gbForecast.minTemp = (int) cmForecast.getLow() + 273;
                 }
-                gbForecast.conditionCode = Weather.mapToOpenWeatherMapCondition(CMtoYahooCondintion(cmForecast.getConditionCode()));
+                gbForecast.conditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(CMtoYahooCondintion(cmForecast.getConditionCode()));
                 weatherSpec.forecasts.add(gbForecast);
             }
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
-            Weather.getInstance().setWeatherSpec(weatherSpecs);
+            Weather.INSTANCE.setWeatherSpec(weatherSpecs);
             GBApplication.deviceService().onSendWeather(weatherSpecs);
         } else {
             LOG.info("request has returned null for WeatherInfo");

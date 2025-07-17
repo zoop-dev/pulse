@@ -517,7 +517,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             if (!TextUtils.isEmpty(locationKey) && !TextUtils.isEmpty(locationName)) {
                 LOG.debug("Received request for conditions (location key = {}, name = {})", locationKey, locationName);
 
-                final List<WeatherSpec> knownWeathers = Weather.getInstance().getWeatherSpecs();
+                final List<WeatherSpec> knownWeathers = Weather.INSTANCE.getWeatherSpecs();
                 for (WeatherSpec spec : knownWeathers) {
                     if (TextUtils.equals(spec.location, locationName)) {
                         sendWeatherSpec(spec);
@@ -529,14 +529,14 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             }
         }
 
-        final WeatherSpec spec = Weather.getInstance().getWeatherSpec();
+        final WeatherSpec spec = Weather.INSTANCE.getWeatherSpec();
 
         if (spec == null) {
             LOG.warn("Not sending weather conditions: active weather spec is null!");
             return;
         }
 
-        sendWeatherSpec(Weather.getInstance().getWeatherSpec());
+        sendWeatherSpec(Weather.INSTANCE.getWeatherSpec());
     }
 
     private static String[] weatherLocationsToStringArray(final Collection<XiaomiProto.WeatherLocation> locations) {
@@ -567,7 +567,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             locationsInitialized = true;
 
             // now that the feature flag has been updated, send cached weather
-            onSendWeather(Weather.getInstance().getWeatherSpecs());
+            onSendWeather(Weather.INSTANCE.getWeatherSpecs());
 
             return;
         }
@@ -614,7 +614,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
         final Set<XiaomiProto.WeatherLocation> specLocations = new HashSet<>();
 
-        for (final WeatherSpec s : Weather.getInstance().getWeatherSpecs()) {
+        for (final WeatherSpec s : Weather.INSTANCE.getWeatherSpecs()) {
             specLocations.add(getWeatherLocationFromSpec(s));
         }
 

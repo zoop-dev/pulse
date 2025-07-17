@@ -69,6 +69,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity
 import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherCacheManager;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -168,7 +169,7 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 pref.setOnPreferenceChangeListener((preference, newVal) -> {
                     boolean doEnable = Boolean.TRUE.equals(newVal);
 
-                    Weather.getInstance().setCacheFile(requireContext().getCacheDir(), doEnable);
+                    Weather.INSTANCE.initializeCache(new WeatherCacheManager(requireContext().getCacheDir(), doEnable));
 
                     return true;
                 });

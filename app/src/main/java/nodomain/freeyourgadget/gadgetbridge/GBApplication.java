@@ -87,6 +87,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherCacheManager;
 import nodomain.freeyourgadget.gadgetbridge.service.NotificationCollectorMonitorService;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
@@ -310,7 +311,7 @@ public class GBApplication extends Application {
 
         setupExceptionHandler(prefs.getBoolean("crash_notification", isDebug()));
 
-        Weather.getInstance().setCacheFile(getCacheDir(), prefs.getBoolean("cache_weather", true));
+        Weather.INSTANCE.initializeCache(new WeatherCacheManager(getCacheDir(), prefs.getBoolean("cache_weather", true)));
 
         deviceManager = new DeviceManager(this);
         String language = prefs.getString("language", "default");

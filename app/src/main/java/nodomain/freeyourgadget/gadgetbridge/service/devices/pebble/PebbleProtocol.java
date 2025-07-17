@@ -66,7 +66,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec.Action;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleNotification;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
@@ -1183,10 +1183,10 @@ public class PebbleProtocol extends GBDeviceProtocol {
         buf.order(ByteOrder.LITTLE_ENDIAN);
         buf.put((byte) 3); // unknown, always 3?
         buf.putShort(currentTemp);
-        buf.put(Weather.mapToPebbleCondition(weatherSpec.currentConditionCode));
+        buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(weatherSpec.currentConditionCode));
         buf.putShort(todayMax);
         buf.putShort(todayMin);
-        buf.put(Weather.mapToPebbleCondition(tomorrowConditionCode));
+        buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(tomorrowConditionCode));
         buf.putShort(tomorrowMax);
         buf.putShort(tomorrowMin);
         buf.putInt(weatherSpec.timestamp);

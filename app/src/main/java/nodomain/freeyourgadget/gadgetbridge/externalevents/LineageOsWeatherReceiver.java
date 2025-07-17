@@ -50,6 +50,7 @@ import lineageos.weather.util.WeatherUtils;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -183,8 +184,8 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
             }
             weatherSpec.windDirection = (int) weatherInfo.getWindDirection();
 
-            weatherSpec.currentConditionCode = Weather.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(weatherInfo.getConditionCode()));
-            weatherSpec.currentCondition = Weather.getConditionString(mContext, weatherSpec.currentConditionCode);
+            weatherSpec.currentConditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(weatherInfo.getConditionCode()));
+            weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.currentConditionCode);
             weatherSpec.currentHumidity = (int) weatherInfo.getHumidity();
 
             weatherSpec.forecasts = new ArrayList<>();
@@ -199,11 +200,11 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
                     gbForecast.maxTemp = (int) cmForecast.getHigh() + 273;
                     gbForecast.minTemp = (int) cmForecast.getLow() + 273;
                 }
-                gbForecast.conditionCode = Weather.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(cmForecast.getConditionCode()));
+                gbForecast.conditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(cmForecast.getConditionCode()));
                 weatherSpec.forecasts.add(gbForecast);
             }
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
-            Weather.getInstance().setWeatherSpec(weatherSpecs);
+            Weather.INSTANCE.setWeatherSpec(weatherSpecs);
             GBApplication.deviceService().onSendWeather(weatherSpecs);
         } else {
             LOG.info("request has returned null for WeatherInfo");

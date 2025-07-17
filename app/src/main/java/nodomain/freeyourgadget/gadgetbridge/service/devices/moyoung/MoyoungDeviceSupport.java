@@ -446,8 +446,8 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         if (packetType == MoyoungConstants.CMD_NOTIFY_WEATHER_CHANGE) {
             LOG.info("Will transmit cached weather (if any) since the watch asks for it");
-            if (Weather.getInstance().getWeatherSpec() != null) {
-                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.getInstance().getWeatherSpecs());
+            if (Weather.INSTANCE.getWeatherSpec() != null) {
+                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.INSTANCE.getWeatherSpecs());
                 GBApplication.deviceService().onSendWeather(specs);
             }
             return true;

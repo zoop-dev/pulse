@@ -124,6 +124,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -362,13 +363,13 @@ public class DebugActivity extends AbstractGBActivity {
         setWeatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Weather.getInstance().getWeatherSpec() == null) {
+                if (Weather.INSTANCE.getWeatherSpec() == null) {
                     final WeatherSpec weatherSpec = new WeatherSpec();
                     weatherSpec.forecasts = new ArrayList<>();
 
                     weatherSpec.location = "Green Hill";
                     weatherSpec.currentConditionCode = 601; // snow
-                    weatherSpec.currentCondition = Weather.getConditionString(DebugActivity.this, weatherSpec.currentConditionCode);
+                    weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(DebugActivity.this, weatherSpec.currentConditionCode);
 
                     weatherSpec.currentTemp = 15 + 273;
                     weatherSpec.currentHumidity = 30;
@@ -388,10 +389,10 @@ public class DebugActivity extends AbstractGBActivity {
                         weatherSpec.forecasts.add(gbForecast);
                     }
 
-                    Weather.getInstance().setWeatherSpec(new ArrayList<>(Collections.singletonList(weatherSpec)));
+                    Weather.INSTANCE.setWeatherSpec(new ArrayList<>(Collections.singletonList(weatherSpec)));
                 }
 
-                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.getInstance().getWeatherSpecs());
+                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.INSTANCE.getWeatherSpecs());
                 GBApplication.deviceService().onSendWeather(specs);
             }
         });
@@ -400,7 +401,7 @@ public class DebugActivity extends AbstractGBActivity {
         showCachedWeatherButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                final List<WeatherSpec> weatherSpecs = Weather.getInstance().getWeatherSpecs();
+                final List<WeatherSpec> weatherSpecs = Weather.INSTANCE.getWeatherSpecs();
 
                 if (weatherSpecs == null || weatherSpecs.isEmpty()) {
                     displayWeatherInfo(null);

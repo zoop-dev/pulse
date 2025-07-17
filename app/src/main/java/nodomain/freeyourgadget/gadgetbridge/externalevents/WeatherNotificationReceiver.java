@@ -50,14 +50,14 @@ public class WeatherNotificationReceiver extends BroadcastReceiver {
         }
 
         if (parcelableWeather2 != null) {
-            Weather weather = Weather.getInstance();
+            Weather weather = Weather.INSTANCE;
             weather.setReconstructedOWMForecast(parcelableWeather2.reconstructedOWMForecast);
 
             WeatherSpec weatherSpec = parcelableWeather2.weatherSpec;
             LOG.info("weather in " + weatherSpec.location + " is " + weatherSpec.currentCondition + " (" + (weatherSpec.currentTemp - 273) + "°C)");
 
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
-            Weather.getInstance().setWeatherSpec(weatherSpecs);
+            Weather.INSTANCE.setWeatherSpec(weatherSpecs);
             GBApplication.deviceService().onSendWeather(weatherSpecs);
         }
     }
