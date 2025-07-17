@@ -176,7 +176,9 @@ public class OpenTracksController extends Activity {
         activityTrack.addTrackPoints(activityPoints);
 
         try {
-            final File gpxDir = FileUtils.getExternalFilesDir();
+            final File gpxDir = new File(FileUtils.getExternalFilesDir(), "gpx");
+            //noinspection ResultOfMethodCallIgnored
+            gpxDir.mkdirs();
             final File gpxFile = new File(gpxDir, gpxName + ".gpx");
             final GPXExporter gpxExporter = new GPXExporter();
             gpxExporter.performExport(activityTrack, gpxFile);

@@ -115,7 +115,9 @@ public class GpxReceiverActivity extends AbstractGBActivity {
     private File create_file_from_uri(Uri source) {
         File destination = null;
         try {
-            File external = FileUtils.getExternalFilesDir();
+            File external = new File(FileUtils.getExternalFilesDir(), "gpx");
+            //noinspection ResultOfMethodCallIgnored
+            external.mkdirs();
             String fileName = get_file_name(source);
 
             if (fileName != null) {

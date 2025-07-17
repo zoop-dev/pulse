@@ -17,7 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.*;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.INTERNAL_HAS_GPS;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -42,10 +42,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.gridlayout.widget.GridLayout;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -54,8 +50,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
+import androidx.gridlayout.widget.GridLayout;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -70,8 +68,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -108,7 +105,8 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
     List<String> filesGpxList = new ArrayList<>();
     int selectedGpxIndex;
     String selectedGpxFile;
-    File export_path = null;
+    File export_path_root = null;  // original gpx file location, could still contain old gpx files
+    File export_path_gpx = null;  // new gpx file location
 
     private ActivitySummariesChartFragment activitySummariesChartFragment;
     private ActivitySummariesGpsFragment activitySummariesGpsFragment;
@@ -308,35 +306,31 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
     }
 
     private List<String> get_gpx_file_list() {
-        List<String> list = new ArrayList<>();
+        List<File> files = new ArrayList<>();
+        FileFilter gpxFileFilter = file -> file.isFile() && file.getPath().toLowerCase().endsWith(".gpx");
+        if (export_path_root.isDirectory()) {
+            File[] rootFiles = export_path_root.listFiles(gpxFileFilter);
+            if (rootFiles != null)
+                Collections.addAll(files, rootFiles);
+        }
+        if (export_path_gpx.isDirectory()) {
+            File[] gpxFiles = export_path_gpx.listFiles(gpxFileFilter);
+            if (gpxFiles != null)
+                Collections.addAll(files, gpxFiles);
+        }
 
-        File[] fileListing = export_path.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return file.getPath().toLowerCase().endsWith(".gpx");
-            }
+        files.sort((file1, file2) -> {
+            long lastModified1 = file1.lastModified();
+            long lastModified2 = file2.lastModified();
+            return Long.compare(lastModified2, lastModified1); // Descending order
         });
 
-        if (fileListing != null && fileListing.length > 1) {
-            Arrays.sort(fileListing, new Comparator<File>() {
-                @Override
-                public int compare(File fileA, File fileB) {
-                    if (fileA.lastModified() < fileB.lastModified()) {
-                        return 1;
-                    }
-                    if (fileA.lastModified() > fileB.lastModified()) {
-                        return -1;
-                    }
-                    return 0;
-                }
-            });
-        }
-
+        List<String> list = new ArrayList<>();
         list.add(getString(R.string.activity_summary_detail_clear_gpx_track));
-
-        for (File file : fileListing) {
+        for (File file : files) {
             list.add(file.getName());
         }
+
         return list;
     }
 
@@ -505,7 +499,8 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
     }
 
     private void editGps() {
-        export_path = get_path();
+        export_path_root = get_path();
+        export_path_gpx = new File(get_path(), "gpx");
         filesGpxList = get_gpx_file_list();
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(ActivitySummaryDetail.this);
@@ -513,7 +508,16 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         ArrayAdapter<String> directory_listing = new ArrayAdapter<>(ActivitySummaryDetail.this, android.R.layout.simple_list_item_1, filesGpxList);
         builder.setSingleChoiceItems(directory_listing, 0, (dialog, which) -> {
             selectedGpxIndex = which;
-            selectedGpxFile = export_path + "/" + filesGpxList.get(selectedGpxIndex);
+            String selectedFilename = filesGpxList.get(selectedGpxIndex);
+            if (new File(export_path_gpx, selectedFilename).isFile()) {
+                // Note: if selectedFilename exists in both export_path_gpx and export_path_root,
+                // this code will always choose the one in export_path_gpx. This is acceptable
+                // because export_path_gpx is where all new files end up, and gpx files tend to
+                // have a unique name anyway because it usually contains some timestamp.
+                selectedGpxFile = new File(export_path_gpx, selectedFilename).getPath();
+            } else {
+                selectedGpxFile = new File(export_path_root, selectedFilename).getPath();
+            }
             String message = String.format("%s %s?", getString(R.string.set), filesGpxList.get(selectedGpxIndex));
             if (selectedGpxIndex == 0) {
                 selectedGpxFile = null;
