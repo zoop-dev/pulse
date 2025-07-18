@@ -4118,4 +4118,5 @@
     <string name="pref_summary_time_interval">Auf bestimmte Intervalle beschränken</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Alten Benachrichtigungsmonitor-Dienst aktivieren</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Erzwingt einen zweiten Vordergrunddienst, damit der Benachrichtigungsmonitor aktiv bleibt. \nAktiviere, wenn keine Benachrichtigungen mehr ankommen. Kann eine zweite dauerhafte Benachrichtigung anzeigen. \nNach dem Ändern App neu starten.</string>
+    <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
 </resources>
