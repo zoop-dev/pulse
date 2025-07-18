@@ -114,7 +114,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             uartTx(builder, "\u0010GB("+json.toString()+")\n");
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -129,7 +129,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 JSONObject json = new JSONObject(line);
                 handleUartRxJSON(json);
             } catch (JSONException e) {
-                GB.toast(getContext(), "Malformed JSON from Bangle.js: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast(getContext(), "Malformed JSON from Bangle.js: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
         }
     }
@@ -274,7 +274,7 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             setTime(builder);
             builder.queue();
         } catch (Exception e) {
-            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

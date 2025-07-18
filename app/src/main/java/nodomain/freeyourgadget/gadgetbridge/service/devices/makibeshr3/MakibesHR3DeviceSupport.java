@@ -537,7 +537,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
 
         } catch (Exception ex) {
             // Why is this a toast? The user doesn't care about the error.
-            GB.toast(getContext(), "Error saving samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error saving samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
             GB.updateTransferNotification(null, "Data transfer failed", false, 0, getContext());
 
             LOG.error(ex.getMessage());

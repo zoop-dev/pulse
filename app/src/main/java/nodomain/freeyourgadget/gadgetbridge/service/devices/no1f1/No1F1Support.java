@@ -166,7 +166,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
             setTime(builder);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -244,7 +244,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, msg);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error starting heart rate measurement: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error starting heart rate measurement: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -405,7 +405,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, msg);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error showing icon: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error showing icon: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -437,7 +437,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
 
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error showing notificaton: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error showing notificaton: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -469,7 +469,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, msg);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -515,7 +515,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                         }
                     }
                 } catch (Exception ex) {
-                    GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                    GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
                     GB.updateTransferNotification(null,"Data transfer failed", false, 0, getContext());
                 }
             }

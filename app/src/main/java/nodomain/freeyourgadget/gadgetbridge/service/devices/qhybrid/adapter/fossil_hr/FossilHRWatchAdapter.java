@@ -427,7 +427,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         }catch (IllegalArgumentException e){
             serviceEnabled = false;
             respondToAlexa("voice service not found on phone", true);
-            GB.toast("voice service not found", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("voice service not found", Toast.LENGTH_LONG, GB.ERROR, e);
         }
 
         if(!serviceEnabled){

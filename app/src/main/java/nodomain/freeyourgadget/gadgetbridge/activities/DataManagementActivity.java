@@ -357,7 +357,7 @@ public class DataManagementActivity extends AbstractGBActivity {
                 }
             }
         } catch (Exception e) {
-            GB.toast("Error importing device specific preferences", Toast.LENGTH_SHORT, GB.ERROR);
+            GB.toast("Error importing device specific preferences", Toast.LENGTH_SHORT, GB.ERROR, e);
         }
     }
 

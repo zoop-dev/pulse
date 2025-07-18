@@ -439,7 +439,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
             setHeartrateSleepSupport(builder);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error toggling heart rate sleep support: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error toggling heart rate sleep support: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

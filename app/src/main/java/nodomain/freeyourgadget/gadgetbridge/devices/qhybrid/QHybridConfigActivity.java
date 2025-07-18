@@ -482,7 +482,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                         buttonLayout.addView(buttonTextView);
                     }
                 } catch (JSONException e) {
-                    GB.toast("error parsing button config", Toast.LENGTH_LONG, GB.ERROR);
+                    GB.toast("error parsing button config", Toast.LENGTH_LONG, GB.ERROR, e);
                 }
             }
         });

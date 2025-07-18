@@ -234,7 +234,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
             requestSummarizedData(builder);
             builder.queueConnected();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -326,7 +326,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                 requestDetailedData(builder);
                 builder.queueConnected();
             } catch (IOException e) {
-                GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
         }
     }
@@ -376,7 +376,7 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
                             requestDetailedData(builder);
                             builder.queue();
                         } catch (IOException e) {
-                            GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                            GB.toast(getContext(), "Error fetching activity data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                         }
                     }
                 }

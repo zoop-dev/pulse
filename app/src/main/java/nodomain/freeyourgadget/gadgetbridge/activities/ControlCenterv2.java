@@ -170,8 +170,8 @@ public class ControlCenterv2 extends AppCompatActivity
                         clDialog = cl.getMaterialFullLogDialog();
                     }
                     clDialog.show();
-                } catch (Exception ignored) {
-                    GB.toast(getBaseContext(), getString(R.string.error_showing_changelog), Toast.LENGTH_LONG, GB.ERROR);
+                } catch (Exception ex) {
+                    GB.toast(getBaseContext(), getString(R.string.error_showing_changelog), Toast.LENGTH_LONG, GB.ERROR, ex);
                 }
             }
         }
@@ -298,8 +298,8 @@ public class ControlCenterv2 extends AppCompatActivity
         if (showChangelog && cl.isFirstRun() && cl.hasChanges(cl.isFirstRunEver())) {
             try {
                 cl.getMaterialLogDialog().show();
-            } catch (Exception ignored) {
-                GB.toast(this, getString(R.string.error_showing_changelog), Toast.LENGTH_LONG, GB.ERROR);
+            } catch (Exception ex) {
+                GB.toast(this, getString(R.string.error_showing_changelog), Toast.LENGTH_LONG, GB.ERROR, ex);
             }
         }
 
@@ -369,8 +369,8 @@ public class ControlCenterv2 extends AppCompatActivity
                     clDialog = cl.getMaterialFullLogDialog();
                 }
                 clDialog.show();
-            } catch (Exception ignored) {
-                GB.toast(getBaseContext(), getString(R.string.error_showing_changelog), Toast.LENGTH_LONG, GB.ERROR);
+            } catch (Exception ex) {
+                GB.toast(getBaseContext(), getString(R.string.error_showing_changelog), Toast.LENGTH_LONG, GB.ERROR, ex);
             }
             return false;
         } else if (itemId == R.id.about) {

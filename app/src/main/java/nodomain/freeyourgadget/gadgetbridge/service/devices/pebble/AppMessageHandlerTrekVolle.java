@@ -52,7 +52,7 @@ class AppMessageHandlerTrekVolle extends AppMessageHandler {
             MESSAGE_KEY_WEATHER_TEMPERATURE_MAX = appKeys.getInt("WEATHER_TEMPERATURE_MAX");
             MESSAGE_KEY_WEATHER_LOCATION = appKeys.getInt("WEATHER_LOCATION");
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the TrekVolle watchface configuration.", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("There was an error accessing the TrekVolle watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }

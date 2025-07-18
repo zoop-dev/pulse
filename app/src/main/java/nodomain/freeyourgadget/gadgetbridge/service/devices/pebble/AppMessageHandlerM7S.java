@@ -71,7 +71,7 @@ class AppMessageHandlerM7S extends AppMessageHandler {
             KEY_WEATHER_ICON = appKeys.getInt("KEY_WEATHER_ICON");
             KEY_WEATHER_DATA_TIME = appKeys.getInt("KEY_WEATHER_DATA_TIME");
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the M7S watchface configuration.", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("There was an error accessing the M7S watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }

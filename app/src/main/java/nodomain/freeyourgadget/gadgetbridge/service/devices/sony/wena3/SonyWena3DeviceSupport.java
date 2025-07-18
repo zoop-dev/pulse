@@ -1074,7 +1074,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             builder.queueImmediately();
         } catch(Exception e) {
-            GB.toast("Failed to send settings update", Toast.LENGTH_SHORT, GB.ERROR);
+            GB.toast("Failed to send settings update", Toast.LENGTH_SHORT, GB.ERROR, e);
         }
     }
 

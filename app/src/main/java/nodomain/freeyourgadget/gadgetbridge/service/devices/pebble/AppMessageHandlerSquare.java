@@ -51,7 +51,7 @@ class AppMessageHandlerSquare extends AppMessageHandler {
             CfgKeyUseCelsius = appKeys.getInt("CfgKeyUseCelsius");
             CfgKeyWeatherLocation = appKeys.getInt("CfgKeyWeatherLocation");
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the Square watchface configuration.", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("There was an error accessing the Square watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }

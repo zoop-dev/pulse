@@ -125,7 +125,7 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
             setTime(builder);
             builder.queue();
         } catch (Exception e) {
-            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -150,7 +150,7 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(alarmCharacteristic, new BandAlarms(bandAlarmList).toByteArray());
             builder.queue();
         } catch (Exception e) {
-            GB.toast(getContext(), "Error setting alarms: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error setting alarms: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

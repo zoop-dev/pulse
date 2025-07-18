@@ -209,7 +209,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
             try {
                 queryString = confUri.getEncodedQuery();
             } catch (IllegalArgumentException e) {
-                GB.toast("returned uri: " + confUri.toString(), Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast("returned uri: " + confUri.toString(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
             myWebView.stopLoading();
             myWebView.loadUrl("file:///android_asset/app_config/configure.html?" + queryString);

@@ -279,7 +279,7 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             try {
                 AndroidUtils.openApp("d.d.hrmenucompanion");
             } catch (Exception e) {
-                GB.toast(getString(R.string.error_menu_companion_not_installed), Toast.LENGTH_SHORT, GB.INFO);
+                GB.toast(getString(R.string.error_menu_companion_not_installed), Toast.LENGTH_SHORT, GB.INFO, e);
 
                 AndroidUtils.openWebsite("https://github.com/dakhnod/Fossil-HR-Menu-Companion/releases/latest");
             }

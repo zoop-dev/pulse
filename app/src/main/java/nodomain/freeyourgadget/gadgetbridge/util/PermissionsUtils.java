@@ -301,7 +301,7 @@ public class PermissionsUtils {
                             intent.putExtra(":settings:show_fragment_args", bundle);
                             activity.startActivity(intent);
                         } catch (ActivityNotFoundException e) {
-                            GB.toast(activity, "'Notification Listener Settings' activity not found", Toast.LENGTH_LONG, GB.ERROR);
+                            GB.toast(activity, "'Notification Listener Settings' activity not found", Toast.LENGTH_LONG, GB.ERROR, e);
                             LOG.error("'Notification Listener Settings' activity not found");
                         }
                     }
@@ -320,7 +320,7 @@ public class PermissionsUtils {
                         try {
                             activity.startActivity(new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS));
                         } catch (ActivityNotFoundException e) {
-                            GB.toast(activity, "'Notification Policy' activity not found", Toast.LENGTH_LONG, GB.ERROR);
+                            GB.toast(activity, "'Notification Policy' activity not found", Toast.LENGTH_LONG, GB.ERROR, e);
                             LOG.error("'Notification Policy' activity not found");
                         }
                     }

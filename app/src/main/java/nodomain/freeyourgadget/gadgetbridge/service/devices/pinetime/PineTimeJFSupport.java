@@ -1243,7 +1243,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             GB.signalActivityDataFinish(getDevice());
 
         } catch (Exception ex) {
-            GB.toast(getContext(), "Error saving samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error saving samples: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
             GB.updateTransferNotification(null, "Data transfer failed", false, 0, getContext());
 
             LOG.error(ex.getMessage());

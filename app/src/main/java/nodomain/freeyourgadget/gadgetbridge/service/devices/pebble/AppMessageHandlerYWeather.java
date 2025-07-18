@@ -94,7 +94,7 @@ class AppMessageHandlerYWeather extends AppMessageHandler {
             KEY_WEATHER_D3_MAXTEMP = appKeys.getInt("high3");
 
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the YWeather watchface configuration.", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("There was an error accessing the YWeather watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }

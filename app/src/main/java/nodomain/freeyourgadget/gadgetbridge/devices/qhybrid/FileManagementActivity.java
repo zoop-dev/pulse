@@ -129,7 +129,7 @@ public class FileManagementActivity extends AbstractGBActivity implements View.O
                 return;
             }
         } catch (IllegalArgumentException e) {
-            GB.toast("please choose a local file", Toast.LENGTH_LONG, GB.WARN);
+            GB.toast("please choose a local file", Toast.LENGTH_LONG, GB.WARN, e);
             return;
         }
 

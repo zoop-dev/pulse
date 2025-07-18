@@ -148,7 +148,7 @@ public class FetchActivityOperation extends AbstractID115Operation {
             ID115SampleProvider provider = new ID115SampleProvider(getDevice(), dbHandler.getDaoSession());
             provider.addGBActivitySamples(sampleArray);
         } catch (Exception ex) {
-            GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
     }
 

@@ -350,7 +350,7 @@ public class GB {
         try {
             NotificationManagerCompat.from(context).notify(id, notification);
         } catch (SecurityException e) {
-            toast(context.getString(R.string.warning_missing_notification_permission), Toast.LENGTH_SHORT, WARN);
+            toast(context.getString(R.string.warning_missing_notification_permission), Toast.LENGTH_SHORT, WARN, e);
         }
     }
 

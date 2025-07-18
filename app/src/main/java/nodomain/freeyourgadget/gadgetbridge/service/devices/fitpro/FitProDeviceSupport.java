@@ -524,7 +524,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
             }
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error sending configuration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error sending configuration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

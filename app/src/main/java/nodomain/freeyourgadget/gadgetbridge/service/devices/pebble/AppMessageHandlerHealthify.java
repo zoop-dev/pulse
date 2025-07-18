@@ -45,7 +45,7 @@ class AppMessageHandlerHealthify extends AppMessageHandler {
             KEY_TEMPERATURE = appKeys.getInt("TEMPERATURE");
             KEY_CONDITIONS = appKeys.getInt("CONDITIONS");
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the Helthify watchface configuration.", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("There was an error accessing the Helthify watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }

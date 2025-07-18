@@ -63,7 +63,7 @@ class AppMessageHandlerSimplyLight extends AppMessageHandler {
             KEY_CONDITION = appKeys.getInt("condition");
             KEY_ERR = appKeys.getInt("err");
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the Simply Light watchface configuration.", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast("There was an error accessing the Simply Light watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }

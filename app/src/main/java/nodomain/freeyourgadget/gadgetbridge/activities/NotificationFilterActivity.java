@@ -102,7 +102,7 @@ public class NotificationFilterActivity extends AbstractGBActivity {
             setupView(db);
 
         } catch (Exception e) {
-            GB.toast(this, "Error accessing the database: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(this, "Error accessing the database: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             this.finish();
         }
     }
@@ -209,7 +209,7 @@ public class NotificationFilterActivity extends AbstractGBActivity {
             NotificationFilterActivity.this.finish();
 
         } catch (Exception e) {
-            GB.toast(NotificationFilterActivity.this, "Error accessing the database: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(NotificationFilterActivity.this, "Error accessing the database: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

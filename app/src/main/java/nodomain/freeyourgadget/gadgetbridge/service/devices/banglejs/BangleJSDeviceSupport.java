@@ -292,7 +292,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                                 uartTx(builder, data);
                                 builder.queue();
                             } catch (IOException e) {
-                                GB.toast(getContext(), "Error in TX: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                                GB.toast(getContext(), "Error in TX: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                             }
                         }
                         break;
@@ -343,7 +343,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                             uartTx(builder, data);
                             builder.queue();
                         } catch (IOException e) {
-                            GB.toast(getContext(), "Error in TX: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                            GB.toast(getContext(), "Error in TX: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                         }
                         break;
                     }
@@ -515,7 +515,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             uartTxJSON(builder, json);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error in "+taskName+": " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -531,7 +531,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 o.put("id", id);
             o.put("err", message);
         } catch (JSONException e) {
-            GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
         uartTxJSON(taskName, o);
     }
@@ -554,7 +554,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     LOG.warn("UART RX JSON parsed but doesn't contain 't' - ignoring");
             } catch (JSONException e) {
                 LOG.error("UART RX JSON parse failure: "+ e.getLocalizedMessage());
-                GB.toast(getContext(), "Malformed JSON from Bangle.js: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast(getContext(), "Malformed JSON from Bangle.js: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
         } else if (line.startsWith("data:image/bmp;base64,")) {
             LOG.debug("Got screenshot bmp");
@@ -995,7 +995,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                             if (response!=null)
                                 o.put("resp", response);
                         } catch (JSONException e) {
-                            GB.toast(getContext(), "HTTP: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+                            GB.toast(getContext(), "HTTP: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                         }
                         uartTxJSON("http", o);
                     }
@@ -1169,7 +1169,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         } catch (final Exception e) {
             // The user sent an invalid flag
             LOG.info("Flag '"+flag+"' isn't implemented or doesn't exist and was therefore not set.");
-            GB.toast(getContext(), "Flag '"+flag+"' isn't implemented or it doesn't exist and was therefore not set.", Toast.LENGTH_LONG, GB.INFO);
+            GB.toast(getContext(), "Flag '"+flag+"' isn't implemented or it doesn't exist and was therefore not set.", Toast.LENGTH_LONG, GB.INFO, e);
         }
         return intent;
     }
@@ -1290,7 +1290,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             LOG.debug("Requesting gps power status: {}", o);
             uartTxJSON(builder, o);
         } catch (JSONException e) {
-            GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -1349,7 +1349,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             LOG.debug("Sending gps value: " + o.toString());
             uartTxJSON("gps", o);
         } catch (JSONException e) {
-            GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "uartTxJSONError: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -1553,7 +1553,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             forceCalendarSync();
             builder.queue();
         } catch (Exception e) {
-            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error setting time: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -1837,7 +1837,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             uartTx(builder, "\u0010g.dump()\n");
             builder.queue();
         } catch (final IOException e) {
-            GB.toast(getContext(), "Failed to get screenshot: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Failed to get screenshot: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

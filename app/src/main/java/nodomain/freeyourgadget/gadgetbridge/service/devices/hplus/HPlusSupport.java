@@ -548,7 +548,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             setFindMe(builder, start);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error toggling Find Me: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error toggling Find Me: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
 
     }
@@ -567,7 +567,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, msg);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error setting Vibration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error setting Vibration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -643,7 +643,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error toggling Send Weather: " + e.getLocalizedMessage(), Toast.LENGTH_LONG,
-                    GB.ERROR);
+                    GB.ERROR, e);
         }
     }
 
@@ -712,7 +712,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
 
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error showing incoming call: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error showing incoming call: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
 
         }
     }
@@ -779,7 +779,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
             builder.write(ctrlCharacteristic, msg);
             builder.queue();
         } catch (IOException e) {
-            GB.toast(getContext(), "Error showing device Notification: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(getContext(), "Error showing device Notification: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
 
         }
     }
