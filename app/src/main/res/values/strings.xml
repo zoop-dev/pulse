@@ -39,9 +39,9 @@
     <string name="controlcenter_find_device">Find lost device</string>
     <string name="search">Search</string>
     <string name="find_lost_device_message">Search for %1$s?</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="controlcenter_take_screenshot">Take Screenshot</string>
     <string name="controlcenter_power_off">Power Off</string>
     <string name="controlcenter_power_off_confirm_title">Power Off</string>
@@ -154,7 +154,7 @@
 \n
 \nPROCEED AT YOUR OWN RISK!
 \n
-\nCOMPLETELY UNTESTED, PROBABLY YOU NEED TO FLASH A BEATS_W FIRMWARE IF YOUR DEVICE NAME IS \"Amazfit Band 2\"</string>
+\nCOMPLETELY UNTESTED, PROBABLY YOU NEED TO FLASH A BEATS_W FIRMWARE IF YOUR DEVICE NAME IS "Amazfit Band 2"</string>
     <string name="fw_upgrade_notice_amazfitgtr">You are about to install the %s firmware on your Amazfit GTR.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfitgts">You are about to install the %s firmware on your Amazfit GTS.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfit_trex">You are about to install the %s firmware on your Amazfit T-Rex.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
@@ -183,7 +183,7 @@
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
     <string name="fw_upgrade_notice_huawei">You are about to upload the %1$s firmware on your %2$s.\n\nYour current firmware is %s\n\nYour device will reboot after uploading.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with Gadgetbridge.</string>
-    <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with Gadgetbridge.\n\nYou are DISCOURAGED from flashing it!"</string>
+    <string name="miband_firmware_unknown_warning">This firmware is untested and may not be compatible with Gadgetbridge.\n\nYou are DISCOURAGED from flashing it!</string>
     <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>
     <!-- Strings related to the FwAppInstaller opener activity -->
     <string name="open_fw_installer_info_text">The Firmware/Watchface/App/File Installer allows you to upload/install supported files (firmware, watchfaces, applications, GPS, resources, fonts…) to the device. See some more information in the wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
@@ -279,7 +279,7 @@
     <string name="pref_pair_bluetooth_calls_help_title">How to receive bluetooth calls</string>
     <string name="pref_pair_bluetooth_calls_help_summary">In order to receive bluetooth calls, you need to pair your phone with a second instance of the watch.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tap the button below to start the pairing process.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Go to your phone\'s bluetooth settings, and pair with the new device that will show up (similar name to your current watch, but with a suffix, eg. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Go to your phone\'s bluetooth settings, and pair with the new device that will show up (similar name to your current watch, but with a suffix, eg. "Amazfit GTR 4 - AFC8".</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Enable the "Bluetooth calls" setting below.</string>
     <string name="pref_pair_bluetooth_calls_help_warning">WARNING: If you enable bluetooth calls without pairing with the second instance, call notifications might not work as expected.</string>
     <string name="pref_title_support_voip_calls">Enable VoIP app calls</string>
@@ -342,7 +342,7 @@
     <string name="pref_message_privacy_mode_bodyonly">Hide only body</string>
     <string name="pref_title_weather">Weather</string>
     <string name="pref_title_weather_location">Weather location (for LineageOS weather provider)</string>
-    <string name="pref_title_weather_summary">Used for the LineageOS weather provider, other Android versions need to use an app like \"Weather notification\". Find more information in the Gadgetbridge wiki.</string>
+    <string name="pref_title_weather_summary">Used for the LineageOS weather provider, other Android versions need to use an app like "Weather notification". Find more information in the Gadgetbridge wiki.</string>
     <string name="pref_applications_settings">Applications list</string>
     <string name="pref_blacklist_calendars">Blacklist Calendars</string>
     <string name="pref_blacklist_calendars_summary">Blacklisted calendars will not be synced to the device</string>
@@ -413,7 +413,7 @@
     <string name="pref_title_pebble_forcele">Always prefer BLE</string>
     <string name="pref_summary_pebble_forcele">Use experimental Pebble LE support for all Pebbles, instead of BT classic. This requires pairing to non LE first, and then Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU limit</string>
-    <string name="pref_summary_pebble_mtu_limit">If your Pebble 2/Pebble LE does not work as expected, try this setting to limit the MTU (valid range 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">If your Pebble 2/Pebble LE does not work as expected, try this setting to limit the MTU (valid range 20 – 512)</string>
     <string name="pref_title_pebble_enable_applogs">Enable watch app logging</string>
     <string name="pref_title_pebble_gatt_clientonly">GATT client only</string>
     <string name="pref_summary_pebble_gatt_clientonly">This is for Pebble 2 only and experimental, try this if you have connectivity problems</string>
@@ -498,7 +498,7 @@
     <!-- Femometer Preferences -->
     <string name="femometer_measurement_mode_title">Measurement mode</string>
     <string name="femometer_measurement_mode_quick">Quick Mode (30s)</string>
-    <string name="femometer_measurement_mode_normal">Normal Mode (60s-90s)</string>
+    <string name="femometer_measurement_mode_normal">Normal Mode (60s – 90s)</string>
     <string name="femometer_measurement_mode_precise">Precise Mode (3min)</string>
     <!-- Makibes HR3 Preferences -->
     <string name="preferences_makibes_hr3_settings">Makibes HR3 settings</string>
@@ -555,7 +555,7 @@
     <string name="title_gpx_track_name">Track name</string>
     <string name="pref_summary_authkey">Change the auth key to a common key on all your Android devices from which you would like to connect from. The previous default key for all devices is 0123456789@ABCDE</string>
     <string name="pref_explanation_authkey">Some devices require a special pairing key for the very first initialization of the device. Tap here for more details in the wiki.</string>
-    <string name="pref_explanation_authkey_new_protocol">If you get \"Update the app to latest version\" message on the band, make sure to check the \"New Auth Protocol\" above. Tap here for more details in the wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">If you get "Update the app to latest version" message on the band, make sure to check the "New Auth Protocol" above. Tap here for more details in the wiki.</string>
     <string name="prefs_hr_alarm_activity">Heart rate alarm during sports activity</string>
     <string name="prefs_hr_alarm_low">Low limit</string>
     <string name="prefs_hr_alarm_high">High limit</string>
@@ -689,11 +689,11 @@
     <string name="pairing">Pairing with %s…</string>
     <string name="choose_device">Choose a device</string>
     <string name="no_supported_devices_found">No supported devices found</string>
-    <string name="pairing_creating_bond_with">"Creating bond with %1$s (%2$s)"</string>
+    <string name="pairing_creating_bond_with">Creating bond with %1$s (%2$s)</string>
     <string name="pairing_bonding_under_way">Please allow bonding process a few moments to complete.</string>
     <string name="pairing_unable_to_pair_with">"Unable to pair with %1$s (%2$s)"</string>
     <string name="pairing_in_progress">Bonding in progress: %1$s (%2$s)</string>
-    <string name="pairing_already_bonded">"Already bonded with %1$s (%2$s), connecting…"</string>
+    <string name="pairing_already_bonded">Already bonded with %1$s (%2$s), connecting…</string>
     <string name="message_cannot_pair_no_mac">No MAC address passed, cannot pair.</string>
     <string name="preferences_category_device_specific_settings">Device specific settings</string>
     <string name="preferences_miband_1_2_settings" tools:ignore="TypographyFractions">Mi Band 1/2 settings</string>
@@ -869,9 +869,9 @@
     <string name="reminder_no_free_slots_title">No free slots</string>
     <string name="reminder_no_free_slots_description">The device has no free slots for reminders (total slots: %1$s)</string>
     <string name="contact_delete_confirm_title">Delete contact</string>
-    <string name="contact_delete_confirm_description">Are you sure you want to delete \'%1$s\'?</string>
+    <string name="contact_delete_confirm_description">Are you sure you want to delete "%1$s"?</string>
     <string name="contact_no_free_slots_description">The device has no free slots for contacts (total slots: %1$s)</string>
-    <string name="world_clock_delete_confirm_title">Delete \'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">Delete "%1$s"</string>
     <string name="world_clock_delete_confirm_description">Are you sure you want to delete the world clock?</string>
     <string name="world_clock_no_free_slots_title">No free slots</string>
     <string name="world_clock_no_free_slots_description">The device has no free slots for world clocks (total slots: %1$s)</string>
@@ -917,7 +917,7 @@
     <string name="prefs_spo2_alert_threshold">SPO2 alert threshold</string>
     <string name="prefs_activity_monitoring_title">Activity monitoring</string>
     <string name="prefs_activity_monitoring_description">Automatically increase the heart rate detection frequency when the band detects physical exercise, to increase heart rate capture accuracy.</string>
-    <string name="dbaccess_error_executing">Error executing \'%1$s\'</string>
+    <string name="dbaccess_error_executing">Error executing "%1$s"</string>
     <string name="controlcenter_start_activitymonitor">Your activity</string>
     <string name="cannot_connect">Cannot connect: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Unable to find a handler to install this file.</string>
@@ -1103,12 +1103,12 @@
     <string name="stats_empty_value">-</string>
     <string name="time_empty_value" translatable="false">--:--</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
-    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="stats_lowest_hr">Lowest HR</string>
     <string name="stats_highest_hr">Highest HR</string>
     <string name="stats_average_hr">Average HR</string>
     <string name="transition">Transition</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">You did not sleep</string>
     <string name="charts_min_max_heartrate_popup">Lowest heart rate: %1$d \nHighest heart rate: %2$d \nMovement intensity: %3$s</string>
     <string name="device_not_connected">Not connected.</string>
@@ -1125,7 +1125,7 @@
     <string name="pref_sleep_breathing_quality_monitoring">Sleep breathing quality monitoring</string>
     <string name="miband_prefs_device_time_offset_hours">Device time offset in hours (for detecting sleep of shift workers)</string>
     <string name="prefs_find_phone">Find phone</string>
-    <string name="prefs_enable_find_phone">Turn on \'Find phone\'</string>
+    <string name="prefs_enable_find_phone">Turn on "Find phone"</string>
     <string name="prefs_find_phone_summary">Use your band to play your phone\'s ringtone.</string>
     <string name="prefs_find_phone_duration">Ring duration in seconds</string>
     <string name="miband2_prefs_dateformat">Date format</string>
@@ -1158,7 +1158,7 @@
     <string name="mi2_prefs_inactivity_warnings_summary">The band will vibrate when you have been inactive for a while</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Inactivity threshold (in minutes)</string>
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Disable inactivity warnings for a time interval</string>
-    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Disable inactivity warnings during the lunch break (12:00 - 14:00)</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Disable inactivity warnings during the lunch break (12:00 – 14:00)</string>
     <string name="hydration_dnd_summary">Disable hydration warnings for a time interval</string>
     <string name="mi2_prefs_heart_rate_monitoring">Heart Rate Monitoring</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Configure heart rate monitoring</string>
@@ -1184,7 +1184,7 @@
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Activate display upon lift during Do Not Disturb</string>
     <string name="do_not_disturb_lift_wrist_summary">Only if activate display upon lift enabled</string>
     <string name="pref_do_not_disturb_not_wear">Do not disturb when not wearing</string>
-    <string name="mi3_prefs_band_screen_unlock">Band screen unlock"</string>
+    <string name="mi3_prefs_band_screen_unlock">Band screen unlock</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Swipe up to unlock the band\'s screen</string>
     <string name="mi3_prefs_night_mode">Night mode</string>
     <string name="mi3_prefs_night_mode_summary">Lower band screen brightness automatically at night</string>
@@ -1332,22 +1332,22 @@
     <string name="active_time">Active time</string>
     <string name="standing_time">Standing time</string>
     <string name="pref_title_pebble_health_store_raw">Store raw record in the database</string>
-    <string name="pref_summary_pebble_health_store_raw">Stores the data \"as is\", increasing the database usage to allow for later interpretation.</string>
+    <string name="pref_summary_pebble_health_store_raw">Stores the data "as is", increasing the database usage to allow for later interpretation.</string>
     <string name="action_db_management">Data management</string>
     <string name="title_activity_db_management">Data management</string>
     <string name="activity_db_management_import_export_explanation">The export/import operations use the following path (see below) to a directory on your device. This directory is accessible to other Android apps and your computer. Do note, that this directory and all containing files are deleted if you uninstall Gadgetbridge. The data includes:\n Export_preference - global settings\n Export_preference_MAC - device specific settings\n Gadgetbridge - device and activity database\n Gadgetbridge_date - database exported on a date\n *.gpx - GPS recordings\n *.log - log files\nExpect to find your exported files (or place the files you want to import) there:</string>
     <string name="activity_db_management_merge_old_title">Legacy database delete</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Cannot access export path. Please contact the developers.</string>
     <string name="dbmanagementactivity_exported_to">Exported to: %1$s</string>
-    <string name="dbmanagementactivity_error_exporting_db">"Error exporting DB: %1$s"</string>
-    <string name="dbmanagementactivity_error_cleaning_export_directory">"Error erasing files from export directory %1$s"</string>
-    <string name="dbmanagementactivity_error_exporting_shared">"Error exporting preference: %1$s"</string>
+    <string name="dbmanagementactivity_error_exporting_db">Error exporting DB: %1$s</string>
+    <string name="dbmanagementactivity_error_cleaning_export_directory">Error erasing files from export directory %1$s</string>
+    <string name="dbmanagementactivity_error_exporting_shared">Error exporting preference: %1$s</string>
     <string name="dbmanagementactivity_import_data_title">Import Data?</string>
     <string name="dbmanagementactivity_export_data_title">Export Data?</string>
     <string name="dbmanagementactivity_overwrite_database_confirmation">Really overwrite the current data? All your current activity data (if any), devices, and preferences will be overwritten.</string>
     <string name="dbmanagementactivity_export_confirmation">Really export data? Previously exported activity data (if any) and preferences will be overwritten.</string>
     <string name="dbmanagementactivity_import_successful">Imported.</string>
-    <string name="dbmanagementactivity_error_importing_db">"Error importing DB: %1$s"</string>
+    <string name="dbmanagementactivity_error_importing_db">Error importing DB: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">"Error importing preference: %1$s"</string>
     <string name="dbmanagementactivity_delete_activity_data_title">Delete Activity Data?</string>
     <string name="dbmanagementactivity_really_delete_entire_db">Really delete the entire database? All your activity data and information about your devices will be lost.</string>
@@ -1755,7 +1755,7 @@
     <string name="hrv_status_last_night_highest_5">Last night 5-min max avg</string>
     <string name="hrv_status_seven_days_avg_long">7-day average</string>
     <string name="hrv_status_unit">%1$d ms</string>
-    <string name="hrv_status_baseline">%1$d-%2$d ms</string>
+    <string name="hrv_status_baseline">%1$d – %2$d ms</string>
     <string name="hrv_status_baseline_label">Baseline</string>
     <string name="training_acute_load">Acute Load</string>
     <string name="training_chronic_load">Chronic Load</string>
@@ -2448,16 +2448,16 @@
     <string name="about_contributors">Contributors</string>
     <string name="about_core_team_members" translatable="false">Andreas Shimokawa\nCarsten Pfeiffer\nDaniele Gobbetti</string>
     <string name="about_additional_device_support">Additional device support</string>
-    <string name="about_additional_contributors" translatable="false">João Paulo Barraca (HPlus)\nVitaly Svyastyn (NO.1 F1)\nSami Alaoui (Teclast H30)\n“ladbsoft” (XWatch)\nSebastian Kranz (ZeTime)\nVadim Kaushan (ID115)\n“maxirnilian” (Lenovo Watch 9)\n“ksiwczynski”, “mkusnierz”, “mamutcho” (Lenovo Watch X Plus)\nAndreas Böhler (Casio GB-6900B, Casio GB-5600B, Casio GBX-100)\nJean-François Greffier (Mi Scale 2)\nJohannes Schmitt (BFH-16)\nLukas Schwichtenberg (Makibes HR3)\nDaniel Dakhno (Fossil Q Hybrid, Fossil Hybrid HR)\nGordon Williams (Bangle.js)\nPavel Elagin (JYou Y5)\nTaavi Eomäe (iTag)\nJohannes Krude(Casio GW-B5600)</string>
+    <string name="about_additional_contributors" translatable="false">João Paulo Barraca (HPlus)\nVitaly Svyastyn (NO.1 F1)\nSami Alaoui (Teclast H30)\n"ladbsoft" (XWatch)\nSebastian Kranz (ZeTime)\nVadim Kaushan (ID115)\n"maxirnilian" (Lenovo Watch 9)\n"ksiwczynski", "mkusnierz", "mamutcho" (Lenovo Watch X Plus)\nAndreas Böhler (Casio GB-6900B, Casio GB-5600B, Casio GBX-100)\nJean-François Greffier (Mi Scale 2)\nJohannes Schmitt (BFH-16)\nLukas Schwichtenberg (Makibes HR3)\nDaniel Dakhno (Fossil Q Hybrid, Fossil Hybrid HR)\nGordon Williams (Bangle.js)\nPavel Elagin (JYou Y5)\nTaavi Eomäe (iTag)\nJohannes Krude(Casio GW-B5600)</string>
     <string name="about_additional_contributions">Many thanks to all unlisted contributors for contributing code, translations, support, ideas, motivation, bug reports, money… ✊</string>
     <string name="about_links">Links</string>
-    <string name="permission_request">%1$s allows you to send messages and other data from Android to your device. To do this it requires permission to access that data and without it, it might not function properly.\n\nYou\'ll now be presented with a few Android dialogs requesting those permissions.\n\nPlease tap \'%2$s\' to continue.</string>
+    <string name="permission_request">%1$s allows you to send messages and other data from Android to your device. To do this it requires permission to access that data and without it, it might not function properly.\n\nYou\'ll now be presented with a few Android dialogs requesting those permissions.\n\nPlease tap "%2$s" to continue.</string>
     <string name="permission_granting_mandatory">All these permissions are required and instability might occur if not granted</string>
-    <string name="permission_notification_listener">%1$s needs access to Notifications in order to display them on your watch when your phone\'s screen is off.\n\nPlease tap \'%2$s\' then \'%1$s\' and enable \'Allow Notification Access\', then tap \'Back\' to return to %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s needs access to Do Not Disturb settings in order to honour them on your watch when your phone\'s screen is off.\n\nPlease tap \'%2$s\' then \'%1$s\' and enable \'Allow Do Not Disturb\', then tap \'Back\' to return to %1$s.</string>
-    <string name="permission_location">%1$s needs access to your location in the background to allow it to stay connected to your watch even when your screen is off.\n\nPlease choose \'%2$s\' in the following screen, then tap \'Back\' to return to %1$s.</string>
-    <string name="permission_display_over_other_apps">%1$s needs permission to display over other apps in order to let Bangle.js watches start activities via intents when %1$s is in the background.\n\nThis can be used to start a music app and play a song, and many other things.\n\nPlease tap \'%2$s\' then \'%1$s\' and enable \'Allow display over other apps\', then tap \'Back\' to return to %1$s.\n\nTo stop %1$s asking for permissions go to \'Settings\' and uncheck \'Check permission status\'.\n\nMake sure to grant %1$s the permissions needed to function as you expect.</string>
-    <string name="error_version_check_extreme_caution">CAUTION: Error when checking version information! You should not continue! Saw version name \"%s\"</string>
+    <string name="permission_notification_listener">%1$s needs access to Notifications in order to display them on your watch when your phone\'s screen is off.\n\nPlease tap "%2$s" then "%1$s" and enable "Allow Notification Access", then tap "Back" to return to %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s needs access to Do Not Disturb settings in order to honour them on your watch when your phone\'s screen is off.\n\nPlease tap "%2$s" then "%1$s" and enable "Allow Do Not Disturb", then tap "Back" to return to %1$s.</string>
+    <string name="permission_location">%1$s needs access to your location in the background to allow it to stay connected to your watch even when your screen is off.\n\nPlease choose "%2$s" in the following screen, then tap "Back" to return to %1$s.</string>
+    <string name="permission_display_over_other_apps">%1$s needs permission to display over other apps in order to let Bangle.js watches start activities via intents when %1$s is in the background.\n\nThis can be used to start a music app and play a song, and many other things.\n\nPlease tap "%2$s" then "%1$s" and enable "Allow display over other apps", then tap "Back" to return to %1$s.\n\nTo stop %1$s asking for permissions go to "Settings" and uncheck "Check permission status".\n\nMake sure to grant %1$s the permissions needed to function as you expect.</string>
+    <string name="error_version_check_extreme_caution">CAUTION: Error when checking version information! You should not continue! Saw version name "%s"</string>
     <string name="require_location_provider">Location must be enabled</string>
     <string name="companiondevice_pairing">CompanionDevice Pairing</string>
 
@@ -3263,9 +3263,9 @@
     <string name="mijia_lywsd_comfort_level_title">Comfort Level</string>
     <string name="mijia_lywsd_comfort_level_summary">Configure the temperature and humidity limits for the displayed emoji</string>
     <string name="mijia_lywsd_comfort_temperature_title">Temperature (°C)</string>
-    <string name="mijia_lywsd_comfort_temperature_summary">Recommended range: 19 - 27</string>
+    <string name="mijia_lywsd_comfort_temperature_summary">Recommended range: 19 – 27</string>
     <string name="mijia_lywsd_comfort_humidity_title">Humidity (%)</string>
-    <string name="mijia_lywsd_comfort_humidity_summary">Recommended range: 20 - 85</string>
+    <string name="mijia_lywsd_comfort_humidity_summary">Recommended range: 20 – 85</string>
     <string name="mijia_lywsd_comfort_lower">Lower Limit</string>
     <string name="mijia_lywsd_comfort_upper">Upper Limit</string>
     <string name="protocol_version">Protocol Version</string>
@@ -3325,7 +3325,7 @@
     <string name="idasen_pref_mid_height">Middle position height (in centimeters)</string>
     <string name="idasen_pref_sit_height">Sit position height (in centimeters)</string>
     <string name="idasen_pref_stand_height">Stand position height (in centimeters)</string>
-    <string name="idasen_pref_value_warning">The value must be between 62 - 126 cm</string>
+    <string name="idasen_pref_value_warning">The value must be between 62 – 126 cm</string>
     <string name="prefs_workmode">Work Mode</string>
     <string name="huawei_alarm_smart_description">Do not uncheck smart wakeup checkbox.</string>
     <string name="huawei_alarm_event_description">Do not check smart wakeup checkbox.</string>
@@ -3539,7 +3539,7 @@
     <string name="button_open_menu_companion">Open menu companion app</string>
     <string name="button_reset_menu_structure">Reset menu structure</string>
     <string name="info_menu_structure_removed">Menu structure removed</string>
-    <string name="error_menu_companion_not_installed">\'HR Menu Companion\' probably not installed</string>
+    <string name="error_menu_companion_not_installed">"HR Menu Companion" probably not installed</string>
     <string name="info_menu_structure_contents">Menu structure: %s</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Please rebuild your watchface for custom menu</string>
     <string name="devicetype_miband2_hrx" translatable="false">Mi Band HRX</string>
@@ -3673,7 +3673,7 @@
     <string name="widget">Widget</string>
     <string name="widget_screen">Widget Screen</string>
     <string name="widget_screen_delete_confirm_title">Delete widget screen</string>
-    <string name="widget_screen_delete_confirm_description">Are you sure you want to delete \'%1$s\'?</string>
+    <string name="widget_screen_delete_confirm_description">Are you sure you want to delete "%1$s"?</string>
     <string name="widget_screen_no_free_slots_description">The device has no free slots for widget screens (total slots: %1$s)</string>
     <string name="widget_screen_min_screens">There must be a minimum of %1$s screens</string>
     <string name="widget_layout_top_1_bot_2">1 top, 2 bottom</string>
@@ -3725,7 +3725,7 @@
     <string name="auto_reconnect_ble_scan_summary">Wait for device scan instead of blind connection attempts</string>
     <string name="prompt_restart_gadgetbridge">Please restart GB in order to take effect.</string>
     <string name="waiting_for_bluetooth">Waiting for bluetooth…</string>
-    <string name="error_scan_failed">"Scan failed: %d"</string>
+    <string name="error_scan_failed">Scan failed: %d</string>
     <string name="scan_not_scanning">Not scanning</string>
     <string name="scan_scanning_all_devices">Scanning all devices</string>
     <string name="scan_scanning_single_device">Scanning 1 device</string>
@@ -3768,7 +3768,7 @@
     <string name="pref_dashboard_all_devices_summary">Combine activity data from all added devices for the totals on the dashboard</string>
     <string name="pref_dashboard_select_devices_summary">Combine activity data from specific devices for the totals on the dashboard</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">Heart rate interval</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">The amount of minutes the chart shows \'worn\' after each successful heart rate measurement</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">The amount of minutes the chart shows "worn" after each successful heart rate measurement</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
@@ -3865,9 +3865,9 @@
     <string name="pref_import_activity_files_summary">Manually import activity files from the phone storage</string>
     <string name="pref_fetch_unknown_files_title">Fetch unknown files</string>
     <string name="pref_fetch_unknown_files_summary">Fetch unknown activity files from the watch. They will not be processed, but will be saved in the phone.</string>
-    <string name="cannot_upload_watchface_too_many_watchfaces_installed">"Cannot upload watchface, too many watchfaces installed"</string>
-    <string name="insufficient_space_for_upload">"Insufficient space for upload"</string>
-    <string name="file_already_exists">"File already exists"</string>
+    <string name="cannot_upload_watchface_too_many_watchfaces_installed">Cannot upload watchface, too many watchfaces installed</string>
+    <string name="insufficient_space_for_upload">Insufficient space for upload</string>
+    <string name="file_already_exists">File already exists</string>
     <string name="smart_ring_measurement_error_worn_incorrectly">Measurement error. Are the ring\'s sensors oriented correctly?</string>
     <string name="smart_ring_measurement_error_unknown">Unknown measurement error %d received from ring</string>
     <string name="pref_header_deprecated_functionalities">Deprecated functionalities</string>
@@ -3931,8 +3931,8 @@
     <string name="prefs_hrv_monitoring_description">Automatically monitor heart rate variability throughout the day</string>
     <string name="pref_music_management_title">Manage Music</string>
     <string name="pref_music_management_summary">Manage music on the watch</string>
-    <string name="music_delete_confirm_description">Are you sure you want to delete \'%1$s\'?</string>
-    <string name="music_delete_multiple_confirm_description">Are you sure you want to delete \'%1$d\' songs?</string>
+    <string name="music_delete_confirm_description">Are you sure you want to delete "%1$s"?</string>
+    <string name="music_delete_multiple_confirm_description">Are you sure you want to delete "%1$d" songs?</string>
     <string name="music_add_to_playlist">Add to playlist</string>
     <string name="music_delete_from_playlist">Delete from playlist</string>
     <string name="music_delete">Delete song</string>
@@ -4047,7 +4047,7 @@
     <string name="earfun_tap_action_redial">Redial</string>
     <string name="earfun_change_device_name_confirm_message">1) Once you\'ve updated the name, place the earbuds in the charging case, close the lid, and wait for about 10 seconds.\n\n2) In your device settings, remove the original device.\n\n3) Open the charging case again, search for the device, and the name change should be applied successfully.</string>
     <string name="earfun_change_confirm_title">Change %s?</string>
-    <string name="earfun_reboot_confirm_message">After applying this setting, your device will restart. Once it powers back on, navigate to the \'Devices\' screen and reconnect.</string>
+    <string name="earfun_reboot_confirm_message">After applying this setting, your device will restart. Once it powers back on, navigate to the "Devices" screen and reconnect.</string>
     <string name="earfun_low_latency_mode">Low Latency Mode</string>
     <string name="earfun_low_latency_mode_hint">Low latency mode reduces audio lag by utilizing a smaller buffer, though this can sometimes result in a less stable connection.</string>
     <string name="earfun_connect_two_devices">Dual device connection</string>
