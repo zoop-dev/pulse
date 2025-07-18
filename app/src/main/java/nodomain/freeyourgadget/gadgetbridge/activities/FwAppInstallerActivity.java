@@ -212,7 +212,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             public void onClick(View v) {
                 setInstallEnabled(false);
                 installHandler.onStartInstall(device);
-                GBApplication.deviceService(device).onInstallApp(uri);
+                GBApplication.deviceService(device).onInstallApp(uri, Bundle.EMPTY);
             }
         });
 

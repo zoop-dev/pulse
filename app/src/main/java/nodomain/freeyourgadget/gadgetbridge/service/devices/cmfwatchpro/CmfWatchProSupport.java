@@ -25,8 +25,10 @@ import android.location.Location;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import net.e175.klaus.solarpositioning.DeltaT;
@@ -751,7 +753,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     }
 
     @Override
-    public void onInstallApp(final Uri uri) {
+    public void onInstallApp(final Uri uri, @NonNull final Bundle options) {
         dataUploader.onInstallApp(uri);
     }
 

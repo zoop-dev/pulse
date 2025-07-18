@@ -20,8 +20,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble;
 
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
@@ -107,7 +109,7 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         PebbleProtocol pebbleProtocol = (PebbleProtocol) getDeviceProtocol();
         PebbleIoThread pebbleIoThread = getDeviceIOThread();
         // Catch fake URLs first

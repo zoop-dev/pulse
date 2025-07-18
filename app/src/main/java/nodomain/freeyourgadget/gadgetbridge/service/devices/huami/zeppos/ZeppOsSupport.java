@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -464,7 +465,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     }
 
     @Override
-    public void onInstallApp(final Uri uri) {
+    public void onInstallApp(final Uri uri, @NonNull final Bundle options) {
         final ZeppOsAgpsInstallHandler agpsHandler = new ZeppOsAgpsInstallHandler(uri, getContext());
         if (agpsHandler.isValid()) {
             try {

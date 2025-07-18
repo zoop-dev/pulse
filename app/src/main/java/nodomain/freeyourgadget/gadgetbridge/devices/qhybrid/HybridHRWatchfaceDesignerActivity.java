@@ -78,7 +78,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implements View.OnClickListener, View.OnLongClickListener, View.OnDragListener {
@@ -637,7 +636,7 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             final Uri tempAppFileUri = Uri.fromFile(tempFile);
             if (preview) {
                 findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri, Bundle.EMPTY);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -658,14 +657,14 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri, Bundle.EMPTY);
                                     FossilHRInstallHandler.saveAppInCache(fossilFile, selectedBackgroundImage, wfFactory.getPreviewImage(mContext), mCoordinator, HybridHRWatchfaceDesignerActivity.this);
                                 }
                             })
                             .show();
                 } else {
                     findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri, Bundle.EMPTY);
                     FossilHRInstallHandler.saveAppInCache(fossilFile, selectedBackgroundImage, wfFactory.getPreviewImage(mContext), mCoordinator, HybridHRWatchfaceDesignerActivity.this);
                 }
             }

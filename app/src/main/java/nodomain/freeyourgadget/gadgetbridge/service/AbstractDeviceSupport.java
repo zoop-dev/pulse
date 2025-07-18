@@ -25,6 +25,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -357,10 +359,12 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
     /**
      * If apps can be installed on the device, this method can be
      * overridden and implemented by the device support class.
-     * @param uri reference to a watch app file
+     *
+     * @param uri     reference to a watch app file
+     * @param options a bundle of custom options
      */
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
 
     }
 

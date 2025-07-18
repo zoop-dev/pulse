@@ -1097,9 +1097,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
             case ACTION_INSTALL:
                 Uri uri = intentCopy.getParcelableExtra(EXTRA_URI);
+                Bundle options = intentCopy.getBundleExtra(EXTRA_OPTIONS);
                 if (uri != null) {
                     LOG.info("will try to install app/fw");
-                    deviceSupport.onInstallApp(uri);
+                    deviceSupport.onInstallApp(uri, options);
                 }
                 break;
             case ACTION_SET_ALARMS:

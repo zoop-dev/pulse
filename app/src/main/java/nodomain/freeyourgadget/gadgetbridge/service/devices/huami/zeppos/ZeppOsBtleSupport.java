@@ -24,6 +24,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -312,8 +314,8 @@ public class ZeppOsBtleSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     @Override
-    public void onInstallApp(final Uri uri) {
-        zeppOsSupport.onInstallApp(uri);
+    public void onInstallApp(final Uri uri, @NonNull final Bundle options) {
+        zeppOsSupport.onInstallApp(uri, options);
     }
 
     @Override

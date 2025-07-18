@@ -604,7 +604,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             return true;
         } else if (itemId == R.id.appmanager_app_reinstall) {
             final File cachePath = new File(appCacheDir, selectedApp.getUUID() + mCoordinator.getAppFileExtension());
-            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.fromFile(cachePath));
+            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.fromFile(cachePath), Bundle.EMPTY);
             return true;
         } else if (itemId == R.id.appmanager_app_share) {
             final File origFilePath = new File(appCacheDir, selectedApp.getUUID() + mCoordinator.getAppFileExtension());
@@ -627,13 +627,13 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             }
             return true;
         } else if (itemId == R.id.appmanager_health_activate) {
-            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.parse("fake://health"));
+            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.parse("fake://health"), Bundle.EMPTY);
             return true;
         } else if (itemId == R.id.appmanager_hrm_activate) {
-            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.parse("fake://hrm"));
+            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.parse("fake://hrm"), Bundle.EMPTY);
             return true;
         } else if (itemId == R.id.appmanager_weather_activate) {
-            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.parse("fake://weather"));
+            GBApplication.deviceService(mGBDevice).onInstallApp(Uri.parse("fake://weather"), Bundle.EMPTY);
             return true;
         } else if (itemId == R.id.appmanager_health_deactivate || itemId == R.id.appmanager_hrm_deactivate || itemId == R.id.appmanager_weather_deactivate) {
             GBApplication.deviceService(mGBDevice).onAppDelete(selectedApp.getUUID());

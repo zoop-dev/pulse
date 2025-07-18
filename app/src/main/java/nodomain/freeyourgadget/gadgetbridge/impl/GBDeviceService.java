@@ -54,6 +54,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.RtlUtils;
 
 import static nodomain.freeyourgadget.gadgetbridge.util.JavaExtensions.coalesce;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -318,9 +320,10 @@ public class GBDeviceService implements DeviceService {
     }
 
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         Intent intent = createIntent().setAction(ACTION_INSTALL)
-                .putExtra(EXTRA_URI, uri);
+                .putExtra(EXTRA_URI, uri)
+                .putExtra(EXTRA_OPTIONS, options);
         invokeService(intent);
     }
 

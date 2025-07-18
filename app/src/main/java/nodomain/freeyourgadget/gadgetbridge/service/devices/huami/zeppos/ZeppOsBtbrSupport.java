@@ -26,6 +26,8 @@ import android.os.Looper;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -566,8 +568,8 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     }
 
     @Override
-    public void onInstallApp(final Uri uri) {
-        zeppOsSupport.onInstallApp(uri);
+    public void onInstallApp(final Uri uri, @NonNull final Bundle options) {
+        zeppOsSupport.onInstallApp(uri, options);
     }
 
     @Override

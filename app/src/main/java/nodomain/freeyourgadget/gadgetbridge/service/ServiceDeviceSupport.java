@@ -24,6 +24,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -247,11 +249,11 @@ public class ServiceDeviceSupport implements DeviceSupport {
     }
 
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         if (checkBusy("install app")) {
             return;
         }
-        delegate.onInstallApp(uri);
+        delegate.onInstallApp(uri, options);
     }
 
     @Override

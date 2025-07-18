@@ -18,6 +18,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.divoom;
 
 import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
@@ -45,7 +48,7 @@ public class PixooSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         getDeviceIOThread().write(((PixooProtocol) getDeviceProtocol()).encodeShowFrame(uri));
     }
 

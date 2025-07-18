@@ -20,6 +20,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,7 +158,7 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
     }
 
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         supportProvider.onInstallApp(uri);
     }
 

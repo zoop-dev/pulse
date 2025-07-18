@@ -21,8 +21,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -320,7 +323,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
     }
 
     @Override
-    public void onInstallApp(final Uri uri) {
+    public void onInstallApp(final Uri uri, @NonNull final Bundle options) {
         final XiaomiFWHelper fwHelper = new XiaomiFWHelper(uri, getContext());
 
         if (!fwHelper.isValid()) {

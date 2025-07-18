@@ -22,6 +22,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -83,7 +85,7 @@ public interface EventHandler {
 
     void onEnableRealtimeSteps(boolean enable);
 
-    void onInstallApp(Uri uri);
+    void onInstallApp(Uri uri, @NonNull Bundle options);
 
     void onAppInfoReq();
 
