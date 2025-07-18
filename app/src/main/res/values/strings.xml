@@ -122,7 +122,6 @@
     <string name="appmanager_hrm_deactivate">Deactivate HRM</string>
     <string name="appmanager_weather_activate">Activate System Weather app</string>
     <string name="appmanager_weather_deactivate">Deactivate System Weather app</string>
-    <string name="appmanager_weather_install_provider">Install the Weather Notification app</string>
     <string name="app_configure">Configure</string>
     <string name="app_move_to_top">Move to top</string>
     <string name="appmanager_item_outdated">(outdated)</string>
@@ -1386,7 +1385,6 @@
     <!-- Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble pairing</string>
     <string name="pebble_pairing_hint">A pairing dialog will pop up on your Android device. If not, look in the notification drawer and accept the pairing request. Also accept it on your Pebble afterwards.</string>
-    <string name="weather_notification_label">Make sure that this skin is enabled in the Weather Notification app to get weather information on your Pebble.\n\nNo configuration is needed here.\n\nYou can enable the system weather app of your Pebble from the app management.\n\nSupported watchfaces will show the weather automatically.</string>
     <string name="pref_title_setup_bt_pairing">Enable Bluetooth pairing</string>
     <string name="pref_summary_setup_bt_pairing">Deactivate this if you have trouble connecting</string>
     <string name="unit_metric">Metric</string>

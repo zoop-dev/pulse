@@ -10,7 +10,6 @@ object Weather {
     private val LOG = LoggerFactory.getLogger("Weather")
 
     private val weatherSpecs = CopyOnWriteArrayList<WeatherSpec>()
-    private var reconstructedOWMForecast: JSONObject? = null
 
     private var cacheManager: WeatherCacheManager? = null
 
@@ -60,12 +59,6 @@ object Weather {
             LOG.error("Error while reconstructing OWM weather reply", e)
             null
         }
-    }
-
-    fun getReconstructedOWMForecast(): JSONObject? = reconstructedOWMForecast
-
-    fun setReconstructedOWMForecast(value: JSONObject?) {
-        reconstructedOWMForecast = value
     }
 
     fun initializeCache(cacheManager: WeatherCacheManager) {

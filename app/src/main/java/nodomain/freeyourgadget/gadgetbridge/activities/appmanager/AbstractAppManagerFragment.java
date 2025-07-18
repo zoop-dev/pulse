@@ -526,24 +526,12 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         if (!PebbleProtocol.UUID_WEATHER.equals(selectedApp.getUUID())) {
             menu.removeItem(R.id.appmanager_weather_activate);
             menu.removeItem(R.id.appmanager_weather_deactivate);
-            menu.removeItem(R.id.appmanager_weather_install_provider);
         }
         if (selectedApp.getType() == GBDeviceApp.Type.APP_SYSTEM || selectedApp.getType() == GBDeviceApp.Type.WATCHFACE_SYSTEM) {
             menu.removeItem(R.id.appmanager_app_delete);
         }
         if (!selectedApp.isConfigurable()) {
             menu.removeItem(R.id.appmanager_app_configure);
-        }
-
-        if (PebbleProtocol.UUID_WEATHER.equals(selectedApp.getUUID())) {
-            PackageManager pm = getActivity().getPackageManager();
-            try {
-                pm.getPackageInfo("ru.gelin.android.weather.notification", PackageManager.GET_ACTIVITIES);
-                menu.removeItem(R.id.appmanager_weather_install_provider);
-            } catch (PackageManager.NameNotFoundException e) {
-                //menu.removeItem(R.id.appmanager_weather_activate);
-                //menu.removeItem(R.id.appmanager_weather_deactivate);
-            }
         }
 
         if ((mGBDevice.getType() != DeviceType.FOSSILQHYBRID) || (selectedApp.getType() != GBDeviceApp.Type.WATCHFACE)) {
@@ -637,9 +625,6 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             return true;
         } else if (itemId == R.id.appmanager_health_deactivate || itemId == R.id.appmanager_hrm_deactivate || itemId == R.id.appmanager_weather_deactivate) {
             GBApplication.deviceService(mGBDevice).onAppDelete(selectedApp.getUUID());
-            return true;
-        } else if (itemId == R.id.appmanager_weather_install_provider) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/app/ru.gelin.android.weather.notification")));
             return true;
         } else if (itemId == R.id.appmanager_app_configure) {
             GBApplication.deviceService(mGBDevice).onAppStart(selectedApp.getUUID(), true);
