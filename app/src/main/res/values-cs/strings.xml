@@ -4211,4 +4211,5 @@
     <string name="pref_summary_time_interval">Omezit na určité intervaly</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Povolit zastaralou Službu monitoru sběrače oznámení</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Vynutí použití druhé služby na popředí pro udržení monitoru oznámení v provozu. Tuto možnost aktivujte, pokud Gadgetbridge přestal přijímat oznámení.\nUpozorňujeme, že funkce může způsobit zobrazení druhého trvalého oznámení.\nPo přepnutí restartujte aplikaci.</string>
+    <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
 </resources>
