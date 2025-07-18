@@ -260,20 +260,20 @@ public class SMAQ2OSSSupport extends AbstractBTLESingleDeviceSupport {
 
             SMAQ2OSSProtos.SetWeather.Builder setWeather= SMAQ2OSSProtos.SetWeather.newBuilder();
 
-            setWeather.setTimestamp(weatherSpec.timestamp);
-            setWeather.setCondition(weatherSpec.currentConditionCode);
-            setWeather.setTemperature(weatherSpec.currentTemp-273);
-            setWeather.setTemperatureMin(weatherSpec.todayMinTemp-273);
-            setWeather.setTemperatureMax(weatherSpec.todayMaxTemp-273);
-            setWeather.setHumidity(weatherSpec.currentHumidity);
+            setWeather.setTimestamp(weatherSpec.getTimestamp());
+            setWeather.setCondition(weatherSpec.getCurrentConditionCode());
+            setWeather.setTemperature(weatherSpec.getCurrentTemp() -273);
+            setWeather.setTemperatureMin(weatherSpec.getTodayMinTemp() -273);
+            setWeather.setTemperatureMax(weatherSpec.getTodayMaxTemp() -273);
+            setWeather.setHumidity(weatherSpec.getCurrentHumidity());
 
-            for (WeatherSpec.Daily f:weatherSpec.forecasts) {
+            for (WeatherSpec.Daily f: weatherSpec.getForecasts()) {
 
                 SMAQ2OSSProtos.Forecast.Builder fproto = SMAQ2OSSProtos.Forecast.newBuilder();
 
-                fproto.setCondition(f.conditionCode);
-                fproto.setTemperatureMin(f.minTemp-273);
-                fproto.setTemperatureMax(f.maxTemp-273);
+                fproto.setCondition(f.getConditionCode());
+                fproto.setTemperatureMin(f.getMinTemp() -273);
+                fproto.setTemperatureMax(f.getMaxTemp() -273);
 
                 setWeather.addForecasts(fproto);
             }

@@ -380,12 +380,12 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             JSONObject o = new JSONObject();
             o.put("t", "weather");
-            o.put("temp", weatherSpec.currentTemp);
-            o.put("hum", weatherSpec.currentHumidity);
-            o.put("code", weatherSpec.currentConditionCode);
-            o.put("txt", weatherSpec.currentCondition);
-            o.put("wind", weatherSpec.windSpeed);
-            o.put("loc", weatherSpec.location);
+            o.put("temp", weatherSpec.getCurrentTemp());
+            o.put("hum", weatherSpec.getCurrentHumidity());
+            o.put("code", weatherSpec.getCurrentConditionCode());
+            o.put("txt", weatherSpec.getCurrentCondition());
+            o.put("wind", weatherSpec.getWindSpeed());
+            o.put("loc", weatherSpec.getLocation());
             uartTxJSON("onSendWeather", o);
         } catch (JSONException e) {
             LOG.info("JSONException: " + e.getLocalizedMessage());

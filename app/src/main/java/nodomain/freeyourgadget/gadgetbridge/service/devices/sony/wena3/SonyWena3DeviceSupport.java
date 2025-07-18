@@ -601,22 +601,22 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
         WeatherSpec weatherSpec = weatherSpecs.get(0);
-        if(weatherSpec.forecasts.size() < 4) return;
+        if(weatherSpec.getForecasts().size() < 4) return;
 
         ArrayList<WeatherDay> days = new ArrayList<>();
         // Add today
         days.add(
                 new WeatherDay(
-                        Weather.fromOpenWeatherMap(weatherSpec.currentConditionCode),
-                        Weather.fromOpenWeatherMap(weatherSpec.currentConditionCode),
-                        weatherSpec.todayMaxTemp,
-                        weatherSpec.todayMinTemp
+                        Weather.fromOpenWeatherMap(weatherSpec.getCurrentConditionCode()),
+                        Weather.fromOpenWeatherMap(weatherSpec.getCurrentConditionCode()),
+                        weatherSpec.getTodayMaxTemp(),
+                        weatherSpec.getTodayMinTemp()
                 )
         );
 
         // Add other days
         for(int i = 0; i < 4; i++) {
-            days.add(WeatherDay.fromSpec(weatherSpec.forecasts.get(i)));
+            days.add(WeatherDay.fromSpec(weatherSpec.getForecasts().get(i)));
         }
 
         WeatherReport report = new WeatherReport(days);

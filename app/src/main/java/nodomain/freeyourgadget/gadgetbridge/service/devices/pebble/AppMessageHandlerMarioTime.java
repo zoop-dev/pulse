@@ -43,7 +43,7 @@ class AppMessageHandlerMarioTime extends AppMessageHandler {
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
         pairs.add(new Pair<>(KEY_WEATHER_ICON_ID, (Object) (byte) 1));
-        pairs.add(new Pair<>(KEY_WEATHER_TEMPERATURE, (Object) (byte) (weatherSpec.currentTemp - 273)));
+        pairs.add(new Pair<>(KEY_WEATHER_TEMPERATURE, (Object) (byte) (weatherSpec.getCurrentTemp() - 273)));
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 
         ByteBuffer buf = ByteBuffer.allocate(weatherMessage.length);

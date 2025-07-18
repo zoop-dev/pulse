@@ -105,24 +105,24 @@ public class WeatherMapperTest extends TestBase {
             JSONObject wind = new JSONObject();
 
             try {
-                condition.put("id", weatherSpec.currentConditionCode);
-                condition.put("main", weatherSpec.currentCondition);
-                condition.put("description", weatherSpec.currentCondition);
-                condition.put("icon", Weather.mapToOpenWeatherMapIcon(weatherSpec.currentConditionCode));
+                condition.put("id", weatherSpec.getCurrentConditionCode());
+                condition.put("main", weatherSpec.getCurrentCondition());
+                condition.put("description", weatherSpec.getCurrentCondition());
+                condition.put("icon", Weather.mapToOpenWeatherMapIcon(weatherSpec.getCurrentConditionCode()));
                 weather.put(condition);
 
 
-                main.put("temp", weatherSpec.currentTemp);
-                main.put("humidity", weatherSpec.currentHumidity);
-                main.put("temp_min", weatherSpec.todayMinTemp);
-                main.put("temp_max", weatherSpec.todayMaxTemp);
+                main.put("temp", weatherSpec.getCurrentTemp());
+                main.put("humidity", weatherSpec.getCurrentHumidity());
+                main.put("temp_min", weatherSpec.getTodayMinTemp());
+                main.put("temp_max", weatherSpec.getTodayMaxTemp());
 
-                wind.put("speed", (weatherSpec.windSpeed / 3.6f)); //meter per second
-                wind.put("deg", weatherSpec.windDirection);
+                wind.put("speed", (weatherSpec.getWindSpeed() / 3.6f)); //meter per second
+                wind.put("deg", weatherSpec.getWindDirection());
 
                 reconstructedOWMWeather.put("weather", weather);
                 reconstructedOWMWeather.put("main", main);
-                reconstructedOWMWeather.put("name", weatherSpec.location);
+                reconstructedOWMWeather.put("name", weatherSpec.getLocation());
                 reconstructedOWMWeather.put("wind", wind);
 
             } catch (JSONException e) {

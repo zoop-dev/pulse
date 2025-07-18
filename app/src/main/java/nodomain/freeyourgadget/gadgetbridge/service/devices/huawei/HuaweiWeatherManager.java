@@ -152,42 +152,42 @@ public class HuaweiWeatherManager {
         Date currentDay = DateTimeUtils.dayStart(DateTimeUtils.todayUTC());
         Date nextDay = DateTimeUtils.shiftByDays(currentDay, 1);
 
-        if (timeOutOfDateInterval(weatherSpec.sunRise, currentDay, nextDay)) {
-            LOG.warn("Sun rise for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.sunRise));
-            weatherSpec.sunRise = 0;
+        if (timeOutOfDateInterval(weatherSpec.getSunRise(), currentDay, nextDay)) {
+            LOG.warn("Sun rise for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.getSunRise()));
+            weatherSpec.setSunRise(0);
         }
-        if (timeOutOfDateInterval(weatherSpec.sunSet, currentDay, nextDay)) {
-            LOG.warn("Sun set for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.sunSet));
-            weatherSpec.sunSet = 0;
+        if (timeOutOfDateInterval(weatherSpec.getSunSet(), currentDay, nextDay)) {
+            LOG.warn("Sun set for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.getSunSet()));
+            weatherSpec.setSunSet(0);
         }
-        if (timeOutOfDateInterval(weatherSpec.moonRise, currentDay, nextDay)) {
-            LOG.warn("Moon rise for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.moonRise));
-            weatherSpec.moonRise = 0;
+        if (timeOutOfDateInterval(weatherSpec.getMoonRise(), currentDay, nextDay)) {
+            LOG.warn("Moon rise for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.getMoonRise()));
+            weatherSpec.setMoonRise(0);
         }
-        if (timeOutOfDateInterval(weatherSpec.moonSet, currentDay, nextDay)) {
-            LOG.warn("Moon set for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.moonSet));
-            weatherSpec.moonSet = 0;
+        if (timeOutOfDateInterval(weatherSpec.getMoonSet(), currentDay, nextDay)) {
+            LOG.warn("Moon set for today out of bounds: {}", DateTimeUtils.parseTimeStamp(weatherSpec.getMoonSet()));
+            weatherSpec.setMoonSet(0);
         }
 
-        for (WeatherSpec.Daily point : weatherSpec.forecasts) {
+        for (WeatherSpec.Daily point : weatherSpec.getForecasts()) {
             currentDay = nextDay;
             nextDay = DateTimeUtils.shiftByDays(currentDay, 1);
 
-            if (timeOutOfDateInterval(point.sunRise, currentDay, nextDay)) {
-                LOG.warn("Sun rise for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.sunRise));
-                point.sunRise = 0;
+            if (timeOutOfDateInterval(point.getSunRise(), currentDay, nextDay)) {
+                LOG.warn("Sun rise for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.getSunRise()));
+                point.setSunRise(0);
             }
-            if (timeOutOfDateInterval(point.sunSet, currentDay, nextDay)) {
-                LOG.warn("Sun set for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.sunSet));
-                point.sunSet = 0;
+            if (timeOutOfDateInterval(point.getSunSet(), currentDay, nextDay)) {
+                LOG.warn("Sun set for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.getSunSet()));
+                point.setSunSet(0);
             }
-            if (timeOutOfDateInterval(point.moonRise, currentDay, nextDay)) {
-                LOG.warn("Moon rise for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.moonRise));
-                point.moonRise = 0;
+            if (timeOutOfDateInterval(point.getMoonRise(), currentDay, nextDay)) {
+                LOG.warn("Moon rise for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.getMoonRise()));
+                point.setMoonRise(0);
             }
-            if (timeOutOfDateInterval(point.moonSet, currentDay, nextDay)) {
-                LOG.warn("Moon set for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.moonSet));
-                point.moonSet = 0;
+            if (timeOutOfDateInterval(point.getMoonSet(), currentDay, nextDay)) {
+                LOG.warn("Moon set for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.getMoonSet()));
+                point.setMoonSet(0);
             }
         }
     }

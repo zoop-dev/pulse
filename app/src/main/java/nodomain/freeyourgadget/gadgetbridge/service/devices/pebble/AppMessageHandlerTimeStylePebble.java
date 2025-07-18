@@ -139,16 +139,16 @@ class AppMessageHandlerTimeStylePebble extends AppMessageHandler {
         boolean isNight = false;   //TODO: use the night icons when night
         pairs.add(new Pair<>(messageKeys.get("SettingUseMetric"), (Object) 1)); //celsius
         pairs.add(new Pair<>(messageKeys.get("WeatherUseNightIcon"), (Object) (isNight ? 1 : 0)));
-        pairs.add(new Pair<>(messageKeys.get("WeatherTemperature"), (Object) (weatherSpec.currentTemp - 273)));
-        pairs.add(new Pair<>(messageKeys.get("WeatherCondition"), (Object) (getIconForConditionCode(weatherSpec.currentConditionCode, isNight))));
+        pairs.add(new Pair<>(messageKeys.get("WeatherTemperature"), (Object) (weatherSpec.getCurrentTemp() - 273)));
+        pairs.add(new Pair<>(messageKeys.get("WeatherCondition"), (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))));
 
-        if (weatherSpec.forecasts.size() > 0) {
-            WeatherSpec.Daily tomorrow = weatherSpec.forecasts.get(0);
-            pairs.add(new Pair<>(messageKeys.get("WeatherForecastCondition"), (Object) (getIconForConditionCode(tomorrow.conditionCode, isNight))));
+        if (weatherSpec.getForecasts().size() > 0) {
+            WeatherSpec.Daily tomorrow = weatherSpec.getForecasts().get(0);
+            pairs.add(new Pair<>(messageKeys.get("WeatherForecastCondition"), (Object) (getIconForConditionCode(tomorrow.getConditionCode(), isNight))));
         }
 
-        pairs.add(new Pair<>(messageKeys.get("WeatherForecastHighTemp"), (Object) (weatherSpec.todayMaxTemp - 273)));
-        pairs.add(new Pair<>(messageKeys.get("WeatherForecastLowTemp"), (Object) (weatherSpec.todayMinTemp - 273)));
+        pairs.add(new Pair<>(messageKeys.get("WeatherForecastHighTemp"), (Object) (weatherSpec.getTodayMaxTemp() - 273)));
+        pairs.add(new Pair<>(messageKeys.get("WeatherForecastLowTemp"), (Object) (weatherSpec.getTodayMinTemp() - 273)));
 
         return mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
     }

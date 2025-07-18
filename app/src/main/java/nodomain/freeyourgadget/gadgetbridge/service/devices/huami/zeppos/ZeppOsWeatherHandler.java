@@ -198,9 +198,9 @@ public class ZeppOsWeatherHandler {
         public List<Object> airQualities = new ArrayList<>();
 
         public ForecastResponse(final WeatherSpec weatherSpec, final int days, final boolean sunMoonInUtc) {
-            final int actualDays = Math.min(weatherSpec.forecasts.size(), days - 1); // leave one slot for the first day
+            final int actualDays = Math.min(weatherSpec.getForecasts().size(), days - 1); // leave one slot for the first day
 
-            pubTime = new Date(weatherSpec.timestamp * 1000L);
+            pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
 
             final Calendar calendar = GregorianCalendar.getInstance();
             calendar.setTime(pubTime);
@@ -210,48 +210,48 @@ public class ZeppOsWeatherHandler {
             sunriseDate.setTime(calendar.getTime());
 
             // First one is for the current day
-            temperature.add(new Range(weatherSpec.todayMinTemp - 273, weatherSpec.todayMaxTemp - 273));
-            final String currentWeatherCode = String.valueOf(mapToZeppOsWeatherCode(weatherSpec.currentConditionCode));
+            temperature.add(new Range(weatherSpec.getTodayMinTemp() - 273, weatherSpec.getTodayMaxTemp() - 273));
+            final String currentWeatherCode = String.valueOf(mapToZeppOsWeatherCode(weatherSpec.getCurrentConditionCode()));
             weather.add(new Range(currentWeatherCode, currentWeatherCode));
-            if (weatherSpec.sunRise != 0 && weatherSpec.sunSet != 0) {
-                sunRiseSet.add(getSunriseSunset(new Date(weatherSpec.sunRise * 1000L), new Date(weatherSpec.sunSet * 1000L), sunMoonInUtc));
-            } else if (weatherSpec.getLocation() != null) {
-                sunRiseSet.add(getSunriseSunset(sunriseDate, weatherSpec.getLocation(), sunMoonInUtc));
+            if (weatherSpec.getSunRise() != 0 && weatherSpec.getSunSet() != 0) {
+                sunRiseSet.add(getSunriseSunset(new Date(weatherSpec.getSunRise() * 1000L), new Date(weatherSpec.getSunSet() * 1000L), sunMoonInUtc));
+            } else if (weatherSpec.getLocationObject() != null) {
+                sunRiseSet.add(getSunriseSunset(sunriseDate, weatherSpec.getLocationObject(), sunMoonInUtc));
             } else {
                 sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation, sunMoonInUtc));
             }
             sunriseDate.add(Calendar.DAY_OF_MONTH, 1);
-            windDirection.add(new Range(weatherSpec.windDirection, weatherSpec.windDirection));
-            windSpeed.add(new Range(Math.round(weatherSpec.windSpeed), Math.round(weatherSpec.windSpeed)));
+            windDirection.add(new Range(weatherSpec.getWindDirection(), weatherSpec.getWindDirection()));
+            windSpeed.add(new Range(Math.round(weatherSpec.getWindSpeed()), Math.round(weatherSpec.getWindSpeed())));
 
-            moonRiseSet.add(weatherSpec.moonRise, weatherSpec.moonSet, weatherSpec.moonPhase, sunMoonInUtc);
+            moonRiseSet.add(weatherSpec.getMoonRise(), weatherSpec.getMoonSet(), weatherSpec.getMoonPhase(), sunMoonInUtc);
 
             for (int i = 0; i < actualDays; i++) {
-                final WeatherSpec.Daily forecast = weatherSpec.forecasts.get(i);
-                temperature.add(new Range(forecast.minTemp - 273, forecast.maxTemp - 273));
-                final String weatherCode = String.valueOf(mapToZeppOsWeatherCode(forecast.conditionCode));
+                final WeatherSpec.Daily forecast = weatherSpec.getForecasts().get(i);
+                temperature.add(new Range(forecast.getMinTemp() - 273, forecast.getMaxTemp() - 273));
+                final String weatherCode = String.valueOf(mapToZeppOsWeatherCode(forecast.getConditionCode()));
                 weather.add(new Range(weatherCode, weatherCode));
 
-                if (forecast.sunRise != 0 && forecast.sunSet != 0) {
-                    sunRiseSet.add(getSunriseSunset(new Date(forecast.sunRise * 1000L), new Date(forecast.sunSet * 1000L), sunMoonInUtc));
+                if (forecast.getSunRise() != 0 && forecast.getSunSet() != 0) {
+                    sunRiseSet.add(getSunriseSunset(new Date(forecast.getSunRise() * 1000L), new Date(forecast.getSunSet() * 1000L), sunMoonInUtc));
                 } else {
                     sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation, sunMoonInUtc));
                 }
                 sunriseDate.add(Calendar.DAY_OF_MONTH, 1);
 
-                if (forecast.windDirection != -1) {
-                    windDirection.add(new Range(forecast.windDirection, forecast.windDirection));
+                if (forecast.getWindDirection() != -1) {
+                    windDirection.add(new Range(forecast.getWindDirection(), forecast.getWindDirection()));
                 } else {
                     windDirection.add(new Range(0, 0));
                 }
 
-                if (forecast.windSpeed != -1) {
-                    windSpeed.add(new Range(Math.round(forecast.windSpeed), Math.round(forecast.windSpeed)));
+                if (forecast.getWindSpeed() != -1) {
+                    windSpeed.add(new Range(Math.round(forecast.getWindSpeed()), Math.round(forecast.getWindSpeed())));
                 } else {
                     windSpeed.add(new Range(0, 0));
                 }
 
-                moonRiseSet.add(forecast.moonRise, forecast.moonSet, forecast.moonPhase, sunMoonInUtc);
+                moonRiseSet.add(forecast.getMoonRise(), forecast.getMoonSet(), forecast.getMoonPhase(), sunMoonInUtc);
             }
         }
 
@@ -371,7 +371,7 @@ public class ZeppOsWeatherHandler {
         public List<IndexEntry> dataList = new ArrayList<>();
 
         public IndexResponse(final WeatherSpec weatherSpec, final int days) {
-            pubTime = new Date(weatherSpec.timestamp * 1000L);
+            pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
         }
 
         public static class Serializer implements JsonSerializer<IndexResponse> {
@@ -445,14 +445,14 @@ public class ZeppOsWeatherHandler {
         public Wind wind;
 
         public CurrentWeatherModel(final WeatherSpec weatherSpec) {
-            humidity = new UnitValue(Unit.PERCENTAGE, weatherSpec.currentHumidity);
-            pressure = new UnitValue(Unit.PRESSURE_MB, Math.round(weatherSpec.pressure));
-            pubTime = new Date(weatherSpec.timestamp * 1000L);
-            temperature = new UnitValue(Unit.TEMPERATURE_C, weatherSpec.currentTemp - 273);
-            uvIndex = String.valueOf(Math.round(weatherSpec.uvIndex));
-            visibility = new UnitValue(Unit.KM, Math.round(weatherSpec.visibility / 1000));
-            weather = String.valueOf(mapToZeppOsWeatherCode(weatherSpec.currentConditionCode));
-            wind = new Wind(weatherSpec.windDirection, Math.round(weatherSpec.windSpeed));
+            humidity = new UnitValue(Unit.PERCENTAGE, weatherSpec.getCurrentHumidity());
+            pressure = new UnitValue(Unit.PRESSURE_MB, Math.round(weatherSpec.getPressure()));
+            pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
+            temperature = new UnitValue(Unit.TEMPERATURE_C, weatherSpec.getCurrentTemp() - 273);
+            uvIndex = String.valueOf(Math.round(weatherSpec.getUvIndex()));
+            visibility = new UnitValue(Unit.KM, Math.round(weatherSpec.getVisibility() / 1000));
+            weather = String.valueOf(mapToZeppOsWeatherCode(weatherSpec.getCurrentConditionCode()));
+            wind = new Wind(weatherSpec.getWindDirection(), Math.round(weatherSpec.getWindSpeed()));
         }
 
         public static class Serializer implements JsonSerializer<CurrentWeatherModel> {
@@ -483,18 +483,18 @@ public class ZeppOsWeatherHandler {
         public String so2; // float
 
         public AqiModel(final WeatherSpec weatherSpec) {
-            if (weatherSpec.airQuality == null) {
+            if (weatherSpec.getAirQuality() == null) {
                 return;
             }
 
-            this.aqi = String.valueOf(weatherSpec.airQuality.aqi);
-            this.co = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.airQuality.coAqi);
-            this.no2 = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.airQuality.no2Aqi);
-            this.o3 = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.airQuality.o3Aqi);
-            this.pm10 = String.valueOf(Math.round((float) weatherSpec.airQuality.pm10Aqi));
-            this.pm25 = String.valueOf(Math.round((float) weatherSpec.airQuality.pm25Aqi));
-            this.pubTime = new Date(weatherSpec.timestamp * 1000L);
-            this.so2 = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.airQuality.so2Aqi);
+            this.aqi = String.valueOf(weatherSpec.getAirQuality().getAqi());
+            this.co = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.getAirQuality().getCoAqi());
+            this.no2 = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.getAirQuality().getNo2Aqi());
+            this.o3 = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.getAirQuality().getO3Aqi());
+            this.pm10 = String.valueOf(Math.round((float) weatherSpec.getAirQuality().getPm10Aqi()));
+            this.pm25 = String.valueOf(Math.round((float) weatherSpec.getAirQuality().getPm25Aqi()));
+            this.pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
+            this.so2 = String.format(Locale.ROOT, "%.1f", (float) weatherSpec.getAirQuality().getSo2Aqi());
         }
 
         public static class Serializer implements JsonSerializer<AqiModel> {
@@ -529,7 +529,7 @@ public class ZeppOsWeatherHandler {
         public List<TideDataEntry> tideData = new ArrayList<>();
 
         public TideResponse(final WeatherSpec weatherSpec, int tideDays) {
-            pubTime = new Date(weatherSpec.timestamp * 1000L);
+            pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
 
             // Fill all entries, even if without data
             final Calendar pubTimeDate = Calendar.getInstance();
@@ -678,9 +678,9 @@ public class ZeppOsWeatherHandler {
         public List<String> windScale = new ArrayList<>(); // each element in the form of 1-2
 
         public HourlyResponse(final WeatherSpec weatherSpec, final int hours) {
-            pubTime = new Date(weatherSpec.timestamp * 1000L);
+            pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
 
-            if (weatherSpec.hourly == null || weatherSpec.hourly.isEmpty()) {
+            if (weatherSpec.getHourly() == null || weatherSpec.getHourly().isEmpty()) {
                 // We don't have hourly data, but some devices refuse to open the weather app without it
 
                 final Calendar fxTimeCalendar = Calendar.getInstance();
@@ -691,12 +691,12 @@ public class ZeppOsWeatherHandler {
                 fxTimeCalendar.add(Calendar.HOUR, 1);
 
                 for (int i = 0; i < hours; i++) {
-                    weather.add(String.valueOf(mapToZeppOsWeatherCode(weatherSpec.currentConditionCode)));
-                    temperature.add(String.valueOf(weatherSpec.currentTemp - 273));
-                    humidity.add(String.valueOf(weatherSpec.currentHumidity));
+                    weather.add(String.valueOf(mapToZeppOsWeatherCode(weatherSpec.getCurrentConditionCode())));
+                    temperature.add(String.valueOf(weatherSpec.getCurrentTemp() - 273));
+                    humidity.add(String.valueOf(weatherSpec.getCurrentHumidity()));
                     fxTime.add(fxTimeCalendar.getTime());
-                    windDirection.add(String.valueOf(weatherSpec.windDirection));
-                    windSpeed.add(String.valueOf(Math.round(weatherSpec.windSpeed)));
+                    windDirection.add(String.valueOf(weatherSpec.getWindDirection()));
+                    windSpeed.add(String.valueOf(Math.round(weatherSpec.getWindSpeed())));
                     windScale.add("1-2");
 
                     fxTimeCalendar.add(Calendar.HOUR, 1);
@@ -704,17 +704,17 @@ public class ZeppOsWeatherHandler {
             } else {
                 int i = 0;
 
-                for (final WeatherSpec.Hourly hourly : weatherSpec.hourly) {
-                    if (hourly.timestamp < weatherSpec.timestamp) {
+                for (final WeatherSpec.Hourly hourly : weatherSpec.getHourly()) {
+                    if (hourly.getTimestamp() < weatherSpec.getTimestamp()) {
                         continue;
                     }
 
-                    weather.add(String.valueOf(mapToZeppOsWeatherCode(hourly.conditionCode)));
-                    temperature.add(String.valueOf(hourly.temp - 273));
-                    humidity.add(String.valueOf(hourly.humidity));
-                    fxTime.add(new Date(hourly.timestamp * 1000L));
-                    windDirection.add(String.valueOf(hourly.windDirection));
-                    windSpeed.add(String.valueOf(Math.round(hourly.windSpeed)));
+                    weather.add(String.valueOf(mapToZeppOsWeatherCode(hourly.getConditionCode())));
+                    temperature.add(String.valueOf(hourly.getTemp() - 273));
+                    humidity.add(String.valueOf(hourly.getHumidity()));
+                    fxTime.add(new Date(hourly.getTimestamp() * 1000L));
+                    windDirection.add(String.valueOf(hourly.getWindDirection()));
+                    windSpeed.add(String.valueOf(Math.round(hourly.getWindSpeed())));
                     windScale.add(hourly.windSpeedAsBeaufort() + "-" + hourly.windSpeedAsBeaufort());
 
                     if (++i >= hours) {

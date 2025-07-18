@@ -315,21 +315,21 @@ public class PixooProtocol extends GBDeviceProtocol {
     @Override
     public byte[] encodeSendWeather(WeatherSpec weatherSpec) {
         byte pixooWeatherCode = 0;
-        if (weatherSpec.currentConditionCode >= 200 && weatherSpec.currentConditionCode <= 299) {
+        if (weatherSpec.getCurrentConditionCode() >= 200 && weatherSpec.getCurrentConditionCode() <= 299) {
             pixooWeatherCode = 5;
-        } else if (weatherSpec.currentConditionCode >= 300 && weatherSpec.currentConditionCode < 600) {
+        } else if (weatherSpec.getCurrentConditionCode() >= 300 && weatherSpec.getCurrentConditionCode() < 600) {
             pixooWeatherCode = 6;
-        } else if (weatherSpec.currentConditionCode >= 600 && weatherSpec.currentConditionCode < 700) {
+        } else if (weatherSpec.getCurrentConditionCode() >= 600 && weatherSpec.getCurrentConditionCode() < 700) {
             pixooWeatherCode = 8;
-        } else if (weatherSpec.currentConditionCode >= 700 && weatherSpec.currentConditionCode < 800) {
+        } else if (weatherSpec.getCurrentConditionCode() >= 700 && weatherSpec.getCurrentConditionCode() < 800) {
             pixooWeatherCode = 9;
-        } else if (weatherSpec.currentConditionCode == 800) {
+        } else if (weatherSpec.getCurrentConditionCode() == 800) {
             pixooWeatherCode = 1;
-        } else if (weatherSpec.currentConditionCode >= 801 && weatherSpec.currentConditionCode <= 804) {
+        } else if (weatherSpec.getCurrentConditionCode() >= 801 && weatherSpec.getCurrentConditionCode() <= 804) {
             pixooWeatherCode = 3;
         }
 
-        byte temp = (byte) (weatherSpec.currentTemp - 273);
+        byte temp = (byte) (weatherSpec.getCurrentTemp() - 273);
         String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
             temp = (byte) WeatherUtils.celsiusToFahrenheit(temp);

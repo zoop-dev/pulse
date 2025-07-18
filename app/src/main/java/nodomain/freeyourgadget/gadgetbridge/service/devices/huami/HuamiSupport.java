@@ -2831,33 +2831,33 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         final WeatherSpec weatherSpec = weatherSpecs.get(0);
 
         MiBandConst.DistanceUnit unit = HuamiCoordinator.getDistanceUnit();
-        int tz_offset_hours = SimpleTimeZone.getDefault().getOffset(weatherSpec.timestamp * 1000L) / (1000 * 60 * 60);
+        int tz_offset_hours = SimpleTimeZone.getDefault().getOffset(weatherSpec.getTimestamp() * 1000L) / (1000 * 60 * 60);
         try {
             TransactionBuilder builder;
             builder = performInitialized("Sending current temp");
 
-            byte condition = HuamiWeatherConditions.mapToAmazfitBipWeatherCode(weatherSpec.currentConditionCode);
+            byte condition = HuamiWeatherConditions.mapToAmazfitBipWeatherCode(weatherSpec.getCurrentConditionCode());
 
             int length = 8;
             if (supportsConditionString) {
-                length += weatherSpec.currentCondition.getBytes().length + 1;
+                length += weatherSpec.getCurrentCondition().getBytes().length + 1;
             }
             ByteBuffer buf = ByteBuffer.allocate(length);
             buf.order(ByteOrder.LITTLE_ENDIAN);
 
             buf.put((byte) 2);
-            buf.putInt(weatherSpec.timestamp);
+            buf.putInt(weatherSpec.getTimestamp());
             buf.put((byte) (tz_offset_hours * 4));
             buf.put(condition);
 
-            int currentTemp = weatherSpec.currentTemp - 273;
+            int currentTemp = weatherSpec.getCurrentTemp() - 273;
             if (unit == MiBandConst.DistanceUnit.IMPERIAL) {
                 currentTemp = (int) WeatherUtils.celsiusToFahrenheit(currentTemp);
             }
             buf.put((byte) currentTemp);
 
             if (supportsConditionString) {
-                buf.put(weatherSpec.currentCondition.getBytes());
+                buf.put(weatherSpec.getCurrentCondition().getBytes());
                 buf.put((byte) 0);
             }
 
@@ -2876,7 +2876,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             TransactionBuilder builder;
             builder = performInitialized("Sending air quality index");
             int length = 8;
-            int aqi = weatherSpec.airQuality != null ? weatherSpec.airQuality.aqi : -1;
+            int aqi = weatherSpec.getAirQuality() != null ? weatherSpec.getAirQuality().getAqi() : -1;
             String aqiString = WeatherMapper.INSTANCE.getAqiLevelString(getContext(), aqi);
             if (supportsConditionString) {
                 length += aqiString.getBytes().length + 1;
@@ -2884,7 +2884,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             ByteBuffer buf = ByteBuffer.allocate(length);
             buf.order(ByteOrder.LITTLE_ENDIAN);
             buf.put((byte) 4);
-            buf.putInt(weatherSpec.timestamp);
+            buf.putInt(weatherSpec.getTimestamp());
             buf.put((byte) (tz_offset_hours * 4));
             buf.putShort((short) aqi);
             if (supportsConditionString) {
@@ -2905,18 +2905,18 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
         try {
             TransactionBuilder builder = performInitialized("Sending weather forecast");
-            if (weatherSpec.forecasts.size() > 6) { //TDOD: find out the limits for each device
-                weatherSpec.forecasts.subList(6, weatherSpec.forecasts.size()).clear();
+            if (weatherSpec.getForecasts().size() > 6) { //TDOD: find out the limits for each device
+                weatherSpec.getForecasts().subList(6, weatherSpec.getForecasts().size()).clear();
             }
-            final byte NR_DAYS = (byte) (1 + weatherSpec.forecasts.size());
+            final byte NR_DAYS = (byte) (1 + weatherSpec.getForecasts().size());
             int bytesPerDay = 4;
 
             int conditionsLength = 0;
             if (supportsConditionString) {
                 bytesPerDay = 5;
-                conditionsLength = weatherSpec.currentCondition.getBytes().length;
-                for (WeatherSpec.Daily forecast : weatherSpec.forecasts) {
-                    conditionsLength += WeatherMapper.INSTANCE.getConditionString(getContext(), forecast.conditionCode).getBytes().length;
+                conditionsLength = weatherSpec.getCurrentCondition().getBytes().length;
+                for (WeatherSpec.Daily forecast : weatherSpec.getForecasts()) {
+                    conditionsLength += WeatherMapper.INSTANCE.getConditionString(getContext(), forecast.getConditionCode()).getBytes().length;
                 }
             }
 
@@ -2925,17 +2925,17 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
             buf.order(ByteOrder.LITTLE_ENDIAN);
             buf.put((byte) 1);
-            buf.putInt(weatherSpec.timestamp);
+            buf.putInt(weatherSpec.getTimestamp());
             buf.put((byte) (tz_offset_hours * 4));
 
             buf.put(NR_DAYS);
 
-            byte condition = HuamiWeatherConditions.mapToAmazfitBipWeatherCode(weatherSpec.currentConditionCode);
+            byte condition = HuamiWeatherConditions.mapToAmazfitBipWeatherCode(weatherSpec.getCurrentConditionCode());
             buf.put(condition);
             buf.put(condition);
 
-            int todayMaxTemp = weatherSpec.todayMaxTemp - 273;
-            int todayMinTemp = weatherSpec.todayMinTemp - 273;
+            int todayMaxTemp = weatherSpec.getTodayMaxTemp() - 273;
+            int todayMinTemp = weatherSpec.getTodayMinTemp() - 273;
             if (unit == MiBandConst.DistanceUnit.IMPERIAL) {
                 todayMaxTemp = (int) WeatherUtils.celsiusToFahrenheit(todayMaxTemp);
                 todayMinTemp = (int) WeatherUtils.celsiusToFahrenheit(todayMinTemp);
@@ -2944,17 +2944,17 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             buf.put((byte) todayMinTemp);
 
             if (supportsConditionString) {
-                buf.put(weatherSpec.currentCondition.getBytes());
+                buf.put(weatherSpec.getCurrentCondition().getBytes());
                 buf.put((byte) 0);
             }
 
-            for (WeatherSpec.Daily forecast : weatherSpec.forecasts) {
-                condition = HuamiWeatherConditions.mapToAmazfitBipWeatherCode(forecast.conditionCode);
+            for (WeatherSpec.Daily forecast : weatherSpec.getForecasts()) {
+                condition = HuamiWeatherConditions.mapToAmazfitBipWeatherCode(forecast.getConditionCode());
                 buf.put(condition);
                 buf.put(condition);
 
-                int forecastMaxTemp = forecast.maxTemp - 273;
-                int forecastMinTemp = forecast.minTemp - 273;
+                int forecastMaxTemp = forecast.getMaxTemp() - 273;
+                int forecastMinTemp = forecast.getMinTemp() - 273;
                 if (unit == MiBandConst.DistanceUnit.IMPERIAL) {
                     forecastMaxTemp = (int) WeatherUtils.celsiusToFahrenheit(forecastMaxTemp);
                     forecastMinTemp = (int) WeatherUtils.celsiusToFahrenheit(forecastMinTemp);
@@ -2963,7 +2963,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 buf.put((byte) forecastMinTemp);
 
                 if (supportsConditionString) {
-                    buf.put(WeatherMapper.INSTANCE.getConditionString(getContext(), forecast.conditionCode).getBytes());
+                    buf.put(WeatherMapper.INSTANCE.getConditionString(getContext(), forecast.getConditionCode()).getBytes());
                     buf.put((byte) 0);
                 }
             }
@@ -2983,11 +2983,11 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             TransactionBuilder builder;
             builder = performInitialized("Sending forecast location");
 
-            int length = 2 + weatherSpec.location.getBytes().length;
+            int length = 2 + weatherSpec.getLocation().getBytes().length;
             ByteBuffer buf = ByteBuffer.allocate(length);
             buf.order(ByteOrder.LITTLE_ENDIAN);
             buf.put((byte) 8);
-            buf.put(weatherSpec.location.getBytes());
+            buf.put(weatherSpec.getLocation().getBytes());
             buf.put((byte) 0);
 
 
@@ -3008,14 +3008,14 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 builder = performInitialized("Sending wind/humidity");
 
                 String windString = this.windSpeedString(weatherSpec);
-                String humidityString = weatherSpec.currentHumidity + "%";
+                String humidityString = weatherSpec.getCurrentHumidity() + "%";
 
                 int length = 8 + windString.getBytes().length + humidityString.getBytes().length;
 
                 ByteBuffer buf = ByteBuffer.allocate(length);
                 buf.order(ByteOrder.LITTLE_ENDIAN);
                 buf.put((byte) 64);
-                buf.putInt(weatherSpec.timestamp);
+                buf.putInt(weatherSpec.getTimestamp());
                 buf.put((byte) (tz_offset_hours * 4));
                 buf.put(windString.getBytes());
                 buf.put((byte) 0);
@@ -3048,7 +3048,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                         ByteBuffer buf = ByteBuffer.allocate(10);
                         buf.order(ByteOrder.LITTLE_ENDIAN);
                         buf.put((byte) 16);
-                        buf.putInt(weatherSpec.timestamp);
+                        buf.putInt(weatherSpec.getTimestamp());
                         buf.put((byte) (tz_offset_hours * 4));
                         buf.put((byte) sunriseTransitSet.getSunrise().getHour());
                         buf.put((byte) sunriseTransitSet.getSunrise().getMinute());

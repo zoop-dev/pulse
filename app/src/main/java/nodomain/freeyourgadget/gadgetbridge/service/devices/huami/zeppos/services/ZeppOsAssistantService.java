@@ -274,15 +274,15 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
             baos.write(0x00); // ?
             baos.write(0x00); // ?
 
-            baos.write(BLETypeConversions.fromUint32(weather.timestamp));
+            baos.write(BLETypeConversions.fromUint32(weather.getTimestamp()));
 
-            baos.write(StringUtils.ensureNotNull(weather.location).getBytes(StandardCharsets.UTF_8));
+            baos.write(StringUtils.ensureNotNull(weather.getLocation()).getBytes(StandardCharsets.UTF_8));
             baos.write(0);
 
             // FIXME long date string
             baos.write(0);
 
-            baos.write(StringUtils.ensureNotNull(weather.currentCondition).getBytes(StandardCharsets.UTF_8));
+            baos.write(StringUtils.ensureNotNull(weather.getCurrentCondition()).getBytes(StandardCharsets.UTF_8));
             baos.write(0);
 
             // FIXME Second line for the condition
@@ -290,8 +290,8 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
 
             // FIXME
 
-            baos.write(weather.forecasts.size());
-            for (final WeatherSpec.Daily forecast : weather.forecasts) {
+            baos.write(weather.getForecasts().size());
+            for (final WeatherSpec.Daily forecast : weather.getForecasts()) {
                 // FIXME
             }
         } catch (final IOException e) {

@@ -63,10 +63,10 @@ class AppMessageHandlerSquare extends AppMessageHandler {
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
         pairs.add(new Pair<>(CfgKeyWeatherMode, (Object) 1));
-        pairs.add(new Pair<>(CfgKeyConditions, (Object) weatherSpec.currentCondition));
+        pairs.add(new Pair<>(CfgKeyConditions, (Object) weatherSpec.getCurrentCondition()));
         pairs.add(new Pair<>(CfgKeyUseCelsius, (Object) 1));
-        pairs.add(new Pair<>(CfgKeyCelsiusTemperature, (Object) (weatherSpec.currentTemp - 273)));
-        pairs.add(new Pair<>(CfgKeyWeatherLocation, (Object) (weatherSpec.location)));
+        pairs.add(new Pair<>(CfgKeyCelsiusTemperature, (Object) (weatherSpec.getCurrentTemp() - 273)));
+        pairs.add(new Pair<>(CfgKeyWeatherLocation, (Object) (weatherSpec.getLocation())));
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 
         ByteBuffer buf = ByteBuffer.allocate(weatherMessage.length);

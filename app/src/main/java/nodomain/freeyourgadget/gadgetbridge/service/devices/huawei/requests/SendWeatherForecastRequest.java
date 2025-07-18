@@ -39,45 +39,45 @@ public class SendWeatherForecastRequest extends Request {
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
-        int hourlyCount = Math.min(weatherSpec.hourly.size(), 24);
-        int dayCount = Math.min(weatherSpec.forecasts.size() + 1, 8); // We add today as well
+        int hourlyCount = Math.min(weatherSpec.getHourly().size(), 24);
+        int dayCount = Math.min(weatherSpec.getForecasts().size() + 1, 8); // We add today as well
 
         ArrayList<WeatherForecastData.TimeData> timeDataArrayList = new ArrayList<>(hourlyCount);
         ArrayList<WeatherForecastData.DayData> dayDataArrayList = new ArrayList<>(dayCount);
         for (int i = 0; i < hourlyCount; i++) {
-            WeatherSpec.Hourly hourly = weatherSpec.hourly.get(i);
+            WeatherSpec.Hourly hourly = weatherSpec.getHourly().get(i);
             WeatherForecastData.TimeData timeData = new WeatherForecastData.TimeData();
-            timeData.timestamp = hourly.timestamp;
-            timeData.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(hourly.conditionCode);
-            timeData.temperature = (byte) (hourly.temp - 273);
+            timeData.timestamp = hourly.getTimestamp();
+            timeData.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(hourly.getConditionCode());
+            timeData.temperature = (byte) (hourly.getTemp() - 273);
             timeDataArrayList.add(timeData);
         }
 
         // Add today as well
         WeatherForecastData.DayData today = new WeatherForecastData.DayData();
-        today.timestamp = weatherSpec.timestamp;
-        today.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(weatherSpec.currentConditionCode);
-        today.highTemperature = (byte) (weatherSpec.todayMaxTemp - 273);
-        today.lowTemperature = (byte) (weatherSpec.todayMinTemp - 273);
-        today.sunriseTime = weatherSpec.sunRise;
-        today.sunsetTime = weatherSpec.sunSet;
-        today.moonRiseTime = weatherSpec.moonRise;
-        today.moonSetTime = weatherSpec.moonSet;
-        today.moonPhase = Weather.degreesToMoonPhase(weatherSpec.moonPhase);
+        today.timestamp = weatherSpec.getTimestamp();
+        today.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(weatherSpec.getCurrentConditionCode());
+        today.highTemperature = (byte) (weatherSpec.getTodayMaxTemp() - 273);
+        today.lowTemperature = (byte) (weatherSpec.getTodayMinTemp() - 273);
+        today.sunriseTime = weatherSpec.getSunRise();
+        today.sunsetTime = weatherSpec.getSunSet();
+        today.moonRiseTime = weatherSpec.getMoonRise();
+        today.moonSetTime = weatherSpec.getMoonSet();
+        today.moonPhase = Weather.degreesToMoonPhase(weatherSpec.getMoonPhase());
         dayDataArrayList.add(today);
 
         for (int i = 0; i < dayCount - 1; i++) {
-            WeatherSpec.Daily daily = weatherSpec.forecasts.get(i);
+            WeatherSpec.Daily daily = weatherSpec.getForecasts().get(i);
             WeatherForecastData.DayData dayData = new WeatherForecastData.DayData();
-            dayData.timestamp = weatherSpec.timestamp + (60*60*24 * (i + 1));
-            dayData.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(daily.conditionCode);
-            dayData.highTemperature = (byte) (daily.maxTemp - 273);
-            dayData.lowTemperature = (byte) (daily.minTemp - 273);
-            dayData.sunriseTime = daily.sunRise;
-            dayData.sunsetTime = daily.sunSet;
-            dayData.moonRiseTime = daily.moonRise;
-            dayData.moonSetTime = daily.moonSet;
-            dayData.moonPhase = Weather.degreesToMoonPhase(daily.moonPhase);
+            dayData.timestamp = weatherSpec.getTimestamp() + (60*60*24 * (i + 1));
+            dayData.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(daily.getConditionCode());
+            dayData.highTemperature = (byte) (daily.getMaxTemp() - 273);
+            dayData.lowTemperature = (byte) (daily.getMinTemp() - 273);
+            dayData.sunriseTime = daily.getSunRise();
+            dayData.sunsetTime = daily.getSunSet();
+            dayData.moonRiseTime = daily.getMoonRise();
+            dayData.moonSetTime = daily.getMoonSet();
+            dayData.moonPhase = Weather.degreesToMoonPhase(daily.getMoonPhase());
             dayDataArrayList.add(dayData);
         }
         try {

@@ -49,9 +49,9 @@ public class AsteroidOSWeather {
          * @param forecast A day in the weather forecast
          */
         public Day(WeatherSpec.Daily forecast) {
-            minTemp = forecast.minTemp;
-            maxTemp = forecast.maxTemp;
-            condition = forecast.conditionCode;
+            minTemp = forecast.getMinTemp();
+            maxTemp = forecast.getMaxTemp();
+            condition = forecast.getConditionCode();
         }
 
         /**
@@ -59,9 +59,9 @@ public class AsteroidOSWeather {
          * @param spec The weather spec itself
          */
         public Day(WeatherSpec spec) {
-            minTemp = spec.todayMinTemp;
-            maxTemp = spec.todayMaxTemp;
-            condition = spec.currentConditionCode;
+            minTemp = spec.getTodayMinTemp();
+            maxTemp = spec.getTodayMaxTemp();
+            condition = spec.getCurrentConditionCode();
         }
     }
 
@@ -80,10 +80,10 @@ public class AsteroidOSWeather {
      * @param spec The WeatherSpec given to the device support class
      */
     public AsteroidOSWeather(WeatherSpec spec) {
-        cityName = spec.location;
+        cityName = spec.getLocation();
         days.add(new Day(spec));
-        for (int i = 1; i < spec.forecasts.size(); i++) {
-            days.add(new Day(spec.forecasts.get(i - 1)));
+        for (int i = 1; i < spec.getForecasts().size(); i++) {
+            days.add(new Day(spec.getForecasts().get(i - 1)));
         }
     }
 

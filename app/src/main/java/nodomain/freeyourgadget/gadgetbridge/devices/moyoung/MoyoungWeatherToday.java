@@ -57,15 +57,15 @@ public class MoyoungWeatherToday {
     }
 
     public MoyoungWeatherToday(WeatherSpec weatherSpec) {
-        conditionId = MoyoungConstants.openWeatherConditionToMoyoungConditionId(weatherSpec.currentConditionCode);
+        conditionId = MoyoungConstants.openWeatherConditionToMoyoungConditionId(weatherSpec.getCurrentConditionCode());
         String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
-            currentTemp = (byte) WeatherUtils.celsiusToFahrenheit(weatherSpec.currentTemp - 273); // Kelvin -> Fahrenheit
+            currentTemp = (byte) WeatherUtils.celsiusToFahrenheit(weatherSpec.getCurrentTemp() - 273); // Kelvin -> Fahrenheit
         } else {
-            currentTemp = (byte) (weatherSpec.currentTemp - 273); // Kelvin -> Celcius
+            currentTemp = (byte) (weatherSpec.getCurrentTemp() - 273); // Kelvin -> Celcius
         }
         pm25 = null;
         lunar_or_festival = StringUtils.pad("", 4);
-        city = StringUtils.pad(weatherSpec.location.substring(0, 4), 4);
+        city = StringUtils.pad(weatherSpec.getLocation().substring(0, 4), 4);
     }
 }

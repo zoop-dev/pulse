@@ -2001,10 +2001,10 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             // Sunrise/sunset packet
             Calendar sunrise = Calendar.getInstance();
-            sunrise.setTimeInMillis(weatherSpec.sunRise * 1000L);
+            sunrise.setTimeInMillis(weatherSpec.getSunRise() * 1000L);
             Calendar sunset = Calendar.getInstance();
-            sunset.setTimeInMillis(weatherSpec.sunSet * 1000L);
-            ByteBuffer packetSunriseSunset = ByteBuffer.allocate(9 + weatherSpec.location.getBytes(StandardCharsets.UTF_8).length);
+            sunset.setTimeInMillis(weatherSpec.getSunSet() * 1000L);
+            ByteBuffer packetSunriseSunset = ByteBuffer.allocate(9 + weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length);
             packetSunriseSunset.put((byte) 0x00);
             packetSunriseSunset.put(weatherToday.conditionId);
             packetSunriseSunset.put(weatherToday.currentTemp);
@@ -2013,13 +2013,13 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             packetSunriseSunset.put((byte) sunrise.get(Calendar.MINUTE));
             packetSunriseSunset.put((byte) sunset.get(Calendar.HOUR_OF_DAY));
             packetSunriseSunset.put((byte) sunset.get(Calendar.MINUTE));
-            packetSunriseSunset.put(weatherSpec.location.getBytes(StandardCharsets.UTF_8));
+            packetSunriseSunset.put(weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8));
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SET_SUNRISE_SUNSET, packetSunriseSunset.array()));
 
             // Weather location packet. Prepend the update time to the location, since the watch can't display it separately
             Calendar updateTime = Calendar.getInstance();
-            updateTime.setTimeInMillis(weatherSpec.timestamp * 1000L);
-            String location = String.format(Locale.getDefault(), "%02d:%02d %s", updateTime.get(Calendar.HOUR_OF_DAY), updateTime.get(Calendar.MINUTE), weatherSpec.location);
+            updateTime.setTimeInMillis(weatherSpec.getTimestamp() * 1000L);
+            String location = String.format(Locale.getDefault(), "%02d:%02d %s", updateTime.get(Calendar.HOUR_OF_DAY), updateTime.get(Calendar.MINUTE), weatherSpec.getLocation());
             sendPacket(builder, MoyoungPacketOut.buildPacket(getMtu(), MoyoungConstants.CMD_SET_WEATHER_LOCATION, location.getBytes(StandardCharsets.UTF_8)));
 
             // Weather forecast packet
@@ -2029,8 +2029,8 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             packetWeatherForecast.put(weatherToday.currentTemp);
             for (int i = 0; i < 7; i++) {
                 MoyoungWeatherForecast forecast;
-                if (weatherSpec.forecasts.size() > i)
-                    forecast = new MoyoungWeatherForecast(weatherSpec.forecasts.get(i));
+                if (weatherSpec.getForecasts().size() > i)
+                    forecast = new MoyoungWeatherForecast(weatherSpec.getForecasts().get(i));
                 else
                     forecast = new MoyoungWeatherForecast(MoyoungConstants.WEATHER_HAZE, (byte) -100, (byte) -100); // I don't think there is a way to send less (my watch shows only tomorrow anyway...)
                 packetWeatherForecast.put(forecast.conditionId);

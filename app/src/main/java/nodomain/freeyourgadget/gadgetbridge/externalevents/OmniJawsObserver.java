@@ -105,7 +105,7 @@ public class OmniJawsObserver extends ContentObserver {
             try {
 
                 WeatherSpec weatherSpec = new WeatherSpec();
-                weatherSpec.forecasts = new ArrayList<>();
+                weatherSpec.setForecasts(new ArrayList<>());
 
                 int count = c.getCount();
                 if (count > 0) {
@@ -113,28 +113,28 @@ public class OmniJawsObserver extends ContentObserver {
                         c.moveToPosition(i);
                         if (i == 0) {
 
-                            weatherSpec.location = c.getString(0);
-                            weatherSpec.currentConditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(2));
-                            weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.currentConditionCode);
+                            weatherSpec.setLocation(c.getString(0));
+                            weatherSpec.setCurrentConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(2)));
+                            weatherSpec.setCurrentCondition(WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
                             //alternatively the following would also be possible
                             //weatherSpec.currentCondition = c.getString(1);
 
-                            weatherSpec.currentTemp = toKelvin(c.getFloat(3));
-                            weatherSpec.currentHumidity = (int) c.getFloat(4);
+                            weatherSpec.setCurrentTemp(toKelvin(c.getFloat(3)));
+                            weatherSpec.setCurrentHumidity((int) c.getFloat(4));
 
-                            weatherSpec.windSpeed = toKmh(c.getFloat(11));
-                            weatherSpec.windDirection = c.getInt(12);
-                            weatherSpec.timestamp = (int) (Long.parseLong(c.getString(9)) / 1000);
+                            weatherSpec.setWindSpeed(toKmh(c.getFloat(11)));
+                            weatherSpec.setWindDirection(c.getInt(12));
+                            weatherSpec.setTimestamp((int) (Long.parseLong(c.getString(9)) / 1000));
                         } else if (i == 1) {
-                            weatherSpec.todayMinTemp = toKelvin(c.getFloat(5));
-                            weatherSpec.todayMaxTemp = toKelvin(c.getFloat(6));
+                            weatherSpec.setTodayMinTemp(toKelvin(c.getFloat(5)));
+                            weatherSpec.setTodayMaxTemp(toKelvin(c.getFloat(6)));
                         } else {
 
                             WeatherSpec.Daily gbForecast = new WeatherSpec.Daily();
-                            gbForecast.minTemp = toKelvin(c.getFloat(5));
-                            gbForecast.maxTemp = toKelvin(c.getFloat(6));
-                            gbForecast.conditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(8));
-                            weatherSpec.forecasts.add(gbForecast);
+                            gbForecast.setMinTemp(toKelvin(c.getFloat(5)));
+                            gbForecast.setMaxTemp(toKelvin(c.getFloat(6)));
+                            gbForecast.setConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(8)));
+                            weatherSpec.getForecasts().add(gbForecast);
                         }
                     }
                 }

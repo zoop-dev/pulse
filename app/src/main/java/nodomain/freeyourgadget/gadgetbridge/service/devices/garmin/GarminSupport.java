@@ -493,41 +493,41 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         RecordData today = new RecordData(recordDefinitionToday, recordDefinitionToday.getRecordHeader());
         today.setFieldByName("weather_report", 0); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-        today.setFieldByName("timestamp", weather.timestamp);
-        today.setFieldByName("observed_at_time", weather.timestamp);
-        today.setFieldByName("temperature", weather.currentTemp);
-        today.setFieldByName("low_temperature", weather.todayMinTemp);
-        today.setFieldByName("high_temperature", weather.todayMaxTemp);
-        today.setFieldByName("condition", weather.currentConditionCode);
-        today.setFieldByName("wind_direction", weather.windDirection);
-        today.setFieldByName("precipitation_probability", weather.precipProbability);
-        today.setFieldByName("wind_speed", Math.round(weather.windSpeed));
-        today.setFieldByName("temperature_feels_like", weather.feelsLikeTemp);
-        today.setFieldByName("relative_humidity", weather.currentHumidity);
-        today.setFieldByName("observed_location_lat", weather.latitude);
-        today.setFieldByName("observed_location_long", weather.longitude);
-        today.setFieldByName("dew_point", weather.dewPoint);
-        if (null != weather.airQuality) {
-            today.setFieldByName("air_quality", weather.airQuality.aqi);
+        today.setFieldByName("timestamp", weather.getTimestamp());
+        today.setFieldByName("observed_at_time", weather.getTimestamp());
+        today.setFieldByName("temperature", weather.getCurrentTemp());
+        today.setFieldByName("low_temperature", weather.getTodayMinTemp());
+        today.setFieldByName("high_temperature", weather.getTodayMaxTemp());
+        today.setFieldByName("condition", weather.getCurrentConditionCode());
+        today.setFieldByName("wind_direction", weather.getWindDirection());
+        today.setFieldByName("precipitation_probability", weather.getPrecipProbability());
+        today.setFieldByName("wind_speed", Math.round(weather.getWindSpeed()));
+        today.setFieldByName("temperature_feels_like", weather.getFeelsLikeTemp());
+        today.setFieldByName("relative_humidity", weather.getCurrentHumidity());
+        today.setFieldByName("observed_location_lat", weather.getLatitude());
+        today.setFieldByName("observed_location_long", weather.getLongitude());
+        today.setFieldByName("dew_point", weather.getDewPoint());
+        if (null != weather.getAirQuality()) {
+            today.setFieldByName("air_quality", weather.getAirQuality().getAqi());
         }
-        today.setFieldByName("location", weather.location);
+        today.setFieldByName("location", weather.getLocation());
         weatherData.add(today);
 
         for (int hour = 0; hour <= 11; hour++) {
-            if (hour < weather.hourly.size()) {
-                WeatherSpec.Hourly hourly = weather.hourly.get(hour);
+            if (hour < weather.getHourly().size()) {
+                WeatherSpec.Hourly hourly = weather.getHourly().get(hour);
                 RecordData weatherHourlyForecast = new RecordData(recordDefinitionHourly, recordDefinitionHourly.getRecordHeader());
                 weatherHourlyForecast.setFieldByName("weather_report", 1); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-                weatherHourlyForecast.setFieldByName("timestamp", hourly.timestamp);
-                weatherHourlyForecast.setFieldByName("temperature", hourly.temp);
-                weatherHourlyForecast.setFieldByName("condition", hourly.conditionCode);
-                weatherHourlyForecast.setFieldByName("temperature_feels_like", hourly.temp); //TODO: switch to actual feels like field once Hourly contains this information
-                weatherHourlyForecast.setFieldByName("wind_direction", hourly.windDirection);
-                weatherHourlyForecast.setFieldByName("wind_speed", Math.round(hourly.windSpeed));
-                weatherHourlyForecast.setFieldByName("precipitation_probability", hourly.precipProbability);
-                weatherHourlyForecast.setFieldByName("relative_humidity", hourly.humidity);
+                weatherHourlyForecast.setFieldByName("timestamp", hourly.getTimestamp());
+                weatherHourlyForecast.setFieldByName("temperature", hourly.getTemp());
+                weatherHourlyForecast.setFieldByName("condition", hourly.getConditionCode());
+                weatherHourlyForecast.setFieldByName("temperature_feels_like", hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
+                weatherHourlyForecast.setFieldByName("wind_direction", hourly.getWindDirection());
+                weatherHourlyForecast.setFieldByName("wind_speed", Math.round(hourly.getWindSpeed()));
+                weatherHourlyForecast.setFieldByName("precipitation_probability", hourly.getPrecipProbability());
+                weatherHourlyForecast.setFieldByName("relative_humidity", hourly.getHumidity());
 //                    weatherHourlyForecast.setFieldByName("dew_point", 0); // TODO: add once Hourly contains this information
-                weatherHourlyForecast.setFieldByName("uv_index", hourly.uvIndex);
+                weatherHourlyForecast.setFieldByName("uv_index", hourly.getUvIndex());
 //                    weatherHourlyForecast.setFieldByName("air_quality", 0); // TODO: add once Hourly contains this information
                 weatherData.add(weatherHourlyForecast);
             }
@@ -535,32 +535,32 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 //
         RecordData todayDailyForecast = new RecordData(recordDefinitionDaily, recordDefinitionDaily.getRecordHeader());
         todayDailyForecast.setFieldByName("weather_report", 2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-        todayDailyForecast.setFieldByName("timestamp", weather.timestamp);
-        todayDailyForecast.setFieldByName("low_temperature", weather.todayMinTemp);
-        todayDailyForecast.setFieldByName("high_temperature", weather.todayMaxTemp);
-        todayDailyForecast.setFieldByName("condition", weather.currentConditionCode);
-        todayDailyForecast.setFieldByName("precipitation_probability", weather.precipProbability);
-        todayDailyForecast.setFieldByName("day_of_week", weather.timestamp);
-        if (null != weather.airQuality) {
-            todayDailyForecast.setFieldByName("air_quality", weather.airQuality.aqi);
+        todayDailyForecast.setFieldByName("timestamp", weather.getTimestamp());
+        todayDailyForecast.setFieldByName("low_temperature", weather.getTodayMinTemp());
+        todayDailyForecast.setFieldByName("high_temperature", weather.getTodayMaxTemp());
+        todayDailyForecast.setFieldByName("condition", weather.getCurrentConditionCode());
+        todayDailyForecast.setFieldByName("precipitation_probability", weather.getPrecipProbability());
+        todayDailyForecast.setFieldByName("day_of_week", weather.getTimestamp());
+        if (null != weather.getAirQuality()) {
+            todayDailyForecast.setFieldByName("air_quality", weather.getAirQuality().getAqi());
         }
         weatherData.add(todayDailyForecast);
 
 
         for (int day = 0; day < 4; day++) {
-            if (day < weather.forecasts.size()) {
+            if (day < weather.getForecasts().size()) {
                 //noinspection ExtractMethodRecommender
-                WeatherSpec.Daily daily = weather.forecasts.get(day);
-                int ts = weather.timestamp + (day + 1) * 24 * 60 * 60;
+                WeatherSpec.Daily daily = weather.getForecasts().get(day);
+                int ts = weather.getTimestamp() + (day + 1) * 24 * 60 * 60;
                 RecordData weatherDailyForecast = new RecordData(recordDefinitionDaily, recordDefinitionDaily.getRecordHeader());
                 weatherDailyForecast.setFieldByName("weather_report", 2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-                weatherDailyForecast.setFieldByName("timestamp", weather.timestamp);
-                weatherDailyForecast.setFieldByName("low_temperature", daily.minTemp);
-                weatherDailyForecast.setFieldByName("high_temperature", daily.maxTemp);
-                weatherDailyForecast.setFieldByName("condition", daily.conditionCode);
-                weatherDailyForecast.setFieldByName("precipitation_probability", daily.precipProbability);
-                if (null != daily.airQuality) {
-                    weatherDailyForecast.setFieldByName("air_quality", daily.airQuality.aqi);
+                weatherDailyForecast.setFieldByName("timestamp", weather.getTimestamp());
+                weatherDailyForecast.setFieldByName("low_temperature", daily.getMinTemp());
+                weatherDailyForecast.setFieldByName("high_temperature", daily.getMaxTemp());
+                weatherDailyForecast.setFieldByName("condition", daily.getConditionCode());
+                weatherDailyForecast.setFieldByName("precipitation_probability", daily.getPrecipProbability());
+                if (null != daily.getAirQuality()) {
+                    weatherDailyForecast.setFieldByName("air_quality", daily.getAirQuality().getAqi());
                 }
                 weatherDailyForecast.setFieldByName("day_of_week", ts);
                 weatherData.add(weatherDailyForecast);

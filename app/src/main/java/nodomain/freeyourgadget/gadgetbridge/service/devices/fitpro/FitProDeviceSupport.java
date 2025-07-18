@@ -546,8 +546,8 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
         WeatherSpec weatherSpec = weatherSpecs.get(0);
         LOG.debug("FitPro send weather");
-        short todayMax = (short) (weatherSpec.todayMaxTemp - 273);
-        short todayMin = (short) (weatherSpec.todayMinTemp - 273);
+        short todayMax = (short) (weatherSpec.getTodayMaxTemp() - 273);
+        short todayMin = (short) (weatherSpec.getTodayMinTemp() - 273);
         byte weatherUnit = 0;
         String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
@@ -556,7 +556,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
             weatherUnit = 1;
         }
 
-        byte currentConditionCode = WeatherMapper.INSTANCE.mapToFitProCondition(weatherSpec.currentConditionCode);
+        byte currentConditionCode = WeatherMapper.INSTANCE.mapToFitProCondition(weatherSpec.getCurrentConditionCode());
         TransactionBuilder builder = createTransactionBuilder("weather");
         writeChunkedData(builder, craftData(CMD_GROUP_GENERAL, CMD_WEATHER, new byte[]{(byte) todayMin, (byte) todayMax, (byte) currentConditionCode, (byte) weatherUnit}));
         builder.queue();

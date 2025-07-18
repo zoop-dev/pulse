@@ -2017,17 +2017,17 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             o.put("v", 1);
 
             // Current weather
-            o.put("temp", weatherSpec.currentTemp);
-            o.put("hi", weatherSpec.todayMaxTemp);
-            o.put("lo", weatherSpec.todayMinTemp);
-            o.put("hum", weatherSpec.currentHumidity);
-            o.put("rain", weatherSpec.precipProbability);
-            o.put("uv", Math.round(weatherSpec.uvIndex*10)/10);
-            o.put("code", weatherSpec.currentConditionCode);
-            o.put("txt", weatherSpec.currentCondition);
-            o.put("wind", Math.round(weatherSpec.windSpeed*100)/100.0);
-            o.put("wdir", weatherSpec.windDirection);
-            o.put("loc", weatherSpec.location);
+            o.put("temp", weatherSpec.getCurrentTemp());
+            o.put("hi", weatherSpec.getTodayMaxTemp());
+            o.put("lo", weatherSpec.getTodayMinTemp());
+            o.put("hum", weatherSpec.getCurrentHumidity());
+            o.put("rain", weatherSpec.getPrecipProbability());
+            o.put("uv", Math.round(weatherSpec.getUvIndex() *10)/10);
+            o.put("code", weatherSpec.getCurrentConditionCode());
+            o.put("txt", weatherSpec.getCurrentCondition());
+            o.put("wind", Math.round(weatherSpec.getWindSpeed() *100)/100.0);
+            o.put("wdir", weatherSpec.getWindDirection());
+            o.put("loc", weatherSpec.getLocation());
 
             uartTxJSON("handleWeather", o);
         } catch (JSONException e) {
@@ -2046,82 +2046,82 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             JSONObject o = new JSONObject();
             o.put("t", "weather");
             o.put("v", 2);
-            o.put("l", weatherSpec.location);
-            o.put("c", weatherSpec.currentCondition);
+            o.put("l", weatherSpec.getLocation());
+            o.put("c", weatherSpec.getCurrentCondition());
 
             ByteArrayOutputStream weatherData = new ByteArrayOutputStream();
 
             // Current weather
-            write1ByteSigned(weatherData, weatherSpec.currentTemp - 273);
-            write1ByteSigned(weatherData, weatherSpec.todayMaxTemp - 273);
-            write1ByteSigned(weatherData, weatherSpec.todayMinTemp - 273);
-            weatherData.write(weatherSpec.currentHumidity);
-            weatherData.write(weatherSpec.precipProbability);
-            weatherData.write(Math.round(weatherSpec.uvIndex*10));  // fixed point decimal
-            weatherData.write(conditionCodeMapping(weatherSpec.currentConditionCode));
-            write2Bytes(weatherData, Math.round(weatherSpec.windSpeed*100));  // fixed point decimal
-            write2Bytes(weatherData, weatherSpec.windDirection);
-            write1ByteSigned(weatherData, weatherSpec.dewPoint - 273);
-            write2Bytes(weatherData, Math.round(weatherSpec.pressure*10));  // fixed point decimal
-            weatherData.write(weatherSpec.cloudCover);
-            write4Bytes(weatherData, Math.round(weatherSpec.visibility*10)); // fixed point decimal
-            write4Bytes(weatherData, weatherSpec.sunRise);
-            write4Bytes(weatherData, weatherSpec.sunSet);
-            write4Bytes(weatherData, weatherSpec.moonRise);
-            write4Bytes(weatherData, weatherSpec.moonSet);
-            write2Bytes(weatherData, weatherSpec.moonPhase);
-            write1ByteSigned(weatherData, weatherSpec.feelsLikeTemp - 273);
+            write1ByteSigned(weatherData, weatherSpec.getCurrentTemp() - 273);
+            write1ByteSigned(weatherData, weatherSpec.getTodayMaxTemp() - 273);
+            write1ByteSigned(weatherData, weatherSpec.getTodayMinTemp() - 273);
+            weatherData.write(weatherSpec.getCurrentHumidity());
+            weatherData.write(weatherSpec.getPrecipProbability());
+            weatherData.write(Math.round(weatherSpec.getUvIndex() *10));  // fixed point decimal
+            weatherData.write(conditionCodeMapping(weatherSpec.getCurrentConditionCode()));
+            write2Bytes(weatherData, Math.round(weatherSpec.getWindSpeed() *100));  // fixed point decimal
+            write2Bytes(weatherData, weatherSpec.getWindDirection());
+            write1ByteSigned(weatherData, weatherSpec.getDewPoint() - 273);
+            write2Bytes(weatherData, Math.round(weatherSpec.getPressure() *10));  // fixed point decimal
+            weatherData.write(weatherSpec.getCloudCover());
+            write4Bytes(weatherData, Math.round(weatherSpec.getVisibility() *10)); // fixed point decimal
+            write4Bytes(weatherData, weatherSpec.getSunRise());
+            write4Bytes(weatherData, weatherSpec.getSunSet());
+            write4Bytes(weatherData, weatherSpec.getMoonRise());
+            write4Bytes(weatherData, weatherSpec.getMoonSet());
+            write2Bytes(weatherData, weatherSpec.getMoonPhase());
+            write1ByteSigned(weatherData, weatherSpec.getFeelsLikeTemp() - 273);
 
             if (includeForecast) {
                 // Hourly forecast as Structure of Arrays
-                int hourlyAmount = Math.min(weatherSpec.hourly.size(), 25);
+                int hourlyAmount = Math.min(weatherSpec.getHourly().size(), 25);
                 weatherData.write(hourlyAmount);
                 if(hourlyAmount>0)
                 {
-                    write4Bytes(weatherData, weatherSpec.hourly.get(0).timestamp);
+                    write4Bytes(weatherData, weatherSpec.getHourly().get(0).getTimestamp());
                 }
-                List<WeatherSpec.Hourly> hourly = weatherSpec.hourly.subList(0, hourlyAmount);
+                List<WeatherSpec.Hourly> hourly = weatherSpec.getHourly().subList(0, hourlyAmount);
                 for (final WeatherSpec.Hourly hour : hourly) {
-                    float hoursDelta = (float) (hour.timestamp - weatherSpec.hourly.get(0).timestamp)/3600;
+                    float hoursDelta = (float) (hour.getTimestamp() - weatherSpec.getHourly().get(0).getTimestamp())/3600;
                     weatherData.write(Math.round(hoursDelta*10)); // fixed point decimal (max 25 hours ahead)
                 }
                 for (final WeatherSpec.Hourly hour :hourly) {
-                    write1ByteSigned(weatherData, hour.temp - 273);
+                    write1ByteSigned(weatherData, hour.getTemp() - 273);
                 }
                 for (final WeatherSpec.Hourly hour : hourly) {
-                    weatherData.write(conditionCodeMapping(hour.conditionCode));
+                    weatherData.write(conditionCodeMapping(hour.getConditionCode()));
                 }
                 for (final WeatherSpec.Hourly hour : hourly) {
-                    weatherData.write(Math.round(hour.windSpeed));
+                    weatherData.write(Math.round(hour.getWindSpeed()));
                 }
                 for (final WeatherSpec.Hourly hour : hourly) {
-                    weatherData.write(hour.windDirection / 2); // Divide 2 by to save 1 Byte
+                    weatherData.write(hour.getWindDirection() / 2); // Divide 2 by to save 1 Byte
                 }
                 for (final WeatherSpec.Hourly hour : hourly) {
-                    weatherData.write(hour.precipProbability);
+                    weatherData.write(hour.getPrecipProbability());
                 }
 
                 // Daily forecast as Structure of Arrays
-                int dailyAmount = Math.min(weatherSpec.forecasts.size(), 7);
+                int dailyAmount = Math.min(weatherSpec.getForecasts().size(), 7);
                 weatherData.write(dailyAmount);
-                List<WeatherSpec.Daily> daily = weatherSpec.forecasts.subList(0, dailyAmount);
+                List<WeatherSpec.Daily> daily = weatherSpec.getForecasts().subList(0, dailyAmount);
                 for (final WeatherSpec.Daily day : daily) {
-                    write1ByteSigned(weatherData, day.maxTemp - 273);
+                    write1ByteSigned(weatherData, day.getMaxTemp() - 273);
                 }
                 for (final WeatherSpec.Daily day : daily) {
-                    write1ByteSigned(weatherData, day.minTemp - 273);
+                    write1ByteSigned(weatherData, day.getMinTemp() - 273);
                 }
                 for (final WeatherSpec.Daily day : daily) {
-                    weatherData.write(conditionCodeMapping(day.conditionCode));
+                    weatherData.write(conditionCodeMapping(day.getConditionCode()));
                 }
                 for (final WeatherSpec.Daily day : daily) {
-                    weatherData.write(Math.round(day.windSpeed));
+                    weatherData.write(Math.round(day.getWindSpeed()));
                 }
                 for (final WeatherSpec.Daily day : daily) {
-                    weatherData.write(day.windDirection / 2); // Divide 2 by to save 1 Byte
+                    weatherData.write(day.getWindDirection() / 2); // Divide 2 by to save 1 Byte
                 }
                 for (final WeatherSpec.Daily day : daily) {
-                    weatherData.write(day.precipProbability);
+                    weatherData.write(day.getPrecipProbability());
                 }
             }
             o.put("d", Base64.encodeToString(weatherData.toByteArray(), Base64.DEFAULT));

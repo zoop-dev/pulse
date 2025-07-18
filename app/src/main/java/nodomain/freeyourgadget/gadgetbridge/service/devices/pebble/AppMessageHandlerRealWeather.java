@@ -117,8 +117,8 @@ class AppMessageHandlerRealWeather extends AppMessageHandler {
         }
         boolean isNight = false; // TODO
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
-        pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°", weatherSpec.currentTemp - 273.15))));
-        pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.currentConditionCode, isNight))));
+        pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°", weatherSpec.getCurrentTemp() - 273.15))));
+        pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))));
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 
         ByteBuffer buf = ByteBuffer.allocate(weatherMessage.length);

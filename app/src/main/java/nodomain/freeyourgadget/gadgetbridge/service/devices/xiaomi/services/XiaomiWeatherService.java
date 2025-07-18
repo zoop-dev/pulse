@@ -245,20 +245,20 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
     }
 
     private static XiaomiProto.WeatherMetadata getWeatherMetaFromSpec(final WeatherSpec weatherSpec) {
-        final String location = StringUtils.ensureNotNull(weatherSpec.location);
+        final String location = StringUtils.ensureNotNull(weatherSpec.getLocation());
         return XiaomiProto.WeatherMetadata.newBuilder()
-                .setPublicationTimestamp(unixTimestampToISOWithColons(weatherSpec.timestamp))
+                .setPublicationTimestamp(unixTimestampToISOWithColons(weatherSpec.getTimestamp()))
                 .setCityName("")
                 .setLocationName(location)
                 .setLocationKey(getLocationKey(location)) // FIXME: placeholder because key is not present in spec
-                .setIsCurrentLocation(weatherSpec.isCurrentLocation == 1)
+                .setIsCurrentLocation(weatherSpec.getIsCurrentLocation() == 1)
                 .build();
     }
 
     private static XiaomiProto.WeatherLocation getWeatherLocationFromSpec(final WeatherSpec weatherSpec) {
         return XiaomiProto.WeatherLocation.newBuilder()
-                .setCode(getLocationKey(weatherSpec.location))
-                .setName(StringUtils.ensureNotNull(weatherSpec.location))
+                .setCode(getLocationKey(weatherSpec.getLocation()))
+                .setName(StringUtils.ensureNotNull(weatherSpec.getLocation()))
                 .build();
     }
 
@@ -289,7 +289,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
     }
 
     public void sendCurrentConditions(final WeatherSpec weatherSpec) {
-        LOG.debug("Sending current weather conditions for {}", weatherSpec.location);
+        LOG.debug("Sending current weather conditions for {}", weatherSpec.getLocation());
 
         XiaomiProto.Command command = XiaomiProto.Command.newBuilder()
                 .setType(COMMAND_TYPE)
@@ -297,17 +297,17 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
                 .setWeather(XiaomiProto.Weather.newBuilder().setCurrent(
                         XiaomiProto.WeatherCurrent.newBuilder()
                                 .setMetadata(getWeatherMetaFromSpec(weatherSpec))
-                                .setWeatherCondition(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.currentConditionCode))
-                                .setTemperature(buildUnitValue(weatherSpec.currentTemp - 273, "℃"))
-                                .setHumidity(buildUnitValue(weatherSpec.currentHumidity, "%"))
-                                .setWind(buildUnitValue(weatherSpec.windSpeedAsBeaufort(), Integer.toString(weatherSpec.windDirection)))
-                                .setUv(buildUnitValue(Math.round(weatherSpec.uvIndex), "")) // This is sent as an sint but seems to be displayed with a decimal point
+                                .setWeatherCondition(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.getCurrentConditionCode()))
+                                .setTemperature(buildUnitValue(weatherSpec.getCurrentTemp() - 273, "℃"))
+                                .setHumidity(buildUnitValue(weatherSpec.getCurrentHumidity(), "%"))
+                                .setWind(buildUnitValue(weatherSpec.windSpeedAsBeaufort(), Integer.toString(weatherSpec.getWindDirection())))
+                                .setUv(buildUnitValue(Math.round(weatherSpec.getUvIndex()), "")) // This is sent as an sint but seems to be displayed with a decimal point
                                 .setAqi(buildUnitValue(
-                                        weatherSpec.airQuality != null && weatherSpec.airQuality.aqi >= 0 ? weatherSpec.airQuality.aqi : 0,
+                                        weatherSpec.getAirQuality() != null && weatherSpec.getAirQuality().getAqi() >= 0 ? weatherSpec.getAirQuality().getAqi() : 0,
                                         "Unknown" // some string like "Moderate"
                                 ))
                                 .setWarning(XiaomiProto.WeatherWarnings.newBuilder()) // TODO add warnings when they become available through spec
-                                .setPressure(weatherSpec.pressure * 100f)
+                                .setPressure(weatherSpec.getPressure() * 100f)
                 ))
                 .build();
 
@@ -316,47 +316,47 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
     public void sendDailyForecast(final WeatherSpec weatherSpec) {
         final XiaomiProto.ForecastEntries.Builder entryListBuilder = XiaomiProto.ForecastEntries.newBuilder();
-        final int daysToSend = Math.min(6, weatherSpec.forecasts.size());
+        final int daysToSend = Math.min(6, weatherSpec.getForecasts().size());
 
         // reconstruct first forecast element from current conditions, as the first forecast
         // is expected to apply to today
         {
             entryListBuilder.addEntry(XiaomiProto.ForecastEntry.newBuilder()
                     .setAqi(buildUnitValue(
-                            weatherSpec.airQuality != null && weatherSpec.airQuality.aqi >= 0 ? weatherSpec.airQuality.aqi : 0,
+                            weatherSpec.getAirQuality() != null && weatherSpec.getAirQuality().getAqi() >= 0 ? weatherSpec.getAirQuality().getAqi() : 0,
                             "Unknown" // TODO describe AQI level
                     ))
                     .setTemperatureRange(XiaomiProto.WeatherRange.newBuilder()
-                            .setFrom(weatherSpec.todayMinTemp - 273)
-                            .setTo(weatherSpec.todayMaxTemp - 273))
+                            .setFrom(weatherSpec.getTodayMinTemp() - 273)
+                            .setTo(weatherSpec.getTodayMaxTemp() - 273))
                     // FIXME: should preferable be replaced with a best and worst case condition whenever that becomes available
                     .setConditionRange(XiaomiProto.WeatherRange.newBuilder()
-                            .setFrom(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.currentConditionCode))
-                            .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.currentConditionCode)))
+                            .setFrom(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.getCurrentConditionCode()))
+                            .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.getCurrentConditionCode())))
                     .setTemperatureSymbol("℃")
                     .setSunriseSunset(XiaomiProto.WeatherSunriseSunset.newBuilder()
-                            .setSunrise(weatherSpec.sunRise != 0 ? unixTimestampToISOWithColons(weatherSpec.sunRise) : "")
-                            .setSunset(weatherSpec.sunSet != 0 ? unixTimestampToISOWithColons(weatherSpec.sunSet) : "")));
+                            .setSunrise(weatherSpec.getSunRise() != 0 ? unixTimestampToISOWithColons(weatherSpec.getSunRise()) : "")
+                            .setSunset(weatherSpec.getSunSet() != 0 ? unixTimestampToISOWithColons(weatherSpec.getSunSet()) : "")));
         }
 
         // loop over available forecast entries in weatherSpec
-        for (WeatherSpec.Daily currentEntry : weatherSpec.forecasts.subList(0, daysToSend)) {
+        for (WeatherSpec.Daily currentEntry : weatherSpec.getForecasts().subList(0, daysToSend)) {
             entryListBuilder.addEntry(XiaomiProto.ForecastEntry.newBuilder()
                     .setAqi(buildUnitValue(
-                            currentEntry.airQuality != null && currentEntry.airQuality.aqi >= 0 ? currentEntry.airQuality.aqi : 0,
+                            currentEntry.getAirQuality() != null && currentEntry.getAirQuality().getAqi() >= 0 ? currentEntry.getAirQuality().getAqi() : 0,
                             "Unknown" // TODO describe AQI level
                     ))
                     // FIXME should preferable be replaced with a best and worst case condition whenever that becomes available
                     .setConditionRange(XiaomiProto.WeatherRange.newBuilder()
-                            .setFrom(XiaomiWeatherConditions.convertOwmConditionToXiaomi(currentEntry.conditionCode))
-                            .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(currentEntry.conditionCode)))
+                            .setFrom(XiaomiWeatherConditions.convertOwmConditionToXiaomi(currentEntry.getConditionCode()))
+                            .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(currentEntry.getConditionCode())))
                     .setTemperatureRange(XiaomiProto.WeatherRange.newBuilder()
-                            .setTo(currentEntry.maxTemp - 273)
-                            .setFrom(currentEntry.minTemp - 273))
+                            .setTo(currentEntry.getMaxTemp() - 273)
+                            .setFrom(currentEntry.getMinTemp() - 273))
                     .setTemperatureSymbol("℃")
                     .setSunriseSunset(XiaomiProto.WeatherSunriseSunset.newBuilder()
-                            .setSunrise(currentEntry.sunRise != 0 ? unixTimestampToISOWithColons(currentEntry.sunRise) : "")
-                            .setSunset(currentEntry.sunSet != 0 ? unixTimestampToISOWithColons(currentEntry.sunSet) : "")));
+                            .setSunrise(currentEntry.getSunRise() != 0 ? unixTimestampToISOWithColons(currentEntry.getSunRise()) : "")
+                            .setSunset(currentEntry.getSunSet() != 0 ? unixTimestampToISOWithColons(currentEntry.getSunSet()) : "")));
         }
 
         LOG.debug("Sending daily forecast with {} days of info", entryListBuilder.getEntryCount());
@@ -375,19 +375,19 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
     public void sendHourlyForecast(final WeatherSpec weatherSpec) {
         final XiaomiProto.ForecastEntries.Builder entriesBuilder = XiaomiProto.ForecastEntries.newBuilder();
-        final int hoursToSend = Math.min(23, weatherSpec.hourly.size());
+        final int hoursToSend = Math.min(23, weatherSpec.getHourly().size());
 
-        for (WeatherSpec.Hourly hourly : weatherSpec.hourly.subList(0, hoursToSend)) {
+        for (WeatherSpec.Hourly hourly : weatherSpec.getHourly().subList(0, hoursToSend)) {
             entriesBuilder.addEntry(XiaomiProto.ForecastEntry.newBuilder()
                     .setAqi(buildUnitValue(0, "Unknown")) // FIXME when available through spec
                     .setTemperatureRange(XiaomiProto.WeatherRange.newBuilder()
                             .setFrom(0) // not set, but required
-                            .setTo(hourly.temp - 273))
+                            .setTo(hourly.getTemp() - 273))
                     .setConditionRange(XiaomiProto.WeatherRange.newBuilder()
                             .setFrom(0) // not set, but required
-                            .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(hourly.conditionCode)))
+                            .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(hourly.getConditionCode())))
                     .setTemperatureSymbol("℃")
-                    .setWind(buildUnitValue(hourly.windSpeedAsBeaufort(), Integer.toString(hourly.windDirection))));
+                    .setWind(buildUnitValue(hourly.windSpeedAsBeaufort(), Integer.toString(hourly.getWindDirection()))));
         }
 
         LOG.debug("Sending hourly forecast with {} hours of info", entriesBuilder.getEntryCount());
@@ -464,7 +464,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
     }
 
     private void sendWeatherSpec(@NonNull final WeatherSpec weatherSpec) {
-        LOG.debug("Send weather for location {}", weatherSpec.location);
+        LOG.debug("Send weather for location {}", weatherSpec.getLocation());
 
         sendCurrentConditions(weatherSpec);
         sendDailyForecast(weatherSpec);
@@ -519,7 +519,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
                 final List<WeatherSpec> knownWeathers = Weather.INSTANCE.getWeatherSpecs();
                 for (WeatherSpec spec : knownWeathers) {
-                    if (TextUtils.equals(spec.location, locationName)) {
+                    if (TextUtils.equals(spec.getLocation(), locationName)) {
                         sendWeatherSpec(spec);
                         return;
                     }
@@ -553,7 +553,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
         final List<String> result = new ArrayList<>();
 
         for (final WeatherSpec spec : specs) {
-            result.add(StringUtils.ensureNotNull(spec.location));
+            result.add(StringUtils.ensureNotNull(spec.getLocation()));
         }
 
         return result.toArray(new String[0]);

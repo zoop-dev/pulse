@@ -36,10 +36,10 @@ public class WeatherDay {
 
     public static WeatherDay fromSpec(WeatherSpec.Daily daily) {
         return new WeatherDay(
-                Weather.fromOpenWeatherMap(daily.conditionCode),
-                Weather.fromOpenWeatherMap(daily.conditionCode),
-                daily.maxTemp,
-                daily.minTemp
+                Weather.fromOpenWeatherMap(daily.getConditionCode()),
+                Weather.fromOpenWeatherMap(daily.getConditionCode()),
+                daily.getMaxTemp(),
+                daily.getMinTemp()
         );
     }
 }

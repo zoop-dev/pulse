@@ -64,7 +64,7 @@ public class ZeppOsWeatherService extends AbstractZeppOsService {
         // TODO: Support for multiple weather locations
 
         final String locationKey = "1.234,-5.678,xiaomi_accu:" + System.currentTimeMillis(); // dummy
-        final String locationName = weatherSpec.location;
+        final String locationName = weatherSpec.getLocation();
 
         try {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();

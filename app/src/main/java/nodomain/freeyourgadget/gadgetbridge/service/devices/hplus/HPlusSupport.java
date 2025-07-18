@@ -604,7 +604,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("sendWeather");
 
-            int windSpeed = (int) weatherSpec.windSpeed;
+            int windSpeed = (int) weatherSpec.getWindSpeed();
 
             CurrentPosition currentPosition = new CurrentPosition();
 
@@ -613,20 +613,20 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
                 altitude = (int) currentPosition.getLastKnownLocation().getAltitude();
             }
 
-            int weatherCode = HPlusWeatherCode.mapOpenWeatherConditionToHPlusCondition(weatherSpec.currentConditionCode);
+            int weatherCode = HPlusWeatherCode.mapOpenWeatherConditionToHPlusCondition(weatherSpec.getCurrentConditionCode());
 
-            LOG.info("[WEATHER] currentConditionCode={} altitude={} temp={}", weatherCode, altitude, weatherSpec.currentTemp);
+            LOG.info("[WEATHER] currentConditionCode={} altitude={} temp={}", weatherCode, altitude, weatherSpec.getCurrentTemp());
 
             byte[] weatherInfo = new byte[]{(byte) HPlusConstants.CMD_SET_WEATHER_STATE,
                     (byte) ((weatherCode >> 8) & 255),
                     (byte) (weatherCode & 255),
-                    (byte) weatherSpec.windDirection, (byte) 0, // weatherSpec.getWinPower(),
+                    (byte) weatherSpec.getWindDirection(), (byte) 0, // weatherSpec.getWinPower(),
                     (byte) ((windSpeed >> 8) & 255),
                     (byte) (windSpeed & 255),
-                    (byte) (weatherSpec.currentTemp - 17),
+                    (byte) (weatherSpec.getCurrentTemp() - 17),
                     // base temperature information start at 17d celsius
-                    (byte) (weatherSpec.todayMaxTemp - 17), // base temperature information start at 18d celsius
-                    (byte) (weatherSpec.todayMinTemp - 17), // base temperature information start at 18d celsius
+                    (byte) (weatherSpec.getTodayMaxTemp() - 17), // base temperature information start at 18d celsius
+                    (byte) (weatherSpec.getTodayMinTemp() - 17), // base temperature information start at 18d celsius
                     (byte) 0, // Life Index always 0
                     (byte) 0, // (byte) (weatherSpec.getPressure() & 255),
                     (byte) 0, // (byte) ((weatherSpec.getPressure() >> 8) & 255),

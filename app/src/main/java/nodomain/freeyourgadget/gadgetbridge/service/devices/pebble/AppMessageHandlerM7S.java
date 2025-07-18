@@ -125,16 +125,16 @@ class AppMessageHandlerM7S extends AppMessageHandler {
             return null;
         }
 
-        String wString1 = String.format(Locale.ENGLISH, "%.0f / %.0f__C \n%.0f %s", (weatherSpec.todayMaxTemp-273.15), (weatherSpec.todayMinTemp-273.15), weatherSpec.windSpeed, "km/h");
-        String wString2 = String.format(Locale.ENGLISH, "%d %%", weatherSpec.currentHumidity);
+        String wString1 = String.format(Locale.ENGLISH, "%.0f / %.0f__C \n%.0f %s", (weatherSpec.getTodayMaxTemp() -273.15), (weatherSpec.getTodayMinTemp() -273.15), weatherSpec.getWindSpeed(), "km/h");
+        String wString2 = String.format(Locale.ENGLISH, "%d %%", weatherSpec.getCurrentHumidity());
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
-        pairs.add(new Pair<>(KEY_LOCATION_NAME, (Object) (weatherSpec.location)));
-        pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) ((int) Math.round(weatherSpec.currentTemp - 273.15))));
-        pairs.add(new Pair<>(KEY_WEATHER_DATA_TIME, (Object) (weatherSpec.timestamp)));
+        pairs.add(new Pair<>(KEY_LOCATION_NAME, (Object) (weatherSpec.getLocation())));
+        pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) ((int) Math.round(weatherSpec.getCurrentTemp() - 273.15))));
+        pairs.add(new Pair<>(KEY_WEATHER_DATA_TIME, (Object) (weatherSpec.getTimestamp())));
         pairs.add(new Pair<>(KEY_WEATHER_STRING_1, (Object) (wString1)));
         pairs.add(new Pair<>(KEY_WEATHER_STRING_2, (Object) (wString2)));
-        pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.currentConditionCode))));
+        pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode()))));
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 
         ByteBuffer buf = ByteBuffer.allocate(weatherMessage.length);

@@ -594,16 +594,16 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
         WeatherSpec weatherSpec = weatherSpecs.get(0);
-        byte[] weather = new byte[weatherSpec.location.getBytes(StandardCharsets.UTF_8).length + 26]; // 26 bytes for weatherdata and overhead
+        byte[] weather = new byte[weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length + 26]; // 26 bytes for weatherdata and overhead
         weather[0] = ZeTimeConstants.CMD_PREAMBLE;
         weather[1] = ZeTimeConstants.CMD_PUSH_WEATHER_DATA;
         weather[2] = ZeTimeConstants.CMD_SEND;
-        weather[3] = (byte) ((weatherSpec.location.getBytes(StandardCharsets.UTF_8).length + 20) & 0xff);
-        weather[4] = (byte) ((weatherSpec.location.getBytes(StandardCharsets.UTF_8).length + 20) >> 8);
+        weather[3] = (byte) ((weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length + 20) & 0xff);
+        weather[4] = (byte) ((weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length + 20) >> 8);
         weather[5] = 0; // celsius
-        weather[6] = (byte) (weatherSpec.currentTemp - 273);
-        weather[7] = (byte) (weatherSpec.todayMinTemp - 273);
-        weather[8] = (byte) (weatherSpec.todayMaxTemp - 273);
+        weather[6] = (byte) (weatherSpec.getCurrentTemp() - 273);
+        weather[7] = (byte) (weatherSpec.getTodayMinTemp() - 273);
+        weather[8] = (byte) (weatherSpec.getTodayMaxTemp() - 273);
 
         boolean newWeather = false;
         if (versionCmd.fwVersion.length() >= 24) {
@@ -617,22 +617,22 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
             LOG.warn("We do not have a sane fw version string available, firmware too old/new?");
         }
         if (newWeather) {
-            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.currentConditionCode);
+            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.getCurrentConditionCode());
         } else {
-            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.currentConditionCode);
+            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.getCurrentConditionCode());
         }
         for (int forecast = 0; forecast < 3; forecast++) {
             weather[10 + (forecast * 5)] = 0; // celsius
             weather[11 + (forecast * 5)] = (byte) 0xff;
-            weather[12 + (forecast * 5)] = (byte) (weatherSpec.forecasts.get(forecast).minTemp - 273);
-            weather[13 + (forecast * 5)] = (byte) (weatherSpec.forecasts.get(forecast).maxTemp - 273);
+            weather[12 + (forecast * 5)] = (byte) (weatherSpec.getForecasts().get(forecast).getMinTemp() - 273);
+            weather[13 + (forecast * 5)] = (byte) (weatherSpec.getForecasts().get(forecast).getMaxTemp() - 273);
             if (newWeather) {
-                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.forecasts.get(forecast).conditionCode);
+                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.getForecasts().get(forecast).getConditionCode());
             } else {
-                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.forecasts.get(forecast).conditionCode);
+                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.getForecasts().get(forecast).getConditionCode());
             }
         }
-        System.arraycopy(weatherSpec.location.getBytes(StandardCharsets.UTF_8), 0, weather, 25, weatherSpec.location.getBytes(StandardCharsets.UTF_8).length);
+        System.arraycopy(weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8), 0, weather, 25, weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length);
         weather[weather.length - 1] = ZeTimeConstants.CMD_END;
         try {
             TransactionBuilder builder = performInitialized("sendWeahter");

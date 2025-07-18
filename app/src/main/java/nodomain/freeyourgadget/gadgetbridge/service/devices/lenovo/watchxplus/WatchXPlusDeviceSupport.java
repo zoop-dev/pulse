@@ -1222,7 +1222,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             int todayMaxTemp;
             byte[] command = WatchXPlusConstants.CMD_WEATHER_SET;
             byte[] weatherInfo = new byte[5];
-            int currentCondition = weatherSpec.currentConditionCode;
+            int currentCondition = weatherSpec.getCurrentConditionCode();
 // set weather icon
             int currentConditionCode = 0; // 0 is sunny
             switch (currentCondition) {
@@ -1351,15 +1351,15 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             }
             LOG.info( " Weather cond: " + currentCondition + " icon: " + currentConditionCode);
 // calculate for temps under 0
-            currentTemp = (Math.abs(weatherSpec.currentTemp)) - 273;
+            currentTemp = (Math.abs(weatherSpec.getCurrentTemp())) - 273;
             if (currentTemp < 0) {
                 currentTemp = (Math.abs(currentTemp) ^ 255) + 1;
             }
-            todayMinTemp = (Math.abs(weatherSpec.todayMinTemp)) - 273;
+            todayMinTemp = (Math.abs(weatherSpec.getTodayMinTemp())) - 273;
             if (todayMinTemp < 0) {
                 todayMinTemp = (Math.abs(todayMinTemp) ^ 255) + 1;
             }
-            todayMaxTemp = (Math.abs(weatherSpec.todayMaxTemp)) - 273;
+            todayMaxTemp = (Math.abs(weatherSpec.getTodayMaxTemp())) - 273;
             if (todayMaxTemp < 0) {
                 todayMaxTemp = (Math.abs(todayMaxTemp) ^ 255) + 1;
             }

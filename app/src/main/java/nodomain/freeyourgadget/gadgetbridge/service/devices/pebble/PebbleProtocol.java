@@ -1143,17 +1143,17 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     private byte[] encodeWeatherForecast(WeatherSpec weatherSpec) {
 
-        short currentTemp = (short) (weatherSpec.currentTemp - 273);
-        short todayMax = (short) (weatherSpec.todayMaxTemp - 273);
-        short todayMin = (short) (weatherSpec.todayMinTemp - 273);
+        short currentTemp = (short) (weatherSpec.getCurrentTemp() - 273);
+        short todayMax = (short) (weatherSpec.getTodayMaxTemp() - 273);
+        short todayMin = (short) (weatherSpec.getTodayMinTemp() - 273);
         short tomorrowMax = 0;
         short tomorrowMin = 0;
         int tomorrowConditionCode = 0;
-        if (weatherSpec.forecasts.size() > 0) {
-            WeatherSpec.Daily tomorrow = weatherSpec.forecasts.get(0);
-            tomorrowMax = (short) (tomorrow.maxTemp - 273);
-            tomorrowMin = (short) (tomorrow.minTemp - 273);
-            tomorrowConditionCode = tomorrow.conditionCode;
+        if (weatherSpec.getForecasts().size() > 0) {
+            WeatherSpec.Daily tomorrow = weatherSpec.getForecasts().get(0);
+            tomorrowMax = (short) (tomorrow.getMaxTemp() - 273);
+            tomorrowMin = (short) (tomorrow.getMinTemp() - 273);
+            tomorrowConditionCode = tomorrow.getConditionCode();
         }
 
         String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
@@ -1166,7 +1166,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         }
         final short WEATHER_FORECAST_LENGTH = 20;
 
-        String[] parts = {weatherSpec.location, weatherSpec.currentCondition};
+        String[] parts = {weatherSpec.getLocation(), weatherSpec.getCurrentCondition()};
 
         // Calculate length first
         short attributes_length = 0;
@@ -1183,13 +1183,13 @@ public class PebbleProtocol extends GBDeviceProtocol {
         buf.order(ByteOrder.LITTLE_ENDIAN);
         buf.put((byte) 3); // unknown, always 3?
         buf.putShort(currentTemp);
-        buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(weatherSpec.currentConditionCode));
+        buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(weatherSpec.getCurrentConditionCode()));
         buf.putShort(todayMax);
         buf.putShort(todayMin);
         buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(tomorrowConditionCode));
         buf.putShort(tomorrowMax);
         buf.putShort(tomorrowMin);
-        buf.putInt(weatherSpec.timestamp);
+        buf.putInt(weatherSpec.getTimestamp());
         buf.put((byte) 0); // automatic location 0=manual 1=auto
         buf.putShort(attributes_length);
 

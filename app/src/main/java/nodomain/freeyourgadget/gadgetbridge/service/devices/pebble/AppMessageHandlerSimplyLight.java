@@ -109,8 +109,8 @@ private int getConditionForConditionCode(int conditionCode) {
         }
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
-        pairs.add(new Pair<>(KEY_TEMPERATURE, (Object) (weatherSpec.currentTemp - 273)));
-        pairs.add(new Pair<>(KEY_CONDITION, (Object) (getConditionForConditionCode(weatherSpec.currentConditionCode))));
+        pairs.add(new Pair<>(KEY_TEMPERATURE, (Object) (weatherSpec.getCurrentTemp() - 273)));
+        pairs.add(new Pair<>(KEY_CONDITION, (Object) (getConditionForConditionCode(weatherSpec.getCurrentConditionCode()))));
         pairs.add(new Pair<>(KEY_ERR, (Object) 0));
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 

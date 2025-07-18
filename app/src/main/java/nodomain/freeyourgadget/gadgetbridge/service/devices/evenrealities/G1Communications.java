@@ -237,14 +237,14 @@ public class G1Communications {
             this.timeMilliseconds = timeMilliseconds;
             this.use12HourFormat = use12HourFormat;
             if (weatherInfo != null) {
-                this.weatherIcon = G1Constants.fromOpenWeatherCondition(weatherInfo.currentConditionCode);
+                this.weatherIcon = G1Constants.fromOpenWeatherCondition(weatherInfo.getCurrentConditionCode());
                 // Convert sunny to a moon if the current time stamp is between sunrise and sunset.
-                if (timeMilliseconds / 1000 >= weatherInfo.sunSet &&
+                if (timeMilliseconds / 1000 >= weatherInfo.getSunSet() &&
                     this.weatherIcon == G1Constants.WeatherId.SUNNY) {
                     this.weatherIcon = G1Constants.WeatherId.NIGHT;
                 }
                 // Convert Kelvin -> Celsius.
-                this.tempInCelsius = (byte) (weatherInfo.currentTemp - 273);
+                this.tempInCelsius = (byte) (weatherInfo.getCurrentTemp() - 273);
             } else {
                 this.weatherIcon = 0x00;
                 this.tempInCelsius = 0x00;

@@ -725,7 +725,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     private void onSendWeatherCBOR(WeatherSpec weatherSpec) {
-        if (weatherSpec.location != null) {
+        if (weatherSpec.getLocation() != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -733,7 +733,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h
                         .put("EventType", WeatherData.EventType.Location.value)
-                        .put("Location", weatherSpec.location)
+                        .put("Location", weatherSpec.getLocation())
                         .put("Altitude", 0)
                         .put("Latitude", 0)
                         .put("Longitude", 0)
@@ -753,12 +753,12 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         }
 
         // Current condition
-        if (weatherSpec.currentCondition != null) {
+        if (weatherSpec.getCurrentCondition() != null) {
             // We can't do anything with this?
         }
 
         // Current humidity
-        if (weatherSpec.currentHumidity > 0) {
+        if (weatherSpec.getCurrentHumidity() > 0) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -766,7 +766,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h this should be the weather provider's interval, really
                         .put("EventType", WeatherData.EventType.Humidity.value)
-                        .put("Humidity", (int) weatherSpec.currentHumidity)
+                        .put("Humidity", (int) weatherSpec.getCurrentHumidity())
                         .end()
                         .build()
                 );
@@ -783,7 +783,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         }
 
         // Current temperature
-        if (weatherSpec.currentTemp >= -273.15) {
+        if (weatherSpec.getCurrentTemp() >= -273.15) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -791,7 +791,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h this should be the weather provider's interval, really
                         .put("EventType", WeatherData.EventType.Temperature.value)
-                        .put("Temperature", (int) ((weatherSpec.currentTemp - 273.15) * 100))
+                        .put("Temperature", (int) ((weatherSpec.getCurrentTemp() - 273.15) * 100))
                         .put("DewPoint", (int) (-32768))
                         .end()
                         .build()
@@ -839,7 +839,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         */
 
         // Wind speed
-        if (weatherSpec.windSpeed != 0.0f) {
+        if (weatherSpec.getWindSpeed() != 0.0f) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -847,10 +847,10 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h
                         .put("EventType", WeatherData.EventType.Wind.value)
-                        .put("SpeedMin", (int) (weatherSpec.windSpeed / 60 / 60 * 1000))
-                        .put("SpeedMax", (int) (weatherSpec.windSpeed / 60 / 60 * 1000))
-                        .put("DirectionMin", (int) (0.71 * weatherSpec.windDirection))
-                        .put("DirectionMax", (int) (0.71 * weatherSpec.windDirection))
+                        .put("SpeedMin", (int) (weatherSpec.getWindSpeed() / 60 / 60 * 1000))
+                        .put("SpeedMax", (int) (weatherSpec.getWindSpeed() / 60 / 60 * 1000))
+                        .put("DirectionMin", (int) (0.71 * weatherSpec.getWindDirection()))
+                        .put("DirectionMax", (int) (0.71 * weatherSpec.getWindDirection()))
                         .end()
                         .build()
                 );
@@ -867,7 +867,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         }
 
         // Current weather condition
-        if (mapOpenWeatherConditionToPineTimePrecipitation(weatherSpec.currentConditionCode) != WeatherData.PrecipitationType.Length) {
+        if (mapOpenWeatherConditionToPineTimePrecipitation(weatherSpec.getCurrentConditionCode()) != WeatherData.PrecipitationType.Length) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -875,7 +875,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h
                         .put("EventType", WeatherData.EventType.Precipitation.value)
-                        .put("Type", (int) mapOpenWeatherConditionToPineTimePrecipitation(weatherSpec.currentConditionCode).value)
+                        .put("Type", (int) mapOpenWeatherConditionToPineTimePrecipitation(weatherSpec.getCurrentConditionCode()).value)
                         .put("Amount", (int) 0)
                         .end()
                         .build()
@@ -892,7 +892,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             builder.queue();
         }
 
-        if (mapOpenWeatherConditionToPineTimeObscuration(weatherSpec.currentConditionCode) != WeatherData.ObscurationType.Length) {
+        if (mapOpenWeatherConditionToPineTimeObscuration(weatherSpec.getCurrentConditionCode()) != WeatherData.ObscurationType.Length) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -900,7 +900,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h
                         .put("EventType", WeatherData.EventType.Obscuration.value)
-                        .put("Type", (int) mapOpenWeatherConditionToPineTimeObscuration(weatherSpec.currentConditionCode).value)
+                        .put("Type", (int) mapOpenWeatherConditionToPineTimeObscuration(weatherSpec.getCurrentConditionCode()).value)
                         .put("Amount", (int) 65535)
                         .end()
                         .build()
@@ -917,7 +917,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             builder.queue();
         }
 
-        if (mapOpenWeatherConditionToPineTimeSpecial(weatherSpec.currentConditionCode) != WeatherData.SpecialType.Length) {
+        if (mapOpenWeatherConditionToPineTimeSpecial(weatherSpec.getCurrentConditionCode()) != WeatherData.SpecialType.Length) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -925,7 +925,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h
                         .put("EventType", WeatherData.EventType.Special.value)
-                        .put("Type", mapOpenWeatherConditionToPineTimeSpecial(weatherSpec.currentConditionCode).value)
+                        .put("Type", mapOpenWeatherConditionToPineTimeSpecial(weatherSpec.getCurrentConditionCode()).value)
                         .end()
                         .build()
                 );
@@ -941,7 +941,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             builder.queue();
         }
 
-        if (mapOpenWeatherConditionToCloudCover(weatherSpec.currentConditionCode) != -1) {
+        if (mapOpenWeatherConditionToCloudCover(weatherSpec.getCurrentConditionCode()) != -1) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 new CborEncoder(baos).encode(new CborBuilder()
@@ -949,7 +949,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                         .put("Timestamp", System.currentTimeMillis() / 1000L)
                         .put("Expires", 60 * 60 * 1 + WEATHER_GRACE_TIME) // 1h
                         .put("EventType", WeatherData.EventType.Clouds.value)
-                        .put("Amount", (int) (mapOpenWeatherConditionToCloudCover(weatherSpec.currentConditionCode)))
+                        .put("Amount", (int) (mapOpenWeatherConditionToCloudCover(weatherSpec.getCurrentConditionCode())))
                         .end()
                         .build()
                 );
@@ -969,20 +969,20 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     private void onSendWeatherSimple(WeatherSpec weatherSpec) {
-        long timestampLocal = weatherSpec.timestamp + Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()) / 1000L;
+        long timestampLocal = weatherSpec.getTimestamp() + Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()) / 1000L;
 
         ByteBuffer currentPacket = ByteBuffer.allocate(49).order(ByteOrder.LITTLE_ENDIAN);
         currentPacket.putLong(2, timestampLocal);
-        currentPacket.putShort(10, (short) ((weatherSpec.currentTemp - 273.15) * 100));
-        currentPacket.putShort(12, (short) ((weatherSpec.todayMinTemp - 273.15) * 100));
-        currentPacket.putShort(14, (short) ((weatherSpec.todayMaxTemp - 273.15) * 100));
-        if (weatherSpec.location != null) {
-            byte[] locationBytes = nodomain.freeyourgadget.gadgetbridge.util.StringUtils.truncateToBytes(weatherSpec.location, 32);
+        currentPacket.putShort(10, (short) ((weatherSpec.getCurrentTemp() - 273.15) * 100));
+        currentPacket.putShort(12, (short) ((weatherSpec.getTodayMinTemp() - 273.15) * 100));
+        currentPacket.putShort(14, (short) ((weatherSpec.getTodayMaxTemp() - 273.15) * 100));
+        if (weatherSpec.getLocation() != null) {
+            byte[] locationBytes = nodomain.freeyourgadget.gadgetbridge.util.StringUtils.truncateToBytes(weatherSpec.getLocation(), 32);
             for (int i = 0; i < locationBytes.length; i++) {
                 currentPacket.put(16 + i, locationBytes[i]);
             }
         }
-        currentPacket.put(48, mapOpenWeatherConditionToPineTimeCondition(weatherSpec.currentConditionCode).value);
+        currentPacket.put(48, mapOpenWeatherConditionToPineTimeCondition(weatherSpec.getCurrentConditionCode()).value);
 
         TransactionBuilder currentBuilder = createTransactionBuilder("SimpleWeatherData");
         safeWriteToCharacteristic(currentBuilder,
@@ -991,19 +991,19 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
         currentBuilder.queue();
 
-        if (weatherSpec.forecasts == null) {
+        if (weatherSpec.getForecasts() == null) {
             return;
         }
 
         ByteBuffer forecastPacket = ByteBuffer.allocate(36).order(ByteOrder.LITTLE_ENDIAN);
         forecastPacket.put(0, (byte) 1);
         forecastPacket.putLong(2, timestampLocal);
-        byte nbDays = (byte) Math.min(weatherSpec.forecasts.size(), 5);
+        byte nbDays = (byte) Math.min(weatherSpec.getForecasts().size(), 5);
         forecastPacket.put(10, nbDays);
         for (int i = 0; i < nbDays; i++) {
-            forecastPacket.putShort(11 + i * 5, (short) ((weatherSpec.forecasts.get(i).minTemp - 273.15) * 100));
-            forecastPacket.putShort(11 + i * 5 + 2, (short) ((weatherSpec.forecasts.get(i).maxTemp - 273.15) * 100));
-            forecastPacket.put(11 + i * 5 + 4, mapOpenWeatherConditionToPineTimeCondition(weatherSpec.forecasts.get(i).conditionCode).value);
+            forecastPacket.putShort(11 + i * 5, (short) ((weatherSpec.getForecasts().get(i).getMinTemp() - 273.15) * 100));
+            forecastPacket.putShort(11 + i * 5 + 2, (short) ((weatherSpec.getForecasts().get(i).getMaxTemp() - 273.15) * 100));
+            forecastPacket.put(11 + i * 5 + 4, mapOpenWeatherConditionToPineTimeCondition(weatherSpec.getForecasts().get(i).getConditionCode()).value);
         }
 
         TransactionBuilder forecastBuilder = createTransactionBuilder("SimpleWeatherData");

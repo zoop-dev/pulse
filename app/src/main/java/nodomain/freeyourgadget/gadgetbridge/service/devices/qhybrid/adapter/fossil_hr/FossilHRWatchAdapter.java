@@ -1497,10 +1497,10 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     @Override
     public void onSendWeather(WeatherSpec weatherSpec) {
         boolean isNight = false;
-        if (weatherSpec.sunRise != 0 && weatherSpec.sunSet != 0) {
-            isNight = weatherSpec.sunRise * 1000L > System.currentTimeMillis() || weatherSpec.sunSet * 1000L < System.currentTimeMillis();
+        if (weatherSpec.getSunRise() != 0 && weatherSpec.getSunSet() != 0) {
+            isNight = weatherSpec.getSunRise() * 1000L > System.currentTimeMillis() || weatherSpec.getSunSet() * 1000L < System.currentTimeMillis();
         } else {
-            Location location = weatherSpec.getLocation();
+            Location location = weatherSpec.getLocationObject();
             if (location == null) {
                 location = new CurrentPosition().getLastKnownLocation();
             }
@@ -1526,8 +1526,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                                     .put("weatherInfo", new JSONObject()
                                             .put("alive", ts + 60 * 60)
                                             .put("unit", "c") // FIXME: do not hardcode
-                                            .put("temp", weatherSpec.currentTemp - 273)
-                                            .put("cond_id", getIconForConditionCode(weatherSpec.currentConditionCode, isNight))
+                                            .put("temp", weatherSpec.getCurrentTemp() - 273)
+                                            .put("cond_id", getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))
                                     )
                             )
                     );
@@ -1537,16 +1537,16 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             JSONArray forecastWeekArray = new JSONArray();
             final String[] weekdays = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
             Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(weatherSpec.timestamp * 1000L);
+            cal.setTimeInMillis(weatherSpec.getTimestamp() * 1000L);
             int i = 0;
-            for (WeatherSpec.Daily forecast : weatherSpec.forecasts) {
+            for (WeatherSpec.Daily forecast : weatherSpec.getForecasts()) {
                 cal.add(Calendar.DATE, 1);
                 int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
                 forecastWeekArray.put(new JSONObject()
                         .put("day", weekdays[dayOfWeek])
-                        .put("cond_id", getIconForConditionCode(forecast.conditionCode, false))
-                        .put("high", forecast.maxTemp - 273)
-                        .put("low", forecast.minTemp - 273)
+                        .put("cond_id", getIconForConditionCode(forecast.getConditionCode(), false))
+                        .put("high", forecast.getMaxTemp() - 273)
+                        .put("low", forecast.getMinTemp() - 273)
                 );
                 if (++i == 3) break; // max 3
             }
@@ -1569,15 +1569,15 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                                     .put("weatherApp._.config.locations", new JSONArray()
                                             .put(new JSONObject()
                                                     .put("alive", ts + 60 * 60)
-                                                    .put("city", weatherSpec.location)
+                                                    .put("city", weatherSpec.getLocation())
                                                     .put("unit", "c") // FIXME: do not hardcode
-                                                    .put("temp", weatherSpec.currentTemp - 273)
-                                                    .put("high", weatherSpec.todayMaxTemp - 273)
-                                                    .put("low", weatherSpec.todayMinTemp - 273)
-                                                    .put("rain", weatherSpec.precipProbability)
-                                                    .put("uv", Math.round(weatherSpec.uvIndex))
-                                                    .put("message", weatherSpec.currentCondition)
-                                                    .put("cond_id", getIconForConditionCode(weatherSpec.currentConditionCode, isNight))
+                                                    .put("temp", weatherSpec.getCurrentTemp() - 273)
+                                                    .put("high", weatherSpec.getTodayMaxTemp() - 273)
+                                                    .put("low", weatherSpec.getTodayMinTemp() - 273)
+                                                    .put("rain", weatherSpec.getPrecipProbability())
+                                                    .put("uv", Math.round(weatherSpec.getUvIndex()))
+                                                    .put("message", weatherSpec.getCurrentCondition())
+                                                    .put("cond_id", getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))
                                                     .put("forecast_day", forecastDayArray)
                                                     .put("forecast_week", forecastWeekArray)
                                             )
@@ -1601,7 +1601,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                     .put("set", new JSONObject()
                         .put("widgetChanceOfRain._.config.info", new JSONObject()
                             .put("alive", ts + 60 * 15)
-                            .put("rain", weatherSpec.precipProbability)
+                            .put("rain", weatherSpec.getPrecipProbability())
                         )
                     )
                 );
@@ -1621,7 +1621,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                     .put("set", new JSONObject()
                         .put("widgetUV._.config.info", new JSONObject()
                             .put("alive", ts + 60 * 15)
-                            .put("uv", Math.round(weatherSpec.uvIndex))
+                            .put("uv", Math.round(weatherSpec.getUvIndex()))
                         )
                     )
                 );

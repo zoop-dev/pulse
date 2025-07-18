@@ -365,28 +365,28 @@ public class DebugActivity extends AbstractGBActivity {
             public void onClick(View v) {
                 if (Weather.INSTANCE.getWeatherSpec() == null) {
                     final WeatherSpec weatherSpec = new WeatherSpec();
-                    weatherSpec.forecasts = new ArrayList<>();
+                    weatherSpec.setForecasts(new ArrayList<>());
 
-                    weatherSpec.location = "Green Hill";
-                    weatherSpec.currentConditionCode = 601; // snow
-                    weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(DebugActivity.this, weatherSpec.currentConditionCode);
+                    weatherSpec.setLocation("Green Hill");
+                    weatherSpec.setCurrentConditionCode(601); // snow
+                    weatherSpec.setCurrentCondition(WeatherMapper.INSTANCE.getConditionString(DebugActivity.this, weatherSpec.getCurrentConditionCode()));
 
-                    weatherSpec.currentTemp = 15 + 273;
-                    weatherSpec.currentHumidity = 30;
+                    weatherSpec.setCurrentTemp(15 + 273);
+                    weatherSpec.setCurrentHumidity(30);
 
-                    weatherSpec.windSpeed = 10;
-                    weatherSpec.windDirection = 12;
-                    weatherSpec.timestamp = (int) (System.currentTimeMillis() / 1000);
-                    weatherSpec.todayMinTemp = 10 + 273;
-                    weatherSpec.todayMaxTemp = 25 + 273;
+                    weatherSpec.setWindSpeed(10);
+                    weatherSpec.setWindDirection(12);
+                    weatherSpec.setTimestamp((int) (System.currentTimeMillis() / 1000));
+                    weatherSpec.setTodayMinTemp(10 + 273);
+                    weatherSpec.setTodayMaxTemp(25 + 273);
 
                     for (int i = 0; i < 5; i++) {
                         final WeatherSpec.Daily gbForecast = new WeatherSpec.Daily();
-                        gbForecast.minTemp = 10 + i + 273;
-                        gbForecast.maxTemp = 25 + i + 273;
+                        gbForecast.setMinTemp(10 + i + 273);
+                        gbForecast.setMaxTemp(25 + i + 273);
 
-                        gbForecast.conditionCode = 800; // clear
-                        weatherSpec.forecasts.add(gbForecast);
+                        gbForecast.setConditionCode(800); // clear
+                        weatherSpec.getForecasts().add(gbForecast);
                     }
 
                     Weather.INSTANCE.setWeatherSpec(new ArrayList<>(Collections.singletonList(weatherSpec)));
@@ -414,7 +414,7 @@ public class DebugActivity extends AbstractGBActivity {
                 final String[] weatherLocations = new String[weatherSpecs.size()];
 
                 for (int i = 0; i < weatherSpecs.size(); i++) {
-                    weatherLocations[i] = weatherSpecs.get(i).location;
+                    weatherLocations[i] = weatherSpecs.get(i).getLocation();
                 }
 
                 new MaterialAlertDialogBuilder(DebugActivity.this)
@@ -1160,82 +1160,82 @@ public class DebugActivity extends AbstractGBActivity {
         if (weatherSpec == null)
             return "Weather cache is empty.";
 
-        builder.append("Location: ").append(weatherSpec.location).append("\n");
-        builder.append("Timestamp: ").append(weatherSpec.timestamp).append("\n");
-        builder.append("Current Temp: ").append(weatherSpec.currentTemp).append(" K\n");
-        builder.append("Max Temp: ").append(weatherSpec.todayMaxTemp).append(" K\n");
-        builder.append("Min Temp: ").append(weatherSpec.todayMinTemp).append(" K\n");
-        builder.append("Condition: ").append(weatherSpec.currentCondition).append("\n");
-        builder.append("Condition Code: ").append(weatherSpec.currentConditionCode).append("\n");
-        builder.append("Humidity: ").append(weatherSpec.currentHumidity).append("\n");
-        builder.append("Wind Speed: ").append(weatherSpec.windSpeed).append(" kmph\n");
-        builder.append("Wind Direction: ").append(weatherSpec.windDirection).append(" deg\n");
-        builder.append("UV Index: ").append(weatherSpec.uvIndex).append("\n");
-        builder.append("Precip Probability: ").append(weatherSpec.precipProbability).append(" %\n");
-        builder.append("Dew Point: ").append(weatherSpec.dewPoint).append(" K\n");
-        builder.append("Pressure: ").append(weatherSpec.pressure).append(" mb\n");
-        builder.append("Cloud Cover: ").append(weatherSpec.cloudCover).append(" %\n");
-        builder.append("Visibility: ").append(weatherSpec.visibility).append(" m\n");
-        builder.append("Sun Rise: ").append(sdf.format(new Date(weatherSpec.sunRise * 1000L))).append("\n");
-        builder.append("Sun Set: ").append(sdf.format(new Date(weatherSpec.sunSet * 1000L))).append("\n");
-        builder.append("Moon Rise: ").append(sdf.format(new Date(weatherSpec.moonRise * 1000L))).append("\n");
-        builder.append("Moon Set: ").append(sdf.format(new Date(weatherSpec.moonSet * 1000L))).append("\n");
-        builder.append("Moon Phase: ").append(weatherSpec.moonPhase).append(" deg\n");
-        builder.append("Latitude: ").append(weatherSpec.latitude).append("\n");
-        builder.append("Longitude: ").append(weatherSpec.longitude).append("\n");
-        builder.append("Feels Like Temp: ").append(weatherSpec.feelsLikeTemp).append(" K\n");
-        builder.append("Is Current Location: ").append(weatherSpec.isCurrentLocation).append("\n");
+        builder.append("Location: ").append(weatherSpec.getLocation()).append("\n");
+        builder.append("Timestamp: ").append(weatherSpec.getTimestamp()).append("\n");
+        builder.append("Current Temp: ").append(weatherSpec.getCurrentTemp()).append(" K\n");
+        builder.append("Max Temp: ").append(weatherSpec.getTodayMaxTemp()).append(" K\n");
+        builder.append("Min Temp: ").append(weatherSpec.getTodayMinTemp()).append(" K\n");
+        builder.append("Condition: ").append(weatherSpec.getCurrentCondition()).append("\n");
+        builder.append("Condition Code: ").append(weatherSpec.getCurrentConditionCode()).append("\n");
+        builder.append("Humidity: ").append(weatherSpec.getCurrentHumidity()).append("\n");
+        builder.append("Wind Speed: ").append(weatherSpec.getWindSpeed()).append(" kmph\n");
+        builder.append("Wind Direction: ").append(weatherSpec.getWindDirection()).append(" deg\n");
+        builder.append("UV Index: ").append(weatherSpec.getUvIndex()).append("\n");
+        builder.append("Precip Probability: ").append(weatherSpec.getPrecipProbability()).append(" %\n");
+        builder.append("Dew Point: ").append(weatherSpec.getDewPoint()).append(" K\n");
+        builder.append("Pressure: ").append(weatherSpec.getPressure()).append(" mb\n");
+        builder.append("Cloud Cover: ").append(weatherSpec.getCloudCover()).append(" %\n");
+        builder.append("Visibility: ").append(weatherSpec.getVisibility()).append(" m\n");
+        builder.append("Sun Rise: ").append(sdf.format(new Date(weatherSpec.getSunRise() * 1000L))).append("\n");
+        builder.append("Sun Set: ").append(sdf.format(new Date(weatherSpec.getSunSet() * 1000L))).append("\n");
+        builder.append("Moon Rise: ").append(sdf.format(new Date(weatherSpec.getMoonRise() * 1000L))).append("\n");
+        builder.append("Moon Set: ").append(sdf.format(new Date(weatherSpec.getMoonSet() * 1000L))).append("\n");
+        builder.append("Moon Phase: ").append(weatherSpec.getMoonPhase()).append(" deg\n");
+        builder.append("Latitude: ").append(weatherSpec.getLatitude()).append("\n");
+        builder.append("Longitude: ").append(weatherSpec.getLongitude()).append("\n");
+        builder.append("Feels Like Temp: ").append(weatherSpec.getFeelsLikeTemp()).append(" K\n");
+        builder.append("Is Current Location: ").append(weatherSpec.getIsCurrentLocation()).append("\n");
 
-        if (weatherSpec.airQuality != null) {
-            builder.append("Air Quality aqi: ").append(weatherSpec.airQuality.aqi).append("\n");
-            builder.append("Air Quality co: ").append(weatherSpec.airQuality.co).append("\n");
-            builder.append("Air Quality no2: ").append(weatherSpec.airQuality.no2).append("\n");
-            builder.append("Air Quality o3: ").append(weatherSpec.airQuality.o3).append("\n");
-            builder.append("Air Quality pm10: ").append(weatherSpec.airQuality.pm10).append("\n");
-            builder.append("Air Quality pm25: ").append(weatherSpec.airQuality.pm25).append("\n");
-            builder.append("Air Quality so2: ").append(weatherSpec.airQuality.so2).append("\n");
-            builder.append("Air Quality coAqi: ").append(weatherSpec.airQuality.coAqi).append("\n");
-            builder.append("Air Quality no2Aqi: ").append(weatherSpec.airQuality.no2Aqi).append("\n");
-            builder.append("Air Quality o3Aqi: ").append(weatherSpec.airQuality.o3Aqi).append("\n");
-            builder.append("Air Quality pm10Aqi: ").append(weatherSpec.airQuality.pm10Aqi).append("\n");
-            builder.append("Air Quality pm25Aqi: ").append(weatherSpec.airQuality.pm25Aqi).append("\n");
-            builder.append("Air Quality so2Aqi: ").append(weatherSpec.airQuality.so2Aqi).append("\n");
+        if (weatherSpec.getAirQuality() != null) {
+            builder.append("Air Quality aqi: ").append(weatherSpec.getAirQuality().getAqi()).append("\n");
+            builder.append("Air Quality co: ").append(weatherSpec.getAirQuality().getCo()).append("\n");
+            builder.append("Air Quality no2: ").append(weatherSpec.getAirQuality().getNo2()).append("\n");
+            builder.append("Air Quality o3: ").append(weatherSpec.getAirQuality().getO3()).append("\n");
+            builder.append("Air Quality pm10: ").append(weatherSpec.getAirQuality().getPm10()).append("\n");
+            builder.append("Air Quality pm25: ").append(weatherSpec.getAirQuality().getPm25()).append("\n");
+            builder.append("Air Quality so2: ").append(weatherSpec.getAirQuality().getSo2()).append("\n");
+            builder.append("Air Quality coAqi: ").append(weatherSpec.getAirQuality().getCoAqi()).append("\n");
+            builder.append("Air Quality no2Aqi: ").append(weatherSpec.getAirQuality().getNo2Aqi()).append("\n");
+            builder.append("Air Quality o3Aqi: ").append(weatherSpec.getAirQuality().getO3Aqi()).append("\n");
+            builder.append("Air Quality pm10Aqi: ").append(weatherSpec.getAirQuality().getPm10Aqi()).append("\n");
+            builder.append("Air Quality pm25Aqi: ").append(weatherSpec.getAirQuality().getPm25Aqi()).append("\n");
+            builder.append("Air Quality so2Aqi: ").append(weatherSpec.getAirQuality().getSo2Aqi()).append("\n");
         } else {
             builder.append("Air Quality: null\n");
         }
 
         int i = 0;
-        for (final WeatherSpec.Daily daily : weatherSpec.forecasts) {
+        for (final WeatherSpec.Daily daily : weatherSpec.getForecasts()) {
             builder.append("-------------\n");
             builder.append("-->Day ").append(i++).append("\n");
-            builder.append("Max Temp: ").append(daily.maxTemp).append(" K\n");
-            builder.append("Min Temp: ").append(daily.minTemp).append(" K\n");
-            builder.append("Condition Code: ").append(daily.conditionCode).append("\n");
-            builder.append("Humidity: ").append(daily.humidity).append("\n");
-            builder.append("Wind Speed: ").append(daily.windSpeed).append(" kmph\n");
-            builder.append("Wind Direction: ").append(daily.windDirection).append(" deg\n");
-            builder.append("UV Index: ").append(daily.uvIndex).append("\n");
-            builder.append("Precip Probability: ").append(daily.precipProbability).append(" %\n");
-            builder.append("Sun Rise: ").append(sdf.format(new Date(daily.sunRise * 1000L))).append("\n");
-            builder.append("Sun Set: ").append(sdf.format(new Date(daily.sunSet * 1000L))).append("\n");
-            builder.append("Moon Rise: ").append(sdf.format(new Date(daily.moonRise * 1000L))).append("\n");
-            builder.append("Moon Set: ").append(sdf.format(new Date(daily.moonSet * 1000L))).append("\n");
-            builder.append("Moon Phase: ").append(daily.moonPhase).append(" deg\n");
+            builder.append("Max Temp: ").append(daily.getMaxTemp()).append(" K\n");
+            builder.append("Min Temp: ").append(daily.getMinTemp()).append(" K\n");
+            builder.append("Condition Code: ").append(daily.getConditionCode()).append("\n");
+            builder.append("Humidity: ").append(daily.getHumidity()).append("\n");
+            builder.append("Wind Speed: ").append(daily.getWindSpeed()).append(" kmph\n");
+            builder.append("Wind Direction: ").append(daily.getWindDirection()).append(" deg\n");
+            builder.append("UV Index: ").append(daily.getUvIndex()).append("\n");
+            builder.append("Precip Probability: ").append(daily.getPrecipProbability()).append(" %\n");
+            builder.append("Sun Rise: ").append(sdf.format(new Date(daily.getSunRise() * 1000L))).append("\n");
+            builder.append("Sun Set: ").append(sdf.format(new Date(daily.getSunSet() * 1000L))).append("\n");
+            builder.append("Moon Rise: ").append(sdf.format(new Date(daily.getMoonRise() * 1000L))).append("\n");
+            builder.append("Moon Set: ").append(sdf.format(new Date(daily.getMoonSet() * 1000L))).append("\n");
+            builder.append("Moon Phase: ").append(daily.getMoonPhase()).append(" deg\n");
 
-            if (daily.airQuality != null) {
-                builder.append("Air Quality aqi: ").append(daily.airQuality.aqi).append("\n");
-                builder.append("Air Quality co: ").append(daily.airQuality.co).append("\n");
-                builder.append("Air Quality no2: ").append(daily.airQuality.no2).append("\n");
-                builder.append("Air Quality o3: ").append(daily.airQuality.o3).append("\n");
-                builder.append("Air Quality pm10: ").append(daily.airQuality.pm10).append("\n");
-                builder.append("Air Quality pm25: ").append(daily.airQuality.pm25).append("\n");
-                builder.append("Air Quality so2: ").append(daily.airQuality.so2).append("\n");
-                builder.append("Air Quality coAqi: ").append(daily.airQuality.coAqi).append("\n");
-                builder.append("Air Quality no2Aqi: ").append(daily.airQuality.no2Aqi).append("\n");
-                builder.append("Air Quality o3Aqi: ").append(daily.airQuality.o3Aqi).append("\n");
-                builder.append("Air Quality pm10Aqi: ").append(daily.airQuality.pm10Aqi).append("\n");
-                builder.append("Air Quality pm25Aqi: ").append(daily.airQuality.pm25Aqi).append("\n");
-                builder.append("Air Quality so2Aqi: ").append(daily.airQuality.so2Aqi).append("\n");
+            if (daily.getAirQuality() != null) {
+                builder.append("Air Quality aqi: ").append(daily.getAirQuality().getAqi()).append("\n");
+                builder.append("Air Quality co: ").append(daily.getAirQuality().getCo()).append("\n");
+                builder.append("Air Quality no2: ").append(daily.getAirQuality().getNo2()).append("\n");
+                builder.append("Air Quality o3: ").append(daily.getAirQuality().getO3()).append("\n");
+                builder.append("Air Quality pm10: ").append(daily.getAirQuality().getPm10()).append("\n");
+                builder.append("Air Quality pm25: ").append(daily.getAirQuality().getPm25()).append("\n");
+                builder.append("Air Quality so2: ").append(daily.getAirQuality().getSo2()).append("\n");
+                builder.append("Air Quality coAqi: ").append(daily.getAirQuality().getCoAqi()).append("\n");
+                builder.append("Air Quality no2Aqi: ").append(daily.getAirQuality().getNo2Aqi()).append("\n");
+                builder.append("Air Quality o3Aqi: ").append(daily.getAirQuality().getO3Aqi()).append("\n");
+                builder.append("Air Quality pm10Aqi: ").append(daily.getAirQuality().getPm10Aqi()).append("\n");
+                builder.append("Air Quality pm25Aqi: ").append(daily.getAirQuality().getPm25Aqi()).append("\n");
+                builder.append("Air Quality so2Aqi: ").append(daily.getAirQuality().getSo2Aqi()).append("\n");
             } else {
                 builder.append("Air Quality: null\n");
             }
@@ -1243,16 +1243,16 @@ public class DebugActivity extends AbstractGBActivity {
 
         builder.append("=============\n");
 
-        for (final WeatherSpec.Hourly hourly : weatherSpec.hourly) {
+        for (final WeatherSpec.Hourly hourly : weatherSpec.getHourly()) {
             builder.append("-------------\n");
-            builder.append("-->Hour: ").append(sdf.format(new Date(hourly.timestamp * 1000L))).append("\n");
-            builder.append("Max Temp: ").append(hourly.temp).append(" K\n");
-            builder.append("Condition Code: ").append(hourly.conditionCode).append("\n");
-            builder.append("Humidity: ").append(hourly.humidity).append("\n");
-            builder.append("Wind Speed: ").append(hourly.windSpeed).append(" kmph\n");
-            builder.append("Wind Direction: ").append(hourly.windDirection).append(" deg\n");
-            builder.append("UV Index: ").append(hourly.uvIndex).append("\n");
-            builder.append("Precip Probability: ").append(hourly.precipProbability).append(" %\n");
+            builder.append("-->Hour: ").append(sdf.format(new Date(hourly.getTimestamp() * 1000L))).append("\n");
+            builder.append("Max Temp: ").append(hourly.getTemp()).append(" K\n");
+            builder.append("Condition Code: ").append(hourly.getConditionCode()).append("\n");
+            builder.append("Humidity: ").append(hourly.getHumidity()).append("\n");
+            builder.append("Wind Speed: ").append(hourly.getWindSpeed()).append(" kmph\n");
+            builder.append("Wind Direction: ").append(hourly.getWindDirection()).append(" deg\n");
+            builder.append("UV Index: ").append(hourly.getUvIndex()).append("\n");
+            builder.append("Precip Probability: ").append(hourly.getPrecipProbability()).append(" %\n");
         }
 
         return builder.toString();

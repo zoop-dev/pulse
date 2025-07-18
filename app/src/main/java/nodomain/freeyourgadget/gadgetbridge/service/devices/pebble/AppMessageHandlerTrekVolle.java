@@ -83,12 +83,12 @@ class AppMessageHandlerTrekVolle extends AppMessageHandler {
 
         boolean isNight = false; // FIXME
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>();
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE, (Object) (weatherSpec.currentTemp - 273)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_CONDITIONS, (Object) (weatherSpec.currentCondition)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.currentConditionCode, isNight))));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MAX, (Object) (weatherSpec.todayMaxTemp - 273)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MIN, (Object) (weatherSpec.todayMinTemp - 273)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_LOCATION, (Object) weatherSpec.location));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE, (Object) (weatherSpec.getCurrentTemp() - 273)));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_CONDITIONS, (Object) (weatherSpec.getCurrentCondition())));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MAX, (Object) (weatherSpec.getTodayMaxTemp() - 273)));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MIN, (Object) (weatherSpec.getTodayMinTemp() - 273)));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_LOCATION, (Object) weatherSpec.getLocation()));
 
 
         return mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);

@@ -140,43 +140,43 @@ public class CMWeatherReceiver extends BroadcastReceiver implements CMWeatherMan
         if (weatherInfo != null) {
             LOG.info("weather: " + weatherInfo.toString());
             WeatherSpec weatherSpec = new WeatherSpec();
-            weatherSpec.timestamp = (int) (weatherInfo.getTimestamp() / 1000);
-            weatherSpec.location = weatherInfo.getCity();
+            weatherSpec.setTimestamp((int) (weatherInfo.getTimestamp() / 1000));
+            weatherSpec.setLocation(weatherInfo.getCity());
 
             if (weatherInfo.getTemperatureUnit() == FAHRENHEIT) {
-                weatherSpec.currentTemp = (int) WeatherUtils.fahrenheitToCelsius(weatherInfo.getTemperature()) + 273;
-                weatherSpec.todayMaxTemp = (int) WeatherUtils.fahrenheitToCelsius(weatherInfo.getTodaysHigh()) + 273;
-                weatherSpec.todayMinTemp = (int) WeatherUtils.fahrenheitToCelsius(weatherInfo.getTodaysLow()) + 273;
+                weatherSpec.setCurrentTemp((int) WeatherUtils.fahrenheitToCelsius(weatherInfo.getTemperature()) + 273);
+                weatherSpec.setTodayMaxTemp((int) WeatherUtils.fahrenheitToCelsius(weatherInfo.getTodaysHigh()) + 273);
+                weatherSpec.setTodayMinTemp((int) WeatherUtils.fahrenheitToCelsius(weatherInfo.getTodaysLow()) + 273);
             } else {
-                weatherSpec.currentTemp = (int) weatherInfo.getTemperature() + 273;
-                weatherSpec.todayMaxTemp = (int) weatherInfo.getTodaysHigh() + 273;
-                weatherSpec.todayMinTemp = (int) weatherInfo.getTodaysLow() + 273;
+                weatherSpec.setCurrentTemp((int) weatherInfo.getTemperature() + 273);
+                weatherSpec.setTodayMaxTemp((int) weatherInfo.getTodaysHigh() + 273);
+                weatherSpec.setTodayMinTemp((int) weatherInfo.getTodaysLow() + 273);
             }
             if (weatherInfo.getWindSpeedUnit() == MPH) {
-                weatherSpec.windSpeed = (float) weatherInfo.getWindSpeed() * 1.609344f;
+                weatherSpec.setWindSpeed((float) weatherInfo.getWindSpeed() * 1.609344f);
             } else {
-                weatherSpec.windSpeed = (float) weatherInfo.getWindSpeed();
+                weatherSpec.setWindSpeed((float) weatherInfo.getWindSpeed());
             }
-            weatherSpec.windDirection = (int) weatherInfo.getWindDirection();
+            weatherSpec.setWindDirection((int) weatherInfo.getWindDirection());
 
-            weatherSpec.currentConditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(CMtoYahooCondintion(weatherInfo.getConditionCode()));
-            weatherSpec.currentCondition = WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.currentConditionCode);
-            weatherSpec.currentHumidity = (int) weatherInfo.getHumidity();
+            weatherSpec.setCurrentConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(CMtoYahooCondintion(weatherInfo.getConditionCode())));
+            weatherSpec.setCurrentCondition(WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
+            weatherSpec.setCurrentHumidity((int) weatherInfo.getHumidity());
 
-            weatherSpec.forecasts = new ArrayList<>();
+            weatherSpec.setForecasts(new ArrayList<>());
             List<WeatherInfo.DayForecast> forecasts = weatherInfo.getForecasts();
             for (int i = 1; i < forecasts.size(); i++) {
                 WeatherInfo.DayForecast cmForecast = forecasts.get(i);
                 WeatherSpec.Daily gbForecast = new WeatherSpec.Daily();
                 if (weatherInfo.getTemperatureUnit() == FAHRENHEIT) {
-                    gbForecast.maxTemp = (int) WeatherUtils.fahrenheitToCelsius(cmForecast.getHigh()) + 273;
-                    gbForecast.minTemp = (int) WeatherUtils.fahrenheitToCelsius(cmForecast.getLow()) + 273;
+                    gbForecast.setMaxTemp((int) WeatherUtils.fahrenheitToCelsius(cmForecast.getHigh()) + 273);
+                    gbForecast.setMinTemp((int) WeatherUtils.fahrenheitToCelsius(cmForecast.getLow()) + 273);
                 } else {
-                    gbForecast.maxTemp = (int) cmForecast.getHigh() + 273;
-                    gbForecast.minTemp = (int) cmForecast.getLow() + 273;
+                    gbForecast.setMaxTemp((int) cmForecast.getHigh() + 273);
+                    gbForecast.setMinTemp((int) cmForecast.getLow() + 273);
                 }
-                gbForecast.conditionCode = WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(CMtoYahooCondintion(cmForecast.getConditionCode()));
-                weatherSpec.forecasts.add(gbForecast);
+                gbForecast.setConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(CMtoYahooCondintion(cmForecast.getConditionCode())));
+                weatherSpec.getForecasts().add(gbForecast);
             }
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
             Weather.INSTANCE.setWeatherSpec(weatherSpecs);

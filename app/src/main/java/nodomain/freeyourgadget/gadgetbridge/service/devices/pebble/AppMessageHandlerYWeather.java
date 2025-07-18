@@ -192,30 +192,30 @@ class AppMessageHandlerYWeather extends AppMessageHandler {
         }
         boolean isNight = false; // TODO
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
-        pairs.add(new Pair<>(KEY_LOCATION_NAME, (Object) (weatherSpec.location)));
-        pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°", weatherSpec.currentTemp - 273.15))));
-        pairs.add(new Pair<>(KEY_WEATHER_TODAY_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", weatherSpec.todayMinTemp - 273.15))));
-        pairs.add(new Pair<>(KEY_WEATHER_TODAY_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", weatherSpec.todayMaxTemp - 273.15))));
-        pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.currentConditionCode, isNight))));
-        pairs.add(new Pair<>(KEY_WEATHER_WIND_SPEED, (Object) (String.format(Locale.ENGLISH, "%.0f", weatherSpec.windSpeed))));
-        pairs.add(new Pair<>(KEY_WEATHER_WIND_DIRECTION, (Object) (formatWindDirection(weatherSpec.windDirection))));
-        if (weatherSpec.forecasts.size() > 0) {
-            WeatherSpec.Daily day1 = weatherSpec.forecasts.get(0);
-            pairs.add(new Pair<>(KEY_WEATHER_D1_ICON, (Object) (getIconForConditionCode(day1.conditionCode, false))));
-            pairs.add(new Pair<>(KEY_WEATHER_D1_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day1.minTemp - 273.15))));
-            pairs.add(new Pair<>(KEY_WEATHER_D1_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day1.maxTemp - 273.15))));
+        pairs.add(new Pair<>(KEY_LOCATION_NAME, (Object) (weatherSpec.getLocation())));
+        pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°", weatherSpec.getCurrentTemp() - 273.15))));
+        pairs.add(new Pair<>(KEY_WEATHER_TODAY_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", weatherSpec.getTodayMinTemp() - 273.15))));
+        pairs.add(new Pair<>(KEY_WEATHER_TODAY_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", weatherSpec.getTodayMaxTemp() - 273.15))));
+        pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))));
+        pairs.add(new Pair<>(KEY_WEATHER_WIND_SPEED, (Object) (String.format(Locale.ENGLISH, "%.0f", weatherSpec.getWindSpeed()))));
+        pairs.add(new Pair<>(KEY_WEATHER_WIND_DIRECTION, (Object) (formatWindDirection(weatherSpec.getWindDirection()))));
+        if (weatherSpec.getForecasts().size() > 0) {
+            WeatherSpec.Daily day1 = weatherSpec.getForecasts().get(0);
+            pairs.add(new Pair<>(KEY_WEATHER_D1_ICON, (Object) (getIconForConditionCode(day1.getConditionCode(), false))));
+            pairs.add(new Pair<>(KEY_WEATHER_D1_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day1.getMinTemp() - 273.15))));
+            pairs.add(new Pair<>(KEY_WEATHER_D1_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day1.getMaxTemp() - 273.15))));
         }
-        if (weatherSpec.forecasts.size() > 1) {
-            WeatherSpec.Daily day2 = weatherSpec.forecasts.get(1);
-            pairs.add(new Pair<>(KEY_WEATHER_D2_ICON, (Object) (getIconForConditionCode(day2.conditionCode, false))));
-            pairs.add(new Pair<>(KEY_WEATHER_D2_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day2.minTemp - 273.15))));
-            pairs.add(new Pair<>(KEY_WEATHER_D2_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day2.maxTemp - 273.15))));
+        if (weatherSpec.getForecasts().size() > 1) {
+            WeatherSpec.Daily day2 = weatherSpec.getForecasts().get(1);
+            pairs.add(new Pair<>(KEY_WEATHER_D2_ICON, (Object) (getIconForConditionCode(day2.getConditionCode(), false))));
+            pairs.add(new Pair<>(KEY_WEATHER_D2_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day2.getMinTemp() - 273.15))));
+            pairs.add(new Pair<>(KEY_WEATHER_D2_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day2.getMaxTemp() - 273.15))));
         }
-        if (weatherSpec.forecasts.size() > 2) {
-            WeatherSpec.Daily day3 = weatherSpec.forecasts.get(2);
-            pairs.add(new Pair<>(KEY_WEATHER_D3_ICON, (Object) (getIconForConditionCode(day3.conditionCode, false))));
-            pairs.add(new Pair<>(KEY_WEATHER_D3_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day3.minTemp - 273.15))));
-            pairs.add(new Pair<>(KEY_WEATHER_D3_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day3.maxTemp - 273.15))));
+        if (weatherSpec.getForecasts().size() > 2) {
+            WeatherSpec.Daily day3 = weatherSpec.getForecasts().get(2);
+            pairs.add(new Pair<>(KEY_WEATHER_D3_ICON, (Object) (getIconForConditionCode(day3.getConditionCode(), false))));
+            pairs.add(new Pair<>(KEY_WEATHER_D3_MINTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day3.getMinTemp() - 273.15))));
+            pairs.add(new Pair<>(KEY_WEATHER_D3_MAXTEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°C", day3.getMaxTemp() - 273.15))));
         }
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 

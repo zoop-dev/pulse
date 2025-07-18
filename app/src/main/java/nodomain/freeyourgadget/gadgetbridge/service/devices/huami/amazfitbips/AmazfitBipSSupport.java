@@ -69,7 +69,7 @@ public class AmazfitBipSSupport extends AmazfitBipSupport {
 
     @Override
     public String windSpeedString(WeatherSpec weatherSpec){
-        return weatherSpec.windSpeed + "km/h";
+        return weatherSpec.getWindSpeed() + "km/h";
     }
 
     @Override
