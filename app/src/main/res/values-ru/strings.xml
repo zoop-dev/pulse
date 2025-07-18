@@ -2440,7 +2440,7 @@
     <string name="prefs_wena3_button_action_name_activity_screen">Отображение активности</string>
     <string name="pref_device_action_fitness_app_control_start">Начало отслеживания фитнес-приложением</string>
     <string name="devicetype_miband2_hrx">Mi Band HRX (без датчика ЧСС)</string>
-    <string name="drag_handle">перетаскивание элементов</string>
+    <string name="drag_handle">ручка перетаскивания</string>
     <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="watchface_setting_power_saving_hands">Выключить движения рук при снятом ремешке</string>
     <string name="pref_device_action_fitness_app_control_stop">Остановка отслеживания фитнес-приложением</string>
