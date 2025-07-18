@@ -27,9 +27,9 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleColor;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 
 class AppMessageHandlerPebStyle extends AppMessageHandler {
     public static final int KEY_AMPM_TEXT = 21;

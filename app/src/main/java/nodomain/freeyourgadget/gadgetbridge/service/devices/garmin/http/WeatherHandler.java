@@ -22,9 +22,9 @@ import java.util.Map;
 
 import lineageos.weather.util.WeatherUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
 

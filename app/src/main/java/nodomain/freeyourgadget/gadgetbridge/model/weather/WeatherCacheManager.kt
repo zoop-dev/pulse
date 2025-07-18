@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.model
+package nodomain.freeyourgadget.gadgetbridge.model.weather
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -10,7 +10,7 @@ class WeatherCacheManager(
     cacheDir: File,
     private val useCache: Boolean
 ) {
-    private val LOG = LoggerFactory.getLogger("nodomain.freeyourgadget.gadgetbridge.model.WeatherCacheManager")
+    private val LOG = LoggerFactory.getLogger("nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherCacheManager")
     private val cacheFile = File(cacheDir, "weatherCache.bin")
     private val listType = object : TypeToken<List<WeatherSpec>>() {}.type
     private val gson: Gson = Gson()

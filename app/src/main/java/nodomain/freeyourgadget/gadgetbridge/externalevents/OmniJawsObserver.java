@@ -29,13 +29,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.model.Weather;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherMapper;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 
 
 public class OmniJawsObserver extends ContentObserver {

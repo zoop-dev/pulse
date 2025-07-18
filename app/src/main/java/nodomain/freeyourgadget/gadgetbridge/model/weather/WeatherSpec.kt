@@ -16,7 +16,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.model
+package nodomain.freeyourgadget.gadgetbridge.model.weather
 
 import android.location.Location
 import android.os.Parcel
@@ -348,7 +348,7 @@ class WeatherSpec() : Parcelable {
         }
 
         fun windSpeedAsBeaufort(): Int {
-            return WeatherSpec.toBeaufort(this.windSpeed)
+            return toBeaufort(this.windSpeed)
         }
 
         companion object {
@@ -400,7 +400,7 @@ class WeatherSpec() : Parcelable {
         }
 
         fun windSpeedAsBeaufort(): Int {
-            return WeatherSpec.toBeaufort(this.windSpeed)
+            return toBeaufort(this.windSpeed)
         }
 
         companion object {

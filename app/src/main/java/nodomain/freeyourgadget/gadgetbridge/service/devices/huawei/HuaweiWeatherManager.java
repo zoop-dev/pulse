@@ -27,7 +27,7 @@ import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendGpsAndTimeToDeviceRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWeatherCurrentRequest;
@@ -277,7 +277,7 @@ public class HuaweiWeatherManager {
     public void handleAsyncMessage(HuaweiPacket response) {
         if (response.getTlv().getInteger(0x7f, -1) == 0x000186AA) {
             // Send weather
-            final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.Weather.INSTANCE.getWeatherSpecs());
+            final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.INSTANCE.getWeatherSpecs());
             if (specs.isEmpty()) {
                 LOG.debug("Weather specs empty, returning that weather is disabled.");
                 try {

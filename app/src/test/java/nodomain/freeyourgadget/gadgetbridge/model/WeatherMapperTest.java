@@ -40,6 +40,8 @@ import java.util.Collection;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 
 public class WeatherMapperTest extends TestBase {

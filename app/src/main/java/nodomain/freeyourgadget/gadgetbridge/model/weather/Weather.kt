@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.model
+package nodomain.freeyourgadget.gadgetbridge.model.weather
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -35,7 +35,9 @@ object Weather {
                         put("id", spec.currentConditionCode)
                         put("main", spec.currentCondition)
                         put("description", spec.currentCondition)
-                        put("icon", WeatherMapper.mapToOpenWeatherMapIcon(spec.currentConditionCode))
+                        put("icon",
+                            WeatherMapper.mapToOpenWeatherMapIcon(spec.currentConditionCode)
+                        )
                     })
                 })
 
@@ -62,7 +64,7 @@ object Weather {
     }
 
     fun initializeCache(cacheManager: WeatherCacheManager) {
-        this.cacheManager = cacheManager
+        Weather.cacheManager = cacheManager
 
         cacheManager.load { loadedSpecs ->
             weatherSpecs.clear()

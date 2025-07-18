@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.model
+package nodomain.freeyourgadget.gadgetbridge.model.weather
 
 import android.content.Context
 import nodomain.freeyourgadget.gadgetbridge.R
