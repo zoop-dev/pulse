@@ -1724,7 +1724,7 @@
     <string name="pref_workout_start_on_phone_title">Отслеживание фитнес-приложений</string>
     <string name="persian">Персидский</string>
     <string name="scandinavian">Скандинавский</string>
-    <string name="watchface_dialog_widget_cat_custom_widget">Пользовательский виджет</string>
+    <string name="watchface_dialog_widget_cat_custom_widget">Свой виджет</string>
     <string name="watchface_dialog_title_widget">Настройки виджета</string>
     <string name="nothing_prefs_inear_title">Обнаружение уха</string>
     <string name="sony_sound_position_front_left">Передний левый</string>
