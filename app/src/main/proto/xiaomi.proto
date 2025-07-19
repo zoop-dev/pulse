@@ -16,6 +16,7 @@ message Command {
   optional Auth auth = 3;
   optional System system = 4;
   optional Watchface watchface = 6;
+  // 8, 10 get
   optional Health health = 10;
   optional Calendar calendar = 14;
   optional Music music = 20;
@@ -88,6 +89,12 @@ message System {
 
   // 2, 18
   optional uint32 findDevice = 5; // 0, 1 == "found it" pressed on device
+
+  // 2, 24 get | 2, 25 set
+  optional RaiseToWake raiseToWake = 7;
+
+  // 2, 28 get | 2, 27 set
+  optional SimpleWidgets simpleWidgets = 9;
 
   // 2, 29 get | 2, 39 set
   optional DisplayItems displayItems = 10;
@@ -198,6 +205,24 @@ message TimeZone {
   required string name = 3;
 }
 
+message RaiseToWake {
+  optional uint32 mode = 1; // 0 all day 1 scheduled 2 off
+  optional HourMinute start = 2;
+  optional HourMinute end = 3;
+}
+
+message SimpleWidgets {
+  repeated SimpleWidget simpleWidget = 1;
+  optional uint32 unk2 = 2; // 41
+  optional uint32 unk3 = 3; // 3
+}
+
+message SimpleWidget {
+  optional uint32 unk1 = 1;
+  optional bool enabled = 2;
+  optional uint32 unk3 = 3;
+}
+
 message DisplayItems {
   repeated DisplayItem displayItem = 1;
 }
@@ -284,6 +309,7 @@ message MiscSettingSet {
 message MiscNotificationSettings {
   optional uint32 wakeScreen = 1; // 0 ignore 1 enable 2 disable
   optional uint32 onlyWhenPhoneLocked = 2; // 0 ignore 1 enable 2 disable
+  optional uint32 onlyWhenWorn = 3; // 1 enable 2 disable
 }
 
 message DndSync {
