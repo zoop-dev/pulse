@@ -26,7 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 public class ColmiP76Coordinator extends AbstractMoyoungDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("P76J");
+        return Pattern.compile("^P76J$");
     }
 
     @Override
