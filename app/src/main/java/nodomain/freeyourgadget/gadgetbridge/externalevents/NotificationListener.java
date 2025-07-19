@@ -631,6 +631,18 @@ public class NotificationListener extends NotificationListenerService {
             LOG.debug("Ignoring non-voip call");
             return;
         }
+
+        // #5113 - Firefox incorrectly categorizes recording notifications as calls - ignore them
+        if (app.equals("org.mozilla.firefox") ||
+                app.equals("org.mozilla.firefox_beta") ||
+                app.equals("org.mozilla.fenix") ||
+                app.equals("org.mozilla.fennec_aurora") ||
+                app.equals("org.mozilla.focus") ||
+                app.equals("org.mozilla.fennec_fdroid")) {
+            LOG.debug("Ignoring firefox call");
+            return;
+        }
+
         Notification noti = sbn.getNotification();
         dumpExtras(noti.extras);
         boolean callStarted = false;
