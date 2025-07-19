@@ -354,6 +354,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.MiBand9ProCoo
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.MiWatchColorSportCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.MiWatchLiteCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.RedmiSmartBand2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.RedmiSmartBand3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.RedmiSmartBandProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.RedmiWatch2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.RedmiWatch2LiteCoordinator;
@@ -448,6 +449,7 @@ public enum DeviceType {
     REDMIWATCH3ACTIVE(RedmiWatch3ActiveCoordinator.class),
     REDMIWATCH3(RedmiWatch3Coordinator.class),
     REDMISMARTBAND2(RedmiSmartBand2Coordinator.class),
+    REDMISMARTBAND3(RedmiSmartBand3Coordinator.class),
     REDMIWATCH2(RedmiWatch2Coordinator.class),
     REDMIWATCH2LITE(RedmiWatch2LiteCoordinator.class),
     REDMISMARTBANDPRO(RedmiSmartBandProCoordinator.class),
