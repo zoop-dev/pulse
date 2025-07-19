@@ -27,6 +27,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Person;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -676,6 +677,15 @@ public class NotificationListener extends NotificationListenerService {
             if (people != null && people.length > 0 && people[0] != null) {
                 number = people[0];
             }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && noti.extras.containsKey(Notification.EXTRA_PEOPLE_LIST)) {
+            List<Person> people = noti.extras.getParcelableArrayList(Notification.EXTRA_PEOPLE_LIST);
+            if (people != null && !people.isEmpty()) {
+                Person firstPerson = people.get(0);
+                if (firstPerson != null && firstPerson.getName() != null) {
+                    number = firstPerson.getName().toString();
+                }
+            }
+        }
         } else if (noti.extras.containsKey(Notification.EXTRA_TITLE)) {
             number = noti.extras.getString(Notification.EXTRA_TITLE);
         } else {
