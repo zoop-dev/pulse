@@ -24,7 +24,13 @@ import java.util.UUID;
 
 public class XiaomiUuids {
     public static final UUID UUID_SERVICE_SERIAL_PORT_PROFILE = UUID.fromString(String.format(BASE_UUID, "1101"));
-    public static final Map<UUID, XiaomiBleUuidSet> BLE_UUIDS = new LinkedHashMap<UUID, XiaomiBleUuidSet>() {{
+
+    // Mi Band 9 Active
+    public static final UUID BLE_V2_SERVICE_UUID = UUID.fromString("0000fe95-0000-1000-8000-00805f9b34fb");
+    public static final UUID BLE_V2_CHARACTERISTIC_RX_UUID = UUID.fromString("0000005e-0000-1000-8000-00805f9b34fb");
+    public static final UUID BLE_V2_CHARACTERISTIC_TX_UUID = UUID.fromString("0000005f-0000-1000-8000-00805f9b34fb");
+
+    public static final Map<UUID, XiaomiBleUuidSet> BLE_V1_UUIDS = new LinkedHashMap<UUID, XiaomiBleUuidSet>() {{
         // all encrypted devices seem to share the same characteristics
         // Mi Band 8
         // Redmi Watch 3 Active

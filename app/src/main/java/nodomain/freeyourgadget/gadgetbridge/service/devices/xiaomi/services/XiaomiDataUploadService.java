@@ -29,7 +29,7 @@ import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiCharacteristic;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSendCallback;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
@@ -159,7 +159,7 @@ public class XiaomiDataUploadService extends AbstractXiaomiService {
             BLETypeConversions.writeUint16(chunkToSend, 2, currentPart);
             System.arraycopy(payload, startIndex, chunkToSend, 4, endIndex - startIndex);
 
-            getSupport().getConnectionSpecificSupport().sendDataChunk("upload part " + currentPart + " of " + totalParts, chunkToSend, new XiaomiCharacteristic.SendCallback() {
+            getSupport().getConnectionSpecificSupport().sendDataChunk("upload part " + currentPart + " of " + totalParts, chunkToSend, new XiaomiSendCallback() {
                 @Override
                 public void onSend() {
                     final int progressPercent = Math.round((100.0f * currentPart) / totalParts);

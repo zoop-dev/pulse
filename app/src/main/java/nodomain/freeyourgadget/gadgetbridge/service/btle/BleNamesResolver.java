@@ -24,13 +24,14 @@ import android.bluetooth.BluetoothProfile;
 import android.util.SparseArray;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class BleNamesResolver {
-    private static HashMap<String, String> mServices = new HashMap<>(100);
-    private static HashMap<String, String> mCharacteristics = new HashMap<>(600);
-    private static SparseArray<String> mValueFormats = new SparseArray<>(10);
-    private static SparseArray<String> mAppearance = new SparseArray<>(20);
-    private static SparseArray<String> mHeartRateSensorLocation = new SparseArray<>(10);
+    private static final Map<String, String> mServices = new HashMap<>(100);
+    private static final Map<String, String> mCharacteristics = new HashMap<>(600);
+    private static final SparseArray<String> mValueFormats = new SparseArray<>(10);
+    private static final SparseArray<String> mAppearance = new SparseArray<>(20);
+    private static final SparseArray<String> mHeartRateSensorLocation = new SparseArray<>(10);
 
     static public String resolveServiceName(final String uuid) {
         String result = mServices.get(uuid);
@@ -39,8 +40,7 @@ public class BleNamesResolver {
     }
 
     static public String resolveValueTypeDescription(final int format) {
-        Integer tmp = Integer.valueOf(format);
-        return mValueFormats.get(tmp, "Unknown Format");
+        return mValueFormats.get(format, "Unknown Format");
     }
 
     static public String resolveCharacteristicName(final String uuid) {
@@ -1000,6 +1000,27 @@ public class BleNamesResolver {
         mCharacteristics.put("6a4e2823-667b-11e3-949a-0800200c9a66", "(Propr: Garmin ML 3 TX)");
         mCharacteristics.put("6a4e2814-667b-11e3-949a-0800200c9a66", "(Propr: Garmin ML 4 RX)");
         mCharacteristics.put("6a4e2824-667b-11e3-949a-0800200c9a66", "(Propr: Garmin ML 4 TX)");
+        mCharacteristics.put("00000051-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi V1 Command Read)");
+        mCharacteristics.put("00000052-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi V1 Command Write)");
+        mCharacteristics.put("00000053-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi V1 Activity Data)");
+        mCharacteristics.put("00000055-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi V1 Data Upload)");
+        mCharacteristics.put("16186f01-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Command Read)");
+        mCharacteristics.put("16186f02-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Command Write)");
+        mCharacteristics.put("16186f03-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Activity Data)");
+        mCharacteristics.put("16186f04-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Data Upload)");
+        mCharacteristics.put("16187f02-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Command Read)");
+        mCharacteristics.put("16187f01-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Command Write)");
+        mCharacteristics.put("16187f03-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Activity Data)");
+        mCharacteristics.put("16187f04-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi V1 Data Upload)");
+        mCharacteristics.put("1314f005-1000-9000-7000-301291e21220", "(Propr: Xiaomi V1 Command Read)");
+        mCharacteristics.put("1314f001-1000-9000-7000-301291e21220", "(Propr: Xiaomi V1 Command Write)");
+        mCharacteristics.put("1314f002-1000-9000-7000-301291e21220", "(Propr: Xiaomi V1 Activity Data)");
+        mCharacteristics.put("1314f007-1000-9000-7000-301291e21220", "(Propr: Xiaomi V1 Data Upload)");
+        mCharacteristics.put("74950002-a7f3-424b-92dd-4a006a3aef56", "(Propr: Xiaomi V1 Command Read)");
+        mCharacteristics.put("74950001-a7f3-424b-92dd-4a006a3aef56", "(Propr: Xiaomi V1 Command Write)");
+        mCharacteristics.put("74950003-a7f3-424b-92dd-4a006a3aef56", "(Propr: Xiaomi V1 Activity Data)");
+        mCharacteristics.put("0000005e-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi V2 RX)");
+        mCharacteristics.put("0000005f-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi V2 TX)");
         mCharacteristics.put("0000fff1-0000-1000-8000-00805f9b34fb", "(Propr: Nothing CMF Command Read");
         mCharacteristics.put("0000fff2-0000-1000-8000-00805f9b34fb", "(Propr: Nothing CMF Command Write");
         mCharacteristics.put("02f00000-0000-0000-0000-00000000ffe1", "(Propr: Nothing CMF Data Write");

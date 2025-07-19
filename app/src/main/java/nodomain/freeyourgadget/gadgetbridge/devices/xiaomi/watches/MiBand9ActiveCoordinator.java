@@ -20,8 +20,16 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class MiBand9ActiveCoordinator extends XiaomiCoordinator {
+    @Override
+    public boolean isExperimental() {
+        // Activity fetching is broken
+        // Some settings are broken
+        return true;
+    }
+
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_miband9active;
@@ -33,19 +41,17 @@ public class MiBand9ActiveCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean isExperimental() {
-        // Untested - based on btsnoops provided on matrix
-        return true;
-    }
-
-    @Override
-    public ConnectionType getConnectionType() {
-        // Unconfirmed - but actually looks like SPPv2 packets over BLE?
-        return ConnectionType.BOTH;
-    }
-
-    @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_default;
+    }
+
+    @Override
+    public boolean supportsFindDevice() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+        return false;
     }
 }

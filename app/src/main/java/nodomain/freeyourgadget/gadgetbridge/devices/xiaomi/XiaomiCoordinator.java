@@ -77,7 +77,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public Collection<? extends ScanFilter> createBLEScanFilters() {
         final List<ScanFilter> filters = new ArrayList<>();
-        for (final UUID uuid : XiaomiUuids.BLE_UUIDS.keySet()) {
+        for (final UUID uuid : XiaomiUuids.BLE_V1_UUIDS.keySet()) {
             final ParcelUuid service = new ParcelUuid(uuid);
             final ScanFilter filter = new ScanFilter.Builder().setServiceUuid(service).build();
             filters.add(filter);

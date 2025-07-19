@@ -43,8 +43,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class XiaomiCharacteristic {
-    private final Logger LOG = LoggerFactory.getLogger(XiaomiCharacteristic.class);
+public class XiaomiCharacteristicV1 {
+    private final Logger LOG = LoggerFactory.getLogger(XiaomiCharacteristicV1.class);
     private static final long TIMEOUT_TASK_DELAY = 5000L;
 
     public static final byte[] PAYLOAD_ACK = new byte[]{0, 0, 3, 0};
@@ -78,9 +78,9 @@ public class XiaomiCharacteristic {
 
     private XiaomiChannelHandler channelHandler = null;
 
-    public XiaomiCharacteristic(final XiaomiBleSupport support,
-                                final BluetoothGattCharacteristic bluetoothGattCharacteristic,
-                                @Nullable final XiaomiAuthService authService) {
+    public XiaomiCharacteristicV1(final XiaomiBleSupport support,
+                                  final BluetoothGattCharacteristic bluetoothGattCharacteristic,
+                                  @Nullable final XiaomiAuthService authService) {
         this.mSupport = support;
         this.bluetoothGattCharacteristic = bluetoothGattCharacteristic;
         this.authService = authService;
@@ -119,7 +119,7 @@ public class XiaomiCharacteristic {
      * Write bytes to this characteristic, encrypting and splitting it into chunks if necessary.
      * Callback will be notified when a (n)ack has been received by the remote device.
      */
-    public void write(final String taskName, final byte[] value, final SendCallback callback) {
+    public void write(final String taskName, final byte[] value, final XiaomiSendCallback callback) {
         write(null, new Payload(taskName, value, callback));
     }
 
@@ -136,7 +136,7 @@ public class XiaomiCharacteristic {
      * commands. The callback will be notified when a (n)ack has been received from the remote
      * device in response to the payload being sent.
      */
-    public void write(final TransactionBuilder builder, final byte[] value, final SendCallback callback) {
+    public void write(final TransactionBuilder builder, final byte[] value, final XiaomiSendCallback callback) {
         write(builder, new Payload(builder.getTaskName(), value, callback));
     }
 
@@ -536,9 +536,9 @@ public class XiaomiCharacteristic {
 
         // Bytes that will actually be sent (might be encrypted)
         private byte[] bytesToSend;
-        private final SendCallback callback;
+        private final XiaomiSendCallback callback;
 
-        public Payload(final String taskName, final byte[] bytes, final SendCallback callback) {
+        public Payload(final String taskName, final byte[] bytes, final XiaomiSendCallback callback) {
             this.taskName = taskName;
             this.bytes = bytes;
             this.callback = callback;
@@ -559,11 +559,8 @@ public class XiaomiCharacteristic {
         public byte[] getBytesToSend() {
             return bytesToSend != null ? bytesToSend : bytes;
         }
-        public SendCallback getCallback() { return this.callback; }
-    }
-
-    public interface SendCallback {
-        void onSend();
-        void onNack();
+        public XiaomiSendCallback getCallback() {
+            return this.callback;
+        }
     }
 }
