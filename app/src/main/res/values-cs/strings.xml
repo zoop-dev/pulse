@@ -4212,4 +4212,12 @@
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Povolit zastaralou Službu monitoru sběrače oznámení</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Vynutí použití druhé služby na popředí pro udržení monitoru oznámení v provozu. Tuto možnost aktivujte, pokud Gadgetbridge přestal přijímat oznámení.\nUpozorňujeme, že funkce může způsobit zobrazení druhého trvalého oznámení.\nPo přepnutí restartujte aplikaci.</string>
     <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
+    <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
+    <string name="exercise_category_bench_press">Bench-press</string>
+    <string name="exercise_category_calf_raise">Výpony lýtek</string>
+    <string name="exercise_category_carry">Carry</string>
+    <string name="exercise_category_chop">Chop</string>
+    <string name="exercise_category_core">Core</string>
+    <string name="exercise_category_crunch">Zkracovačka</string>
+    <string name="exercise_category_flye">Rozpažování</string>
 </resources>
