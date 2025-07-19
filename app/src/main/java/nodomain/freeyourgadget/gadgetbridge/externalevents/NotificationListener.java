@@ -144,6 +144,11 @@ public class NotificationListener extends NotificationListenerService {
             add("org.fossify.phone");
     }};
 
+    private static final Set<String> NOTI_USE_TITLE_APPS = new HashSet<String>() {{
+            add("com.whatsapp");
+            add("org.thoughtcrime.securesms");
+    }};
+
     public static final ArrayList<String> notificationStack = new ArrayList<>();
     private static final ArrayList<Integer> notificationsActive = new ArrayList<>();
 
@@ -671,6 +676,8 @@ public class NotificationListener extends NotificationListenerService {
 
         // figure out sender
         String number = null;
+        String notiTitle = null;
+        String notiText = null;
         String appName = NotificationUtils.getApplicationLabel(this, app);
         if (noti.extras.containsKey(Notification.EXTRA_PEOPLE)) {
             String[] people = noti.extras.getStringArray(Notification.EXTRA_PEOPLE);
@@ -686,9 +693,16 @@ public class NotificationListener extends NotificationListenerService {
                 }
             }
         }
-        } else if (noti.extras.containsKey(Notification.EXTRA_TITLE)) {
-            number = noti.extras.getString(Notification.EXTRA_TITLE);
-        } else {
+        if (noti.extras.containsKey(Notification.EXTRA_TEXT)) {
+            notiText = noti.extras.getString(Notification.EXTRA_TEXT);
+        }
+        if (noti.extras.containsKey(Notification.EXTRA_TITLE)) {
+            notiTitle = noti.extras.getString(Notification.EXTRA_TITLE);
+        }
+        if (number == null) {
+            number = NOTI_USE_TITLE_APPS.contains(app) ? notiTitle : notiText;
+        }
+        if (number == null) {
             number = appName != null ? appName : app;
         }
         activeCallPostTime = sbn.getPostTime();
