@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
@@ -516,6 +517,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (!sets.isEmpty()) {
             final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(SETS, "sets_header", Arrays.asList(
                     "set",
+                    "category",
                     "workout_set_reps",
                     "menuitem_weight",
                     "activity_detail_duration_label"
@@ -524,10 +526,16 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             int i = 1;
             for (final FitSet set : sets) {
                 if (set.getSetType() != null && set.getDuration() != null && set.getSetType() == 1) {
+                    ExerciseCategory category = null;
+                    if (set.getCategory() != null && set.getCategory().length > 0) {
+                        category = set.getCategory()[0];
+                    }
+
                     tableBuilder.addRow(
                             "set_" + i,
                             Arrays.asList(
                                     new ActivitySummaryValue(i, UNIT_NONE),
+                                    new ActivitySummaryValue(category != null ? context.getString(category.getNameResId()) : null, UNIT_NONE),
                                     new ActivitySummaryValue(set.getRepetitions() != null ? String.valueOf(set.getRepetitions()) : null),
                                     new ActivitySummaryValue(set.getWeight(), weightUnit),
                                     new ActivitySummaryValue(set.getDuration().longValue(), UNIT_SECONDS)

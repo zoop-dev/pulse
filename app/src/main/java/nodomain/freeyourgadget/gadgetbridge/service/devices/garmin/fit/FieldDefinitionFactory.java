@@ -5,6 +5,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionArray;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionDayOfWeek;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionFileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
@@ -32,6 +33,8 @@ public class FieldDefinitionFactory {
                 return new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
             case DAY_OF_WEEK:
                 return new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
+            case EXERCISE_CATEGORY:
+                return new FieldDefinitionExerciseCategory(localNumber, size, baseType, name);
             case FILE_TYPE:
                 return new FieldDefinitionFileType(localNumber, size, baseType, name);
             case GOAL_SOURCE:
@@ -71,6 +74,7 @@ public class FieldDefinitionFactory {
         ALARM,
         ARRAY,
         DAY_OF_WEEK,
+        EXERCISE_CATEGORY,
         FILE_TYPE,
         GOAL_SOURCE,
         GOAL_TYPE,

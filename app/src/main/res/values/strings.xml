@@ -2722,6 +2722,31 @@
     <string name="swim_style_butterfly">Butterfly</string>
     <string name="swim_style_drill">Drill</string>
     <string name="swim_style_mixed">Mixed</string>
+    <string name="exercise_category_bench_press">Bench press</string>
+    <string name="exercise_category_calf_raise">Calf raise</string>
+    <string name="exercise_category_carry">Carry</string>
+    <string name="exercise_category_chop">Chop</string>
+    <string name="exercise_category_core">Core</string>
+    <string name="exercise_category_crunch">Crunch</string>
+    <string name="exercise_category_flye">Flye</string>
+    <string name="exercise_category_hip_raise">Hip raise</string>
+    <string name="exercise_category_hip_stability">Hip stability</string>
+    <string name="exercise_category_hip_swing">Hip swing</string>
+    <string name="exercise_category_hyperextension">Hyperextension</string>
+    <string name="exercise_category_lateral_raise">Lateral raise</string>
+    <string name="exercise_category_leg_curl">Leg curl</string>
+    <string name="exercise_category_leg_raise">Leg raise</string>
+    <string name="exercise_category_lunge">Lunge</string>
+    <string name="exercise_category_olympic_lift">Olympic lift</string>
+    <string name="exercise_category_plyo">Plyo</string>
+    <string name="exercise_category_shoulder_press">Shoulder press</string>
+    <string name="exercise_category_shoulder_stability">Shoulder stability</string>
+    <string name="exercise_category_shrug">Shrug</string>
+    <string name="exercise_category_squat">Squat</string>
+    <string name="exercise_category_total_body">Total body</string>
+    <string name="exercise_category_triceps_extension">Triceps extension</string>
+
+    <string name="category">Category</string>
     <string name="workout_intervals">Intervals</string>
     <!-- Diving params -->
     <string name="diving_maximum_diving_depth">Maximum Diving Depth</string>

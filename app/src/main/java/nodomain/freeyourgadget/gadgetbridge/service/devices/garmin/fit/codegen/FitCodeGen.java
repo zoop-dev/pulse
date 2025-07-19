@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFIT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
@@ -249,6 +250,8 @@ public class FitCodeGen {
                     return Number[].class;
                 case DAY_OF_WEEK:
                     return DayOfWeek.class;
+                case EXERCISE_CATEGORY:
+                    return FieldDefinitionExerciseCategory.ExerciseCategory[].class;
                 case FILE_TYPE:
                     return FileType.FILETYPE.class;
                 case GOAL_SOURCE:

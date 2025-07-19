@@ -400,7 +400,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(4, BaseType.UINT16, "weight", 16, 0), // kg
             new FieldDefinitionPrimitive(5, BaseType.UINT8, "set_type"), // 1 active 0 rest
             new FieldDefinitionPrimitive(6, BaseType.UINT32, "start_time", FieldDefinitionFactory.FIELD.TIMESTAMP),
-            new FieldDefinitionPrimitive(7, BaseType.UINT16, "category"),
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "category", FieldDefinitionFactory.FIELD.EXERCISE_CATEGORY),
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "message_index"),
             new FieldDefinitionPrimitive(254, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));

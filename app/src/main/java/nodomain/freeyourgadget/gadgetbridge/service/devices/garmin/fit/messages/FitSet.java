@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory;
 
 //
 // WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -46,8 +47,15 @@ public class FitSet extends RecordData {
     }
 
     @Nullable
-    public Integer getCategory() {
-        return (Integer) getFieldByNumber(7);
+    public ExerciseCategory[] getCategory() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(7);
+        if (objectsArray == null)
+            return null;
+        final ExerciseCategory[] ret = new ExerciseCategory[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (ExerciseCategory) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
