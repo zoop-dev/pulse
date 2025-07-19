@@ -669,10 +669,13 @@ public class NotificationListener extends NotificationListenerService {
         }
 
         // figure out sender
-        String number;
+        String number = null;
         String appName = NotificationUtils.getApplicationLabel(this, app);
         if (noti.extras.containsKey(Notification.EXTRA_PEOPLE)) {
-            number = noti.extras.getString(Notification.EXTRA_PEOPLE);
+            String[] people = noti.extras.getStringArray(Notification.EXTRA_PEOPLE);
+            if (people != null && people.length > 0 && people[0] != null) {
+                number = people[0];
+            }
         } else if (noti.extras.containsKey(Notification.EXTRA_TITLE)) {
             number = noti.extras.getString(Notification.EXTRA_TITLE);
         } else {
