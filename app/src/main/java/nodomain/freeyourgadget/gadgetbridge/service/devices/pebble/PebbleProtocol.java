@@ -66,6 +66,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec.Action;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleNotification;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
@@ -423,6 +424,12 @@ public class PebbleProtocol extends GBDeviceProtocol {
         super(device);
         mAppMessageHandlers.put(UUID_MORPHEUZ, new AppMessageHandlerMorpheuz(UUID_MORPHEUZ, PebbleProtocol.this));
         mAppMessageHandlers.put(UUID_MISFIT, new AppMessageHandlerMisfit(UUID_MISFIT, PebbleProtocol.this));
+        mAppMessageHandlers.put(UUID_WEATHER, new AppMessageHandler(UUID_WEATHER, PebbleProtocol.this){
+            @Override
+            public GBDeviceEvent[] onAppStart() {
+                return new GBDeviceEvent[] {new GBDeviceEventSendBytes(encodeSendWeather(Weather.getWeatherSpec()))};
+            }
+        });
         if (!((PebbleCoordinator) device.getDeviceCoordinator()).isBackgroundJsEnabled(device)) {
             mAppMessageHandlers.put(UUID_PEBBLE_TIMESTYLE, new AppMessageHandlerTimeStylePebble(UUID_PEBBLE_TIMESTYLE, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_PEBSTYLE, new AppMessageHandlerPebStyle(UUID_PEBSTYLE, PebbleProtocol.this));
