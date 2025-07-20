@@ -16,8 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,7 @@ import java.io.InputStream;
 import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
@@ -109,6 +113,12 @@ public class GarminFitFileInstallHandler implements InstallHandler {
         }
     }
 
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
+    }
+
     @Override
     public boolean isValid() {
         // If we got a fitParseException, the file is "valid" (a fit file) for this handler, but corrupted
@@ -134,13 +144,12 @@ public class GarminFitFileInstallHandler implements InstallHandler {
         }
 
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!(coordinator instanceof GarminCoordinator)) {
+        if (!(coordinator instanceof GarminCoordinator garminCoordinator)) {
             LOG.warn("Coordinator is not a GarminCoordinator: {}", coordinator.getClass());
             installActivity.setInfoText(mContext.getString(R.string.fwapp_install_device_not_supported));
             installActivity.setInstallEnabled(false);
             return;
         }
-        final GarminCoordinator garminCoordinator = (GarminCoordinator) coordinator;
         final boolean fileSupported = parseFitFile(installActivity, garminCoordinator, device);
 
         if (!fileSupported) {
@@ -166,13 +175,9 @@ public class GarminFitFileInstallHandler implements InstallHandler {
         return rawBytes;
     }
 
-    public FitFile getFitFile() {
-        return fitFile;
-    }
-
     public FileType.FILETYPE getFileType() {
         return fileType;
-}
+    }
 
     private boolean parseFitFile(final InstallActivity installActivity, final GarminCoordinator coordinator, final GBDevice device) {
         final String name;

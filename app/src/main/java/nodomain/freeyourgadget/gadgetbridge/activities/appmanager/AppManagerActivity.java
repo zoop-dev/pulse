@@ -19,9 +19,11 @@ package nodomain.freeyourgadget.gadgetbridge.activities.appmanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -44,16 +47,17 @@ import androidx.viewpager.widget.ViewPager;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractFragmentPagerAdapter;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragmentActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 
 public class AppManagerActivity extends AbstractGBFragmentActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(AppManagerActivity.class);
-    private int READ_REQUEST_CODE = 42;
+    private static final int READ_REQUEST_CODE = 42;
 
     private GBDevice mGBDevice = null;
 
@@ -128,18 +132,16 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            switch (enabledTabsList.get(position)) {
-                case "cache":
-                    return new AppManagerFragmentCache();
-                case "apps":
-                    return new AppManagerFragmentInstalledApps();
-                case "watchfaces":
-                    return new AppManagerFragmentInstalledWatchfaces();
-            }
-            return null;
+            return switch (enabledTabsList.get(position)) {
+                case "cache" -> new AppManagerFragmentCache();
+                case "apps" -> new AppManagerFragmentInstalledApps();
+                case "watchfaces" -> new AppManagerFragmentInstalledWatchfaces();
+                default -> throw new IllegalArgumentException("Unknown tab position " + position);
+            };
         }
 
         @Override
@@ -149,15 +151,12 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (enabledTabsList.get(position)) {
-                case "cache":
-                    return getString(R.string.appmanager_cached_watchapps_watchfaces);
-                case "apps":
-                    return getString(R.string.appmanager_installed_watchapps);
-                case "watchfaces":
-                    return getString(R.string.appmanager_installed_watchfaces);
-            }
-            return super.getPageTitle(position);
+            return switch (enabledTabsList.get(position)) {
+                case "cache" -> getString(R.string.appmanager_cached_watchapps_watchfaces);
+                case "apps" -> getString(R.string.appmanager_installed_watchapps);
+                case "watchfaces" -> getString(R.string.appmanager_installed_watchfaces);
+                default -> super.getPageTitle(position);
+            };
         }
     }
 
@@ -208,9 +207,16 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Intent startIntent = new Intent(AppManagerActivity.this, FwAppInstallerActivity.class);
+            final Uri uri = resultData.getData();
+            final InstallHandler installHandler = mGBDevice.getDeviceCoordinator().findInstallHandler(uri, this);
+            if (installHandler == null) {
+                GB.toast(getString(R.string.fwinstaller_file_not_compatible_to_device), Toast.LENGTH_LONG, GB.INFO);
+                return;
+            }
+            final Intent startIntent = new Intent(AppManagerActivity.this, installHandler.getInstallActivity());
+            startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
             startIntent.setAction(Intent.ACTION_VIEW);
-            startIntent.setDataAndType(resultData.getData(), null);
+            startIntent.setDataAndType(uri, null);
             startActivity(startIntent);
         }
     }

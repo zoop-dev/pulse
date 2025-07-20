@@ -16,13 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
@@ -42,6 +46,12 @@ public class GarminPrgFileInstallHandler implements InstallHandler {
         this.prgFile = new GarminPrgFile(uri, context);
     }
 
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
+    }
+
     @Override
     public boolean isValid() {
         return prgFile.isValid();
@@ -57,14 +67,13 @@ public class GarminPrgFileInstallHandler implements InstallHandler {
         }
 
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!(coordinator instanceof GarminCoordinator)) {
+        if (!(coordinator instanceof GarminCoordinator garminCoordinator)) {
             LOG.warn("Coordinator is not a GarminCoordinator: {}", coordinator.getClass());
             installActivity.setInfoText(mContext.getString(R.string.fwapp_install_device_not_supported));
             installActivity.setInstallEnabled(false);
             installActivity.setCloseEnabled(true);
             return;
         }
-        final GarminCoordinator garminCoordinator = (GarminCoordinator) coordinator;
 
         // FIXME this might not be the correct capability
         if (!garminCoordinator.supports(device, GarminCapability.CONNECTIQ_APP_MANAGEMENT)) {

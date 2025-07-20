@@ -17,21 +17,25 @@
 
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
-
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiAppManager;
@@ -110,7 +114,7 @@ public class HuaweiInstallHandler implements InstallHandler {
     public void validateInstallation(InstallActivity installActivity, GBDevice device) {
 
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!(coordinator instanceof HuaweiCoordinatorSupplier)) {
+        if (!(coordinator instanceof HuaweiCoordinatorSupplier huaweiCoordinatorSupplier)) {
             LOG.warn("Coordinator is not a HuaweiCoordinatorSupplier: {}", coordinator.getClass());
             installActivity.setInstallEnabled(false);
             return;
@@ -157,13 +161,16 @@ public class HuaweiInstallHandler implements InstallHandler {
         }
 
         if (helper.isWatchface()) {
-            final HuaweiCoordinatorSupplier huaweiCoordinatorSupplier = (HuaweiCoordinatorSupplier) coordinator;
 
             HuaweiWatchfaceManager.WatchfaceDescription description = helper.getWatchfaceDescription();
 
             HuaweiWatchfaceManager.Resolution resolution = new HuaweiWatchfaceManager.Resolution();
-            String deviceScreen = String.format("%d*%d", huaweiCoordinatorSupplier.getHuaweiCoordinator().getHeight(),
-                    huaweiCoordinatorSupplier.getHuaweiCoordinator().getWidth());
+            String deviceScreen = String.format(
+                    Locale.ROOT,
+                    "%d*%d",
+                    huaweiCoordinatorSupplier.getHuaweiCoordinator().getHeight(),
+                    huaweiCoordinatorSupplier.getHuaweiCoordinator().getWidth()
+            );
             this.valid = resolution.isValid(description.screen, deviceScreen);
 
             installActivity.setInstallEnabled(true);
@@ -245,8 +252,6 @@ public class HuaweiInstallHandler implements InstallHandler {
 
             LOG.debug("Initialized HuaweiInstallHandler: App");
         } else if (helper.isMusic()) {
-            final HuaweiCoordinatorSupplier huaweiCoordinatorSupplier = (HuaweiCoordinatorSupplier) coordinator;
-
             HuaweiMusicUtils.MusicCapabilities capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getExtendedMusicInfoParams();
             if (capabilities == null) {
                 capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getMusicInfoParams();
@@ -292,6 +297,12 @@ public class HuaweiInstallHandler implements InstallHandler {
             LOG.debug("Initialized HuaweiInstallHandler: Music");
         }
 
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
     }
 
     @Override

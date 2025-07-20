@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/about_margin"
-        android:paddingRight="@dimen/about_margin"
-        tools:context="nodomain.freeyourgadget.gadgetbridge.activities.OpenFwAppInstallerActivity">
+        android:paddingRight="@dimen/about_margin">
 
         <LinearLayout
             android:layout_width="match_parent"

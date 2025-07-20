@@ -17,8 +17,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.pebble;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +37,7 @@ import java.io.InputStream;
 import java.io.Writer;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
@@ -119,16 +123,11 @@ public class PBWInstallHandler implements InstallHandler {
                 if (mPBWReader.isLanguage()) {
                     drawable = R.drawable.ic_languagepack;
                 } else {
-                    switch (app.getType()) {
-                        case WATCHFACE:
-                            drawable = R.drawable.ic_watchface;
-                            break;
-                        case APP_ACTIVITYTRACKER:
-                            drawable = R.drawable.ic_activitytracker;
-                            break;
-                        default:
-                            drawable = R.drawable.ic_watchapp;
-                    }
+                    drawable = switch (app.getType()) {
+                        case WATCHFACE -> R.drawable.ic_watchface;
+                        case APP_ACTIVITYTRACKER -> R.drawable.ic_activitytracker;
+                        default -> R.drawable.ic_watchapp;
+                    };
                 }
                 installItem.setIcon(drawable);
 
@@ -155,12 +154,13 @@ public class PBWInstallHandler implements InstallHandler {
         GBDeviceApp app = mPBWReader.getGBDeviceApp();
         try {
             destDir = PebbleUtils.getPbwCacheDir();
+            //noinspection ResultOfMethodCallIgnored
             destDir.mkdirs();
             FileUtils.copyURItoFile(mContext, mUri, new File(destDir, app.getUUID().toString() + ".pbw"));
 
             AppManagerActivity.addToAppOrderFile("pbwcacheorder.txt", app.getUUID());
         } catch (IOException e) {
-            LOG.error("Installation failed: " + e.getMessage(), e);
+            LOG.error("Installation failed: ", e);
             return;
         }
 
@@ -169,7 +169,7 @@ public class PBWInstallHandler implements InstallHandler {
         try {
             writer = new BufferedWriter(new FileWriter(outputFile));
         } catch (IOException e) {
-            LOG.error("Failed to open output file: " + e.getMessage(), e);
+            LOG.error("Failed to open output file: ", e);
             return;
         }
         try {
@@ -183,25 +183,25 @@ public class PBWInstallHandler implements InstallHandler {
 
             writer.close();
         } catch (IOException e) {
-            LOG.error("Failed to write to output file: " + e.getMessage(), e);
+            LOG.error("Failed to write to output file: ", e);
         } catch (JSONException e) {
             LOG.error(e.getMessage(), e);
         }
 
         InputStream jsConfigFile = mPBWReader.getInputStreamFile("pebble-js-app.js");
         if (jsConfigFile != null) {
-            try {
+            try (jsConfigFile) {
                 outputFile = new File(destDir, app.getUUID().toString() + "_config.js");
                 FileUtils.copyStreamToFile(jsConfigFile, outputFile);
             } catch (IOException e) {
-                LOG.error("Failed to open output file: " + e.getMessage(), e);
-            } finally {
-                try {
-                    jsConfigFile.close();
-                } catch (IOException e) {
-                }
+                LOG.error("Failed to open output file: ", e);
             }
         }
+    }
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
     }
 
     @Override

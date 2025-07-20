@@ -33,6 +33,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NavUtils;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -46,11 +47,8 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.adapter.ItemWithDetailsAdapter;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -171,9 +169,12 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appinstaller);
 
-        GBDevice dev = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
-        if (dev != null) {
-            device = dev;
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null) {
+            // This activity does not support auto-discovery - see FileInstallerActivity for that
+            GB.toast("No device provided to FwAppInstallerActivity", Toast.LENGTH_LONG, GB.ERROR);
+            finish();
+            return;
         }
         if (savedInstanceState != null) {
             details = savedInstanceState.getParcelableArrayList(ITEM_DETAILS);
@@ -207,13 +208,10 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         filter.addAction(GB.ACTION_SET_FINISHED);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
-        installButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setInstallEnabled(false);
-                installHandler.onStartInstall(device);
-                GBApplication.deviceService(device).onInstallApp(uri, Bundle.EMPTY);
-            }
+        installButton.setOnClickListener(v -> {
+            setInstallEnabled(false);
+            installHandler.onStartInstall(device);
+            GBApplication.deviceService(device).onInstallApp(uri, Bundle.EMPTY);
         });
 
         closeButton.setOnClickListener(v -> finish());
@@ -222,78 +220,30 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         if (uri == null) { // For "share" intent
             uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
         }
-        installHandler = findInstallHandlerFor(uri);
+
+        installHandler = device.getDeviceCoordinator().findInstallHandler(uri, this);
+
         if (installHandler == null) {
+            // Should never happen? at this point, we got here by installing to the device
             setInfoText(getString(R.string.installer_activity_unable_to_find_handler));
-        } else {
-            setInfoText(getString(R.string.installer_activity_wait_while_determining_status));
+            return;
+        }
 
-            List<GBDevice> selectedDevices = GBApplication.app().getDeviceManager().getSelectedDevices();
-            if(selectedDevices.size() == 0){
-                GB.toast(getString(R.string.open_fw_installer_connect_minimum_one_device), Toast.LENGTH_LONG, GB.ERROR);
-                finish();
-                return;
-            }
-            if(selectedDevices.size() != 1){
-                GB.toast(getString(R.string.open_fw_installer_connect_maximum_one_device), Toast.LENGTH_LONG, GB.ERROR);
-                finish();
-                return;
-            }
-            device = selectedDevices.get(0);
+        setInfoText(getString(R.string.installer_activity_wait_while_determining_status));
 
-            // needed to get the device
-            if (device == null || !device.isConnected()) {
+        if (!device.isConnected()) {
+            if (mayConnect) {
                 connect();
-            } else {
-                GBApplication.deviceService(device).requestDeviceInfo();
             }
+        } else {
+            GBApplication.deviceService(device).requestDeviceInfo();
         }
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(ITEM_DETAILS, details);
-    }
-
-    private InstallHandler findInstallHandlerFor(Uri uri) {
-        for (DeviceCoordinator coordinator : getAllCoordinatorsConnectedFirst()) {
-            InstallHandler handler = coordinator.findInstallHandler(uri, this);
-            if (handler != null) {
-                LOG.info("Found install handler {} from {}", handler.getClass(), coordinator.getClass());
-                return handler;
-            }
-        }
-        return null;
-    }
-
-    private List<DeviceCoordinator> getAllCoordinatorsConnectedFirst() {
-        DeviceManager deviceManager = ((GBApplication) getApplicationContext()).getDeviceManager();
-        List<DeviceCoordinator> connectedCoordinators = new ArrayList<>();
-        List<DeviceCoordinator> allCoordinators = new ArrayList<>(DeviceType.values().length);
-        for(DeviceType type : DeviceType.values()){
-            allCoordinators.add(type.getDeviceCoordinator());
-        }
-        List<DeviceCoordinator> sortedCoordinators = new ArrayList<>(allCoordinators.size());
-
-        List<GBDevice> devices = deviceManager.getSelectedDevices();
-        for(GBDevice connectedDevice : devices){
-            if (connectedDevice.isConnected()) {
-                DeviceCoordinator coordinator = connectedDevice.getDeviceCoordinator();
-                if (coordinator != null) {
-                    connectedCoordinators.add(coordinator);
-                }
-            }
-        }
-
-
-        sortedCoordinators.addAll(connectedCoordinators);
-        for (DeviceCoordinator coordinator : allCoordinators) {
-            if (!connectedCoordinators.contains(coordinator)) {
-                sortedCoordinators.add(coordinator);
-            }
-        }
-        return sortedCoordinators;
     }
 
     @Override
@@ -320,7 +270,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
     @Override
     public void setPreview(@Nullable final Bitmap bitmap) {
         previewImage.setImageBitmap(bitmap);
-        if (previewImage == null) {
+        if (bitmap == null) {
             previewImage.setVisibility(View.GONE);
         } else {
             previewImage.setVisibility(View.VISIBLE);

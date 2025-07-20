@@ -68,7 +68,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -84,7 +83,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1567,21 +1565,6 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         final ShortcutManager shortcutManager = (ShortcutManager) context.getApplicationContext().getSystemService(Context.SHORTCUT_SERVICE);
 
         shortcutManager.removeDynamicShortcuts(Collections.singletonList(device.getAddress()));
-    }
-
-    private static class GBDeviceDiffUtil extends DiffUtil.ItemCallback<GBDevice> {
-        @Override
-        public boolean areItemsTheSame(@NonNull GBDevice oldItem, @NonNull GBDevice newItem) {
-            return new EqualsBuilder()
-                    .append(oldItem.getAddress(), newItem.getAddress())
-                    .append(oldItem.getName(), newItem.getName())
-                    .isEquals();
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull GBDevice oldItem, @NonNull GBDevice newItem) {
-            return EqualsBuilder.reflectionEquals(oldItem, newItem);
-        }
     }
 
     /**

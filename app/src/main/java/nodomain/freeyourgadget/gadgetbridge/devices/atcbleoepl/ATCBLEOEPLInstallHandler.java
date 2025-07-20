@@ -17,9 +17,13 @@
 
 package nodomain.freeyourgadget.gadgetbridge.devices.atcbleoepl;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -31,6 +35,12 @@ public class ATCBLEOEPLInstallHandler implements InstallHandler {
     public ATCBLEOEPLInstallHandler(Uri uri, Context context) {
         mContext = context;
         mUri = uri;
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
     }
 
     @Override

@@ -137,6 +137,7 @@
     <!-- Strings related to CalBlacklist -->
     <string name="title_activity_calblacklist">Blacklisted Calendars</string>
     <!-- Strings related to FwAppInstaller -->
+    <string name="title_activity_file_installer">File installer</string>
     <string name="title_activity_fw_app_insaller">FW/App installer</string>
     <string name="fw_upgrade_notice">You are about to install the %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">You are about to install the %s firmware on your Amazfit Bip.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
@@ -1109,6 +1110,8 @@
     <string name="pref_title_keep_data_on_device">Keep activity data on device</string>
     <string name="miband_fwinstaller_incompatible_version">Incompatible firmware</string>
     <string name="fwinstaller_firmware_not_compatible_to_device">This firmware is not compatible with the device</string>
+    <string name="fwinstaller_file_not_compatible_to_device">The selected file is not compatible with the device</string>
+    <string name="fwinstaller_no_compatible_device_found">No compatible device found to install %1s</string>
     <string name="miband_prefs_reserve_alarm_calendar">Alarms to reserve for upcoming events</string>
     <string name="miband_prefs_reserve_reminder_calendar">Reminders to reserve for upcoming events</string>
     <string name="prefs_reserve_reminder_calendar_summary">Number of calendar events that will be synchronized</string>

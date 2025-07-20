@@ -1,9 +1,12 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.thermalprinter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +44,10 @@ public class ImageFilePrinterHandler implements InstallHandler {
 
     }
 
-    public Bitmap getIncomingBitmap() {
-        return incomingBitmap;
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return SendToPrinterActivity.class;
     }
 
     @Override
@@ -52,10 +57,8 @@ public class ImageFilePrinterHandler implements InstallHandler {
 
     @Override
     public void validateInstallation(InstallActivity installActivity, GBDevice device) {
-
         installActivity.setPreview(incomingBitmap);
         installActivity.setInstallEnabled(true);
-
     }
 
     @Override

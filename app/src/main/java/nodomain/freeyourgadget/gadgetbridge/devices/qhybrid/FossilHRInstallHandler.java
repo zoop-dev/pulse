@@ -17,11 +17,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.json.JSONException;
@@ -37,6 +39,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AbstractAppManagerFragment;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
@@ -45,7 +48,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -123,10 +125,11 @@ public class FossilHRInstallHandler implements InstallHandler {
         try {
             app = fossilFile.getGBDeviceApp();
             destDir = mCoordinator.getAppCacheDir();
+            //noinspection ResultOfMethodCallIgnored
             destDir.mkdirs();
             FileUtils.copyURItoFile(mContext, fossilFile.getUri(), new File(destDir, app.getUUID().toString() + mCoordinator.getAppFileExtension()));
         } catch (IOException e) {
-            LOG.error("Saving app in cache failed: " + e.getMessage(), e);
+            LOG.error("Saving app in cache failed: ", e);
             return false;
         }
         // write app metadata
@@ -135,7 +138,7 @@ public class FossilHRInstallHandler implements InstallHandler {
         try {
             writer = new BufferedWriter(new FileWriter(outputFile));
         } catch (IOException e) {
-            LOG.error("Failed to open output file: " + e.getMessage(), e);
+            LOG.error("Failed to open output file: ", e);
             return false;
         }
         try {
@@ -149,10 +152,10 @@ public class FossilHRInstallHandler implements InstallHandler {
 
             writer.close();
         } catch (IOException e) {
-            LOG.error("Failed to write to output file: " + e.getMessage(), e);
+            LOG.error("Failed to write to output file: ", e);
             return false;
         } catch (JSONException e) {
-            LOG.error("Failed to load or write appKeys JSON: " + e.getMessage(), e);
+            LOG.error("Failed to load or write appKeys JSON: ", e);
             return false;
         }
         // write watchface background image
@@ -163,7 +166,7 @@ public class FossilHRInstallHandler implements InstallHandler {
                 backgroundImg.compress(Bitmap.CompressFormat.PNG, 9, fos);
                 fos.close();
             } catch (IOException e) {
-                LOG.error("Failed to write to output file: " + e.getMessage(), e);
+                LOG.error("Failed to write to output file: ", e);
                 return false;
             }
         }
@@ -175,11 +178,17 @@ public class FossilHRInstallHandler implements InstallHandler {
                 previewImg.compress(Bitmap.CompressFormat.PNG, 9, fos);
                 fos.close();
             } catch (IOException e) {
-                LOG.error("Failed to write to output file: " + e.getMessage(), e);
+                LOG.error("Failed to write to output file: ", e);
                 return false;
             }
         }
         return true;
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
     }
 
     @Override

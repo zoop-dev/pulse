@@ -381,6 +381,7 @@ public class MusicManagerActivity extends AbstractGBActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                         Intent startIntent = new Intent(MusicManagerActivity.this, FwAppInstallerActivity.class);
+                        startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
                         startIntent.setAction(Intent.ACTION_VIEW);
                         startIntent.setDataAndType(result.getData().getData(), null);
                         startActivity(startIntent);

@@ -17,25 +17,52 @@
 
 package nodomain.freeyourgadget.gadgetbridge.devices.divoom;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 
+import androidx.annotation.NonNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class PixooInstallHandler implements InstallHandler {
+    private static final Logger LOG = LoggerFactory.getLogger(PixooInstallHandler.class);
+
     private final Context mContext;
     private final Uri mUri;
+
+    private Bitmap incomingBitmap;
 
     public PixooInstallHandler(Uri uri, Context context) {
         mContext = context;
         mUri = uri;
+
+        try {
+            incomingBitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), mUri);
+        } catch (final IOException e) {
+            LOG.error("Could not decode image", e);
+        }
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
     }
 
     @Override
     public boolean isValid() {
-        return true;
+        return incomingBitmap != null;
     }
 
     @Override

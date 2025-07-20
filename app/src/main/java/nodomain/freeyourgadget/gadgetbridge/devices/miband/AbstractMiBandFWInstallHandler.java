@@ -17,6 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.miband;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
@@ -26,15 +27,16 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareType.AGPS_UIHH;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareType.WATCHFACE;
+
+import androidx.annotation.NonNull;
 
 public abstract class AbstractMiBandFWInstallHandler implements InstallHandler {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractMiBandFWInstallHandler.class);
@@ -42,7 +44,6 @@ public abstract class AbstractMiBandFWInstallHandler implements InstallHandler {
     protected final Uri mUri;
     protected final Context mContext;
     protected AbstractMiBandFWHelper helper;
-    private String errorMessage;
 
     public AbstractMiBandFWInstallHandler(Uri uri, Context context) {
         mUri = uri;
@@ -51,8 +52,7 @@ public abstract class AbstractMiBandFWInstallHandler implements InstallHandler {
         try {
             helper = createHelper(uri, context);
         } catch (IOException e) {
-            errorMessage = e.getMessage();
-            LOG.warn(errorMessage, e);
+            LOG.error("Failed to open as miband fw", e);
         }
     }
 
@@ -149,6 +149,12 @@ public abstract class AbstractMiBandFWInstallHandler implements InstallHandler {
     @Override
     public void onStartInstall(GBDevice device) {
 
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends Activity> getInstallActivity() {
+        return FwAppInstallerActivity.class;
     }
 
     @Override

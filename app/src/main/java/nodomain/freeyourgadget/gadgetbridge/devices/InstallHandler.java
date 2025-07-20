@@ -16,6 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices;
 
+import android.app.Activity;
+
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -24,6 +28,9 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
  * gadget device. The actual element to install will be passed in the constructor.
  */
 public interface InstallHandler {
+
+    @NonNull
+    Class<? extends Activity> getInstallActivity();
 
     /**
      * Returns true if this handler is able to install the element.
