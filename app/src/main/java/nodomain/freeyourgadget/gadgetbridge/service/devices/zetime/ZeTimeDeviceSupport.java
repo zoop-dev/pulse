@@ -617,9 +617,9 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
             LOG.warn("We do not have a sane fw version string available, firmware too old/new?");
         }
         if (newWeather) {
-            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.getCurrentConditionCode());
+            weather[9] = WeatherMapper.mapToZeTimeCondition(weatherSpec.getCurrentConditionCode());
         } else {
-            weather[9] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.getCurrentConditionCode());
+            weather[9] = WeatherMapper.mapToZeTimeConditionOld(weatherSpec.getCurrentConditionCode());
         }
         for (int forecast = 0; forecast < 3; forecast++) {
             weather[10 + (forecast * 5)] = 0; // celsius
@@ -627,9 +627,9 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
             weather[12 + (forecast * 5)] = (byte) (weatherSpec.getForecasts().get(forecast).getMinTemp() - 273);
             weather[13 + (forecast * 5)] = (byte) (weatherSpec.getForecasts().get(forecast).getMaxTemp() - 273);
             if (newWeather) {
-                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeCondition(weatherSpec.getForecasts().get(forecast).getConditionCode());
+                weather[14 + (forecast * 5)] = WeatherMapper.mapToZeTimeCondition(weatherSpec.getForecasts().get(forecast).getConditionCode());
             } else {
-                weather[14 + (forecast * 5)] = WeatherMapper.INSTANCE.mapToZeTimeConditionOld(weatherSpec.getForecasts().get(forecast).getConditionCode());
+                weather[14 + (forecast * 5)] = WeatherMapper.mapToZeTimeConditionOld(weatherSpec.getForecasts().get(forecast).getConditionCode());
             }
         }
         System.arraycopy(weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8), 0, weather, 25, weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length);

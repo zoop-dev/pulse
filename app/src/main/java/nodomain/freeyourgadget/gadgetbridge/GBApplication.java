@@ -311,7 +311,7 @@ public class GBApplication extends Application {
 
         setupExceptionHandler(prefs.getBoolean("crash_notification", isDebug()));
 
-        Weather.INSTANCE.initializeCache(new WeatherCacheManager(getCacheDir(), prefs.getBoolean("cache_weather", true)));
+        Weather.initializeCache(new WeatherCacheManager(getCacheDir(), prefs.getBoolean("cache_weather", true)));
 
         deviceManager = new DeviceManager(this);
         String language = prefs.getString("language", "default");

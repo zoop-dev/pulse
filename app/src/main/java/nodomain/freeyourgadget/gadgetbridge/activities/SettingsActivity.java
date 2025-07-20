@@ -169,7 +169,7 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 pref.setOnPreferenceChangeListener((preference, newVal) -> {
                     boolean doEnable = Boolean.TRUE.equals(newVal);
 
-                    Weather.INSTANCE.initializeCache(new WeatherCacheManager(requireContext().getCacheDir(), doEnable));
+                    Weather.initializeCache(new WeatherCacheManager(requireContext().getCacheDir(), doEnable));
 
                     return true;
                 });

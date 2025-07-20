@@ -556,7 +556,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
             weatherUnit = 1;
         }
 
-        byte currentConditionCode = WeatherMapper.INSTANCE.mapToFitProCondition(weatherSpec.getCurrentConditionCode());
+        byte currentConditionCode = WeatherMapper.mapToFitProCondition(weatherSpec.getCurrentConditionCode());
         TransactionBuilder builder = createTransactionBuilder("weather");
         writeChunkedData(builder, craftData(CMD_GROUP_GENERAL, CMD_WEATHER, new byte[]{(byte) todayMin, (byte) todayMax, (byte) currentConditionCode, (byte) weatherUnit}));
         builder.queue();

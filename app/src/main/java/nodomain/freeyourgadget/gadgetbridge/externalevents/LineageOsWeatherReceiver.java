@@ -184,8 +184,8 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
             }
             weatherSpec.setWindDirection((int) weatherInfo.getWindDirection());
 
-            weatherSpec.setCurrentConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(weatherInfo.getConditionCode())));
-            weatherSpec.setCurrentCondition(WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
+            weatherSpec.setCurrentConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(weatherInfo.getConditionCode())));
+            weatherSpec.setCurrentCondition(WeatherMapper.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
             weatherSpec.setCurrentHumidity((int) weatherInfo.getHumidity());
 
             weatherSpec.setForecasts(new ArrayList<>());
@@ -200,11 +200,11 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
                     gbForecast.setMaxTemp((int) cmForecast.getHigh() + 273);
                     gbForecast.setMinTemp((int) cmForecast.getLow() + 273);
                 }
-                gbForecast.setConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(cmForecast.getConditionCode())));
+                gbForecast.setConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(LineageOSToYahooCondition(cmForecast.getConditionCode())));
                 weatherSpec.getForecasts().add(gbForecast);
             }
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
-            Weather.INSTANCE.setWeatherSpec(weatherSpecs);
+            Weather.setWeatherSpec(weatherSpecs);
             GBApplication.deviceService().onSendWeather(weatherSpecs);
         } else {
             LOG.info("request has returned null for WeatherInfo");

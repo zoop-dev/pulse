@@ -10,7 +10,7 @@ class WeatherCacheManager(
     cacheDir: File,
     private val useCache: Boolean
 ) {
-    private val LOG = LoggerFactory.getLogger("nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherCacheManager")
+    private val LOG = LoggerFactory.getLogger(WeatherCacheManager::class.java)
     private val cacheFile = File(cacheDir, "weatherCache.bin")
     private val listType = object : TypeToken<List<WeatherSpec>>() {}.type
     private val gson: Gson = Gson()

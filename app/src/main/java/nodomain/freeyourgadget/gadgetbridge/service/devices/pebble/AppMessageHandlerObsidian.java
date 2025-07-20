@@ -160,7 +160,7 @@ class AppMessageHandlerObsidian extends AppMessageHandler {
 
     @Override
     public GBDeviceEvent[] onAppStart() {
-        WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
         if (weatherSpec == null) {
             return new GBDeviceEvent[]{null};
         }

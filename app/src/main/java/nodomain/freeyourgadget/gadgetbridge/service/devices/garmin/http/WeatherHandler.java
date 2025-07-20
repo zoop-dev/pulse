@@ -40,7 +40,7 @@ public class WeatherHandler {
         final String path = request.getPath();
         final Map<String, String> query = request.getQuery();
 
-        final WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
 
         if (weatherSpec == null) {
             LOG.warn("No weather in weather instance");
@@ -161,8 +161,8 @@ public class WeatherHandler {
 
         public WeatherForecastDay(final GregorianCalendar date, final WeatherSpec.Daily dailyForecast, final String tempUnit, final String speedUnit) {
             dayOfWeek = BLETypeConversions.dayOfWeekToRawBytes(date);
-            description = WeatherMapper.INSTANCE.getConditionString(GBApplication.getContext(), dailyForecast.getConditionCode());
-            summary = WeatherMapper.INSTANCE.getConditionString(GBApplication.getContext(), dailyForecast.getConditionCode());
+            description = WeatherMapper.getConditionString(GBApplication.getContext(), dailyForecast.getConditionCode());
+            summary = WeatherMapper.getConditionString(GBApplication.getContext(), dailyForecast.getConditionCode());
             high = getTemperature(dailyForecast.getMaxTemp(), tempUnit);
             low = getTemperature(dailyForecast.getMinTemp(), tempUnit);
             precipProb = dailyForecast.getPrecipProbability();
@@ -213,7 +213,7 @@ public class WeatherHandler {
 
         public WeatherForecastHour(final WeatherSpec.Hourly hourlyForecast, final String tempUnit, final String speedUnit) {
             epochSeconds = hourlyForecast.getTimestamp();
-            description = WeatherMapper.INSTANCE.getConditionString(GBApplication.getContext(), hourlyForecast.getConditionCode());
+            description = WeatherMapper.getConditionString(GBApplication.getContext(), hourlyForecast.getConditionCode());
             temp = getTemperature(hourlyForecast.getTemp(), tempUnit);
             precipProb = hourlyForecast.getPrecipProbability();
             wind = new Wind(getSpeed(hourlyForecast.getWindSpeed(), speedUnit), hourlyForecast.getWindDirection());

@@ -113,8 +113,8 @@ public class OmniJawsObserver extends ContentObserver {
                         if (i == 0) {
 
                             weatherSpec.setLocation(c.getString(0));
-                            weatherSpec.setCurrentConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(2)));
-                            weatherSpec.setCurrentCondition(WeatherMapper.INSTANCE.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
+                            weatherSpec.setCurrentConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(c.getInt(2)));
+                            weatherSpec.setCurrentCondition(WeatherMapper.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
                             //alternatively the following would also be possible
                             //weatherSpec.currentCondition = c.getString(1);
 
@@ -132,14 +132,14 @@ public class OmniJawsObserver extends ContentObserver {
                             WeatherSpec.Daily gbForecast = new WeatherSpec.Daily();
                             gbForecast.setMinTemp(toKelvin(c.getFloat(5)));
                             gbForecast.setMaxTemp(toKelvin(c.getFloat(6)));
-                            gbForecast.setConditionCode(WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(c.getInt(8)));
+                            gbForecast.setConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(c.getInt(8)));
                             weatherSpec.getForecasts().add(gbForecast);
                         }
                     }
                 }
 
                 ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
-                Weather.INSTANCE.setWeatherSpec(weatherSpecs);
+                Weather.setWeatherSpec(weatherSpecs);
                 GBApplication.deviceService().onSendWeather(weatherSpecs);
 
             } finally {

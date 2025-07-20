@@ -2003,7 +2003,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                     }
                 } else if (request.has("weatherInfo") || request.has("weatherApp._.config.locations")) {
                     LOG.info("Got weatherInfo request");
-                    WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
+                    WeatherSpec weatherSpec = Weather.getWeatherSpec();
                     if (weatherSpec != null) {
                         onSendWeather(weatherSpec);
                     } else {
@@ -2011,7 +2011,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                     }
                 } else if (request.has("widgetChanceOfRain._.config.info")) {
                     LOG.info("Got widgetChanceOfRain request");
-                    WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
+                    WeatherSpec weatherSpec = Weather.getWeatherSpec();
                     if (weatherSpec != null) {
                         onSendChanceOfRain(weatherSpec);
                     } else {
@@ -2019,7 +2019,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                     }
                 } else if (request.has("widgetUV._.config.info")) {
                     LOG.info("Got widgetUV request");
-                    WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
+                    WeatherSpec weatherSpec = Weather.getWeatherSpec();
                     if (weatherSpec != null) {
                         onSendUVIndex(weatherSpec);
                     } else {

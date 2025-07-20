@@ -1985,7 +1985,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void handleWeather(JSONObject json)
     {
         if (!json.has("v")) {
-            handleWeatherV1(Weather.INSTANCE.getWeatherSpecs());
+            handleWeatherV1(Weather.getWeatherSpecs());
             return;
         }
         try {
@@ -1995,9 +1995,9 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 forecast = json.getBoolean("f");
             }
             if (version == 1) {
-                handleWeatherV1(Weather.INSTANCE.getWeatherSpecs());
+                handleWeatherV1(Weather.getWeatherSpecs());
             } else if (version == 2) {
-                handleWeatherV2(Weather.INSTANCE.getWeatherSpecs(), forecast);
+                handleWeatherV2(Weather.getWeatherSpecs(), forecast);
             }
         } catch (JSONException e) {
             LOG.info("JSONException: " + e.getLocalizedMessage());

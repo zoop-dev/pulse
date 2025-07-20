@@ -49,16 +49,16 @@ public class WeatherMapperTest extends TestBase {
     public void ensureConversionToKotlin() {
 
         for (int i = 0; i <= 3200; i++) {
-            Assert.assertEquals(Weather.mapToPebbleCondition(i), WeatherMapper.INSTANCE.mapToPebbleCondition(i));
-            Assert.assertEquals(Weather.mapToYahooCondition(i), WeatherMapper.INSTANCE.mapToYahooCondition(i));
-            Assert.assertEquals(Weather.mapToOpenWeatherMapIcon(i), WeatherMapper.INSTANCE.mapToOpenWeatherMapIcon(i));
-            Assert.assertEquals(Weather.mapToOpenWeatherMapCondition(i), WeatherMapper.INSTANCE.mapToOpenWeatherMapCondition(i));
-            Assert.assertEquals(Weather.getConditionString(getContext(), i), WeatherMapper.INSTANCE.getConditionString(getContext(), i));
-            Assert.assertEquals(Weather.getAqiLevelString(getContext(), i), WeatherMapper.INSTANCE.getAqiLevelString(getContext(), i));
-            Assert.assertEquals(Weather.mapToZeTimeConditionOld(i), WeatherMapper.INSTANCE.mapToZeTimeConditionOld(i));
-            Assert.assertEquals(Weather.mapToZeTimeCondition(i), WeatherMapper.INSTANCE.mapToZeTimeCondition(i));
-            Assert.assertEquals(Weather.mapToCmfCondition(i), WeatherMapper.INSTANCE.mapToCmfCondition(i));
-            Assert.assertEquals(Weather.mapToFitProCondition(i), WeatherMapper.INSTANCE.mapToFitProCondition(i));
+            Assert.assertEquals(Weather.mapToPebbleCondition(i), WeatherMapper.mapToPebbleCondition(i));
+            Assert.assertEquals(Weather.mapToYahooCondition(i), WeatherMapper.mapToYahooCondition(i));
+            Assert.assertEquals(Weather.mapToOpenWeatherMapIcon(i), WeatherMapper.mapToOpenWeatherMapIcon(i));
+            Assert.assertEquals(Weather.mapToOpenWeatherMapCondition(i), WeatherMapper.mapToOpenWeatherMapCondition(i));
+            Assert.assertEquals(Weather.getConditionString(getContext(), i), WeatherMapper.getConditionString(getContext(), i));
+            Assert.assertEquals(Weather.getAqiLevelString(getContext(), i), WeatherMapper.getAqiLevelString(getContext(), i));
+            Assert.assertEquals(Weather.mapToZeTimeConditionOld(i), WeatherMapper.mapToZeTimeConditionOld(i));
+            Assert.assertEquals(Weather.mapToZeTimeCondition(i), WeatherMapper.mapToZeTimeCondition(i));
+            Assert.assertEquals(Weather.mapToCmfCondition(i), WeatherMapper.mapToCmfCondition(i));
+            Assert.assertEquals(Weather.mapToFitProCondition(i), WeatherMapper.mapToFitProCondition(i));
         }
     }
 

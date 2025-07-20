@@ -363,13 +363,13 @@ public class DebugActivity extends AbstractGBActivity {
         setWeatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Weather.INSTANCE.getWeatherSpec() == null) {
+                if (Weather.getWeatherSpec() == null) {
                     final WeatherSpec weatherSpec = new WeatherSpec();
                     weatherSpec.setForecasts(new ArrayList<>());
 
                     weatherSpec.setLocation("Green Hill");
                     weatherSpec.setCurrentConditionCode(601); // snow
-                    weatherSpec.setCurrentCondition(WeatherMapper.INSTANCE.getConditionString(DebugActivity.this, weatherSpec.getCurrentConditionCode()));
+                    weatherSpec.setCurrentCondition(WeatherMapper.getConditionString(DebugActivity.this, weatherSpec.getCurrentConditionCode()));
 
                     weatherSpec.setCurrentTemp(15 + 273);
                     weatherSpec.setCurrentHumidity(30);
@@ -389,10 +389,10 @@ public class DebugActivity extends AbstractGBActivity {
                         weatherSpec.getForecasts().add(gbForecast);
                     }
 
-                    Weather.INSTANCE.setWeatherSpec(new ArrayList<>(Collections.singletonList(weatherSpec)));
+                    Weather.setWeatherSpec(new ArrayList<>(Collections.singletonList(weatherSpec)));
                 }
 
-                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.INSTANCE.getWeatherSpecs());
+                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.getWeatherSpecs());
                 GBApplication.deviceService().onSendWeather(specs);
             }
         });
@@ -401,7 +401,7 @@ public class DebugActivity extends AbstractGBActivity {
         showCachedWeatherButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                final List<WeatherSpec> weatherSpecs = Weather.INSTANCE.getWeatherSpecs();
+                final List<WeatherSpec> weatherSpecs = Weather.getWeatherSpecs();
 
                 if (weatherSpecs == null || weatherSpecs.isEmpty()) {
                     displayWeatherInfo(null);

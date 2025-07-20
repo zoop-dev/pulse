@@ -517,7 +517,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             if (!TextUtils.isEmpty(locationKey) && !TextUtils.isEmpty(locationName)) {
                 LOG.debug("Received request for conditions (location key = {}, name = {})", locationKey, locationName);
 
-                final List<WeatherSpec> knownWeathers = Weather.INSTANCE.getWeatherSpecs();
+                final List<WeatherSpec> knownWeathers = Weather.getWeatherSpecs();
                 for (WeatherSpec spec : knownWeathers) {
                     if (TextUtils.equals(spec.getLocation(), locationName)) {
                         sendWeatherSpec(spec);
@@ -529,14 +529,14 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             }
         }
 
-        final WeatherSpec spec = Weather.INSTANCE.getWeatherSpec();
+        final WeatherSpec spec = Weather.getWeatherSpec();
 
         if (spec == null) {
             LOG.warn("Not sending weather conditions: active weather spec is null!");
             return;
         }
 
-        sendWeatherSpec(Weather.INSTANCE.getWeatherSpec());
+        sendWeatherSpec(Weather.getWeatherSpec());
     }
 
     private static String[] weatherLocationsToStringArray(final Collection<XiaomiProto.WeatherLocation> locations) {
@@ -567,7 +567,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             locationsInitialized = true;
 
             // now that the feature flag has been updated, send cached weather
-            onSendWeather(Weather.INSTANCE.getWeatherSpecs());
+            onSendWeather(Weather.getWeatherSpecs());
 
             return;
         }
@@ -614,7 +614,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
 
         final Set<XiaomiProto.WeatherLocation> specLocations = new HashSet<>();
 
-        for (final WeatherSpec s : Weather.INSTANCE.getWeatherSpecs()) {
+        for (final WeatherSpec s : Weather.getWeatherSpecs()) {
             specLocations.add(getWeatherLocationFromSpec(s));
         }
 

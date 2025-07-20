@@ -5,6 +5,7 @@ import nodomain.freeyourgadget.gadgetbridge.R
 
 object WeatherMapper {
 
+    @JvmStatic
     fun mapToOpenWeatherMapIcon(code: Int): String = when {
         //see https://openweathermap.org/weather-conditions
         code in 200..299 -> "11d"
@@ -20,6 +21,7 @@ object WeatherMapper {
         else -> "02d" // fallback
     }
 
+    @JvmStatic
     fun mapToOpenWeatherMapCondition(yahooCondition: Int): Int {
         //yahoo weather conditions:
 //https://developer.yahoo.com/weather/documentation.html
@@ -59,6 +61,7 @@ object WeatherMapper {
         }
     }
 
+    @JvmStatic
     fun getConditionString(context: Context, code: Int): String = when (code) {
         200 -> context.getString(R.string.weather_condition_thunderstorm_with_light_rain)
         201 -> context.getString(R.string.weather_condition_thunderstorm_with_rain)
@@ -142,6 +145,7 @@ object WeatherMapper {
         else -> ""
     }
 
+    @JvmStatic
     fun getAqiLevelString(context: Context, aqi: Int): String = when {
         // Uses the [2023 Plume index](https://plumelabs.files.wordpress.com/2023/06/plume_aqi_2023.pdf) as a reference
         aqi < 0   -> context.getString(R.string.aqi_level_unknown)
@@ -153,6 +157,7 @@ object WeatherMapper {
         else      -> context.getString(R.string.aqi_level_dangerous)
     }
 
+    @JvmStatic
     fun mapToPebbleCondition(openWeatherMapCondition: Int): Byte {
         /* deducted values:
     0 = sun + cloud
@@ -184,6 +189,7 @@ object WeatherMapper {
         }
     }
 
+    @JvmStatic
     fun mapToYahooCondition(openWeatherMapCondition: Int): Int {
         // openweathermap.org conditions:
         // http://openweathermap.org/weather-conditions
@@ -226,7 +232,7 @@ object WeatherMapper {
         }
     }
 
-
+    @JvmStatic
     fun mapToZeTimeConditionOld(openWeatherMapCondition: Int): Byte {
         /* deducted values:
     0 = partly cloudy
@@ -251,6 +257,7 @@ object WeatherMapper {
         }
     }
 
+    @JvmStatic
     fun mapToZeTimeCondition(openWeatherMapCondition: Int): Byte {
         /* deducted values:
     0 = tornado
@@ -324,6 +331,7 @@ object WeatherMapper {
         }
     }
 
+    @JvmStatic
     fun mapToCmfCondition(openWeatherMapCondition: Int): Byte {
         /* deducted values:
     1 = sunny
@@ -377,6 +385,7 @@ object WeatherMapper {
         }
     }
 
+    @JvmStatic
     fun mapToFitProCondition(openWeatherMapCondition: Int): Byte {
         return when (openWeatherMapCondition) {
             100 -> 1

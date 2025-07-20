@@ -1183,10 +1183,10 @@ public class PebbleProtocol extends GBDeviceProtocol {
         buf.order(ByteOrder.LITTLE_ENDIAN);
         buf.put((byte) 3); // unknown, always 3?
         buf.putShort(currentTemp);
-        buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(weatherSpec.getCurrentConditionCode()));
+        buf.put(WeatherMapper.mapToPebbleCondition(weatherSpec.getCurrentConditionCode()));
         buf.putShort(todayMax);
         buf.putShort(todayMin);
-        buf.put(WeatherMapper.INSTANCE.mapToPebbleCondition(tomorrowConditionCode));
+        buf.put(WeatherMapper.mapToPebbleCondition(tomorrowConditionCode));
         buf.putShort(tomorrowMax);
         buf.putShort(tomorrowMin);
         buf.putInt(weatherSpec.getTimestamp());

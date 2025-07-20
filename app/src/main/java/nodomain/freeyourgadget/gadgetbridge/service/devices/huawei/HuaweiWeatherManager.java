@@ -277,7 +277,7 @@ public class HuaweiWeatherManager {
     public void handleAsyncMessage(HuaweiPacket response) {
         if (response.getTlv().getInteger(0x7f, -1) == 0x000186AA) {
             // Send weather
-            final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.INSTANCE.getWeatherSpecs());
+            final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpecs());
             if (specs.isEmpty()) {
                 LOG.debug("Weather specs empty, returning that weather is disabled.");
                 try {

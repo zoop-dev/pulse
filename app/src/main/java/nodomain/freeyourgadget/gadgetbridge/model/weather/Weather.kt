@@ -13,6 +13,7 @@ object Weather {
 
     private var cacheManager: WeatherCacheManager? = null
 
+    @JvmStatic
     fun setWeatherSpec(newSpecs: Collection<WeatherSpec>) {
         weatherSpecs.apply {
             clear()
@@ -21,10 +22,13 @@ object Weather {
         cacheManager?.save(weatherSpecs)
     }
 
+    @JvmStatic
     fun getWeatherSpec(): WeatherSpec? = weatherSpecs.firstOrNull()
 
+    @JvmStatic
     fun getWeatherSpecs(): List<WeatherSpec> = weatherSpecs
 
+    @JvmStatic
     fun createReconstructedOWMWeatherReply(): JSONObject? {
         val spec = getWeatherSpec() ?: return null
 
@@ -63,6 +67,7 @@ object Weather {
         }
     }
 
+    @JvmStatic
     fun initializeCache(cacheManager: WeatherCacheManager) {
         Weather.cacheManager = cacheManager
 

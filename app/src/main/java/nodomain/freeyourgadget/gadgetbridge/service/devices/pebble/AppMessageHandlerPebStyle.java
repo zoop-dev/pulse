@@ -93,11 +93,11 @@ class AppMessageHandlerPebStyle extends AppMessageHandler {
 
 
         //WEATHER
-        WeatherSpec weather = Weather.INSTANCE.getWeatherSpec();
+        WeatherSpec weather = Weather.getWeatherSpec();
         if (weather != null) {
             //comment the same key in the general section above!
             pairs.add(new Pair<>(KEY_LOCATION_SERVICE, (Object) 0)); //0 auto, 1 manual
-            pairs.add(new Pair<>(KEY_WEATHER_CODE, (Object) WeatherMapper.INSTANCE.mapToYahooCondition(weather.getCurrentConditionCode())));
+            pairs.add(new Pair<>(KEY_WEATHER_CODE, (Object) WeatherMapper.mapToYahooCondition(weather.getCurrentConditionCode())));
             pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (weather.getCurrentTemp() - 273)));
         }
 

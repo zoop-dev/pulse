@@ -813,7 +813,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         final int payloadLength = (7 * 9) + (24 * 2) + (supportsSunriseSunset ? 32 : 30) + (supportsSunriseSunset ? 7 * 8 : 0);
         final ByteBuffer buf = ByteBuffer.allocate(payloadLength).order(ByteOrder.BIG_ENDIAN);
         // start with the current day's weather
-        buf.put(WeatherMapper.INSTANCE.mapToCmfCondition(weatherSpec.getCurrentConditionCode()));
+        buf.put(WeatherMapper.mapToCmfCondition(weatherSpec.getCurrentConditionCode()));
         buf.put((byte) (weatherSpec.getCurrentTemp() - 273 + 100)); // convert Kelvin to C, add 100
         buf.put((byte) (weatherSpec.getTodayMaxTemp() - 273 + 100)); // convert Kelvin to C, add 100
         buf.put((byte) (weatherSpec.getTodayMinTemp() - 273 + 100)); // convert Kelvin to C, add 100
@@ -828,7 +828,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         for (int i = 0; i < 6; i++) {
             if (i < maxForecastsAvailable) {
                 WeatherSpec.Daily forecastDay = weatherSpec.getForecasts().get(i);
-                buf.put((byte) (WeatherMapper.INSTANCE.mapToCmfCondition(forecastDay.getConditionCode())));  // weather condition flag
+                buf.put(WeatherMapper.mapToCmfCondition(forecastDay.getConditionCode()));  // weather condition flag
                 buf.put((byte) (forecastDay.getMaxTemp() - 273 + 100)); // temp in C (not shown in future days' forecasts)
                 buf.put((byte) (forecastDay.getMaxTemp() - 273 + 100)); // max temp in C, + 100
                 buf.put((byte) (forecastDay.getMinTemp() - 273 + 100)); // min temp in C, + 100
@@ -858,7 +858,7 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
                 buf.put((byte) forecastHr.getConditionCode()); // condition
             } else {
                 buf.put((byte) (weatherSpec.getCurrentTemp() - 273 + 100)); // assume current temp
-                buf.put((byte) (WeatherMapper.INSTANCE.mapToCmfCondition(weatherSpec.getCurrentConditionCode()))); // current condition
+                buf.put(WeatherMapper.mapToCmfCondition(weatherSpec.getCurrentConditionCode())); // current condition
             }
         }
         // place name - watch scrolls after ~10 chars. Pad up to 32 bytes.

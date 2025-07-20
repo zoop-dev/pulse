@@ -91,7 +91,7 @@ public class ZeppOsWeatherHandler {
     }
 
     public Response handleHttpRequest(final String path, final Map<String, String> query) {
-        final WeatherSpec weatherSpec = Weather.INSTANCE.getWeatherSpec();
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
 
         if (weatherSpec == null) {
             LOG.error("No weather in weather instance");

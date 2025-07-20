@@ -45,6 +45,7 @@ import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
 
 public class GBWebClient extends WebViewClient {
@@ -143,15 +144,15 @@ public class GBWebClient extends WebViewClient {
 
     private WebResourceResponse mimicOpenWeatherMapResponse(String type, String units) {
 
-        if (Weather.INSTANCE == null) {
-            LOG.warn("WEBVIEW - Weather instance is null, cannot update weather");
+        if (Weather.getWeatherSpecs().isEmpty()) {
+            LOG.warn("WEBVIEW - WeatherSpecs is empty, cannot update weather");
             return null;
         }
 
         CurrentPosition currentPosition = new CurrentPosition();
 
         try {
-            JSONObject resp = Weather.INSTANCE.createReconstructedOWMWeatherReply();
+            JSONObject resp = Weather.createReconstructedOWMWeatherReply();
             if ("/data/2.5/weather".equals(type) && resp != null) {
                 JSONObject main = resp.getJSONObject("main");
 
@@ -162,8 +163,8 @@ public class GBWebClient extends WebViewClient {
                 resp.put("cod", 200);
                 resp.put("coord", coordObject(currentPosition));
                 resp.put("sys", sysObject(currentPosition));
-//            } else if ("/data/2.5/forecast".equals(type) && Weather.INSTANCE.getWeather2().reconstructedOWMForecast != null) { //this is wrong, as we only have daily data. Unfortunately it looks like daily forecasts cannot be reconstructed
-//                resp = new JSONObject(Weather.INSTANCE.getWeather2().reconstructedOWMForecast.toString());
+//            } else if ("/data/2.5/forecast".equals(type) && Weather.getWeather2().reconstructedOWMForecast != null) { //this is wrong, as we only have daily data. Unfortunately it looks like daily forecasts cannot be reconstructed
+//                resp = new JSONObject(Weather.getWeather2().reconstructedOWMForecast.toString());
 //
 //                JSONObject city = resp.getJSONObject("city");
 //                city.put("coord", coordObject(currentPosition));
