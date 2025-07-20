@@ -44,7 +44,7 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
+    public boolean supportsCalendarEvents(final GBDevice device) {
         return false;
     }
 

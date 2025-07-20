@@ -172,7 +172,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     @Nullable
     @Override
     public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
-        return supportsActivityTracks() ? new TestActivitySummaryParser() : super.getActivitySummaryParser(device, context);
+        return supportsActivityTracks(device) ? new TestActivitySummaryParser() : super.getActivitySummaryParser(device, context);
     }
 
     @Override
@@ -191,8 +191,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppListFetching() {
-        return supports(getTestDevice(), TestFeature.APP_LIST_FETCHING);
+    public boolean supportsAppListFetching(final GBDevice device) {
+        return supports(device, TestFeature.APP_LIST_FETCHING);
     }
 
     @Override
@@ -209,7 +209,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsScreenshots(final GBDevice device) {
-        return supports(getTestDevice(), TestFeature.SCREENSHOTS);
+        return supports(device, TestFeature.SCREENSHOTS);
     }
 
     @Override
@@ -240,51 +240,51 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppReordering() {
-        return supports(getTestDevice(), TestFeature.APP_REORDERING);
+    public boolean supportsAppReordering(final GBDevice device) {
+        return supports(device, TestFeature.APP_REORDERING);
     }
 
     @Override
     public boolean supportsAppsManagement(final GBDevice device) {
-        return supports(getTestDevice(), TestFeature.APPS_MANAGEMENT);
+        return supports(device, TestFeature.APPS_MANAGEMENT);
     }
 
     @Override
     public boolean supportsCachedAppManagement(final GBDevice device) {
-        return supports(getTestDevice(), TestFeature.CACHED_APP_MANAGEMENT);
+        return supports(device, TestFeature.CACHED_APP_MANAGEMENT);
     }
 
     @Override
     public boolean supportsInstalledAppManagement(final GBDevice device) {
-        return supports(getTestDevice(), TestFeature.INSTALLED_APP_MANAGEMENT);
+        return supports(device, TestFeature.INSTALLED_APP_MANAGEMENT);
     }
 
     @Override
     public boolean supportsWatchfaceManagement(final GBDevice device) {
-        return supports(getTestDevice(), TestFeature.WATCHFACE_MANAGEMENT);
+        return supports(device, TestFeature.WATCHFACE_MANAGEMENT);
     }
 
     @Nullable
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
+    public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
         return AppManagerActivity.class;
     }
 
     @Nullable
     @Override
-    public Class<? extends Activity> getWatchfaceDesignerActivity() {
+    public Class<? extends Activity> getWatchfaceDesignerActivity(final GBDevice device) {
         // TODO getWatchfaceDesignerActivity
-        return super.getWatchfaceDesignerActivity();
+        return super.getWatchfaceDesignerActivity(device);
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
-        return supports(getTestDevice(), TestFeature.CALENDAR_EVENTS);
+    public boolean supportsCalendarEvents(final GBDevice device) {
+        return supports(device, TestFeature.CALENDAR_EVENTS);
     }
 
     @Override
-    public boolean supportsActivityDataFetching() {
-        return supports(getTestDevice(), TestFeature.ACTIVITY_DATA_FETCHING);
+    public boolean supportsActivityDataFetching(final GBDevice device) {
+        return supports(device, TestFeature.ACTIVITY_DATA_FETCHING);
     }
 
     @Override
@@ -318,8 +318,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks() {
-        return supports(getTestDevice(), TestFeature.ACTIVITY_TRACKS);
+    public boolean supportsActivityTracks(final GBDevice device) {
+        return supports(device, TestFeature.ACTIVITY_TRACKS);
     }
 
     @Override
@@ -471,8 +471,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWeather() {
-        return supports(getTestDevice(), TestFeature.WEATHER);
+    public boolean supportsWeather(final GBDevice device) {
+        return supports(device, TestFeature.WEATHER);
     }
 
     @Override
@@ -585,8 +585,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsNavigation() {
-        return supports(getTestDevice(), TestFeature.NAVIGATION);
+    public boolean supportsNavigation(final GBDevice device) {
+        return supports(device, TestFeature.NAVIGATION);
     }
 
     @Override

@@ -476,7 +476,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //fetch activity data
-        holder.fetchActivityDataBox.setVisibility((device.isInitialized() && coordinator.supportsActivityDataFetching()) ? View.VISIBLE : View.GONE);
+        holder.fetchActivityDataBox.setVisibility((device.isInitialized() && coordinator.supportsActivityDataFetching(device)) ? View.VISIBLE : View.GONE);
         holder.fetchActivityData.setOnClickListener(new View.OnClickListener()
 
                                                     {
@@ -510,7 +510,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                                      @Override
                                                      public void onClick(View v) {
                                                          DeviceCoordinator coordinator = device.getDeviceCoordinator();
-                                                         Class<? extends Activity> appsManagementActivity = coordinator.getAppsManagementActivity();
+                                                         Class<? extends Activity> appsManagementActivity = coordinator.getAppsManagementActivity(device);
                                                          if (appsManagementActivity != null) {
                                                              Intent startIntent = new Intent(context, appsManagementActivity);
                                                              startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
@@ -566,7 +566,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //show activity tracks
-        holder.showActivityTracks.setVisibility(coordinator.supportsActivityTracks() ? View.VISIBLE : View.GONE);
+        holder.showActivityTracks.setVisibility(coordinator.supportsActivityTracks(device) ? View.VISIBLE : View.GONE);
         holder.showActivityTracks.setOnClickListener(new View.OnClickListener()
                                                      {
                                                          @Override

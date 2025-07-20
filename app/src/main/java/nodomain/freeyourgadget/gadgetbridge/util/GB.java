@@ -220,7 +220,7 @@ public class GB {
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_DISCONNECT);
                 PendingIntent disconnectPendingIntent = PendingIntentUtils.getService(context, 0, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT, false);
                 builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
-                if (device.getDeviceCoordinator().supportsActivityDataFetching()) {
+                if (device.getDeviceCoordinator().supportsActivityDataFetching(device)) {
                     deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
                     deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.ACTIVITY);
                     PendingIntent fetchPendingIntent = PendingIntentUtils.getService(context, 1, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT, false);
@@ -241,7 +241,7 @@ public class GB {
                     isConnected = false;
                 }
 
-                anyDeviceSupportesActivityDataFetching |= device.getDeviceCoordinator().supportsActivityDataFetching();
+                anyDeviceSupportesActivityDataFetching |= device.getDeviceCoordinator().supportsActivityDataFetching(device);
 
                 String deviceName = device.getAliasOrName();
                 String text = device.getStateString(context);

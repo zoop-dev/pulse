@@ -51,7 +51,7 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsWeather() {
+    public boolean supportsWeather(final GBDevice device) {
         return false;
     }
 
@@ -71,7 +71,7 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
+    public boolean supportsCalendarEvents(final GBDevice device) {
         return false;
     }
 

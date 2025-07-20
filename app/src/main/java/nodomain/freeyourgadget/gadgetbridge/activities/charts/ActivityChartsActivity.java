@@ -61,7 +61,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
     @Override
     protected boolean supportsRefresh() {
         final DeviceCoordinator coordinator = getDevice().getDeviceCoordinator();
-        return coordinator.supportsActivityDataFetching();
+        return coordinator.supportsActivityDataFetching(getDevice());
     }
 
     @Override

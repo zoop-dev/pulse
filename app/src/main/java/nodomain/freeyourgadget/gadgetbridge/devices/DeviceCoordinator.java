@@ -213,7 +213,7 @@ public interface DeviceCoordinator {
      *
      * @return
      */
-    boolean supportsActivityDataFetching();
+    boolean supportsActivityDataFetching(final GBDevice device);
 
     /**
      * Returns true if activity tracking is supported by the device
@@ -239,7 +239,7 @@ public interface DeviceCoordinator {
      * data. This is different from the constant activity tracking since the tracks are
      * usually recorded with additional features, like e.g. GPS.
      */
-    boolean supportsActivityTracks();
+    boolean supportsActivityTracks(GBDevice device);
 
     /**
      * Returns true if stress measurement and fetching is supported by the device
@@ -559,14 +559,14 @@ public interface DeviceCoordinator {
      *
      * @return
      */
-    Class<? extends Activity> getAppsManagementActivity();
+    Class<? extends Activity> getAppsManagementActivity(GBDevice device);
 
     /**
      * Returns the Activity class that will be used to design watchfaces.
      *
      * @return
      */
-    Class<? extends Activity> getWatchfaceDesignerActivity();
+    Class<? extends Activity> getWatchfaceDesignerActivity(GBDevice device);
 
     /**
      * Returns the device app cache directory.
@@ -591,12 +591,12 @@ public interface DeviceCoordinator {
     /**
      * Indicated whether the device supports fetching a list of its apps.
      */
-    boolean supportsAppListFetching();
+    boolean supportsAppListFetching(GBDevice device);
 
     /**
      * Indicates whether the device supports reordering of apps.
      */
-    boolean supportsAppReordering();
+    boolean supportsAppReordering(GBDevice device);
 
     /**
      * Returns how/if the given device should be bonded before connecting to it.
@@ -618,7 +618,7 @@ public interface DeviceCoordinator {
      * Indicates whether the device has some kind of calender we can sync to.
      * Also used for generated sunrise/sunset events
      */
-    boolean supportsCalendarEvents();
+    boolean supportsCalendarEvents(GBDevice device);
 
     /**
      * Indicates whether the device supports getting a stream of live data.
@@ -645,7 +645,7 @@ public interface DeviceCoordinator {
      * Indicates whether the device supports current weather and/or weather
      * forecast display.
      */
-    boolean supportsWeather();
+    boolean supportsWeather(GBDevice device);
 
     /**
      * Indicates whether the device supports being found by vibrating, 
@@ -816,7 +816,7 @@ public interface DeviceCoordinator {
     @Nullable
     WidgetManager getWidgetManager(GBDevice device);
 
-    boolean supportsNavigation();
+    boolean supportsNavigation(GBDevice device);
 
     int getOrderPriority();
 

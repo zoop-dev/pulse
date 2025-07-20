@@ -56,7 +56,7 @@ public class KsixVentureCoordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
+    public boolean supportsCalendarEvents(final GBDevice device) {
         return false;
     }
 

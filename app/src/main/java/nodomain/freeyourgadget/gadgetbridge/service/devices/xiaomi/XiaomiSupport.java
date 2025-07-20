@@ -245,7 +245,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
     public void onSetTime() {
         systemService.setCurrentTime();
 
-        if (getCoordinator().supportsCalendarEvents()) {
+        if (getCoordinator().supportsCalendarEvents(getDevice())) {
             // TODO this should not be done here
             calendarService.syncCalendar();
         }

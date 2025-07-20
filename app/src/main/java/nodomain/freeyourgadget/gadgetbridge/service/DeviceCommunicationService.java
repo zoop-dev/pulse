@@ -207,20 +207,20 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             this.supportsSleepAsAndroid = supportsSleepAsAndroid;
         }
 
-        public void logicalOr(DeviceCoordinator operand){
-            if(operand.supportsCalendarEvents()){
+        public void logicalOr(DeviceCoordinator operand, final GBDevice device){
+            if (operand.supportsCalendarEvents(device)) {
                 setSupportsCalendarEvents(true);
             }
-            if(operand.supportsWeather()){
+            if (operand.supportsWeather(device)) {
                 setSupportsWeather(true);
             }
-            if(operand.supportsActivityDataFetching()){
+            if (operand.supportsActivityDataFetching(device)) {
                 setSupportsActivityDataFetching(true);
             }
-            if(operand.supportsMusicInfo()){
+            if (operand.supportsMusicInfo()) {
                 setSupportsMusicInfo(true);
             }
-            if(operand.supportsNavigation()){
+            if (operand.supportsNavigation(device)) {
                 setSupportsNavigation(true);
             }
             if (operand.supportsSleepAsAndroid()) {
@@ -307,7 +307,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private final String API_LEGACY_ACTION_DEVICE_CONNECTED = "nodomain.freeyourgadget.gadgetbridge.BLUETOOTH_CONNECTED";
     private final String API_LEGACY_ACTION_DEVICE_SCANNED = "nodomain.freeyourgadget.gadgetbridge.BLUETOOTH_SCANNED";
 
-    private void sendDeviceAPIBroadcast(String address, String action){
+    private void sendDeviceAPIBroadcast(String address, String action) {
         if(!allowBluetoothIntentApi){
             LOG.debug("not sending API event due to settings");
             return;
@@ -492,20 +492,21 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
         FeatureSet features = new FeatureSet();
 
-        for(DeviceStruct struct: deviceStructs){
+        for (DeviceStruct struct: deviceStructs) {
+            final GBDevice device = struct.getDevice();
             DeviceSupport deviceSupport = struct.getDeviceSupport();
-            if((deviceSupport != null && deviceSupport.useAutoConnect()) || isDeviceInitialized(struct.getDevice())){
+            if ((deviceSupport != null && deviceSupport.useAutoConnect()) || isDeviceInitialized(device)) {
                 enableReceivers = true;
             }
-            if(isDeviceInitialized(struct.getDevice())){
+            if (isDeviceInitialized(device)) {
                 anyDeviceInitialized = true;
             }
 
             DeviceCoordinator coordinator = struct.getCoordinator();
-            if(coordinator != null){
-                features.logicalOr(coordinator);
-                if (coordinator.supportsCalendarEvents()){
-                    devicesWithCalendar.add(struct.getDevice());
+            if (coordinator != null){
+                features.logicalOr(coordinator, device);
+                if (coordinator.supportsCalendarEvents(device)) {
+                    devicesWithCalendar.add(device);
                 }
             }
         }

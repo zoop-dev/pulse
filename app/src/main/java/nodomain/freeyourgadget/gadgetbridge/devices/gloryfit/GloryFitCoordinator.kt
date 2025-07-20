@@ -89,7 +89,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return false
     }
 
-    override fun supportsActivityDataFetching(): Boolean {
+    override fun supportsActivityDataFetching(device: GBDevice): Boolean {
         return true
     }
 
@@ -140,7 +140,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsWeather(): Boolean {
+    override fun supportsWeather(device: GBDevice): Boolean {
         // TODO it does
         return false
     }

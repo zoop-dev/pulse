@@ -21,6 +21,7 @@ import androidx.annotation.DrawableRes;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class KT80Coordinator extends AbstractMoyoungDeviceCoordinator {
     @Override
@@ -50,7 +51,7 @@ public class KT80Coordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
+    public boolean supportsCalendarEvents(final GBDevice device) {
         return false;
     }
 }

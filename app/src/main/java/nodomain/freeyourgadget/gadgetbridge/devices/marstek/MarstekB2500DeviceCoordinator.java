@@ -63,7 +63,7 @@ public class MarstekB2500DeviceCoordinator extends AbstractBLEDeviceCoordinator 
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
+    public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
         return SolarEquipmentStatusActivity.class;
     }
 

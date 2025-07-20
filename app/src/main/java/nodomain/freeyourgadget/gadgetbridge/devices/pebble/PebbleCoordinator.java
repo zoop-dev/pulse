@@ -91,10 +91,8 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
         DevicePrefs prefs = GBApplication.getDevicePrefs(device);
         int activityTracker = prefs.getInt("pebble_activitytracker", SampleProvider.PROVIDER_PEBBLE_HEALTH);
         return switch (activityTracker) {
-            case SampleProvider.PROVIDER_PEBBLE_MISFIT ->
-                    new PebbleMisfitSampleProvider(device, session);
-            case SampleProvider.PROVIDER_PEBBLE_MORPHEUZ ->
-                    new PebbleMorpheuzSampleProvider(device, session);
+            case SampleProvider.PROVIDER_PEBBLE_MISFIT -> new PebbleMisfitSampleProvider(device, session);
+            case SampleProvider.PROVIDER_PEBBLE_MORPHEUZ -> new PebbleMorpheuzSampleProvider(device, session);
             default -> new PebbleHealthSampleProvider(device, session);
         };
     }
@@ -106,7 +104,9 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() { return true; }
+    public boolean supportsFlashing() {
+        return true;
+    }
 
     @Override
     public boolean supportsActivityTracking() {
@@ -139,7 +139,7 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
+    public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
         return AppManagerActivity.class;
     }
 
@@ -159,39 +159,28 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppListFetching() {
-        List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
-        for(GBDevice device : devices){
-            if(device.getType() == DeviceType.PEBBLE){
-                if (device.getFirmwareVersion() != null) {
-                    return PebbleUtils.getFwMajor(device.getFirmwareVersion()) < 3;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean supportsAppReordering() {
-        List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
-        for(GBDevice device : devices){
-            if(device.getType() == DeviceType.PEBBLE){
-                if (device.getFirmwareVersion() != null) {
-                    return PebbleUtils.getFwMajor(device.getFirmwareVersion()) >= 3;
-                }
-            }
+    public boolean supportsAppListFetching(final GBDevice device) {
+        if (device.getFirmwareVersion() != null) {
+            return PebbleUtils.getFwMajor(device.getFirmwareVersion()) < 3;
         }
         return false;
     }
 
     @Override
-    public boolean supportsCalendarEvents() {
+    public boolean supportsAppReordering(final GBDevice device) {
+        if (device.getFirmwareVersion() != null) {
+            return PebbleUtils.getFwMajor(device.getFirmwareVersion()) >= 3;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean supportsCalendarEvents(final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsWeather() {
+    public boolean supportsWeather(final GBDevice device) {
         return true;
     }
 
