@@ -231,7 +231,6 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
         // Query weight measurements saved by the scale
         sendHistoryCommand(builder, CMD_HISTORY_START, true);
         sendHistoryCommand(builder, CMD_HISTORY_QUERY, false);
-        builder.queue();
     }
 
     private void setTime(TransactionBuilder builder) {
