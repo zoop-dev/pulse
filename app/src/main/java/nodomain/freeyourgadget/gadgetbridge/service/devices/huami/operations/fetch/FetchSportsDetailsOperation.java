@@ -179,11 +179,6 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
             return false;
         }
 
-        if (DateUtils.isToday(lastSyncTimestamp.getTimeInMillis())) {
-            LOG.info("Hopefully no further fetch needed, last synced timestamp is from today.");
-            return false;
-        }
-
         if (lastSyncTimestamp.getTimeInMillis() > System.currentTimeMillis()) {
             LOG.warn("Not doing another fetch since last synced timestamp is in the future: {}", DateTimeUtils.formatDateTime(lastSyncTimestamp.getTime()));
             return false;
