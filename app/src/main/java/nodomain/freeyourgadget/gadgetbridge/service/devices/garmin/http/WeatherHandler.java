@@ -52,6 +52,8 @@ public class WeatherHandler {
             case "/weather/v1/forecast/day":
             case "/weather/v2/forecast/day":
             {
+                final int version = path.startsWith("/weather/v2/") ? 2 : 1;
+
                 final int lat = getQueryNum(query, "lat", 0);
                 final int lon = getQueryNum(query, "lon", 0);
                 final int duration = getQueryNum(query, "duration", 5);
@@ -64,10 +66,10 @@ public class WeatherHandler {
                 final List<WeatherForecastDay> ret = new ArrayList<>(duration);
                 final GregorianCalendar date = new GregorianCalendar();
                 date.setTime(new Date(weatherSpec.getTimestamp() * 1000L));
-                ret.add(new WeatherForecastDay(date, weatherSpec.todayAsDaily(), tempUnit, speedUnit));
+                ret.add(new WeatherForecastDay(version, date, weatherSpec.todayAsDaily(), tempUnit, speedUnit));
                 for (int i = 0; i < Math.min(duration, weatherSpec.getForecasts().size()) - 1; i++) {
                     date.add(Calendar.DAY_OF_MONTH, 1);
-                    ret.add(new WeatherForecastDay(date, weatherSpec.getForecasts().get(i), tempUnit, speedUnit));
+                    ret.add(new WeatherForecastDay(version, date, weatherSpec.getForecasts().get(i), tempUnit, speedUnit));
                 }
                 weatherData = ret;
                 break;
@@ -147,7 +149,7 @@ public class WeatherHandler {
     }
 
     public static class WeatherForecastDay {
-        public int dayOfWeek; // 1 monday .. 7 sunday
+        public int dayOfWeek; // v2: 1 monday .. 7 sunday, v1: 1 sunday
         public String description;
         public String summary;
         public WeatherValue high;
@@ -159,8 +161,18 @@ public class WeatherHandler {
         public Wind wind; // no gusts
         public Integer humidity;
 
-        public WeatherForecastDay(final GregorianCalendar date, final WeatherSpec.Daily dailyForecast, final String tempUnit, final String speedUnit) {
-            dayOfWeek = BLETypeConversions.dayOfWeekToRawBytes(date);
+        public WeatherForecastDay(final int version,
+                                  final GregorianCalendar date,
+                                  final WeatherSpec.Daily dailyForecast,
+                                  final String tempUnit,
+                                  final String speedUnit) {
+            if (version == 2) {
+                // 1 = monday
+                dayOfWeek = BLETypeConversions.dayOfWeekToRawBytes(date);
+            } else {
+                // 1 = sunday
+                dayOfWeek = date.get(Calendar.DAY_OF_WEEK);
+            }
             description = WeatherMapper.getConditionString(GBApplication.getContext(), dailyForecast.getConditionCode());
             summary = WeatherMapper.getConditionString(GBApplication.getContext(), dailyForecast.getConditionCode());
             high = getTemperature(dailyForecast.getMaxTemp(), tempUnit);
