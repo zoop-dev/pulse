@@ -3837,6 +3837,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         if (HuamiCoordinator.getOverwriteSettingsOnConnection(getDevice().getAddress())) {
             setDateDisplay(builder);
             setTimeFormat(builder);
+            setCurrentTime(builder);
             setUserInfo(builder);
             setDistanceUnit(builder);
             setWearLocation(builder);
@@ -3857,6 +3858,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             setExposeHRThirdParty(builder);
             setHeartrateMeasurementInterval(builder, HuamiCoordinator.getHeartRateMeasurementInterval(getDevice().getAddress()));
             sendReminders(builder);
+            sendCalendarEvents(builder);
             setWorldClocks(builder);
             for (final HuamiVibrationPatternNotificationType type : coordinator.getVibrationPatternNotificationTypes(getDevice())) {
                 final String typeKey = type.name().toLowerCase(Locale.ROOT);
