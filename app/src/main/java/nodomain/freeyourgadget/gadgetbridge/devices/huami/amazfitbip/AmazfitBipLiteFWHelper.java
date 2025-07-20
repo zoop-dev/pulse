@@ -19,8 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbip;
 import android.content.Context;
 import android.net.Uri;
 
-import androidx.annotation.NonNull;
-
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
@@ -32,7 +30,6 @@ public class AmazfitBipLiteFWHelper extends HuamiFWHelper {
         super(uri, context);
     }
 
-    @NonNull
     @Override
     protected void determineFirmwareInfo(byte[] wholeFirmwareBytes) {
         firmwareInfo = new AmazfitBipLiteFirmwareInfo(wholeFirmwareBytes);

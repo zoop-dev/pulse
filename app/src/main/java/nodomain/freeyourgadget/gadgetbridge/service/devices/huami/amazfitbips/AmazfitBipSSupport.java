@@ -20,9 +20,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitbips;
 import android.content.Context;
 import android.net.Uri;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -38,9 +35,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.upd
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
 
 public class AmazfitBipSSupport extends AmazfitBipSupport {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AmazfitBipSSupport.class);
-
     @Override
     public byte getCryptFlags() {
         return (byte) 0x80;

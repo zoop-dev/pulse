@@ -19,18 +19,12 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitbips;
 import android.content.Context;
 import android.net.Uri;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbips.AmazfitBipSLiteFWHelper;
 
 public class AmazfitBipSLiteSupport extends AmazfitBipSSupport {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AmazfitBipSLiteSupport.class);
-
     @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {
         return new AmazfitBipSLiteFWHelper(uri, context);

@@ -31,7 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 
 public class AmazfitBipSFirmwareInfo extends HuamiFirmwareInfo {
 
-    private static Map<Integer, String> crcToVersion = new HashMap<>();
+    private static final Map<Integer, String> crcToVersion = new HashMap<>();
 
     static {
         // fw tonlesap
@@ -67,8 +67,12 @@ public class AmazfitBipSFirmwareInfo extends HuamiFirmwareInfo {
 
     @Override
     protected HuamiFirmwareType determineFirmwareType(byte[] bytes) {
+        // FIXME: We should somehow get the device here, instead of using getSelectedDevices...
         List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
         for (GBDevice device : devices) {
+            if (device.getType() != DeviceType.AMAZFITBIPS) {
+                continue;
+            }
             if (device.getFirmwareVersion().startsWith("2.")) {
                 //For devices on firmware 2.x it is a tonleasp device and needs a header which looks like Mi Band 4
                 if (ArrayUtils.equals(bytes, MiBand4FirmwareInfo.FW_HEADER, MiBand4FirmwareInfo.FW_HEADER_OFFSET)) {

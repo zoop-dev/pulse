@@ -37,7 +37,7 @@ public class AmazfitBipLiteFirmwareInfo extends HuamiFirmwareInfo {
     };
 
 
-    private static Map<Integer, String> crcToVersion = new HashMap<>();
+    private static final Map<Integer, String> crcToVersion = new HashMap<>();
 
     static {
         // firmware
@@ -70,8 +70,12 @@ public class AmazfitBipLiteFirmwareInfo extends HuamiFirmwareInfo {
             if (searchString32BitAligned(bytes, "Amazfit Bip Lite")) {
                 return HuamiFirmwareType.FIRMWARE;
             }
+            // FIXME: We should somehow get the device here, instead of using getSelectedDevices...
             List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
-            for(GBDevice device : devices){
+            for (GBDevice device : devices) {
+                if (device.getType() != DeviceType.AMAZFITBIP_LITE) {
+                    continue;
+                }
                 Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(device.getAddress()));
                 if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_RELAX_FIRMWARE_CHECKS, false)) {
                     if (searchString32BitAligned(bytes, "Amazfit Bip")) {
