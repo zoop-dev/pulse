@@ -35,6 +35,7 @@ import java.util.UUID;
 import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 
 /**
@@ -52,6 +53,11 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
     private String deviceName;
     private Boolean isBonded = null;
 
+    /**
+     * If set, forces this candidate to be recognized as a specific device type.
+     */
+    private DeviceType forcedType;
+
     public GBDeviceCandidate(BluetoothDevice device, short rssi, ParcelUuid[] serviceUuids) {
         this.device = device;
         this.rssi = rssi;
@@ -68,6 +74,10 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         serviceUuids = AndroidUtils.toParcelUuids(in.readParcelableArray(getClass().getClassLoader()));
 
         deviceName = in.readString();
+        final String forcedTypeName = in.readString();
+        if (forcedTypeName != null && !forcedTypeName.isEmpty()) {
+            forcedType = DeviceType.valueOf(forcedTypeName);
+        }
         final int isBondedInt = in.readInt();
         if (isBondedInt != -1) {
             isBonded = (isBondedInt == 1);
@@ -80,6 +90,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         dest.writeInt(rssi);
         dest.writeParcelableArray(serviceUuids, 0);
         dest.writeString(deviceName);
+        dest.writeString(forcedType != null ? forcedType.name() : "");
         if (isBonded == null) {
             dest.writeInt(-1);
         } else {
@@ -87,7 +98,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         }
     }
 
-    public static final Creator<GBDeviceCandidate> CREATOR = new Creator<GBDeviceCandidate>() {
+    public static final Creator<GBDeviceCandidate> CREATOR = new Creator<>() {
         @Override
         public GBDeviceCandidate createFromParcel(Parcel in) {
             return new GBDeviceCandidate(in);
@@ -105,6 +116,14 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
 
     public String getMacAddress() {
         return device != null ? device.getAddress() : GBApplication.getContext().getString(R.string._unknown_);
+    }
+
+    public DeviceType getForcedType() {
+        return forcedType;
+    }
+
+    public void setForcedType(final DeviceType forcedType) {
+        this.forcedType = forcedType;
     }
 
     private ParcelUuid[] mergeServiceUuids(ParcelUuid[] serviceUuids, ParcelUuid[] deviceUuids) {
@@ -149,8 +168,8 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
 
     public boolean supportsService(UUID aService) {
         ParcelUuid[] uuids = getServiceUuids();
-        if (uuids == null || uuids.length == 0) {
-            LOG.warn("no cached services available for " + this);
+        if (uuids.length == 0) {
+            LOG.warn("no cached services available for {}", this);
             return false;
         }
 
@@ -183,6 +202,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
             }
         } else {
             try {
+                //noinspection JavaReflectionMemberAccess
                 final Method method = device.getClass().getMethod("getAliasName");
                 deviceName = (String) method.invoke(device);
             } catch (final NoSuchMethodException ignore) {
@@ -232,6 +252,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         return device.getAddress().hashCode() ^ 37;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getName() + ": " + getMacAddress();
@@ -247,6 +268,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
             clone.serviceUuids = this.serviceUuids;
             clone.deviceName = this.deviceName;
             clone.isBonded = this.isBonded;
+            clone.forcedType = this.forcedType;
             return clone;
         } catch (final CloneNotSupportedException e) {
             throw new RuntimeException(e);

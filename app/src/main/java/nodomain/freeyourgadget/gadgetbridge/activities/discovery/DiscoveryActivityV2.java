@@ -35,7 +35,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -637,6 +636,10 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
             return;
         }
 
+        preparePair(deviceCandidate);
+    }
+
+    private void preparePair(final GBDeviceCandidate deviceCandidate) {
         DeviceType deviceType = DeviceHelper.getInstance().resolveDeviceType(deviceCandidate);
 
         if (!deviceType.isSupported()) {
@@ -796,12 +799,9 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                 .setView(linearLayout)
                 .setPositiveButton(R.string.ok, (dialog, which) -> {
                     if (selectedUnsupportedDeviceKey != DebugActivity.SELECT_DEVICE) {
-                        DebugActivity.createTestDevice(
-                                DiscoveryActivityV2.this,
-                                selectedUnsupportedDeviceKey,
-                                deviceCandidate.getMacAddress(),
-                                deviceCandidate.getName()
-                        );
+                        final DeviceType deviceType = DeviceType.values()[(int) selectedUnsupportedDeviceKey];
+                        deviceCandidate.setForcedType(deviceType);
+                        preparePair(deviceCandidate);
                         finish();
                     }
                 })

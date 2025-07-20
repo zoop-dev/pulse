@@ -128,8 +128,13 @@ public class DeviceHelper {
     }
 
     public DeviceType resolveDeviceType(GBDeviceCandidate deviceCandidate, boolean useCache){
+        final DeviceType forcedType = deviceCandidate.getForcedType();
+        if (forcedType != null) {
+            return forcedType;
+        }
+
         synchronized (this) {
-            if(useCache) {
+            if (useCache) {
                 DeviceType cachedType =
                         deviceTypeCache.get(deviceCandidate.getMacAddress().toLowerCase());
                 if (cachedType != null) {
