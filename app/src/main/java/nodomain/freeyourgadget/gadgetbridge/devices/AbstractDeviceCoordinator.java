@@ -1004,6 +1004,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return !(authKey.getBytes().length < 34 || !authKey.startsWith("0x"));
     }
 
+    @Nullable
+    public String getAuthHelp() {
+        return null;
+    }
+
     @Override
     public List<DeviceCardAction> getCustomActions() {
         return Collections.emptyList();

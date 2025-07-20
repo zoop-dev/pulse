@@ -85,6 +85,7 @@ import java.util.Set;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.AuthKeyActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.DebugActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.adapter.DeviceCandidateAdapter;
@@ -127,6 +128,8 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
 
     private Button startButton;
     private boolean scanning;
+
+    private ActivityResultLauncher<Intent> authKeyLauncher;
 
     private long selectedUnsupportedDeviceKey = DebugActivity.SELECT_DEVICE;
 
@@ -193,6 +196,22 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
         registerBroadcastReceivers();
 
         checkAndRequestLocationPermission();
+
+        authKeyLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        final Intent data = result.getData();
+                        if (data == null) {
+                            // Should never happen
+                            GB.toast(this, "Auth data is null", Toast.LENGTH_LONG, GB.ERROR);
+                            return;
+                        }
+                        final GBDeviceCandidate deviceCandidate = data.getParcelableExtra(AuthKeyActivity.EXTRA_DEVICE_CANDIDATE_RESULT);
+                        final DeviceType deviceType = DeviceHelper.getInstance().resolveDeviceType(deviceCandidate);
+                        startPair(deviceCandidate, deviceType.getDeviceCoordinator());
+                    }
+                });
 
         if (!startDiscovery()) {
             /* if we couldn't start scanning, go back to the main page.
@@ -297,7 +316,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                 try {
                     final Method isConnectedMethod = device.getClass().getMethod("isConnected");
                     final Boolean isConnected = (Boolean) isConnectedMethod.invoke(device);
-                    if (isConnected!= null && isConnected) {
+                    if (isConnected != null && isConnected) {
                         LOG.debug("Pre-adding already bonded device {}", device.getAddress());
                         deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, (short) -1, null));
                     }
@@ -528,7 +547,8 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     private void showWarnDialog(@StringRes final int message) {
         new MaterialAlertDialogBuilder(getContext())
                 .setMessage(message)
-                .setPositiveButton(R.string.ok, (dialog, whichButton) -> {})
+                .setPositiveButton(R.string.ok, (dialog, whichButton) -> {
+                })
                 .show();
     }
 
@@ -630,29 +650,25 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
         final DeviceCoordinator coordinator = deviceType.getDeviceCoordinator();
         LOG.info("Using device candidate {} with coordinator {}", deviceCandidate, coordinator.getClass());
 
-        if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_REQUIRE_KEY) {
-            final SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceCandidate.getMacAddress());
-
-            final String authKey = sharedPrefs.getString("authkey", null);
-            if (authKey == null || authKey.isEmpty()) {
-                showWarnDialog(R.string.discovery_need_to_enter_authkey);
-                return;
-            } else if (!coordinator.validateAuthKey(authKey)) {
-                showWarnDialog(R.string.discovery_entered_invalid_authkey);
-                return;
-            }
-        }
-
         if (coordinator.suggestUnbindBeforePair() && deviceCandidate.isBonded()) {
             new MaterialAlertDialogBuilder(getContext())
                     .setTitle(R.string.unbind_before_pair_title)
                     .setMessage(R.string.unbind_before_pair_message)
                     .setIcon(R.drawable.ic_warning_gray)
                     .setPositiveButton(R.string.ok, (dialog, whichButton) -> {
-                        startPair(deviceCandidate, coordinator);
+                        checkAuthKeyAndPair(deviceCandidate, coordinator);
                     })
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
+        } else {
+            checkAuthKeyAndPair(deviceCandidate, coordinator);
+        }
+    }
+
+    private void checkAuthKeyAndPair(final GBDeviceCandidate deviceCandidate, final DeviceCoordinator coordinator) {
+        if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_REQUIRE_KEY) {
+            final Intent authIntent = AuthKeyActivity.Companion.newIntent(this, deviceCandidate);
+            authKeyLauncher.launch(authIntent);
         } else {
             startPair(deviceCandidate, coordinator);
         }

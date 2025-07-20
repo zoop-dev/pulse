@@ -155,6 +155,12 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
         return authKeyBytes.length == 32 || (authKey.startsWith("0x") && authKeyBytes.length == 34);
     }
 
+    @Nullable
+    @Override
+    public String getAuthHelp() {
+        return "https://gadgetbridge.org/basics/pairing/nothing-cmf-server/";
+    }
+
     @Override
     public int[] getSupportedDeviceSpecificAuthenticationSettings() {
         return new int[]{R.xml.devicesettings_pairingkey};

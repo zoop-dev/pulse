@@ -861,5 +861,8 @@ public interface DeviceCoordinator {
 
     boolean validateAuthKey(String authKey);
 
+    @Nullable
+    String getAuthHelp();
+
     List<DeviceCardAction> getCustomActions();
 }

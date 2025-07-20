@@ -21,6 +21,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -699,5 +700,11 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     public boolean validateAuthKey(final String authKey) {
         final byte[] authKeyBytes = authKey.trim().getBytes();
         return authKeyBytes.length == 32 || (authKey.trim().startsWith("0x") && authKeyBytes.length == 34);
+    }
+
+    @Nullable
+    @Override
+    public String getAuthHelp() {
+        return "https://gadgetbridge.org/basics/pairing/huami-xiaomi-server/";
     }
 }

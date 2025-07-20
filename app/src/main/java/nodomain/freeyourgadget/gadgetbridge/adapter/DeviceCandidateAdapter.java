@@ -83,9 +83,6 @@ public class DeviceCandidateAdapter extends ArrayAdapter<GBDeviceCandidate> {
         if (coordinator.isExperimental()) {
             statusLines.add(getContext().getString(R.string.device_experimental));
         }
-        if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_REQUIRE_KEY) {
-            statusLines.add(getContext().getString(R.string.device_requires_key));
-        }
 
         deviceStatus.setText(TextUtils.join("\n", statusLines));
         return view;

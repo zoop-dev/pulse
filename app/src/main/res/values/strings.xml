@@ -2445,7 +2445,6 @@
     <string name="app_crash_notification_title">%1s has crashed</string>
     <string name="app_crash_share_stacktrace">Share error</string>
     <string name="device_is_currently_bonded">ALREADY BONDED</string>
-    <string name="device_requires_key">KEY REQUIRED, LONG PRESS TO ENTER</string>
     <string name="device_unsupported">UNSUPPORTED</string>
     <string name="device_experimental">EXPERIMENTAL</string>
     <string name="error_background_service_reason">Starting the background service failed because of an exception - click here for more information.\n\nError:</string>
@@ -4189,4 +4188,11 @@
     <string name="error_queue_is_dead">GB\'s processing queue is dead</string>
     <string name="error_sender_is_dead">GB\'s sender thread is dead</string>
     <string name="error_receiver_is_dead">GB\'s receiver thread is dead</string>
+    <string name="submit_button_text">Submit</string>
+    <string name="auth_key_required_message">Auth key cannot be empty</string>
+    <string name="invalid_auth_key_message">Invalid auth key - please try again</string>
+    <string name="auth_key_activity_title_for">Auth key for %1$s</string>
+    <string name="auth_key_explanation">This device requires an authentication key for pairing.</string>
+    <string name="help">Help</string>
+    <string name="cannot_open_help_url">Could not open URL</string>
 </resources>

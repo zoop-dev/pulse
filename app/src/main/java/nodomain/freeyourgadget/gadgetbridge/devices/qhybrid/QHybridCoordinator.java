@@ -315,6 +315,12 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
         };
     }
 
+    @Nullable
+    @Override
+    public String getAuthHelp() {
+        return "https://gadgetbridge.org/basics/pairing/fossil-server/";
+    }
+
     @Deprecated // we should use the isHybridHR(GBDevice) instead of iterating every single device
     private boolean isHybridHR() {
         List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();

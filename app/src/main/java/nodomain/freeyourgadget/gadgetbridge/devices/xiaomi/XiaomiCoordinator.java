@@ -101,6 +101,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Nullable
     @Override
+    public String getAuthHelp() {
+        return "https://gadgetbridge.org/basics/pairing/huami-xiaomi-server/";
+    }
+
+    @Nullable
+    @Override
     public InstallHandler findInstallHandler(final Uri uri, final Context context) {
         final XiaomiInstallHandler handler = new XiaomiInstallHandler(uri, context);
         return handler.isValid() ? handler : null;

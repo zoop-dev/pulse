@@ -98,6 +98,12 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
         return false;
     }
 
+    @Nullable
+    @Override
+    public String getAuthHelp() {
+        return "https://gadgetbridge.org/basics/pairing/huami-xiaomi-server/";
+    }
+
     @Override
     protected void deleteDevice(@NonNull final GBDevice gbDevice,
                                 @NonNull final Device device,
