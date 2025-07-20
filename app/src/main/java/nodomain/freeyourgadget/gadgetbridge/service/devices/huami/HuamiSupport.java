@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -302,6 +303,8 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     private boolean needsAuth;
     private volatile boolean telephoneRinging;
 
+    private final Handler calendarSyncHandler = new Handler();
+
     private final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     private final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
     private final GBDeviceEventFindPhone findPhoneEvent = new GBDeviceEventFindPhone();
@@ -350,6 +353,13 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         this.mediaManager = new MediaManager(context);
     }
 
+    @CallSuper
+    @Override
+    public void dispose() {
+        calendarSyncHandler.removeCallbacksAndMessages(null);
+        super.dispose();
+    }
+
     @Override
     public void setActivityNotifications(final boolean control, final boolean data) {
         final TransactionBuilder builder = createTransactionBuilder("set activity notifications: " + control + " " + data);
@@ -367,6 +377,8 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
+        calendarSyncHandler.removeCallbacksAndMessages(null);
+
         if (getMTU() != MIN_MTU) {
             // Reset the MTU before re-initializing the device, otherwise initialization will sometimes fail
             previousMtu = getMTU();
@@ -1160,10 +1172,12 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     @Override
     public void onSetTime() {
         try {
-            TransactionBuilder builder = performInitialized("Set date and time");
-            setCurrentTime(builder);
+            TransactionBuilder builder = performInitialized("set date and time");
+            if (GBApplication.getPrefs().syncTime()) {
+                setCurrentTime(builder);
+            }
             //TODO: once we have a common strategy for sending events (e.g. EventHandler), remove this call from here. Meanwhile it does no harm.
-            // = we should genaralize the pebble calender code
+            // = we should generalize the pebble calender code
             sendCalendarEvents(builder);
             builder.queue();
         } catch (IOException ex) {
@@ -1173,12 +1187,26 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
     @Override
     public void onAddCalendarEvent(final CalendarEventSpec calendarEventSpec) {
-        onSetTime();
+        scheduleCalendarSync();
     }
 
     @Override
     public void onDeleteCalendarEvent(final byte type, final long id) {
-        onSetTime();
+        scheduleCalendarSync();
+    }
+
+    /**
+     * Delays calendar event updates for a few seconds, in case we get a burst of updates, since we always need
+     * to update all of them.
+     */
+    private void scheduleCalendarSync() {
+        calendarSyncHandler.removeCallbacksAndMessages(null);
+        calendarSyncHandler.postDelayed(() -> {
+            LOG.debug("Syncing calendar events");
+            final TransactionBuilder builder = createTransactionBuilder("sync calendar");
+            sendCalendarEvents(builder);
+            builder.queue();
+        }, 2000L);
     }
 
     @Override
