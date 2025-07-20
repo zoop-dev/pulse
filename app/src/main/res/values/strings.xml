@@ -4195,4 +4195,5 @@
     <string name="auth_key_explanation">This device requires an authentication key for pairing.</string>
     <string name="help">Help</string>
     <string name="cannot_open_help_url">Could not open URL</string>
+    <string name="auth_settings">Authentication settings</string>
 </resources>

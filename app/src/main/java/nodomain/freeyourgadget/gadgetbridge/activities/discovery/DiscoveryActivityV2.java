@@ -88,12 +88,14 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AuthKeyActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.DebugActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.adapter.DeviceCandidateAdapter;
+import nodomain.freeyourgadget.gadgetbridge.adapter.SimpleIconListAdapter;
 import nodomain.freeyourgadget.gadgetbridge.adapter.SpinnerWithIconAdapter;
 import nodomain.freeyourgadget.gadgetbridge.adapter.SpinnerWithIconItem;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.RunnableListIconItem;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingInterface;
@@ -725,32 +727,69 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
 
         final GBDeviceCandidate deviceCandidate = deviceCandidates.get(position);
         if (deviceCandidate == null) {
-            LOG.error("Device candidate clicked, but item not found");
+            LOG.error("Device candidate long clicked, but item not found");
             return true;
         }
 
-        DeviceType deviceType = DeviceHelper.getInstance().resolveDeviceType(deviceCandidate);
+        final List<RunnableListIconItem> longClickItems = new ArrayList<>(3);
 
-        if (!deviceType.isSupported()) {
-            showUnsupportedDeviceDialog(deviceCandidate);
-            return true;
+        final DeviceType deviceType = DeviceHelper.getInstance().resolveDeviceType(deviceCandidate);
+
+        final GBDevice existingDevice = GBApplication.app().getDeviceManager()
+                .getDeviceByAddress(deviceCandidate.getMacAddress());
+
+        if (existingDevice == null) {
+            longClickItems.add(new RunnableListIconItem(
+                    getString(R.string.add_test_device),
+                    R.drawable.ic_warning,
+                    () -> showUnsupportedDeviceDialog(deviceCandidate)
+            ));
         }
 
         final DeviceCoordinator coordinator = deviceType.getDeviceCoordinator();
         final GBDevice device = DeviceHelper.getInstance().toSupportedDevice(deviceCandidate);
-        if (coordinator.getSupportedDeviceSpecificSettings(device) == null) {
+
+        if (coordinator.getSupportedDeviceSpecificAuthenticationSettings().length > 0) {
+            longClickItems.add(new RunnableListIconItem(
+                    getString(R.string.auth_settings),
+                    R.drawable.ic_vpn_key,
+                    () -> {
+                        final Intent startIntent = new Intent(DiscoveryActivityV2.this, DeviceSettingsActivity.class);
+                        startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                        startIntent.putExtra(DeviceSettingsActivity.MENU_ENTRY_POINT, DeviceSettingsActivity.MENU_ENTRY_POINTS.AUTH_SETTINGS);
+                        startActivity(startIntent);
+                    }
+            ));
+        }
+
+        if (coordinator.getDeviceSpecificSettings(device) != null) {
+            longClickItems.add(new RunnableListIconItem(
+                    getString(R.string.pref_header_device_spec_settings),
+                    R.drawable.ic_settings,
+                    () -> {
+                        final Intent startIntent = new Intent(DiscoveryActivityV2.this, DeviceSettingsActivity.class);
+                        startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                        startIntent.putExtra(DeviceSettingsActivity.MENU_ENTRY_POINT, DeviceSettingsActivity.MENU_ENTRY_POINTS.DEVICE_SETTINGS);
+                        startActivity(startIntent);
+                    }
+            ));
+        }
+
+        if (longClickItems.isEmpty()) {
+            LOG.error("Device candidate long clicked, but there are no options");
             return true;
         }
 
-        final Intent startIntent;
-        startIntent = new Intent(this, DeviceSettingsActivity.class);
-        startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
-        if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_REQUIRE_KEY) {
-            startIntent.putExtra(DeviceSettingsActivity.MENU_ENTRY_POINT, DeviceSettingsActivity.MENU_ENTRY_POINTS.AUTH_SETTINGS);
-        } else {
-            startIntent.putExtra(DeviceSettingsActivity.MENU_ENTRY_POINT, DeviceSettingsActivity.MENU_ENTRY_POINTS.DEVICE_SETTINGS);
-        }
-        startActivity(startIntent);
+        final SimpleIconListAdapter adapter = new SimpleIconListAdapter(this, longClickItems);
+
+        new MaterialAlertDialogBuilder(this)
+                .setAdapter(adapter, (dialog, i1) -> longClickItems.get(i1).getAction().run())
+                .setTitle(deviceCandidate.getName())
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i1) -> {
+                })
+                .create()
+                .show();
+
         return true;
     }
 
