@@ -32,6 +32,7 @@ import net.e175.klaus.solarpositioning.SPA;
 import net.e175.klaus.solarpositioning.SunriseTransitSet;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
 
@@ -150,9 +152,10 @@ public class GBWebClient extends WebViewClient {
         }
 
         CurrentPosition currentPosition = new CurrentPosition();
+        WeatherSpec current = Weather.getWeatherSpec();
 
         try {
-            JSONObject resp = Weather.createReconstructedOWMWeatherReply();
+            JSONObject resp = createReconstructedOWMWeatherReply(current);
             if ("/data/2.5/weather".equals(type) && resp != null) {
                 JSONObject main = resp.getJSONObject("main");
 
@@ -196,6 +199,45 @@ public class GBWebClient extends WebViewClient {
 
         return null;
 
+    }
+
+    public JSONObject createReconstructedOWMWeatherReply(WeatherSpec weatherSpec) {
+        if (weatherSpec == null) {
+            return null;
+        }
+        JSONObject reconstructedOWMWeather = new JSONObject();
+        JSONArray weather = new JSONArray();
+        JSONObject condition = new JSONObject();
+        JSONObject main = new JSONObject();
+        JSONObject wind = new JSONObject();
+
+        try {
+            condition.put("id", weatherSpec.getCurrentConditionCode());
+            condition.put("main", weatherSpec.getCurrentCondition());
+            condition.put("description", weatherSpec.getCurrentCondition());
+            condition.put("icon", WeatherMapper.mapToOpenWeatherMapIcon(weatherSpec.getCurrentConditionCode()));
+            weather.put(condition);
+
+
+            main.put("temp", weatherSpec.getCurrentTemp());
+            main.put("humidity", weatherSpec.getCurrentHumidity());
+            main.put("temp_min", weatherSpec.getTodayMinTemp());
+            main.put("temp_max", weatherSpec.getTodayMaxTemp());
+
+            wind.put("speed", (weatherSpec.getWindSpeed() / 3.6f)); //meter per second
+            wind.put("deg", weatherSpec.getWindDirection());
+
+            reconstructedOWMWeather.put("weather", weather);
+            reconstructedOWMWeather.put("main", main);
+            reconstructedOWMWeather.put("name", weatherSpec.getLocation());
+            reconstructedOWMWeather.put("wind", wind);
+
+        } catch (JSONException e) {
+            LOG.error("Error while reconstructing OWM weather reply");
+            return null;
+        }
+        LOG.debug("Weather JSON for WEBVIEW: " + reconstructedOWMWeather);
+        return reconstructedOWMWeather;
     }
 
 
