@@ -126,6 +126,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.SilentMode;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
+import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
@@ -1168,6 +1169,16 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         } catch (IOException ex) {
             LOG.error("Unable to set time on Huami device", ex);
         }
+    }
+
+    @Override
+    public void onAddCalendarEvent(final CalendarEventSpec calendarEventSpec) {
+        onSetTime();
+    }
+
+    @Override
+    public void onDeleteCalendarEvent(final byte type, final long id) {
+        onSetTime();
     }
 
     @Override
