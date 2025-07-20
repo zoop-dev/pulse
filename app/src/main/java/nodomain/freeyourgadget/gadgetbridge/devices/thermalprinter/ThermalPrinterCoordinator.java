@@ -12,6 +12,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
@@ -77,6 +78,14 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
             return imageFilePrinterHandler;
         }
         return null;
+    }
+
+    @Override
+    public DeviceSpecificSettings getDeviceSpecificSettings(GBDevice device) {
+        final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
+
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_print_received_text);
+        return deviceSpecificSettings;
     }
 
     @Override

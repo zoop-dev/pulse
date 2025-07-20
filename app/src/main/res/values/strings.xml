@@ -4165,4 +4165,5 @@
     <string name="pref_summary_time_interval">Restrict to specific intervals</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Enable the deprecated Notification Collector Monitor Service</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Forces the usage of a second foreground service to keep the Notification monitor alive, activate this option if Gadgetbridge stops receiving notifications.\nPlease note that it might cause a second persistent notification to be shown.\nRestart the application after toggling.</string>
+    <string name="pref_printer_print_received_text">Print text shared to Gadgetbridge</string>
 </resources>

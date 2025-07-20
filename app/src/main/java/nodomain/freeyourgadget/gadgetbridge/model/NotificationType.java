@@ -60,6 +60,7 @@ public enum NotificationType {
     TUMBLR,
     PINTEREST,
     YOUTUBE,
+    GADGETBRIDGE_TEXT_RECEIVER,
     ;
 
 
@@ -120,6 +121,7 @@ public enum NotificationType {
             case YAHOO_MAIL:
                 return "generic_email";
             case COL_REMINDER:
+            case GADGETBRIDGE_TEXT_RECEIVER:
             case UNKNOWN:
             default:
                 return "generic";

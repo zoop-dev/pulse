@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.thermalprinter;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -34,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -119,6 +121,18 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
 
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
+        if(notificationSpec.type.equals(NotificationType.GADGETBRIDGE_TEXT_RECEIVER)) {
+            final SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
+            if(!prefs.getBoolean("pref_printer_print_received_text", false)) {
+                LOG.info("Not printing received text, device preference forbids this.");
+                return;
+            }
+
+            //title is appName
+            //body is the shared text
+            // see TextReceiverActivity.java
+            printImage(createBitmapFromString(notificationSpec.body), false, PrintAlignment.ALIGN_LEFT);
+        }
 //        printImage(createNotificationBitmap(notificationSpec), true, PrintAlignment.ALIGN_LEFT);
     }
 

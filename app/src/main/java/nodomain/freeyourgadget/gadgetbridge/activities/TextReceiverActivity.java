@@ -71,7 +71,7 @@ public class TextReceiverActivity extends AbstractGBActivity {
         notificationSpec.body = text;
         notificationSpec.sourceAppId = BuildConfig.APPLICATION_ID;
         notificationSpec.sourceName = appName;
-        notificationSpec.type = NotificationType.UNKNOWN;
+        notificationSpec.type = NotificationType.GADGETBRIDGE_TEXT_RECEIVER;
 
         GBApplication.deviceService().onNotification(notificationSpec);
         finish();
