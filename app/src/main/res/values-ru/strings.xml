@@ -4227,4 +4227,8 @@
     <string name="pref_aawireless_start_fix_summary">Обходное решение — включите этот вариант, если светодиод горит синим, но Android Auto не запускается</string>
     <string name="pref_aawireless_remove_tap_restriction_title">Удалить ограничение на нажатие</string>
     <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
+    <string name="title_activity_file_installer">Установщик файлов</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Выбранный файл несовместим у этим устройством</string>
+    <string name="fwinstaller_no_compatible_device_found">Не найдены совместимые устройства для установки %1s</string>
+    <string name="category">Категория</string>
 </resources>
