@@ -4261,4 +4261,8 @@
     <string name="exercise_category_total_body">Całe ciało</string>
     <string name="exercise_category_triceps_extension">Prostowanie ramienia na triceps</string>
     <string name="category">Kategoria</string>
+    <string name="title_activity_file_installer">Plik instalacyjny</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Wybrany plik nie jest zgodny z urządzeniem</string>
+    <string name="fwinstaller_no_compatible_device_found">Nie znaleziono zgodnego urządzenia do zainstalowania %1s</string>
+    <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
 </resources>
