@@ -58,6 +58,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -1097,10 +1098,12 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
             case ACTION_INSTALL:
                 Uri uri = intentCopy.getParcelableExtra(EXTRA_URI);
-                Bundle options = intentCopy.getBundleExtra(EXTRA_OPTIONS);
+                Bundle options = Objects.requireNonNullElse(intentCopy.getBundleExtra(EXTRA_OPTIONS), Bundle.EMPTY);
                 if (uri != null) {
                     LOG.info("will try to install app/fw");
                     deviceSupport.onInstallApp(uri, options);
+                } else {
+                    LOG.error("Got null uri for app to install");
                 }
                 break;
             case ACTION_SET_ALARMS:

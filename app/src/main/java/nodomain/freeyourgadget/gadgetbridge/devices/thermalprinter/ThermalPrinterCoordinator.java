@@ -72,16 +72,12 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
     @Nullable
     @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
-        //TODO: maybe there is another way to implement opening/receiving pictures
         final ImageFilePrinterHandler imageFilePrinterHandler = new ImageFilePrinterHandler(uri, context);
         if (imageFilePrinterHandler.isValid()) {
-            Intent instentStartPrintActivity = new Intent(context, SendToPrinterActivity.class);
-            instentStartPrintActivity.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_URI, uri);
-            context.startActivity(instentStartPrintActivity);
+            return imageFilePrinterHandler;
         }
         return null;
     }
-
 
     @Override
     public List<DeviceCardAction> getCustomActions() {

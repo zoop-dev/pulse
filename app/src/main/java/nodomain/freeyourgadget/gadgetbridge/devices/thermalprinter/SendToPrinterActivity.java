@@ -8,14 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.materialswitch.MaterialSwitch;
 
@@ -26,7 +25,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.thermalprinter.BitmapToBitSet;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.thermalprinter.GenericThermalPrinterSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 
@@ -48,6 +47,8 @@ public class SendToPrinterActivity extends AbstractGBActivity {
     private ImageView previewImage;
     private MaterialSwitch dithering;
     private MaterialSwitch upscale;
+    private GBDevice device;
+
     private final GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
         private static final int SWIPE_THRESHOLD = 100;
 
@@ -75,11 +76,13 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         }
     };
     private File printPicture = null;
+    private Uri uri;
+
     ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
-                    Uri uri = result.getData().getData();
+                    uri = result.getData().getData();
                     processUriAsync(uri);
                 }
             }
@@ -97,40 +100,23 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         final TextView warning = findViewById(R.id.warning_devices);
         upscale = findViewById(R.id.switchUpscale);
 
-        final List<GBDevice> devices = ((GBApplication) getApplicationContext()).getDeviceManager().getSelectedDevices();
-        GBDevice device = devices.get(0);
-
-        switch (devices.size()) {
-            case 0:
-                warning.setText(R.string.open_fw_installer_connect_minimum_one_device);
-                sendToPrinter.setEnabled(false);
-                break;
-            case 1:
-                warning.setText(String.format(getString(R.string.open_fw_installer_select_file), device.getAliasOrName()));
-                sendToPrinter.setEnabled(true);
-                break;
-            default:
-                warning.setText(R.string.open_fw_installer_connect_maximum_one_device);
-                sendToPrinter.setEnabled(false);
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null) {
+            // This activity does not support auto-discovery - see FileInstallerActivity for that
+            GB.toast("No device provided to SendToPrinterActivity", Toast.LENGTH_LONG, GB.ERROR);
+            finish();
+            return;
         }
 
         gestureDetector = new GestureDetector(this, gestureListener);
 
         previewImage.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
-        dithering.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LOG.info("dithering is : {}", dithering.isChecked());
-                updatePreview();
-            }
+        dithering.setOnClickListener(view -> {
+            LOG.info("dithering is : {}", dithering.isChecked());
+            updatePreview();
         });
 
-        sendToPrinter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendToPrinter();
-            }
-        });
+        sendToPrinter.setOnClickListener(v -> sendToPrinter(device));
 
         upscale.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -144,7 +130,10 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         });
 
         printPicture = new File(getCacheDir(), "temp_bitmap.png");
-        final Uri uri = getIntent().getParcelableExtra(GenericThermalPrinterSupport.INTENT_EXTRA_URI);
+        uri = getIntent().getData();
+        if (uri == null) { // For "share" intent
+            uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
+        }
         if (uri != null) {
             processUriAsync(uri);
         } else {
@@ -207,13 +196,13 @@ public class SendToPrinterActivity extends AbstractGBActivity {
         previewImage.setImageBitmap(bitmapToBitSet.getPreview());
     }
 
-    private void sendToPrinter() {
-        Intent intent = new Intent(GenericThermalPrinterSupport.INTENT_ACTION_PRINT_BITMAP);
-        intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_BITMAP_CACHE_FILE_PATH, printPicture.getAbsolutePath());
-        intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_APPLY_DITHERING, dithering.isChecked());
-        intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_UPSCALE, upscale.isChecked());
-        intent.putExtra(GenericThermalPrinterSupport.INTENT_EXTRA_ALIGNMENT, alignment);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    private void sendToPrinter(final GBDevice device) {
+        final Bundle options = new Bundle();
+        options.putString(GenericThermalPrinterSupport.INTENT_EXTRA_BITMAP_CACHE_FILE_PATH, printPicture.getAbsolutePath());
+        options.putBoolean(GenericThermalPrinterSupport.INTENT_EXTRA_APPLY_DITHERING, dithering.isChecked());
+        options.putBoolean(GenericThermalPrinterSupport.INTENT_EXTRA_UPSCALE, upscale.isChecked());
+        options.putSerializable(GenericThermalPrinterSupport.INTENT_EXTRA_ALIGNMENT, alignment);
+        GBApplication.deviceService(device).onInstallApp(uri, options);
     }
 
     private void cleanUpPrintPictureCache() {

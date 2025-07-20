@@ -2,10 +2,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.thermalprinter;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -22,7 +18,6 @@ import android.text.TextPaint;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +40,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSupport {
     public static final int IMAGE_WIDTH = 384;
-    public static final String INTENT_ACTION_PRINT_BITMAP = "print_bitmap";
-    public static final String INTENT_EXTRA_URI = "picture_uri";
     public static final String INTENT_EXTRA_BITMAP_CACHE_FILE_PATH = "bitmap_cache_file_path";
     public static final String INTENT_EXTRA_APPLY_DITHERING = "apply_dithering";
     public static final String INTENT_EXTRA_UPSCALE = "upscale";
@@ -65,32 +58,6 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     private final int PRINT_TYPE = 0; //1 also observed
     private boolean useRunLengthEncoding = false;
     private boolean canPrint = false;
-    private final BroadcastReceiver printCommandReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
-                case INTENT_ACTION_PRINT_BITMAP:
-
-                    String picturePath = intent.getStringExtra(INTENT_EXTRA_BITMAP_CACHE_FILE_PATH);
-                    if (picturePath.isEmpty()) {
-                        LOG.error("Cannot print: picturePath is empty");
-                        return;
-                    }
-                    final Bitmap incoming = BitmapFactory.decodeFile(picturePath);
-                    final Bitmap bitmap = intent.getBooleanExtra(INTENT_EXTRA_UPSCALE, false) ?
-                            Bitmap.createScaledBitmap(incoming, IMAGE_WIDTH, (int) (IMAGE_WIDTH * (float) incoming.getHeight() / incoming.getWidth()), true)
-                            : incoming;
-
-                    if (bitmap == null) {
-                        LOG.error("Cannot print: bitmap is null");
-                        return;
-                    }
-                    boolean dither = intent.getBooleanExtra(INTENT_EXTRA_APPLY_DITHERING, false);
-                    PrintAlignment alignment = (PrintAlignment) intent.getSerializableExtra(INTENT_EXTRA_ALIGNMENT);
-                    printImage(bitmap, dither, alignment);
-            }
-        }
-    };
 
     public GenericThermalPrinterSupport() {
         super(LOG);
@@ -374,17 +341,9 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
 
         builder.setDeviceState(GBDevice.State.INITIALIZED);
 
-        registerPrintCommandReceiver();
-
-        LOG.debug("Connected to: " + gbDevice.getName());
+        LOG.debug("Connected to: {}", gbDevice.getName());
 
         return builder;
-    }
-
-    private void registerPrintCommandReceiver() {
-        IntentFilter commandFilter = new IntentFilter();
-        commandFilter.addAction(INTENT_ACTION_PRINT_BITMAP);
-        LocalBroadcastManager.getInstance(GBApplication.getContext()).registerReceiver(printCommandReceiver, commandFilter);
     }
 
     public void send(String taskname, byte[] command) {
@@ -398,14 +357,6 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     public void onTestNewFunction() {
 //        send(PrinterCommand.feedPaper.message(new byte[]{1}));
         sendTestPrint();
-    }
-
-    @Override
-    public void dispose() {
-        synchronized (ConnectionMonitor) {
-            super.dispose();
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(printCommandReceiver);
-        }
     }
 
     @Override
@@ -441,7 +392,23 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
 
     @Override
     public void onInstallApp(Uri uri, @NonNull final Bundle options) {
-        //we just abuse the install functionality to start our own activity
+        String picturePath = options.getString(INTENT_EXTRA_BITMAP_CACHE_FILE_PATH, "");
+        if (picturePath.isEmpty()) {
+            LOG.error("Cannot print: picturePath is empty");
+            return;
+        }
+        final Bitmap incoming = BitmapFactory.decodeFile(picturePath);
+        final Bitmap bitmap = options.getBoolean(INTENT_EXTRA_UPSCALE, false) ?
+                Bitmap.createScaledBitmap(incoming, IMAGE_WIDTH, (int) (IMAGE_WIDTH * (float) incoming.getHeight() / incoming.getWidth()), true)
+                : incoming;
+
+        if (bitmap == null) {
+            LOG.error("Cannot print: bitmap is null");
+            return;
+        }
+        boolean dither = options.getBoolean(INTENT_EXTRA_APPLY_DITHERING, false);
+        PrintAlignment alignment = (PrintAlignment) options.getSerializable(INTENT_EXTRA_ALIGNMENT);
+        printImage(bitmap, dither, alignment);
     }
 
     public enum PrintAlignment {
