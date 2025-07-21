@@ -4265,4 +4265,24 @@
     <string name="fwinstaller_file_not_compatible_to_device">Wybrany plik nie jest zgodny z urządzeniem</string>
     <string name="fwinstaller_no_compatible_device_found">Nie znaleziono zgodnego urządzenia do zainstalowania %1s</string>
     <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
+    <string name="busy_task_processing_files">Przetwarzanie plików</string>
+    <string name="busy_task_progress_int">%1$d z %2$d</string>
+    <string name="devicetype_amazfit_helio_ring">Amazfit Helio Ring</string>
+    <string name="devicetype_colmi_p76">Colmi P76</string>
+    <string name="diving_avg_depth">Średnia głębokość</string>
+    <string name="diving_avg_descent_rate">Średnia prędkość opadania</string>
+    <string name="diving_avg_ascent_rate">Średnia prędkość wynurzania</string>
+    <string name="diving_max_descent_rate">Maksymalna prędkość opadania</string>
+    <string name="diving_max_ascent_rate">Maksymalna prędkość wynurzania</string>
+    <string name="diving_start_cns">Początek toksyczności CNS</string>
+    <string name="diving_end_cns">Koniec toksyczności CNS</string>
+    <string name="diving_start_n2">Początek nasycania azotem</string>
+    <string name="diving_end_n2">Koniec nasycania azotem</string>
+    <string name="dive_number">Numer nurkowania</string>
+    <string name="diving_bottom_time">Czas denny</string>
+    <string name="gases_header">Gazy do nurkowania</string>
+    <string name="helium_content">Zawartość helu</string>
+    <string name="oxygen_content">Zawartość tlenu</string>
+    <string name="nitrogen_content">Zawartość azotu</string>
+    <string name="pref_printer_print_received_text">Drukuj tekst udostępniony do Gadgetbridge</string>
 </resources>
