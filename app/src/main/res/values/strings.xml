@@ -747,6 +747,8 @@
     <string name="busy_task_fetch_weight_data">Fetching weight data</string>
     <string name="busy_task_fetch_training_data">Fetching last training data</string>
     <string name="busy_task_fetch_training_data_finished">Training data received!</string>
+    <string name="busy_task_processing_files">Processing files</string>
+    <string name="busy_task_progress_int">%1$d of %2$d</string>
     <string name="busy_task_busy">Busy…</string>
     <string name="busy_task_configuring">Configuring</string>
     <string name="busy_task_downloading">Downloading</string>

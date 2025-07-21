@@ -93,6 +93,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALLOW_HIGH_MTU;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SEND_APP_NOTIFICATIONS;
@@ -110,6 +111,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private MediaManager mediaManager;
     private boolean mFirstConnect = false;
     private boolean isBusyFetching;
+
+    private GBProgressNotification transferNotification;
 
     final Map<UUID, GdiInstalledAppsService.InstalledAppsService.InstalledApp> installedApps = new HashMap<>();
 
@@ -132,6 +135,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
         super.setContext(gbDevice, btAdapter, context);
         this.mediaManager = new MediaManager(context);
+        this.transferNotification = new GBProgressNotification(context, GB.NOTIFICATION_CHANNEL_ID_TRANSFER);
     }
 
     @Override
@@ -143,8 +147,15 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         }
     }
 
+    public void onFileDownloadProgress(final int progress) {
+        transferNotification.setChunkProgress(progress);
+    }
+
     public void addFileToDownloadList(FileTransferHandler.DirectoryEntry directoryEntry) {
         filesToDownload.add(directoryEntry);
+        if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
+            transferNotification.incrementTotalSize(directoryEntry.getFileSize());
+        }
     }
 
     @Override
@@ -332,13 +343,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             final FileTransferHandler.DirectoryEntry entry = ((FileDownloadedDeviceEvent) deviceEvent).directoryEntry;
             final String filename = entry.getFileName();
             LOG.debug("FILE DOWNLOAD COMPLETE {}", filename);
+            transferNotification.incrementTotalProgress(entry.getFileSize());
 
             if (entry.getFiletype().isFitFile()) {
                 try (DBHandler handler = GBApplication.acquireDB()) {
                     final DaoSession session = handler.getDaoSession();
 
                     final PendingFileProvider pendingFileProvider = new PendingFileProvider(gbDevice, session);
-
                     pendingFileProvider.addPendingFile(((FileDownloadedDeviceEvent) deviceEvent).localPath);
                 } catch (final Exception e) {
                     GB.toast(getContext(), "Error saving pending file", Toast.LENGTH_LONG, GB.ERROR, e);
@@ -617,7 +628,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         if (!filesToDownload.isEmpty() && !fileTransferHandler.isDownloading()) {
             if (!gbDevice.isBusy()) {
                 isBusyFetching = true;
-                GB.updateTransferNotification(getContext().getString(R.string.busy_task_fetch_activity_data), "", true, 0, getContext());
+                transferNotification.start(R.string.busy_task_fetch_activity_data, 0);
                 getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
                 getDevice().sendDeviceUpdateIntent(getContext());
             }
@@ -629,11 +640,17 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     if (!getKeepActivityDataOnDevice()) { // delete file from watch if already downloaded
                         sendOutgoingMessage("archive file " + directoryEntry.getFileIndex(), new SetFileFlagsMessage(directoryEntry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
                     }
+                    if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
+                        transferNotification.incrementTotalProgress(directoryEntry.getFileSize());
+                    }
                     continue;
                 }
 
                 final DownloadRequestMessage downloadRequestMessage = fileTransferHandler.downloadDirectoryEntry(directoryEntry);
                 LOG.debug("Will download file: {}", directoryEntry.getOutputPath());
+                if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
+                    transferNotification.setChunkProgress(0);
+                }
                 sendOutgoingMessage("download file " + directoryEntry.getFileIndex(), downloadRequestMessage);
                 return;
             }
@@ -661,7 +678,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 if (gbDevice.isBusy() && isBusyFetching) {
                     getDevice().unsetBusyTask();
                     GB.signalActivityDataFinish(getDevice());
-                    GB.updateTransferNotification(null, "", false, 100, getContext());
+                    transferNotification.finish();
                     getDevice().sendDeviceUpdateIntent(getContext());
                 }
                 isBusyFetching = false;
@@ -672,27 +689,21 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             // isBusyFetching so we do not start multiple processors
             isBusyFetching = false;
 
+            transferNotification.start(R.string.busy_task_processing_files, 0);
+            transferNotification.setTotalSize(filesToProcess.size());
+
             final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), getDevice());
-            final long[] lastNotificationUpdateTs = new long[]{System.currentTimeMillis()};
             fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
                 @Override
                 public void onProgress(final int i) {
-                    final long now = System.currentTimeMillis();
-                    if (now - lastNotificationUpdateTs[0] > 1500L) {
-                        lastNotificationUpdateTs[0] = now;
-                        GB.updateTransferNotification(
-                                "Parsing fit files", "File " + i + " of " + filesToProcess.size(),
-                                true,
-                                (i * 100) / filesToProcess.size(), getContext()
-                        );
-                    }
+                    transferNotification.setTotalProgress(i);
                 }
 
                 @Override
                 public void onFinish() {
                     getDevice().unsetBusyTask();
                     GB.signalActivityDataFinish(getDevice());
-                    GB.updateTransferNotification(null, "", false, 100, getContext());
+                    transferNotification.finish();
                     getDevice().sendDeviceUpdateIntent(getContext());
                 }
             });
@@ -1053,7 +1064,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         GB.toast(getContext(), "Check notification for progress", Toast.LENGTH_LONG, GB.INFO);
 
-        GB.updateTransferNotification("Parsing fit files", "...", true, 0, getContext());
+        transferNotification.start(R.string.busy_task_processing_files, 0);
+        transferNotification.setTotalSize(fitFiles.size());
 
         //try (DBHandler handler = GBApplication.acquireDB()) {
         //    final DaoSession session = handler.getDaoSession();
@@ -1063,26 +1075,17 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         //    GB.toast(getContext(), "Error deleting activity data", Toast.LENGTH_LONG, GB.ERROR, e);
         //}
 
-        final long[] lastNotificationUpdateTs = new long[]{System.currentTimeMillis()};
         final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), getDevice());
         fitAsyncProcessor.process(fitFiles, new FitAsyncProcessor.Callback() {
             @Override
             public void onProgress(final int i) {
-                final long now = System.currentTimeMillis();
-                if (now - lastNotificationUpdateTs[0] > 1500L) {
-                    lastNotificationUpdateTs[0] = now;
-                    GB.updateTransferNotification(
-                            "Parsing fit files", "File " + i + " of " + fitFiles.size(),
-                            true,
-                            (i * 100) / fitFiles.size(), getContext()
-                    );
-                }
+                transferNotification.setTotalProgress(i);
             }
 
             @Override
             public void onFinish() {
                 parsingFitFilesFromStorage = false;
-                GB.updateTransferNotification("", "", false, 100, getContext());
+                transferNotification.finish();
                 GB.signalActivityDataFinish(getDevice());
             }
         });

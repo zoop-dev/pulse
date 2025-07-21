@@ -103,15 +103,12 @@ public class GB {
     /** Commands related to the progress (bar) on the screen */
     public static final String ACTION_SET_PROGRESS_BAR = "GB_Set_Progress_Bar";
     public static final String PROGRESS_BAR_INDETERMINATE = "indeterminate";
-    public static final String PROGRESS_BAR_MAX = "max";
     public static final String PROGRESS_BAR_PROGRESS = "progress";
     public static final String ACTION_SET_PROGRESS_TEXT = "GB_Set_Progress_Text";
     public static final String ACTION_SET_INFO_TEXT = "GB_Set_Info_Text";
     public static final String ACTION_SET_FINISHED = "GB_Set_Finished";
 
     private static boolean notificationChannelsCreated;
-
-    private static final String TAG = "GB";
 
     public static void createNotificationChannels(Context context) {
         if (notificationChannelsCreated) return;
@@ -541,6 +538,10 @@ public class GB {
         return nb.build();
     }
 
+    /**
+     * @deprecated use {@link nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification}
+     */
+    @Deprecated
     public static void updateTransferNotification(CharSequence title, CharSequence text, boolean ongoing, int percentage, Context context) {
         if (percentage == 100) {
             removeNotification(NOTIFICATION_ID_TRANSFER, context);

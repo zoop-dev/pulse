@@ -120,6 +120,8 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
             currentlyDownloading.append(fileTransferDataMessage);
             if (!currentlyDownloading.dataHolder.hasRemaining())
                 processCompleteDownload();
+            else
+                deviceSupport.onFileDownloadProgress(currentlyDownloading.dataHolder.position());
         }
 
         private void processCompleteDownload() {
@@ -395,6 +397,10 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
 
         public Date getFileDate() {
             return fileDate;
+        }
+
+        public int getFileSize() {
+            return fileSize;
         }
 
         /**
