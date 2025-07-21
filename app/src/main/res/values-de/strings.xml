@@ -4125,4 +4125,18 @@
     <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
     <string name="devicetype_colmi_p76">Colmi P76</string>
     <string name="exercise_category_bench_press">Bankdrücken</string>
+    <string name="exercise_category_calf_raise">Wadenheben</string>
+    <string name="exercise_category_carry">Tragen</string>
+    <string name="exercise_category_chop">Holzhacker</string>
+    <string name="exercise_category_core">Rumpf</string>
+    <string name="exercise_category_crunch">Crunch</string>
+    <string name="exercise_category_flye">Fliegende</string>
+    <string name="exercise_category_hip_raise">Hüftheben</string>
+    <string name="exercise_category_hip_stability">Hüftstabilität</string>
+    <string name="exercise_category_hip_swing">Hüftschwung</string>
+    <string name="exercise_category_hyperextension">Überstreckung</string>
+    <string name="exercise_category_lateral_raise">Seitheben</string>
+    <string name="exercise_category_leg_curl">Beinbeuger</string>
+    <string name="exercise_category_leg_raise">Beinheben</string>
+    <string name="exercise_category_lunge">Ausfallschritt</string>
 </resources>
