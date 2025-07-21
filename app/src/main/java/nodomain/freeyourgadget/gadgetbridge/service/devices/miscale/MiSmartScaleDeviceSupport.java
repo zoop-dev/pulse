@@ -115,7 +115,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         deviceInfoProfile.requestDeviceInfo(builder);
 
-        if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true))
+        if (GBApplication.getPrefs().syncTime())
             setTime(builder);
 
         builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_WEIGHT_MEASUREMENT, true);

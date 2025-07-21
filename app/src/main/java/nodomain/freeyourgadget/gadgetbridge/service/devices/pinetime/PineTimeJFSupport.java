@@ -490,7 +490,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         requestDeviceInfo(builder);
-        if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true)) {
+        if (GBApplication.getPrefs().syncTime()) {
             onSetTime();
         }
         setWorldClocks();

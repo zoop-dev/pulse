@@ -150,6 +150,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.VolleyUtils;
@@ -384,8 +385,8 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         // No need to clear active line with Ctrl-C now - firmwares in 2023 auto-clear on connect
 
-        Prefs prefs = GBApplication.getPrefs();
-        if (prefs.getBoolean("datetime_synconconnect", true))
+        GBPrefs prefs = GBApplication.getPrefs();
+        if (prefs.syncTime())
           transmitTime(builder);
         //sendSettings(builder);
 

@@ -89,7 +89,7 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLESingleDeviceSupp
         builder.write(writeCharacteristic, Message.encodeGetBatteryStatus());
         builder.write(writeCharacteristic, Message.encodeGetFirmwareVersion());
 
-        if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true)) {
+        if (GBApplication.getPrefs().syncTime()) {
             builder.write(writeCharacteristic, makeSetDateTimeMessage());
         }
         // sync all preferences to device

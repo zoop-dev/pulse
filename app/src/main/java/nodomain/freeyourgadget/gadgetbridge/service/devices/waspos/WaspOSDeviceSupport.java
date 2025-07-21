@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDevic
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(WaspOSDeviceSupport.class);
@@ -79,8 +79,8 @@ public class WaspOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         uartTx(builder, " \u0003"); // clear active line
 
-        Prefs prefs = GBApplication.getPrefs();
-        if (prefs.getBoolean("datetime_synconconnect", true))
+        GBPrefs prefs = GBApplication.getPrefs();
+        if (prefs.syncTime())
           setTime(builder);
         //sendSettings(builder);
 

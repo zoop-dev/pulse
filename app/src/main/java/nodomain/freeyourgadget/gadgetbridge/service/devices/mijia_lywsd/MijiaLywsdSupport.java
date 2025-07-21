@@ -103,7 +103,7 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
         requestDeviceInfo(builder);
 
         final boolean supportsSetTime = getCoordinator().supportsSetTime();
-        if (supportsSetTime && GBApplication.getPrefs().getBoolean("datetime_synconconnect", true)) {
+        if (supportsSetTime && GBApplication.getPrefs().syncTime()) {
             setTime(builder);
         } else {
             getTime(builder);

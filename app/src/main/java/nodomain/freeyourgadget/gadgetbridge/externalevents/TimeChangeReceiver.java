@@ -39,8 +39,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
 public class TimeChangeReceiver extends BroadcastReceiver {
@@ -52,14 +52,14 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        final Prefs prefs = GBApplication.getPrefs();
+        final GBPrefs prefs = GBApplication.getPrefs();
         final String action = intent.getAction();
         if (action == null) {
             LOG.warn("Null action");
             return;
         }
 
-        if (!prefs.getBoolean("datetime_synconconnect", true)) {
+        if (!prefs.syncTime()) {
             LOG.warn("Ignoring time change for {}, time sync is disabled", action);
             return;
         }
@@ -150,7 +150,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
     }
 
     public static void ifEnabledScheduleNextDstChangeOrPeriodicSync(final Context context) {
-        if (GBApplication.getPrefs().getBoolean("datetime_synconconnect", true)) {
+        if (GBApplication.getPrefs().syncTime()) {
             scheduleNextDstChangeOrPeriodicSync(context);
         }
     }
