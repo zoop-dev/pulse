@@ -35,8 +35,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
@@ -57,21 +56,21 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.palette.graphics.Palette;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -80,7 +79,6 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleColor;
 import nodomain.freeyourgadget.gadgetbridge.entities.NotificationFilter;
 import nodomain.freeyourgadget.gadgetbridge.entities.NotificationFilterDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.NotificationFilterEntry;
@@ -94,12 +92,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
-import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.NotificationFilterActivity.NOTIFICATION_FILTER_MODE_BLACKLIST;
@@ -125,17 +121,18 @@ public class NotificationListener extends NotificationListenerService {
     private final LimitedQueue<Integer, NotificationAction> mActionLookup = new LimitedQueue<>(128);
     private final LimitedQueue<Integer, String> mPackageLookup = new LimitedQueue<>(64);
     private final LimitedQueue<Integer, Long> mNotificationHandleLookup = new LimitedQueue<>(128);
+    private long lastPictureNotificationTime = 0;
 
     private final HashMap<String, Long> notificationBurstPrevention = new HashMap<>();
     private final HashMap<String, Long> notificationOldRepeatPrevention = new HashMap<>();
 
-    private static final Set<String> GROUP_SUMMARY_WHITELIST = new HashSet<String>() {{
+    private static final Set<String> GROUP_SUMMARY_WHITELIST = new HashSet<>() {{
         add("com.microsoft.office.lync15");
         add("com.skype.raider");
         add("mikado.bizcalpro");
     }};
 
-    private static final Set<String> PHONE_CALL_APPS = new HashSet<String>() {{
+    private static final Set<String> PHONE_CALL_APPS = new HashSet<>() {{
             add("com.android.dialer");
             add("com.android.incallui");
             add("com.asus.asusincallui");
@@ -144,7 +141,7 @@ public class NotificationListener extends NotificationListenerService {
             add("org.fossify.phone");
     }};
 
-    private static final Set<String> NOTI_USE_TITLE_APPS = new HashSet<String>() {{
+    private static final Set<String> NOTI_USE_TITLE_APPS = new HashSet<>() {{
             add("com.whatsapp");
             add("org.thoughtcrime.securesms");
     }};
@@ -152,7 +149,7 @@ public class NotificationListener extends NotificationListenerService {
     public static final ArrayList<String> notificationStack = new ArrayList<>();
     private static final ArrayList<Integer> notificationsActive = new ArrayList<>();
 
-    private static final Set<String> supportedPictureMimeTypes = new HashSet<String>() {{
+    private static final Set<String> supportedPictureMimeTypes = new HashSet<>() {{
         add("image/"); //for im.vector.app
         add("image/jpeg");
         add("image/png");
@@ -295,6 +292,7 @@ public class NotificationListener extends NotificationListenerService {
         filterLocal.addAction(ACTION_DISMISS_ALL);
         filterLocal.addAction(ACTION_MUTE);
         filterLocal.addAction(ACTION_REPLY);
+        //noinspection deprecation
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filterLocal);
         createNotificationPictureCacheDirectory();
         cleanUpNotificationPictureProvider();
@@ -302,6 +300,7 @@ public class NotificationListener extends NotificationListenerService {
 
     @Override
     public void onDestroy() {
+        //noinspection deprecation
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         notificationStack.clear();
         notificationsActive.clear();
@@ -369,7 +368,9 @@ public class NotificationListener extends NotificationListenerService {
             return;
         }
 
-        if (shouldIgnoreNotification(sbn, false)) {
+        final boolean hasPicture = notificationHasPicture(sbn.getNotification());
+
+        if (shouldIgnoreNotification(sbn, false, hasPicture)) {
             if (!"com.sec.android.app.clockpackage".equals(sbn.getPackageName())) {  // workaround to allow phone alarm notification
                 LOG.info("Ignoring notification: {}", sbn.getPackageName());          // need to fix
                 return;
@@ -384,18 +385,33 @@ public class NotificationListener extends NotificationListenerService {
                 && notification.when <= notificationOldRepeatPreventionValue
                 && !shouldIgnoreRepeatPrevention(sbn)
         ) {
-            LOG.info("NOT processing notification, already sent newer notifications from this source.");
-            return;
+            if (!hasPicture || notification.when <= lastPictureNotificationTime) {
+                LOG.info("NOT processing notification, already sent newer notifications from this source.");
+                return;
+            } else {
+                LOG.info("Allowing repeat notification, it has a picture now");
+            }
         }
 
         // Ignore too frequent notifications, according to user preference
+        final int notificationsTimeoutSeconds = prefs.getInt("notifications_timeout", 0);
         long curTime = System.nanoTime();
         Long notificationBurstPreventionValue = notificationBurstPrevention.get(source);
+
+        // If this notification contains a picture, and we did not yet send a picture inside the timeout interval,
+        // we should still send it (eg. notification updates)
+        final boolean newPicture = hasPicture &&
+                notification.when - lastPictureNotificationTime  > TimeUnit.SECONDS.toMillis(notificationsTimeoutSeconds);
+
         if (notificationBurstPreventionValue != null) {
             long diff = curTime - notificationBurstPreventionValue;
-            if (diff < TimeUnit.SECONDS.toNanos(prefs.getInt("notifications_timeout", 0))) {
-                LOG.info("Ignoring frequent notification, last one was {} ms ago", TimeUnit.NANOSECONDS.toMillis(diff));
-                return;
+            if (diff < TimeUnit.SECONDS.toNanos(notificationsTimeoutSeconds)) {
+                if (!newPicture) {
+                    LOG.info("Ignoring frequent notification, last one was {} ms ago", TimeUnit.NANOSECONDS.toMillis(diff));
+                    return;
+                } else {
+                    LOG.info("Allowing frequent notification, last one was {} ms ago", TimeUnit.NANOSECONDS.toMillis(diff));
+                }
             }
         }
 
@@ -468,7 +484,7 @@ public class NotificationListener extends NotificationListenerService {
         // Others only send the group summary, so they need to be whitelisted
         if (wearableActions.isEmpty() && NotificationCompat.isGroupSummary(notification)
                 && !GROUP_SUMMARY_WHITELIST.contains(source)) { //this could cause #395 to come back
-            LOG.info("Not forwarding notification, FLAG_GROUP_SUMMARY is set and no wearable action present. Notification flags: " + notification.flags);
+            LOG.info("Not forwarding notification, FLAG_GROUP_SUMMARY is set and no wearable action present. Notification flags: {}", notification.flags);
             return;
         }
 
@@ -543,6 +559,10 @@ public class NotificationListener extends NotificationListenerService {
 
         mNotificationHandleLookup.add(notificationSpec.getId(), sbn.getPostTime()); // for both DISMISS and OPEN
         mPackageLookup.add(notificationSpec.getId(), sbn.getPackageName()); // for MUTE
+
+        if (notificationSpec.picturePath != null) {
+            lastPictureNotificationTime = notificationSpec.when;
+        }
 
         notificationBurstPrevention.put(source, curTime);
         if (notification.when == 0) {
@@ -734,7 +754,7 @@ public class NotificationListener extends NotificationListenerService {
                     LOG.info("Every word was found, blacklist has effect, processing stops.");
                     return false;
                 } else {
-                    boolean containsAny = StringUtils.containsAny(body, wordsList.toArray(new CharSequence[0]));
+                    boolean containsAny = Strings.CS.containsAny(body, wordsList.toArray(new CharSequence[0]));
                     if (!containsAny) {
                         LOG.info("No matching word was found, blacklist has no effect, processing continues.");
                     } else {
@@ -754,7 +774,7 @@ public class NotificationListener extends NotificationListenerService {
                     LOG.info("Every word was found, whitelist has effect, processing continues.");
                     return true;
                 } else {
-                    boolean containsAny = StringUtils.containsAny(body, wordsList.toArray(new CharSequence[0]));
+                    boolean containsAny = Strings.CS.containsAny(body, wordsList.toArray(new CharSequence[0]));
                     if (containsAny) {
                         LOG.info("At least one matching word was found, whitelist has effect, processing continues.");
                     } else {
@@ -772,6 +792,25 @@ public class NotificationListener extends NotificationListenerService {
     // Keep newline and whitespace characters
     private String sanitizeUnicode(String orig) {
         return orig.replaceAll("[\\p{C}&&\\S]", "");
+    }
+
+    /// Helper method to quickly check whether a notification has a picture, without
+    /// dissecting the full thing
+    private boolean notificationHasPicture(final Notification notification) {
+        final NotificationCompat.MessagingStyle messagingStyle = NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(notification);
+        if (messagingStyle != null) {
+            final List<NotificationCompat.MessagingStyle.Message> messages = messagingStyle.getMessages();
+            if (!messages.isEmpty()) {
+                final NotificationCompat.MessagingStyle.Message lastMessage = messages.get(messages.size() - 1);
+
+                if (supportedPictureMimeTypes.contains(lastMessage.getDataMimeType()) && lastMessage.getDataUri() != null) {
+                    return true;
+                }
+            }
+        }
+
+        final Bundle extras = NotificationCompat.getExtras(notification);
+        return extras != null && extras.containsKey(NotificationCompat.EXTRA_PICTURE);
     }
 
     private void dissectNotificationTo(Notification notification, NotificationSpec notificationSpec,
@@ -809,19 +848,44 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (supportedPictureMimeTypes.contains(lastMessage.getDataMimeType()) && lastMessage.getDataUri() != null) {
                     ContentResolver contentResolver = getContentResolver();
+
+                    // Attempt to get the direct path
                     try (Cursor cursor = contentResolver.query(lastMessage.getDataUri(), null, null, null, null)) {
                         if (cursor != null && cursor.moveToFirst()) {
                             int dataIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
                             notificationSpec.picturePath = cursor.getString(dataIndex);
                         }
                     } catch (Exception e) {
-                        LOG.error("Failed to get notification picture", e);
+                        LOG.error("Failed to get notification picture path", e);
+                    }
+
+                    // Fallback - attempt to open the URI and copy it to cache
+                    if (notificationSpec.picturePath == null) {
+                        Bitmap bmp = null;
+                        try (InputStream inputStream = contentResolver.openInputStream(lastMessage.getDataUri())) {
+                            bmp = BitmapFactory.decodeStream(inputStream);
+                            if (bmp != null) {
+                                final File pictureFile = new File(this.notificationPictureCacheDirectory, String.valueOf(notificationSpec.getId()));
+                                try (FileOutputStream fos = new FileOutputStream(pictureFile)) {
+                                    bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                                    notificationSpec.picturePath = pictureFile.getAbsolutePath();
+                                } catch (IOException e) {
+                                    LOG.error("Failed to encode image from message data uri to notification cache: ", e);
+                                }
+                            }
+                        } catch (IOException e) {
+                            LOG.error("Failed to load picture from data uri to cache: ", e);
+                        } finally {
+                            if (bmp != null) {
+                                bmp.recycle();
+                            }
+                        }
                     }
                 }
             }
         }
 
-        if (extras.containsKey(NotificationCompat.EXTRA_PICTURE)) {
+        if (notificationSpec.picturePath == null && extras.containsKey(NotificationCompat.EXTRA_PICTURE)) {
             final Bitmap bmp = (Bitmap) extras.get(NotificationCompat.EXTRA_PICTURE);
             if (bmp != null) {
                 File pictureFile = new File(this.notificationPictureCacheDirectory, String.valueOf(notificationSpec.getId()));
@@ -936,7 +1000,7 @@ public class NotificationListener extends NotificationListenerService {
             GBApplication.deviceService().onSetCallState(callSpec);
         }
 
-        if (shouldIgnoreNotification(sbn, true)) return;
+        if (shouldIgnoreNotification(sbn, true, false)) return;
 
         // Build list of all currently active notifications
         ArrayList<Integer> activeNotificationsIds = new ArrayList<>();
@@ -1134,7 +1198,9 @@ public class NotificationListener extends NotificationListenerService {
         return false;
     }
 
-    private boolean shouldIgnoreNotification(StatusBarNotification sbn, boolean remove) {
+    private boolean shouldIgnoreNotification(StatusBarNotification sbn,
+                                             boolean remove,
+                                             boolean hasPicture) {
         Notification notification = sbn.getNotification();
         String source = sbn.getPackageName();
 
@@ -1189,11 +1255,18 @@ public class NotificationListener extends NotificationListenerService {
                 isImportant = notification.priority >= Notification.PRIORITY_DEFAULT;
             }
             if (!isImportant) {
-                return true;
+                // notification updates with a picture are low priority
+                if (!hasPicture) {
+                    LOG.debug("Ignoring notification, low priority");
+                    return true;
+                } else {
+                    LOG.debug("Allowing low priority notification - has picture");
+                }
             }
         }
 
         if (shouldIgnoreOngoing(sbn, type)) {
+            LOG.trace("Ignoring notification, ongoing");
             return false;
         }
 
