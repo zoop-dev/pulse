@@ -36,7 +36,6 @@ import javax.crypto.spec.SecretKeySpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil.FossilWatchAdapter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil_hr.FossilHRWatchAdapter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.FossilRequest;
-import nodomain.freeyourgadget.gadgetbridge.util.CRC32C;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -164,9 +163,6 @@ public abstract class FileEncryptedGetRequest extends FossilRequest implements F
 
                 CRC32 crc = new CRC32();
                 crc.update(this.fileData);
-
-                CRC32C c = new CRC32C();
-                c.update(this.fileData, 0, fileData.length);
 
                 int crcExpected = buffer.getInt(8);
 
