@@ -20,17 +20,19 @@ package nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks;
 import android.app.Activity;
 import android.content.Context;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 
 
@@ -43,11 +45,13 @@ public class OpenTracksContentObserver extends ContentObserver {
     private int protocolVersion;
     private int totalTimeMillis;
     private float totalDistanceMeter;
-    private final List<ActivityPoint> activityPoints;
+    private final ActivityTrack activityTrack = new ActivityTrack();
 
     private long previousTimeMillis = 0;
     private float previousDistanceMeter = 0;
+    private long lastTrackId;
     private long lastTrackPointId;
+    private ActivityPoint previousActivityPoint = null;
 
     public int getTotalTimeMillis() {
         return totalTimeMillis;
@@ -55,8 +59,8 @@ public class OpenTracksContentObserver extends ContentObserver {
     public float getTotalDistanceMeter() {
         return totalDistanceMeter;
     }
-    public List<ActivityPoint> getActivityPoints() {
-        return activityPoints;
+    public ActivityTrack getActivityTrack() {
+        return activityTrack;
     }
 
     public long getTimeMillisChange() {
@@ -82,7 +86,6 @@ public class OpenTracksContentObserver extends ContentObserver {
         this.trackpointsUri = trackpointsUri;
         this.protocolVersion = protocolVersion;
         this.previousTimeMillis = System.currentTimeMillis();
-        this.activityPoints = new ArrayList<>();
 
         LOG.debug("Initializing OpenTracksContentObserver...");
     }
@@ -101,19 +104,7 @@ public class OpenTracksContentObserver extends ContentObserver {
             }
         }
         if (trackpointsUri.toString().startsWith(uri.toString())) {
-            final TrackPointsBySegments trackPointsBySegments = TrackPoint.readTrackPointsBySegments(mContext.getContentResolver(), trackpointsUri, lastTrackPointId, protocolVersion);
-            if (!trackPointsBySegments.isEmpty()) {
-                for (List<TrackPoint> segment : trackPointsBySegments.segments()) {
-                    for (TrackPoint trackPoint : segment) {
-                        lastTrackPointId = trackPoint.getTrackPointId();
-                        ActivityPoint activityPoint = new ActivityPoint();
-                        activityPoint.setLocation(new GPSCoordinate(trackPoint.getLongitude(), trackPoint.getLatitude()));
-                        activityPoint.setTime(new Date());
-                        activityPoints.add(activityPoint);
-                        LOG.debug("Trackpoint received from OpenTracks: {}/{}", trackPoint.getLatitude(), trackPoint.getLongitude());
-                    }
-                }
-            }
+            readTrackPointsBySegments(trackpointsUri);
         }
     }
 
@@ -128,6 +119,83 @@ public class OpenTracksContentObserver extends ContentObserver {
         if (mContext != null) {
             ((Activity) mContext).finish();
             mContext = null;
+        }
+    }
+
+    /**
+     * The constants and logic below were copied and modified from
+     * https://github.com/OpenTracksApp/OSMDashboard/blob/v4.3.0/src/main/java/de/storchp/opentracks/osmplugin/dashboardapi/TrackPoint.java
+     */
+    public static final String _ID = "_id";
+    public static final String TRACKID = "trackid";
+    public static final String LONGITUDE = "longitude";
+    public static final String LATITUDE = "latitude";
+    public static final String TIME = "time";
+    public static final String TYPE = "type";
+    public static final String SPEED = "speed";
+    public static final double PAUSE_LATITUDE = 100.0;
+    public static final double LAT_LON_FACTOR = 1E6;
+    public static final String[] PROJECTION_V1 = {
+            _ID,
+            TRACKID,
+            LATITUDE,
+            LONGITUDE,
+            TIME,
+            SPEED
+    };
+    public static final String[] PROJECTION_V2 = {
+            _ID,
+            TRACKID,
+            LATITUDE,
+            LONGITUDE,
+            TIME,
+            TYPE,
+            SPEED
+    };
+    public void readTrackPointsBySegments(Uri data) {
+        String[] projection = PROJECTION_V2;
+        String typeQuery = " AND " + TYPE + " IN (-2, -1, 0, 1, 3)";
+        if (protocolVersion < 2) { // fallback to old Dashboard API
+            projection = PROJECTION_V1;
+            typeQuery = "";
+        }
+        try (Cursor cursor = mContext.getContentResolver().query(data, projection, _ID + "> ?" + typeQuery, new String[]{Long.toString(lastTrackPointId)}, null)) {
+            while (cursor.moveToNext()) {
+                lastTrackPointId = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
+                long trackId = cursor.getLong(cursor.getColumnIndexOrThrow(TRACKID));
+                double latitude = cursor.getInt(cursor.getColumnIndexOrThrow(LATITUDE)) / LAT_LON_FACTOR;
+                double longitude = cursor.getInt(cursor.getColumnIndexOrThrow(LONGITUDE)) / LAT_LON_FACTOR;
+                int typeIndex = cursor.getColumnIndex(TYPE);
+                double speed = cursor.getDouble(cursor.getColumnIndexOrThrow(SPEED));
+                Date time = Date.from(Instant.ofEpochMilli(cursor.getLong(cursor.getColumnIndexOrThrow(TIME))));
+
+                int type = 0;
+                if (typeIndex > -1) {
+                    type = cursor.getInt(typeIndex);
+                }
+
+                if (lastTrackId != trackId) {
+                    activityTrack.startNewSegment();
+                    lastTrackId = trackId;
+                }
+
+                LOG.debug("Trackpoint received from OpenTracks: {}/{} type={} speed={} time={}", latitude, longitude, type, speed, time);
+
+                ActivityPoint activityPoint = new ActivityPoint();
+                activityPoint.setTime(time);
+                activityPoint.setSpeed((float) speed);
+                if ((latitude != 0 || longitude != 0) && latitude != PAUSE_LATITUDE) {
+                    activityPoint.setLocation(new GPSCoordinate(longitude, latitude));
+                } else if (previousActivityPoint != null && previousActivityPoint.getLocation() != null && (type == 3 || latitude == PAUSE_LATITUDE)) {
+                    activityPoint.setLocation(previousActivityPoint.getLocation());
+                }
+                if (activityPoint.getLocation() != null) {
+                    activityTrack.addTrackPoint(activityPoint);
+                }
+                previousActivityPoint = activityPoint;
+            }
+        } catch (Exception e) {
+            LOG.error("Couldn't read trackpoints from OpenTracks URI", e);
         }
     }
 }

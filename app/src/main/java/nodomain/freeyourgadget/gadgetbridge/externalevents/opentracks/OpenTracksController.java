@@ -32,14 +32,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -152,7 +150,7 @@ public class OpenTracksController extends Activity {
         sendIntent(context, "de.dennisguse.opentracks.publicapi.StopRecording", null, null);
         OpenTracksContentObserver openTracksObserver = GBApplication.app().getOpenTracksObserver();
         if (openTracksObserver != null) {
-            saveToGpx(openTracksObserver.getActivityPoints());
+            saveToGpx(openTracksObserver.getActivityTrack());
             openTracksObserver.finish();
         }
         GBApplication.app().setOpenTracksObserver(null);
@@ -167,13 +165,11 @@ public class OpenTracksController extends Activity {
         }
     }
 
-    private static void saveToGpx(List<ActivityPoint> activityPoints) {
+    private static void saveToGpx(ActivityTrack activityTrack) {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         final String gpxName = sdf.format(new Date());
 
-        final ActivityTrack activityTrack = new ActivityTrack();
         activityTrack.setName(gpxName);
-        activityTrack.addTrackPoints(activityPoints);
 
         try {
             final File gpxDir = new File(FileUtils.getExternalFilesDir(), "gpx");
