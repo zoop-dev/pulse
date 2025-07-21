@@ -4220,4 +4220,7 @@
     <string name="exercise_category_core">Core</string>
     <string name="exercise_category_crunch">Zkracovačka</string>
     <string name="exercise_category_flye">Rozpažování</string>
+    <string name="title_activity_file_installer">Instalátor souborů</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Vybraný soubor není kompatibilní se zařízením</string>
+    <string name="fwinstaller_no_compatible_device_found">Nenalezeno žádné kompatibilní zařízení k instalaci souboru %1s</string>
 </resources>
