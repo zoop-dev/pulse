@@ -24,7 +24,6 @@ import java.nio.ByteOrder;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.UUID;
 import java.util.zip.CRC32;
 
 import javax.crypto.BadPaddingException;
@@ -41,23 +40,17 @@ import nodomain.freeyourgadget.gadgetbridge.util.CRC32C;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public abstract class FileEncryptedGetRequest extends FossilRequest implements FileEncryptedInterface{
-    private byte majorHandle;
-    private byte minorHandle;
-    private FossilHRWatchAdapter adapter;
-
+public abstract class FileEncryptedGetRequest extends FossilRequest implements FileEncryptedInterface {
+    private final byte majorHandle;
+    private final byte minorHandle;
+    private final FossilHRWatchAdapter adapter;
+    int fileSize;
     private ByteBuffer fileBuffer;
-
     private byte[] fileData;
-
     private boolean finished = false;
-
     private Cipher cipher;
     private SecretKeySpec keySpec;
     private byte[] originalIv;
-
-    int fileSize;
-
     private int packetCount = 0;
     private int ivIncrementor = 0x1f;
 
@@ -101,7 +94,7 @@ public abstract class FileEncryptedGetRequest extends FossilRequest implements F
 
             originalIv[7]++;
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            e.printStackTrace();
+            log(e.getMessage());
         }
     }
 
@@ -109,7 +102,7 @@ public abstract class FileEncryptedGetRequest extends FossilRequest implements F
         return adapter;
     }
 
-    private byte[] incrementIV(byte[] iv, int amount){
+    private byte[] incrementIV(byte[] iv, int amount) {
         byte[] incrementedIv = new byte[iv.length];
         System.arraycopy(iv, 0, incrementedIv, 0, iv.length);
         ByteBuffer buffer = ByteBuffer.wrap(incrementedIv);
@@ -160,7 +153,8 @@ public abstract class FileEncryptedGetRequest extends FossilRequest implements F
                 ByteBuffer buffer = ByteBuffer.wrap(value);
                 buffer.order(ByteOrder.LITTLE_ENDIAN);
 
-                short handle = buffer.getShort(1);
+                short minorHandle = buffer.get(1);
+                short majorHandle = buffer.get(2);
                 if (this.minorHandle != minorHandle) {
                     throw new RuntimeException("minor handle: " + minorHandle + "   expected: " + this.minorHandle);
                 }
@@ -185,24 +179,24 @@ public abstract class FileEncryptedGetRequest extends FossilRequest implements F
         } else if (characteristic.getUuid().toString().equals("3dda0004-957f-7d4a-34a6-74696673696d")) {
             try {
                 byte[] result = null;
-                if(packetCount == 1) {
-                    for(int testIvSummand = 0x1e; testIvSummand < 0x30; testIvSummand++){
+                if (packetCount == 1) {
+                    for (int testIvSummand = 0x1e; testIvSummand < 0x30; testIvSummand++) {
                         byte[] iv = incrementIV(originalIv, testIvSummand);
                         cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv));
                         result = cipher.doFinal(value);
 
                         int currentLength = fileBuffer.position() + result.length - 1;
 
-                        byte expectedByte = (currentLength == fileSize) ? (byte)0x81 : (byte)0x01; // 0x81 indicated the last payload
+                        byte expectedByte = (currentLength == fileSize) ? (byte) 0x81 : (byte) 0x01; // 0x81 indicated the last payload
 
-                        if(result[0] == expectedByte){
+                        if (result[0] == expectedByte) {
                             this.ivIncrementor = testIvSummand;
                             log("iv summand: " + testIvSummand);
                             break;
                         }
                         log("no iv summand found");
                     }
-                }else{
+                } else {
                     byte[] iv = incrementIV(originalIv, ivIncrementor * packetCount);
 
                     cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv));
@@ -216,16 +210,12 @@ public abstract class FileEncryptedGetRequest extends FossilRequest implements F
                 if ((result[0] & 0x80) == 0x80) {
                     this.fileData = fileBuffer.array();
                 }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidAlgorithmParameterException | InvalidKeyException e) {
-                e.printStackTrace();
+            } catch (BadPaddingException | IllegalBlockSizeException |
+                     InvalidAlgorithmParameterException | InvalidKeyException e) {
+                log(e.getMessage());
                 throw new RuntimeException(e);
             }
         }
-    }
-
-    @Override
-    public UUID getRequestUUID() {
-        return UUID.fromString("3dda0003-957f-7d4a-34a6-74696673696d");
     }
 
     @Override
