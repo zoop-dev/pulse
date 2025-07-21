@@ -583,7 +583,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     private void completeInitialization() {
-        onSetTime();
+        if (GBApplication.getPrefs().syncTime()) {
+            onSetTime();
+        }
         enableWeather();
 
         //following is needed for vivomove style
