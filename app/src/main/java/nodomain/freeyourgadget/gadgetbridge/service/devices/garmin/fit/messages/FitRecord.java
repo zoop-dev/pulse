@@ -66,6 +66,11 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getTemperature() {
+        return (Integer) getFieldByNumber(13);
+    }
+
+    @Nullable
     public Long getAccumulatedPower() {
         return (Long) getFieldByNumber(29);
     }
@@ -103,6 +108,46 @@ public class FitRecord extends RecordData {
     @Nullable
     public Float getStepLength() {
         return (Float) getFieldByNumber(85);
+    }
+
+    @Nullable
+    public Long getAbsolutePressure() {
+        return (Long) getFieldByNumber(91);
+    }
+
+    @Nullable
+    public Double getDepth() {
+        return (Double) getFieldByNumber(92);
+    }
+
+    @Nullable
+    public Double getNextStopDepth() {
+        return (Double) getFieldByNumber(93);
+    }
+
+    @Nullable
+    public Long getNextStopTime() {
+        return (Long) getFieldByNumber(94);
+    }
+
+    @Nullable
+    public Long getTimeToSurface() {
+        return (Long) getFieldByNumber(95);
+    }
+
+    @Nullable
+    public Long getNdlTime() {
+        return (Long) getFieldByNumber(96);
+    }
+
+    @Nullable
+    public Integer getCnsLoad() {
+        return (Integer) getFieldByNumber(97);
+    }
+
+    @Nullable
+    public Integer getN2Load() {
+        return (Integer) getFieldByNumber(98);
     }
 
     @Nullable

@@ -379,6 +379,10 @@ public enum ActivityKind {
                 activityKind.name().contains("TREADMILL") || activityKind.name().contains("WALK");
     }
 
+    public static boolean isDiving(final ActivityKind activityKind) {
+        return activityKind.name().contains("DIVING") || activityKind.name().contains("APNEA");
+    }
+
     public static CycleUnit getCycleUnit(final ActivityKind activityKind) {
         switch (activityKind) {
             case BUNGEE_JUMPING:
@@ -444,6 +448,12 @@ public enum ActivityKind {
             case CRICKET:
             case SOFTBALL:
                 return CycleUnit.SWINGS;
+            case DIVING:
+            case SCUBA_DIVING:
+            case FREE_DIVING:
+            case APNEA_TRAINING:
+            case APNEA_TEST:
+                return CycleUnit.NONE;
         }
 
         return CycleUnit.STEPS;

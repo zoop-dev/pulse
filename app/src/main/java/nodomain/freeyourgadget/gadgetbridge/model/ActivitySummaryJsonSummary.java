@@ -226,6 +226,9 @@ public class ActivitySummaryJsonSummary {
                     HR_ZONE_NA, HR_ZONE_WARM_UP, HR_ZONE_FAT_BURN, HR_ZONE_EASY, HR_ZONE_AEROBIC, HR_ZONE_ANAEROBIC,
                     HR_ZONE_THRESHOLD, HR_ZONE_EXTREME, HR_ZONE_MAXIMUM
             ));
+            put(GROUP_DIVING, Arrays.asList(
+                    AVG_DEPTH, MAX_DEPTH, START_CNS, END_CNS, START_N2, END_N2, DIVE_NUMBER, BOTTOM_TIME
+            ));
             put(SETS, Arrays.asList(
             ));
         }};

@@ -77,6 +77,10 @@ public class FitRecordDataFactory {
                 return new FitStressLevel(recordDefinition, recordHeader);
             case 229:
                 return new FitMaxMetData(recordDefinition, recordHeader);
+            case 259:
+                return new FitDiveGas(recordDefinition, recordHeader);
+            case 268:
+                return new FitDiveSummary(recordDefinition, recordHeader);
             case 269:
                 return new FitSpo2(recordDefinition, recordHeader);
             case 273:

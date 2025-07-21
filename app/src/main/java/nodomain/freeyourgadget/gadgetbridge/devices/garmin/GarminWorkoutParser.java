@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.Gar
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDiveGas;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
@@ -41,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitUserProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDiveSummary;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -55,6 +57,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private FitSport sport = null;
     private FitUserProfile userProfile = null;
     private FitPhysiologicalMetrics physiologicalMetrics = null;
+    private FitDiveSummary diveSummary = null;
+    private final List<FitDiveGas> diveGases = new ArrayList<>();
     private final List<FitSet> sets = new ArrayList<>();
     private final List<FitLap> laps = new ArrayList<>();
 
@@ -112,6 +116,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         sport = null;
         userProfile = null;
         physiologicalMetrics = null;
+        diveSummary = null;
+        diveGases.clear();
         sets.clear();
         laps.clear();
     }
@@ -155,6 +161,15 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 // We only support 1 user profile
                 userProfile = (FitUserProfile) record;
             }
+        } else if (record instanceof FitDiveSummary) {
+            LOG.trace("Dive summary: {}", record);
+            if (diveSummary != null) {
+                return false; // for some reason there is more than one message, in my activities the first one contains all data
+            }
+            diveSummary = (FitDiveSummary) record;
+        } else if (record instanceof FitDiveGas) {
+            LOG.trace("Dive gas: {}", record);
+            diveGases.add((FitDiveGas) record);
         } else {
             return false;
         }
@@ -206,7 +221,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (session.getAvgSwolf() != null) {
             summaryData.add(SWOLF_AVG, session.getAvgSwolf(), UNIT_NONE);
         }
-        if (session.getTotalCycles() != null) {
+        if (session.getTotalCycles() != null && cycleUnit != ActivityKind.CycleUnit.NONE) {
             if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
                 summaryData.addTotal(session.getTotalCycles() * 2, cycleUnit);
             } else {
@@ -268,10 +283,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.addCadenceMax(session.getMaxCadence(), cycleUnit);
             }
         }
-        if (session.getTotalAscent() != null) {
+        if (session.getTotalAscent() != null && !ActivityKind.isDiving(activityKind)) {
             summaryData.add(ASCENT_DISTANCE, session.getTotalAscent(), UNIT_METERS);
         }
-        if (session.getTotalDescent() != null) {
+        if (session.getTotalDescent() != null && !ActivityKind.isDiving(activityKind)) {
             summaryData.add(DESCENT_DISTANCE, session.getTotalDescent(), UNIT_METERS);
         }
         if (session.getAvgSwimCadence() != null) {
@@ -289,6 +304,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (session.getEnhancedMaxSpeed() != null) {
             if (ActivityKind.isPaceActivity(activityKind)) {
                 summaryData.add(PACE_MAX, Math.round((60 / (session.getEnhancedMaxSpeed() * 3.6)) * 60), UNIT_SECONDS);
+            } else if (ActivityKind.isDiving(activityKind)) { // Hide average speed for diving activities
             } else {
                 summaryData.add(SPEED_MAX, Math.round((session.getEnhancedMaxSpeed() * 3600 / 1000) * 100.0) / 100.0, UNIT_KMPH);
             }
@@ -510,9 +526,64 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             }
         }
 
+        if (diveSummary != null) {
+            if (diveSummary.getAvgDepth() != null) {
+                summaryData.add(AVG_DEPTH, diveSummary.getAvgDepth(), UNIT_METERS);
+            }
+            if (diveSummary.getMaxDepth() != null) {
+                summaryData.add(MAX_DEPTH, diveSummary.getMaxDepth(), UNIT_METERS);
+            }
+            if (diveSummary.getStartCns() != null) {
+                summaryData.add(START_CNS, diveSummary.getStartCns(), UNIT_PERCENTAGE);
+            }
+            if (diveSummary.getEndCns() != null) {
+                summaryData.add(END_CNS, diveSummary.getEndCns(), UNIT_PERCENTAGE);
+            }
+            if (diveSummary.getStartN2() != null) {
+                summaryData.add(START_N2, diveSummary.getStartN2(), UNIT_PERCENTAGE);
+            }
+            if (diveSummary.getEndN2() != null) {
+                summaryData.add(END_N2, diveSummary.getEndN2(), UNIT_PERCENTAGE);
+            }
+            if (diveSummary.getDiveNumber() != null) {
+                summaryData.add(DIVE_NUMBER, diveSummary.getDiveNumber(), UNIT_NONE);
+            }
+            if (diveSummary.getBottomTime() != null) {
+                summaryData.add(BOTTOM_TIME, diveSummary.getBottomTime(), UNIT_SECONDS);
+            }
+        }
+
         summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
         summaryData.add(INTENSITY_FACTOR, session.getIntensityFactor(), UNIT_NONE);
         summaryData.add(TRAINING_STRESS_SCORE, session.getTrainingStressScore(), UNIT_NONE);
+
+        if (!diveGases.isEmpty()) {
+            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(GAS, "gases_header", Arrays.asList(
+                    "diving_gas",
+                    "helium_content",
+                    "oxygen_content",
+                    "nitrogen_content"
+            ));
+
+            int i = 1;
+            for (final FitDiveGas gas : diveGases) {
+                int helium = gas.getHeliumContent() != null ? gas.getHeliumContent(): 0;
+                int oxygen = gas.getOxygenContent() != null ? gas.getOxygenContent(): 0;
+                int nitrogen = 100 - helium - oxygen;
+                tableBuilder.addRow(
+                        "gas_" + i,
+                        Arrays.asList(
+                                new ActivitySummaryValue(i, UNIT_NONE),
+                                new ActivitySummaryValue(helium, UNIT_PERCENTAGE),
+                                new ActivitySummaryValue(oxygen, UNIT_PERCENTAGE),
+                                new ActivitySummaryValue(nitrogen, UNIT_PERCENTAGE)
+                        )
+                );
+                i++;
+            }
+
+            tableBuilder.addToSummaryData(summaryData);
+        }
 
         if (!sets.isEmpty()) {
             final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(SETS, "sets_header", Arrays.asList(

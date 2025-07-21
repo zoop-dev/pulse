@@ -230,6 +230,14 @@ public class ActivitySummaryEntries {
     public static final String GROUP_LAPS = "laps";
     public static final String GROUP_RUNNING_FORM = "RunningForm";
     public static final String GROUP_INTERVALS = "workout_intervals";
+    public static final String GROUP_DIVING = "activity_type_diving";
+    public static final String AVG_DEPTH = "diving_avg_depth";
+    public static final String START_CNS = "diving_start_cns";
+    public static final String END_CNS = "diving_end_cns";
+    public static final String START_N2 = "diving_start_n2";
+    public static final String END_N2 = "diving_end_n2";
+    public static final String DIVE_NUMBER = "dive_number";
+    public static final String BOTTOM_TIME = "diving_bottom_time";
 
     // DIVING parameters
     public static final String MAX_DEPTH = "diving_maximum_diving_depth";

@@ -216,6 +216,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(5, BaseType.UINT32, "distance", 100, 0), // m
             new FieldDefinitionPrimitive(6, BaseType.UINT16, "speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(7, BaseType.UINT16, "power"), // watt
+            new FieldDefinitionPrimitive(13, BaseType.SINT8, "temperature", 1, 0), // C
             new FieldDefinitionPrimitive(29, BaseType.UINT32, "accumulated_power"), // watt
             new FieldDefinitionPrimitive(39, BaseType.UINT16, "oscillation", 10, 0), // mm
             new FieldDefinitionPrimitive(42, BaseType.ENUM, "activity"),
@@ -224,6 +225,14 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(78, BaseType.UINT32, "enhanced_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(83, BaseType.UINT16, "vertical_ratio", 100, 0), // %
             new FieldDefinitionPrimitive(85, BaseType.UINT16, "step_length", 10, 0), // mm
+            new FieldDefinitionPrimitive(91, BaseType.UINT32, "absolute_pressure", 1, 0), // Pa
+            new FieldDefinitionPrimitive(92, BaseType.UINT32, "depth", 1000, 0), // m
+            new FieldDefinitionPrimitive(93, BaseType.UINT32, "next_stop_depth", 1000, 0), // m
+            new FieldDefinitionPrimitive(94, BaseType.UINT32, "next_stop_time", 1, 0), // s
+            new FieldDefinitionPrimitive(95, BaseType.UINT32, "time_to_surface", 1, 0), // s
+            new FieldDefinitionPrimitive(96, BaseType.UINT32, "ndl_time", 1, 0), // s
+            new FieldDefinitionPrimitive(97, BaseType.UINT8, "cns_load", 1, 0), // %
+            new FieldDefinitionPrimitive(98, BaseType.UINT16, "n2_load", 1, 0), // %
             new FieldDefinitionPrimitive(108, BaseType.UINT16, "enhanced_respiration_rate"),
             new FieldDefinitionPrimitive(136, BaseType.UINT8, "wrist_heart_rate"),
             new FieldDefinitionPrimitive(143, BaseType.UINT8, "body_battery"),
@@ -404,7 +413,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "message_index"),
             new FieldDefinitionPrimitive(254, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
-
+    public static GlobalFITMessage DIVE_GAS = new GlobalFITMessage(259, "DIVE_GAS", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT8, "helium_content"),
+            new FieldDefinitionPrimitive(1, BaseType.UINT8, "oxygen_content"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT8, "status"),
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
+    ));
     public static GlobalFITMessage STRESS_LEVEL = new GlobalFITMessage(227, "STRESS_LEVEL", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT16, "stress_level_value"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "stress_level_time", FieldDefinitionFactory.FIELD.TIMESTAMP),
@@ -443,6 +457,23 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(6, BaseType.ENUM, "sub_sport"),
             new FieldDefinitionPrimitive(8, BaseType.ENUM, "max_met_category"), // 0 generic
             new FieldDefinitionPrimitive(9, BaseType.ENUM, "calibrated_data") // 1?
+    ));
+
+    public static GlobalFITMessage DIVE_SUMMARY = new GlobalFITMessage(268, "DIVE_SUMMARY", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "reference_mesg"),
+            new FieldDefinitionPrimitive(1, BaseType.UINT16, "reference_index"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "avg_depth", 1000, 0), // m
+            new FieldDefinitionPrimitive(3, BaseType.UINT32, "max_depth", 1000, 0), // m
+            new FieldDefinitionPrimitive(4, BaseType.UINT32, "surface_interval"), // s
+            new FieldDefinitionPrimitive(5, BaseType.UINT8, "start_cns"), // %
+            new FieldDefinitionPrimitive(6, BaseType.UINT8, "end_cns"), // %
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "start_n2"), // %
+            new FieldDefinitionPrimitive(8, BaseType.UINT16, "end_n2"), // %
+            new FieldDefinitionPrimitive(9, BaseType.UINT16, "o2_toxicity"), // OTUs
+            new FieldDefinitionPrimitive(10, BaseType.UINT32, "dive_number"),
+            new FieldDefinitionPrimitive(11, BaseType.UINT32, "bottom_time", 1000, 0), // s
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+
     ));
 
     public static GlobalFITMessage RESPIRATION_RATE = new GlobalFITMessage(297, "RESPIRATION_RATE", Arrays.asList(
@@ -548,9 +579,11 @@ public class GlobalFITMessage {
         put(225, SET);
         put(227, STRESS_LEVEL);
         put(229, MAX_MET_DATA);
+        put(259, DIVE_GAS);
         put(269, SPO2);
         put(273, SLEEP_DATA_INFO);
         put(274, SLEEP_DATA_RAW);
+        put(268, DIVE_SUMMARY);
         put(275, SLEEP_STAGE);
         put(297, RESPIRATION_RATE);
         put(346, SLEEP_STATS);

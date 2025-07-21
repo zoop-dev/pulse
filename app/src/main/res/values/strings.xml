@@ -2584,6 +2584,17 @@
     <string name="workout_set_repetitions">%1d x</string>
     <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
     <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
+    <string name="diving_avg_depth">Average depth</string>
+    <string name="diving_avg_descent_rate">Average descent rate</string>
+    <string name="diving_avg_ascent_rate">Average ascent rate</string>
+    <string name="diving_max_descent_rate">Max descent rate</string>
+    <string name="diving_max_ascent_rate">Max ascent rate</string>
+    <string name="diving_start_cns">Start CNS toxicity</string>
+    <string name="diving_end_cns">End CNS toxicity</string>
+    <string name="diving_start_n2">Start N2 load</string>
+    <string name="diving_end_n2">End N2 load</string>
+    <string name="dive_number">Dive number</string>
+    <string name="diving_bottom_time">Bottom time</string>
     <!-- activity summary units-->
     <string name="meters">m</string>
     <string name="cm">cm</string>
@@ -2756,6 +2767,10 @@
     <string name="diving_maximum_diving_depth">Maximum Diving Depth</string>
     <string name="diving_water_type">Water Type</string>
     <string name="diving_gas">Gas</string>
+    <string name="gases_header">Diving Gases</string>
+    <string name="helium_content">Helium Content</string>
+    <string name="oxygen_content">Oxygen Content</string>
+    <string name="nitrogen_content">Nitrogen Content</string>
 
     <string name="devicetype_nut_mini">Nut mini</string>
     <string name="qhybrid_calibration_align_hint">Use the buttons below to align the watch hands to 12:00.</string>
