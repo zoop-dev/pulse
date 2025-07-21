@@ -4121,7 +4121,7 @@
     <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
     <string name="title_activity_file_installer">Datei-Installer</string>
     <string name="fwinstaller_file_not_compatible_to_device">Die ausgewählte Datei ist mit dem Gerät nicht kompatibel</string>
-    <string name="fwinstaller_no_compatible_device_found">Kein kompatibles Gerät zum Installieren von %1$s gefunden</string>
+    <string name="fwinstaller_no_compatible_device_found">Kein kompatibles Gerät zum Installieren von %1s gefunden</string>
     <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
     <string name="devicetype_colmi_p76">Colmi P76</string>
     <string name="exercise_category_bench_press">Bankdrücken</string>
@@ -4139,4 +4139,15 @@
     <string name="exercise_category_leg_curl">Beinbeuger</string>
     <string name="exercise_category_leg_raise">Beinheben</string>
     <string name="exercise_category_lunge">Ausfallschritt</string>
+    <string name="exercise_category_olympic_lift">Olympisches Gewichtheben</string>
+    <string name="exercise_category_plyo">Sprungtraining</string>
+    <string name="exercise_category_shoulder_press">Schulterdrücken</string>
+    <string name="exercise_category_shoulder_stability">Schulterstabilität</string>
+    <string name="exercise_category_shrug">Schulterheben</string>
+    <string name="exercise_category_squat">Kniebeuge</string>
+    <string name="exercise_category_total_body">Ganzkörper</string>
+    <string name="exercise_category_triceps_extension">Trizepsstrecken</string>
+    <string name="category">Kategorie</string>
+    <string name="devicetype_amazfit_helio_ring">Amazfit Helio Ring</string>
+    <string name="pref_printer_print_received_text">Text zum Drucken an Gadgetbridge gesendet</string>
 </resources>
