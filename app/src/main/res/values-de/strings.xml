@@ -4119,4 +4119,10 @@
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Alten Benachrichtigungsmonitor-Dienst aktivieren</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">Erzwingt einen zweiten Vordergrunddienst, damit der Benachrichtigungsmonitor aktiv bleibt. \nAktiviere, wenn keine Benachrichtigungen mehr ankommen. Kann eine zweite dauerhafte Benachrichtigung anzeigen. \nNach dem Ändern App neu starten.</string>
     <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
+    <string name="title_activity_file_installer">Datei-Installer</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Die ausgewählte Datei ist mit dem Gerät nicht kompatibel</string>
+    <string name="fwinstaller_no_compatible_device_found">Kein kompatibles Gerät zum Installieren von %1$s gefunden</string>
+    <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
+    <string name="devicetype_colmi_p76">Colmi P76</string>
+    <string name="exercise_category_bench_press">Bankdrücken</string>
 </resources>
