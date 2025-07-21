@@ -53,6 +53,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBExceptionHandler;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -287,8 +288,17 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
                 LOG.warn("connect - ignored, mBluetoothGatt isn't null");
                 return false;
             } else if (mDisposed.get()) {
-                LOG.error("connect - ignored, this BtLEQueue has already been disposed");
-                return false;
+                LOG.error("connect - queue has already been disposed");
+                String message = mContext.getString(R.string.error_queue_is_dead);
+                throw new IllegalStateException(message);
+            } else if (!mDispatchThread.isAlive()) {
+                LOG.error("connect - mDispatchThread {} is dead", mDispatchThread.getName());
+                String message = mContext.getString(R.string.error_sender_is_dead);
+                throw new IllegalStateException(message);
+            } else if (mReceiverThread != null && !mReceiverThread.isAlive()) {
+                LOG.error("connect - mReceiverThread {} is dead", mReceiverThread.getName());
+                String message = mContext.getString(R.string.error_receiver_is_dead);
+                throw new IllegalStateException(message);
             }
 
             if (connectImp()) {
