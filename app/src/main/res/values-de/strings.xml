@@ -674,7 +674,7 @@
     <string name="pref_title_support_voip_calls">VoIP App-Anrufe aktivieren</string>
     <string name="title_activity_device_specific_settings">Gerätespezifische Einstellungen</string>
     <string name="pref_title_authkey">Authentifizierungsschlüssel</string>
-    <string name="pref_summary_authkey">Ändere den Authentifizierungsschlüssel in einen gemeinsamen Schlüssel auf all deinen Android-Geräten, von denen aus du eine Verbindung herstellen möchtet. Der bisherige Standardschlüssel für alle Geräte ist 0123456789@ABCDE</string>
+    <string name="pref_summary_authkey">Setze einen gemeinsamen Auth-Schlüssel für deine Android-Geräte. Je nach Hersteller wird er unterschiedlich verwaltet und muss ggf. über Originalsoftware oder Cloudprozesse ausgelesen werden. Standard: 0123456789@ABCDE. Mehr Infos: https://gadgetbridge.org/basics/</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">Du bist dabei, die %s-Firmware auf deine Amazfit Cor 2 zu installieren. \n \nBitte stelle sicher, dass du die .fw-Datei und danach die .res-Datei installierst. Dein Band wird nach der Installation der .fw-Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte. \n \nAUF EIGENE GEFAHR! \n \nVOLLSTÄNDIG UNGETESTET, WAHRSCHEINLICH MUSST DU EINE BEATS_W FIRMWARE FLASHEN, WENN DEIN GERÄTENAME \"Amazfit Band 2\" IST</string>
     <string name="dutch">Niederländisch</string>
@@ -4150,4 +4150,21 @@
     <string name="category">Kategorie</string>
     <string name="devicetype_amazfit_helio_ring">Amazfit Helio Ring</string>
     <string name="pref_printer_print_received_text">Text zum Drucken an Gadgetbridge gesendet</string>
+    <string name="busy_task_processing_files">Dateien werden verarbeitet</string>
+    <string name="busy_task_progress_int">%1$d of %2$d</string>
+    <string name="diving_avg_depth">Ø Tiefe</string>
+    <string name="diving_avg_descent_rate">Ø Abstiegsrate</string>
+    <string name="diving_avg_ascent_rate">Ø Aufstiegsrate</string>
+    <string name="diving_max_descent_rate">Max. Abstiegsrate</string>
+    <string name="diving_max_ascent_rate">Max. Aufstiegsrate</string>
+    <string name="diving_start_cns">Beginn CNS-Belastung</string>
+    <string name="diving_end_cns">Ende CNS-Belastung</string>
+    <string name="diving_start_n2">Beginn N2-Belastung</string>
+    <string name="diving_end_n2">Ende N2-Belastung</string>
+    <string name="dive_number">Tauchgangnummer</string>
+    <string name="diving_bottom_time">Grundzeit</string>
+    <string name="gases_header">Tauchgase</string>
+    <string name="helium_content">Heliumgehalt</string>
+    <string name="oxygen_content">Sauerstoffgehalt</string>
+    <string name="nitrogen_content">Stickstoffgehalt</string>
 </resources>
