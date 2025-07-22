@@ -19,11 +19,11 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.galaxy_buds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class GalaxyBudsDeviceSupport extends AbstractHeadphoneDeviceSupport {
+public class GalaxyBudsDeviceSupport extends AbstractHeadphoneSerialDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(GalaxyBudsDeviceSupport.class);
 
     @Override

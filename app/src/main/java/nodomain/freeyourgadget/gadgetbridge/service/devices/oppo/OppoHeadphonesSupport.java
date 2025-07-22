@@ -16,11 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class OppoHeadphonesSupport extends AbstractHeadphoneDeviceSupport {
+public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupport {
     @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new OppoHeadphonesProtocol(getDevice());

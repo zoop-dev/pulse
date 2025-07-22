@@ -17,12 +17,12 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.deviceevents.SonyHeadphonesEnqueueRequestEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class SonyHeadphonesSupport extends AbstractHeadphoneDeviceSupport {
+public class SonyHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupport {
     @Override
     protected GBDeviceProtocol createDeviceProtocol() {
         return new SonyHeadphonesProtocol(getDevice());

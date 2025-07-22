@@ -1,10 +1,10 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.earfun;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class EarFunDeviceSupport extends AbstractHeadphoneDeviceSupport {
+public class EarFunDeviceSupport extends AbstractHeadphoneSerialDeviceSupport {
     @Override
     public void onSendConfiguration(String config) {
         super.onSendConfiguration(config);

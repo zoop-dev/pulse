@@ -24,7 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
 
-public abstract class AbstractHeadphoneDeviceSupport extends AbstractSerialDeviceSupport implements HeadphoneHelper.Callback {
+public abstract class AbstractHeadphoneSerialDeviceSupport extends AbstractSerialDeviceSupport implements HeadphoneHelper.Callback {
     private HeadphoneHelper headphoneHelper;
 
     @Override

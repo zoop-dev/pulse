@@ -16,11 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.motion300;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class SoundcoreMotion300DeviceSupport extends AbstractHeadphoneDeviceSupport {
+public class SoundcoreMotion300DeviceSupport extends AbstractHeadphoneSerialDeviceSupport {
     @Override
     public boolean useAutoConnect() {
         return false;

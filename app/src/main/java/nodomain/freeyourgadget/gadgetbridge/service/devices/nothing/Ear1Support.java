@@ -19,11 +19,11 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.nothing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
-public class Ear1Support extends AbstractHeadphoneDeviceSupport {
+public class Ear1Support extends AbstractHeadphoneSerialDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(Ear1Support.class);
 
     @Override
