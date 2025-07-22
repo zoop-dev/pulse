@@ -1074,11 +1074,13 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     if (sample.getType() != unitType)
                         continue;
 
+                    // TODO: add proper units for type == 1. imperial
+
                     final List<ActivitySummaryValue> columns = new LinkedList<>();
-                    // TODO: add proper units for type == 1. MILES
                     columns.add(new ActivitySummaryValue(currentIndex++, ActivitySummaryEntries.UNIT_NONE));
                     columns.add(new ActivitySummaryValue(getSwimStyle(sample.getSwimType()), ActivitySummaryEntries.UNIT_NONE));
-                    columns.add(new ActivitySummaryValue(sample.getDistance(), ActivitySummaryEntries.UNIT_METERS));
+                    String segmentDistanceUnit = sample.getType() == 1?ActivitySummaryEntries.UNIT_YARD:ActivitySummaryEntries.UNIT_METERS;
+                    columns.add(new ActivitySummaryValue(sample.getDistance(), segmentDistanceUnit));
                     columns.add(new ActivitySummaryValue(sample.getTime(), ActivitySummaryEntries.UNIT_SECONDS));
 
 
@@ -1092,11 +1094,11 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     );
 
                     final List<ActivitySummaryValue> columns2 = new LinkedList<>();
-                    // TODO: add proper units for type == 1. MILES and SECONDS PER MILE
                     columns2.add(new ActivitySummaryValue("", ActivitySummaryEntries.UNIT_NONE));
                     columns2.add(new ActivitySummaryValue(sample.getStrokes(), ActivitySummaryEntries.UNIT_STROKES));
                     columns2.add(new ActivitySummaryValue(sample.getAvgSwolf(), ActivitySummaryEntries.UNIT_NONE));
-                    columns2.add(new ActivitySummaryValue(sample.getPace(), ActivitySummaryEntries.UNIT_NONE)); //TODO: seconds / 100 meters
+                    String segmentPaceUnit = sample.getType() == 1?ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS:ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
+                    columns2.add(new ActivitySummaryValue(sample.getPace(), segmentPaceUnit));
 
 
                     segmentsTable.put("segments_table_" + tableIndex++,

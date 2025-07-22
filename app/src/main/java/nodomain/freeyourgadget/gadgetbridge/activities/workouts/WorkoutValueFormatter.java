@@ -7,6 +7,8 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_M;
 
@@ -149,12 +151,30 @@ public class WorkoutValueFormatter {
                         }
                     }
                     break;
+                case UNIT_SECONDS_PER_100_METERS:
+                    if (units.equals(UNIT_IMPERIAL)) {
+                        value = (value * 0.9144) / 60D;
+                        unit = "minutes_100yd";
+                    } else { //metric
+                        value = value / 60D;
+                        unit = "minutes_100m";
+                    }
+                    break;
+                case UNIT_SECONDS_PER_100_YARDS:
+                    if (units.equals(UNIT_IMPERIAL)) {
+                        value = value / 60D;
+                        unit = "minutes_100yd";
+                    } else { //metric
+                        value = (value * 1.0936133D) / 60D;
+                        unit = "minutes_100m";
+                    }
+                    break;
             }
         }
 
         if (unit.equals("seconds") && !show_raw_data) { //rather then plain seconds, show formatted duration
             return DateTimeUtils.formatDurationHoursMinutes((long) value, TimeUnit.SECONDS);
-        } else if (unit.equals("minutes_km") || unit.equals("minutes_mi")) {
+        } else if (unit.equals("minutes_km") || unit.equals("minutes_mi") || unit.equals("minutes_100m") || unit.equals("minutes_100yd")) {
             // Format pace
             return String.format(
                     Locale.getDefault(),

@@ -216,6 +216,8 @@ public class ActivitySummaryEntries {
     public static final String UNIT_MM = "unit_millimeter";
     public static final String UNIT_WATT = "unit_watt";
     public static final String UNIT_JOULE = "unit_joule";
+    public static final String UNIT_SECONDS_PER_100_METERS = "seconds_100m";
+    public static final String UNIT_SECONDS_PER_100_YARDS = "seconds_100yd";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
@@ -251,15 +253,15 @@ public class ActivitySummaryEntries {
      */
     public static final String INTERNAL_HAS_GPS = "internal_hasGps";
 
-    public static final Map<String, Integer> HR_ZONES = new LinkedHashMap<String, Integer>() {{
-            put(HR_ZONE_NA, 0);
-            put(HR_ZONE_WARM_UP, R.color.hr_zone_warm_up_color);
-            put(HR_ZONE_EASY, R.color.hr_zone_easy_color);
-            put(HR_ZONE_FAT_BURN, R.color.hr_zone_easy_color);
-            put(HR_ZONE_AEROBIC, R.color.hr_zone_aerobic_color);
-            put(HR_ZONE_ANAEROBIC, R.color.hr_zone_threshold_color);
-            put(HR_ZONE_THRESHOLD, R.color.hr_zone_threshold_color);
-            put(HR_ZONE_EXTREME, R.color.hr_zone_maximum_color);
-            put(HR_ZONE_MAXIMUM, R.color.hr_zone_maximum_color);
+    public static final Map<String, Integer> HR_ZONES = new LinkedHashMap<>() {{
+        put(HR_ZONE_NA, 0);
+        put(HR_ZONE_WARM_UP, R.color.hr_zone_warm_up_color);
+        put(HR_ZONE_EASY, R.color.hr_zone_easy_color);
+        put(HR_ZONE_FAT_BURN, R.color.hr_zone_easy_color);
+        put(HR_ZONE_AEROBIC, R.color.hr_zone_aerobic_color);
+        put(HR_ZONE_ANAEROBIC, R.color.hr_zone_threshold_color);
+        put(HR_ZONE_THRESHOLD, R.color.hr_zone_threshold_color);
+        put(HR_ZONE_EXTREME, R.color.hr_zone_maximum_color);
+        put(HR_ZONE_MAXIMUM, R.color.hr_zone_maximum_color);
     }};
 }

@@ -2669,6 +2669,8 @@
     <string name="km">km</string>
     <string name="mi">mi</string>
     <string name="degrees">degrees</string>
+    <string name="minutes_100m">min/100m</string>
+    <string name="minutes_100yd">min/100yd</string>
     <string name="Pace">Pace</string>
     <!-- activity summary groups-->
     <string name="Strokes">Strokes</string>
