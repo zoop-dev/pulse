@@ -4223,4 +4223,19 @@
     <string name="title_activity_file_installer">Instalátor souborů</string>
     <string name="fwinstaller_file_not_compatible_to_device">Vybraný soubor není kompatibilní se zařízením</string>
     <string name="fwinstaller_no_compatible_device_found">Nenalezeno žádné kompatibilní zařízení k instalaci souboru %1s</string>
+    <string name="busy_task_processing_files">Zpracování souborů</string>
+    <string name="busy_task_progress_int">%1$d z %2$d</string>
+    <string name="devicetype_amazfit_helio_ring">Amazfit Helio Ring</string>
+    <string name="devicetype_colmi_p76">Colmi P76</string>
+    <string name="diving_avg_depth">Průměrná hloubka</string>
+    <string name="diving_avg_descent_rate">Průměrná rychlost klesání</string>
+    <string name="diving_avg_ascent_rate">Průměrná rychlost stoupání</string>
+    <string name="diving_max_descent_rate">Maximální rychlost klesání</string>
+    <string name="diving_max_ascent_rate">Maximální rychlost stoupání</string>
+    <string name="diving_start_cns">Začátek toxicity CNS</string>
+    <string name="diving_end_cns">Konec toxicity CNS</string>
+    <string name="diving_start_n2">Začátek zátěže N2</string>
+    <string name="diving_end_n2">Konec zátěže N2</string>
+    <string name="dive_number">Číslo potápění</string>
+    <string name="diving_bottom_time">Čas dosažení dna</string>
 </resources>
