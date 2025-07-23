@@ -384,7 +384,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         return ret;
     }
 
-    private T createDummySample(final int ts) {
+    protected T createDummySample(final int ts) {
         final T dummySample = createActivitySample();
         dummySample.setTimestamp(ts);
         dummySample.setRawKind(ActivityKind.UNKNOWN.getCode());

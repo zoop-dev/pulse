@@ -201,12 +201,24 @@ public class GarminActivitySampleProvider extends AbstractSampleProvider<GarminA
         }
 
         if (!stagesMap.isEmpty()) {
-            for (final GarminActivitySample sample : samples) {
-                final long ts = sample.getTimestamp() * 1000L;
-                final ActivityKind sleepType = stagesMap.get(ts);
-                if (sleepType != null && !sleepType.equals(ActivityKind.UNKNOWN)) {
-                    sample.setRawKind(sleepType.getCode());
-                    sample.setRawIntensity(ActivitySample.NOT_MEASURED);
+            if (!samples.isEmpty()) {
+                for (final GarminActivitySample sample : samples) {
+                    final long ts = sample.getTimestamp() * 1000L;
+                    final ActivityKind sleepType = stagesMap.get(ts);
+                    if (sleepType != null && !sleepType.equals(ActivityKind.UNKNOWN)) {
+                        sample.setRawKind(sleepType.getCode());
+                        sample.setRawIntensity(ActivitySample.NOT_MEASURED);
+                    }
+                }
+            } else {
+                for (int ts = timestamp_from; ts <= timestamp_to; ts += 60) {
+                    final GarminActivitySample sample = createDummySample(ts);
+                    final ActivityKind sleepType = stagesMap.get(ts * 1000L);
+                    if (sleepType != null && !sleepType.equals(ActivityKind.UNKNOWN)) {
+                        sample.setRawKind(sleepType.getCode());
+                        sample.setRawIntensity(ActivitySample.NOT_MEASURED);
+                    }
+                    samples.add(sample);
                 }
             }
         }
@@ -219,17 +231,13 @@ public class GarminActivitySampleProvider extends AbstractSampleProvider<GarminA
             return ActivityKind.UNKNOWN;
         }
 
-        switch (sleepStage) {
-            case AWAKE:
-                return ActivityKind.AWAKE_SLEEP;
-            case LIGHT:
-                return ActivityKind.LIGHT_SLEEP;
-            case DEEP:
-                return ActivityKind.DEEP_SLEEP;
-            case REM:
-                return ActivityKind.REM_SLEEP;
-        }
+        return switch (sleepStage) {
+            case AWAKE -> ActivityKind.AWAKE_SLEEP;
+            case LIGHT -> ActivityKind.LIGHT_SLEEP;
+            case DEEP -> ActivityKind.DEEP_SLEEP;
+            case REM -> ActivityKind.REM_SLEEP;
+            default -> ActivityKind.UNKNOWN;
+        };
 
-        return ActivityKind.UNKNOWN;
     }
 }

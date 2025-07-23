@@ -325,7 +325,8 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
         return true;
     }
 
-    private HuaweiActivitySample createDummySample(int timestamp) {
+    @Override
+    protected HuaweiActivitySample createDummySample(int timestamp) {
         HuaweiActivitySample activitySample = new HuaweiActivitySample(
                 timestamp,
                 -1,
