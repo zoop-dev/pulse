@@ -100,7 +100,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     private class DispatchRunnable implements Runnable {
         @Override
         public void run() {
-            LOG.debug("{} started", Thread.currentThread().getName());
+            LOG.debug("started thread {}", Thread.currentThread().getName());
             boolean crashed = false;
 
             while (!mDisposed.get() && !crashed) {
@@ -210,7 +210,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
                     mWaitCharacteristic = null;
                 }
             }
-            LOG.debug("{} terminated", Thread.currentThread().getName());
+            LOG.debug("finished thread {}", Thread.currentThread().getName());
         }
     };
 
@@ -245,6 +245,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
             mReceiverThread.setUncaughtExceptionHandler(this);
             mReceiverThread.start();
             mReceiverHandler = new Handler(mReceiverThread.getLooper());
+            mReceiverHandler.post(() -> LOG.debug("started thread {}", Thread.currentThread().getName()));
         } else {
             mReceiverThread = null;
             mReceiverHandler = null;
@@ -468,12 +469,14 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
         disconnect();
 
-        if (mReceiverThread != null) {
+        if (mReceiverThread != null && mReceiverThread.isAlive()) {
             mReceiverHandler.post(() -> {
-                mDispatchThread.interrupt();
+                LOG.debug("finish thread {}", Thread.currentThread().getName());
                 mReceiverThread.quitSafely();
             });
-        } else {
+        }
+
+        if (mDispatchThread != null) {
             mDispatchThread.interrupt();
         }
     }

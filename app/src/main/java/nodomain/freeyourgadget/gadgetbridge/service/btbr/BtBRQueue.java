@@ -68,6 +68,7 @@ public final class BtBRQueue {
         return new Thread("BtBRQueue_read_" + THREAD_COUNTER.getAndIncrement()) {
             @Override
             public void run() {
+                LOG.debug("started thread {}", getName());
                 final byte[] buffer = new byte[mBufferSize];
                 int nRead;
 
@@ -107,6 +108,8 @@ public final class BtBRQueue {
                     LOG.debug("Exited read thread loop, will wait for reconnect");
                     mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
                 }
+
+                LOG.debug("finished thread {}", getName());
             }
         };
     }
@@ -121,6 +124,9 @@ public final class BtBRQueue {
         mDisposed = new AtomicBoolean(false);
 
         mWriteHandlerThread.start();
+
+        new Handler(mWriteHandlerThread.getLooper()).post(()
+                -> LOG.debug("started thread {}", Thread.currentThread().getName()));
 
         LOG.debug("Write handler thread is prepared, creating write handler");
         mWriteHandler = new Handler(mWriteHandlerThread.getLooper()) {
@@ -266,6 +272,7 @@ public final class BtBRQueue {
     public void disconnect() {
         if (mWriteHandlerThread.isAlive()) {
             mWriteHandlerThread.quit();
+            LOG.debug("finished thread {}", mWriteHandlerThread.getName());
         }
 
         if (mBtSocket != null && mBtSocket.isConnected()) {

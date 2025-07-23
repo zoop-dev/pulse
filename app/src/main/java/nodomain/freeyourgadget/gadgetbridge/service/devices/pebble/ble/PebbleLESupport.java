@@ -65,6 +65,7 @@ public class PebbleLESupport {
         mWriteHandlerThread = new HandlerThread("PebbleLESupport_write_" + THREAD_COUNTER.getAndIncrement());
         mWriteHandlerThread.start();
         mWriteHandler = new Handler(mWriteHandlerThread.getLooper());
+        mWriteHandler.post(() -> LOG.debug("started thread {}", Thread.currentThread().getName()));
 
         mMTULimit = GBApplication.getDevicePrefs(mgbDevice).getInt("pebble_mtu_limit", 512);
         mMTULimit = Math.max(mMTULimit, 20);
@@ -119,6 +120,7 @@ public class PebbleLESupport {
         }
         if (mWriteHandlerThread != null) {
             mWriteHandlerThread.quit();
+            LOG.debug("finished thread {}", mWriteHandlerThread.getName());
         }
     }
 

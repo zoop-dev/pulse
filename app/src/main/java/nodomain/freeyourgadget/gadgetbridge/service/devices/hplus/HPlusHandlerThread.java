@@ -85,6 +85,8 @@ class HPlusHandlerThread extends GBDeviceIoThread {
 
     @Override
     public void run() {
+        LOG.debug("started thread {}", getName());
+
         mQuit = false;
 
         sync();
@@ -131,7 +133,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
             now = GregorianCalendar.getInstance();
             waitTime = Math.min(mGetDaySummaryTime.getTimeInMillis(), Math.min(mGetDaySlotsTime.getTimeInMillis(), Math.min(mHelloTime.getTimeInMillis(), mGetSleepTime.getTimeInMillis()))) - now.getTimeInMillis();
         }
-
+        LOG.debug("finished thread {}", getName());
     }
 
     @Override

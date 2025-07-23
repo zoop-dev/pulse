@@ -241,6 +241,8 @@ class PebbleIoThread extends GBDeviceIoThread {
 
     @Override
     public void run() {
+        LOG.debug("started thread {}", getName());
+
         mIsConnected = connect();
         if (!mIsConnected) {
             if (GBApplication.getPrefs().getAutoReconnect(getDevice()) && !mQuit) {
@@ -416,6 +418,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         }
 
         gbDevice.sendDeviceUpdateIntent(getContext());
+        LOG.debug("finished thread {}", getName());
     }
 
     private void enablePebbleKitSupport(boolean enable) {

@@ -87,6 +87,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
 
     @Override
     public void run() {
+        LOG.debug("started thread {}", getName());
         mIsConnected = connect();
         if (!mIsConnected) {
             if (GBApplication.getPrefs().getAutoReconnect(getDevice()) && !mQuit) {
@@ -135,6 +136,8 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
             LOG.debug("Exited read thread loop, will wait for reconnect");
             gbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
         }
+
+        LOG.debug("finished thread {}", getName());
     }
 
     @Override
