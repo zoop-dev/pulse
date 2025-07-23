@@ -399,4 +399,6 @@
     <string name="pref_title_notifications_and_calls_repeat_on_misscall">Lặp lại trong X phút</string>
     <string name="prefs_notifications_and_calls_reject">Nút bỏ qua/từ chối cuộc gọi</string>
     <string name="pref_summary_notifications_and_calls_title_reject">Tắt - bỏ qua, Bật - từ chối</string>
+    <string name="about_activity_title_generic">Về gadgetbridge</string>
+    <string name="controlcenter_power_off_confirm_description">Bạn muốn tắt thiết bị này ?</string>
 </resources>
