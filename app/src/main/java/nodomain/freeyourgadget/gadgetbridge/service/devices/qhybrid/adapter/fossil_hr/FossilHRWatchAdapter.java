@@ -231,13 +231,13 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     ServiceConnection voiceServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            GB.log("attached to voice service", GB.INFO, null);
+            LOG.info("attached to voice service");
             voiceMessenger = new Messenger(service);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            GB.log("detached from voice service", GB.INFO, null);
+            LOG.info("detached from voice service");
             voiceMessenger = null;
         }
     };
@@ -328,7 +328,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         queueWrite(new CheckDeviceNeedsConfirmationRequest() {
             @Override
             public void onResult(boolean needsConfirmation) {
-                GB.log("needs confirmation: " + needsConfirmation, GB.INFO, null);
+                LOG.info("needs confirmation: {}", needsConfirmation);
                 if (needsConfirmation) {
                     final Timer timer = new Timer();
                     GB.toast(getContext().getString(R.string.fossil_hr_confirm_connection), Toast.LENGTH_SHORT, GB.INFO);
@@ -357,13 +357,13 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         queueWrite(new CheckDevicePairingRequest() {
             @Override
             public void onResult(boolean pairingStatus) {
-                GB.log("watch pairing status: " + pairingStatus, GB.INFO, null);
+                LOG.info("watch pairing status: {}", pairingStatus);
                 if (!pairingStatus) {
                     queueWrite(new PerformDevicePairingRequest() {
                         @Override
                         public void onResult(boolean pairingSuccess) {
                             isFinished = true;
-                            GB.log("watch pairing result: " + pairingSuccess, GB.INFO, null);
+                            LOG.info("watch pairing result: {}", pairingSuccess);
                             if (pairingSuccess) {
                                 GB.toast(getContext().getString(R.string.fossil_hr_pairing_successful), Toast.LENGTH_LONG, GB.ERROR);
                             } else {
@@ -406,7 +406,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
 
         flags |= Service.BIND_AUTO_CREATE;
 
-        GB.log("binding to voice service...", GB.INFO, null);
+        LOG.info("binding to voice service...");
 
         getContext().bindService(
                 voiceIntent,
@@ -466,7 +466,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         try {
             voiceMessenger.send(message);
         } catch (RemoteException e) {
-            GB.log("error sending voice data to service", GB.ERROR, e);
+            LOG.error("error sending voice data to service", e);
             GB.toast("error sending voice data to service", Toast.LENGTH_LONG, GB.ERROR);
             voiceMessenger = null;
             detachFromVoiceService();
@@ -675,7 +675,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 }
             }
         } catch (IOException | RuntimeException e) {
-            GB.log("error opening background file", GB.ERROR, e);
+            LOG.error("error opening background file", e);
             GB.toast("error opening background file", Toast.LENGTH_LONG, GB.ERROR);
         }
     }
@@ -691,7 +691,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 FileOutputStream fos = new FileOutputStream(getBackgroundFile(), false);
                 fos.write(pixels);
             } catch (IOException e) {
-                GB.log("error saving background", GB.ERROR, e);
+                LOG.error("error saving background", e);
                 GB.toast("error persistent saving background", Toast.LENGTH_LONG, GB.ERROR);
             }
         }
@@ -1139,7 +1139,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 @Override
                 protected void handleAuthenticationResult(boolean success) {
                     if (success) {
-                        GB.log("success auth", GB.INFO, null);
+                        LOG.info("success auth");
                         queueWrite((FossilRequest) request, true);
                     }
                 }
@@ -1215,7 +1215,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                     this
             ));
         } catch (BufferOverflowException e) {
-            GB.log("musicInfo: " + musicSpec, GB.ERROR, e);
+            LOG.error("musicInfo: {}", musicSpec, e);
         }
     }
 
@@ -1325,7 +1325,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             fos.close();
             GB.toast("saved file data", Toast.LENGTH_SHORT, GB.INFO);
         } catch (IOException e) {
-            GB.log("file error", GB.ERROR, e);
+            LOG.error("file error", e);
         }
     }
 

@@ -188,7 +188,7 @@ public class MiBandPairingActivity extends AbstractGBActivity implements Bonding
                     DBHelper.getDevice(gbDevice, daoSession);
                     gbDevice.sendDeviceUpdateIntent(this);
                 } catch (final Exception e) {
-                    GB.log("Error accessing database", GB.ERROR, e);
+                    LOG.error("Error accessing database", e);
                 }
             }
             Intent intent = new Intent(this, ControlCenterv2.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

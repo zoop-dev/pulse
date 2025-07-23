@@ -335,7 +335,7 @@ public class QHybridSupport extends QHybridBaseSupport {
                                     PlayNotificationRequest.VibrationType.NO_VIBE
                             ));
                         } catch (Exception e) {
-                            GB.log("wrong number format", GB.ERROR, e);
+                            logger.error("wrong number format", e);
                             logger.debug("trash extra should be number 0.0-1.0");
                         }
                         break;
@@ -543,7 +543,7 @@ public class QHybridSupport extends QHybridBaseSupport {
         try {
             watchAdapter.setMusicInfo(musicSpec);
         }catch (Exception e){
-            GB.log("setMusicInfo error", GB.ERROR, e);
+            logger.error("setMusicInfo error", e);
         }
     }
 
@@ -741,7 +741,7 @@ public class QHybridSupport extends QHybridBaseSupport {
             //TODO file stuff
             // queueWrite(new EraseFileRequest((short) request.fileHandle));
         } catch (Exception e) {
-            GB.log("error", GB.ERROR, e);
+            logger.error("error", e);
             if (request.fileHandle > 257) {
                 // queueWrite(new DownloadFileRequest((short) (request.fileHandle - 1)));
             }
@@ -781,7 +781,7 @@ public class QHybridSupport extends QHybridBaseSupport {
                     gbDevice.addDeviceInfo(new GenericItem(ITEM_EXTENDED_VIBRATION_SUPPORT, String.valueOf(watchAdapter.supportsExtendedVibration())));
                     gbDevice.addDeviceInfo(new GenericItem(ITEM_HAS_ACTIVITY_HAND, String.valueOf(watchAdapter.supportsActivityHand())));
                 } catch (UnsupportedOperationException e) {
-                    GB.log("error", GB.ERROR, e);
+                    logger.error("error", e);
                     gbDevice.addDeviceInfo(new GenericItem(ITEM_EXTENDED_VIBRATION_SUPPORT, "false"));
                 }
                 break;

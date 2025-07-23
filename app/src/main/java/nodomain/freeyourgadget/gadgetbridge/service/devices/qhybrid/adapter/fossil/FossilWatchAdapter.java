@@ -228,7 +228,7 @@ public class FossilWatchAdapter extends WatchAdapter {
     public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         if (status != BluetoothGatt.GATT_SUCCESS) {
             if (characteristic.getUuid().toString().equals("3dda0005-957f-7d4a-34a6-74696673696d")) {
-                GB.log("authentication failed", GB.ERROR, null);
+                LOG.error("authentication failed");
                 setDeviceState(GBDevice.State.AUTHENTICATION_REQUIRED);
                 requestQueue.clear();
             }
@@ -350,7 +350,7 @@ public class FossilWatchAdapter extends WatchAdapter {
             };
             queueWrite(fileUploadRequets);
         } catch (JSONException e) {
-            GB.log("error", GB.ERROR, e);
+            LOG.error("error", e);
         }
     }
 
@@ -456,7 +456,7 @@ public class FossilWatchAdapter extends WatchAdapter {
                 }
             }, false);
         } catch (Exception e) {
-            GB.log("error", GB.ERROR, e);
+            LOG.error("error", e);
         }
     }
 
@@ -669,10 +669,10 @@ public class FossilWatchAdapter extends WatchAdapter {
                         requestFinished = fossilRequest.isFinished();
                     } catch (RuntimeException e) {
                         if (characteristic.getUuid().toString().equals("3dda0005-957f-7d4a-34a6-74696673696d")) {
-                            GB.log("authentication failed", GB.ERROR, e);
+                            LOG.error("authentication failed", e);
                             // setDeviceState(GBDevice.State.AUTHENTICATION_REQUIRED);
                         }else {
-                            GB.log("error", GB.ERROR, e);
+                            LOG.error("error", e);
                             if (BuildConfig.DEBUG)
                                 GB.toast(fossilRequest.getName() + " failed", Toast.LENGTH_SHORT, GB.ERROR);
                         }
@@ -718,7 +718,7 @@ public class FossilWatchAdapter extends WatchAdapter {
                 }
             }
         } catch (UnsupportedOperationException e) {
-            GB.log("error", GB.ERROR, e);
+            LOG.error("error", e);
         }
 
         if (start && getDeviceSupport().searchDevice) return;
@@ -735,7 +735,7 @@ public class FossilWatchAdapter extends WatchAdapter {
                         try {
                             Thread.sleep(2500);
                         } catch (InterruptedException e) {
-                            GB.log("error", GB.ERROR, e);
+                            LOG.error("error", e);
                         }
                     }
                 }

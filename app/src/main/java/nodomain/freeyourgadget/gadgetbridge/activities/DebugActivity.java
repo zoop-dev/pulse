@@ -1117,7 +1117,7 @@ public class DebugActivity extends AbstractGBActivity {
 
         } catch (
                 Exception e) {
-            GB.log("Error accessing database", GB.ERROR, e);
+            LOG.error("Error accessing database", e);
         }
     }
 

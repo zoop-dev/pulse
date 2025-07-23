@@ -182,7 +182,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
                         fos.write((new Date().toString() + ": " + characteristic.getUuid().toString() + ": " + arrayToString(value)).getBytes());
                     }
                 } catch (IOException e) {
-                    GB.log("error", GB.ERROR, e);
+                    logger.error("error", e);
                 }
                 break;
             }
@@ -247,7 +247,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
                 }
                 logger.debug("file written.");
             } catch (Exception e) {
-                GB.log("error", GB.ERROR, e);
+                logger.error("error", e);
             }
             gbDevice.addDeviceInfo(new GenericItem(ITEM_STEP_COUNT, String.valueOf(((GetCurrentStepCountRequest) request).steps)));
         } else if (request instanceof OTAEnterRequest) {

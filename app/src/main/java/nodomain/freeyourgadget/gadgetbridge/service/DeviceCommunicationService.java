@@ -326,22 +326,22 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         @Override
         public void onReceive(Context context, Intent intent) {
             if (!allowBluetoothIntentApi){
-                GB.log("Connection API not allowed in settings", GB.ERROR, null);
+                LOG.error("Connection API not allowed in settings");
                 return;
             }
             Bundle extras = intent.getExtras();
             if (extras == null) {
-                GB.log("no extras provided in Intent", GB.ERROR, null);
+                LOG.error("no extras provided in Intent");
                 return;
             }
             final String action = intent.getAction();
             if (action == null) {
-                GB.log("Action for bluetooth command is null", GB.ERROR, null);
+                LOG.error("Action for bluetooth command is null");
                 return;
             }
             String address = extras.getString("EXTRA_DEVICE_ADDRESS", "");
             if (address.isEmpty()){
-                GB.log("no bluetooth address provided in Intent", GB.ERROR, null);
+                LOG.error("no bluetooth address provided in Intent");
                 return;
             }
             GBDevice targetDevice = GBApplication.app()
@@ -349,25 +349,25 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     .getDeviceByAddress(address);
 
             if (targetDevice == null){
-                GB.log(String.format("device %s not registered", address), GB.ERROR, null);
+                LOG.error("device {} not registered", address);
                 return;
             }
 
             switch (action) {
                 case API_LEGACY_COMMAND_BLUETOOTH_CONNECT:
                     if (isDeviceConnected(address)){
-                        GB.log(String.format("device %s already connected", address), GB.INFO, null);
+                        LOG.info("device {} already connected", address);
                         sendDeviceConnectedBroadcast(address);
 
                         return;
                     }
 
-                    GB.log(String.format("connecting to %s", address), GB.INFO, null);
+                    LOG.info("connecting to {}", address);
 
                     GBApplication.deviceService(targetDevice).connect();
                     break;
                 case API_LEGACY_COMMAND_BLUETOOTH_DISCONNECT:
-                    GB.log(String.format("disconnecting from %s", address), GB.INFO, null);
+                    LOG.info("disconnecting from {}", address);
 
                     GBApplication.deviceService(targetDevice).disconnect();
                     break;
@@ -1618,7 +1618,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
         if (GBPrefs.PREF_ALLOW_INTENT_API.equals(key)){
             allowBluetoothIntentApi = sharedPreferences.getBoolean(GBPrefs.PREF_ALLOW_INTENT_API, false);
-            GB.log("allowBluetoothIntentApi changed to " + allowBluetoothIntentApi, GB.INFO, null);
+            LOG.info("allowBluetoothIntentApi changed to {}", allowBluetoothIntentApi);
         }
     }
 
