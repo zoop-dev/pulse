@@ -4285,4 +4285,9 @@
     <string name="oxygen_content">Zawartość tlenu</string>
     <string name="nitrogen_content">Zawartość azotu</string>
     <string name="pref_printer_print_received_text">Drukuj tekst udostępniony do Gadgetbridge</string>
+    <string name="minutes_100m">min/100m</string>
+    <string name="minutes_100yd">min/100yd</string>
+    <string name="error_queue_is_dead">Kolejka przetwarzania Gadgetbridge uległa awarii</string>
+    <string name="error_sender_is_dead">Wątek wysyłania Gadgetbridge uległ awarii</string>
+    <string name="error_receiver_is_dead">Wątek odbierania Gadgetbridge uległ awarii</string>
 </resources>
