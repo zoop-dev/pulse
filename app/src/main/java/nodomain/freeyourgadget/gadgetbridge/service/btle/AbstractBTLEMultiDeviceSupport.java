@@ -584,6 +584,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
     /**
      * Get the current MTU, or the minimum 23 if unknown
      */
+    @Override
     public int getMTU(int deviceIdx) {
         validateDeviceIndex(deviceIdx);
         return mMTUs[deviceIdx];

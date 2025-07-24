@@ -112,6 +112,14 @@ public class TransactionBuilder {
             LOG.warn("Unable to write characteristic: null");
             return this;
         }
+
+        int maxChunk = getMaxWriteChunk();
+        if (data.length > maxChunk) {
+            LOG.error("writeLegacy - payload for {} is too long: {} > {}",
+                    characteristic.getUuid(), data.length, maxChunk);
+            // TODO throw exception after reviewing device specific code (performConnected...)
+        }
+
         WriteAction action = new WriteAction(characteristic, data, true);
         return add(action);
     }
@@ -119,15 +127,23 @@ public class TransactionBuilder {
     /// Invokes a write operation on a given characteristic
     /// The result status will be made available asynchronously through
     /// {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
-    /// @see #write(UUID, byte...) 
+    /// @see #write(UUID, byte...)
     /// @see #writeChunkedData(BluetoothGattCharacteristic, byte[], int)
-    /// @see #writeLegacy(BluetoothGattCharacteristic, byte...)  
+    /// @see #writeLegacy(BluetoothGattCharacteristic, byte...)
     @NonNull
     public TransactionBuilder write(@Nullable BluetoothGattCharacteristic characteristic, byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
             return this;
         }
+
+        int maxChunk = getMaxWriteChunk();
+        if (data.length > maxChunk) {
+            LOG.error("write - payload for {} is too long: {} > {}",
+                    characteristic.getUuid(), data.length, maxChunk);
+            // TODO throw exception after reviewing device specific code (performConnected...)
+        }
+
         WriteAction action = new WriteAction(characteristic, data);
         return add(action);
     }
@@ -135,7 +151,7 @@ public class TransactionBuilder {
     /// Invokes a write operation on a given characteristic
     /// The result status will be made available asynchronously through
     /// {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
-    /// @see #write(BluetoothGattCharacteristic, byte...) 
+    /// @see #write(BluetoothGattCharacteristic, byte...)
     /// @see #writeChunkedData(BluetoothGattCharacteristic, byte[], int)
     /// @see #writeLegacy(BluetoothGattCharacteristic, byte...)
     @NonNull
@@ -151,17 +167,22 @@ public class TransactionBuilder {
     /// Invokes one or more write operations on a given characteristic
     /// The result status will be made available asynchronously through
     /// {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
+    /// @param requestedChunkLength will be automatically reduced if required for this connection
     /// @see #write(BluetoothGattCharacteristic, byte...)
     /// @see #write(UUID, byte...)
     /// @see #writeLegacy(BluetoothGattCharacteristic, byte...)
     @NonNull
     public TransactionBuilder writeChunkedData(@Nullable BluetoothGattCharacteristic characteristic,
-                                               @NonNull byte[] data, int chunkSize)
-    {
+                                               @NonNull byte[] data,
+                                               @IntRange(from = 1L) int requestedChunkLength) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
             return this;
         }
+
+        // no larger than requested
+        int chunkSize = Math.min(requestedChunkLength, getMaxWriteChunk());
+
         for (int start = 0; start < data.length; start += chunkSize) {
             int end = start + chunkSize;
             if (end > data.length) end = data.length;
@@ -170,6 +191,13 @@ public class TransactionBuilder {
         }
 
         return this;
+    }
+
+    /// the maximum payload length supported for one write action
+    @IntRange(from = 20L, to = 512L)
+    public int getMaxWriteChunk() {
+        int mtu = mDeviceSupport.getMTU(mDeviceIdx);
+        return AbstractBTLEDeviceSupport.calcMaxWriteChunk(mtu);
     }
 
     /// Calls {@link BluetoothGatt#requestMtu(int)}. Results are returned asynchronously through

@@ -22,7 +22,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothProfile;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
 
 import java.util.UUID;
@@ -84,4 +84,18 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport
 
     @Nullable
     abstract BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx);
+
+    abstract int getMTU(int deviceIdx);
+
+    /// the maximum payload length supported for one write action
+    @IntRange(from = 20L, to = 512L)
+    public static int calcMaxWriteChunk(int mtu) {
+        // the minimum MTU is 23 (Bluetooth spec)
+        int safeMtu = Math.max(23, mtu);
+
+        // GATT_MAX_ATTR_LEN: no larger than 512 (Bluetooth spec)
+        // MTU: overhead of simple write must be supported. Some other operations like
+        //      ATT_PREPARE_WRITE_REQ have even larger overhead so the max BLE MTU is larger than 512+3
+        return Math.min(512, safeMtu - 3);
+    }
 }
