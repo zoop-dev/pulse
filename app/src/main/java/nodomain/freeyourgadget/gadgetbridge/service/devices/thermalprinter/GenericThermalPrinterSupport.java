@@ -123,7 +123,7 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
     public void onNotification(NotificationSpec notificationSpec) {
         if(notificationSpec.type.equals(NotificationType.GADGETBRIDGE_TEXT_RECEIVER)) {
             final SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
-            if(!prefs.getBoolean("pref_printer_print_received_text", false)) {
+            if(!prefs.getBoolean("pref_printer_print_received_text", true)) {
                 LOG.info("Not printing received text, device preference forbids this.");
                 return;
             }
