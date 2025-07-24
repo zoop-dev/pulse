@@ -22,7 +22,6 @@ import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AmazfitHelioRingCoordinator extends ZeppOsCoordinator {
     @Override
@@ -46,52 +45,7 @@ public class AmazfitHelioRingCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsWeather(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsMusicInfo() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsHrvMeasurement(final GBDevice device) {
-        return true;
-    }
-
-    @Override
-    public int getWorldClocksSlotCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public int getCannedRepliesSlotCount(final GBDevice device) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
-        return true;
-    }
-
-    @Override
-    public boolean supportsContinuousTemperature(final GBDevice device) {
-        return true;
-    }
-
-    @Override
-    public boolean supportsAgpsUpdates() {
+    public boolean hasDisplay() {
         return false;
     }
 }

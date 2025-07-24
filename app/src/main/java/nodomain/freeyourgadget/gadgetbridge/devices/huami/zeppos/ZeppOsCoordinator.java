@@ -167,7 +167,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsScreenshots(final GBDevice device) {
-        return true;
+        return hasDisplay();
     }
 
     @Override
@@ -182,7 +182,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsWeather(final GBDevice device) {
-        return true;
+        return hasDisplay();
     }
 
     @Override
@@ -237,7 +237,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsMusicInfo() {
-        return true;
+        return hasDisplay();
     }
 
     @Override
@@ -257,7 +257,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsHrvMeasurement(final GBDevice device) {
-        return supportsDisplayItem(device, "hrv");
+        return !hasDisplay() || supportsDisplayItem(device, "hrv");
     }
 
     @Override
@@ -267,7 +267,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public int getWorldClocksSlotCount() {
-        return 20; // as enforced by Zepp
+        return hasDisplay() ? 20 : 0; // as enforced by Zepp
     }
 
     @Override
@@ -312,7 +312,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsCalendarEvents(final GBDevice device) {
-        return true;
+        return hasDisplay();
     }
 
     @Override
@@ -348,7 +348,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public int getCannedRepliesSlotCount(final GBDevice device) {
-        return 16;
+        return hasDisplay() ? 16 : 0;
     }
 
     @Override
@@ -414,38 +414,42 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         //
         // Time
         //
-        final List<Integer> dateTime = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DATE_TIME);
-        // FIXME: This "works", but the band does not update when the setting changes, so it's disabled for now
-        //dateTime.add(R.xml.devicesettings_timeformat);
-        dateTime.add(R.xml.devicesettings_dateformat_2);
-        if (getWorldClocksSlotCount() > 0) {
-            dateTime.add(R.xml.devicesettings_world_clocks);
+        if (hasDisplay()) {
+            final List<Integer> dateTime = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DATE_TIME);
+            // FIXME: This "works", but the band does not update when the setting changes, so it's disabled for now
+            //dateTime.add(R.xml.devicesettings_timeformat);
+            dateTime.add(R.xml.devicesettings_dateformat_2);
+            if (getWorldClocksSlotCount() > 0) {
+                dateTime.add(R.xml.devicesettings_world_clocks);
+            }
+            dateTime.add(R.xml.devicesettings_zeppos_sun_moon_utc);
         }
-        dateTime.add(R.xml.devicesettings_zeppos_sun_moon_utc);
 
         //
         // Display
         //
-        final List<Integer> display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY);
-        display.add(R.xml.devicesettings_huami2021_displayitems);
-        display.add(R.xml.devicesettings_huami2021_shortcuts);
-        if (supportsControlCenter()) {
-            display.add(R.xml.devicesettings_huami2021_control_center);
-        }
-        if (supportsShortcutCards(device)) {
-            display.add(R.xml.devicesettings_huami2021_shortcut_cards);
-        }
-        display.add(R.xml.devicesettings_nightmode);
-        display.add(R.xml.devicesettings_sleep_mode);
-        display.add(R.xml.devicesettings_liftwrist_display_sensitivity_with_smart);
-        display.add(R.xml.devicesettings_password);
-        display.add(R.xml.devicesettings_huami2021_watchface);
-        display.add(R.xml.devicesettings_always_on_display);
-        display.add(R.xml.devicesettings_screen_timeout);
-        if (supportsAutoBrightness(device)) {
-            display.add(R.xml.devicesettings_screen_brightness_withauto);
-        } else {
-            display.add(R.xml.devicesettings_screen_brightness);
+        if (hasDisplay()) {
+            final List<Integer> display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY);
+            display.add(R.xml.devicesettings_huami2021_displayitems);
+            display.add(R.xml.devicesettings_huami2021_shortcuts);
+            if (supportsControlCenter()) {
+                display.add(R.xml.devicesettings_huami2021_control_center);
+            }
+            if (supportsShortcutCards(device)) {
+                display.add(R.xml.devicesettings_huami2021_shortcut_cards);
+            }
+            display.add(R.xml.devicesettings_nightmode);
+            display.add(R.xml.devicesettings_sleep_mode);
+            display.add(R.xml.devicesettings_liftwrist_display_sensitivity_with_smart);
+            display.add(R.xml.devicesettings_password);
+            display.add(R.xml.devicesettings_huami2021_watchface);
+            display.add(R.xml.devicesettings_always_on_display);
+            display.add(R.xml.devicesettings_screen_timeout);
+            if (supportsAutoBrightness(device)) {
+                display.add(R.xml.devicesettings_screen_brightness_withauto);
+            } else {
+                display.add(R.xml.devicesettings_screen_brightness);
+            }
         }
 
         //
@@ -458,42 +462,50 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         //
         // Workout
         //
-        final List<Integer> workout = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT);
-        if (hasGps(device)) {
-            workout.add(R.xml.devicesettings_gps_agps);
-        } else {
-            // If the device has GPS, it doesn't report workout start/end to the phone
-            workout.add(R.xml.devicesettings_workout_start_on_phone);
-            workout.add(R.xml.devicesettings_workout_send_gps_to_band);
+        if (hasDisplay()) {
+            final List<Integer> workout = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT);
+            if (hasGps(device)) {
+                workout.add(R.xml.devicesettings_gps_agps);
+            } else {
+                // If the device has GPS, it doesn't report workout start/end to the phone
+                workout.add(R.xml.devicesettings_workout_start_on_phone);
+                workout.add(R.xml.devicesettings_workout_send_gps_to_band);
+            }
+            workout.add(R.xml.devicesettings_workout_keep_screen_on);
+            workout.add(R.xml.devicesettings_workout_detection);
         }
-        workout.add(R.xml.devicesettings_workout_keep_screen_on);
-        workout.add(R.xml.devicesettings_workout_detection);
 
         //
         // Notifications
         //
-        final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
-        if (supportsBluetoothPhoneCalls(device)) {
-            notifications.add(R.xml.devicesettings_phone_calls_watch_pair);
-        } else {
-            notifications.add(R.xml.devicesettings_display_caller);
+        if (hasDisplay()) {
+            final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
+            if (supportsBluetoothPhoneCalls(device)) {
+                notifications.add(R.xml.devicesettings_phone_calls_watch_pair);
+            } else {
+                notifications.add(R.xml.devicesettings_display_caller);
+            }
+            notifications.add(R.xml.devicesettings_sound_and_vibration);
+            notifications.add(R.xml.devicesettings_vibrationpatterns);
+            notifications.add(R.xml.devicesettings_donotdisturb_withauto_and_always);
+            notifications.add(R.xml.devicesettings_send_app_notifications);
+            notifications.add(R.xml.devicesettings_screen_on_on_notifications);
+            notifications.add(R.xml.devicesettings_autoremove_notifications);
+            if (getCannedRepliesSlotCount(device) > 0) {
+                notifications.add(R.xml.devicesettings_canned_reply_16);
+            }
+            notifications.add(R.xml.devicesettings_transliteration);
         }
-        notifications.add(R.xml.devicesettings_sound_and_vibration);
-        notifications.add(R.xml.devicesettings_vibrationpatterns);
-        notifications.add(R.xml.devicesettings_donotdisturb_withauto_and_always);
-        notifications.add(R.xml.devicesettings_send_app_notifications);
-        notifications.add(R.xml.devicesettings_screen_on_on_notifications);
-        notifications.add(R.xml.devicesettings_autoremove_notifications);
-        notifications.add(R.xml.devicesettings_canned_reply_16);
-        notifications.add(R.xml.devicesettings_transliteration);
 
         //
         // Calendar
         //
-        deviceSpecificSettings.addRootScreen(
-                DeviceSpecificSettingsScreen.CALENDAR,
-                R.xml.devicesettings_sync_calendar
-        );
+        if (supportsCalendarEvents(device)) {
+            deviceSpecificSettings.addRootScreen(
+                    DeviceSpecificSettingsScreen.CALENDAR,
+                    R.xml.devicesettings_sync_calendar
+            );
+        }
 
         //
         // Other
@@ -583,16 +595,16 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsTemperatureMeasurement(final GBDevice device) {
-        return supportsDisplayItem(device, "thermometer");
+        return !hasDisplay() || supportsDisplayItem(device, "thermometer");
     }
 
     @Override
     public boolean supportsContinuousTemperature(final GBDevice device) {
-        return supportsDisplayItem(device, "thermometer");
+        return supportsTemperatureMeasurement(device);
     }
 
     public boolean supportsAgpsUpdates() {
-        return true;
+        return hasDisplay();
     }
 
     /**
@@ -615,6 +627,10 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         // TODO: Not yet implemented
         // TODO: When implemented, query the capability like reminders
         return false;
+    }
+
+    public boolean hasDisplay() {
+        return true;
     }
 
     public boolean mainMenuHasMoreSection() {
