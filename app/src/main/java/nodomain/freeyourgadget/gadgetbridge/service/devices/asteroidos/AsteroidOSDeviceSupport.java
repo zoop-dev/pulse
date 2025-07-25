@@ -35,9 +35,11 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSMediaCommand;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSNotification;
+import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSScreenshotHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.asteroidos.AsteroidOSWeather;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -56,6 +58,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(AsteroidOSDeviceSupport.class);
     private final BatteryInfoProfile<AsteroidOSDeviceSupport> batteryInfoProfile;
     private final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
+    private final AsteroidOSScreenshotHandler screenshotHandler = new AsteroidOSScreenshotHandler();
 
     public AsteroidOSDeviceSupport() {
         super(LOG);
@@ -65,6 +68,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         addSupportedService(AsteroidOSConstants.WEATHER_SERVICE_UUID);
         addSupportedService(AsteroidOSConstants.NOTIFICATION_SERVICE_UUID);
         addSupportedService(AsteroidOSConstants.MEDIA_SERVICE_UUID);
+        addSupportedService(AsteroidOSConstants.SCREENSHOT_SERVICE_UUID);
 
         IntentListener mListener = intent -> {
             String action = intent.getAction();
@@ -95,9 +99,13 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             handleMediaCommand(characteristic, value);
             return true;
         }
+        if (characteristicUUID.equals(AsteroidOSConstants.SCREENSHOT_CONTENT_CHAR)) {
+            handleScreenshotData(characteristic, value);
+            return true;
+        }
 
-        LOG.info("Characteristic changed UUID: " + characteristicUUID);
-        LOG.info("Characteristic changed value: " + Arrays.toString(value));
+        LOG.info("Characteristic changed UUID: {}", characteristicUUID);
+        LOG.info("Characteristic changed value: {}", Arrays.toString(value));
         return false;
     }
 
@@ -109,10 +117,12 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         getDevice().setFirmwareVersion2("N/A");
 
         builder.notify(AsteroidOSConstants.MEDIA_COMMANDS_CHAR, true);
+        builder.notify(AsteroidOSConstants.SCREENSHOT_CONTENT_CHAR, true);
         builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
+        screenshotHandler.reset();
         // Gadgetbridge doesn't seem to do this itself, so we force it to set its time
         onSetTime(builder);
         return builder;
@@ -240,6 +250,13 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
+    public void onScreenshotReq() {
+        TransactionBuilder builder = createTransactionBuilder("send screenshot request");
+        safeWriteToCharacteristic(builder, AsteroidOSConstants.SCREENSHOT_REQUEST_CHAR, new byte[1]);
+        builder.queue();
+    }
+
+    @Override
     public boolean useAutoConnect() {
         return false;
     }
@@ -268,7 +285,7 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         UUID characteristicUUID = characteristic.getUuid();
 
-        LOG.info("Unhandled characteristic read: " + characteristicUUID);
+        LOG.info("Unhandled characteristic read: {}", characteristicUUID);
         return false;
     }
 
@@ -283,6 +300,24 @@ public class AsteroidOSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         GBDeviceEventMusicControl event = command.toMusicControlEvent();
         if (event != null)
             evaluateGBDeviceEvent(event);
+    }
+
+    /**
+     * Handles receiving screenshot content
+     * @param characteristic The Characteristic information
+     * @param value The actual value passed to it
+     */
+    public void handleScreenshotData(BluetoothGattCharacteristic characteristic, byte[] value) {
+        LOG.info("handle screenshot data");
+        switch (screenshotHandler.receiveScreenshotBytes(value)) {
+            case Finished:
+                final GBDeviceEventScreenshot gbDeviceEventScreenshot = new GBDeviceEventScreenshot(screenshotHandler.getScreenshotContent());
+                evaluateGBDeviceEvent(gbDeviceEventScreenshot);
+                break;
+            case Error:
+                LOG.info("Error receiving screenshot: {}", screenshotHandler.getCurrentError());
+                screenshotHandler.reset();
+        }
     }
 
     @Override

@@ -77,6 +77,9 @@ public class AsteroidOSDeviceCoordinator extends AbstractBLEDeviceCoordinator {
         return true;
     }
 
+    @Override
+    public boolean supportsScreenshots(GBDevice device) { return true; }
+
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
