@@ -19,6 +19,6 @@ public class GarminFenix3Coordinator extends GarminWatchCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_fenix_5;
+        return R.string.devicetype_garmin_fenix_3;
     }
 }
