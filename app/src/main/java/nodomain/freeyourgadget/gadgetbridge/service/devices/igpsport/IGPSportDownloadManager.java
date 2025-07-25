@@ -59,7 +59,7 @@ public class IGPSportDownloadManager {
                 LOG.info(avaliableActivityFiles.size() + " files to sync");
             }
             downloadingFile = avaliableActivityFiles.remove(0);
-            //if (downloadingFile.getTimeStamp() == 1092299406) { // FIXME replace with newer that las sync. hardcoded for debug
+            //if (downloadingFile.getStandardTimeStamp() == 1092299406) { // FIXME replace with newer that las sync. hardcoded for debug
                 TransactionBuilder builder = support.createTransactionBuilder("ongettrainingfile");
                 CyclingData.cycling_data_msg.Builder cycleDataMsg = CyclingData.cycling_data_msg.newBuilder();
                 cycleDataMsg.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA);
@@ -99,7 +99,7 @@ public class IGPSportDownloadManager {
                     dir = support.getWritableExportDirectory();
                     outputFile = new File(dir, downloadingFile.getFileName());
                     FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 28, recievingDataBuffer.size()-28), outputFile);
-                    outputFile.setLastModified(downloadingFile.getTimeStamp()* 1000L);
+                    outputFile.setLastModified(downloadingFile.getStandardTimeStamp());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -135,8 +135,13 @@ public class IGPSportDownloadManager {
                 return timestamp;
             }
 
+            public long getStandardTimeStamp() {
+                return timestamp*1000L + 631065600000L;  //fit files use custom epoch 1989-12-31 00:00:00 UTC
+                                                        //TODO: it also could be shifted to TZ Asia/Shanghai (28800 seconds)
+            }
+
             public String getFileName() {
-                long timestampMillis = timestamp * 1000L;
+                long timestampMillis = getStandardTimeStamp();
                 Instant instant = Instant.ofEpochMilli(timestampMillis);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
                 ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
