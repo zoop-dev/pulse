@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -135,5 +136,131 @@ public class FitUserProfile extends RecordData {
     @Nullable
     public Integer getUserWalkingStepLength() {
         return (Integer) getFieldByNumber(32);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(3);
+        }
+
+        public Builder setFriendlyName(final String value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setGender(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setAge(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setHeight(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setWeight(final Float value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setLanguage(final Language value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setElevSetting(final Type value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setWeightSetting(final Type value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setRestingHeartRate(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setDefaultMaxBikingHeartRate(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setDefaultMaxHeartRate(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setHrSetting(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setSpeedSetting(final Type value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setDistSetting(final Type value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setPowerSetting(final Integer value) {
+            setFieldByNumber(16, value);
+            return this;
+        }
+
+        public Builder setActivityClass(final Integer value) {
+            setFieldByNumber(17, value);
+            return this;
+        }
+
+        public Builder setPositionSetting(final Integer value) {
+            setFieldByNumber(18, value);
+            return this;
+        }
+
+        public Builder setTemperatureSetting(final Type value) {
+            setFieldByNumber(21, value);
+            return this;
+        }
+
+        public Builder setWakeTime(final Long value) {
+            setFieldByNumber(28, value);
+            return this;
+        }
+
+        public Builder setSleepTime(final Long value) {
+            setFieldByNumber(29, value);
+            return this;
+        }
+
+        public Builder setHeightSetting(final Type value) {
+            setFieldByNumber(30, value);
+            return this;
+        }
+
+        public Builder setUserRunningStepLength(final Integer value) {
+            setFieldByNumber(31, value);
+            return this;
+        }
+
+        public Builder setUserWalkingStepLength(final Integer value) {
+            setFieldByNumber(32, value);
+            return this;
+        }
+
+        @Override
+        public FitUserProfile build() {
+            return (FitUserProfile) super.build();
+        }
     }
 }

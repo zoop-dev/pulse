@@ -400,7 +400,15 @@ public class GlobalFITMessage {
     ));
 
     public static GlobalFITMessage ALARM_SETTINGS = new GlobalFITMessage(222, "ALARM_SETTINGS", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ALARM)
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ALARM),
+            new FieldDefinitionPrimitive(1, BaseType.UINT32Z, "repeat"), // 31 weekday 96 weekend 126 all except mon 127 daily 128 once
+            new FieldDefinitionPrimitive(2, BaseType.ENUM, "enabled"), // 0/1
+            new FieldDefinitionPrimitive(3, BaseType.ENUM, "sound"), // 0 none 1 sound 2 vibrate 3 sound+vibrate
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "unknown4"), // 1
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, "some_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(7, BaseType.UINT8, "unknown7"), // 0
+            new FieldDefinitionPrimitive(8, BaseType.ENUM, "label"), // 0 none 2 workout 3 reminder 4 appointment 6 class 7 meditate 8 bedtime
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
     public static GlobalFITMessage SET = new GlobalFITMessage(225, "SET", Arrays.asList(
@@ -547,7 +555,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static Map<Integer, GlobalFITMessage> KNOWN_MESSAGES = new HashMap<Integer, GlobalFITMessage>() {{
+    public static Map<Integer, GlobalFITMessage> KNOWN_MESSAGES = new HashMap<>() {{
         put(0, FILE_ID);
         put(2, DEVICE_SETTINGS);
         put(3, USER_PROFILE);
@@ -649,6 +657,25 @@ public class GlobalFITMessage {
             }
         }
         return subset;
+    }
+
+    public FieldDefinition getFieldDefinition(final String name) {
+        for (FieldDefinitionPrimitive fieldDefinitionPrimitive :
+                fieldDefinitionPrimitives) {
+            if (name.equals(fieldDefinitionPrimitive.name)) {
+                return FieldDefinitionFactory.create(
+                        fieldDefinitionPrimitive.number,
+                        fieldDefinitionPrimitive.size,
+                        fieldDefinitionPrimitive.type,
+                        fieldDefinitionPrimitive.baseType,
+                        fieldDefinitionPrimitive.name,
+                        fieldDefinitionPrimitive.scale,
+                        fieldDefinitionPrimitive.offset
+                );
+            }
+        }
+
+        throw new IllegalArgumentException("Unknown field name " + name);
     }
 
     @Nullable

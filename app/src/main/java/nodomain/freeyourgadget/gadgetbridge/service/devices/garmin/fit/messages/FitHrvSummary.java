@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -59,5 +60,56 @@ public class FitHrvSummary extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(370);
+        }
+
+        public Builder setWeeklyAverage(final Float value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setLastNightAverage(final Float value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setLastNight5MinHigh(final Float value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setBaselineLowUpper(final Float value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setBaselineBalancedLower(final Float value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setBaselineBalancedUpper(final Float value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setStatus(final HrvStatus value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitHrvSummary build() {
+            return (FitHrvSummary) super.build();
+        }
     }
 }

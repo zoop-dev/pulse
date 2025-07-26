@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -28,5 +29,26 @@ public class FitTimestampCorrelation extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(162);
+        }
+
+        public Builder setLocalTimestamp(final Long value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitTimestampCorrelation build() {
+            return (FitTimestampCorrelation) super.build();
+        }
     }
 }

@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -98,5 +99,96 @@ public class FitDeviceSettings extends RecordData {
     @Nullable
     public Long getAutoActivityDetect() {
         return (Long) getFieldByNumber(90);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(2);
+        }
+
+        public Builder setActiveTimeZone(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setUtcOffset(final Long value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setTimeOffset(final Long value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setTimeMode(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setTimeZoneOffset(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setBacklightMode(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setActivityTrackerEnabled(final Integer value) {
+            setFieldByNumber(36, value);
+            return this;
+        }
+
+        public Builder setMoveAlertEnabled(final Integer value) {
+            setFieldByNumber(46, value);
+            return this;
+        }
+
+        public Builder setDateMode(final Integer value) {
+            setFieldByNumber(47, value);
+            return this;
+        }
+
+        public Builder setDisplayOrientation(final Integer value) {
+            setFieldByNumber(55, value);
+            return this;
+        }
+
+        public Builder setMountingSide(final Integer value) {
+            setFieldByNumber(56, value);
+            return this;
+        }
+
+        public Builder setDefaultPage(final Integer value) {
+            setFieldByNumber(57, value);
+            return this;
+        }
+
+        public Builder setAutosyncMinSteps(final Integer value) {
+            setFieldByNumber(58, value);
+            return this;
+        }
+
+        public Builder setAutosyncMinTime(final Integer value) {
+            setFieldByNumber(59, value);
+            return this;
+        }
+
+        public Builder setBleAutoUploadEnabled(final Integer value) {
+            setFieldByNumber(86, value);
+            return this;
+        }
+
+        public Builder setAutoActivityDetect(final Long value) {
+            setFieldByNumber(90, value);
+            return this;
+        }
+
+        @Override
+        public FitDeviceSettings build() {
+            return (FitDeviceSettings) super.build();
+        }
     }
 }

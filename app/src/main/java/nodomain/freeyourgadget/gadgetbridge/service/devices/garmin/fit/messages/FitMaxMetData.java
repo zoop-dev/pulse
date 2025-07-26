@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -48,5 +49,46 @@ public class FitMaxMetData extends RecordData {
     @Nullable
     public Integer getCalibratedData() {
         return (Integer) getFieldByNumber(9);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(229);
+        }
+
+        public Builder setUpdateTime(final Long value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setVo2Max(final Float value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setSport(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setSubSport(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setMaxMetCategory(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setCalibratedData(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        @Override
+        public FitMaxMetData build() {
+            return (FitMaxMetData) super.build();
+        }
     }
 }

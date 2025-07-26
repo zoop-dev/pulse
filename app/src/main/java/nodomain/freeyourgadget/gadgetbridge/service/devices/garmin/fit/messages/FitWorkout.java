@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -48,5 +49,46 @@ public class FitWorkout extends RecordData {
     @Nullable
     public String getNotes() {
         return (String) getFieldByNumber(17);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(26);
+        }
+
+        public Builder setSport(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setCapabilities(final Long value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setNumValidSteps(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setName(final String value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setSubSport(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setNotes(final String value) {
+            setFieldByNumber(17, value);
+            return this;
+        }
+
+        @Override
+        public FitWorkout build() {
+            return (FitWorkout) super.build();
+        }
     }
 }

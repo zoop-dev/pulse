@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 import androidx.annotation.Nullable;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType.FILETYPE;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -59,5 +60,56 @@ public class FitFileId extends RecordData {
     @Nullable
     public String getProductName() {
         return (String) getFieldByNumber(8);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(0);
+        }
+
+        public Builder setType(final FILETYPE value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setManufacturer(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setProduct(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setSerialNumber(final Long value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setTimeCreated(final Long value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setNumber(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setManufacturerPartner(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setProductName(final String value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        @Override
+        public FitFileId build() {
+            return (FitFileId) super.build();
+        }
     }
 }

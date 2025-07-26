@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminTimeUtils;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -81,6 +82,77 @@ public class FitMonitoring extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(55);
+        }
+
+        public Builder setDistance(final Long value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setCycles(final Long value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setActiveTime(final Long value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setActivityType(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setActiveCalories(final Integer value) {
+            setFieldByNumber(19, value);
+            return this;
+        }
+
+        public Builder setDurationMin(final Integer value) {
+            setFieldByNumber(29, value);
+            return this;
+        }
+
+        public Builder setCurrentActivityTypeIntensity(final Integer value) {
+            setFieldByNumber(24, value);
+            return this;
+        }
+
+        public Builder setTimestamp16(final Integer value) {
+            setFieldByNumber(26, value);
+            return this;
+        }
+
+        public Builder setHeartRate(final Integer value) {
+            setFieldByNumber(27, value);
+            return this;
+        }
+
+        public Builder setModerateActivityMinutes(final Integer value) {
+            setFieldByNumber(33, value);
+            return this;
+        }
+
+        public Builder setVigorousActivityMinutes(final Integer value) {
+            setFieldByNumber(34, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitMonitoring build() {
+            return (FitMonitoring) super.build();
+        }
     }
 
     // manual changes below

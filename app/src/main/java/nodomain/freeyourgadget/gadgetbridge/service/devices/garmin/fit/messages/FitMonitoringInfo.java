@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -69,5 +70,46 @@ public class FitMonitoringInfo extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(103);
+        }
+
+        public Builder setLocalTimestamp(final Long value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setActivityType(final Number[] value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setStepsToDistance(final Number[] value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setStepsToCalories(final Number[] value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setRestingMetabolicRate(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitMonitoringInfo build() {
+            return (FitMonitoringInfo) super.build();
+        }
     }
 }

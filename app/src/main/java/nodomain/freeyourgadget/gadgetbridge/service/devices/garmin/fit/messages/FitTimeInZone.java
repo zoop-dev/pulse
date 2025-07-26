@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -77,5 +78,61 @@ public class FitTimeInZone extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(216);
+        }
+
+        public Builder setReferenceMessage(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setReferenceIndex(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setTimeInZone(final Double[] value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setHrZoneHighBoundary(final Integer[] value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setHrCalcType(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setMaxHeartRate(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setRestingHeartRate(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setThresholdHeartRate(final Integer value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitTimeInZone build() {
+            return (FitTimeInZone) super.build();
+        }
     }
 }

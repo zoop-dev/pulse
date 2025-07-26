@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -14,99 +15,53 @@ public class FitRecordDataFactory {
     }
 
     public static RecordData create(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
-        switch (recordDefinition.getGlobalFITMessage().getNumber()) {
-            case 0:
-                return new FitFileId(recordDefinition, recordHeader);
-            case 2:
-                return new FitDeviceSettings(recordDefinition, recordHeader);
-            case 3:
-                return new FitUserProfile(recordDefinition, recordHeader);
-            case 7:
-                return new FitZonesTarget(recordDefinition, recordHeader);
-            case 12:
-                return new FitSport(recordDefinition, recordHeader);
-            case 15:
-                return new FitGoals(recordDefinition, recordHeader);
-            case 18:
-                return new FitSession(recordDefinition, recordHeader);
-            case 19:
-                return new FitLap(recordDefinition, recordHeader);
-            case 20:
-                return new FitRecord(recordDefinition, recordHeader);
-            case 21:
-                return new FitEvent(recordDefinition, recordHeader);
-            case 23:
-                return new FitDeviceInfo(recordDefinition, recordHeader);
-            case 26:
-                return new FitWorkout(recordDefinition, recordHeader);
-            case 31:
-                return new FitCourse(recordDefinition, recordHeader);
-            case 34:
-                return new FitActivity(recordDefinition, recordHeader);
-            case 49:
-                return new FitFileCreator(recordDefinition, recordHeader);
-            case 55:
-                return new FitMonitoring(recordDefinition, recordHeader);
-            case 103:
-                return new FitMonitoringInfo(recordDefinition, recordHeader);
-            case 127:
-                return new FitConnectivity(recordDefinition, recordHeader);
-            case 128:
-                return new FitWeather(recordDefinition, recordHeader);
-            case 140:
-                return new FitPhysiologicalMetrics(recordDefinition, recordHeader);
-            case 159:
-                return new FitWatchfaceSettings(recordDefinition, recordHeader);
-            case 160:
-                return new FitGpsMetadata(recordDefinition, recordHeader);
-            case 162:
-                return new FitTimestampCorrelation(recordDefinition, recordHeader);
-            case 206:
-                return new FitFieldDescription(recordDefinition, recordHeader);
-            case 207:
-                return new FitDeveloperData(recordDefinition, recordHeader);
-            case 211:
-                return new FitMonitoringHrData(recordDefinition, recordHeader);
-            case 216:
-                return new FitTimeInZone(recordDefinition, recordHeader);
-            case 222:
-                return new FitAlarmSettings(recordDefinition, recordHeader);
-            case 225:
-                return new FitSet(recordDefinition, recordHeader);
-            case 227:
-                return new FitStressLevel(recordDefinition, recordHeader);
-            case 229:
-                return new FitMaxMetData(recordDefinition, recordHeader);
-            case 259:
-                return new FitDiveGas(recordDefinition, recordHeader);
-            case 268:
-                return new FitDiveSummary(recordDefinition, recordHeader);
-            case 269:
-                return new FitSpo2(recordDefinition, recordHeader);
-            case 273:
-                return new FitSleepDataInfo(recordDefinition, recordHeader);
-            case 274:
-                return new FitSleepDataRaw(recordDefinition, recordHeader);
-            case 275:
-                return new FitSleepStage(recordDefinition, recordHeader);
-            case 297:
-                return new FitRespirationRate(recordDefinition, recordHeader);
-            case 346:
-                return new FitSleepStats(recordDefinition, recordHeader);
-            case 370:
-                return new FitHrvSummary(recordDefinition, recordHeader);
-            case 371:
-                return new FitHrvValue(recordDefinition, recordHeader);
-            case 378:
-                return new FitTrainingLoad(recordDefinition, recordHeader);
-            case 397:
-                return new FitSkinTempRaw(recordDefinition, recordHeader);
-            case 398:
-                return new FitSkinTempOvernight(recordDefinition, recordHeader);
-            case 412:
-                return new FitNap(recordDefinition, recordHeader);
-        }
-
-        return new RecordData(recordDefinition, recordHeader);
+        return switch (recordDefinition.getGlobalFITMessage().getNumber()) {
+            case 0 -> new FitFileId(recordDefinition, recordHeader);
+            case 2 -> new FitDeviceSettings(recordDefinition, recordHeader);
+            case 3 -> new FitUserProfile(recordDefinition, recordHeader);
+            case 7 -> new FitZonesTarget(recordDefinition, recordHeader);
+            case 12 -> new FitSport(recordDefinition, recordHeader);
+            case 15 -> new FitGoals(recordDefinition, recordHeader);
+            case 18 -> new FitSession(recordDefinition, recordHeader);
+            case 19 -> new FitLap(recordDefinition, recordHeader);
+            case 20 -> new FitRecord(recordDefinition, recordHeader);
+            case 21 -> new FitEvent(recordDefinition, recordHeader);
+            case 23 -> new FitDeviceInfo(recordDefinition, recordHeader);
+            case 26 -> new FitWorkout(recordDefinition, recordHeader);
+            case 31 -> new FitCourse(recordDefinition, recordHeader);
+            case 34 -> new FitActivity(recordDefinition, recordHeader);
+            case 49 -> new FitFileCreator(recordDefinition, recordHeader);
+            case 55 -> new FitMonitoring(recordDefinition, recordHeader);
+            case 103 -> new FitMonitoringInfo(recordDefinition, recordHeader);
+            case 127 -> new FitConnectivity(recordDefinition, recordHeader);
+            case 128 -> new FitWeather(recordDefinition, recordHeader);
+            case 140 -> new FitPhysiologicalMetrics(recordDefinition, recordHeader);
+            case 159 -> new FitWatchfaceSettings(recordDefinition, recordHeader);
+            case 160 -> new FitGpsMetadata(recordDefinition, recordHeader);
+            case 162 -> new FitTimestampCorrelation(recordDefinition, recordHeader);
+            case 206 -> new FitFieldDescription(recordDefinition, recordHeader);
+            case 207 -> new FitDeveloperData(recordDefinition, recordHeader);
+            case 211 -> new FitMonitoringHrData(recordDefinition, recordHeader);
+            case 216 -> new FitTimeInZone(recordDefinition, recordHeader);
+            case 222 -> new FitAlarmSettings(recordDefinition, recordHeader);
+            case 225 -> new FitSet(recordDefinition, recordHeader);
+            case 227 -> new FitStressLevel(recordDefinition, recordHeader);
+            case 229 -> new FitMaxMetData(recordDefinition, recordHeader);
+            case 259 -> new FitDiveGas(recordDefinition, recordHeader);
+            case 268 -> new FitDiveSummary(recordDefinition, recordHeader);
+            case 269 -> new FitSpo2(recordDefinition, recordHeader);
+            case 273 -> new FitSleepDataInfo(recordDefinition, recordHeader);
+            case 274 -> new FitSleepDataRaw(recordDefinition, recordHeader);
+            case 275 -> new FitSleepStage(recordDefinition, recordHeader);
+            case 297 -> new FitRespirationRate(recordDefinition, recordHeader);
+            case 346 -> new FitSleepStats(recordDefinition, recordHeader);
+            case 370 -> new FitHrvSummary(recordDefinition, recordHeader);
+            case 371 -> new FitHrvValue(recordDefinition, recordHeader);
+            case 378 -> new FitTrainingLoad(recordDefinition, recordHeader);
+            case 397 -> new FitSkinTempRaw(recordDefinition, recordHeader);
+            case 398 -> new FitSkinTempOvernight(recordDefinition, recordHeader);
+            case 412 -> new FitNap(recordDefinition, recordHeader);
+             default -> new RecordData(recordDefinition, recordHeader);
+        };
     }
 }

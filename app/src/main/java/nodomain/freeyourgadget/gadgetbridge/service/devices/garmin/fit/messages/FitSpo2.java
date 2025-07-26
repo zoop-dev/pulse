@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -38,5 +39,36 @@ public class FitSpo2 extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(269);
+        }
+
+        public Builder setReadingSpo2(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setReadingConfidence(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setMode(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitSpo2 build() {
+            return (FitSpo2) super.build();
+        }
     }
 }

@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -63,5 +64,61 @@ public class FitConnectivity extends RecordData {
     @Nullable
     public Integer getGpsEphemerisDownloadEnabled() {
         return (Integer) getFieldByNumber(10);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(127);
+        }
+
+        public Builder setBluetoothEnabled(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setName(final String value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setLiveTrackingEnabled(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setWeatherConditionsEnabled(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setWeatherAlertsEnabled(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setAutoActivityUploadEnabled(final Integer value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setCourseDownloadEnabled(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setWorkoutDownloadEnabled(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setGpsEphemerisDownloadEnabled(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        @Override
+        public FitConnectivity build() {
+            return (FitConnectivity) super.build();
+        }
     }
 }

@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -49,6 +50,32 @@ public class FitStressLevel extends RecordData {
     @Nullable
     public Integer getBodyEnergy() {
         return (Integer) getFieldByNumber(3);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(227);
+        }
+
+        public Builder setStressLevelValue(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setStressLevelTime(final Long value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setBodyEnergy(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        @Override
+        public FitStressLevel build() {
+            return (FitStressLevel) super.build();
+        }
     }
 
     // manual changes below

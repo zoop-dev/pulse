@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -43,5 +44,41 @@ public class FitDeviceInfo extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(23);
+        }
+
+        public Builder setManufacturer(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setSerialNumber(final Long value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setProduct(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setSoftwareVersion(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitDeviceInfo build() {
+            return (FitDeviceInfo) super.build();
+        }
     }
 }

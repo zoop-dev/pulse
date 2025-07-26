@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -23,5 +24,21 @@ public class FitSleepDataRaw extends RecordData {
     @Nullable
     public Integer getBytes() {
         return (Integer) getFieldByNumber(0);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(274);
+        }
+
+        public Builder setBytes(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        @Override
+        public FitSleepDataRaw build() {
+            return (FitSleepDataRaw) super.build();
+        }
     }
 }

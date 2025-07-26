@@ -6,7 +6,7 @@ import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminUtils;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -168,6 +168,162 @@ public class FitRecord extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(20);
+        }
+
+        public Builder setLatitude(final Double value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setLongitude(final Double value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setAltitude(final Float value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setHeartRate(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setCadence(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setDistance(final Double value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setSpeed(final Float value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setPower(final Integer value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setTemperature(final Integer value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setAccumulatedPower(final Long value) {
+            setFieldByNumber(29, value);
+            return this;
+        }
+
+        public Builder setOscillation(final Float value) {
+            setFieldByNumber(39, value);
+            return this;
+        }
+
+        public Builder setActivity(final Integer value) {
+            setFieldByNumber(42, value);
+            return this;
+        }
+
+        public Builder setFractionalCadence(final Float value) {
+            setFieldByNumber(53, value);
+            return this;
+        }
+
+        public Builder setEnhancedSpeed(final Double value) {
+            setFieldByNumber(73, value);
+            return this;
+        }
+
+        public Builder setEnhancedAltitude(final Double value) {
+            setFieldByNumber(78, value);
+            return this;
+        }
+
+        public Builder setVerticalRatio(final Float value) {
+            setFieldByNumber(83, value);
+            return this;
+        }
+
+        public Builder setStepLength(final Float value) {
+            setFieldByNumber(85, value);
+            return this;
+        }
+
+        public Builder setAbsolutePressure(final Long value) {
+            setFieldByNumber(91, value);
+            return this;
+        }
+
+        public Builder setDepth(final Double value) {
+            setFieldByNumber(92, value);
+            return this;
+        }
+
+        public Builder setNextStopDepth(final Double value) {
+            setFieldByNumber(93, value);
+            return this;
+        }
+
+        public Builder setNextStopTime(final Long value) {
+            setFieldByNumber(94, value);
+            return this;
+        }
+
+        public Builder setTimeToSurface(final Long value) {
+            setFieldByNumber(95, value);
+            return this;
+        }
+
+        public Builder setNdlTime(final Long value) {
+            setFieldByNumber(96, value);
+            return this;
+        }
+
+        public Builder setCnsLoad(final Integer value) {
+            setFieldByNumber(97, value);
+            return this;
+        }
+
+        public Builder setN2Load(final Integer value) {
+            setFieldByNumber(98, value);
+            return this;
+        }
+
+        public Builder setEnhancedRespirationRate(final Integer value) {
+            setFieldByNumber(108, value);
+            return this;
+        }
+
+        public Builder setWristHeartRate(final Integer value) {
+            setFieldByNumber(136, value);
+            return this;
+        }
+
+        public Builder setBodyBattery(final Integer value) {
+            setFieldByNumber(143, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
+            return this;
+        }
+
+        @Override
+        public FitRecord build() {
+            return (FitRecord) super.build();
+        }
     }
 
     // manual changes below

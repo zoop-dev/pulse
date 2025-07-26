@@ -2,7 +2,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen;
 
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
@@ -11,8 +10,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -39,7 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
-// This class is only used to generate code, and will not be packaged in the final apk
+/** @noinspection ReadWriteStringCanBeUsed*/ // This class is only used to generate code, and will not be packaged in the final apk
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class FitCodeGen {
     public static void main(final String[] args) throws Exception {
@@ -60,6 +59,7 @@ public class FitCodeGen {
 
         sbFactory.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;\n");
         sbFactory.append("\n");
+        sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;\n");
@@ -74,22 +74,20 @@ public class FitCodeGen {
         sbFactory.append("    }\n");
         sbFactory.append("\n");
         sbFactory.append("    public static RecordData create(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {\n");
-        sbFactory.append("        switch (recordDefinition.getGlobalFITMessage().getNumber()) {\n");
+        sbFactory.append("        return switch (recordDefinition.getGlobalFITMessage().getNumber()) {\n");
 
         final ArrayList<GlobalFITMessage> globalFITMessages = new ArrayList<>(GlobalFITMessage.KNOWN_MESSAGES.values());
         Collections.sort(globalFITMessages, Comparator.comparingInt(GlobalFITMessage::getNumber));
 
         for (final GlobalFITMessage value : globalFITMessages) {
             final String className = "Fit" + capitalize(toCamelCase(value.name()));
-            sbFactory.append("            case ").append(value.getNumber()).append(":\n");
-            sbFactory.append("                return new ").append(className).append("(recordDefinition, recordHeader);\n");
+            sbFactory.append("            case ").append(value.getNumber()).append(" -> ")
+                    .append("new ").append(className).append("(recordDefinition, recordHeader);\n");
 
             process(value);
         }
-
-        sbFactory.append("        }\n");
-        sbFactory.append("\n");
-        sbFactory.append("        return new RecordData(recordDefinition, recordHeader);\n");
+        sbFactory.append("             default -> new RecordData(recordDefinition, recordHeader);\n");
+        sbFactory.append("        };\n");
         sbFactory.append("    }\n");
         sbFactory.append("}\n");
 
@@ -223,6 +221,32 @@ public class FitCodeGen {
         //sb.append("                .build();\n");
         //sb.append("    }\n");
 
+        //
+        // Builder
+        //
+
+        sb.append("\n");
+        sb.append("    public static class Builder extends FitRecordDataBuilder {\n");
+        sb.append("        public Builder() {\n");
+        sb.append("            super(").append(globalFITMessage.getNumber()).append(");\n");
+        sb.append("        }\n");
+
+        for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
+            final Class<?> fieldType = getFieldType(primitive);
+            final String fieldTypeName = fieldType.getSimpleName();
+            sb.append("\n");
+            sb.append("        public Builder").append(method(" set", primitive)).append("(final ").append(fieldTypeName).append(" value) {\n");
+            sb.append("            setFieldByNumber(").append(primitive.getNumber()).append(", value);\n");
+            sb.append("            return this;\n");
+            sb.append("        }\n");
+        }
+        sb.append("\n");
+        sb.append("        @Override\n");
+        sb.append("        public ").append(className).append(" build() {\n");
+        sb.append("            return (").append(className).append(") super.build();\n");
+        sb.append("        }\n");
+        sb.append("    }\n");
+
         if (outputFile.exists()) {
             // Keep manual changes if any
             final String fileContents = new String(Files.readAllBytes(outputFile.toPath()), StandardCharsets.UTF_8);
@@ -243,48 +267,27 @@ public class FitCodeGen {
 
     public Class<?> getFieldType(final GlobalFITMessage.FieldDefinitionPrimitive primitive) {
         if (primitive.getType() != null) {
-            switch (primitive.getType()) {
-                case ALARM:
-                    return Calendar.class;
-                case ARRAY:
-                    return Number[].class;
-                case DAY_OF_WEEK:
-                    return DayOfWeek.class;
-                case EXERCISE_CATEGORY:
-                    return FieldDefinitionExerciseCategory.ExerciseCategory[].class;
-                case FILE_TYPE:
-                    return FileType.FILETYPE.class;
-                case GOAL_SOURCE:
-                    return FieldDefinitionGoalSource.Source.class;
-                case GOAL_TYPE:
-                    return FieldDefinitionGoalType.Type.class;
-                case HRV_STATUS:
-                    return FieldDefinitionHrvStatus.HrvStatus.class;
-                case HR_TIME_IN_ZONE:
-                    return Double[].class;
-                case HR_ZONE_HIGH_BOUNDARY:
-                    return Integer[].class;
-                case MEASUREMENT_SYSTEM:
-                    return FieldDefinitionMeasurementSystem.Type.class;
-                case TEMPERATURE:
-                    return Integer.class;
-                case TIMESTAMP:
-                    return Long.class;
-                case WEATHER_CONDITION:
-                    return FieldDefinitionWeatherCondition.Condition.class;
-                case LANGUAGE:
-                    return FieldDefinitionLanguage.Language.class;
-                case SLEEP_STAGE:
-                    return FieldDefinitionSleepStage.SleepStage.class;
-                case WEATHER_AQI:
-                    return FieldDefinitionWeatherAqi.AQI_LEVELS.class;
-                case COORDINATE:
-                    return Double.class;
-                case SWIM_STYLE:
-                    return FieldDefinitionSwimStyle.SwimStyle.class;
-            }
-
-            throw new RuntimeException("Unknown field type " + primitive.getType());
+            return switch (primitive.getType()) {
+                case ALARM -> LocalTime.class;
+                case ARRAY -> Number[].class;
+                case DAY_OF_WEEK -> DayOfWeek.class;
+                case EXERCISE_CATEGORY -> FieldDefinitionExerciseCategory.ExerciseCategory[].class;
+                case FILE_TYPE -> FileType.FILETYPE.class;
+                case GOAL_SOURCE -> FieldDefinitionGoalSource.Source.class;
+                case GOAL_TYPE -> FieldDefinitionGoalType.Type.class;
+                case HRV_STATUS -> FieldDefinitionHrvStatus.HrvStatus.class;
+                case HR_TIME_IN_ZONE -> Double[].class;
+                case HR_ZONE_HIGH_BOUNDARY -> Integer[].class;
+                case MEASUREMENT_SYSTEM -> FieldDefinitionMeasurementSystem.Type.class;
+                case TEMPERATURE -> Integer.class;
+                case TIMESTAMP -> Long.class;
+                case WEATHER_CONDITION -> FieldDefinitionWeatherCondition.Condition.class;
+                case LANGUAGE -> FieldDefinitionLanguage.Language.class;
+                case SLEEP_STAGE -> FieldDefinitionSleepStage.SleepStage.class;
+                case WEATHER_AQI -> FieldDefinitionWeatherAqi.AQI_LEVELS.class;
+                case COORDINATE -> Double.class;
+                case SWIM_STYLE -> FieldDefinitionSwimStyle.SwimStyle.class;
+            };
         }
 
         switch (primitive.getBaseType()) {

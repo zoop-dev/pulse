@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -66,5 +67,56 @@ public class FitSet extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(254);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(225);
+        }
+
+        public Builder setDuration(final Double value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setRepetitions(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setWeight(final Float value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setSetType(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setStartTime(final Long value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setCategory(final ExerciseCategory[] value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(254, value);
+            return this;
+        }
+
+        @Override
+        public FitSet build() {
+            return (FitSet) super.build();
+        }
     }
 }

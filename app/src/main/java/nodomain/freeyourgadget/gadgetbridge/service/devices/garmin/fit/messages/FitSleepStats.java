@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -103,5 +104,101 @@ public class FitSleepStats extends RecordData {
     @Nullable
     public Integer getUnk16() {
         return (Integer) getFieldByNumber(16);
+    }
+
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(346);
+        }
+
+        public Builder setCombinedAwakeScore(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setAwakeTimeScore(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setAwakeningsCountScore(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setDeepSleepScore(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setSleepDurationScore(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setLightSleepScore(final Integer value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setOverallSleepScore(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setSleepQualityScore(final Integer value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setSleepRecoveryScore(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setRemSleepScore(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setSleepRestlessnessScore(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setAwakeningsCount(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setUnk12(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setUnk13(final Integer value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setInterruptionsScore(final Integer value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setAverageStressDuringSleep(final Float value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
+        public Builder setUnk16(final Integer value) {
+            setFieldByNumber(16, value);
+            return this;
+        }
+
+        @Override
+        public FitSleepStats build() {
+            return (FitSleepStats) super.build();
+        }
     }
 }
