@@ -129,4 +129,8 @@ public abstract class XiaomiActivityParser {
 
         return null;
     }
+
+    public static boolean validData(final byte[] header, final int i) {
+        return (header[i / 8] & (1 << (7 - (i % 8)))) != 0;
+    }
 }
