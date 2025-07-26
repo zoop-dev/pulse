@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiSmartBand3Coordinator extends XiaomiCoordinator {
     @Override
@@ -41,5 +42,17 @@ public class RedmiSmartBand3Coordinator extends XiaomiCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_default;
+    }
+
+    @Override
+    public boolean supportsFindDevice() {
+        // #4809 does not seem to be supported
+        return false;
+    }
+
+    @Override
+    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+        // #4809 does not seem to be supported
+        return false;
     }
 }
