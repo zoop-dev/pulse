@@ -16,7 +16,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 
 /** @noinspection LoggingSimilarMessage*/
 public class XiaomiBleProtocolV1 extends AbstractXiaomiBleProtocol {
@@ -123,12 +122,12 @@ public class XiaomiBleProtocolV1 extends AbstractXiaomiBleProtocol {
 
         // request highest possible MTU; device should response with the highest supported MTU anyway
         builder.requestMtu(512);
-        builder.add(new SetDeviceStateAction(gbDevice, GBDevice.State.INITIALIZING, context));
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         builder.notify(btCharacteristicCommandWrite, true);
         builder.notify(btCharacteristicCommandRead, true);
         builder.notify(btCharacteristicActivityData, true);
         builder.notify(btCharacteristicDataUpload, true);
-        builder.add(new SetDeviceStateAction(gbDevice, GBDevice.State.AUTHENTICATING, context));
+        builder.setDeviceState(GBDevice.State.AUTHENTICATING);
 
         if (uuidSet.isEncrypted()) {
             builder.run(() -> xiaomiSupport.getAuthService().startEncryptedHandshake());

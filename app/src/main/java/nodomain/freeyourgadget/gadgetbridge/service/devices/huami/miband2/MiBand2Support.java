@@ -28,13 +28,11 @@ import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbip.AmazfitBipFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.miband2.MiBand2FWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.AbortTransactionAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.common.SimpleNotification;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
@@ -70,7 +68,7 @@ public class MiBand2Support extends HuamiSupport {
 
     protected void onAlarmClock(NotificationSpec notificationSpec) {
         alarmClockRinging = true;
-        AbortTransactionAction abortAction = new StopNotificationAction(getCharacteristic(UUID_CHARACTERISTIC_ALERT_LEVEL)) {
+        StopNotificationAction abortAction = new StopNotificationAction(getCharacteristic(UUID_CHARACTERISTIC_ALERT_LEVEL)) {
             @Override
             protected boolean shouldAbort() {
                 return !isAlarmClockRinging();
