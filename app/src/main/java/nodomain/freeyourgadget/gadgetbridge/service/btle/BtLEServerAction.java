@@ -17,12 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattServer;
-import android.bluetooth.BluetoothGattService;
-
-import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
@@ -66,7 +61,7 @@ public abstract class BtLEServerAction {
 
 
     protected String getCreationTime() {
-        return DateTimeUtils.formatDateTime(new Date(creationTimestamp));
+        return DateTimeUtils.formatLocalTime(creationTimestamp);
     }
 
     public String toString() {

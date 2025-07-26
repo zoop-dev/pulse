@@ -18,8 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.btbr;
 
 import android.bluetooth.BluetoothSocket;
 
-import java.util.Date;
-
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 /**
@@ -55,7 +53,7 @@ public abstract class BtBRAction {
     public abstract boolean run(BluetoothSocket socket);
 
     protected String getCreationTime() {
-        return DateTimeUtils.formatDateTime(new Date(creationTimestamp));
+        return DateTimeUtils.formatLocalTime(creationTimestamp);
     }
 
     public String toString() {

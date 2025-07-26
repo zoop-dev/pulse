@@ -328,7 +328,6 @@ public class DateTimeUtils {
         return fromFormattedDate + " - " + toFormattedDate;
     }
 
-    private static SimpleDateFormat mFormatLocalTime;
     /// format UTC millisecond epoch as local time (e.g. 23:59:59)
     public static String formatLocalTime(long epochMilli) {
         Date date = new Date(epochMilli);
