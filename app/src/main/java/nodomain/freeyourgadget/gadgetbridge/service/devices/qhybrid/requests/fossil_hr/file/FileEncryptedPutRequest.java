@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.file;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.widget.Toast;
 
@@ -220,7 +222,7 @@ public class FileEncryptedPutRequest extends FossilRequest implements FileEncryp
     }
 
     private void prepareFilePackets(byte[] file) {
-        int maxPacketSize = adapter.getMTU() - 4;
+        int maxPacketSize = calcMaxWriteChunk(adapter.getMTU()) - 1;
 
         ByteBuffer buffer = ByteBuffer.allocate(file.length + 12 + 4);
         buffer.order(ByteOrder.LITTLE_ENDIAN);

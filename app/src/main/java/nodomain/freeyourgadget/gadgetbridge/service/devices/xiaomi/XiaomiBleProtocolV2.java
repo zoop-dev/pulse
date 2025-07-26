@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSppPacketV2.PACKET_PREAMBLE;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSppPacketV2.PACKET_TYPE_ACK;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSppPacketV2.PACKET_TYPE_DATA;
@@ -187,7 +188,7 @@ public class XiaomiBleProtocolV2 extends AbstractXiaomiBleProtocol {
         if (status != BluetoothGatt.GATT_SUCCESS) {
             return;
         }
-        this.maxWriteSize = mtu - 3;
+        this.maxWriteSize = calcMaxWriteChunk(mtu);
     }
 
     @Override

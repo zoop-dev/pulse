@@ -35,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareInfo.UIHH_HEADER;
 
 public class UpdateFirmwareOperation2020 extends UpdateFirmwareOperation {
@@ -231,7 +232,7 @@ public class UpdateFirmwareOperation2020 extends UpdateFirmwareOperation {
         byte[] fwbytes = info.getBytes();
         int len = fwbytes.length;
         int remaining = len - offset;
-        final int packetLength = getSupport().getMTU() - 3;
+        final int packetLength = calcMaxWriteChunk(getSupport().getMTU());
 
         int chunkLength = mChunkLength;
         if (remaining < mChunkLength) {

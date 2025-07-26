@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.moyoung;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
@@ -150,7 +152,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private final Set<CalendarEvent> lastSync = new HashSet<>();
 
     public int getMtu() {
-        return super.getMTU() - 3;
+        return calcMaxWriteChunk(super.getMTU());
     }
 
     public MoyoungDeviceSupport() {

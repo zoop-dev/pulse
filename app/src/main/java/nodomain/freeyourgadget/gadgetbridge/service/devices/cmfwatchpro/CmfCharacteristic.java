@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.cmfwatchpro;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.Nullable;
@@ -115,7 +117,8 @@ public class CmfCharacteristic {
     }
 
     private byte[][] makeChunksPlaintext(final byte[] payload) {
-        final int chunkSize = mtu - 20;
+        // exclude general protocol overhead (11 bytes), our CRC32 (4 bytes) and ??? (2 bytes)
+        final int chunkSize = calcMaxWriteChunk(mtu) - 11 - 4 - 2;
         final int numChunks = (int) Math.ceil(payload.length / (float) chunkSize);
         final byte[][] chunks = new byte[numChunks][];
 
@@ -145,7 +148,7 @@ public class CmfCharacteristic {
         }
 
         // AES will output 16-byte blocks, exclude the protocol overhead (11 bytes)
-        final int maxEncryptedPayloadSize = ((mtu - 11) / 16) * 16;
+        final int maxEncryptedPayloadSize = ((calcMaxWriteChunk(mtu) - 11) / 16) * 16;
         final int maxPayloadSize = maxEncryptedPayloadSize - 4 - 1; // exclude 4 bytes for crc and 1 byte of aes padding
         final int numChunks = (int) Math.ceil(payload.length / (float) (maxPayloadSize));
         final byte[][] chunks = new byte[numChunks][];

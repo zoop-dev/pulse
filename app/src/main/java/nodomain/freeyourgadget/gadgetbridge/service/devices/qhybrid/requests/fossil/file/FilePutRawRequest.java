@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.file;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import java.nio.ByteBuffer;
@@ -194,7 +196,7 @@ public class FilePutRawRequest extends FossilRequest {
     }
 
     private void prepareFilePackets(byte[] file) {
-        int maxPacketSize = adapter.getMTU() - 4;
+        int maxPacketSize = calcMaxWriteChunk(adapter.getMTU()) - 1;
 
         byte[] data = file;
 

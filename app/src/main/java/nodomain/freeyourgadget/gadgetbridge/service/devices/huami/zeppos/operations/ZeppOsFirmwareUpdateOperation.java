@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -265,7 +267,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
     private void sendFirmwareDataChunk(int offset) {
         int len = fwHelper.getSize();
         int remaining = len - offset;
-        final int packetLength = getSupport().getMTU() - 3;
+        final int packetLength = calcMaxWriteChunk(getSupport().getMTU());
 
         int chunkLength = mChunkLength;
         if (remaining < mChunkLength) {

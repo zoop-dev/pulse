@@ -463,7 +463,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     override fun onSetContacts(contacts: ArrayList<out Contact>) {
         // command + count + 0x37 + 0xfb + numberLength + nameLength + 15 + 20
         val minSize = 2 + 1 + 4 + 15 + 20
-        var chunkSize = mtu - 3
+        var chunkSize = calcMaxWriteChunk(mtu)
         if (mtu < minSize) {
             LOG.warn("MTU is too low - setting contacts might fail")
             chunkSize = 244

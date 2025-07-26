@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,7 +108,7 @@ public class Huami2021ChunkedEncoder {
         }
 
         while (remaining > 0) {
-            final int maxChunkLength = mMTU - 3 - header_size;
+            final int maxChunkLength = calcMaxWriteChunk(mMTU) - header_size;
             int copyBytes = Math.min(remaining, maxChunkLength);
             byte[] chunk = new byte[copyBytes + header_size];
 

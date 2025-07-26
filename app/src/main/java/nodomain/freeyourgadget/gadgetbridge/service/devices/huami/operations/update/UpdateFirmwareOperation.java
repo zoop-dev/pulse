@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
@@ -235,7 +237,7 @@ public class UpdateFirmwareOperation extends AbstractMiBandOperation<HuamiSuppor
     private boolean sendFirmwareData(AbstractHuamiFirmwareInfo info) {
         byte[] fwbytes = info.getBytes();
         int len = fwbytes.length;
-        final int packetLength = getSupport().getMTU() - 3;
+        final int packetLength = calcMaxWriteChunk(getSupport().getMTU());
         int packets = len / packetLength;
 
         try {

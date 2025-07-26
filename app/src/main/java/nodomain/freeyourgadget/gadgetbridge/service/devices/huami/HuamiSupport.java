@@ -3750,7 +3750,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     }
 
     protected void writeToChunkedOld(TransactionBuilder builder, int type, byte[] data) {
-        final int MAX_CHUNKLENGTH = mMTU - 6;
+        final int MAX_CHUNKLENGTH = calcMaxWriteChunk(mMTU) - 3;
         int remaining = data.length;
         byte count = 0;
         while (remaining > 0) {

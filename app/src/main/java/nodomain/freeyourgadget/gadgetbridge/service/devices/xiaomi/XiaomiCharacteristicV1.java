@@ -17,6 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi;
 
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Handler;
 import android.os.Looper;
@@ -527,7 +529,7 @@ public class XiaomiCharacteristicV1 {
 
     public void setMtu(final int newMtu) {
         // subtract ATT packet header size
-        maxWriteSize = newMtu - 3;
+        maxWriteSize = calcMaxWriteChunk(newMtu);
     }
 
     private static class Payload {

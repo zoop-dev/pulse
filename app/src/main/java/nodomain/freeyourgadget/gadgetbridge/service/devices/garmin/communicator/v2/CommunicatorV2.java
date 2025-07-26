@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.v2;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
@@ -72,7 +74,7 @@ public class CommunicatorV2 implements ICommunicator {
 
     @Override
     public void onMtuChanged(final int mtu) {
-        maxWriteSize = mtu - 3;
+        maxWriteSize = calcMaxWriteChunk(mtu);
     }
 
     @Override

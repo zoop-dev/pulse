@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.ble;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.Handler;
@@ -234,8 +236,9 @@ public class PebbleLESupport {
 
                     int payloadToSend = bytesRead + 4;
                     int srcPos = 0;
+                    int maxChunkSize = calcMaxWriteChunk(mMTU) - 1;
                     while (payloadToSend > 0) {
-                        int chunkSize = (payloadToSend < (mMTU - 4)) ? payloadToSend : mMTU - 4;
+                        int chunkSize = (payloadToSend < maxChunkSize) ? payloadToSend : maxChunkSize;
                         byte[] outBuf = new byte[chunkSize + 1];
                         outBuf[0] = (byte) ((mmSequence++ << 3) & 0xff);
                         System.arraycopy(buf, srcPos, outBuf, 1, chunkSize);

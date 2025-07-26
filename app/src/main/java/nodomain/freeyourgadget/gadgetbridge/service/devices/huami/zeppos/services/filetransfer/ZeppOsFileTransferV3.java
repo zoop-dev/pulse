@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.filetransfer;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport.calcMaxWriteChunk;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -240,7 +242,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
             flags |= FLAG_LAST_CHUNK;
         }
 
-        final int partSize = mSupport.getMTU() - 3;
+        final int partSize = calcMaxWriteChunk(mSupport.getMTU());
 
         final ByteBuffer buf = ByteBuffer.allocate(chunk.length + 5);
         buf.order(ByteOrder.LITTLE_ENDIAN);
