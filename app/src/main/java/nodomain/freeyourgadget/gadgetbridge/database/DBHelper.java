@@ -74,7 +74,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.ValidByDate;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
@@ -86,6 +85,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
  * <p/>
  * Maybe this code should actually be in the DAO classes themselves, but then
  * these should be under revision control instead of 100% generated at build time.
+ * @noinspection RedundantIfStatement
  */
 public class DBHelper {
     private static final Logger LOG = LoggerFactory.getLogger(DBHelper.class);
@@ -100,10 +100,6 @@ public class DBHelper {
      * Closes the database and returns its name.
      * Important: after calling this, you have to DBHandler#openDb() it again
      * to get it back to work.
-     *
-     * @param dbHandler
-     * @return
-     * @throws IllegalStateException
      */
     private String getClosedDBPath(DBHandler dbHandler) throws IllegalStateException {
         SQLiteDatabase db = dbHandler.getDatabase();
@@ -202,9 +198,8 @@ public class DBHelper {
      * Looks up the user entity in the database. If a user exists already, it will
      * be updated with the current preferences values. If no user exists yet, it will
      * be created in the database.
-     *
+     * <p>
      * Note: so far there is only ever a single user; there is no multi-user support yet
-     * @param session
      * @return the User entity
      */
     @NonNull
@@ -317,6 +312,7 @@ public class DBHelper {
     }
 
     // TODO: move this into db queries?
+    /** @noinspection BooleanMethodIsAlwaysInverted*/
     private static boolean isValidNow(ValidByDate element) {
         Calendar cal = DateTimeUtils.getCalendarUTC();
         Date nowUTC = cal.getTime();
@@ -337,19 +333,19 @@ public class DBHelper {
 
     private static boolean isEqual(UserAttributes attr, ActivityUser prefsUser) {
         if (prefsUser.getHeightCm() != attr.getHeightCM()) {
-            LOG.info("user height changed to " + prefsUser.getHeightCm() + " from " + attr.getHeightCM());
+            LOG.debug("user height changed to {} from {}", prefsUser.getHeightCm(), attr.getHeightCM());
             return false;
         }
         if (prefsUser.getWeightKg() != attr.getWeightKG()) {
-            LOG.info("user changed to " + prefsUser.getWeightKg() + " from " + attr.getWeightKG());
+            LOG.debug("user weight changed to {} from {}", prefsUser.getWeightKg(), attr.getWeightKG());
             return false;
         }
         if (!Integer.valueOf(prefsUser.getSleepDurationGoal()).equals(attr.getSleepGoalHPD())) {
-            LOG.info("user sleep goal changed to " + prefsUser.getSleepDurationGoal() + " from " + attr.getSleepGoalHPD());
+            LOG.debug("user sleep goal changed to {} from {}", prefsUser.getSleepDurationGoal(), attr.getSleepGoalHPD());
             return false;
         }
         if (!Integer.valueOf(prefsUser.getStepsGoal()).equals(attr.getStepsGoalSPD())) {
-            LOG.info("user steps goal changed to " + prefsUser.getStepsGoal() + " from " + attr.getStepsGoalSPD());
+            LOG.debug("user steps goal changed to {} from {}", prefsUser.getStepsGoal(), attr.getStepsGoalSPD());
             return false;
         }
         return true;
@@ -370,8 +366,6 @@ public class DBHelper {
 
     /**
      * Finds the corresponding Device entity for the given GBDevice.
-     * @param gbDevice
-     * @param session
      * @return the corresponding Device entity, or null if none
      */
     @Nullable
@@ -379,7 +373,7 @@ public class DBHelper {
         DeviceDao deviceDao = session.getDeviceDao();
         Query<Device> query = deviceDao.queryBuilder().where(DeviceDao.Properties.Identifier.eq(gbDevice.getAddress())).build();
         List<Device> devices = query.list();
-        if (devices.size() > 0) {
+        if (!devices.isEmpty()) {
             return devices.get(0);
         }
         return null;
@@ -390,7 +384,7 @@ public class DBHelper {
         final Query<Device> query = deviceDao.queryBuilder().where(DeviceDao.Properties.Identifier.eq(oldAddress)).build();
         final List<Device> devices = query.list();
         if (devices.isEmpty()) {
-            LOG.warn("Failed to find device with address {}", oldAddress);
+            LOG.warn("Failed to find device with address {} to update mac address", oldAddress);
             return;
         }
 
@@ -404,7 +398,7 @@ public class DBHelper {
         final Query<Device> query = deviceDao.queryBuilder().where(DeviceDao.Properties.Identifier.eq(address)).build();
         final List<Device> devices = query.list();
         if (devices.isEmpty()) {
-            LOG.warn("Failed to find device with address {}", address);
+            LOG.warn("Failed to find device with address {} to update device type", address);
             return;
         }
 
@@ -416,7 +410,6 @@ public class DBHelper {
     /**
      * Returns all active (that is, not old, archived ones) from the database.
      * (currently the active handling is not available)
-     * @param daoSession
      */
     public static List<Device> getActiveDevices(DaoSession daoSession) {
         return daoSession.getDeviceDao().loadAll();
@@ -502,6 +495,11 @@ public class DBHelper {
     }
 
     private static void ensureDeviceAttributes(Device device, GBDevice gbDevice, DaoSession session) {
+        if (gbDevice.getFirmwareVersion() == null) {
+            LOG.warn("Attempting to update device attributes with null firmware version for {}", gbDevice);
+            return;
+        }
+
         List<DeviceAttributes> deviceAttributes = device.getDeviceAttributesList();
         DeviceAttributes[] previousDeviceAttributes = new DeviceAttributes[1];
         if (hasUpToDateDeviceAttributes(deviceAttributes, gbDevice, previousDeviceAttributes)) {
@@ -555,8 +553,7 @@ public class DBHelper {
         Property userIdProperty = ActivityDescriptionDao.Properties.UserId;
         QueryBuilder<ActivityDescription> qb = session.getActivityDescriptionDao().queryBuilder();
         qb.where(userIdProperty.eq(user.getId()), isAtLeastPartiallyInRange(qb, tsFromProperty, tsToProperty, tsFrom, tsTo));
-        List<ActivityDescription> descriptions = qb.build().list();
-        return descriptions;
+        return qb.build().list();
     }
 
     /**
@@ -591,7 +588,7 @@ public class DBHelper {
         QueryBuilder<Tag> qb = tagDao.queryBuilder();
         Query<Tag> query = qb.where(TagDao.Properties.UserId.eq(user.getId()), TagDao.Properties.Name.eq(name)).build();
         List<Tag> tags = query.list();
-        if (tags.size() > 0) {
+        if (!tags.isEmpty()) {
             return tags.get(0);
         }
         return createTag(user, name, null, session);
@@ -608,7 +605,7 @@ public class DBHelper {
 
     /**
      * Returns all user-configurable alarms for the given user and device. The list is sorted by
-     * {@link Alarm#position}. Calendar events that may also be modeled as alarms are not stored
+     * {@link Alarm#getPosition()}. Calendar events that may also be modeled as alarms are not stored
      * in the database and hence not returned by this method.
      * @param gbDevice the device for which the alarms shall be loaded
      * @return the list of alarms for the given device
@@ -616,7 +613,7 @@ public class DBHelper {
     @NonNull
     public static List<Alarm> getAlarms(@NonNull GBDevice gbDevice) {
         DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
-        GBPrefs prefs = new GBPrefs(new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress())));
+        GBPrefs prefs = new GBPrefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
 
         int reservedSlots = prefs.getInt(DeviceSettingsPreferenceConst.PREF_RESERVER_ALARMS_CALENDAR, 0);
         int alarmSlots = coordinator.getAlarmSlotCount(gbDevice);
