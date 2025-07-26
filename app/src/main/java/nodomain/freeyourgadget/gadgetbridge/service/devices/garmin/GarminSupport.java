@@ -630,7 +630,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         if (!filesToDownload.isEmpty() && !fileTransferHandler.isDownloading()) {
             if (!gbDevice.isBusy()) {
                 isBusyFetching = true;
-                transferNotification.start(R.string.busy_task_fetch_activity_data, 0);
+                transferNotification.start(
+                        R.string.busy_task_fetch_activity_data,
+                        0,
+                        filesToDownload.stream().mapToLong(FileTransferHandler.DirectoryEntry::getFileSize).sum()
+                );
                 getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
                 getDevice().sendDeviceUpdateIntent(getContext());
             }
@@ -691,8 +695,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             // isBusyFetching so we do not start multiple processors
             isBusyFetching = false;
 
-            transferNotification.start(R.string.busy_task_processing_files, 0);
-            transferNotification.setTotalSize(filesToProcess.size());
+            transferNotification.start(R.string.busy_task_processing_files, 0, filesToProcess.size());
 
             final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), getDevice());
             fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
@@ -1066,8 +1069,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         GB.toast(getContext(), "Check notification for progress", Toast.LENGTH_LONG, GB.INFO);
 
-        transferNotification.start(R.string.busy_task_processing_files, 0);
-        transferNotification.setTotalSize(fitFiles.size());
+        transferNotification.start(R.string.busy_task_processing_files, 0, fitFiles.size());
 
         //try (DBHandler handler = GBApplication.acquireDB()) {
         //    final DaoSession session = handler.getDaoSession();

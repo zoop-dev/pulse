@@ -62,13 +62,14 @@ class GBProgressNotification(
      */
     fun start(
         @StringRes titleRes: Int,
-        @StringRes textRes: Int
+        @StringRes textRes: Int,
+        totalSize: Long = 0
     ) {
         this.titleRes = titleRes
         this.textRes = textRes
         this.chunkProgress = 0
         this.totalProgress = 0
-        this.totalSize = 0
+        this.totalSize = totalSize
 
         LOG.debug(
             "Started notification id={}, title={}",
@@ -119,21 +120,18 @@ class GBProgressNotification(
     }
 
     fun getProgressPercentage(): Int {
-        var percentage = 0f
-
-        if (totalSize != 0L) {
-            percentage = ((totalProgress * 100) / totalSize.toFloat())
-
-            if (chunkProgress != 0L) {
-                percentage += ((chunkProgress * 100) / totalSize.toFloat())
-            }
+        if (totalSize == 0L) {
+            return 0
         }
 
-        return percentage.roundToInt()
+        return (((totalProgress + chunkProgress) * 100f) / totalSize).roundToInt()
     }
 
     fun finish() {
-        visible = false
+        this.visible = false
+        this.chunkProgress = 0
+        this.totalProgress = 0
+        this.totalSize = 0
 
         LOG.debug("Finishing notification id={}", notificationId)
 
@@ -143,17 +141,23 @@ class GBProgressNotification(
     private fun refresh(force: Boolean) {
         val percentage = getProgressPercentage()
 
-        LOG.debug("Updating notification, percentage={}", percentage)
-
         if (visible) {
             val now = System.currentTimeMillis()
             if (now - lastNotificationUpdateTs < MIN_TIME_BETWEEN_UPDATES && !force) {
-                LOG.debug("Throttling notification update")
+                LOG.trace("Throttling notification update")
                 return
             }
 
             lastNotificationUpdateTs = now
         }
+
+        LOG.debug(
+            "Updating notification, progress=({}+{})/{}, percentage={}",
+            totalProgress,
+            chunkProgress,
+            totalSize,
+            percentage
+        )
 
         visible = true
 
