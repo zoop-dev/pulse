@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Andreas Böhler
+/*  Copyright (C) 2019-2025 Andreas Böhler, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,24 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEServerAction;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
  * Invokes a response on a given GATT characteristic read.
- * The result status will be made available asynchronously through the
- * {@link BluetoothGattCallback}
  */
 public class ServerResponseAction extends BtLEServerAction {
-    private static final Logger LOG = LoggerFactory.getLogger(ServerResponseAction.class);
-
     private final byte[] value;
     private final int requestId;
     private final int status;
@@ -47,17 +42,10 @@ public class ServerResponseAction extends BtLEServerAction {
         this.offset = offset;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public boolean run(BluetoothGattServer server) {
-        return writeValue(server, getDevice(), requestId, status, offset, value);
-    }
-
-    protected boolean writeValue(BluetoothGattServer gattServer, BluetoothDevice device, int requestId, int status, int offset, byte[] value) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("writing to server: " + device.getAddress() + ": " + Logging.formatBytes(value));
-        }
-
-        return gattServer.sendResponse(device, requestId, status, offset, value);
+        return server.sendResponse(getDevice(), requestId, status, offset, getValue());
     }
 
     protected final byte[] getValue() {
@@ -67,5 +55,11 @@ public class ServerResponseAction extends BtLEServerAction {
     @Override
     public boolean expectsResult() {
         return false;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + " #" + requestId + " - " + GB.hexdump(getValue());
     }
 }

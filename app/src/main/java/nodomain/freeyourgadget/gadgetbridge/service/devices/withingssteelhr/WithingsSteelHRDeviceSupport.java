@@ -58,7 +58,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.ServerTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.activity.WithingsActivityType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.WithingsServerAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.WithingsUUID;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.conversation.ActivitySampleHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.conversation.BatteryStateHandler;
@@ -441,8 +440,8 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
     public void sendAncsNotificationSourceNotification(NotificationSource notificationSource) {
         try {
             ServerTransactionBuilder builder = performServer("notificationSourceNotification");
-            notificationSourceCharacteristic.setValue(notificationSource.serialize());
-            builder.add(new WithingsServerAction(device, notificationSourceCharacteristic));
+            byte[] data = notificationSource.serialize();
+            builder.notifyCharacteristicChanged(device, notificationSourceCharacteristic, data);
             builder.queue(getQueue());
         } catch (IOException e) {
             logger.error("Could not send notification.", e);
@@ -454,8 +453,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
         try {
             ServerTransactionBuilder builder = performServer("dataSourceNotification");
             byte[] data = response.serialize();
-            dataSourceCharacteristic.setValue(response.serialize());
-            builder.add(new WithingsServerAction(device, dataSourceCharacteristic));
+            builder.notifyCharacteristicChanged(device, dataSourceCharacteristic, data);
             builder.queue(getQueue());
         } catch (IOException e) {
             logger.error("Could not send notification.", e);

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Andreas Böhler, Damien Gaignon
+/*  Copyright (C) 2019-2025 Andreas Böhler, Damien Gaignon, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -17,11 +17,15 @@
 package nodomain.freeyourgadget.gadgetbridge.service.btle;
 
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.NotifyCharacteristicChangedAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ServerResponseAction;
 
 public class ServerTransactionBuilder {
@@ -34,6 +38,7 @@ public class ServerTransactionBuilder {
         mTransaction = new ServerTransaction(taskName);
     }
 
+    @NonNull
     public ServerTransactionBuilder writeServerResponse(BluetoothDevice device, int requestId, int status, int offset, byte[] data) {
         if(device == null) {
             LOG.warn("Unable to write to device: null");
@@ -43,7 +48,20 @@ public class ServerTransactionBuilder {
         return add(action);
     }
 
-    public ServerTransactionBuilder add(BtLEServerAction action) {
+    @NonNull
+    public ServerTransactionBuilder notifyCharacteristicChanged(@NonNull BluetoothDevice device,
+                                                                @NonNull BluetoothGattCharacteristic characteristic,
+                                                                @NonNull byte[] value) {
+        if (device == null) {
+            LOG.warn("Unable to write to device: null");
+            return this;
+        }
+        BtLEServerAction action = new NotifyCharacteristicChangedAction(device, characteristic, value);
+        return add(action);
+    }
+
+    @NonNull
+    public ServerTransactionBuilder add(@NonNull BtLEServerAction action) {
         mTransaction.add(action);
         return this;
     }
@@ -66,10 +84,8 @@ public class ServerTransactionBuilder {
 
     /**
      * To be used as the final step to execute the transaction by the given queue.
-     *
-     * @param queue
      */
-    public void queue(BtLEQueue queue) {
+    public void queue(@NonNull BtLEQueue queue) {
         if (mQueued) {
             throw new IllegalStateException("This builder had already been queued. You must not reuse it.");
         }
