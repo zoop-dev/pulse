@@ -75,16 +75,13 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        // Enter initializing state
         builder.setDeviceState(GBDevice.State.INITIALIZING);
 
         deviceInfoProfile.requestDeviceInfo(builder);
-        deviceInfoProfile.enableNotify(builder, true);
 
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
 
-        builder.notify(UUID_SERVICE_BATTERY_SERVICE, true);
         builder.notify(UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, true);
 
         // Set defaults

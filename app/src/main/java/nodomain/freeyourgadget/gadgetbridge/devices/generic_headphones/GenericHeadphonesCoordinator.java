@@ -58,7 +58,7 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "generic";
+        return "Generic";
     }
 
     @NonNull
@@ -69,8 +69,7 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_unknown;
-
+        return R.string.devicetype_generic_headphones;
     }
 
     @Override

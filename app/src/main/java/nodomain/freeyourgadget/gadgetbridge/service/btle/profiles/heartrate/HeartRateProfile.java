@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Intent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBlePro
  */
 public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(HeartRateProfile.class);
+
+    private static final String ACTION_PREFIX = HeartRateProfile.class.getName() + "_";
+    public static final String ACTION_HEART_RATE = ACTION_PREFIX + "HEART_RATE";
+    public static final String EXTRA_HEART_RATE = "HEART_RATE";
 
     /**
      * Returned when a request to the heart rate control point is not supported by the device
@@ -61,17 +66,34 @@ public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends
     }
 
     @Override
+    public void enableNotify(TransactionBuilder builder, boolean enable) {
+        builder.notify(GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, enable);
+    }
+
+    @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
-        if (GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-            int flag = characteristic.getProperties();
-            final int heartRate;
-            if ((flag & 0x01) != 0) {
-                heartRate = BLETypeConversions.toUint16(value, 1);
-            } else {
-                heartRate = BLETypeConversions.toUnsigned(value, 1);
-            }
-            LOG.info("Heart rate: " + heartRate);
+        if (!GattCharacteristic.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
+            return false;
         }
-        return false;
+
+        final int flag = value[0];
+        final int heartRate;
+        if ((flag & 0x01) != 0) {
+            heartRate = BLETypeConversions.toUint16(value, 1);
+        } else {
+            heartRate = BLETypeConversions.toUnsigned(value, 1);
+        }
+
+        LOG.debug("Got heartRate: {}", heartRate);
+
+        notify(createIntent(heartRate));
+
+        return true;
+    }
+
+    private Intent createIntent(final int heartRate) {
+        final Intent intent = new Intent(ACTION_HEART_RATE);
+        intent.putExtra(EXTRA_HEART_RATE, heartRate);
+        return intent;
     }
 }
