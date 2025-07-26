@@ -60,4 +60,10 @@ public class RedmiSmartBandProCoordinator extends XiaomiCoordinator {
         // Crashes when requesting alarms
         return false;
     }
+
+    @Override
+    public boolean supportsPai() {
+        // Does not support vitality score
+        return false;
+    }
 }
