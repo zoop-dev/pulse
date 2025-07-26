@@ -4172,4 +4172,18 @@
     <string name="error_queue_is_dead">GB-Verarbeitungswarteschlange ist ausgefallen</string>
     <string name="error_sender_is_dead">Sender-Thread von GB ist ausgefallen</string>
     <string name="error_receiver_is_dead">Empfangs-Thread von GB ist ausgefallen</string>
+    <string name="devicetype_garmin_fenix_3">Garmin Fenix 3</string>
+    <string name="devicetype_generic_headphones">Kopfhörer</string>
+    <string name="devicetype_generic_heart_rate_sensor">Pulssensor</string>
+    <string name="devicetype_coospo_h6">Coospo H6</string>
+    <string name="devicetype_coospo_hw9">Coospo H6</string>
+    <string name="devicetype_garmin_hrm_200">Garmin HRM 200</string>
+    <string name="submit_button_text">Abenden</string>
+    <string name="auth_key_required_message">Der Auth-Schlüssel darf nicht leer sein</string>
+    <string name="invalid_auth_key_message">Ungültiger Auth-Schlüssel – bitte erneut versuchen</string>
+    <string name="auth_key_activity_title_for">Auth-Schlüssel für %1$s</string>
+    <string name="auth_key_explanation">Dieses Gerät benötigt einen Auth-Schlüssel zum Koppeln.</string>
+    <string name="help">Hilfe</string>
+    <string name="cannot_open_help_url">URL konnte nicht geöffnet werden</string>
+    <string name="auth_settings">Authentifizierungseinstellungen</string>
 </resources>
