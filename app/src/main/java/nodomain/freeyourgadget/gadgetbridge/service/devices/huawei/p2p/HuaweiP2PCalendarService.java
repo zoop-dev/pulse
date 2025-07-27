@@ -262,7 +262,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
 
     private List<CalendarEvent> getCalendarEventList() {
         final CalendarManager upcomingEvents = new CalendarManager(manager.getSupportProvider().getContext(), manager.getSupportProvider().getDevice().getAddress());
-        return upcomingEvents.getCalendarEventList();
+        return upcomingEvents.getCalendarEventList(7);
     }
 
     private JsonArray getFullCalendarData() {

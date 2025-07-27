@@ -92,12 +92,17 @@ public class CalendarManager {
     }
 
     public List<CalendarEvent> getCalendarEventList() {
+        final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
+        final int lookaheadDays = Math.max(1, prefs.getInt(DeviceSettingsPreferenceConst.PREF_CALENDAR_LOOKAHEAD_DAYS, 7));
+        return getCalendarEventList(lookaheadDays);
+    }
+
+    public List<CalendarEvent> getCalendarEventList(final int lookaheadDays) {
         loadCalendarsBlackList();
 
         final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
 
         final List<CalendarEvent> calendarEventList = new ArrayList<>();
-        final int lookaheadDays = Math.max(1, prefs.getInt("calendar_lookahead_days", 7));
 
         if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR, false)) {
             calendarEventList.addAll(getCalendarEvents(lookaheadDays));

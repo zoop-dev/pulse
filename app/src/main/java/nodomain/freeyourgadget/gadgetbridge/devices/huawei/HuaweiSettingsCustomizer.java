@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.Collections;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ui.HuaweiStressCalibrationActivity;
@@ -161,6 +162,12 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
                 handler.getContext().startActivity(intent);
                 return true;
             });
+        }
+
+        // Huawei devices do not support lookahead > 7 days
+        final Preference calendarLookahead = handler.findPreference(DeviceSettingsPreferenceConst.PREF_CALENDAR_LOOKAHEAD_DAYS);
+        if (calendarLookahead != null) {
+            calendarLookahead.setVisible(false);
         }
     }
 
