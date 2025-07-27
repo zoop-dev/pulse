@@ -68,12 +68,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     private final AtomicBoolean isRegistered = new AtomicBoolean(false);
 
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private final Runnable syncCallback = new Runnable() {
-        @Override
-        public void run() {
-            sendCalendarCmd((byte) 0x01, (byte) 0x01, null);
-        }
-    };
+    private final Runnable syncCallback = () -> sendCalendarCmd((byte) 0x01, (byte) 0x01, null);
 
     private List<CalendarEvent> lastCalendarEvents = null;
 
@@ -136,14 +131,11 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     }
 
     private void sendCalendarCmd(byte command, byte commandData, HuaweiP2PCallback callback) {
-        sendPing(new HuaweiP2PCallback() {
-            @Override
-            public void onResponse(int code, byte[] data) {
-                if ((byte) code != (byte) 0xca)
-                    return;
-                // NOTE: basically this is TLV with one tag 0x1, But I have no reasons to create additional classes for this.
-                sendCommand(new byte[]{command, 0x01, 0x01, commandData}, callback);
-            }
+        sendPing((code, data) -> {
+            if ((byte) code != (byte) 0xca)
+                return;
+            // NOTE: basically this is TLV with one tag 0x1, But I have no reasons to create additional classes for this.
+            sendCommand(new byte[]{command, 0x01, 0x01, commandData}, callback);
         });
     }
 
@@ -431,6 +423,15 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                 return false;
         }
 
+
+        if (calendarData.size() > scheduleCount) {
+            JsonArray newData = new JsonArray();
+            for(int i = 0; i< scheduleCount; i++) {
+                newData.add(calendarData.get(i));
+            }
+            calendarData = newData;
+        }
+
         return sendCalendarFile(majorVersion, minorVersion, calendarData);
     }
 
@@ -457,7 +458,6 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
 
                 LOG.info("Operate mode: {} Major: {} Minor: {} Schedule Count: {}", operateMode, majorVersion, minorVersion, scheduleCount);
 
-                // TODO: scheduleCount can be a max number of events to send, but I am not sure. Ignore it for now.
                 // NOTE: device can initiate calendar sync. So we need to check and answer properly.
                 final boolean syncEnabled = GBApplication.getDeviceSpecificSharedPrefs(manager.getSupportProvider().getDevice().getAddress()).getBoolean(PREF_SYNC_CALENDAR, false);
                 if(!syncEnabled) {
@@ -474,6 +474,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                         //TODO:
                         //sendCalendarCmd((byte) 0x01, (byte) 0x06, null);  //no permissions
 
+                        // NOTE: scheduleCount is a max number of events to send. It suitable only if supportsExternalCalendarService not set
                         //external calendar synchronization only supported on Harmony devices. I don't know how to deal with this.
                         if (!manager.getSupportProvider().getHuaweiCoordinator().supportsExternalCalendarService()) {
                             if (!syncCalendarEvents(majorVersion, minorVersion, scheduleCount)) {
