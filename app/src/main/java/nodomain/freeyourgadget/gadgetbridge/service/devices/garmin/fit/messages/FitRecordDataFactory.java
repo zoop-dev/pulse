@@ -1,6 +1,5 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;
 
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -54,6 +53,9 @@ public class FitRecordDataFactory {
             case 274 -> new FitSleepDataRaw(recordDefinition, recordHeader);
             case 275 -> new FitSleepStage(recordDefinition, recordHeader);
             case 297 -> new FitRespirationRate(recordDefinition, recordHeader);
+            case 336 -> new FitEcgSummary(recordDefinition, recordHeader);
+            case 337 -> new FitEcgRawSample(recordDefinition, recordHeader);
+            case 338 -> new FitEcgSmoothSample(recordDefinition, recordHeader);
             case 346 -> new FitSleepStats(recordDefinition, recordHeader);
             case 370 -> new FitHrvSummary(recordDefinition, recordHeader);
             case 371 -> new FitHrvValue(recordDefinition, recordHeader);

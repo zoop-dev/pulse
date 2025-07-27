@@ -489,6 +489,28 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage ECG_SUMMARY = new GlobalFITMessage(336, "ECG_SUMMARY", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "unknown_0"), // 10103
+            new FieldDefinitionPrimitive(1, BaseType.ENUM, "unknown_1"), // 3
+            new FieldDefinitionPrimitive(2, BaseType.FLOAT32, "unknown_2"), // 512
+            new FieldDefinitionPrimitive(3, BaseType.FLOAT32, "unknown_3"), // 128
+            new FieldDefinitionPrimitive(4, BaseType.UINT32, "ecg_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone
+            new FieldDefinitionPrimitive(6, BaseType.ENUM, "unknown_6"), // 1
+            new FieldDefinitionPrimitive(7, BaseType.FLOAT32, "average_heart_rate"), // bpm
+            new FieldDefinitionPrimitive(10, BaseType.STRING, "unknown_10"), // ?
+            new FieldDefinitionPrimitive(11, BaseType.UINT16, "unknown_11"), // 30
+            new FieldDefinitionPrimitive(12, BaseType.UINT8, "unknown_12") // 39
+    ));
+
+    public static GlobalFITMessage ECG_RAW_SAMPLE = new GlobalFITMessage(337, "ECG_RAW_SAMPLE", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.FLOAT32, "value")
+    ));
+
+    public static GlobalFITMessage ECG_SMOOTH_SAMPLE = new GlobalFITMessage(338, "ECG_SMOOTH_SAMPLE", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.FLOAT32, "value")
+    ));
+
     public static GlobalFITMessage SLEEP_STATS = new GlobalFITMessage(346, "SLEEP_STATS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "combined_awake_score"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "awake_time_score"),
@@ -594,6 +616,9 @@ public class GlobalFITMessage {
         put(268, DIVE_SUMMARY);
         put(275, SLEEP_STAGE);
         put(297, RESPIRATION_RATE);
+        put(336, ECG_SUMMARY);
+        put(337, ECG_RAW_SAMPLE);
+        put(338, ECG_SMOOTH_SAMPLE);
         put(346, SLEEP_STATS);
         put(370, HRV_SUMMARY);
         put(371, HRV_VALUE);

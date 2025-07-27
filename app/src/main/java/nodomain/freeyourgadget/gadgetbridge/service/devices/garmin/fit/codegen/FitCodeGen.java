@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
@@ -59,7 +60,6 @@ public class FitCodeGen {
 
         sbFactory.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;\n");
         sbFactory.append("\n");
-        sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;\n");
@@ -100,6 +100,7 @@ public class FitCodeGen {
 
         final List<String> imports = new ArrayList<>();
         imports.add(Nullable.class.getCanonicalName());
+        imports.add(FitRecordDataBuilder.class.getCanonicalName());
         imports.add(RecordData.class.getCanonicalName());
         imports.add(RecordDefinition.class.getCanonicalName());
         imports.add(RecordHeader.class.getCanonicalName());
