@@ -95,6 +95,7 @@ public class GB {
     public static final int INFO = 1;
     public static final int WARN = 2;
     public static final int ERROR = 3;
+    public static final int DEBUG = 4;
     public static final String ACTION_DISPLAY_MESSAGE = "GB_Display_Message";
     public static final String DISPLAY_MESSAGE_MESSAGE = "message";
     public static final String DISPLAY_MESSAGE_DURATION = "duration";
@@ -505,6 +506,8 @@ public class GB {
             case ERROR:
                 LOG.error(message, ex);
                 break;
+            case DEBUG:
+                LOG.debug(message, ex);
         }
     }
 
