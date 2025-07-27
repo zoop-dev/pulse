@@ -173,6 +173,14 @@
             android:title="@string/pref_theme_black_background"
             app:iconSpaceReserved="false" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_visibility_lock"
+            android:key="block_screenshots"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_summary_block_screenshots"
+            android:title="@string/pref_title_block_screenshot" />
+
         <PreferenceCategory
             android:key="pref_screen_theme"
             android:title="@string/pref_header_main_screen"

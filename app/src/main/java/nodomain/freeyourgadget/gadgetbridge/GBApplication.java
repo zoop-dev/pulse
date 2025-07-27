@@ -21,6 +21,7 @@
 package nodomain.freeyourgadget.gadgetbridge;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.NotificationManager;
@@ -41,12 +42,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Window;
+import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -310,6 +316,8 @@ public class GBApplication extends Application {
         //migrateDeviceTypes();
 
         setupExceptionHandler(prefs.getBoolean("crash_notification", isDebug()));
+
+        registerActivityLifecycleCallbacks(new GBActivityLifecycleCallbacks());
 
         Weather.initializeCache(new WeatherCacheManager(getCacheDir(), prefs.getBoolean("cache_weather", true)));
 
@@ -2258,5 +2266,41 @@ public class GBApplication extends Application {
 
     public void setAutoExportScheduledTimestamp(long autoExportScheduledTimestamp) {
         this.autoExportScheduledTimestamp = autoExportScheduledTimestamp;
+    }
+
+    private static class GBActivityLifecycleCallbacks implements ActivityLifecycleCallbacks{
+        @Override
+        public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+            boolean preventScreenshots = getPrefs().getBoolean(GBPrefs.BLOCK_SCREENSHOTS, false);
+            if (preventScreenshots) {
+                GB.log("set FLAG_SECURE for " + activity.getLocalClassName(), GB.DEBUG, null);
+                Window window = activity.getWindow();
+                window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+            }
+        }
+
+        @Override
+        public void onActivityDestroyed(@NonNull Activity activity) {
+        }
+
+        @Override
+        public void onActivityPaused(@NonNull Activity activity) {
+        }
+
+        @Override
+        public void onActivityResumed(@NonNull Activity activity) {
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+        }
+
+        @Override
+        public void onActivityStarted(@NonNull Activity activity) {
+        }
+
+        @Override
+        public void onActivityStopped(@NonNull Activity activity) {
+        }
     }
 }

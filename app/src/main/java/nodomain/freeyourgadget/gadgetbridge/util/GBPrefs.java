@@ -70,6 +70,7 @@ public class GBPrefs extends Prefs {
 
     public static final String LAST_DEVICE_ADDRESSES = "last_device_addresses";
     public static final String RECONNECT_ONLY_TO_CONNECTED = "general_reconnectonlytoconnected";
+    public static final String BLOCK_SCREENSHOTS = "block_screenshots";
 
     @Deprecated
     public GBPrefs(Prefs prefs) {
