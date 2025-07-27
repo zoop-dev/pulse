@@ -162,16 +162,16 @@
             android:defaultValue="@string/pref_theme_value_light"
             android:entries="@array/pref_theme_options"
             android:entryValues="@array/pref_theme_values"
+            android:icon="@drawable/ic_contrast"
             android:key="pref_key_theme"
             android:summary="%s"
-            android:title="@string/pref_title_theme"
-            app:iconSpaceReserved="false" />
+            android:title="@string/pref_title_theme" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:icon="@drawable/ic_dark_mode"
             android:key="pref_key_theme_amoled_black"
             android:layout="@layout/preference_checkbox"
-            android:title="@string/pref_theme_black_background"
-            app:iconSpaceReserved="false" />
+            android:title="@string/pref_theme_black_background" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -184,25 +184,25 @@
         <PreferenceCategory
             android:key="pref_screen_theme"
             android:title="@string/pref_header_main_screen"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="true">
 
             <SwitchPreferenceCompat
                 android:defaultValue="true"
+                android:icon="@drawable/ic_add"
                 android:key="display_add_device_fab"
                 android:layout="@layout/preference_checkbox"
                 android:summaryOff="@string/pref_display_add_device_fab_off"
                 android:summaryOn="@string/pref_display_add_device_fab_on"
-                android:title="@string/pref_display_add_device_fab"
-                app:iconSpaceReserved="false" />
+                android:title="@string/pref_display_add_device_fab" />
 
             <SwitchPreferenceCompat
                 android:defaultValue="true"
+                android:icon="@drawable/ic_bottom_navigation"
                 android:key="display_bottom_navigation_bar"
                 android:layout="@layout/preference_checkbox"
                 android:summaryOff="@string/pref_summary_bottom_navigation_bar_off"
                 android:summaryOn="@string/pref_summary_bottom_navigation_bar_on"
-                android:title="@string/pref_title_bottom_navigation_bar"
-                app:iconSpaceReserved="false" />
+                android:title="@string/pref_title_bottom_navigation_bar" />
         </PreferenceCategory>
     </PreferenceScreen>
 
