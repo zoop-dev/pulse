@@ -4265,4 +4265,18 @@
     <string name="error_queue_is_dead">Fronta zpracování GB je mrtvá</string>
     <string name="error_sender_is_dead">Vlákno odesílání GB je mrtvé</string>
     <string name="error_receiver_is_dead">Vlákno přijímání GB je mrtvé</string>
+    <string name="devicetype_garmin_fenix_3">Garmin Fenix 3</string>
+    <string name="devicetype_generic_headphones">Sluchátka</string>
+    <string name="devicetype_generic_heart_rate_sensor">Senzor tepu</string>
+    <string name="devicetype_coospo_h6">Coospo H6</string>
+    <string name="devicetype_coospo_hw9">Coospo HW9</string>
+    <string name="devicetype_garmin_hrm_200">Garmin HRM 200</string>
+    <string name="submit_button_text">Potvrdit</string>
+    <string name="auth_key_required_message">Autentifikační klíč nemůže být prázdný</string>
+    <string name="invalid_auth_key_message">Neplatný autentifikační klíč – zkuste to prosím znovu</string>
+    <string name="auth_key_activity_title_for">Autentifikační klíč pro %1$s</string>
+    <string name="auth_key_explanation">Toto zařízení vyžaduje pro párování autentifikační klíč.</string>
+    <string name="help">Nápověda</string>
+    <string name="cannot_open_help_url">Nepodařilo se otevřít adresu URL</string>
+    <string name="auth_settings">Nastavení autentifikace</string>
 </resources>
