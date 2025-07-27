@@ -91,7 +91,12 @@ public class WriteAction extends BtLEAction {
         }
 
         if (characteristic.setValue(value)) {
-            return gatt.writeCharacteristic(characteristic);
+            if (gatt.writeCharacteristic(characteristic)) {
+                return true;
+            }
+            LOG.error("writing characteristic {} failed", characteristic.getUuid());
+        } else {
+            LOG.error("setting value of characteristic {} failed", characteristic.getUuid());
         }
         return false;
     }
