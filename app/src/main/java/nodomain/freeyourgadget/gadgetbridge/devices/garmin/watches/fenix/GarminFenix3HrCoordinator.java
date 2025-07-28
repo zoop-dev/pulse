@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 
-public class GarminFenix3Coordinator extends GarminWatchCoordinator {
+public class GarminFenix3HrCoordinator extends GarminWatchCoordinator {
     @Override
     public boolean isExperimental() {
         // #4480 - Some sync and connection issues
@@ -14,11 +14,11 @@ public class GarminFenix3Coordinator extends GarminWatchCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^fenix 3$");
+        return Pattern.compile("^fenix 3 HR$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_fenix_3;
+        return R.string.devicetype_garmin_fenix_3_hr;
     }
 }
