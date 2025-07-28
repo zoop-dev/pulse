@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025 Vitaliy Tomin, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.igpsport;
 
 import android.app.Activity;
@@ -49,7 +65,7 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public boolean supportsActivityTracks() {
+    public boolean supportsActivityTracks(final GBDevice device) {
         return true;
     }
 
@@ -59,12 +75,12 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public boolean supportsAppListFetching() {
+    public boolean supportsAppListFetching(final GBDevice device) {
         return true;
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity() {
+    public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
         return AppManagerActivity.class;
     }
 

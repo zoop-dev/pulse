@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025 Vitaliy Tomin, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
 import java.io.IOException;
@@ -119,27 +135,27 @@ public class IGPSportWeather {
             TransactionBuilder builder = support.performInitialized("set weather");
             Back.back_msg.Builder weatherMsg = Back.back_msg.newBuilder();
             Back.weather_current_data_message.Builder currentWeatherMsg =Back.weather_current_data_message.newBuilder();
-            currentWeatherMsg.setCurDayMinTemp(weatherSpec.todayMinTemp-273);
-            currentWeatherMsg.setCurDayMaxTemp(weatherSpec.todayMaxTemp-273);
-            currentWeatherMsg.setCurTemperature(weatherSpec.currentTemp-273);
-            currentWeatherMsg.setCurWeather(IGPSportWeather.convertOWMtoQWeather(weatherSpec.currentConditionCode));
-            currentWeatherMsg.setWindDeg(String.valueOf(weatherSpec.windDirection));
-            currentWeatherMsg.setWindSpd(String.valueOf(Math.round(weatherSpec.windSpeed)));
+            currentWeatherMsg.setCurDayMinTemp(weatherSpec.getTodayMinTemp()-273);
+            currentWeatherMsg.setCurDayMaxTemp(weatherSpec.getTodayMaxTemp()-273);
+            currentWeatherMsg.setCurTemperature(weatherSpec.getCurrentTemp()-273);
+            currentWeatherMsg.setCurWeather(IGPSportWeather.convertOWMtoQWeather(weatherSpec.getCurrentConditionCode()));
+            currentWeatherMsg.setWindDeg(String.valueOf(weatherSpec.getWindDirection()));
+            currentWeatherMsg.setWindSpd(String.valueOf(Math.round(weatherSpec.getWindSpeed())));
             currentWeatherMsg.setTime(formatterHourly.format(currentTime));
 
             int currentDay=0;
 
-            for (final WeatherSpec.Daily forecast : weatherSpec.forecasts) {
+            for (final WeatherSpec.Daily forecast : weatherSpec.getForecasts()) {
 
                 LocalDateTime now = LocalDateTime.now();
                 currentDay++;
                 LocalDateTime tomorrow = now.plusDays(currentDay);
                 DateTimeFormatter formatterDaily = DateTimeFormatter.ISO_LOCAL_DATE; //"yyyy-MM-dd"
                 weatherMsg.addThreeDaysMsg(Back.weather_three_days_data_message.newBuilder()
-                        .setWeatherIndex(IGPSportWeather.convertOWMtoQWeather(forecast.conditionCode))
-                        .setRainProb(forecast.precipProbability)
-                        .setMaxTemp(forecast.maxTemp-273)
-                        .setMinTemp(forecast.minTemp-273)
+                        .setWeatherIndex(IGPSportWeather.convertOWMtoQWeather(forecast.getConditionCode()))
+                        .setRainProb(forecast.getPrecipProbability())
+                        .setMaxTemp(forecast.getMaxTemp()-273)
+                        .setMinTemp(forecast.getMinTemp()-273)
                         .setDate(tomorrow.format(formatterDaily)).build());
 
                 if (currentDay > 2) //we only need 3 days
@@ -147,14 +163,14 @@ public class IGPSportWeather {
             }
 
             int currentHour=0;
-            for (final WeatherSpec.Hourly hourly : weatherSpec.hourly) {
+            for (final WeatherSpec.Hourly hourly : weatherSpec.getHourly()) {
                 weatherMsg.addThreeHoursMsg(Back.weather_three_hour_data_memsage.newBuilder()
-                        .setWatherIndex(IGPSportWeather.convertOWMtoQWeather(hourly.conditionCode))
-                        .setRainProb(hourly.precipProbability)
-                        .setTemp(hourly.temp-273)
-                        .setTime(formatterHourly.format(Instant.ofEpochMilli(hourly.timestamp * 1000L)))
-                        .setWindDeg(String.valueOf(hourly.windDirection))
-                        .setWindSpd(String.valueOf(Math.round(hourly.windSpeed))).build());
+                        .setWatherIndex(IGPSportWeather.convertOWMtoQWeather(hourly.getConditionCode()))
+                        .setRainProb(hourly.getPrecipProbability())
+                        .setTemp(hourly.getTemp()-273)
+                        .setTime(formatterHourly.format(Instant.ofEpochMilli(hourly.getTimestamp() * 1000L)))
+                        .setWindDeg(String.valueOf(hourly.getWindDirection()))
+                        .setWindSpd(String.valueOf(Math.round(hourly.getWindSpeed()))).build());
 
                 currentHour++;
                 if (currentHour > 3 ) // its called three hour weather but shows actually 4 entries
@@ -174,7 +190,7 @@ public class IGPSportWeather {
                     weatherMsg.getBackOperateType().getNumber(),
                     weatherMsg.build().toByteArray());
             builder.writeChunkedData(support.writeCharacteristicFourth, weatherBytes, support.getMTU());
-            builder.queue(support.getQueue());
+            builder.queue();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

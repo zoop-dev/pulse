@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025 Vitaliy Tomin, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
 import android.widget.Toast;
@@ -14,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
@@ -109,9 +126,8 @@ public class IGPSportRoutesManager {
                     fileOperationbuilder.build().toByteArray(),
                     handler.getBytes());
             builder.writeChunkedData(support.writeCharacteristicFourth, fileOperationBytes, support.getMTU());
-            support.getDevice().setBusyTask("Installing route");
-            support.getDevice().sendDeviceUpdateIntent(support.getContext());
-            builder.queue(support.getQueue());
+            builder.setBusyTask(R.string.task_installing_route);
+            builder.queue();
 
         } catch (final Exception e) {
             GB.toast(support.getContext(), "Gpx install error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
@@ -129,7 +145,7 @@ public class IGPSportRoutesManager {
             byte[] routePlanBytes = support.craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
             builder.write(support.writeCharacteristicFourth, routePlanBytes);
 
-            builder.queue(support.getQueue());
+            builder.queue();
 
         } catch (IOException e) {
             GB.toast(support.getContext(), "Gpx get list error: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
@@ -191,7 +207,7 @@ public class IGPSportRoutesManager {
     private void requestFiles() {
 
         int endFile = (fileNumber > fileListSupportNumMax ? fileListSupportNumMax - 1 : fileNumber)+startFile;
-        TransactionBuilder builder = new TransactionBuilder("get files list");
+        TransactionBuilder builder = support.createTransactionBuilder("get files list");
 
 
         RoutePlan.route_plan_data_msg.Builder routePlan2ndBuilder = RoutePlan.route_plan_data_msg.newBuilder();
@@ -205,7 +221,7 @@ public class IGPSportRoutesManager {
         fileNumber -= fileListSupportNumMax;
 
         builder.write(support.writeCharacteristicFourth, routePlan2ndBytes);
-        builder.queue(support.getQueue());
+        builder.queue();
     }
 
     public void handleRouteNumber(byte[] pbData) throws InvalidProtocolBufferException {
@@ -235,7 +251,7 @@ public class IGPSportRoutesManager {
             routePlanBuilder.addRoutePlanInfoMsg(installedRouteHash.get(uuid).toMessage());
             byte[] routePlanBytes = support.craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
             builder.write(support.writeCharacteristicFourth, routePlanBytes);
-            builder.queue(support.getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(support.getContext(), "Failed to start gpx navigation: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -250,7 +266,7 @@ public class IGPSportRoutesManager {
             routePlanBuilder.addRoutePlanInfoMsg(installedRouteHash.get(uuid).toMessage());
             byte[] routePlanBytes = support.craftData(routePlanBuilder.getServiceType().getNumber(), 0xff, routePlanBuilder.getRoutePlanOperateType().getNumber(), routePlanBuilder.build().toByteArray());
             builder.write(support.writeCharacteristicFourth, routePlanBytes);
-            builder.queue(support.getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(support.getContext(), "Failed to delete gpx navigation: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }

@@ -2250,6 +2250,11 @@
     <string name="devicetype_earfun_air_s" translatable="false">EarFun Air S</string>
     <string name="devicetype_earfun_air_pro_4" translatable="false">EarFun Air Pro 4</string>
     <string name="devicetype_atc_ble_oepl" translatable="false">ATC_BLE_OEPL</string>
+    <string name="devicetype_igpsport_bsc200">IGPSPORT BSC200</string>
+    <string name="devicetype_igpsport_igs630">IGPSPORT iGS630</string>
+    <string name="task_installing_route">Installing route</string>
+    <string name="route_upload_completed">Route upload completed</string>
+    <string name="route_upload_failed">Route upload failed</string>
     <string name="choose_auto_export_location">Choose export location</string>
     <string name="notification_channel_name">General</string>
     <string name="notification_channel_high_priority_name">High-priority</string>

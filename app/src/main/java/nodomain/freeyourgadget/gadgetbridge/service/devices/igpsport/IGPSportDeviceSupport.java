@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025 Vitaliy Tomin, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
 
@@ -8,7 +24,10 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -47,11 +66,9 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.PeripheralCommon;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.RoutePlan;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
@@ -63,7 +80,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Factory;
 
 
-public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
+public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private static final Logger LOG = LoggerFactory.getLogger(IGPSportDeviceSupport.class);
     public BluetoothGattCharacteristic readCharacteristic;
@@ -147,7 +164,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // mark the device as initializing
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
         readCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX);
         writeCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_TX);
         writeCharacteristicThird = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_TX);
@@ -201,7 +218,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         getDevice().setFirmwareVersion2("N/A");
 
         // mark the device as initialized
-        builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
         return builder;
     }
 
@@ -323,25 +340,15 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                     if (mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
                         gbDevice.unsetBusyTask();
                         gbDevice.sendDeviceUpdateIntent(getContext());
-                        TransactionBuilder builder = new TransactionBuilder("Route  upload finished");
+                        TransactionBuilder builder = createTransactionBuilder("Route  upload finished");
                         if (result == 0) {
-                            builder.add(new SetProgressAction(
-                                    "Route upload completed",
-                                    false,
-                                    100,
-                                    getContext()
-                            ));
+                            builder.setProgress(R.string.route_upload_completed, false, 100);
                             handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Route upload completed", Toast.LENGTH_LONG, GB.INFO));
                         } else {
-                            builder.add(new SetProgressAction(
-                                    "Route upload failed",
-                                    false,
-                                    0,
-                                    getContext()
-                            ));
+                            builder.setProgress(R.string.route_upload_failed, false, 0);
                             handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Failed to upload route", Toast.LENGTH_LONG, GB.ERROR));
                         }
-                        builder.queue(getQueue());
+                        builder.queue();
                     }
                     break;
 
@@ -476,7 +483,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
         LOG.debug("iGPSport notification: " + notificationSpec.type);
-        TransactionBuilder builder = new TransactionBuilder("notification");
+        TransactionBuilder builder = createTransactionBuilder("notification");
 
         Ins.ins_msg.Builder insMsgBuilder = Ins.ins_msg.newBuilder();
         insMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_INS);
@@ -501,13 +508,13 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         insMsgBuilder.setInsDataMsg(insDataMsgBuilder);
         byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
         builder.write(writeCharacteristic, callData);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
     public void onSetCallState(CallSpec callSpec) {
         LOG.debug("iGPSport send call notification");
-        TransactionBuilder builder = new TransactionBuilder("CALL");
+        TransactionBuilder builder = createTransactionBuilder("CALL");
         Ins.ins_msg.Builder insMsgBuilder = Ins.ins_msg.newBuilder();
         insMsgBuilder.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_INS);
         insMsgBuilder.setInsServiceType(Ins.INS_SERVICE_TYPE.enum_INS_SERVICE_TYPE_CALL);
@@ -529,7 +536,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         insMsgBuilder.setInsDataMsg(insDataMsgBuilder);
         byte[] callData = craftData(insMsgBuilder.getServiceType().getNumber(), insMsgBuilder.getInsServiceType().getNumber(), insMsgBuilder.getInsOperateType().getNumber(), insMsgBuilder.build().toByteArray());
         builder.write(writeCharacteristic, callData);
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     @Override
@@ -545,7 +552,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
         byte[] cycleDataMsgBytes = craftData(cycleDataMsg.getServiceType().getNumber(), 0xff, cycleDataMsg.getCyclingDataOperateType().getNumber(), cycleDataMsg.build().toByteArray(), true);
 
         builder.write(writeCharacteristicThird, cycleDataMsgBytes);
-        builder.queue(getQueue());
+        builder.queue();
 
     }
 
@@ -566,7 +573,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
                     setMeasurementSystem(builder);
                     break;
             }
-            builder.queue(getQueue());
+            builder.queue();
         } catch (IOException e) {
             GB.toast(getContext(), "Error sending configuration: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR);
         }
@@ -627,7 +634,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
     }
 
     @Override
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         //final IGPSportGpxRouteInstallHandler gpxRouteHandler = new IGPSportGpxRouteInstallHandler(uri, getContext());
         final IGPSportRouteInstallHandler routeHandler = new IGPSportRouteInstallHandler(uri, getContext());
         if (routeHandler.isValid()) {
@@ -665,7 +672,7 @@ public class IGPSportDeviceSupport extends AbstractBTLEDeviceSupport {
 
     private void handleWeather() {
         // Send weather
-        final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.Weather.getInstance().getWeatherSpecs());
+        final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpecs());
         if (!specs.isEmpty()) {
             weatherManager.handleWeather(specs.get(0));
         }
