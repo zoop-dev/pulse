@@ -4261,4 +4261,23 @@
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">启用已弃用的通知收集监视服务</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_summary">强制使用第二个前台服务保持通知监视器运行，如果 Gadgetbridge 停止接收通知请启用此选项。\n注意：可能会显示第二个持续通知。\n切换后需重启应用。</string>
     <string name="pref_printer_print_received_text">打印分享到 Gadgetbridge 的文本</string>
+    <string name="devicetype_garmin_fenix_3">佳明 Fenix 3</string>
+    <string name="devicetype_generic_headphones">耳机</string>
+    <string name="devicetype_generic_heart_rate_sensor">心率传感器</string>
+    <string name="devicetype_coospo_h6">酷思 H6</string>
+    <string name="devicetype_coospo_hw9">酷思 HW9</string>
+    <string name="devicetype_garmin_hrm_200">佳明 HRM 200</string>
+    <string name="minutes_100m">分钟/100米</string>
+    <string name="minutes_100yd">分钟/100码</string>
+    <string name="error_queue_is_dead">GB 处理队列已停止</string>
+    <string name="error_sender_is_dead">GB 发送线程已停止</string>
+    <string name="error_receiver_is_dead">GB 接收线程已停止</string>
+    <string name="submit_button_text">提交</string>
+    <string name="auth_key_required_message">认证密钥不能为空</string>
+    <string name="invalid_auth_key_message">无效的认证密钥 - 请重试</string>
+    <string name="auth_key_activity_title_for">%1$s 的认证密钥</string>
+    <string name="auth_key_explanation">此设备需要认证密钥进行配对。</string>
+    <string name="help">帮助</string>
+    <string name="cannot_open_help_url">无法打开 URL</string>
+    <string name="auth_settings">认证设置</string>
 </resources>
