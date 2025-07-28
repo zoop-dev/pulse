@@ -4283,4 +4283,7 @@
     <string name="error_queue_is_dead">GB\'s behandelingsrij werkt niet</string>
     <string name="error_sender_is_dead">GB\'s verzendingsproces werkt niet</string>
     <string name="error_receiver_is_dead">GB\'s ontvangstproces werkt niet</string>
+    <string name="submit_button_text">Opslaan</string>
+    <string name="auth_key_required_message">Authenticatiesleutel kan niet leeg zijn</string>
+    <string name="invalid_auth_key_message">Ongeldige authenticatiesleutel - probeer opnieuw</string>
 </resources>
