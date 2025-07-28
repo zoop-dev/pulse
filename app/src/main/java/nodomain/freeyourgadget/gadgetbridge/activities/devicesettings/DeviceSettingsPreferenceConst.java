@@ -597,6 +597,8 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_FORCE_ENABLE_SPO2_SUPPORT = "pref_force_enable_spo2_support";
     public static final String PREF_IGNORE_WAKEUP_STATUS_START = "pref_force_ignore_wakeup_status_start";
     public static final String PREF_IGNORE_WAKEUP_STATUS_END = "pref_force_ignore_wakeup_status_end";
+    public static final String PREF_HUAWEI_SAVE_RAW_FILES = "pref_huawei_save_raw_files";
+
 
     public static final String PREF_FEMOMETER_MEASUREMENT_MODE = "femometer_measurement_mode";
 
