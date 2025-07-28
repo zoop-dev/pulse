@@ -394,7 +394,7 @@ public class HuaweiTruSleepParser {
             LOG.debug("TruSleepDataAcc {} : {}", startTime, String.format("%04x", i.flags));
         }
         for (HuaweiTruSleepParser.TruSleepDataPpg i : ppg) {
-            java.util.Date startTime = new java.util.Date((long) i.startTime);
+            java.util.Date startTime = new java.util.Date(i.startTime);
             LOG.debug("TruSleepDataPpg {} : {}", startTime, String.format("%04x", i.flags));
         }
     }
@@ -440,6 +440,7 @@ public class HuaweiTruSleepParser {
         public void syncComplete(byte[] statusData, byte[] sleepData) { }
         @Override
         public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
+            super.downloadException(e);
             if (e.fileRequest == null) {
                 LOG.error("Failed to download TruSleep file: {}", e.toString());
                 syncComplete(statusData, sleepData);

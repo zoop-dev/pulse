@@ -2790,29 +2790,42 @@ public class HuaweiSupportProvider {
         if (!getHuaweiCoordinator().supportsTruSleep())
             return false;
 
+        HuaweiTruSleepParser.SleepFileDownloadCallback callback = new HuaweiTruSleepParser.SleepFileDownloadCallback(this) {
+            @Override
+            public void syncComplete(byte[] statusData, byte[] sleepData) {
+                LOG.debug("Sync of TruSleep status and data finished");
+
+                if (statusData == null || statusData.length == 0) {
+                    LOG.debug("Sleep state file empty");
+                    syncState.setActivitySync(false);
+                    return;
+                }
+
+                HuaweiTruSleepParser.TruSleepStatus[] results = HuaweiTruSleepParser.parseState(statusData);
+                if (results.length == 0) {
+                    LOG.debug("No sleep results");
+                    syncState.setActivitySync(false);
+                    return;
+                }
+                for (HuaweiTruSleepParser.TruSleepStatus status : results)
+                    addSleepActivity(status.startTime, status.endTime, (byte) 0x06, (byte) 0x0a);
+
+//                HuaweiTruSleepParser.TruSleepData data = HuaweiTruSleepParser.parseData(sleepData);
+//                HuaweiTruSleepParser.analyze(this.provider, results, data);
+            }
+        };
+
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sleepStateFileRequest(
                 getHuaweiCoordinator().getSupportsTruSleepNewSync(),
                 start,
                 end,
-                new HuaweiFileDownloadManager.FileDownloadCallback() {
-                    @Override
-                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
-                        if (fileRequest.getData().length != 0) {
-                            LOG.debug("Parsing sleep state file");
-                            HuaweiTruSleepParser.TruSleepStatus[] results = HuaweiTruSleepParser.parseState(fileRequest.getData());
-                            for (HuaweiTruSleepParser.TruSleepStatus status : results)
-                                addSleepActivity(status.startTime, status.endTime, (byte) 0x06, (byte) 0x0a);
-                        } else
-                            LOG.debug("Sleep state file empty");
-                        syncState.setActivitySync(false);
-                    }
-
-                    @Override
-                    public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
-                        super.downloadException(e);
-                        syncState.setActivitySync(false);
-                    }
-                }
+                callback
+        ), true);
+        huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sleepDataFileRequest(
+                getHuaweiCoordinator().getSupportsTruSleepNewSync(),
+                start,
+                end,
+                callback
         ), true);
         return true;
     }
@@ -3011,39 +3024,6 @@ public class HuaweiSupportProvider {
 
 
     public void onTestNewFunction() {
-        // Show to user
-        gbDevice.setBusyTask(R.string.busy_task_downloading, getContext());
-        gbDevice.sendDeviceUpdateIntent(getContext());
-
-        HuaweiTruSleepParser.SleepFileDownloadCallback callback = new HuaweiTruSleepParser.SleepFileDownloadCallback(this) {
-            @Override
-            public void syncComplete(byte[] statusData, byte[] sleepData) {
-                LOG.debug("Sync of TruSleep status and data finished");
-
-                if (statusData == null || statusData.length == 0)
-                    return;
-
-                HuaweiTruSleepParser.TruSleepStatus[] results = HuaweiTruSleepParser.parseState(statusData);
-                if (results.length == 0)
-                    return;
-
-                HuaweiTruSleepParser.TruSleepData data = HuaweiTruSleepParser.parseData(sleepData);
-                HuaweiTruSleepParser.analyze(this.provider, results, data);
-            }
-        };
-
-        huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sleepStateFileRequest(
-                getHuaweiCoordinator().getSupportsTruSleepNewSync(),
-                0,
-                (int) (System.currentTimeMillis() / 1000),
-                callback
-        ), true);
-        huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sleepDataFileRequest(
-                getHuaweiCoordinator().getSupportsTruSleepNewSync(),
-                0,
-                (int) (System.currentTimeMillis() / 1000),
-                callback
-        ), true);
     }
 
     public void onMusicListReq() {
