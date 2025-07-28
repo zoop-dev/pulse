@@ -1,9 +1,9 @@
 Gebruik uw smartwatch, fitness tracker en andere bluetooth-apparaten zonder de gesloten apps van fabrikanten en zonder de verplichting om een account te maken en uw gegevens op te sturen naar de servers van de fabrikant.
-Voor een volledige lijst van ondersteunde apparaten, kijk op onze website.
+Voor een volledige lijst van ondersteunde apparaten, kijk op de Gadgets-pagina op onze website: https://gadgetbridge.org/gadgets/.
 
 U kunt meldingen op uw pols lezen en (afhankelijk van het apparaat):
 
-- gegevens van de sensors van het apparaat verzamelen
-- het afspelen van muziek op uw Android-apparaat bedienen
-- het weerbericht zien
-- navigatie-instructies krijgen
+- Gegevens van de sensors van het apparaat verzamelen.
+- Het afspelen van muziek op uw Android-apparaat bedienen.
+- Het weerbericht zien.
+- Navigatie-instructies krijgen.
