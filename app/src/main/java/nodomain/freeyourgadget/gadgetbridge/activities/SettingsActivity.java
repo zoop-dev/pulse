@@ -552,17 +552,17 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             try {
                 return AndroidUtils.getFilePath(requireContext().getApplicationContext(), uri);
             } catch (IllegalArgumentException e) {
-                try {
-                    Cursor cursor = requireContext().getContentResolver().query(
-                            uri,
-                            new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME},
-                            null, null, null, null
-                    );
+                try (
+                        Cursor cursor = requireContext().getContentResolver().query(
+                                uri,
+                                new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME},
+                                null, null, null, null
+                        )) {
                     if (cursor != null && cursor.moveToFirst()) {
                         return cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME));
                     }
-                } catch (Exception fdfsdfds) {
-                    LOG.warn("fuck");
+                } catch (Exception e2) {
+                    LOG.warn("getAutoExportLocationSummary", e2);
                 }
             }
             return "";
