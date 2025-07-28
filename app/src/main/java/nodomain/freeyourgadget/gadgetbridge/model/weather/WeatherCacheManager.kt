@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.model.weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import org.slf4j.LoggerFactory
 import java.io.File
 

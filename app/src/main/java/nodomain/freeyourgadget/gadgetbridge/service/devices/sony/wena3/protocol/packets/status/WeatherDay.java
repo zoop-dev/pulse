@@ -17,7 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.status;
 
 import lineageos.weather.util.WeatherUtils;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 public class WeatherDay {
     public final Weather day;

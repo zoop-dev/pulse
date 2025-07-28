@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.model.weather
 
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import java.util.concurrent.CopyOnWriteArrayList
 
 object Weather {

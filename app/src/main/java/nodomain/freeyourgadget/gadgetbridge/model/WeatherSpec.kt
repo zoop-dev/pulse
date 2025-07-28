@@ -16,13 +16,17 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.model.weather
+package nodomain.freeyourgadget.gadgetbridge.model
 
 import android.location.Location
 import android.os.Parcel
 import android.os.Parcelable
 
 // FIXME: document me and my fields, including units
+/**
+ * The package for this class must not change, since that is used by external apps such as
+ * Tiny Weather Forecast Germany.
+ */
 class WeatherSpec() : Parcelable {
     var timestamp: Int = 0 // unix epoch timestamp, in seconds
     var location: String? = null
@@ -182,6 +186,76 @@ class WeatherSpec() : Parcelable {
         airQuality = this@WeatherSpec.airQuality
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as WeatherSpec
+
+        if (timestamp != other.timestamp) return false
+        if (currentTemp != other.currentTemp) return false
+        if (currentConditionCode != other.currentConditionCode) return false
+        if (currentHumidity != other.currentHumidity) return false
+        if (todayMaxTemp != other.todayMaxTemp) return false
+        if (todayMinTemp != other.todayMinTemp) return false
+        if (windSpeed != other.windSpeed) return false
+        if (windDirection != other.windDirection) return false
+        if (uvIndex != other.uvIndex) return false
+        if (precipProbability != other.precipProbability) return false
+        if (dewPoint != other.dewPoint) return false
+        if (pressure != other.pressure) return false
+        if (cloudCover != other.cloudCover) return false
+        if (visibility != other.visibility) return false
+        if (sunRise != other.sunRise) return false
+        if (sunSet != other.sunSet) return false
+        if (moonRise != other.moonRise) return false
+        if (moonSet != other.moonSet) return false
+        if (moonPhase != other.moonPhase) return false
+        if (latitude != other.latitude) return false
+        if (longitude != other.longitude) return false
+        if (feelsLikeTemp != other.feelsLikeTemp) return false
+        if (isCurrentLocation != other.isCurrentLocation) return false
+        if (location != other.location) return false
+        if (currentCondition != other.currentCondition) return false
+        if (airQuality != other.airQuality) return false
+        if (forecasts != other.forecasts) return false
+        if (hourly != other.hourly) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = timestamp
+        result = 31 * result + currentTemp
+        result = 31 * result + currentConditionCode
+        result = 31 * result + currentHumidity
+        result = 31 * result + todayMaxTemp
+        result = 31 * result + todayMinTemp
+        result = 31 * result + windSpeed.hashCode()
+        result = 31 * result + windDirection
+        result = 31 * result + uvIndex.hashCode()
+        result = 31 * result + precipProbability
+        result = 31 * result + dewPoint
+        result = 31 * result + pressure.hashCode()
+        result = 31 * result + cloudCover
+        result = 31 * result + visibility.hashCode()
+        result = 31 * result + sunRise
+        result = 31 * result + sunSet
+        result = 31 * result + moonRise
+        result = 31 * result + moonSet
+        result = 31 * result + moonPhase
+        result = 31 * result + latitude.hashCode()
+        result = 31 * result + longitude.hashCode()
+        result = 31 * result + feelsLikeTemp
+        result = 31 * result + isCurrentLocation
+        result = 31 * result + (location?.hashCode() ?: 0)
+        result = 31 * result + (currentCondition?.hashCode() ?: 0)
+        result = 31 * result + (airQuality?.hashCode() ?: 0)
+        result = 31 * result + forecasts.hashCode()
+        result = 31 * result + hourly.hashCode()
+        return result
+    }
+
     @Deprecated("Kept for backwards compatibility with old weather apps")
     class Forecast() : Parcelable {
         var minTemp: Int = 0 // Kelvin
@@ -203,6 +277,28 @@ class WeatherSpec() : Parcelable {
             dest.writeInt(maxTemp)
             dest.writeInt(conditionCode)
             dest.writeInt(humidity)
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Forecast
+
+            if (minTemp != other.minTemp) return false
+            if (maxTemp != other.maxTemp) return false
+            if (conditionCode != other.conditionCode) return false
+            if (humidity != other.humidity) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = minTemp
+            result = 31 * result + maxTemp
+            result = 31 * result + conditionCode
+            result = 31 * result + humidity
+            return result
         }
 
         companion object {
@@ -279,6 +375,46 @@ class WeatherSpec() : Parcelable {
             dest.writeInt(so2Aqi)
         }
 
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as AirQuality
+
+            if (aqi != other.aqi) return false
+            if (co != other.co) return false
+            if (no2 != other.no2) return false
+            if (o3 != other.o3) return false
+            if (pm10 != other.pm10) return false
+            if (pm25 != other.pm25) return false
+            if (so2 != other.so2) return false
+            if (coAqi != other.coAqi) return false
+            if (no2Aqi != other.no2Aqi) return false
+            if (o3Aqi != other.o3Aqi) return false
+            if (pm10Aqi != other.pm10Aqi) return false
+            if (pm25Aqi != other.pm25Aqi) return false
+            if (so2Aqi != other.so2Aqi) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = aqi
+            result = 31 * result + co.hashCode()
+            result = 31 * result + no2.hashCode()
+            result = 31 * result + o3.hashCode()
+            result = 31 * result + pm10.hashCode()
+            result = 31 * result + pm25.hashCode()
+            result = 31 * result + so2.hashCode()
+            result = 31 * result + coAqi
+            result = 31 * result + no2Aqi
+            result = 31 * result + o3Aqi
+            result = 31 * result + pm10Aqi
+            result = 31 * result + pm25Aqi
+            result = 31 * result + so2Aqi
+            return result
+        }
+
         companion object {
             const val VERSION = 1
 
@@ -351,6 +487,48 @@ class WeatherSpec() : Parcelable {
             return toBeaufort(this.windSpeed)
         }
 
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Daily
+
+            if (minTemp != other.minTemp) return false
+            if (maxTemp != other.maxTemp) return false
+            if (conditionCode != other.conditionCode) return false
+            if (humidity != other.humidity) return false
+            if (windSpeed != other.windSpeed) return false
+            if (windDirection != other.windDirection) return false
+            if (uvIndex != other.uvIndex) return false
+            if (precipProbability != other.precipProbability) return false
+            if (sunRise != other.sunRise) return false
+            if (sunSet != other.sunSet) return false
+            if (moonRise != other.moonRise) return false
+            if (moonSet != other.moonSet) return false
+            if (moonPhase != other.moonPhase) return false
+            if (airQuality != other.airQuality) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = minTemp
+            result = 31 * result + maxTemp
+            result = 31 * result + conditionCode
+            result = 31 * result + humidity
+            result = 31 * result + windSpeed.hashCode()
+            result = 31 * result + windDirection
+            result = 31 * result + uvIndex.hashCode()
+            result = 31 * result + precipProbability
+            result = 31 * result + sunRise
+            result = 31 * result + sunSet
+            result = 31 * result + moonRise
+            result = 31 * result + moonSet
+            result = 31 * result + moonPhase
+            result = 31 * result + (airQuality?.hashCode() ?: 0)
+            return result
+        }
+
         companion object {
             const val VERSION = 1
 
@@ -401,6 +579,36 @@ class WeatherSpec() : Parcelable {
 
         fun windSpeedAsBeaufort(): Int {
             return toBeaufort(this.windSpeed)
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Hourly
+
+            if (timestamp != other.timestamp) return false
+            if (temp != other.temp) return false
+            if (conditionCode != other.conditionCode) return false
+            if (humidity != other.humidity) return false
+            if (windSpeed != other.windSpeed) return false
+            if (windDirection != other.windDirection) return false
+            if (uvIndex != other.uvIndex) return false
+            if (precipProbability != other.precipProbability) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = timestamp
+            result = 31 * result + temp
+            result = 31 * result + conditionCode
+            result = 31 * result + humidity
+            result = 31 * result + windSpeed.hashCode()
+            result = 31 * result + windDirection
+            result = 31 * result + uvIndex.hashCode()
+            result = 31 * result + precipProbability
+            return result
         }
 
         companion object {
