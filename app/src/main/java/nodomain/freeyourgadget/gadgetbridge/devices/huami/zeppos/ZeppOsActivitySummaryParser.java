@@ -85,8 +85,8 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
         }
 
         if (summaryProto.hasType()) {
-            final ZeppOsActivityType activityType = ZeppOsActivityType
-                    .fromCode((byte) summaryProto.getType().getType());
+            final byte typeCode = (byte) summaryProto.getType().getType();
+            final ZeppOsActivityType activityType = ZeppOsActivityType.fromCode(typeCode);
 
             final ActivityKind activityKind;
             if (activityType != null) {
@@ -94,6 +94,7 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             } else {
                 LOG.warn("Unknown workout activity type code {}", String.format("0x%X", summaryProto.getType().getType()));
                 activityKind = ActivityKind.UNKNOWN;
+                summaryData.add(ACTIVITY_TYPE_CODE, typeCode, UNIT_NONE);
             }
             summary.setActivityKind(activityKind.getCode());
         }

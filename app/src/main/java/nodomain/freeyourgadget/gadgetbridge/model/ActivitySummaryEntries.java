@@ -25,6 +25,8 @@ public class ActivitySummaryEntries {
     public static final String STATUS = "status";
     public static final String TYPE = "watchface_dialog_widget_type"; // TODO: change this?
 
+    public static final String ACTIVITY_TYPE_CODE = "activity_type_code";
+
     public static final String TIME_START = "startTime";
     public static final String TIME_END = "endTime";
     public static final String ACTIVE_SECONDS = "activeSeconds";

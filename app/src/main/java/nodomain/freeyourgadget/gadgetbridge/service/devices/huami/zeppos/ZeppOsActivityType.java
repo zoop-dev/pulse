@@ -80,6 +80,7 @@ public enum ZeppOsActivityType {
     IndoorCycling(0x08, ActivityKind.INDOOR_CYCLING),
     IndoorFitness(0x18, ActivityKind.INDOOR_FITNESS),
     IndoorIceSkating(0x2d, ActivityKind.INDOOR_ICE_SKATING),
+    IndoorWalking(0x28, ActivityKind.INDOOR_WALKING),
     JaiAlai(0xab, ActivityKind.JAI_ALAI),
     JazzDance(0x71, ActivityKind.JAZZ_DANCE),
     Judo(0x62, ActivityKind.JUDO),
