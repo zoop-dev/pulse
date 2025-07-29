@@ -4099,4 +4099,6 @@
     <string name="help">Допомога</string>
     <string name="cannot_open_help_url">Не вдалося відкрити URL-адресу</string>
     <string name="auth_settings">Налаштування автентифікації</string>
+    <string name="pref_title_block_screenshot">Блокувати скріншоти</string>
+    <string name="pref_summary_block_screenshots">Забороняє знімки екрана та перегляд на незахищених дисплеях. Для повної чинності потрібен перезапуск ГБ.</string>
 </resources>
