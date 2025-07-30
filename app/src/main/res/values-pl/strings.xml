@@ -4307,4 +4307,8 @@
     <string name="help">Pomoc</string>
     <string name="cannot_open_help_url">Nie można otworzyć adresu URL</string>
     <string name="auth_settings">Ustawienia uwierzytelniania</string>
+    <string name="chinese">Chiński</string>
+    <string name="media_playback_mode_normal">Normalny</string>
+    <string name="media_playback_mode_shuffle">Odtwarzanie losowe</string>
+    <string name="equalizer_preset_standard">Standardowy</string>
 </resources>
