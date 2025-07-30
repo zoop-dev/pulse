@@ -56,7 +56,6 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
     public HuaweiFreebudsSupport() {
         super();
         addSupportedService(UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
-        setBufferSize(1032);
     }
 
     @Override

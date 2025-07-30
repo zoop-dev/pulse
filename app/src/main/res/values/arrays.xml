@@ -2708,6 +2708,7 @@
         <item name="ms_MY">@string/bahasa_melayu</item>
         <item name="fa_IR">@string/persian</item>
         <!-- simplified versions, without a country -->
+        <item name="zh">@string/chinese</item>
         <item name="en">@string/english</item>
         <item name="ko">@string/korean</item>
         <item name="ja">@string/japanese</item>
@@ -2773,6 +2774,7 @@
         <item>ms_MY</item>
         <item>fa_IR</item>
         <!-- simplified versions, without a country -->
+        <item>zh</item>
         <item>en</item>
         <item>ko</item>
         <item>ja</item>
@@ -4117,6 +4119,53 @@
         <item>manual</item>
         <item>custom_1</item>
         <item>custom_2</item>
+    </string-array>
+
+    <string-array name="media_source_names">
+        <item>@string/menuitem_bluetooth</item>
+        <item>@string/mp3</item>
+    </string-array>
+    <string-array name="media_source_values">
+        <item>bluetooth</item>
+        <item>mp3</item>
+    </string-array>
+
+    <string-array name="shokz_equalizer_bluetooth_names">
+        <item>@string/equalizer_preset_standard</item>
+        <item>@string/sony_equalizer_preset_vocal</item>
+    </string-array>
+    <string-array name="shokz_equalizer_bluetooth_values">
+        <item>standard</item>
+        <item>vocal</item>
+    </string-array>
+
+    <string-array name="shokz_equalizer_mp3_names">
+        <item>@string/equalizer_preset_standard</item>
+        <item>@string/Swimming</item>
+    </string-array>
+    <string-array name="shokz_equalizer_mp3_values">
+        <item>standard</item>
+        <item>swimming</item>
+    </string-array>
+
+    <string-array name="media_playback_mode_names">
+        <item>@string/media_playback_mode_normal</item>
+        <item>@string/media_playback_mode_shuffle</item>
+        <item>@string/media_playback_mode_repeat</item>
+    </string-array>
+    <string-array name="media_playback_mode_values">
+        <item>normal</item>
+        <item>shuffle</item>
+        <item>repeat</item>
+    </string-array>
+
+    <string-array name="shokz_controls_names">
+        <item>@string/moondrop_touch_action_assistant</item>
+        <item>@string/media_source_switching_bluetooth_mp3</item>
+    </string-array>
+    <string-array name="shokz_controls_values">
+        <item>assistant</item>
+        <item>media_source</item>
     </string-array>
 
     <string-array name="sony_automatic_power_off_names">

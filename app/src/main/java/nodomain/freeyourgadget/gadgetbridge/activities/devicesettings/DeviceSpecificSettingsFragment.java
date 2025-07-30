@@ -103,6 +103,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
     static final String FRAGMENT_TAG = "DEVICE_SPECIFIC_SETTINGS_FRAGMENT";
 
+    private DeviceSpecificSettings deviceSpecificSettings;
     private DeviceSpecificSettingsCustomizer deviceSpecificSettingsCustomizer;
 
     private GBDevice device;
@@ -142,6 +143,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                         LOG.debug("{} changed, notifying customizer", changedDevice);
                         deviceSpecificSettingsCustomizer.onDeviceChanged(DeviceSpecificSettingsFragment.this);
                     }
+                    reloadEnabledPreferences();
                 }
             }
         }
@@ -174,7 +176,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             return;
         }
         String settingsFileSuffix = arguments.getString("settingsFileSuffix", null);
-        DeviceSpecificSettings deviceSpecificSettings = arguments.getParcelable("deviceSpecificSettings");
+        this.deviceSpecificSettings = arguments.getParcelable("deviceSpecificSettings");
         this.deviceSpecificSettingsCustomizer = arguments.getParcelable("deviceSpecificSettingsCustomizer");
         this.device = arguments.getParcelable("device");
 
@@ -241,6 +243,19 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         }
 
         setChangeListener(rootKey);
+
+        reloadEnabledPreferences();
+    }
+
+    private void reloadEnabledPreferences() {
+        if (deviceSpecificSettings != null) {
+            for (String connectedPreference : deviceSpecificSettings.getConnectedPreferences()) {
+                final Preference pref = findPreference(connectedPreference);
+                if (pref != null) {
+                    pref.setEnabled(device.isInitialized());
+                }
+            }
+        }
     }
 
     private void addDynamicSettings(final String rootKey) {
@@ -810,6 +825,14 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SONY_CONNECT_TWO_DEVICES);
         addPreferenceHandlerFor(PREF_SONY_ADAPTIVE_VOLUME_CONTROL);
         addPreferenceHandlerFor(PREF_SONY_WIDE_AREA_TAP);
+
+        addPreferenceHandlerFor(PREF_MEDIA_SOURCE);
+        addPreferenceHandlerFor(PREF_MEDIA_PLAYBACK_MODE);
+        addPreferenceHandlerFor(PREF_SHOKZ_EQUALIZER_BLUETOOTH);
+        addPreferenceHandlerFor(PREF_SHOKZ_EQUALIZER_MP3);
+
+        addPreferenceHandlerFor(PREF_SHOKZ_CONTROLS_LONG_PRESS_MULTI_FUNCTION);
+        addPreferenceHandlerFor(PREF_SHOKZ_CONTROLS_SIMULTANEOUS_VOLUME_UP_DOWN);
 
         addPreferenceHandlerFor(PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL);
         addPreferenceHandlerFor(PREF_SOUNDCORE_WIND_NOISE_REDUCTION);

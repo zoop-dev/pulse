@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="off"
+        android:entries="@array/media_source_names"
+        android:entryValues="@array/media_source_values"
+        android:icon="@drawable/ic_music_note"
+        android:key="pref_media_source"
+        android:title="@string/media_source"
+        app:useSimpleSummaryProvider="true" />
+
+</androidx.preference.PreferenceScreen>

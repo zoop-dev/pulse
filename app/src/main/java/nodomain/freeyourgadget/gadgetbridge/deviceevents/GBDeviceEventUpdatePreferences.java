@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,18 @@ public class GBDeviceEventUpdatePreferences extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventUpdatePreferences.class);
 
     public final Map<String, Object> preferences;
+
+    @NonNull
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder(super.toString());
+        sb.append("preferences: ");
+        for (Map.Entry<String, Object> e : preferences.entrySet()) {
+            sb.append(e.getKey()).append("=").append(e.getValue()).append(", ");
+        }
+        sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
 
     public GBDeviceEventUpdatePreferences() {
         this.preferences = new HashMap<>();
@@ -73,10 +87,11 @@ public class GBDeviceEventUpdatePreferences extends GBDeviceEvent {
     private void update(final SharedPreferences prefs) {
         final SharedPreferences.Editor editor = prefs.edit();
 
-        for (String key : preferences.keySet()) {
-            final Object value = preferences.get(key);
+        for (Map.Entry<String, Object> e : preferences.entrySet()) {
+            final String key = e.getKey();
+            final Object value = e.getValue();
 
-            LOG.debug("Updating {} = {}", key, value);
+            LOG.trace("Updating {} = {}", key, value);
 
             if (value == null) {
                 editor.remove(key);
@@ -93,6 +108,7 @@ public class GBDeviceEventUpdatePreferences extends GBDeviceEvent {
             } else if (value instanceof Long) {
                 editor.putLong(key, (Long) value);
             } else if (value instanceof Set) {
+                //noinspection unchecked,rawtypes
                 editor.putStringSet(key, (Set) value);
             } else {
                 LOG.warn("Unknown preference value type {} for {}", value.getClass(), key);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="standard"
+        android:entries="@array/shokz_equalizer_bluetooth_names"
+        android:entryValues="@array/shokz_equalizer_bluetooth_values"
+        android:icon="@drawable/ic_equalizer"
+        android:key="pref_shokz_equalizer_bluetooth"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/sony_equalizer" />
+
+    <ListPreference
+        android:defaultValue="standard"
+        android:entries="@array/shokz_equalizer_mp3_names"
+        android:entryValues="@array/shokz_equalizer_mp3_values"
+        android:icon="@drawable/ic_equalizer"
+        android:key="pref_shokz_equalizer_mp3"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/sony_equalizer" />
+
+</androidx.preference.PreferenceScreen>

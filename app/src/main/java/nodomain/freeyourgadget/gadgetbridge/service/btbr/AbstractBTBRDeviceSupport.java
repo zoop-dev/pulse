@@ -16,6 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btbr;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
+import android.os.ParcelUuid;
+
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -24,6 +28,7 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 
 /**
  * Abstract base class for devices connected through a serial protocol, like RFCOMM BT or TCP socket.
@@ -42,11 +47,15 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     private BtBRQueue mQueue;
     private UUID mSupportedService = null;
-    private int mBufferSize = 1024;
+    private final int mBufferSize;
     private final Logger logger;
 
-    public AbstractBTBRDeviceSupport(Logger logger) {
+    /**
+     * @param bufferSize should be larger than the maximum expected message side, or messages might be lost.
+     */
+    public AbstractBTBRDeviceSupport(Logger logger, final int bufferSize) {
         this.logger = logger;
+        this.mBufferSize = bufferSize;
         if (logger == null) {
             throw new IllegalArgumentException("logger must not be null");
         }
@@ -57,6 +66,21 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         synchronized (ConnectionMonitor) {
             final UUID supportedService = getSupportedService();
             if (supportedService == null) {
+                // Before throwing the exception, list the available UUIDs
+                final BluetoothDevice btDevice = getBluetoothAdapter().getRemoteDevice(gbDevice.getAddress());
+                @SuppressLint("MissingPermission") final ParcelUuid[] uuids = btDevice.getUuids();
+                if (uuids == null || uuids.length == 0) {
+                    logger.warn("Device provided no UUIDs to connect to: {}", gbDevice);
+                } else {
+                    for (ParcelUuid uuid : uuids) {
+                        logger.debug(
+                                "discovered service: {}: {}",
+                                BleNamesResolver.resolveServiceName(uuid.toString()),
+                                uuid
+                        );
+                    }
+                }
+
                 throw new NullPointerException("No supported service UUID specified");
             }
 
@@ -134,10 +158,6 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     protected UUID getSupportedService() {
         return mSupportedService;
-    }
-
-    protected void setBufferSize(int bufferSize) {
-        mBufferSize = bufferSize;
     }
 
     protected int getBufferSize() {

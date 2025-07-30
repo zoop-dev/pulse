@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.XmlRes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,9 @@ import java.util.Objects;
 public class DeviceSpecificSettings implements Parcelable {
     private final List<Integer> rootScreens = new ArrayList<>();
     private final Map<String, List<Integer>> subScreens = new LinkedHashMap<>();
+
+    /// Settings that should only be available while connected
+    private final List<String> connectedPreferences = new ArrayList<>();
 
     public DeviceSpecificSettings() {
     }
@@ -115,6 +119,7 @@ public class DeviceSpecificSettings implements Parcelable {
                 Objects.requireNonNull(subScreens.get(e.getKey())).add(screen);
             }
         }
+        connectedPreferences.addAll(deviceSpecificSettings.connectedPreferences);
     }
 
     public List<Integer> getRootScreens() {
@@ -124,6 +129,14 @@ public class DeviceSpecificSettings implements Parcelable {
     @Nullable
     public List<Integer> getScreen(@NonNull final String key) {
         return subScreens.get(key);
+    }
+
+    public void addConnectedPreferences(final String... preferences) {
+        connectedPreferences.addAll(Arrays.asList(preferences));
+    }
+
+    public List<String> getConnectedPreferences() {
+        return connectedPreferences;
     }
 
     public List<Integer> getAllNonRootScreens() {
@@ -143,7 +156,7 @@ public class DeviceSpecificSettings implements Parcelable {
         return allScreens;
     }
 
-    public static final Creator<DeviceSpecificSettings> CREATOR = new Creator<DeviceSpecificSettings>() {
+    public static final Creator<DeviceSpecificSettings> CREATOR = new Creator<>() {
         @Override
         public DeviceSpecificSettings createFromParcel(final Parcel in) {
             final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
@@ -161,6 +174,7 @@ public class DeviceSpecificSettings implements Parcelable {
                 }
                 deviceSpecificSettings.addSubScreen(key, screens);
             }
+            in.readStringList(deviceSpecificSettings.connectedPreferences);
             return deviceSpecificSettings;
         }
 
@@ -189,5 +203,6 @@ public class DeviceSpecificSettings implements Parcelable {
                 dest.writeInt(s);
             }
         }
+        dest.writeStringList(connectedPreferences);
     }
 }

@@ -46,7 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class XiaomiSppSupport extends XiaomiConnectionSupport {
     private static final Logger LOG = LoggerFactory.getLogger(XiaomiSppSupport.class);
 
-    AbstractBTBRDeviceSupport commsSupport = new AbstractBTBRDeviceSupport(LOG) {
+    AbstractBTBRDeviceSupport commsSupport = new AbstractBTBRDeviceSupport(LOG, 1024) {
         @Override
         public boolean useAutoConnect() {
             return mXiaomiSupport.useAutoConnect();

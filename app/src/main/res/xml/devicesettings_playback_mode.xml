@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="normal"
+        android:entries="@array/media_playback_mode_names"
+        android:entryValues="@array/media_playback_mode_values"
+        android:icon="@drawable/ic_play"
+        android:key="pref_media_playback_mode"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/media_playback_mode" />
+
+</androidx.preference.PreferenceScreen>

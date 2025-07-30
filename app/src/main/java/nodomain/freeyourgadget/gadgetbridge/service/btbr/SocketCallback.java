@@ -26,8 +26,6 @@ public interface SocketCallback {
 
     /**
      * Read data from InputStream of BluetoothSocket
-     *
-     * @param data
      */
     void onSocketRead(byte[] data);
 

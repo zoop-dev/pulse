@@ -516,6 +516,13 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SONY_ADAPTIVE_VOLUME_CONTROL = "pref_adaptive_volume_control";
     public static final String PREF_SONY_WIDE_AREA_TAP = "pref_wide_area_tap";
 
+    public static final String PREF_MEDIA_SOURCE = "pref_media_source";
+    public static final String PREF_MEDIA_PLAYBACK_MODE = "pref_media_playback_mode";
+    public static final String PREF_SHOKZ_EQUALIZER_BLUETOOTH = "pref_shokz_equalizer_bluetooth";
+    public static final String PREF_SHOKZ_EQUALIZER_MP3 = "pref_shokz_equalizer_mp3";
+    public static final String PREF_SHOKZ_CONTROLS_LONG_PRESS_MULTI_FUNCTION = "shokz_controls_long_press_multi_function";
+    public static final String PREF_SHOKZ_CONTROLS_SIMULTANEOUS_VOLUME_UP_DOWN = "shokz_controls_simultaneous_volume_up_down";
+
     public static final String PREF_OVERRIDE_FEATURES_ENABLED = "override_features_enabled";
     public static final String PREF_OVERRIDE_FEATURES_LIST = "override_features_list";
 

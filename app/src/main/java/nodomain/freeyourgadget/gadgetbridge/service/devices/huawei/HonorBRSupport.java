@@ -17,17 +17,11 @@
 
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 
 public class HonorBRSupport extends HuaweiBRSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(HonorBRSupport.class);
     public HonorBRSupport() {
         super();
         addSupportedService(HuaweiConstants.UUID_SERVICE_HONOR_SDP);
-        setBufferSize(1032);
     }
-
 }

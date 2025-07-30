@@ -50,9 +50,6 @@ public abstract class GBDeviceEvent {
     /**
      * Helper method to run specific actions configured in the device preferences, upon wear state
      * or awake/asleep events.
-     *
-     * @param actions
-     * @param message
      */
     protected void handleDeviceAction(final Context context, final GBDevice device, Set<String> actions, String message, String broadcastPackage) {
         if (actions.isEmpty()) {

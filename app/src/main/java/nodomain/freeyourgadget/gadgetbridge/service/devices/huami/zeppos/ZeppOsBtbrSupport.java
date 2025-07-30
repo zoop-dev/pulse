@@ -101,9 +101,8 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     private long lastWrite = -1;
 
     public ZeppOsBtbrSupport() {
-        super(LOG);
+        super(LOG, MAX_MTU);
         addSupportedService(HuamiService.UUID_BT_SERIAL_SERVICE);
-        setBufferSize(MAX_MTU);
     }
 
     @Override

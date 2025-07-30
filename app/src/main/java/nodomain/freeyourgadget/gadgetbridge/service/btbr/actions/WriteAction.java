@@ -30,7 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btbr.BtBRAction;
 /**
  * Invokes a write operation on a given socket.
  * The result status will be made available asynchronously through the
- * {@link SocketCallback}
+ * {@link nodomain.freeyourgadget.gadgetbridge.service.btbr.SocketCallback}
  */
 public class WriteAction extends BtBRAction {
     private static final Logger LOG = LoggerFactory.getLogger(WriteAction.class);
@@ -59,7 +59,7 @@ public class WriteAction extends BtBRAction {
 
     protected boolean writeValue(byte[] value) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("writing to socket: " + Logging.formatBytes(value));
+            LOG.debug("writing to socket: {}", Logging.formatBytes(value));
         }
         try {
             mOutputStream.write(value);

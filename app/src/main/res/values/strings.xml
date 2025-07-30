@@ -1208,6 +1208,7 @@
     <string name="manual">Manual</string>
     <string name="simplified_chinese">Chinese (Simplified)</string>
     <string name="traditional_chinese">Chinese (Traditional)</string>
+    <string name="chinese">Chinese</string>
     <string name="english">English</string>
     <string name="english_au">English (Australia)</string>
     <string name="english_ca">English (Canada)</string>
@@ -4205,4 +4206,15 @@
     <string name="help">Help</string>
     <string name="cannot_open_help_url">Could not open URL</string>
     <string name="auth_settings">Authentication settings</string>
+    <string name="devicetype_shokz_openswim_pro">Shokz OpenSwim Pro</string>
+    <string name="equalizer_preset_standard">Standard</string>
+    <string name="media_playback_mode">Playback mode</string>
+    <string name="media_playback_mode_normal">Normal</string>
+    <string name="media_playback_mode_shuffle">Shuffle</string>
+    <string name="media_playback_mode_repeat">Repeat</string>
+    <string name="media_source">Media source</string>
+    <string name="mp3">MP3</string>
+    <string name="media_source_switching_bluetooth_mp3">Switch media source (Bluetooth/MP3)</string>
+    <string name="shokz_controls_long_press_multi_function">Long-press the multi-function button</string>
+    <string name="shokz_controls_simultaneous_volume_up_down">Long-press volume up and down simultaneously</string>
 </resources>

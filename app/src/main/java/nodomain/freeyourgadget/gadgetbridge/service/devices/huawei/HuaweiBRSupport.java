@@ -49,9 +49,8 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
     private final HuaweiSupportProvider supportProvider;
 
     public HuaweiBRSupport() {
-        super(LOG);
+        super(LOG, 1032);
         addSupportedService(HuaweiConstants.UUID_SERVICE_HUAWEI_SDP);
-        setBufferSize(1032);
         supportProvider = new HuaweiSupportProvider(this);
     }
 

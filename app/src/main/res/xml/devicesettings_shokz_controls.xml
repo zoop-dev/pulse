@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue=""
+        android:entries="@array/shokz_controls_names"
+        android:entryValues="@array/shokz_controls_values"
+        android:icon="@drawable/ic_touch"
+        android:key="shokz_controls_long_press_multi_function"
+        android:title="@string/shokz_controls_long_press_multi_function"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:defaultValue=""
+        android:entries="@array/shokz_controls_names"
+        android:entryValues="@array/shokz_controls_values"
+        android:icon="@drawable/ic_arrows_up_down"
+        android:key="shokz_controls_simultaneous_volume_up_down"
+        android:title="@string/shokz_controls_simultaneous_volume_up_down"
+        app:useSimpleSummaryProvider="true" />
+
+</androidx.preference.PreferenceScreen>

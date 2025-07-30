@@ -59,7 +59,7 @@ public class CheckSums {
     public static int getCRC16(byte[] seq) {
         return getCRC16(seq, 0xFFFF);
     }
-    
+
     public static int getCRC16(byte[] seq, int crc) {
         for (byte b : seq) {
             crc = ((crc >>> 8) | (crc << 8)) & 0xffff;
@@ -71,7 +71,7 @@ public class CheckSums {
         crc &= 0xffff;
         return crc;
     }
-    
+
     public static int getCRC16ansi(byte[] seq) {
         int crc = 0xffff;
         int polynomial = 0xA001;
@@ -189,5 +189,25 @@ public class CheckSums {
         }
         md.update(str.getBytes(StandardCharsets.UTF_8));
         return GB.hexdump(md.digest()).toLowerCase(Locale.ROOT);
+    }
+
+    public static int crc16_maxim(final byte[] data, final int offset, final int length) {
+        // Reflected polynomial 0x8005 -> 0xA001 when shifting right (LSB first)
+        final int poly = 0xA001;
+        int crc = 0x0000;
+
+        for (int i = offset; i < offset + length; i++) {
+            final byte b = data[i];
+            crc ^= (b & 0xFF);
+            for (int j = 0; j < 8; j++) {
+                if ((crc & 0x0001) != 0) {
+                    crc = (crc >>> 1) ^ poly;
+                } else {
+                    crc >>>= 1;
+                }
+            }
+        }
+
+        return crc ^ 0xFFFF;
     }
 }

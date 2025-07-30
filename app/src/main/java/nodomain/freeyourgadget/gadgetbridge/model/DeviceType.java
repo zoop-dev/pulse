@@ -315,6 +315,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds6ProCoord
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.scannable.ScannableDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.shokz.ShokzOpenSwimProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.smaq2oss.SMAQ2OSSCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.soflow.SoFlowCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyLinkBudsCoordinator;
@@ -662,6 +663,7 @@ public enum DeviceType {
     SONY_WF_C700N(SonyWFC700NCoordinator.class),
     SONY_WF_C710N(SonyWFC710NCoordinator.class),
     PIXEL_BUDS_A(PixelBudsACoordinator.class),
+    SHOKZ_OPENSWIM_PRO(ShokzOpenSwimProCoordinator.class),
     SOUNDCORE_LIBERTY3_PRO(SoundcoreLiberty3ProCoordinator.class),
     SOUNDCORE_LIBERTY4_NC(SoundcoreLiberty4NCCoordinator.class),
     SOUNDCORE_MOTION300(SoundcoreMotion300Coordinator.class),

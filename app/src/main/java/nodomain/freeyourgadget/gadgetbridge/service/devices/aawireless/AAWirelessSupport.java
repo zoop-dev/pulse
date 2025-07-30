@@ -70,9 +70,8 @@ public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
     private final BroadcastReceiver commandReceiver = new AAWirelessCommandReceiver();
 
     public AAWirelessSupport() {
-        super(LOG);
+        super(LOG, MAX_MTU);
         addSupportedService(UUID_SERVICE_AAWIRELESS);
-        setBufferSize(MAX_MTU);
     }
 
     @Override

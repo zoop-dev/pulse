@@ -485,6 +485,11 @@ public class BleNamesResolver {
         mServices.put("0000185a-0000-1000-8000-00805f9b34fb", "Industrial Measurement Device");
         mServices.put("0000185b-0000-1000-8000-00805f9b34fb", "Ranging");
 
+        mServices.put("00001101-0000-1000-8000-00805f9b34fb", "SPP (Serial Port Profile)");
+        mServices.put("0000111e-0000-1000-8000-00805f9b34fb", "HFP HS (Hands-Free Profile)");
+        mServices.put("0000110b-0000-1000-8000-00805f9b34fb", "A2DP Sink");
+        mServices.put("0000110e-0000-1000-8000-00805f9b34fb", "AVRCP Remote");
+
         mServices.put("0000fdab-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi Proximity Unlock Service)");
         mServices.put("0000fe95-0000-1000-8000-00805f9b34fb", "(Propr: Xiaomi Wear Service)");
         mServices.put("0000fee0-0000-3512-2118-0009af100700", "(Propr: Xiaomi MiLi Service)");
