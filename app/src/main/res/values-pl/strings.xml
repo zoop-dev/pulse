@@ -1891,7 +1891,7 @@
     <string name="pref_switch_noise_control">Przełącznik kontroli hałasu</string>
     <string name="prefs_double_tap_edge">Podwójne stuknięcie krawędzi</string>
     <string name="devicetype_flipper_zero">Flipper zero</string>
-    <string name="activity_prefs_allow_bluetooth_intent_api">API Bluetooth Intent</string>
+    <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent API</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">Pozwól na sterowanie połączeniem Bluetooth za pomocą Intent API</string>
     <string name="activity_type_gymnastics">Gimnastyka</string>
     <string name="activity_type_stepper">Chodzik</string>
@@ -2479,7 +2479,7 @@
     <string name="avgStrokeRate">Średnia częstotliwość uderzeń</string>
     <string name="zepp_os_watchface_the_ultima">Ostateczna</string>
     <string name="zepp_os_watchface_city_of_speed">Miejska prędkość</string>
-    <string name="menuitem_headphone">Słuchawki</string>
+    <string name="menuitem_headphone">Słuchawka</string>
     <string name="femometer_measurement_mode_normal">tryb normalny (60~90s)</string>
     <string name="call_rejection_method_reject">Odrzuć</string>
     <string name="zepp_os_watchface_free_combination">Dowolna kombinacja</string>
@@ -3356,7 +3356,7 @@
     <string name="workout_set_i">Powtórzenie %1d</string>
     <string name="moondrop_equalizer_preset_monitor">Monitor</string>
     <string name="moondrop_touch_earbud_both">Obie</string>
-    <string name="moondrop_touch_earbud">Słuchawki</string>
+    <string name="moondrop_touch_earbud">Słuchawka douszna</string>
     <string name="moondrop_equalizer_preset_basshead">Basshead</string>
     <string name="moondrop_touch_action_call_start">Rozpocznij połączenie</string>
     <string name="moondrop_touch_action_assistant">Aktywuj asystenta głosowego</string>
@@ -4290,4 +4290,21 @@
     <string name="error_queue_is_dead">Kolejka przetwarzania Gadgetbridge uległa awarii</string>
     <string name="error_sender_is_dead">Wątek wysyłania Gadgetbridge uległ awarii</string>
     <string name="error_receiver_is_dead">Wątek odbierania Gadgetbridge uległ awarii</string>
+    <string name="pref_title_block_screenshot">Blokuj zrzuty ekranu</string>
+    <string name="pref_summary_block_screenshots">Zapobiega wykonywaniu zrzutów ekranu i wyświetlaniu na niezabezpieczonych ekranach. Aby w pełni aktywować, wymagane jest ponowne uruchomienie Gadgetbridge.</string>
+    <string name="devicetype_garmin_fenix_3">Garmin Fenix 3</string>
+    <string name="devicetype_garmin_fenix_3_hr">Garmin Fenix 3 HR</string>
+    <string name="devicetype_generic_headphones">Słuchawki</string>
+    <string name="devicetype_generic_heart_rate_sensor">Czujnik tętna</string>
+    <string name="devicetype_coospo_h6">Coospo H6</string>
+    <string name="devicetype_coospo_hw9">Coospo HW9</string>
+    <string name="devicetype_garmin_hrm_200">Garmin HRM 200</string>
+    <string name="submit_button_text">Wyślij</string>
+    <string name="auth_key_required_message">Klucz uwierzytelniający nie może być pusty</string>
+    <string name="invalid_auth_key_message">Nieprawidłowy klucz uwierzytelniający – spróbuj ponownie</string>
+    <string name="auth_key_activity_title_for">Klucz uwierzytelniający dla %1$s</string>
+    <string name="auth_key_explanation">To urządzenie wymaga klucza uwierzytelniającego do parowania.</string>
+    <string name="help">Pomoc</string>
+    <string name="cannot_open_help_url">Nie można otworzyć adresu URL</string>
+    <string name="auth_settings">Ustawienia uwierzytelniania</string>
 </resources>
