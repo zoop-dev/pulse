@@ -2910,6 +2910,7 @@
     <string name="prefs_autoheartrate_interval">Frequency of measurements</string>
     <string name="devicetype_nothingear1">Nothing Ear (1)</string>
     <string name="devicetype_nothingear2">Nothing Ear (2)</string>
+    <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
     <string name="devicetype_nothingearstick">Nothing Ear (Stick)</string>
     <string name="devicetype_nothing_cmf_buds_pro_2">CMF Buds Pro 2</string>
     <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro</string>
