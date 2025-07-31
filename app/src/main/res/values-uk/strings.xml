@@ -692,7 +692,7 @@
     <string name="devicetype_mijia_lywsd02">Розумний годинник Mijia</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="activity_db_management_autoexport_explanation">Для автоматичного експортування бази даних було призначено цю теку:</string>
-    <string name="activity_db_management_autoexport_label">Автоекспорт</string>
+    <string name="activity_db_management_autoexport_label">Авто експорт</string>
     <string name="activity_DB_test_export_button">Запустити автоекспорт зараз</string>
     <string name="activity_DB_test_export_message">Експортування бази даних…</string>
     <string name="activity_DB_delete_legacy_button">Видалити стару базу даних</string>
@@ -4101,4 +4101,16 @@
     <string name="auth_settings">Налаштування автентифікації</string>
     <string name="pref_title_block_screenshot">Блокувати скріншоти</string>
     <string name="pref_summary_block_screenshots">Забороняє знімки екрана та перегляд на незахищених дисплеях. Для повної чинності потрібен перезапуск ГБ.</string>
+    <string name="chinese">Китайська</string>
+    <string name="devicetype_shokz_openswim_pro">Shokz OpenSwim Pro</string>
+    <string name="equalizer_preset_standard">Стандартний</string>
+    <string name="media_playback_mode">Режим відтворення</string>
+    <string name="media_playback_mode_normal">Нормальний</string>
+    <string name="media_playback_mode_shuffle">Перемішати</string>
+    <string name="media_playback_mode_repeat">Повторити</string>
+    <string name="media_source">Джерело медіа</string>
+    <string name="mp3">MP3</string>
+    <string name="media_source_switching_bluetooth_mp3">Перемикання джерела медіа (Bluetooth/MP3)</string>
+    <string name="shokz_controls_long_press_multi_function">Тривале натискання багатофункціональної кнопки</string>
+    <string name="shokz_controls_simultaneous_volume_up_down">Тривале одночасне натискання на кнопки збільшення та зменшення гучності</string>
 </resources>
