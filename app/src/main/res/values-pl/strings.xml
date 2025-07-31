@@ -4311,4 +4311,12 @@
     <string name="media_playback_mode_normal">Normalny</string>
     <string name="media_playback_mode_shuffle">Odtwarzanie losowe</string>
     <string name="equalizer_preset_standard">Standardowy</string>
+    <string name="devicetype_shokz_openswim_pro">Shokz OpenSwim Pro</string>
+    <string name="media_playback_mode">Tryb odtwarzania</string>
+    <string name="media_playback_mode_repeat">Powtarzaj</string>
+    <string name="media_source">Źródło multimediów</string>
+    <string name="mp3">MP3</string>
+    <string name="media_source_switching_bluetooth_mp3">Przełącz źródło multimediów (Bluetooth/MP3)</string>
+    <string name="shokz_controls_long_press_multi_function">Przytrzymaj przycisk wielofunkcyjny</string>
+    <string name="shokz_controls_simultaneous_volume_up_down">Przytrzymaj jednocześnie przyciski zwiększania i zmniejszania głośności</string>
 </resources>
