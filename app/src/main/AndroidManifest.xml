@@ -605,10 +605,6 @@
                 <action android:name="nodomain.freeyourgadget.gadgetbridge.callcontrol" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name=".database.PeriodicExporter"
-            android:enabled="true"
-            android:exported="false" />
         <!--
             forcing the DebugActivity to portrait mode avoids crashes with the progress
             dialog when changing orientation
