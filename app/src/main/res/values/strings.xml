@@ -2112,6 +2112,7 @@
     <string name="devicetype_generic_heart_rate_sensor">Heart Rate Sensor</string>
     <string name="devicetype_coospo_h6">Coospo H6</string>
     <string name="devicetype_coospo_hw9">Coospo HW9</string>
+    <string name="devicetype_coospo_hw807">Coospo HW807</string>
     <string name="devicetype_garmin_hrm_200">Garmin HRM 200</string>
     <!-- Menus on the smart device -->
     <string name="menuitem_nothing">Nothing</string>
