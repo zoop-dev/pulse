@@ -4113,4 +4113,6 @@
     <string name="media_source_switching_bluetooth_mp3">Перемикання джерела медіа (Bluetooth/MP3)</string>
     <string name="shokz_controls_long_press_multi_function">Тривале натискання багатофункціональної кнопки</string>
     <string name="shokz_controls_simultaneous_volume_up_down">Тривале одночасне натискання на кнопки збільшення та зменшення гучності</string>
+    <string name="devicetype_coospo_hw807">Coospo HW807</string>
+    <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
 </resources>
