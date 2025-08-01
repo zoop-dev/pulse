@@ -4186,4 +4186,21 @@
     <string name="help">Hilfe</string>
     <string name="cannot_open_help_url">URL konnte nicht geöffnet werden</string>
     <string name="auth_settings">Authentifizierungseinstellungen</string>
+    <string name="chinese">Chinesisch</string>
+    <string name="devicetype_garmin_fenix_3_hr">Garmin Fenix 3 HR</string>
+    <string name="devicetype_coospo_hw807">Coospo HW807</string>
+    <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
+    <string name="devicetype_shokz_openswim_pro">Shokz OpenSwim Pro</string>
+    <string name="equalizer_preset_standard">Standard</string>
+    <string name="media_playback_mode_normal">Normal</string>
+    <string name="media_playback_mode_repeat">Wiederholen</string>
+    <string name="mp3">MP3</string>
+    <string name="pref_title_block_screenshot">Screenshots blockieren</string>
+    <string name="pref_summary_block_screenshots">Screenshots und die Anzeige auf nicht gesicherten Bildschirmen verhindern. Erfordert einen Neustart von GB, um vollständig wirksam zu werden.</string>
+    <string name="media_playback_mode">Wiedergabemodus</string>
+    <string name="media_playback_mode_shuffle">Zufällig</string>
+    <string name="media_source">Medienquelle</string>
+    <string name="media_source_switching_bluetooth_mp3">Medienquelle wechseln (Bluetooth/MP3)</string>
+    <string name="shokz_controls_long_press_multi_function">Multifunktionstaste lange drücken</string>
+    <string name="shokz_controls_simultaneous_volume_up_down">Gleichzeitiges langes Drücken der Lautstärketasten nach oben und unten</string>
 </resources>
