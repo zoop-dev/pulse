@@ -7,11 +7,11 @@
     "path": "licenses/aho-corasick.txt"
   },
   {
-    "name": "android-emojify",
-    "owner": "AniTrend",
+    "name": "JEmoji",
+    "owner": "Dominic Fellbaum",
     "type": "Apache 2.0",
-    "url": "https://github.com/AniTrend/android-emojify",
-    "path": "licenses/android-emojify.txt"
+    "url": "https://github.com/felldo/JEmoji",
+    "path": "licenses/apache-2.0.txt"
   },
   {
     "name": "Android Jetpack",

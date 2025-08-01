@@ -24,12 +24,6 @@
       ]
     },
     {
-      "groupName": "android-emojify",
-      "matchPackageNames": [
-        "com.github.wax911.android-emojify:*"
-      ]
-    },
-    {
       "groupName": "mapsforge",
       "matchPackageNames": [
         "com.github.mapsforge.mapsforge:*"

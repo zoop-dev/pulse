@@ -66,6 +66,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import net.fellbaum.jemoji.Emoji;
+import net.fellbaum.jemoji.EmojiManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,11 +96,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.SimpleTimeZone;
 
 import de.greenrobot.dao.query.QueryBuilder;
-import io.wax911.emojify.EmojiManager;
-import io.wax911.emojify.parser.EmojiParserKt;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -1363,8 +1365,8 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private String renderUnicodeWordPartAsImage(final String word) {
         // check for emoji
-        final EmojiManager emojiManager = EmojiConverter.getEmojiManager(getContext());
-        final boolean hasEmoji = !EmojiParserKt.extractEmojis(emojiManager, word).isEmpty();
+        Set<Emoji> emojis = EmojiManager.extractEmojis(word);
+        final boolean hasEmoji = !emojis.isEmpty();
         // if we had emoji, ensure we create 3 bit color (not 1 bit B&W)
         final BangleJSBitmapStyle style = hasEmoji ? BangleJSBitmapStyle.RGB_3BPP_TRANSPARENT : BangleJSBitmapStyle.MONOCHROME_TRANSPARENT;
         return "\0"+bitmapToEspruinoString(textToBitmap(word), style);
