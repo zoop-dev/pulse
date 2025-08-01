@@ -329,7 +329,9 @@ public class GBApplication extends Application {
         loadAppsNotifBlackList();
         loadAppsPebbleBlackList();
 
-        PeriodicExporter.enablePeriodicExport(context);
+        if (!GBEnvironment.env().isTest()) {
+            PeriodicExporter.enablePeriodicExport(context);
+        }
 
         if (isRunningMarshmallowOrLater()) {
             notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
