@@ -421,6 +421,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             DeviceSettingsUtils.sortListPreference(languageListPreference);
         }
 
+        final ListPreference transliterationPreference = findPreference(DeviceSettingsPreferenceConst.PREF_TRANSLITERATION_LANGUAGES);
+        if (transliterationPreference != null) {
+            DeviceSettingsUtils.sortListPreference(transliterationPreference);
+        }
+
         String disconnectNotificationState = prefs.getString(PREF_DISCONNECT_NOTIFICATION, PREF_DO_NOT_DISTURB_OFF);
         boolean disconnectNotificationScheduled = disconnectNotificationState.equals(PREF_DO_NOT_DISTURB_SCHEDULED);
 
