@@ -49,11 +49,12 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
@@ -127,6 +128,12 @@ public class HuaweiCoordinator {
         long deviceId = device.getId();
         QueryBuilder<?> qb = session.getHuaweiActivitySampleDao().queryBuilder();
         qb.where(HuaweiActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        QueryBuilder<?> sleepQb = session.getHuaweiSleepStageSampleDao().queryBuilder();
+        sleepQb.where(HuaweiSleepStageSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        QueryBuilder<?> sleepStatsQb = session.getHuaweiSleepStatsSampleDao().queryBuilder();
+        sleepStatsQb.where(HuaweiSleepStatsSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
 
         QueryBuilder<?> stressQb = session.getHuaweiStressSampleDao().queryBuilder();
         stressQb.where(HuaweiStressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
@@ -281,7 +288,7 @@ public class HuaweiCoordinator {
     }
 
     private int getNotificationConstraint(byte which) {
-        return (int)notificationConstraints.getShort(which);
+        return notificationConstraints.getShort(which);
     }
 
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
@@ -727,6 +734,18 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsDictSleepSync() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(143);
+        return false;
+    }
+
+    public boolean supportsBedTime() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(199);
+        return false;
+    }
+
     public boolean supportsUnknownGender() {
         if (supportsExpandCapability())
             return supportsExpandCapability(0x57);
@@ -1084,6 +1103,10 @@ public class HuaweiCoordinator {
     public int[] getStressChartParameters() {
         // For Huawei devices stress data is provided every 30 minutes. So draw it as bars with delta
         return new int[]{1800, 1800, 400};
+    }
+
+    public boolean getSupportsNewTrueSleep(final GBDevice device) {
+        return supportsTruSleep() && supportsDictSleepSync();
     }
 
 }

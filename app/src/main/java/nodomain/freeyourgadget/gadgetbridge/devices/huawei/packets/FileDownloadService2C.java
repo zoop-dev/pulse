@@ -35,36 +35,29 @@ public class FileDownloadService2C {
         SLEEP_DATA,
         RRI,
         GPS,
+        SEQUENCE_DATA,
         UNKNOWN; // Never use this as input
 
         static byte fileTypeToByte(FileType fileType) {
-            switch (fileType) {
-                case SLEEP_STATE:
-                    return (byte) 0x0e;
-                case SLEEP_DATA:
-                    return (byte) 0x0f;
-                case RRI:
-                    return (byte) 0x10;
-                case GPS:
-                    return (byte) 0x11;
-                default:
-                    throw new RuntimeException();
-            }
+            return switch (fileType) {
+                case SLEEP_STATE -> (byte) 0x0e;
+                case SLEEP_DATA -> (byte) 0x0f;
+                case RRI -> (byte) 0x10;
+                case GPS -> (byte) 0x11;
+                case SEQUENCE_DATA -> (byte) 0x16;
+                default -> throw new RuntimeException();
+            };
         }
 
         static FileType byteToFileType(byte b) {
-            switch (b) {
-                case 0x0e:
-                    return FileType.SLEEP_STATE;
-                case 0x0f:
-                    return FileType.SLEEP_DATA;
-                case 0x10:
-                    return FileType.RRI;
-                case 0x11:
-                    return FileType.GPS;
-                default:
-                    return FileType.UNKNOWN;
-            }
+            return switch (b) {
+                case 0x0e -> FileType.SLEEP_STATE;
+                case 0x0f -> FileType.SLEEP_DATA;
+                case 0x10 -> FileType.RRI;
+                case 0x11 -> FileType.GPS;
+                case 0x16 -> FileType.SEQUENCE_DATA;
+                default -> FileType.UNKNOWN;
+            };
         }
     }
 
@@ -72,18 +65,24 @@ public class FileDownloadService2C {
         public static final int id = 0x01;
 
         public static class Request extends HuaweiPacket {
-            public Request(ParamsProvider paramsProvider, String filename, FileType filetype, int startTime, int endTime) {
+            public Request(ParamsProvider paramsProvider, String filename, FileType filetype, int startTime, int endTime, int dictId) {
                 super(paramsProvider);
 
                 this.serviceId = FileDownloadService2C.id;
                 this.commandId = id;
 
+
+                byte fileId = FileType.fileTypeToByte(filetype);
                 // TODO: start and end time might be optional?
                 this.tlv = new HuaweiTLV()
                         .put(0x01, filename)
-                        .put(0x02, FileType.fileTypeToByte(filetype))
+                        .put(0x02, fileId)
                         .put(0x05, startTime)
                         .put(0x06, endTime);
+
+                if(dictId > 0 && fileId == 0x16) { // SEQUENCE_DATA
+                    this.tlv.put(0x0c, dictId);
+                }
 
                 this.complete = true;
             }
@@ -190,7 +189,7 @@ public class FileDownloadService2C {
     public static class RequestBlock extends HuaweiPacket {
         public static final int id = 0x04;
 
-        public RequestBlock(ParamsProvider paramsProvider, byte fileId, int offset, int size, boolean noEncrypt) {
+        public RequestBlock(ParamsProvider paramsProvider, byte fileId, int offset, int size, boolean noEncrypt, int dictId) {
             super(paramsProvider);
 
             this.serviceId = FileDownloadService2C.id;
@@ -200,6 +199,10 @@ public class FileDownloadService2C {
                     .put(0x01, fileId)
                     .put(0x02, offset)
                     .put(0x03, size);
+
+            if(dictId > 0 && fileId == 0x16) { // SEQUENCE_DATA
+                this.tlv.put(0x04, dictId);
+            }
 
             this.complete = true;
             this.isEncrypted = !noEncrypt;

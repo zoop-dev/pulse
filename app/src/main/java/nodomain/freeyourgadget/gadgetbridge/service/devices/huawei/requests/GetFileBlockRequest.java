@@ -48,7 +48,8 @@ public class GetFileBlockRequest extends Request {
                         this.request.getFileId(),
                         this.request.getCurrentOffset(),
                         this.request.getCurrentBlockSize(),
-                        this.request.isNoEncrypt()
+                        this.request.isNoEncrypt(),
+                        this.request.getDictId()
                 ).serialize();
             else
                 return new FileDownloadService0A.RequestBlock.Request(

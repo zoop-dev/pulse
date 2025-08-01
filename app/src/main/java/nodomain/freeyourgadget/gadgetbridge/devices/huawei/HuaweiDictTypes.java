@@ -23,4 +23,6 @@ public class HuaweiDictTypes {
 
     public static final int SKIN_TEMPERATURE_CLASS = 400012;
     public static final int SKIN_TEMPERATURE_VALUE = 400012430;
+
+    public static final int SLEEP_DETAILS_CLASS = 700013;
 }

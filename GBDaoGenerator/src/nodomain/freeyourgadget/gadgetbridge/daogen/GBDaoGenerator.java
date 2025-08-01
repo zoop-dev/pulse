@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(107, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(108, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -170,6 +170,8 @@ public class GBDaoGenerator {
 
         addHuaweiActivitySample(schema, user, device);
         addHuaweiStressSample(schema, user, device);
+        addHuaweiSleepStageSample(schema, user, device);
+        addHuaweiSleepStatsSample(schema, user, device);
 
         addUltrahumanActivitySample(schema, user, device);
         addUltrahumanDeviceStateSample(schema, user, device);
@@ -1546,6 +1548,36 @@ public class GBDaoGenerator {
         stressSample.addByteProperty("level").notNull();
         stressSample.addLongProperty("startTime").notNull();
         return stressSample;
+    }
+
+    private static Entity addHuaweiSleepStageSample(Schema schema, Entity user, Entity device) {
+        Entity sleepStageSample = addEntity(schema, "HuaweiSleepStageSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sleepStageSample, user, device);
+        sleepStageSample.addIntProperty("stage").notNull();
+        return sleepStageSample;
+    }
+
+    private static Entity addHuaweiSleepStatsSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "HuaweiSleepStatsSample");
+        sample.addImport(MAIN_PACKAGE + ".model.SleepScoreSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.implementsInterface("SleepScoreSample");
+        sample.addIntProperty("sleepScore").notNull().codeBeforeGetter(OVERRIDE);
+        sample.addLongProperty("bedTime").notNull();
+        sample.addLongProperty("risingTime").notNull();
+        sample.addLongProperty("wakeupTime").notNull();
+        sample.addIntProperty("sleepDataQuality").notNull();
+        sample.addIntProperty("deepPart").notNull();
+        sample.addIntProperty("snoreFreq").notNull();
+        sample.addIntProperty("sleepLatency").notNull();
+        sample.addIntProperty("sleepEfficiency").notNull();
+        sample.addIntProperty("minHeartRate").notNull();
+        sample.addIntProperty("maxHeartRate").notNull();
+        sample.addDoubleProperty("minOxygenSaturation").notNull();
+        sample.addDoubleProperty("maxOxygenSaturation").notNull();
+        sample.addDoubleProperty("minBreathRate").notNull();
+        sample.addDoubleProperty("maxBreathRate").notNull();
+        return sample;
     }
 
     private static Entity addHuaweiWorkoutSummarySample(Schema schema, Entity user, Entity device) {

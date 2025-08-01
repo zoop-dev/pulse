@@ -123,6 +123,7 @@ public class HuaweiFileDownloadManager {
         SLEEP_DATA,
         RRI,
         GPS,
+        SEQUENCE_DATA,
         UNKNOWN // Never for input!
     }
 
@@ -150,6 +151,8 @@ public class HuaweiFileDownloadManager {
         // Sleep type only - for 2C GPS they are set to zero
         private int startTime = 0;
         private int endTime = 0;
+
+        private int dictId = 0;
 
         // GPS type only
         private short workoutId;
@@ -180,7 +183,21 @@ public class HuaweiFileDownloadManager {
         }
 
         public static FileRequest rriFileRequest(boolean supportsRriNewSync, int startTime, int endTime, FileDownloadCallback fileDownloadCallback) {
-            return new FileRequest("rrisqi_data.bin", FileType.RRI, supportsRriNewSync, startTime, endTime, fileDownloadCallback);
+            return new FileRequest("rrisqi_data.bin", FileType.RRI, supportsRriNewSync, startTime, endTime,fileDownloadCallback);
+        }
+
+        private FileRequest(String filename, FileType fileType, int startTime, int endTime, int dictId, FileDownloadCallback fileDownloadCallback) {
+            this.filename = filename;
+            this.fileType = fileType;
+            this.newSync = true;
+            this.fileDownloadCallback = fileDownloadCallback;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.dictId = dictId;
+        }
+
+        public static FileRequest sequenceDataFileRequest(int startTime, int endTime, int dictId, FileDownloadCallback fileDownloadCallback) {
+            return new FileRequest("sequence_data", FileType.SEQUENCE_DATA, startTime, endTime, dictId, fileDownloadCallback);
         }
 
         private FileRequest(String filename, FileType fileType, boolean newSync, FileDownloadCallback fileDownloadCallback) {
@@ -354,6 +371,10 @@ public class HuaweiFileDownloadManager {
         public void setNeedVerify(boolean needVerify) {
             this.needVerify = needVerify;
         }
+
+        public int getDictId() { return dictId;}
+
+        public void setDictId(int dictId) { this.dictId = dictId;}
     }
 
     /**
