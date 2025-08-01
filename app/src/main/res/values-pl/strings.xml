@@ -4321,4 +4321,5 @@
     <string name="shokz_controls_simultaneous_volume_up_down">Przytrzymaj jednocześnie przyciski zwiększania i zmniejszania głośności</string>
     <string name="devicetype_coospo_hw807">Coospo HW807</string>
     <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
+    <string name="emoji">Emoji</string>
 </resources>
