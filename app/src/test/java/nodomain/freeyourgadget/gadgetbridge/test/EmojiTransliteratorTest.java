@@ -10,12 +10,12 @@ public class EmojiTransliteratorTest extends TestCase {
 
     @Test
     public void testSimpleEmoji() {
-        Assert.assertEquals(":heart:", new EmojiTransliterator().transliterate("❤\uFE0F"));
+        Assert.assertEquals("<3", new EmojiTransliterator().transliterate("❤\uFE0F"));
         Assert.assertEquals(":grinning:", new EmojiTransliterator().transliterate("\uD83D\uDE00"));
     }
 
     @Test
     public void testCompoundEmoji() {
-        Assert.assertEquals(":factory_worker::skin-tone-4:", new EmojiTransliterator().transliterate("\uD83E\uDDD1\uD83C\uDFFE\u200D\uD83C\uDFED"));
+        Assert.assertEquals(":factory_worker_tone4:", new EmojiTransliterator().transliterate("\uD83E\uDDD1\uD83C\uDFFE\u200D\uD83C\uDFED"));
     }
 }
