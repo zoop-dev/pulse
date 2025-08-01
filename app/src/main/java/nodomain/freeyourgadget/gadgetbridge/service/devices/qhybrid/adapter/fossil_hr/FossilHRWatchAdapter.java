@@ -122,6 +122,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
+import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
@@ -2202,8 +2203,8 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
 
     public void onSetNavigationInfo(NavigationInfoSpec navigationInfoSpec) {
         SharedPreferences prefs = getDeviceSpecificPreferences();
-        String installedAppsJson = getDeviceSupport().getDevice().getDeviceInfo("INSTALLED_APPS").getDetails();
-        if (installedAppsJson == null || !installedAppsJson.contains("navigationApp")) {
+        ItemWithDetails installedAppsJson = getDeviceSupport().getDevice().getDeviceInfo("INSTALLED_APPS");
+        if (installedAppsJson == null || !installedAppsJson.getDetails().contains("navigationApp")) {
             if (!notifiedAboutMissingNavigationApp) {
                 notifiedAboutMissingNavigationApp = true;
                 NotificationCompat.Builder ncomp = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)

@@ -248,18 +248,8 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                                         }
                                     }
                                 };
-                                picker.handsListener = new TimePicker.OnHandsSetListener() {
-                                    @Override
-                                    public void onHandsSet(NotificationConfiguration config) {
-                                        setHands(config);
-                                    }
-                                };
-                                picker.vibrationListener = new TimePicker.OnVibrationSetListener() {
-                                    @Override
-                                    public void onVibrationSet(NotificationConfiguration config) {
-                                        vibrate(config);
-                                    }
-                                };
+                                picker.handsListener = QHybridConfigActivity.this::setHands;
+                                picker.vibrationListener = QHybridConfigActivity.this::vibrate;
                                 setControl(true, picker.getSettings());
                                 break;
                             }
@@ -341,6 +331,11 @@ public class QHybridConfigActivity extends AbstractGBActivity {
         );
     }
 
+    @NonNull
+    private String getDeviceInfoDetails(final String name) {
+        ItemWithDetails deviceInfo = device.getDeviceInfo(name);
+        return deviceInfo != null ? deviceInfo.getDetails() : "";
+    }
 
     private void setSettingsEnabled(boolean enables) {
         findViewById(R.id.settingsLayout).setAlpha(enables ? 1f : 0.2f);
@@ -352,7 +347,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             public void run() {
                 EditText et = findViewById(R.id.stepGoalEt);
                 et.setOnEditorActionListener(null);
-                final String text = device.getDeviceInfo(QHybridSupport.ITEM_STEP_GOAL).getDetails();
+                final String text = getDeviceInfoDetails(QHybridSupport.ITEM_STEP_GOAL);
                 et.setText(text);
                 et.setSelection(text.length());
                 et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -367,14 +362,19 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                                 LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
                                 updateSettings();
                             }
-                            ((InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                            final View currentFocus = getCurrentFocus();
+                            if (currentFocus != null) {
+                                ((InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+                            }
                         }
                         return true;
                     }
                 });
 
-                if ("true".equals(device.getDeviceInfo(QHybridSupport.ITEM_EXTENDED_VIBRATION_SUPPORT).getDetails())) {
-                    final int strengthProgress = (int) (Math.log(Double.parseDouble(device.getDeviceInfo(QHybridSupport.ITEM_VIBRATION_STRENGTH).getDetails()) / 25) / Math.log(2));
+                final String extendedVibrationSupport = getDeviceInfoDetails(QHybridSupport.ITEM_EXTENDED_VIBRATION_SUPPORT);
+                final String vibrationStrength = getDeviceInfoDetails(QHybridSupport.ITEM_VIBRATION_STRENGTH);
+                if ("true".equals(extendedVibrationSupport) && !vibrationStrength.isEmpty()) {
+                    final int strengthProgress = (int) (Math.log(Double.parseDouble(vibrationStrength) / 25) / Math.log(2));
 
                     setSettingsEnabled(true);
                     SeekBar seekBar = findViewById(R.id.vibrationStrengthBar);
@@ -384,14 +384,14 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                     findViewById(R.id.vibrationStrengthLayout).setAlpha(0.5f);
                 }
                 CheckBox activityHandCheckbox = findViewById(R.id.checkBoxUserActivityHand);
-                if (device.getDeviceInfo(QHybridSupport.ITEM_HAS_ACTIVITY_HAND).getDetails().equals("true")) {
-                    if (device.getDeviceInfo(QHybridSupport.ITEM_USE_ACTIVITY_HAND).getDetails().equals("true")) {
+                if (getDeviceInfoDetails(QHybridSupport.ITEM_HAS_ACTIVITY_HAND).equals("true")) {
+                    if (getDeviceInfoDetails(QHybridSupport.ITEM_USE_ACTIVITY_HAND).equals("true")) {
                         activityHandCheckbox.setChecked(true);
                     }
                     activityHandCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean checked) {
-                            if (!device.getDeviceInfo(QHybridSupport.ITEM_STEP_GOAL).getDetails().equals("1000000")) {
+                        public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean checked) {
+                            if (!getDeviceInfoDetails(QHybridSupport.ITEM_STEP_GOAL).equals("1000000")) {
                                 new MaterialAlertDialogBuilder(QHybridConfigActivity.this)
                                         .setMessage(getString(R.string.qhybrid_prompt_million_steps))
                                         .setPositiveButton("ok", null)
@@ -565,7 +565,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             @Override
             public void run() {
                 setSettingsEnabled(false);
-                ((TextView) findViewById(R.id.settingsErrorText)).setVisibility(View.VISIBLE);
+                findViewById(R.id.settingsErrorText).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.settingsErrorText)).setText(error);
             }
         });

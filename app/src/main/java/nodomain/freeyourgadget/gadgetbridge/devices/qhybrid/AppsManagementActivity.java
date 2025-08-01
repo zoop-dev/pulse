@@ -46,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -69,16 +70,16 @@ public class AppsManagementActivity extends AbstractGBActivity {
     private void refreshInstalledApps() {
         try {
             List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
-            boolean deviceFound = false;
             for(GBDevice device : devices){
                 if (
                         device.getType() == DeviceType.FOSSILQHYBRID &&
                                 device.isConnected() &&
+                                device.getModel() != null &&
                                 (device.getModel().startsWith("DN") || device.getModel().startsWith("IV")) &&
                                 device.getState() == GBDevice.State.INITIALIZED
                 ) {
-                    String installedAppsJson = device.getDeviceInfo("INSTALLED_APPS").getDetails();
-                    if (installedAppsJson == null || installedAppsJson.isEmpty()) {
+                    ItemWithDetails installedAppsJson = device.getDeviceInfo("INSTALLED_APPS");
+                    if (installedAppsJson == null || installedAppsJson.getDetails().isEmpty()) {
                         throw new RuntimeException("can't get installed apps");
                     }
                     JSONArray apps = new JSONArray(installedAppsJson);
@@ -98,7 +99,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         throw new RuntimeException("Device not connected");
     }
 
-    class AppsListAdapter extends ArrayAdapter<String> {
+    static class AppsListAdapter extends ArrayAdapter<String> {
         public AppsListAdapter(@NonNull Context context, @NonNull String[] objects) {
             super(context, 0, objects);
         }
