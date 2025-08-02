@@ -4115,4 +4115,5 @@
     <string name="shokz_controls_simultaneous_volume_up_down">Тривале одночасне натискання на кнопки збільшення та зменшення гучності</string>
     <string name="devicetype_coospo_hw807">Coospo HW807</string>
     <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
+    <string name="emoji">Емодзі</string>
 </resources>
