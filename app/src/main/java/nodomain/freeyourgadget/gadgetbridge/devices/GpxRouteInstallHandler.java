@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.install.FwAppInstallerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.GpxRouteInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.install.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
@@ -29,7 +29,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrack;
 public abstract class GpxRouteInstallHandler implements InstallHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GpxRouteInstallHandler.class);
 
-    private static final int MAX_EXPECTED_SIZE = 1024 * 1024; // 1MB, they're usually ~128KB
+    public static final String EXTRA_TRACK_NAME = "gpx_track_name";
+
+    private static final int MAX_EXPECTED_SIZE = 10 * 1024 * 1024; // 10MB
 
     protected final Context mContext;
     private GpxFile gpxFile;
@@ -63,7 +65,7 @@ public abstract class GpxRouteInstallHandler implements InstallHandler {
     @NonNull
     @Override
     public Class<? extends Activity> getInstallActivity() {
-        return FwAppInstallerActivity.class;
+        return GpxRouteInstallerActivity.class;
     }
 
     @Override

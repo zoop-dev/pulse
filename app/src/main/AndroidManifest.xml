@@ -275,6 +275,10 @@
             android:label="@string/title_activity_fw_app_insaller"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
+            android:name=".activities.install.GpxRouteInstallerActivity"
+            android:label="@string/title_activity_gps_track_installer"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
             android:name=".activities.install.FileInstallerActivity"
             android:label="@string/title_activity_file_installer"
             android:parentActivityName=".activities.ControlCenterv2"

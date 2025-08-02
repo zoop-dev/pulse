@@ -40,9 +40,10 @@ public class ZeppOsGpxRouteUploadOperation extends AbstractZeppOsOperation<ZeppO
 
     public ZeppOsGpxRouteUploadOperation(final ZeppOsSupport support,
                                          final GpxFile gpxFile,
+                                         final String trackName,
                                          final ZeppOsFileTransferService fileTransferService) {
         super(support);
-        this.file = new ZeppOsGpxRouteFile(gpxFile);
+        this.file = new ZeppOsGpxRouteFile(gpxFile, trackName);
         this.fileBytes = file.getEncodedBytes();
         this.fileTransferService = fileTransferService;
     }

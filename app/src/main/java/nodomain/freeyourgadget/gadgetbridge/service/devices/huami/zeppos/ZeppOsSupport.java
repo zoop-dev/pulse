@@ -524,10 +524,12 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
         final ZeppOsGpxRouteInstallHandler gpxRouteHandler = new ZeppOsGpxRouteInstallHandler(uri, getContext());
         if (gpxRouteHandler.isValid()) {
+            final String trackName = options.getString(ZeppOsGpxRouteInstallHandler.EXTRA_TRACK_NAME);
             try {
                 new ZeppOsGpxRouteUploadOperation(
                         this,
                         gpxRouteHandler.getGpxFile(),
+                        trackName,
                         fileTransferService
                 ).perform();
             } catch (final Exception e) {

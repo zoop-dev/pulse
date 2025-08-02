@@ -40,10 +40,12 @@ public class ZeppOsGpxRouteFile {
 
     private final long timestamp;
     private final GpxFile gpxFile;
+    private final String trackName;
 
-    public ZeppOsGpxRouteFile(final GpxFile gpxFile) {
+    public ZeppOsGpxRouteFile(final GpxFile gpxFile, final String trackName) {
         this.timestamp = System.currentTimeMillis() / 1000;
         this.gpxFile = gpxFile;
+        this.trackName = trackName;
     }
 
     public boolean isValid() {
@@ -52,18 +54,6 @@ public class ZeppOsGpxRouteFile {
 
     public long getTimestamp() {
         return timestamp;
-    }
-
-    public String getName() {
-        if (gpxFile == null) {
-            return "";
-        }
-
-        if (!StringUtils.isNullOrEmpty(gpxFile.getName())) {
-            return gpxFile.getName();
-        } else {
-            return String.valueOf(getTimestamp());
-        }
     }
 
     public byte[] getEncodedBytes() {
@@ -103,7 +93,7 @@ public class ZeppOsGpxRouteFile {
             baos.write(BLETypeConversions.fromUint32((int) (maxLongitude * COORD_MULTIPLIER)));
             baos.write(BLETypeConversions.fromUint32((int) minAltitude));
             baos.write(BLETypeConversions.fromUint32((int) maxAltitude));
-            baos.write(truncatePadString(getName()));
+            baos.write(truncatePadString(trackName));
             baos.write(BLETypeConversions.fromUint32(0)); // ?
 
             if (!waypoints.isEmpty()) {

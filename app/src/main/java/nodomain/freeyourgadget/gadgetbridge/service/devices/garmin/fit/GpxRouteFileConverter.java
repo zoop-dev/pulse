@@ -22,11 +22,13 @@ public class GpxRouteFileConverter {
     private final long timestamp;
     private final GpxFile gpxFile;
     private FitFile convertedFile;
-    private String name;
+    private final String name;
 
-    public GpxRouteFileConverter(final GpxFile gpxFile) {
+    public GpxRouteFileConverter(final GpxFile gpxFile,
+                                 final String trackName) {
         this.timestamp = System.currentTimeMillis() / 1000;
         this.gpxFile = gpxFile;
+        this.name = trackName;
         try {
             this.convertedFile = convertGpxToRoute(gpxFile);
         } catch (final Exception e) {
@@ -51,28 +53,11 @@ public class GpxRouteFileConverter {
         return this.convertedFile != null;
     }
 
-    public String getName() {
-        if (gpxFile == null) {
-            return "";
-        }
-
-        if (!StringUtils.isNullOrEmpty(this.name))
-            return this.name;
-
-        if (!StringUtils.isNullOrEmpty(gpxFile.getName())) {
-            return gpxFile.getName();
-        } else {
-            return String.valueOf(timestamp);
-        }
-    }
-
     private FitFile convertGpxToRoute(GpxFile gpxFile) {
         if (gpxFile.getTracks().isEmpty()) {
             LOG.error("Gpx file contains no Tracks.");
             return null;
         }
-
-        this.name = gpxFile.getTracks().get(0).getName();
 
         // GPX files may contain multiple tracks, we use only the first one,
         // but we use all segments (#4855)
@@ -170,7 +155,7 @@ public class GpxRouteFileConverter {
                 new RecordDefinition(new RecordHeader((byte) 0x42), ByteOrder.BIG_ENDIAN, GlobalFITMessage.COURSE, GlobalFITMessage.COURSE.getFieldDefinitions(4, 5), null),
                 new RecordHeader((byte) 0x02));
         courseRecord.setFieldByName("sport", activity); //TODO use track.getType()
-        courseRecord.setFieldByName("name", this.getName());
+        courseRecord.setFieldByName("name", name);
         return courseRecord;
     }
 

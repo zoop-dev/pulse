@@ -139,6 +139,7 @@
     <!-- Strings related to FwAppInstaller -->
     <string name="title_activity_file_installer">File installer</string>
     <string name="title_activity_fw_app_insaller">FW/App installer</string>
+    <string name="title_activity_gps_track_installer">GPS track installer</string>
     <string name="fw_upgrade_notice">You are about to install the %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">You are about to install the %s firmware on your Amazfit Bip.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">You are about to install the %s firmware on your Amazfit Bip Lite.\n\nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
@@ -551,6 +552,7 @@
     <!-- Device specific settings -->
     <string name="title_activity_device_specific_settings">Device specific settings</string>
     <string name="pref_title_authkey">Auth Key</string>
+    <string name="title_gpx_track_name">Track name</string>
     <string name="pref_summary_authkey">Change the auth key to a common key on all your Android devices from which you would like to connect from. The previous default key for all devices is 0123456789@ABCDE</string>
     <string name="pref_explanation_authkey">Some devices require a special pairing key for the very first initialization of the device. Tap here for more details in the wiki.</string>
     <string name="pref_explanation_authkey_new_protocol">If you get \"Update the app to latest version\" message on the band, make sure to check the \"New Auth Protocol\" above. Tap here for more details in the wiki.</string>
@@ -4220,4 +4222,5 @@
     <string name="media_source_switching_bluetooth_mp3">Switch media source (Bluetooth/MP3)</string>
     <string name="shokz_controls_long_press_multi_function">Long-press the multi-function button</string>
     <string name="shokz_controls_simultaneous_volume_up_down">Long-press volume up and down simultaneously</string>
+    <string name="track_name_required">Track name cannot be empty</string>
 </resources>
