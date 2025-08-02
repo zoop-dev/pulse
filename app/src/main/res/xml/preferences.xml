@@ -335,7 +335,7 @@
         </PreferenceScreen>
 
         <Preference
-            android:icon="@drawable/ic_navigation"
+            android:icon="@drawable/ic_deployed_code"
             android:key="pref_key_opentracks_packagename"
             android:summary="@string/pref_summary_opentracks_packagename"
             android:title="@string/pref_title_opentracks_packagename" />
@@ -346,7 +346,7 @@
             android:title="@string/sleepasandroid_settings" />
 
         <PreferenceScreen
-            android:icon="@drawable/ic_wb_sunny"
+            android:icon="@drawable/ic_partly_cloudy_day"
             android:key="pref_screen_weather"
             android:summary="@string/pref_title_weather_summary"
             android:title="@string/pref_title_weather">
