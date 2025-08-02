@@ -207,6 +207,8 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 LOG.info("Triggering Debug Test New Function");
                 GBApplication.deviceService().onTestNewFunction();
                 break;
+            default:
+                LOG.warn("Got unknown intent API action: {}", intent.getAction());
         }
     }
 

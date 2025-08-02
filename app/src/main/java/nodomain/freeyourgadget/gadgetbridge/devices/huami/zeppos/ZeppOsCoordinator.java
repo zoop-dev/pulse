@@ -123,14 +123,10 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
             connType = getConnectionType();
         }
 
-        switch (connType) {
-            case BOTH:
-            case BT_CLASSIC:
-                return ZeppOsBtbrSupport.class;
-            case BLE:
-            default:
-                return ZeppOsBtleSupport.class;
-        }
+        return switch (connType) {
+            case BOTH, BT_CLASSIC -> ZeppOsBtbrSupport.class;
+            default -> ZeppOsBtleSupport.class;
+        };
     }
 
     @Override

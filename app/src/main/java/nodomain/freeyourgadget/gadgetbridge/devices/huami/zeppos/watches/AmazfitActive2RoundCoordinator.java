@@ -34,6 +34,11 @@ public class AmazfitActive2RoundCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
+    public ConnectionType getConnectionType() {
+        return ConnectionType.BOTH;
+    }
+
+    @Override
     public Set<Integer> getDeviceSources() {
         return new HashSet<>(Arrays.asList(
                 8913152, // chinese mainland version

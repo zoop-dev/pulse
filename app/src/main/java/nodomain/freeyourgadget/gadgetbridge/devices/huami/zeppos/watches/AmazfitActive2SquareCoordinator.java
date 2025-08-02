@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +30,11 @@ public class AmazfitActive2SquareCoordinator extends ZeppOsCoordinator {
     public boolean isExperimental() {
         // untested
         return true;
+    }
+
+    @Override
+    public ConnectionType getConnectionType() {
+        return ConnectionType.BOTH;
     }
 
     @Override
