@@ -2818,10 +2818,14 @@ public class HuaweiSupportProvider {
                             for (HuaweiSequenceDataParser.SequenceData sd : sequenceFileData.getSequenceDataList()) {
                                 LOG.info("SLEEP SequenceData: {}", sd);
                                 HuaweiTrueSleepSequenceDataParser.SleepSummary sleepDataSummary = HuaweiTrueSleepSequenceDataParser.parseSleepDataSummary(sequenceFileData, sd);
-                                LOG.info("SLEEP DataSummary: {}", sleepDataSummary);
-
-                                if(sleepDataSummary == null)
+                                if(sleepDataSummary == null) {
+                                    LOG.warn("SLEEP DataSummary is null");
                                     continue;
+                                }
+
+                                // NOTE: some watches return  incorrect(random) data for some fields. We need to correct this data.
+                                HuaweiTrueSleepSequenceDataParser.correctSummary(sleepDataSummary);
+                                LOG.info("SLEEP DataSummary: {}", sleepDataSummary);
 
                                 HuaweiSleepStatsSample sleepStat = new HuaweiSleepStatsSample();
                                 sleepStat.setTimestamp(sleepDataSummary.getFallAsleepTime() * 1000L);

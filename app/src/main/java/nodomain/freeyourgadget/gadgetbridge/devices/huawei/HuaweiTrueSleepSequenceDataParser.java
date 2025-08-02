@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HuaweiTrueSleepSequenceDataParser {
@@ -156,6 +157,12 @@ public class HuaweiTrueSleepSequenceDataParser {
 
     public static int readAsInteger(byte[] data, int def) {
         if (data == null || data.length == 0 || data.length > 4) {
+            return def;
+        }
+        // NOTE: Looks like validData should be float but the watch returns it as integer.
+        // unsigned integer  stored as 0xBF800000 = 10111111 10000000 00000000 00000000
+        // for float -1.
+        if(Arrays.equals(data,new byte[]{(byte) 0xBF, (byte) 0x80, 0x00, 0x00})) {
             return def;
         }
         int res = 0;
@@ -309,7 +316,7 @@ public class HuaweiTrueSleepSequenceDataParser {
                     byte[] value = tv2.getBytes(0x5);
                     fillSleepSummary(details, dictId, dataType, value);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    LOG.error("Sleep dict sync: tag is missing", e);
                 }
             }
 
@@ -325,6 +332,19 @@ public class HuaweiTrueSleepSequenceDataParser {
             return parseTLVData(data.getSummary());
         }
         return null;
+    }
+
+    public static void correctSummary(SleepSummary summary) {
+        if(summary.validData == -1) {
+            summary.setBedTime(0);
+            summary.setRisingTime(0);
+            summary.setSleepScore(-1);
+            summary.setSleepDataQuality(-1);
+            summary.setDeepPart(-1);
+            summary.setSnoreFreq(-1);
+            summary.setSleepEfficiency(-1);
+            summary.setSleepLatency(-1);
+        }
     }
 
     private static long adjustTimeToMinute(long time) {
