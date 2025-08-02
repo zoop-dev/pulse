@@ -4279,4 +4279,22 @@
     <string name="help">Nápověda</string>
     <string name="cannot_open_help_url">Nepodařilo se otevřít adresu URL</string>
     <string name="auth_settings">Nastavení autentifikace</string>
+    <string name="pref_title_block_screenshot">Zablokovat snímky obrazovky</string>
+    <string name="pref_summary_block_screenshots">Zabránit snímkům obrazovky a zobrazování na nezabezpečených displejích. Vyžaduje restart GB.</string>
+    <string name="chinese">Čínština</string>
+    <string name="emoji">Emodži</string>
+    <string name="devicetype_garmin_fenix_3_hr">Garmin Fenix 3 HR</string>
+    <string name="devicetype_coospo_hw807">Coospo HW807</string>
+    <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
+    <string name="devicetype_shokz_openswim_pro">Shokz OpenSwim Pro</string>
+    <string name="equalizer_preset_standard">Standardní</string>
+    <string name="media_playback_mode">Režim přehrávání</string>
+    <string name="media_playback_mode_normal">Normální</string>
+    <string name="media_playback_mode_shuffle">Náhodně</string>
+    <string name="media_playback_mode_repeat">Opakování</string>
+    <string name="media_source">Zdroj médií</string>
+    <string name="mp3">MP3</string>
+    <string name="media_source_switching_bluetooth_mp3">Přepnout zdroj médií (Bluetooth/MP3)</string>
+    <string name="shokz_controls_long_press_multi_function">Dlouze podržte multifunkční tlačítko</string>
+    <string name="shokz_controls_simultaneous_volume_up_down">Dlouze podržte zároveň zvýšení a snížení hlasitosti</string>
 </resources>
