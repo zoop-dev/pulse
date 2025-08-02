@@ -15,14 +15,4 @@ public class GarminFenix7XCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_fenix_7x;
     }
-
-    @Override
-    public boolean supportsTrainingLoad() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsWorkoutLoad() {
-        return true;
-    }
 }

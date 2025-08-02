@@ -15,4 +15,9 @@ public class GarminVivoActiveHrCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_vivoactive_hr;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
 }

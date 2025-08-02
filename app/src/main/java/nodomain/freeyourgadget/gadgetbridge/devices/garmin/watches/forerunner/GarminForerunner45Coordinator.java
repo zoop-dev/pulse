@@ -31,4 +31,9 @@ public class GarminForerunner45Coordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_45;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
 }

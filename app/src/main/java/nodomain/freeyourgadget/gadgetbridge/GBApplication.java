@@ -2112,7 +2112,11 @@ public class GBApplication extends Application {
 
                     final String newPrefValue;
                     if (!StringUtils.isBlank(chartsTabsValue)) {
-                        newPrefValue = chartsTabsValue + ",load";
+                        if (!chartsTabsValue.contains("load")) {
+                            newPrefValue = chartsTabsValue + ",load";
+                        } else {
+                            newPrefValue = chartsTabsValue;
+                        }
                     } else {
                         newPrefValue = "load";
                     }

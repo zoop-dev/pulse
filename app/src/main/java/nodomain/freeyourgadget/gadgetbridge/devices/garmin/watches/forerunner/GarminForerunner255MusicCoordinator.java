@@ -15,14 +15,4 @@ public class GarminForerunner255MusicCoordinator extends GarminWatchCoordinator 
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_255_music;
     }
-
-    @Override
-    public boolean supportsTrainingLoad() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsWorkoutLoad() {
-        return true;
-    }
 }

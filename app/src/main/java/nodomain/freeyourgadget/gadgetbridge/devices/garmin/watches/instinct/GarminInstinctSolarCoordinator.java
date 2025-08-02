@@ -13,11 +13,6 @@ public class GarminInstinctSolarCoordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public int getCannedRepliesSlotCount(final GBDevice device) {
-        return 16;
-    }
-
-    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_instinct_solar;
     }

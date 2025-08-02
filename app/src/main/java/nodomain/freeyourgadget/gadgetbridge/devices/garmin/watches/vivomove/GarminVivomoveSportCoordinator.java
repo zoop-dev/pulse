@@ -15,4 +15,9 @@ public class GarminVivomoveSportCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_vivomove_sport;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
 }

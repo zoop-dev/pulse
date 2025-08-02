@@ -16,14 +16,4 @@ public class GarminInstinct2XSolarCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_instinct_2x_solar;
     }
-
-    @Override
-    public boolean supportsTrainingLoad() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsWorkoutLoad() {
-        return true;
-    }
 }

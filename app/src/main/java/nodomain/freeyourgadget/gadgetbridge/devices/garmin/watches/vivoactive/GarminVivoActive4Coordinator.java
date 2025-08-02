@@ -15,4 +15,9 @@ public class GarminVivoActive4Coordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_vivoactive_4;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
 }

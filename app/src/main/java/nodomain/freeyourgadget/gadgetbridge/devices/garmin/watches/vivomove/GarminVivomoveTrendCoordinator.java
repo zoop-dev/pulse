@@ -15,4 +15,9 @@ public class GarminVivomoveTrendCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_vivomove_trend;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
 }

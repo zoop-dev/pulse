@@ -15,14 +15,4 @@ public class GarminForerunner255SCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_255s;
     }
-
-    @Override
-    public boolean supportsTrainingLoad() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsWorkoutLoad() {
-        return true;
-    }
 }

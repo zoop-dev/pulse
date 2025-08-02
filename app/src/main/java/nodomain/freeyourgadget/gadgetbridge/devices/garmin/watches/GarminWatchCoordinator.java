@@ -147,8 +147,8 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
 
     @Override
     public boolean supportsTrainingLoad() {
-        // TODO: Not all devices support it
-        return false;
+        // Not all devices support it
+        return true;
     }
 
     @Override

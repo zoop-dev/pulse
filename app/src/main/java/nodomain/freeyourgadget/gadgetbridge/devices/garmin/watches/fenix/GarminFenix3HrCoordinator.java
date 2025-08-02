@@ -21,4 +21,14 @@ public class GarminFenix3HrCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_fenix_3_hr;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsWorkoutLoad() {
+        return false;
+    }
 }
