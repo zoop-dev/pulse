@@ -17,12 +17,17 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations;
 
 import android.content.Context;
+import android.content.Intent;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.IOException;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
  * This is a simplified version of the AbstractBTLEOperation, in order to allow for simpler
@@ -46,6 +51,15 @@ public abstract class AbstractZeppOsOperation<T extends ZeppOsSupport> {
     protected abstract void doPerform() throws IOException;
 
     protected void operationFinished() {
+        operationStatus = OperationStatus.FINISHED;
+
+        final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(GBApplication.getContext());
+        broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_FINISHED));
+
+        if (getDevice() != null && getDevice().isConnected()) {
+            unsetBusy();
+            getDevice().sendDeviceUpdateIntent(getContext());
+        }
     }
 
     protected Context getContext() {

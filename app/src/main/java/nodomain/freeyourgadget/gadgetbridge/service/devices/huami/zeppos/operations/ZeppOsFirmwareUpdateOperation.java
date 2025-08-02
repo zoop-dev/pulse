@@ -111,6 +111,7 @@ public class ZeppOsFirmwareUpdateOperation extends AbstractZeppOsOperation<ZeppO
 
     @Override
     protected void operationFinished() {
+        super.operationFinished();
         getSupport().onFirmwareUpdateFinished();
         ZeppOsTransactionBuilder builder = getSupport().createZeppOsTransactionBuilder("fw update finish");
         enableNeededNotifications(builder, false);

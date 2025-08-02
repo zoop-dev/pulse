@@ -25,7 +25,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
 
@@ -57,15 +56,6 @@ public class ZeppOsGpxRouteUploadOperation extends AbstractZeppOsOperation<ZeppO
                 false,
                 this
         );
-    }
-
-    @Override
-    protected void operationFinished() {
-        operationStatus = OperationStatus.FINISHED;
-        if (getDevice() != null && getDevice().isConnected()) {
-            unsetBusy();
-            getDevice().sendDeviceUpdateIntent(getContext());
-        }
     }
 
     @Override

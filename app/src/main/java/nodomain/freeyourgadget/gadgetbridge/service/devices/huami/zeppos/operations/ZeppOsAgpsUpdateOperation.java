@@ -27,7 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAgpsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
@@ -69,15 +68,6 @@ public class ZeppOsAgpsUpdateOperation extends AbstractZeppOsOperation<ZeppOsSup
     protected void doPerform() throws IOException {
         agpsService.setCallback(this);
         agpsService.startUpload(file.getUihhBytes().length);
-    }
-
-    @Override
-    protected void operationFinished() {
-        operationStatus = OperationStatus.FINISHED;
-        if (getDevice() != null && getDevice().isConnected()) {
-            unsetBusy();
-            getDevice().sendDeviceUpdateIntent(getContext());
-        }
     }
 
     @Override
