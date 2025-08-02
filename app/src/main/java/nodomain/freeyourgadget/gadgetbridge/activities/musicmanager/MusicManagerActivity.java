@@ -62,7 +62,7 @@ import java.util.stream.Collectors;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.adapter.MusicListAdapter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceMusic;

@@ -271,7 +271,7 @@
             android:label="@string/devicetype_generic_thermal_printer"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
-            android:name=".activities.FwAppInstallerActivity"
+            android:name=".activities.install.FwAppInstallerActivity"
             android:label="@string/title_activity_fw_app_insaller"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity

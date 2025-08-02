@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import no.nordicsemi.android.dfu.DfuBaseService;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
-import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.FwAppInstallerActivity;
 
 public class PineTimeDFUService extends DfuBaseService {
     private static final Logger LOG = LoggerFactory.getLogger(PineTimeDFUService.class);

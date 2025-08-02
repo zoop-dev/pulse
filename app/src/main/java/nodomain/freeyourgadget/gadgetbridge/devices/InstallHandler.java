@@ -20,7 +20,7 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 /**

@@ -37,8 +37,8 @@ import java.io.InputStream;
 import java.io.Writer;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.FwAppInstallerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;

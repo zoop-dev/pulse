@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.FwAppInstallerActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.InstallActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.FwAppInstallerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.install.InstallActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
