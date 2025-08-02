@@ -1,0 +1,9 @@
+Korzystaj ze swojego smartwatcha, opaski fitness i innych urządzeń Bluetooth bez zamkniętej aplikacji producenta, bez konieczności zakładania konta i bez przesyłania danych na serwery producenta.
+Pełną listę obsługiwanych urządzeń znajdziesz na naszej stronie: https://gadgetbridge.org/gadgets/
+
+Na swoim nadgarstku możesz otrzymywać powiadomienia i — w zależności od urządzenia:
+
+- Zbierać dane z czujników urządzenia.
+- Sterować odtwarzaniem muzyki na telefonie z Androidem.
+- Sprawdzać pogodę.
+- Otrzymywać wskazówki nawigacyjne.
