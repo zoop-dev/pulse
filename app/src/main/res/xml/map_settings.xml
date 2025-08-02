@@ -29,7 +29,7 @@
 
         <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:defaultValue="@color/map_track_default"
-            android:icon="@drawable/ic_paint"
+            android:icon="@drawable/ic_border_color"
             android:key="maps_track_color"
             android:title="@string/maps_track_color_title"
             app:cpv_dialogTitle="@string/maps_track_color_title" />
