@@ -29,7 +29,6 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackPoint;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxWaypoint;
@@ -39,14 +38,12 @@ public class ZeppOsGpxRouteFile {
 
     private static final double COORD_MULTIPLIER = 3000000.0;
 
-    private final byte[] xmlBytes;
     private final long timestamp;
     private final GpxFile gpxFile;
 
-    public ZeppOsGpxRouteFile(final byte[] xmlBytes) {
-        this.xmlBytes = xmlBytes;
+    public ZeppOsGpxRouteFile(final GpxFile gpxFile) {
         this.timestamp = System.currentTimeMillis() / 1000;
-        this.gpxFile = GpxParser.parseGpx(xmlBytes);
+        this.gpxFile = gpxFile;
     }
 
     public boolean isValid() {

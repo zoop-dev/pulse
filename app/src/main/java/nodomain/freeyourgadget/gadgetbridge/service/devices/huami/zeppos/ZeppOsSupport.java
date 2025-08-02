@@ -97,6 +97,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiDevicePre
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFetcher;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsAgpsUpdateOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsFirmwareUpdateOperation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsGpxRouteFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsGpxRouteUploadOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.operations.ZeppOsMusicUploadOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsActivityFetchService;
@@ -526,7 +527,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             try {
                 new ZeppOsGpxRouteUploadOperation(
                         this,
-                        gpxRouteHandler.getFile(),
+                        gpxRouteHandler.getGpxFile(),
                         fileTransferService
                 ).perform();
             } catch (final Exception e) {

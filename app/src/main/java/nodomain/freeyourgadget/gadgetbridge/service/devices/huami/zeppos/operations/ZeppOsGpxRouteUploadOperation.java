@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
 
 public class ZeppOsGpxRouteUploadOperation extends AbstractZeppOsOperation<ZeppOsSupport>
         implements ZeppOsFileTransferService.UploadCallback {
@@ -38,10 +39,10 @@ public class ZeppOsGpxRouteUploadOperation extends AbstractZeppOsOperation<ZeppO
     private final ZeppOsFileTransferService fileTransferService;
 
     public ZeppOsGpxRouteUploadOperation(final ZeppOsSupport support,
-                                         final ZeppOsGpxRouteFile file,
+                                         final GpxFile gpxFile,
                                          final ZeppOsFileTransferService fileTransferService) {
         super(support);
-        this.file = file;
+        this.file = new ZeppOsGpxRouteFile(gpxFile);
         this.fileBytes = file.getEncodedBytes();
         this.fileTransferService = fileTransferService;
     }

@@ -76,6 +76,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.SupportedFileTypesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.WeatherRequestDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitAsyncProcessor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteFileConverter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.PredefinedLocalMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
@@ -996,7 +997,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         final GarminGpxRouteInstallHandler garminGpxRouteInstallHandler = new GarminGpxRouteInstallHandler(uri, getContext());
         if (garminGpxRouteInstallHandler.isValid()) {
-            communicator.sendMessage("upload course file", fileTransferHandler.initiateUpload(garminGpxRouteInstallHandler.getGpxRouteFileConverter().getConvertedFile().getOutgoingMessage(), FileType.FILETYPE.DOWNLOAD_COURSE).getOutgoingMessage());
+            final GpxRouteFileConverter gpxRouteFileConverter = new GpxRouteFileConverter(garminGpxRouteInstallHandler.getGpxFile());
+            communicator.sendMessage("upload course file", fileTransferHandler.initiateUpload(gpxRouteFileConverter.getConvertedFile().getOutgoingMessage(), FileType.FILETYPE.DOWNLOAD_COURSE).getOutgoingMessage());
         }
 
         final GarminPrgFileInstallHandler prgFileInstallHandler = new GarminPrgFileInstallHandler(uri, getContext());

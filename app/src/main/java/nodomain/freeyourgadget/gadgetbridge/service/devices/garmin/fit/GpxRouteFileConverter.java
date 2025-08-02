@@ -12,8 +12,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecordDataFactory;
-import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackPoint;
 
@@ -26,16 +24,14 @@ public class GpxRouteFileConverter {
     private FitFile convertedFile;
     private String name;
 
-    public GpxRouteFileConverter(byte[] xmlBytes) {
+    public GpxRouteFileConverter(final GpxFile gpxFile) {
         this.timestamp = System.currentTimeMillis() / 1000;
-        this.gpxFile = GpxParser.parseGpx(xmlBytes);
-        if (this.gpxFile != null) {
-            try {
-                this.convertedFile = convertGpxToRoute(gpxFile);
-            } catch (final Exception e) {
-                LOG.error("Failed to convert gpx to route", e);
-                this.convertedFile = null;
-            }
+        this.gpxFile = gpxFile;
+        try {
+            this.convertedFile = convertGpxToRoute(gpxFile);
+        } catch (final Exception e) {
+            LOG.error("Failed to convert gpx to route", e);
+            this.convertedFile = null;
         }
     }
 
