@@ -21,23 +21,16 @@ import android.net.Uri;
 
 import androidx.documentfile.provider.DocumentFile;
 
-import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
-import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.Point;
-import org.mapsforge.core.model.Rotation;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.datastore.MultiMapDataStore;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
-import org.mapsforge.map.model.MapViewPosition;
 import org.mapsforge.map.reader.MapFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,6 +152,23 @@ public final class MapsManager {
 
     public boolean isMapLoaded() {
         return isMapLoaded;
+    }
+
+    public void onDestroy() {
+        if (polyline != null) {
+            mapView.getLayerManager().getLayers().remove(polyline);
+            polyline.onDestroy();
+            polyline = null;
+        }
+
+        if (tileRendererLayer != null) {
+            mapView.getLayerManager().getLayers().remove(tileRendererLayer);
+            tileRendererLayer.onDestroy();
+            tileRendererLayer.getTileCache().purge();
+            tileRendererLayer = null;
+        }
+
+        isMapLoaded = false;
     }
 
     public void setTrack(final List<LatLong> points) {

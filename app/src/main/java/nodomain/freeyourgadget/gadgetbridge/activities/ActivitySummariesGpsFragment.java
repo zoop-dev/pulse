@@ -122,6 +122,7 @@ public class ActivitySummariesGpsFragment extends AbstractGBFragment {
     @Override
     public void onDestroyView() {
         LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mReceiver);
+        mapsManager.onDestroy();
         super.onDestroyView();
     }
 

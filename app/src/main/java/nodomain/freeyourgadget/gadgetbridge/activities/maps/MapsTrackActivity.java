@@ -145,6 +145,8 @@ public class MapsTrackActivity extends AbstractGBActivity implements MenuProvide
         }
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+
+        mapsManager.onDestroy();
     }
 
     @Override
