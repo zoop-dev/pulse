@@ -15,4 +15,14 @@ public class GarminForerunner265Coordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_265;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsWorkoutLoad() {
+        return true;
+    }
 }

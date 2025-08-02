@@ -31,4 +31,14 @@ public class GarminForerunner735XTCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_735xt;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsWorkoutLoad() {
+        return true;
+    }
 }

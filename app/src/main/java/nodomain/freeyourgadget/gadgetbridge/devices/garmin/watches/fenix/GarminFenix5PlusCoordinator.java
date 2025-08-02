@@ -21,4 +21,14 @@ public class GarminFenix5PlusCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_fenix_5_plus;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsWorkoutLoad() {
+        return true;
+    }
 }

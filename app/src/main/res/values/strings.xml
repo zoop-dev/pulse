@@ -1757,6 +1757,15 @@
     <string name="hrv_status_unit">%1$d ms</string>
     <string name="hrv_status_baseline">%1$d-%2$d ms</string>
     <string name="hrv_status_baseline_label">Baseline</string>
+    <string name="training_acute_load">Acute Load</string>
+    <string name="training_chronic_load">Chronic Load</string>
+    <string name="this_week_total">This week total</string>
+    <string name="last_week_total">Last week total</string>
+    <string name="low">Low</string>
+    <string name="optimal">Optimal</string>
+    <string name="high">High</string>
+    <string name="very_high">Very High</string>
+    <string name="training_daily_load">Daily Load</string>
     <string name="bpm_value_unit">%1$d bpm</string>
     <string name="steps_distance_unit">%1$,.2f km</string>
     <string name="body_energy_gained">Gained</string>
@@ -3028,6 +3037,7 @@
     <string name="pref_header_stress">Stress</string>
     <string name="pref_header_spo2">Blood Oxygen</string>
     <string name="pref_header_hrv_status">HRV Status</string>
+    <string name="pref_header_training_load">Training Load</string>
     <string name="pref_wear_sensor_summary">Detect when the device is not being worn</string>
     <string name="pref_wear_sensor_title">Wear Sensor</string>
     <string name="body_energy">Body Energy</string>

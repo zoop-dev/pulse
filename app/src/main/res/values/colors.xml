@@ -57,6 +57,12 @@
     <color name="hrv_status_low" type="color">#fc5203</color>
     <color name="hrv_status_poor" type="color">#be03fc</color>
     <color name="hrv_status_char_line_color" type="color">#d12a2a</color>
+    <color name="training_load_dark" type="color">#FFF</color>
+    <color name="training_load" type="color">#1d2436</color>
+    <color name="training_chronic_load" type="color">#8847a1</color>
+    <color name="training_load_optimal" type="color">#59b22c</color>
+    <color name="training_load_low" type="color">#D3D3D3</color>
+    <color name="training_load_high" type="color">#d12a2a</color>
     <color name="vo2max_running_char_line_color" type="color">#46acea</color>
     <color name="vo2max_cycling_char_line_color" type="color">#59b22c</color>
     <color name="vo2max_value_poor_color" type="color">#d93832</color>

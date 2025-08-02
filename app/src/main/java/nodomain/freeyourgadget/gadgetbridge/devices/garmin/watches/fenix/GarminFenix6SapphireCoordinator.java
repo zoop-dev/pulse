@@ -15,4 +15,14 @@ public class GarminFenix6SapphireCoordinator extends GarminWatchCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_fenix_6_sapphire;
     }
+
+    @Override
+    public boolean supportsTrainingLoad() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsWorkoutLoad() {
+        return true;
+    }
 }

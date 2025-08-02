@@ -45,6 +45,8 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.widgets.WidgetManager;
 import nodomain.freeyourgadget.gadgetbridge.entities.CyclingSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
@@ -65,6 +67,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WeightSample;
+import nodomain.freeyourgadget.gadgetbridge.model.WorkoutLoadSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 
@@ -371,6 +374,23 @@ public interface DeviceCoordinator {
      * Returns the sample provider for HRV values, for the device being supported.
      */
     TimeSampleProvider<? extends HrvValueSample> getHrvValueSampleProvider(GBDevice device, DaoSession session);
+
+    /**
+     * Returns the sample provider for Workout load values, for the device being supported.
+     */
+    TimeSampleProvider<? extends WorkoutLoadSample> getWorkoutLoadSampleProvider(GBDevice device, DaoSession session);
+
+    /**
+     * Returns the sample provider for training acute load values, for the device being supported.
+     */
+    TimeSampleProvider<? extends GenericTrainingLoadAcuteSample> getTrainingAcuteLoadSampleProvider(GBDevice device, DaoSession session);
+
+
+    /**
+     * Returns the sample provider for training chronic load values, for the device being supported.
+     */
+    TimeSampleProvider<? extends GenericTrainingLoadChronicSample> getTrainingChronicLoadSampleProvider(GBDevice device, DaoSession session);
+
 
     /**
      * Returns the sample provider for VO2 max values, for the device being supported.

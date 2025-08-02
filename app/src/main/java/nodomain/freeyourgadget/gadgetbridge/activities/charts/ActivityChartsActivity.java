@@ -133,6 +133,9 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
         if (!coordinator.supportsVO2Max()) {
             tabList.remove("vo2max");
         }
+        if (!coordinator.supportsWorkoutLoad()) {
+            tabList.remove("load");
+        }
         if (!coordinator.supportsActiveCalories()) {
             tabList.remove("calories");
         }
@@ -176,6 +179,8 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
                     return new BodyEnergyFragment();
                 case "vo2max":
                     return new VO2MaxFragment();
+                case "load":
+                    return new LoadFragment();
                 case "stress":
                     return StressCollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "pai":
@@ -247,6 +252,8 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
                     return getString(R.string.calories);
                 case "respiratoryrate":
                     return getString(R.string.respiratoryrate);
+                case "load":
+                    return getString(R.string.pref_header_training_load);
             }
 
             return String.format(Locale.getDefault(), "Unknown %d", position);

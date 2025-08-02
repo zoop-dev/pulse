@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2024 Andreas Shimokawa, Daniele Gobbetti, José Rebelo
+/*  Copyright (C) 2017-2024 a0z, José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -15,8 +15,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
-
-import static java.util.stream.Collectors.toCollection;
 
 import android.os.Build;
 import android.os.Bundle;
