@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(109, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(110, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -209,6 +209,8 @@ public class GBDaoGenerator {
         addGenericHrvValueSample(schema, user, device);
         addGenericTemperatureSample(schema, user, device);
         addGenericSleepStageSample(schema, user, device);
+        addGenericTrainingLoadAcuteSample(schema, user, device);
+        addGenericTrainingLoadChronicSample(schema, user, device);
 
         new DaoGenerator().generateAll(schema, "app/src/main/java");
     }
@@ -1947,5 +1949,19 @@ public class GBDaoGenerator {
         sleepStageSample.addIntProperty("duration").notNull();
         sleepStageSample.addIntProperty("stage").notNull();
         return sleepStageSample;
+    }
+
+    private static Entity addGenericTrainingLoadAcuteSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GenericTrainingLoadAcuteSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addIntProperty("value").notNull();
+        return sample;
+    }
+
+    private static Entity addGenericTrainingLoadChronicSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GenericTrainingLoadChronicSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addIntProperty("value").notNull();
+        return sample;
     }
 }

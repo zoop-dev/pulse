@@ -593,6 +593,16 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsTrainingLoad() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsWorkoutLoad() {
+        return false;
+    }
+
+    @Override
     public boolean supportsActivityTabs() {
         return supportsActivityTracking();
     }

@@ -23,6 +23,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadAcuteSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadChronicSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminBodyEnergySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminEventSampleProvider;
@@ -56,6 +58,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSpo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminStressSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -85,6 +89,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitStressLevel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTrainingLoad;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitUserProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -108,6 +113,8 @@ public class FitImporter {
     private final List<GarminHrvSummarySample> hrvSummarySamples = new ArrayList<>();
     private final List<GarminHrvValueSample> hrvValueSamples = new ArrayList<>();
     private final List<GarminRestingMetabolicRateSample> restingMetabolicRateSamples = new ArrayList<>();
+    private final List<GenericTrainingLoadAcuteSample> trainingLoadAcuteSamples = new ArrayList<>();
+    private final List<GenericTrainingLoadChronicSample> trainingLoadChronicSamples = new ArrayList<>();
     private final Map<Integer, Integer> unknownRecords = new HashMap<>();
     private FitSleepDataInfo fitSleepDataInfo = null;
     private final List<FitSleepDataRaw> fitSleepDataRawSamples = new ArrayList<>();
@@ -318,6 +325,21 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setRestingMetabolicRate(monitoringInfo.getRestingMetabolicRate());
                 restingMetabolicRateSamples.add(sample);
+            } else if (record instanceof FitTrainingLoad) {
+                final FitTrainingLoad trainingLoad = (FitTrainingLoad) record;
+                LOG.trace("Training load at {}: {}", ts, record);
+                if (trainingLoad.getTrainingLoadAcute() != null) {
+                    final GenericTrainingLoadAcuteSample sample = new GenericTrainingLoadAcuteSample();
+                    sample.setTimestamp(ts * 1000L);
+                    sample.setValue(trainingLoad.getTrainingLoadAcute());
+                    trainingLoadAcuteSamples.add(sample);
+                }
+                if (trainingLoad.getTrainingLoadChronic() != null) {
+                    final GenericTrainingLoadChronicSample sample = new GenericTrainingLoadChronicSample();
+                    sample.setTimestamp(ts * 1000L);
+                    sample.setValue(trainingLoad.getTrainingLoadChronic());
+                    trainingLoadChronicSamples.add(sample);
+                }
             } else if (record instanceof FitMonitoringHrData) {
                 final FitMonitoringHrData monitoringHrData = (FitMonitoringHrData) record;
                 if (monitoringHrData.getRestingHeartRate() == null) {
@@ -395,6 +417,10 @@ public class FitImporter {
                     persistAbstractSamples(stressSamples, new GarminStressSampleProvider(gbDevice, session));
                     persistAbstractSamples(bodyEnergySamples, new GarminBodyEnergySampleProvider(gbDevice, session));
                     persistAbstractSamples(restingMetabolicRateSamples, new GarminRestingMetabolicRateSampleProvider(gbDevice, session));
+                    break;
+                case METRICS:
+                    persistAbstractSamples(trainingLoadAcuteSamples, new GenericTrainingLoadAcuteSampleProvider(gbDevice, session));
+                    persistAbstractSamples(trainingLoadChronicSamples, new GenericTrainingLoadChronicSampleProvider(gbDevice, session));
                     break;
                 case SLEEP:
                     persistAbstractSamples(events, new GarminEventSampleProvider(gbDevice, session));
@@ -475,6 +501,8 @@ public class FitImporter {
         hrvSummarySamples.clear();
         hrvValueSamples.clear();
         restingMetabolicRateSamples.clear();
+        trainingLoadAcuteSamples.clear();
+        trainingLoadChronicSamples.clear();
         unknownRecords.clear();
         fitSleepDataInfo = null;
         fitSleepDataRawSamples.clear();
