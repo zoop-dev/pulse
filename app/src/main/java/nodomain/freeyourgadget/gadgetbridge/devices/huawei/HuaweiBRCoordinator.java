@@ -267,7 +267,7 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
 
     @Override
     public TimeSampleProvider<? extends SleepScoreSample> getSleepScoreProvider(final GBDevice device, final DaoSession session) {
-        return new HuaweiSleepStatsSampleProvider(device, session);
+        return new HuaweiSleepScoreSampleProvider(device, session);
     }
 
     @Override

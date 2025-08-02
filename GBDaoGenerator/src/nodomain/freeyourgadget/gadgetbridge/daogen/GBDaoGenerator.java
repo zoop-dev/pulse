@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(108, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(109, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -1559,13 +1559,11 @@ public class GBDaoGenerator {
 
     private static Entity addHuaweiSleepStatsSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "HuaweiSleepStatsSample");
-        sample.addImport(MAIN_PACKAGE + ".model.SleepScoreSample");
         addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
-        sample.implementsInterface("SleepScoreSample");
-        sample.addIntProperty("sleepScore").notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("sleepScore").notNull();
         sample.addLongProperty("bedTime").notNull();
         sample.addLongProperty("risingTime").notNull();
-        sample.addLongProperty("wakeupTime").notNull();
+        final Property wakeupTime = sample.addLongProperty("wakeupTime").notNull().getProperty();
         sample.addIntProperty("sleepDataQuality").notNull();
         sample.addIntProperty("deepPart").notNull();
         sample.addIntProperty("snoreFreq").notNull();
@@ -1577,6 +1575,11 @@ public class GBDaoGenerator {
         sample.addDoubleProperty("maxOxygenSaturation").notNull();
         sample.addDoubleProperty("minBreathRate").notNull();
         sample.addDoubleProperty("maxBreathRate").notNull();
+
+        final Index indexWakeUp = new Index();
+        indexWakeUp.addProperty(wakeupTime);
+        sample.addIndex(indexWakeUp);
+
         return sample;
     }
 

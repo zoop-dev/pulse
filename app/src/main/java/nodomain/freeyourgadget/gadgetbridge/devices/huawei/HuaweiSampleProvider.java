@@ -69,6 +69,7 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
 
         public static final int TRUSLEEP_REM = 0x5656;
         public static final int TRUSLEEP_AWAKE = 0x5658;
+        public static final int TRUSLEEP_NAP = 0x5659;
     }
 
     public HuaweiSampleProvider(GBDevice device, DaoSession session) {
@@ -82,6 +83,7 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
             case RawTypes.LIGHT_SLEEP -> ActivityKind.LIGHT_SLEEP;
             case RawTypes.TRUSLEEP_REM -> ActivityKind.REM_SLEEP;
             case RawTypes.TRUSLEEP_AWAKE -> ActivityKind.AWAKE_SLEEP;
+            case RawTypes.TRUSLEEP_NAP -> ActivityKind.LIGHT_SLEEP; // TODO:
             default -> ActivityKind.UNKNOWN;
         };
     }
@@ -298,9 +300,16 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
         return samples;
     }
 
-    private static int adjustTimeToMinute(int time) {
+    private static int adjustTimeSecToMinute(int time) {
         if (time % 60 != 0) {
             time = (time / 60) * 60;
+        }
+        return time;
+    }
+
+    private static long adjustTimeMillisToMinute(long time) {
+        if (time % 60000L != 0) {
+            time = (time / 60000L) * 60000L;
         }
         return time;
     }
@@ -315,8 +324,8 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
     protected List<HuaweiActivitySample> getGBActivitySamples(int timestamp_from, int timestamp_to) {
         List<HuaweiActivitySample> processedSamples = new ArrayList<>();
 
-        timestamp_from = adjustTimeToMinute(timestamp_from);
-        timestamp_to = adjustTimeToMinute(timestamp_to);
+        timestamp_from = adjustTimeSecToMinute(timestamp_from);
+        timestamp_to = adjustTimeSecToMinute(timestamp_to);
 
         for (int timestamp = timestamp_from; timestamp <= timestamp_to; timestamp += 60) {
             processedSamples.add(createDummySample(timestamp));
@@ -331,8 +340,8 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
 
     @Override
     protected List<HuaweiActivitySample> getGBActivitySamplesHighRes(int timestamp_from, int timestamp_to) {
-        timestamp_from = adjustTimeToMinute(timestamp_from);
-        timestamp_to = adjustTimeToMinute(timestamp_to);
+        timestamp_from = adjustTimeSecToMinute(timestamp_from);
+        timestamp_to = adjustTimeSecToMinute(timestamp_to);
 
         List<HuaweiActivitySample> processedSamples = getRawOrderedActivitySamples(timestamp_from, timestamp_to);
         addWorkoutSamples(processedSamples, timestamp_from, timestamp_to);
@@ -571,7 +580,7 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
             case 2 -> RawTypes.TRUSLEEP_REM;
             case 3 -> RawTypes.DEEP_SLEEP;
             case 4 -> RawTypes.TRUSLEEP_AWAKE;
-            //case 5 -> RawTypes.UNKNOWN;
+            case 5 -> RawTypes.TRUSLEEP_NAP;
             default -> RawTypes.UNKNOWN;
         };
     }
@@ -586,8 +595,8 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
         if (!sleepStatsSamples.isEmpty()) {
             for(HuaweiSleepStatsSample sample: sleepStatsSamples) {
                 final List<HuaweiSleepStageSample> stageSamples = sleepStageSampleProvider.getAllSamples(
-                        sample.getTimestamp(),
-                        sample.getWakeupTime() - 60000L
+                        adjustTimeMillisToMinute(sample.getTimestamp()),
+                        adjustTimeMillisToMinute(sample.getWakeupTime()) - 60000L
                 );
                 for (final HuaweiSleepStageSample stageSample : stageSamples) {
                     stagesMap.put(stageSample.getTimestamp(), toActivityKind(stageSample));
