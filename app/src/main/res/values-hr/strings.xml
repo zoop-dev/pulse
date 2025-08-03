@@ -125,15 +125,7 @@
 \nNapomena: Ne morate instalirati .res i .gps ako su ove datoteke potpuno iste kao one prethodno instalirane.
 \n
 \nNASTAVITE NA VLASTITU ODGOVORNOST!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Spremate se instalirati %s firmware na vaš Amazfit Cor 2.
-\n
-\nObavezno instalirajte .fw datoteku, a nakon toga .res datoteku. Vaš band će se ponovno pokrenuti nakon instaliranja.
-\n
-\nNapomena: Ne morate instalirati .res ako je potpuno isti kao onaj koji je prethodno instaliran.
-\n
-\nNASTAVITE NA VLASTITU ODGOVORNOST!
-\n
-\nPOTPUNO NETESTIRANO, VJEROJATNO TREBATE FLASHATI BEATS_W FIRMWARE AKO JE VAŠ UREĐAJ \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Spremate se instalirati %s firmware na vaš Amazfit Cor 2. \n \nObavezno instalirajte .fw datoteku, a nakon toga .res datoteku. Vaš band će se ponovno pokrenuti nakon instaliranja. \n \nNapomena: Ne morate instalirati .res ako je potpuno isti kao onaj koji je prethodno instaliran. \n \nNASTAVITE NA VLASTITU ODGOVORNOST! \n \nPOTPUNO NETESTIRANO, VJEROJATNO TREBATE FLASHATI BEATS_W FIRMWARE AKO JE VAŠ UREĐAJ \"Amazfit Band 2\"</string>
     <string name="fw_upgrade_notice_miband4">Spremate se instalirati %s firmware na vaš Mi Band 4.
 \n
 \nObavezno instalirajte .fw datoteku, a nakon toga .res datoteku. Vaš band će se ponovno pokrenuti nakon instaliranja.
