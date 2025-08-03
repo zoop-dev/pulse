@@ -1614,12 +1614,8 @@
     <string name="notification_gps_text">GPS konumu %1$d aygıta gönderiliyor</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">GPS Konumu Dinleyiciyi Durdur</string>
     <string name="pref_workout_send_gps_title">Egzersiz sırasında GPS gönder</string>
-    <string name="permission_notification_listener">%1$s, telefonunuzun ekranı kapalıyken saatinizde görüntülemek için Bildirimlere erişmeye ihtiyaç duyuyor.
-\n
-\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Bildirim Erişimine İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
-    <string name="permission_notification_policy_access">%1$s, telefonunuzun ekranı kapalıyken saatinizde bu ayarları yerine getirebilmek için Rahatsız Etme ayarlarına erişmeye ihtiyaç duyuyor.
-\n
-\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Rahatsız Etmeye İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
+    <string name="permission_notification_listener">%1$s, telefonunuzun ekranı kapalıyken saatinizde görüntülemek için Bildirimlere erişmeye ihtiyaç duyuyor. \n \nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Bildirim Erişimine İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
+    <string name="permission_notification_policy_access">%1$s, telefonunuzun ekranı kapalıyken saatinizde bu ayarları yerine getirebilmek için Rahatsız Etme ayarlarına erişmeye ihtiyaç duyuyor. \n \nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Rahatsız Etmeye İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
     <string name="quick_alarm">Hızlı alarm</string>
     <string name="quick_alarm_description">Widget alarmı</string>
     <string name="portuguese_pt">Portekizce (Portekiz)</string>
@@ -2208,11 +2204,7 @@
     <string name="screenshot_taken">Ekran görüntüsü alındı</string>
     <string name="zepp_os_watchface_simplicity_data">Sadelik Verisi</string>
     <string name="zepp_os_watchface_rotating_earth">Dönen Dünya</string>
-    <string name="permission_request">%1$s, Android\'den aygıtınıza mesaj ve diğer verileri göndermenizi sağlar. Bunu yapmak için bu verilere erişim izni gerekir ve bu izin olmadan düzgün çalışmayabilir.
-\n
-\nŞimdi size bu izinleri isteyen birkaç Android iletişim kutusu sunulacak.
-\n
-\nDevam etmek için lütfen \'%2$s\' seçeneğine dokunun.</string>
+    <string name="permission_request">%1$s, Android\'den aygıtınıza mesaj ve diğer verileri göndermenizi sağlar. Bunu yapmak için bu verilere erişim izni gerekir ve bu izin olmadan düzgün çalışmayabilir. \n \nŞimdi size bu izinleri isteyen birkaç Android iletişim kutusu sunulacak. \n \nDevam etmek için lütfen \'%2$s\' seçeneğine dokunun.</string>
     <string name="activity_detail_share_gps_label">GPS İzlemesini Paylaş</string>
     <string name="pai_day">Günlük artış</string>
     <string name="double_tap">Çift Dokunuş</string>
