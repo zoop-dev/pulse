@@ -1591,12 +1591,8 @@
     <string name="pref_workout_start_on_phone_title">健身应用追踪</string>
     <string name="pref_workout_start_on_phone_summary">在手环上开始 GPS 锻炼时，在手机上开始/停止健身应用跟踪</string>
     <string name="notification_channel_gps">GPS跟踪</string>
-    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。
-\n
-\n请点击\'%2$s\'然后\'%1$s\'并启用\'允许通知访问\'，然后点击\'返回\'以返回到%1$s。</string>
-    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。
-\n
-\n请点击“%2$s”然后点击“%1$s”并启用“允许请勿打扰”，然后点击“返回”返回到%1$s。</string>
+    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。 \n \n请点击\'%2$s\'然后\'%1$s\'并启用\'允许通知访问\'，然后点击\'返回\'以返回到%1$s。</string>
+    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。 \n \n请点击“%2$s”然后点击“%1$s”并启用“允许请勿打扰”，然后点击“返回”返回到%1$s。</string>
     <string name="pref_workout_send_gps_title">在锻炼期间发送 GPS</string>
     <string name="pref_workout_send_gps_summary">锻炼时将当前的GPS位置发送到手环上</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
@@ -1710,15 +1706,7 @@
     <string name="prefs_hourly_chime_summary">手表每小时将发出一次蜂鸣音</string>
     <string name="step_streaks_achievements_sharing_message">我每天的步数成就!</string>
     <string name="step_streaks_achievements_sharing_title">步数成就</string>
-    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。
-\n
-\n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。
-\n
-\n请点击“%2$s”，然后点击“%1$s”并启用“允许显示在其他应用程序上”，然后点击“返回”返回到%1$s。
-\n
-\n若需要停止 %1$s 询问权限，请进入“设置”，并取消“检查权限状态”。
-\n
-\n请确保 %1$s 已经给予了必要的权限。</string>
+    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。 \n \n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。 \n \n请点击“%2$s”，然后点击“%1$s”并启用“允许显示在其他应用程序上”，然后点击“返回”返回到%1$s。 \n \n若需要停止 %1$s 询问权限，请进入“设置”，并取消“检查权限状态”。 \n \n请确保 %1$s 已经给予了必要的权限。</string>
     <string name="pref_header_display">显示</string>
     <string name="pref_header_health">健康</string>
     <string name="pref_header_time">时间</string>
@@ -2171,11 +2159,7 @@
     <string name="busy_task_fetch_sleep_respiratory_rate_data">正在获取睡眠呼吸频率数据</string>
     <string name="activity_prefs_goals">目标</string>
     <string name="error_no_bluetooth_scan">必须授予并启用蓝牙扫描访问权限才能使扫描正常的工作</string>
-    <string name="permission_request">%1$s 允许您将消息和其他数据从 Android 发送到您的设备。 为此，它需要访问该数据的权限，如果没有该权限，它可能无法正常运行。
-\n
-\n现在您将看到一些请求这些权限的 Android 对话框。
-\n
-\n请点击“%2$s”继续。</string>
+    <string name="permission_request">%1$s 允许您将消息和其他数据从 Android 发送到您的设备。 为此，它需要访问该数据的权限，如果没有该权限，它可能无法正常运行。 \n \n现在您将看到一些请求这些权限的 Android 对话框。 \n \n请点击“%2$s”继续。</string>
     <string name="error_no_bluetooth_connect">必须授予并启用蓝牙连接访问权限才能使扫描正常的工作</string>
     <string name="activity_type_surfing">冲浪</string>
     <string name="activity_type_kitesurfing">风筝冲浪</string>
