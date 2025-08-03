@@ -658,7 +658,7 @@ Temps de sommeil préféré en heures</string>
     <string name="title_activity_device_specific_settings">Paramètres spécifiques de l\'appareil</string>
     <string name="pref_title_authkey">Clé d\'autorisation</string>
     <string name="pref_summary_authkey">Changez la clé d\'autorisation pour une clé commune à tous vos appareils Android sur lesquels vous souhaitez vous connecter. La précédente clé par défaut est 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du fichier .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST « Amazfit Band 2 »</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du fichier .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST « Amazfit Band 2 »</string>
     <string name="dutch">Néerlandais</string>
     <string name="turkish">Turc</string>
     <string name="ukrainian">Ukrainien</string>
