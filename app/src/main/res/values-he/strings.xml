@@ -1605,13 +1605,9 @@
     <string name="quick_alarm">שעון מעורר מהיר</string>
     <string name="pref_title_banglejs_webview_url">כתובת טוען יישומון</string>
     <string name="pref_summary_banglejs_webview_url">אם ברצונך להשתמש בטוען יישומון אחר נא לציין את הכתובת https://…/android.html, אם לא אפשר להשאיר ריק כדי להשתמש ב־https://banglejs.com/apps</string>
-    <string name="permission_notification_listener">ל־%1$s דרושה גישה להתראות כדי להציג אותן בשעון שלך כאשר מסך הטלפון שלך כבוי.
-\n
-\nנא לגעת ב־‚%2$s’ ואז ‚%1$s’ ולהפעיל את ‚לאפשר גישה להתראות’ ואז לגעת ב‚חזרה’ כדי לחזור אל %1$s.</string>
+    <string name="permission_notification_listener">ל־%1$s דרושה גישה להתראות כדי להציג אותן בשעון שלך כאשר מסך הטלפון שלך כבוי. \n \nנא לגעת ב־‚%2$s’ ואז ‚%1$s’ ולהפעיל את ‚לאפשר גישה להתראות’ ואז לגעת ב‚חזרה’ כדי לחזור אל %1$s.</string>
     <string name="permission_location">ל־%1$s דרושה גישה למיקום שלך ברקע כדי לאפשר לו להישאר מחובר לשעון שלך גם כאשר המסך שלך כבוי. \n \nנא לבחור ב‚%2$s’ במסך הבא, ואז ללחוץ על ‚חזרה’ כדי לחזור אל %1$s.</string>
-    <string name="permission_notification_policy_access">ל־%1$s דרושה גישה להגדרות לא להפריע כדי לכבד אותן בשעון שלך כאשר מסך הטלפון שלך כבוי.
-\n
-\nנא לגעת ב־‚%2$s’ ואז ‚%1$s’ ולהפעיל את ‚לאפשר לא להפריע’ ואז לגעת ב‚חזרה’ כדי לחזור אל %1$s.</string>
+    <string name="permission_notification_policy_access">ל־%1$s דרושה גישה להגדרות לא להפריע כדי לכבד אותן בשעון שלך כאשר מסך הטלפון שלך כבוי. \n \nנא לגעת ב־‚%2$s’ ואז ‚%1$s’ ולהפעיל את ‚לאפשר לא להפריע’ ואז לגעת ב‚חזרה’ כדי לחזור אל %1$s.</string>
     <string name="extended_ascii">ASCII מורחב</string>
     <string name="scandinavian">סקנדינבית</string>
     <string name="icelandic">איסלנדית</string>
@@ -1713,15 +1709,7 @@
     <string name="about_description_banglejs_nightly">יישומון נלווה ל־Bangle.js לסביבת Android שנבנה על גבי מיזם Gadgetbridge בתוספת גישה לאינטרנט.
 \n
 \nעקב מדיניות של חנות Google Play אסור לנו להציב קישור תרומה ביישומון עצמו אבל אם היישומון הזה נושא חן בעיניך, נא לשקול לתרום לו דרך האתר של Gadgetbridge שלהלן.</string>
-    <string name="permission_display_over_other_apps">%1$s זקוק להרשאות כדי להציג על פני יישומונים אחרים כדי לאפשר לשעוני Bangle.js להריץ פעילויות דרך Intens כאשר %1$s פועל ברקע.
-\n
-\nאפשר להשתמש בזה כדי להפעיל יישומון מוזיקה ולנגן שיר ולעוד מגוון משימות.
-\n
-\nנא לגעת ב־‚%2$s’ ואז ב־‚%1$s’ ולסמן את ‚לאפשר הצגה על גבי יישומונים אחרים’, ואז לגעת ב־‚חזרה’ כדי לחזור אל %1$s.
-\n
-\nכדי לעצור את בקשת ההרשאות מצד %1$s יש לגשת אל ההגדרות ולבטל את הסימון ‚בדיקת מצב הרשאות’.
-\n
-\nנא לוודא שהענקת ל־%1$s את ההרשאות הנדרשות כדי שיפעל כראוי.</string>
+    <string name="permission_display_over_other_apps">%1$s זקוק להרשאות כדי להציג על פני יישומונים אחרים כדי לאפשר לשעוני Bangle.js להריץ פעילויות דרך Intens כאשר %1$s פועל ברקע. \n \nאפשר להשתמש בזה כדי להפעיל יישומון מוזיקה ולנגן שיר ולעוד מגוון משימות. \n \nנא לגעת ב־‚%2$s’ ואז ב־‚%1$s’ ולסמן את ‚לאפשר הצגה על גבי יישומונים אחרים’, ואז לגעת ב־‚חזרה’ כדי לחזור אל %1$s. \n \nכדי לעצור את בקשת ההרשאות מצד %1$s יש לגשת אל ההגדרות ולבטל את הסימון ‚בדיקת מצב הרשאות’. \n \nנא לוודא שהענקת ל־%1$s את ההרשאות הנדרשות כדי שיפעל כראוי.</string>
     <string name="pref_header_calendar">לוח שנה</string>
     <string name="pref_header_connection">חיבור</string>
     <string name="pref_header_display">תצוגה</string>
@@ -2095,7 +2083,7 @@
     <string name="contact_no_free_slots_description">למכשיר אין מקומות פנויים לאנשי קשר (סך כל המקומות: %1$s)</string>
     <string name="title_activity_set_contacts">הגדרת אנשי קשר</string>
     <string name="pref_contacts_summary">הגדרת אנשי קשר בשעון</string>
-    <string name="contact_delete_confirm_description">למחוק את ‚%1$s’\?</string>
+    <string name="contact_delete_confirm_description">למחוק את ‚%1$s’?</string>
     <string name="contact_delete_confirm_title">מחיקת איש קשר</string>
     <string name="contact_phone_number">מס׳ טלפון</string>
     <string name="contact_missing_name">שם איש הקשר ריק</string>
@@ -2175,11 +2163,7 @@
     <string name="activity_prefs_goals">יעדים</string>
     <string name="error_no_bluetooth_scan">יש להעניק גישה לסריקת Bluetooth ולהפעיל אותה כדי שזה יעבוד כראוי</string>
     <string name="error_no_bluetooth_connect">יש להעניק גישה לחיבור Bluetooth ולהפעיל אותו כדי שהסריקה תעבוד כראוי</string>
-    <string name="permission_request">%1$s מאפשר לך לשלוח הודעות ונתונים נוספים מ־Android למכשיר שלך. כדי לעשות זאת נדרשת גישה לנתונים האלה ובלעדיה, כנראה שזה לא יעבוד כראוי.
-\n
-\nעכשיו יוצגו בפניך מספר חלוניות של Android שמבקשות את ההרשאות האלה.
-\n
-\nנא לגעת ב־‚%2$s’ כדי להמשיך.</string>
+    <string name="permission_request">%1$s מאפשר לך לשלוח הודעות ונתונים נוספים מ־Android למכשיר שלך. כדי לעשות זאת נדרשת גישה לנתונים האלה ובלעדיה, כנראה שזה לא יעבוד כראוי. \n \nעכשיו יוצגו בפניך מספר חלוניות של Android שמבקשות את ההרשאות האלה. \n \nנא לגעת ב־‚%2$s’ כדי להמשיך.</string>
     <string name="activity_type_surfing">גלישה</string>
     <string name="activity_type_windsurfing">גלישת רוח</string>
     <string name="activity_type_rugby">רוגבי</string>
