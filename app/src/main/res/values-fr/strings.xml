@@ -950,7 +950,7 @@ Temps de sommeil préféré en heures</string>
     <string name="error_background_service">Impossible de démarrer le service d\'arrière-plan</string>
     <string name="companiondevice_pairing">Pairage du bracelet</string>
     <string name="require_location_provider">La géolocalisation doit être activée</string>
-    <string name="error_version_check_extreme_caution">ATTENTION: Erreur lors de la vérification de l\'information de version ! Vous ne devriez pas poursuivre ! Numéro de version \"%s\"</string>
+    <string name="error_version_check_extreme_caution">ATTENTION: Erreur lors de la vérification de l\'information de version ! Vous ne devriez pas poursuivre ! Numéro de version \"%s\"</string>
     <string name="permission_granting_mandatory">Toutes ces permissions sont nécessaires et une instabilité peut se produire si elles ne sont pas accordées</string>
     <string name="about_links">Liens</string>
     <string name="about_additional_contributions">Nombreux remerciements à tous les participants non indiqués pour la contribution au code, les traductions, le support, les idées, la motivation, les rapports de bugs, les soutiens financiers… ✊</string>
@@ -1572,9 +1572,7 @@ Temps de sommeil préféré en heures</string>
     <string name="notification_gps_title">GPS Gadgebridge</string>
     <string name="notification_gps_text">Envoi des données GPS au(x) appareil(s) %1$d</string>
     <string name="notification_channel_gps">Suivi GPS</string>
-    <string name="permission_notification_listener">%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint.
-\n
-\nMerci de sélectionner \'%2$s\' puis \'%1$s\' et activer \'Autoriser l\'accès aux notifications\', puis appuyer sur \'Retour\' pour revenir à %1$s.</string>
+    <string name="permission_notification_listener">%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint. \n \nMerci de sélectionner \'%2$s\' puis \'%1$s\' et activer \'Autoriser l\'accès aux notifications\', puis appuyer sur \'Retour\' pour revenir à %1$s.</string>
     <string name="portuguese_br">Portugais (Brésil)</string>
     <string name="portuguese_pt">Portugais (Portugal)</string>
     <string name="prefs_active_noise_cancelling_level_low">Bas</string>
@@ -1595,9 +1593,7 @@ Temps de sommeil préféré en heures</string>
     <string name="prefs_double_tap_edge_summary">Détecter un double appui même si hors zone tactile</string>
     <string name="pref_voice_detect_duration_10">10 secondes</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Arrêt du gestionnaire GPS</string>
-    <string name="permission_notification_policy_access">%1$s doit accéder aux réglages Ne Pas Déranger afin de les respecter sur votre montre quand l\'écran de votre téléphone est éteint.
-\n
-\nMerci de sélectionner \'%2$s\' puis \'%1$s\' et activer \'Autoriser Ne Pas Déranger\', puis sélectionner \'Retour\' pour revenir à %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s doit accéder aux réglages Ne Pas Déranger afin de les respecter sur votre montre quand l\'écran de votre téléphone est éteint. \n \nMerci de sélectionner \'%2$s\' puis \'%1$s\' et activer \'Autoriser Ne Pas Déranger\', puis sélectionner \'Retour\' pour revenir à %1$s.</string>
     <string name="prefs_voice_detect_summary">Activer le son ambiant et réduction de bruit automatique lors de la détection de voix</string>
     <string name="quick_alarm">Alarme rapide</string>
     <string name="quick_alarm_description">Alarme d\'un widget</string>
@@ -2096,7 +2092,7 @@ Temps de sommeil préféré en heures</string>
     <string name="contact_delete_confirm_title">Effacer le contact</string>
     <string name="title_activity_contact_details">Détails du contact</string>
     <string name="title_activity_set_contacts">Configurer les contacts</string>
-    <string name="contact_delete_confirm_description">Etes-vous sûr de vouloir effacer \'%1$s\' \?</string>
+    <string name="contact_delete_confirm_description">Etes-vous sûr de vouloir effacer \'%1$s\' ?</string>
     <string name="contact_name">Nom</string>
     <string name="contact_missing_name">Le nom du contact est vide</string>
     <string name="contact_missing_number">Le numéro du contact est vide</string>
@@ -2180,11 +2176,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_prefs_goals">Objectifs</string>
     <string name="error_no_bluetooth_scan">L\'accès au Bluetooth doit être autorisé et activé pour que le scan fonctionne correctement</string>
     <string name="error_no_bluetooth_connect">L\'accès au Bluetooth doit être autorisé et activé pour que le scan fonctionne correctement</string>
-    <string name="permission_request">%1$s vous permet d\'envoyer des messages et d\'autres données depuis Android vers votre appareil. Pour cela il a besoin de permission pour accéder à ces données, sans quoi cela risque de ne pas fonctionner correctement.
-\n
-\nVous allez maintenant pouvoir configurer ces autorisations.
-\n
-\nMerci d\'appuyer sur \'%2$s\' pour continuer.</string>
+    <string name="permission_request">%1$s vous permet d\'envoyer des messages et d\'autres données depuis Android vers votre appareil. Pour cela il a besoin de permission pour accéder à ces données, sans quoi cela risque de ne pas fonctionner correctement. \n \nVous allez maintenant pouvoir configurer ces autorisations. \n \nMerci d\'appuyer sur \'%2$s\' pour continuer.</string>
     <string name="activity_type_handball">Handball</string>
     <string name="activity_type_windsurfing">Surf à voile</string>
     <string name="activity_type_kitesurfing">Kitesurfing</string>
