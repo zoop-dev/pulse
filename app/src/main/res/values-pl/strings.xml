@@ -184,7 +184,7 @@
     <string name="chart_no_data_synchronize">Brak danych. Synchronizować urządzenie?</string>
     <string name="user_feedback_miband_activity_data_transfer">Zamierzam przesłać %1$s danych, rozpoczynając od %2$s</string>
     <string name="miband_prefs_fitness_goal">Dzienny cel kroków</string>
-    <string name="dbaccess_error_executing">Błąd przetwarzania \'%1$s\' </string>
+    <string name="dbaccess_error_executing">Błąd przetwarzania \'%1$s\'</string>
     <string name="controlcenter_start_activitymonitor">Twoja aktywność</string>
     <string name="cannot_connect">Nie można połączyć: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Nie można znaleźć procedury by zainstalować ten plik.</string>
