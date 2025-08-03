@@ -3194,13 +3194,13 @@ Temps de sommeil préféré en heures</string>
     <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
     <string name="date_placeholders__date__time">%1s, %1s</string>
     <string name="mijia_lywsd_comfort_temperature_title">Temperature (°C)</string>
-    <string name="mijia_lywsd_comfort_temperature_summary">Plage recommandée : 19 - 27</string>
+    <string name="mijia_lywsd_comfort_temperature_summary">Plage recommandée : 19 - 27</string>
     <string name="mijia_lywsd_comfort_level_title">Niveau confort</string>
     <string name="mijia_lywsd_comfort_humidity_title">Humidité (%)</string>
     <string name="mijia_lywsd_comfort_level_summary">Configurer les limites de température et d’humidité pour l’affihage d\'emoji</string>
     <string name="mijia_lywsd_comfort_lower">limite inférieure</string>
     <string name="mijia_lywsd_comfort_upper">Limite supérieure</string>
-    <string name="mijia_lywsd_comfort_humidity_summary">Plage recommandée : 20 - 85</string>
+    <string name="mijia_lywsd_comfort_humidity_summary">Plage recommandée : 20 - 85</string>
     <string name="pref_summary_sync_birthdays">Synchroniser les anniversaires de contact avec les événements du calendrier</string>
     <string name="pref_title_sync_birthdays">Synchroniser les anniversaires</string>
     <string name="birthdays">Anniversaires</string>
@@ -3275,7 +3275,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
     <string name="redmi_buds_5_pro_anc_deep">Profond</string>
-    <string name="music_delete_confirm_description">Êtes-vous sûr de vouloir supprimer \'%1$s\' ?</string>
+    <string name="music_delete_confirm_description">Êtes-vous sûr de vouloir supprimer \'%1$s\' ?</string>
     <string name="music_rename_playlist">Renommer la playlist</string>
     <string name="first_start_overview_dashboard">Le tableau de bord vous permet d’avoir une idée rapide de comment vous allez aujourd\'hui. L’affichage du calendrier indique l’état de vos objectifs sur un mois entier.</string>
     <string name="permission_fine_location_summary">Rechercher les appareils Bluetooth</string>
@@ -3319,7 +3319,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_equalizer_2">2 dB</string>
     <string name="first_start_overview_desc">Gadgetbridge a deux vues principales, chacune avec son propre but.</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
-    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr de vouloir supprimer \'%1$d\' chansons ?</string>
+    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr de vouloir supprimer \'%1$d\' chansons ?</string>
     <string name="first_start_overview_devices">La vue des appareils affiche tous les appareils que vous avez configurés et leur statut, et donne accès à des fonctions spécifiques aux appareils telles que des graphiques détaillés, des paramètres, des applications et des alarmes.</string>
     <string name="permission_notifications_summary">Transfert des notifications vers les gadgets connectés</string>
     <string name="permission_displayover_title">Afficher par-dessus d\'autres applications</string>
