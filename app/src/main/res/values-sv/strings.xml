@@ -214,15 +214,7 @@
     <string name="battery_detail_activity_title">Batteristatus</string>
     <string name="prefs_activity_in_device_card_distance_title_summary">Avstånd beräknas från stegen och stegens längd (justeras i Inställningar - Om)</string>
     <string name="whitelist_all_for_notifications">Vitlista alla för aviseringar</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Du är på väg att installera %s firmware på din Amazfit Cor 2.
-\n
-\nSe till att installera .fw-filen och efter det .res-filen. Ditt band kommer att starta om efter installation av .fw-filen.
-\n
-\nObs: Du behöver inte installera .res om det är exakt samma som det tidigare installerade.
-\n
-\nFORTSÄTT PÅ EGEN RISK!
-\n
-\nHELT OTESTAD, FÖRMODLIGT MÅSTE DU FLASH EN BEATS_W FIRMWARE OM DIN ENHET ÄR \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Du är på väg att installera %s firmware på din Amazfit Cor 2. \n \nSe till att installera .fw-filen och efter det .res-filen. Ditt band kommer att starta om efter installation av .fw-filen. \n \nObs: Du behöver inte installera .res om det är exakt samma som det tidigare installerade. \n \nFORTSÄTT PÅ EGEN RISK! \n \nHELT OTESTAD, FÖRMODLIGT MÅSTE DU FLASH EN BEATS_W FIRMWARE OM DIN ENHET ÄR \"Amazfit Band 2\"</string>
     <string name="fw_upgrade_notice_amazfitgts">Du håller på att installera %s firmware på din Amazfit GTS.
 \n
 \nSe till att installera .fw-filen, sedan .res-filen och slutligen .gps-filen. Din klocka kommer att starta om efter installation av .fw-filen.
