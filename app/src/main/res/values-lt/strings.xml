@@ -474,7 +474,7 @@
     <string name="pref_world_clocks_summary">Konfigūruoti laikrodžius kitoms laiko zonoms</string>
     <string name="pref_contacts_summary">Konfigūruoti adresatus laikrodyje</string>
     <string name="contact_no_free_slots_description">Įrenginys neturi laisvų vietų adresatams (iš viso vietų: %1$s)</string>
-    <string name="contact_delete_confirm_description">Ar tikrai norite ištrinti \'%1$s\'\?</string>
+    <string name="contact_delete_confirm_description">Ar tikrai norite ištrinti \'%1$s\'?</string>
     <string name="user_feedback_miband_set_alarms_failed">Įvyko klaida nustatant žadintuvus, bandykite dar kartą.</string>
     <string name="title_activity_world_clock_details">Pasaulio laikrodžio informacija</string>
     <string name="title_activity_contact_details">Adresato informacija</string>
