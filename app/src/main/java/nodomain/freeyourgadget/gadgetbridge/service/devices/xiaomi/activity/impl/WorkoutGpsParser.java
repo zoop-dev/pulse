@@ -22,8 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Date;
@@ -42,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileFetcher;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
@@ -131,8 +130,8 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             activityTrack.setDevice(device);
             activityTrack.setName(ActivityKind.fromCode(summary.getActivityKind()).getLabel(support.getContext()));
 
-            // Save the raw bytes
-            final String rawBytesPath = saveRawBytes(fileId, bytes);
+            // The file was already persisted by XiaomiActivityFileFetcher - just use the existing file
+            final File rawBytesFile = XiaomiActivityFileFetcher.getRawFile(support, fileId);
 
             // Save the gpx file
             final GPXExporter exporter = new GPXExporter();
@@ -151,8 +150,8 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             if (exportGpxSuccess) {
                 summary.setGpxTrack(gpxTargetFile.getAbsolutePath());
             }
-            if (rawBytesPath != null) {
-                summary.setRawDetailsPath(rawBytesPath);
+            if (rawBytesFile != null) {
+                summary.setRawDetailsPath(rawBytesFile.getAbsolutePath());
             }
             session.getBaseActivitySummaryDao().insertOrReplace(summary);
         } catch (final Exception e) {
@@ -161,23 +160,5 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
         }
 
         return true;
-    }
-
-    private String saveRawBytes(final XiaomiActivityFileId fileId, final byte[] bytes) {
-        try {
-            final File targetFolder = new File(FileUtils.getExternalFilesDir(), "rawDetails");
-            //noinspection ResultOfMethodCallIgnored
-            targetFolder.mkdirs();
-            final File targetFile = new File(targetFolder, fileId.getFilename());
-            FileOutputStream outputStream = new FileOutputStream(targetFile);
-            outputStream.write(fileId.toBytes());
-            outputStream.write(bytes);
-            outputStream.close();
-            return targetFile.getAbsolutePath();
-        } catch (final IOException e) {
-            LOG.error("Failed to save raw bytes", e);
-        }
-
-        return null;
     }
 }

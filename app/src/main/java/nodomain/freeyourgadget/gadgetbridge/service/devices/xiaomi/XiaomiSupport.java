@@ -132,16 +132,11 @@ public class XiaomiSupport extends AbstractDeviceSupport {
             connType = getDevicePrefs().getForcedConnectionTypeFromPrefs();
         }
 
-        switch (connType) {
-            case BLE:
-            case BOTH:
-                return new XiaomiBleSupport(this);
-            case BT_CLASSIC:
-                return new XiaomiSppSupport(this);
-        }
+        return switch (connType) {
+            case BLE, BOTH -> new XiaomiBleSupport(this);
+            case BT_CLASSIC -> new XiaomiSppSupport(this);
+        };
 
-        LOG.error("Cannot create connection-specific support, unhanded {} connection type", connType);
-        return null;
     }
 
     public XiaomiConnectionSupport getConnectionSpecificSupport() {
@@ -469,7 +464,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
 
         LOG.info("Parsing all activity files from storage");
 
-        final File[] activityFiles;
+        final List<File> activityFiles;
         try {
             final File externalFilesDir = getCoordinator().getWritableExportDirectory(getDevice());
             final File exportDir = new File(externalFilesDir, "rawFetchOperations");
@@ -480,13 +475,8 @@ public class XiaomiSupport extends AbstractDeviceSupport {
                 return;
             }
 
-            activityFiles = exportDir.listFiles((dir, name) -> name.startsWith("xiaomi_"));
-            if (activityFiles == null) {
-                LOG.error("activityFiles is null for {}", exportDir);
-                GB.toast(getContext(), "activityFiles is null for " + exportDir, Toast.LENGTH_LONG, GB.ERROR);
-                return;
-            }
-            if (activityFiles.length == 0) {
+            activityFiles = FileUtils.listRecursive(exportDir, (dir, name) -> name.endsWith(".bin"));
+            if (activityFiles.isEmpty()) {
                 LOG.error("No activity files found in {}", exportDir);
                 GB.toast(getContext(), "No activity files found in " + exportDir, Toast.LENGTH_LONG, GB.ERROR);
                 return;
@@ -496,6 +486,8 @@ public class XiaomiSupport extends AbstractDeviceSupport {
             GB.toast(getContext(), "Failed to parse from storage", Toast.LENGTH_LONG, GB.ERROR, e);
             return;
         }
+
+        LOG.debug("Will parse {} files", activityFiles.size());
 
         GB.toast(getContext(), "Check notification for progress", Toast.LENGTH_LONG, GB.INFO);
         GB.updateTransferNotification("Parsing activity files", "...", true, 0, getContext());
@@ -515,11 +507,10 @@ public class XiaomiSupport extends AbstractDeviceSupport {
                         lastNotificationUpdateTs[0] = now;
                         handler.post(() -> {
                             GB.updateTransferNotification(
-                                    "Parsing activity files", "File " + i[0] + " of " + activityFiles.length,
+                                    "Parsing activity files", "File " + i[0] + " of " + activityFiles.size(),
                                     true,
-                                    (i[0] * 100) / activityFiles.length, getContext()
+                                    (i[0] * 100) / activityFiles.size(), getContext()
                             );
-                            ;
                         });
                     }
 

@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
@@ -149,18 +150,52 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
                 .build();
     }
 
-    public String getFilename() {
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss", Locale.US);
+    public File getOutputFile(final File targetDir) {
+        final SimpleDateFormat SDF_YEAR = new SimpleDateFormat("yyyy", Locale.ROOT);
+        final SimpleDateFormat SDF_FULL = new SimpleDateFormat("yyyyMMdd'T'HHmmss", Locale.US);
 
-        return String.format(
+        final StringBuilder sb = new StringBuilder();
+
+        // Year
+        sb.append(SDF_YEAR.format(getTimestamp()));
+        sb.append("/");
+
+        // Type
+        final Type typeName = Type.fromCode(type);
+        sb.append(typeName.name());
+        if (typeName == Type.UNKNOWN) {
+            sb.append("_").append(String.format("%02X", type));
+        }
+        sb.append("/");
+
+        // Subtype
+        final Subtype subtypeName = Subtype.fromCode(typeName, subtype);
+        sb.append(subtypeName.name());
+        if (subtypeName == Subtype.UNKNOWN) {
+            sb.append("_").append(String.format("%02X", subtype));
+        }
+        sb.append("/");
+
+        // DetailType
+        final DetailType detailTypeName = DetailType.fromCode(detailType);
+        sb.append(detailTypeName.name());
+        if (detailTypeName == DetailType.UNKNOWN) {
+            sb.append("_").append(String.format("%02X", subtype));
+        }
+        sb.append("/");
+
+        // Filename
+        sb.append(String.format(
                 Locale.ROOT,
-                "xiaomi_%s_%02X_%02X_%02X_v%d.bin",
-                sdf.format(getTimestamp()),
+                "%s_%02X_%02X_%02X_v%d.bin",
+                SDF_FULL.format(getTimestamp()),
                 getTypeCode(),
                 getSubtypeCode(),
                 getDetailTypeCode(),
                 getVersion()
-        );
+        ));
+
+        return new File(targetDir, sb.toString());
     }
 
     public enum Type {
@@ -252,16 +287,12 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
         public int getFetchOrder() {
             // Fetch summary first, so we have the summary data for workouts
             // before parsing the gps track
-            switch (this) {
-                case SUMMARY:
-                    return 0;
-                case DETAILS:
-                    return 1;
-                case GPS_TRACK:
-                    return 2;
-            }
-
-            return 3;
+            return switch (this) {
+                case SUMMARY -> 0;
+                case DETAILS -> 1;
+                case GPS_TRACK -> 2;
+                default -> 3;
+            };
         }
 
         public static DetailType fromCode(final int code) {
