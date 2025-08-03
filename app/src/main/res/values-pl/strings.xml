@@ -1682,15 +1682,7 @@
     <string name="menuitem_workout_status">Status treningu</string>
     <string name="share_log_not_enabled_message">Musisz najpierw włączyć rejestrowanie w Ustawieniach - Zapisywanie plików dziennika</string>
     <string name="menuitem_personal_activity_intelligence">Inteligencja działań osobistych (PAI)</string>
-    <string name="permission_display_over_other_apps">%1$s potrzebuje uprawnień do wyświetlania nad innymi aplikacjami, aby zegarki Bangle.js mogły rozpoczynać działania za pomocą intencji, gdy %1$s działa w tle.
-\n
-\nMożna go użyć do uruchomienia aplikacji muzycznej i odtworzenia utworu oraz wielu innych rzeczy.
-\n
-\nWybierz „%2$s”, a następnie „%1$s” i włącz opcję „Zezwalaj na wyświetlanie w innych aplikacjach”, a następnie dotknij „Wstecz”, aby powrócić do %1$s.
-\n
-\nAby przestać pytać %1$s o uprawnienia, przejdź do „Ustawień” i odznacz „Sprawdź stan uprawnień”.
-\n
-\nUpewnij się, że przyznałeś %1$s uprawnienia potrzebne do działania zgodnie z oczekiwaniami.</string>
+    <string name="permission_display_over_other_apps">%1$s potrzebuje uprawnień do wyświetlania nad innymi aplikacjami, aby zegarki Bangle.js mogły rozpoczynać działania za pomocą intencji, gdy %1$s działa w tle. \n \nMożna go użyć do uruchomienia aplikacji muzycznej i odtworzenia utworu oraz wielu innych rzeczy. \n \nWybierz „%2$s”, a następnie „%1$s” i włącz opcję „Zezwalaj na wyświetlanie w innych aplikacjach”, a następnie dotknij „Wstecz”, aby powrócić do %1$s. \n \nAby przestać pytać %1$s o uprawnienia, przejdź do „Ustawień” i odznacz „Sprawdź stan uprawnień”. \n \nUpewnij się, że przyznałeś %1$s uprawnienia potrzebne do działania zgodnie z oczekiwaniami.</string>
     <string name="watchface_dialog_widget_cat_generic">Generyczny</string>
     <string name="watchface_dialog_widget_cat_2nd_tz_widget">Drugi widżet strefy czasowej</string>
     <string name="prefs_double_tap_edge_summary">Wykrywaj podwójne dotknięcie, nawet jeśli nie zostało dotknięte na płytce dotykowej</string>
@@ -2160,7 +2152,7 @@
     <string name="contact_no_free_slots_description">Urządzenie nie posiada wolnych miejsc na styki (całkowita liczba miejsc: %1$s)</string>
     <string name="pref_workout_keep_screen_on_summary">Ekran pozostanie włączony podczas treningu, a jasność zostanie dostosowana tak, aby stale wyświetlać dane treningu w czasie rzeczywistym</string>
     <string name="prefs_wena3_home_icon_name_pedometer">Liczba kroków</string>
-    <string name="contact_delete_confirm_description">Czy na pewno chcesz usunąć \'%1$s\'\?</string>
+    <string name="contact_delete_confirm_description">Czy na pewno chcesz usunąć \'%1$s\'?</string>
     <string name="fossil_hr_connection_not_confirmed">Połączenie nie zostało potwierdzone na zegarku, przy użyciu trybu nieuwierzytelnionego</string>
     <string name="wifi_hotspot_summary">Kontroluj hotspot Wi-Fi na zegarku</string>
     <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
@@ -2206,11 +2198,7 @@
     <string name="fossil_hr_pairing_failed">Parowanie z zegarkiem nie powiodło się</string>
     <string name="english_au">Angielski (Australia)</string>
     <string name="prefs_wena3_home_icon_name_energy">Energia ciała</string>
-    <string name="permission_request">%1$s umożliwia wysyłanie wiadomości i innych danych z Androida na Twoje urządzenie. Aby to zrobić, wymagany jest dostęp do tych danych i bez niego może nie działać poprawnie.
-\n
-\nZostanie wyświetlonych kilka okien dialogowych Androida z prośbą o te uprawnienia.
-\n
-\nAby kontynuować, kliknij \'%2$s\'.</string>
+    <string name="permission_request">%1$s umożliwia wysyłanie wiadomości i innych danych z Androida na Twoje urządzenie. Aby to zrobić, wymagany jest dostęp do tych danych i bez niego może nie działać poprawnie. \n \nZostanie wyświetlonych kilka okien dialogowych Androida z prośbą o te uprawnienia. \n \nAby kontynuować, kliknij \'%2$s\'.</string>
     <string name="loyalty_cards_catima_package">Nazwa pakietu Catima</string>
     <string name="prefs_wena3_notification_vibration_repetition_2">Dwukrotnie</string>
     <string name="prefs_wena3_auto_power_off_hint">Urządzenie wyłączy się i włączy automatycznie według określonego harmonogramu</string>
