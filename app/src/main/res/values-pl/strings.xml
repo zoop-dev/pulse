@@ -622,15 +622,7 @@
     <string name="activity_prefs_activetime_minutes">Cel dzienny: czas aktywności w minutach</string>
     <string name="title_activity_device_specific_settings">Ustawienia danego urządzenia</string>
     <string name="pref_title_authkey">Klucz autoryzacji</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit Cor 2.
-\n
-\nProszę upewnić się, że zainstalowany został plik .fw, a następnie plik .res. Po zainstalowaniu pliku .fw Twój zegarek zostanie ponownie uruchomiony.
-\n
-\nUwaga: Nie musisz instalować pliku .res, jeśli jest on dokładnie taki sam jak ten, który został wcześniej zainstalowany.
-\n
-\nKONTYNUUJ NA WŁASNE RYZYKO!
-\n
-\nKOMPLETNIE NIETESTOWANY, PRAWDOPODOBNIE BĘDZIESZ MUSIAŁ SFLASHOWAĆ OPROGRAMOWANIE UKŁADOWE BEATS_W JEŚLI NAZWA TWOJEGO URZĄDZENIA TO \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit Cor 2. \n \nProszę upewnić się, że zainstalowany został plik .fw, a następnie plik .res. Po zainstalowaniu pliku .fw Twój zegarek zostanie ponownie uruchomiony. \n \nUwaga: Nie musisz instalować pliku .res, jeśli jest on dokładnie taki sam jak ten, który został wcześniej zainstalowany. \n \nKONTYNUUJ NA WŁASNE RYZYKO! \n \nKOMPLETNIE NIETESTOWANY, PRAWDOPODOBNIE BĘDZIESZ MUSIAŁ SFLASHOWAĆ OPROGRAMOWANIE UKŁADOWE BEATS_W JEŚLI NAZWA TWOJEGO URZĄDZENIA TO \"Amazfit Band 2\"</string>
     <string name="dutch">Niderlandzki</string>
     <string name="turkish">Turecki</string>
     <string name="ukrainian">Ukraiński</string>
@@ -1785,9 +1777,7 @@
     <string name="lithuanian">Litewski</string>
     <string name="persian">Perski</string>
     <string name="scandinavian">Skandynawski</string>
-    <string name="permission_notification_listener">%1$s potrzebuje dostępu do powiadomień, aby móc je wyświetlać na zegarku, gdy ekran telefonu jest wyłączony.
-\n
-\nProszę dotknąć \'%2$s\', a następnie \'%1$s\' i włączyć \'Pozwól na dostęp do powiadomień\', a następnie dotknąć \'Wróć\', aby powrócić do %1$s.</string>
+    <string name="permission_notification_listener">%1$s potrzebuje dostępu do powiadomień, aby móc je wyświetlać na zegarku, gdy ekran telefonu jest wyłączony. \n \nProszę dotknąć \'%2$s\', a następnie \'%1$s\' i włączyć \'Pozwól na dostęp do powiadomień\', a następnie dotknąć \'Wróć\', aby powrócić do %1$s.</string>
     <string name="permission_notification_policy_access">%1$s potrzebuje dostępu do ustawień Nie przeszkadzać, aby móc je honorować na zegarku, gdy ekran telefonu jest wyłączony. \n \nProszę dotknąć \'%2$s\' a następnie \'%1$s\' i włączyć ozwól na zmianę ustawień trybu Nie Przeszkadzać a następnie dotknąć róć aby powrócić do %1$s.</string>
     <string name="pref_title_touch_volume">Głośność</string>
     <string name="pref_switch_controls_anc_off">Tłumienie hałasu ←→ Wyłączone</string>
