@@ -4,43 +4,71 @@
 
 * Initial support for Amazfit Active 2 Square, Helio Strap, Helio Ring
 * Initial support for Colmi R07, P76
+* Initial support for Coospo H6, HW9, HW807
+* Initial support for Garmin Descent Mk3, Fenix 3, Fenix 3 HR, Forerunner 165 Music, Forerunner 945, Instinct Tactical, Venu X1, Vivomove Sport, Vivosmart 3
 * Initial support for Garmin eTrex SE
-* Initial support for Garmin Descent Mk3, Forerunner 165 Music, Forerunner 945, Instinct Tactical, Venu X1, Vivomove Sport, Vivosmart 3
+* Initial support for Garmin HRM 200
+* Initial support for Generic Heart Rate Sensor
 * Initial support for generic thermal printer
 * Initial support for GloryFit devices - Oukitel BT103, Dotn P66D
 * Initial support for H59 (Da Fit / Moyoung)
+* Initial support for Nothing Ear (a)
 * Initial support for Redmi Smart Band 3 (experimental), Watch 5
+* Initial support for Shokz OpenSwim Pro
 * Initial support for Xiaomi Smart Band 9 Active, Band 10
 * Initial support for Yawell rings R10 and R11
-* Initial support for ATC_BLE_OEPL (experimental)
 * Experimental support for Amazfit Balance 2
+* Experimental support for ATC_BLE_OEPL
+* Amazfit Active 2: Change connection default to BTBR
+* AsteroidOS: Add screenshot support
 * Casio: Fix connection to some devices
 * CMF Watch Pro: Firmware update
 * Fossil/Skagen Hybrids: Add calendar support
 * Fossil/Skagen Hybrids: Add support for workouts sync
+* Fossil/Skagen Hybrids: Fix some crashes on config activity
 * Garmin: Display activity fetch and parse progress
+* Garmin: Display progress on fetch notification
 * Garmin: Display workout set exercise
 * Garmin: Fix sleep stages for partial syncs
 * Garmin: Initial diving support
 * Garmin: Split fit files per type / year
+* Garmin: Allow gpx track name to be changed when uploading
 * Huami: Allow fetching multiple workouts in current day
 * Huami: Sync calendar event updates
+* Huawei: Fix some device crashes on calendar sync
+* Huawei: Fix UI for apps icons uploading
 * Huawei: Improved workout parsing
 * Huawei: Initial diving support
+* Huawei: Parse TruSleep data for new devices
 * Mi Band 9 Pro: Fix walking activity parsing
 * Mi Smart Scale: Fix disconnection
+* Moondrop Space Travel: Fix toast on null firmware version
 * Pebble: Send current weather when opening the native weather app
+* Xaomi-protobuf: Split fit files per type / year
+* Zepp OS: Add activity type for indoor walking
+* Zepp OS: Allow gpx track name to be changed when uploading
 * Zepp OS: Fix some unknown setting items
+* Zepp OS: Fix some upload operations not finishing in the UI
+* Add auth key activity
+* Add Emoji transliteration
 * Add Goodwy and Simple SMS to sms apps
+* Allow blocking screenshots
+* Allow unsupported devices to follow normal pairing process
 * Bluetooth: Improved connection and reconnection for BLE/BTBR/BT Classic
+* Charts: Add training load
 * Charts: Fix crash if database fetch fails
 * Drop support for outdated app Weather Notification
 * Fix caller number for some VoIP apps
 * Fix crash when no calendar provider is available
 * Fix freeze when processing large firmware files
 * Fix headphones connection on some Android 12 devices
+* Fix notification pictures for some apps
 * Fix repeating battery exemption request
 * Ignore Firefox call notifications
+* Save track to GPX file when stopping OpenTracks recording
+* Sort transliteration languages
+* UI: Make device types not translatable
+* UI: Update material icons
 
 #### 0.86.1
 
