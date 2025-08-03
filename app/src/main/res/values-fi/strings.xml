@@ -92,15 +92,7 @@
 \nHuomio: Sinun ei tarvitse asentaa .res tai .gps tiedostoja jos nämä tiedostot ovat samat kuin jo asennetut.
 \n
 \nJATKA OMALLA VASTUULLA!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Olet asentamassa %s laiteohjelmistoa laitteeseen Amazfit Cor 2.
-\n
-\nVarmista että asennat ensin .fw-tiedoston, sen jälkeen .res-tiedoston ja lopuksi .gps-tiedoston. Kellosi käynnistyy uudelleen .fw-tiedoston asentamisen jälkeen.
-\n
-\nHuomio: Sinun ei tarvitse asentaa .res tai .gps tiedostoja jos nämä tiedostot ovat samat kuin jo asennetut.
-\n
-\nJATKA OMALLA VASTUULLA!
-\n
-\nTÄYSIN TESTAAMATON, TODENNÄKÖISESTI SINUN TARVITSEE ASENTAA BEATS_W LAITEOHJELMISTO JOS LAITTEESI NIMI ON \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Olet asentamassa %s laiteohjelmistoa laitteeseen Amazfit Cor 2. \n \nVarmista että asennat ensin .fw-tiedoston, sen jälkeen .res-tiedoston ja lopuksi .gps-tiedoston. Kellosi käynnistyy uudelleen .fw-tiedoston asentamisen jälkeen. \n \nHuomio: Sinun ei tarvitse asentaa .res tai .gps tiedostoja jos nämä tiedostot ovat samat kuin jo asennetut. \n \nJATKA OMALLA VASTUULLA! \n \nTÄYSIN TESTAAMATON, TODENNÄKÖISESTI SINUN TARVITSEE ASENTAA BEATS_W LAITEOHJELMISTO JOS LAITTEESI NIMI ON \"Amazfit Band 2\"</string>
     <string name="fw_upgrade_notice_amazfitcor">Olet asentamassa %s laiteohjelmistoa laitteeseen Amazfit Cor.
 \n
 \nVarmista että asennat ensin .fw-tiedoston, sen jälkeen .res-tiedoston ja lopuksi .gps-tiedoston. Kellosi käynnistyy uudelleen .fw-tiedoston asentamisen jälkeen.
