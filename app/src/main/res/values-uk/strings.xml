@@ -4116,4 +4116,17 @@
     <string name="devicetype_coospo_hw807">Coospo HW807</string>
     <string name="devicetype_nothing_ear_a">Nothing Ear (a)</string>
     <string name="emoji">Емодзі</string>
+    <string name="title_activity_gps_track_installer">Установник GPS-трекера</string>
+    <string name="title_gpx_track_name">Назва треку</string>
+    <string name="training_acute_load">Гостре навантаження</string>
+    <string name="training_chronic_load">Хронічне навантаження</string>
+    <string name="this_week_total">Загальна сума за цей тиждень</string>
+    <string name="last_week_total">Загальна сума за минулий тиждень</string>
+    <string name="low">Низький</string>
+    <string name="optimal">Оптимальний</string>
+    <string name="high">Високий</string>
+    <string name="very_high">Дуже високий</string>
+    <string name="training_daily_load">Щоденне навантаження</string>
+    <string name="pref_header_training_load">Тренувальний навантаження</string>
+    <string name="track_name_required">Назва треку не може бути порожньою</string>
 </resources>
