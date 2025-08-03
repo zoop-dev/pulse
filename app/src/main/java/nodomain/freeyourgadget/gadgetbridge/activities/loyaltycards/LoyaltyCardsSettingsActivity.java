@@ -18,17 +18,13 @@ package nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceScreen;
 
-import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractSettingsActivityV2;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -40,11 +36,6 @@ public class LoyaltyCardsSettingsActivity extends AbstractSettingsActivityV2 imp
     public static final int PERMISSION_REQUEST_CODE = 0;
 
     private GBDevice device;
-
-    @Override
-    protected String fragmentTag() {
-        return LoyaltyCardsSettingsFragment.FRAGMENT_TAG;
-    }
 
     @Override
     protected PreferenceFragmentCompat newFragment() {

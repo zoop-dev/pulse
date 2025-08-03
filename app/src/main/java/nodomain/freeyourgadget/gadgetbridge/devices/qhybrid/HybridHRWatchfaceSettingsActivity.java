@@ -36,11 +36,6 @@ public class HybridHRWatchfaceSettingsActivity extends AbstractSettingsActivityV
     static HybridHRWatchfaceSettings settings;
 
     @Override
-    protected String fragmentTag() {
-        return HybridHRWatchfaceSettingsFragment.FRAGMENT_TAG;
-    }
-
-    @Override
     protected PreferenceFragmentCompat newFragment() {
         return new HybridHRWatchfaceSettingsFragment();
     }

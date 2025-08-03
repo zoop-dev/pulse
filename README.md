@@ -27,6 +27,7 @@ vendor's servers.
 * Files in app/src/main/java/com/android/nQuant are taken from the [nQuant.android](https://github.com/mcychan/nQuant.android/) project, licensed under the Apache license by Miller Cy Chan
 * Files in app/src/main/java/org/concentus are taken from the [Concentus](https://github.com/lostromb/concentus) project, licensed under the BSD-3 license by various holding parties
 * Files in GBDaoGenerator/src/de/greenrobot are taken from the [greenDAO](https://codeberg.org/Freeyourgadget/greenDAO) project (Gadgetbridge's fork), licensed under the GPLv3 by Markus Junginger, greenrobot
+* File app/src/main/java/nodomain/freeyourgadget/gadgetbridge/util/SearchPreferenceHighlighter.java is licensed under the MIT license by ByteHamster
 
 ## Download
 

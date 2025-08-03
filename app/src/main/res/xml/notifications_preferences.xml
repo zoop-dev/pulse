@@ -67,17 +67,16 @@
             android:id="@+id/preference"
             android:key="ping_tone"
             android:title="@string/pref_title_ping_tone"
-            app:iconSpaceReserved="false"
-            app:summary="%s" />
+            app:iconSpaceReserved="false" />
 
         <ListPreference
             android:defaultValue="always"
             android:entries="@array/notification_mode_toggle"
             android:entryValues="@array/notification_mode_values_toggle"
             android:key="notification_mode_calls"
-            android:summary="%s"
             android:title="@string/pref_title_notifications_call"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -101,9 +100,9 @@
             android:entries="@array/notification_mode"
             android:entryValues="@array/notification_mode_values"
             android:key="notification_mode_sms"
-            android:summary="%s"
             android:title="@string/pref_title_notifications_sms"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:defaultValue="when_screen_off"
@@ -119,9 +118,9 @@
             android:entries="@array/notifications_timeout"
             android:entryValues="@array/notifications_timeout_values"
             android:key="notifications_timeout"
-            android:summary="%s"
             android:title="@string/pref_title_notifications_timeout"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -169,9 +168,9 @@
             android:entries="@array/notification_list_is_blacklist_names"
             android:entryValues="@array/notification_list_is_blacklist_values"
             android:key="notification_list_is_blacklist"
-            android:summary="%s"
             android:title="@string/pref_title_notification_use_as"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -196,18 +195,18 @@
             android:entries="@array/pref_call_privacy_mode"
             android:entryValues="@array/pref_call_privacy_mode_values"
             android:key="pref_call_privacy_mode"
-            android:summary="%s"
             android:title="@string/pref_title_call_privacy_mode"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:defaultValue="off"
             android:entries="@array/pref_message_privacy_mode"
             android:entryValues="@array/pref_message_privacy_mode_values"
             android:key="pref_message_privacy_mode"
-            android:summary="%s"
             android:title="@string/pref_title_message_privacy_mode"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:iconSpaceReserved="false">
 
+    <com.bytehamster.lib.preferencesearch.SearchPreference
+        android:key="searchPreference"
+        app:isPreferenceVisible="false" />
+
     <PreferenceScreen
         android:icon="@drawable/ic_settings"
         android:key="pref_screen_general"
@@ -47,17 +51,17 @@
                 android:entries="@array/pref_language_options"
                 android:entryValues="@array/pref_language_values"
                 android:key="language"
-                android:summary="%s"
                 android:title="@string/pref_title_language"
-                android:icon="@drawable/ic_translate" />
+                android:icon="@drawable/ic_translate"
+                app:useSimpleSummaryProvider="true" />
             <ListPreference
                 android:defaultValue="metric"
                 android:entries="@array/pref_entries_unit_system"
                 android:entryValues="@array/pref_values_unit_system"
                 android:key="measurement_system"
-                android:summary="%s"
                 android:title="@string/pref_title_unit_system"
-                android:icon="@drawable/ic_straighten" />
+                android:icon="@drawable/ic_straighten"
+                app:useSimpleSummaryProvider="true" />
             <PreferenceScreen
                 android:key="pref_screen_rtl"
                 android:title="@string/preferences_rtl_settings"
@@ -164,8 +168,8 @@
             android:entryValues="@array/pref_theme_values"
             android:icon="@drawable/ic_contrast"
             android:key="pref_key_theme"
-            android:summary="%s"
-            android:title="@string/pref_title_theme" />
+            android:title="@string/pref_title_theme"
+            app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/ic_dark_mode"
@@ -236,7 +240,6 @@
             app:iconSpaceReserved="false">
             <Preference
                 android:key="auto_export_location"
-                android:summary="%s"
                 android:title="@string/pref_title_auto_export_location"
                 app:iconSpaceReserved="false" />
             <SwitchPreferenceCompat
@@ -493,9 +496,9 @@
                 android:defaultValue="default"
                 android:dependency="mb_intents"
                 android:key="audio_player"
-                android:summary="%s"
                 android:title="@string/pref_title_audio_player"
-                app:iconSpaceReserved="false" />
+                app:iconSpaceReserved="false"
+                app:useSimpleSummaryProvider="true" />
         </PreferenceCategory>
     </PreferenceScreen>
 </PreferenceScreen>

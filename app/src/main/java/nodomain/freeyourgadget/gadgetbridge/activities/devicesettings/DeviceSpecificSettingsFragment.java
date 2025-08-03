@@ -101,8 +101,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
     private static final Logger LOG = LoggerFactory.getLogger(DeviceSpecificSettingsFragment.class);
 
-    static final String FRAGMENT_TAG = "DEVICE_SPECIFIC_SETTINGS_FRAGMENT";
-
     private DeviceSpecificSettings deviceSpecificSettings;
     private DeviceSpecificSettingsCustomizer deviceSpecificSettingsCustomizer;
 

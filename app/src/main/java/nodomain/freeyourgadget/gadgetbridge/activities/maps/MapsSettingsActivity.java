@@ -22,11 +22,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractSettingsActivityV
 
 public class MapsSettingsActivity extends AbstractSettingsActivityV2 {
     @Override
-    protected String fragmentTag() {
-        return MapsSettingsFragment.FRAGMENT_TAG;
-    }
-
-    @Override
     protected PreferenceFragmentCompat newFragment() {
         return new MapsSettingsFragment();
     }

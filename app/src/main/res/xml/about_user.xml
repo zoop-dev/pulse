@@ -24,8 +24,8 @@
             android:entries="@array/gender"
             android:entryValues="@array/gender_values"
             android:key="activity_user_gender"
-            android:summary="%s"
-            android:title="@string/activity_prefs_gender" />
+            android:title="@string/activity_prefs_gender"
+            app:useSimpleSummaryProvider="true" />
 
         <!--TODO: support localized heights and weights -->
         <EditTextPreference

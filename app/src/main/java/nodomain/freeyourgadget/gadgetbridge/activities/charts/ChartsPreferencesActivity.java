@@ -20,29 +20,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 
-import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.mobeta.android.dslv.DragSortListPreference;
-
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AboutUserPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractSettingsActivityV2;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
-import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class ChartsPreferencesActivity extends AbstractSettingsActivityV2 {
     private GBDevice device;
-
-    @Override
-    protected String fragmentTag() {
-        return ChartsPreferencesFragment.FRAGMENT_TAG;
-    }
 
     @Override
     protected PreferenceFragmentCompat newFragment() {
@@ -57,8 +46,6 @@ public class ChartsPreferencesActivity extends AbstractSettingsActivityV2 {
     }
 
     public static class ChartsPreferencesFragment extends AbstractPreferenceFragment {
-        static final String FRAGMENT_TAG = "CHARTS_PREFERENCES_FRAGMENT";
-
         private GBDevice device;
 
         static ChartsPreferencesFragment newInstance(final GBDevice device) {

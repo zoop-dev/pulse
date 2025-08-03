@@ -45,18 +45,11 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 
 public class AboutUserPreferencesActivity extends AbstractSettingsActivityV2 {
     @Override
-    protected String fragmentTag() {
-        return AboutUserPreferencesFragment.FRAGMENT_TAG;
-    }
-
-    @Override
     protected PreferenceFragmentCompat newFragment() {
         return new AboutUserPreferencesFragment();
     }
 
     public static class AboutUserPreferencesFragment extends AbstractPreferenceFragment {
-        static final String FRAGMENT_TAG = "ABOUT_USER_PREFERENCES_FRAGMENT";
-
         @Override
         public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
             setPreferencesFromResource(R.xml.about_user, rootKey);

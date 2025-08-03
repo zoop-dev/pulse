@@ -48,6 +48,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResult;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -80,19 +81,33 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
     public static final String PREF_MEASUREMENT_SYSTEM = "measurement_system";
 
     @Override
-    protected String fragmentTag() {
-        return SettingsFragment.FRAGMENT_TAG;
-    }
-
-    @Override
     protected PreferenceFragmentCompat newFragment() {
         return new SettingsFragment();
     }
 
+    @Override
+    public void onSearchResultClicked(final SearchPreferenceResult result) {
+        if (result.getResourceFile() == R.xml.dashboard_preferences) {
+            open(DashboardPreferencesActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.about_user) {
+            open(AboutUserPreferencesActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.charts_preferences) {
+            open(ChartsPreferencesActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.sleepasandroid_preferences) {
+            open(SleepAsAndroidPreferencesActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.discovery_pairing_preferences) {
+            open(DiscoveryPairingPreferenceActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.notifications_preferences) {
+            open(NotificationManagementActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.map_settings) {
+            open(MapsSettingsActivity.class, result);
+        } else {
+            super.onSearchResultClicked(result);
+        }
+    }
+
     public static class SettingsFragment extends AbstractPreferenceFragment {
         private static final Logger LOG = LoggerFactory.getLogger(SettingsActivity.class);
-
-        static final String FRAGMENT_TAG = "SETTINGS_FRAGMENT";
 
         private static final int EXPORT_LOCATION_FILE_REQUEST_CODE = 4711;
         private EditText fitnessAppEditText = null;
@@ -101,6 +116,14 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
         @Override
         public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
+            index(R.xml.preferences);
+            index(R.xml.dashboard_preferences, R.string.bottom_nav_dashboard);
+            index(R.xml.about_user, R.string.activity_prefs_about_you);
+            index(R.xml.charts_preferences, R.string.activity_prefs_charts);
+            index(R.xml.sleepasandroid_preferences, R.string.sleepasandroid_settings);
+            index(R.xml.discovery_pairing_preferences, R.string.activity_prefs_discovery_pairing);
+            index(R.xml.notifications_preferences, R.string.pref_header_notifications);
+            index(R.xml.map_settings, R.string.maps_settings);
 
             setInputTypeFor("rtl_max_line_length", InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);

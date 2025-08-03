@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.bytehamster.lib.preferencesearch.SearchPreference
+        android:key="searchPreference" />
+</androidx.preference.PreferenceScreen>

@@ -122,6 +122,18 @@ public class DeviceSpecificSettings implements Parcelable {
         connectedPreferences.addAll(deviceSpecificSettings.connectedPreferences);
     }
 
+    public String getRootScreenForSubScreen(final int subScreen) {
+        for (final Map.Entry<String, List<Integer>> e : subScreens.entrySet()) {
+            for (final Integer ss : e.getValue()) {
+                if (ss == subScreen) {
+                    return e.getKey();
+                }
+            }
+        }
+
+        return null;
+    }
+
     public List<Integer> getRootScreens() {
         return rootScreens;
     }

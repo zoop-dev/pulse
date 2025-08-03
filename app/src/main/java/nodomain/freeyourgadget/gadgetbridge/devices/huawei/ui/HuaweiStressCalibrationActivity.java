@@ -47,7 +47,7 @@ public class HuaweiStressCalibrationActivity extends AbstractGBActivity {
         super.onCreate(savedInstanceState);
         device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
 
-        setContentView(R.layout.activity_device_settings);
+        setContentView(R.layout.activity_settings);
 
         if (device == null || !device.isInitialized()) {
             GB.toast(getString(R.string.watch_not_connected), Toast.LENGTH_SHORT, GB.INFO);

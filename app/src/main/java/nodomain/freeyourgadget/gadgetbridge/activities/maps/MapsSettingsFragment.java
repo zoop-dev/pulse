@@ -34,8 +34,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragmen
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager;
 
 public class MapsSettingsFragment extends AbstractPreferenceFragment {
-    static final String FRAGMENT_TAG = "MAP_SETTINGS_FRAGMENT";
-
     public static final String ACTION_SETTING_CHANGE = "nodomain.freeyourgadget.gadgetbridge.maps.setting_change";
     public static final String EXTRA_SETTING_KEY = "nodomain.freeyourgadget.gadgetbridge.maps_setting_key";
 
