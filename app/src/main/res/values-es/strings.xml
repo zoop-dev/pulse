@@ -3264,7 +3264,7 @@
     <string name="activity_type_athletics">Atletismo</string>
     <string name="pref_garmin_fake_oauth_summary">Soluciona problemas en algunas funciones, como la actualización del clima y del AGPS, sin necesidad de conectarse a la aplicación oficial cada 90 días.</string>
     <string name="gree_pair_info">Está a punto de emparejar con %s (%s). Introduzca la información del wifi y del servidor anfitrión para el emparejamiento. Consulte el sitio web para obtener más información.</string>
-    <string name="range_percentage">%1$d %% - %2$d %%</string>
+    <string name="range_percentage">%1$d %% - %2$d %%</string>
     <string name="range_degrees">%1$d° - %2$d°</string>
     <string name="permission_disable_doze_summary">Permite ejecutarse en segundo plano sin restricciones por las optimizaciones de batería de Android</string>
     <string name="unit_repetitions">repet</string>
