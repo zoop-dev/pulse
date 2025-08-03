@@ -754,15 +754,7 @@
     <string name="ukrainian">Ucraniano</string>
     <string name="turkish">Turco</string>
     <string name="dutch">Holandês</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Está prestes a instalar o firmware %s no seu Amazfit Cor 2. 
-\n 
-\nCertifique-se de instalar o ficheiro .fw e depois o ficheiro .res. Sua pulseira será reiniciada após a instalação do ficheiro .fw. 
-\n 
-\nNota: não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente. 
-\n 
-\nPROSSIGA AO SEU PRÓPRIO RISCO! 
-\n 
-\nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE PRECISA INSTALAR UM FIRMWARE BEATS_W SE O NOME DO SEU APARELHO FOR \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Está prestes a instalar o firmware %s no seu Amazfit Cor 2. \n \nCertifique-se de instalar o ficheiro .fw e depois o ficheiro .res. Sua pulseira será reiniciada após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO! \n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE PRECISA INSTALAR UM FIRMWARE BEATS_W SE O NOME DO SEU APARELHO FOR \"Amazfit Band 2\"</string>
     <string name="pref_summary_authkey">Altere a chave de autenticação para uma chave comum em todos os aparelhos Android dos quais gostaria de se conectar. A chave padrão anterior para todos aparelhos é 0123456789@ABCDE</string>
     <string name="pref_title_authkey">Chave de autenticação</string>
     <string name="title_activity_device_specific_settings">Configurações específicas do aparelho</string>
@@ -1559,11 +1551,7 @@
     <string name="bluetooth_calls_pairing">Pareamento de chamadas Bluetooth</string>
     <string name="spo2_perc_90">90%</string>
     <string name="pref_header_health">Saúde</string>
-    <string name="permission_request">O %1$s permite que envie mensagens e outros dados do Android para o seu dispositivo. Para fazê-lo, precisa de permissão para aceder esses dados e, sem ela, pode não funcionar corretamente.
-\n
-\nAgora verá algumas caixas de diálogo do Android solicitando essas permissões.
-\n
-\nToque em \'%2$s\' para continuar.</string>
+    <string name="permission_request">O %1$s permite que envie mensagens e outros dados do Android para o seu dispositivo. Para fazê-lo, precisa de permissão para aceder esses dados e, sem ela, pode não funcionar corretamente. \n \nAgora verá algumas caixas de diálogo do Android solicitando essas permissões. \n \nToque em \'%2$s\' para continuar.</string>
     <string name="widget_layout">Layout do widget</string>
     <string name="pref_theme_dynamic">Cores dinâmicas</string>
     <string name="connection_over_ble">Conexão via BLE</string>
@@ -2105,15 +2093,7 @@
     <string name="portuguese_pt">Português (Portugal)</string>
     <string name="activity_db_management_autoexport_scheduled_no">A exportação automática não foi programada.</string>
     <string name="quick_alarm_description">Alarme do widget</string>
-    <string name="permission_display_over_other_apps">%1$s precisa de permissão para ser exibido sobre outras apps a fim de permitir que os relógios Bangle.js iniciem atividades por meio de intenções quando %1$s estiver em segundo plano.
-\n
-\nIsto pode ser usado para iniciar uma apps de música e reproduzir uma música e muitas outras coisas.
-\n
-\nToque em \"%2$s\" e depois em \"%1$s\" e ative a opção \"Permitir sobrepor outras apps\", depois toque em \"Voltar\" para retornar a %1$s.
-\n
-\nPara que o %1$s pare de solicitar permissões, vá para \"Configurações\" e desmarque \"Verificar estado da permissão\".
-\n
-\nCertifique-se de conceder ao %1$s as permissões necessárias para que ele funcione como espera.</string>
+    <string name="permission_display_over_other_apps">%1$s precisa de permissão para ser exibido sobre outras apps a fim de permitir que os relógios Bangle.js iniciem atividades por meio de intenções quando %1$s estiver em segundo plano. \n \nIsto pode ser usado para iniciar uma apps de música e reproduzir uma música e muitas outras coisas. \n \nToque em \"%2$s\" e depois em \"%1$s\" e ative a opção \"Permitir sobrepor outras apps\", depois toque em \"Voltar\" para retornar a %1$s. \n \nPara que o %1$s pare de solicitar permissões, vá para \"Configurações\" e desmarque \"Verificar estado da permissão\". \n \nCertifique-se de conceder ao %1$s as permissões necessárias para que ele funcione como espera.</string>
     <string name="controlcenter_connected_fraction">Conectado: %d/%d</string>
     <string name="controlcenter_set_folder_title">Definir ou criar uma nova pasta</string>
     <string name="steps_streaks_since_date">Desde %s</string>
@@ -2214,9 +2194,7 @@
     <string name="pref_screen_auto_brightness_title">Brilho automático</string>
     <string name="menuitem_thermometer">Termômetro</string>
     <string name="activity_type_rock_climbing">Escalada em rocha</string>
-    <string name="permission_notification_listener">%1$s precisa de acesso às Notificações para exibi-las no relógio quando o ecrã do telefone estiver desligada.
-\n
-\nToque em \'%2$s\' e depois em \'%1$s\' e ative \'Permitir acesso a notificações\' e, em seguida, toque em \'Voltar\' para retornar a %1$s.</string>
+    <string name="permission_notification_listener">%1$s precisa de acesso às Notificações para exibi-las no relógio quando o ecrã do telefone estiver desligada. \n \nToque em \'%2$s\' e depois em \'%1$s\' e ative \'Permitir acesso a notificações\' e, em seguida, toque em \'Voltar\' para retornar a %1$s.</string>
     <string name="impactAvg">Impacto médio</string>
     <string name="moondrop_touch_action_call_start">Iniciar uma ligação</string>
     <string name="pai_total">Total</string>
