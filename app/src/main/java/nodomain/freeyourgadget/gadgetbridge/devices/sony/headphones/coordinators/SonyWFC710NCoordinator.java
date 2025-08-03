@@ -52,7 +52,7 @@ public class SonyWFC710NCoordinator extends SonyHeadphonesCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_sony_wf_c700n;
+        return R.string.devicetype_sony_wf_c710n;
     }
 
     @Override

@@ -2437,7 +2437,7 @@
     <string name="activity_type_kitesurfing">Kitesurfing</string>
     <string name="prefs_wena3_hint_rich_design">Dodaje zaokrąglone prostokąty wokół ikon ekranu głównego</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Przebuduj tarczę zegarka, aby uzyskać niestandardowe menu</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="pai_total">Całkowite</string>
     <string name="zepp_os_watchface_minimalist">Minimalistyczny</string>
     <string name="loyalty_cards_catima_not_installed">Catima jest potrzebna do zarządzania kartami lojalnościowymi</string>

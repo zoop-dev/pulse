@@ -2300,7 +2300,7 @@
     <string name="activity_type_hockey">Hockey</string>
     <string name="error_no_bluetooth_scan">Bluetooth-scantoegang moet worden verleend en ingeschakeld om het scannen correct te laten werken</string>
     <string name="activity_type_golf">Golfen</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="withings_calibration_text_minutes">Gebruik nu de draaiknop om de minutenwijzer op de 12 uit te lijnen.</string>
     <string name="permission_request">Met %1$s kunt u berichten en andere gegevens van Android naar uw apparaat verzenden. Om dit te doen, heeft het toestemming nodig om toegang te krijgen tot die gegevens, zonder deze toestemmingen werkt het mogelijk niet goed.
 \n

@@ -2131,7 +2131,7 @@
     <string name="activity_type_weightlifting">Важка атлетика</string>
     <string name="withings_calibration_text_hours">Використовуйте циферблат нижче, щоби вирівняти годинникову стрілку на 12.</string>
     <string name="withings_calibration_text_minutes">Тепер за допомогою циферблата вирівняйте хвилинну стрілку на 12.</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="withings_calibration_text_activity_target">Нарешті, вирівняйте стрілку діяльності на 100%. Зверніть увагу, що ця стрілка рухається лише за годинниковою стрілкою.</string>
     <string name="withings_bt_calibration_previous">Попереднє</string>
     <string name="activity_type_windsurfing">Віндсерфінг</string>

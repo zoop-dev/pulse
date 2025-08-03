@@ -2323,7 +2323,7 @@
     <string name="menuitem_zepp_coach">Zepp Coach</string>
     <string name="sony_speak_to_chat_focus_on_voice">Концентрация на голосе</string>
     <string name="sony_button_mode_help_title">Режимы кнопок - Помощь</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah Square (квадратные)</string>
     <string name="devicetype_amazfit_falcon">Amazfit Falcon</string>
     <string name="maxCadence">Максимум шагов в минуту</string>

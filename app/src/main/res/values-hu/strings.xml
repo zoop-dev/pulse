@@ -2717,7 +2717,7 @@
     <string name="url">Webcím</string>
     <string name="default_percentage">Alapértelmezett (%1$d%%)</string>
     <string name="paceCorrection">Helyesbítés</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="activity_type_health_snapshot">Egészségi állapot felmérés</string>
     <string name="body_energy_gained">Szerzett</string>
     <string name="body_energy_lost">Vesztett</string>

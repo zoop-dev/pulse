@@ -141,7 +141,7 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractBLEDeviceCoordinat
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.withings_steel_hr;
+        return R.string.devicetype_withings_steel_hr;
     }
 
     @Override

@@ -2297,7 +2297,7 @@
     <string name="activity_type_kitesurfing">קייטסרפינג</string>
     <string name="activity_type_snowboarding">גלישת שלג</string>
     <string name="activity_type_other">אחר</string>
-    <string name="withings_steel_hr">Withings Steel HR‎</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR‎</string>
     <string name="withings_bt_calibration_previous">הקודם</string>
     <string name="withings_calibration_text_minutes">כעת יש להשתמש בחוגה כדי ליישר את מחוג הדקות ל־12.</string>
     <string name="withings_bt_calibration_next">הבא</string>

@@ -2303,7 +2303,7 @@
     <string name="activity_type_hockey">هوكي</string>
     <string name="activity_type_golf">الجولف</string>
     <string name="activity_type_other">أخرى</string>
-    <string name="withings_steel_hr">ويثينجز ستيل إتش آر</string>
+    <string name="devicetype_withings_steel_hr">ويثينجز ستيل إتش آر</string>
     <string name="withings_bt_calibration_previous">السابق</string>
     <string name="activity_type_icehockey">هوكي الجليد</string>
     <string name="activity_type_iceskating">التزلج على الثلج</string>

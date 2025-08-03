@@ -2324,7 +2324,7 @@
     <string name="pref_summary_navigation_forward">Předávat instrukce z navigačních aplikací do hodinek</string>
     <string name="sony_quick_access_triple_tap">Rychlý Přístup (trojté ťuknutí)</string>
     <string name="pref_title_navigation_forward">Odesílat navigaci do hodinek</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="sony_button_mode_help_summary">Popis módů tlačítek</string>
     <string name="sony_ambient_sound_control_button_modes">Režimy ovládání okolního zvuku</string>
     <string name="fossil_hr_confirmation_skipped">Přeskočit potvrzení na hodinkách</string>

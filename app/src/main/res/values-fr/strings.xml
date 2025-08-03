@@ -2305,7 +2305,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_type_iceskating">Patinage sur glace</string>
     <string name="activity_type_golf">Golf</string>
     <string name="activity_type_other">Autre</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="withings_bt_calibration_previous">Précédent</string>
     <string name="withings_bt_calibration_next">Suivant</string>
     <string name="activity_type_tennis">Tennis</string>

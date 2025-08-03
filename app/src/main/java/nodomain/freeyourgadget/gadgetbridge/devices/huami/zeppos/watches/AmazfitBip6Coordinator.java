@@ -63,7 +63,7 @@ public class AmazfitBip6Coordinator extends ZeppOsCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_amazfit_bip5;
+        return R.string.devicetype_amazfit_bip6;
     }
 
     @Override

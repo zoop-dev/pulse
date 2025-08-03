@@ -41,7 +41,7 @@ public class AmazfitHelioRingCoordinator extends ZeppOsCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_amazfit_helio_strap;
+        return R.string.devicetype_amazfit_helio_ring;
     }
 
     @Override

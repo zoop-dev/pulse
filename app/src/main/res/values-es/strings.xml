@@ -2146,7 +2146,7 @@
     <string name="withings_calibration_text_minutes">Ahora utilice el dial para alinear el minutero con las 12.</string>
     <string name="withings_calibration_text_activity_target">Por último, alinee la manecilla de actividad al 100 %. Tenga en cuenta que esta manecilla solo se mueve en sentido horario.</string>
     <string name="withings_bt_calibration_next">Siguiente</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="activity_type_football">Fútbol</string>
     <string name="activity_type_riding">Equitación</string>
     <string name="activity_type_hockey">Jockey</string>

@@ -2306,7 +2306,7 @@
     <string name="activity_type_iceskating">Seluncur Es</string>
     <string name="activity_type_golf">Golf</string>
     <string name="activity_type_other">Lainnya</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="withings_calibration_text_activity_target">Terakhir, sejajarkan jarum penunjuk aktivitas ke 100%. Perlu diketahui bahwa jarum penunjuk ini hanya bergerak searah jarum jam.</string>
     <string name="withings_bt_calibration_previous">Sebelumnya</string>
     <string name="withings_bt_calibration_next">Lanjutkan</string>

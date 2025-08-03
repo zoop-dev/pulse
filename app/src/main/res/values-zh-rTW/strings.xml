@@ -1984,7 +1984,7 @@
     <string name="watchface_dialog_widget_timeout_show_circle">超時顯示圓圈</string>
     <string name="qhybrid_summary_on_device_confirmation">設備上的配對確認可能會讓人感到煩惱。禁用它們可能會失去某些功能。</string>
     <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="pref_button_action_disabled">殘疾</string>
     <string name="pref_media_play">媒體播放</string>
     <string name="pref_media_pause">媒體暫停</string>

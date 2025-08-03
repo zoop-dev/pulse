@@ -310,7 +310,7 @@
     <string name="sony_button_mode_ambient_sound_control">சுற்றுப்புற ஒலி கட்டுப்பாடு</string>
     <string name="miscale_weight_unit_metric">மெட்ரிக் (கிலோ)</string>
     <string name="watchface_widget_type_custom">தனிப்பயன் விட்செட்</string>
-    <string name="withings_steel_hr">விதைகள் எஃகு மனிதவள</string>
+    <string name="devicetype_withings_steel_hr">விதைகள் எஃகு மனிதவள</string>
     <string name="info_connected_count">%d சாதனங்கள் இணைக்கப்பட்டுள்ளன</string>
     <string name="supercars_lights_blinking_label">ஒளிரும்</string>
     <string name="wifi_ssid">Ssid</string>

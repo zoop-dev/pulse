@@ -2308,7 +2308,7 @@
     <string name="stress_moderate">Moderato</string>
     <string name="stress_mild">Leggero</string>
     <string name="pref_theme_dynamic">Colori dinamici</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="preferences_miband_1_2_settings" tools:ignore="TypographyFractions">Impostazioni Mi Band 1/2</string>
     <string name="preferences_miband_1_2_warning">Attenzione: Queste preferenze si applicano solo a Mi Band 1 e 2.</string>
     <string name="pref_activity_full_sync_trigger_summary">Avvia una sincronizzazione completa dei dati attività</string>

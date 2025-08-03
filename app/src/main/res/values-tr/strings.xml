@@ -2259,7 +2259,7 @@
     <string name="prefs_active_noise_cancelling_transparency">Şeffaflık</string>
     <string name="stress_mild">Hafif</string>
     <string name="quick_attention">Çabuk Dikkat</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="pref_device_action_dnd_priority">Rahatsız etme - Yalnızca öncelikli</string>
     <string name="pref_device_action_dnd_off">Rahatsız etme - Kapalı</string>
     <string name="pref_device_action_dnd_on">Rahatsız etme - Açık</string>

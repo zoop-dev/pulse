@@ -2184,7 +2184,7 @@
     <string name="sony_automatic_power_off_5_min">5 分</string>
     <string name="watchface_dialog_widget_timezone">タイムゾーン</string>
     <string name="devicetype_sony_wena3">SONY Wena 3</string>
-    <string name="withings_steel_hr">Withings Steel HR</string>
+    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
     <string name="sony_equalizer_band_6300">6.3k</string>
     <string name="sony_automatic_power_off_30_min">30 分</string>
