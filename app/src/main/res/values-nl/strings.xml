@@ -1604,12 +1604,8 @@
     <string name="pref_workout_send_gps_title">GPS verzenden tijdens training</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">GPS-locatie verzenden naar %1$d-apparaten</string>
-    <string name="permission_notification_policy_access">%1$s heeft toegang nodig tot de instellingen voor Niet storen om ze op je horloge te respecteren wanneer het scherm van je telefoon is uitgeschakeld.
-\n
-\nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Niet storen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
-    <string name="permission_notification_listener">%1$s heeft toegang tot meldingen nodig om ze op je horloge weer te geven wanneer het scherm van je telefoon is uitgeschakeld.
-\n
-\nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Toegang tot meldingen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s heeft toegang nodig tot de instellingen voor Niet storen om ze op je horloge te respecteren wanneer het scherm van je telefoon is uitgeschakeld. \n \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Niet storen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
+    <string name="permission_notification_listener">%1$s heeft toegang tot meldingen nodig om ze op je horloge weer te geven wanneer het scherm van je telefoon is uitgeschakeld. \n \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Toegang tot meldingen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">GPS-locatie Listener Stop</string>
     <string name="pref_title_banglejs_webview_url">URL app-lader</string>
     <string name="pref_summary_banglejs_webview_url">Als u een aangepaste app-lader wilt, plaatst u hier uw https://…/android.html URL. Laat anders leeg voor https://banglejs.com/apps</string>
@@ -1756,15 +1752,7 @@
     <string name="menuitem_workout_history">Trainingsgeschiedenis</string>
     <string name="menuitem_female_health">Vrouwelijke gezondheid</string>
     <string name="menuitem_workout_status">Trainingsstatus</string>
-    <string name="permission_display_over_other_apps">%1$s heeft toestemming nodig om boven andere apps te worden weergegeven om Bangle.js-horloges activiteiten te laten starten via intents wanneer %1$s op de achtergrond is.
-\n
-\nDit kan worden gebruikt om een muziek-app te starten en een nummer af te spelen, en vele andere dingen.
-\n
-\nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Weergave over andere apps toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.
-\n
-\nOm te voorkomen dat %1$s om machtigingen vraagt, gaat u naar \'Instellingen\' en schakelt u \'Controleer machtigingsstatus\' uit.
-\n
-\nZorg ervoor dat u %1$s de machtigingen verleent die nodig zijn om te functioneren zoals u verwacht.</string>
+    <string name="permission_display_over_other_apps">%1$s heeft toestemming nodig om boven andere apps te worden weergegeven om Bangle.js-horloges activiteiten te laten starten via intents wanneer %1$s op de achtergrond is. \n \nDit kan worden gebruikt om een muziek-app te starten en een nummer af te spelen, en vele andere dingen. \n \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Weergave over andere apps toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s. \n \nOm te voorkomen dat %1$s om machtigingen vraagt, gaat u naar \'Instellingen\' en schakelt u \'Controleer machtigingsstatus\' uit. \n \nZorg ervoor dat u %1$s de machtigingen verleent die nodig zijn om te functioneren zoals u verwacht.</string>
     <string name="pref_header_spo2">Bloedzuurstof</string>
     <string name="pref_screen_brightness">Schermhelderheid</string>
     <string name="pref_summary_screen_on_on_notifications">Schakel het scherm van de band in wanneer er een melding binnenkomt</string>
@@ -2094,7 +2082,7 @@
     <string name="title_activity_set_contacts">Contacten configureren</string>
     <string name="pref_contacts_title">Contactpersonen</string>
     <string name="pref_contacts_summary">Configureer contactpersonen op het horloge</string>
-    <string name="contact_delete_confirm_description">Weet u zeker dat u \'%1$s\' wilt verwijderen\?</string>
+    <string name="contact_delete_confirm_description">Weet u zeker dat u \'%1$s\' wilt verwijderen?</string>
     <string name="contact_delete_confirm_title">Contactpersoon verwijderen</string>
     <string name="title_activity_contact_details">Contactpersoondetails</string>
     <string name="contact_name">Naam</string>
@@ -2200,11 +2188,7 @@
     <string name="error_no_bluetooth_scan">Bluetooth-scantoegang moet worden verleend en ingeschakeld om het scannen correct te laten werken</string>
     <string name="activity_type_golf">Golfen</string>
     <string name="withings_calibration_text_minutes">Gebruik nu de draaiknop om de minutenwijzer op de 12 uit te lijnen.</string>
-    <string name="permission_request">Met %1$s kunt u berichten en andere gegevens van Android naar uw apparaat verzenden. Om dit te doen, heeft het toestemming nodig om toegang te krijgen tot die gegevens, zonder deze toestemmingen werkt het mogelijk niet goed.
-\n
-\nU krijgt nu enkele Android-dialoogvensters te zien waarin om die machtigingen wordt gevraagd.
-\n
-\nTik op \'%2$s\' om door te gaan.</string>
+    <string name="permission_request">Met %1$s kunt u berichten en andere gegevens van Android naar uw apparaat verzenden. Om dit te doen, heeft het toestemming nodig om toegang te krijgen tot die gegevens, zonder deze toestemmingen werkt het mogelijk niet goed. \n \nU krijgt nu enkele Android-dialoogvensters te zien waarin om die machtigingen wordt gevraagd. \n \nTik op \'%2$s\' om door te gaan.</string>
     <string name="withings_calibration_text_hours">Gebruik de onderstaande draaiknop om de uurwijzer op de 12 uit te lijnen.</string>
     <string name="pref_theme_dynamic">Dynamische kleuren</string>
     <string name="pref_canned_message">Bericht</string>
