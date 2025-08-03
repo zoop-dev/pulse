@@ -1982,7 +1982,7 @@
     <string name="pref_workout_detection_time_summary">Kolik minut cvičení je potřeba pro automatickou detekci</string>
     <string name="pref_sleep_mode_title">Režim spánku</string>
     <string name="pref_sleep_mode_sleep_screen_title">Spánková Obrazovka</string>
-    <string name="contact_delete_confirm_description">Opravdu chcete odstranit \'%1$s\'\?</string>
+    <string name="contact_delete_confirm_description">Opravdu chcete odstranit \'%1$s\'?</string>
     <string name="contact_no_free_slots_description">Zařízení nemá žádné volné místo pro kontakty (celkem míst: %1$s)</string>
     <string name="pref_sleep_mode_smart_enable_title">Chytré Zapnutí</string>
     <string name="pref_sleep_mode_smart_enable_summary">Povolit režim spánku automaticky během spánku</string>
