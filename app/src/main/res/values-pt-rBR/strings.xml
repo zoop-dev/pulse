@@ -1858,11 +1858,7 @@
     <string name="estonian">Estoniano</string>
     <string name="lithuanian">Lituano</string>
     <string name="cyan">Ciano</string>
-    <string name="permission_request">O %1$s permite que você envie mensagens e outros dados do Android para o seu dispositivo. Para fazer isso, ele precisa de permissão para acessar esses dados e, sem ela, pode não funcionar corretamente.
-\n
-\nAgora você verá algumas caixas de diálogo do Android solicitando essas permissões.
-\n
-\nToque em \'%2$s\' para continuar.</string>
+    <string name="permission_request">O %1$s permite que você envie mensagens e outros dados do Android para o seu dispositivo. Para fazer isso, ele precisa de permissão para acessar esses dados e, sem ela, pode não funcionar corretamente. \n \nAgora você verá algumas caixas de diálogo do Android solicitando essas permissões. \n \nToque em \'%2$s\' para continuar.</string>
     <string name="yellow">Amarelo</string>
     <string name="prefs_wena3_vibration_strength_item_weak">Fraca</string>
     <string name="prefs_wena3_item_weather_statusbar">Clima na Barra de Status</string>
@@ -2089,15 +2085,7 @@
     <string name="pref_summary_banglejs_phone_gps_update_interval">O intervalo de atualização da posição GPS, em ms</string>
     <string name="pref_header_sony_device_info">Informações do dispositivo</string>
     <string name="pref_title_device_intents">Permitir Intenção</string>
-    <string name="permission_display_over_other_apps">%1$s precisa de permissão para ser exibido sobre outros aplicativos a fim de permitir que os relógios Bangle.js iniciem atividades por meio de intenções quando %1$s estiver em segundo plano.
-\n
-\nIsso pode ser usado para iniciar um aplicativo de música e reproduzir uma música e muitas outras coisas.
-\n
-\nToque em \"%2$s\" e depois em \"%1$s\" e ative a opção \"Permitir sobrepor outros aplicativos\", depois toque em \"Voltar\" para retornar a %1$s.
-\n
-\nPara que o %1$s pare de solicitar permissões, vá para \"Configurações\" e desmarque \"Verificar status da permissão\".
-\n
-\nCertifique-se de conceder ao %1$s as permissões necessárias para que ele funcione como você espera.</string>
+    <string name="permission_display_over_other_apps">%1$s precisa de permissão para ser exibido sobre outros aplicativos a fim de permitir que os relógios Bangle.js iniciem atividades por meio de intenções quando %1$s estiver em segundo plano. \n \nIsso pode ser usado para iniciar um aplicativo de música e reproduzir uma música e muitas outras coisas. \n \nToque em \"%2$s\" e depois em \"%1$s\" e ative a opção \"Permitir sobrepor outros aplicativos\", depois toque em \"Voltar\" para retornar a %1$s. \n \nPara que o %1$s pare de solicitar permissões, vá para \"Configurações\" e desmarque \"Verificar status da permissão\". \n \nCertifique-se de conceder ao %1$s as permissões necessárias para que ele funcione como você espera.</string>
     <string name="activity_type_climbing">Escalada</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Para receber chamadas por bluetooth, é necessário parear o telefone com uma segunda instância do relógio.</string>
     <string name="pref_summary_notification_cache_while_disconnected">Envie notificações perdidas quando um dispositivo se reconectar após ficar fora do alcance</string>
@@ -2157,9 +2145,7 @@
     <string name="activity_type_martial_arts">Artes marciais</string>
     <string name="activity_error_share_failed">Falha no compartilhamento do arquivo.</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">A bateria do dispositivo está muito fraca</string>
-    <string name="permission_notification_listener">%1$s precisa de acesso às Notificações para exibi-las no relógio quando a tela do telefone estiver desligada.
-\n
-\nToque em \'%2$s\' e depois em \'%1$s\' e ative \'Permitir acesso a notificações\' e, em seguida, toque em \'Voltar\' para retornar a %1$s.</string>
+    <string name="permission_notification_listener">%1$s precisa de acesso às Notificações para exibi-las no relógio quando a tela do telefone estiver desligada. \n \nToque em \'%2$s\' e depois em \'%1$s\' e ative \'Permitir acesso a notificações\' e, em seguida, toque em \'Voltar\' para retornar a %1$s.</string>
     <string name="pref_summary_notification_times_enabled">Enviar notificações somente entre horários específicos</string>
     <string name="updatefirmwareoperation_updateproblem_free_space">O dispositivo não tem espaço livre suficiente</string>
     <string name="activity_db_management_autoexport_location">Não foi possível entender a localização. Provavelmente um problema do sistema de permissão mais recente do Android. Muito provavelmente, a exportação automática não está funcionando agora.</string>
