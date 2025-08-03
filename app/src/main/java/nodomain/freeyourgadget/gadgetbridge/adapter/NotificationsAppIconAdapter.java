@@ -27,14 +27,18 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
 public class NotificationsAppIconAdapter extends RecyclerView.Adapter<NotificationsAppIconAdapter.NotificationsAppIconViewHolder> implements Filterable {
@@ -94,7 +98,8 @@ public class NotificationsAppIconAdapter extends RecyclerView.Adapter<Notificati
     }
 
     private void toggleSelection(String packageName) {
-        if(selectedItems.size() >= MAX_SELECT_COUNT) {
+        if(selectedItems.size() >= MAX_SELECT_COUNT && !selectedItems.contains(packageName)) {
+            GB.toast(this.context.getString(R.string.notifications_app_icon_uploading_limit_reached), Toast.LENGTH_LONG, GB.WARN);
             return;
         }
         if(selectedItems.contains(packageName)) {
