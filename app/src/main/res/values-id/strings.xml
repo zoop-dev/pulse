@@ -1309,9 +1309,7 @@
     <string name="pref_invalid_frequency_message">Mohon masukkan frekuensi antara 87,5 dan 108,0</string>
     <string name="appwidget_not_connected">Tidak terhubung, alarm tidak diatur.</string>
     <string name="prefs_button_long_press_action_selection_title">Tindakan tekan lama tombol</string>
-    <string name="permission_notification_policy_access">%1$s membutuhkan akses ke pengaturan Jangan Ganggu untuk mencukupinya di jam tangan ketika layar ponsel sedang mati. 
-\n 
-\nMohon ketuk \'%2$s\' lalu \'%1$s\' dan aktifkan \'Perbolehkan Jangan Ganggu\', lalu ketuk \'Kembali\' untuk kembali ke %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s membutuhkan akses ke pengaturan Jangan Ganggu untuk mencukupinya di jam tangan ketika layar ponsel sedang mati. \n \nMohon ketuk \'%2$s\' lalu \'%1$s\' dan aktifkan \'Perbolehkan Jangan Ganggu\', lalu ketuk \'Kembali\' untuk kembali ke %1$s.</string>
     <string name="currentWorkoutLoad">Muatan Olahraga</string>
     <string name="hrZoneExtreme">Ekstrim</string>
     <string name="TrainingEffect">Efek Pelatihan</string>
@@ -1819,15 +1817,7 @@
 \nGelang Anda akan dinyalakan ulang setelah memasang berkas .zip. 
 \n 
 \nLANJUTKAN DENGAN RISIKO ANDA SENDIRI!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Anda akan memasang perangkat tegar %s pada Amazfit Cor 2 Anda. 
-\n 
-\nPastikan Anda memasang berkas .fw, dan setelah itu berkas .res. Gelang Anda akan dinyalakan ulang setelah memasang berkas .fw. 
-\n 
-\nCatatan: Anda tidak harus memasang .res jika sama persis dengan yang sebelumnya dipasang. 
-\n 
-\nLANJUTKAN DENGAN RISIKO ANDA SENDIRI! 
-\n 
-\nSAMA SEKALI BELUM DICOBA, MUNGKIN ANDA HARUS FLASH SEBUAH FIRMWARE BEATS_W JIKA NAMA PERANGKAT ANDA ADALAH \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Anda akan memasang perangkat tegar %s pada Amazfit Cor 2 Anda. \n \nPastikan Anda memasang berkas .fw, dan setelah itu berkas .res. Gelang Anda akan dinyalakan ulang setelah memasang berkas .fw. \n \nCatatan: Anda tidak harus memasang .res jika sama persis dengan yang sebelumnya dipasang. \n \nLANJUTKAN DENGAN RISIKO ANDA SENDIRI! \n \nSAMA SEKALI BELUM DICOBA, MUNGKIN ANDA HARUS FLASH SEBUAH FIRMWARE BEATS_W JIKA NAMA PERANGKAT ANDA ADALAH \"Amazfit Band 2\"</string>
     <string name="fw_upgrade_notice_miband6">Anda akan memasang perangkat tegar %s pada Mi Band 6 Anda. 
 \n 
 \nPastikan Anda memasang berkas .fw, dan setelah itu berkas .res. Gelang Anda akan dinyalakan ulang setelah memasang berkas .fw. 
@@ -1929,18 +1919,8 @@
     <string name="activity_db_management_empty_db_warning">Peringatan! Dengan menekan tombol ini Anda akan menghapus basis data Anda dan mulai dari awal.</string>
     <string name="dbmanagementactivity_really_delete_entire_db">Benar-benar hapus seluruh basis data\? Semua data aktivitas dan informasi tentang perangkat Anda akan hilang.</string>
     <string name="permission_location">%1$s membutuhkan akses ke lokasi Anda di latar belakang untuk memungkinkan untuk tetap terhubung ke jam tangan Anda bahkan ketika layar Anda mati. \n \nMohon ketuk \'%2$s\' untuk menerima.</string>
-    <string name="permission_notification_listener">%1$s membutuhkan akses ke Notifikasi untuk dapat ditampilkan di jam tangan Anda ketika layar ponsel Anda mati. 
-\n 
-\nMohon ketuk \'%2$s\'\' lalu \'%1$s\' dan aktifkan \'Perbolehkan Akses Notifikasi\', lalu ketuk \'Kembali\' untuk kembali ke %1$s.</string>
-    <string name="permission_display_over_other_apps">%1$s membutuhkan izin untuk menampilkan di atas aplikasi lain untuk memperbolehkan jam tangan Bangle.js untuk memulai aktivitas melalui intent ketika %1$s berada dalam latar belakang. 
-\n 
-\nIni dapat digunakan untuk memulai sebuah aplikasi musik dan memutarkan lagu, dan banyak hal lain. 
-\n 
-\nMohon ketuk \'%2$s\' lalu \'%1$s\' dan aktifkan \'Izinkan tampil di atas aplikasi lain\', lalu ketuk \'Kembali\' untuk kembali ke %1$s. 
-\n 
-\nUntuk menghentikan %1$s meminta izin pergi ke \'Pengaturan\' dan hapus centang \'Periksa status izin\'. 
-\n 
-\nPastikan untuk memberikan %1$s izin yang dibutuhkan untuk berfungsi sesuai yang Anda harapkan.</string>
+    <string name="permission_notification_listener">%1$s membutuhkan akses ke Notifikasi untuk dapat ditampilkan di jam tangan Anda ketika layar ponsel Anda mati. \n \nMohon ketuk \'%2$s\'\' lalu \'%1$s\' dan aktifkan \'Perbolehkan Akses Notifikasi\', lalu ketuk \'Kembali\' untuk kembali ke %1$s.</string>
+    <string name="permission_display_over_other_apps">%1$s membutuhkan izin untuk menampilkan di atas aplikasi lain untuk memperbolehkan jam tangan Bangle.js untuk memulai aktivitas melalui intent ketika %1$s berada dalam latar belakang. \n \nIni dapat digunakan untuk memulai sebuah aplikasi musik dan memutarkan lagu, dan banyak hal lain. \n \nMohon ketuk \'%2$s\' lalu \'%1$s\' dan aktifkan \'Izinkan tampil di atas aplikasi lain\', lalu ketuk \'Kembali\' untuk kembali ke %1$s. \n \nUntuk menghentikan %1$s meminta izin pergi ke \'Pengaturan\' dan hapus centang \'Periksa status izin\'. \n \nPastikan untuk memberikan %1$s izin yang dibutuhkan untuk berfungsi sesuai yang Anda harapkan.</string>
     <string name="activity_db_management_import_export_explanation">Operasi ekspor/impor menggunakan jalur berikut (lihat di bawah) ke sebuah direktori di perangkat Anda. Direktori ini dapat diakses oleh aplikasi Android lain dan komputer Anda. Dicatat, bahwa direktori dan semua berkas yang berisi akan dihapus jika Anda menghapus Gadgetbridge. Data berisi: 
 \n Export_preference - pengaturan global 
 \n Export_preference_MAC - pengaturan spesifik perangkat
@@ -2107,7 +2087,7 @@
     <string name="contact_missing_name">Nama kontak kosong</string>
     <string name="contact_delete_confirm_title">Hapus kontak</string>
     <string name="contact_missing_number">Nomor kontak kosong</string>
-    <string name="contact_delete_confirm_description">Apakah Anda yakin ingin menghapus \'%1$s\'\?</string>
+    <string name="contact_delete_confirm_description">Apakah Anda yakin ingin menghapus \'%1$s\'?</string>
     <string name="pref_header_navigation">Navigasi</string>
     <string name="pref_summary_navigation_forward">Teruskan petunjuk dari aplikasi navigasi ke jam tangan</string>
     <string name="pref_title_navigation_forward">Kirim navigasi ke jam tangan</string>
@@ -2183,11 +2163,7 @@
     <string name="busy_task_fetch_pai_data">Mendapatkan data PAI</string>
     <string name="activity_prefs_goals">Sasaran</string>
     <string name="error_no_bluetooth_connect">Akses koneksi Bluetooth harus diberikan dan diaktifkan agar pemindaian dapat bekerja dengan baik</string>
-    <string name="permission_request">%1$s memungkinkan Anda untuk mengirim pesan dan data lain dari Android ke perangkat Anda. Untuk melakukan hal ini, diperlukan izin untuk mengakses data tersebut dan tanpa izin, aplikasi ini tidak akan berfungsi dengan baik.
-\n
-\nSekarang Anda akan dihadapkan pada beberapa dialog Android yang meminta izin tersebut.
-\n
-\nSilakan ketuk \'%2$s\' untuk melanjutkan.</string>
+    <string name="permission_request">%1$s memungkinkan Anda untuk mengirim pesan dan data lain dari Android ke perangkat Anda. Untuk melakukan hal ini, diperlukan izin untuk mengakses data tersebut dan tanpa izin, aplikasi ini tidak akan berfungsi dengan baik. \n \nSekarang Anda akan dihadapkan pada beberapa dialog Android yang meminta izin tersebut. \n \nSilakan ketuk \'%2$s\' untuk melanjutkan.</string>
     <string name="activity_type_windsurfing">Selancar angin</string>
     <string name="activity_type_football">Sepak bola</string>
     <string name="activity_type_baseball">Bisbol</string>
