@@ -1230,19 +1230,9 @@
     <string name="share_log_not_enabled_message">Devi prima abilitare la registrazione in Impostazioni - Scrittura dei file di log</string>
     <string name="quick_alarm_description">Sveglia dal widget</string>
     <string name="toast_app_must_be_selected">L\'app deve essere selezionata per essere configurata</string>
-    <string name="permission_notification_policy_access">%1$s deve accedere alle impostazioni Non Disturbare per poterle soddisfare sull\'orologio quando lo schermo del telefono è spento.
-\n
-\nTocca \"%2$s\" e poi \"%1$s\" e attiva \"Consenti Non Disturbare\", quindi tocca \"Indietro\" per tornare a %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s deve accedere alle impostazioni Non Disturbare per poterle soddisfare sull\'orologio quando lo schermo del telefono è spento. \n \nTocca \"%2$s\" e poi \"%1$s\" e attiva \"Consenti Non Disturbare\", quindi tocca \"Indietro\" per tornare a %1$s.</string>
     <string name="prefs_password_4_digits_1_to_4_summary">La password deve avere 4 cifre, usando i numeri da 1 a 4</string>
-    <string name="permission_display_over_other_apps">%1$s ha bisogno dell\'autorizzazione per essere visualizzata sopra le altre app, per consentire agli orologi Bangle.js di avviare attività tramite intenti quando %1$s è in background.
-\n
-\nQuesto può essere usato per avviare un\'app musicale e riprodurre una canzone, e varie altre cose.
-\n
-\nTocca \"%2$s\" e poi \"%1$s\" e abilita \"Consenti visualizzazione su altre app\", quindi tocca \"Indietro\" per tornare a %1$s.
-\n
-\nPer evitare che %1$s chieda autorizzazioni, vai in \"Impostazioni\" e deseleziona \"Verifica stato autorizzazioni\".
-\n
-\nAssicurati di concedere a %1$s le autorizzazioni necessarie per funzionare correttamente.</string>
+    <string name="permission_display_over_other_apps">%1$s ha bisogno dell\'autorizzazione per essere visualizzata sopra le altre app, per consentire agli orologi Bangle.js di avviare attività tramite intenti quando %1$s è in background. \n \nQuesto può essere usato per avviare un\'app musicale e riprodurre una canzone, e varie altre cose. \n \nTocca \"%2$s\" e poi \"%1$s\" e abilita \"Consenti visualizzazione su altre app\", quindi tocca \"Indietro\" per tornare a %1$s. \n \nPer evitare che %1$s chieda autorizzazioni, vai in \"Impostazioni\" e deseleziona \"Verifica stato autorizzazioni\". \n \nAssicurati di concedere a %1$s le autorizzazioni necessarie per funzionare correttamente.</string>
     <string name="seconds_14">14 secondi</string>
     <string name="about_hash">Commit %s</string>
     <string name="qhybrid_title_watchface">Configurazione quadrante</string>
@@ -1327,9 +1317,7 @@
     <string name="menuitem_email">E-mail</string>
     <string name="prefs_fm_presets_presets">Preimpostati</string>
     <string name="gpx_receiver_activity_title">Ricevitore GPX Gadgetbridge</string>
-    <string name="permission_notification_listener">%1$s ha bisogno di accedere alle Notifiche per poterle visualizzare sull\'orologio quando lo schermo del telefono è spento.
-\n
-\nTocca \"%2$s\" e poi \"%1$s\" e abilita \"Consenti Accesso alle Notifiche\", quindi tocca \"Indietro\" per tornare a %1$s.</string>
+    <string name="permission_notification_listener">%1$s ha bisogno di accedere alle Notifiche per poterle visualizzare sull\'orologio quando lo schermo del telefono è spento. \n \nTocca \"%2$s\" e poi \"%1$s\" e abilita \"Consenti Accesso alle Notifiche\", quindi tocca \"Indietro\" per tornare a %1$s.</string>
     <string name="watchface_dialog_widget_preset_bottom">In basso</string>
     <string name="qhybrid_calibration_10_steps">10 passi</string>
     <string name="qhybrid_calibration_100_steps">100 passi</string>
@@ -2095,7 +2083,7 @@
     <string name="pref_contacts_title">Contatti</string>
     <string name="pref_contacts_summary">Configura contatti sull\'orologio</string>
     <string name="contact_delete_confirm_title">Elimina contatto</string>
-    <string name="contact_delete_confirm_description">Sei sicuro di voler eliminare \'%1$s\'\?</string>
+    <string name="contact_delete_confirm_description">Sei sicuro di voler eliminare \'%1$s\'?</string>
     <string name="contact_no_free_slots_description">Il dispositivo non ha campi liberi per contatti (campi totali: %1$s)</string>
     <string name="dev_tools">Strumenti Sviluppatori</string>
     <string name="debug_companion_show_associated">Mostra i dispositivi associati</string>
@@ -2180,11 +2168,7 @@
     <string name="activity_type_other">Altro</string>
     <string name="share_screenshot">Condividi schermata</string>
     <string name="screenshot_taken">Schermata acquisita</string>
-    <string name="permission_request">%1$s consente di inviare messaggi e altri dati da Android al dispositivo. Per fare questo richiede il permesso di accedere a tali dati e senza, potrebbe non funzionare correttamente.
-\n
-\nOra vedrai alcune finestre di dialogo Android che richiedono queste autorizzazioni.
-\n
-\nPremi %2$s per continuare.</string>
+    <string name="permission_request">%1$s consente di inviare messaggi e altri dati da Android al dispositivo. Per fare questo richiede il permesso di accedere a tali dati e senza, potrebbe non funzionare correttamente. \n \nOra vedrai alcune finestre di dialogo Android che richiedono queste autorizzazioni. \n \nPremi %2$s per continuare.</string>
     <string name="voice_service">Servizi Vocali</string>
     <string name="pref_app_logs_stop_summary">Termina i log per le applicazioni dell\'orologio</string>
     <string name="description">Descrizione</string>
