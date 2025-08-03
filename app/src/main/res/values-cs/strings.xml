@@ -2947,7 +2947,7 @@
     <string name="battery_low_notify_enabled">Oznámení při nízkém nabití</string>
     <string name="url">URL</string>
     <string name="garmin_agps_local_file">Místní soubor</string>
-    <string name="pref_garmin_agps_help">Níže uvedený seznam obsahuje všechny adresy URL, které si hodinky vyžádaly pro aktualizace systému AGPS. Můžete vybrat soubor z úložiště telefonu, který bude odeslán do hodinek, když si vyžádají aktualizaci.</string>
+    <string name="pref_garmin_agps_help">Níže uvedený seznam obsahuje všechny adresy URL, které si hodinky vyžádaly pro aktualizace systému AGPS. Můžete vybrat soubor z úložiště telefonu, který bude odeslán do hodinek, když si vyžádají aktualizaci.\n\nJe třeba nastavit pouze jeden ze souborů.</string>
     <string name="copied_to_clipboard">Zkopírováno do schránky</string>
     <string name="realtime_settings">Nastavení v reálném čase</string>
     <string name="show_in_notification">Zobrazit v oznámení</string>
@@ -4297,4 +4297,17 @@
     <string name="media_source_switching_bluetooth_mp3">Přepnout zdroj médií (Bluetooth/MP3)</string>
     <string name="shokz_controls_long_press_multi_function">Dlouze podržte multifunkční tlačítko</string>
     <string name="shokz_controls_simultaneous_volume_up_down">Dlouze podržte zároveň zvýšení a snížení hlasitosti</string>
+    <string name="title_activity_gps_track_installer">Instalátor stop GPS</string>
+    <string name="title_gpx_track_name">Název stopy</string>
+    <string name="training_acute_load">Okamžitá zátěž</string>
+    <string name="training_chronic_load">Chronická zátěž</string>
+    <string name="this_week_total">Celkem tento týden</string>
+    <string name="last_week_total">Celkem minulý týden</string>
+    <string name="low">Nízká</string>
+    <string name="optimal">Optimální</string>
+    <string name="high">Vysoká</string>
+    <string name="very_high">Velmi vysoká</string>
+    <string name="training_daily_load">Denní zátěž</string>
+    <string name="pref_header_training_load">Tréninková zátěž</string>
+    <string name="track_name_required">Název stopy nemůže být prázdný</string>
 </resources>
