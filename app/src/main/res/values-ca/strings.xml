@@ -416,15 +416,7 @@
     <string name="zetime_analog_mode_hands">Només mans</string>
     <string name="zetime_analog_mode_handsandsteps">Mans i passes</string>
     <string name="pref_title_support_voip_calls">Activa les trucades de VoIP</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Sou a punt d\'instal·lar el microprogramari %s en la vostra Amazfit Cor 2.
-\n
-\nSi us plau, assegureu-vos d\'instal·lar el fitxer .fw, i després el fitxer .res. La vostra polsera es reiniciarà després d\'instal·lar el fitxer .fw.
-\n
-\nObservació: No cal que instal·leu el fitxer .res si és exactament el mateix que ja estava instal·lat.
-\n
-\nPROCEDIU SOTA LA VOSTRA PRÒPIA RESPONSABILITAT!
-\n
-\nAIXÒ NO HA ESTAT PROVAT ABANS. PROBABLEMENT CAL QUE INSTAL·LEU UN MICROPROGRAMARI BEATS_W SI EL NOM DEL VOSTRE APARELL ÉS \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Sou a punt d\'instal·lar el microprogramari %s en la vostra Amazfit Cor 2. \n \nSi us plau, assegureu-vos d\'instal·lar el fitxer .fw, i després el fitxer .res. La vostra polsera es reiniciarà després d\'instal·lar el fitxer .fw. \n \nObservació: No cal que instal·leu el fitxer .res si és exactament el mateix que ja estava instal·lat. \n \nPROCEDIU SOTA LA VOSTRA PRÒPIA RESPONSABILITAT! \n \nAIXÒ NO HA ESTAT PROVAT ABANS. PROBABLEMENT CAL QUE INSTAL·LEU UN MICROPROGRAMARI BEATS_W SI EL NOM DEL VOSTRE APARELL ÉS \"Amazfit Band 2\"</string>
     <string name="firmware_install_warning">ESTEU PROVANT D\'INSTAL·LAR UN MICROPROGRAMARI. CONTINUEU SOTA LA VOSTRA RESPONSABILITAT.
 \n
 \n
