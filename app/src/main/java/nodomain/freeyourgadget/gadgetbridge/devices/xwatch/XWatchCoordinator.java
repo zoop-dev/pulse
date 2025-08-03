@@ -1,5 +1,5 @@
-/*  Copyright (C) 2018-2024 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
-    Daniele Gobbetti, José Rebelo, ladbsoft, Petr Vaněk
+/*  Copyright (C) 2018-2025 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
+    Daniele Gobbetti, José Rebelo, ladbsoft, Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,12 +19,17 @@ package nodomain.freeyourgadget.gadgetbridge.devices.xwatch;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.XWatchActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -70,5 +75,12 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_xwatch;
+    }
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
+        map.put(session.getXWatchActivitySampleDao(), XWatchActivitySampleDao.Properties.DeviceId);
+        return map;
     }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2025 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -18,11 +18,18 @@ package nodomain.freeyourgadget.gadgetbridge.devices.mijia_lywsd;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.MijiaLywsdHistoricSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.MijiaLywsdRealtimeSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -104,4 +111,12 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     }
 
     public abstract boolean supportsSetTime();
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(2);
+        map.put(session.getMijiaLywsdHistoricSampleDao(), MijiaLywsdHistoricSampleDao.Properties.DeviceId);
+        map.put(session.getMijiaLywsdRealtimeSampleDao(), MijiaLywsdRealtimeSampleDao.Properties.DeviceId);
+        return map;
+    }
 }

@@ -1,6 +1,6 @@
-/*  Copyright (C) 2019-2024 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
+/*  Copyright (C) 2019-2025 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
     Gabriele Monaco, Ganblejs, glemco, Gordon Williams, José Rebelo, LukasEdl,
-    Petr Vaněk
+    Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -32,16 +32,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
+import nodomain.freeyourgadget.gadgetbridge.entities.BangleJSActivitySampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
@@ -270,5 +276,13 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_banglejs;
+    }
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(2);
+        map.put(session.getBangleJSActivitySampleDao(), BangleJSActivitySampleDao.Properties.DeviceId);
+        map.put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
+        return map;
     }
 }

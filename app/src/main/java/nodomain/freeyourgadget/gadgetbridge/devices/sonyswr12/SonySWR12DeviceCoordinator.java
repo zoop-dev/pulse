@@ -1,5 +1,5 @@
-/*  Copyright (C) 2020-2024 Damien Gaignon, Daniel Dakhno, José Rebelo,
-    opavlov, Petr Vaněk
+/*  Copyright (C) 2020-2025 Damien Gaignon, Daniel Dakhno, José Rebelo,
+    opavlov, Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,12 +19,17 @@ package nodomain.freeyourgadget.gadgetbridge.devices.sonyswr12;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.SonySWR12SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -90,5 +95,12 @@ public class SonySWR12DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_sonyswr12;
+    }
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
+        map.put(session.getSonySWR12SampleDao(), SonySWR12SampleDao.Properties.DeviceId);
+        return map;
     }
 }

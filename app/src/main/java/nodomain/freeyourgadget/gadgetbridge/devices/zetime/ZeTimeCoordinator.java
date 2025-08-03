@@ -1,5 +1,5 @@
-/*  Copyright (C) 2018-2024 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
-    Daniele Gobbetti, José Rebelo, Petr Vaněk, Sebastian Kranz
+/*  Copyright (C) 2018-2025 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
+    Daniele Gobbetti, José Rebelo, Petr Vaněk, Sebastian Kranz, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -20,9 +20,13 @@ package nodomain.freeyourgadget.gadgetbridge.devices.zetime;
 import androidx.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -31,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.ZeTimeActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -194,5 +199,12 @@ public class ZeTimeCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_zetime;
+    }
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
+        map.put(session.getZeTimeActivitySampleDao(), ZeTimeActivitySampleDao.Properties.DeviceId);
+        return map;
     }
 }

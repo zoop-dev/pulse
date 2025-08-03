@@ -1,5 +1,5 @@
-/*  Copyright (C) 2018-2024 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
-    Daniele Gobbetti, José Rebelo, Petr Vaněk, Vadim Kaushan
+/*  Copyright (C) 2018-2025 Andreas Shimokawa, Damien Gaignon, Daniel Dakhno,
+    Daniele Gobbetti, José Rebelo, Petr Vaněk, Vadim Kaushan, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -22,13 +22,18 @@ import android.os.ParcelUuid;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.ID115ActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
@@ -99,5 +104,12 @@ public class ID115Coordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_h30_h10;
+    }
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
+        map.put(session.getID115ActivitySampleDao(), ID115ActivitySampleDao.Properties.DeviceId);
+        return map;
     }
 }
