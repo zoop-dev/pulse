@@ -151,15 +151,7 @@
     <string name="ukrainian">Ukrainian</string>
     <string name="turkish">Turkish</string>
     <string name="dutch">Dutch</string>
-    <string name="fw_upgrade_notice_amazfitcor2">You are about to install the %s firmware on your Amazfit Cor 2. 
-\n 
-\nPlease make sure to install the .fw file, and after that the .res file. Your band will reboot after installing the .fw file. 
-\n 
-\nNote: You do not have to install .res if it is exactly the same as the one previously installed. 
-\n 
-\nPROCEED AT YOUR OWN RISK! 
-\n 
-\nCOMPLETELY UNTESTED, PROBABLY YOU NEED TO FLASH A BEATS_W FIRMWARE IF YOUR DEVICE NAME IS \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">You are about to install the %s firmware on your Amazfit Cor 2. \n \nPlease make sure to install the .fw file, and after that the .res file. Your band will reboot after installing the .fw file. \n \nNote: You do not have to install .res if it is exactly the same as the one previously installed. \n \nPROCEED AT YOUR OWN RISK! \n \nCOMPLETELY UNTESTED, PROBABLY YOU NEED TO FLASH A BEATS_W FIRMWARE IF YOUR DEVICE NAME IS \"Amazfit Band 2\"</string>
     <string name="pref_summary_authkey">Change the auth key to a common key on all your Android devices from which you would like to connect from. The previous default key for all devices is 0123456789@ABCDE</string>
     <string name="pref_title_authkey">Auth Key</string>
     <string name="title_activity_device_specific_settings">Device specific settings</string>
