@@ -3950,4 +3950,5 @@
     <string name="training_daily_load">Denní zátěž</string>
     <string name="pref_header_training_load">Tréninková zátěž</string>
     <string name="track_name_required">Název stopy nemůže být prázdný</string>
+    <string name="notifications_app_icon_uploading_limit_reached">Byl dosažen limit nahrávání ikon aplikací.</string>
 </resources>
