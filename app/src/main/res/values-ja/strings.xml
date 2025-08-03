@@ -1742,11 +1742,7 @@
     <string name="appmanager_item_outdated">(古いバージョン)</string>
     <string name="uncheck_all_applications">すべてのアプリを未確認にする</string>
     <string name="about_description_generic">メーカーが提供するクローズドソースの Android アプリの代替として開発された、クラウドレスでコピーレフトの自由なアプリ。</string>
-    <string name="permission_request">%1$s を使うと、 Android からあなたのデバイスにメッセージやその他のデータを送ることができます。データへのアクセス許可がない場合、この機能は正しく動作しない可能性があります。
-\n
-\n動作に必要なアクセス許可を要求するダイアログが表示されます。
-\n
-\n\'%2$s\' をタップして進みます。</string>
+    <string name="permission_request">%1$s を使うと、 Android からあなたのデバイスにメッセージやその他のデータを送ることができます。データへのアクセス許可がない場合、この機能は正しく動作しない可能性があります。 \n \n動作に必要なアクセス許可を要求するダイアログが表示されます。 \n \n\'%2$s\' をタップして進みます。</string>
     <string name="permission_location">%1$s は、画面がオフの状態でもウォッチとの接続を維持するためにバックグラウンドで位置情報にアクセスする権限が必要です。 \n \n\'%2$s\' をタップして同意します。</string>
     <string name="permission_granting_mandatory">これらすべての許可がなければ、アプリが正しく動作しない可能性があります</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js は動作中です</string>
@@ -1758,15 +1754,7 @@
     <string name="single_band">シングルバンド</string>
     <string name="dual_band">デュアルバンド</string>
     <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js は動作中です</string>
-    <string name="permission_display_over_other_apps">%1$s は、 %1$s がバックグラウンドで動作しているときに Bangle.js ウォッチがインテントを経由してアクティビティを開始するために、他のアプリの上に重ねて表示する権限が必要です。
-\n
-\nこれによって、音楽アプリを起動して音楽を再生したり、その他いろいろなことができます。
-\n
-\n\'%2$s\' をタップし、 \'%1$s\' を選択して \'他のアプリの上に重ねて表示できるようにする\' を有効にし、戻るをタップして %1$s に戻ってください。
-\n
-\n%1$s がこの権限を求めるのを停止するには Gadgetbridge の設定を開き、 \'権限の状態を確認する\' をオフにしてください。
-\n
-\nアプリを期待通りに動作させるには、必要な権限を %1$s に与えてください。</string>
+    <string name="permission_display_over_other_apps">%1$s は、 %1$s がバックグラウンドで動作しているときに Bangle.js ウォッチがインテントを経由してアクティビティを開始するために、他のアプリの上に重ねて表示する権限が必要です。 \n \nこれによって、音楽アプリを起動して音楽を再生したり、その他いろいろなことができます。 \n \n\'%2$s\' をタップし、 \'%1$s\' を選択して \'他のアプリの上に重ねて表示できるようにする\' を有効にし、戻るをタップして %1$s に戻ってください。 \n \n%1$s がこの権限を求めるのを停止するには Gadgetbridge の設定を開き、 \'権限の状態を確認する\' をオフにしてください。 \n \nアプリを期待通りに動作させるには、必要な権限を %1$s に与えてください。</string>
     <string name="device_experimental">試験的</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">デバイスの環境設定を削除しますか？</string>
     <string name="device_unsupported">未サポート</string>
@@ -1810,12 +1798,8 @@
     <string name="watchface_widget_type_steps">歩数</string>
     <string name="watchface_widget_type_heart_rate">心拍数</string>
     <string name="qhybrid_pref_summary_external_intents">他の Android アプリからファイルをアップロード/上書きすることを許可します</string>
-    <string name="permission_notification_listener">%1$s は、Android の画面がオフのときにもウォッチに通知を表示するために、通知にアクセスする必要があります。
-\n
-\n\'%2$s\' をタップし、 \'%1$s\' を選択して \'通知へのアクセス許可\' を有効にし、 戻るボタンをタップして %1$s に戻ってください。</string>
-    <string name="permission_notification_policy_access">%1$s は、 Android がオフのときにもウォッチでサイレント モードを有効にするために、サイレント モードの設定にアクセスする必要があります。
-\n
-\n\'%2$s\' をタップし、 \'%1$s\' を選択して \'サイレント モードの利用を許可\' を有効にし、 戻るボタンをタップして %1$s に戻ってください。</string>
+    <string name="permission_notification_listener">%1$s は、Android の画面がオフのときにもウォッチに通知を表示するために、通知にアクセスする必要があります。 \n \n\'%2$s\' をタップし、 \'%1$s\' を選択して \'通知へのアクセス許可\' を有効にし、 戻るボタンをタップして %1$s に戻ってください。</string>
+    <string name="permission_notification_policy_access">%1$s は、 Android がオフのときにもウォッチでサイレント モードを有効にするために、サイレント モードの設定にアクセスする必要があります。 \n \n\'%2$s\' をタップし、 \'%1$s\' を選択して \'サイレント モードの利用を許可\' を有効にし、 戻るボタンをタップして %1$s に戻ってください。</string>
     <string name="minHR">最小心拍数</string>
     <string name="seconds_km">秒/km</string>
     <string name="seconds_m">秒/m</string>
