@@ -1665,15 +1665,7 @@
     <string name="prefs_hourly_chime_summary">Die Smartwatch gibt einmal pro Stunde einen Signalton ab</string>
     <string name="step_streaks_achievements_sharing_message">Meine täglichen Schritterfolge!</string>
     <string name="step_streaks_achievements_sharing_title">Schritterfolge</string>
-    <string name="permission_display_over_other_apps">%1$s benötigt die Berechtigung, über andere Apps angezeigt zu werden, damit Bangle.js-Watch Aktivitäten mit Intents starten kann, wenn %1$s im Hintergrund ist.
-\n
-\nDies kann verwendet werden, um eine Musik-App zu starten und einen Song abzuspielen und viele andere Dinge.
-\n
-\nTippe auf \'%2$s\' und dann auf \'%1$s\', aktiviere \'Anzeige über andere Apps zulassen\' und tippe dann auf \'Zurück\', um zu %1$s zurückzukehren.
-\n
-\nUm zu verhindern, dass %1$s nach Berechtigungen fragt, gehe zu \"Einstellungen\" und entferne das Häkchen bei \"Berechtigungsstatus prüfen\".
-\n
-\nVergewissere dich, dass du %1$s die erforderlichen Berechtigungen erteilst, damit es so funktioniert, wie du es erwartest.</string>
+    <string name="permission_display_over_other_apps">%1$s benötigt die Berechtigung, über andere Apps angezeigt zu werden, damit Bangle.js-Watch Aktivitäten mit Intents starten kann, wenn %1$s im Hintergrund ist. \n \nDies kann verwendet werden, um eine Musik-App zu starten und einen Song abzuspielen und viele andere Dinge. \n \nTippe auf \'%2$s\' und dann auf \'%1$s\', aktiviere \'Anzeige über andere Apps zulassen\' und tippe dann auf \'Zurück\', um zu %1$s zurückzukehren. \n \nUm zu verhindern, dass %1$s nach Berechtigungen fragt, gehe zu \"Einstellungen\" und entferne das Häkchen bei \"Berechtigungsstatus prüfen\". \n \nVergewissere dich, dass du %1$s die erforderlichen Berechtigungen erteilst, damit es so funktioniert, wie du es erwartest.</string>
     <string name="fw_upgrade_notice_miband7">Du bist dabei, die Firmware %s auf dein Xiaomi Smart Band 7 zu installieren.
 \n
 \nDein Band wird nach der Installation der .zip-Datei neu starten.
@@ -2015,7 +2007,7 @@
     <string name="pref_contacts_title">Kontakte</string>
     <string name="contact_no_free_slots_description">Das Gerät hat keine freien Speicherplätze für Kontakte (Gesamtspeicherplatz: %1$s)</string>
     <string name="title_activity_contact_details">Kontaktdetails</string>
-    <string name="contact_delete_confirm_description">Bist du sicher, dass du \'%1$s\' löschen möchtest\?</string>
+    <string name="contact_delete_confirm_description">Bist du sicher, dass du \'%1$s\' löschen möchtest?</string>
     <string name="contact_delete_confirm_title">Kontakt löschen</string>
     <string name="contact_name">Name</string>
     <string name="contact_phone_number">Telefonnummer</string>
@@ -2097,11 +2089,7 @@
     <string name="busy_task_fetch_sleep_respiratory_rate_data">Abrufen der Atemfrequenzdaten</string>
     <string name="error_no_bluetooth_scan">Zugriff auf den Bluetooth-Scan muss gewährt und aktiviert sein, damit der Scanvorgang ordnungsgemäß funktioniert</string>
     <string name="error_no_bluetooth_connect">Zugriff auf die Bluetooth-Verbindung muss gewährt und aktiviert sein, damit der Scanvorgang ordnungsgemäß funktioniert</string>
-    <string name="permission_request">Mit %1$s kannst du Nachrichten und andere Daten von Android an dein Gerät senden. Dazu ist die Berechtigung für den Zugriff auf diese Daten erforderlich, und ohne diese Berechtigung funktioniert sie möglicherweise nicht richtig.
-\n
-\nEs werden nun einige Android-Dialogfelder angezeigt, in denen diese Berechtigungen angefordert werden.
-\n
-\nBitte tippe auf \'%2$s\', um fortzufahren.</string>
+    <string name="permission_request">Mit %1$s kannst du Nachrichten und andere Daten von Android an dein Gerät senden. Dazu ist die Berechtigung für den Zugriff auf diese Daten erforderlich, und ohne diese Berechtigung funktioniert sie möglicherweise nicht richtig. \n \nEs werden nun einige Android-Dialogfelder angezeigt, in denen diese Berechtigungen angefordert werden. \n \nBitte tippe auf \'%2$s\', um fortzufahren.</string>
     <string name="busy_task_fetch_hr_data">Abrufen der Pulsdaten</string>
     <string name="activity_prefs_goals">Ziele</string>
     <string name="activity_type_surfing">Surfen</string>
