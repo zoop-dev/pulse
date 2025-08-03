@@ -658,15 +658,7 @@
     <string name="activity_prefs_calories_burnt">Obiettivo giornaliero: calorie bruciate</string>
     <string name="activity_prefs_distance_meters">Obiettivo giornaliero: distanza percorsa in metri</string>
     <string name="activity_prefs_activetime_minutes">Obiettivo giornaliero: tempo di attività in minuti</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Stai per installare il firmware %s sul tuo Amazfit Cor 2. 
-\n 
-\nAssicurati di installare il file .fw e successivamente il file .res. La band si riavvierà dopo aver installato il file .fw. 
-\n 
-\nNota: non è necessario installare .res se è esattamente lo stesso di quello installato in precedenza. 
-\n 
-\nPROCEDI A TUO RISCHIO! 
-\n 
-\nCOMPLETAMENTE NON TESTATO, PROBABILMENTE DOVRAI FLASHARE IL FIRMWARE BEATS_W SE IL NOME DEL TUO DISPOSITIVO è \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Stai per installare il firmware %s sul tuo Amazfit Cor 2. \n \nAssicurati di installare il file .fw e successivamente il file .res. La band si riavvierà dopo aver installato il file .fw. \n \nNota: non è necessario installare .res se è esattamente lo stesso di quello installato in precedenza. \n \nPROCEDI A TUO RISCHIO! \n \nCOMPLETAMENTE NON TESTATO, PROBABILMENTE DOVRAI FLASHARE IL FIRMWARE BEATS_W SE IL NOME DEL TUO DISPOSITIVO è \"Amazfit Band 2\"</string>
     <string name="dutch">Olandese</string>
     <string name="turkish">Turco</string>
     <string name="ukrainian">Ucraino</string>
