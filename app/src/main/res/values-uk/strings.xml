@@ -3807,7 +3807,7 @@
     <string name="none">Жоден</string>
     <string name="garmin_agps_url_i">URL-адреса %1$d AGPS</string>
     <string name="number_selected_items">%1d вибраний</string>
-    <string name="pref_garmin_agps_help">У списку нижче наведено всі URL-адреси, запитувані годинником для оновлень AGPS. Ви можете вибрати файл із пам’яті телефону, який буде надіслано на годинник, коли він запитуватиме оновлення.</string>
+    <string name="pref_garmin_agps_help">У списку нижче наведено всі URL-адреси, запитувані годинником для оновлень AGPS. Ви можете вибрати файл із пам’яті телефону, який буде надіслано на годинник, коли він запитуватиме оновлення.\n\nПотрібно налаштувати лише один із файлів.</string>
     <string name="maps_not_found">Карти не знайдено. Будь ласка, виберіть дійсну папку карт у налаштуваннях</string>
     <string name="toggle_debug_mode">Увімкнути/вимкнути режим налагодження</string>
     <string name="share_debug_info">Поділитися інформацією про налагодження</string>
