@@ -208,7 +208,7 @@
     <string name="abstract_chart_fragment_kind_activity">Діяльність</string>
     <string name="abstract_chart_fragment_kind_light_sleep">Легкий сон</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">Глибокий сон</string>
-    <string name="abstract_chart_fragment_kind_not_worn">Не одягнено</string>
+    <string name="abstract_chart_fragment_kind_not_worn">Не надіто</string>
     <string name="device_not_connected">Не підʼєднано.</string>
     <string name="user_feedback_all_alarms_disabled">Усі будильники вимкнено</string>
     <string name="pref_title_keep_data_on_device">Зберігати дані про діяльність на пристрої</string>
@@ -1056,7 +1056,7 @@
     <string name="activity_prefs_step_length_cm">Довжина кроку в сантиметрах</string>
     <string name="lefun_prefs_interface_language_title">Мова інтерфейсу</string>
     <string name="lefun_prefs_antilost_summary">Браслет вібруватиме, якщо ваш телефон відʼєднається від нього</string>
-    <string name="lefun_prefs_antilost_title">Запобігання втраті</string>
+    <string name="lefun_prefs_antilost_title">Захист від втрати</string>
     <string name="lefun_prefs_hydration_reminder_interval_title">Інтервал нагадування про пиття води (у хвилинах)</string>
     <string name="lefun_prefs_hydration_reminder_summary">Браслет вібруватиме, щоби нагадати вам про потребу попити води</string>
     <string name="lefun_prefs_hydration_reminder_title">Нагадування про пиття води</string>
@@ -1213,7 +1213,7 @@
     <string name="nothing_prefs_inear_summary">Відтворювати/призупиняти музику залежно від того, чи одягнено навушники</string>
     <string name="nothing_prefs_audiomode_title">Аудіорежим</string>
     <string name="check_all_applications">Обрати всі застосунки</string>
-    <string name="uncheck_all_applications">Зняти вибір з усіх застосунків</string>
+    <string name="uncheck_all_applications">Зняти позначки з усіх застосунків</string>
     <string name="pref_title_notification_use_as_allow">Дозволити сповіщення з обраних застосунків</string>
     <string name="title_activity_notification_management">Налаштування сповіщень</string>
     <string name="pref_header_notification_application_settings">Налаштування для кожного застосунку</string>
@@ -1964,7 +1964,7 @@
     <string name="ftp_server_status">Стан FTP-сервера</string>
     <string name="croatian">Хорватська</string>
     <string name="sony_speak_to_chat_summary">Автоматично вимикати шумопоглинання під час спілкування.</string>
-    <string name="pref_morning_updates_title">Ранкові оновлення</string>
+    <string name="pref_morning_updates_title">Оновлення щоранку</string>
     <string name="pref_morning_updates_summary">Показувати оновлення щоранку</string>
     <string name="pref_morning_updates_categories_title">Категорії ранкових оновлень</string>
     <string name="pref_morning_updates_categories_summary">Список категорій для показу щоранку</string>
@@ -2116,10 +2116,10 @@
     <string name="busy_task_fetch_hr_data">Отримання даних про пульс</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">Отримання даних про частоту дихання уві сні</string>
     <string name="busy_task_fetch_debug_logs">Отримання журналів налагодження</string>
-    <string name="busy_task_fetch_sports_summaries">Отримання спортивних підсумків</string>
+    <string name="busy_task_fetch_sports_summaries">Отримання підсумків про спорт</string>
     <string name="busy_task_fetch_stress_data">Отримання даних про напруження</string>
     <string name="busy_task_fetch_spo2_data">Отримання даних SpO2</string>
-    <string name="busy_task_fetch_sports_details">Отримання спортивних подробиць</string>
+    <string name="busy_task_fetch_sports_details">Отримання подробиць про спорт</string>
     <string name="busy_task_fetch_pai_data">Отримання даних про PAI</string>
     <string name="activity_prefs_goals">Мети</string>
     <string name="error_no_bluetooth_scan">Для належної роботи виявлення потрібно ввімкнути та надати доступ до виявлення через Bluetooth</string>
@@ -2373,7 +2373,7 @@
     <string name="pref_title_navigation_apps">Застосунки для навігації</string>
     <string name="menuitem_running">Запущено</string>
     <string name="pref_sleep_mode_schedule_title">Розклад режиму сну</string>
-    <string name="clap_hands_to_wakeup_device">Поплескайте в долоні, щоб увімкнути екран</string>"
+    <string name="clap_hands_to_wakeup_device">Плесніть в долоні, щоб увімкнути екран</string>"
     <string name="bedtime">Початок сну</string>
     <string name="pref_vitality_score_7_day_summary">Отримувати сповіщення, коли ваша оцінка жвавості досягне 30, 60 або 100 за останні 7 днів</string>
     <string name="devicetype_pixoo">Pixoo</string>
@@ -2462,7 +2462,7 @@
     <string name="proprietary_app_warning">Ця функція потребує встановлення пропрієтарного застосунку</string>
     <string name="pref_title_notification_wake_on_open">Автоматичне увімкнення та розблокування</string>
     <string name="fw_upgrade_notice_amazfitbip3">Ви збираєтеся встановити мікропрограму %s на ваш Amazfit Bip 3.\n\nСпочатку встановіть файл .fw, потім .res. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файл .res, якщо він такий самий, як раніше встановлений.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!</string>
-    <string name="busy_task_fetch_sports_details_interrupted">Отримання спортивних подробиць було перервано</string>
+    <string name="busy_task_fetch_sports_details_interrupted">Отримання подробиць про спорт було перервано</string>
     <string name="prefs_heartrate_alert_active_high_threshold">Межа попередження про високий пульс під час діяльності</string>
     <string name="notif_battery_full_title">Акумулятор пристрою повністю заряджений!</string>
     <string name="notif_battery_full">Акумулятор %1$s повністю заряджений</string>
