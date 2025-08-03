@@ -1532,12 +1532,8 @@
     <string name="pref_title_touch_volume">Hlasitost</string>
     <string name="pref_title_touch_spotify">Spotify</string>
     <string name="pref_switch_noise_control">Přepínání regulace hluku</string>
-    <string name="permission_notification_listener">Aplikace %1$s potřebuje přístup k oznámením, aby mohla zobrazovat oznámení na připojených hodinkách při vypnuté obrazovce telefonu.
-\n
-\nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit přístup k oznámením“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
-    <string name="permission_notification_policy_access">Aplikace %1$s potřebuje přístup k nastavení režimu Nerušit, aby jej mohla nastavit na připojených hodinkách při vypnuté obrazovce telefonu.
-\n
-\nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit režim Nerušit“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
+    <string name="permission_notification_listener">Aplikace %1$s potřebuje přístup k oznámením, aby mohla zobrazovat oznámení na připojených hodinkách při vypnuté obrazovce telefonu. \n \nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit přístup k oznámením“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
+    <string name="permission_notification_policy_access">Aplikace %1$s potřebuje přístup k nastavení režimu Nerušit, aby jej mohla nastavit na připojených hodinkách při vypnuté obrazovce telefonu. \n \nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit režim Nerušit“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
     <string name="prefs_in_ear_detection_summary">Přehrávání hovorů do sluchátek, jsou li v uších</string>
     <string name="heartrate_bpm_130">130 tepů/min</string>
     <string name="pref_title_banglejs_text_bitmap">Text jako Bitmapa</string>
@@ -1761,15 +1757,7 @@
     <string name="menuitem_workout_history">Historie cvičení</string>
     <string name="menuitem_female_health">Ženské zdraví</string>
     <string name="menuitem_workout_status">Stav cvičení</string>
-    <string name="permission_display_over_other_apps">Aplikace %1$s potřebuje oprávnění k zobrazení nad ostatními aplikacemi, aby hodinky Bangle.js mohly spouštět aktivity prostřednictvím záměrů (intents) při běhu aplikace %1$s na pozadí.
-\n
-\nToho lze využít ke spuštění hudební aplikace pro přehrání skladby a ke spoustě dalších věcí.
-\n
-\nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit zobrazení přes jiné aplikace“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.
-\n
-\nPokud chcete, aby aplikace %1$s přestala žádat o oprávnění, přejděte do „Nastavení“ a vypněte „Kontrolovat stav oprávnění“.
-\n
-\nUjistěte se, že jste aplikaci %1$s poskytli požadovaná oprávnění pro funkci dle vašich očekávání.</string>
+    <string name="permission_display_over_other_apps">Aplikace %1$s potřebuje oprávnění k zobrazení nad ostatními aplikacemi, aby hodinky Bangle.js mohly spouštět aktivity prostřednictvím záměrů (intents) při běhu aplikace %1$s na pozadí. \n \nToho lze využít ke spuštění hudební aplikace pro přehrání skladby a ke spoustě dalších věcí. \n \nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit zobrazení přes jiné aplikace“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s. \n \nPokud chcete, aby aplikace %1$s přestala žádat o oprávnění, přejděte do „Nastavení“ a vypněte „Kontrolovat stav oprávnění“. \n \nUjistěte se, že jste aplikaci %1$s poskytli požadovaná oprávnění pro funkci dle vašich očekávání.</string>
     <string name="pref_header_heartrate_alerts">Upozornění na tepovou frekvenci</string>
     <string name="pref_header_stress">Stres</string>
     <string name="pref_header_spo2">Kyslík v krvi</string>
@@ -2031,11 +2019,7 @@
     <string name="activity_type_iceskating">Bruslení</string>
     <string name="error_no_bluetooth_scan">Musí být povoleno Bluetooth skenování pro správnou funkci</string>
     <string name="error_no_bluetooth_connect">Musí být povoleno Bluetooth připojení pro správnou funkci</string>
-    <string name="permission_request">Aplikace %1$s umožňuje posílání zpráv a dalších dat ze systému Android do vašeho zařízení. K tomu potřebuje oprávnění k přístupu k těmto datům, bez kterého nemusí správně fungovat.
-\n
-\nNyní se vám zobrazí několik dialogových oken systému Android, která si tato oprávnění vyžádají.
-\n
-\nPro pokračování klepněte na „%2$s“.</string>
+    <string name="permission_request">Aplikace %1$s umožňuje posílání zpráv a dalších dat ze systému Android do vašeho zařízení. K tomu potřebuje oprávnění k přístupu k těmto datům, bez kterého nemusí správně fungovat. \n \nNyní se vám zobrazí několik dialogových oken systému Android, která si tato oprávnění vyžádají. \n \nPro pokračování klepněte na „%2$s“.</string>
     <string name="hrZoneAerobic">Aerobní</string>
     <string name="hrZoneNa">Není k dispozici</string>
     <string name="sony_speak_to_chat_sensitivity_standard">Standardní</string>
