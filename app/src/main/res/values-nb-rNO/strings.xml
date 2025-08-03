@@ -429,10 +429,6 @@
     <string name="kind_resources">Ressurser</string>
     <string name="kind_watchface">Urskive</string>
     <string name="devicetype_unknown">Ukjent enhet</string>
-    <string name="devicetype_test">Test enhet</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
     <string name="pref_title_charts_swipe">Skru på venstre-/høyredragning i poengtavleaktiviteten</string>
     <string name="pref_title_weather_location">Vær-plassering (for LineageOS-værtilbyder)</string>
     <string name="pref_header_cannned_messages">Forhåndsutfylte meldinger</string>
@@ -475,15 +471,6 @@
     <string name="activity_web_view">Web View-aktivitet</string>
     <string name="kind_gps_almanac">GPS-almanakk</string>
     <string name="kind_gps_cep">GPS-korrigering</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="pref_header_auto_export">Automatisk eksport</string>
     <string name="pref_title_auto_export_enabled">Automatisk eksport mislyktes</string>
     <string name="pref_title_auto_export_location">Eksporteringsplassering</string>
@@ -493,7 +480,6 @@
     <string name="choose_auto_export_location">Velg eksportplassering</string>
     <string name="spanish">Spansk</string>
     <string name="notification_channel_name">Generelt</string>
-    <string name="devicetype_xwatch">XWatch</string>
     <string name="on">På</string>
     <string name="controlcenter_start_activity_tracks">Dine aktivitetsspor</string>
     <string name="activity_type_not_measured">Ikke målt</string>
@@ -528,8 +514,6 @@
 \nMerk: Du trenger ikke å installere .res hvis du har akkurat den samme installert.
 \n
 \nFORTSETT PÅ EGEN RISIKO!</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
-    <string name="devicetype_q8">Q8</string>
     <string name="blacklist_all_for_notifications">Svartelist merknader fra alle disse</string>
     <string name="whitelist_all_for_notifications">Hvitlist merknader fra alle disse</string>
     <string name="pref_auto_fetch">Hent aktivitetsdata automatisk</string>
@@ -566,9 +550,6 @@
     <string name="korean">Koreansk</string>
     <string name="japanese">Japansk</string>
     <string name="mi3_night_mode_sunset">Ved solnedgang</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
-    <string name="devicetype_id115">ID115</string>
-    <string name="devicetype_watch9">Watch 9</string>
     <string name="menuitem_notifications">Merknader</string>
     <string name="menuitem_music">Musikk</string>
     <string name="menuitem_more">Mer</string>
@@ -585,8 +566,6 @@
     <string name="warning">Advarsel!</string>
     <string name="controlcenter_change_led_color">Endre LED-farge</string>
     <string name="controlcenter_change_fm_frequency">Endre FM-frekvens</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
     <string name="preferences_led_color">LED-farge</string>
     <string name="preferences_fm_frequency">FM-frekvens</string>
     <string name="pref_invalid_frequency_title">Ugyldig frekvens</string>
@@ -612,7 +591,6 @@
     <string name="language_and_region_prefs">Språk og stedsinnstillinger</string>
     <string name="debugactivity_really_factoryreset_title">Vil du virkelig gjenopprette fabrikkinnstillinger\?</string>
     <string name="debugactivity_really_factoryreset">Gjenoppretting til fabrikkinnstillinger vil slette all data fra den tilkoblede enheten (hvis støttet). Xiaomi/Huami-enheter endrer også MAC-adressen for Blåtann, og vil dermed framtre som nye enheter i Gadgetbridge.</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="title_activity_notification_filter">Merknadsfilter</string>
     <string name="edittext_notification_filter_words_hint">Skriv inn ønskede ord, ett ord per linje</string>
     <string name="toast_notification_filter_saved_successfully">Merknadsfilter lagret</string>
@@ -682,7 +660,6 @@
     <string name="title_activity_device_specific_settings">Enhetsspesifikke innstillinger</string>
     <string name="pref_title_authkey">Identitetsbekreftelsesnøkkel</string>
     <string name="pref_summary_authkey">Endre identitetsbekreftelsesnøkkelen til en vanlig nøkkel på alle Android-enhetene du ønsker å koble til fra. Forrige forvalgte nøkkel for alle enheter var 0123456789@ABCDE</string>
-    <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">Du er i ferd med å installere %s-fastvaren på din Amazfit Cor 2.
 \n
 \nInstaller .fw-filen, og deretter .res-filen. Ditt bånd vil starte på ny etter installering av .fw-filen.
@@ -700,8 +677,6 @@
     <string name="thai">Thai</string>
     <string name="vietnamese">Vietnamesisk</string>
     <string name="portuguese">Portugisisk</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
     <string name="fw_upgrade_notice_miband4">Du er i ferd med å installere %s-fastvaren på ditt Mi Band 4.
 \n
 \nForsikre deg om at du installerer .fw-filen, og deretter .res-filen. Båndet vil startes på ny etter installasjon av .fw-filen.
@@ -720,7 +695,6 @@
     <string name="pref_charts_range_off">Poengtavleområde satt til ei uke</string>
     <string name="weekstepschart_steps_a_month">Steg per måned</string>
     <string name="weeksleepchart_sleep_a_month">Søvn per måned</string>
-    <string name="devicetype_mijia_lywsd02">Mijia-smartklokke</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="pref_summary_expose_hr">Tillater andre programmer tilgang til HR-data i sanntid mens Gadgetbridge er tilkoblet</string>
     <string name="pref_title_expose_hr">Tredjepartssanntidstilgang til HR</string>
@@ -753,8 +727,6 @@
     </plurals>
     <string name="activity_error_no_app_for_gpx">For å vise aktivitetsspor, installer et program som kan håndtere GPX-filer.</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3-innstillinger</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">Finn telefon</string>
     <string name="prefs_enable_find_phone">Skru på «Finn telefon»</string>
     <string name="prefs_find_phone_summary">Bruk båndet ditt til å spille av telefonens ringetone.</string>
@@ -768,7 +740,6 @@
 \nMerk: Du trenger ikke å installere .res-filen hvis den er akkurat den samme som den som allerede er installert.
 \n
 \nFORTSETT PÅ EGEN RISIKO!</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="pref_chart_heartrate_color_red">Rød</string>
     <string name="pref_chart_heartrate_color_orange">Oransje</string>
     <string name="pref_title_chart_heartrate_color">Pulsfarge</string>
@@ -782,7 +753,6 @@
     <string name="pref_title_chart_sleep_rolling_24_hour">Søvnperiode</string>
     <string name="pref_chart_sleep_rolling_24_on">Siste 24 timer</string>
     <string name="pref_chart_sleep_rolling_24_off">12:00 til 12:00</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="fw_upgrade_notice_amazfitgts">Du er i ferd med å installere %s-fastvaren på din Amazfit GTS.
 \n
 \nForsikre deg om at du installerer .fw-fila, så .res-fila, og til sist gps-fila. Armbåndsuret ditt vil starte på nytt etter at .fw-fila er installert.
@@ -793,8 +763,6 @@
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="watch_not_connected">Klokke ikke tilkoblet</string>
     <string name="qhybrid_vibration_strength">vibrasjonsstyrke:</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="preferences_qhybrid_settings">Q Hybrid-innstillinger</string>
     <string name="qhybrid_overwrite_buttons">overskriv taster</string>
     <string name="qhybrid_buttons_overwrite_success">Knapper overskrevet</string>
@@ -809,7 +777,6 @@
     <string name="qhybrid_offset_time_by">forskyv tid med</string>
     <string name="pref_disable_new_ble_scanning">Skru av ny BLE-skanning</string>
     <string name="pref_summary_disable_new_ble_scanning">Velg dette hvis enheten du ikke finner enheten din under oppdagelse</string>
-    <string name="devicetype_y5">Y5</string>
     <string name="prefs_button_single_press_action_selection_title">Handling for hendelse 1</string>
     <string name="prefs_button_double_press_action_selection_title">Handling for hendelse 2</string>
     <string name="prefs_button_triple_press_action_selection_title">Handling for hendelse 3</string>
@@ -817,7 +784,6 @@
     <string name="prefs_button_long_press_action_selection_title">Handling for langt knappetrykk</string>
     <string name="alarm_snooze">Slumre</string>
     <string name="error_no_location_access">Plasseringstilgang må innvilges og skrus på for at skanning skal fungere</string>
-    <string name="devicetype_itag">iTag</string>
     <string name="pref_title_allow_high_mtu">Tillat høy MTU</string>
     <string name="pref_summary_allow_high_mtu">Øker overføringshastighet, men kan forårsake problemer på noen Android-enheter.</string>
     <string name="pref_summary_sync_calendar">Skru på kalendervarsler, selv når frakoblet.</string>
@@ -830,7 +796,6 @@
     <string name="hr_widget_battery">Batteri</string>
     <string name="hr_widget_weather">Vær</string>
     <string name="hr_widget_nothing">Ingenting</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
     <string name="hr_appname_wellness">Velvære</string>
     <string name="hr_appname_workout">Treningsøkt</string>
     <string name="pref_title_custom_deviceicon">Vis enhetsspesifikt merknadsikon</string>
@@ -863,8 +828,6 @@
     <string name="power_mode_saving">Batterisparing</string>
     <string name="power_mode_normal">Normalt</string>
     <string name="power_mode_title">Klokkeeffektmodus</string>
-    <string name="devicetype_watchx">Watch X</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
     <string name="power_mode_watch">Kun klokke</string>
     <string name="menuitem_workout">Treningsøkt</string>
     <string name="pref_sensors_bp_calibration_high">Blodtrykk SYSTOLISK (høyt)</string>
@@ -896,7 +859,6 @@
     <string name="menuitem_stress">Stress</string>
     <string name="menuitem_cycles">Følg m.-syklus</string>
     <string name="menuitem_breathing">Pusting</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="ascentSeconds">Stigende</string>
     <string name="descentSeconds">Fall</string>
     <string name="Activity">Aktivitet</string>
@@ -908,7 +870,6 @@
     <string name="seconds_km">sek/km</string>
     <string name="calories_unit">kcal</string>
     <string name="activeSeconds">Aktiv</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
     <string name="controlcenter_set_alias">Sett alias</string>
     <string name="laps_unit">runder</string>
     <string name="swim_style">disiplin</string>
@@ -969,11 +930,9 @@
     <string name="permission_granting_mandatory">Alle disse tilgangene er påkrevd og ustabilitet kan oppstå hvis de ikke innvilges</string>
     <string name="about_additional_contributions">Mange takk til alle ulistede bidragsytere for kode, oversettelser, støtte, idéer, motivasjon, feilrapporter, penger… ✊</string>
     <string name="about_core_team_title">Kjernelag (sortert etter første kodebidrag)</string>
-    <string name="devicetype_pinetime_jf">PineTime (JF-fastvare)</string>
     <string name="activity_summary_detail">Sportaktivitetsdetalj</string>
     <string name="activity_type_jump_roping">Hoppetau</string>
     <string name="activity_type_indoor_cycling">Innendørssykling</string>
-    <string name="devicetype_tlw64">TLW64</string>
     <string name="activity_summary_yesterday">I går</string>
     <string name="activity_summary_today">I dag</string>
     <string name="activity_summary_edit_name_title">Rediger etikett</string>
@@ -1014,7 +973,6 @@
     <string name="lefun_prefs_hydration_reminder_interval_title">Drikkepåminnelseintervall (i minutter)</string>
     <string name="lefun_prefs_interface_language_title">Grensesnittspråk</string>
     <string name="pref_title_weather_summary">Brukt av LineageOS-værtilbyderen, andre Android-versjoner må bruke et program som «Ditt lokale vær». Mer info er å finne på Gadgetbridge-wiki-en.</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="sonyswr12_settings_title">Sony SWR12 innstillinger</string>
     <string name="sonyswr12_settings_low_vibration">Lav vibrasjon aktivert</string>
     <string name="sonyswr12_settings_stamina">Strømsparingsmodus er på</string>
@@ -1035,12 +993,10 @@
     <string name="baseAltitude">Starthøyde</string>
     <string name="swolf_index">SWOLF-indeks</string>
     <string name="prefs_events_forwarding_fellsleep">Ved dvalgang</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="addto_filter">Legg til i filter</string>
     <string name="prefs_events_forwarding_action_title">Kjør handling</string>
     <string name="prefs_events_forwarding_startnonwear">Når ikke ikledt</string>
     <string name="prefs_events_forwarding_wokeup">Ved oppvåkning</string>
-    <string name="devicetype_lefun">LeFun</string>
     <string name="activity_error_no_app_for_png">For å dele denne skjermavbildningen må du installere et program som kan åpne bildefiler.</string>
     <string name="activity_prefs_chart_min_session_length">Minste aktivitetslengde (minutter)</string>
     <string name="lefun_prefs_antilost_title">Tapsforhindring</string>
@@ -1050,7 +1006,6 @@
     <string name="error_background_service_reason">Kunne ikke starte bakgrunnstjenesten:</string>
     <string name="require_location_provider">Posisjon må skrus på</string>
     <string name="device_is_currently_bonded">ALLEREDE TILKNYTTET</string>
-    <string name="devicetype_sg2">LEMFO SG2</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Pauselengde for inndeling av aktiviteter (minutter)</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Minste antall steg per minutt før aktivitet registreres</string>
     <string name="activity_prefs_chart_min_steps_per_minute_for_run">Laveste antall steg før løping registreres</string>
@@ -1092,15 +1047,12 @@
     <string name="pref_title_middle_button_function_short">Midtre knapp kort</string>
     <string name="pref_title_upper_button_function_short">Øvre knapp kort</string>
     <string name="menuitem_spo2">SpO2</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="charts_legend_heartrate_average">Pulsgjennomsnitt</string>
     <string name="activity_prefs_step_length_cm">Steglengde i cm</string>
     <string name="charts_min_max_heartrate_popup">Laveste puls: %1$d
 \nHøyeste puls: %2$d
 \nBevegelsesintensitet: %3$s</string>
     <string name="find_lost_device_message">Søk etter %1$s\?</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
     <string name="menuitem_dnd">Ikke forstyrr</string>
     <string name="menuitem_stopwatch">Stoppeklokke</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -1114,11 +1066,8 @@
 \nIntensitet</string>
     <string name="activity_list_summary_active_time">Aktiv tid</string>
     <string name="activity_list_summary_distance">Distanse</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
     <string name="prefs_charts_tabs_summary">Synlige poengtavlefaner</string>
     <string name="prefs_charts_tabs">Poengtavlefaner</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
     <string name="menuitem_pomodoro">Pomodoro-sporer</string>
     <string name="menuitem_sleep">Søvn</string>
     <string name="menuitem_goal">Aktivetsmål</string>
@@ -1142,10 +1091,7 @@
     <string name="prefs_key_vibration">Tastevibrasjon</string>
     <string name="prefs_autolight">Automatisk lys</string>
     <string name="widget_settings_select_device_title">Velg enhet</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
     <string name="activity_db_management_clean_export_directory_text">Eksporterte filer i eksport/import-mappen er tilgjengelig for alle programmer på enheten din. Du vil antagelig ønske å fjerne disse filene etter synkronisering eller sikkerhetskopi. Forsikre deg om at du har en sikkerhetskopi før du sletter dem. GPX-filer, undermapper og auto-eksportert databasefil (hvis den finnes) vil ikke slettes. Stien til eksport/import-mappen er:</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
     <string name="dbmanagementactivity_export_finished">Sletting fullført</string>
     <string name="activity_DB_clean_export_directory_warning_title">Slett filer i eksport/import-mappen\?</string>
     <string name="activity_DB_clean_export_directory_warning_message">Vil du virkelig slette filer i eksport/import mappen\?</string>
@@ -1156,8 +1102,6 @@
     <string name="mi_h">mi/t</string>
     <string name="ft">fot</string>
     <string name="activity_type_strength_training">Styrketrening</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
     <string name="fw_upgrade_notice_amazfitx">Du er i ferd med å installere %s-fastvaren på din Amazfit X.
 \n
 \nForsikre deg om at du installerer .fw-fila, så .res-fila. Båndet ditt vil starte på nytt etter at .fw-fila er installert.
@@ -1165,10 +1109,6 @@
 \nMerk: Du trenger ikke å installere .res-filen hvis den er akkurat den samme som den som allerede er installert.
 \n
 \nFORTSETT PÅ EGEN RISIKO!</string>
-    <string name="devicetype_waspos">Wasp-os</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
     <string name="battery_detail_activity_title">Batteri-info</string>
     <string name="show_ongoing_activity">Vis oppsprett for pågående aktivitet</string>
     <string name="dialog_hide">Skjul</string>
@@ -1189,7 +1129,6 @@
     <string name="qhybrid_title_calibration">Kalibrering</string>
     <string name="qhybrid_title_apps_management">Programbehandling</string>
     <string name="qhybrid_title_file_management">Filbehandling</string>
-    <string name="devicetype_um25">UM-25</string>
     <string name="fossil_hr_warning_firmware_too_new">Noen funksjoner er skrudd av siden fastvaren på klokken er for ny.</string>
     <string name="prefs_sounds_summary">Sett opp når enheten skal pipe</string>
     <string name="prefs_sounds">Lyder</string>
@@ -1201,7 +1140,6 @@
     <string name="menuitem_events">Hendelser</string>
     <string name="menuitem_temperature">Temperatur</string>
     <string name="menuitem_widgets">Miniprogrammer</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
     <string name="fw_upgrade_notice_miband6">Du er i ferd med å installere %s-fastvaren på ditt Mi Band 6.
 \n
 \nForsikre deg om at du installerer .fw-fila, og så .res-fila. Båndet ditt vil starte på ny etter at .fw-fila er installert.
@@ -1235,7 +1173,6 @@
     <string name="qhybrid_title_watchface">Urskive-oppsett</string>
     <string name="notification_channel_low_battery_name">Lavt batterinivå</string>
     <string name="notification_channel_transfer_name">Dataoverføring</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="qhybrid_pref_summary_external_intents">Lar Android-programmer laste opp/overskrive filer</string>
     <string name="qhybrid_pref_title_external_intents">Tillat farlige eksterne intensjoner</string>
     <string name="pref_summary_developer_settings">Innstillinger og funksjonalitet brukt til utvikling</string>
@@ -1262,7 +1199,6 @@
     <string name="watchface_setting_wrist_flick_hour">Din hånd (-360 til 360)</string>
     <string name="watchface_widget_type_heart_rate">Puls</string>
     <string name="gpx_receiver_activity_title">GPX-mottager Gadgetbridge</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="activity_summary_detail_clear_gpx_track">Tøm GPX-spor</string>
     <string name="watchface_dialog_title_set_name">Velg urskive-navn</string>
     <string name="button_watchface_settings">Urskive-innstillinger</string>
@@ -1289,7 +1225,6 @@
     <string name="activity_summary_detail_select_gpx_track">Velg GPX-spor</string>
     <string name="set">Sett</string>
     <string name="pref_summary_huami_force_new_protocol">Skru på dette hvis enheten ikke kobler til etter fastvareoppgradering</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="heart_rate_result">Målingsresultater</string>
     <string name="getting_heart_rate">Måling</string>
     <string name="prefs_autoheartrate_interval">Målingsfrekvens</string>
@@ -1322,7 +1257,6 @@
     <string name="sony_automatic_power_off_3_hour">3 timer</string>
     <string name="pref_header_other">Annet</string>
     <string name="pref_header_system">System</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="prefs_activity_in_device_card_title_summary">Vis nåværende steg, avstand eller søvn på enhetsskjerm</string>
     <string name="prefs_activity_in_device_card_sleep_title">Søvn</string>
     <string name="prefs_activity_in_device_card_sleep_title_summary">Vis sovetid</string>
@@ -1330,12 +1264,9 @@
     <string name="prefs_activity_in_device_card_steps_title_summary">Vis totalt antall steg</string>
     <string name="toast_app_must_not_be_selected">Programmet kan ikke være valgt for å kunne settes opp</string>
     <string name="toast_app_must_be_selected">Programmet må velges for å settes opp</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
     <string name="watchface_widget_type_chance_rain">Mulighet for regn</string>
     <string name="prefs_sleep_time_label">Definer sovetid</string>
     <string name="prefs_sleep_time">Sovetider</string>
-    <string name="devicetype_nothingear1">Nothing Ear (1)</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="prefs_sleep_time_summary">Angir tider der søvn registreres</string>
     <string name="prefs_vibration_enable">Skru på vibrasjoner</string>
     <string name="prefs_notifications_enable">Skru på merknader</string>
@@ -1478,9 +1409,6 @@
     <string name="discover_unsupported_devices">Oppdag ustøttede enheter</string>
     <string name="discover_unsupported_devices_description">Å skru på dette viser alle oppdagede Blåtannsenheter ved skanning. Et kort trykk kopierer enhetsnavn og MAC-adresse til utklippstavlen. Trykk lenge for å kjøre «Legg til testenhet»-dialogen.</string>
     <string name="controlcenter_power_off">Slå av</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="devicetype_vesc">VESC</string>
     <string name="ascentDistance">Oppoverbakke</string>
     <string name="sony_button_mode_ambient_sound_control">Innstilling for omgivelseslyd</string>
     <string name="activity_type_hiking">Turgåing</string>
@@ -1539,7 +1467,6 @@
     <string name="fossil_hr_button_config_info">Noen knapper kan ikke settes opp fordi funksjonene deres er hardkodet i armbåndsur-fastvaren.
 \n
 \nAdvarsel: Lang-trykk på øvre knapp når en urskive fra det offisielle Fossil-programmet er installert vil også veksle mellom visnings/skjuling av miniprogrammer.</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
     <string name="sony_speak_to_chat_sensitivity">Sensitivitet for oppdagelse av stemme</string>
     <string name="start">Start</string>
     <string name="sony_anc_optimizer_status_starting">Starter …</string>
@@ -1558,9 +1485,6 @@
     <string name="pref_header_sony_device_info">Enhetsinfo</string>
     <string name="sony_anc_optimize_title">Optimaliser</string>
     <string name="menuitem_nothing">Ingenting</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="pref_device_action_fitness_app_control_start">Sporingsstart for trimprogram</string>
     <string name="pref_device_action_fitness_app_control_stop">Sporingsstopp for trimprogram</string>
     <string name="pref_title_opentracks_packagename">OpenTracks-pakkenavn</string>

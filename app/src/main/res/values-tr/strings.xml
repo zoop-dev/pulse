@@ -179,42 +179,7 @@
     <string name="device_hw">Donanım revizyonu: %1$s</string>
     <string name="device_not_connected">Bağlanmadı.</string>
     <string name="device_with_rssi">%1$s (%2$s)</string>
-    <string name="devicetype_amazfit_bip">AmazFit Bip</string>
-    <string name="devicetype_amazfit_bip_lite">AmazFit Bip Lite</string>
-    <string name="devicetype_amazfit_bips">AmazFit Bip S</string>
-    <string name="devicetype_amazfit_cor">AmazFit Cor</string>
-    <string name="devicetype_amazfit_cor2">AmazFit Cor 2</string>
-    <string name="devicetype_amazfit_gtr">AmazFit GTR</string>
-    <string name="devicetype_amazfit_gts">AmazFit GTS</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_bfh16">BFH-16</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_id115">ID115</string>
-    <string name="devicetype_itag">iTag</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
-    <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_q8">Q8</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
-    <string name="devicetype_test">Test Aygıtı</string>
     <string name="devicetype_unknown">Bilinmeyen Aygıt</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_watch9">Watch 9</string>
-    <string name="devicetype_xwatch">XWatch</string>
-    <string name="devicetype_y5">Y5</string>
     <string name="discovery_attempting_to_pair">%1$s ile eşleşmeye çalışılıyor</string>
     <string name="discovery_bonding_failed_immediately">%1$s ile etkileşim anında başarısız oldu.</string>
     <string name="discovery_connected_devices_hint">Aygıtınızı bulunabilir hale getirin. Şu anda bağlı aygıtlar muhtemelen keşfedilmeyecek. Android 6+ için konumu (örn. GPS) etkinleştirin. Gadgetbridge için Gizlilik Korumasını (Privacy Guard) devre dışı bırakın, çünkü çökebilir ve telefonunuzu yeniden başlatabilir. Birkaç dakika sonra hiçbir aygıt bulunmazsa, mobil aygıtınızı yeniden başlattıktan sonra tekrar deneyin.</string>
@@ -865,8 +830,6 @@
     <string name="menuitem_eventreminder">Etkinlik Hatırlatıcı</string>
     <string name="menuitem_hr">Kalp Ritmi</string>
     <string name="menuitem_pai">PAI</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
-    <string name="devicetype_watchx">Watch X</string>
     <string name="power_mode_watch">Yalnızca saat</string>
     <string name="power_mode_saving">Güç tasarrufu</string>
     <string name="power_mode_normal">Normal</string>
@@ -912,7 +875,6 @@
 \nNot: Bu dosyalar önceden kurulanlarla tamamen aynıysa .res ve .gps dosyalarını kurmanız gerekmez.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
     <string name="about_additional_contributions">Listelenmeyen herkese kod, çeviri, destek, fikirler, motivasyon, hata raporları, para… ile katkıda bulundukları için çok teşekkürler ✊</string>
     <string name="about_additional_device_support">Ek aygıt desteği</string>
     <string name="about_contributors">Katkıda bulunanlar</string>
@@ -930,7 +892,6 @@
     <string name="menuitem_stress">Stres</string>
     <string name="menuitem_cycles">Döngü İzleme</string>
     <string name="menuitem_breathing">Nefes Alma</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="fw_upgrade_notice_miband5">Mi Band 5 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nLütfen önce .fw dosyasını, sonra .res dosyasın kurun. Bilekliğiniz .fw dosyasını kurduktan sonra yeniden başlatılacak.
@@ -938,7 +899,6 @@
 \nNot: Daha önce kurulanla tamamen aynıysa .res dosyasını kurmanız gerekmez.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="devicetype_tlw64">TLW64</string>
     <string name="device_is_currently_bonded">ZATEN ETKİLEŞİMDE</string>
     <string name="device_requires_key">ANAHTAR GEREKLİ, GİRMEK İÇİN UZUN BASIN</string>
     <string name="error_location_enabled_mandatory">Aygıtları taramak için konumun açık olması gerekmektedir</string>
@@ -949,7 +909,6 @@
     <string name="pref_check_permission_status">İzin durumunu denetle</string>
     <string name="companiondevice_pairing">CompanionDevice Eşleştirme</string>
     <string name="require_location_provider">Konum etkinleştirilmelidir</string>
-    <string name="devicetype_pinetime_jf">PineTime (JF Ürün Yazılımı)</string>
     <string name="ascentSeconds">Artan</string>
     <string name="descentSeconds">Azalma</string>
     <string name="activity_detail_show_gps_label">GPS İzlemesini Göster</string>
@@ -1030,7 +989,6 @@
     <string name="pref_header_statistics">Spor Etkinlikleri İstatistikleri</string>
     <string name="activity_filter_name_contains">Etiket</string>
     <string name="activity_summaries_all_activities">Tüm Etkinlikler</string>
-    <string name="devicetype_sg2">Lemfo SG2</string>
     <string name="activity_summary_yesterday">Dün</string>
     <string name="activity_summary_today">Bugün</string>
     <string name="activity_filter_to_placeholder">bugün</string>
@@ -1064,13 +1022,11 @@
     <string name="chart_get_active_and_synchronize">Biraz etkinlik yapın ve aygıtı eşzamanlayın.</string>
     <string name="chart_no_active_data">Etkinlik algılanmadı.</string>
     <string name="lefun_prefs_antilost_summary">Telefonunuzun bileklikle bağlantısı kesilirse bileklik titreyecek</string>
-    <string name="devicetype_lefun">Lefun</string>
     <string name="lefun_prefs_interface_language_title">Arayüz dili</string>
     <string name="lefun_prefs_antilost_title">Kayıp önleme</string>
     <string name="lefun_prefs_hydration_reminder_interval_title">Sıvı alma hatırlatma aralığı (dakika olarak)</string>
     <string name="lefun_prefs_hydration_reminder_summary">Bileklik su içmenizi hatırlatmak için titreyecek</string>
     <string name="lefun_prefs_hydration_reminder_title">Sıvı alma hatırlatıcı</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="sonyswr12_settings_title">Sony SWR12 Ayarları</string>
     <string name="sonyswr12_settings_low_vibration">Düşük titreşim etkin</string>
     <string name="sonyswr12_settings_alarm_interval">Dakikalar içinde akıllı alarm aralığı</string>
@@ -1078,7 +1034,6 @@
     <string name="sonyswr12_settings_stamina_summary">Güç tasarrufu modu, kalp ritminin düzenli aralıklarla otomatik ölçümünü kapatır ve böylece çalışma süresini uzatır</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Akıllı alarm aralığı, kurulu alarmdan önceki aralıktır. Bu aralıkta aygıt, kullanıcıyı uyandırmak için uykunun en hafif aşamasını tespit etmeye çalışır</string>
     <string name="sonyswr12_settings_stamina">Güç tasarrufu modu açık</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="activity_error_no_app_for_png">Bu ekran görüntüsünü paylaşmak için görüntü dosyalarını işleyebilen bir uygulama kurun.</string>
     <string name="pref_title_lower_button_function_double">Alt Düğme çift</string>
     <string name="pref_title_middle_button_function_double">Orta Düğme çift</string>
@@ -1101,18 +1056,15 @@
     <string name="devicestatus_connected">Aygıt bağlandı</string>
     <string name="devicestatus_connecting">Aygıt bağlanıyor</string>
     <string name="activity_prefs_step_length_cm">Santimetre cinsinden adım uzunluğu</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="menuitem_spo2">SpO2</string>
     <string name="qhybrid_calibration_align_hint">Saatin ibrelerini 12:00\'a hizalamak için aşağıdaki düğmeleri kullanın.</string>
     <string name="gps_track">GPS izleme</string>
     <string name="about_version">Sürüm %s</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
     <string name="charts_legend_heartrate_average">Kalp ritmi ortalaması</string>
     <string name="charts_min_max_heartrate_popup">En düşük kalp ritmi: %1$d
 \nEn yüksek kalp ritmi: %2$d
 \nHareket yoğunluğu: %3$s</string>
     <string name="find_lost_device_message">%1$s aransın mı\?</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
     <string name="menuitem_stopwatch">Kronometre</string>
     <string name="menuitem_dnd">Rahatsız Etme</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -1126,14 +1078,11 @@
     <string name="activity_list_summary_active_time">Etkin zaman</string>
     <string name="activity_list_summary_distance">Mesafe</string>
     <string name="activity_list_summary_active_steps">Etkin adımlar</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100</string>
     <string name="prefs_charts_tabs_summary">Görülebilir çizelge sekmeleri</string>
     <string name="prefs_charts_tabs">Çizelge sekmeleri</string>
     <string name="menuitem_pomodoro">Pomodoro İzleyici</string>
     <string name="menuitem_sleep">Uyku</string>
     <string name="menuitem_goal">Etkinlik Hedefi</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
     <string name="pref_summary_connected_advertisement">Bağlı olduğunda bile aygıtı Bluetooth aracılığıyla bulunabilir hale getirir</string>
     <string name="pref_title_connected_advertisement">Bağlıyken görülebilir</string>
     <string name="prefs_autoremove_message">SMS bildirimlerini otomatik olarak kaldır</string>
@@ -1142,7 +1091,6 @@
     <string name="prefs_key_vibration">Tuş Titreşimi</string>
     <string name="prefs_autolight">Otomatik ışık</string>
     <string name="discovery_entered_invalid_authkey">Girdiğiniz gizli kimlik doğrulama anahtarı geçersiz! Düzenlemek için aygıta uzun basın.</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
     <string name="fw_upgrade_notice_amazfitvergel">Amazfit Verge Lite aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nLütfen önce .fw dosyasını, sonra .res dosyasını, ve son olarak .gps dosyasını kurun. Saatiniz .fw dosyasını kurduktan sonra yeniden başlatılacak.
@@ -1155,26 +1103,18 @@
     <string name="widget_settings_select_device_title">Aygıt seç</string>
     <string name="dbmanagementactivity_export_confirmation">Veriler gerçekten dışarı aktarılsın mı\? Önceden dışa aktarılan etkinlik verilerinizin (varsa) ve tercihlerinizin üzerine yazılacak.</string>
     <string name="dbmanagementactivity_export_data_title">Veriler Dışa Aktarılsın mı\?</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
     <string name="dbmanagementactivity_export_finished">Silme işlemi tamamlandı</string>
     <string name="activity_db_management_clean_export_directory_text">Dışa/İçe aktarma dizinindeki dışa aktarılan dosyalara, aygıtınızdaki herhangi bir uygulama tarafından erişilebilir. Eşzamanlama veya yedeklemeden sonra bu dosyaları kaldırmak isteyebilirsiniz. Silmeden önce bir yedeğini aldığınızdan emin olun. GPX dosyaları, alt dizinler ve otomatik dışa aktarılan veri tabanı dosyası (varsa) silinmeyecektir. Dışa/İçe aktarma dizininin yolu şudur:</string>
     <string name="activity_DB_clean_export_directory_warning_message">Dışa/İçe aktarma dizinindeki dosyalar gerçekten silinsin mi\?</string>
     <string name="activity_DB_clean_export_directory_warning_title">Dışa/İçe aktarma dizinindeki dosyalar silinsin mi\?</string>
     <string name="activity_db_management_clean_export_directory_label">Dışa/İçe aktarma dizinindeki dosyaları sil</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">%1$s dışa aktarma dizininden dosyaları silerken hata oluştu</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
     <string name="activity_type_strength_training">Kuvvet Antrenmanı</string>
     <string name="mi_h">mi/sa</string>
     <string name="mi">mi</string>
     <string name="minutes_mi">dak/mi</string>
     <string name="ft">ft</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
-    <string name="devicetype_waspos">Wasp-os</string>
     <string name="battery_detail_activity_title">Pil bilgisi</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
     <string name="fw_upgrade_notice_amazfitx">AmazFit X aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nLütfen önce .fw dosyasını, sonra .res dosyasını kurun. Bilekliğiniz .fw dosyasını kurduktan sonra yeniden başlatılacak.
@@ -1201,7 +1141,6 @@
     <string name="qhybrid_title_file_management">Dosya yönetimi</string>
     <string name="qhybrid_title_background_image">Arka plan görüntüsü</string>
     <string name="qhybrid_title_apps">Uygulamalar</string>
-    <string name="devicetype_um25">UM-25</string>
     <string name="fossil_hr_warning_firmware_too_new">Saatin ürün yazılımı çok yeni olduğu için bazı işlevler devre dışı bırakıldı</string>
     <string name="prefs_sounds_summary">Aygıtın ne zaman bip sesi çıkaracağını yapılandırın</string>
     <string name="prefs_sounds">Ses</string>
@@ -1220,7 +1159,6 @@
 \nNot: Daha önce kurulanla tamamen aynıysa .res dosyasını kurmanız gerekmez.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
     <string name="pref_summary_canned_messages_dismisscall">Çağrıları SMS mesajıyla saatten kapatın</string>
     <string name="pref_summary_canned_messages_set">Aşağıda yapılandırılan mesajları aygıtınıza gönderin</string>
     <string name="qhybrid_summary_calibration">Saatin ibrelerini kalibre edin</string>
@@ -1253,7 +1191,6 @@
     <string name="pref_title_developer_settings">Geliştirici ayarları</string>
     <string name="qhybrid_pref_summary_actions">İşe Gidip Gelme uygulaması için eylemler</string>
     <string name="qhybrid_pref_title_actions">Eylemler</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="menuitem_barometer">Barometre</string>
     <string name="pref_theme_black_background">Koyu temada siyah arka plan kullan</string>
     <string name="button_watchface_preview">Saat üzerinde ön izle</string>
@@ -1296,7 +1233,6 @@
     <string name="gpx_receiver_overwrite_some_files">Bazı dosya(lar) zaten var. Üzerine yazılsın mı\?</string>
     <string name="gpx_receiver_files_received">Alınan GPX dosya(lar)ı:</string>
     <string name="gpx_receiver_activity_title">GPX Alıcı Gadgetbridge</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="activity_summary_detail_editing_gpx_track">Bağlantılı GPX izlemesini düzenleme</string>
     <string name="activity_summary_detail_clear_gpx_track">GPX izlemesini temizle</string>
     <string name="activity_summary_detail_select_gpx_track">GPX izlemesi seç</string>
@@ -1326,9 +1262,7 @@
     <string name="prefs_sleep_time_summary">Uykunun kaydedildiği zamanları belirtir</string>
     <string name="prefs_sleep_time_label">Uyku saatlerini tanımla</string>
     <string name="prefs_sleep_time">Uyku zamanları</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="pref_title_ping_tone">Ping sesi</string>
-    <string name="devicetype_nothingear1">Nothing Ear (1)</string>
     <string name="nothing_prefs_inear_summary">Kulaklıkları takmanıza bağlı olarak müziği oynat/duraklat</string>
     <string name="nothing_prefs_inear_title">Kulak içi algılama</string>
     <string name="nothing_prefs_audiomode_title">Ses modu</string>
@@ -1363,7 +1297,6 @@
     <string name="prefs_right">Sağ</string>
     <string name="prefs_galaxy_touch_options">Dokunma Seçenekleri</string>
     <string name="prefs_galaxy_buds_experimental">Deneysel</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
     <string name="pref_title_equalizer_soft">Yumuşak</string>
     <string name="pref_title_equalizer_dynamic">Dinamik</string>
     <string name="prefs_equalizer_summary">Dengeleyiciyi etkinleştirin veya devre dışı bırakın</string>
@@ -1372,7 +1305,6 @@
     <string name="battery_case">Pil kutusu</string>
     <string name="left_earbud">Sol kulaklık</string>
     <string name="right_earbud">Sağ kulaklık</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="pref_title_equalizer_normal">Normal</string>
     <string name="prefs_active_noise_cancelling">Etkin Gürültü Engelleme</string>
     <string name="prefs_active_noise_cancelling_summary">Çevredeki sesleri engelleyin</string>
@@ -1395,7 +1327,6 @@
     <string name="pressure_relief_summary">Etkin Gürültü Engelleme kullanılmadığında kulaklarda basınç hissini önleyin</string>
     <string name="pref_header_system">Sistem</string>
     <string name="pref_header_equalizer">Dengeleyici</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="prefs_pressure_relief">Ortam sesi ile basınç rahatlatma</string>
     <string name="sony_equalizer_preset_vocal">Vokal</string>
     <string name="pref_header_sony_ambient_sound_control">Ortam Sesi Denetimi</string>
@@ -1492,7 +1423,6 @@
     <string name="discover_unsupported_devices_description">Bu seçeneğin etkinleştirilmesi, tarama sırasında keşfedilen tüm bluetooth aygıtlarını görüntüleyecektir. Kısa dokunma, aygıt adını ve MAC adresini panoya kopyalayacaktır. Uzun basıldığında, `Test aygıtı ekle` iletişim kutusu açılacaktır. Olası uygulama donma sorunlarına neden olabilir.</string>
     <string name="controlcenter_power_off_confirm_description">Aygıtı kapatmak istediğinizden emin misiniz\?</string>
     <string name="controlcenter_power_off_confirm_title">Kapat</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
     <string name="controlcenter_power_off">Kapat</string>
     <string name="activity_prefs_discovery_pairing">Keşif ve Eşleştirme seçenekleri</string>
     <string name="add_test_device">Test aygıtı ekle</string>
@@ -1504,8 +1434,6 @@
     <string name="sony_button_mode_volume_control">Ses Denetimi</string>
     <string name="descentDistance">Yokuş aşağı mesafe</string>
     <string name="ascentDistance">Yokuş yukarı mesafe</string>
-    <string name="devicetype_vesc">VESC</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
     <string name="activity_type_hiking">Doğa Yürüyüşü</string>
     <string name="activity_type_climbing">Tırmanma</string>
     <string name="distance_format_meters">###m</string>
@@ -1524,10 +1452,8 @@
     <string name="pref_activity_recognition_mode_ask">sor</string>
     <string name="menuitem_menu">Menü</string>
     <string name="about_hash">Kayıt %s</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
     <string name="pref_device_action_broadcast">Yayın Gönder</string>
     <string name="distance_format_feet">###ft</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="sony_speak_to_chat_sensitivity">Ses Algılama Hassasiyeti</string>
     <string name="discovery_bluetooth_le_scan">Bluetooth LE taraması:</string>
     <string name="discovery_bluetooth_scan">Bluetooth taraması:</string>
@@ -1560,8 +1486,6 @@
     <string name="sony_anc_optimizer_status_not_running">Çalışmıyor</string>
     <string name="sony_anc_optimizer_status_atmospheric_pressure">Atmosfer basıncı ölçülüyor…</string>
     <string name="sony_anc_optimizer_status_finished">Bitiriliyor…</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
     <string name="menuitem_nothing">Hiçbir Şey</string>
     <string name="pref_title_opentracks_packagename">OpenTracks paket adı</string>
     <string name="pref_summary_opentracks_packagename">Harici fitness uygulamasında GPS izleme kaydını başlatmak/durdurmak için kullanılır.</string>
@@ -1618,7 +1542,6 @@
     <string name="pref_screen_notification_profile_event_reminder">Etkinlik hatırlatıcı</string>
     <string name="pref_screen_notification_profile_find_device">Aygıt bul</string>
     <string name="pref_screen_vibration_patterns_summary">Farklı bildirimler için titreşim modellerini yapılandırın</string>
-    <string name="devicetype_sony_wf_1000xm3">Sony WF-1000XM3</string>
     <string name="pref_ambient_sound_tone">Ortam Sesi Tonu</string>
     <string name="prefs_noise_control_with_one_earbud">Bir kulak ile gürültü denetimi</string>
     <string name="pref_switch_controls_ambient_off">Ortam ←→ Kapalı</string>
@@ -1671,7 +1594,6 @@
     <string name="heartrate_bpm_125">125 kalp atışı/dakika</string>
     <string name="prefs_heartrate_alert_threshold">Kalp ritmi uyarı eşiği</string>
     <string name="mi2_prefs_heart_rate_monitoring">Kalp Ritmi İzleme</string>
-    <string name="devicetype_galaxybuds_pro">Galaxy Buds Pro</string>
     <string name="prefs_customize_ambient_sound_summary">Ortam Sesini Özelleştir</string>
     <string name="prefs_ambient_settings_title">Ortam Sesi Seçenekleri</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Kalp ritmi izlemeyi yapılandırın</string>
@@ -1861,13 +1783,11 @@
     <string name="prefs_screen_timeout">Ekran Zaman Aşımı</string>
     <string name="prefs_always_on_display">Ekran Her Zaman Açık</string>
     <string name="pref_screen_brightness">Ekran Parlaklığı</string>
-    <string name="devicetype_miband7">Xiaomi Smart Band 7</string>
     <string name="menuitem_countdown">Geri Sayım</string>
     <string name="menuitem_female_health">Kadın Sağlığı</string>
     <string name="menuitem_personal_activity_intelligence">Kişisel Etkinlik Bilgileri</string>
     <string name="pref_summary_notifications_ignore_low_priority">Düşük ve asgari öncelikli bildirimleri saate gönderme</string>
     <string name="pref_title_notifications_ignore_low_priority">Düşük öncelikli bildirimleri yok say</string>
-    <string name="devicetype_flipper_zero">Flipper zero</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth İstek API\'yı</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">İstek API ile Bluetooth bağlantısının kontrol edilmesine izin verin</string>
     <string name="fw_upgrade_notice_amazfit_gts3">Amazfit GTS 3 aygıtınıza %s ürün yazılımını kurmak üzeresiniz. 
@@ -1875,7 +1795,6 @@
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak. 
 \n 
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="devicetype_amazfit_gts3">Amazfit GTS 3</string>
     <string name="pref_title_notification_prefer_long_text">Uzun bildirim metnini tercih et</string>
     <string name="pref_summary_notification_prefer_long_text">Kullanılabilirse, aygıta uzun bildirim metni gönder</string>
     <string name="menuitem_unknown_app">Bilinmeyen (%s)</string>
@@ -1883,7 +1802,6 @@
     <string name="pref_title_overwrite_settings_on_connection">Bağlantıda ayarların üzerine yaz</string>
     <string name="pref_summary_overwrite_settings_on_connection">Bilekliğe bağlanırken, onun tüm ayarlarının üzerine yaz.</string>
     <string name="dismiss">Kapat</string>
-    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3</string>
     <string name="fw_upgrade_notice_amazfit_gtr3">Amazfit GTR 3 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
@@ -1907,8 +1825,6 @@
     <string name="activity_type_street_dance">Sokak Dansı</string>
     <string name="activity_type_indoor_ice_skating">Kapalı Alan Buz Pateni</string>
     <string name="activity_type_zumba">Zumba</string>
-    <string name="devicetype_super_cars">Shell Yarışı</string>
-    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite</string>
     <string name="watchface_setting_button_move_hands">İbreleri hareket ettir</string>
     <string name="supercars_turbo_speed_label">Turbo Hız</string>
     <string name="supercars_lights_label">Işıklar</string>
@@ -1932,8 +1848,6 @@
     <string name="elevationGain">Yükseklik kazancı</string>
     <string name="elevationLoss">Yükseklik kaybı</string>
     <string name="pref_chart_sleep_lines_limit">Kaydırmadan önce kaç uyku oturumu satırının gösterileceği</string>
-    <string name="devicetype_sony_wh_1000xm2">Sony WH-1000XM2</string>
-    <string name="devicetype_sony_wf_1000xm4">Sony WF-1000XM4</string>
     <string name="low_power_gps">Düşük Güçlü GPS</string>
     <string name="gps">GPS</string>
     <string name="gps_galileo">GPS + GALILEO</string>
@@ -2022,14 +1936,12 @@
     <string name="menuitem_membership_cards">Üyelik Kartları</string>
     <string name="prefs_control_center">Denetim Merkezi</string>
     <string name="menuitem_theater_mode">Tiyatro Modu</string>
-    <string name="devicetype_amazfit_gtr4">Amazfit GTR 4</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Getirme işlemi zaman damgalarını dakikalara kısaltın. Çok kısa egzersizleri getirirken sorunlarla karşılaşırsanız, zaman damgalarını saniye cinsinden tutmak için bu ayarı devre dışı bırakın.</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">Getirme işlemi zaman damgalarını kısalt</string>
     <string name="pref_title_notification_media_ignores_application_list">Medya bildirimleri uygulama listesini yok sayar</string>
     <string name="pref_summary_notification_media_ignores_application_list">Medya bildirimlerini uygulama listesinden önce işle. Bu tercih işaretli değilse, medya denetimlerinin aygıtta çalışması için uygulama listesinde medya uygulamalarına izin verilmesi gerekir.</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Aygıt tercihleri kaldırılsın mı\?</string>
     <string name="debugactivity_confirm_remove_device_preferences">Bu, bağlı tüm aygıtlar için aygıt tercihlerini sıfırlayacak. Emin misiniz\?</string>
-    <string name="devicetype_amazfit_band7">Amazfit Band 7</string>
     <string name="fw_upgrade_notice_amazfit_band7">Amazfit Band 7 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
@@ -2039,21 +1951,17 @@
     <string name="world_clock_code">Kod</string>
     <string name="pref_title_touch_spotify_official_app">Spotify (yalnızca resmi uygulama)</string>
     <string name="pref_title_touch_spotify_galaxy_app">Spotify (yalnızca Galaxy Wearable uygulaması)</string>
-    <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
     <string name="prefs_touch_lock_buds2">Dokunma denetimleri</string>
     <string name="fw_upgrade_notice_amazfit_gts4">Amazfit GTS 4 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="devicetype_amazfit_gts4">Amazfit GTS 4</string>
     <string name="fw_upgrade_notice_amazfit_gts4_mini">Amazfit GTS 4 Mini aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
-    <string name="devicetype_amazfit_gts4_mini">Amazfit GTS 4 Mini</string>
-    <string name="devicetype_sony_linkbuds_s">Sony LinkBuds S</string>
     <string name="pref_header_intent_api">İstek API</string>
     <string name="intent_api_allow_activity_sync_title">Etkinlik eşzamanlama tetikleyicisine izin ver</string>
     <string name="intent_api_allow_activity_sync_summary">İstek API ile etkinlik eşlemesi tetiklemesine izin verin</string>
@@ -2077,8 +1985,6 @@
     <string name="appmanager_downloaded_to_cache">%s önbelleğe indirildi</string>
     <string name="appmanager_download_started">Uygulama indirme başladı</string>
     <string name="appmanager_download_app_error">Uygulama indirilirken hata oluştu</string>
-    <string name="devicetype_asteroidos">AsteroidOS</string>
-    <string name="devicetype_amazfit_trex_2">Amazfit T-Rex 2</string>
     <string name="fw_upgrade_notice_amazfit_trex2">Amazfit T-Rex 2 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
@@ -2092,8 +1998,6 @@
     <string name="pref_workout_detection_time_summary">Egzersizin algılanmadan önce devam etmesi gereken dakika miktarı</string>
     <string name="activity_type_rowing">Kürek Çekme</string>
     <string name="georgian">Gürcüce</string>
-    <string name="devicetype_galaxybuds_2_pro">Galaxy Buds2 Pro</string>
-    <string name="devicetype_soflow_s06">SoFlow SO6</string>
     <string name="pref_title_lock_unlock">Kilitle</string>
     <string name="pref_camera_remote_summary">Saatin telefonun kamerasını tetiklemesine izin verir</string>
     <string name="pref_camera_remote_title">Kamera Kumandası</string>
@@ -2239,33 +2143,19 @@
     <string name="femometer_measurement_mode_quick">Hızlı Mod (30 sn)</string>
     <string name="femometer_measurement_mode_normal">Normal Mod (60sn-90sn)</string>
     <string name="preferences_miband_1_2_warning">Uyarı: Bu tercihler yalnızca Mi Band 1 ve 2 için geçerlidir.</string>
-    <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
-    <string name="devicetype_colacao23">ColaCao 2023</string>
-    <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5</string>
-    <string name="devicetype_huawei_band6">Huawei Band 6</string>
-    <string name="devicetype_huawei_band8">Huawei Band 8</string>
-    <string name="devicetype_huawei_watch_gt">Huawei Watch GT</string>
-    <string name="devicetype_huawei_band4pro">Huawei Band 4 (Pro)</string>
-    <string name="devicetype_huawei_watchgt2">Huawei Watch GT 2 (Pro)</string>
-    <string name="devicetype_miband7pro">Xiaomi Smart Band 7 Pro</string>
     <string name="activity_type_surfing">Sörf yapma</string>
     <string name="activity_type_kitesurfing">Uçurtma sörfü</string>
-    <string name="devicetype_redmi_watch_2">Redmi Watch 2</string>
     <string name="menuitem_thermometer">Termometre</string>
     <string name="menuitem_cards">Kartlar</string>
     <string name="menuitem_vo2_max">En Yüksek VO₂</string>
     <string name="device_experimental">DENEYSEL</string>
-    <string name="devicetype_nothingearstick">Nothing Ear (Stick)</string>
     <string name="prefs_active_noise_cancelling_transparency">Şeffaflık</string>
     <string name="stress_mild">Hafif</string>
     <string name="quick_attention">Çabuk Dikkat</string>
-    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="pref_device_action_dnd_priority">Rahatsız etme - Yalnızca öncelikli</string>
     <string name="pref_device_action_dnd_off">Rahatsız etme - Kapalı</string>
     <string name="pref_device_action_dnd_on">Rahatsız etme - Açık</string>
     <string name="huawei_trusleep_summary_light">Geliştirilmiş uyku izleme</string>
-    <string name="devicetype_redmi_smart_band_pro">Redmi Smart Band Pro</string>
-    <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Bracelet</string>
     <string name="zepp_os_watchface_multiple_data">Çoklu Veri</string>
     <string name="zepp_os_watchface_lightning_flash">Şimşek çakması</string>
     <string name="pref_show_changelog">Başlangıçta değişiklik günlüğünü göster</string>
@@ -2286,13 +2176,9 @@
     <string name="triple_tap">Üç Dokunuş</string>
     <string name="pref_summary_navigation_forward">Navigasyon uygulamalarındaki talimatları saate ilet</string>
     <string name="continue_pressing">Basmaya Devam Et</string>
-    <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="zepp_os_watchface_vibrant">Canlı</string>
     <string name="activity_type_rugby">Ragbi</string>
     <string name="activity_type_squash">Squash (duvar tenisi)</string>
-    <string name="devicetype_amazfit_gtr3_pro">Amazfit GTR 3 Pro</string>
-    <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
-    <string name="devicetype_femometer_vinca2">Femometer Vinca II</string>
     <string name="zepp_os_watchface_red_fantasy">Kırmızı Fantezi</string>
     <string name="zepp_os_watchface_emerald_moonlight">Zümrüt Ay Işığı</string>
     <string name="zepp_os_watchface_guider">Kılavuz</string>
@@ -2311,8 +2197,6 @@
     <string name="silent_mode_vibrate_silent">Titret / Sessiz</string>
     <string name="do_not_disturb_lift_wrist_summary">Yalnızca kaldırıldığında ekranı aç özelliği etkinleştirilmişse</string>
     <string name="activity_type_snowboarding">Kar kayağı</string>
-    <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
-    <string name="devicetype_huawei_band7">Huawei Band 7</string>
     <string name="pref_enable_call_accept_summary">Aygıttan gelen çağrıları kabul etmeyi etkinleştirin</string>
     <string name="pref_force_smart_alarm">Akıllı alarmı zorla</string>
     <string name="pref_force_wear_location">Giyme konumunu zorla</string>
@@ -2322,8 +2206,6 @@
     <string name="english_us">İngilizce (ABD)</string>
     <string name="activity_type_weightlifting">Ağırlık kaldırma</string>
     <string name="screenshot_taken">Ekran görüntüsü alındı</string>
-    <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (Kare)</string>
-    <string name="devicetype_amazfit_falcon">Amazfit Falcon</string>
     <string name="zepp_os_watchface_simplicity_data">Sadelik Verisi</string>
     <string name="zepp_os_watchface_rotating_earth">Dönen Dünya</string>
     <string name="permission_request">%1$s, Android\'den aygıtınıza mesaj ve diğer verileri göndermenizi sağlar. Bunu yapmak için bu verilere erişim izni gerekir ve bu izin olmadan düzgün çalışmayabilir.
@@ -2335,7 +2217,6 @@
     <string name="pai_day">Günlük artış</string>
     <string name="double_tap">Çift Dokunuş</string>
     <string name="spanish_us">İspanyolca (ABD)</string>
-    <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
     <string name="menuitem_zepp_pay">Zepp Pay</string>
     <string name="stress_moderate">Orta</string>
     <string name="pref_disable_find_phone_with_dnd">Rahatsız etme özelliği etkin olduğunda telefonumu bul özelliğini devre dışı bırak</string>
@@ -2344,8 +2225,6 @@
 \nKULLANMANIZ DURUMUNDA RİSK SİZE AİTTİR</string>
     <string name="common_symbols">Yaygın Semboller</string>
     <string name="activity_type_windsurfing">Rüzgar sörfü</string>
-    <string name="devicetype_honor_band4">Honor Band 4</string>
-    <string name="devicetype_honor_band5">Honor Band 5</string>
     <string name="menuitem_recommendation">Tavsiye</string>
     <string name="menuitem_workout_shortcuts">Egzersiz kısayolları</string>
     <string name="menuitem_apps_shortcuts">Uygulama kısayolları</string>
@@ -2394,16 +2273,6 @@
     <string name="activity_type_golf">Golf</string>
     <string name="activity_type_trekking">Doğa yürüyüşü</string>
     <string name="activity_type_wrestling">Güreş</string>
-    <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
-    <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
-    <string name="devicetype_mijia_lywsd03">Mijia Sıcaklık ve Nem Sensörü 2</string>
-    <string name="devicetype_mijia_mho_c303">Mijia MHO-C303</string>
-    <string name="devicetype_colacao21">ColaCao 2021</string>
-    <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N</string>
-    <string name="devicetype_honor_band3">Honor Band 3</string>
-    <string name="devicetype_honor_band6">Honor Band 6</string>
-    <string name="devicetype_honor_band7">Honor Band 7</string>
-    <string name="devicetype_redmiwatch3">Redmi Watch 3</string>
     <string name="menuitem_aqi">Hava Kalitesi Göstergesi</string>
     <string name="menuitem_last_workout">Son egzersiz</string>
     <string name="menuitem_total_workout">Toplam egzersiz</string>
@@ -2425,8 +2294,6 @@
     <string name="activity_type_iceskating">Buz pateni</string>
     <string name="activity_type_other">Diğer</string>
     <string name="watchface_widget_type_uv_index">UV göstergesi</string>
-    <string name="devicetype_nothingear2">Nothing Ear (2)</string>
-    <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro</string>
     <string name="prefs_active_noise_cancelling_light">Hafif Etkin Gürültü Engelleme</string>
     <string name="huawei_trusleep_summary">Uyku kalitenizi ve solunum düzeninizi gerçek zamanlı olarak izleyin.
 \nUyku düzeninizi inceleyin ve 6 tür uyku problemini doğru bir şekilde teşhis edin.</string>
@@ -2508,22 +2375,7 @@
     <string name="activity_type_outdoor_walking">Açık Havada Yürüyüş</string>
     <string name="activity_error_share_failed">Dosya paylaşımı başarısız oldu.</string>
     <string name="kind_gpx_route">GPX Güzergahı</string>
-    <string name="devicetype_miband8">Xiaomi Smart Band 8</string>
-    <string name="devicetype_miband8pro">Xiaomi Smart Band 8 Pro</string>
-    <string name="devicetype_amazfit_balance">Amazfit Balance</string>
-    <string name="devicetype_amazfit_active">Amazfit Active</string>
-    <string name="devicetype_amazfit_active_edge">Amazfit Active Edge</string>
-    <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (Yuvarlak)</string>
-    <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
     <string name="huawei_alarm_smart_description">Akıllı uyandırma onay kutusunun işaretini kaldırma.</string>
-    <string name="devicetype_huawei_watchgt2e">Huawei Watch GT 2e</string>
-    <string name="devicetype_huawei_talk_band_b6">Huawei Talk Band B6</string>
-    <string name="devicetype_huawei_watchgt3">Huawei Watch GT 3 (Pro)</string>
-    <string name="devicetype_honor_magicwatch2">Honor MagicWatch 2</string>
-    <string name="devicetype_huawei_band_aw70">Huawei Band (AW70)</string>
-    <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite</string>
-    <string name="devicetype_redmiwatch3active">Redmi Watch 3 Active</string>
-    <string name="devicetype_redmi_smart_band_2">Redmi Smart Band 2</string>
     <string name="flatDistance">Düz mesafe</string>
     <string name="prefs_device_name">Aygıt adı</string>
     <string name="spanish_es">İspanyolca (İspanya)</string>
@@ -2532,11 +2384,8 @@
     <string name="activity_type_tennis">Tenis</string>
     <string name="activity_type_dancing">Dans etme</string>
     <string name="activity_type_trail_run">Patika koşusu</string>
-    <string name="devicetype_sony_wf_1000xm5">Sony WF-1000XM5</string>
     <string name="stress_relaxed">Rahat</string>
-    <string name="devicetype_redmi_watch_2_lite">Redmi Watch 2 Lite</string>
     <string name="pref_switch_controls_anc_ambient_off">Gürültü engelleme ←→ Ortam ←→ Kapalı</string>
-    <string name="devicetype_huawei_watchfit">Huawei Watch Fit</string>
     <string name="menuitem_readiness">Hazır olma durumu</string>
     <string name="menuitem_body_composition">Vücut yapısı</string>
     <string name="zepp_os_watchface_rush">Acele</string>
@@ -2587,7 +2436,6 @@
     <string name="title">Başlık</string>
     <string name="preview_image">Ön izleme görseli</string>
     <string name="changelog_full_title">Değişiklik günlüğü</string>
-    <string name="devicetype_xiaomi_watch_s1_active">Xiaomi Watch S1 Active</string>
     <string name="pref_force_connection_type_ble">Bluetooth LE</string>
     <string name="find_my_phone_found_it">BULUNDU</string>
     <string name="error_menu_companion_not_installed">\'HR Menu Companion\' muhtemelen kurulu değil</string>
@@ -2601,7 +2449,6 @@
     <string name="widget">Widget</string>
     <string name="widget_screen_no_free_slots_description">Aygıtta widget ekranları için boş yuva yok (toplam yuva: %1$s)</string>
     <string name="pref_sleep_mode_schedule_summary">Yatma vaktinde bir hatırlatma gönder ve uyku moduna geç. Ayarlanan uyanma saatinde, uyandırma alarmı çalacaktır.</string>
-    <string name="devicetype_xiaomi_watch_s1">Xiaomi Watch S1</string>
     <string name="pref_title_fossil_hr_nav_foreground">Ön plana gel</string>
     <string name="pref_summary_fossil_hr_nav_foreground">Navigasyon uygulamasının bir navigasyon talimatı aldığında otomatik olarak ön plana gelip gelmeyeceği</string>
     <string name="uploadwatchfaceoperation_in_progress">Saat arayüzü yükleniyor</string>
@@ -2629,7 +2476,6 @@
     <string name="withings_bt_calibration_next">Sonraki</string>
     <string name="prefs_home_icon_right_item">Sağ</string>
     <string name="prefs_wena3_vibration_strength_item_medium">Orta</string>
-    <string name="devicetype_mi_watch_color_sport">Mi Watch Color Sport</string>
     <string name="loyalty_cards_sync_options">Eşzamanlama Seçenekleri</string>
     <string name="prefs_wena3_title_screen">Ekran Ayarları</string>
     <string name="prefs_wena3_hint_background_sync">Wena\'nın düzenli aralıklarla Gadgetbridge\'in aygıttan etkinlik verilerini indirmesini istemesine izin ver</string>
@@ -2648,7 +2494,6 @@
     <string name="drag_handle">sürükleme kolu</string>
     <string name="prefs_wena3_hint_lift_wrist">Bileğinize baktığınızda ekranı aç</string>
     <string name="prefs_wena3_title_activity">Etkinlik Ayarları</string>
-    <string name="devicetype_pixoo">Pixoo</string>
     <string name="pref_vitality_score_title">Canlılık Puanı</string>
     <string name="pref_vitality_score_7_day_title">7 günlük ilerleme</string>
     <string name="widget_layout_top_2_bot_2">2 üst, 2 alt</string>
@@ -2741,8 +2586,6 @@
     <string name="pref_title_prefix_notification_with_app">Bildirimdeki uygulama adı</string>
     <string name="pref_summary_prefix_notification_with_app">Bildirim başlığının önüne kaynak uygulamanın adını ekle</string>
     <string name="pref_title_osmand_packagename">OsmAnd paket adı</string>
-    <string name="devicetype_xiaomi_watch_s3">Xiaomi Watch S3</string>
-    <string name="devicetype_xiaomi_watch_s1_pro">Xiaomi Watch S1 Pro</string>
     <string name="pref_vitality_score_daily_summary">Gün için en yüksek canlılık puanı sayısına ulaştığınızda bir bildirim alın</string>
     <string name="pref_vitality_score_daily_title">Günlük ilerleme</string>
     <string name="widget_screen_delete_confirm_title">Widget ekranını sil</string>
@@ -2776,7 +2619,6 @@
     <string name="warning_missing_notification_permission">Eksik izin nedeniyle devam eden bildirim gönderilemedi</string>
     <string name="error_invalid_menu_structure">Geçersiz menü yapısı JSON</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Özel menü için lütfen saat arayüzünüzü yeniden oluşturun</string>
-    <string name="devicetype_miband2_hrx">Mi Band HRX</string>
     <string name="activity_info">Etkinlik bilgileri</string>
     <string name="device_state_waiting_scan">Aygıt taraması bekleniyor</string>
     <string name="auto_reconnect_ble_scan_title">BLE taraması ile yeniden bağlan</string>
@@ -2789,14 +2631,11 @@
     <string name="scan_scanning_single_device">1 aygıt taranıyor</string>
     <string name="scan_scanning_multiple_devices">%d aygıt taranıyor</string>
     <string name="notification_channel_scan_service_name">Tarama hizmeti</string>
-    <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
     <string name="pref_wide_area_tap_summary">Yanaklar ve kulaklar arasındaki dokunuşları tanı</string>
     <string name="pref_wide_area_tap_title">Geniş alan dokunuşu</string>
     <string name="pref_adaptive_volume_control_summary">Ortam sesi yüksek olduğunda sesi otomatik olarak artır</string>
     <string name="pref_adaptive_volume_control_title">Uyarlanabilir ses seviyesi denetimi</string>
-    <string name="devicetype_sony_linkbuds">Sony LinkBuds</string>
     <string name="pref_header_sony_sound_control">Ses Denetimi</string>
-    <string name="devicetype_amazfit_bip3">Amazfit Bip 3</string>
     <string name="fw_upgrade_notice_amazfitbip3">Amazfit Bip 3 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nLütfen önce .fw dosyasını, sonra .res dosyasını kurun. Saatiniz .fw dosyasını kurduktan sonra yeniden başlatılacak.
@@ -2806,9 +2645,7 @@
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Haftalık/aylık uyku</string>
     <string name="weekstepschart_steps_a_week_or_month">Haftalık/aylık adım</string>
-    <string name="devicetype_huawei_watchgt4">Huawei Watch GT 4</string>
     <string name="busy_task_fetch_sports_details_interrupted">Spor bilgilerinin getirilmesi yarıda kesildi</string>
-    <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate</string>
     <string name="companion_pairing_request_title">Yardımcı aygıt</string>
     <string name="companion_pairing_request_description">Bu aygıt yardımcı olarak eşleştirilsin mi?
 \n
@@ -2892,7 +2729,6 @@
     <string name="pref_summary_notification_wake_on_open">Aygıt bir OPEN (AÇ) yanıtı gönderdiğinde Android aygıtını uyandırın ve kilidini açın. Güvenilir bir durumda olması gerekir.</string>
     <string name="pref_speak_notifications_aloud_summary">Bildirimler kulaklıklardan yüksek sesle okunacaktır</string>
     <string name="pref_speak_notifications_aloud_title">Bildirimleri Sesli Oku</string>
-    <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="widget_layout_top_wide_bot_large">Yukarıda geniş, aşağıda büyük</string>
     <string name="widget_layout_top_large_bot_wide">Yukarıda büyük, aşağıda geniş</string>
     <string name="widget_name_colored_tile">%1$s (renkli döşeme)</string>
@@ -2926,18 +2762,13 @@
     <string name="cyclingPowerMin">En düşük bisiklet gücü</string>
     <string name="cyclingPowerAverage">Ortalama bisiklet gücü</string>
     <string name="cyclingPowerMax">En yüksek bisiklet gücü</string>
-    <string name="devicetype_huawei_watchfit2">Huawei Watch Fit 2</string>
     <string name="huawei_trusleep_warning">Uyarı: Bunu etkinleştirmek tüm uykunun Gadgetbridge\'de hafif uyku olarak görünmesine neden olacaktır! Bunu kabul ediyorsanız buraya tıklayın.</string>
     <string name="pref_touch_tone_summary">Kulaklığa dokunulduğunda bir ses çalar</string>
     <string name="pref_wearing_tone">Takma Sesi</string>
-    <string name="devicetype_soundcore_liberty3_pro">Soundcore Liberty 3 Pro</string>
     <string name="pref_touch_tone">Dokunma Sesi</string>
     <string name="pref_wearing_tone_summary">Kulaklık takıldığında bir ses çalar</string>
     <string name="pref_adaptive_noise_cancelling_title">Uyarlanabilir ANC</string>
     <string name="pref_adaptive_noise_cancelling_summary">Ortam ses seviyesine bağlı olarak ANC\'nin gücünü otomatik olarak ayarla</string>
-    <string name="devicetype_huawei_band9">Huawei Band 9</string>
-    <string name="devicetype_huawei_watchfit3">Huawei Watch Fit 3</string>
-    <string name="devicetype_huawei_watch4pro">Huawei Watch 4 (Pro)</string>
     <string name="preferences_qhybrid_settings_summary">Q Hybrid saatler için eski ayarlar</string>
     <string name="device_name_cycling_sensor">Döngü sensörü</string>
     <string name="devicetype_cycling_sensor">Döngü hızı sensörü</string>
@@ -2957,44 +2788,24 @@
     <string name="toast_setting_requires_reconnect">Bu ayar yeniden bağlandıktan sonra geçerli olacak</string>
     <string name="toast_camera_photo_taken">Fotoğraf çekildi ve kaydedildi: %s</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_on">Bildirim konuşulurken diğer uygulamalardan oynatma duraklatılacaktır</string>
-    <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity</string>
     <string name="pref_agps_status">AGPS Durumu</string>
     <string name="agps_status_current">Geçerli</string>
     <string name="agps_status_error">Hata</string>
-    <string name="devicetype_garmin_venu_3">Garmin Venu 3</string>
-    <string name="devicetype_garmin_instinct_solar">Garmin Instinct Solar</string>
-    <string name="devicetype_garmin_instinct_2s">Garmin Instinct 2S</string>
-    <string name="devicetype_garmin_instinct_2_soltac">Garmin Instinct 2 SolTac</string>
-    <string name="devicetype_garmin_instinct_crossover">Garmin Instinct Crossover</string>
-    <string name="devicetype_garmin_forerunner_245">Garmin Forerunner 245</string>
-    <string name="devicetype_garmin_swim_2">Garmin Swim 2</string>
-    <string name="devicetype_garmin_vivoactive_4">Garmin Vívoactive 4</string>
     <string name="none">Yok</string>
     <string name="garmin_agps_url_i">AGPS %1$d URL\'si</string>
     <string name="no_folder_selected">Klasör seçilmedi</string>
     <string name="folder_is_empty">Klasör boş</string>
     <string name="folder">Klasör</string>
     <string name="url">URL</string>
-    <string name="devicetype_garmin_vivomove_hr">Garmin Vívomove HR</string>
     <string name="agps_status_missing">Eksik</string>
     <string name="agps_status_pending">Bekliyor</string>
-    <string name="devicetype_garmin_vivomove_style">Garmin Vívomove Style</string>
-    <string name="devicetype_garmin_instinct_2_solar">Garmin Instinct 2 Solar</string>
-    <string name="devicetype_garmin_vivoactive_4s">Garmin Vívoactive 4S</string>
-    <string name="devicetype_garmin_vivoactive_5">Garmin Vívoactive 5</string>
     <string name="garmin_agps_local_file">Yerel dosya</string>
     <string name="pref_summary_garmin_default_reply_suffix">Gadgetbridge\'de ayarlanan son eke ek olarak eklenir</string>
     <string name="pref_title_garmin_default_reply_suffix">Önceden tanımlanan yanıt son ekini kullan</string>
     <string name="pref_garmin_agps_help">Aşağıdaki liste, saat tarafından AGPS güncellemeleri için istenen tüm URL\'leri içerir. Telefonun depolama alanından, güncelleme istediğinde saate gönderilecek bir dosya seçebilirsiniz.</string>
     <string name="copied_to_clipboard">Panoya kopyalandı</string>
-    <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
-    <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
-    <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
-    <string name="devicetype_garmin_epix_pro">Garmin Epix Pro</string>
-    <string name="devicetype_garmin_instinct_2x_solar">Garmin Instinct 2X Solar</string>
     <string name="intent_api_broadcast_activity_sync_title">Etkinlik eşzamanlaması bittiğinde yayın gönder</string>
     <string name="intent_api_broadcast_activity_sync_summary">Herhangi bir aygıt için etkinlik eşlemesi bittiğinde bir istek yayınlayın</string>
-    <string name="devicetype_garmin_fenix_6_sapphire">Garmin Fenix 6 Sapphire</string>
     <string name="loading">Yükleniyor…</string>
     <string name="toggle_debug_mode">Hata ayıklama modunu aç/kapat</string>
     <string name="share_debug_info">Hata ayıklama bilgilerini paylaş</string>
@@ -3003,12 +2814,9 @@
     <string name="activity_prefs_height_inches">İnç cinsinden yükseklik</string>
     <string name="unsupported">Desteklenmiyor</string>
     <string name="max_val">En yüksek: %d</string>
-    <string name="devicetype_garmin_venu_3s">Garmin Venu 3S</string>
-    <string name="devicetype_garmin_fenix_7_pro">Garmin Fenix 7 Pro</string>
     <string name="notif_battery_full_title">Aygıt pili dolu!</string>
     <string name="notif_battery_full">%1$s pili dolu</string>
     <string name="battery_i">Pil %d</string>
-    <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
     <string name="notification_channel_full_battery_name">Pil dolu</string>
     <string name="battery_full_threshold">Pil dolu eşiği</string>
     <string name="default_percentage">Öntanımlı (%%%1$d)</string>
@@ -3018,10 +2826,6 @@
     <string name="battery_low_notify_enabled">Düşük pil durumunda bildir</string>
     <string name="battery_low_threshold">Düşük pil eşiği</string>
     <string name="battery_full_notify_enabled">Pil dolu olduğunda bildir</string>
-    <string name="devicetype_garmin_forerunner_255">Garmin Forerunner 255</string>
-    <string name="devicetype_garmin_forerunner_265">Garmin Forerunner 265</string>
-    <string name="devicetype_hama_fit6900">Hama Fit6900</string>
-    <string name="devicetype_garmin_venu_2">Garmin Venu 2</string>
     <string name="pref_fetch_unknown_files_title">Bilinmeyen dosyaları al</string>
     <string name="pref_fetch_unknown_files_summary">Bilinmeyen etkinlik dosyalarını saatten alın. Bunlar işlenmeyecek, ancak telefona kaydedilecektir.</string>
     <string name="dashboard_calendar_month_goals_reached_title">Ulaşılan adım hedefi yüzdesi</string>
@@ -3029,9 +2833,6 @@
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>
     </plurals>
-    <string name="devicetype_garmin_forerunner_255s">Garmin Forerunner 255S</string>
-    <string name="devicetype_garmin_instinct">Garmin Instinct</string>
-    <string name="devicetype_moondrop_space_travel">Moondrop Space Travel</string>
     <string name="moondrop_touch_earbud">Kulakiçi kulaklık</string>
     <string name="moondrop_touch_earbud_both">Her ikisi</string>
     <string name="moondrop_touch_trigger">Tetik</string>
@@ -3045,19 +2846,13 @@
     <string name="moondrop_equalizer_preset_basshead">Bas kafa</string>
     <string name="moondrop_equalizer_preset_monitor">Ekran</string>
     <string name="moondrop_touch_action_anc_mode">Etkin Gürültü Engelleme Modunu Değiştir</string>
-    <string name="devicetype_garmin_fenix_6">Garmin Fenix 6</string>
-    <string name="devicetype_garmin_fenix_5">Garmin Fenix 5</string>
-    <string name="devicetype_garmin_vivoactive_3">Garmin Vívoactive 3</string>
     <string name="pref_battery_polling_enable">Pil sorgulamasını etkinleştir</string>
     <string name="proprietary_app_warning">Bu özellik, özgür olmayan bir uygulamanın kurulmasını gerektirir</string>
     <string name="pref_battery_polling_configuration">Pil sorgulama yapılandırması</string>
     <string name="pref_battery_polling_summary">Bu en iyi çabadır ve çeşitli nedenlerle gecikebilir</string>
     <string name="battery_polling_failed_start">Pil sorgulaması başlatılamadı</string>
-    <string name="devicetype_garmin_vivomove_trend">Garmin Vívomove Trend</string>
     <string name="pref_battery_polling_interval">Pil sorgulama aralığı</string>
     <string name="pref_battery_polling_interval_format">her %1$s dakika</string>
-    <string name="devicetype_garmin_vivosport">Garmin Vívosport</string>
-    <string name="devicetype_nothing_cmf_watch_pro_2">CMF Watch Pro 2</string>
     <string name="activity_type_tae_bo">Tae Bo</string>
     <string name="activity_type_beach_soccer">Plaj Futbolu</string>
     <string name="activity_type_beach_volleyball">Plaj Voleybolu</string>
@@ -3069,12 +2864,6 @@
     <string name="activity_type_parkour">Parkur</string>
     <string name="pref_summary_notification_times_enabled">Yalnızca belirli zamanlar arasında bildirim gönder</string>
     <string name="pref_title_notification_times_enabled">Bildirim zamanları</string>
-    <string name="devicetype_huawei_watch3">Huawei Watch 3 (Pro)</string>
-    <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker">Vivitar Kalp Ritmi ve Kan Basıncı İzleme Etkinlik Takip Aygıtı</string>
-    <string name="devicetype_nothing_cmf_buds_pro_2">CMF Buds Pro 2</string>
-    <string name="devicetype_garmin_forerunner_255s_music">Garmin Forerunner 255S Music</string>
-    <string name="devicetype_garmin_forerunner_255_music">Garmin Forerunner 255 Music</string>
-    <string name="devicetype_huawei_watchgtrunner">Huawei Watch GT Runner</string>
     <string name="find_my_phone_companion_warning">Telefon bulmak için yardımcı eşleştirme gereklidir. Daha fazla bilgi için buraya tıklayın.</string>
     <string name="abstract_chart_fragment_kind_awake_sleep">Uyanık</string>
     <string name="sleep_colored_stats_deep">Derin</string>
@@ -3102,9 +2891,7 @@
     <string name="hrv_status_seven_days_avg_status">Durum</string>
     <string name="hrv_status_balanced">Dengeli</string>
     <string name="hrv_status_unbalanced">Dengesiz</string>
-    <string name="devicetype_garmin_forerunner_965">Garmin Forerunner 965</string>
     <string name="gps_glonass">GPS + GLONASS</string>
-    <string name="devicetype_garmin_fenix_5_plus">Garmin Fenix 5 Plus</string>
     <string name="soundcore_equalizer_band7">Bant 7</string>
     <string name="soundcore_button_brightness_medium">Orta</string>
     <string name="soundcore_button_brightness_high">Yüksek</string>
@@ -3126,7 +2913,6 @@
     <string name="soundcore_equalizer_value">Değer</string>
     <string name="minutes_20">20 dakika</string>
     <string name="minutes_60">60 dakika</string>
-    <string name="devicetype_soundcore_motion300">Soundcore Motion 300</string>
     <string name="soundcore_voice_prompts">Sesli Uyarılar</string>
     <string name="soundcore_button_brightness">Düğme Parlaklığı</string>
     <string name="soundcore_button_brightness_low">Düşük</string>
@@ -3267,17 +3053,13 @@
     <string name="activity_type_obstacle_race">Engelli koşu</string>
     <string name="activity_type_billiard_pool">Havuz</string>
     <string name="authentication_failed_negotiation">Kimlik doğrulama anahtarı anlaşması başarısız oldu</string>
-    <string name="devicetype_garmin_venu">Garmin Venu</string>
-    <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
     <string name="estimatedSweatLoss">Tahmini Ter Kaybı</string>
     <string name="miscale_weight_unit_summary">Görüntülenen ölçümler için ağırlık birimini ayarla</string>
     <string name="miscale_weight_unit_metric">Metrik (kg)</string>
-    <string name="devicetype_mismartscale">Mi Smart Scale 2</string>
     <string name="miscale_weight_unit_title">Ağırlık Birimi</string>
     <string name="miscale_weight_unit_imperial">İngiliz (paunt)</string>
     <string name="miscale_small_objects_title">Küçük Nesneler</string>
     <string name="hrv">Kalp Ritmi Değişkenliği</string>
-    <string name="devicetype_micompositionscale">Mi Body Composition Scale 2</string>
     <string name="miscale_small_objects_summary">Ağırlığı 10 kg\'dan az nesneleri kaydet</string>
     <string name="miscale_weight_unit_chinese">Çin (jin)</string>
     <string name="steps_distance_unit">%1$,.2f km</string>
@@ -3297,15 +3079,12 @@
     <string name="minutes_120">120 dakika</string>
     <string name="minutes_150">150 dakika</string>
     <string name="dateformat_day_month">Gün, Ay</string>
-    <string name="devicetype_colmi_r03">Colmi R03</string>
     <string name="smart_ring_measurement_error_unknown">Yüzükten bilinmeyen %d ölçüm hatası alındı</string>
     <string name="minutes_4">4 dakika</string>
     <string name="user_feedback_set_settings_ok">Ayarlar aygıta gönderildi.</string>
     <string name="minutes_6">6 dakika</string>
     <string name="minutes_210">210 dakika</string>
     <string name="minutes_240">240 dakika</string>
-    <string name="devicetype_colmi_r02">Colmi R02</string>
-    <string name="devicetype_colmi_r06">Colmi R06</string>
     <string name="minutes_7">7 dakika</string>
     <string name="minutes_8">8 dakika</string>
     <string name="minutes_180">180 dakika</string>
@@ -3315,11 +3094,8 @@
     <string name="prefs_light_duration_longer">Daha uzun ışık süresi</string>
     <string name="pref_app_connection_duration">Uygulama bağlantı süresi</string>
     <string name="smart_ring_measurement_error_worn_incorrectly">Ölçüm hatası. Yüzüğün sensörleri doğru konumlandırıldı mı?</string>
-    <string name="devicetype_honor_watchgs3">Honor Watch GS 3</string>
-    <string name="devicetype_mijia_xmwsdj04">Mijia Sıcaklık ve Nem Sensörü 2 (E-ink)</string>
     <string name="sleep_colored_stats_awake_avg">Uyanık ortalaması</string>
     <string name="activity_type_rem_sleep">REM uykusu</string>
-    <string name="devicetype_garmin_fenix_5x_plus">Garmin Fenix 5X Plus</string>
     <string name="lactateThresholdHeartRate">Laktat Eşiği Kalp Ritmi</string>
     <string name="recoveryTime">İyileşme Süresi</string>
     <string name="weight_kg">%1$.2f kg</string>
@@ -3337,7 +3113,6 @@
     <string name="menuitem_stress_breakdown">Stres (çöküş)</string>
     <string name="menuitem_stress_simple">Stres (basit)</string>
     <string name="choose_device">Aygıt seç</string>
-    <string name="devicetype_soundcore_liberty4_nc">Soundcore Liberty 4 NC</string>
     <string name="search">Ara</string>
     <string name="pref_header_deprecated_functionalities">Kullanımdan kaldırılan işlevler</string>
     <string name="pref_header_deprecated_functionalities_warning">Aşağıdaki işlevler kullanımdan kaldırıldı ve yakında yazılımdan kaldırılacak.
@@ -3358,13 +3133,11 @@
     <string name="pref_description_user_interface">Tema, ana ekran</string>
     <string name="pref_description_dashboard">Widget\'lar, dahil edilecek aygıtlar</string>
     <string name="activity_prefs_date_birth">Doğum tarihi</string>
-    <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">BLE İstek API ile GATT etkileşimine izin verin</string>
     <string name="prefs_summary_gatt_client_device_state_updates">İstekler yoluyla BLE bağlantı durumu değişikliklerini alın</string>
     <string name="prefs_title_gatt_client_api_package">BLE API paketi</string>
     <string name="prefs_title_ble_intent_api">BLE İstek API</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Sürekli cilt sıcaklığı ölçümü</string>
-    <string name="devicetype_ble_gatt_client">Genel BLE GATT İstemcisi</string>
     <string name="prefs_title_gatt_client_notification_intents">BLE İstek API\'si aracılığıyla GATT bildirim isteklerini yayınla</string>
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">BLE özellik okuma/yazma ve bağlanma komutlarının gönderilmesine izin ver</string>
     <string name="prefs_summary_gatt_client_api_package">Bu paketle BLE İstek API iletişimini kısıtlayın</string>
@@ -3398,8 +3171,6 @@
     <string name="backup_restore_abort_title">İptal et</string>
     <string name="backup_restore_abort_export_confirmation">Dışa aktarma iptal edilsin mi? Kısmi zip dosyası silinecek.</string>
     <string name="backup_restore_restart_summary">%1s şimdi yeniden başlatılacak.</string>
-    <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
-    <string name="devicetype_amazfit_trex_3">Amazfit T-Rex 3</string>
     <string name="menuitem_map">Harita</string>
     <string name="menuitem_heart_rate_push">Kalp Ritmi İtme</string>
     <string name="menuitem_night_display">Gece Ekranı</string>
@@ -3408,27 +3179,18 @@
     <string name="label_distance_total_mph">Toplam: %.1f mil</string>
     <string name="error_no_cycling_sensor_found">döngü sensörü bulunamadı</string>
     <string name="label_distance_trip_mph">Yolculuk: %.1f mil</string>
-    <string name="devicetype_garmin_forerunner_245_music">Garmin Forerunner 245 Music</string>
     <string name="hr_resting">Dinlenirken</string>
     <string name="hr_maximum">En yüksek</string>
     <string name="hr_minimum">En düşük</string>
     <string name="hr_average">Ortalama</string>
-    <string name="devicetype_garmin_enduro_3">Garmin Enduro 3</string>
     <string name="bpm_value_unit">%1$d kalp atışı/dakika</string>
-    <string name="devicetype_garmin_forerunner_955">Garmin Forerunner 955</string>
-    <string name="devicetype_sony_wf_c500">Sony WF-C500</string>
     <string name="vo2max_running">En Yüksek Koşu VO₂ Değeri</string>
     <string name="vo2max_cycling">En Yüksek Bisiklet Sürme VO₂ Değeri</string>
     <string name="thirty_days_timeline">30 Günlük Zaman Çizelgesi</string>
-    <string name="devicetype_garmin_forerunner_265s">Garmin Forerunner 265S</string>
-    <string name="devicetype_redmi_watch_5_active">Redmi Watch 5 Active</string>
-    <string name="devicetype_miband9">Xiaomi Smart Band 9</string>
-    <string name="devicetype_huawei_watchgt5">Huawei Watch GT 5 (Pro)</string>
     <string name="contact_birthday">%1s doğum günü</string>
     <string name="pref_summary_sync_birthdays">Kişi doğum günlerini takvim etkinlikleriyle birlikte eşzamanla</string>
     <string name="pref_title_sync_birthdays">Doğum günlerini eşzamanla</string>
     <string name="birthdays">Doğum günleri</string>
-    <string name="devicetype_sony_wf_c700n">Sony WF-C700N</string>
     <string name="pref_crash_notification_title">Çökme durumunda bildir</string>
     <string name="pref_crash_notification_summary">Uygulama çöktüğünde, hatayı içeren bir bildirim görüntüle</string>
     <string name="app_crash_notification_title">%1s çöktü</string>
@@ -3443,12 +3205,9 @@
     <string name="hrZoneThreshold">Eşik</string>
     <string name="hrZoneMaximum">En yüksek</string>
     <string name="workout_set_reps">Tekrarlar</string>
-    <string name="devicetype_huawei_watchgtcyber">Huawei Watch GT Cyber</string>
     <string name="paceCorrection">Düzeltme</string>
     <string name="activity_detail_share_json_details">JSON Ayrıntılarını Paylaş</string>
     <string name="number_selected_items">%1d seçildi</string>
-    <string name="devicetype_garmin_fenix_8">Garmin Fenix 8</string>
-    <string name="devicetype_garmin_venu_sq">Garmin Venu Sq</string>
     <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="mijia_lywsd_comfort_temperature_summary">Tavsiye edilen aralık: 19 - 27</string>
     <string name="mijia_lywsd_comfort_level_title">Rahatlık Seviyesi</string>
@@ -3459,8 +3218,6 @@
     <string name="mijia_lywsd_comfort_humidity_summary">Tavsiye edilen aralık: 20 - 85</string>
     <string name="mijia_lywsd_comfort_lower">Alt Sınır</string>
     <string name="mijia_lywsd_comfort_upper">Üst Sınır</string>
-    <string name="devicetype_garmin_venu_sq_2">Garmin Venu Sq 2</string>
-    <string name="devicetype_garmin_fenix_6s_sapphire">Garmin Fenix 6S Sapphire</string>
     <string name="inactivity_warnings_minimum_steps_title">Asgari adım sayısı</string>
     <string name="inactivity_warnings_minimum_steps_summary">Eşik dakikaları boyunca atılması gereken asgari adım sayısı</string>
     <string name="prefs_hrv_monitoring_title">Kalp Ritmi Değişkenliği izleme</string>
@@ -3476,9 +3233,6 @@
     <string name="hrv_sdrr">Kalp Ritmi Değişkenliği SDDR</string>
     <string name="breaths_per_min">nefes/dk</string>
     <string name="fmtPaceAverage">Hız ortalaması</string>
-    <string name="devicetype_huawei_watchd2">Huawei Watch D2</string>
-    <string name="devicetype_idasen">IKEA Idasen Desk</string>
-    <string name="devicetype_colmi_r10">Colmi R10</string>
     <string name="idasen_control_button_mid">ORTA</string>
     <string name="idasen_control_button_sit">OTUR</string>
     <string name="idasen_control_button_stand">AYAKTA</string>
@@ -3514,16 +3268,13 @@
     <string name="activity_prefs_goal_active_calories_burnt">Günlük hedef: aktif bir şekilde yakılan kalori</string>
     <string name="permission_process_outgoing_calls_title">Giden çağrıları işleme</string>
     <string name="redmi_buds_5_pro_equalizer_neg1">-1 dB</string>
-    <string name="devicetype_huawei_band3pro">Huawei Band 3 (Pro)</string>
     <string name="totalJumps">Toplam Zıplama Sayısı</string>
     <string name="first_start_intro_welcome_to">Hoş geldiniz</string>
-    <string name="devicetype_bandw_pseries">Bowers &amp; Wilkins P serisi</string>
     <string name="pref_voice_passthrough_enabled">Doğrudan aktar</string>
     <string name="pref_voice_passthrough_enabled_summary">Dışarıdaki seslerin direkt olarak kulağınıza gelmesine izin verin</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
     <string name="redmi_buds_5_pro_equalizer_zero">0 dB</string>
     <string name="notifications_dismiss_all">Tümünü bırak</string>
-    <string name="devicetype_huawei_band2pro">Huawei Band 2 (Pro)</string>
     <string name="redmi_buds_5_pro_equalizer_preset_custom">Özel</string>
     <string name="redmi_buds_5_pro_equalizer_band_62">62 Hz</string>
     <string name="pref_override_features_title">Desteklenen özellikleri geçersiz kıl</string>
@@ -3546,14 +3297,7 @@
     <string name="charts_show_balance_sleep_title">Uyku dengesini göster</string>
     <string name="charts_show_balance_sleep_summary">Aşırı/yetersiz uykuyu haftalık ve aylık grafikler şeklinde göster</string>
     <string name="charts_show_balance_steps_title">Adım atma dengesini göster</string>
-    <string name="devicetype_garmin_instinct_2">Garmin Instinct 2</string>
     <string name="garmin_intensity_minutes">Aktif Dakikalar</string>
-    <string name="devicetype_garmin_forerunner_55">Garmin Forerunner 55</string>
-    <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
-    <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
-    <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
-    <string name="devicetype_redmi_buds_5_pro">Redmi Buds 5 Pro</string>
-    <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
     <string name="maxJumpRate">Maksimum Zıplama Oranı</string>
     <string name="pref_override_features_summary">Belirli aygıt özelliklerini etkinleştirin/devre dışı bırakın. Bu, sorunlara ve/veya aygıtınızın yanlış çalışmasına neden olabilir</string>
     <string name="music_delete_confirm_description">\'%1$s\' ses dosyasını silmek istediğinize emin misiniz?</string>
@@ -3577,8 +3321,6 @@
     <string name="summary_battery_discharge_intervals_set">Aşağıdaki yapılandırmayı cihaza gönder</string>
     <string name="battery_minimum_charge">%% cinsinden minimum pil seviyesi</string>
     <string name="permission_disable_doze_summary">Android pil optimizasyonları tarafından engellenmeden arka planda çalışmaya izin verir</string>
-    <string name="devicetype_casioecbs100">Casio ECB-S100</string>
-    <string name="devicetype_sony_wi_c100">Sony WI-C100</string>
     <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
     <string name="music_delete_from_playlist">Çalma listesinden sil</string>
     <string name="permission_displayover_title">Diğer uygulamaların üzerinde görüntüleme</string>
@@ -3627,8 +3369,6 @@
     <string name="discharge_interval_4">Boşalma aralığı 4</string>
     <string name="battery_allow_pass_through">Başka bir cihazı şarj ederken şarj olmaya izin ver</string>
     <string name="permission_disable_doze_title">Pil optimizasyonlarını yok say</string>
-    <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
-    <string name="devicetype_redmi_watch_5_lite">Redmi Watch 5 Lite</string>
     <string name="menuitem_calories_segmented">Kalori (Parçalı)</string>
     <string name="music_all_songs">Tüm şarkılar</string>
     <string name="discharge_interval_5">Boşalma aralığı 5</string>
@@ -3651,9 +3391,7 @@
     <string name="permission_answer_phone_calls_summary">Cihazlardan gelen telefon çağrılarını yanıtlar</string>
     <string name="permission_external_storage_title">Harici depolama</string>
     <string name="about_build_details_copied_to_clipboard">Yapım ayrıntıları panoya kopyalandı</string>
-    <string name="devicetype_marstek_b2500">Marstek B2500</string>
     <string name="discharge_interval_2">Boşalma aralığı 2</string>
-    <string name="devicetype_garmin_forerunner_620">Garmin Forerunner 620</string>
     <string name="music_new_playlist">Yeni çalma listesi</string>
     <string name="first_start_get_started_title">Başlayın</string>
     <string name="pref_music_management_title">Müziği Yönet</string>
@@ -3663,20 +3401,15 @@
     <string name="music_error">Hata oluştu</string>
     <string name="menuitem_calories_active_goal">Kalori hedefi (aktif)</string>
     <string name="remote_control">Uzaktan kontrol</string>
-    <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
     <string name="prefs_summary_gatt_client_filter_char">Virgülle ayırarak belirli BLE özelliklerini filtrele</string>
     <string name="redmi_buds_5_pro_equalizer_2">2 dB</string>
     <string name="music_multiselect_limit">Birden fazla öğe seçme sınırına ulaşıldı</string>
     <string name="first_start_intro_tag_line">Aygıt satıcılarının ticari uygulamalarından ve bulut hizmetlerinden kurtulun.</string>
     <string name="update_firmware_operation_check_in_progress">Ürün yazılımı kontrol ediliyor</string>
-    <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
-    <string name="devicetype_realme_buds_t110">Realme Buds T110</string>
     <string name="redmi_buds_5_pro_combo_all">ANC / Şeffaflık / Kapalı</string>
     <string name="redmi_buds_5_pro_equalizer_band_2k">2 kHz</string>
     <string name="permission_read_phone_state_summary">Devam eden çağrıların durumunu okuma</string>
-    <string name="devicetype_oppo_enco_air">Oppo Enco Air</string>
-    <string name="devicetype_oppo_enco_air2">Oppo Enco Air2</string>
     <string name="redmi_buds_5_pro_anc_deep">Derin</string>
     <string name="redmi_buds_5_pro_anc_balanced">Dengeli</string>
     <string name="redmi_buds_5_pro_anc_light">Hafif</string>
@@ -3685,28 +3418,17 @@
     <string name="file_already_exists">Dosya zaten mevcut</string>
     <string name="music_delete">Şarkıyı sil</string>
     <string name="first_start_overview_devices">Cihazlar ekranı yapılandırdığınız tüm cihazları ve durumlarını gösterir. Ayrıntılı grafikler, ayarlar, uygulamalar ve alarmlar gibi cihaza özel işlevlere erişim sağlar.</string>
-    <string name="devicetype_garmin_forerunner_235">Garmin Forerunner 235</string>
     <string name="permission_fine_location_summary">Bluetooth cihazlarını taramak için</string>
     <string name="activity_prefs_goal_standing_hours">Günlük hedef: ayakta durulan saatler</string>
-    <string name="devicetype_garmin_fenix_6s_pro">Garmin Fenix 6S Pro</string>
-    <string name="devicetype_miband9pro">Xiaomi Smart Band 9 Pro</string>
     <string name="redmi_buds_5_pro_equalizer_preset_standard">Standart</string>
     <string name="redmi_buds_5_pro_equalizer_preset_treble">Tiz Sesleri Artır</string>
     <string name="redmi_buds_5_pro_equalizer_preset_bass">Bas Sesleri Artır</string>
     <string name="redmi_buds_5_pro_equalizer_preset_voice">İnsan Seslerini Artır</string>
     <string name="redmi_buds_5_pro_equalizer_band_500">500 Hz</string>
     <string name="redmi_buds_5_pro_equalizer_band_12k">12 kHz</string>
-    <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
-    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
-    <string name="devicetype_garmin_fenix_7">Garmin Fenix 7</string>
-    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
-    <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
-    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
     <string name="view_file">Görünüm</string>
-    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="reset">Sıfırla</string>
     <string name="pairing_even_realities_g1_working">%1s ile eşleştirme...</string>
-    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="copy_to_clipboard">Kopyala</string>
     <string name="unit_rpm">rpm</string>
     <string name="average_power">Ortalama güç</string>
@@ -3718,10 +3440,8 @@
     <string name="vertical_ratio">Dikey oran</string>
     <string name="range_percentage">%1$d%% - %2$d%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
-    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
     <string name="unit_millimeter">mm</string>
     <string name="pref_import_activity_files_title">Etkinlik dosyalarını içe aktar</string>
-    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
     <string name="pairing_even_realities_g1_bottom_hint">Android aygıtınızda birkaç eşleştirme iletişim kutusu açılacaktır. Açılmazsa, bildirim çekmecesine bakın ve eşleştirme isteğini kabul edin. Hem sol hem de sağ lensin eşleştirilmesi gerekecektir.</string>
     <string name="gree_pair_status_failure">Eşleştirme başarısız: %s</string>
     <string name="gree_pair_status_success">Eşleştirme başarılı.\n\nBağlanma anahtarı: %s</string>
@@ -3735,7 +3455,6 @@
     <string name="title_activity_even_realities_g1_pairing">Even G1 eşleştirme</string>
     <string name="pairing_even_realities_g1_find_both_fail">Hem sağ hem de sol lensi bulamadı. Lütfen tekrar tarayın.</string>
     <string name="pairing_even_realities_g1_invalid_device">Even G1 aygıtı hatalı biçimlendirilmiş: %1$s.</string>
-    <string name="devicetype_even_realities_g1">Even Realities G1</string>
     <string name="activity_type_triathlon">Triatlon</string>
     <string name="activity_type_other_water_sports">Diğer su sporları</string>
     <string name="activity_type_other_winter_sports">Diğer kış sporları</string>
@@ -3749,10 +3468,8 @@
     <string name="gree_controller_host">Sunucu</string>
     <string name="pref_workout_send_gps_timeout_title">GPS zaman aşımını gönder</string>
     <string name="spo2_perc_75">%75</string>
-    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
     <string name="pref_heart_rate_high_alert">Yüksek kalp dizemi uyarısı</string>
     <string name="pref_garmin_fake_oauth_summary">Resmi uygulamaya her 90 günde bir bağlanmadan, hava durumu ve AGPS güncellemeleriyle ilgili bazı işlevleri düzeltir.</string>
-    <string name="devicetype_gree_ac">Gree klima</string>
     <string name="cycling">Bisiklete binme</string>
     <string name="gree_pair_info">%1$s (%2$s) ile eşleştirmek üzeresiniz. Eşleştirme için lütfen kablosuz ve ana sunucu bilgilerini girin. Daha fazla bilgi için internet sitesini kontrol edin.</string>
     <string name="pref_vibration_intensity">Titreşim yoğunluğu</string>
@@ -3814,42 +3531,13 @@
     <string name="huawei_stress_calibrate_finish">Bitir</string>
     <string name="maps_download_summary">Harita dosyalarını indirmek için buraya tıklayın. Aşağıdaki tercihte seçilen klasöre kaydedilmelidir.</string>
     <string name="banglejs_notification_missed_call_source">Gelen çağrı</string>
-    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
-    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
     <string name="pref_huawei_activity_reminders">Etkinlik hatırlatıcıları</string>
-    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
-    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
-    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
-    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
     <string name="interval_twenty_minutes">her 20 dakikada bir</string>
-    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
-    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
-    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
-    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
-    <string name="devicetype_colmi_r12">Colmi R12</string>
-    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="menuitem_real_time_heart_rate">Gerçek zamanlı kalp ritmi</string>
     <string name="menuitem_calculator">Hesaplayıcı</string>
     <string name="maps_not_found">Harita bulunamadı - lütfen ayarlarda geçerli bir harita klasörü seçin</string>
-    <string name="devicetype_misirun_c17">Misirun C17</string>
-    <string name="devicetype_ksix_venture">KSIX Venture</string>
-    <string name="devicetype_kt80">KT80</string>
-    <string name="devicetype_colmi_v89">Colmi V89</string>
-    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
     <string name="menuitem_running_calculator">Koşma hesaplayıcısı</string>
-    <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
-    <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
     <string name="maps_settings">Harita ayarları</string>
     <string name="maps_download_title">Harita indir</string>
-    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
-    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
     <string name="pref_device_version">Aygıt sürümü</string>
-    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
-    <string name="devicetype_colmi_v72">Colmi V72</string>
-    <string name="devicetype_c20">C20</string>
-    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
-    <string name="devicetype_viran_c29">Viran C29</string>
-    <string name="devicetype_r50pro">R50Pro</string>
-    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
-    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
 </resources>

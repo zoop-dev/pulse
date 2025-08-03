@@ -468,19 +468,6 @@
     <string name="kind_resources">Middelen</string>
     <string name="kind_watchface">Wijzerplaat</string>
     <string name="devicetype_unknown">Onbekend apparaat</string>
-    <string name="devicetype_test">Test Apparaat</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_vibratissimo">Virbatissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="pref_header_auto_export">Automatisch exporteren</string>
     <string name="pref_title_auto_export_enabled">Automatisch exporteren ingeschakeld</string>
     <string name="pref_title_auto_export_location">Locatie exporteren</string>
@@ -521,9 +508,6 @@
     <string name="activity_type_treadmill">Loopband</string>
     <string name="select_all">Selecteer alles</string>
     <string name="share">Delen</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
-    <string name="devicetype_q8">Q8</string>
-    <string name="devicetype_xwatch">XWatch</string>
     <string name="menuitem_status">Status</string>
     <string name="menuitem_activity">Trainingsgeschiedenis</string>
     <string name="menuitem_weather">Weer</string>
@@ -550,7 +534,6 @@
     <string name="korean">Koreaans</string>
     <string name="japanese">Japans</string>
     <string name="reset_index">Reset ophaaldatum</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="menuitem_notifications">Meldingen</string>
     <string name="controlcenter_change_led_color">Wijzig ledkleur</string>
     <string name="controlcenter_change_fm_frequency">Wijzig FM-frequentie</string>
@@ -584,10 +567,6 @@
     <string name="activity_prefs_chart_min_heart_rate">Minimum hartslag</string>
     <string name="ok">OK</string>
     <string name="mi3_night_mode_sunset">Bij zonsondergang</string>
-    <string name="devicetype_id115">ID115</string>
-    <string name="devicetype_watch9">Watch 9</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
     <string name="menuitem_music">Muziek</string>
     <string name="menuitem_more">Meer</string>
     <string name="watch9_time_minutes">Minuten:</string>
@@ -609,7 +588,6 @@
     <string name="pref_invalid_frequency_title">Ongeldige frequentie</string>
     <string name="pref_invalid_frequency_message">Voer een frequentie in tussen 87,5 en 108,0</string>
     <string name="language_and_region_prefs">Taal en regio instellingen</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="title_activity_notification_filter">Meldingen filter</string>
     <string name="edittext_notification_filter_words_hint">Voer gewenste woorden in, elk op een nieuwe regel</string>
     <string name="toast_notification_filter_saved_successfully">Meldingen filter opgeslagen</string>
@@ -679,7 +657,6 @@
     <string name="title_activity_device_specific_settings">Apparaatspecifieke instellingen</string>
     <string name="pref_title_authkey">Authenticatiesleutel</string>
     <string name="pref_summary_authkey">Wijzig de authenticatiesleutel in een algemene sleutel op al uw Android-apparaten waarmee u verbinding wilt maken. De vorige standaardsleutel voor alle apparaten is 0123456789@ABCDE</string>
-    <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2. \n \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand. \n \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. \n \nGA VERDER OP EIGEN RISICO! \n \nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM \"Amazfit Band 2\" IS</string>
     <string name="dutch">Nederlands</string>
     <string name="turkish">Turks</string>
@@ -689,8 +666,6 @@
     <string name="thai">Thais</string>
     <string name="vietnamese">Vietnamees</string>
     <string name="portuguese">Portugees</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
     <string name="fw_upgrade_notice_miband4">U staat op het punt om de %s-firmware op je Mi Band 4 te installeren.
 \n
 \nZorg ervoor dat u het .fw-bestand installeert, en daarna het .res-bestand. Uw band wordt opnieuw opgestart na het installeren van het .fw-bestand.
@@ -709,7 +684,6 @@
     <string name="pref_charts_range_off">Grafiekbereik ingesteld op een week</string>
     <string name="weekstepschart_steps_a_month">Stappen per maand</string>
     <string name="weeksleepchart_sleep_a_month">Slaap per maand</string>
-    <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="pref_summary_expose_hr">Sta andere apps toe HR-data te benaderen in realtime terwijl Gadgetbridge verbonden is</string>
     <string name="pref_title_expose_hr">realtime HR-toegang door derden</string>
@@ -742,8 +716,6 @@
     <string name="pref_display_add_device_fab_off">Alleen zichtbaar als er geen apparaat toegevoegd is</string>
     <string name="activity_error_no_app_for_gpx">Om de route van de activiteit te zien: installeer een app die GPX bestanden kan tonen.</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 instellingen</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">Vind telefoon</string>
     <string name="prefs_enable_find_phone">\\\'Vind telefoon\\\' inschakelen</string>
     <string name="prefs_find_phone_summary">Gebruik je band om de beltoon van je telefoon af te spelen.</string>
@@ -757,7 +729,6 @@
 \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd.
 \n
 \nGA VERDER OP EIGEN RISICO!</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="fw_upgrade_notice_amazfitgtr">U staat op het punt om de firmware %s te installeren op uw Amazfit GTR.
 \n
 \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand en als laatste het .gps-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand.
@@ -771,7 +742,6 @@
     <string name="pref_title_chart_sleep_rolling_24_hour">Slaapbereik</string>
     <string name="pref_chart_sleep_rolling_24_on">Afgelopen 24 uur</string>
     <string name="pref_chart_sleep_rolling_24_off">Van middag tot middag</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="fw_upgrade_notice_amazfitgts">U staat op het punt om de firmware %s te installeren op uw Amazfit GTS.
 \n
 \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand en als laatste het .gps-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand.
@@ -780,7 +750,6 @@
 \n
 \nGA VERDER OP EIGEN RISICO!</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="preferences_qhybrid_settings">Q Hybrid instellingen</string>
     <string name="watch_not_connected">Horloge niet verbonden</string>
     <string name="qhybrid_vibration_strength">trillingssterkte:</string>
@@ -797,8 +766,6 @@
     <string name="qhybrid_offset_time_by">offset tijdzone met</string>
     <string name="pref_disable_new_ble_scanning">Nieuwe BLE-scanning uitschakelen</string>
     <string name="pref_summary_disable_new_ble_scanning">Vink deze optie aan als uw apparaat niet kan worden gevonden tijdens discovery</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_y5">Y5</string>
     <string name="prefs_button_single_press_action_selection_title">Event 1 actie</string>
     <string name="prefs_button_double_press_action_selection_title">Event 2 actie</string>
     <string name="prefs_button_triple_press_action_selection_title">Event 3 actie</string>
@@ -806,7 +773,6 @@
     <string name="prefs_button_long_press_action_selection_title">Lange druk op de knop actie</string>
     <string name="alarm_snooze">Sluimeren</string>
     <string name="error_no_location_access">Voor een goede werking van het scannen moet de locatietoegang worden verleend en ingeschakeld</string>
-    <string name="devicetype_itag">iTag</string>
     <string name="pref_title_allow_high_mtu">Hoge MTU toestaan</string>
     <string name="pref_summary_allow_high_mtu">Verhoogt de overdrachtssnelheid, maar werkt mogelijk niet op sommige Android-apparaten.</string>
     <string name="pref_summary_sync_calendar">Schakelt agendameldingen in, zelfs wanneer niet verbonden</string>
@@ -831,7 +797,6 @@
     <string name="hr_appname_stopwatch">Stopwatch</string>
     <string name="hr_appname_commute">Woon-werkverkeer</string>
     <string name="pref_title_vibration_strength">Trillingssterkte</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
     <string name="pref_title_relax_firmware_checks">Schakel dit in als u een firmware wilt flashen die niet voor uw apparaat bedoeld is (op eigen risico)</string>
     <string name="pref_summary_relax_firmware_checks">Minder strenge firmwarecontroles</string>
     <string name="pref_header_auto_fetch">Automatisch ophalen</string>
@@ -841,8 +806,6 @@
     <string name="menuitem_eventreminder">Gebeurtenis herinnering</string>
     <string name="menuitem_hr">Hartslag</string>
     <string name="menuitem_pai">PAI</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
-    <string name="devicetype_watchx">Watch X</string>
     <string name="power_mode_watch">Alleen horloge</string>
     <string name="power_mode_saving">Energiebesparing</string>
     <string name="power_mode_normal">Normaal</string>
@@ -889,7 +852,6 @@
 \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. 
 \n 
 \nGA VERDER OP EIGEN RISICO!</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
     <string name="about_additional_contributions">Hartelijk dank aan alle niet-vermelde bijdragers voor het bijdragen van code, vertalingen, ondersteuning, ideeën, motivatie, foutrapporten, geld … ✊</string>
     <string name="about_additional_device_support">Extra apparaatondersteuning</string>
     <string name="about_contributors">Bijdragers</string>
@@ -907,7 +869,6 @@
     <string name="menuitem_stress">Spanning</string>
     <string name="menuitem_cycles">Cyclus volgen</string>
     <string name="menuitem_breathing">Ademhaling</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="fw_upgrade_notice_miband5">U staat op het punt om de %s-firmware op je Mi Band 5 te installeren.
 \n
 \nZorg ervoor dat u het .fw-bestand installeert, en daarna het .res-bestand. Uw band wordt opnieuw opgestart na het installeren van het .fw-bestand.
@@ -915,7 +876,6 @@
 \nOpmerking: U hoeft .res niet te installeren als het precies hetzelfde is als het eerder geïnstalleerde .res.
 \n
 \nGA VERDER OP EIGEN RISICO!</string>
-    <string name="devicetype_tlw64">TLW64</string>
     <string name="error_location_enabled_mandatory">Locatie moet zijn ingeschakeld om naar apparaten te scannen</string>
     <string name="error_retrieving_devices_database">Fout bij het ophalen van apparaten uit de database</string>
     <string name="error_setting_alias">Fout bij instellen van alias:</string>
@@ -1012,21 +972,6 @@
     <string name="menuitem_mutephone">Telefoon dempen</string>
     <string name="menuitem_findphone">Vind telefoon</string>
     <string name="menuitem_spo2">SpO2</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
-    <string name="devicetype_waspos">Wasp-os</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="activity_type_strength_training">Krachttraining</string>
     <string name="dbmanagementactivity_export_finished">Verwijdering voltooid</string>
     <string name="activity_db_management_clean_export_directory_text">Geëxporteerde bestanden in de export/import-directory zijn toegankelijk voor elke app op uw apparaat. Mogelijk wilt u deze bestanden verwijderen na synchronisatie of back-up. Zorg ervoor dat u een back-up hebt voordat u ze verwijdert. GPX-bestanden, submappen en automatisch geëxporteerde databasebestanden (indien aanwezig) worden niet verwijderd. Het pad naar de export/import-directory is:</string>
@@ -1065,7 +1010,6 @@
     <string name="calendar_day">Dag</string>
     <string name="battery_level">Batterijniveau</string>
     <string name="battery_detail_activity_title">Batterij-informatie</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="medley">Wisselslag</string>
     <string name="backstroke">Rugslag</string>
     <string name="freestyle">Vrije slag</string>
@@ -1133,9 +1077,6 @@
     <string name="pref_title_lower_button_function_short">Onderknop kort</string>
     <string name="pref_title_middle_button_function_short">Middenknop kort</string>
     <string name="pref_title_upper_button_function_short">Bovenknop kort</string>
-    <string name="devicetype_lefun">Lefun</string>
-    <string name="devicetype_sg2">Lemfo SG2</string>
-    <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
     <string name="activity_error_no_app_for_png">Installeer een geschikte app om de schermafbeelding te delen.</string>
     <string name="activity_summary_detail">Activiteitdetails</string>
     <string name="activity_type_badminton">Badminton</string>
@@ -1177,7 +1118,6 @@
     <string name="qhybrid_title_file_management">Bestandsbeheer</string>
     <string name="qhybrid_title_background_image">Achtergrondafbeelding</string>
     <string name="qhybrid_title_apps">Apps</string>
-    <string name="devicetype_um25">UM-25</string>
     <string name="fossil_hr_warning_firmware_too_new">Sommige functies zijn uitgeschakeld omdat de firmware van het horloge te nieuw is</string>
     <string name="prefs_sounds_summary">Instellen wanneer het apparaat geluid maakt</string>
     <string name="prefs_sounds">Geluiden</string>
@@ -1195,7 +1135,6 @@
     <string name="qhybrid_summary_file_management">Upload en download bestanden</string>
     <string name="pref_summary_physical_buttons">Configureer de functionaliteit van de fysieke knoppen op het horloge</string>
     <string name="pref_title_physical_buttons">Fysieke knoppen</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
     <string name="fw_upgrade_notice_miband6">U staat op het punt om de %s-firmware op je Mi Band 6 te installeren.
 \n
 \nZorg ervoor dat u het .fw-bestand installeert, en daarna het .res-bestand. Uw band wordt opnieuw opgestart na het installeren van het .fw-bestand.
@@ -1229,7 +1168,6 @@
     <string name="pref_title_developer_settings">Ontwikkelaarsinstellingen</string>
     <string name="qhybrid_pref_summary_actions">Acties voor de Reistijd-app</string>
     <string name="qhybrid_pref_title_actions">Acties</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="menuitem_barometer">Barometer</string>
     <string name="pref_theme_black_background">Gebruik zwarte achtergrond in Donker thema</string>
     <string name="set">Gebruik</string>
@@ -1273,7 +1211,6 @@
     <string name="button_watchface_add_widget">Widget toevoegen</string>
     <string name="button_watchface_select_image">Verander achtergrond</string>
     <string name="button_watchface_edit_name">Naam aanpassen</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="watchface_upload_failed">Uploaden van de wijzerplaat is mislukt. Probeer het opnieuw.</string>
     <string name="watchface_cache_confirm_overwrite">Er bestaat al een wijzerplaat met deze naam in de cache. Wil je het overschrijven\?</string>
     <string name="heart_rate_result">Meetresultaat</string>
@@ -1302,9 +1239,7 @@
     <string name="prefs_sleep_time_summary">Geeft aan wanneer slaap is gedetecteerd</string>
     <string name="prefs_sleep_time_label">Slaaptijden instellen</string>
     <string name="prefs_sleep_time">Slaaptijden</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="pref_title_ping_tone">Ping-geluid</string>
-    <string name="devicetype_nothingear1">Nothing Ear (1)</string>
     <string name="nothing_prefs_inear_summary">Speel/pauzeer de muziek afhankelijk van of je de oordopjes draagt</string>
     <string name="nothing_prefs_inear_title">In-oor-detectie</string>
     <string name="nothing_prefs_audiomode_title">Audiomodus</string>
@@ -1321,7 +1256,6 @@
     <string name="pref_message_privacy_mode_complete">Verberg alle inhoud</string>
     <string name="pref_applications_settings">App-lijst</string>
     <string name="toast_app_must_be_selected">App moet geselecteerd zijn om ingesteld te worden</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
     <string name="prefs_equalizer_preset">Equalizer-voorinstelling</string>
     <string name="pref_title_equalizer_bass_boost">Basversterking</string>
     <string name="pref_title_equalizer_soft">Zacht</string>
@@ -1348,7 +1282,6 @@
     <string name="battery_case">Hoes</string>
     <string name="left_earbud">Linker oordopje</string>
     <string name="right_earbud">Rechter oordopje</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="pref_title_equalizer_normal">Normaal</string>
     <string name="prefs_active_noise_cancelling">Actieve ruisonderdrukking</string>
     <string name="prefs_active_noise_cancelling_summary">Blokkeer omgevingsgeluid</string>
@@ -1393,7 +1326,6 @@
     <string name="sony_equalizer_preset_mellow">Zacht</string>
     <string name="sony_equalizer_preset_custom_1">Aangepast 1</string>
     <string name="sony_equalizer_band_1000">1k</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="sony_ambient_sound_focus_voice">Versterk stemmen</string>
     <string name="sony_equalizer_band_16000">16k</string>
     <string name="sony_automatic_power_off_1_hour">1 uur</string>
@@ -1464,8 +1396,6 @@
     <string name="pref_header_sony_equalizer_bands">Banden</string>
     <string name="sony_audio_upsampling">Audio-upsampling</string>
     <string name="controlcenter_power_off">Uitschakelen</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="devicetype_vesc">VESC</string>
     <string name="sony_button_mode_off">Uit</string>
     <string name="sony_button_mode_ambient_sound_control">Omgevingsgeluidregeling</string>
     <string name="sony_button_mode_left">Knopmodus (links)</string>
@@ -1477,7 +1407,6 @@
     <string name="sony_pause_when_taken_off">Pauzeer wanneer de koptelefoon wordt afgezet</string>
     <string name="sony_button_mode_volume_control">Volumeregeling</string>
     <string name="add_test_device">Testapparaat toevoegen</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
     <string name="descentDistance">Afstand bergafwaarts</string>
     <string name="discover_unsupported_devices">Ontdek niet-ondersteunde apparaten</string>
     <string name="ascentDistance">Afstand bergopwaarts</string>
@@ -1512,8 +1441,6 @@
     <string name="fossil_hr_button_config_info">Sommige knoppen kunnen niet worden geconfigureerd omdat hun functies hard gecodeerd zijn in de horlogefirmware.
 \n
 \nWaarschuwing: lang indrukken van de bovenste knop wanneer een wijzerplaat van de officiële Fossil-app is geïnstalleerd, schakelt ook tussen tonen/verbergen van widgets.</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="sony_speak_to_chat">Spreek-om-te-chatten</string>
     <string name="sony_speak_to_chat_sensitivity">Gevoeligheid van stemdetectie</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Automatisch</string>
@@ -1530,7 +1457,6 @@
     <string name="sony_speak_to_chat_timeout_long">Lang (1m)</string>
     <string name="sony_connect_two_devices">Met 2 apparaten tegelijk verbinden</string>
     <string name="device_unsupported">NIET ONDERSTEUND</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="pref_header_sony_anc_optimizer">Ruisonderdrukking-optimalisator</string>
     <string name="sony_anc_optimize_description">Klik om de optimalisatie voor ruisonderdrukking te starten.</string>
     <string name="sony_anc_optimize_confirmation_title">Ruisonderdrukking-optimalisator</string>
@@ -1547,8 +1473,6 @@
     <string name="sony_anc_optimize_confirmation_description">Gebruik de hoofdtelefoon zoals u gewend bent. Als de draagconditie of de atmosferische druk verandert, voert u de optimizer opnieuw uit.</string>
     <string name="sony_anc_optimizer_status_not_running">Niet actief</string>
     <string name="sony_anc_optimizer_status_starting">Starten…</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
     <string name="menuitem_nothing">Geen</string>
     <string name="pref_summary_opentracks_packagename">Wordt gebruikt voor het starten/stoppen van GPS-trackregistratie in externe fitness-app.</string>
     <string name="pref_title_opentracks_packagename">OpenTracks-pakketnaam</string>
@@ -1583,7 +1507,6 @@
     <string name="sensitive">Gevoelig</string>
     <string name="activity_type_outdoor_cycling">Buiten fietsen</string>
     <string name="activity_type_elliptical">Crosstrainer</string>
-    <string name="devicetype_sony_wf_1000xm3">Sony WF-1000XM3</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly Geen Pebble</string>
     <string name="activity_type_outdoor_running">Buiten hardlopen</string>
     <string name="about_activity_title_main_nightly">Over Gadgetbridge Nightly</string>
@@ -1652,7 +1575,6 @@
     <string name="prefs_in_ear_detection_summary">Gesprekken voeren via uw oordopjes wanneer ze in uw oren zitten</string>
     <string name="prefs_ambient_volume_right">Omgevingsvolume rechts</string>
     <string name="heartrate_bpm_100">100 bpm</string>
-    <string name="devicetype_galaxybuds_pro">Galaxy Buds Pro</string>
     <string name="prefs_ambient_sound_during_call_title">Omgevingsgeluid tijdens gesprekken</string>
     <string name="heartrate_bpm_145">145 bpm</string>
     <string name="prefs_heartrate_alert_experimental_description">Trillen wanneer de hartslag boven een bepaalde drempel komt, zonder enige duidelijke fysieke activiteit in de laatste 10 minuten. Deze functie is experimenteel en is niet uitgebreid getest.</string>
@@ -1831,7 +1753,6 @@
     <string name="prefs_screen_timeout">Time-out scherm</string>
     <string name="smart">Slim</string>
     <string name="mi2_dnd_always">Altijd</string>
-    <string name="devicetype_miband7">Xiaomi Smart Band 7</string>
     <string name="menuitem_workout_history">Trainingsgeschiedenis</string>
     <string name="menuitem_female_health">Vrouwelijke gezondheid</string>
     <string name="menuitem_workout_status">Trainingsstatus</string>
@@ -1867,7 +1788,6 @@
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="pref_title_notifications_ignore_low_priority">Negeer meldingen met lage prioriteit</string>
     <string name="pref_summary_notifications_ignore_low_priority">Stuur geen meldingen met lage en minimale prioriteit naar het horloge</string>
-    <string name="devicetype_flipper_zero">Flipper zero</string>
     <string name="pref_title_notification_prefer_long_text">Voorkeur voor lange meldingstekst</string>
     <string name="pref_summary_notification_prefer_long_text">Stuur, indien beschikbaar, de lange meldingstekst naar het apparaat</string>
     <string name="kind_app">App</string>
@@ -1876,10 +1796,8 @@
     <string name="menuitem_unknown_app">Onbekend (%s)</string>
     <string name="pref_title_overwrite_settings_on_connection">Instellingen overschrijven bij verbinding</string>
     <string name="pref_summary_overwrite_settings_on_connection">Wanneer er verbinding met het apparaat gemaakt wordt, overschrijf alle instellingen erop.</string>
-    <string name="devicetype_amazfit_gts3">Amazfit GTS 3</string>
     <string name="pref_title_third_party_app_device_settings">Toestaan dat apps van derden instellingen wijzigen</string>
     <string name="dismiss">Afwijzen</string>
-    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3</string>
     <string name="activity_type_dance">Dansen</string>
     <string name="activity_type_indoor_fitness">Binnenfitness</string>
     <string name="activity_type_gymnastics">Gymnastiek</string>
@@ -1896,9 +1814,7 @@
     <string name="activity_type_street_dance">Street Dance</string>
     <string name="activity_type_zumba">Zumba</string>
     <string name="activity_type_indoor_ice_skating">Indoor schaatsen</string>
-    <string name="devicetype_super_cars">Shell Racing</string>
     <string name="pref_summary_third_party_app_device_settings">Sta andere geïnstalleerde apps van derden toe om apparaatinstellingen aan te passen via intents.</string>
-    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite</string>
     <string name="fw_upgrade_notice_amazfit_gtr3">U staat op het punt de %s-firmware op uw Amazfit GTR 3 te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
@@ -1989,9 +1905,7 @@
     <string name="menuitem_phone">Telefoon</string>
     <string name="pref_title_upper_button_long_press_action">Bovenste knop lang indrukken actie</string>
     <string name="pref_screen_auto_brightness_summary">Pas de helderheid van het scherm aan op basis van het omgevingslicht</string>
-    <string name="devicetype_sony_wh_1000xm2">Sony WH-1000XM2</string>
     <string name="pref_chart_sleep_lines_limit">Hoeveel slaapsessieregels moeten worden weergegeven voordat ze worden gescrolld</string>
-    <string name="devicetype_sony_wf_1000xm4">Sony WH-1000XM4</string>
     <string name="fw_upgrade_notice_amazfit_gtr4">U staat op het punt de %s-firmware op uw Amazfit GTR 4 te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
@@ -2004,7 +1918,6 @@
 \n
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="activity_type_indoor_walking">Binnen wandelen</string>
-    <string name="devicetype_amazfit_gts4">Amazfit GTS 4</string>
     <string name="menuitem_todo">Te doen</string>
     <string name="pref_title_lower_button_short_press_action">Onderste knop korte druk actie</string>
     <string name="pref_header_intent_api">Intent API</string>
@@ -2023,7 +1936,6 @@
     <string name="intent_api_allow_trigger_export_title">Database-export toestaan</string>
     <string name="intent_api_broadcast_export_title">Broadcast op database export</string>
     <string name="intent_api_broadcast_export_summary">Een Intent uitzenden wanneer het exporteren van de database is voltooid</string>
-    <string name="devicetype_amazfit_gtr4">Amazfit GTR 4</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Apparaatvoorkeuren verwijderen\?</string>
     <string name="debugactivity_confirm_remove_device_preferences">Hiermee worden de apparaatvoorkeuren voor alle aangesloten apparaten gereset. Weet je het zeker\?</string>
     <string name="fw_upgrade_notice_amazfit_gts4_mini">U staat op het punt de %s-firmware op uw Amazfit GTS 4 Mini te installeren.
@@ -2033,7 +1945,6 @@
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="pref_title_notification_media_ignores_application_list">App-lijst negeren voor medianotificaties</string>
     <string name="pref_summary_notification_media_ignores_application_list">Verwerk mediameldingen vóór de app-lijst. Als deze voorkeur niet is aangevinkt, moeten media-apps worden toegestaan in de app-lijst om mediabediening op het apparaat te laten werken.</string>
-    <string name="devicetype_amazfit_gts4_mini">Amazfit GTS 4 Mini</string>
     <string name="menuitem_brightness">Helderheid</string>
     <string name="menuitem_bluetooth">Bluetooth</string>
     <string name="menuitem_wifi">Wi-Fi</string>
@@ -2045,19 +1956,16 @@
     <string name="menuitem_unsupported">[NIET ONDERSTEUND] %s</string>
     <string name="sony_speak_to_chat_sensitivity_standard">Standaard</string>
     <string name="pref_screen_auto_brightness_title">Automatische helderheid</string>
-    <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
     <string name="fw_upgrade_notice_amazfit_band7">U staat op het punt de %s-firmware op uw Amazfit Band 7 te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
 \n
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="activity_type_pool_swimming">Zwembad zwemmen</string>
-    <string name="devicetype_amazfit_band7">Amazfit-band 7</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Verkort de tijdstempels van de ophaalbewerking tot minuten. Schakel deze instelling uit om de tijdstempels binnen enkele seconden te behouden als u problemen ondervindt tijdens het ophalen van zeer korte trainingen.</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">Tijdstempels voor ophaalbewerkingen inkorten</string>
     <string name="sony_ambient_sound_control_button_modes">Instellingen knop omgevingsgeluid</string>
     <string name="sony_ambient_sound_control_button_mode_nc_off">Ruisonderdrukking, uit</string>
-    <string name="devicetype_sony_linkbuds_s">Sony LinkBuds S</string>
     <string name="sony_ambient_sound_control_button_mode_nc_as_off">Ruisonderdrukking, Omgevingsgeluid, Uit</string>
     <string name="sony_ambient_sound_control_button_mode_nc_as">Ruisonderdrukking, omgevingsgeluid</string>
     <string name="sony_ambient_sound_control_button_mode_as_off">Omgevingsgeluid, uit</string>
@@ -2072,13 +1980,11 @@
     <string name="appmanager_download_started">Downloaden van app gestart</string>
     <string name="appmanager_downloaded_to_cache">%s gedownload naar cache</string>
     <string name="appmanager_download_app_error">Fout bij het downloaden van de app</string>
-    <string name="devicetype_asteroidos">AsteroidOS</string>
     <string name="fw_upgrade_notice_amazfit_trex2">U staat op het punt de %s-firmware op uw Amazfit T-Rex 2 te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
 \n
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
-    <string name="devicetype_amazfit_trex_2">Amazfit T-Rex 2</string>
     <string name="pref_workout_detection_ask_first">Vraag het mij eerst</string>
     <string name="pref_workout_detection_ask_first_summary">Bevestiging op horloge vereisen bij het detecteren van deze training</string>
     <string name="activity_type_rowing">Roeien</string>
@@ -2087,8 +1993,6 @@
     <string name="pref_workout_detection_enabled_summary">Schakel automatische detectie van deze training in</string>
     <string name="pref_workout_detection_time_summary">Het aantal minuten dat de training aan de gang moet zijn voordat deze wordt gedetecteerd</string>
     <string name="georgian">Georgisch</string>
-    <string name="devicetype_soflow_s06">SoFlow SO6</string>
-    <string name="devicetype_galaxybuds_2_pro">Galaxy Buds2 Pro</string>
     <string name="pref_title_lock_unlock">Slot</string>
     <string name="pref_camera_remote_title">Camera-afstandsbediening</string>
     <string name="pref_camera_remote_summary">Hiermee kan het horloge de camera van de telefoon activeren</string>
@@ -2164,13 +2068,11 @@
     <string name="menuitem_vo2_max">VO₂ Max</string>
     <string name="menuitem_recommendation">Aanbeveling</string>
     <string name="menuitem_aqi">Luchtkwaliteitsindex</string>
-    <string name="devicetype_amazfit_gtr3_pro">Amazfit GTR 3 Pro</string>
     <string name="fw_upgrade_notice_amazfit_gtr3_pro">U staat op het punt de %s-firmware op uw Amazfit GTR 3 Pro te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
 \n
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
-    <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5</string>
     <string name="fossil_hr_connection_not_confirmed">Verbinding niet bevestigd op horloge, gebruikt nu ongeauthenticeerde modus</string>
     <string name="fossil_hr_pairing_successful">Koppelen met horloge gelukt</string>
     <string name="fossil_hr_pairing_failed">Koppelen met horloge mislukt</string>
@@ -2264,7 +2166,6 @@
     <string name="loyalty_cards_sync_options">Synchronisatie-opties</string>
     <string name="pref_title_mb_intents">Broadcast Media Knop Intents Direct</string>
     <string name="pref_summary_mb_intents">Inschakelen als mediabediening van apparaat niet werkt voor bepaalde apps</string>
-    <string name="devicetype_bohemic_smart_bracelet">Bohemic Smart Armband</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">Gegevens over slaapademhalingsfrequentie ophalen</string>
     <string name="busy_task_fetch_sports_summaries">Sportoverzichten ophalen</string>
     <string name="busy_task_fetch_debug_logs">Foutopsporingslogboeken ophalen</string>
@@ -2273,8 +2174,6 @@
     <string name="busy_task_fetch_pai_data">PAI-gegevens ophalen</string>
     <string name="busy_task_fetch_spo2_data">SpO2-gegevens ophalen</string>
     <string name="busy_task_fetch_hr_data">Hartslaggegevens ophalen</string>
-    <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
-    <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="activity_prefs_goals">Doelen</string>
     <string name="activity_type_windsurfing">Windsurfen</string>
     <string name="activity_type_rugby">Rugby</string>
@@ -2300,7 +2199,6 @@
     <string name="activity_type_hockey">Hockey</string>
     <string name="error_no_bluetooth_scan">Bluetooth-scantoegang moet worden verleend en ingeschakeld om het scannen correct te laten werken</string>
     <string name="activity_type_golf">Golfen</string>
-    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
     <string name="withings_calibration_text_minutes">Gebruik nu de draaiknop om de minutenwijzer op de 12 uit te lijnen.</string>
     <string name="permission_request">Met %1$s kunt u berichten en andere gegevens van Android naar uw apparaat verzenden. Om dit te doen, heeft het toestemming nodig om toegang te krijgen tot die gegevens, zonder deze toestemmingen werkt het mogelijk niet goed.
 \n
@@ -2329,7 +2227,6 @@
 \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. 
 \n 
 \nGA VERDER OP EIGEN RISICO!</string>
-    <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">U staat op het punt de %s-firmware op uw Amazfit Cheetah Pro te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
@@ -2337,13 +2234,6 @@
 \nVERDERGAAN IS OP EIGEN RISICO!</string>
     <string name="device_experimental">EXPERIMENTEEL</string>
     <string name="fw_upgrade_notice_zepp_os">U staat op het punt de %1$s-firmware op uw %2$s te installeren. \n \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand. \n \nVERDERGAAN IS OP EIGEN RISICO!</string>
-    <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (vierkant)</string>
-    <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (rond)</string>
-    <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
-    <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
-    <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
-    <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
-    <string name="devicetype_amazfit_falcon">Amazfit Falcon</string>
     <string name="info_menu_structure_set">Menustructuur-JSON ingesteld in GB</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Update alstublieft uw wijzerplaat voor het aangepaste menu</string>
     <string name="error_invalid_menu_structure">Ongeldige menustructuur-JSON</string>
@@ -2365,7 +2255,6 @@
     <string name="updatefirmwareoperation_updateproblem_free_space">Het apparaat heeft niet genoeg vrije ruimte</string>
     <string name="text_receiver_activity_title">Stuur tekst naar apparaat</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Huidige MTU van %1$d is te laag, activeer alstublieft Hoge MTU in de apparaatinstellingen en verbind het apparaat opnieuw.</string>
-    <string name="devicetype_miband2_hrx">Mi Band HRX</string>
     <string name="prefs_wena3_receive_calls_title">Instellingen binnenkomend gesprek</string>
     <string name="prefs_wena3_button_action_name_start_timer">Start timer</string>
     <string name="prefs_wena3_menu_icon_hint">Instellingen wordt altijd aan het eind getoond</string>
@@ -2416,7 +2305,6 @@
     <string name="prefs_wena3_notification_default_call_vibration">Trilling binnenkomend telefoongesprek</string>
     <string name="green">Groen</string>
     <string name="yellow">Geel</string>
-    <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="prefs_wena3_notification_default_call_led">LED-kleur binnenkomend telefoongesprek</string>
     <string name="red">Rood</string>
     <string name="cyan">Cyaan</string>
@@ -2452,7 +2340,6 @@
     <string name="blue">Blauw</string>
     <string name="prefs_wena3_button_action_name_activity_screen">Activiteitenscherm</string>
     <string name="prefs_wena3_notification_settings_title">Meldingsinstellingen</string>
-    <string name="devicetype_sony_wf_1000xm5">Sony WF-1000XM5</string>
     <string name="pref_message_privacy_mode_bodyonly">Verberg alleen tekst</string>
     <string name="latvian">Lets</string>
     <string name="pref_title_notifications_ignore_work_profile">Negeer meldingen uit het werkprofiel</string>
@@ -2473,7 +2360,6 @@
     <string name="busy_task_fetch_statistics">Bezig met ophalen statistieken</string>
     <string name="femometer_measurement_mode_quick">Snel (30s)</string>
     <string name="zepp_os_watchface_starry_sky">Sterrenhemel</string>
-    <string name="devicetype_amazfit_balance">Amazfit Balance</string>
     <string name="fossil_hr_nav_app_not_installed_notify_text">Navigatie gestart maar navigationApp is niet op het horloge geïnstalleerd. Installeer het via de App-beheerder.</string>
     <string name="yard">yard</string>
     <string name="strokes_minute">slagen/min</string>
@@ -2491,11 +2377,8 @@
     <string name="zepp_os_watchface_guider">Gids</string>
     <string name="menuitem_readiness">Gereedheid</string>
     <string name="menuitem_thermometer">Thermometer</string>
-    <string name="devicetype_femometer_vinca2">Femometer Vinca II</string>
     <string name="fossil_hr_nav_app_not_installed_notify_title">Navigatie-app niet geïnstalleerd op horloge</string>
-    <string name="devicetype_amazfit_active_edge">Amazfit Active Edge</string>
     <string name="charts_legend_spo2_average">Zuurstofsaturatie</string>
-    <string name="devicetype_amazfit_active">Amazfit Active</string>
     <string name="pref_title_navigation_apps">Navigatie-apps</string>
     <string name="pref_title_navigation_prefs">Navigatie-instellingen</string>
     <string name="pref_navigation_app_gmaps">Google Maps</string>
@@ -2507,7 +2390,6 @@
     <string name="pref_title_casio_alert_other">Overige meldingen</string>
     <string name="pref_title_casio_alert_calendar">Kalendermeldingen</string>
     <string name="pref_summary_casio_alert_call">Tril/piep voor binnenkomende telefoongesprekken</string>
-    <string name="devicetype_miband8">Xiaomi Smart Band 8</string>
     <string name="menuitem_running">Hardlopen</string>
     <string name="pref_sleep_mode_schedule_title">Planning slaapmodus</string>
     <string name="pref_title_casio_alert_call">Melding voor telefoongesprekken</string>
@@ -2517,22 +2399,16 @@
     <string name="menuitem_focus">Focus</string>
     <string name="pref_summary_casio_alert_sms">Tril/piep voor SMS-meldingen</string>
     <string name="pref_title_preview_message_in_title">Toon een preview van het bericht in de titel</string>
-    <string name="devicetype_redmiwatch3active">Redmi Watch 3 Active</string>
     <string name="pref_summary_casio_alert_calendar">Tril/piep voor kalendermeldingen</string>
     <string name="serial_number">Serienummer</string>
     <string name="danish">Deens</string>
     <string name="wake_up_time">Wektijd</string>
     <string name="menuitem_stats">Statistieken</string>
     <string name="pref_summary_casio_alert_other">Tril/piep voor meldingen in de categorie Overig</string>
-    <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite</string>
     <string name="pref_summary_preview_message_in_title">Laat een preview van het bericht zien in de titel van een melding voor zover toegestaan door het apparaat</string>
     <string name="pref_sleep_mode_schedule_summary">Stuur een melding en start slaapmodus op de ingestelde bedtijd. Op de ingestelde wektijd klinkt een alarmsignaal.</string>
     <string name="pref_title_casio_alert_sms">Melding voor SMS</string>
     <string name="menuitem_alerts">Meldingen</string>
-    <string name="devicetype_miband7pro">Xiaomi Smart Band 7 Pro</string>
-    <string name="devicetype_xiaomi_watch_s1_active">Xiaomi Watch S1 Active</string>
-    <string name="devicetype_mi_watch_color_sport">Mi Watch Color Sport</string>
-    <string name="devicetype_pixoo">Pixoo</string>
     <string name="pref_summary_send_app_notifications">Stuur app-meldingen naar het apparaat</string>
     <string name="pref_title_send_app_notifications">Stuur meldingen</string>
     <string name="pref_device_action_dnd_on">Niet storen - Aan</string>
@@ -2568,11 +2444,9 @@
     <string name="widget_screen_delete_confirm_title">Verwijder widget-scherm</string>
     <string name="clap_hands_to_wakeup_device_summary">Klap nog een keer voor scherm uit</string>"
     <string name="widget_layout_top_1_bot_2">1 boven, 2 onder</string>
-    <string name="devicetype_colacao23">ColaCao 2023</string>
     <string name="widget_layout_top_2_bot_2">2 boven, 2 onder</string>
     <string name="widget_screen_min_screens">Er moeten minimaal %1$s schermen zijn</string>
     <string name="widget">Widget</string>
-    <string name="devicetype_redmi_smart_band_2">Redmi Smart Band 2</string>
     <string name="widget_screen">Widget-scherm</string>
     <string name="widget_move_down">Omlaag</string>
     <string name="widget_layout_single">1 widget</string>
@@ -2580,10 +2454,8 @@
     <string name="widget_screen_x">Scherm %s</string>
     <string name="widget_missing_parts">Selecteer alle widgets</string>
     <string name="widget_layout_top_2_bot_1">2 boven, 1 onder</string>
-    <string name="devicetype_colacao21">ColaCao 2021</string>
     <string name="pixoo_power_saving_summary">Het scherm zal uitgaan nadat de microfoon een tijd geen geluid heeft opgevangen</string>
     <string name="activity_type_wrestling">Worstelen</string>
-    <string name="devicetype_mijia_lywsd03">Mijia thermo- en hygrometer 2</string>
     <string name="pref_title_fossil_hr_navigation_instructions">Navigatie-instructies</string>
     <string name="pref_summary_fossil_hr_navigation_instructions">Configureer gedrag van navigatie-app op horloge</string>
     <string name="pref_summary_fossil_hr_nav_foreground">Of de navigatie-app automatisch op de voorgrond moet komen wanneer deze een navigatie-instructie ontvangt</string>
@@ -2591,29 +2463,11 @@
     <string name="pref_title_fossil_hr_nav_foreground">Naar voorgrond</string>
     <string name="prefs_device_name">Apparaatnaam</string>
     <string name="pref_summary_fossil_hr_nav_vibrate">Trilt het horloge bij elke nieuwe of gewijzigde navigatie-instructie (alleen als de app op de voorgrond is)</string>
-    <string name="devicetype_redmi_watch_2_lite">Redmi Watch 2 Lite</string>
     <string name="notification_channel_connection_status_name">Connectie status</string>
-    <string name="devicetype_redmi_smart_band_pro">Redmi Smart Band Pro</string>
-    <string name="devicetype_nothingear2">Nothing Ear (2)</string>
     <string name="do_not_disturb_lift_wrist_summary">Alleen wanneer scherm-aan-bij-oppakken is ingeschakeld</string>
     <string name="pref_do_not_disturb_not_wear">Niet storen wanneer het apparaat niet gedragen wordt</string>
     <string name="manual">Handmatig</string>
     <string name="dnd_all_day">Hele dag</string>
-    <string name="devicetype_honor_band3">Honor Band 3</string>
-    <string name="devicetype_honor_band4">Honor Band 4</string>
-    <string name="devicetype_honor_band5">Honor Band 5</string>
-    <string name="devicetype_honor_band6">Honor Band 6</string>
-    <string name="devicetype_honor_band7">Honor Band 7</string>
-    <string name="devicetype_huawei_band_aw70">Huawei Band (AW70)</string>
-    <string name="devicetype_huawei_band6">Huawei Band 6</string>
-    <string name="devicetype_huawei_band7">Huawei Band 7</string>
-    <string name="devicetype_huawei_band8">Huawei Band 8</string>
-    <string name="devicetype_huawei_watch_gt">Huawei Watch GT</string>
-    <string name="devicetype_huawei_band4pro">Huawei Band 4 (Pro)</string>
-    <string name="devicetype_huawei_watchgt2">Huawei Watch GT 2 (Pro)</string>
-    <string name="devicetype_huawei_watchgt2e">Huawei Watch GT 2e</string>
-    <string name="devicetype_huawei_talk_band_b6">Huawei Talk Band B6</string>
-    <string name="devicetype_huawei_watchgt3">Huawei Watch GT 3 (Pro)</string>
     <string name="prefs_active_noise_cancelling_light">Lichte actieve geluidsonderdrukking</string>
     <string name="prefs_active_noise_cancelling_transparency">Transparantie</string>
     <string name="huawei_alarm_smart_description">Verwijder het vinkje niet bij slim wakker worden.</string>
@@ -2627,7 +2481,6 @@
     <string name="pref_heartrate_automatic_enable">Automatische hartslagmeting inschakelen</string>
     <string name="pref_spo_automatic_enable">Automatische bloedzuurstofmeting inschakelen</string>
     <string name="prefs_disconnect_notification_summary">Melding op het apparaat bij verbroken Bluetooth-verbinding.</string>
-    <string name="devicetype_nothingearstick">Nothing Ear (Stick)</string>
     <string name="prefs_workmode">Werkmodus</string>
     <string name="huawei_alarm_event_description">Plaats geen vinkje bij slim wakker worden.</string>
     <string name="huawei_trusleep_summary">Monitor uw slaapkwaliteit en adempatroon in realtime.
@@ -2662,12 +2515,7 @@
     <string name="sony_protocol_v3">Versie 3</string>
     <string name="protocol_version">Protocolversie</string>
     <string name="prefs_password_4_digits_0_to_9_summary">Het wachtwoord moet uit 4 cijfers bestaan</string>
-    <string name="devicetype_miband8pro">Xiaomi Smart Band 8 Pro</string>
-    <string name="devicetype_mijia_mho_c303">Mijia MHO-C303</string>
     <string name="sony_protocol_v1">Versie 1</string>
-    <string name="devicetype_xiaomi_watch_s1">Xiaomi Watch S1</string>
-    <string name="devicetype_xiaomi_watch_s3">Xiaomi Watch S3</string>
-    <string name="devicetype_xiaomi_watch_s1_pro">Xiaomi Watch S1 Pro</string>
     <string name="uploading_watchface">Wijzerplaat uploaden…</string>
     <string name="uploadwatchfaceoperation_in_progress">Wijzerplaat uploaden</string>
     <string name="uploadwatchfaceoperation_complete">Wijzerplaat-installatie gelukt</string>
@@ -2698,8 +2546,6 @@
     <string name="activity_type_ballet">Ballet</string>
     <string name="activity_type_other_dance">Overige dansen</string>
     <string name="activity_type_snow_sports">Sneeuwsporten</string>
-    <string name="devicetype_redmi_watch_2">Redmi Watch 2</string>
-    <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro</string>
     <string name="prefs_heartrate_alert_active_high_threshold">Meldingsdrempel maximale hartslag</string>
     <string name="activity_type_cross_trainer">Crosstrainer</string>
     <string name="activity_type_free_training">Vrije training</string>
@@ -2764,20 +2610,12 @@
     <string name="activity_type_rock_climbing">Rotsklimmen</string>
     <string name="activity_type_hunting">Jagen</string>
     <string name="activity_type_outdoor_walking">Buiten wandelen</string>
-    <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N</string>
-    <string name="devicetype_honor_magicwatch2">Honor MagicWatch 2</string>
-    <string name="devicetype_redmiwatch3">Redmi Watch 3</string>
     <string name="pref_test_features_title">Functies</string>
     <string name="pref_test_features_summary">Beschikbare functies op dit testapparaat</string>
     <string name="warning_missing_notification_permission">Kon permanente notificatie niet plaatsen vanwege missende permissie</string>
-    <string name="devicetype_huawei_watchfit">Huawei Watch Fit</string>
     <string name="pref_wide_area_tap_title">Groot gebied aanraken</string>
     <string name="weekstepschart_steps_a_week_or_month">Stappen per week/maand</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Slaap per week/maand</string>
-    <string name="devicetype_amazfit_bip3">Amazfit Bip 3</string>
-    <string name="devicetype_sony_linkbuds">Sony LinkBuds</string>
-    <string name="devicetype_huawei_watchgt4">Huawei Watch GT 4</string>
-    <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate</string>
     <string name="auto_reconnect_ble_scan_title">Opnieuw verbinden via BLE-scan</string>
     <string name="pref_wide_area_tap_summary">Herken aanraken tussen wangen en oren</string>
     <string name="pref_adaptive_volume_control_title">Automatisch volume</string>
@@ -2801,7 +2639,6 @@
     <string name="scan_scanning_multiple_devices">Scannen naar %d apparaten</string>
     <string name="notification_channel_scan_service_name">Scan-service</string>
     <string name="device_state_waiting_scan">Wachten op apparaatscan</string>
-    <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
     <string name="alarm_smart_wakeup_interval_default">5 minuten</string>
     <string name="alarm_smart_wakeup_interval">Interval slim wekken:</string>
     <string name="companion_pairing_request_title">Companion-apparaat</string>
@@ -2887,7 +2724,6 @@
     <string name="pref_summary_notification_wake_on_open">Ontgrendel het scherm van het Android-apparaat wanneer de gadget een OPEN-commando stuurt. Werkt alleen wanneer vertrouwde ontgrendeling actief is.</string>
     <string name="pref_speak_notifications_aloud_summary">Meldingen zullen opgelezen worden via de koptelefoon</string>
     <string name="pref_speak_notifications_aloud_title">Meldingen oplezen</string>
-    <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="widget_name_untitled">Widget zonder titel (%1$s)</string>
     <string name="pref_header_calls_and_notifications">Gesprekken en meldingen</string>
     <string name="widget_layout_top_wide_bot_large">Breed boven, groot onder</string>
@@ -2918,8 +2754,6 @@
     <string name="serbian">Servisch</string>
     <string name="pref_summary_huawei_account">Huawei-account dat gebruikt is tijdens het bindingsproces. Het hier instellen staat toe dat het apparaat gebonden kan worden zonder reset naar fabrieksinstellingen.</string>
     <string name="watchface_resolution_doesnt_match">Resolutie van wijzerplaat komt niet overeen met het scherm van het apparaat. Wijzerplaat is %1$s en scherm is %2$s</string>
-    <string name="devicetype_garmin_vivosmart_5">Garmin Vívosmart 5</string>
-    <string name="devicetype_huawei_watch4pro">Huawei Watch 4 (Pro)</string>
     <string name="huawei_trusleep_warning">Waarschuwing: wanneer u dit inschakelt zal alle slaap getoond worden als lichte slaap in Gadgetbridge. Klik hier om dit te accepteren.</string>
     <string name="pref_summary_garmin_default_reply_suffix">Wordt toegevoegd aanvullend aan de bestaande toevoegingen in Gadgetbridge</string>
     <string name="pref_title_garmin_default_reply_suffix">Vaste toevoeging aan antwoord</string>
@@ -2948,10 +2782,6 @@
     <string name="pref_wearing_tone">Geluid bij indoen</string>
     <string name="pref_wearing_tone_summary">Speelt een geluid wanneer het oordopje in het oor geplaatst wordt</string>
     <string name="pref_touch_tone">Geluid bij aanraken</string>
-    <string name="devicetype_soundcore_liberty3_pro">Soundcore Liberty 3 Pro</string>
-    <string name="devicetype_huawei_watchfit2">Huawei Watch Fit 2</string>
-    <string name="devicetype_huawei_band9">Huawei Band 9</string>
-    <string name="devicetype_huawei_watchfit3">Huawei Watch Fit 3</string>
     <string name="cyclingPowerMin">Minimale kracht bij fietsen</string>
     <string name="cyclingPowerMax">Maximale kracht bij fietsen</string>
     <string name="pref_adaptive_noise_cancelling_summary">Stel de sterkte van de ruisonderdrukking automatisch in afhankelijk van het omgevingsgeluid</string>
@@ -2960,12 +2790,6 @@
     <string name="agps_status_pending">Bezig</string>
     <string name="agps_status_current">Actueel</string>
     <string name="agps_status_error">Fout</string>
-    <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity</string>
-    <string name="devicetype_garmin_vivomove_hr">Garmin Vívomove HR</string>
-    <string name="devicetype_garmin_vivomove_style">Garmin Vívomove Style</string>
-    <string name="devicetype_garmin_vivoactive_4">Garmin Vívoactive 4</string>
-    <string name="devicetype_garmin_vivoactive_4s">Garmin Vívoactive 4S</string>
-    <string name="devicetype_garmin_vivoactive_5">Garmin Vívoactive 5</string>
     <string name="cyclingPowerAverage">Gemiddelde kracht bij fietsen</string>
     <string name="copied_to_clipboard">Gekopieerd naar het klembord</string>
     <string name="open_camera">Open camera</string>
@@ -2974,22 +2798,9 @@
     <string name="no_folder_selected">Geen directory geselecteerd</string>
     <string name="garmin_agps_url_i">AGPS %1$d URL</string>
     <string name="pref_garmin_agps_help">De onderstaande lijst bevat alle URL\'s die door het horloge opgevraagd worden voor AGPS-updates. U kunt een bestand van de telefoon selecteren dat naar het horloge wordt gestuurd wanneer het een update opvraagt.</string>
-    <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
-    <string name="devicetype_garmin_venu_3">Garmin Venu 3</string>
-    <string name="devicetype_garmin_instinct_solar">Garmin Instinct Solar</string>
-    <string name="devicetype_garmin_instinct_2s">Garmin Instinct 2S</string>
-    <string name="devicetype_garmin_instinct_2_solar">Garmin Instinct 2 Solar</string>
-    <string name="devicetype_garmin_instinct_2_soltac">Garmin Instinct 2 SolTac</string>
-    <string name="devicetype_garmin_instinct_crossover">Garmin Instinct Crossover</string>
-    <string name="devicetype_garmin_forerunner_245">Garmin Forerunner 245</string>
-    <string name="devicetype_garmin_swim_2">Garmin Swim 2</string>
     <string name="none">Geen</string>
-    <string name="devicetype_garmin_epix_pro">Garmin Epix Pro</string>
-    <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
-    <string name="devicetype_garmin_instinct_2x_solar">Garmin Instinct 2X Solar</string>
     <string name="intent_api_broadcast_activity_sync_title">Stuur intent na synchronisatie</string>
     <string name="intent_api_broadcast_activity_sync_summary">Stuur een broadcast intent zodra de activiteitssynchronisatie van een apparaat is voltooid</string>
-    <string name="devicetype_garmin_fenix_6_sapphire">Garmin Fenix 6 Sapphire</string>
     <string name="loading">Laden…</string>
     <string name="activity_prefs_height_inches">Lengte in inches</string>
     <string name="toggle_debug_mode">Schakel foutopsporingsmodus aan/uit</string>
@@ -2998,8 +2809,6 @@
     <string name="unsupported">Niet ondersteund</string>
     <string name="min_val">Minimum: %d</string>
     <string name="max_val">Maximum: %d</string>
-    <string name="devicetype_garmin_venu_3s">Garmin Venu 3S</string>
-    <string name="devicetype_garmin_fenix_7_pro">Garmin Fenix 7 Pro</string>
     <string name="notif_battery_full_title">Gadget-batterij vol!</string>
     <string name="notification_channel_full_battery_name">Volle batterij</string>
     <string name="battery_low_notify_enabled">Melding bij lage batterijlading</string>
@@ -3012,11 +2821,6 @@
     <string name="show_in_notification">Toon in melding</string>
     <string name="battery_full_threshold">Niveau volle batterij</string>
     <string name="authentication_failed_check_key">Authenticatie mislukt, controleer authenticatiesleutel</string>
-    <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
-    <string name="devicetype_garmin_forerunner_255">Garmin Forerunner 255</string>
-    <string name="devicetype_garmin_forerunner_265">Garmin Forerunner 265</string>
-    <string name="devicetype_hama_fit6900">Hama Fit6900</string>
-    <string name="devicetype_garmin_venu_2">Garmin Venu 2</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
@@ -3024,25 +2828,19 @@
     <string name="dashboard_calendar_month_goals_reached_title">% van stappendoel bereikt</string>
     <string name="pref_fetch_unknown_files_title">Onbekende bestanden ophalen</string>
     <string name="pref_fetch_unknown_files_summary">Haal ook onbekende activiteitsbestanden op van het apparaat. Deze zullen niet verwerkt worden, alleen opgeslagen op de telefoon.</string>
-    <string name="devicetype_moondrop_space_travel">Moondrop Space Travel</string>
     <string name="moondrop_equalizer_preset_reference">Referentie</string>
     <string name="moondrop_touch_action_anc_mode">Wissel actieve-ruisonderdrukking</string>
-    <string name="devicetype_garmin_fenix_5">Garmin Fenix 5</string>
-    <string name="devicetype_garmin_fenix_6">Garmin Fenix 6</string>
     <string name="moondrop_touch_earbud_both">Allebei</string>
     <string name="moondrop_touch_trigger">Activatie</string>
     <string name="moondrop_touch_action_play_pause">Afspelen/Pauze</string>
     <string name="moondrop_touch_action_call_pick_hang">Opnemen/Ophangen</string>
     <string name="moondrop_touch_action_call_start">Start gesprek</string>
     <string name="moondrop_touch_action_assistant">Activeer stemassistent</string>
-    <string name="devicetype_garmin_vivoactive_3">Garmin Vívoactive 3</string>
     <string name="moondrop_equalizer_preset_basshead">Basliefhebber</string>
     <string name="moondrop_equalizer_preset_monitor">Monitor</string>
     <string name="moondrop_touch_earbud">Oordopje</string>
     <string name="moondrop_touch_trigger_long_press_1s">Lang drukken (1s)</string>
     <string name="moondrop_touch_trigger_long_press_3s">Lang drukken (3s)</string>
-    <string name="devicetype_garmin_forerunner_255s">Garmin Forerunner 255S</string>
-    <string name="devicetype_garmin_instinct">Garmin Instinct</string>
     <string name="activity_type_beach_volleyball">Strandvolleybal</string>
     <string name="activity_type_sepak_takraw">Sepak Takraw</string>
     <string name="activity_type_luge">Rodelen</string>
@@ -3054,21 +2852,13 @@
     <string name="pref_summary_notification_times_enabled">Stuur alleen meldingen tussen bepaalde tijden</string>
     <string name="activity_type_tae_bo">Tae Bo</string>
     <string name="activity_type_beach_soccer">Strandvoetbal</string>
-    <string name="devicetype_nothing_cmf_watch_pro_2">CMF Watch Pro 2</string>
     <string name="proprietary_app_warning">Deze optie vereist de installatie van een niet-vrije app</string>
-    <string name="devicetype_huawei_watch3">Huawei Watch 3 (Pro)</string>
-    <string name="devicetype_garmin_vivomove_trend">Garmin Vívomove Trend</string>
     <string name="pref_battery_polling_enable">Batterijstatus opvragen inschakelen</string>
     <string name="pref_battery_polling_interval">Interval batterijstatus opvragen</string>
     <string name="pref_battery_polling_interval_format">elke %1$s minuten</string>
     <string name="battery_polling_failed_start">Batterijstatus opvragen starten mislukt</string>
     <string name="pref_battery_polling_configuration">Batterijstatus opvragen</string>
     <string name="pref_battery_polling_summary">Dit gebeurt op basis van best-effort en kan om verschillende redenen uitgesteld worden</string>
-    <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker">Vivitar HR &amp; BP Monitor Activity Tracker</string>
-    <string name="devicetype_garmin_forerunner_255_music">Garmin Forerunner 255 Music</string>
-    <string name="devicetype_nothing_cmf_buds_pro_2">CMF Buds Pro 2</string>
-    <string name="devicetype_garmin_forerunner_255s_music">Garmin Forerunner 255S Music</string>
-    <string name="devicetype_garmin_vivosport">Garmin Vívosport</string>
     <string name="minutes_60">60 minuten</string>
     <string name="sleep_colored_stats_rem">REM</string>
     <string name="sleep_colored_stats_deep_avg">Diep gemiddeld</string>
@@ -3107,7 +2897,6 @@
     <string name="soundcore_equalizer_reset_summary">Herstel de standaardinstellingen van de equalizer</string>
     <string name="soundcore_equalizer_frequency">Frequentie</string>
     <string name="body_energy_legend_level">Energieniveau</string>
-    <string name="devicetype_garmin_fenix_5_plus">Garmin Fenix 5 Plus</string>
     <string name="soundcore_button_brightness">Knoplichtsterkte</string>
     <string name="soundcore_ldac_mode_title">LDAC-modus</string>
     <string name="soundcore_ldac_mode_summary">Het inschakelen van LDAC zal de batterijduur verkorten en kan leiden tot instabiele verbinding</string>
@@ -3119,7 +2908,6 @@
     <string name="soundcore_equalizer_band8">Band 8</string>
     <string name="body_energy_gained">Toegenomen</string>
     <string name="body_energy_lost">Afgenomen</string>
-    <string name="devicetype_soundcore_motion300">Soundcore Motion 300</string>
     <string name="body_energy">Lichaam-energie</string>
     <string name="soundcore_button_brightness_high">Hoog</string>
     <string name="soundcore_adaptive_direction_summary">Pas de equalizer voorinstelling automatisch aan gebaseerd op de richting van het apparaat</string>
@@ -3139,8 +2927,6 @@
     <string name="hrv_status_baseline">%1$d-%2$d ms</string>
     <string name="hrv_status_baseline_label">Basiswaarde</string>
     <string name="hrv_status_last_night_highest_5">Afgelopen nacht 5-minutengemiddelde</string>
-    <string name="devicetype_garmin_forerunner_965">Garmin Forerunner 965</string>
-    <string name="devicetype_huawei_watchgtrunner">Huawei Watch GT Runner</string>
     <string name="activity_type_indoor_track">Binnenbaan</string>
     <string name="activity_type_handcycling">Handfietsen</string>
     <string name="activity_type_e_bike">E-Bike</string>
@@ -3210,7 +2996,6 @@
     <string name="activity_type_canoeing">Kanoën</string>
     <string name="activity_type_bungee_jumping">Bungeejumpen</string>
     <string name="activity_type_biathlon">Biathlon</string>
-    <string name="devicetype_garmin_venu">Garmin Venu</string>
     <string name="activity_type_bocce">Jeu de boules</string>
     <string name="activity_type_bridge">Bridgen</string>
     <string name="activity_type_checkers">Dammen</string>
@@ -3263,11 +3048,8 @@
     <string name="activity_type_bobsleigh">Bobsleeën</string>
     <string name="activity_type_sledding">Sleeën</string>
     <string name="activity_type_orienteering">Oriëntatieloop</string>
-    <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
     <string name="hrv">HRV</string>
     <string name="steps_distance_unit">%1$,.2f km</string>
-    <string name="devicetype_mismartscale">Mi Smart Scale 2</string>
-    <string name="devicetype_micompositionscale">Mi Body Composition Scale 2</string>
     <string name="steps_avg">Stappen gemiddeld</string>
     <string name="steps_total">Stappen totaal</string>
     <string name="miscale_weight_unit_title">Gewichtseenheid</string>
@@ -3299,20 +3081,14 @@
     <string name="minutes_180">180 minuten</string>
     <string name="minutes_210">210 minuten</string>
     <string name="minutes_240">240 minuten</string>
-    <string name="devicetype_colmi_r02">Colmi R02</string>
     <string name="stress_average">Gemiddeld</string>
     <string name="smart_ring_measurement_error_worn_incorrectly">Meetfout. Zijn de sensors van de ring correct geörienteerd?</string>
     <string name="smart_ring_measurement_error_unknown">Onbekende meetfout %d ontvangen van ring</string>
-    <string name="devicetype_mijia_xmwsdj04">Mijia temperatuur- en luchtvochtigheidsensor 2 (e-ink)</string>
-    <string name="devicetype_honor_watchgs3">Honor Watch GS 3</string>
     <string name="prefs_light_duration_longer">Langere lichtduur</string>
     <string name="sleep_colored_stats_awake_avg">Wakker gemiddeld</string>
     <string name="pref_app_connection_duration">App-verbindingsduur</string>
     <string name="lactateThresholdHeartRate">Lactaatdrempel-hartslag</string>
     <string name="recoveryTime">Hersteltijd</string>
-    <string name="devicetype_garmin_fenix_5x_plus">Garmin Fenix 5X Plus</string>
-    <string name="devicetype_colmi_r03">Colmi R03</string>
-    <string name="devicetype_colmi_r06">Colmi R06</string>
     <string name="target">Doel</string>
     <string name="pref_header_sound">Geluid</string>
     <string name="minutes_75">75 minuten</string>
@@ -3322,8 +3098,6 @@
     <string name="weight_lbs">%1$.2f lbs</string>
     <string name="minutes_120">120 minuten</string>
     <string name="menuitem_weight">Gewicht</string>
-    <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
-    <string name="devicetype_soundcore_liberty4_nc">Soundcore Liberty 4 NC</string>
     <string name="workout_set_repetitions">%1d x</string>
     <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
     <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
@@ -3333,7 +3107,6 @@
     <string name="prefs_title_gatt_client_api_package">BLE API-pakketnaam</string>
     <string name="prefs_summary_gatt_client_api_package">Beperk BLE Intent API-communicatie tot deze app</string>
     <string name="pref_continuous_skin_temperature_measurement_title">Continue huidtemperatuurmeting</string>
-    <string name="devicetype_ble_gatt_client">Algemene BLE GATT-client</string>
     <string name="pref_header_deprecated_functionalities_warning">De volgende functies zijn verouderd en zullen in een toekomstige versie van de software verwijderd worden.
 \nAls het voor u nodig is om een van deze instellingen in te schakelen, neem dan contact op met het projectteam om dit te melden.</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Sta GATT-interactie toe via de BLE Intent API</string>
@@ -3393,8 +3166,6 @@
 \n
 \nHet importeren van een zip-bestand zal alle bestaande data, apparaten en instellingen verwijderen, en volledig vervangen met de back-up.</string>
     <string name="backup_restore_restart_title">Herstart</string>
-    <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
-    <string name="devicetype_amazfit_trex_3">Amazfit T-Rex 3</string>
     <string name="menuitem_map">Kaart</string>
     <string name="menuitem_night_display">Nachtstand</string>
     <string name="menuitem_heart_rate_push">Hartslag rapporteren</string>
@@ -3406,21 +3177,12 @@
     <string name="vo2max_running">Hardlopen VO₂ Max</string>
     <string name="thirty_days_timeline">30-dagentijdlijn</string>
     <string name="bpm_value_unit">%1$d bpm</string>
-    <string name="devicetype_garmin_forerunner_265s">Garmin Forerunner 265S</string>
-    <string name="devicetype_garmin_enduro_3">Garmin Enduro 3</string>
-    <string name="devicetype_sony_wf_c500">Sony WF-C500</string>
     <string name="vo2max_cycling">Fietsen VO₂ Max</string>
     <string name="hr_resting">In rust</string>
     <string name="hr_maximum">Maximum</string>
     <string name="hr_minimum">Minimum</string>
     <string name="hr_average">Gemiddeld</string>
-    <string name="devicetype_garmin_forerunner_245_music">Garmin Forerunner 245 Music</string>
-    <string name="devicetype_garmin_forerunner_955">Garmin Forerunner 955</string>
-    <string name="devicetype_miband9">Xiaomi Smart Band 9</string>
-    <string name="devicetype_huawei_watchgt5">Huawei Watch GT 5 (Pro)</string>
-    <string name="devicetype_redmi_watch_5_active">Redmi Watch 5 Active</string>
     <string name="pref_summary_sync_birthdays">Synchroniseer verjaardagen van contactpersonen naast reguliere agenda-afspraken</string>
-    <string name="devicetype_sony_wf_c700n">Sony WF-C700N</string>
     <string name="app_crash_notification_title">%1s is gecrasht</string>
     <string name="app_crash_share_stacktrace">Deel foutmelding</string>
     <string name="contact_birthday">Verjaardag van %1s</string>
@@ -3435,22 +3197,17 @@
     <string name="pref_title_calendar_lookahead">Aantal toekomstige dagen</string>
     <string name="pref_summary_calendar_lookahead">Synchroniseer %1s dagen aan kalenderevenementen</string>
     <string name="workout_set_reps">Herhalingen</string>
-    <string name="devicetype_huawei_watchgtcyber">Huawei Watch GT Cyber</string>
     <string name="hrZoneEasy">Makkelijk</string>
     <string name="hrZoneThreshold">Drempel</string>
     <string name="hrZoneMaximum">Maximaal</string>
     <string name="activity_detail_share_json_details">Deel JSON-details</string>
     <string name="number_selected_items">%1d geselecteerd</string>
     <string name="paceCorrection">Correctie</string>
-    <string name="devicetype_garmin_fenix_8">Garmin Fenix 8</string>
-    <string name="devicetype_garmin_venu_sq">Garmin Venu Sq</string>
     <string name="mijia_lywsd_comfort_upper">Maximum</string>
     <string name="mijia_lywsd_comfort_lower">Minimum</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
     <string name="mijia_lywsd_comfort_level_summary">Stel de temperatuur- en luchtvochtigheidslimieten in voor de weergegeven emoji</string>
-    <string name="devicetype_garmin_venu_sq_2">Garmin Venu Sq 2</string>
-    <string name="devicetype_garmin_fenix_6s_sapphire">Garmin Fenix 6S Sapphire</string>
     <string name="mijia_lywsd_comfort_level_title">Comfortniveau</string>
     <string name="mijia_lywsd_comfort_temperature_title">Temperatuur (°C)</string>
     <string name="mijia_lywsd_comfort_temperature_summary">Aangeraden bereik: 19 - 27</string>
@@ -3471,9 +3228,6 @@
     <string name="breaths_per_min">ademhaling/min</string>
     <string name="fmtPaceAverage">Tempo gemiddeld</string>
     <string name="milliseconds_ms">ms</string>
-    <string name="devicetype_huawei_watchd2">Huawei Watch D2</string>
-    <string name="devicetype_colmi_r10">Colmi R10</string>
-    <string name="devicetype_idasen">IKEA Idasen bureau</string>
     <string name="idasen_control_button_mid">Midden</string>
     <string name="idasen_control_button_sit">Zitten</string>
     <string name="idasen_control_button_stand">Staan</string>
@@ -3482,19 +3236,10 @@
     <string name="idasen_pref_sit_height">Zitpositie (in centimeters)</string>
     <string name="idasen_pref_stand_height">Stapositie (in centimeters)</string>
     <string name="music_upload_info">U staat op het punt om het volgende muziekbestand te uploaden:\n\n%1$s\nTitel: %2$s\nAlbum: %3$s\n</string>
-    <string name="devicetype_garmin_fenix_7">Garmin Fenix 7</string>
     <string name="file_already_exists">Bestand bestaat al</string>
-    <string name="devicetype_garmin_forerunner_235">Garmin Forerunner 235</string>
-    <string name="devicetype_sony_wi_c100">Sony WI-C100</string>
-    <string name="devicetype_bandw_pseries">Bowers and Wilkins P series</string>
-    <string name="devicetype_garmin_fenix_6s_pro">Garmin Fenix 6S Pro</string>
     <string name="pref_voice_passthrough_enabled_summary">Laat externe geluiden door naar uw oren</string>
-    <string name="devicetype_huawei_band3pro">Huawei Band 3 (Pro)</string>
     <string name="pref_voice_passthrough_enabled">Doorlaten</string>
     <string name="pref_voice_passthrough_level">Niveau van doorlaten</string>
-    <string name="devicetype_garmin_forerunner_620">Garmin Forerunner 620</string>
-    <string name="devicetype_oppo_enco_air">Oppo Enco Air</string>
-    <string name="devicetype_garmin_forerunner_55">Garmin Forerunner 55</string>
     <string name="menuitem_calories_segmented">Calorieën (gesegmenteerd)</string>
     <string name="active_calories">Actieve calorieën</string>
     <string name="active_calories_short">Actief</string>
@@ -3505,7 +3250,6 @@
     <string name="redmi_buds_5_pro_transparency_regular">Normaal</string>
     <string name="redmi_buds_5_pro_transparency_voice">Versterk stemmen</string>
     <string name="redmi_buds_5_pro_transparency_ambient">Versterk omgevingsgeluiden</string>
-    <string name="devicetype_miband9pro">Xiaomi Smart Band 9 Pro</string>
     <string name="respiratoryrate">Ademhalingssnelheid</string>
     <string name="sleep_avg">Slaap gemiddeld</string>
     <string name="highest">Hoogste</string>
@@ -3513,15 +3257,11 @@
     <string name="watchface_widget_type_sp02">SpO2</string>
     <string name="redmi_buds_5_pro_anc_light">Licht</string>
     <string name="lowest">Laagste</string>
-    <string name="devicetype_redmi_buds_5_pro">Redmi Buds 5 Pro</string>
     <string name="menuitem_calories_active_goal">Calorieëndoel (actief)</string>
-    <string name="devicetype_oppo_enco_air2">Oppo Enco Air2</string>
     <string name="redmi_buds_5_pro_anc_balanced">Gebalanceerd</string>
     <string name="title_activity_musicmanager">Muziekbeheer</string>
     <string name="pref_wear_sensor_summary">Detecteer wanneer het apparaat niet gedragen wordt</string>
     <string name="pref_wear_sensor_title">Draagsensor</string>
-    <string name="devicetype_realme_buds_t110">Realme Buds T110</string>
-    <string name="devicetype_garmin_instinct_2">Garmin Instinct 2</string>
     <string name="stepRateMax">Max. stapcadans</string>
     <string name="Jumps">Sprongen</string>
     <string name="weekly_total">Weektotaal</string>
@@ -3540,12 +3280,10 @@
     <string name="music_delete_multiple_confirm_description">Weet u zeker dat u \'%1$d\' nummers wilt verwijderen?</string>
     <string name="music_multiselect_limit">Limiet bereikt voor het selecteren van meer dan een item</string>
     <string name="first_start_intro_welcome_to">Welkom bij</string>
-    <string name="devicetype_casioecbs100">Casio ECB-S100</string>
     <string name="garmin_intensity_minutes">Minuten intensiteit</string>
     <string name="pref_developer_add_test_activities_title">Testactiviteiten toevoegen</string>
     <string name="first_start_overview_devices">De apparatenweergave toont alle apparaten die u hebt geconfigureerd en hun status, en geeft toegang tot apparaatspecifieke functies zoals gedetailleerde grafieken, instellingen, apps en alarmen.</string>
     <string name="music_rename_playlist">Playlist hernoemen</string>
-    <string name="devicetype_redmi_watch_5_lite">Redmi Watch 5 Lite</string>
     <string name="redmi_buds_5_pro_equalizer_band_1k">1 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_2k">2 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_16k">16 kHz</string>
@@ -3553,7 +3291,6 @@
     <string name="redmi_buds_5_pro_equalizer_band_250">250 Hz</string>
     <string name="redmi_buds_5_pro_equalizer_band_500">500 Hz</string>
     <string name="music_all_songs">Alle nummers</string>
-    <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
     <string name="pref_developer_add_test_activities_summary">Database opvullen met dummy test activiteiten</string>
     <string name="music_new_playlist">Nieuwe playlist</string>
     <string name="redmi_buds_5_pro_equalizer_preset_voice">Stem verbeteren</string>
@@ -3568,8 +3305,6 @@
     <string name="redmi_buds_5_pro_equalizer_neg1">-1 dB</string>
     <string name="activity_type_upper_body">Bovenlichaam</string>
     <string name="activity_type_lower_body">Onderlichaam</string>
-    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
-    <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
     <string name="redmi_buds_5_pro_combo_anc_off">ANC / Uit</string>
     <string name="redmi_buds_5_pro_combo_anc_transparency">ANC / Transparantie</string>
     <string name="redmi_buds_5_pro_combo_all">ANC / Transparantie / Uit</string>
@@ -3577,7 +3312,6 @@
     <string name="first_start_open_source_title">Open Source</string>
     <string name="sleep_score">Slaapscore</string>
     <string name="sleep_score_value">Score: %1d</string>
-    <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="redmi_buds_5_pro_adaptive_sound_description">Geluid aanpassen aan oorvorm en omgeving</string>
     <string name="redmi_buds_5_pro_equalizer_preset_treble">Treble verbeteren</string>
     <string name="redmi_buds_5_pro_equalizer_preset_bass">Bass verbeteren</string>
@@ -3588,7 +3322,6 @@
     <string name="redmi_buds_5_pro_equalizer_3">3 dB</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
-    <string name="devicetype_huawei_band2pro">Huawei Band 2 (Pro)</string>
     <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_8k">8 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_12k">12 kHz</string>
@@ -3599,7 +3332,6 @@
     <string name="music_huawei_device_info">Ondersteunde formaten: %1$s\nOpslag horloge: %2$d MB</string>
     <string name="music_error">Er is een fout opgetreden</string>
     <string name="first_start_intro_tag_line">Bevrijd je van de gesloten apps en clouddiensten van gadgetleveranciers.</string>
-    <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
     <string name="totalJumps">Totale sprongen</string>
     <string name="music_delete">Nummer verwijderen</string>
     <string name="permission_bluetooth_connect_summary">Verbinden met eerder gebonden Bluetooth-apparaten</string>
@@ -3647,7 +3379,6 @@
     <string name="permission_receive_sms_title">Ontvang SMS</string>
     <string name="permission_query_all_packages_summary">Namen en iconen van alle geïnstalleerde apps lezen</string>
     <string name="about_build_details_copied_to_clipboard">Details gekopieerd naar klembord</string>
-    <string name="devicetype_marstek_b2500">Marstek B2500</string>
     <string name="battery_discharge_intervals">Batterij-ontladingsintervals</string>
     <string name="discharge_interval_1">Ontladingsinterval 1</string>
     <string name="manual_discharge">Handmatige ontladingsintervals</string>
@@ -3673,32 +3404,24 @@
     <string name="pref_override_features_summary">Schakel specifieke apparaatfuncties in/uit. Dit kan zorgen voor problemen en kan de werking van uw apparaat negatief beïnvloeden</string>
     <string name="pref_override_features_title">Negeer ondersteunde functies</string>
     <string name="permission_disable_doze_title">Negeer batterijoptimalisatie</string>
-    <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
     <string name="charts_show_balance_sleep_title">Toon slaapbalans</string>
     <string name="charts_show_balance_sleep_summary">Toon te veel / te weinig slaap in wekelijkse en maandelijkse grafieken</string>
     <string name="charts_show_balance_steps_title">Toon stappenbalans</string>
     <string name="charts_show_balance_steps_summary">Toon te veel / te weinig stappen in wekelijkse en maandelijkse grafieken</string>
-    <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
-    <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
     <string name="canned_replies_not_empty">Er moet minimaal één voorgedefinieerd bericht zijn.</string>
     <string name="permission_disable_doze_summary">Maakt het mogelijk om in de achtergrond te werken zonder dat de batterij-optimalisaties van Android dit belemmeren</string>
     <string name="notifications_dismiss_all">Alles afwijzen</string>
-    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
     <string name="prefs_active_noise_cancelling_transport">Transport</string>
     <string name="prefs_active_noise_cancelling_indoor">Binnen</string>
     <string name="activity_prefs_goal_standing_hours">Dagelijks doel: uren staand</string>
     <string name="prefs_summary_gatt_client_filter_char">Filter voor specifieke BLE-karakteristieken, gescheiden door komma\'s</string>
     <string name="prefs_active_noise_cancelling_outdoor">Buiten</string>
-    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
-    <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
     <string name="prefs_title_gatt_client_filter_char">BLE-karakteristieken</string>
     <string name="activity_type_barbell">Barbell</string>
-    <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
     <string name="view_file">Toon</string>
     <string name="unit_repetitions_per_minute">herhalingen/min</string>
     <string name="unit_revolutions_per_minute">omwentelingen/min</string>
     <string name="fit_file_viewer">FIT-bestand-weergave</string>
-    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="poolLength">Lengte van zwembad</string>
     <string name="swim_avg_cadence">Gemiddelde zwemcadans</string>
     <string name="strokes_per_length">slagen/lengte</string>
@@ -3710,21 +3433,16 @@
     <string name="pairing_even_realities_g1_working">Koppelen met %1s…</string>
     <string name="pairing_even_realities_g1_find_both_fail">Kon niet zowel de rechter als de linker lens vinden. Probeer opnieuw te scannen.</string>
     <string name="pairing_even_realities_g1_invalid_device">Even G1 apparaat ongeldig: %1$s.</string>
-    <string name="devicetype_even_realities_g1">Even Realities G1</string>
     <string name="fw_upgrade_notice_huawei">Je staat op het punt om firmware %1$s naar je %2$s te uploaden.\n\nDe huidige firmware is %s\n\nJe apparaat zal herstarten na het uploaden.\n\nGA DOOR OP EIGEN RISICO!</string>
     <string name="remote_control">Afstandsbediening</string>
-    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
     <string name="workout_repetitions">Herhalingen</string>
     <string name="workout_revolutions">Omwentelingen</string>
-    <string name="devicetype_gree_ac">Gree Air Conditioner</string>
-    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="activity_detail_inspect_file">Inspecteer bestand</string>
     <string name="reset">Reset</string>
     <string name="pairing_even_realities_g1_bottom_hint">Meerdere koppelingsdialogen zullen op uw Android-apparaat weergegeven worden. Zo niet, controleer het meldingenscherm en accepteer de koppelingsverzoeken daar. Zowel de linker als rechter lens moeten gekoppeld worden.</string>
     <string name="update_firmware_operation_check_in_progress">Firmware controleren</string>
     <string name="copy_to_clipboard">Kopieer</string>
     <string name="update_firmware_operation_check_failed">Firmware-controle mislukt</string>
-    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
     <string name="pref_garmin_fake_oauth_summary">Herstelt enkele functies zoals het weerbericht en AGPS-updates zonder elke 90 dagen te moeten verbinden met de officiële app.</string>
     <string name="pref_garmin_fake_oauth_title">Stuur nagemaakte OAuth-antwoorden</string>
     <string name="pref_garmin_fake_oauth_warning">Schakel dit niet in als u van plan bent de officiële app te gebruiken of het horloge met het internet te verbinden. Na het inschakelen van deze instelling moet u het horloge naar fabrieksinstellingen terugzetten om opnieuw te kunnen authenticeren.</string>
@@ -3760,7 +3478,6 @@
     <string name="vertical_ratio">Verticale verhouding</string>
     <string name="vertical_oscillation">Verticale oscillatie</string>
     <string name="pref_heart_rate_high_alert">Melding hoge hartslag</string>
-    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
     <string name="average_right_platform_center_offset">Gemiddeld platform centrum-afwijking rechts</string>
     <string name="average_left_power_phase">Gemiddelde krachtfase links</string>
     <string name="average_left_power_phase_peak">Gemiddelde krachtfase links piek</string>
@@ -3802,11 +3519,8 @@
     <string name="serbian_latin">Servisch (Latijns schrift)</string>
     <string name="catalan">Catalaans</string>
     <string name="enhanced">Verbeterd</string>
-    <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
     <string name="earfun_anc_mode_balanced">Gebalanceerd</string>
-    <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
     <string name="earfun_tap_action_noise_control_normal_wind">Ruisonderdrukking (normaal, windgeluid)</string>
-    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="earfun_anc_mode_ai_environment_adaptive">AI omgevingsaanpassing</string>
     <string name="zepp_os_watchface_vital_orange">Vitaal oranje</string>
@@ -3814,8 +3528,6 @@
     <string name="dual_device_mode_summary">Verbind de hoofdtelefoon met twee apparaten tegelijk</string>
     <string name="ultrahuman_airplane_mode_too_full">ring is volledig opgeladen - vliegtuigstand NIET geactiveerd</string>
     <string name="ultrahuman_airplane_mode_question">Activeer vliegtuigstand?</string>
-    <string name="devicetype_earfun_air_s">EarFun Air S</string>
-    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
     <string name="earfun_transparency_mode">Transparantie</string>
     <string name="earfun_anc_mode">Modus actieve ruisonderdrukking</string>
     <string name="zepp_os_watchface_elegant">Elegant</string>
@@ -3827,7 +3539,6 @@
     <string name="earfun_tap_action_noise_control_normal_ambient">Ruisonderdrukking (normaal, omgevingsgeluid)</string>
     <string name="earfun_tap_action_noise_control_wind_ambient">Ruisonderdrukking (windgeluid, omgevingsgeluid)</string>
     <string name="earfun_tap_action_redial">Opnieuw bellen</string>
-    <string name="devicetype_huawei_band10">Huawei Band 10</string>
     <string name="zepp_os_watchface_silver_shadows">Zilveren schaduwen</string>
     <string name="map_upload_failed">Kaart-upload mislukt</string>
     <string name="map_upload_complete">Kaart-upload compleet</string>
@@ -3837,7 +3548,6 @@
     <string name="earfun_anc_mode_ai_ear_adaptive">AI ooraanpassing</string>
     <string name="ultrahuman_airplane_mode_activated">vliegtuigstand geactiveerd</string>
     <string name="ultrahuman_airplane_mode_on_charger">ring laadt op - vliegtuigstand NIET geactiveerd</string>
-    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="zepp_os_watchface_digital_wraith">Digitale schim</string>
     <string name="ultrahuman_airplane_mode_title">vliegtuigstand</string>
     <string name="earfun_microphone_mode_hint">Voor het gebruiken van de microfoon kan er gekozen worden voor automatisch wisselen tussen links en rechts of kan er een vaste kant gekozen worden.</string>
@@ -3897,7 +3607,6 @@
     <string name="huawei_stress_calibrate_information">Voor optimale resultaten rust u enige tijd voor het starten van een meting en zit u stil tijdens de meting. \n Gesp het apparaat strak vast, met het scherm naar boven en de sensor in direct contact met uw huid.</string>
     <string name="huawei_stress_calibrate_adjust_score">Pas score aan</string>
     <string name="huawei_voice_boost">Stemmen versterken</string>
-    <string name="devicetype_honor_watch4">Honor Watch 4 (Pro)</string>
     <string name="weather_condition_thunderstorm_with_light_rain">onweer met lichte regen</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">onweer met zware regen</string>
     <string name="weather_condition_light_thunderstorm">licht onweer</string>
@@ -3960,7 +3669,6 @@
     <string name="maps_download_summary">Klik hier om kaartbestanden te downloaden. Deze moeten opgeslagen worden in de hieronder geselecteerde directory.</string>
     <string name="weather_condition_light_shower_snow">lichte sneeuwbui</string>
     <string name="weather_condition_windy">winderig</string>
-    <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
     <string name="earfun_connect_two_devices_hint">Verbind met twee Bluetooth-apparaten tegelijk. Voor een stabiel signaal wordt afgeraden deze optie tegelijk met de LDAP-modus te gebruiken.</string>
     <string name="weather_condition_light_rain">lichte regen</string>
     <string name="weather_condition_thunderstorm_with_rain">onweer met regen</string>
@@ -3982,20 +3690,14 @@
     <string name="huawei_stress_calibrate_summary">Kalibreer de automatische stressmeting</string>
     <string name="menuitem_water_time">Watertijd</string>
     <string name="prefs_events_forwarding_broadcast_package">Broadcast-pakket</string>
-    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
-    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
     <string name="menuitem_running_calculator">Hardloopcalculator</string>
     <string name="silent_mode">Stil</string>
-    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
     <string name="swim_style_mixed">Gemixt</string>
     <string name="workout_intervals">Intervals</string>
-    <string name="devicetype_polarh10">Polar H10</string>
     <string name="menuitem_bluetooth_scale_assistant">Bluetooth Weegschaal assistent</string>
-    <string name="devicetype_amazfit_active_2_nfc">Amazfit Active 2 NFC</string>
     <string name="swim_style_butterfly">Vlinderslag</string>
     <string name="ultrahuman_breathing_start">Start</string>
     <string name="ultrahuman_breathing_title">Ademen</string>
-    <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
     <string name="active_calories_avg">Actief gemiddelde</string>
     <string name="active_calories_total">Actief totaal</string>
     <string name="resting_calories_total">Rust totaal</string>
@@ -4003,28 +3705,22 @@
     <string name="calorie_under_goal">Onder doel: %1$d kcal</string>
     <string name="ultrahuman_breathing_stop">Stop</string>
     <string name="notifications_app_icon_upload">Upload melding-icoon</string>
-    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
     <string name="menuitem_watch_storage_space">Opslagruimte horloge</string>
     <string name="menuitem_real_time_heart_rate">Live hartslag</string>
     <string name="pairing_even_realities_g1_final_connect">Apparaten instellen, een moment geduld…</string>
     <string name="ultrahuman_airplane_mode_unknown">onbekende fout %#02x - vliegtuigstand NIET geactiveerd</string>
-    <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
     <string name="pref_display_enabled_summary">Schakel het scherm op de ring in</string>
     <string name="ultrahuman_unhandled_error_response">onbekende antwoordcode %2$#02x %3$#02x voor operatie %1$#02x ontvangen</string>
     <string name="swimming_stroke">Schoolslag</string>
     <string name="ultrahuman_unhandled_operation_response">onbekende werking-antwoord %s</string>
-    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
-    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
     <string name="workout_swings">Schommel</string>
     <string name="menuitem_calculator">Rekenmachine</string>
     <string name="swim_style_drill">Oefening</string>
     <string name="pref_device_logs_summary">Schakel apparaatlogs in</string>
     <string name="pref_device_logs_title">Apparaatlogs</string>
-    <string name="devicetype_colmi_r12">Colmi R12</string>
     <string name="restingCalories">Caloriën in rust</string>
     <string name="pref_display_enabled_all_day_title">Hele dag ingeschakeld</string>
     <string name="pref_display_enabled_all_day_summary">Het scherm is de hele dag ingeschakeld. Schakel deze optie uit om hieronder specifieke tijden te kiezen</string>
-    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
     <string name="metabolic_rate">Metabolisch percentage</string>
     <string name="pref_display_enabled_title">Scherm ingeschakeld</string>
     <string name="busy_task_fetch_weight_data">Gewichtsgegevens ophalen</string>
@@ -4032,11 +3728,6 @@
     <string name="map_theme_motorider">Motorrijder</string>
     <string name="connection_priority_low_power_title">Laag stroomverbruik</string>
     <string name="connection_priority_low_power_summary">Verminder de Bluetooth-prioriteit en verbindingssnelheidparameters.</string>
-    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
-    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
-    <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
-    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
-    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
     <string name="notifications_app_icon_uploading">De iconen zullen op de achtergrond worden geüpload. U kunt dit scherm sluiten</string>
     <string name="notifications_app_icon_uploading_confirm_description">Weet u zeker dat u %1$d app-iconen wilt uploaden?</string>
     <string name="body_energy_legend_average">30-dagen gemiddelde</string>
@@ -4068,47 +3759,24 @@
     <string name="pref_huawei_activity_reminder_progress_summary">Krijg meldingen van voortgang op de Activiteitencircel</string>
     <string name="pref_huawei_activity_reminder_goal_reached_title">Doel bereikt</string>
     <string name="pref_huawei_activity_reminders">Activiteitsherinneringen</string>
-    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
     <string name="workout_active_score">Actieve Score</string>
-    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
     <string name="gatt_synchronous_writes_summary">Kies bij voorkeur voor synchrone GATT-schrijfbewerkingen als een kenmerk zowel synchrone als asynchrone opties ondersteunt.</string>
     <string name="busy_task_fetch_training_data">Ophalen van de laatste trainingsgegevens</string>
-    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
     <string name="prefs_title_gatt_settings">Algemeen Attribuutprofiel</string>
     <string name="gatt_synchronous_writes_title">Synchrone GATT-schrijfbewerkingen</string>
     <string name="interval_twenty_minutes">elke 20 minuten</string>
     <string name="busy_task_fetch_training_data_finished">Trainingsgegevens ontvangen!</string>
     <string name="zepp_os_sun_moon_utc_title">Stuur zon-/maantijden in UTC</string>
     <string name="zepp_os_sun_moon_utc_summary">Schakel dit in als uw horloge onjuiste waarden voor zon- en maantijden weergeeft</string>
-    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
     <string name="huawei_better_audio_quality_title">Verkies betere geluidskwaliteit.</string>
     <string name="huawei_better_audio_quality_summary">Schakel betere audiocodecs (LDAC) in. Dit zou de geluidskwaliteit moeten verbeteren, maar het verhoogt het stroomverbruik en kan vertragingen veroorzaken.</string>
-    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Muziek</string>
-    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
     <string name="pref_watch_face">Wijzerplaat</string>
     <string name="pref_device_version">Apparaatversie</string>
     <string name="pairing_bonding_under_way">Geef het koppelingsproces even de tijd om te voltooien.</string>
-    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
-    <string name="devicetype_colmi_v72">Colmi V72</string>
-    <string name="devicetype_colmi_v89">Colmi V89</string>
-    <string name="devicetype_misirun_c17">Misirun C17</string>
-    <string name="devicetype_c20">C20</string>
-    <string name="devicetype_kt80">KT80</string>
-    <string name="devicetype_ksix_venture">KSIX Venture</string>
-    <string name="devicetype_viran_c29">Viran C29</string>
-    <string name="devicetype_r50pro">R50Pro</string>
-    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
-    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
     <string name="prefs_device_support_settings">Apparaatondersteuning</string>
     <string name="device_support_can_reconnect_title">Hergebruik apparaatondersteuning</string>
     <string name="device_support_can_reconnect_summary">Hergebruik de DeviceSupport-instantie bij het opnieuw verbinden met de gadget.</string>
     <string name="discovery_bonding_error">Binden mislukt: %1$s</string>
-    <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
-    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
-    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
-    <string name="devicetype_aawireless">AAWireless</string>
-    <string name="devicetype_yawell_r10">Yawell R10</string>
-    <string name="devicetype_yawell_r11">Yawell R11</string>
     <string name="pref_aawireless_dongle_confirmation">Na het schakelen tussen normale modus en dongel-modus, moet het apparaat opnieuw gekoppeld worden. Wacht minimaal 30 seconden om het toepassen van de instelling te voltooien.</string>
     <string name="switch_to_next_phone">Volgende telefoon</string>
     <string name="toggle_standby_on_off">Standby aan/uit</string>
@@ -4184,12 +3852,6 @@
     <string name="activity_type_apnea_training">Apneu-training</string>
     <string name="activity_type_apnea_test">Apneu-test</string>
     <string name="activity_type_scuba_diving">SCUBA-duiken</string>
-    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Rond)</string>
-    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Vierkant)</string>
-    <string name="devicetype_garmin_vivomove_sport">Garmin Vívomove Sport</string>
-    <string name="devicetype_garmin_venu_x1">Garmin Venu X1</string>
-    <string name="devicetype_amazfit_helio_ring">Amazfit Helio Ring</string>
-    <string name="devicetype_amazfit_helio_strap">Amazfit Helio Strap</string>
     <string name="devicetype_generic_headphones">Koptelefoon</string>
     <string name="devicetype_generic_heart_rate_sensor">Hartslagsensor</string>
     <string name="devicetype_generic_thermal_printer">Thermische printer</string>
@@ -4223,22 +3885,6 @@
     <string name="help">Help</string>
     <string name="auth_key_explanation">Dit apparaat heeft een authenticatiesleutel nodig om te verbinden.</string>
     <string name="auth_key_activity_title_for">Authenticatiesleutel voor %1$s</string>
-    <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
-    <string name="devicetype_garmin_fenix_3">Garmin Fenix 3</string>
-    <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
-    <string name="devicetype_garmin_forerunner_165_music">Garmin Forerunner 165 Music</string>
-    <string name="devicetype_garmin_hrm_200">Garmin HRM 200</string>
-    <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
-    <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
-    <string name="devicetype_garmin_vivosmart_3">Garmin Vívosmart 3</string>
-    <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
-    <string name="devicetype_colmi_r07">Colmi R07</string>
-    <string name="devicetype_h59">H59</string>
-    <string name="devicetype_colmi_p76">Colmi P76</string>
-    <string name="devicetype_garmin_fenix_3_hr">Garmin Fenix 3 HR</string>
-    <string name="devicetype_atc_ble_oepl">ATC_BLE_OEPL</string>
-    <string name="devicetype_coospo_h6">Coospo H6</string>
-    <string name="devicetype_coospo_hw9">Coospo HW9</string>
     <string name="menuitem_zepp_flow">Zepp Flow</string>
     <string name="exercise_category_bench_press">Bankdrukken</string>
     <string name="exercise_category_calf_raise">Calf raise</string>
@@ -4273,8 +3919,6 @@
     <string name="activity_print_label_print_size">Afmeting print (px): %1$d x %2$d</string>
     <string name="service_notification_collector_service_title">Gadgetbridge meldingen-monitor</string>
     <string name="service_notification_collector_service_text">Monitor meldingen in de achtergrond</string>
-    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
-    <string name="devicetype_dotn_p66d">Dotn P66D</string>
     <string name="pref_title_time_interval">Tijdsinterval</string>
     <string name="pref_summary_time_interval">Beperk tot specifieke intervallen</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Schakel de verouderde meldingenverzamelservice in</string>

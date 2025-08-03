@@ -192,7 +192,6 @@
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="debugactivity_really_factoryreset_title">Chiar dorești o restaurare a setărilor din fabrică?</string>
-    <string name="devicetype_xiaomi_watch_s1_active">Xiaomi Watch S1 Active</string>
     <string name="fw_upgrade_notice_miband7">Ești pe cale să instalezi firmware-ul %s pe Xiaomi Smart Band 7.
 \n
 \nDupă instalarea fișierului .zip, brățara va reporni.

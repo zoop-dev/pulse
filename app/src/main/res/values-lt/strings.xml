@@ -46,17 +46,6 @@
     <string name="app_move_to_top">Perkelti į viršų</string>
     <string name="title_activity_calblacklist">Kalendorių juodasis sąrašas</string>
     <string name="title_activity_fw_app_insaller">FW/Programų diegyklė</string>
-    <string name="devicetype_test">Išbandyti įrenginį</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
     <string name="menuitem_activity">Veikla</string>
     <string name="controlcenter_calibrate_device">Kalibruoti įrenginį</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>

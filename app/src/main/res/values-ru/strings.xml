@@ -506,9 +506,6 @@
     <string name="kind_gps">Прошивка GPS</string>
     <string name="kind_resources">Ресурсы</string>
     <string name="devicetype_unknown">Неизвестное устройство</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
     <string name="menuitem_alipay">Alipay</string>
     <string name="on">Вкл.</string>
     <string name="select_all">Выбрать все</string>
@@ -517,19 +514,6 @@
     <string name="menuitem_alarm">Будильник</string>
     <string name="menuitem_timer">Обратный отсчёт</string>
     <string name="activity_type_biking">Велопрогулка</string>
-    <string name="devicetype_test">Тестовое устройство</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_q8">Q8</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
-    <string name="devicetype_xwatch">XWatch</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="prefs_screen_orientation">Ориентация экрана</string>
     <string name="pref_auto_fetch">Получать данные активности автоматически</string>
     <string name="pref_auto_fetch_summary">Получать данные активности при разблокировке. Работает только при настроенной блокировке экрана!</string>
@@ -543,8 +527,6 @@
     <string name="kind_invalid">Недопустимый формат данных</string>
     <string name="kind_gps_almanac">Данные GPS</string>
     <string name="kind_gps_cep">Поправка ошибки GPS</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_id115">ID115</string>
     <string name="choose_auto_export_location">Куда сохранять данные при экспорте</string>
     <string name="notification_channel_name">Общий</string>
     <string name="menuitem_activity">История тренировок</string>
@@ -553,7 +535,6 @@
     <string name="menuitem_music">Музыка</string>
     <string name="controlcenter_calibrate_device">Откалибровать устройство</string>
     <string name="watch9_pairing_tap_hint">Когда устройство завибрирует, встряхните его или нажмите на кнопку.</string>
-    <string name="devicetype_watch9">Watch 9</string>
     <string name="watch9_time_minutes">Минут:</string>
     <string name="watch9_time_hours">Часов:</string>
     <string name="watch9_time_seconds">Секунд:</string>
@@ -590,8 +571,6 @@
     <string name="ok">Принять</string>
     <string name="controlcenter_change_led_color">Изменить цвет светодиода</string>
     <string name="controlcenter_change_fm_frequency">Изменить FM-частоту</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
     <string name="preferences_led_color">Цвет излучения светодиода</string>
     <string name="preferences_fm_frequency">Частота УКВ</string>
     <string name="pref_invalid_frequency_title">Недопустимая частота</string>
@@ -611,7 +590,6 @@
     <string name="preferences_rtl_settings">Поддержка ввода справа налево</string>
     <string name="prefs_disconnect_notification">Уведомление об отключении</string>
     <string name="activity_type_exercise">Упражнения</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="title_activity_notification_filter">Фильтр уведомлений</string>
     <string name="filter_submode_at_least_one">Минимум одно из слов</string>
     <string name="filter_submode_all">Все слова</string>
@@ -693,7 +671,6 @@
     <string name="title_activity_device_specific_settings">Специфичные для устройства настройки</string>
     <string name="pref_title_authkey">Ключ авторизации</string>
     <string name="pref_summary_authkey">Измените ключ авторизации на общий ключ на всех ваших Android-устройствах, с которых вы хотели бы подключиться. Предыдущий ключ по умолчанию для всех устройств 0123456789@ABCDE</string>
-    <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">Вы собираетесь установить прошивку %s на ваш Amazfit Cor 2.
 \n
 \nБудьте внимательны: вначале установите файл .fw, затем .res. После установки .fw ваш браслет будет перезагружен.
@@ -711,8 +688,6 @@
     <string name="thai">Тайский</string>
     <string name="vietnamese">Вьетнамский</string>
     <string name="portuguese">Португальский</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
     <string name="fw_upgrade_notice_miband4">Вы собираетесь установить прошивку %s на ваш Mi Band 4.
 \n
 \nБудьте внимательны: сначала установите файл .fw, затем .res. После установки .fw ваш браслет будет перезагружен.
@@ -730,7 +705,6 @@
     <string name="pref_charts_range_off">Диапазон графиков в рамках недели</string>
     <string name="weekstepschart_steps_a_month">Активность за месяц</string>
     <string name="weeksleepchart_sleep_a_month">Сон за месяц</string>
-    <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="pref_title_use_custom_font">Пользовательский шрифт</string>
     <string name="pref_summary_use_custom_font">Включите при наличии на устройстве пользовательского шрифта для поддержки эмодзи</string>
@@ -760,8 +734,6 @@
     </plurals>
     <string name="activity_error_no_app_for_gpx">Для просмотра трассировки активности установите приложение, которое может работать с GPX файлами.</string>
     <string name="preferences_makibes_hr3_settings">Настройки Makibes HR3</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">Найти телефон</string>
     <string name="prefs_enable_find_phone">Включить \'Найти телефон\'</string>
     <string name="prefs_find_phone_summary">Использовать ваш браслет для проигрывания рингтонов.</string>
@@ -775,7 +747,6 @@
 \nПримечание: если файл и .res такой же, как в текущей версии, его не нужно переустанавливать.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="fw_upgrade_notice_amazfitgtr">Вы собираетесь установить прошивку %s на ваш Amazfit GTR.
 \n
 \nБудьте внимательны: вначале установите файл .fw, затем .res. После установки .fw ваши часы будут перезагружены.
@@ -789,7 +760,6 @@
     <string name="pref_title_chart_sleep_rolling_24_hour">Диапазон сна</string>
     <string name="pref_chart_sleep_rolling_24_on">Последние 24 часа</string>
     <string name="pref_chart_sleep_rolling_24_off">С полудня до полудня</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="fw_upgrade_notice_amazfitgts">Вы собираетесь установить прошивку %s на ваш Amazfit GTS.
 \n
 \nБудьте внимательны: сперва установите файл .fw, затем .res. После установки .fw ваши часы будут перезагружены.
@@ -797,7 +767,6 @@
 \nПримечание: если версия файла .res совпадает с установленной, его не нужно переустанавливать.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="preferences_qhybrid_settings">Настройки Q Hybrid</string>
     <string name="watch_not_connected">Часы не подсоединены</string>
     <string name="qhybrid_vibration_strength">сила вибрации:</string>
@@ -814,11 +783,8 @@
     <string name="qhybrid_offset_time_by">смещение времени на</string>
     <string name="pref_disable_new_ble_scanning">Отключить новое BLE сканирование</string>
     <string name="pref_summary_disable_new_ble_scanning">Включите, если устройство не видно как доступное</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_y5">Y5</string>
     <string name="alarm_snooze">Откладывание будильника</string>
     <string name="error_no_location_access">Доступ к местоположению должен быть разрешен и включен для корректной работы поиска</string>
-    <string name="devicetype_itag">iTag</string>
     <string name="pref_title_allow_high_mtu">Разрешить высокий MTU</string>
     <string name="pref_summary_allow_high_mtu">Увеличивает скорость передачи данных, но может не работать на некоторых Android-устройствах.</string>
     <string name="pref_summary_sync_calendar">Получение оповещений календаря даже при отсутствии подключения</string>
@@ -864,11 +830,6 @@
     <string name="menuitem_cycles">Отслеживание цикла</string>
     <string name="menuitem_breathing">Дыхание</string>
     <string name="notification_channel_high_priority_name">Высокий приоритет</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
-    <string name="devicetype_watchx">Watch X</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="find_lost_device_you_found_it">Нашел!</string>
     <string name="czesh">Чешский</string>
     <string name="swedish">Шведский</string>
@@ -990,8 +951,6 @@
     <string name="device_is_currently_bonded">УЖЕ СВЯЗАНЫ</string>
     <string name="companiondevice_pairing">Сопряжение с CompanionDevice</string>
     <string name="require_location_provider">Местоположение должно быть включено</string>
-    <string name="devicetype_pinetime_jf">PineTime (Прошивка JF)</string>
-    <string name="devicetype_tlw64">TLW64</string>
     <string name="activity_summary_detail">Подробности спортивной деятельности</string>
     <string name="activity_type_yoga">Йога</string>
     <string name="activity_type_jump_roping">Скакалка</string>
@@ -1020,7 +979,6 @@
     <string name="activity_summaries_all_activities">Все активности</string>
     <string name="activity_summary_yesterday">Вчера</string>
     <string name="activity_summary_today">Сегодня</string>
-    <string name="devicetype_sg2">Lemfo SG2</string>
     <string name="activity_summaries_all_devices">Все устройства</string>
     <string name="sports_activity_quick_filter_select">Период времени</string>
     <string name="sports_activity_quick_filter_30days">30 дней</string>
@@ -1055,10 +1013,8 @@
     <string name="lefun_prefs_hydration_reminder_title">Напоминание о гидратации</string>
     <string name="lefun_prefs_antilost_summary">Браслет будет вибрировать, если ваш телефон отключится от браслета</string>
     <string name="lefun_prefs_hydration_reminder_summary">Браслет будет вибрировать, напоминая вам о питье воды</string>
-    <string name="devicetype_lefun">Lefun</string>
     <string name="lefun_prefs_interface_language_title">Язык интерфейса</string>
     <string name="lefun_prefs_antilost_title">Защита от потери</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="sonyswr12_settings_title">Настройки Sony SWR12</string>
     <string name="sonyswr12_settings_low_vibration">Слабая вибрация</string>
     <string name="sonyswr12_settings_stamina">Режима энергосбережения включен</string>
@@ -1066,13 +1022,10 @@
     <string name="sonyswr12_settings_low_vibration_summary">Включить слабую вибрации на браслете</string>
     <string name="sonyswr12_settings_stamina_summary">Режим энергосбережения отключает периодические замеры пульса, продлевая время работы</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Интервал умного будильника - это интервал до установленного будильника. В этом интервале устройство пытается определить самую легкую фазу сна, чтобы разбудить пользователя</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="activity_error_no_app_for_png">Чтобы поделиться этим снимком, установите приложение, способное обрабатывать файлы изображений.</string>
     <string name="descentSeconds">По убыванию</string>
     <string name="gps_track">GPS-трек</string>
     <string name="about_version">Версия %s</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="charts_legend_heartrate_average">Средняя частота пульса</string>
     <string name="activity_prefs_step_length_cm">Длина шага в см</string>
     <string name="charts_min_max_heartrate_popup">Самая низкая частота пульса: %1$d
@@ -1094,8 +1047,6 @@
     <string name="menuitem_takephoto">Удаленное управление камерой</string>
     <string name="menuitem_mutephone">Отключение звука</string>
     <string name="menuitem_spo2">SpO2</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
     <string name="activity_list_summary_active_time">Время активности</string>
     <string name="activity_list_summary_distance">Расстояние</string>
     <string name="activity_list_summary_active_steps">Активные шаги</string>
@@ -1105,12 +1056,10 @@
 \nдвижения</string>
     <string name="menuitem_stopwatch">Секундомер</string>
     <string name="menuitem_findphone">Найти телефон</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
     <string name="movement_intensity">Интенсивность движения</string>
     <string name="devicestatus_upload_started">Загрузка началась</string>
     <string name="activity_list_summary_activities">Активности</string>
     <string name="menuitem_sleep">Сон</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
     <string name="pref_title_upper_button_function_double">Двойное нажатие на верхнюю кнопку</string>
     <string name="pref_title_lower_button_function_double">Двойное нажатие на нижнюю кнопку</string>
     <string name="pref_title_middle_button_function_double">Двойное нажатие на среднюю кнопку</string>
@@ -1128,7 +1077,6 @@
     <string name="prefs_fake_ring_duration">Поддельный непрерывный звонок</string>
     <string name="prefs_key_vibration">Вибрация клавиш</string>
     <string name="prefs_autolight">Автоматический свет</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
     <string name="discovery_entered_invalid_authkey">Введённый ключ аутентификации недействителен! Удерживайте для изменения.</string>
     <string name="fw_upgrade_notice_amazfitvergel">Вы собираетесь установить прошивку %s на свой Amazfit Verge Lite.
 \n
@@ -1142,7 +1090,6 @@
     <string name="dbmanagementactivity_export_data_title">Экспорт данных\?</string>
     <string name="prefs_operating_sounds">Рабочие звуки</string>
     <string name="widget_settings_select_device_title">Выберите устройство</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
     <string name="dbmanagementactivity_export_finished">Удаление завершено</string>
     <string name="activity_db_management_clean_export_directory_text">Экспортированные файлы в каталоге экспорта/импорта доступны для любого приложения на вашем устройстве. Вы можете удалить эти файлы после синхронизации или резервного копирования. Перед удалением убедитесь, что у вас есть резервная копия. Файлы GPX, подкаталоги и автоматически экспортируемый файл базы данных (если он существует) не будут удалены. Путь к каталогу экспорта/импорта:</string>
     <string name="activity_DB_clean_export_directory_warning_message">Действительно удалить файлы в каталоге экспорта/импорта\?</string>
@@ -1155,12 +1102,6 @@
     <string name="minutes_mi">минут/миль</string>
     <string name="mi_h">миль/час</string>
     <string name="ft">футов</string>
-    <string name="devicetype_waspos">Wasp-os</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
     <string name="activity_type_strength_training">Силовой тренинг</string>
     <string name="battery_detail_activity_title">Информация о батарее</string>
     <string name="fw_upgrade_notice_amazfitx">Вы собираетесь установить прошивку %s на свой Amazfit X.
@@ -1170,7 +1111,6 @@
 \nПримечание: не нужно устанавливать .res, если он точно такой же, как ранее установленный.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
     <string name="calendar_year">Год</string>
     <string name="calendar_six_months">6 месяцев</string>
     <string name="calendar_month">Месяц</string>
@@ -1190,7 +1130,6 @@
     <string name="fossil_hr_unavailable_unauthed">Недоступно в режиме без аутентификации</string>
     <string name="fossil_hr_synced_activity_data">Синхронизированные данные об активности</string>
     <string name="fossil_hr_commute_processing">Обработка запроса…</string>
-    <string name="devicetype_um25">UM-25</string>
     <string name="calendar_three_months">3 месяца</string>
     <string name="fw_upgrade_notice_miband6">Вы собираетесь установить прошивку %s на свой Mi Band 6.
 \n
@@ -1199,7 +1138,6 @@
 \nПримечание: не нужно устанавливать .res если он ничем не отличаются от установленных ранее.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="qhybrid_pref_summary_external_intents">Позволяет другим приложениям Android загружать/перезаписывать файлы</string>
     <string name="qhybrid_pref_title_external_intents">Разрешить опасные внешние намерения</string>
     <string name="pref_summary_developer_settings">Настройки и функционал, используемый разработчиками</string>
@@ -1230,7 +1168,6 @@
     <string name="menuitem_events">События</string>
     <string name="notification_channel_low_battery_name">Низкий заряд батареи</string>
     <string name="notification_channel_transfer_name">Передача данных</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
     <string name="kind_agps_bundle">Пакет AGPS</string>
     <string name="prefs_sounds_summary">Настроить, когда устройство будет пищать</string>
     <string name="prefs_sounds">Звуки</string>
@@ -1281,7 +1218,6 @@
     <string name="gpx_receiver_overwrite_some_files">Некоторый файл(ы) уже существует. Перезаписать\?</string>
     <string name="gpx_receiver_files_received">Получен файл(ы) GPX:</string>
     <string name="gpx_receiver_activity_title">GPX-приемник Gadgetbridge</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="activity_summary_detail_editing_gpx_track">Редактирование связанного GPX трека</string>
     <string name="activity_summary_detail_clear_gpx_track">Очистить GPX трек</string>
     <string name="activity_summary_detail_select_gpx_track">Выберите GPX трек</string>
@@ -1293,7 +1229,6 @@
     <string name="getting_heart_rate">Измерение</string>
     <string name="blood_pressure">Артериальное давление</string>
     <string name="pref_title_huami_force_new_protocol">Новый протокол авторизации</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="menuitem_flashlight">Фонарик</string>
     <string name="pref_title_ping_tone">Звуковой сигнал</string>
     <string name="pref_header_notification_application_settings">Настройки для каждого приложения</string>
@@ -1358,7 +1293,6 @@
     <string name="sony_surround_mode_concert_hall">Концертный зал</string>
     <string name="nothing_prefs_audiomode_title">Аудиорежим</string>
     <string name="sony_automatic_power_off_30_min">30 минут</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="sony_speak_to_chat_timeout_standard">Стандартный (30с)</string>
     <string name="sony_speak_to_chat_timeout_short">Короткий (15с)</string>
     <string name="sony_speak_to_chat_timeout_off">Выкл</string>
@@ -1376,7 +1310,6 @@
     <string name="sony_surround_mode_club">Клуб</string>
     <string name="sony_surround_mode_arena">Арена</string>
     <string name="sony_ambient_sound_noise_cancelling">Подавление шума</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
     <string name="prefs_autoheartrate_interval">Частота замеров</string>
     <string name="prefs_notifications_enable">Включить оповещения</string>
     <string name="sony_ambient_sound_off">Выкл.</string>
@@ -1389,20 +1322,12 @@
     <string name="minSpeed">Минимальное</string>
     <string name="unknown">Неизвестно</string>
     <string name="sony_button_mode_off">Выкл</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
     <string name="spm">шагов/мин</string>
     <string name="sony_equalizer_band_1000">1к</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="prefs_dolby_mode">Режим Dolby</string>
     <string name="prefs_sleep_time">Время сна</string>
     <string name="sony_equalizer_preset_off">Выкл</string>
     <string name="sony_automatic_power_off_5_min">5 минут</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="devicetype_vesc">VESC</string>
     <string name="about_hash">Коммит %s</string>
     <string name="sony_equalizer_clear_bass">Чистый бас</string>
     <string name="sony_equalizer_band_16000">16к</string>
@@ -1575,7 +1500,6 @@
     <string name="miband_prefs_reserve_reminder_calendar">Резервирование напоминаний для предстоящих событий</string>
     <string name="prefs_reserve_reminder_calendar_summary">Количество событий календаря, которые будут синхронизированы</string>
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Включать дисплей при подъеме устройства, когда режим \"Не беспокоить\" включен</string>
-    <string name="devicetype_nothingear1">Нечего прослушивать (1)</string>
     <string name="prefs_equalizer_preset">Предустановки эквалайзера</string>
     <string name="pref_title_equalizer_trebble">Усиление ВЧ</string>
     <string name="pref_title_equalizer_dynamic">Динамичный</string>
@@ -1738,7 +1662,6 @@
     <string name="prefs_always_on_display_summary">Всегда держать экран устройства включенным</string>
     <string name="prefs_activate_display_on_lift_sensitivity">Чувствительность</string>
     <string name="activity_type_zumba">Зумба</string>
-    <string name="devicetype_amazfit_gts4">Amazfit GTS 4</string>
     <string name="menuitem_unsupported">[НЕ ПОДДЕРЖИВАЕТСЯ] %s</string>
     <string name="watchface_dialog_widget_background">Фон</string>
     <string name="prefs_sleep_time_label">Указать часы сна</string>
@@ -1801,9 +1724,6 @@
     <string name="offline_voice_respond_screen_on">Отвечать, когда экран включен</string>
     <string name="kind_app">Приложение</string>
     <string name="pref_title_lower_button_short_press_action">Действие при быстром нажатии на нижнюю кнопку</string>
-    <string name="devicetype_miband7">Xiaomi Smart Band 7</string>
-    <string name="devicetype_amazfit_gts3">Amazfit GTS 3</string>
-    <string name="devicetype_amazfit_gtr4">Amazfit GTR 4</string>
     <string name="pref_cover_to_mute">Накрыть для отключения звука</string>
     <string name="fw_upgrade_notice_amazfit_band7">Вы собираетесь установить прошивку %s на свой Amazfit Band 7.
 \n
@@ -1819,23 +1739,13 @@
     <string name="prefs_seamless_connection_switch_summary">Переключаться между устройствами автоматически</string>
     <string name="sony_sound_position_front_right">Передний правый</string>
     <string name="pref_summary_third_party_app_device_settings">Разрешить прочим сторонним приложениям устанавливать настройки устройства по intents.</string>
-    <string name="devicetype_amazfit_gts4_mini">Amazfit GTS 4 Mini</string>
-    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite</string>
-    <string name="devicetype_sony_wf_1000xm3">Sony WF-1000XM3</string>
-    <string name="devicetype_sony_wf_1000xm4">Sony WF-1000XM4</string>
-    <string name="devicetype_sony_linkbuds_s">Sony LinkBuds S</string>
-    <string name="devicetype_galaxybuds_pro">Galaxy Buds Pro</string>
-    <string name="devicetype_galaxybuds_2">Galaxy Buds2</string>
-    <string name="devicetype_super_cars">Shell Racing</string>
     <string name="error_setting_parent_folder">Ошибка задания родительской папки: %s</string>
     <string name="autoconnect_from_device_summary">Подключаться в случае когда соединение инициировано устройством, например, наушниками</string>
-    <string name="devicetype_sony_wh_1000xm2">Sony WH-1000XM2</string>
     <string name="info_no_devices_connected">Нет подключенных устройств</string>
     <string name="controlcenter_set_parent_folder">Задать родительскую папку</string>
     <string name="controlcenter_set_folder_title">Укажите папку или создайте новую</string>
     <string name="autoconnect_from_device_title">Подключаться при подключении с устройства</string>
     <string name="pref_title_device_intents">Разрешить использование Intent</string>
-    <string name="devicetype_flipper_zero">Flipper zero</string>
     <string name="gadgetbridge_running_main_nopebble">Nightly NoPebble GB запущен</string>
     <string name="controlcenter_set_preferences">Задать настройки</string>
     <string name="error_deleting_device">Ошибка удаления устройства: %s</string>
@@ -1846,15 +1756,12 @@
     <string name="about_activity_title_banglejs_nightly">О Bangle.js Gadgetbridge (Nightly)</string>
     <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js запущен</string>
     <string name="connection_over_bt_classic">Подключение через обычный Bluetooth</string>
-    <string name="devicetype_asteroidos">AsteroidOS</string>
-    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3</string>
     <string name="info_connected_count">%d устройств подключено</string>
     <string name="controlcenter_toggle_details">Показать подробности</string>
     <string name="controlcenter_folder_name">Имя папки:</string>
     <string name="connection_over_ble">Подключение по BLE</string>
     <string name="auto_reconnect_ble_summary">Периодически пытаться переподключиться</string>
     <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
-    <string name="devicetype_amazfit_band7">Amazfit Band 7</string>
     <string name="activity_db_management_autoexport_enabled_yes">Авто-экспорт включен.</string>
     <string name="activity_db_management_autoexport_scheduled_no">Авто-экспорт не был запланирован.</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent API</string>
@@ -1924,10 +1831,8 @@
     <string name="gpx_route_upload_complete">Загрузка GPX маршрута завершена</string>
     <string name="gpx_route_upload_in_progress">Загрузка GPX маршрута</string>
     <string name="gpx_route_upload_failed">Не удалось загрузить GPX маршрут</string>
-    <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5</string>
     <string name="pref_workout_keep_screen_on_title">Оставлять экран включенным во время тренировки</string>
     <string name="georgian">Грузинский</string>
-    <string name="devicetype_amazfit_trex_2">Amazfit T-Rex 2</string>
     <string name="pref_contacts_title">Контакты</string>
     <string name="contact_delete_confirm_title">Удалить контакт</string>
     <string name="activity_prefs_goal_standing_time_minutes">Ежедневная цель: время стоя в минутах</string>
@@ -1936,7 +1841,6 @@
     <string name="activity_prefs_goal_fat_burn_time_minutes">Ежедневная цель: время сжигания жира в минутах</string>
     <string name="status">Статус</string>
     <string name="normal">Нормальный</string>
-    <string name="devicetype_amazfit_gtr3_pro">Amazfit GTR 3 Pro</string>
     <string name="menuitem_forecast">Прогноз</string>
     <string name="menuitem_last_workout">Последняя тренировка</string>
     <string name="mi5_prefs_workout_activity_types">Типы тренировок</string>
@@ -2132,10 +2036,8 @@
     <string name="stress_high">Высокий</string>
     <string name="pai_total">Всего</string>
     <string name="pref_theme_dynamic">Адаптивные цвета</string>
-    <string name="devicetype_casiogmwb5000">Casio GMW-B5000</string>
     <string name="watchface_widget_type_uv_index">Индекс УФ-излучения</string>
     <string name="pref_show_changelog">Показывать список изменений при запуске</string>
-    <string name="devicetype_galaxybuds_2_pro">Galaxy Buds2 Pro</string>
     <string name="activity_type_handball">Гандбол</string>
     <string name="activity_type_weightlifting">Тяжёлая атлетика</string>
     <string name="activity_type_dancing">Танцы</string>
@@ -2143,14 +2045,12 @@
     <string name="activity_type_snowboarding">Сноубординг</string>
     <string name="activity_type_riding">Верховая езда</string>
     <string name="activity_type_hockey">Хоккей</string>
-    <string name="devicetype_casiogwb5600">Casio GW-B5600</string>
     <string name="watchface_dialog_widget_cat_2nd_tz_widget">Виджет вторичного часового пояса</string>
     <string name="activity_type_icehockey">Хоккей с шайбой</string>
     <string name="activity_type_iceskating">Коньки</string>
     <string name="activity_type_other">Другое</string>
     <string name="error_no_bluetooth_connect">Для корректной работы сканирования требуется разрешение на соединение по Bluetooth</string>
     <string name="activity_type_golf">Гольф</string>
-    <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro</string>
     <string name="error_no_bluetooth_scan">Для корректной работы сканирования требуется разрешение на сканирование Bluetooth</string>
     <string name="pref_show_changelog_summary">Отображать список изменений с предыдущей версии после обновления Gadgetbridge</string>
     <string name="watchface_dialog_widget_cat_position">Позиция</string>
@@ -2313,19 +2213,11 @@
 \nНажмите «%2$s», чтобы продолжить.</string>
     <string name="pref_device_action_broadcast">Отправить трансляцию</string>
     <string name="prefs_ambient_sound_during_call_summary">Отчётливо слышать свой голос во время звонков</string>
-    <string name="devicetype_amazfit_bip5">Amazfit Bip 5</string>
-    <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra</string>
-    <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini</string>
     <string name="device_experimental">ЭКСПЕРИМЕНТАЛЬНО</string>
-    <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro</string>
-    <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (круглые)</string>
     <string name="watchface_setting_title_custom_events">Пользовательские события</string>
     <string name="menuitem_zepp_coach">Zepp Coach</string>
     <string name="sony_speak_to_chat_focus_on_voice">Концентрация на голосе</string>
     <string name="sony_button_mode_help_title">Режимы кнопок - Помощь</string>
-    <string name="devicetype_withings_steel_hr">Withings Steel HR</string>
-    <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah Square (квадратные)</string>
-    <string name="devicetype_amazfit_falcon">Amazfit Falcon</string>
     <string name="maxCadence">Максимум шагов в минуту</string>
     <string name="minStride">Минимальная длина шага</string>
     <string name="prefs_autoheartrate">Автозамеры сердцебиения</string>
@@ -2346,9 +2238,7 @@
     <string name="pref_media_rewind">Пропустить назад</string>
     <string name="sony_equalizer_preset_relaxed">Расслабленный</string>
     <string name="pref_media_previous">Предыдущий</string>
-    <string name="devicetype_soflow_s06">SoFlow SO6</string>
     <string name="watchface_dialog_pre_setting_position">предустановка позиции на %s</string>
-    <string name="devicetype_bohemic_smart_bracelet">Умный браслет Bohemic</string>
     <string name="text_receiver_activity_title">Отправить текст на устройство</string>
     <string name="activity_type_stepper">Степпер</string>
     <string name="battery_case">Зарядный футляр</string>
@@ -2439,13 +2329,10 @@
     <string name="blue">Синий</string>
     <string name="prefs_wena3_button_action_name_activity_screen">Отображение активности</string>
     <string name="pref_device_action_fitness_app_control_start">Начало отслеживания фитнес-приложением</string>
-    <string name="devicetype_miband2_hrx">Mi Band HRX (без датчика ЧСС)</string>
     <string name="drag_handle">ручка перетаскивания</string>
-    <string name="devicetype_sony_wena3">Sony Wena 3</string>
     <string name="watchface_setting_power_saving_hands">Выключить движения рук при снятом ремешке</string>
     <string name="pref_device_action_fitness_app_control_stop">Остановка отслеживания фитнес-приложением</string>
     <string name="pref_header_sony_equalizer_bands">Диапазоны</string>
-    <string name="devicetype_sony_wf_1000xm5">Sony WF-1000XM5</string>
     <string name="sony_equalizer_preset_mellow">Мягкий</string>
     <string name="sony_equalizer_preset_excited">Взволнованный</string>
     <string name="pref_title_lock_unlock">Заблокировать</string>
@@ -2470,7 +2357,6 @@
     <string name="menuitem_zepp_pay">Zepp Pay</string>
     <string name="femometer_measurement_mode_quick">Быстрый (30 сек.)</string>
     <string name="zepp_os_watchface_starry_sky">Звёздное небо</string>
-    <string name="devicetype_amazfit_balance">Amazfit Balance</string>
     <string name="femometer_measurement_mode_title">Режим измерения</string>
     <string name="femometer_measurement_mode_precise">Точный (3 мин.)</string>
     <string name="zepp_os_watchface_vast_sky">Необъятное небо</string>
@@ -2480,7 +2366,6 @@
     <string name="zepp_os_watchface_guider">Руководство</string>
     <string name="menuitem_readiness">Готовность</string>
     <string name="menuitem_thermometer">Термометр</string>
-    <string name="devicetype_femometer_vinca2">Femometer Vinca II</string>
     <string name="fossil_hr_nav_app_not_installed_notify_text">Навигация была начата, но navigationApp не установлено на часах. Пожалуйста, установите его в менеджере приложений.</string>
     <string name="fossil_hr_nav_app_not_installed_notify_title">Приложение для навигации не установлено на часах</string>
     <string name="call_rejection_method_ignore">Игнорировать (прекратить уведомление)</string>
@@ -2491,9 +2376,7 @@
     <string name="pref_call_rejection_method_summary">Какое действие необходимо совершить при отклонении вызова с часов</string>
     <string name="busy_task_fetch_temperature">Получение температуры</string>
     <string name="laneLength">Длина дорожки</string>
-    <string name="devicetype_amazfit_active_edge">Amazfit Active Edge</string>
     <string name="charts_legend_spo2_average">Средний уровень кислорода в крови</string>
-    <string name="devicetype_amazfit_active">Amazfit Active</string>
     <string name="pref_title_navigation_apps">Навигационные приложения</string>
     <string name="pref_title_navigation_prefs">Настройки навигации</string>
     <string name="pref_navigation_app_gmaps">Google Карты</string>
@@ -2505,7 +2388,6 @@
     <string name="pref_title_casio_alert_other">Оповещения прочих уведомлений</string>
     <string name="pref_title_casio_alert_calendar">Оповещения календаря</string>
     <string name="pref_summary_casio_alert_call">Оповещать о входящих звонках вибрацией/пищанием</string>
-    <string name="devicetype_miband8">Xiaomi Smart Band 8</string>
     <string name="menuitem_running">Бег</string>
     <string name="pref_sleep_mode_schedule_title">Расписание спящего режима</string>
     <string name="pref_title_casio_alert_call">Оповещения о входящих</string>
@@ -2515,22 +2397,16 @@
     <string name="menuitem_focus">Концентрация</string>
     <string name="pref_summary_casio_alert_sms">Оповещать о полученных SMS (текстовых) сообщениях вибрацией/пищанием</string>
     <string name="pref_title_preview_message_in_title">Показывать сообщение в заголовке</string>
-    <string name="devicetype_redmiwatch3active">Redmi Watch 3 Active</string>
     <string name="pref_summary_casio_alert_calendar">Оповещать о событиях календаря вибрацией/пищанием</string>
     <string name="serial_number">Серийный номер</string>
     <string name="danish">Датский</string>
     <string name="wake_up_time">Пробуждение</string>
     <string name="menuitem_stats">Статистика</string>
     <string name="pref_summary_casio_alert_other">Оповещать при прочих уведомлениях вибрацией/пищанием</string>
-    <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite</string>
     <string name="pref_summary_preview_message_in_title">Показывать сообщение в заголовке уведомления в соответствии с настройками конфиденциальности устройства</string>
     <string name="pref_sleep_mode_schedule_summary">Отправьте напоминание и перейдите в режим сна перед сном. В запланированное время пробуждения прозвучит сигнал будильника.</string>
     <string name="pref_title_casio_alert_sms">Оповещения SMS-сообщений</string>
     <string name="menuitem_alerts">Оповещения</string>
-    <string name="devicetype_miband7pro">Xiaomi Smart Band 7 Pro</string>
-    <string name="devicetype_xiaomi_watch_s1_active">Xiaomi Watch S1 Active</string>
-    <string name="devicetype_mi_watch_color_sport">Mi Watch Color Sports</string>
-    <string name="devicetype_pixoo">Pixoo</string>
     <string name="pref_summary_send_app_notifications">Передавать уведомления приложений на устройство</string>
     <string name="pref_title_send_app_notifications">Передавать уведомления</string>
     <string name="activity_type_trail_run">Трейлраннинг</string>
@@ -2557,7 +2433,6 @@
     <string name="silent_mode_vibrate_silent">На вибрации / Беззвучный</string>
     <string name="widget">Виджет</string>
     <string name="pref_vitality_score_daily_summary">Получите уведомление, когда вы достигнете максимального количества очков жизненной силы за день</string>
-    <string name="devicetype_redmi_smart_band_2">Redmi Smart Band 2</string>
     <string name="widget_screen">Экран виджета</string>
     <string name="widget_move_down">Переместить ниже</string>
     <string name="widget_layout_single">1 виджет</string>
@@ -2576,12 +2451,9 @@
     <string name="pref_device_action_dnd_off">Не беспокоить - Выключено</string>
     <string name="silent_mode_normal_silent">Нормальный / Беззвучный</string>
     <string name="activity_type_wrestling">Борьба</string>
-    <string name="devicetype_colacao23">ColaCao 2023</string>
-    <string name="devicetype_colacao21">ColaCao 2021</string>
     <string name="clap_hands_to_wakeup_device">Активировать экран хлопком руками</string>"
     <string name="clap_hands_to_wakeup_device_summary">Повторный хлопок погасит его</string>"
     <string name="pixoo_power_saving_summary">Экран погаснет после продолжительной тишины, замеченной микрофоном</string>
-    <string name="devicetype_mijia_lywsd03">Mijia Temperature and Humidity Sensor 2</string>
     <string name="pref_title_fossil_hr_navigation_instructions">Указания по навигации</string>
     <string name="pref_summary_fossil_hr_navigation_instructions">Настройки встроенного приложения навигации</string>
     <string name="pref_summary_fossil_hr_nav_foreground">Должно ли появляться приложение навигации при получении навигационных указаний</string>
@@ -2589,33 +2461,14 @@
     <string name="pref_title_fossil_hr_nav_foreground">Автопоявление</string>
     <string name="prefs_device_name">Имя устройства</string>
     <string name="pref_summary_fossil_hr_nav_vibrate">Должны ли часы вибрировать при получении или изменении навигационных указаний (когда приложение показано)</string>
-    <string name="devicetype_redmi_watch_2_lite">Redmi Watch 2 Lite</string>
     <string name="notification_channel_connection_status_name">Состояние соединения</string>
-    <string name="devicetype_redmi_smart_band_pro">Redmi Smart Band Pro</string>
-    <string name="devicetype_nothingear2">Nothing Ear (2)</string>
-    <string name="devicetype_nothingearstick">Nothing Ear (Stick)</string>
     <string name="prefs_active_noise_cancelling_light">Лёгкое активное подавление шума</string>
     <string name="prefs_active_noise_cancelling_transparency">Прозрачность</string>
-    <string name="devicetype_honor_band5">Honor Band 5</string>
-    <string name="devicetype_huawei_watch_gt">Huawei Watch GT</string>
-    <string name="devicetype_huawei_band4pro">Huawei Band 4 Pro</string>
-    <string name="devicetype_huawei_watchgt2">Huawei Watch GT 2 Pro</string>
-    <string name="devicetype_huawei_watchgt2e">Huawei Watch GT 2e</string>
-    <string name="devicetype_huawei_talk_band_b6">Huawei Talk Band B6</string>
-    <string name="devicetype_huawei_watchgt3">Huawei Watch GT 3 Pro</string>
     <string name="prefs_disconnect_notification_summary">Уведомление на устройстве при отсоединении от Bluetooth.</string>
     <string name="do_not_disturb_lift_wrist_summary">Только если включена активация по поднятию руки</string>
     <string name="pref_do_not_disturb_not_wear">\"Не беспокоить\", когда устройство снято</string>
     <string name="manual">Вручную</string>
-    <string name="devicetype_honor_band4">Honor Band 4</string>
-    <string name="devicetype_honor_band6">Honor Band 6</string>
-    <string name="devicetype_honor_band7">Honor Band 7</string>
-    <string name="devicetype_huawei_band_aw70">Huawei Band (AW70)</string>
     <string name="dnd_all_day">Весь день</string>
-    <string name="devicetype_honor_band3">Honor Band 3</string>
-    <string name="devicetype_huawei_band8">Huawei Band 8</string>
-    <string name="devicetype_huawei_band6">Huawei Band 6</string>
-    <string name="devicetype_huawei_band7">Huawei Band 7</string>
     <string name="prefs_workmode">Режим работы</string>
     <string name="huawei_alarm_smart_description">Не отключать \"умный подъём\".</string>
     <string name="huawei_alarm_event_description">Не включать \"умный подъём\".</string>
@@ -2664,7 +2517,6 @@
     <string name="updatefirmwareoperation_updateproblem_low_battery">Заряд аккумулятора слишком низок</string>
     <string name="menuitem_buzzer_intensity">Мощность звукоизлучателя</string>
     <string name="prefs_password_4_digits_0_to_9_summary">Пароль должен состоять из 4 цифр</string>
-    <string name="devicetype_xiaomi_watch_s1_pro">Xiaomi Watch S1 Pro</string>
     <string name="uploadwatchfaceoperation_complete">Установка циферблата завершена</string>
     <string name="uploadwatchfaceoperation_failed">Установка циферблата не удалась</string>
     <string name="pref_force_connection_type_title">Принудительная установка типа соединения</string>
@@ -2677,14 +2529,9 @@
     <string name="protocol_version">Версия протокола</string>
     <string name="sony_protocol_v2">Версия 2</string>
     <string name="flatDistance">Плоское расстояние</string>
-    <string name="devicetype_xiaomi_watch_s1">Xiaomi Watch S1</string>
-    <string name="devicetype_xiaomi_watch_s3">Xiaomi Watch S3</string>
     <string name="uploading_watchface">Загрузка циферблата…</string>
     <string name="uploadwatchfaceoperation_in_progress">Загрузка циферблата</string>
     <string name="pref_force_connection_type_description">Возможно, вам удаться заставить устройство работать с Gadgetbridge, принудительно выставив нужный тип соединения</string>
-    <string name="devicetype_miband8pro">Xiaomi Smart Band 8 Pro</string>
-    <string name="devicetype_mijia_mho_c303">Mijia MHO-C303</string>
-    <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N</string>
     <string name="heartrate_bpm_155">155 уд/м</string>
     <string name="heartrate_bpm_165">165 уд/м</string>
     <string name="prefs_heartrate_alert_active_high_threshold">Порог предупреждения о повышенном сердцебиении</string>
@@ -2712,20 +2559,16 @@
     <string name="activity_type_push_ups">Отжимания</string>
     <string name="activity_type_high_jump">Прыжки в высоту</string>
     <string name="activity_type_hula_hooping">Обруч</string>
-    <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro</string>
     <string name="activity_type_hunting">Охота</string>
     <string name="activity_type_fishing">Рыбалка</string>
-    <string name="devicetype_redmi_watch_2">Redmi Watch 2</string>
     <string name="activity_type_karting">Картинг</string>
     <string name="activity_type_billiards">Бильярд</string>
     <string name="activity_type_dodgeball">Вышибалы</string>
     <string name="activity_type_softball">Софтбол</string>
     <string name="activity_type_pickleball">Пиклбол</string>
     <string name="warning_missing_notification_permission">Невозможно отправить текущее уведомление из-за отсутствия разрешения</string>
-    <string name="devicetype_huawei_watchfit">Huawei Watch Fit</string>
     <string name="pref_test_features_title">Возможности</string>
     <string name="pref_test_features_summary">Возможности, включенные для этого тестового устройства</string>
-    <string name="devicetype_redmiwatch3">Redmi Watch 3</string>
     <string name="alarm_smart_wakeup_interval_default">5 минут</string>
     <string name="alarm_smart_wakeup_interval">Интервал умного пробуждения:</string>
     <string name="auto_reconnect_ble_scan_summary">Ожидать автопоиск устройств вместо выполнения слепых попыток переподключения</string>
@@ -2734,12 +2577,9 @@
     <string name="device_state_waiting_scan">Ожидание поиска устройств</string>
     <string name="auto_reconnect_ble_scan_title">Переподключение при сканировании BLE</string>
     <string name="error_scan_failed">Поиск не удался: %d</string>
-    <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active</string>
     <string name="pref_header_sony_sound_control">Управление звуком</string>
     <string name="pref_adaptive_volume_control_summary">Автоматически повышать громкость в шумных местах</string>
     <string name="pref_adaptive_volume_control_title">Адаптивная настройка громкости</string>
-    <string name="devicetype_amazfit_bip3">Amazfit Bip 3</string>
-    <string name="devicetype_sony_linkbuds">Sony LinkBuds</string>
     <string name="pref_wide_area_tap_summary">Распознавать касания между щекой и ухом</string>
     <string name="pref_wide_area_tap_title">Широкополосный кран</string>
     <string name="fw_upgrade_notice_amazfitbip3">Вы собираетесь установить прошивку %s на ваш Amazfit Bip 3.
@@ -2751,8 +2591,6 @@
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
     <string name="weekstepschart_steps_a_week_or_month">Шагов за неделю/месяц</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Сон за неделю/месяц</string>
-    <string name="devicetype_huawei_watchgt4">Huawei Watch GT 4</string>
-    <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate</string>
     <string name="busy_task_fetch_sports_details_interrupted">Получение подробностей о спорте было прервано</string>
     <string name="pref_force_enable_heartrate_support">Поддержка измерения пульса</string>
     <string name="pref_force_enable_spo2_support_summary">Форсировать поддержку измерения уровня кислорода в крови.
@@ -2778,7 +2616,6 @@
     <string name="pref_header_calls_and_notifications">Вызовы и уведомления</string>
     <string name="pref_dashboard_widget_show_legend_title">Показывать обозначения</string>
     <string name="armenian">Армянский</string>
-    <string name="devicetype_redmi_watch_4">Redmi Watch 4</string>
     <string name="pref_title_notification_wake_on_open">Автопробуждение и разблокировка</string>
     <string name="pref_summary_notification_wake_on_open">Пробуждать и разблокировать Android-устройство когда носимое устройство отвечает с OPEN. Нужно быть в доверенном состоянии.</string>
     <string name="pref_sleepasandroid_features_title">Функции</string>
@@ -2800,7 +2637,6 @@
     <string name="companion_pairing_request_description">Привязать устройство как сопутствующее?
 \n
 \nЭто рекомендуется для работы функции поиска устройства и улучшения качества соединения.</string>
-    <string name="devicetype_huawei_watchfit2">Huawei Watch Fit 2</string>
     <string name="devicesetting_scannable_minimum_unseen">Мин. время отсутствия (в сек.)</string>
     <string name="unbind_before_pair_title">Уже привязано</string>
     <string name="pref_dashboard_widget_today_title">График активности</string>
@@ -2821,10 +2657,6 @@
     <string name="pref_wearing_tone_summary">Проигрывать сигнал, когда вставлен наушник</string>
     <string name="pref_touch_tone">Сигнал касания</string>
     <string name="pref_wearing_tone">Сигнал ношения</string>
-    <string name="devicetype_soundcore_liberty3_pro">Soundcore Liberty 3 Pro</string>
-    <string name="devicetype_huawei_band9">Huawei Band 9</string>
-    <string name="devicetype_huawei_watchfit3">Huawei Watch Fit 3</string>
-    <string name="devicetype_huawei_watch4pro">Huawei Watch 4 (Pro)</string>
     <string name="preferences_qhybrid_settings_summary">Старые настройки для часов Q Hybrid</string>
     <string name="pref_adaptive_noise_cancelling_title">Адаптивное подавление шума</string>
     <string name="pref_adaptive_noise_cancelling_summary">Задавать уровень активного подавления шума в зависимости от громкости окружения</string>
@@ -2832,7 +2664,6 @@
     <string name="pref_summary_wheel_diameter">Диаметр колеса в дюймах. Обычно 29, 27,5 или 26.</string>
     <string name="chart_cycling_point_label_speed">%.1f км/ч</string>
     <string name="chart_cycling_point_label_distance">Сегодня: %1$.1f км \nВсего: %2$.1f км</string>
-    <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_on">Воспроизведение в других приложениях будет приостановлено при произнесении уведомления</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Приостанавливать воспроизведение</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_off">Громкость воспроизведения в других приложениях будет снижена при произнесении уведомления</string>
@@ -2890,24 +2721,10 @@
     <string name="activity_type_curling">Керлинг</string>
     <string name="activity_type_snow_sports">Снежный спорт</string>
     <string name="activity_type_skateboarding">Скейтбординг</string>
-    <string name="devicetype_garmin_vivomove_hr">Garmin Vívomove HR</string>
-    <string name="devicetype_garmin_vivomove_style">Garmin Vívomove Style</string>
-    <string name="devicetype_garmin_venu_3">Garmin Venu 3</string>
-    <string name="devicetype_garmin_instinct_solar">Garmin Instinct Solar</string>
-    <string name="devicetype_garmin_instinct_2_soltac">Garmin Instinct 2 SolTac</string>
-    <string name="devicetype_garmin_instinct_2s">Garmin Instinct 2S</string>
-    <string name="devicetype_garmin_instinct_2_solar">Garmin Instinct 2 Solar</string>
-    <string name="devicetype_garmin_forerunner_245">Garmin Forerunner 245</string>
-    <string name="devicetype_garmin_swim_2">Garmin Swim 2</string>
     <string name="activity_type_track_and_field">Легкая атлетика</string>
     <string name="activity_type_mind_and_body">Разум и тело</string>
     <string name="activity_type_cross_country_skiing">Катание на беговых лыжах</string>
-    <string name="devicetype_garmin_instinct_crossover">Garmin Instinct Crossover</string>
-    <string name="devicetype_garmin_vivoactive_4">Garmin Vívoactive 4</string>
     <string name="swolfAvg">Средний волк</string>
-    <string name="devicetype_garmin_vivoactive_5">Garmin Vívoactive 5</string>
-    <string name="devicetype_garmin_vivoactive_4s">Garmin Vívoactive 4S</string>
-    <string name="devicetype_honor_magicwatch2">Honor MagicWatch 2</string>
     <string name="avgStrokeRate">Средняя скорость инсульта</string>
     <string name="maxStrokeRate">Максимальная скорость хода</string>
     <string name="strokes">Всего ударов</string>
@@ -2992,31 +2809,20 @@
     <string name="pref_garmin_agps_help">В приведенном ниже списке содержатся все URL-адреса, запрашиваемые часами для обновления AGPS. Вы можете выбрать файл из хранилища телефона, который будет отправлен на часы при запросе обновления.</string>
     <string name="no_folder_selected">Не выбрана папка</string>
     <string name="folder_is_empty">Папка пустая</string>
-    <string name="devicetype_garmin_epix_pro">Garmin Epix Pro</string>
-    <string name="devicetype_garmin_instinct_2s_solar">Garmin Instinct 2S Solar</string>
-    <string name="devicetype_garmin_vivosmart_5">Garmin Vivosmart 5</string>
-    <string name="devicetype_garmin_fenix_6_sapphire">Garmin Fenix 6 Sapphire</string>
     <string name="activity_prefs_height_inches">Рост в дюймах</string>
     <string name="loading">Загрузка…</string>
     <string name="min_val">Минимум: %d</string>
     <string name="toggle_debug_mode">Включить отладочный режим</string>
     <string name="share_debug_info">Поделиться отладочной информацией</string>
-    <string name="devicetype_garmin_instinct_2x_solar">Garmin Instinct 2X Solar</string>
     <string name="unsupported">Не поддерживается</string>
     <string name="max_val">Максимум: %d</string>
-    <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus</string>
     <string name="notif_battery_full_title">Аккумулятор заряжен!</string>
     <string name="notif_battery_full">%1$s батарея заряжена</string>
     <string name="authentication_failed_check_key">Аутентификация не удалась, проверьте ключ</string>
-    <string name="devicetype_garmin_fenix_7s">Garmin Fenix 7S</string>
-    <string name="devicetype_garmin_fenix_7_pro">Garmin Fenix 7 Pro</string>
-    <string name="devicetype_garmin_forerunner_255">Garmin Forerunner 255</string>
     <string name="notification_channel_full_battery_name">Полная батарея</string>
     <string name="battery_i">Батарея %d</string>
     <string name="battery_percentage_str">%1$s%%</string>
     <string name="battery_full_notify_enabled">Уведомлять об окончании зарядки</string>
-    <string name="devicetype_garmin_venu_3s">Garmin Venu 3S</string>
-    <string name="devicetype_garmin_forerunner_265">Garmin Forerunner 265</string>
     <string name="default_percentage">По умолчанию (%1$d%%)</string>
     <string name="show_in_notification">Показывать в уведомлении</string>
     <string name="battery_low_notify_enabled">Уведомлять о низком заряде батареи</string>
@@ -3024,8 +2830,6 @@
     <string name="battery_low_threshold">Порог низкого заряда</string>
     <string name="pref_fetch_unknown_files_title">Скачать неизвестные файлы</string>
     <string name="pref_fetch_unknown_files_summary">Сохранить неизвестные файлы активности с часов на этом устройстве. Они не будут обработаны.</string>
-    <string name="devicetype_garmin_venu_2">Garmin Venu 2</string>
-    <string name="devicetype_hama_fit6900">Hama Fit6900</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d день</item>
         <item quantity="few">%d дня</item>
@@ -3033,8 +2837,6 @@
         <item quantity="other">%d дней</item>
     </plurals>
     <string name="dashboard_calendar_month_goals_reached_title">% достигнуто от цели шагов</string>
-    <string name="devicetype_garmin_forerunner_255s">Garmin Forerunner 255S</string>
-    <string name="devicetype_garmin_instinct">Garmin Instinct</string>
     <string name="moondrop_touch_earbud_both">Оба</string>
     <string name="moondrop_touch_trigger">Срабатывать на</string>
     <string name="moondrop_touch_action_play_pause">Воспроизведение/Пауза</string>
@@ -3043,20 +2845,13 @@
     <string name="moondrop_touch_action_assistant">Вызов голосового помощника</string>
     <string name="moondrop_touch_trigger_long_press_1s">Долгое касание (1 сек)</string>
     <string name="moondrop_touch_trigger_long_press_3s">Долгое касание (3 сек)</string>
-    <string name="devicetype_moondrop_space_travel">Moondrop Space Travel</string>
     <string name="moondrop_touch_action_anc_mode">Изменить режим подавления шума</string>
-    <string name="devicetype_garmin_fenix_5">Garmin Fenix 5</string>
-    <string name="devicetype_garmin_fenix_6">Garmin Fenix 6</string>
-    <string name="devicetype_garmin_vivoactive_3">Garmin Vívoactive 3</string>
     <string name="realtime_settings">Настройки в реальном времени</string>
     <string name="proprietary_app_warning">Эта функция требует установку проприетарного приложения</string>
-    <string name="devicetype_garmin_vivomove_trend">Garmin Vívomove Trend</string>
-    <string name="devicetype_garmin_vivosport">Garmin Vívosport</string>
     <string name="pref_battery_polling_summary">Это наилучшая попытка, и возможно она затянется по нескольким причинам</string>
     <string name="pref_battery_polling_interval_format">через каждые %1$s минут</string>
     <string name="pref_title_notification_times_enabled">Время уведомлений</string>
     <string name="activity_type_parkour">Паркур</string>
-    <string name="devicetype_nothing_cmf_watch_pro_2">CMF Watch Pro 2</string>
     <string name="pref_summary_notification_times_enabled">Отправлять уведомления только в этом временном диапазоне</string>
     <string name="minutes_20">20 минут</string>
     <string name="stats_empty_value">-</string>
@@ -3172,16 +2967,10 @@
     <string name="activity_type_luge">Санный спорт</string>
     <string name="pref_title_sync_birthdays">Синхронизация дней рождения</string>
     <string name="pref_summary_sync_birthdays">Синхронизировать дни рождения контактов вместе с событиями календаря</string>
-    <string name="devicetype_sony_wf_c500">Sony WF-C500</string>
     <string name="recoveryTime">Время восстановления</string>
-    <string name="devicetype_huawei_watchgt5">Huawei Watch GT 5 (Pro)</string>
     <string name="miscale_weight_unit_title">Единица веса</string>
     <string name="miscale_weight_unit_metric">Метрическая (кг)</string>
     <string name="birthdays">Дни рождения</string>
-    <string name="devicetype_sony_wf_c700n">Sony WF-C700N</string>
-    <string name="devicetype_honor_watchgs3">Honor Watch GS 3</string>
-    <string name="devicetype_honor_watchgspro">Honor Watch GS Pro</string>
-    <string name="devicetype_redmi_watch_5_active">Redmi Watch 5 Active</string>
     <string name="contact_birthday">День рождения %1s</string>
     <string name="body_energy_gained">Набрано</string>
     <string name="body_energy_lost">Потеряно</string>
@@ -3192,15 +2981,11 @@
     <string name="activity_type_biathlon">Биатлон</string>
     <string name="hrv_status_day_avg">Среднее за день</string>
     <string name="hrv_status_low">Низкий</string>
-    <string name="devicetype_soundcore_liberty4_nc">Soundcore Liberty 4 NC</string>
-    <string name="devicetype_huawei_watchgtrunner">Huawei Watch GT Runner</string>
-    <string name="devicetype_huawei_watch3">Huawei Watch 3 (Pro)</string>
     <string name="menuitem_map">Карта</string>
     <string name="menuitem_weight">Вес</string>
     <string name="hrv_status_poor">Плохой</string>
     <string name="hrv_status_balanced">Сбалансированное</string>
     <string name="hrv_status_unbalanced">Несбалансированное</string>
-    <string name="devicetype_soundcore_motion300">Soundcore Motion 300</string>
     <string name="activity_type_table_football">Настольный футбол</string>
     <string name="idasen_control_button_stand">СТОЯ</string>
     <string name="idasen_control_button_sit">СИДЯ</string>
@@ -3250,10 +3035,6 @@
     <string name="music_delete_from_playlist">Удалить из плейлиста</string>
     <string name="music_delete">Удалить трек</string>
     <string name="music_all_songs">Все треки</string>
-    <string name="devicetype_colmi_r10">Colmi R10</string>
-    <string name="devicetype_garmin_venu_2s">Garmin Venu 2S</string>
-    <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker">Монитор активности Vivitar HR &amp; BP Tracker</string>
-    <string name="devicetype_garmin_fenix_6s_pro">Garmin Fenix 6S Pro</string>
     <string name="active_calories">Активные калории</string>
     <string name="active_calories_short">Активно</string>
     <string name="activity_prefs_goal_active_calories_burnt">Ежедневная цель: активное сжигание калорий</string>
@@ -3263,13 +3044,8 @@
     <string name="activity_type_paddling">Гребля</string>
     <string name="activity_type_folk_dance">Народный танец</string>
     <string name="activity_type_free_sparring">Свободный спарринг</string>
-    <string name="devicetype_garmin_forerunner_255s_music">Garmin Forerunner 255S Music</string>
-    <string name="devicetype_mijia_xmwsdj04">Датчик температуры и влажности Mijia 2 (E-ink)</string>
-    <string name="devicetype_sony_wi_c100">Sony WI-C100</string>
     <string name="menuitem_calories_segmented">Калории (сегментировано)</string>
     <string name="menuitem_calories_active_goal">Цель по калориям (активно)</string>
-    <string name="devicetype_bandw_pseries">Серия Bowers и Wilkins P</string>
-    <string name="devicetype_huawei_band3pro">Huawei Band 3 (Pro)</string>
     <string name="activity_type_indoor_push_run_speed">Отжимание в помещении - скорость бега</string>
     <string name="activity_type_bmx">BMX</string>
     <string name="activity_type_futsal">Футзал</string>
@@ -3281,9 +3057,6 @@
     <string name="sleep_colored_stats_rem_avg">БДГ (ср.)</string>
     <string name="activity_type_bocce">Хоккей с мячом</string>
     <string name="activity_type_hula_hoop">Обруч</string>
-    <string name="devicetype_miband9pro">Xiaomi Smart Band 9 Pro</string>
-    <string name="devicetype_garmin_instinct_2">Garmin Instinct 2</string>
-    <string name="devicetype_garmin_forerunner_255_music">Garmin Forerunner 255 Music</string>
     <string name="activity_type_hacky_sack">Мешочек с хекки</string>
     <string name="activity_type_judo">Дзюдо</string>
     <string name="activity_type_shuffleboard">Шахматная доска</string>
@@ -3315,15 +3088,6 @@
     <string name="activity_type_canoeing">Каноэ</string>
     <string name="hrv_status_last_night_highest_5">Прошлой ночью 5-минутный максимальный показатель</string>
     <string name="body_energy_legend_level">Уровень энергии тела</string>
-    <string name="devicetype_miband9">Xiaomi Smart Band 9</string>
-    <string name="devicetype_garmin_fenix_7">Garmin Fenix 7</string>
-    <string name="devicetype_garmin_forerunner_55">Garmin Forerunner 55</string>
-    <string name="devicetype_garmin_forerunner_235">Garmin Forerunner 235</string>
-    <string name="devicetype_garmin_forerunner_265s">Garmin Forerunner 265S</string>
-    <string name="devicetype_garmin_forerunner_620">Garmin Forerunner 620</string>
-    <string name="devicetype_idasen">Стол IKEA Idasen</string>
-    <string name="devicetype_huawei_watchd2">Huawei Watch D2</string>
-    <string name="devicetype_redmi_buds_5_pro">Redmi Buds 5 Pro</string>
     <string name="menuitem_heart_rate_push">Нажатие на пульс</string>
     <string name="menuitem_night_display">Ночной дисплей</string>
     <string name="busy_task_fetch_hrv_data">Получение данных HRV</string>
@@ -3332,16 +3096,12 @@
     <string name="sleep_colored_stats_light_avg">Легкий (ср.)</string>
     <string name="activity_type_esports">Эспорт</string>
     <string name="activity_type_wall_ball">Настенный мяч</string>
-    <string name="devicetype_garmin_forerunner_165">Garmin Forerunner 165</string>
-    <string name="devicetype_garmin_fenix_5x_plus">Garmin Fenix 5X Plus</string>
     <string name="activity_type_dragon_boat">Лодка дракона</string>
     <string name="activity_type_jumpmaster">Прыжковый мастер</string>
     <string name="activity_type_push_walk_speed">Толчок - скорость ходьбы</string>
     <string name="activity_type_tug_of_war">Перетягивание каната</string>
     <string name="activity_type_obstacle_race">Гонки с препятствиями</string>
-    <string name="devicetype_colmi_r06">Colmi R06</string>
     <string name="menuitem_stress_simple">Стресс (простой)</string>
-    <string name="devicetype_garmin_venu">Garmin Venu</string>
     <string name="activity_type_spinning">Спиннинг</string>
     <string name="activity_type_race_walking">Спортивная ходьба</string>
     <string name="activity_type_somatosensory_game">Соматосенсорная игра</string>
@@ -3372,9 +3132,6 @@
     <string name="steps_distance_unit">%1$,.2f км</string>
     <string name="hrv_status_baseline">%1$d-%2$d мс</string>
     <string name="hrv_status_baseline_label">Базовая линия</string>
-    <string name="devicetype_amazfit_trex_3">Amazfit T-Rex 3</string>
-    <string name="devicetype_garmin_enduro_3">Garmin Enduro 3</string>
-    <string name="devicetype_huawei_watchgtcyber">Huawei Watch GT Cyber</string>
     <string name="activity_type_indoor_push_walk_speed">Отжимание в помещении - скорость ходьбы</string>
     <string name="activity_type_breaking">Взлом</string>
     <string name="activity_type_bridge">Мост</string>
@@ -3383,22 +3140,10 @@
     <string name="activity_type_finswimming">Плавание на финках</string>
     <string name="activity_type_frisbee">Фрисби</string>
     <string name="activity_type_flying">Летать</string>
-    <string name="devicetype_colmi_r02">Colmi R02</string>
-    <string name="devicetype_mismartscale">Mi Smart Scale 2</string>
-    <string name="devicetype_micompositionscale">Mi Весы для определения состава тела 2</string>
-    <string name="devicetype_colmi_r03">Colmi R03</string>
     <string name="menuitem_stress_breakdown">Стресс (пробой)</string>
     <string name="menuitem_stress_segmented">Стресс (сегментированный)</string>
-    <string name="devicetype_garmin_forerunner_245_music">Garmin Forerunner 245 Music</string>
     <string name="activity_type_parallel_bars">Параллельные брусья</string>
     <string name="activity_type_pole_dance">Танец на шесте</string>
-    <string name="devicetype_garmin_fenix_8">Garmin Fenix 8</string>
-    <string name="devicetype_garmin_fenix_5_plus">Garmin Fenix 5 Plus</string>
-    <string name="devicetype_garmin_venu_sq">Garmin Venu Sq</string>
-    <string name="devicetype_garmin_venu_sq_2">Garmin Venu Sq 2</string>
-    <string name="devicetype_garmin_fenix_6s_sapphire">Garmin Fenix 6S Sapphire</string>
-    <string name="devicetype_garmin_forerunner_955">Garmin Forerunner 955</string>
-    <string name="devicetype_garmin_forerunner_965">Garmin Forerunner 965</string>
     <string name="milliseconds_ms">мс</string>
     <string name="average_respiration_rate">Скорость дыхания</string>
     <string name="max_respiration_rate">Максимальная скорость дыхания</string>
@@ -3418,8 +3163,6 @@
     <string name="intent_api_broadcast_activity_sync_summary">Рассылка намерений при завершении синхронизации активности для любого устройства</string>
     <string name="activity_detail_share_json_details">Поделиться подробной информацией JSON</string>
     <string name="idasen_pref_stand_height">Высота положения стойки (в сантиметрах)</string>
-    <string name="devicetype_oppo_enco_air2">Oppo Enco Air2</string>
-    <string name="devicetype_realme_buds_t110">Realme Buds T110</string>
     <string name="vo2max_cycling">Велоспорт VO₂ Макс</string>
     <string name="redmi_buds_5_pro_anc_balanced">Сбалансированный</string>
     <string name="redmi_buds_5_pro_anc_light">Свет</string>
@@ -3446,7 +3189,6 @@
     <string name="miscale_weight_unit_chinese">Китайский (цзинь)</string>
     <string name="backup_restore_exporting_preferences">Экспорт предпочтений…</string>
     <string name="target">Цель</string>
-    <string name="devicetype_oppo_enco_air">Oppo Enco Air</string>
     <string name="min_respiration_rate">Минимальная скорость дыхания</string>
     <string name="body_energy">Энергия тела</string>
     <string name="soundcore_voice_prompts">Голосовые подсказки</string>
@@ -3469,7 +3211,6 @@
     <string name="soundcore_equalizer_reset_title">Сброс настроек по умолчанию</string>
     <string name="idasen_pref_mid_height">Высота среднего положения (в сантиметрах)</string>
     <string name="steps_avg">Шаги (ср.)</string>
-    <string name="devicetype_nothing_cmf_buds_pro_2">CMF Buds Pro 2</string>
     <string name="weight_lbs">%1$.2f lbs</string>
     <string name="soundcore_button_brightness">Кнопка Яркость</string>
     <string name="soundcore_equalizer_preset_signature">саундкор Подпись</string>
@@ -3494,7 +3235,6 @@
     <string name="redmi_buds_5_pro_equalizer_band_62">62 Гц</string>
     <string name="redmi_buds_5_pro_equalizer_band_16k">16 кГц</string>
     <string name="activity_db_management_export_to_zip">Экспорт zip</string>
-    <string name="devicetype_colmi_r09">Colmi R09</string>
     <string name="pref_voice_passthrough_enabled">Проходной</string>
     <string name="pref_voice_passthrough_enabled_summary">Позволяют внешним звукам проходить в уши</string>
     <string name="redmi_buds_5_pro_equalizer_preset_custom">Пользовательское</string>
@@ -3510,7 +3250,6 @@
     <string name="activity_db_management_backup_restore_explanation">Операции импорта/экспорта позволяют переносить или создавать резервные копии всех настроек, устройств и данных Gadgetbridge в zip-файл и из него.\n\nИмпорт файла приведет к удалению всех существующих данных, устройств и настроек, полностью заменив их резервной копией.</string>
     <string name="sleep_score">Оценка сна</string>
     <string name="sleep_score_value">Оценка: %1d</string>
-    <string name="devicetype_huawei_band2pro">Huawei Band 2 (Pro)</string>
     <string name="hrv_rmssd">HRV RMSSD</string>
     <string name="paceCorrection">Коррекция</string>
     <string name="thirty_days_timeline">30-дневный график</string>
@@ -3547,7 +3286,6 @@
     <string name="soundcore_adaptive_direction_title">Адаптивное направление</string>
     <string name="soundcore_equalizer_preset_balanced">Сбалансированный</string>
     <string name="pref_header_deprecated_functionalities_warning">Следующие функции устарели и будут удалены из программного обеспечения в ближайшее время.\nЕсли вам нужно включить одну из следующих настроек, обязательно свяжитесь с командой проекта.</string>
-    <string name="devicetype_ble_gatt_client">Общий клиент BLE GATT</string>
     <string name="moondrop_equalizer_preset_basshead">Бассоголовый</string>
     <string name="moondrop_equalizer_preset_reference">Ссылка</string>
     <string name="permission_bluetooth_scan_title">Сканирование по Bluetooth</string>
@@ -3672,32 +3410,20 @@
     <string name="charts_show_balance_steps_summary">Покажите избыток/недостаток шагов на недельных и месячных графиках</string>
     <string name="jumps_unit">прыжки</string>
     <string name="garmin_intensity_minutes">Интенсивность Минуты</string>
-    <string name="devicetype_sony_wf_c510">Sony WF-C510</string>
-    <string name="devicetype_redmi_buds_4_active">Redmi Buds 4 Active</string>
-    <string name="devicetype_redmi_watch_5_lite">Redmi Watch 5 Lite</string>
     <string name="permission_disable_doze_summary">Позволяет работать в фоновом режиме без помех со стороны оптимизаторов батареи Android</string>
     <string name="canned_replies_not_empty">Должен быть хотя бы один готовый ответ.</string>
     <string name="permission_disable_doze_title">Игнорируйте оптимизацию батареи</string>
-    <string name="devicetype_garmin_forerunner_45">Garmin Forerunner 45</string>
-    <string name="devicetype_garmin_fenix_7s_pro">Garmin Fenix 7S Pro</string>
-    <string name="devicetype_redmi_buds_6_active">Redmi Buds 6 Active</string>
     <string name="prefs_title_gatt_client_filter_char">BLE Характеристики</string>
     <string name="prefs_summary_gatt_client_filter_char">Фильтр по определенным характеристикам BLE, разделенным запятой</string>
     <string name="battery_minimum_charge">Минимальный заряд батареи в %</string>
-    <string name="devicetype_marstek_b2500">Marstek B2500</string>
     <string name="manual_discharge_summary">если отключено, то предполагается интеллектуальный разряд, контролируемый внешним измерителем мощности (не поддерживается Gadgetbridge)</string>
     <string name="manual_discharge">Интервалы разгрузки вручную</string>
-    <string name="devicetype_casioecbs100">Casio ECB-S100</string>
-    <string name="devicetype_garmin_fenix_7x">Garmin Fenix 7X</string>
     <string name="pref_override_features_summary">Включение/отключение определенных функций устройства. Это может вызвать проблемы и/или заставить устройство работать некорректно</string>
     <string name="activity_type_lower_body">Нижняя часть тела</string>
-    <string name="devicetype_garmin_fenix_6x_pro_solar">Garmin Fenix 6X Pro Solar</string>
-    <string name="devicetype_huawei_freebuds_5i">Huawei FreeBuds 5i</string>
     <string name="pref_override_features_title">Переопределение поддерживаемых функций</string>
     <string name="about_build_details_copied_to_clipboard">Детали сборки копируются в буфер обмена</string>
     <string name="workout_revolutions">Обороты</string>
     <string name="left_right_balance">Баланс</string>
-    <string name="devicetype_miband9active">Xiaomi Smart Band 9 Active</string>
     <string name="unit_repetitions">повторений</string>
     <string name="pairing_even_realities_g1_working">Сопряжение с %1s…</string>
     <string name="pref_workout_send_gps_timeout_title">Тайм-аут отправки GPS-координат</string>
@@ -3707,7 +3433,6 @@
     <string name="activity_type_back">Спина</string>
     <string name="activity_type_athletics">Лёгкая атлетика</string>
     <string name="activity_type_burpee">Бёрпи</string>
-    <string name="devicetype_garmin_instinct_3">Garmin Instinct 3</string>
     <string name="unit_millimeter">мм</string>
     <string name="unit_watt">Ватт</string>
     <string name="unit_joule">Джоуль</string>
@@ -3720,15 +3445,11 @@
     <string name="activity_type_equestrian">Конный спорт</string>
     <string name="fw_upgrade_notice_huawei">Вы собираетесь загрузить прошивку %1$s на ваше устройство %2$s.\n\nВаша текущая прошивка: %s\n\nВаше устройство перезагрузится после загрузки.\n\nПРОДОЛЖАЙТЕ НА СВОЙ РИСК!</string>
     <string name="activity_type_other_water_sports">Другой водный спорт</string>
-    <string name="devicetype_garmin_instinct_e">Garmin Instinct E</string>
-    <string name="devicetype_amazfit_active_2">Amazfit Active 2</string>
-    <string name="devicetype_garmin_lily_2_active">Garmin Lily 2 Active</string>
     <string name="copy_to_clipboard">Скопировать</string>
     <string name="gree_pair_status_success">Успешно сопряжено.\n\nКлюч сопряжения: %s</string>
     <string name="pref_workout_send_gps_timeout_summary">Не отправлять GPS, если тренировка не открыта на устройстве (миллисекунды)</string>
     <string name="pairing_even_realities_g1_bottom_hint">Несколько диалогов сопряжения появятся на вашем Android-устройстве. Если нет, откройте уведомления и подтвердите запрос сопряжения. Обе левые и правые линзы должны быть сопряжены.</string>
     <string name="view_file">Просмотреть</string>
-    <string name="devicetype_soundcore_q30">Soundcore Q30</string>
     <string name="uploading">Загрузка…</string>
     <string name="update_firmware_operation_check_in_progress">Проверка прошивки</string>
     <string name="update_firmware_operation_check_failed">Ошибка проверки прошивки</string>
@@ -3742,14 +3463,8 @@
     <string name="activity_type_abs">Мышцы живота</string>
     <string name="activity_type_step_aerobics">Степ-аэробика</string>
     <string name="gree_controller_host">Хост</string>
-    <string name="devicetype_garmin_forerunner_735xt">Garmin Forerunner 735XT</string>
-    <string name="devicetype_gree_ac">Кондиционер Gree</string>
-    <string name="devicetype_even_realities_g1">Even Realities G1</string>
-    <string name="devicetype_sony_wh_ult900n">Sony WH-ULT900N</string>
     <string name="pref_heart_rate_realtime_mode_summary">Если включено, использует режим реального времени, иначе «умный» режим. Расходует больше заряда.</string>
     <string name="poolLength">Длина бассейна</string>
-    <string name="devicetype_earfun_air_s">EarFun Air S</string>
-    <string name="devicetype_earfun_air_pro_4">EarFun Air Pro 4</string>
     <string name="prefs_active_noise_cancelling_transport">Транспорт</string>
     <string name="prefs_active_noise_cancelling_outdoor">На улице</string>
     <string name="earfun_transparency_mode">Прозрачность</string>
@@ -3776,15 +3491,12 @@
     <string name="activity_prefs_goal_standing_hours">Ежедневная цель: часы стояния</string>
     <string name="unit_revolutions_per_minute">об/мин</string>
     <string name="reset">Перезагрузить</string>
-    <string name="devicetype_huawei_freebuds_pro">Huawei FreeBuds Pro</string>
-    <string name="devicetype_redmi_buds_3_pro">Redmi Buds 3 Pro</string>
     <string name="unit_repetitions_per_minute">повторений/мин</string>
     <string name="unit_revolutions">обороты</string>
     <string name="pref_vibration_intensity">Интенсивность вибрации</string>
     <string name="catalan">Каталанский</string>
     <string name="finnish">Финский</string>
     <string name="bahasa_melayu">Малайский</string>
-    <string name="devicetype_ultrahuma_ring_air">Ultrahuman Ring AIR</string>
     <string name="ultrahuman_airplane_mode_title">режим полёта</string>
     <string name="ultrahuman_airplane_mode_on_charger">кольцо заряжается – режим полёта НЕ активирован</string>
     <string name="serbian_latin">Сербский (латиница)</string>
@@ -3799,7 +3511,6 @@
     <string name="map_upload_complete">Карта успешно загружена</string>
     <string name="map_upload_in_progress">Загрузка карты</string>
     <string name="stats_average_hr">Средний пульс</string>
-    <string name="devicetype_huawei_band10">Huawei Band 10</string>
     <string name="pref_title_stable_connection">Стабильное соединение</string>
     <string name="zepp_os_install_map_instructions">После того, как на телефоне начнётся установка, нужно будет её подтвердить и на часах.</string>
     <string name="map_upload_failed">Ошибка загрузки карты</string>
@@ -3812,7 +3523,6 @@
     <string name="prefs_active_noise_cancelling_level_comfort">Комфортный</string>
     <string name="prefs_active_noise_cancelling_level_ultra">Ультра</string>
     <string name="prefs_active_noise_cancelling_level_dynamic">Динамический</string>
-    <string name="devicetype_onemore_sonoflow">1MORE SonoFlow</string>
     <string name="earfun_earbud_mode_right">Только правый наушник</string>
     <string name="earfun_voice_prompt_volume">Громкость голосовых команд</string>
     <string name="earfun_header_audio_experience">Аудио опыт</string>
@@ -3852,7 +3562,6 @@
     <string name="maps_track_color_title">Цвет траектории</string>
     <string name="maps">Карты</string>
     <string name="strokes_per_length">гребков/длина</string>
-    <string name="devicetype_honor_watch4">Honor Watch 4 (Pro)</string>
     <string name="maps_settings">Настройки карты</string>
     <string name="maps_download_summary">Нажмите здесь, чтобы загрузить файлы карты. Они должны быть сохранены в папке, выбранной настройкой ниже.</string>
     <string name="swim_avg_cadence">Средняя частота гребков</string>
@@ -3887,20 +3596,13 @@
     <string name="weather_condition_extreme_rain">ливень</string>
     <string name="weather_condition_freezing_rain">ледяной дождь</string>
     <string name="weather_condition_thunderstorm_with_light_drizzle">гроза с лёгкой моросью</string>
-    <string name="devicetype_amazfit_bip6">Amazfit Bip 6</string>
     <string name="weather_condition_heavy_shower_rain_and_drizzle">сильный проливной дождь с изморосью</string>
     <string name="weather_condition_ragged_thunderstorm">местами гроза</string>
     <string name="weather_condition_light_intensity_drizzle_rain">слабо моросящий дождь</string>
-    <string name="devicetype_polarh10">Polar H10</string>
     <string name="weather_condition_shower_snow">снегопад</string>
     <string name="weather_condition_heavy_shower_snow">сильный снегопад</string>
     <string name="pref_huawei_activity_reminder_goal_reached_summary">Получать напоминание когда вы завершаете круги</string>
-    <string name="devicetype_garmin_instinct_2x_tactical">Garmin Instinct 2X Tactical</string>
-    <string name="devicetype_garmin_vivoactive_hr">Garmin Vívoactive HR</string>
-    <string name="devicetype_garmin_edge_130_plus">Garmin Edge 130 Plus</string>
-    <string name="devicetype_garmin_fenix_7x_pro">Garmin Fenix 7X Pro</string>
     <string name="weather_condition_shower_sleet">ливень со снегом</string>
-    <string name="devicetype_colmi_r12">Colmi R12</string>
     <string name="busy_task_fetch_weight_data">Получение данных о весе</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>
@@ -3946,49 +3648,6 @@
     <string name="activity_type_apnea_training">Тренировка апноэ</string>
     <string name="activity_type_apnea_test">Проверка апноэ</string>
     <string name="activity_type_scuba_diving">Дайвинг с аквалангом</string>
-    <string name="devicetype_miband10">Xiaomi Smart Band 10</string>
-    <string name="devicetype_amazfit_balance_2">Amazfit Balance 2</string>
-    <string name="devicetype_amazfit_active_2_round">Amazfit Active 2 (Круглый)</string>
-    <string name="devicetype_amazfit_active_2_square">Amazfit Active 2 (Квадратный)</string>
-    <string name="devicetype_amazfit_active_2_nfc">Amazfit Active 2 NFC</string>
-    <string name="devicetype_amazfit_helio_strap">Amazfit Helio Strap</string>
-    <string name="devicetype_garmin_vivomove_sport">Garmin Vívomove Sport</string>
-    <string name="devicetype_garmin_venu_x1">Garmin Venu X1</string>
-    <string name="devicetype_garmin_edge_explore_2">Garmin Edge Explore 2</string>
-    <string name="devicetype_garmin_descent_mk3">Garmin Descent Mk3</string>
-    <string name="devicetype_garmin_instinct_tactical">Garmin Instinct Tactical</string>
-    <string name="devicetype_garmin_instinct_3_tactical">Garmin Instinct 3 Tactical</string>
-    <string name="devicetype_garmin_forerunner_165_music">Garmin Forerunner 165 Music</string>
-    <string name="devicetype_garmin_forerunner_630">Garmin Forerunner 630</string>
-    <string name="devicetype_garmin_forerunner_645_music">Garmin Forerunner 645 Music</string>
-    <string name="devicetype_garmin_forerunner_945">Garmin Forerunner 945</string>
-    <string name="devicetype_garmin_vivosmart_3">Garmin Vívosmart 3</string>
-    <string name="devicetype_garmin_vivosmart_4">Garmin Vívosmart 4</string>
-    <string name="devicetype_sony_wf_c710n">Sony WF-C710N</string>
-    <string name="devicetype_pixel_buds_a_series">Pixel Buds A-Series</string>
-    <string name="devicetype_huawei_watchfit4pro">Huawei Watch Fit 4 (Pro)</string>
-    <string name="devicetype_huawei_watch5">Huawei Watch 5</string>
-    <string name="devicetype_huawei_freebuds_6">Huawei FreeBuds 6</string>
-    <string name="devicetype_redmi_buds_6_pro">Redmi Buds 6 Pro</string>
-    <string name="devicetype_redmi_watch_5">Redmi Watch 5</string>
-    <string name="devicetype_aawireless">AAWireless</string>
-    <string name="devicetype_yawell_r10">Yawell R10</string>
-    <string name="devicetype_yawell_r11">Yawell R11</string>
-    <string name="devicetype_colmi_r07">Colmi R07</string>
-    <string name="devicetype_h59">H59</string>
-    <string name="devicetype_colmi_i28_ultra">Colmi i28 Ultra</string>
-    <string name="devicetype_colmi_v72">Colmi V72</string>
-    <string name="devicetype_colmi_v89">Colmi V89</string>
-    <string name="devicetype_misirun_c17">Misirun C17</string>
-    <string name="devicetype_c20">C20</string>
-    <string name="devicetype_kt80">KT80</string>
-    <string name="devicetype_ksix_venture">KSIX Venture</string>
-    <string name="devicetype_fireboltt_talk">Fire-Boltt Talk</string>
-    <string name="devicetype_viran_c29">Viran C29</string>
-    <string name="devicetype_r50pro">R50Pro</string>
-    <string name="devicetype_rainbuvvy_t97">Rainbuvvy T97</string>
-    <string name="devicetype_advan_watch_se1ai">Advan Watch SE1 AI</string>
-    <string name="devicetype_atc_ble_oepl">ATC_BLE_OEPL</string>
     <string name="devicetype_generic_thermal_printer">Термопринтер</string>
     <string name="menuitem_running_calculator">Калькулятор бега</string>
     <string name="menuitem_water_time">Время приема воды</string>
@@ -4093,10 +3752,6 @@
     <string name="diving_maximum_diving_depth">Максимальная глубина погружения</string>
     <string name="diving_water_type">Тип воды</string>
     <string name="diving_gas">Газ</string>
-    <string name="devicetype_oppo_enco_buds2">Oppo Enco Buds2</string>
-    <string name="devicetype_realme_buds_t100">Realme Buds T100</string>
-    <string name="devicetype_realme_buds_t300">Realme Buds T300</string>
-    <string name="devicetype_realme_buds_air_5_pro">Realme Buds Air 5 Pro</string>
     <string name="pref_enable_sms_quick_reply_title">Включить быстрые ответы на SMS</string>
     <string name="pref_enable_sms_quick_reply_summary">Разрешить отклонение звонков с ответом по SMS</string>
     <string name="pref_device_logs_summary">Включить ведение журналов с устройства</string>
@@ -4166,8 +3821,6 @@
     <string name="activity_print_image_apply_dithering_switch">Применить рассеивание</string>
     <string name="activity_print_label_print_size">Размер печати (пикс.): %1$d x %2$d</string>
     <string name="service_notification_collector_service_title">Монитор уведомлений Gadgetbridge</string>
-    <string name="devicetype_oukitel_bt103">Oukitel BT103</string>
-    <string name="devicetype_dotn_p66d">Dotn P66D</string>
     <string name="pref_title_time_interval">Интервал времени</string>
     <string name="pref_summary_time_interval">Ограничить до определенных интервалов</string>
     <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Включить устаревшую службу мониторинга сборщика уведомлений</string>
@@ -4226,16 +3879,12 @@
     <string name="pref_aawireless_start_fix_title">Исправление запуска</string>
     <string name="pref_aawireless_start_fix_summary">Обходное решение — включите этот вариант, если светодиод горит синим, но Android Auto не запускается</string>
     <string name="pref_aawireless_remove_tap_restriction_title">Удалить ограничение на нажатие</string>
-    <string name="devicetype_garmin_etrex_se">Garmin eTrex SE</string>
     <string name="title_activity_file_installer">Установщик файлов</string>
     <string name="fwinstaller_file_not_compatible_to_device">Выбранный файл несовместим у этим устройством</string>
     <string name="fwinstaller_no_compatible_device_found">Не найдены совместимые устройства для установки %1s</string>
     <string name="category">Категория</string>
     <string name="busy_task_processing_files">Обработка файлов</string>
     <string name="busy_task_progress_int">%1$d из %2$d</string>
-    <string name="devicetype_amazfit_helio_ring">Amazfit Helio Ring</string>
-    <string name="devicetype_redmi_smart_band_3">Redmi Smart Band 3</string>
-    <string name="devicetype_colmi_p76">Colmi P76</string>
     <string name="diving_avg_depth">Средняя глубина</string>
     <string name="diving_avg_descent_rate">Средняя скорость снижения</string>
     <string name="diving_avg_ascent_rate">Средняя скорость подъёма</string>

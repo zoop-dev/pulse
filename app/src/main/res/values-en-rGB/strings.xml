@@ -18,7 +18,6 @@
     <string name="pref_header_auto_fetch">Auto fetch</string>
     <string name="pref_title_relax_firmware_checks">Enable this if you want to flash a firmware not intended for your device (at your own risk)</string>
     <string name="pref_summary_relax_firmware_checks">Relax firmware checks</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
     <string name="pref_title_vibration_strength">Vibration strength</string>
     <string name="hr_appname_commute">Commute</string>
     <string name="hr_appname_stopwatch">Stopwatch</string>
@@ -42,7 +41,6 @@
     <string name="pref_summary_sync_calendar">Enables calendar alerts, even when disconnected</string>
     <string name="pref_summary_allow_high_mtu">Increases transfer speed, but might not work on some Android devices.</string>
     <string name="pref_title_allow_high_mtu">Allow high MTU</string>
-    <string name="devicetype_itag">iTag</string>
     <string name="error_no_location_access">Location access must be granted and enabled for scanning to work properly</string>
     <string name="alarm_snooze">Snooze</string>
     <string name="prefs_button_long_press_action_selection_title">Long press button action</string>
@@ -50,8 +48,6 @@
     <string name="prefs_button_triple_press_action_selection_title">Event 3 action</string>
     <string name="prefs_button_double_press_action_selection_title">Event 2 action</string>
     <string name="prefs_button_single_press_action_selection_title">Event 1 action</string>
-    <string name="devicetype_y5">Y5</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
     <string name="pref_summary_disable_new_ble_scanning">Check this option if your device cannot be found during discovery</string>
     <string name="pref_disable_new_ble_scanning">Disable new BLE scanning</string>
     <string name="qhybrid_offset_time_by">offset time by</string>
@@ -68,7 +64,6 @@
     <string name="qhybrid_vibration_strength">vibration strength:</string>
     <string name="watch_not_connected">Watch not connected</string>
     <string name="preferences_qhybrid_settings">Q Hybrid Settings</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="fw_upgrade_notice_amazfitgts">You are about to install the %s firmware on your Amazfit GTS.
 \n
 \nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.
@@ -76,7 +71,6 @@
 \nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="pref_chart_sleep_rolling_24_off">Noon to noon</string>
     <string name="pref_chart_sleep_rolling_24_on">Past 24 hours</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Sleep range</string>
@@ -89,7 +83,6 @@
 \nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">You are about to install the %s firmware on your Amazfit Bip Lite.
 \n
 \nPlease make sure to install the .fw file, and after that the .res file. Your watch will reboot after installing the .fw file.
@@ -103,9 +96,7 @@
     <string name="prefs_find_phone_summary">Use your band to play your phone\'s ringtone.</string>
     <string name="prefs_enable_find_phone">Turn on \'Find phone\'</string>
     <string name="prefs_find_phone">Find phone</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_wearside">Wearing left or right\?</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 settings</string>
     <string name="activity_error_no_app_for_gpx">To view activity trace, install app which can handle GPX files.</string>
     <string name="pref_display_add_device_fab_off">Visible only if no device is added</string>
@@ -134,7 +125,6 @@
     <string name="pref_title_expose_hr">3rd party realtime HR access</string>
     <string name="pref_summary_expose_hr">Allows other apps to access HR data in realtime while Gadgetbridge is connected</string>
     <string name="menuitem_nfc">NFC</string>
-    <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="weeksleepchart_sleep_a_month">Sleep per month</string>
     <string name="weekstepschart_steps_a_month">Steps per month</string>
     <string name="pref_charts_range_off">Charts range is set to a Week</string>
@@ -153,8 +143,6 @@
 \nNote: You do not have to install .res if it is exactly the same as the one previously installed.
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
     <string name="portuguese">Portuguese</string>
     <string name="vietnamese">Vietnamese</string>
     <string name="thai">Thai</string>
@@ -172,7 +160,6 @@
 \nPROCEED AT YOUR OWN RISK! 
 \n 
 \nCOMPLETELY UNTESTED, PROBABLY YOU NEED TO FLASH A BEATS_W FIRMWARE IF YOUR DEVICE NAME IS \"Amazfit Band 2\"</string>
-    <string name="devicetype_bfh16">BFH-16</string>
     <string name="pref_summary_authkey">Change the auth key to a common key on all your Android devices from which you would like to connect from. The previous default key for all devices is 0123456789@ABCDE</string>
     <string name="pref_title_authkey">Auth Key</string>
     <string name="title_activity_device_specific_settings">Device specific settings</string>
@@ -253,8 +240,6 @@
     <string name="pref_invalid_frequency_message">Please enter a frequency between 87.5 and 108.0</string>
     <string name="pref_invalid_frequency_title">Invalid frequency</string>
     <string name="preferences_fm_frequency">FM Frequency</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
-    <string name="devicetype_roidmi">Roidmi</string>
     <string name="controlcenter_change_fm_frequency">Change FM Frequency</string>
     <string name="warning">Warning!</string>
     <string name="share_log_warning">Please keep in mind Gadgetbridge logs files that may contain lots of personal info, including but not limited to health data, unique identifiers (such as a device\'s MAC address), music preferences, etc. Consider editing the file and removing this info before sending the file to a public issue report.</string>
@@ -291,25 +276,21 @@
     <string name="watch9_time_seconds">Seconds:</string>
     <string name="watch9_time_hours">Hours:</string>
     <string name="watch9_time_minutes">Minutes:</string>
-    <string name="devicetype_watch9">Watch 9</string>
     <string name="watch9_pairing_tap_hint">When your watch vibrates, shake the device or press its button.</string>
     <string name="controlcenter_calibrate_device">Calibrate Device</string>
     <string name="menuitem_music">Music</string>
     <string name="menuitem_more">More</string>
     <string name="menuitem_notifications">Notifications</string>
-    <string name="devicetype_id115">ID115</string>
     <string name="vertical">Vertical</string>
     <string name="horizontal">Horizontal</string>
     <string name="prefs_screen_orientation">Screen orientation</string>
     <string name="russian">Russian</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="pref_auto_fetch_limit_fetches_summary">Fetches every %d minutes</string>
     <string name="pref_auto_fetch_limit_fetches">Minimum time between fetches</string>
     <string name="pref_auto_fetch_summary">Fetch happens upon screen unlock. Only works if a lock mechanism is set!</string>
     <string name="pref_auto_fetch">Auto fetch activity data</string>
     <string name="whitelist_all_for_notifications">Whitelist all for notifications</string>
     <string name="blacklist_all_for_notifications">Blacklist all for notifications</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="activity_prefs_distance_meters">Daily target: distance in metres</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Broadcast message sent with the event. Parameter ‘button_id’ is added automatically to each message.</string>
     <string name="preferences_led_color">LED colour</string>
@@ -320,7 +301,6 @@
 \nNote: You do not have to install .res if it is exactly the same as the one previously installed.
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
-    <string name="devicetype_q8">Q8</string>
     <string name="pref_summary_pebble_gatt_clientonly">This is for Pebble 2 only and experimental, try this if you have connectivity problems</string>
     <string name="pref_title_pebble_gatt_clientonly">GATT client only</string>
     <string name="menuitem_alipay">Alipay</string>
@@ -350,7 +330,6 @@
     <string name="activity_type_not_measured">Not measured</string>
     <string name="controlcenter_start_activity_tracks">Your activity tracks</string>
     <string name="on">On</string>
-    <string name="devicetype_xwatch">XWatch</string>
     <string name="notification_channel_name">General</string>
     <string name="spanish">Spanish</string>
     <string name="choose_auto_export_location">Choose export location</string>
@@ -361,19 +340,6 @@
     <string name="pref_title_auto_export_enabled">Auto export enabled</string>
     <string name="pref_header_auto_export">Auto export</string>
     <string name="pref_title_weather">Weather</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_test">Test Device</string>
     <string name="devicetype_unknown">Unknown Device</string>
     <string name="kind_watchface">Watchface</string>
     <string name="kind_resources">Resources</string>
@@ -552,7 +518,6 @@
     <string name="updatefirmwareoperation_update_complete">Firmware installation complete</string>
     <string name="title_activity_notification_filter">Notification Filter</string>
     <string name="appwidget_setting_alarm">Setting alarm for %1$02d:%2$02d</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="debugactivity_really_factoryreset">Doing a factory reset will delete all data from the connected device (if supported). Xiaomi/Huami devices also change Bluetooth MAC address, so they appear as a new devices to Gadgetbridge.</string>
     <string name="debugactivity_really_factoryreset_title">Really factory reset\?</string>
     <string name="live_activity_max_heart_rate">Current / Max heart rate: %1$d / %2$d</string>
@@ -848,8 +813,6 @@
     <string name="menuitem_eventreminder">Event Reminder</string>
     <string name="menuitem_hr">Heart Rate</string>
     <string name="menuitem_pai">PAI</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
-    <string name="devicetype_watchx">Watch X</string>
     <string name="czesh">Czech</string>
     <string name="swedish">Swedish</string>
     <string name="hebrew">Hebrew</string>
@@ -929,15 +892,8 @@
     <string name="activity_summary_detail_clear_gpx_track">Clear GPX track</string>
     <string name="activity_summary_detail_editing_gpx_track">Editing linked GPX track</string>
     <string name="kind_agps_bundle">AGPS Bundle</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
-    <string name="devicetype_um25">UM-25</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="notification_channel_transfer_name">Data transfer</string>
     <string name="notification_channel_low_battery_name">Low battery</string>
-    <string name="devicetype_lefun">Lefun</string>
     <string name="menuitem_cycles">Cycle Tracking</string>
     <string name="menuitem_stress">Stress</string>
     <string name="menuitem_dnd">DND</string>
@@ -985,7 +941,6 @@
     <string name="activity_filter_to_placeholder">Today</string>
     <string name="prefs_key_vibration">Key Vibration</string>
     <string name="breaststroke">Breaststroke</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="prefs_autolight">Automatic Light</string>
     <string name="qhybrid_calibration_align_hint">Use the buttons below to align the watch hands to 12:00.</string>
     <string name="qhybrid_summary_file_management">Upload and download files</string>
@@ -1020,9 +975,6 @@
     <string name="sony_sound_position_front_right">Front Right</string>
     <string name="sony_sound_position_rear_left">Rear Left</string>
     <string name="watchface_dialog_widget_color_black">Black</string>
-    <string name="devicetype_waspos">Wasp-os</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
     <string name="watchface_widget_type_battery">Battery</string>
     <string name="mi_h">mph</string>
     <string name="movement_intensity">Movement intensity</string>
@@ -1032,13 +984,10 @@
     <string name="activity_type_pingpong">Ping Pong</string>
     <string name="activity_summary_today">Today</string>
     <string name="activity_type_basketball">Basketball</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="swolfIndex">swolfIndex</string>
     <string name="meters">m</string>
     <string name="pref_header_statistics">Sports Activities Statistics</string>
     <string name="activity_error_no_app_for_png">To share this screenshot, install an app which can handle image files.</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
     <string name="pref_title_lower_button_function_long">Lower Button long</string>
     <string name="pref_title_lower_button_function_double">Lower Button double</string>
     <string name="gpx_receiver_activity_title">GPX Receiver Gadgetbridge</string>
@@ -1091,17 +1040,10 @@
     <string name="activity_type_elliptical_trainer">Elliptical Trainer</string>
     <string name="activity_summary_detail">Sport Activity Detail</string>
     <string name="activity_summary_edit_name_title">Edit label</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
-    <string name="devicetype_tlw64">TLW64</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="toast_app_must_not_be_selected">App must not be selected to be configured</string>
     <string name="widget_settings_select_device_title">Select device</string>
     <string name="activity_db_management_clean_export_directory_text">Exported files in the Export/Import directory are accessible by any app on your device. You might like to remove these files after synchronisation or backup. Make sure to have a backup before deleting them. GPX files, sub-directories and auto-exported database file (if exist) will not be deleted. The path to the Export/Import directory is:</string>
     <string name="activity_type_strength_training">Strength Training</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
     <string name="toast_app_must_be_selected">App must be selected to be configured</string>
     <string name="companiondevice_pairing">CompanionDevice Pairing</string>
     <string name="averageLapPace">Average Lap Pace</string>
@@ -1127,7 +1069,6 @@
     <string name="no">No</string>
     <string name="sports_activity_quick_filter_this_week">This week</string>
     <string name="qhybrid_pref_summary_external_intents">Allows other Android apps to upload/overwrite files</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="gps_track">GPS track</string>
     <string name="prefs_events_forwarding_action_title">Run action</string>
     <string name="activity_filter_date_to">To</string>
@@ -1237,7 +1178,6 @@
     <string name="enable_notifications_summary">Notifications for calls, messages and more</string>
     <string name="prefs_autoheartrate">Automatic Heart Rate</string>
     <string name="prefs_autoheartrate_interval">Frequency of measurements</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="nothing_prefs_audiomode_title">Audio mode</string>
     <string name="sony_sound_position">Sound Position</string>
     <string name="sony_sound_position_off">Off</string>
@@ -1251,7 +1191,6 @@
     <string name="sony_ambient_sound_focus_voice">Focus on Voice</string>
     <string name="menuitem_sleep">Sleep</string>
     <string name="menuitem_pomodoro">Pomodoro Tracker</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="menuitem_spo2">SpO2</string>
     <string name="menuitem_mutephone">Mute Phone</string>
     <string name="menuitem_goal">Activity Goal</string>
@@ -1307,8 +1246,6 @@
     <string name="dbmanagementactivity_export_data_title">Export Data\?</string>
     <string name="dbmanagementactivity_export_confirmation">Really export data\? Previously exported activity data (if any) and preferences will be overwritten.</string>
     <string name="activity_db_management_clean_export_directory_label">Delete files in Export/Import directory</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
     <string name="menuitem_findphone">Find Phone</string>
     <string name="menuitem_takephoto">Camera Remote</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -1331,7 +1268,6 @@
     <string name="pref_title_middle_button_function_long">Middle Button long</string>
     <string name="minutes_mi">min/mi</string>
     <string name="pref_summary_canned_messages_dismisscall">Dismiss calls from the watch with an SMS message</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
     <string name="prefs_equalizer_preset">Equalizer Preset</string>
     <string name="pref_title_equalizer_bass_boost">Bass boost</string>
     <string name="pref_title_equalizer_soft">Soft</string>
@@ -1350,7 +1286,6 @@
     <string name="prefs_ambient_volume">Ambient volume</string>
     <string name="menuitem_flashlight">Flashlight</string>
     <string name="watchface_widget_type_calories">Calories</string>
-    <string name="devicetype_nothingear1">Nothing Ear (1)</string>
     <string name="seconds_km">sec/km</string>
     <string name="averageStrokeDistance">Average Stroke Distance</string>
     <string name="averageHR">Heartrate</string>
@@ -1378,9 +1313,6 @@
     <string name="about_links">Links</string>
     <string name="menuitem_worldclock">World Clock</string>
     <string name="menuitem_breathing">Breathing</string>
-    <string name="devicetype_sg2">Lemfo SG2</string>
-    <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="activity_summary_yesterday">Yesterday</string>
     <string name="prefs_right">Right</string>
     <string name="prefs_galaxy_touch_options">Touch Options</string>
@@ -1474,7 +1406,6 @@
     <string name="activity_prefs_discovery_pairing">Discovery and Pairing options</string>
     <string name="controlcenter_power_off_confirm_title">Power Off</string>
     <string name="add_test_device">Add test device</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
     <string name="controlcenter_power_off_confirm_description">Are you sure you want to power off the device\?</string>
     <string name="sony_button_mode_left">Button Mode (Left)</string>
     <string name="discover_unsupported_devices">Discover unsupported devices</string>
@@ -1485,8 +1416,6 @@
     <string name="sony_button_mode_playback_control">Playback Control</string>
     <string name="pref_header_sony_equalizer_bands">Bands</string>
     <string name="sony_audio_upsampling">Audio Upsampling</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="devicetype_vesc">VESC</string>
     <string name="descentDistance">Downhill distance</string>
     <string name="ascentDistance">Uphill distance</string>
     <string name="activity_type_hiking">Hiking</string>
@@ -1500,7 +1429,6 @@
     <string name="pref_media_volumeup">Volume Up</string>
     <string name="pref_media_volumedown">Volume Down</string>
     <string name="distance_format_miles">###.#mi</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
     <string name="pref_button_action_disabled">Disabled</string>
     <string name="pref_media_next">Next Track</string>
     <string name="pref_media_previous">Previous Track</string>
@@ -1521,7 +1449,6 @@
 \n
 \nWarning: long-pressing the upper button when a watchface from the official Fossil app is installed will also toggle between showing/hiding widgets.</string>
     <string name="watchface_dialog_widget_width">Width:</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="sony_connect_two_devices">Connect to 2 devices simultaneously</string>
     <string name="sony_speak_to_chat_focus_on_voice">Focus on Voice</string>
     <string name="sony_speak_to_chat_sensitivity_low">Low</string>
@@ -1537,7 +1464,6 @@
     <string name="sony_speak_to_chat">Speak-to-chat</string>
     <string name="device_unsupported">UNSUPPORTED</string>
     <string name="discovery_bluetooth_scan">Bluetooth scan:</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="sony_anc_optimize_confirmation_title">Noise Cancelling Optimiser</string>
     <string name="sony_anc_optimizer_status_wearing_condition">Measuring wearing condition…</string>
     <string name="start">Start</string>
@@ -1554,8 +1480,6 @@
     <string name="audio_codec">Audio Codec</string>
     <string name="pref_header_sony_anc_optimizer">Noise Cancelling Optimiser</string>
     <string name="sony_anc_optimize_confirmation_description">Use the headphones as you normally would. If the wearing condition or atmospheric pressure change, run the optimiser again.</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
     <string name="menuitem_nothing">Nothing</string>
     <string name="autoExport_lastTime_label">Last AutoExport: %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">AutoExport has not been not scheduled.</string>

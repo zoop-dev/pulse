@@ -518,22 +518,8 @@
     <string name="kind_resources">Recursos</string>
     <string name="kind_watchface">Caràtula</string>
     <string name="devicetype_unknown">Aparell desconegut</string>
-    <string name="devicetype_test">Aparell de prova</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="choose_auto_export_location">Tria la ubicació de l\'exportació</string>
     <string name="notification_channel_name">General</string>
-    <string name="devicetype_xwatch">XWatch</string>
     <string name="on">Activat</string>
     <string name="controlcenter_start_activity_tracks">Les vostres pistes d\'activitat</string>
     <string name="activity_type_not_measured">No mesurat</string>
@@ -559,22 +545,17 @@
     <string name="menuitem_compass">Brúixola</string>
     <string name="menuitem_settings">Configuració</string>
     <string name="menuitem_alipay">Alipay</string>
-    <string name="devicetype_q8">Q8</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="pref_auto_fetch">Recull automàticament les dades d\'activitats</string>
     <string name="pref_auto_fetch_summary">Es recullen dades quan es bloqueja la pantalla. Només funciona si hi ha un sistema de bloqueig establert!</string>
     <string name="pref_auto_fetch_limit_fetches">Temps mínim entre extraccions</string>
     <string name="pref_auto_fetch_limit_fetches_summary">Extraccions cada %d minuts</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="russian">Rus</string>
     <string name="horizontal">Horitzontal</string>
     <string name="vertical">Vertical</string>
-    <string name="devicetype_id115">ID115</string>
     <string name="menuitem_notifications">Notificacions</string>
     <string name="menuitem_more">Més</string>
     <string name="menuitem_music">Música</string>
     <string name="watch9_pairing_tap_hint">Quan el vostre aparell vibri, sacsegeu-lo o premeu-ne el botó.</string>
-    <string name="devicetype_watch9">Watch 9</string>
     <string name="watch9_time_minutes">Minuts:</string>
     <string name="watch9_time_hours">Hores:</string>
     <string name="watch9_time_seconds">Segons:</string>
@@ -609,8 +590,6 @@
     <string name="share_log">Comparteix el registre</string>
     <string name="share_log_warning">Si us plau, tingueu en compte que els fitxers de registre del Gadgetbridge poden contenir molta informació personal, incloent-hi, entre d\'altres, dades relacionades amb la salut, identificadors únics (com ara adreces MAC), preferències musicals, etc. Considereu editar el fitxer i suprimir aquesta informació abans d\'enviar-lo a un informe públic d\'error.</string>
     <string name="warning">Atenció!</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
     <string name="preferences_led_color">Color del LED</string>
     <string name="preferences_fm_frequency">Freqüència de FM</string>
     <string name="pref_invalid_frequency_title">La freqüència no és vàlida</string>
@@ -630,7 +609,6 @@
     <string name="overstep">Passes de més: %1$d</string>
     <string name="no_data">No hi ha dades</string>
     <string name="live_activity_max_heart_rate">Ritme cardíac actual / màxim: %1$d / %2$d</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="title_activity_notification_filter">Filtre de notificacions</string>
     <string name="edittext_notification_filter_words_hint">Introduïu les paraules desitjades, cadascuna en una línia nova</string>
     <string name="toast_notification_filter_saved_successfully">S\'ha desat el filtre de notificacions</string>
@@ -688,7 +666,6 @@
     <string name="title_activity_device_specific_settings">Configuració específica de l\'aparell</string>
     <string name="pref_title_authkey">Clau d\'autenticació</string>
     <string name="pref_summary_authkey">Canvia la clau d\'autenticació en tots els aparells Android des dels quals et vulguis connectar. La clau anterior per defecte per a tots els aparells és 0123456789@ABCDE</string>
-    <string name="devicetype_bfh16">BFH-16</string>
     <string name="dutch">Neerlandès</string>
     <string name="turkish">Turc</string>
     <string name="ukrainian">Ucraïnès</string>
@@ -697,8 +674,6 @@
     <string name="thai">Tailandès</string>
     <string name="vietnamese">Vietnamita</string>
     <string name="portuguese">Portuguès</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="fw_upgrade_notice_miband4">Esteu a punt d\'instal·lar el microprogramari %s en la vostra Mi Band 4.
 \n
@@ -715,7 +690,6 @@
     <string name="pref_title_charts_range">Rang dels gràfics</string>
     <string name="weekstepschart_steps_a_month">Passes per mes</string>
     <string name="weeksleepchart_sleep_a_month">Son per mes</string>
-    <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="pref_summary_expose_hr">Permet altres aplicacions accedir a les dades de freqüència cardíaca en temps real mentre Gadgetbridge estigui connectat</string>
     <string name="pref_title_expose_hr">Accés a tercers a freqüència cardíaca en temps real</string>
@@ -742,8 +716,6 @@
     <string name="pref_display_add_device_fab_on">Sempre visible</string>
     <string name="pref_display_add_device_fab_off">Visible només si no hi ha cap dispositiu afegit</string>
     <string name="preferences_makibes_hr3_settings">Configuració de Makibes HR3</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">Troba el telèfon</string>
     <string name="prefs_enable_find_phone">Activa «Troba el telèfon»</string>
     <string name="prefs_find_phone_duration">Durada del to en segons</string>
@@ -755,7 +727,6 @@
 \nNota: no heu d\'instal·lar el fitxer .res si és exactament el mateix que ja estava instal·lat.
 \n
 \nPROCEDIU SOTA LA VOSTRA PRÒPIA RESPONSABILITAT!</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="fw_upgrade_notice_amazfitgtr">Esteu a punt d\'instal·lar el microprogramari %s en el vostre Amazfit GTR.
 \n
 \nSi us plau, assegureu-vos d\'instal·lar el fitxer .fw, el fitxer .res i, finalment, el fitxer .gps. El vostre rellotge es reiniciarà després d\'instal·lar l\'arxiu .fw.
@@ -769,7 +740,6 @@
     <string name="pref_title_chart_sleep_rolling_24_hour">Interval de son</string>
     <string name="pref_chart_sleep_rolling_24_on">Últimes 24 hores</string>
     <string name="pref_chart_sleep_rolling_24_off">De migdia a migdia</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="fw_upgrade_notice_amazfitgts">Esteu a punt d\'instal·lar el microprogramari %s en el vostre Amazfit GTS.
 \n
 \nSi us plau, assegureu-vos d\'instal·lar el fitxer .fw, el fitxer .res i, finalment, el fitxer .gps. El vostre rellotge es reiniciarà després d\'instal·lar l\'arxiu .fw.
@@ -789,7 +759,6 @@
     <string name="prefs_find_phone_summary">Fes servir la teva banda per a reproduir el to del telèfon.</string>
     <string name="discovery_need_to_enter_authkey">Aquest aparell requereix una clau d\'autenticació secreta, mantingueu premut sobre l\'aparell per a introduir-la. Consulteu la wiki.</string>
     <string name="pref_summary_allow_high_mtu">Augmenta la velocitat de transferència, però pot ser que no funcioni en alguns aparells Android.</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="preferences_qhybrid_settings">Configuració de Q Hybrid</string>
     <string name="watch_not_connected">Rellotge no connectat</string>
     <string name="qhybrid_vibration_strength">intensitat de vibració:</string>
@@ -806,8 +775,6 @@
     <string name="qhybrid_offset_time_by">temps decalat en</string>
     <string name="pref_disable_new_ble_scanning">Desactiva el nou escaneig BLE</string>
     <string name="pref_summary_disable_new_ble_scanning">Marca aquesta opció si el teu aparell no pot ser trobat durant la detecció</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_y5">Y5</string>
     <string name="prefs_button_single_press_action_selection_title">Acció d\'esdeveniment 1</string>
     <string name="prefs_button_double_press_action_selection_title">Acció d\'esdeveniment 2</string>
     <string name="prefs_button_triple_press_action_selection_title">Acció d\'esdeveniment 3</string>
@@ -815,7 +782,6 @@
     <string name="prefs_button_long_press_action_selection_title">Acció de premuda llarga de botó</string>
     <string name="alarm_snooze">Posposa</string>
     <string name="error_no_location_access">S\'ha de permetre i activar l\'accés a la localitztació per al correcte funcionament de l\'escaneig</string>
-    <string name="devicetype_itag">iTag</string>
     <string name="pref_title_allow_high_mtu">Permet una alta MTU</string>
     <string name="pref_summary_sync_calendar">Activa les alertes de calendari, fins i tot quan estigui desconnectat</string>
     <string name="pref_title_sync_caldendar">Sincronitza els esdeveniments del calendari</string>
@@ -840,14 +806,11 @@
     <string name="hr_appname_commute">Desplçament</string>
     <string name="pref_title_relax_firmware_checks">Activeu-ho si voleu instal·lar microprogramari no destinat al vostre aparell (sota la vostra responsabilitat)</string>
     <string name="pref_summary_relax_firmware_checks">Relaxa les comprovacions de microprogramari</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
     <string name="pref_title_vibration_strength">Intensitat de vibració</string>
     <string name="pref_header_auto_fetch">Recollida automàtica</string>
     <string name="menuitem_workout">Entrenament</string>
     <string name="menuitem_eventreminder">Recordatori d\'esdeveniment</string>
     <string name="menuitem_hr">Ritme cardíac</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
-    <string name="devicetype_watchx">Watch X</string>
     <string name="power_mode_watch">Només rellotge</string>
     <string name="power_mode_saving">Estalvi d\'energia</string>
     <string name="power_mode_normal">Normal</string>
@@ -877,7 +840,6 @@
     <string name="sonyswr12_settings_alarm_interval_summary">L\'interval d\'alarma intel·ligent és l\'interval abans de l\'alarma instal·lada. En aquest interval, el dispositiu intenta detectar la fase més lleugera del son per despertar l\'usuari</string>
     <string name="sonyswr12_settings_stamina">Mode d\'estalvi d\'energia activat</string>
     <string name="qhybrid_calibration_align_hint">Utilitza els botons de sota per a alinear les manetes del rellotge a les 12:00.</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="backstroke">Esquena</string>
     <string name="freestyle">Estil lliure</string>
     <string name="breaststroke">Braça</string>
@@ -1002,16 +964,6 @@
     <string name="menuitem_stress">Estrès</string>
     <string name="menuitem_cycles">Seguiment del cicle</string>
     <string name="menuitem_breathing">Respiració</string>
-    <string name="devicetype_lefun">Lefun</string>
-    <string name="devicetype_sg2">Lemfo SG2</string>
-    <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
-    <string name="devicetype_tlw64">TLW64</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="activity_summary_yesterday">Ahir</string>
     <string name="activity_summary_today">Avui</string>
     <string name="activity_summary_edit_name_title">Edita l\'etiqueta</string>
@@ -1105,17 +1057,6 @@
     <string name="widget_settings_select_device_title">Seleccionar aparell</string>
     <string name="menuitem_sleep">Dormir</string>
     <string name="menuitem_goal">Objectiu d\'activitat</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
-    <string name="devicetype_waspos">Wasp-os</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
     <string name="activity_type_strength_training">Entrenament de força</string>
     <string name="dbmanagementactivity_export_finished">Supressió finalitzada</string>
     <string name="activity_DB_clean_export_directory_warning_message">De debò voleu esborrar els fitxers del directori d\'exportació/importació\?</string>
@@ -1178,9 +1119,6 @@
     <string name="pref_title_huami_force_new_protocol">Nou protocol d\'autenticació</string>
     <string name="show_ongoing_activity">Mostra una finestra emergent d\'activitat en curs</string>
     <string name="getting_heart_rate">Mesurant</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
-    <string name="devicetype_um25">UM-25</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="menuitem_events">Esdeveniments</string>
     <string name="menuitem_widgets">Ginys</string>
     <string name="menuitem_flashlight">Llanterna</string>
@@ -1223,7 +1161,6 @@
     <string name="sony_ambient_sound_off">Apagat</string>
     <string name="watchface_setting_title_power_saving">Estalvi d\'energia</string>
     <string name="prefs_notifications_enable">Activa les notificacions</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="button_watchface_select_image">Canvia la imatge de fons</string>
     <string name="watchface_setting_wrist_flick_duration">Durada (en ms):</string>
     <string name="watchface_dialog_widget_y_coordinate">Coordenada Y (màxim 240):</string>
@@ -1288,7 +1225,6 @@
     <string name="reminder_every_week">Cada setmana</string>
     <string name="menuitem_pomodoro">Seguiment Pomodoro</string>
     <string name="dbmanagementactivity_export_confirmation">Voleu exportar dades\? Les dades d’activitat exportades anteriorment (si n’hi ha) i les preferències se sobreescriuran.</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
     <string name="prefs_fm_preset_instructions">Premeu una estona el botó per desar la preconfiguració</string>
     <string name="check_all_applications">Activar totes les aplicacions</string>
     <string name="uncheck_all_applications">Desactivar totes les aplicacions</string>
@@ -1307,7 +1243,6 @@
     <string name="pref_summary_canned_messages_set">Envieu els missatges configurats més avall al vostre aparell</string>
     <string name="pref_summary_developer_settings">Configuració i funcionalitat usada per programadors</string>
     <string name="qhybrid_pref_title_external_intents">Permetre el intents externs perillosos</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="gpx_receiver_overwrite_some_files">Algun(s) fitxer(s) ja existeixen. Sobreescriure\'ls\?</string>
     <string name="gpx_receiver_files_received">Fitxer(s) GPX rebut(s):</string>
     <string name="fossil_hr_auth_failed">Autenticació fallada, funcionalitat limitada</string>
@@ -1362,8 +1297,6 @@
     <string name="add_test_device">Afegeix aparell de prova</string>
     <string name="controlcenter_power_off_confirm_description">Segur que voleu apagar l\'aparell?</string>
     <string name="pref_title_message_privacy_mode">Mode de privacitat de missatges</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
     <string name="device_unsupported">NO S\'ADMET</string>
     <string name="watchface_widget_type_2nd_tz">2n fus horari</string>
     <string name="pref_header_sony_device_info">Informació de l\'aparell</string>
@@ -1375,7 +1308,6 @@
     <string name="device_card_activity_card_title_summary">Escull quins detalls d\'activitat es mostren a la targeta de l\'aparell</string>
     <string name="prefs_activity_in_device_card_title">Mostra informació d\'activitat a la targeta de l\'aparell</string>
     <string name="prefs_activity_in_device_card_title_summary">Mostra les passes, la distància o el son actuals a la targeta de l\'aparell</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="swolf_index">índex swolf</string>
     <string name="discovery_bluetooth_scan">Escaneig Bluetooth:</string>
     <string name="discovery_bluetooth_le_scan">Escaneig Bluetooth LE:</string>
@@ -1391,26 +1323,18 @@
     <string name="menuitem_nothing">Res</string>
     <string name="qhybrid_summary_calibration">Calibra les manetes del rellotge</string>
     <string name="watchface_setting_display_refresh_partial">Actualització parcial (en minuts):</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
-    <string name="devicetype_nothingear1">Nothing Ear (1)</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="devicetype_vesc">VESC</string>
     <string name="controlcenter_power_off_confirm_title">Apaga</string>
     <string name="pref_title_notifications_generic_settings">Configuració de notificacions Android</string>
     <string name="controlcenter_power_off">Apaga</string>
     <string name="activity_summary_detail_clear_gpx_track">Neteja la pista GPX</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
     <string name="menuitem_email">Correu electrònic</string>
     <string name="watchface_install_info">Sou a punt d\'instal·lar la següent caràtula:
 \n
 \n%1$s
 \nVersió %2$s per %3$s
 \n</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
     <string name="activity_type_climbing">Escalada</string>
     <string name="activity_summary_detail_select_gpx_track">Selecciona la pista GPX</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="about_hash">Confirma %s</string>
     <string name="watchface_setting_display_refresh_full">Actualització completa (en minuts):</string>
     <string name="sony_ambient_sound_noise_cancelling">Cancel·lació de soroll</string>

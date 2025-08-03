@@ -463,19 +463,6 @@
     <string name="kind_resources">משאבים</string>
     <string name="kind_watchface">פני השעון</string>
     <string name="devicetype_unknown">התקן לא ידוע</string>
-    <string name="devicetype_test">בדיקת ההתקן</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="pref_title_weather">מזג אוויר</string>
     <string name="pref_header_auto_export">ייצוא אוטומטי</string>
     <string name="pref_title_auto_export_enabled">ייצוא אוטומטי מופעל</string>
@@ -486,7 +473,6 @@
     <string name="choose_auto_export_location">נא לבחור את מיקום הייצוא</string>
     <string name="spanish">ספרדית</string>
     <string name="notification_channel_name">כללי</string>
-    <string name="devicetype_xwatch">XWatch</string>
     <string name="on">פעיל</string>
     <string name="controlcenter_start_activity_tracks">מסלולי הפעילות שלך</string>
     <string name="activity_type_not_measured">ללא מדידה</string>
@@ -514,7 +500,6 @@
     <string name="menuitem_alipay">Alipay</string>
     <string name="pref_title_pebble_gatt_clientonly">לקוח GATT בלבד</string>
     <string name="pref_summary_pebble_gatt_clientonly">מצב זה מיועד ל־Pebble 2 והוא ניסיוני, ניתן לנסות זאת אם נתקלת בבעיות חיבור</string>
-    <string name="devicetype_q8">Q8</string>
     <string name="fw_upgrade_notice_miband3">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Mi Band 3 שלך.
 \n
 \nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res הרצועה שלך תופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -522,25 +507,21 @@
 \nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר.
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="blacklist_all_for_notifications">הוספת כולם לרשימה השחורה של ההודעות</string>
     <string name="whitelist_all_for_notifications">הוספת כולם לרשימת ההיתר של ההודעות</string>
     <string name="pref_auto_fetch">אחזור אוטומטי של נתוני פעילות</string>
     <string name="pref_auto_fetch_summary">האחזור מתבצע בעת שחרור נעילת המסך. עובד רק אם הוגדר מנגנון נעילה!</string>
     <string name="pref_auto_fetch_limit_fetches">זמן מזערי בין אחזורים</string>
     <string name="pref_auto_fetch_limit_fetches_summary">מתבצע אחזור כל %d דקות</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
     <string name="russian">רוסית</string>
     <string name="prefs_screen_orientation">כיוון המסך</string>
     <string name="horizontal">אופקי</string>
     <string name="vertical">אנכי</string>
-    <string name="devicetype_id115">ID115</string>
     <string name="menuitem_notifications">התראות</string>
     <string name="menuitem_more">עוד</string>
     <string name="menuitem_music">מוזיקה</string>
     <string name="controlcenter_calibrate_device">כיול התקן</string>
     <string name="watch9_pairing_tap_hint">כשהשעון שלך רוטט, עליך לנער את ההתקן או ללחוץ על הכפתור שלו.</string>
-    <string name="devicetype_watch9">Watch 9</string>
     <string name="watch9_time_minutes">דקות:</string>
     <string name="watch9_time_hours">שעות:</string>
     <string name="watch9_time_seconds">שניות:</string>
@@ -578,8 +559,6 @@
     <string name="warning">אזהרה!</string>
     <string name="controlcenter_change_led_color">החלפת צבע נורית</string>
     <string name="controlcenter_change_fm_frequency">החלפת תדירות FM</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi 3</string>
     <string name="preferences_led_color">צבע נורית</string>
     <string name="preferences_fm_frequency">תדר FM</string>
     <string name="pref_invalid_frequency_title">תדר שגוי</string>
@@ -605,7 +584,6 @@
     <string name="live_activity_max_heart_rate">דופק נוכחי / מרבי: %1$d ‏/ %2$d</string>
     <string name="debugactivity_really_factoryreset_title">לאפס להגדרות יצרן\?</string>
     <string name="debugactivity_really_factoryreset">איפוס להגדרות יצרן ימחק את כל הנתונים מההתקן המקושר (אם יש תמיכה בזה). מכשירים מבית Xiaomi/Huami גם משנים את כתובת החומרה (MAC), כך שבעיני Gadgetbridge הם נחשבים למכשירים חדשים.</string>
-    <string name="devicetype_casiogb6900">Casio GB-6900‎</string>
     <string name="title_activity_notification_filter">מסנן התראות</string>
     <string name="edittext_notification_filter_words_hint">נא להקליד את המילים המבוקשות, אחת בכל שורה</string>
     <string name="toast_notification_filter_saved_successfully">מסנן ההתראות נשמר</string>
@@ -675,7 +653,6 @@
     <string name="title_activity_device_specific_settings">הגדרות ייחודיות למכשיר</string>
     <string name="pref_title_authkey">מפתח אימות</string>
     <string name="pref_summary_authkey">ניתן להחליף את מפתח האימות למפתח משותף בכל מכשירי ה־Android שלך מהם ברצונך להתחבר. מפתח בררת המחדל הקודם לכל המכשירים הוא 0123456789@ABCDE</string>
-    <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Amazfit Cor 2 שלך. \n \nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res. הצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־fw. \n \nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res אם הוא כבר זהים לזה שהתקנת בעבר. \n \nהמשך התהליך הוא על אחריותך! \n \nתהליך זה לא נבדק, כנראה שיהיה עליך להתקין קושחה מסוג BEATS_W אם שם המכשיר שלך הוא „Amazfit Band 2”</string>
     <string name="dutch">הולנדית</string>
     <string name="turkish">טורקית</string>
@@ -685,8 +662,6 @@
     <string name="thai">תאי</string>
     <string name="vietnamese">וייטנאמית</string>
     <string name="portuguese">פורטוגלית</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
     <string name="fw_upgrade_notice_miband4">פעולה זו תתקין את הקושחה %s ב־Mi Band 4 שלך.
 \n
 \nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -705,7 +680,6 @@
     <string name="pref_charts_range_off">טווח התרשימים מוגדר לשבוע</string>
     <string name="weekstepschart_steps_a_month">צעדים בחודש</string>
     <string name="weeksleepchart_sleep_a_month">שינה בחודש</string>
-    <string name="devicetype_mijia_lywsd02">שעון קיר חכם מבית Mijia</string>
     <string name="menuitem_nfc">תקשורת קרבה</string>
     <string name="pref_summary_expose_hr">מאפשר ליישומונים אחרים לגשת לנתוני דופק בזמן אמת כש־Gadgetbridge מחובר</string>
     <string name="pref_title_expose_hr">גישה של צד־שלישי לדופק בזמן אמת</string>
@@ -740,8 +714,6 @@
     </plurals>
     <string name="activity_error_no_app_for_gpx">כדי לצפות בעקבות פעילות, עליך להתקין יישומון שיכול לטפל בקובצי GPX.</string>
     <string name="preferences_makibes_hr3_settings">הגדרות של Makibes HR3</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">איתור הטלפון</string>
     <string name="prefs_enable_find_phone">הפעלת ‚איתור הטלפון’</string>
     <string name="prefs_find_phone_summary">ניתן להשתמש בצמיד כדי שהטלפון שלך ישמיע צלצול.</string>
@@ -755,7 +727,6 @@
 \nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר.
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
     <string name="fw_upgrade_notice_amazfitgtr">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Amazfit GTR שלך.
 \n
 \nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -769,7 +740,6 @@
     <string name="pref_title_chart_sleep_rolling_24_hour">טווח שינה</string>
     <string name="pref_chart_sleep_rolling_24_on">24 השעות האחרונות</string>
     <string name="pref_chart_sleep_rolling_24_off">צהריים עד צהריים</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="fw_upgrade_notice_amazfitgts">פעולה זו תתקין את הקושחה %s ב־Amazfit GTS שלך.
 \n
 \nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -778,7 +748,6 @@
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="preferences_qhybrid_settings">הגדרות Q Hybrid</string>
     <string name="watch_not_connected">השעון לא מחובר</string>
     <string name="qhybrid_vibration_strength">עצמת רטט:</string>
@@ -795,8 +764,6 @@
     <string name="qhybrid_offset_time_by">מרחק מהשעה</string>
     <string name="pref_disable_new_ble_scanning">השבתת סריקת BLE חדשה</string>
     <string name="pref_summary_disable_new_ble_scanning">יש לסמן את האפשרות הזאת אם המכשיר שלך לא נמצא במהלך האיתור</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_y5">Y5</string>
     <string name="prefs_button_single_press_action_selection_title">פעולה עם אירוע 1</string>
     <string name="prefs_button_double_press_action_selection_title">פעולה עם אירוע 2</string>
     <string name="prefs_button_triple_press_action_selection_title">פעולה עם אירוע 3</string>
@@ -804,7 +771,6 @@
     <string name="prefs_button_long_press_action_selection_title">פעולה ללחיצה ארוכה על הכפתור</string>
     <string name="alarm_snooze">נודניק</string>
     <string name="error_no_location_access">יש להעניק גישה למיקום כדי שהסריקה תעבוד כראוי</string>
-    <string name="devicetype_itag">iTag‎</string>
     <string name="pref_title_allow_high_mtu">לאפשר MTU גבוה</string>
     <string name="pref_summary_allow_high_mtu">מגביר את קצב ההעברה, יש מכשירי Android שלא תומכים בזה.</string>
     <string name="pref_summary_sync_calendar">הפעלת התראות לוח שנה, אפילו ללא חיבור</string>
@@ -829,7 +795,6 @@
     <string name="hr_appname_stopwatch">שעון עצר</string>
     <string name="hr_appname_commute">התניידות</string>
     <string name="pref_title_vibration_strength">עצמת הרטט</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
     <string name="pref_title_relax_firmware_checks">יש להפעיל זאת אם מטרתך היא לצרוב קושחה שאינה מיועדת להתקן שלך (באחריותך הבלעדית)</string>
     <string name="pref_summary_relax_firmware_checks">הפחתת בדיקות חומרה</string>
     <string name="pref_header_auto_fetch">קבלה אוטומטית</string>
@@ -839,8 +804,6 @@
     <string name="menuitem_eventreminder">תזכורת אירועים</string>
     <string name="menuitem_hr">דופק</string>
     <string name="menuitem_pai">בינת פעילות</string>
-    <string name="devicetype_watchxplus">Watch X Plus</string>
-    <string name="devicetype_watchx">Watch X</string>
     <string name="power_mode_title">צריכת חשמל בשעון</string>
     <string name="pref_summary_notifications_and_calls_title_shake_reject">כפיל של פעולת כפתור השעון</string>
     <string name="power_mode_watch">שעון בלבד</string>
@@ -887,7 +850,6 @@
 \nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר. 
 \n 
 \nהמשך התהליך הוא על אחריותך!</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
     <string name="about_additional_contributions">תודתנו נתונה לכל התורמים שתרמו קוד, תרגומים, תמיכה, רעיונות, מוטיבציה, דיווחי תקלות, כסף… ✊</string>
     <string name="about_additional_device_support">תמיכה במכשירים נוספים</string>
     <string name="about_contributors">תורמים</string>
@@ -912,19 +874,16 @@
     <string name="menuitem_stress">לחץ</string>
     <string name="menuitem_cycles">מעקב מחזור</string>
     <string name="menuitem_breathing">נשימה</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="error_retrieving_devices_database">שגיאה בקבלת מכשירים ממסד הנתונים</string>
     <string name="error_setting_alias">שגיאה בהגדרת כינוי:</string>
     <string name="error_exporting_device_preferences">שגיאה בייצוא העדפות ייחודיות למכשיר</string>
     <string name="pref_check_permission_status">בדיקת מצב ההרשאות</string>
     <string name="device_requires_key">נדרש מפתח, ללחוץ ארוכות כדי להקלידה</string>
     <string name="device_is_currently_bonded">כבר מאוגד</string>
-    <string name="devicetype_tlw64">TLW64</string>
     <string name="error_location_enabled_mandatory">יש להפעיל מיקום כדי לסרוק לאיתור מכשירים</string>
     <string name="companiondevice_pairing">צימוד CompanionDevice</string>
     <string name="require_location_provider">יש להפעיל מיקום</string>
     <string name="pref_check_permission_status_summary">לבדוק ולבקש הרשאות חסרות אפילו אם אינן נדרשות באותו הרגע. יש להשבית את זה רק אם המכשירים שלך אכן לא תומכים בתכונות האלו. חסך בהענקת הרשאות עלול להוביל לתקלות!</string>
-    <string name="devicetype_pinetime_jf">PineTime (קושחה מסוג JF)</string>
     <string name="distanceMeters">מרחק</string>
     <string name="activity_summary_detail">פרטי הפעילות הספורטיבית</string>
     <string name="activity_detail_show_gps_label">הצגת מסלול GPS</string>
@@ -1006,7 +965,6 @@
     <string name="activity_summaries_all_activities">כל הפעילויות</string>
     <string name="activity_summary_yesterday">אתמול</string>
     <string name="activity_summary_today">היום</string>
-    <string name="devicetype_sg2">Lemfo SG2</string>
     <string name="activity_summaries_all_devices">כל המכשירים</string>
     <string name="sports_activity_quick_filter_select">תקופה</string>
     <string name="sports_activity_quick_filter_30days">30 ימים</string>
@@ -1036,14 +994,12 @@
     <string name="charts_activity_list">רשימת פעילויות</string>
     <string name="chart_get_active_and_synchronize">יש לעשות פעילות כלשהי ולסנכרן את ההתקן.</string>
     <string name="chart_no_active_data">לא זוהו פעילויות.</string>
-    <string name="devicetype_lefun">Lefun</string>
     <string name="lefun_prefs_interface_language_title">שפת המנשק</string>
     <string name="lefun_prefs_antilost_summary">הצמיד ירוטו אם הטלפון שלך מתנתק מהצמיד</string>
     <string name="lefun_prefs_antilost_title">מונע איבוד</string>
     <string name="lefun_prefs_hydration_reminder_interval_title">הפרש תזכורת שתייה (בדקות)</string>
     <string name="lefun_prefs_hydration_reminder_summary">הצמיד ירטוט כדי להזכיר לך לשתות מים</string>
     <string name="lefun_prefs_hydration_reminder_title">תזכורת שתייה</string>
-    <string name="devicetype_sonyswr12">Sony SWR12</string>
     <string name="sonyswr12_settings_title">Sony SWR12 הגדרות</string>
     <string name="sonyswr12_settings_low_vibration">רטט נמוך מופעל</string>
     <string name="sonyswr12_settings_stamina">מצב חיסכון בחשמל פועל</string>
@@ -1052,7 +1008,6 @@
     <string name="sonyswr12_settings_stamina_summary">מצב חיסכון בחשמל מכבה מדידה אוטומטית תקופתית של דופק ובכך מגדיל את זמן העבודה</string>
     <string name="sonyswr12_settings_alarm_interval_summary">מרווח אזעקה חכם הוא מרווח לפני ההתראה המותקנת. במרווח זה מכשיר מנסה לאתר את שלב השינה הקל ביותר למשתמש ער</string>
     <string name="baseAltitude">בסיס לחישוב רום</string>
-    <string name="devicetype_nut_mini">Nut mini</string>
     <string name="descentSeconds">ירידה</string>
     <string name="activity_error_no_app_for_png">כדי לשתף את צילום המסך, עליך להתקין יישומון שיכול לטפל בקובצי תמונה.</string>
     <string name="firmware_update_progress">מתבצעת העלאה \n%1$d%% ב־%2$.2f קסל״ש (%3$.2f קסל״ש בממוצע)\nחלק %4$d מתוך %5$d</string>
@@ -1076,18 +1031,15 @@
     <string name="pref_title_middle_button_function_short">כפתור אמצעי קצר</string>
     <string name="pref_title_upper_button_function_short">כפתור עליון קצר</string>
     <string name="activity_prefs_step_length_cm">אורך צעד בס״מ</string>
-    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
     <string name="menuitem_spo2">ריווי חמצן בדם</string>
     <string name="qhybrid_calibration_align_hint">ניתן לכוון את המחוגים בעזרת הכפתורים שלהלן ל־12:00.</string>
     <string name="gps_track">מסלול GPS</string>
     <string name="about_version">גרסה %s</string>
-    <string name="devicetype_amazfit_bips_lite">Amazfit Bip S Lite</string>
     <string name="charts_legend_heartrate_average">דופק ממוצע</string>
     <string name="charts_min_max_heartrate_popup">דופק נמוך: %1$d
 \nדופק גבוה: %2$d
 \nחוזק תנועה: %3$s</string>
     <string name="find_lost_device_message">לחפש אחר %1$s\?</string>
-    <string name="devicetype_amazfit_gtr2">Amazfit GTR 2</string>
     <string name="menuitem_stopwatch">שעון עצר</string>
     <string name="menuitem_dnd">לא להפריע</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -1101,11 +1053,8 @@
     <string name="activity_list_summary_active_steps">צעדים בפעילות</string>
     <string name="activity_list_summary_active_time">זמן פעילות</string>
     <string name="activity_list_summary_distance">מרחק</string>
-    <string name="devicetype_amazfit_gts2">Amazfit GTS 2</string>
-    <string name="devicetype_casiogbx100">Casio GBX-100‎</string>
     <string name="prefs_charts_tabs_summary">לשונית תרשימים</string>
     <string name="prefs_charts_tabs">לשונית</string>
-    <string name="devicetype_amazfit_bipu">Amazfit Bip U</string>
     <string name="menuitem_pomodoro">עוקב פומודורו</string>
     <string name="menuitem_sleep">שינה</string>
     <string name="menuitem_goal">יעד פעילות</string>
@@ -1124,32 +1073,23 @@
 \nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר.
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
-    <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
     <string name="activity_DB_ShowContentButton">הצגת תוכן תיקיית ייבוא/ייצוא</string>
     <string name="activity_data_management_directory_content_title">ייצוא/ייבוא תוכן תיקייה</string>
     <string name="widget_settings_select_device_title">נא לבחור מכשיר</string>
     <string name="dbmanagementactivity_export_confirmation">לייצא נתונים\? נתוני הפעילות שיוצאו קודם לכן (אם יש כאלו) וההעדפות יידרסו.</string>
     <string name="dbmanagementactivity_export_data_title">לייצא נתונים\?</string>
-    <string name="devicetype_amazfit_bipupro">Amazfit Bip U Pro</string>
     <string name="activity_db_management_clean_export_directory_text">הקבצים שבתיקייה הייצוא/ייבוא זמינים לכל יישומון במכשיר שלך. יכול להיות שכדאי לך להסיר את הקבצים האלו לאחר סנכרון או גיבוי. נא לוודא שיש לך גיבוי בטרם מחיקתם. קובצי GPX, תת־תיקיות וקובץ מסד נתונים שיוצא אוטומטית (אם קיים) לא יימחקו. הנתיב לתיקיית הייצוא/ייבוא הוא:</string>
     <string name="dbmanagementactivity_export_finished">המחיקה הושלמה</string>
     <string name="activity_DB_clean_export_directory_warning_message">באמת למחוק את הקבצים שבתיקיית ייצוא/ייבוא\?</string>
     <string name="activity_DB_clean_export_directory_warning_title">למחוק קבצים בתיקיית ייצוא/ייבוא\?</string>
     <string name="activity_db_management_clean_export_directory_label">מחיקת קבצים בתיקיית ייצוא/ייבוא</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">שגיאה במחיקת קבצים מתיקיית הייצוא %1$s</string>
-    <string name="devicetype_amazfit_neo">Amazfit Neo</string>
     <string name="activity_type_strength_training">אימון כוח</string>
     <string name="mi">מייל</string>
     <string name="minutes_mi">דקות למייל</string>
     <string name="mi_h">מייל לשעה</string>
     <string name="ft">רגל</string>
-    <string name="devicetype_amazfit_gts2_mini">Amazfit GTS 2 Mini</string>
-    <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_gtr2e">Amazfit GTR 2e</string>
-    <string name="devicetype_waspos">Wasp-os</string>
     <string name="battery_detail_activity_title">פרטים על הסוללה</string>
-    <string name="devicetype_amazfit_gts2e">Amazfit GTS 2e</string>
-    <string name="devicetype_amazfit_x">Amazfit X</string>
     <string name="fw_upgrade_notice_amazfitx">פעולה זו תתקין את הקושחה %s ב־Amazfit X שלך.
 \n
 \nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה ולאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -1176,7 +1116,6 @@
     <string name="qhybrid_title_file_management">ניהול קבצים</string>
     <string name="qhybrid_title_background_image">תמונת רקע</string>
     <string name="qhybrid_title_apps">יישומונים</string>
-    <string name="devicetype_um25">UM-25</string>
     <string name="fossil_hr_warning_firmware_too_new">חלק מהפונקציות מושבתות כיוון שהקושחה של השעון חדשה מדי</string>
     <string name="prefs_sounds_summary">להגדיר מתי ההתקן יצפצף</string>
     <string name="prefs_sounds">צלילים</string>
@@ -1188,7 +1127,6 @@
     <string name="menuitem_temperature">טמפרטורה</string>
     <string name="menuitem_widgets">וידג׳טים</string>
     <string name="menuitem_events">אירועים</string>
-    <string name="devicetype_miband6">Mi Band 6</string>
     <string name="fw_upgrade_notice_miband6">פעולה זו תתקין את הקושחה %s ב־Mi Band 6 שלך.
 \n
 \nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -1228,7 +1166,6 @@
     <string name="pref_title_developer_settings">הגדרות פיתוח</string>
     <string name="qhybrid_pref_summary_actions">פעולות ליישומון התעבורה</string>
     <string name="qhybrid_pref_title_actions">פעולות</string>
-    <string name="devicetype_amazfit_trex_pro">Amazfit T-Rex Pro</string>
     <string name="menuitem_barometer">מד לחץ</string>
     <string name="pref_theme_black_background">להשתמש ברקע שחור בערכת עיצוב כהה</string>
     <string name="gpx_receiver_overwrite_some_files">חלק מהקבצים כבר קיימים. לדרוס\?</string>
@@ -1271,7 +1208,6 @@
     <string name="button_watchface_add_widget">הוספת וידג׳ט</string>
     <string name="button_watchface_select_image">החלפת תמונת הרקע</string>
     <string name="button_watchface_edit_name">עריכת השם</string>
-    <string name="devicetype_smaq2oss">SMA-Q2 OSS</string>
     <string name="watchface_upload_failed">העלאת פני השעון נכשלה. נא לנסות שוב.</string>
     <string name="watchface_cache_confirm_overwrite">פני שעון בשם הזה כבר קיימים באחסון. לדרוס אותם\?</string>
     <string name="heart_rate_result">תוצאות המדידה</string>
@@ -1301,9 +1237,7 @@
     <string name="prefs_sleep_time_summary">מציין זמנים בהם נרשמת שינה</string>
     <string name="prefs_sleep_time_label">הגדרת שעות שינה</string>
     <string name="prefs_sleep_time">זמני שינה</string>
-    <string name="devicetype_fitpro">FitPro</string>
     <string name="pref_title_ping_tone">צליל פינג</string>
-    <string name="devicetype_nothingear1">Nothing Ear (1)</string>
     <string name="nothing_prefs_inear_summary">נגינה/השהיה של המוזיקה בהתאם להרכבת אוזניות</string>
     <string name="nothing_prefs_inear_title">זיהוי תוך אוזני</string>
     <string name="nothing_prefs_audiomode_title">מצב שמע</string>
@@ -1321,7 +1255,6 @@
     <string name="pref_title_notification_use_as_deny">לדחות התראות מהיישומונים הנבחרים</string>
     <string name="pref_message_privacy_mode_off">הצגת כל התוכן</string>
     <string name="prefs_ambient_voice_summary">הדגשת הקול משאר הצלילים</string>
-    <string name="devicetype_galaxybuds">Galaxy Buds</string>
     <string name="prefs_equalizer_preset">ערכה של אקוולייזר</string>
     <string name="pref_title_equalizer_bass_boost">הגברת באס</string>
     <string name="pref_title_equalizer_soft">רכה</string>
@@ -1349,8 +1282,6 @@
     <string name="right_earbud">אוזנית ימנית</string>
     <string name="pref_header_system">מערכת</string>
     <string name="pref_header_equalizer">אקוולייזר</string>
-    <string name="devicetype_sony_wh_1000xm3">Sony WH-1000XM3</string>
-    <string name="devicetype_galaxybuds_live">Galaxy Buds Live</string>
     <string name="pref_title_equalizer_normal">רגיל</string>
     <string name="prefs_active_noise_cancelling_summary">חסימת רעשי רקע</string>
     <string name="prefs_pressure_relief">הפגת מתחים עם צלילים אופפים</string>
@@ -1472,13 +1403,10 @@
     <string name="add_test_device">הוספת התקן בדיקה</string>
     <string name="sony_button_mode_left">מצב כפתור (שמאל)</string>
     <string name="sony_button_mode_off">כבוי</string>
-    <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
     <string name="discover_unsupported_devices_description">הפעלת אפשרות זו תציג התקני Bluetooth בעת הסריקה. נגיעה קצרה תעתיק את שם ההתקן ואת כתובת החומרה שלו ללוח הגזירים. לחיצה ארוכה תפעיל את חלונית `הוספת התקן בדיקה`. עלול לגרום לתקלות בדמות הקפאת היישומון.</string>
     <string name="sony_pause_when_taken_off">להשהות כאשר האוזניות מוסרות</string>
     <string name="sony_button_mode_ambient_sound_control">בקרת שמע הקפי</string>
     <string name="sony_button_mode_playback_control">בקרת נגינה</string>
-    <string name="devicetype_bose_qc35">Bose QC35</string>
-    <string name="devicetype_vesc">VESC</string>
     <string name="descentDistance">מרחק במורד</string>
     <string name="ascentDistance">מרחק במעלה</string>
     <string name="activity_type_hiking">טיול</string>
@@ -1511,9 +1439,7 @@
     <string name="fossil_hr_button_config_info">לא ניתן להגדיר חלק מהכפתורים כיוון שהתכונות שלהן כתובות באופן מובנה בחומרה של השעון.
 \n
 \nאזהרה: לחיצה ארוכה על הכפתור העליון כאשר מותקנים פני שעון מהיישומון הרשמי של Fossil גם תחליף בין הצגה/הסתרה של וידג׳טים.</string>
-    <string name="devicetype_domyos_t540">Domyos T540</string>
     <string name="sony_speak_to_chat_sensitivity">רגישות זיהוי קולי</string>
-    <string name="devicetype_sony_wh_1000xm4">Sony WH-1000XM4</string>
     <string name="sony_speak_to_chat_sensitivity_auto">אוטומטית</string>
     <string name="sony_speak_to_chat_sensitivity_high">גבוהה</string>
     <string name="sony_speak_to_chat">לחיצה לדיבור</string>
@@ -1545,8 +1471,6 @@
     <string name="sony_anc_optimizer_status_not_running">לא פועל</string>
     <string name="sony_anc_optimizer_status_starting">מופעל…</string>
     <string name="sony_anc_optimize_confirmation_description">ניתן להשתמש באוזניות כרגיל. אם מצב הבלאי או הלחץ האטמוספרי משתנה, יש להריץ את המשפר שוב.</string>
-    <string name="devicetype_amazfit_pop">Amazfit Pop</string>
-    <string name="devicetype_amazfit_pop_pro">Amazfit Pop Pro</string>
     <string name="menuitem_nothing">כלום</string>
     <string name="pref_title_opentracks_packagename">שם חבילה ב־OpenTracks</string>
     <string name="pref_summary_opentracks_packagename">משמש להפעלת/עצירת הקלטת מסלולי GPS מיישומוני חיטוב חיצוניים.</string>
@@ -1603,7 +1527,6 @@
     <string name="pref_screen_notification_profile_event_reminder">מתזכר אירועים</string>
     <string name="pref_screen_notification_idle_alerts">התראות בטלה</string>
     <string name="pref_screen_notification_profile_find_device">איתור המכשיר</string>
-    <string name="devicetype_sony_wf_1000xm3">Sony WF-1000XM3</string>
     <string name="prefs_switch_control_left">בורר שמאל</string>
     <string name="pref_title_touch_ambient">צליל הקפי</string>
     <string name="heartrate_bpm_110">דופק 110</string>
@@ -1659,7 +1582,6 @@
     <string name="prefs_heartrate_alert_experimental_title">התראת דופק (ניסיוני)</string>
     <string name="pref_voice_detect_duration_5">5 שניות</string>
     <string name="mi2_prefs_heart_rate_monitoring_alerts_summary">הגדרת מעקב אחר דופק וסף התראה</string>
-    <string name="devicetype_galaxybuds_pro">Galaxy Buds Pro</string>
     <string name="prefs_ambient_sound_during_call_title">צליל הקפי במהלך שיחה</string>
     <string name="prefs_double_tap_edge_summary">לזהות נגיעה כפולה כשלא בוצעה במשטח המגע</string>
     <string name="prefs_heartrate_alert_experimental_description">להפעיל את הרטט בצמיד כאשר הדופק יורד מתחת לסף, ללא פעילות פיזית מובהקת ב־10 הדקות האחרונות. יכולת זאת נמצאת בשלבי ניסוי ולא נבדקה באופן קפדני.</string>
@@ -1824,7 +1746,6 @@
     <string name="prefs_screen_timeout">תום זמן המסך</string>
     <string name="smart">חכם</string>
     <string name="mi2_dnd_always">תמיד</string>
-    <string name="devicetype_miband7">Xiaomi Smart Band 7‎</string>
     <string name="menuitem_countdown">ספירה לאחור</string>
     <string name="menuitem_personal_activity_intelligence">חוכמת פעילות אישית</string>
     <string name="menuitem_workout_history">היסטוריית אימונים</string>
@@ -1860,11 +1781,9 @@
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
     <string name="pref_title_notifications_ignore_low_priority">להתעלם מהודעות בעדיפות נמוכה</string>
     <string name="pref_summary_notifications_ignore_low_priority">לא לשלוח הודעות בעדיפות נמוכה ומזערית לשעון</string>
-    <string name="devicetype_flipper_zero">‎Flipper zero</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">לאפשר שליטה בחיבור ה־Bluetooth דרך API של Intent</string>
     <string name="pref_summary_notification_prefer_long_text">אם ניתן, לשלוח את הטקסט הארוך של ההתראה למכשיר</string>
     <string name="pref_title_notification_prefer_long_text">להעדיף טקסט התראות ארוך</string>
-    <string name="devicetype_amazfit_gts3">‎Amazfit GTS 3</string>
     <string name="fw_upgrade_notice_amazfit_gts3">פעולה זו תתקין את הקושחה %s ב־Amazfit GTS 3 שלך.
 \n
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip
@@ -1881,7 +1800,6 @@
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
 \n
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
-    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3‎</string>
     <string name="activity_type_table_tennis">טניס שולחן</string>
     <string name="activity_type_bowling">כדורת (באולינג)</string>
     <string name="activity_type_street_dance">ריקוד רחוב</string>
@@ -1902,8 +1820,6 @@
     <string name="activity_type_boxing">איגרוף</string>
     <string name="activity_type_kickboxing">קיקבוקסינג</string>
     <string name="activity_type_indoor_ice_skating">החלקרח במבנה</string>
-    <string name="devicetype_super_cars">מירוץ מכוניות</string>
-    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite‎</string>
     <string name="watchface_setting_button_move_hands">הזזת המחוגים</string>
     <string name="pref_header_authentication">אימות</string>
     <string name="supercars_lights_blinking_label">הבהוב</string>
@@ -1929,8 +1845,6 @@
     <string name="power_saving">חיסכון בחשמל</string>
     <string name="custom">משלך</string>
     <string name="balanced">מאוזן</string>
-    <string name="devicetype_sony_wh_1000xm2">Sony WH-1000XM2‎</string>
-    <string name="devicetype_sony_wf_1000xm4">Sony WF-1000XM4‎</string>
     <string name="single_band">תדר אחד</string>
     <string name="dual_band">שני תדרים</string>
     <string name="low_power_gps">GPS חסכוני</string>
@@ -2013,7 +1927,6 @@
     <string name="prefs_control_center_summary">נא לבחור את הפריטים לרשימה הנגללת של מרכז הבקרה</string>
     <string name="activity_prefs_target_weight_kg">משקל יעד בקילוגרמים</string>
     <string name="activity_prefs_goal_standing_time_minutes">יעד יומי: זמן עמידה בדקות</string>
-    <string name="devicetype_amazfit_gtr4">Amazfit GTR 4‎</string>
     <string name="pref_agps_expiry_reminder_time">מועד תזכורת תפוגת AGPS</string>
     <string name="pref_enable_unsupported_settings_summary">הגדרה זו תאפשר גישה לכל ההגדרות הזמינות, אפילו אם ההתקן לא תומך בהן. עלול לערער את היציבות ולגרום לקריסת ההתקן.</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">קיצור חותמות הזמן של פעילויות משיכה</string>
@@ -2027,26 +1940,21 @@
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
 \n
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
-    <string name="devicetype_amazfit_band7">Amazfit Band 7‎</string>
     <string name="world_clock_code">קוד</string>
     <string name="pref_title_touch_spotify_official_app">Spotify (היישומון הרשמי בלבד)</string>
     <string name="pref_title_touch_spotify_galaxy_app">Spotify (יישומון Galaxy Wearable בלבד)</string>
-    <string name="devicetype_galaxybuds_2">Galaxy Buds2‎</string>
     <string name="prefs_touch_lock_buds2">פקדי מגע</string>
     <string name="function_enabled">מופעל</string>
-    <string name="devicetype_amazfit_gts4">Amazfit GTS 4‎</string>
     <string name="fw_upgrade_notice_amazfit_gts4">פעולה זו תתקין את הקושחה %s ב־Amazfit GTS 4 שלך.
 \n
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
-    <string name="devicetype_amazfit_gts4_mini">Amazfit GTS 4 Mini‎</string>
     <string name="fw_upgrade_notice_amazfit_gts4_mini">פעולה זו תתקין את הקושחה %s ב־Amazfit GTS 4Mini שלך.
 \n
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
-    <string name="devicetype_sony_linkbuds_s">Sony LinkBuds S‎</string>
     <string name="pref_header_intent_api">API של Intent</string>
     <string name="intent_api_allow_activity_sync_title">לאפשר הקפצת סנכרון פעילות</string>
     <string name="intent_api_allow_trigger_export_title">לאפשר ייצוא מסד נתונים</string>
@@ -2070,8 +1978,6 @@
     <string name="appmanager_app_download">הורדה למטמון</string>
     <string name="appmanager_download_app_error">שגיאה בהורדת יישומון</string>
     <string name="appmanager_download_started">הורדת היישומון החלה</string>
-    <string name="devicetype_asteroidos">AsteroidOS‎</string>
-    <string name="devicetype_amazfit_trex_2">Amazfit T-Rex 2‎</string>
     <string name="fw_upgrade_notice_amazfit_trex2">פעולה זו תתקין את הקושחה %s ב־Amazfit T-Rex 2 שלך.
 \n
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip
@@ -2085,9 +1991,7 @@
     <string name="pref_workout_detection_ask_first_summary">לדרוש אישור בשעון בעת זיהוי סוג האימון הזה</string>
     <string name="pref_workout_detection_time">דקות פעילות עד הזיהוי</string>
     <string name="pref_workout_detection_time_summary">כמות הדקות לתוך האימון בטרם זיהויו</string>
-    <string name="devicetype_soflow_s06">SoFlow SO6‎</string>
     <string name="pref_title_lock_unlock">נעילה</string>
-    <string name="devicetype_galaxybuds_2_pro">Galaxy Buds2 Pro‎</string>
     <string name="pref_camera_remote_summary">לאפשר לשעון להפעיל את המצלמה של הטלפון</string>
     <string name="pref_workout_keep_screen_on_title">להשאיר את המסך דולק במהלך אימון</string>
     <string name="wifi_hotspot_summary">שליטה בנקודת הרשת האלחוטית החמה דרך השעון</string>
@@ -2167,8 +2071,6 @@
 \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
 \n
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
-    <string name="devicetype_amazfit_gtr3_pro">Amazfit GTR 3 Pro‎</string>
-    <string name="devicetype_sony_wh_1000xm5">Sony WH-1000XM5‎</string>
     <string name="fossil_hr_confirm_connection">נא לאשר בשעון שלך</string>
     <string name="fossil_hr_connection_not_confirmed">החיבור לא אושר בשעון, מעבר למצב לא מאומת</string>
     <string name="fossil_hr_pairing_successful">הצימוד עם השעון הצליח</string>
@@ -2262,7 +2164,6 @@
     <string name="loyalty_cards_syncing">%d כרטיסי מועדון מסונכרנים למכשיר</string>
     <string name="pref_title_mb_intents">שידור Intents של כפתורי מדיה ישירות</string>
     <string name="pref_summary_mb_intents">יש להפעיל אם בקרת המדיה של המכשיר לא עובדת ביישומים מסוימים</string>
-    <string name="devicetype_bohemic_smart_bracelet">צמיד חכם של Bohemic</string>
     <string name="busy_task_fetch_sports_summaries">תקצירי הספורט מעודכנים</string>
     <string name="busy_task_fetch_sports_details">פרטי הספורט מתעדכנים</string>
     <string name="busy_task_fetch_debug_logs">יומני ניפוי התקלות מעודכנים</string>
@@ -2271,8 +2172,6 @@
     <string name="busy_task_fetch_hr_data">נתוני דופק מעודכנים</string>
     <string name="busy_task_fetch_stress_data">נתוני הלחץ מעודכנים</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">נתוני קצב נשימות בשינה מעודכנים</string>
-    <string name="devicetype_casiogwb5600">Casio GW-B5600‎</string>
-    <string name="devicetype_casiogmwb5000">Casio GMW-B5000‎</string>
     <string name="activity_prefs_goals">יעדים</string>
     <string name="error_no_bluetooth_scan">יש להעניק גישה לסריקת Bluetooth ולהפעיל אותה כדי שזה יעבוד כראוי</string>
     <string name="error_no_bluetooth_connect">יש להעניק גישה לחיבור Bluetooth ולהפעיל אותו כדי שהסריקה תעבוד כראוי</string>
@@ -2297,7 +2196,6 @@
     <string name="activity_type_kitesurfing">קייטסרפינג</string>
     <string name="activity_type_snowboarding">גלישת שלג</string>
     <string name="activity_type_other">אחר</string>
-    <string name="devicetype_withings_steel_hr">Withings Steel HR‎</string>
     <string name="withings_bt_calibration_previous">הקודם</string>
     <string name="withings_calibration_text_minutes">כעת יש להשתמש בחוגה כדי ליישר את מחוג הדקות ל־12.</string>
     <string name="withings_bt_calibration_next">הבא</string>
@@ -2320,7 +2218,6 @@
     <string name="menuitem_zepp_coach">Zepp Coach‎</string>
     <string name="pref_theme_dynamic_colors_explanation">לתשומת לבך: לטובת ערכת הצבעים הדינמיים יש להפעיל צבעי טפט או ערכת צבעים בהגדרות המראה ב־Android 12+‎ שלך. אם לא, Gadgetbridge ישתמש בצבעי Material 3 כברירת מחדל.</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">צבעים דינמיים לא זמינים במכשיר שלך, רק Android 12 ומעלה תומך ביכולת הזאת. Gadgetbridge ישתמש בצבעי ברירת המחדל של Material 3.</string>
-    <string name="devicetype_amazfit_bip3_pro">Amazfit Bip 3 Pro‎</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">פעולה זו תתקין את הקושחה %s על ה־Amazfit Bip 3 Pro שלך.
 \n
 \nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -2334,13 +2231,6 @@
 \n
 \nהמשך התהליך הוא על אחריותך בלבד!</string>
     <string name="fw_upgrade_notice_zepp_os">פעולה זו תתקין את הקושחה %1$s על ה־%2$s שלך. \n \nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip. \n \nהמשך התהליך הוא על אחריותך בלבד!</string>
-    <string name="devicetype_amazfit_cheetah_square">Amazfit Cheetah (מרובע)</string>
-    <string name="devicetype_amazfit_cheetah_round">Amazfit Cheetah (מעוגל)</string>
-    <string name="devicetype_amazfit_cheetah_pro">Amazfit Cheetah Pro‎</string>
-    <string name="devicetype_amazfit_bip5">Amazfit Bip 5‎</string>
-    <string name="devicetype_amazfit_trex_ultra">Amazfit T-Rex Ultra‎</string>
-    <string name="devicetype_amazfit_gtr_mini">Amazfit GTR Mini‎</string>
-    <string name="devicetype_amazfit_falcon">Amazfit Falcon‎</string>
     <string name="device_experimental">ניסיוני</string>
     <string name="button_reset_menu_structure">איפוס מבנה תבנית</string>
     <string name="info_menu_structure_removed">מבנה התפריט הוסר</string>
@@ -2363,8 +2253,6 @@
     <string name="updatefirmwareoperation_updateproblem_free_space">אין מספיק מקום פנוי במכשיר</string>
     <string name="text_receiver_activity_title">שליחת טקסט למכשיר</string>
     <string name="updatefirmwareoperation_failed_low_mtu">הגדרת ה־MTU (יחידת העברה מרבית) הנוכחית %1$d נמוכה מדי, נא להפעיל MTU גבוה בהגדרות המכשיר ולנתק ולחבר את המכשיר שוב.</string>
-    <string name="devicetype_miband2_hrx">Mi Band HRX‎</string>
-    <string name="devicetype_sony_wena3">Sony Wena 3‎</string>
     <string name="prefs_home_icon_left_item">שמאל</string>
     <string name="white">לבן</string>
     <string name="prefs_home_icon_right_item">ימין</string>
@@ -2450,7 +2338,6 @@
     <string name="prefs_wena3_vibration_triple">משולש</string>
     <string name="prefs_wena3_button_action_name_activity_screen">מסך פעילות</string>
     <string name="prefs_wena3_notification_settings_title">הגדרות התראה</string>
-    <string name="devicetype_sony_wf_1000xm5">Sony WF-1000XM5‎</string>
     <string name="pref_message_privacy_mode_bodyonly">הסתרת הגוף בלבד</string>
     <string name="latvian">לטבית</string>
     <string name="common_symbols">סימנים נפוצים</string>
@@ -2514,21 +2401,13 @@
     <string name="pref_device_action_dnd_alarms">לא להפריע - התראות בלבד</string>
     <string name="huawei_alarm_smart_description">לא לבטל את תיבת סימון ההשכמה החכמה.</string>
     <string name="huawei_alarm_event_description">לא לסמן את תיבת סימון ההשכמה החכמה.</string>
-    <string name="devicetype_miband8">Xiaomi Smart Band 8‎</string>
-    <string name="devicetype_miband7pro">Xiaomi Smart Band 7 Pro‎</string>
     <string name="pref_device_action_dnd_priority">לא להפריע - דחוף בלבד</string>
     <string name="pref_device_action_dnd_off">לא להפריע - כבוי</string>
     <string name="pref_device_action_dnd_on">לא להפריע - פעיל</string>
     <string name="pref_enable_call_accept_summary">הפעלת קבלת שיחות מהמכשיר</string>
-    <string name="devicetype_xiaomi_watch_s1_active">Xiaomi Watch S1 Active‎</string>
-    <string name="devicetype_mijia_lywsd03">חיישן טמפרטורה ולחות 2 של Mijia</string>
-    <string name="devicetype_miband8pro">Xiaomi Smart Band 8 Pro‎</string>
     <string name="fossil_hr_nav_app_not_installed_notify_title">לא מותקן יישומון ניווט בשעון</string>
     <string name="pref_do_not_disturb_not_wear">לא להפריע כשלא נענד</string>
     <string name="pref_enable_call_reject_summary">הפעלת דחיית שיחות מהמכשיר</string>
-    <string name="devicetype_huawei_watchgt2">Huawei Watch GT 2 (Pro)‎</string>
-    <string name="devicetype_huawei_watchgt3">Huawei Watch GT 3 (Pro)‎</string>
-    <string name="devicetype_redmiwatch3active">Redmi Watch 3 Active‎</string>
     <string name="activity_type_crossfit">קרוספיט</string>
     <string name="activity_type_fencing">סייף</string>
     <string name="prefs_password_4_digits_0_to_9_summary">הסיסמה חייבת להיות מורכבת מ־4 ספרות בלבד</string>
@@ -2563,7 +2442,6 @@
     <string name="activity_type_fitness_gaming">משחק חיטוב</string>
     <string name="activity_type_aerobic_exercise">תרגיל אירובי</string>
     <string name="danish">דנית</string>
-    <string name="devicetype_femometer_vinca2">Femometer Vinca II‎</string>
     <string name="huawei_reparse_workout_data_description">זה יבצע משהו רק אחרי עדכונים מסוימים</string>
     <string name="huawei_reparse_workout_data">פענוח נתוני אימון מחדש</string>
     <string name="pref_title_debug">בקשת ניפוי תקלות</string>
@@ -2574,8 +2452,6 @@
     <string name="bedtime">הרדמה</string>
     <string name="menuitem_focus">מיקוד</string>
     <string name="pref_vitality_score_title">דירוג חיוניות</string>
-    <string name="devicetype_pixoo">Pixoo‎</string>
-    <string name="devicetype_mi_watch_color_sport">Mi Watch Color Sport‎</string>
     <string name="pref_vitality_score_daily_title">התקדמות יומית</string>
     <string name="widget_move_down">הורדה למטה</string>
     <string name="uploadwatchfaceoperation_complete">התקנת פני שעון הושלמה</string>
@@ -2605,7 +2481,6 @@
     <string name="widget_screen">מסך וידג׳טים</string>
     <string name="widget_screen_min_screens">מוכרחים להיות לפחות %1$s מסכים</string>
     <string name="not_set">לא הוגדר</string>
-    <string name="devicetype_xiaomi_watch_s3">Xiaomi Watch S3‎</string>
     <string name="menuitem_stats">סטטיסטיקה</string>
     <string name="scan_scanning_multiple_devices">נסרקים %d התקנים</string>
     <string name="notification_channel_scan_service_name">שירות סריקה</string>
@@ -2622,8 +2497,6 @@
     <string name="widget_layout_top_1_bot_2">1 למעלה, 2 למטה</string>
     <string name="widget_screen_delete_confirm_description">למחוק את ‚%1$s’?</string>
     <string name="pref_vitality_score_7_day_title">התקדמות ב־7 ימים</string>
-    <string name="devicetype_xiaomi_watch_s1_pro">Xiaomi Watch S1 Pro‎</string>
-    <string name="devicetype_xiaomi_watch_s1">Xiaomi Watch S1‎</string>
     <string name="menuitem_running">ריצה</string>
     <string name="call_rejection_method_reject">דחייה</string>
     <string name="pref_force_connection_type_auto">אוטומטי</string>
@@ -2636,23 +2509,18 @@
     <string name="pref_force_connection_type_title">אכיפת סוג חיבור</string>
     <string name="pref_title_fossil_hr_nav_vibrate">רטט עם קבלת הנחיות חדשות</string>
     <string name="menuitem_workout_shortcuts">קיצורי אימונים</string>
-    <string name="devicetype_redmi_watch_2">Redmi Watch 2‎</string>
     <string name="pref_force_smart_alarm_summary">אילוץ תמיכה בהתראות חכמות
 \nעל אחריותך בלבד</string>
     <string name="huawei_ignore_wakeup_status_end">התעלמות ממצב סיום השכמה</string>
-    <string name="devicetype_redmi_smart_band_pro">Redmi Smart Band Pro‎</string>
     <string name="laneLength">אורך המסלול</string>
     <string name="pref_force_wear_location_summary">אילוץ תמיכה במקום ענידה
 \nעל אחריותך בלבד</string>
     <string name="pref_force_wear_location">אילוץ מקום ענידה</string>
-    <string name="devicetype_huawei_talk_band_b6">Huawei Talk Band B6‎</string>
     <string name="yard">יארד</string>
     <string name="pref_force_smart_alarm">אילוץ התראה חכמה</string>
     <string name="pref_summary_prefix_notification_with_app">להוסיף לפני כותרת ההתראה את שם יישומון המקור</string>
     <string name="strokes_minute">חתירות/דק׳</string>
     <string name="alarm_smart_wakeup_interval">הפרשי השכמה חכמה:</string>
-    <string name="devicetype_huawei_watchgt2e">Huawei Watch GT 2e‎</string>
-    <string name="devicetype_redmi_watch_2_lite">Redmi Watch 2 Lite‎</string>
     <string name="activity_type_cross_trainer">אימון משולב</string>
     <string name="activity_type_stair_stepper">מכשיר מדרגות</string>
     <string name="activity_type_sit_ups">כפיפות בטן</string>
@@ -2666,10 +2534,6 @@
     <string name="activity_type_softball">סופטבול</string>
     <string name="activity_type_snow_sports">ספורט שלג</string>
     <string name="activity_type_curling">קרלינג</string>
-    <string name="devicetype_redmi_smart_band_2">‎Redmi Smart Band 2</string>
-    <string name="devicetype_redmiwatch3">Redmi Watch 3‎</string>
-    <string name="devicetype_huawei_band4pro">Huawei Band 4 (Pro)‎</string>
-    <string name="devicetype_huawei_watch_gt">Huawei Watch GT‎</string>
     <string name="menuitem_readiness">מוכנות</string>
     <string name="menuitem_thermometer">מד חום</string>
     <string name="menuitem_zepp_pay">Zepp Pay‎</string>
@@ -2679,8 +2543,6 @@
     <string name="huawei_ignore_wakeup_status_start">התעלמות ממצב התחלת השכמה</string>
     <string name="pref_force_dnd_support_summary">אילוץ תמיכה ב„לא להפריע”
 \nעל אחריותך בלבד</string>
-    <string name="devicetype_xiaomi_watch_lite">Xiaomi Watch Lite‎</string>
-    <string name="devicetype_huawei_watchfit">Huawei Watch Fit‎</string>
     <string name="activity_type_sailing">שייט</string>
     <string name="activity_type_wrestling">היאבקות</string>
     <string name="activity_type_trail_run">ריצת מסלול</string>
@@ -2725,11 +2587,8 @@
     <string name="pref_enable_call_accept">הפעלת קבלת שיחות</string>
     <string name="pref_heartrate_automatic_enable">הפעלת מדידת דופק אוטומטית</string>
     <string name="activity_type_roller_skating">החלקה על גלגיליות</string>
-    <string name="devicetype_nothing_cmf_watch_pro">CMF Watch Pro‎</string>
-    <string name="devicetype_nothingear2">Nothing Ear (2)‎</string>
     <string name="pref_header_sony_sound_control">בקרת שמע</string>
     <string name="pref_wide_area_tap_title">טפיחה באזור רחב</string>
-    <string name="devicetype_nothingearstick">Nothing Ear (Stick)‎</string>
     <string name="prefs_active_noise_cancelling_transparency">שקיפות</string>
     <string name="degrees">מעלות</string>
     <string name="Pace">צעד</string>
@@ -2764,34 +2623,16 @@
     <string name="pref_dashboard_widget_today_hr_interval_title">משך דופק</string>
     <string name="pref_dashboard_select_devices_summary">שילוב פעילות מהתקנים מסוימים לסיכומים של לוח הבקרה</string>
     <string name="pref_dashboard_widget_today_hr_interval_summary">כמות הדקות שהתרשים מציג ‚נענד’ אחרי כל מדידת דופק מוצלחת</string>
-    <string name="devicetype_amazfit_active_edge">Amazfit Active Edge‎</string>
-    <string name="devicetype_amazfit_bip3">Amazfit Bip 3‎</string>
-    <string name="devicetype_huawei_watchgt4">Huawei Watch GT 4‎</string>
-    <string name="devicetype_huawei_watchultimate">Huawei Watch Ultimate‎</string>
     <string name="sony_protocol_v2">גרסה 2</string>
     <string name="sony_protocol_v1">גרסה 1</string>
     <string name="companion_pairing_request_title">התקן ליווי</string>
     <string name="zepp_os_watchface_the_ultima">האולטימה</string>
     <string name="prefs_workmode">מצב עבודה</string>
-    <string name="devicetype_mijia_mho_c303">Mijia MHO-C303‎</string>
-    <string name="devicetype_sony_linkbuds">Sony LinkBuds‎</string>
     <string name="zepp_os_watchface_lightning_flash">הבזק מהבהב</string>
     <string name="zepp_os_watchface_free_combination">שילוב חופשי</string>
     <string name="zepp_os_watchface_pure_white">לבן טהור</string>
-    <string name="devicetype_huawei_band8">Huawei Band 8‎</string>
     <string name="zepp_os_watchface_starry_sky">ליל כוכבים</string>
-    <string name="devicetype_honor_band5">Honor Band 5‎</string>
-    <string name="devicetype_honor_band3">Honor Band 3‎</string>
-    <string name="devicetype_honor_band4">Honor Band 4‎</string>
     <string name="sony_protocol_v3">גרסה 3</string>
-    <string name="devicetype_miband8active">Xiaomi Smart Band 8 Active‎</string>
-    <string name="devicetype_amazfit_balance">Amazfit Balance‎</string>
-    <string name="devicetype_colacao21">ColaCao 2021‎</string>
-    <string name="devicetype_colacao23">ColaCao 2023‎</string>
-    <string name="devicetype_huawei_band_aw70">Huawei Band (AW70)‎</string>
-    <string name="devicetype_huawei_band6">Huawei Band 6‎</string>
-    <string name="devicetype_huawei_band7">Huawei Band 7‎</string>
-    <string name="devicetype_redmi_watch_4">Redmi Watch 4‎</string>
     <string name="zepp_os_watchface_vast_sky">שמיים פרוסים</string>
     <string name="zepp_os_watchface_guider">מנחה</string>
     <string name="flatDistance">מרחק במישור</string>
@@ -2801,11 +2642,6 @@
     <string name="widget_name_colored_tile">%1$s (אריח צבעוני)</string>
     <string name="widget_name_untitled">וידג׳ט ללא שם (%1$s)</string>
     <string name="pref_force_connection_type_ble">בלוטות׳ LE (אנרגיה נמוכה)</string>
-    <string name="devicetype_honor_magicwatch2">Honor MagicWatch 2‎</string>
-    <string name="devicetype_amazfit_active">Amazfit Active‎</string>
-    <string name="devicetype_sony_wi_sp600n">Sony WI-SP600N‎</string>
-    <string name="devicetype_honor_band6">Honor Band 6‎</string>
-    <string name="devicetype_honor_band7">Honor Band 7‎</string>
     <string name="protocol_version">גרסת פרוטוקול</string>
     <string name="stepRateSum">סיכום קצב הצעדים</string>
     <string name="stepRateAvg">קצב צעדים ממוצע</string>
@@ -2923,9 +2759,6 @@
     <string name="minutes_2">2 דקות</string>
     <string name="pref_wearing_tone_summary">ניגון צליל עם הכנסת האוזנייה לאוזן</string>
     <string name="activity_type_training">אימון</string>
-    <string name="devicetype_garmin_venu_3">Garmin Venu 3‎</string>
-    <string name="devicetype_garmin_venu">Garmin Venu‎</string>
-    <string name="devicetype_garmin_venu_2s">Garmin Venu 2S‎</string>
     <string name="hrv">שונות קצב לב</string>
     <string name="pref_time_sync">סנכרון זמן אוטומטי</string>
     <string name="busy_task_fetch_sleep_data">נתוני השינה נמשכים</string>
@@ -2954,9 +2787,7 @@
     <string name="choose_device">נא לבחור התקן</string>
     <string name="no_supported_devices_found">לא נמצאו התקנים נתמכים</string>
     <string name="hrv_status">מצב שונות קצב לב</string>
-    <string name="devicetype_garmin_venu_2">Garmin Venu 2‎</string>
     <string name="search">חיפוש</string>
-    <string name="devicetype_garmin_venu_2_plus">Garmin Venu 2 Plus‎</string>
     <string name="pref_title_nagivation_apps">יישומוני ניווט</string>
     <string name="pref_header_external_integrations">שילובים חיצוניים</string>
     <string name="pref_header_automations">אוטומציות</string>
@@ -3019,7 +2850,6 @@
     <string name="permission_send_sms_title">שליחת מסרונים</string>
     <string name="permission_process_outgoing_calls_title">עיבוד שיחות יוצאות</string>
     <string name="permission_call_phone_summary">יזימת שיחות מהגאדג׳טים</string>
-    <string name="devicetype_redmi_buds_5_pro">‎Redmi Buds 5 Pro</string>
     <string name="permission_external_storage_title">אחסון חיצוני</string>
     <string name="permission_call_phone_title">שיחת טלפון</string>
     <string name="permission_read_phone_state_summary">קריאת מצב של שיחות בזמן שמתבצעות</string>
@@ -3037,11 +2867,7 @@
     <string name="active_calories_short">פעיל</string>
     <string name="stats_highest_hr">הדופק הגבוה ביותר</string>
     <string name="activity_prefs_goal_active_calories_burnt">יעד יומי: קלוריות פעילות שנשרפו</string>
-    <string name="devicetype_idasen">IKEA Idasen Desk‎</string>
     <string name="soundcore_equalizer_value">ערך</string>
-    <string name="devicetype_micompositionscale">Mi Body Composition Scale 2‎</string>
-    <string name="devicetype_mismartscale">Mi Smart Scale 2‎</string>
-    <string name="devicetype_casioecbs100">Casio ECB-S100‎</string>
     <string name="music_upload_info">הפעולה הזאת תעלה את קובץ המוזיקה הבא:\n\n%1$s\nשם השיר: %2$s\nאלבום: %3$s\n</string>
     <string name="mijia_lywsd_comfort_humidity_title">לחות (%)</string>
     <string name="mijia_lywsd_comfort_humidity_summary">הטווח המומלץ: 20 - 85</string>
@@ -3091,8 +2917,6 @@
     <string name="maps_settings">הגדרות מפות</string>
     <string name="maps_download_title">הורדת מפות</string>
     <string name="banglejs_notification_missed_call_suppressed_caller_id">מתקשר לא ידוע. המזהה הודחק</string>
-    <string name="devicetype_amazfit_bip5_unity">Amazfit Bip 5 Unity‎</string>
-    <string name="devicetype_amazfit_bip6">Amazfit Bip 6‎</string>
     <string name="huawei_stress_calibrate_done">כיול הלחץ הושלם</string>
     <string name="huawei_stress_calibrate_error">שגיאת כיול לחץ</string>
     <string name="huawei_stress_calibrate_information">לתוצאות מיטבות יש לנוח קצת לפני תחילת הבדיקה ולא לזוז במהלכה.\n יש להדק את המכשיר היטב, תוך שהמסך פונה מעלה והחיישן במגע ישיר עם העור שלך.</string>
@@ -3124,7 +2948,6 @@
     <string name="pref_summary_wheel_diameter">קוטר הגלגל באינצ׳ים. בדרך כלל 29, 27.5 או 26.</string>
     <string name="pref_title_wheel_diameter">קוטר הגלגל</string>
     <string name="device_name_bicycle_sensor">חיישן אופניים</string>
-    <string name="devicetype_marstek_b2500">Marstek B2500‎</string>
     <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="pref_title_stable_connection">חיבור יציב</string>
     <string name="about_build_details_copied_to_clipboard">פרטי הבנייה הועתקו ללוח הגזירים</string>

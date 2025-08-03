@@ -462,19 +462,6 @@
     <string name="kind_resources">Πηγές</string>
     <string name="kind_watchface">Watchface</string>
     <string name="devicetype_unknown">Άγνωστη συσκευή</string>
-    <string name="devicetype_test">Δοκιμή συσκευής</string>
-    <string name="devicetype_pebble">Pebble</string>
-    <string name="devicetype_miband">Mi Band</string>
-    <string name="devicetype_miband2">Mi Band 2</string>
-    <string name="devicetype_amazfit_bip">Amazfit Bip</string>
-    <string name="devicetype_amazfit_cor">Amazfit Cor</string>
-    <string name="devicetype_vibratissimo">Vibratissimo</string>
-    <string name="devicetype_liveview">LiveView</string>
-    <string name="devicetype_hplus">HPlus</string>
-    <string name="devicetype_makibes_f68">Makibes F68</string>
-    <string name="devicetype_exrizu_k8">Exrizu K8</string>
-    <string name="devicetype_no1_f1">No.1 F1</string>
-    <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="pref_title_weather">Καιρός</string>
     <string name="pref_header_auto_export">Αυτόματη εξαγωγή ρυθμίσεων</string>
     <string name="pref_title_auto_export_enabled">Η αυτόματη εξαγωγή είναι ενεργοποιημένη</string>
@@ -485,7 +472,6 @@
     <string name="choose_auto_export_location">Διαλέξτε διαδρομή εξαγωγής</string>
     <string name="spanish">Ισπανικά</string>
     <string name="notification_channel_name">Ειδοποιήσεις Gadgetbridge</string>
-    <string name="devicetype_xwatch">XWatch</string>
     <string name="on">Ανοιχτό</string>
     <string name="controlcenter_start_activity_tracks">Η δραστηριότητα σας καταγράφεται</string>
     <string name="activity_type_not_measured">Δεν μετρήθηκε</string>
@@ -513,7 +499,6 @@
     <string name="menuitem_compass">Πυξίδα</string>
     <string name="menuitem_settings">Ρυθμίσεις</string>
     <string name="menuitem_alipay">Alipay</string>
-    <string name="devicetype_q8">Q8</string>
     <string name="blacklist_all_for_notifications">Μαύρη λίστα για όλες τις ειδοποιήσεις</string>
     <string name="whitelist_all_for_notifications">Να ειδοποιήσει όλες οι ειδοποιήσεις</string>
     <string name="fw_upgrade_notice_miband3">—Πρόκειται να εγκαταστήσετε το λογισμικό %s για το Mi Band 3. 
@@ -524,7 +509,6 @@
 \n
 \nΠΡΟΧΩΡΗΣΤΕ ΜΕ ΔΙΚΗ ΣΑΣ ΕΥΘΥΝΗ!</string>
     <string name="pref_auto_fetch">Αυτόματη λήψη δεδομένων δραστηριότητας</string>
-    <string name="devicetype_miband3">Mi Band 3</string>
     <string name="pref_auto_fetch_summary">Η λήψη των δεδομένων γίνεται μόνο όταν ξεκλειδώσετε την οθόνη. Δουλεύει μόνο όταν έχετε ορίσει έναν τρόπο κλειδώματος οθόνης!</string>
     <string name="pref_auto_fetch_limit_fetches">Ελάχιστος χρόνος μεταξύ λήψης δεδομένων</string>
     <string name="pref_auto_fetch_limit_fetches_summary">Λήψη δεδομένων κάθε %d λεπτά</string>
@@ -542,9 +526,6 @@
     <string name="polish">Πολωνικά</string>
     <string name="korean">Κορεάτικα</string>
     <string name="japanese">Ιαπωνικά</string>
-    <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
-    <string name="devicetype_id115">ID115</string>
-    <string name="devicetype_watch9">Watch9</string>
     <string name="menuitem_notifications">Ειδοποιήσεις</string>
     <string name="menuitem_music">Μουσική</string>
     <string name="menuitem_more">Περισσότερα</string>
@@ -574,8 +555,6 @@
     <string name="mi3_prefs_night_mode_summary">Μείωση φωτεινότητας της οθόνης του Mi band 3 κατά τη διάρκεια της νύχτας</string>
     <string name="ok">Εντάξει</string>
     <string name="mi3_night_mode_sunset">Στη δύση του ηλίου</string>
-    <string name="devicetype_roidmi">Roidmi</string>
-    <string name="devicetype_roidmi3">Roidmi3</string>
     <string name="share_log">Αποστολή αρχείου καταγραφής</string>
     <string name="share_log_warning">Παρακαλώ έχετε υπ\'όψιν σας ότι τα αρχεία καταγραφής του Gedgetbridge ενδέχεται να περιέχουν προσωπικά δεδομένα συμπεριλαμβανομένων δεδομένα υγείας, μοναδικά χαρακτηριστικά (όπως διευθύνσεις MAC), μουσικές επιλογές κλπ. προσπαθήστε να επεξεργαστείτε το αρχείο καταγραφής και να αφαιρέσετε αυτές τις πληροφορίες πριν το στείλετε για την αναφορά προβλήματος.</string>
     <string name="warning">Προσοχή!</string>
@@ -604,7 +583,6 @@
     <string name="language_and_region_prefs">Ρυθμίσεις γλώσσας και περιοχής</string>
     <string name="debugactivity_really_factoryreset_title">Επαναφορά εργοστασιακών ρυθμίσεων;</string>
     <string name="debugactivity_really_factoryreset">Κάνοντας επαναφορά εργοστασιακών ρυθμίσεων όλα τα δεδομένα θα διαγραφούν από την συνδεδεμένη συσκευή (αν υποστηρίζεται). Επίσης, οι συσκευές Xiaomi/Huami τείνουν να αλλάζουν την διεύθυνση MAC στο Bluetooth και η εφαρμογή τις εμφανίζει σαν μια νέα συσκευή.</string>
-    <string name="devicetype_casiogb6900">Casio. GB-6900</string>
     <string name="title_activity_notification_filter">Λίστα απο/επιλογής ειδοποιήσεων</string>
     <string name="edittext_notification_filter_words_hint">Εισάγετε τις λέξεις που επιθυμείτε, μία γραμμή για κάθε λέξη</string>
     <string name="toast_notification_filter_saved_successfully">Το φίλτρο ειδοποιήσεων αποθηκεύτηκε</string>
@@ -674,7 +652,6 @@
     <string name="title_activity_device_specific_settings">Μοναδικές ρυθμίσεις συσκευών</string>
     <string name="pref_title_authkey">Κλειδί εξουσιοδότησης</string>
     <string name="pref_summary_authkey">Αλλαγή του κλειδιού εξουσιοδότησης σε ένα κοινό για όλες σας τις συσκευές Android από τις οποίες θέλετε να συνδεθείτε. Το προηγούμενο προεπιλεγμένο κλειδί για όλες τις συσκευές είναι 0123456789@ABCDE</string>
-    <string name="devicetype_bfh16">BFH - 16</string>
     <string name="fw_upgrade_notice_amazfitcor2">—Πρόκειται να εγκαταστήσετε το υλικολογισμικό %s στο Amazfit Cor 2 σας. \n \nΠαρακαλώ βεβαιωθείτε ότι έχετε εγκαταστήσει πρώτα το αρχείο .fw και μετά το αρχείο .res. Η συσκευή πρόκειται να επανακινηθεί μετά την εγκατάσταση του αρχείου .fw. \n \nΣημείωση: Το αρχείο .res δεν χρειάζεται να εγκατασταθεί ξανά εαν αν είναι ακριβώς το ίδιο με αυτό που έχει εγκατασταθεί προηγουμένως. \n \nΠΡΟΧΩΡΗΣΤΕ ΜΕ ΔΙΚΗ ΣΑΣ ΕΥΘΥΝΗ! \n \nΔΕΝ ΕΧΕΙ ΔΟΚΙΜΑΣΤΕΙ, ΕΑΝ ΤΟ ΟΝΟΜΑ ΤΗΣ ΣΥΣΚΕΥΗΣ ΣΑΣ ΕΙΝΑΙ \" Amazfit Band 2\" ΠΙΘΑΝΟΝ ΝΑ ΧΡΕΙΑΣΤΕΙ ΕΓΚΑΤΑΣΤΑΣΗ ΕΝΟΣ \"BEATS_W\" ΥΛΙΚΟΛΟΓΙΣΜΙΚΟΥ</string>
     <string name="dutch">Ολλανδικά</string>
     <string name="turkish">Τουρκικά</string>
@@ -684,8 +661,6 @@
     <string name="thai">Ταϊλανδικά</string>
     <string name="vietnamese">Βιετναμέζικα</string>
     <string name="portuguese">Πορτογαλικά</string>
-    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
-    <string name="devicetype_miband4">Mi Band 4</string>
     <string name="fw_upgrade_notice_miband4">Πρόκειται να εγκαταστήσετε το υλικολογισμικό έκδοσης %s στο Mi Band 4 σας.
 \n
 \nΠαρακαλώ να είστε σίγουροι ότι θα εγκαταστήσετε το αρχείο .fw, και μετά το αρχείο .res. Το Mi Band σας θα κάνει επανεκκίνηση μετά την εγκατάσταση του αρχείου .fw .
@@ -704,7 +679,6 @@
     <string name="pref_charts_range_off">Το εύρος των γραφημάτων έχει οριστεί σε μια Εβδομάδα</string>
     <string name="weekstepschart_steps_a_month">Βήματα ανά μήνα</string>
     <string name="weeksleepchart_sleep_a_month">Ύπνος ανά μήνα</string>
-    <string name="devicetype_mijia_lywsd02">Έξυπνο ρολόι Mijia</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="pref_summary_expose_hr">Επιτρέπει σε άλλες εφαρμογές να έχουν πρόσβαση στα δεδομένα καρδιακού παλμού σε πραγματικό χρόνο, ενώ το Gadgetbridge είναι συνδεδεμένο</string>
     <string name="pref_title_expose_hr">Πρόσβαση δεδομένων καρδιακών παλμών σε πραγματικό χρόνο από τρίτες εφαρμογές</string>
@@ -821,18 +795,7 @@
     <string name="menuitem_hr">Καρδιακοί παλμοί</string>
     <string name="menuitem_pai">PAI (Προσωπική Ευφυΐα Δραστηριότητας)</string>
     <string name="preferences_qhybrid_settings">Ρυθμίσεις Q Hybrid</string>
-    <string name="devicetype_amazfit_gts">Amazfit GTR</string>
     <string name="notification_channel_high_priority_name">Οι ειδοποιήσεις του Gadgetbridge υψηλής προτεραιότητας</string>
-    <string name="devicetype_banglejs">Bangle.js</string>
-    <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_itag">iTag</string>
-    <string name="devicetype_y5">Y5</string>
-    <string name="devicetype_watchxplus">Watch Χ Plus</string>
-    <string name="devicetype_watchx">Watch Χ</string>
-    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
-    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
-    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
-    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="activity_error_no_app_for_gpx">Για να προβάλετε ίχνη δραστηριότητας, εγκαταστείστε εφαρμογή που να μπορεί να χειριστεί αρχεία GPX.</string>
     <string name="maximum_duration">Διάρκεια</string>
     <string name="find_lost_device_you_found_it">Το βρήκα!</string>
@@ -885,7 +848,6 @@
     <string name="about_activity_title_generic">Σχετικά με το Gadgetbridge</string>
     <string name="about_title">Σχετικά</string>
     <string name="menuitem_worldclock">Παγκόσμιο Ρολόι</string>
-    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
     <string name="pref_title_weather_summary">Χρησιμοποιείται για την υπηρεσία παροχής καιρού του LineageOS, άλλες εκδόσεις Android πρέπει να χρησιμοποιούν μια εφαρμογή όπως \"Weather notification\". Βρείτε περισσότερες πληροφορίες στο wiki του Gadgetbridge.</string>
     <string name="fw_upgrade_notice_amazfit_trex">—Πρόκειται να εγκαταστήσετε το υλικολογισμικό %s στο Amazfit T-Rex σας. 
 \n 
@@ -955,9 +917,6 @@
     <string name="require_location_provider">Η τοποθεσία πρέπει να είναι ενεργοποιημένη</string>
     <string name="menuitem_cycles">Περίοδος</string>
     <string name="menuitem_breathing">Αναπνοή</string>
-    <string name="devicetype_pinetime_jf">PineTime (Υλικολογισμικό JF )</string>
-    <string name="devicetype_tlw64">TLW64</string>
-    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="activity_summary_edit_name_title">Επεξεργασία ετικέτας</string>
     <string name="activity_summary_detail">Λεπτομέρεια αθλητικής δραστηριότητας</string>
     <string name="activity_type_yoga">Γιόγκα</string>
