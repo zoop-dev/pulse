@@ -1714,15 +1714,7 @@ Temps de sommeil préféré en heures</string>
     <string name="prefs_hourly_chime_summary">La montre fera un beep toutes les heures</string>
     <string name="step_streaks_achievements_sharing_title">Objectifs de pas</string>
     <string name="step_streaks_achievements_sharing_message">Mes résultats quotidiens de pas !</string>
-    <string name="permission_display_over_other_apps">%1$s a besoin d\'une autorisation pour s\'afficher au-dessus des autres apps afin de pouvoir lancer des activités via la commande vocale lorsque %1$s est en arrière-plan.
-\n
-\nCela peut être utilisé pour démarrer une application de musique et jouer un morceau, et de nombreuses autres choses.
-\n
-\nMerci de choisir \'%2$s\' puis \'%1$s\' et activer \'Permettre l\'affichage au-dessus des autres apps\', puis faire \'Retour\' pour revenir à %1$s.
-\n
-\nPour empêcher %1$s de demander des permissions se rendre dans les \'Réglages\' et décocher \'Vérifier l\'état des permissions\'.
-\n
-\nAssurez-vous d\'accorder à %1$s les permissions nécessaires pour les fonctionnalités attendues.</string>
+    <string name="permission_display_over_other_apps">%1$s a besoin d\'une autorisation pour s\'afficher au-dessus des autres apps afin de pouvoir lancer des activités via la commande vocale lorsque %1$s est en arrière-plan. \n \nCela peut être utilisé pour démarrer une application de musique et jouer un morceau, et de nombreuses autres choses. \n \nMerci de choisir \'%2$s\' puis \'%1$s\' et activer \'Permettre l\'affichage au-dessus des autres apps\', puis faire \'Retour\' pour revenir à %1$s. \n \nPour empêcher %1$s de demander des permissions se rendre dans les \'Réglages\' et décocher \'Vérifier l\'état des permissions\'. \n \nAssurez-vous d\'accorder à %1$s les permissions nécessaires pour les fonctionnalités attendues.</string>
     <string name="pref_header_time">Heure</string>
     <string name="pref_header_workout">Exercice</string>
     <string name="pref_summary_canned_replies">Réponse de la montre utilisant des messages préenregistrés</string>
