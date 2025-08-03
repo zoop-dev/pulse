@@ -662,15 +662,7 @@
     <string name="title_activity_device_specific_settings">Configurações específicas do dispositivo</string>
     <string name="pref_title_authkey">Chave de autenticação</string>
     <string name="pref_summary_authkey">Altere a chave de autenticação para um chave comum em todos os dispositivos Android a partir dos quais você gostaria de se conectar. A chave padrão anterior para todos dispositivos é 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2.
-\n
-\nCertifique-se de instalar o arquivo .fw, e depois disso o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw.
-\n
-\nNota: você não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente.
-\n
-\nPROSSIGA AO SEU PRÓPRIO RISCO!
-\n
-\nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISA INSTALAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2. \n \nCertifique-se de instalar o arquivo .fw, e depois disso o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw. \n \nNota: você não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO! \n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISA INSTALAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR \"Amazfit Band 2\"</string>
     <string name="dutch">Holandês</string>
     <string name="turkish">Turco</string>
     <string name="ukrainian">Ucraniano</string>
