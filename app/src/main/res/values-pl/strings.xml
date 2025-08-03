@@ -3318,7 +3318,7 @@
     <string name="moondrop_touch_trigger_long_press_1s">Długie przyciśnięcie (1s)</string>
     <string name="soundcore_equalizer_band5">Pasmo 5</string>
     <string name="auto_reconnect_ble_scan_summary">Czekaj na skan urządzenia zamiast prób połączenia się na ślepo</string>
-    <string name="pref_garmin_agps_help">Lista poniżej zawiera wszystkie URLe, o które żądał zegarek w celu aktualizacji AGPS. Możesz wybrać plik z pamięci telefonu, który zostanie wysłany, gdy zegarek zażąda aktualizacji.</string>
+    <string name="pref_garmin_agps_help">Poniższa lista zawiera wszystkie adresy URL, o które zegarek prosi podczas aktualizacji danych AGPS. Możesz wybrać plik z pamięci telefonu, który zostanie wysłany do zegarka, gdy zażąda on aktualizacji.\n\nWystarczy skonfigurować jeden z tych plików.</string>
     <string name="activity_type_dynamic_cycle">Kolarstwo dynamiczne</string>
     <string name="activity_type_indoor_track">Tor wewnątrz</string>
     <string name="activity_type_breathwork">Kontrolowanie oddechu</string>
@@ -4325,4 +4325,15 @@
     <string name="title_activity_gps_track_installer">Instalator tras GPS</string>
     <string name="title_gpx_track_name">Nazwa trasy</string>
     <string name="track_name_required">Nazwa trasy nie może być pusta</string>
+    <string name="training_acute_load">Ostre obciążenie</string>
+    <string name="training_chronic_load">Przewlekłe obciążenie</string>
+    <string name="this_week_total">Suma z tego tygodnia</string>
+    <string name="last_week_total">Suma z zeszłego tygodnia</string>
+    <string name="low">Niski</string>
+    <string name="optimal">Optymalny</string>
+    <string name="high">Wysoki</string>
+    <string name="very_high">Bardzo wysoki</string>
+    <string name="training_daily_load">Dzienne obciążenie</string>
+    <string name="pref_header_training_load">Obciążenie treningowe</string>
+    <string name="notifications_app_icon_uploading_limit_reached">Osiągnięto limit przesyłania ikon aplikacji.</string>
 </resources>
