@@ -3900,4 +3900,5 @@
     <string name="exercise_category_squat">Приседание</string>
     <string name="diving_bottom_time">Нижнее время</string>
     <string name="exercise_category_bench_press">Жим лёжа</string>
+    <string name="pref_title_block_screenshot">Блокировать скриншоты</string>
 </resources>
