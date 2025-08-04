@@ -22,6 +22,23 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            android:icon="@drawable/ic_shield"
+            android:key="permission_pestering"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_check_permission_status_summary"
+            android:title="@string/pref_check_permission_status" />
+
+        <Preference
+            android:title="@string/pref_check_permission_show_list"
+            android:key="permission_show_activity"
+            android:icon="@drawable/ic_encrypted_add">
+            <intent
+                android:targetPackage="@string/applicationId"
+                android:targetClass="nodomain.freeyourgadget.gadgetbridge.activities.PermissionsActivity" />
+        </Preference>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
             android:key="show_changelog"
             android:layout="@layout/preference_checkbox"
             android:summary="@string/pref_show_changelog_summary"
@@ -384,13 +401,6 @@
             android:layout="@layout/preference_checkbox"
             android:summary="@string/pref_crash_notification_summary"
             android:title="@string/pref_crash_notification_title"
-            app:iconSpaceReserved="false" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="permission_pestering"
-            android:layout="@layout/preference_checkbox"
-            android:summary="@string/pref_check_permission_status_summary"
-            android:title="@string/pref_check_permission_status"
             app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="true"

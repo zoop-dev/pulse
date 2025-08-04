@@ -2471,6 +2471,7 @@
     <string name="device_unsupported">UNSUPPORTED</string>
     <string name="device_experimental">EXPERIMENTAL</string>
     <string name="error_background_service_reason">Starting the background service failed because of an exception - click here for more information.\n\nError:</string>
+    <string name="pref_check_permission_show_list">Show permission status</string>
     <string name="pref_check_permission_status">Check permission status</string>
     <string name="pref_check_permission_status_summary">Check and ask for missing permissions even when they might not be instantly needed. Disable this only if your devices actually doesn\'t support any of these features. Not granting a permission might cause issues!</string>
     <string name="pref_show_changelog">Show changelog on startup</string>
@@ -3956,6 +3957,8 @@
     <string name="first_start_permissions_title">Permissions</string>
     <string name="first_start_permissions_desc">Gadgetbridge needs a lot of permissions to perform all its functions. Review the permissions and their purposes below.</string>
     <string name="first_start_permissions_request_all_button">Request all permissions</string>
+    <string name="first_start_permissions_do_not_ask_again">Do not ask again</string>
+    <string name="first_start_permissions_do_not_ask_warning_summary">Not granting a permission might cause issues. You can open this screen again from the Settings screen.</string>
     <string name="first_start_permissions_request_button">Request</string>
     <string name="first_start_get_started_title">Get started</string>
     <string name="first_start_get_started_desc">To get started, add your first device directly from this screen, restore a backup or start with a clean database.</string>

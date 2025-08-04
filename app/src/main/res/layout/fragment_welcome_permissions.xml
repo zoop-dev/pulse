@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fillViewport="true"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/permissions_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textAlignment="center"
-        android:text="@string/first_start_permissions_title"
-        android:textSize="30sp"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:text="@string/first_start_permissions_desc" />
+        <TextView
+            android:id="@+id/permissions_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/first_start_permissions_title"
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/button_request_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/first_start_permissions_request_all_button"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/first_start_permissions_desc"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/permissions_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
-</LinearLayout>
+        <Button
+            android:id="@+id/button_do_not_ask_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/first_start_permissions_do_not_ask_again" />
+
+        <Button
+            android:id="@+id/button_request_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/first_start_permissions_request_all_button" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/permissions_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:nestedScrollingEnabled="false" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

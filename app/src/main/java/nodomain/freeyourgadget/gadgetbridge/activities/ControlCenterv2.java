@@ -289,6 +289,7 @@ public class ControlCenterv2 extends AppCompatActivity
             pesterWithPermissions = prefs.getBoolean("permission_pestering", true);
             if (pesterWithPermissions && !PermissionsUtils.checkAllPermissions(this)) {
                 Intent permissionsIntent = new Intent(this, PermissionsActivity.class);
+                permissionsIntent.putExtra(PermissionsActivity.ARG_SHOW_DO_NOT_ASK_BUTTON, true);
                 startActivity(permissionsIntent);
             }
         }

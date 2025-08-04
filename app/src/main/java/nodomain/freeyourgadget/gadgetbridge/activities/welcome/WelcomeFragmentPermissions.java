@@ -27,38 +27,60 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.databinding.FragmentWelcomePermissionsBinding;
 import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils;
 
 public class WelcomeFragmentPermissions extends Fragment {
-    private static final Logger LOG = LoggerFactory.getLogger(WelcomeFragmentPermissions.class);
+    public static final String ARG_SHOW_DO_NOT_ASK_BUTTON = "show_do_not_ask";
 
-    private RecyclerView permissionsListView;
+    private FragmentWelcomePermissionsBinding binding;
     private PermissionAdapter permissionAdapter;
-    private Button requestAllButton;
     private List<String> requestingPermissions = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_welcome_permissions, container, false);
+        binding = FragmentWelcomePermissionsBinding.inflate(getLayoutInflater(), container, false);
 
-        requestAllButton = view.findViewById(R.id.button_request_all);
-        requestAllButton.setOnClickListener(v -> {
+        final Bundle arguments = getArguments();
+        final boolean showDoNotAskAgain = arguments != null && arguments.getBoolean(ARG_SHOW_DO_NOT_ASK_BUTTON, false);
+        if (!showDoNotAskAgain) {
+            binding.buttonDoNotAskAgain.setVisibility(View.GONE);
+        }
+        binding.buttonDoNotAskAgain.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setCancelable(true)
+                    .setTitle(R.string.first_start_permissions_do_not_ask_again)
+                    .setMessage(R.string.first_start_permissions_do_not_ask_warning_summary)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                        GBApplication.getPrefs().getPreferences().edit()
+                                .putBoolean("permission_pestering", false)
+                                .apply();
+                        requireActivity().finish();
+                    })
+                    .setNegativeButton(R.string.Cancel, (dialog, which) -> {
+                        // do nothing
+                    })
+                    .show();
+        });
+
+        binding.buttonRequestAll.setOnClickListener(v -> {
             List<PermissionsUtils.PermissionDetails> wantedPermissions = PermissionsUtils.getRequiredPermissionsList(requireActivity());
             requestingPermissions = new ArrayList<>();
             for (PermissionsUtils.PermissionDetails wantedPermission : wantedPermissions) {
@@ -67,20 +89,18 @@ public class WelcomeFragmentPermissions extends Fragment {
             requestAllPermissions();
         });
 
-        if (((AppCompatActivity)getActivity()).getSupportActionBar().isShowing()) {
+        final ActionBar supportActionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (supportActionBar!= null && supportActionBar.isShowing()) {
             // Hide title when the Action Bar is visible (i.e. when not in the first run flow)
-            view.findViewById(R.id.permissions_title).setVisibility(View.GONE);
+            binding.permissionsTitle.setVisibility(View.GONE);
         }
-
-        // Initialize RecyclerView and data
-        permissionsListView = view.findViewById(R.id.permissions_list);
 
         // Set up RecyclerView
         permissionAdapter = new PermissionAdapter(PermissionsUtils.getRequiredPermissionsList(requireActivity()), requireContext());
-        permissionsListView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        permissionsListView.setAdapter(permissionAdapter);
+        binding.permissionsList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.permissionsList.setAdapter(permissionAdapter);
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -88,7 +108,7 @@ public class WelcomeFragmentPermissions extends Fragment {
         super.onResume();
         permissionAdapter.notifyDataSetChanged();
         if (PermissionsUtils.checkAllPermissions(requireActivity())) {
-            requestAllButton.setEnabled(false);
+            binding.buttonRequestAll.setEnabled(false);
         }
         if (!requestingPermissions.isEmpty()) {
             requestAllPermissions();
@@ -114,7 +134,7 @@ public class WelcomeFragmentPermissions extends Fragment {
         }
     }
 
-    private class PermissionHolder extends RecyclerView.ViewHolder {
+    private static class PermissionHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView summaryTextView;
         ImageView checkmarkImageView;
@@ -130,8 +150,8 @@ public class WelcomeFragmentPermissions extends Fragment {
     }
 
     private class PermissionAdapter extends RecyclerView.Adapter<PermissionHolder> {
-        private List<PermissionsUtils.PermissionDetails> permissionList;
-        private Context context;
+        private final List<PermissionsUtils.PermissionDetails> permissionList;
+        private final Context context;
 
         public PermissionAdapter(List<PermissionsUtils.PermissionDetails> permissionList, Context context) {
             this.permissionList = permissionList;
