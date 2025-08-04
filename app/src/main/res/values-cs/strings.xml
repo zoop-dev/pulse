@@ -237,7 +237,7 @@
     <string name="chart_no_data_synchronize">Chybí data, provést stažení?</string>
     <string name="user_feedback_miband_activity_data_transfer">Stahnout %1$s dat z %2$s</string>
     <string name="miband_prefs_fitness_goal">Cílový počet kroků na den</string>
-    <string name="dbaccess_error_executing">Chyba spouštění \'%1$s\'</string>
+    <string name="dbaccess_error_executing">Chyba spouštění %1$s</string>
     <string name="controlcenter_start_activitymonitor">Vaše aktivita</string>
     <string name="cannot_connect">Nelze se připojit k: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Nemohu najít program k instalaci tohoto souboru.</string>
@@ -534,7 +534,7 @@
     <string name="lack_of_step">Příliš málo kroků: %1$d</string>
     <string name="overstep">Kroků nad plán: %1$d</string>
     <string name="live_activity_max_heart_rate">Aktuální / Maximální tepová frekvence: %1$d / %2$d</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Bez spánku</string>
     <string name="mi3_prefs_band_screen_unlock">Odemknutí obrazovky zařízení</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Přejeďte prstem pro odemčení obrazovky zařízení</string>
@@ -648,7 +648,7 @@
     <string name="title_activity_device_specific_settings">Nastavení pro jednotlivá zařízení</string>
     <string name="pref_title_authkey">Autentizační klíč</string>
     <string name="pref_summary_authkey">Nastavte stejný klíč na všech Vašich zařízeních s Androidem, ze kterých se budete připojovat. Výchozí klíč pro všechna zařízení je 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Chystáte se nainstalovat firmware %s na váš Amazfit Cor 2. \n \nNainstalujte nejprve soubor .fw a poté soubor .res. Váš náramek se po instalaci souboru .fw restartuje. \n \nPoznámka: soubor .res nemusíte instalovat, pokud je totožný s již dříve nainstalovaným. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ! \n \nNENÍ VŮBEC OTESTOVÁNO, POKUD JE NÁZEV VAŠEHO ZAŘÍZENÍ „Amazfit Band 2“, NEJSPÍŠE MUSÍTE FLASHNOUT FIRMWARE BEATS_W</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Chystáte se nainstalovat firmware %s na váš Amazfit Cor 2. \n \nNainstalujte nejprve soubor .fw a poté soubor .res. Váš náramek se po instalaci souboru .fw restartuje. \n \nPoznámka: soubor .res nemusíte instalovat, pokud je totožný s již dříve nainstalovaným. \n \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ! \n \nNENÍ VŮBEC OTESTOVÁNO, POKUD JE NÁZEV VAŠEHO ZAŘÍZENÍ Amazfit Band 2, NEJSPÍŠE MUSÍTE FLASHNOUT FIRMWARE BEATS_W</string>
     <string name="dutch">Nizozemština</string>
     <string name="turkish">Turečtina</string>
     <string name="ukrainian">Ukrajinština</string>
@@ -709,7 +709,7 @@
     <string name="activity_error_no_app_for_gpx">Pro zobrazení trasy aktivity nainstalujte aplikaci, která umí zobrazit GPX soubory.</string>
     <string name="preferences_makibes_hr3_settings">Nastavení Makibes HR3</string>
     <string name="prefs_find_phone">Vyhledat telefon</string>
-    <string name="prefs_enable_find_phone">Zapnout \'Vyhledání telefonu\'</string>
+    <string name="prefs_enable_find_phone">Zapnout funkci Najít telefon</string>
     <string name="prefs_find_phone_summary">Použijte náramek/hodinky k prozvonění telefonu.</string>
     <string name="prefs_find_phone_duration">Délka zvonění ve vteřinách</string>
     <string name="maximum_duration">Délka</string>
@@ -852,8 +852,8 @@
     <string name="about_activity_title_generic">O aplikaci Gadgetbridge</string>
     <string name="about_title">O aplikaci</string>
     <string name="menuitem_worldclock">Světový Čas</string>
-    <string name="pref_title_weather_summary">Použito pro poskytovatele počasí v systému LineageOS. Ostatní verze Androidu vyžadují aplikaci jako například „Weather Notification“. Více informací naleznete na wiki Gadgetbridge.</string>
-    <string name="error_version_check_extreme_caution">POZOR: Chyba při kontrole verze! Nedoporučujeme pokračovat! Verze má název „%s“</string>
+    <string name="pref_title_weather_summary">Použito pro poskytovatele počasí v systému LineageOS. Ostatní verze Androidu vyžadují aplikaci jako například Weather Notification. Více informací naleznete na wiki Gadgetbridge.</string>
+    <string name="error_version_check_extreme_caution">POZOR: Chyba při kontrole verze! Nedoporučujeme pokračovat! Verze má název %s</string>
     <string name="permission_granting_mandatory">Všechna tato oprávnění jsou vyžadována a pokud nebudou udělena, může dojít k nestabilitě</string>
     <string name="activity_detail_show_gps_label">Zobrazit trasu GPS</string>
     <string name="activity_detail_duration_label">Doba trvání</string>
@@ -1519,7 +1519,7 @@
     <string name="title_activity_world_clock_details">Podrobnosti světových hodin</string>
     <string name="pref_world_clocks_title">Světové hodiny</string>
     <string name="pref_world_clocks_summary">Konfigurace hodin pro jiná časová pásma</string>
-    <string name="world_clock_delete_confirm_title">Odstranit \'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">Odstranit %1$s</string>
     <string name="world_clock_no_free_slots_title">Žádné volné místo</string>
     <string name="pref_title_touch_ambient">Okolní zvuk</string>
     <string name="pref_title_device_internet_access">Povolit přístup k internetu</string>
@@ -1532,8 +1532,8 @@
     <string name="pref_title_touch_volume">Hlasitost</string>
     <string name="pref_title_touch_spotify">Spotify</string>
     <string name="pref_switch_noise_control">Přepínání regulace hluku</string>
-    <string name="permission_notification_listener">Aplikace %1$s potřebuje přístup k oznámením, aby mohla zobrazovat oznámení na připojených hodinkách při vypnuté obrazovce telefonu. \n \nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit přístup k oznámením“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
-    <string name="permission_notification_policy_access">Aplikace %1$s potřebuje přístup k nastavení režimu Nerušit, aby jej mohla nastavit na připojených hodinkách při vypnuté obrazovce telefonu. \n \nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit režim Nerušit“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
+    <string name="permission_notification_listener">Aplikace %1$s potřebuje přístup k oznámením, aby mohla zobrazovat oznámení na připojených hodinkách při vypnuté obrazovce telefonu.\n\nKlepněte na %2$s, poté na %1$s a zapněte Povolit přístup k oznámením, poté klepněte na Zpět pro návrat do aplikace %1$s.</string>
+    <string name="permission_notification_policy_access">Aplikace %1$s potřebuje přístup k nastavení režimu Nerušit, aby jej mohla nastavit na připojených hodinkách při vypnuté obrazovce telefonu.\n\nKlepněte na %2$s, poté na %1$s a zapněte Povolit režim Nerušit, poté klepněte na Zpět pro návrat do aplikace %1$s.</string>
     <string name="prefs_in_ear_detection_summary">Přehrávání hovorů do sluchátek, jsou li v uších</string>
     <string name="heartrate_bpm_130">130 tepů/min</string>
     <string name="pref_title_banglejs_text_bitmap">Text jako Bitmapa</string>
@@ -1587,7 +1587,7 @@
     <string name="pref_voice_detect_duration_5">5 sekund</string>
     <string name="pref_voice_detect_duration_15">15 sekund</string>
     <string name="pref_voice_detect_duration_10">10 sekund</string>
-    <string name="pref_explanation_authkey_new_protocol">Pokud se na zařízení zobrazí zpráva \"Aktualizujte aplikaci na nejnovější verzi/Update the app to latest version\", zaškrtněte volbu \"Nový protokol ověřování\" výše. Klepněte zde pro další podrobnosti ve wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Pokud se na zařízení zobrazí zpráva Aktualizujte aplikaci na nejnovější verzi, zaškrtněte volbu Nový protokol ověřování výše. Klepněte sem pro další podrobnosti ve wiki.</string>
     <string name="pref_explanation_authkey">Některá zařízení vyžadují speciální párovací klíč pro první inicializaci zařízení. Klepněte zde pro další podrobnosti ve wiki.</string>
     <string name="ukranian">Ukrajinština</string>
     <string name="notification_channel_gps">Sledování pomocí GPS</string>
@@ -1606,7 +1606,7 @@
     <string name="pref_summary_banglejs_webview_url">Pokud chcete vlastní zavaděč aplikací, vložte adresu ve formátu URL https://.../android.html. V opačném případě zanechte prázdné pro https://banglejs.com/apps</string>
     <string name="portuguese_br">Portugalština (Brazílie)</string>
     <string name="portuguese_pt">Portugalština (Portugalsko)</string>
-    <string name="permission_location">Aplikace %1$s potřebuje přístup k poloze na pozadí z důvodu zajištění udržení spojení s vašimi hodinkami i v době, kdy je obrazovka telefonu zhasnutá. \n \nNa následující obrazovce prosím vyberte „%2$s“ a poté klepněte na „Zpět“ pro návrat do aplikace %1$s.</string>
+    <string name="permission_location">Aplikace %1$s potřebuje přístup k poloze na pozadí z důvodu zajištění udržení spojení s vašimi hodinkami i v době, kdy je obrazovka telefonu zhasnutá.\n\nNa následující obrazovce prosím vyberte %2$s a poté klepněte na Zpět pro návrat do aplikace %1$s.</string>
     <string name="info_no_devices_connected">Nejsou připojena žádná zařízení</string>
     <string name="info_connected_count">Připojená zařízení: %d</string>
     <string name="czech">Čeština</string>
@@ -1757,7 +1757,7 @@
     <string name="menuitem_workout_history">Historie cvičení</string>
     <string name="menuitem_female_health">Ženské zdraví</string>
     <string name="menuitem_workout_status">Stav cvičení</string>
-    <string name="permission_display_over_other_apps">Aplikace %1$s potřebuje oprávnění k zobrazení nad ostatními aplikacemi, aby hodinky Bangle.js mohly spouštět aktivity prostřednictvím záměrů (intents) při běhu aplikace %1$s na pozadí. \n \nToho lze využít ke spuštění hudební aplikace pro přehrání skladby a ke spoustě dalších věcí. \n \nKlepněte na „%2$s“, poté na „%1$s“ a zapněte „Povolit zobrazení přes jiné aplikace“, poté klepněte na „Zpět“ pro návrat do aplikace %1$s. \n \nPokud chcete, aby aplikace %1$s přestala žádat o oprávnění, přejděte do „Nastavení“ a vypněte „Kontrolovat stav oprávnění“. \n \nUjistěte se, že jste aplikaci %1$s poskytli požadovaná oprávnění pro funkci dle vašich očekávání.</string>
+    <string name="permission_display_over_other_apps">Aplikace %1$s potřebuje oprávnění k zobrazení nad ostatními aplikacemi, aby hodinky Bangle.js mohly spouštět aktivity prostřednictvím záměrů (intents) při běhu aplikace %1$s na pozadí.\n\nToho lze využít ke spuštění hudební aplikace pro přehrání skladby a ke spoustě dalších věcí.\n\nKlepněte na %2$s, poté na %1$s a zapněte Povolit zobrazení přes jiné aplikace, poté klepněte na Zpět pro návrat do aplikace %1$s.\n\nPokud chcete, aby aplikace %1$s přestala žádat o oprávnění, přejděte do Nastavení a vypněte možnost Kontrolovat stav oprávnění.\n\nUjistěte se, že jste aplikaci %1$s poskytli požadovaná oprávnění pro funkci dle vašich očekávání.</string>
     <string name="pref_header_heartrate_alerts">Upozornění na tepovou frekvenci</string>
     <string name="pref_header_stress">Stres</string>
     <string name="pref_header_spo2">Kyslík v krvi</string>
@@ -1896,7 +1896,7 @@
 \nVáš náramek se po instalaci souboru .zip restartuje.
 \n
 \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Přejděte do nastavení bluetooth telefonu a spárujte se s novým zařízením, které se zobrazí (podobný název jako vaše aktuální hodinky, ale s příponou, např. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Přejděte do nastavení Bluetooth vašeho telefonu a spárujte jej s novým zařízením, které se zobrazí (podobný název jako vaše aktuální hodinky, ale s příponou, např. Amazfit GTR 4 - AFC8).</string>
     <string name="pref_summary_notification_cache_while_disconnected">Odesílání zmeškaných oznámení, když se zařízení znovu připojí poté, co bylo mimo dosah telefonu</string>
     <string name="pref_summary_notification_media_ignores_application_list">Zpracovávat oznámení multimediálních aplikací před běžným seznamem aplikací. Pokud není tato možnost povolena, musí být mediální aplikace povoleny v seznamu aplikací, aby fungovalo ovládání médií ze zařízení.</string>
     <string name="pref_title_notification_media_ignores_application_list">Ignorovat seznam aplikací u multimediálních oznámení</string>
@@ -1982,7 +1982,7 @@
     <string name="pref_workout_detection_time_summary">Kolik minut cvičení je potřeba pro automatickou detekci</string>
     <string name="pref_sleep_mode_title">Režim spánku</string>
     <string name="pref_sleep_mode_sleep_screen_title">Spánková Obrazovka</string>
-    <string name="contact_delete_confirm_description">Opravdu chcete odstranit \'%1$s\'?</string>
+    <string name="contact_delete_confirm_description">Opravdu chcete odstranit %1$s?</string>
     <string name="contact_no_free_slots_description">Zařízení nemá žádné volné místo pro kontakty (celkem míst: %1$s)</string>
     <string name="pref_sleep_mode_smart_enable_title">Chytré Zapnutí</string>
     <string name="pref_sleep_mode_smart_enable_summary">Povolit režim spánku automaticky během spánku</string>
@@ -2019,7 +2019,7 @@
     <string name="activity_type_iceskating">Bruslení</string>
     <string name="error_no_bluetooth_scan">Musí být povoleno Bluetooth skenování pro správnou funkci</string>
     <string name="error_no_bluetooth_connect">Musí být povoleno Bluetooth připojení pro správnou funkci</string>
-    <string name="permission_request">Aplikace %1$s umožňuje posílání zpráv a dalších dat ze systému Android do vašeho zařízení. K tomu potřebuje oprávnění k přístupu k těmto datům, bez kterého nemusí správně fungovat. \n \nNyní se vám zobrazí několik dialogových oken systému Android, která si tato oprávnění vyžádají. \n \nPro pokračování klepněte na „%2$s“.</string>
+    <string name="permission_request">Aplikace %1$s umožňuje posílání zpráv a dalších dat ze systému Android do vašeho zařízení. K tomu potřebuje oprávnění k přístupu k těmto datům, bez kterého nemusí správně fungovat.\n\nNyní se vám zobrazí několik dialogových oken systému Android, která si tato oprávnění vyžádají.\n\nPro pokračování klepněte na %2$s.</string>
     <string name="hrZoneAerobic">Aerobní</string>
     <string name="hrZoneNa">Není k dispozici</string>
     <string name="sony_speak_to_chat_sensitivity_standard">Standardní</string>
@@ -2237,7 +2237,7 @@
     <string name="french_ca">Francouzština (Kanada)</string>
     <string name="info_menu_structure_contents">Struktura menu: %s</string>
     <string name="femometer_measurement_mode_quick">Rychlý režim (30s)</string>
-    <string name="femometer_measurement_mode_normal">Normální režim (60 s-90 s)</string>
+    <string name="femometer_measurement_mode_normal">Normální režim (60–90 s)</string>
     <string name="femometer_measurement_mode_precise">Precizní režim (3 min)</string>
     <string name="femometer_measurement_mode_title">Režim měření</string>
     <string name="zepp_os_watchface_free_combination">Free combination</string>
@@ -2427,7 +2427,7 @@
     <string name="prefs_wena3_title_activity">Nastavení aktivit</string>
     <string name="widget_screen_x">Obrazovka %s</string>
     <string name="pref_title_fossil_hr_nav_vibrate">Vibrovat při novém pokynu</string>
-    <string name="widget_screen_delete_confirm_description">Opravdu chcete odstranit „%1$s“?</string>
+    <string name="widget_screen_delete_confirm_description">Opravdu chcete odstranit %1$s?</string>
     <string name="pref_force_wear_location_summary">Vynutit podporu umístění gadgetu.
 \nPOUŽIJTE NA VLASTNÍ NEBEZPEČÍ</string>
     <string name="swolfMin">Minimální swolf</string>
@@ -2446,7 +2446,7 @@
     <string name="RunningForm">Běžecká forma</string>
     <string name="huawei_reparse_workout_data_description">Toto nastavení bude fungovat pouze po určitých aktualizacích</string>
     <string name="intent_api_broadcast_activity_sync_summary">Vysílat intent při dokončení synchronizace aktivit u kteréhokoli zařízení</string>
-    <string name="error_menu_companion_not_installed">Aplikace „HR Menu Companion“ nejspíše není nainstalovaná</string>
+    <string name="error_menu_companion_not_installed">Aplikace HR Menu Companion nejspíše není nainstalovaná</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Znovu prosím sestavte svůj ciferník pro vlastní nabídku</string>
     <string name="cyan">Azurová</string>
     <string name="prefs_wena3_title_alarm">Nastavení budíků</string>
@@ -2718,7 +2718,7 @@
     <string name="pref_sleepasandroid_features_title">Funkce</string>
     <string name="activity_type_worn">Nošeno</string>
     <string name="prefs_wena3_led_none">Bez LED</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">Počet minut, kdy graf ukáže „nošení“ po každém úspěšném měření srdečního rytmu</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Počet minut, kdy graf ukáže nošení po každém úspěšném měření srdečního rytmu</string>
     <string name="activity_type_pickleball">Pickleball</string>
     <string name="activity_type_trekking">Treking</string>
     <string name="prefs_wena3_notification_default_call_vibration_repetition">Opakování vybrací příchozího hovoru</string>
@@ -2850,7 +2850,7 @@
     <string name="minutes_20">20 minut</string>
     <string name="hrv_status_balanced">Vyvážený</string>
     <string name="hrv_status_unbalanced">Nevyvážený</string>
-    <string name="hrv_status_baseline">%1$d-%2$d ms</string>
+    <string name="hrv_status_baseline">%1$d–%2$d ms</string>
     <string name="soundcore_voice_prompts">Hlasové povely</string>
     <string name="soundcore_equalizer_preset">Předvolba</string>
     <string name="soundcore_equalizer_direction">Směr zařízení</string>
@@ -3181,9 +3181,9 @@
     <string name="activity_detail_share_json_details">Sdílet podrobnosti v JSON</string>
     <string name="number_selected_items">Vybráno %1d</string>
     <string name="mijia_lywsd_comfort_temperature_title">Teplota (°C)</string>
-    <string name="mijia_lywsd_comfort_temperature_summary">Doporučený rozsah: 19 - 27</string>
+    <string name="mijia_lywsd_comfort_temperature_summary">Doporučený rozsah: 19–27</string>
     <string name="mijia_lywsd_comfort_humidity_title">Vlhkost (%)</string>
-    <string name="mijia_lywsd_comfort_humidity_summary">Doporučený rozsah: 20 - 85</string>
+    <string name="mijia_lywsd_comfort_humidity_summary">Doporučený rozsah: 20–85</string>
     <string name="mijia_lywsd_comfort_lower">Spodní limit</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="mijia_lywsd_comfort_level_title">Úroveň pohodlí</string>
@@ -3223,7 +3223,7 @@
     <string name="pref_developer_add_test_activities_summary">Naplnit databázi fiktivními zkušebními aktivitami</string>
     <string name="pref_music_management_title">Spravovat hudbu</string>
     <string name="pref_music_management_summary">Spravovat hudbu na hodinkách</string>
-    <string name="music_delete_confirm_description">Opravdu chcete odstranit „%1$s“?</string>
+    <string name="music_delete_confirm_description">Opravdu chcete odstranit %1$s?</string>
     <string name="music_add_to_playlist">Přidat do playlistu</string>
     <string name="music_all_songs">Všechny skladby</string>
     <string name="title_activity_musicmanager">Správce hudby</string>
@@ -3348,7 +3348,7 @@
     <string name="respiratoryrate">Rychlost dýchání</string>
     <string name="lowest">Nejnižší</string>
     <string name="sleep_avg">Prům. spánku</string>
-    <string name="music_delete_multiple_confirm_description">Opravdu chcete odstranit skladby „%1$d“?</string>
+    <string name="music_delete_multiple_confirm_description">Opravdu chcete odstranit %1$d skladeb?</string>
     <string name="highest">Nejvyšší</string>
     <string name="sleep_score">Spánkové skóre</string>
     <string name="sleep_score_value">Skóre: %1d</string>
@@ -3511,7 +3511,7 @@
     <string name="pref_title_equalizer_natural">Přirozený</string>
     <string name="dual_device_mode_summary">Umožnit připojení sluchátek ke dvěma zařízením současně</string>
     <string name="dual_device_mode_title">Režim duálních zařízení</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="finnish">Finština</string>
     <string name="bahasa_melayu">Malajština</string>
     <string name="pref_vibration_intensity">Intenzita vibrací</string>
@@ -3555,7 +3555,7 @@
     <string name="earfun_earbud_mode_left">Pouze levé sluchátko</string>
     <string name="prefs_active_noise_cancelling_level_dynamic">Dynamické</string>
     <string name="earfun_change_device_name_confirm_message">1) Jakmile aktualizujete název, umístěte sluchátka do nabíjecího pouzdra, zavřete víko a počkejte asi 10 sekund.\n\n2) V nastavení vašeho zařízení odstraňte původní zaříezní.\n\n3) Znovu otevřete víko, vyhledejte zařízení, název by měl být poté úspěšně změněn.</string>
-    <string name="earfun_reboot_confirm_message">Po použití tohoto nastavení se zařízení restartuje. Jakmile se opět zapne, přejděte do obrazovky „Zařízení“ a znovu jej připojte.</string>
+    <string name="earfun_reboot_confirm_message">Po použití tohoto nastavení se zařízení restartuje. Jakmile se opět zapne, přejděte do obrazovky Zařízení a znovu jej připojte.</string>
     <string name="earfun_earbud_mode_right">Pouze pravé sluchátko</string>
     <string name="earfun_microphone_mode_hint">Při použití mikrofonu ve sluchátkách může automaticky přepínat mezi levým a pravým sluchátkem nebo zůstat pevně na jedné straně podle vaší preference.</string>
     <string name="earfun_in_ear_detection_hint">Když je povoleno, funkce detekce ucha automaticky spustí přehrávání zvuku během nošení sluchátek a pozastaví přehrávání, když je vyndáte.</string>
