@@ -318,6 +318,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.id115.ID115Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.idasen.IdasenCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC200Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportiGS630Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportiGS800Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.itag.ITagCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.jyou.BFH16DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.jyou.TeclastH30.TeclastH30Coordinator;
@@ -945,6 +946,7 @@ public enum DeviceType {
     BRAUN_BPW4500(BraunBPW4500DeviceCoordinator.class),
     IGPSPORT_BSC200(IGPSportBSC200Coordinator.class),
     IGPSPORT_IGS630(IGPSportiGS630Coordinator.class),
+    IGPSPORT_IGS800(IGPSportiGS800Coordinator.class),
     TEST(TestDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;

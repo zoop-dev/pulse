@@ -2252,6 +2252,7 @@
     <string name="devicetype_atc_ble_oepl" translatable="false">ATC_BLE_OEPL</string>
     <string name="devicetype_igpsport_bsc200">IGPSPORT BSC200</string>
     <string name="devicetype_igpsport_igs630">IGPSPORT iGS630</string>
+    <string name="devicetype_igpsport_igs800">IGPSPORT iGS800</string>
     <string name="task_installing_route">Installing route</string>
     <string name="route_upload_completed">Route upload completed</string>
     <string name="route_upload_failed">Route upload failed</string>
