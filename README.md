@@ -81,7 +81,7 @@ Contributions are welcome, be it feedback, bug reports, documentation, translati
 on any of the open [issues](https://codeberg.org/Freeyourgadget/Gadgetbridge/issues);
 just leave a comment that you're working on one to avoid duplicated work.
 
-[Developer documentation](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Developer-Documentation) - [Support for a new Device](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Support-for-a-new-Device) - [New Device Tutorial](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/New-Device-Tutorial)
+[Developer documentation](https://gadgetbridge.org/internals/development/project-overview/) - [Support for a new Device](https://gadgetbridge.org/internals/topics/support/) - [New Device Tutorial](https://gadgetbridge.org/internals/development/new-gadget/)
 
 Translations can be contributed via https://hosted.weblate.org/projects/freeyourgadget/gadgetbridge/
 
