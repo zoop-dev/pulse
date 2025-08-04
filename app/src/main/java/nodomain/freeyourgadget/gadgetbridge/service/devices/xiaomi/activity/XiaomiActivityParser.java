@@ -120,14 +120,12 @@ public abstract class XiaomiActivityParser {
     private static XiaomiActivityParser createForSports(final XiaomiActivityFileId fileId) {
         assert fileId.getType() == XiaomiActivityFileId.Type.SPORTS;
 
-        switch (fileId.getDetailType()) {
-            case SUMMARY:
-                return new WorkoutSummaryParser();
-            case GPS_TRACK:
-                return new WorkoutGpsParser();
-        }
+        return switch (fileId.getDetailType()) {
+            case SUMMARY -> new WorkoutSummaryParser();
+            case GPS_TRACK -> new WorkoutGpsParser();
+            default -> null;
+        };
 
-        return null;
     }
 
     public static boolean validData(final byte[] header, final int i) {

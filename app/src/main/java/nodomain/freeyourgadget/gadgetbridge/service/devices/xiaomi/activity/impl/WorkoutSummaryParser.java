@@ -618,6 +618,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 7:
                 headerSize = 5;
                 break;
+            case 8:
+                headerSize = 8;
+                break;
             default:
                 LOG.warn("Unable to parse pool swimming summary version {}", fileId.getVersion());
                 return null;
