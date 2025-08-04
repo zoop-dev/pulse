@@ -40,7 +40,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.language.impl.BengaliTransliter
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.CommonSymbolsTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.CroatianTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.CzechTransliterator;
-import nodomain.freeyourgadget.gadgetbridge.util.language.impl.EmojiTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.EstonianTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.ExtendedAsciiTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.FlattenToAsciiTransliterator;
@@ -91,7 +90,6 @@ public class LanguageUtils {
         put("turkish", new TurkishTransliterator());
         put("ukranian", new UkranianTransliterator());
         put("armenian", new ArmenianTransliterator());
-        put("emoji", new EmojiTransliterator());
     }};
 
     /**

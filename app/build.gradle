@@ -256,17 +256,17 @@ dependencies {
     implementation "com.github.PhilJay:MPAndroidChart:3.1.0"
     implementation "com.github.pfichtner:durationformatter:0.1.1"
     implementation "de.cketti.library.changelog:ckchangelog:1.2.2"
-    //noinspection NewerVersionAvailable v2 needs java 17
     implementation "net.e175.klaus:solarpositioning:0.1.10"
     implementation "co.nstant.in:cbor:0.9"
     // use pristine greendao instead of our custom version, since our custom jitpack-packaged
     // version contains way too much and our custom patches are in the generator only.
-    //noinspection NewerVersionAvailable we are running a fork of the greendao v2 generator,
-    // so we must always use the corresponding core lib
     implementation "org.greenrobot:greendao:2.2.1"
     implementation "org.apache.commons:commons-lang3:3.18.0"
     implementation "org.cyanogenmod:platform.sdk:6.0"
     implementation 'com.jaredrummler:colorpicker:1.1.0'
+    implementation 'com.github.wax911.android-emojify:contract:1.9.7'
+    implementation 'com.github.wax911.android-emojify:emojify:1.9.7'
+    implementation 'com.github.wax911.android-emojify:gson:1.9.7'
     implementation 'com.google.protobuf:protobuf-javalite:4.31.1'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'org.msgpack:msgpack-core:0.9.10'
@@ -290,9 +290,6 @@ dependencies {
 
     // Needed for Armenian transliteration
     implementation 'org.ahocorasick:ahocorasick:0.6.3'
-
-    // Needed for Emoji transliteration
-    implementation 'net.fellbaum:jemoji:1.7.4'
 }
 
 preBuild.dependsOn(":GBDaoGenerator:genSources")

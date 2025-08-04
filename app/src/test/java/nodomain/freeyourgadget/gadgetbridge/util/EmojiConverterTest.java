@@ -13,7 +13,7 @@ import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 public class EmojiConverterTest extends TestBase {
     @Test
     public void testConvert() {
-        final Map<String, String> snippets = new HashMap<>() {{
+        final Map<String, String> snippets = new HashMap<String, String>() {{
             put(
                     "no emoji",
                     "no emoji"
