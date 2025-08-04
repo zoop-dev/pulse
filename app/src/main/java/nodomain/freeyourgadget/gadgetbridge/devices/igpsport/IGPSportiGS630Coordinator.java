@@ -34,7 +34,7 @@ public class IGPSportiGS630Coordinator extends IGPSportAbstractCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("iGS630|iGS630");
+        return Pattern.compile("iGS630|iGS630s");
     }
 
     @Override
