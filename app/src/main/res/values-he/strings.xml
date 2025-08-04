@@ -2606,7 +2606,7 @@
     <string name="pref_auto_reply_calls_summary">הטלפון יקבל שיחות נכנסות אוטומטית</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">משך דופק</string>
     <string name="pref_dashboard_select_devices_summary">שילוב פעילות מהתקנים מסוימים לסיכומים של לוח הבקרה</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">כמות הדקות שהתרשים מציג ‚נענד’ אחרי כל מדידת דופק מוצלחת</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">כמות הדקות שהתרשים מציג נענד אחרי כל מדידת דופק מוצלחת</string>
     <string name="sony_protocol_v2">גרסה 2</string>
     <string name="sony_protocol_v1">גרסה 1</string>
     <string name="companion_pairing_request_title">התקן ליווי</string>
@@ -2816,7 +2816,7 @@
     <string name="music_delete_from_playlist">מחיקת מרשימת הנגינה</string>
     <string name="music_all_songs">כל השירים</string>
     <string name="pref_music_management_summary">ניהול מוזיקה דרך השעון</string>
-    <string name="music_delete_confirm_description">למחוק את ‚%1$s’?</string>
+    <string name="music_delete_confirm_description">למחוק את %1$s?</string>
     <string name="music_add_to_playlist">הוספה לרשימת נגינה</string>
     <string name="music_new_playlist">רשימת נגינה חדשה</string>
     <string name="music_delete">מחיקת שיר</string>
@@ -2945,4 +2945,5 @@
         <item quantity="two">יומיים</item>
         <item quantity="other">%d ימים</item>
     </plurals>
+    <string name="music_delete_multiple_confirm_description">למחוק %1$d שירים?</string>
 </resources>
