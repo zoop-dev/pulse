@@ -32,10 +32,13 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment;
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult;
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener;
 
+import java.util.Objects;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.util.SearchPreferenceHighlighter;
 
 public abstract class AbstractSettingsActivityV2 extends AbstractGBActivity implements
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
         PreferenceFragmentCompat.OnPreferenceStartScreenCallback,
         SearchPreferenceResultListener {
     public static final String EXTRA_PREF_SCREEN = "preferenceScreen";
@@ -72,6 +75,21 @@ public abstract class AbstractSettingsActivityV2 extends AbstractGBActivity impl
                 SearchPreferenceHighlighter.highlight(fragment, highlightKey);
             }
         }
+    }
+
+    @Override
+    public boolean onPreferenceStartFragment(@NonNull final PreferenceFragmentCompat caller,
+                                             @NonNull final Preference pref) {
+        final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
+                getClassLoader(),
+                Objects.requireNonNull(pref.getFragment())
+        );
+        fragment.setArguments(pref.getExtras());
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.settings_container, fragment)
+                .addToBackStack(null)
+                .commit();
+        return true;
     }
 
     @Override
