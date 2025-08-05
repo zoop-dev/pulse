@@ -841,7 +841,6 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                         final DeviceType deviceType = DeviceType.values()[(int) selectedUnsupportedDeviceKey];
                         deviceCandidate.setForcedType(deviceType);
                         preparePair(deviceCandidate);
-                        finish();
                     }
                 })
                 .setNegativeButton(R.string.Cancel, (dialog, which) -> {
