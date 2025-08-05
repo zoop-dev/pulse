@@ -3935,4 +3935,7 @@
     <string name="pref_header_training_load">Tréninková zátěž</string>
     <string name="track_name_required">Název stopy nemůže být prázdný</string>
     <string name="notifications_app_icon_uploading_limit_reached">Byl dosažen limit nahrávání ikon aplikací.</string>
+    <string name="pref_check_permission_show_list">Zobrazit stav oprávnění</string>
+    <string name="first_start_permissions_do_not_ask_again">Neptat se znovu</string>
+    <string name="first_start_permissions_do_not_ask_warning_summary">Neudělení oprávnění může způsobit problémy. Tuto obrazovku můžete znovu otevřít pomocí Nastavení.</string>
 </resources>
