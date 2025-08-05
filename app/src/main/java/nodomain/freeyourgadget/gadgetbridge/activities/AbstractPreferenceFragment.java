@@ -71,7 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.dialogs.MaterialMultiSelectList
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.MinMaxTextWatcher;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompat implements MenuProvider {
-    protected static final Logger LOG = LoggerFactory.getLogger(AbstractPreferenceFragment.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractPreferenceFragment.class);
 
     private final SharedPreferencesChangeHandler sharedPreferencesChangeHandler = new SharedPreferencesChangeHandler();
 

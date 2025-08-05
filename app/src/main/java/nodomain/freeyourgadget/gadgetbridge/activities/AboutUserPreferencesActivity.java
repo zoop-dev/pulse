@@ -39,11 +39,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 
 public class AboutUserPreferencesActivity extends AbstractSettingsActivityV2 {
+    private static final Logger LOG = LoggerFactory.getLogger(AboutUserPreferencesActivity.class);
+
     @Override
     protected PreferenceFragmentCompat newFragment() {
         return new AboutUserPreferencesFragment();
