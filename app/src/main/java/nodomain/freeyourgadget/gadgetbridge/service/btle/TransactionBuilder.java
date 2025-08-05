@@ -242,7 +242,12 @@ public class TransactionBuilder {
     /// {@link GattCallback#onDescriptorWrite(BluetoothGatt, BluetoothGattDescriptor, int)}.
     @NonNull
     public TransactionBuilder notify(UUID characteristic, boolean enable) {
-        return notify(mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx), enable);
+        BluetoothGattCharacteristic chara = mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx);
+        if (chara == null) {
+            LOG.warn("unable to enable/disable notifications for non-existing characteristic: {}", characteristic);
+            return this;
+        }
+        return notify(chara, enable);
     }
 
     /**
