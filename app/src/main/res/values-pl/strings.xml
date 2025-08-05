@@ -3954,4 +3954,7 @@
     <string name="training_daily_load">Dzienne obciążenie</string>
     <string name="pref_header_training_load">Obciążenie treningowe</string>
     <string name="notifications_app_icon_uploading_limit_reached">Osiągnięto limit przesyłania ikon aplikacji.</string>
+    <string name="pref_check_permission_show_list">Pokaż status uprawnień</string>
+    <string name="first_start_permissions_do_not_ask_again">Nie pytaj ponownie</string>
+    <string name="first_start_permissions_do_not_ask_warning_summary">Brak udzielenia uprawnienia może skutkować wystąpieniem problemów. Ekran ten można ponownie otworzyć z poziomu Ustawień.</string>
 </resources>
