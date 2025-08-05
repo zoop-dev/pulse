@@ -130,14 +130,12 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setTime(TransactionBuilder builder) {
-        BluetoothGattCharacteristic timeCharacteristic = getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_TIME);
-        builder.write(timeCharacteristic, new BandTime(Calendar.getInstance()).toByteArray());
+        builder.write(SonySWR12Constants.UUID_CHARACTERISTIC_TIME, new BandTime(Calendar.getInstance()).toByteArray());
     }
 
     @Override
     public void onSetAlarms(ArrayList<? extends Alarm> alarms) {
         try {
-            BluetoothGattCharacteristic alarmCharacteristic = getCharacteristic(SonySWR12Constants.UUID_CHARACTERISTIC_ALARM);
             TransactionBuilder builder = performInitialized("alarm");
             int prefInterval = Integer.valueOf(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress())
                     .getString(DeviceSettingsPreferenceConst.PREF_SONYSWR12_SMART_INTERVAL, "0"));
@@ -147,7 +145,7 @@ public class SonySWR12DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 if (bandAlarm != null)
                     bandAlarmList.add(bandAlarm);
             }
-            builder.write(alarmCharacteristic, new BandAlarms(bandAlarmList).toByteArray());
+            builder.write(SonySWR12Constants.UUID_CHARACTERISTIC_ALARM, new BandAlarms(bandAlarmList).toByteArray());
             builder.queue();
         } catch (Exception e) {
             GB.toast(getContext(), "Error setting alarms: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);

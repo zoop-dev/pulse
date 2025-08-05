@@ -330,9 +330,7 @@ public class Request {
         if (!this.supportProvider.isBLE()) {
             this.builderBr.write(data);
         } else {
-            BluetoothGattCharacteristic characteristic = supportProvider
-                    .getLeCharacteristic(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_WRITE);
-            this.builderLe.write(characteristic, data);
+            this.builderLe.write(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_WRITE, data);
         }
     }
 

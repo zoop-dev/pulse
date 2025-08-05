@@ -195,10 +195,9 @@ public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
     public void onFindDevice(boolean start) {
         byte[] command = new byte[]{(byte) 0xf0, (byte) 0xaf, (byte) (start ? 0x01 : 0x00), 0x00};
         command[3] = getChecksum(command);
-        BluetoothGattCharacteristic characteristic = getCharacteristic(UUUD_CHARACTERISTICS_WRITE);
-
+        
         TransactionBuilder builder = createTransactionBuilder("beep");
-        builder.write(characteristic, command);
+        builder.write(UUUD_CHARACTERISTICS_WRITE, command);
         builder.queue();
 
     }

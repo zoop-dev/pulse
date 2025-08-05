@@ -42,8 +42,7 @@ public class V1NotificationStrategy implements NotificationStrategy {
 
     @Override
     public void sendDefaultNotification(TransactionBuilder builder, SimpleNotification simpleNotification, BtLEAction extraAction) {
-        BluetoothGattCharacteristic characteristic = support.getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT);
-        builder.write(characteristic, getDefaultNotification());
+        builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, getDefaultNotification());
         builder.add(extraAction);
     }
 
@@ -105,8 +104,7 @@ public class V1NotificationStrategy implements NotificationStrategy {
 
     @Override
     public void stopCurrentNotification(TransactionBuilder builder) {
-        BluetoothGattCharacteristic controlPoint = support.getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT);
-        builder.write(controlPoint, stopVibrate);
+        builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, stopVibrate);
     }
 
 //    private void sendCustomNotification(int vibrateDuration, int vibrateTimes, int pause, int flashTimes, int flashColour, int originalColour, long flashDuration, TransactionBuilder builder) {

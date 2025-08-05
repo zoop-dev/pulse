@@ -106,7 +106,6 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
 
     private fun sendFetchCommand(type: GloryFitFetchType) {
         val builder = mSupport.createTransactionBuilder("fetch $type")
-        val characteristic = mSupport.getCharacteristic(GloryFitSupport.UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE)
         val cmd: ByteArray
         when (type) {
             GloryFitFetchType.STEPS -> {
@@ -126,7 +125,7 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
             }
         }
 
-        builder.write(characteristic, *cmd)
+        builder.write(GloryFitSupport.UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *cmd)
 
         builder.queue()
     }

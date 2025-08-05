@@ -124,7 +124,6 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
         byte[] data;
 
         LOG.debug("Sending current date to the XWatch");
-        BluetoothGattCharacteristic deviceData = getCharacteristic(XWatchService.UUID_WRITE);
 
         String time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String y = time.substring(2, 4);
@@ -153,15 +152,14 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
 
         data = crcChecksum(data);
 
-        builder.write(deviceData, data);
+        builder.write(XWatchService.UUID_WRITE, data);
 
         return this;
     }
 
     private XWatchSupport enableNotifications(TransactionBuilder builder) {
         LOG.debug("Enabling action button");
-        BluetoothGattCharacteristic deviceInfo = getCharacteristic(XWatchService.UUID_NOTIFY);
-        builder.notify(deviceInfo, true);
+        builder.notify(XWatchService.UUID_NOTIFY, true);
         return this;
     }
 
@@ -174,9 +172,8 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
     public void onNotification(NotificationSpec notificationSpec) {
         try {
             TransactionBuilder builder = performInitialized("xwatch notification");
-            BluetoothGattCharacteristic deviceData = getCharacteristic(XWatchService.UUID_WRITE);
             byte[] data = new byte[]{XWatchService.COMMAND_NOTIFICATION, XWatchService.COMMAND_NOTIFICATION_MESSAGE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-            builder.write(deviceData, crcChecksum(data));
+            builder.write(XWatchService.UUID_WRITE, crcChecksum(data));
             builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to send message notification on XWatch device", ex);
@@ -205,9 +202,8 @@ public class XWatchSupport extends AbstractBTLESingleDeviceSupport {
             LOG.debug("Incoming call8");
             try {
                 TransactionBuilder builder = performInitialized("callnotification");
-                BluetoothGattCharacteristic deviceData = getCharacteristic(XWatchService.UUID_WRITE);
                 byte[] data = new byte[]{XWatchService.COMMAND_NOTIFICATION, XWatchService.COMMAND_NOTIFICATION_PHONE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-                builder.write(deviceData, crcChecksum(data));
+                builder.write(XWatchService.UUID_WRITE, crcChecksum(data));
                 builder.queue();
             } catch (IOException ex) {
                 LOG.error("Unable to send call notification on XWatch device", ex);

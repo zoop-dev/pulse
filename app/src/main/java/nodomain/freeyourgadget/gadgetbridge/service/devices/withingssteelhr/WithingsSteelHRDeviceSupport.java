@@ -185,8 +185,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
-        BluetoothGattCharacteristic characteristic = getCharacteristic(WithingsUUID.WITHINGS_WRITE_CHARACTERISTIC_UUID);
-        builder.notify(characteristic, true);
+        builder.notify(WithingsUUID.WITHINGS_WRITE_CHARACTERISTIC_UUID, true);
         logger.debug("Requesting change of MTU...");
         builder.requestMtu(119);
         return builder;

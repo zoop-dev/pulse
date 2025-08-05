@@ -40,14 +40,13 @@ public class Mi2NotificationStrategy extends V2NotificationStrategy<HuamiSupport
     @Override
     protected void sendCustomNotification(VibrationProfile vibrationProfile, SimpleNotification simpleNotification, BtLEAction extraAction, TransactionBuilder builder) {
         startNotify(builder, vibrationProfile.getAlertLevel(), simpleNotification);
-        BluetoothGattCharacteristic alert = getSupport().getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL);
         byte repeat = (byte) (vibrationProfile.getRepeat() * (vibrationProfile.getOnOffSequence().length / 2));
         int waitDuration = 0;
         if (repeat > 0) {
             short vibration = (short) vibrationProfile.getOnOffSequence()[0];
             short pause = (short) vibrationProfile.getOnOffSequence()[1];
             waitDuration = (vibration + pause) * repeat;
-            builder.write(alert, new byte[]{-1, (byte) (vibration & 255), (byte) (vibration >> 8 & 255), (byte) (pause & 255), (byte) (pause >> 8 & 255), repeat});
+            builder.write(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL, new byte[]{-1, (byte) (vibration & 255), (byte) (vibration >> 8 & 255), (byte) (pause & 255), (byte) (pause >> 8 & 255), repeat});
         }
 
         // Don't wait during an incoming call, otherwise we'll not be able to stop the call notification

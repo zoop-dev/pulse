@@ -594,8 +594,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
     private void requestBatteryInfo(TransactionBuilder builder) {
         LOG.debug("Requesting Battery Info!");
-        BluetoothGattCharacteristic characteristic = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO);
-        builder.read(characteristic);
+        builder.read(HuamiService.UUID_CHARACTERISTIC_6_BATTERY_INFO);
     }
 
     public void requestDeviceInfo(TransactionBuilder builder) {

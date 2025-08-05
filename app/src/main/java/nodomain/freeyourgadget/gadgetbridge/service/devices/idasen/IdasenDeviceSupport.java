@@ -182,10 +182,8 @@ public class IdasenDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void readCharacteristic(String taskName, UUID charac) {
-        BluetoothGattCharacteristic characteristic = getCharacteristic(charac);
-
         TransactionBuilder builder = createTransactionBuilder(taskName);
-        builder.read(characteristic);
+        builder.read(charac);
         builder.queue();
     }
 

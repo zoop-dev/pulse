@@ -126,11 +126,10 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setTime(TransactionBuilder builder) {
-        BluetoothGattCharacteristic timeCharacteristc = getCharacteristic(MijiaLywsdSupport.UUID_TIME);
         long ts = System.currentTimeMillis();
         byte offsetHours = (byte) (SimpleTimeZone.getDefault().getOffset(ts) / (1000 * 60 * 60));
         ts = (ts + 250 + 500) / 1000; // round to seconds with +250 ms to compensate for BLE connection interval
-        builder.write(timeCharacteristc, new byte[]{
+        builder.write(MijiaLywsdSupport.UUID_TIME, new byte[]{
                 (byte) (ts & 0xff),
                 (byte) ((ts >> 8) & 0xff),
                 (byte) ((ts >> 16) & 0xff),
@@ -139,29 +138,24 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setConnectionInterval(TransactionBuilder builder) {
-        BluetoothGattCharacteristic intervalCharacteristc = getCharacteristic(MijiaLywsdSupport.UUID_CONN_INTERVAL);
-        builder.write(intervalCharacteristc, new byte[]{(byte) 0xf4, (byte) 0x01}); // maximum interval of 500 ms
+        builder.write(MijiaLywsdSupport.UUID_CONN_INTERVAL, new byte[]{(byte) 0xf4, (byte) 0x01}); // maximum interval of 500 ms
     }
 
     private void getBatteryInfo(TransactionBuilder builder) {
-        BluetoothGattCharacteristic batteryCharacteristc = getCharacteristic(MijiaLywsdSupport.UUID_BATTERY);
-        builder.read(batteryCharacteristc);
+        builder.read(MijiaLywsdSupport.UUID_BATTERY);
     }
 
     private void getComfortLevel(TransactionBuilder builder) {
-        BluetoothGattCharacteristic comfortCharacteristc = getCharacteristic(MijiaLywsdSupport.UUID_COMFORT_LEVEL);
-        builder.read(comfortCharacteristc);
+        builder.read(MijiaLywsdSupport.UUID_COMFORT_LEVEL);
     }
 
     private void getTime(TransactionBuilder builder) {
-        BluetoothGattCharacteristic timeCharacteristic = getCharacteristic(MijiaLywsdSupport.UUID_TIME);
-        builder.read(timeCharacteristic);
+        builder.read(MijiaLywsdSupport.UUID_TIME);
     }
 
     private void setTemperatureScale(TransactionBuilder builder, SharedPreferences prefs) {
         String scale = prefs.getString(PREF_TEMPERATURE_SCALE_CF, "");
-        BluetoothGattCharacteristic scaleCharacteristc = getCharacteristic(MijiaLywsdSupport.UUID_SCALE);
-        builder.write(scaleCharacteristc, new byte[]{(byte) ("f".equals(scale) ? 0x01 : 0xff)});
+        builder.write(MijiaLywsdSupport.UUID_SCALE, new byte[]{(byte) ("f".equals(scale) ? 0x01 : 0xff)});
     }
 
     private void setComfortLevel(TransactionBuilder builder, SharedPreferences prefs) {
@@ -175,7 +169,6 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
         if (temperatureLower > temperatureUpper || humidityLower > humidityUpper)
             return;
 
-        BluetoothGattCharacteristic comfortCharacteristc = getCharacteristic(MijiaLywsdSupport.UUID_COMFORT_LEVEL);
         ByteBuffer buf = ByteBuffer.allocate(length);
 
         buf.order(ByteOrder.LITTLE_ENDIAN);
@@ -197,7 +190,7 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
                 return;
         }
 
-        builder.write(comfortCharacteristc, buf.array());
+        builder.write(MijiaLywsdSupport.UUID_COMFORT_LEVEL, buf.array());
     }
 
     private void handleBatteryInfo(byte[] value, int status) {

@@ -314,17 +314,14 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
 
     private MiBandSupport requestBatteryInfo(TransactionBuilder builder) {
         LOG.debug("Requesting Battery Info!");
-        BluetoothGattCharacteristic characteristic = getCharacteristic(MiBandService.UUID_CHARACTERISTIC_BATTERY);
-        builder.read(characteristic);
+        builder.read(MiBandService.UUID_CHARACTERISTIC_BATTERY);
         return this;
     }
 
     private MiBandSupport requestDeviceInfo(TransactionBuilder builder) {
         LOG.debug("Requesting Device Info!");
-        BluetoothGattCharacteristic deviceInfo = getCharacteristic(MiBandService.UUID_CHARACTERISTIC_DEVICE_INFO);
-        builder.read(deviceInfo);
-        BluetoothGattCharacteristic deviceName = getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME);
-        builder.read(deviceName);
+        builder.read(MiBandService.UUID_CHARACTERISTIC_DEVICE_INFO);
+        builder.read(GattCharacteristic.UUID_CHARACTERISTIC_DEVICE_NAME);
         return this;
     }
 

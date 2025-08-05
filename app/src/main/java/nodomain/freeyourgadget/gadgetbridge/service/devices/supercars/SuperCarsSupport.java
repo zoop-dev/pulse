@@ -157,8 +157,7 @@ public class SuperCarsSupport extends AbstractBTLESingleDeviceSupport {
 
         byte[] command = craft_packet(speed, direction, movement, light);
         TransactionBuilder builder = createTransactionBuilder("send data");
-        BluetoothGattCharacteristic writeCharacteristic = getCharacteristic(SuperCarsConstants.CHARACTERISTIC_UUID_FFF1);
-        builder.write(writeCharacteristic, encryptData(command));
+        builder.write(SuperCarsConstants.CHARACTERISTIC_UUID_FFF1, encryptData(command));
         builder.queue();
     }
 

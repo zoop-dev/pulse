@@ -77,7 +77,6 @@ public class V2NotificationStrategy<T extends AbstractBTLESingleDeviceSupport> i
 
     @Override
     public void stopCurrentNotification(TransactionBuilder builder) {
-        BluetoothGattCharacteristic alert = support.getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL);
-        builder.write(alert, new byte[]{GattCharacteristic.NO_ALERT});
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL, new byte[]{GattCharacteristic.NO_ALERT});
     }
 }

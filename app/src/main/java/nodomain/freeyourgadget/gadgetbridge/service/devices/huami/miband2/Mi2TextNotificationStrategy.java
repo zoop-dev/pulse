@@ -88,7 +88,6 @@ public class Mi2TextNotificationStrategy extends Mi2NotificationStrategy {
 
     @Override
     public void stopCurrentNotification(TransactionBuilder builder) {
-        BluetoothGattCharacteristic alert = getSupport().getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_NEW_ALERT);
-        builder.write(alert, new byte[]{(byte) AlertCategory.IncomingCall.getId(), 0});
+        builder.write(GattCharacteristic.UUID_CHARACTERISTIC_NEW_ALERT, new byte[]{(byte) AlertCategory.IncomingCall.getId(), 0});
     }
 }
