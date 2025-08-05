@@ -3771,4 +3771,7 @@
     <string name="pref_header_training_load">Тренувальний навантаження</string>
     <string name="track_name_required">Назва треку не може бути порожньою</string>
     <string name="notifications_app_icon_uploading_limit_reached">Досягнуто ліміту для завантаження значків програм.</string>
+    <string name="pref_check_permission_show_list">Показати статус дозволів</string>
+    <string name="first_start_permissions_do_not_ask_again">Більше не питати</string>
+    <string name="first_start_permissions_do_not_ask_warning_summary">Відмова від надання дозволу може спричинити проблеми. Ви можете знову відкрити цей екран з екрана налаштувань.</string>
 </resources>
