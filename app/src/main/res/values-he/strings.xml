@@ -860,7 +860,7 @@
     <string name="pref_title_weather_summary">משמש לספק מזג האוויר של LineageOS, גרסאות אחרות של Android צריכות להשתמש ביישומונים כמו „התראות מזג אוויר”. אפשר למצוא מידע נוסף בוויקי של Gadgetbridge.</string>
     <string name="menuitem_worldclock">שעון עולמי</string>
     <string name="permission_granting_mandatory">כל ההרשאות האלו נדרשות ואם לא תוענקנה היציבות תתערער</string>
-    <string name="error_version_check_extreme_caution">אזהרה: בדיקת פרטי הגרסה נתקלה בשגיאה! עדיף שלא להמשיך! הגרסה שנצפתה היא „%s”</string>
+    <string name="error_version_check_extreme_caution">אזהרה: בדיקת פרטי הגרסה נתקלה בשגיאה! עדיף שלא להמשיך! הגרסה שנצפתה היא %s</string>
     <string name="error_background_service_reason">התחלת שירות הרקע נכשלה עקב חריגה - נא ללחוץ כאן לפרטים נוספים. \n\nשגיאה:</string>
     <string name="error_background_service_reason_truncated">התחלת שירות הרקע נכשל עקב…</string>
     <string name="error_background_service">התחלת שירות הרקע נכשלה</string>
@@ -2479,7 +2479,7 @@
     <string name="widget_layout_single">וידג׳ט</string>
     <string name="widget_layout_top_2_bot_2">2 למעלה, 2 למטה</string>
     <string name="widget_layout_top_1_bot_2">1 למעלה, 2 למטה</string>
-    <string name="widget_screen_delete_confirm_description">למחוק את ‚%1$s’?</string>
+    <string name="widget_screen_delete_confirm_description">למחוק את %1$s?</string>
     <string name="pref_vitality_score_7_day_title">התקדמות ב־7 ימים</string>
     <string name="menuitem_running">ריצה</string>
     <string name="call_rejection_method_reject">דחייה</string>
