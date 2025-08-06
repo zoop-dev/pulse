@@ -14,19 +14,19 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.unknown;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.scannable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 
-public class UnknownDeviceSupport extends AbstractDeviceSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(UnknownDeviceSupport.class);
+public class ScannableDeviceSupport extends AbstractDeviceSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(ScannableDeviceSupport.class);
 
     @Override
     public boolean connect() {
-        LOG.error("Attempting to connect to an unknown device - this should never happen");
+        LOG.error("Attempting to connect to a scannable device - this should never happen");
         return false;
     }
 
