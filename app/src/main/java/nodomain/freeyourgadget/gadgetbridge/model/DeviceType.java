@@ -277,6 +277,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiCompositionScaleCo
 import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiSmartScaleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moondrop.MoondropSpaceTravelCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.AdvanWatchSE1AICoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.BlackviewR60Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.C20Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiI28UltraCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiP76Coordinator;
@@ -749,6 +750,7 @@ public enum DeviceType {
     COLMI_P76(ColmiP76Coordinator.class),
     COLMI_V72(ColmiV72Coordinator.class),
     COLMI_V89(ColmiV89Coordinator.class),
+    BLACKVIEW_R60(BlackviewR60Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
     C20(C20Coordinator.class),
     KT80(KT80Coordinator.class),
