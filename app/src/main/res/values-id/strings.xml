@@ -7,14 +7,14 @@
     <string name="action_donate">Donasi</string>
     <string name="controlcenter_fetch_activity_data">Sinkronisasi</string>
     <string name="controlcenter_find_device">Cari perangkat hilang</string>
-    <string name="controlcenter_take_screenshot">Ambil Tangkapan Layar</string>
+    <string name="controlcenter_take_screenshot">Tangkap Layar</string>
     <string name="controlcenter_change_led_color">Ubah Warna LED</string>
     <string name="controlcenter_change_fm_frequency">Ubah Frekuensi FM</string>
     <string name="controlcenter_connect">Sambungkan…</string>
     <string name="controlcenter_disconnect">Putuskan</string>
     <string name="controlcenter_delete_device">Hapus Perangkat</string>
     <string name="controlcenter_delete_device_name">Hapus %1$s</string>
-    <string name="controlcenter_delete_device_dialogmessage">Tindakan ini akan menghapus semua perangkat dan data!</string>
+    <string name="controlcenter_delete_device_dialogmessage">Tindakan ini akan menghapus semua data perangkat!</string>
     <string name="controlcenter_navigation_drawer_open">Buka laci navigasi</string>
     <string name="controlcenter_navigation_drawer_close">Tutup laci navigasi</string>
     <string name="controlcenter_snackbar_need_longpress">Tekan lama kartu untuk memutuskan</string>
@@ -33,7 +33,7 @@
     <string name="appmanager_cached_watchapps_watchfaces">Aplikasi dalam cache</string>
     <string name="title_activity_appmanager">Pengelola Aplikasi</string>
     <string name="debugactivity_really_factoryreset">Mengembalikan ke pengaturan pabrik akan mengkapus semua data dari perangkat yang terhubung (jika mendukung). Perangkat Xiaomi/Huami juga mengubah alamat MAC Bluetooth, agar muncul sebagai perangkat baru di Gadgetbridge.</string>
-    <string name="action_debug">Awakutu</string>
+    <string name="action_debug">Debug</string>
     <string name="sonyswr12_settings_title">Pengaturan Sony SWR12</string>
     <string name="sonyswr12_settings_alarm_interval">Interval alarm pintar dalam beberapa menit</string>
     <string name="sonyswr12_settings_low_vibration_summary">Aktifkan getaran intensitas rendah pada pita</string>
@@ -630,7 +630,7 @@
     <string name="accuracy">Akurasi</string>
     <string name="balanced">Seimbang</string>
     <string name="power_saving">Penghemat Daya</string>
-    <string name="single_band">Jalur Tunggal</string>
+    <string name="single_band">Single Band</string>
     <string name="low_power_gps">GPS Daya Rendah</string>
     <string name="all_satellites">Semua Satelit</string>
     <string name="speed_first">Kecepatan Terlebih Dahulu</string>
@@ -874,7 +874,7 @@
     <string name="about_activity_title_banglejs_main">Tentang Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js berjalan</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
-    <string name="gadgetbridge_running_main_nightly">Nightly GB berjalan</string>
+    <string name="gadgetbridge_running_main_nightly">Nightly GB sedang berjalan</string>
     <string name="application_name_main_nopebble">Gadgetbridge (Nightly, Tanpa penyedia Pebble)</string>
     <string name="about_activity_title_main_nopebble">Tentang Gadgetbridge Nightly Tanpa Pebble</string>
     <string name="gadgetbridge_running_main_nopebble">Nightly GB TanpaPebble berjalan</string>
@@ -1788,7 +1788,7 @@
 \n 
 \nKarena kebijakan Google Play Store, kami tidak diperbolehkan untuk menambahkan tautan donasi dalam aplikasi sendiri, tetapi jika Anda suka aplikasi ini pertimbangkan untuk berdonasi melalui laman beranda Gadgetbridge di bawah.</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
-    <string name="dual_band">Jalur Ganda</string>
+    <string name="dual_band">Dual Band</string>
     <string name="fw_upgrade_notice_amazfitgtr">Anda akan memasang perangkat tegar %s pada Amazfit GTR Anda. 
 \n 
 \nPastikan Anda memasang berkas .fw, dan setelah itu berkas .res, dan akhirnya berkas .gps. Jam tangan Anda akan dinyalakan ulang setelah memasang berkas .fw. 
@@ -1799,7 +1799,7 @@
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="about_description_main_nightly">Pengganti untuk aplikasi gawai Android sumber tertutup dari vendor yang bebas dan tanpa awan. Rilis nightly dari Gadgetbridge. Tidak dapat dipasang jika Anda sudah punya aplikasi Gadgetbridge atau Pebble, karena konflik dalam penyedia Pebble.</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly Tanpa Pebble</string>
-    <string name="about_description_main_nopebble">Pengganti untuk aplikasi gawai Android sumber tertutup dari vendor yang bebas dan tanpa awan. Rilis nightly dari Gadgetbridge. Versi ini mengubah nama penyedia Pebble untuk mencegah konflik, jadi beberapa integrasi berkaitan dengan Pebble tidak akan bekerja, tetapi dapat dipasang di samping pemasangan Gadgetbridge yang sudah ada.</string>
+    <string name="about_description_main_nopebble">Pengganti untuk aplikasi gawai Android sumber tertutup dari vendor yang bebas dan tanpa awan. Rilis nightly dari Gadgetbridge. Versi ini mengubah nama penyedia Pebble untuk mencegah konflik sehingga beberapa integrasi terkait dengan Pebble tidak dapat bekerja, tetapi tetap dapat dipasang bersamaan dengan Gadgetbridge yang sudah ada.</string>
     <string name="gps">GPS</string>
     <string name="fw_upgrade_notice_amazfitgts">Anda akan memasang perangkat tegar %s pada Amazfit GTS Anda. 
 \n 
@@ -2870,4 +2870,8 @@
     <string name="pref_header_sound">Suara</string>
     <string name="pref_description_user_interface">Tema, layar utama</string>
     <string name="gps_glonass">GPS + GLONASS</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
+    <string name="audio_recordings">Rekaman Suara</string>
 </resources>
