@@ -76,6 +76,7 @@
     <color name="calories_color" type="color">#fa4502</color>
     <color name="calories_resting_color" type="color">#1f49f2</color>
     <color name="respiratory_rate_color" type="color">#163ede</color>
+    <color name="spo2_color" type="color">#80D8FF</color>
 
     <color name="value_line_color" type="color">#858585</color>
     <color name="row_separator_light" type="color">#ffe2e2e5</color>

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Martin.JM
+/*  Copyright (C) 2023-2024 Martin.JM, a0z
 
     This file is part of Gadgetbridge.
 
@@ -21,12 +21,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -40,71 +37,87 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.databinding.FragmentSpo2Binding;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.Spo2ManualMeasurement;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 
 // Based on StressDailyFragment
 
 public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.Spo2ChartsData> {
     protected static final Logger LOG = LoggerFactory.getLogger(Spo2ChartFragment.class);
 
-    private LineChart mSpo2Chart;
+    static int DATA_INVALID = -1;
+
+    private FragmentSpo2Binding binding;
 
     private int BACKGROUND_COLOR;
-    private int DESCRIPTION_COLOR;
     private int CHART_TEXT_COLOR;
     private int LEGEND_TEXT_COLOR;
-    private int CHART_LINE_COLOR;
 
-    private String SPO2_AVERAGE_LABEL;
-
-    private final Prefs prefs = GBApplication.getPrefs();
-
-    private final boolean CHARTS_SLEEP_RANGE_24H = prefs.getBoolean("chart_sleep_range_24h", false);
-    private final boolean SHOW_CHARTS_AVERAGE = prefs.getBoolean("charts_show_average", true);
+    private TimestampTranslation tsTranslation;
 
     @Override
     protected void init() {
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
-        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(requireContext());
+        LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
+    }
 
-        if (prefs.getBoolean("chart_heartrate_color", false)) {
-            CHART_LINE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_alternative);
-        } else {
-            CHART_LINE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate);
-        }
-
-        SPO2_AVERAGE_LABEL = requireContext().getString(R.string.charts_legend_spo2_average);
+    @Override
+    public View onCreateView(final LayoutInflater inflater,
+                             final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        binding = FragmentSpo2Binding.inflate(inflater, container, false);
+        binding.manualMeasurements.setVisibility(View.GONE);
+        setupLineChart();
+        refresh();
+        return binding.getRoot();
     }
 
     @Override
     protected Spo2ChartsData refreshInBackground(final ChartsHost chartsHost, final DBHandler db, final GBDevice device) {
-        final List<? extends Spo2Sample> samples = getSamples(db, device);
-
-        LOG.info("Got {} SpO2 samples", samples.size());
-
-        return new Spo2ChartsDataBuilder(samples).build();
+        Calendar day = Calendar.getInstance();
+        day.setTime(getEndDate());
+        day.add(Calendar.DATE, 0);
+        day.set(Calendar.HOUR_OF_DAY, 0);
+        day.set(Calendar.MINUTE, 0);
+        day.set(Calendar.SECOND, 0);
+        day.add(Calendar.HOUR, 0);
+        int startTs = (int) (day.getTimeInMillis() / 1000);
+        int endTs = startTs + 24 * 60 * 60 - 1;
+        tsTranslation = new TimestampTranslation();
+        tsTranslation.shorten(startTs);
+        String formattedDate = new SimpleDateFormat("E, MMM dd").format(chartsHost.getEndDate());
+        binding.dateView.setText(formattedDate);
+        return fetchSpo2Data(db, device, startTs, endTs);
     }
 
-    protected LineDataSet createDataSet(final List<Entry> values) {
-        final LineDataSet lineDataSet = new LineDataSet(values, "SpO2");
-        lineDataSet.setColor(CHART_LINE_COLOR);
+    protected LineDataSet createDataSet(final List<Entry> values, boolean manualPoints) {
+        final LineDataSet lineDataSet = new LineDataSet(values, getString(R.string.pref_header_spo2));
+        lineDataSet.setColor(getResources().getColor(R.color.spo2_color));
         lineDataSet.setDrawCircles(false);
         lineDataSet.setLineWidth(2.2f);
         lineDataSet.setFillAlpha(255);
         lineDataSet.setValueTextColor(CHART_TEXT_COLOR);
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        if (manualPoints) {
+            lineDataSet.setDrawCircles(true);
+            lineDataSet.enableDashedLine(0f,1f,0f);
+        }
         lineDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -115,24 +128,94 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
     }
 
     @Override
-    protected void updateChartsnUIThread(final Spo2ChartsData spo2Data) {
-        final DefaultChartsData<LineData> chartsData = spo2Data.getChartsData();
-        mSpo2Chart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
-        mSpo2Chart.getXAxis().setValueFormatter(chartsData.getXValueFormatter());
-        mSpo2Chart.setData(chartsData.getData());
-        mSpo2Chart.getAxisLeft().removeAllLimitLines();
+    protected void updateChartsnUIThread(Spo2ChartsData data) {
+        binding.manualMeasurementsList.removeAllViews();
+        binding.manualMeasurements.setVisibility(View.GONE);
+        final String emptyValue = requireContext().getString(R.string.stats_empty_value);
+        binding.spo2Minimum.setText(data.minimum > 0 ? String.valueOf(data.minimum) : emptyValue);
+        binding.spo2Maximum.setText(data.maximum > 0 ? String.valueOf(data.maximum) : emptyValue);
+        binding.spo2Average.setText(data.average > 0 ? String.valueOf(data.average) : emptyValue);
+        binding.spo2LineChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
+        binding.spo2LineChart.getAxisLeft().removeAllLimitLines();
+        Date date = new Date((long) getTSEnd() * 1000);
+        String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
+        binding.dateView.setText(formattedDate);
 
-        LOG.debug("SpO2 average: {}", spo2Data.getAverage());
+        final List<LegendEntry> legendEntries = new ArrayList<>(1);
+        final LegendEntry spo2RateEntry = new LegendEntry();
+        spo2RateEntry.label = getString(R.string.pref_header_spo2);
+        spo2RateEntry.formColor = getResources().getColor(R.color.spo2_color);
+        legendEntries.add(spo2RateEntry);
+        final LegendEntry spo2RateAvg = new LegendEntry();
+        spo2RateAvg.label = getString(R.string.stress_average);
+        spo2RateAvg.formColor = Color.GRAY;
+        legendEntries.add(spo2RateAvg);
+        binding.spo2LineChart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
+        binding.spo2LineChart.getLegend().setCustom(legendEntries);
 
-        if (spo2Data.getAverage() > 0 && SHOW_CHARTS_AVERAGE) {
-            final LimitLine averageLine = new LimitLine(spo2Data.getAverage());
-            averageLine.setLineColor(Color.RED);
-            averageLine.setLineWidth(1.5f);
-            averageLine.enableDashedLine(15f, 10f, 0f);
-            mSpo2Chart.getAxisLeft().addLimitLine(averageLine);
+        final List<ILineDataSet> lineDataSets = new ArrayList<>();
+        List<Entry> measurementsEntries = new ArrayList<>();
+        List<Entry> manualMeasurementsEntries = new ArrayList<>();
+        List<Spo2Sample> manualMeasurementSamples = new ArrayList<Spo2Sample>();
+        int lastTsShorten = 0;
+        for (final Spo2Sample sample : data.samples) {
+            int ts = (int) (sample.getTimestamp() / 1000L);
+            int tsShorten = tsTranslation.shorten(ts);
+            if (sample.getType() == Spo2Sample.Type.MANUAL) {
+                manualMeasurementsEntries.add(new Entry(tsShorten, sample.getSpo2()));
+                manualMeasurementSamples.add(sample);
+                continue;
+            }
+            if (lastTsShorten == 0 || (tsShorten - lastTsShorten) <= 300) {
+                measurementsEntries.add(new Entry(tsShorten, sample.getSpo2()));
+            } else {
+                if (!measurementsEntries.isEmpty()) {
+                    List<Entry> clone = new ArrayList<>(measurementsEntries.size());
+                    clone.addAll(measurementsEntries);
+                    lineDataSets.add(createDataSet(clone, false));
+                    measurementsEntries.clear();
+                }
+            }
+            lastTsShorten = tsShorten;
+            measurementsEntries.add(new Entry(tsShorten, sample.getSpo2()));
         }
 
-        mSpo2Chart.getAxisRight().setEnabled(false);
+        if (!measurementsEntries.isEmpty()) {
+            lineDataSets.add(createDataSet(measurementsEntries, false));
+        }
+        if (!manualMeasurementsEntries.isEmpty()) {
+            lineDataSets.add(createDataSet(manualMeasurementsEntries, true));
+        }
+
+        binding.spo2LineChart.getXAxis().setValueFormatter(new SampleXLabelFormatter(tsTranslation, "HH:mm"));
+
+        final LineData lineData = new LineData(lineDataSets);
+
+        if (data.average > 0 && GBApplication.getPrefs().getBoolean("charts_show_average", true)) {
+            final LimitLine averageLine = new LimitLine(data.average);
+            averageLine.setLineColor(Color.GRAY);
+            averageLine.setLineWidth(1.5f);
+            averageLine.enableDashedLine(15f, 10f, 0f);
+            binding.spo2LineChart.getAxisLeft().addLimitLine(averageLine);
+        }
+
+        if (!manualMeasurementSamples.isEmpty()) {
+            for (Spo2Sample sample : manualMeasurementSamples) {
+                View itemView = LayoutInflater.from(getContext()).inflate(R.layout.item_spo2_manual_measurment, binding.manualMeasurementsList, false);
+                TextView timeText = itemView.findViewById(R.id.timeText);
+                TextView valueText = itemView.findViewById(R.id.valueText);
+                Spo2ManualMeasurement measurement = new Spo2ManualMeasurement(sample.getTimestamp(), sample.getSpo2());
+                timeText.setText(measurement.getTime());
+                valueText.setText(measurement.getValue());
+                binding.manualMeasurementsList.addView(itemView);
+            }
+            binding.manualMeasurementsList.getChildAt(binding.manualMeasurementsList.getChildCount() - 1)
+                    .findViewById(R.id.separator)
+                    .setVisibility(View.GONE);
+            binding.manualMeasurements.setVisibility(View.VISIBLE);
+        }
+
+        binding.spo2LineChart.setData(lineData);
     }
 
     @Override
@@ -140,148 +223,81 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         return requireContext().getString(R.string.pref_header_spo2);
     }
 
-    @Override
-    public boolean isSingleDay() {
-        return false;
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater,
-                             final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_charts, container, false);
-
-        mSpo2Chart = rootView.findViewById(R.id.activitysleepchart);
-
-        setupLineChart();
-
-        // refresh immediately instead of use refreshIfVisible(), for perceived performance
-        refresh();
-
-        return rootView;
-    }
-
     private void setupLineChart() {
-        mSpo2Chart.setBackgroundColor(BACKGROUND_COLOR);
-        mSpo2Chart.getDescription().setTextColor(DESCRIPTION_COLOR);
-        configureBarLineChartDefaults(mSpo2Chart);
+        binding.spo2LineChart.setBackgroundColor(BACKGROUND_COLOR);
+        binding.spo2LineChart.getDescription().setText("");
 
-        final XAxis x = mSpo2Chart.getXAxis();
-        x.setDrawLabels(true);
-        x.setDrawGridLines(false);
-        x.setEnabled(true);
-        x.setTextColor(CHART_TEXT_COLOR);
-        x.setDrawLimitLinesBehindData(true);
+        final XAxis xAxisBottom = binding.spo2LineChart.getXAxis();
+        xAxisBottom.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxisBottom.setDrawLabels(true);
+        xAxisBottom.setDrawGridLines(false);
+        xAxisBottom.setEnabled(true);
+        xAxisBottom.setDrawLimitLinesBehindData(true);
+        xAxisBottom.setTextColor(CHART_TEXT_COLOR);
+        xAxisBottom.setAxisMinimum(0f);
+        xAxisBottom.setAxisMaximum(86400f);
+        xAxisBottom.setLabelCount(7, true);
 
-        final YAxis yAxisLeft = mSpo2Chart.getAxisLeft();
+        final YAxis yAxisLeft = binding.spo2LineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setAxisMaximum(100f);
-        yAxisLeft.setAxisMinimum(75f);
+        yAxisLeft.setAxisMaximum(100.5f);
+        yAxisLeft.setAxisMinimum(65f);
         yAxisLeft.setDrawTopYLabelEntry(false);
         yAxisLeft.setTextColor(CHART_TEXT_COLOR);
         yAxisLeft.setEnabled(true);
+
+        final YAxis yAxisRight = binding.spo2LineChart.getAxisRight();
+        yAxisRight.setEnabled(true);
+        yAxisRight.setDrawLabels(false);
+        yAxisRight.setDrawGridLines(false);
+        yAxisRight.setDrawAxisLine(true);
     }
 
     @Override
-    protected void setupLegend(final Chart<?> chart) {
-        final List<LegendEntry> legendEntries = new ArrayList<>(2);
-
-        final LegendEntry entry = new LegendEntry();
-        entry.label = requireContext().getString(R.string.pref_header_spo2);
-        entry.formColor = CHART_LINE_COLOR;
-        legendEntries.add(entry);
-
-        if (SHOW_CHARTS_AVERAGE) {
-            final LegendEntry averageEntry = new LegendEntry();
-            averageEntry.label = SPO2_AVERAGE_LABEL;
-            averageEntry.formColor = Color.RED;
-            legendEntries.add(averageEntry);
-        }
-
-        chart.getLegend().setCustom(legendEntries);
-        chart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
-    }
+    protected void setupLegend(final Chart<?> chart) {}
 
     @Override
     protected void renderCharts() {
-        mSpo2Chart.animateX(ANIM_TIME, Easing.EaseInOutQuart);
+        binding.spo2LineChart.invalidate();
     }
 
-    private List<? extends Spo2Sample> getSamples(final DBHandler db, final GBDevice device) {
-        final int tsStart = getTSStart();
-        final int tsEnd = getTSEnd();
+    private List<? extends Spo2Sample> getSamples(final DBHandler db, final GBDevice device, int startTs, int endTs) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends Spo2Sample> sampleProvider = coordinator.getSpo2SampleProvider(device, db.getDaoSession());
-        return sampleProvider.getAllSamples(tsStart * 1000L, tsEnd * 1000L);
+        return sampleProvider.getAllSamples(startTs * 1000L, endTs * 1000L);
     }
 
-    protected class Spo2ChartsDataBuilder {
-        private final List<? extends Spo2Sample> samples;
 
-        private final TimestampTranslation tsTranslation = new TimestampTranslation();
+    private Spo2ChartsData fetchSpo2Data(DBHandler db, GBDevice device, int startTs, int endTs) {
+        List<? extends Spo2Sample> samples = getSamples(db, device, startTs, endTs);
 
-        private final List<Entry> lineEntries = new ArrayList<>();
-
-        long averageSum;
-        long averageNumSamples;
-
-        public Spo2ChartsDataBuilder(final List<? extends Spo2Sample> samples) {
-            this.samples = samples;
-        }
-
-        private void reset() {
-            tsTranslation.reset();
-            lineEntries.clear();
-
-            averageSum = 0;
-            averageNumSamples = 0;
-        }
-
-        private void processSamples() {
-            reset();
-
-            for (final Spo2Sample sample : samples) {
-                processSample(sample);
+        final Accumulator accumulator = new Accumulator();
+        for (int i = 0; i < samples.size(); i++) {
+            final Spo2Sample sample = samples.get(i);
+            if (sample.getSpo2() > 0) {
+                accumulator.add(sample.getSpo2());
             }
         }
 
-        private void processSample(final Spo2Sample sample) {
-            final int ts = tsTranslation.shorten((int) (sample.getTimestamp() / 1000L));
-            lineEntries.add(new Entry(ts, sample.getSpo2()));
+        final int average = accumulator.getCount() > 0 ? (int) Math.round(accumulator.getAverage()) : DATA_INVALID;
+        final int minimum = accumulator.getCount() > 0 ? (int) Math.round(accumulator.getMin()) : DATA_INVALID;
+        final int maximum = accumulator.getCount() > 0 ? (int) Math.round(accumulator.getMax()) : DATA_INVALID;
 
-            averageSum += sample.getSpo2();
-            averageNumSamples += 1;
-        }
-
-        public Spo2ChartsData build() {
-            processSamples();
-
-            final List<ILineDataSet> lineDataSets = new ArrayList<>();
-
-            lineDataSets.add(createDataSet(lineEntries));
-
-            final LineData lineData = new LineData(lineDataSets);
-            final ValueFormatter xValueFormatter = new SampleXLabelFormatter(tsTranslation, "HH:mm");
-            final DefaultChartsData<LineData> chartsData = new DefaultChartsData<>(lineData, xValueFormatter);
-            return new Spo2ChartsData(chartsData, Math.round((float) averageSum / averageNumSamples));
-        }
+        return new Spo2ChartsData(samples, average, minimum, maximum);
     }
 
     protected static class Spo2ChartsData extends ChartsData {
-        private final DefaultChartsData<LineData> chartsData;
-        private final int average;
+        public List<? extends Spo2Sample> samples;
+        public final int average;
+        public final int minimum;
+        public final int maximum;
 
-        public Spo2ChartsData(final DefaultChartsData<LineData> chartsData, final int average) {
-            this.chartsData = chartsData;
+        public Spo2ChartsData(List<? extends Spo2Sample> samples, int average, int minimum, int maximum) {
+            this.samples = samples;
             this.average = average;
-        }
-
-        public DefaultChartsData<LineData> getChartsData() {
-            return chartsData;
-        }
-
-        public int getAverage() {
-            return average;
+            this.minimum = minimum;
+            this.maximum = maximum;
         }
     }
+
 }
