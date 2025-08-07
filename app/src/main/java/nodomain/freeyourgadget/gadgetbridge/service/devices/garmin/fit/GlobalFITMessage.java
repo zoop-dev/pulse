@@ -436,7 +436,7 @@ public class GlobalFITMessage {
     public static GlobalFITMessage SPO2 = new GlobalFITMessage(269, "SPO2", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "reading_spo2"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "reading_confidence"),
-            new FieldDefinitionPrimitive(2, BaseType.UINT8, "mode"), // 3 periodic
+            new FieldDefinitionPrimitive(2, BaseType.UINT8, "mode"), // 1 manual 3 periodic
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 

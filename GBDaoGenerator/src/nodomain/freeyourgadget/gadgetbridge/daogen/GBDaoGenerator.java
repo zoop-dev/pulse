@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(110, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(111, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -892,6 +892,7 @@ public class GBDaoGenerator {
         Entity spo2sample = addEntity(schema, "GarminSpo2Sample");
         addCommonTimeSampleProperties("AbstractSpo2Sample", spo2sample, user, device);
         spo2sample.addIntProperty(SAMPLE_SPO2).notNull().codeBeforeGetter(OVERRIDE);
+        spo2sample.addIntProperty("typeNum").notNull().codeBeforeGetter(OVERRIDE);
         return spo2sample;
     }
 

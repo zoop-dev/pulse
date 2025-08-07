@@ -65,6 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
@@ -225,8 +226,8 @@ public class FitImporter {
                 }
                 Objects.requireNonNull(activitySamplesPerTimestamp.get(currentMonitoringTimestamp)).add(monitoringRecord);
                 lastMonitoringTimestamp = currentMonitoringTimestamp;
-            } else if (record instanceof FitSpo2) {
-                final Integer spo2 = ((FitSpo2) record).getReadingSpo2();
+            } else if (record instanceof FitSpo2 fitSpo2) {
+                final Integer spo2 = fitSpo2.getReadingSpo2();
                 if (spo2 == null || spo2 <= 0) {
                     continue;
                 }
@@ -234,6 +235,17 @@ public class FitImporter {
                 final GarminSpo2Sample sample = new GarminSpo2Sample();
                 sample.setTimestamp(ts * 1000L);
                 sample.setSpo2(spo2);
+                sample.setTypeNum(Spo2Sample.Type.UNKNOWN.getNum());
+                if (fitSpo2.getMode() != null) {
+                    switch (fitSpo2.getMode()) {
+                        case 1:
+                            sample.setTypeNum(Spo2Sample.Type.MANUAL.getNum());
+                            break;
+                        case 3:
+                            sample.setTypeNum(Spo2Sample.Type.AUTOMATIC.getNum());
+                            break;
+                    }
+                }
                 spo2samples.add(sample);
             } else if (record instanceof FitRespirationRate) {
                 final Float respiratoryRate = ((FitRespirationRate) record).getRespirationRate();
