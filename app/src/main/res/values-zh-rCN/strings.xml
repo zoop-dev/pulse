@@ -254,7 +254,7 @@
     <string name="chart_no_data_synchronize">没有数据。立即同步？</string>
     <string name="user_feedback_miband_activity_data_transfer">即将从 %2$s 开始传输 %1$s 数据</string>
     <string name="miband_prefs_fitness_goal">每天步数目标</string>
-    <string name="dbaccess_error_executing">执行 \'%1$s\' 时出错</string>
+    <string name="dbaccess_error_executing">执行 %1$s 时出错</string>
     <string name="controlcenter_start_activitymonitor">您的活动</string>
     <string name="cannot_connect">无法连接: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">无法找到安装此文件的处理程序。</string>
@@ -455,7 +455,7 @@
     <string name="vibration_profile_ring">响铃</string>
     <string name="mi2_prefs_button_press_broadcast">要发送的广播消息</string>
     <string name="pref_summary_pebble_forcele">使用实验性 Pebble LE 以支持所有 Pebble ，代替 BT 经典连接。 这首先需要以非 LE 配对，然后以 Pebble LE 连接</string>
-    <string name="pref_summary_pebble_mtu_limit">如果您的 Pebble 2 / Pebble LE 无法正常工作，请尝试使用此设置来限制 MTU （有效范围 20–512 ）</string>
+    <string name="pref_summary_pebble_mtu_limit">如果您的 Pebble 2 / Pebble LE 无法正常工作，请尝试使用此设置来限制 MTU （有效范围 20 – 512）</string>
     <string name="pref_header_auto_export">自动导出</string>
     <string name="pref_title_auto_export_enabled">启用自动导出</string>
     <string name="pref_title_auto_export_location">导出位置</string>
@@ -516,7 +516,7 @@
     <string name="lack_of_step">缺少步数：%1$d</string>
     <string name="overstep">超过步数：%1$d</string>
     <string name="live_activity_max_heart_rate">当前／最大心率：%1$d / %2$d</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">您没有睡觉</string>
     <string name="mi3_prefs_band_screen_unlock">手环屏幕解锁</string>
     <string name="mi3_prefs_band_screen_unlock_summary">滑动以解锁手环屏幕</string>
@@ -655,7 +655,7 @@
     <string name="title_activity_device_specific_settings">设备特殊设置</string>
     <string name="pref_title_authkey">认证密钥</string>
     <string name="pref_summary_authkey">将您想要连接的所有 Android 设备上的认证密钥更改为通用的密钥。默认所有设备的密钥是 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">您即将在跃我手环2(Amazfit Cor 2)上安装 %s 版本的固件 \n \n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启 \n \n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件 \n \n风险自担！ \n \n此功能未经测试，如果您的设备名为 \"Amazfit Band 2\"，您可能需要刷入 BEATS_W 固件</string>
+    <string name="fw_upgrade_notice_amazfitcor2">您即将在跃我手环2(Amazfit Cor 2)上安装 %s 版本的固件 \n \n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启 \n \n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件 \n \n风险自担！ \n \n此功能未经测试，如果您的设备名为 Amazfit Band 2，您可能需要刷入 BEATS_W 固件</string>
     <string name="dutch">荷兰语</string>
     <string name="turkish">土耳其语</string>
     <string name="ukrainian">乌克兰语</string>
@@ -856,7 +856,7 @@
     <string name="about_description_generic">用于替代供应商闭源穿戴设备 Android 应用程序的脱机、无版权、自由的方案。</string>
     <string name="about_activity_title_generic">关于 Gadgetbridge</string>
     <string name="about_title">关于</string>
-    <string name="pref_title_weather_summary">由LineageOS天气服务提供，其他版本的Android系统需要使用诸如 \"Weather notification\" 。更多信息请访问 Gadgetbridge 的Wiki。</string>
+    <string name="pref_title_weather_summary">由 LineageOS 天气服务提供，其它 Android 版本需要使用类似 Weather notification 的应用。更多信息请查阅 Gadgetbridge 的Wiki。</string>
     <string name="menuitem_worldclock">世界时钟</string>
     <string name="permission_granting_mandatory">所有权限都是必须的，若未授予这些权限，可能会导致不稳定</string>
     <string name="error_background_service_reason">由于意外错误，启动后台服务失败。 - 点击此处查看更多详情。\n\n错误：</string>
@@ -1511,7 +1511,7 @@
     <string name="world_clock_label">标签</string>
     <string name="title_activity_world_clock_details">世界时钟详情</string>
     <string name="pref_world_clocks_summary">为其他时区配置时钟</string>
-    <string name="world_clock_delete_confirm_title">删除\'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">删除 %1$s</string>
     <string name="pref_world_clocks_title">世界时钟</string>
     <string name="mi5_prefs_workout_activity_types">锻炼活动类型</string>
     <string name="mi5_prefs_workout_activity_types_summary">选择要在锻炼屏幕上显示的活动类型</string>
@@ -1617,7 +1617,7 @@
     <string name="bengali">孟加拉语</string>
     <string name="icelandic">冰岛语</string>
     <string name="pref_explanation_authkey">有些设备在第一次初始化时需要一个特殊的配对密钥。点击这里访问Wiki以了解更多细节。</string>
-    <string name="pref_explanation_authkey_new_protocol">如果您看到“请更新应用程序到最新版本”的信息，请确保选中上面的\"新认证协议\"。点击这里以在Wiki上获得更多信息。</string>
+    <string name="pref_explanation_authkey_new_protocol">如果您在手环上看到“更新应用至最新版本”的提示，请确保选中上方的“新认证协议”。点击这里以在 Wiki 上获得更多信息。</string>
     <string name="prefs_password">密码</string>
     <string name="prefs_password_summary">从手腕上取下时，用密码锁定手环</string>
     <string name="prefs_password_4_digits_1_to_4_summary">密码必须有4位数，使用数字1至4</string>
@@ -2014,7 +2014,7 @@
     <string name="pref_pair_bluetooth_calls_title">配对以进行蓝牙通话</string>
     <string name="pref_pair_bluetooth_calls_help_title">如何接听蓝牙电话</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. 点击下面的按钮开始配对过程。</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. 转到手机的蓝牙设置，并与将显示的新设备配对（与您当前手表的名称相似，但带有后缀，例如 \"Amazfit GTR 4 - AFC8\"。</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. 转到手机的蓝牙设置，并与将显示的新设备配对（与您当前手表的名称相似，但带有后缀，例如 Amazfit GTR 4 - AFC8。</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. 启用下方的蓝牙通话设置。</string>
     <string name="pref_summary_receive_calls_watch">直接在手表上接打电话</string>
     <string name="pref_pair_bluetooth_calls_help_warning">警告：如果您在未与第二个实例配对的情况下启用蓝牙呼叫，来电通知可能无法按预期工作。</string>
@@ -2077,7 +2077,7 @@
     <string name="pref_contacts_title">联系人</string>
     <string name="title_activity_set_contacts">配置联系人</string>
     <string name="contact_delete_confirm_title">删除联系人</string>
-    <string name="contact_delete_confirm_description">您确定要删除 “%1$s” 吗？</string>
+    <string name="contact_delete_confirm_description">您确定要删除 %1$s 吗？</string>
     <string name="title_activity_contact_details">联系人详情</string>
     <string name="pref_contacts_summary">在手表上配置联系人</string>
     <string name="activity_detail_share_gps_label">分享 GPS 轨迹</string>
@@ -3183,7 +3183,7 @@
     <string name="activity_detail_share_json_details">分享 JSON 详情</string>
     <string name="mijia_lywsd_comfort_upper">上限</string>
     <string name="date_placeholders__date__time">%1$s，%2$s</string>
-    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="mijia_lywsd_comfort_level_title">舒适度</string>
     <string name="mijia_lywsd_comfort_level_summary">配置显示表情符号的温度和湿度限制</string>
     <string name="mijia_lywsd_comfort_temperature_title">摄氏度</string>
@@ -3429,7 +3429,7 @@
     <string name="gree_pair_clipboard">设备名称：%1$s\nMAC地址：%2$s\n绑定密钥：%3$s</string>
     <string name="gree_controller_host">主机</string>
     <string name="copy_to_clipboard">复制</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
     <string name="cycling">骑行</string>
     <string name="unit_joule">焦耳</string>
     <string name="training_load">训练负载</string>
@@ -3460,7 +3460,7 @@
     <string name="ground_contact_time_balance">接地接触时间平衡</string>
     <string name="unit_rpm">rpm</string>
     <string name="unit_watt">瓦特</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="average_right_power_phase">平均右动能阶段</string>
     <string name="unit_millimeter">毫米</string>
     <string name="max_power">最大动能</string>
@@ -3512,7 +3512,7 @@
     <string name="earfun_tap_action_noise_control_normal_wind">噪音控制（普通，风噪）</string>
     <string name="dual_device_mode_summary">允许同时将耳机连接到两个设备</string>
     <string name="dual_device_mode_title">双设备模式</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="enhanced">增强</string>
     <string name="serbian_latin">塞尔维亚语（拉丁语）</string>
     <string name="catalan">加泰罗尼亚语</string>
@@ -3908,4 +3908,34 @@
     <string name="help">帮助</string>
     <string name="cannot_open_help_url">无法打开 URL</string>
     <string name="auth_settings">认证设置</string>
+    <string name="title_activity_gps_track_installer">GPS 轨迹安装程序</string>
+    <string name="pref_title_block_screenshot">阻止截图</string>
+    <string name="pref_summary_block_screenshots">防止截图并在非安全显示屏上查看。需要重启GB才能完全生效。</string>
+    <string name="title_gpx_track_name">轨迹名称</string>
+    <string name="chinese">中文</string>
+    <string name="training_acute_load">急性负荷</string>
+    <string name="training_chronic_load">慢性负荷</string>
+    <string name="this_week_total">本周总计</string>
+    <string name="last_week_total">上周总计</string>
+    <string name="low">低</string>
+    <string name="optimal">最佳</string>
+    <string name="high">高</string>
+    <string name="very_high">非常高</string>
+    <string name="training_daily_load">每日负荷</string>
+    <string name="pref_check_permission_show_list">显示权限状态</string>
+    <string name="pref_header_training_load">训练负荷</string>
+    <string name="first_start_permissions_do_not_ask_again">不再询问</string>
+    <string name="first_start_permissions_do_not_ask_warning_summary">不授予权限可能会导致问题。您可以从设置屏幕再次打开此界面。</string>
+    <string name="notifications_app_icon_uploading_limit_reached">应用图标上传已达到限制。</string>
+    <string name="equalizer_preset_standard">标准</string>
+    <string name="media_playback_mode">播放模式</string>
+    <string name="media_playback_mode_normal">正常</string>
+    <string name="media_playback_mode_shuffle">随机</string>
+    <string name="media_playback_mode_repeat">重复</string>
+    <string name="media_source">媒体源</string>
+    <string name="mp3">MP3</string>
+    <string name="media_source_switching_bluetooth_mp3">切换媒体源（蓝牙/MP3）</string>
+    <string name="shokz_controls_long_press_multi_function">长按多功能按钮</string>
+    <string name="shokz_controls_simultaneous_volume_up_down">同时长按音量加减键</string>
+    <string name="track_name_required">轨迹名称不能为空</string>
 </resources>
