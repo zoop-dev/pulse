@@ -133,6 +133,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PAppIcon;
@@ -294,6 +295,8 @@ public class HuaweiSupportProvider {
     private HuaweiDataSyncGoals huaweiDataSyncTreeCircleGoals = null;
 
     private HuaweiDataSyncFindDevice huaweiDataSyncFindDevice = null;
+
+    private HuaweiDataSyncEmotion huaweiDataSyncEmotion = null;
 
     protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
 
@@ -944,6 +947,10 @@ public class HuaweiSupportProvider {
 
                     if (getHuaweiCoordinator().supportsFindDeviceAbility()) {
                         huaweiDataSyncFindDevice = new HuaweiDataSyncFindDevice(HuaweiSupportProvider.this);
+                    }
+
+                    if(getHuaweiCoordinator().supportsEmotion()) {
+                        huaweiDataSyncEmotion = new HuaweiDataSyncEmotion(HuaweiSupportProvider.this);
                     }
                 }
             });
@@ -2408,6 +2415,16 @@ public class HuaweiSupportProvider {
             editor.putBoolean(HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH, false);
             editor.apply();
             GB.toast(context, context.getString(R.string.huawei_stress_no_calibration_data), Toast.LENGTH_SHORT, GB.ERROR);
+            return;
+        }
+
+        if (huaweiDataSyncEmotion != null) {
+            if (!huaweiDataSyncEmotion.changeEmotionsState(automaticStressEnabled)) {
+                LOG.error("Error to set emotions");
+            }
+        }
+
+        if(huaweiDataSyncEmotion != null && !automaticStressEnabled) {
             return;
         }
 

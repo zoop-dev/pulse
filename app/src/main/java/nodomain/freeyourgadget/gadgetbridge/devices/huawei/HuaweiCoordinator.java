@@ -865,6 +865,12 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsEmotion() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(206);
+        return false;
+    }
+
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
 //                  if (deviceType == 10 && deviceVersion == 73617766697368 && deviceSoftVersion == 372E312E31) -> leo device
