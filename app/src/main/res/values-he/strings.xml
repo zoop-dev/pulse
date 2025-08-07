@@ -2329,7 +2329,7 @@
     <string name="pref_summary_notifications_ignore_work_profile">לא לשלוח הודעות מיישומונים בפרופיל העבודה של השעון</string>
     <string name="femometer_measurement_mode_title">מצב מדידה</string>
     <string name="femometer_measurement_mode_quick">מצב מהיר (30 שנ׳)</string>
-    <string name="femometer_measurement_mode_normal">מצב רגיל (60‏-90 שנ׳)</string>
+    <string name="femometer_measurement_mode_normal">מצב רגיל (60‏ – 90 שנ׳)</string>
     <string name="femometer_measurement_mode_precise">מצב מדויק (3 דק׳)</string>
     <string name="pref_test_features_summary">יכולות שמופעלות בהתקן הזה</string>
     <string name="pref_summary_preview_message_in_title">מציג תצוגה מקדימה של ההודעה בכותרת ההתראה כפי שמרשה המכשיר</string>
