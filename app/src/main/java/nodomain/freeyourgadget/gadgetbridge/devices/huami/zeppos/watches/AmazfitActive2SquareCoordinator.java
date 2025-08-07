@@ -50,9 +50,13 @@ public class AmazfitActive2SquareCoordinator extends ZeppOsCoordinator {
     @Override
     public Set<Integer> getDeviceSources() {
         return new HashSet<>(Arrays.asList(
-                9830656, // chinese mainland version
-                9830657,
-                9830659
+                // Old values removed from the website?
+                //9830656, // chinese mainland version
+                //9830657,
+                //9830659,
+                10223872, // chinese mainland version
+                10223873,
+                10223875
         ));
     }
 
