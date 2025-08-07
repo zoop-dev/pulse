@@ -132,7 +132,7 @@
     <string name="pref_title_pebble_forcele">Toujours préférer le BLE</string>
     <string name="pref_summary_pebble_forcele">Utiliser le support expérimental du LE pour toutes les Pebble au lieu du Bluetooth classique. Cela requiert le jumelage d\'une Pebble non LE, puis d\'une Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Limite du GATT MTU de Pebble 2/LE</string>
-    <string name="pref_summary_pebble_mtu_limit">Si votre Pebble 2/LE ne fonctionne pas correctement, essayez d\'activer cette option pour limiter le MTU (plage valide 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Si votre Pebble 2/Pebble LE ne fonctionne pas correctement, essayez d\'activer cette option pour limiter le MTU (plage valide 20 – 512)</string>
     <string name="pref_title_pebble_enable_applogs">Activer la journalisation des applis du bracelet</string>
     <string name="pref_summary_pebble_enable_applogs">Ceci fera en sorte que les journaux des applis de montre soient journalisés par Gadgetbridge (requiert une reconnexion)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">ACK à l\'avance du PebbleKit</string>
@@ -245,7 +245,7 @@
     <string name="chart_no_data_synchronize">Aucune donnée. Synchroniser l\'appareil ?</string>
     <string name="user_feedback_miband_activity_data_transfer">Sur le point de transférer %1$s de données à partir de %2$s</string>
     <string name="miband_prefs_fitness_goal">Objectif de pas par jour</string>
-    <string name="dbaccess_error_executing">Erreur lors de l’exécution de %1$s\'</string>
+    <string name="dbaccess_error_executing">Erreur lors de l’exécution de %1$s</string>
     <string name="controlcenter_start_activitymonitor">Votre activité</string>
     <string name="cannot_connect">Impossible de se connecter : %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Impossible de trouver un gestionnaire pour installer ce fichier.</string>
@@ -451,8 +451,8 @@ Temps de sommeil préféré en heures</string>
 \nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
     <string name="pref_title_charts_swipe">Permettre le balayage gauche/droite dans les graphiques d\'activité</string>
     <string name="automatic">Automatique</string>
-    <string name="simplified_chinese">Chinois simplifié</string>
-    <string name="traditional_chinese">Chinois traditionnel</string>
+    <string name="simplified_chinese">Chinois (simplifié)</string>
+    <string name="traditional_chinese">Chinois (traditionnel)</string>
     <string name="english">Anglais</string>
     <string name="prefs_title_heartrate_measurement_interval">Mesure du pouls toute la journée</string>
     <string name="interval_one_minute">Une fois par minute</string>
@@ -551,7 +551,7 @@ Temps de sommeil préféré en heures</string>
     <string name="lack_of_step">Manque d\'activité : %1$d</string>
     <string name="overstep">Trop d\'activité : %1$d</string>
     <string name="live_activity_max_heart_rate">Mesure cardiaque actuelle / maximum : %1$d / %2$d</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Vous n\'avez pas dormi</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Glisser le doigt vers le haut pour débloquer l\'écran du bracelet</string>
     <string name="mi3_prefs_night_mode">Mode nuit</string>
@@ -723,7 +723,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_error_no_app_for_gpx">Pour visualiser votre géolocalisation, installez une appli qui lit les fichiers GPX.</string>
     <string name="preferences_makibes_hr3_settings">Réglages Makibes HR3</string>
     <string name="prefs_find_phone">Trouver le téléphone</string>
-    <string name="prefs_enable_find_phone">Activer « Trouver le tél. »</string>
+    <string name="prefs_enable_find_phone">Activer \"Trouver le tél\"</string>
     <string name="prefs_find_phone_summary">Utilisez votre bande pour lire l\'alarme de votre téléphone.</string>
     <string name="discovery_need_to_enter_authkey">Cet appareil a besoin d\'une clé d\'auth. Pression longue sur celui-ci pour la saisir. Lisez le wiki.</string>
     <string name="pref_chart_heartrate_color_red">Rouge</string>
@@ -1511,7 +1511,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_screen_notification_idle_alerts">Alertes d\'inactivité</string>
     <string name="pref_screen_vibration_patterns_title">Modes de vibration</string>
     <string name="pref_screen_vibration_patterns_summary">Configurer les modes de vibration pour les différentes notifications</string>
-    <string name="world_clock_delete_confirm_title">Effacer \'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">Effacer %1$s</string>
     <string name="world_clock_timezone">Fuseau horaire</string>
     <string name="world_clock_label">Étiquette</string>
     <string name="title_activity_world_clock_details">Détails du fuseau horaire</string>
@@ -1572,7 +1572,7 @@ Temps de sommeil préféré en heures</string>
     <string name="notification_gps_title">GPS Gadgebridge</string>
     <string name="notification_gps_text">Envoi des données GPS au(x) appareil(s) %1$d</string>
     <string name="notification_channel_gps">Suivi GPS</string>
-    <string name="permission_notification_listener">%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint. \n \nMerci de sélectionner \'%2$s\' puis \'%1$s\' et activer \'Autoriser l\'accès aux notifications\', puis appuyer sur \'Retour\' pour revenir à %1$s.</string>
+    <string name="permission_notification_listener">%2$s%2$s%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint. \n \nMerci de sélectionner %2$s puis %1$s et activer \"Autoriser l\'accès aux notifications\", puis appuyer sur \"Retour\" pour revenir à %1$s.</string>
     <string name="portuguese_br">Portugais (Brésil)</string>
     <string name="portuguese_pt">Portugais (Portugal)</string>
     <string name="prefs_active_noise_cancelling_level_low">Bas</string>
@@ -1642,7 +1642,7 @@ Temps de sommeil préféré en heures</string>
     <string name="autoconnect_from_device_title">Connecter lors de la connexion de l\'appareil</string>
     <string name="pref_explanation_authkey">Certains appareils nécessitent une clé de pairage pour la toute première initialisation de l\'appareil. Touchez ici pour plus de détails dans le wiki.</string>
     <string name="controlcenter_unset_folder">Dossier non configuré</string>
-    <string name="pref_explanation_authkey_new_protocol">Si vous obtenez le message \"Mettre à jour l\'application dans sa dernière version\" sur le bracelet, assurez-vous de vérifier la section \"Nouveau protocole Auth\" ci-dessus. Ou ici pour plus d\'info dans le wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Si vous obtenez le message \"Mettre à jour l\'application dans sa dernière version\" sur le bracelet, assurez-vous de vérifier la section \"Nouveau protocole Auth\" ci-dessus. Tapez ici pour plus d\'info dans le wiki.</string>
     <string name="prefs_password_enabled">Mot de passe activé</string>
     <string name="prefs_password_4_digits_1_to_4_summary">Le mot de passe doit être à 4 chiffres, avec les chiffres de 1 à 4</string>
     <string name="error_setting_parent_folder">Erreur lors de la configuration du dossier parent : %s</string>
@@ -1656,7 +1656,7 @@ Temps de sommeil préféré en heures</string>
     <string name="open_fw_installer_info_text_title">Installateur de fichier</string>
     <string name="open_fw_installer_select_file">Sélectionner un fichier à envoyer à votre appareil : %s</string>
     <string name="open_fw_installer_warning_title">Avertissement</string>
-    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices,...) dans l\'appareil. Pour plus d\'information se reporter au wiki : https ://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices, …) dans l\'appareil. Pour plus d\'information se reporter au wiki : https ://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_warning_text">Cette fonction a la capacité de rendre inopérant/endommager votre appareil. Cela étant dit, cela ne s\'est jamais produit pour aucun des développeurs, mais rappelez-vous que vous faites cela à vos risques et périls.</string>
     <string name="open_fw_installer_ensure_device_connected">Assurez-vous que l\'appareil %s est bien connecté</string>
     <string name="open_fw_installer_connect_maximum_one_device">Merci de connecter UN SEUL appareil vers lequel vous souhaitez envoyer le fichier.</string>
@@ -2027,7 +2027,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_summary_receive_calls_watch">Passer et recevoir des appels directement depuis la montre</string>
     <string name="pref_pair_bluetooth_calls_title">Coupler pour les appels Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Afin de recevoir les appels en Bluetooth, vous devez pairer votre téléphone avec une seconde instance de la montre.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Rendez-vous dans les réglages Bluetooth de votre téléphone, et pairez-le avec le nouvel appareil qui apparaitra (nom similaire à votre montre existante, mais avec un suffixe, du style \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Rendez-vous dans les réglages Bluetooth de votre téléphone, et pairez-le avec le nouvel appareil qui apparaitra (nom similaire à votre montre existante, mais avec un suffixe, du style Amazfit GTR 4 - AFC8.</string>
     <string name="pref_title_notification_cache_while_disconnected">Garder en cache lorsque hors de portée</string>
     <string name="pref_summary_notification_cache_while_disconnected">Envoyer les notifications manquées lorsqu\'un appareil se reconnecte après avoir été hors de portée</string>
     <string name="pref_switch_controls_anc_ambient_off">Annulation de bruit ←→ Ambiance ←→ Off</string>
@@ -2084,7 +2084,7 @@ Temps de sommeil préféré en heures</string>
     <string name="contact_delete_confirm_title">Effacer le contact</string>
     <string name="title_activity_contact_details">Détails du contact</string>
     <string name="title_activity_set_contacts">Configurer les contacts</string>
-    <string name="contact_delete_confirm_description">Etes-vous sûr de vouloir effacer \'%1$s\' ?</string>
+    <string name="contact_delete_confirm_description">Êtes-vous sûr(e) de vouloir effacer %1$s ?</string>
     <string name="contact_name">Nom</string>
     <string name="contact_missing_name">Le nom du contact est vide</string>
     <string name="contact_missing_number">Le numéro du contact est vide</string>
@@ -2168,7 +2168,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_prefs_goals">Objectifs</string>
     <string name="error_no_bluetooth_scan">L\'accès au Bluetooth doit être autorisé et activé pour que le scan fonctionne correctement</string>
     <string name="error_no_bluetooth_connect">L\'accès au Bluetooth doit être autorisé et activé pour que le scan fonctionne correctement</string>
-    <string name="permission_request">%1$s vous permet d\'envoyer des messages et d\'autres données depuis Android vers votre appareil. Pour cela il a besoin de permission pour accéder à ces données, sans quoi cela risque de ne pas fonctionner correctement. \n \nVous allez maintenant pouvoir configurer ces autorisations. \n \nMerci d\'appuyer sur \'%2$s\' pour continuer.</string>
+    <string name="permission_request">%1$s vous permet d\'envoyer des messages et d\'autres données depuis Android vers votre appareil. Pour cela il a besoin de permission pour accéder à ces données, sans quoi cela risque de ne pas fonctionner correctement. \n \nVous allez maintenant pouvoir configurer ces autorisations. \n \nMerci d\'appuyer sur %2$s pour continuer.</string>
     <string name="activity_type_handball">Handball</string>
     <string name="activity_type_windsurfing">Surf à voile</string>
     <string name="activity_type_kitesurfing">Kitesurfing</string>
@@ -2219,7 +2219,7 @@ Temps de sommeil préféré en heures</string>
 \nVotre bracelet va redémarrer après l\'installation du fichier .zip.
 \n
 \nA VOS RISQUES ET PÉRILS !</string>
-    <string name="fw_upgrade_notice_zepp_os">Vous êtes sur le point d\'installer le micro-logiciel %s dans votre %s. \n \nVotre montre va redémarrer après l\'installation du fichier .zip. \n \nA VOS RISQUES ET PÉRILS !</string>
+    <string name="fw_upgrade_notice_zepp_os">Vous êtes sur le point d\'installer le micro-logiciel %1$s dans votre %2$s. \n \nVotre montre va redémarrer après l\'installation du fichier .zip. \n \nA VOS RISQUES ET PÉRILS !</string>
     <string name="device_experimental">EXPÉRIMENTAL</string>
     <string name="info_menu_structure_removed">Structure de menu enlevé</string>
     <string name="error_menu_companion_not_installed">\'Compagnon HR\' probablement non installé</string>
@@ -2338,7 +2338,7 @@ Temps de sommeil préféré en heures</string>
     <string name="zepp_os_watchface_the_ultima">L\'ultima</string>
     <string name="zepp_os_watchface_city_of_speed">Vitesse urbaine</string>
     <string name="menuitem_headphone">Écouteur</string>
-    <string name="femometer_measurement_mode_normal">Mode normal (60s - 90s)</string>
+    <string name="femometer_measurement_mode_normal">Mode normal (60s – 90s)</string>
     <string name="call_rejection_method_reject">Rejet</string>
     <string name="zepp_os_watchface_free_combination">Combinaison libre</string>
     <string name="menuitem_body_composition">Composition corporelle</string>
@@ -2734,7 +2734,7 @@ Temps de sommeil préféré en heures</string>
     <string name="device_name_bicycle_sensor">Capteur vélo</string>
     <string name="title_cycling">Cyclisme</string>
     <string name="pref_title_wheel_diameter">Diamètre de la roue</string>
-    <string name="chart_cycling_point_label_distance">Aujourd\'hui : %.1f km \nTotal : %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Aujourd\'hui : %1$.1f km\nTotal : %2$.1f km</string>
     <string name="toast_setting_requires_reconnect">Ce réglage prendra effet à la prochaine reconnexion</string>
     <string name="toast_camera_permission_required">La permission Appareil Photo est nécessaire pour cette fonction.</string>
     <string name="toast_camera_support_required">Le support de la Caméra est nécessaire pour cette fonction.</string>
@@ -2747,7 +2747,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_sleepasandroid_slot_title">Emplacement d\'alarmes</string>
     <string name="alarm_slot_reset">L\'emplacement d\'alarme a été configuré à sa valeur par défaut</string>
     <string name="widget_layout_top_large_bot_wide">Grand au-dessus, large en dessous</string>
-    <string name="pref_dashboard_select_devices_title">Choisir les appareils...</string>
+    <string name="pref_dashboard_select_devices_title">Choisir les appareils…</string>
     <string name="pref_auto_reply_calls_delay_summary">Temps en seconde après lequel l\'appel est décroché automatiquement</string>
     <string name="devicesetting_scannable_minimum_unseen">Temps invisible minimum (secondes)</string>
     <string name="devicesetting_scannable_debounce">Délai d\'attente de la redondance de scan (secondes)</string>
@@ -2960,7 +2960,7 @@ Temps de sommeil préféré en heures</string>
     <string name="moondrop_touch_trigger_long_press_3s">Appui long (3s)</string>
     <string name="moondrop_touch_action_anc_mode">Activer le mode de suppression du bruit</string>
     <string name="hrv_status_unit">%1$d ms</string>
-    <string name="hrv_status_baseline">%1$d-%2$d ms</string>
+    <string name="hrv_status_baseline">%1$d – %2$d ms</string>
     <string name="soundcore_equalizer_custom_title">Personnaliser…</string>
     <string name="soundcore_equalizer_custom_summary">Configurer l’égaliseur paramétrique</string>
     <string name="soundcore_equalizer_direction">Direction du périphérique</string>
@@ -3125,7 +3125,7 @@ Temps de sommeil préféré en heures</string>
     <string name="backup_restore_exporting_preferences">Exportation des préférences…</string>
     <string name="backup_restore_exporting_database">Exportation de la base de données…</string>
     <string name="backup_restore_exporting_files">Exportation de fichiers…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Exportation des fichiers... %1d de %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Exportation des fichiers… %1$d de %2$d</string>
     <string name="backup_restore_do_not_exit">%s Veuillez garder cet écran ouvert jusqu’à ce que l’opération soit terminée.</string>
     <string name="backup_restore_importing_database">Importation de la base de données…</string>
     <string name="backup_restore_restart_summary">%1s va redémarrer.</string>
@@ -3143,7 +3143,7 @@ Temps de sommeil préféré en heures</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">Permettre l’interaction GATT par l’intermédiaire de l’API Intent BLE</string>
     <string name="prefs_summary_gatt_client_allow_gatt_interactions">Autoriser l’envoi de commandes de lecture/écriture et de connexion des caractéristiques BLE</string>
     <string name="prefs_summary_gatt_client_api_package">Restreindre la communication API d’intention BLE à ce paquet</string>
-    <string name="backup_restore_importing_files_i_of_n">Importation de fichiers... %1d de %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importation de fichiers... %1$d de %2$d</string>
     <string name="activity_db_management_backup_restore_explanation">Les opérations d’importation/exportation vous permettent de migrer ou de sauvegarder tous les paramètres, périphériques et données de Gadgetbridge vers et à partir d’un fichier Zip.
 \n
 \nImporter un fichier supprimera toutes les données, les périphériques et les préférences existants, en les remplaçant complètement par la sauvegarde.</string>
@@ -3153,7 +3153,7 @@ Temps de sommeil préféré en heures</string>
     <string name="backup_restore_importing">Importation à partir de Zip…</string>
     <string name="backup_restore_importing_validating">Validation du fichier…</string>
     <string name="backup_restore_export_complete">Exportation accomplie</string>
-    <string name="backup_restore_warning_files">%1d fichiers échoués à être restaurés : \n %2s</string>
+    <string name="backup_restore_warning_files">%1$d fichiers échoués à être restaurés :\n%2$s</string>
     <string name="backup_restore_import_complete">Importation accomplie</string>
     <string name="label_distance_trip">Distance parcourue : %.1f km</string>
     <string name="label_distance_total">Total : %.1f km</string>
@@ -3183,8 +3183,8 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_dnd_follow_phone_summary">Lorsque le mode NPD est activé ou désactivé sur le téléphone, il bascule automatiquement sur l’appareil également</string>
     <string name="inactivity_warnings_minimum_steps_title">Nombre minimal de pas</string>
     <string name="prefs_hrv_monitoring_title">Surveillance de la VFC</string>
-    <string name="date_placeholders__start_time__end_time">%1s - %2s</string>
-    <string name="date_placeholders__date__time">%1s, %1s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
+    <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="mijia_lywsd_comfort_temperature_title">Temperature (°C)</string>
     <string name="mijia_lywsd_comfort_temperature_summary">Plage recommandée : 19 - 27</string>
     <string name="mijia_lywsd_comfort_level_title">Niveau confort</string>
@@ -3267,7 +3267,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
     <string name="redmi_buds_5_pro_anc_deep">Profond</string>
-    <string name="music_delete_confirm_description">Êtes-vous sûr de vouloir supprimer \'%1$s\' ?</string>
+    <string name="music_delete_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$s ?</string>
     <string name="music_rename_playlist">Renommer la playlist</string>
     <string name="first_start_overview_dashboard">Le tableau de bord vous permet d’avoir une idée rapide de comment vous allez aujourd\'hui. L’affichage du calendrier indique l’état de vos objectifs sur un mois entier.</string>
     <string name="permission_fine_location_summary">Rechercher les appareils Bluetooth</string>
@@ -3311,7 +3311,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_equalizer_2">2 dB</string>
     <string name="first_start_overview_desc">Gadgetbridge a deux vues principales, chacune avec son propre but.</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
-    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr de vouloir supprimer \'%1$d\' chansons ?</string>
+    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$d chansons ?</string>
     <string name="first_start_overview_devices">La vue des appareils affiche tous les appareils que vous avez configurés et leur statut, et donne accès à des fonctions spécifiques aux appareils telles que des graphiques détaillés, des paramètres, des applications et des alarmes.</string>
     <string name="permission_notifications_summary">Transfert des notifications vers les gadgets connectés</string>
     <string name="permission_displayover_title">Afficher par-dessus d\'autres applications</string>
@@ -3363,7 +3363,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_type_lower_body">Bas du corps</string>
     <string name="totalJumps">Total de sauts</string>
     <string name="charts_show_balance_sleep_title">Afficher équilibre sommeil</string>
-    <string name="fw_upgrade_notice_huawei">Vous êtes sur le point de télécharger le micrologiciel %s sur votre %s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
+    <string name="fw_upgrade_notice_huawei">%1$sVous êtes sur le point de télécharger le micrologiciel %2$s%2$s sur votre %2$s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
     <string name="remote_control">Commande à distance</string>
     <string name="charts_show_balance_sleep_summary">Afficher excès/manque de sommeil dans des graphiques hebdomadaires et mensuels</string>
     <string name="charts_show_balance_steps_title">Afficher le solde de pas</string>
@@ -3416,7 +3416,7 @@ Temps de sommeil préféré en heures</string>
     <string name="permission_post_notification_summary">Affichage d’un avis continu qui maintient le service en cours</string>
     <string name="about_build_details_copied_to_clipboard">Détails de la compilation copiés dans le presse-papiers</string>
     <string name="copy_to_clipboard">Copier</string>
-    <string name="gree_pair_clipboard">Nom du périphérique : %s\nAdresse Mac : %s\nLier la clé : %s</string>
+    <string name="gree_pair_clipboard">Nom du périphérique : %1$s\nAdresse Mac : %2$s\nLier la clé : %3$s</string>
     <string name="gree_controller_host">Hôte</string>
     <string name="pref_garmin_fake_oauth_summary">Corrige certaines fonctions telles que la météo et les mises à jour AGPS sans se connecter à l’application officielle tous les 90 jours.</string>
     <string name="permission_manage_dnd_summary">Modification de la politique du MDN (DND) sur les avis (notifications)</string>
@@ -3424,7 +3424,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_transparency_strength">Force de la transparence</string>
     <string name="music_multiselect_limit">Limite pour la sélection de plus d’un élément atteinte</string>
     <string name="title_activity_even_realities_g1_pairing">Même jumelage de G1</string>
-    <string name="pairing_even_realities_g1_working">Jumelage avec %1s...</string>
+    <string name="pairing_even_realities_g1_working">Jumelage avec %1s…</string>
     <string name="pairing_even_realities_g1_find_both_fail">Échec pour trouver les lentilles droites et gauches. Veuillez scanner à nouveau.</string>
     <string name="pairing_even_realities_g1_select_next_lens">%1$s Critère sélectionné pour l\'appariement. Plusieurs candidats pour l\'objectif %2$s trouvé. Veuillez sélectionner l\'objectif %2$s dans la liste ci-dessous.</string>
     <string name="pref_vibration_intensity">Intensité vibration</string>
@@ -3474,7 +3474,7 @@ Temps de sommeil préféré en heures</string>
     <string name="huawei_stress_calibrate_start">Démarrer</string>
     <string name="huawei_stress_calibrate_finish">Terminé</string>
     <string name="banglejs_notification_missed_call_title">Appel manqué</string>
-    <string name="range_percentage">%1$d %% - %2$d %%</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
     <string name="range_percentage_float">%1$.1f %% - %2$.1f %%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="audio_recordings">Enregistrements audio</string>
@@ -3609,7 +3609,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_aawireless_prefer_last">Préférer le dernier téléphone connecté</string>
     <string name="pref_aawireless_remove_tap_restriction_summary">Permettre plus de 6 tapes en succession. Peut affecter la précision du GPS.</string>
     <string name="pref_aawireless_remove_tap_restriction_title">Supprimer restriction de tapes</string>
-    <string name="pref_aawireless_start_fix_summary">Solution de contournement - activez cette option si la LED est bleu fixe, mais qu’Android Auto ne démarre pas.</string>
+    <string name="pref_aawireless_start_fix_summary">Solution de contournement - activez cette option si la LED est bleu fixe, mais qu’Android Auto ne démarre pas</string>
     <string name="activity_print_label_print_size">Taille d’impression (px) : %1$d x %2$d</string>
     <string name="title_activity_file_installer">Installeur de fichier</string>
     <string name="pref_title_block_screenshot">Bloquer captures d’écran</string>
@@ -3625,7 +3625,7 @@ Temps de sommeil préféré en heures</string>
     <string name="interval_6_hour">chaque 6 heures</string>
     <string name="fwinstaller_file_not_compatible_to_device">Le fichier sélectionné n’est pas compatible avec l’appareil</string>
     <string name="fwinstaller_no_compatible_device_found">Aucun dispositif compatible trouvé pour installer %1s</string>
-    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Désactiver avertissements d’inactivité pendant la pause déjeuner (12h00 - 14h00)</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Désactiver avertissements d’inactivité pendant la pause déjeuner (12h00 – 14h00)</string>
     <string name="chinese">Chinois</string>
     <string name="help">Aide</string>
     <string name="cannot_open_help_url">Échec d\'ouverture URL</string>
@@ -3639,4 +3639,16 @@ Temps de sommeil préféré en heures</string>
     <string name="media_source_switching_bluetooth_mp3">Basculer source média (Bluetooth/MP3)</string>
     <string name="shokz_controls_long_press_multi_function">Appuyer longuement sur bouton multifonction</string>
     <string name="shokz_controls_simultaneous_volume_up_down">Appuyez longuement sur le volume pour monter et descendre simultanément</string>
+    <string name="connection_priority_low_power_title">Nécessite low power</string>
+    <string name="connection_priority_low_power_summary">Réduit les paramètres de connexion de priorité et de débit des données Bluetooth.</string>
+    <string name="equalizer_preset_standard">Standard</string>
+    <string name="pref_title_time_interval">Intervalle de temps</string>
+    <string name="pref_summary_time_interval">Restreindre à des intervalles spécifiques</string>
+    <string name="prefs_key_enable_deprecated_notificationcollectormonitor_title">Activer le service obsolète de surveillance du collecteur de notifications</string>
+    <string name="pref_printer_print_received_text">Imprimer le texte partagé sur Gadgetbridge</string>
+    <string name="submit_button_text">Soumettre</string>
+    <string name="auth_key_required_message">La clé d’auth ne peut pas être vide</string>
+    <string name="invalid_auth_key_message">Clé d’auth invalide - veuillez réessayer</string>
+    <string name="auth_key_activity_title_for">Clé d\'auth pour %1$s</string>
+    <string name="auth_key_explanation">Cet appareil nécessite une clé d’authentification pour l’appairage.</string>
 </resources>
