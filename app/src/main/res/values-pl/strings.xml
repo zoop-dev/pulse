@@ -3957,4 +3957,5 @@
     <string name="pref_check_permission_show_list">Pokaż status uprawnień</string>
     <string name="first_start_permissions_do_not_ask_again">Nie pytaj ponownie</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Brak udzielenia uprawnienia może skutkować wystąpieniem problemów. Ekran ten można ponownie otworzyć z poziomu Ustawień.</string>
+    <string name="manual_measurements">Ręczne pomiary</string>
 </resources>
