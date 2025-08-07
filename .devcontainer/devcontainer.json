@@ -1,0 +1,25 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "adelphes.android-dev-ext",
+                "vscjava.vscode-java-pack"
+            ]
+        }
+    },
+    "mounts": [
+        "source=${localEnv:HOME}/.android,target=/home/developer/.android,type=bind,consistency=cached"
+    ],
+    "runArgs": [
+        "--init",
+        "--network=host",
+        "--device=/dev/bus/usb",
+        "--privileged",
+//        "--userns=keep-id" // needed if podman is used instead of docker
+    ],
+    "postStartCommand": "sudo chown -R developer:developer /opt/sdk/",
+    "initializeCommand": "mkdir -p ${localEnv:HOME}/.android" // make sure folder exists so that bind mount does not fail
+}

@@ -1,0 +1,37 @@
+{
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "android",
+                "request": "launch",
+                "name": "Launch App",
+                "appSrcRoot": "${workspaceRoot}/app/src/main",
+                "apkFile": "${workspaceRoot}/app/build/outputs/apk/mainline/debug/app-mainline-debug.apk",
+                "adbSocket": "localhost:5037",
+                "autoStartADB": true,
+                "staleBuild": "warn",
+                "targetDevice": "${command:PickAndroidDevice}",
+                "manifestFile": "${workspaceRoot}/app/src/main/AndroidManifest.xml",
+                "pmInstallArgs": [
+                    "-r"
+                ],
+                "amStartArgs": [
+                    "-D",
+                    "--activity-brought-to-front",
+                    "-a android.intent.action.MAIN",
+                    "-c android.intent.category.LAUNCHER",
+                    "-n nodomain.freeyourgadget.gadgetbridge/nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2"
+                ],
+                "postLaunchPause": 10000,
+                "trace": true
+            }
+        ],
+        "compounds": []
+    },
+    "java.jdt.ls.androidSupport.enabled": "on",
+    // -- Auto format code with a provided rule set:
+    //    "editor.formatOnSave": true,
+    //    "java.format.settings.url": "https://raw.githubusercontent.com/android/platform_development/master/ide/eclipse/android-formatting.xml",
+    //    "java.format.enabled": true
+}
