@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
@@ -64,6 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Config;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Firmware;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ins;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Media;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.PeripheralCommon;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.RoutePlan;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -398,6 +400,35 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             if (mainService == PeripheralCommon.PERIPHERAL_SERVICE_TYPE.PST_HR_VALUE) {
                 LOG.info("Device transmitting its config");
+            }
+            if (mainService == Common.service_type_index.enum_SERVICE_TYPE_INDEX_MUSIC_CTL_VALUE) {
+                byte secondCommand = value[5];
+                GBDeviceEventMusicControl deviceEventMusicControl = new GBDeviceEventMusicControl();
+
+                switch (secondCommand) {
+                    case Media.REMOTE_CMD.PLAY_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAY;
+                        break;
+                    case Media.REMOTE_CMD.PAUSE_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PAUSE;
+                        break;
+                    case Media.REMOTE_CMD.TOGGLE_PLAY_PAUSE_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAYPAUSE;
+                        break;
+                    case Media.REMOTE_CMD.NEXT_TRACK_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.NEXT;
+                        break;
+                    case Media.REMOTE_CMD.PREVIOUS_TRACK_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PREVIOUS;
+                        break;
+                    case Media.REMOTE_CMD.VOLUME_UP_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEUP;
+                        break;
+                    case Media.REMOTE_CMD.VOLUME_DOWN_VALUE:
+                        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEDOWN;
+                        break;
+                }
+                evaluateGBDeviceEvent(deviceEventMusicControl);
             }
         }
 
