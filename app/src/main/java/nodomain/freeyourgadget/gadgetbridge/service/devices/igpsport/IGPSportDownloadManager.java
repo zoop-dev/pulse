@@ -26,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
+import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.FileDownload;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -48,6 +50,8 @@ public class IGPSportDownloadManager {
         private ByteArrayOutputStream recievingDataBuffer;
         private FileInfo downloadingFile;
         private Boolean downloadInProgress = false;
+        private Boolean firstChunk = true;
+        int pbSize=0;
 
 
         public IGPSportDownloadManager(IGPSportDeviceSupport support) {
@@ -94,6 +98,8 @@ public class IGPSportDownloadManager {
         public void startDownload() {
             recievingDataBuffer.reset();
             downloadInProgress = true;
+            firstChunk = true;
+
         }
 
         public void addData(byte[] data) {
@@ -102,9 +108,15 @@ public class IGPSportDownloadManager {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            LOG.debug("current data stored size: " + recievingDataBuffer.size() + " need " + downloadingFile.getFileSize());
 
-            if (recievingDataBuffer.size() > downloadingFile.getFileSize()) {
+            if (firstChunk) {
+                firstChunk = false;
+                pbSize = ByteBuffer.wrap(recievingDataBuffer.toByteArray(), 20, 4).getInt();
+            }
+
+            LOG.debug("current data stored size: " + recievingDataBuffer.size() + " need " + (downloadingFile.getFileSize() + 20 + 4 + pbSize) );
+
+            if (recievingDataBuffer.size() >= (downloadingFile.getFileSize() + 20 + 4 + pbSize) ) { // fileSize + header + pbSize + pbInfo
                 //LOG.info(GB.hexdump(recievingDataBuffer.toByteArray()));
                 downloadInProgress = false;
 
@@ -114,7 +126,12 @@ public class IGPSportDownloadManager {
                 try {
                     dir = support.getWritableExportDirectory();
                     outputFile = new File(dir, downloadingFile.getFileName());
-                    FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 28, recievingDataBuffer.size()-28), outputFile);
+
+                    pbSize = ByteBuffer.wrap(recievingDataBuffer.toByteArray(), 20, 4).getInt();
+                    byte[] pbData = new byte[pbSize];
+                    System.arraycopy(recievingDataBuffer.toByteArray(), 20+4, pbData, 0, pbSize);
+                    FileDownload.file_download pbInfo = FileDownload.file_download.parseFrom(pbData);
+                    FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 20+4+pbSize, pbInfo.getFileSize()), outputFile);
                     outputFile.setLastModified(downloadingFile.getStandardTimeStamp());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -128,7 +145,7 @@ public class IGPSportDownloadManager {
         public Boolean needMoreData() {
             if (!downloadInProgress)
                 return false;
-            if (recievingDataBuffer.size() < downloadingFile.getFileSize()) {
+            if (recievingDataBuffer.size() < (downloadingFile.getFileSize() + 20 + 4 + pbSize)) {
                 return true;
             } else {
                 return false;
