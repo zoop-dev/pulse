@@ -3938,4 +3938,5 @@
     <string name="pref_check_permission_show_list">Zobrazit stav oprávnění</string>
     <string name="first_start_permissions_do_not_ask_again">Neptat se znovu</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Neudělení oprávnění může způsobit problémy. Tuto obrazovku můžete znovu otevřít pomocí Nastavení.</string>
+    <string name="manual_measurements">Ruční měření</string>
 </resources>
