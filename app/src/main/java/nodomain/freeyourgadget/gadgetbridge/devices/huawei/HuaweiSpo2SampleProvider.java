@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 
 public class HuaweiSpo2SampleProvider extends AbstractTimeSampleProvider<HuaweiSpo2SampleProvider.HuaweiSpo2Sample> {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiSpo2SampleProvider.class);
@@ -56,7 +57,7 @@ public class HuaweiSpo2SampleProvider extends AbstractTimeSampleProvider<HuaweiS
     @NonNull
     private HuaweiSpo2Sample activityToSpo2Sample(HuaweiActivitySample sample) {
         return new HuaweiSpo2Sample(
-                -1, // No difference between auto and manual for Huawei
+                Spo2Sample.Type.UNKNOWN.getNum(), // No difference between auto and manual for Huawei
                 sample.getTimestamp() * 1000L,
                 sample.getUserId(),
                 sample.getDeviceId(),
