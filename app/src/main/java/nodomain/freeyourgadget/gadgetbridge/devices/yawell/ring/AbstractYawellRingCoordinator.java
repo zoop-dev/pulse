@@ -99,12 +99,12 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -114,12 +114,12 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -129,7 +129,7 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsHeartRateStats() {
+    public boolean supportsHeartRateStats(@NonNull GBDevice device) {
         return true;
     }
 
@@ -144,12 +144,12 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsAwakeSleep() {
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {
         return true;
     }
 

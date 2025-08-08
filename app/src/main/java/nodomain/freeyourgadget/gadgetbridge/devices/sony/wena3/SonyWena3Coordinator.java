@@ -123,12 +123,12 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -143,7 +143,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateStats() {
+    public boolean supportsHeartRateStats(@NonNull GBDevice device) {
         return true;
     }
 
@@ -168,7 +168,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 
@@ -201,17 +201,17 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
 
 
     @Override
-    public boolean supportsNotificationVibrationPatterns() {
+    public boolean supportsNotificationVibrationPatterns(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsNotificationVibrationRepetitionPatterns() {
+    public boolean supportsNotificationVibrationRepetitionPatterns(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsNotificationLedPatterns() {
+    public boolean supportsNotificationLedPatterns(@NonNull GBDevice device) {
         return true;
     }
 

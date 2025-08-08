@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -21,7 +23,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -31,12 +33,12 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsBodyEnergy() {
+    public boolean supportsBodyEnergy(@NonNull GBDevice device) {
         return true;
     }
 
@@ -46,22 +48,22 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsVO2Max() {
+    public boolean supportsVO2Max(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsVO2MaxCycling() {
+    public boolean supportsVO2MaxCycling(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsVO2MaxRunning() {
+    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActiveCalories() {
+    public boolean supportsActiveCalories(@NonNull GBDevice device) {
         return true;
     }
 
@@ -85,7 +87,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
     }
 
@@ -95,12 +97,12 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsAwakeSleep() {
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {
         return true;
     }
 
@@ -110,17 +112,17 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsRespiratoryRate() {
+    public boolean supportsRespiratoryRate(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsDayRespiratoryRate() {
+    public boolean supportsDayRespiratoryRate(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsPai() {
+    public boolean supportsPai(@NonNull GBDevice device) {
         // Intensity Minutes
         return true;
     }
@@ -131,12 +133,12 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsPaiTime() {
+    public boolean supportsPaiTime(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsPaiLow() {
+    public boolean supportsPaiLow(@NonNull GBDevice device) {
         return false;
     }
 
@@ -146,18 +148,18 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsTrainingLoad() {
+    public boolean supportsTrainingLoad(@NonNull GBDevice device) {
         // Not all devices support it
         return true;
     }
 
     @Override
-    public boolean supportsWorkoutLoad() {
+    public boolean supportsWorkoutLoad(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
@@ -167,7 +169,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 }

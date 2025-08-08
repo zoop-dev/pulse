@@ -183,12 +183,12 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
@@ -198,7 +198,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -208,37 +208,37 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsVO2Max() {
+    public boolean supportsVO2Max(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsVO2MaxRunning() {
+    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsHeartRateStats() {
+    public boolean supportsHeartRateStats(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsPai() {
+    public boolean supportsPai(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsSleepRespiratoryRate() {
+    public boolean supportsSleepRespiratoryRate(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return hasDisplay();
     }
 
     @Override
-    public boolean supportsSleepAsAndroid() {
+    public boolean supportsSleepAsAndroid(@NonNull GBDevice device) {
         return true;
     }
 
@@ -248,7 +248,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsAwakeSleep() {
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {
         return true;
     }
 
@@ -273,7 +273,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsDisabledWorldClocks() {
+    public boolean supportsDisabledWorldClocks(@NonNull GBDevice device) {
         return true;
     }
 
@@ -328,7 +328,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsAlarmSnoozing() {
+    public boolean supportsAlarmSnoozing(@NonNull GBDevice device) {
         // All alarms snooze by default, there doesn't seem to be a flag that disables it
         return false;
     }

@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -45,7 +47,7 @@ public class RedmiSmartBand3Coordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         // #4809 does not seem to be supported
         return false;
     }

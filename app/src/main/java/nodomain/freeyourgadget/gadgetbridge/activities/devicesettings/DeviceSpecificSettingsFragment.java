@@ -1539,7 +1539,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 );
             }
 
-            if (coordinator.supportsActivityTracking()) {
+            if (coordinator.supportsActivityTracking(device)) {
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.ACTIVITY_INFO,
                         R.xml.devicesettings_chartstabs,

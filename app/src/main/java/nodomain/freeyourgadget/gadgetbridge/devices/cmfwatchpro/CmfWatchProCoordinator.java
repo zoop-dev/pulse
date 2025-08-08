@@ -197,7 +197,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return true;
     }
 
@@ -252,7 +252,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -262,7 +262,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -272,7 +272,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 
@@ -292,7 +292,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
@@ -302,7 +302,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

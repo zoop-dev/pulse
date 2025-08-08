@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
@@ -77,10 +78,10 @@ public class ZeppOsWorldClocksService extends AbstractZeppOsService {
             return;
         }
 
-        write("send world clocks", encodeWorldClocks(clocks, coordinator));
+        write("send world clocks", encodeWorldClocks(clocks, coordinator, getSupport().getDevice()));
     }
 
-    public static byte[] encodeWorldClocks(final List<? extends WorldClock> clocks, final DeviceCoordinator coordinator) {
+    public static byte[] encodeWorldClocks(final List<? extends WorldClock> clocks, final DeviceCoordinator coordinator, final GBDevice device) {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try {
@@ -89,7 +90,7 @@ public class ZeppOsWorldClocksService extends AbstractZeppOsService {
             int i = 0;
             for (final WorldClock clock : clocks) {
                 baos.write(i++);
-                baos.write(encodeWorldClock(clock, coordinator));
+                baos.write(encodeWorldClock(clock, coordinator, device));
             }
         } catch (final IOException e) {
             throw new RuntimeException("This should never happen", e);
@@ -98,7 +99,7 @@ public class ZeppOsWorldClocksService extends AbstractZeppOsService {
         return baos.toByteArray();
     }
 
-    public static byte[] encodeWorldClock(final WorldClock clock, final DeviceCoordinator coordinator) {
+    public static byte[] encodeWorldClock(final WorldClock clock, final DeviceCoordinator coordinator, final GBDevice device) {
         try {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -160,7 +161,7 @@ public class ZeppOsWorldClocksService extends AbstractZeppOsService {
                 baos.write((byte) ((nextTransitionTs >> (i * 8)) & 0xff));
             }
 
-            if (coordinator.supportsDisabledWorldClocks()) {
+            if (coordinator.supportsDisabledWorldClocks(device)) {
                 baos.write((byte) (clock.getEnabled() ? 0x01 : 0x00));
             }
 

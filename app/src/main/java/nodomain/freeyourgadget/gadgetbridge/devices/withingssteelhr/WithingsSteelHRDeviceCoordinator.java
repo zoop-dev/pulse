@@ -62,7 +62,7 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractBLEDeviceCoordinat
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
@@ -72,7 +72,7 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractBLEDeviceCoordinat
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -117,7 +117,7 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractBLEDeviceCoordinat
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
     }
 

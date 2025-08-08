@@ -62,16 +62,16 @@ public class HuamiFetcher {
             this.fetchOperationQueue.add(new FetchSportsSummaryOperation(this, 1));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_DEBUGLOGS) != 0 && coordinator.supportsDebugLogs()) {
+        if ((dataTypes & RecordedDataTypes.TYPE_DEBUGLOGS) != 0 && coordinator.supportsDebugLogs(gbDevice)) {
             this.fetchOperationQueue.add(new FetchDebugLogsOperation(this));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_STRESS) != 0 && coordinator.supportsStressMeasurement()) {
+        if ((dataTypes & RecordedDataTypes.TYPE_STRESS) != 0 && coordinator.supportsStressMeasurement(gbDevice)) {
             this.fetchOperationQueue.add(new FetchStressAutoOperation(this));
             this.fetchOperationQueue.add(new FetchStressManualOperation(this));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_PAI) != 0 && coordinator.supportsPai()) {
+        if ((dataTypes & RecordedDataTypes.TYPE_PAI) != 0 && coordinator.supportsPai(gbDevice)) {
             this.fetchOperationQueue.add(new FetchPaiOperation(this));
         }
 
@@ -83,13 +83,13 @@ public class HuamiFetcher {
             this.fetchOperationQueue.add(new FetchHrvOperation(this));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_HEART_RATE) != 0 && coordinator.supportsHeartRateStats()) {
+        if ((dataTypes & RecordedDataTypes.TYPE_HEART_RATE) != 0 && coordinator.supportsHeartRateStats(gbDevice)) {
             this.fetchOperationQueue.add(new FetchHeartRateManualOperation(this));
             this.fetchOperationQueue.add(new FetchHeartRateMaxOperation(this));
             this.fetchOperationQueue.add(new FetchHeartRateRestingOperation(this));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_SLEEP_RESPIRATORY_RATE) != 0 && coordinator.supportsSleepRespiratoryRate()) {
+        if ((dataTypes & RecordedDataTypes.TYPE_SLEEP_RESPIRATORY_RATE) != 0 && coordinator.supportsSleepRespiratoryRate(gbDevice)) {
             this.fetchOperationQueue.add(new FetchSleepRespiratoryRateOperation(this));
         }
 

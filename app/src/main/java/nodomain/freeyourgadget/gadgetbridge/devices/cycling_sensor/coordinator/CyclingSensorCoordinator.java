@@ -35,12 +35,12 @@ public class CyclingSensorCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCyclingData() {
+    public boolean supportsCyclingData(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -50,19 +50,19 @@ public class CyclingSensorCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSleepMeasurement() {
+    public boolean supportsSleepMeasurement(@NonNull GBDevice device) {
         return false;
     }
     @Override
-    public boolean supportsStepCounter() {
+    public boolean supportsStepCounter(@NonNull GBDevice device) {
         return false;
     }
     @Override
-    public boolean supportsSpeedzones() {
+    public boolean supportsSpeedzones(@NonNull GBDevice device) {
         return false;
     }
     @Override
-    public boolean supportsActivityTabs() {
+    public boolean supportsActivityTabs(@NonNull GBDevice device) {
         return false;
     }
 
@@ -77,7 +77,7 @@ public class CyclingSensorCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return false;
     }
 

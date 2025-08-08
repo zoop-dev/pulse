@@ -95,7 +95,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSleepAsAndroid() {
+    public boolean supportsSleepAsAndroid(@NonNull GBDevice device) {
         return true;
     }
 
@@ -111,7 +111,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData()  {
+    public boolean supportsRealtimeData(@NonNull GBDevice device)  {
         return true;
     }
 
@@ -121,7 +121,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
@@ -131,7 +131,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -192,7 +192,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         /* we say yes here (because we can't get a handle to our device's prefs to check)
         and then in 'renderUnicodeAsImage' we call EmojiConverter.convertUnicodeEmojiToAscii
         just like DeviceCommunicationService.sanitizeNotifText would have done if we'd
@@ -258,7 +258,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 

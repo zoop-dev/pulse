@@ -51,7 +51,7 @@ public class Roidmi3Coordinator extends RoidmiCoordinator {
     }
 
     @Override
-    public boolean supportsRgbLedColor() {
+    public boolean supportsRgbLedColor(@NonNull GBDevice device) {
         return true;
     }
 

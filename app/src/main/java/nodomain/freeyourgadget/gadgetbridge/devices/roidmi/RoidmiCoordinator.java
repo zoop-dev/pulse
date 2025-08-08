@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public abstract class RoidmiCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
@@ -34,7 +35,7 @@ public abstract class RoidmiCoordinator extends AbstractBLClassicDeviceCoordinat
     }
 
     @Override
-    public boolean supportsLedColor() {
+    public boolean supportsLedColor(@NonNull GBDevice device) {
         return true;
     }
 

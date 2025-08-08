@@ -73,7 +73,7 @@ public class AmazfitTRexProCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 

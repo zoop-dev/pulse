@@ -46,7 +46,7 @@ public class DashboardStressData implements Serializable {
 
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsStressMeasurement()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsStressMeasurement(dev)) {
                     final List<? extends StressSample> samples = dev.getDeviceCoordinator()
                             .getStressSampleProvider(dev, dbHandler.getDaoSession())
                             .getAllSamples(dashboardData.timeFrom * 1000L, dashboardData.timeTo * 1000L);

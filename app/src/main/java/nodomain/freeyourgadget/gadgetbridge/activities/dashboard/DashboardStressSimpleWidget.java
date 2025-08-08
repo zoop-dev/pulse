@@ -40,7 +40,7 @@ public class DashboardStressSimpleWidget extends AbstractGaugeWidget {
 
     @Override
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsStressMeasurement();
+        return device.getDeviceCoordinator().supportsStressMeasurement(device);
     }
 
     @Override

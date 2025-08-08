@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -49,7 +51,7 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return false;
     }
 
@@ -59,7 +61,7 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return false;
     }
 }

@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
@@ -71,12 +72,12 @@ public class RainbuvvyT97Coordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 }

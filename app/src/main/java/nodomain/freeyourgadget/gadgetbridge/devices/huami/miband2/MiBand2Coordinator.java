@@ -68,7 +68,7 @@ public class MiBand2Coordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsDebugLogs() {
+    public boolean supportsDebugLogs(@NonNull GBDevice device) {
         return false;
     }
 

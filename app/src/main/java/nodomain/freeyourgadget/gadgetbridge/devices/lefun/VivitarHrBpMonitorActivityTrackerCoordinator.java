@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.lefun;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
@@ -41,7 +43,7 @@ public class VivitarHrBpMonitorActivityTrackerCoordinator extends LefunDeviceCoo
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return false;  // not supported
     }
 

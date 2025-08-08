@@ -53,10 +53,10 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() { return true; }
+    public boolean supportsFlashing(@NonNull GBDevice device) { return true; }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -86,12 +86,12 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 

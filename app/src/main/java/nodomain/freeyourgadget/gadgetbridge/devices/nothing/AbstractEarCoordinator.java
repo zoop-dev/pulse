@@ -16,19 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.nothing;
 
-import android.content.Context;
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -41,7 +34,7 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

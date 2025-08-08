@@ -80,7 +80,7 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAlarmSnoozing() {
+    public boolean supportsAlarmSnoozing(@NonNull GBDevice device) {
         return true;
     }
 
@@ -95,7 +95,7 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 

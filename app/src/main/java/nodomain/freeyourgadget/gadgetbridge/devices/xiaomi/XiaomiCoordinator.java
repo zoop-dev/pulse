@@ -187,7 +187,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return true;
     }
 
@@ -252,7 +252,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -262,7 +262,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -272,7 +272,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateStats() {
+    public boolean supportsHeartRateStats(@NonNull GBDevice device) {
         // TODO it does, and they're persisted - see DailySummaryParser
         return false;
     }
@@ -283,7 +283,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsPai() {
+    public boolean supportsPai(@NonNull GBDevice device) {
         // Vitality Score
         return true;
     }
@@ -294,18 +294,18 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsPaiTime() {
+    public boolean supportsPaiTime(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSleepRespiratoryRate() {
+    public boolean supportsSleepRespiratoryRate(@NonNull GBDevice device) {
         // TODO it does
         return false;
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 
@@ -339,7 +339,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsDisabledWorldClocks() {
+    public boolean supportsDisabledWorldClocks(@NonNull GBDevice device) {
         // TODO does it?
         return false;
     }
@@ -360,12 +360,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 
@@ -375,7 +375,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
@@ -385,7 +385,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
 
@@ -439,9 +439,9 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
         //
         // Health
         //
-        if (supportsStressMeasurement() && supports(device, FEAT_STRESS) && supportsSpo2(device) && supports(device, FEAT_SPO2)) {
+        if (supportsStressMeasurement(device) && supports(device, FEAT_STRESS) && supportsSpo2(device) && supports(device, FEAT_SPO2)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_heartrate_sleep_alert_activity_stress_spo2);
-        } else if (supportsStressMeasurement() && supports(device, FEAT_STRESS)) {
+        } else if (supportsStressMeasurement(device) && supports(device, FEAT_STRESS)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_heartrate_sleep_alert_activity_stress);
         } else {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_heartrate_sleep_activity);

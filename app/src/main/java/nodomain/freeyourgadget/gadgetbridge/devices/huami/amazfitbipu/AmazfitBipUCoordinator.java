@@ -68,17 +68,17 @@ public class AmazfitBipUCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsAlarmSnoozing() {
+    public boolean supportsAlarmSnoozing(@NonNull GBDevice device) {
         // All alarms snooze by default, there doesn't seem to be a flag that disables it
         return false;
     }

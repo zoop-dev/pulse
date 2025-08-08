@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.oppo;
 
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigSide;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
@@ -41,7 +44,7 @@ public class OppoEncoAirCoordinator extends OppoHeadphonesCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

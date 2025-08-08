@@ -36,7 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 public class AlarmDetails extends AbstractGBActivity {
 
@@ -177,7 +176,7 @@ public class AlarmDetails extends AbstractGBActivity {
         });
 
         cbSnooze.setChecked(alarm.getSnooze());
-        int snoozeVisibility = supportsSnoozing() ? View.VISIBLE : View.GONE;
+        int snoozeVisibility = supportsSnoozing(device) ? View.VISIBLE : View.GONE;
         cbSnooze.setVisibility(snoozeVisibility);
 
         title.setVisibility(supportsTitle() ? View.VISIBLE : View.GONE);
@@ -251,10 +250,10 @@ public class AlarmDetails extends AbstractGBActivity {
         return false;
     }
 
-    private boolean supportsSnoozing() {
+    private boolean supportsSnoozing(GBDevice device) {
         if (device != null) {
             DeviceCoordinator coordinator = device.getDeviceCoordinator();
-            return coordinator.supportsAlarmSnoozing();
+            return coordinator.supportsAlarmSnoozing(device);
         }
         return false;
     }
@@ -279,7 +278,7 @@ public class AlarmDetails extends AbstractGBActivity {
         alarm.setSmartWakeup(supportsSmartWakeup(alarm.getPosition()) && cbSmartWakeup.isChecked());
         String interval = smartWakeupInterval.getText().toString();
         alarm.setSmartWakeupInterval(interval.equals("") ? null : Integer.parseInt(interval));
-        alarm.setSnooze(supportsSnoozing() && cbSnooze.isChecked());
+        alarm.setSnooze(supportsSnoozing(device) && cbSnooze.isChecked());
         int repetitionMask = AlarmUtils.createRepetitionMask(cbMonday.isChecked(), cbTuesday.isChecked(), cbWednesday.isChecked(), cbThursday.isChecked(), cbFriday.isChecked(), cbSaturday.isChecked(), cbSunday.isChecked());
         alarm.setRepetition(repetitionMask);
         alarm.setHour(timePicker.getCurrentHour());

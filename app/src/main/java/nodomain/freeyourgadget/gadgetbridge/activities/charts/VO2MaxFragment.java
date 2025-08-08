@@ -1,3 +1,19 @@
+/*  Copyright (C) 2024-2025 a0z, José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.os.Bundle;
@@ -10,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -96,12 +111,12 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
 
     public boolean supportsVO2MaxCycling(GBDevice device) {
         DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        return coordinator != null && coordinator.supportsVO2MaxCycling();
+        return coordinator != null && coordinator.supportsVO2MaxCycling(device);
     }
 
     public boolean supportsVO2MaxRunning(GBDevice device) {
         DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        return coordinator != null && coordinator.supportsVO2MaxRunning();
+        return coordinator != null && coordinator.supportsVO2MaxRunning(device);
     }
 
     @Override

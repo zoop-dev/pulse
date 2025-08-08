@@ -51,7 +51,7 @@ public class DashboardSleepWidget extends AbstractGaugeWidget {
 
     @Override
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsSleepMeasurement();
+        return device.getDeviceCoordinator().supportsSleepMeasurement(device);
     }
 
     @Override

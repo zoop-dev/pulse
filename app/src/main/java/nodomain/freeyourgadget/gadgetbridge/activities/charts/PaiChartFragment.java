@@ -31,7 +31,6 @@ import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
@@ -131,13 +130,13 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         mTileModerate = rootView.findViewById(R.id.pai_tile_moderate);
         mTileHigh = rootView.findViewById(R.id.pai_tile_high);
 
-        if (!getChartsHost().getDevice().getDeviceCoordinator().supportsPaiTime()) {
+        if (!getChartsHost().getDevice().getDeviceCoordinator().supportsPaiTime(getChartsHost().getDevice())) {
             mLineLowTime.setVisibility(View.GONE);
             mLineModerateTime.setVisibility(View.GONE);
             mLineHighTime.setVisibility(View.GONE);
         }
 
-        if (!getChartsHost().getDevice().getDeviceCoordinator().supportsPaiLow()) {
+        if (!getChartsHost().getDevice().getDeviceCoordinator().supportsPaiLow(getChartsHost().getDevice())) {
             mTileLow.setVisibility(View.GONE);
         }
 

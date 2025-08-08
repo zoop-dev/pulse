@@ -43,7 +43,7 @@ public class CasioGB6900DeviceCoordinator extends CasioDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

@@ -49,7 +49,7 @@ open class TestDeviceSupport : AbstractDeviceSupport() {
             device.firmwareVersion2 = "N/A"
             device.model = "0.1.7"
 
-            if (this.coordinator.supportsLedColor()) {
+            if (this.coordinator.supportsLedColor(device)) {
                 device.setExtraInfo("led_color", 0xff3061e3.toInt())
             } else {
                 device.setExtraInfo("led_color", null)

@@ -217,13 +217,13 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (operand.supportsActivityDataFetching(device)) {
                 setSupportsActivityDataFetching(true);
             }
-            if (operand.supportsMusicInfo()) {
+            if (operand.supportsMusicInfo(device)) {
                 setSupportsMusicInfo(true);
             }
             if (operand.supportsNavigation(device)) {
                 setSupportsNavigation(true);
             }
-            if (operand.supportsSleepAsAndroid()) {
+            if (operand.supportsSleepAsAndroid(device)) {
                 setSupportsSleepAsAndroid(true);
             }
         }
@@ -842,7 +842,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
         text = getDeviceSupport(device).customStringFilter(text);
 
-        if (!getDeviceCoordinator(device).supportsUnicodeEmojis()) {
+        if (!getDeviceCoordinator(device).supportsUnicodeEmojis(device)) {
             return EmojiConverter.convertUnicodeEmojiToAscii(text, getApplicationContext());
         }
 
@@ -1188,7 +1188,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 deviceSupport.onSetGpsLocation(location);
                 break;
             case ACTION_SLEEP_AS_ANDROID:
-                if(device.getDeviceCoordinator().supportsSleepAsAndroid() && GBApplication.getPrefs().getString("sleepasandroid_device", new String()).equals(device.getAddress()))
+                if(device.getDeviceCoordinator().supportsSleepAsAndroid(device) && GBApplication.getPrefs().getString("sleepasandroid_device", new String()).equals(device.getAddress()))
                 {
                     final String sleepAsAndroidAction = intentCopy.getStringExtra(EXTRA_SLEEP_AS_ANDROID_ACTION);
                     deviceSupport.onSleepAsAndroidAction(sleepAsAndroidAction, intentCopy.getExtras());

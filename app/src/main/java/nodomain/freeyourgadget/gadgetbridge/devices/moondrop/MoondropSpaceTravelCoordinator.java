@@ -20,13 +20,10 @@ import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.moondrop.MoondropSpaceTravelDeviceSupport;
@@ -53,7 +50,7 @@ public class MoondropSpaceTravelCoordinator extends AbstractBLClassicDeviceCoord
     }
 
     @Override
-    public boolean supportsOSBatteryLevel() {
+    public boolean supportsOSBatteryLevel(@NonNull GBDevice device) {
         return true;
     }
 

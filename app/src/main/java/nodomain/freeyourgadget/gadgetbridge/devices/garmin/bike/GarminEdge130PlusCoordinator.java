@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -22,12 +24,12 @@ public class GarminEdge130PlusCoordinator extends GarminBikeComputerCoordinator 
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return false;
     }
 }

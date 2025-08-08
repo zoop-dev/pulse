@@ -87,38 +87,38 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
             tabList = new ArrayList<>(Arrays.asList(myTabs.split(",")));
         }
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!coordinator.supportsActivityTabs()) {
+        if (!coordinator.supportsActivityTabs(device)) {
             tabList.remove("activity");
             tabList.remove("activitylist");
         }
-        if (!coordinator.supportsSleepMeasurement()) {
+        if (!coordinator.supportsSleepMeasurement(device)) {
             tabList.remove("sleep");
         }
-        if (!coordinator.supportsStressMeasurement()) {
+        if (!coordinator.supportsStressMeasurement(device)) {
             tabList.remove("stress");
         }
-        if (!coordinator.supportsPai()) {
+        if (!coordinator.supportsPai(device)) {
             tabList.remove("pai");
         }
         if (!coordinator.supportsSpo2(device)) {
             tabList.remove("spo2");
         }
-        if (!coordinator.supportsStepCounter()) {
+        if (!coordinator.supportsStepCounter(device)) {
             tabList.remove("stepsweek");
         }
-        if (!coordinator.supportsSpeedzones()) {
+        if (!coordinator.supportsSpeedzones(device)) {
             tabList.remove("speedzones");
         }
-        if (!coordinator.supportsRealtimeData()) {
+        if (!coordinator.supportsRealtimeData(device)) {
             tabList.remove("livestats");
         }
         if (!coordinator.supportsTemperatureMeasurement(device)) {
             tabList.remove("temperature");
         }
-        if (!coordinator.supportsCyclingData()) {
+        if (!coordinator.supportsCyclingData(device)) {
             tabList.remove("cycling");
         }
-        if (!coordinator.supportsWeightMeasurement()) {
+        if (!coordinator.supportsWeightMeasurement(device)) {
             tabList.remove("weight");
         }
         if (!coordinator.supportsHrvMeasurement(device)) {
@@ -127,19 +127,19 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
         if (!coordinator.supportsHeartRateMeasurement(device)) {
             tabList.remove("heartrate");
         }
-        if (!coordinator.supportsBodyEnergy()) {
+        if (!coordinator.supportsBodyEnergy(device)) {
             tabList.remove("bodyenergy");
         }
-        if (!coordinator.supportsVO2Max()) {
+        if (!coordinator.supportsVO2Max(device)) {
             tabList.remove("vo2max");
         }
-        if (!coordinator.supportsWorkoutLoad()) {
+        if (!coordinator.supportsWorkoutLoad(device)) {
             tabList.remove("load");
         }
-        if (!coordinator.supportsActiveCalories()) {
+        if (!coordinator.supportsActiveCalories(device)) {
             tabList.remove("calories");
         }
-        if (!coordinator.supportsRespiratoryRate()) {
+        if (!coordinator.supportsRespiratoryRate(device)) {
             tabList.remove("respiratoryrate");
         }
         return tabList;

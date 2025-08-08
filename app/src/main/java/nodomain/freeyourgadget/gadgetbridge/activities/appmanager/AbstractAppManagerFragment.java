@@ -438,7 +438,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
                     appListFab.hide();
                     appListFabNew.hide();
                 } else if (dy < 0) {
-                    if (mCoordinator.supportsFlashing()) {
+                    if (mCoordinator.supportsFlashing(mGBDevice)) {
                         appListFab.show();
                     }
                     if (watchfaceDesignerActivity != null) {

@@ -140,12 +140,12 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
     }
 
@@ -160,7 +160,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -575,12 +575,12 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsAlarmSnoozing() {
+    public boolean supportsAlarmSnoozing(@NonNull GBDevice device) {
         return true;
     }
 
@@ -605,7 +605,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsDebugLogs() {
+    public boolean supportsDebugLogs(@NonNull GBDevice device) {
         return true;
     }
 

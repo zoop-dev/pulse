@@ -85,7 +85,7 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsOSBatteryLevel() {
+    public boolean supportsOSBatteryLevel(@NonNull GBDevice device) {
         return true;
     }
 }

@@ -53,7 +53,7 @@ public class DashboardUtils {
         int totalSteps = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                     totalSteps += (int) getDailyTotals(dev, dbHandler, dashboardData.timeTo).getSteps();
                 }
             }
@@ -68,7 +68,7 @@ public class DashboardUtils {
         int totalActiveCalories = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActiveCalories()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActiveCalories(dev)) {
                     totalActiveCalories += (int) getDailyTotals(dev, dbHandler, dashboardData.timeTo).getActiveCalories();
                 }
             }
@@ -85,7 +85,7 @@ public class DashboardUtils {
         int totalRestingCaloriesDevices = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActiveCalories()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActiveCalories(dev)) {
                     final int restingCalories = (int) getDailyTotals(dev, dbHandler, dashboardData.timeTo).getRestingCalories();
                     if (restingCalories > 0) {
                         totalRestingCalories += restingCalories;
@@ -122,7 +122,7 @@ public class DashboardUtils {
         long totalSleepMinutes = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                     totalSleepMinutes += getSleep(dev, dbHandler, dashboardData.timeTo);
                 }
             }
@@ -149,7 +149,7 @@ public class DashboardUtils {
         long totalDistanceCm = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                     final DailyTotals dailyTotals = getDailyTotals(dev, dbHandler, dashboardData.timeTo);
                     if (dailyTotals.getSteps() > 0 && dailyTotals.getDistance() > 0) {
                         totalDistanceCm += dailyTotals.getDistance();
@@ -187,7 +187,7 @@ public class DashboardUtils {
         long totalActiveMinutes = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking()) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                     totalActiveMinutes += getActiveMinutes(dev, dbHandler, dashboardData);
                 }
             }

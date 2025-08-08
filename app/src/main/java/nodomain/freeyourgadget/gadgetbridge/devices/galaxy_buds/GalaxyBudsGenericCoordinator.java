@@ -19,11 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds;
 
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.galaxy_buds.GalaxyBudsDeviceSupport;
@@ -40,7 +37,7 @@ public abstract class GalaxyBudsGenericCoordinator extends AbstractBLClassicDevi
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

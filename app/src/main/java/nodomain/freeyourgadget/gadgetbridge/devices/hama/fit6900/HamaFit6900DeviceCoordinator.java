@@ -46,7 +46,7 @@ public final class HamaFit6900DeviceCoordinator extends AbstractBLEDeviceCoordin
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

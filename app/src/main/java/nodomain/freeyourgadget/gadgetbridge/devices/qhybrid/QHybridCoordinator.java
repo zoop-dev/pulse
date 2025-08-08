@@ -99,7 +99,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -115,7 +115,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
 
@@ -233,12 +233,12 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return true;
     }
 

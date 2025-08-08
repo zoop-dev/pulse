@@ -16,11 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class MiBand7ProCoordinator extends XiaomiCoordinator {
     @Override
@@ -44,7 +47,7 @@ public class MiBand7ProCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsPai() {
+    public boolean supportsPai(@NonNull GBDevice device) {
         // no PAI nor vitality score
         return false;
     }

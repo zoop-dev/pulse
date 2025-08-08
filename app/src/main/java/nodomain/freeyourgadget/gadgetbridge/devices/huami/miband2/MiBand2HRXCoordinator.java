@@ -51,12 +51,12 @@ public class MiBand2HRXCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsDebugLogs() {
+    public boolean supportsDebugLogs(@NonNull GBDevice device) {
         return false;
     }
 

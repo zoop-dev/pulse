@@ -101,7 +101,7 @@ public class WorldClockDetails extends AbstractGBActivity {
             }
         });
 
-        if (coordinator.supportsDisabledWorldClocks()) {
+        if (coordinator.supportsDisabledWorldClocks(device)) {
             worldClockEnabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 worldClock.setEnabled(isChecked);
             });

@@ -116,7 +116,7 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
 
-        addWhereFilter(coordinator, qb, type);
+        addWhereFilter(coordinator, qb, type, device);
 
         if (until != 0) {
             qb.where(BaseActivitySummaryDao.Properties.StartTime.le(new Date(until)));
@@ -135,10 +135,11 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
 
     private static void addWhereFilter(final DeviceCoordinator coordinator,
                                        final QueryBuilder<BaseActivitySummary> qb,
-                                       final Vo2MaxSample.Type type) {
+                                       final Vo2MaxSample.Type type,
+                                       final GBDevice device) {
         final List<Integer> codes = new ArrayList<>();
 
-        if (coordinator.supportsVO2MaxRunning()) {
+        if (coordinator.supportsVO2MaxRunning(device)) {
             if (type == Vo2MaxSample.Type.ANY || type == Vo2MaxSample.Type.RUNNING) {
                 codes.addAll(Arrays.asList(
                         ActivityKind.INDOOR_RUNNING.getCode(),
@@ -148,7 +149,7 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
                 ));
             }
         }
-        if (coordinator.supportsVO2MaxCycling()) {
+        if (coordinator.supportsVO2MaxCycling(device)) {
             if (type == Vo2MaxSample.Type.ANY || type == Vo2MaxSample.Type.CYCLING) {
                 codes.addAll(Arrays.asList(
                         ActivityKind.CYCLING.getCode(),

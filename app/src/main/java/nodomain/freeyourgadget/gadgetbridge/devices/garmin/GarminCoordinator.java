@@ -255,7 +255,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
 
@@ -291,7 +291,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return true;
     }
 

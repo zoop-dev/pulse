@@ -55,7 +55,7 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
 
     @Override
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsBodyEnergy();
+        return device.getDeviceCoordinator().supportsBodyEnergy(device);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
             // Gain / loss for the period
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
                 for (GBDevice dev : devices) {
-                    if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsBodyEnergy()) {
+                    if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsBodyEnergy(dev)) {
                         final List<? extends BodyEnergySample> samples = dev.getDeviceCoordinator()
                                 .getBodyEnergySampleProvider(dev, dbHandler.getDaoSession())
                                 .getAllSamples(dashboardData.timeFrom * 1000L, dashboardData.timeTo * 1000L);

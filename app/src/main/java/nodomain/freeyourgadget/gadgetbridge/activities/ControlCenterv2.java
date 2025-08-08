@@ -155,7 +155,7 @@ public class ControlCenterv2 extends AppCompatActivity
         boolean activityTrackerAvailable = false;
         List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
         for (GBDevice dev : devices) {
-            if (dev.getDeviceCoordinator().supportsActivityTracking()) {
+            if (dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                 activityTrackerAvailable = true;
                 break;
             }

@@ -60,12 +60,12 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
 
     public boolean supportsRemSleep(GBDevice device) {
         DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        return coordinator.supportsRemSleep();
+        return coordinator.supportsRemSleep(device);
     }
 
     public boolean supportsAwakeSleep(GBDevice device) {
         DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        return coordinator.supportsAwakeSleep();
+        return coordinator.supportsAwakeSleep(device);
     }
 
     protected static final class ActivityConfig {

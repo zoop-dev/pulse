@@ -97,7 +97,7 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        if (coordinator.supportsFlashing()) {
+        if (coordinator.supportsFlashing(mGBDevice)) {
             fab.setOnClickListener(v -> {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);

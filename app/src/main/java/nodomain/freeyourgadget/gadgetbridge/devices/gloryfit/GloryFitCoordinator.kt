@@ -76,8 +76,8 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
 
     override fun getSpo2SampleProvider(
         device: GBDevice,
-        session: DaoSession?
-    ): TimeSampleProvider<out Spo2Sample?>? {
+        session: DaoSession
+    ): TimeSampleProvider<out Spo2Sample>? {
         return GenericSpo2SampleProvider(device, session)
     }
 
@@ -93,11 +93,11 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsActivityTracking(): Boolean {
+    override fun supportsActivityTracking(device: GBDevice): Boolean {
         return true
     }
 
-    override fun supportsActiveCalories(): Boolean {
+    override fun supportsActiveCalories(device: GBDevice): Boolean {
         // TODO it does not, but we could try and match their formula in the samples
         return false
     }
@@ -106,7 +106,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsMusicInfo(): Boolean {
+    override fun supportsMusicInfo(device: GBDevice): Boolean {
         // Not info, but supports music control
         return true
     }
@@ -127,16 +127,16 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return false // TODO supportsManualHeartRateMeasurement
     }
 
-    override fun supportsRealtimeData(): Boolean {
+    override fun supportsRealtimeData(device: GBDevice): Boolean {
         // TODO it does
         return false
     }
 
-    override fun supportsRemSleep(): Boolean {
+    override fun supportsRemSleep(device: GBDevice): Boolean {
         return true
     }
 
-    override fun supportsAwakeSleep(): Boolean {
+    override fun supportsAwakeSleep(device: GBDevice): Boolean {
         return true
     }
 
@@ -145,11 +145,11 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return false
     }
 
-    override fun supportsFindDevice(): Boolean {
+    override fun supportsFindDevice(device: GBDevice): Boolean {
         return true
     }
 
-    override fun supportsUnicodeEmojis(): Boolean {
+    override fun supportsUnicodeEmojis(device: GBDevice): Boolean {
         // Official app seems to just remove them outright
         return false
     }
@@ -159,11 +159,11 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsNotificationVibrationPatterns(): Boolean {
+    override fun supportsNotificationVibrationPatterns(device: GBDevice): Boolean {
         return true
     }
 
-    override fun supportsNotificationVibrationRepetitionPatterns(): Boolean {
+    override fun supportsNotificationVibrationRepetitionPatterns(device: GBDevice): Boolean {
         return true
     }
 

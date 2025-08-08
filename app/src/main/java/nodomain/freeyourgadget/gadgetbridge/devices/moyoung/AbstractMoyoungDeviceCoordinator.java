@@ -107,7 +107,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -147,7 +147,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
     }
 
@@ -157,7 +157,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
@@ -173,7 +173,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 

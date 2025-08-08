@@ -57,23 +57,23 @@ class GenericHeartRateCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsActivityTracking(): Boolean {
+    override fun supportsActivityTracking(device: GBDevice): Boolean {
         return true
     }
 
-    override fun supportsActivityTabs(): Boolean {
+    override fun supportsActivityTabs(device: GBDevice): Boolean {
         return false
     }
 
-    override fun supportsSleepMeasurement(): Boolean {
+    override fun supportsSleepMeasurement(device: GBDevice): Boolean {
         return false
     }
 
-    override fun supportsStepCounter(): Boolean {
+    override fun supportsStepCounter(device: GBDevice): Boolean {
         return false
     }
 
-    override fun supportsSpeedzones(): Boolean {
+    override fun supportsSpeedzones(device: GBDevice): Boolean {
         return false
     }
 

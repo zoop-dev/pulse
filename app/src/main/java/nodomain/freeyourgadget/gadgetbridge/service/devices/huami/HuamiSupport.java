@@ -1163,7 +1163,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         writeToChunked2021(
                 builder,
                 ZeppOsWorldClocksService.ENDPOINT,
-                ZeppOsWorldClocksService.encodeWorldClocks(clocks, coordinator),
+                ZeppOsWorldClocksService.encodeWorldClocks(clocks, coordinator, gbDevice),
                 false
         );
     }
@@ -1301,7 +1301,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
     @Override
     public void onSetMusicState(final MusicStateSpec stateSpec) {
-        if (!getCoordinator().supportsMusicInfo()) {
+        if (!getCoordinator().supportsMusicInfo(getDevice())) {
             return;
         }
 
@@ -1312,7 +1312,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
     @Override
     public void onSetMusicInfo(final MusicSpec musicSpec) {
-        if (!getCoordinator().supportsMusicInfo()) {
+        if (!getCoordinator().supportsMusicInfo(getDevice())) {
             return;
         }
 
@@ -2455,7 +2455,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         if (alarm.getEnabled() && !alarm.getUnused()) {
             actionMask = 0x80;
 
-            if (coordinator.supportsAlarmSnoozing() && !alarm.getSnooze()) {
+            if (coordinator.supportsAlarmSnoozing(getDevice()) && !alarm.getSnooze()) {
                 actionMask |= 0x40;
             }
         }

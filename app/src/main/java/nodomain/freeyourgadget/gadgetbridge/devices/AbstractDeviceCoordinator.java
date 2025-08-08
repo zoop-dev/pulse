@@ -115,7 +115,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supports(GBDeviceCandidate candidate) {
+    public boolean supports(@NonNull GBDeviceCandidate candidate) {
         if (supportedDeviceName == null) {
             supportedDeviceName = getSupportedDeviceName();
         }
@@ -455,12 +455,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return false;
     }
 
@@ -471,7 +471,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
+    public boolean supportsScreenshots(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -481,12 +481,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSmartWakeup(GBDevice device, int alarmPosition) {
+    public boolean supportsSmartWakeup(@NonNull GBDevice device, int alarmPosition) {
         return false;
     }
 
     @Override
-    public boolean supportsSmartWakeupInterval(GBDevice device, int alarmPosition) {
+    public boolean supportsSmartWakeupInterval(@NonNull GBDevice device, int alarmPosition) {
         return false;
     }
 
@@ -496,17 +496,17 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppReordering(final GBDevice device) {
+    public boolean supportsAppReordering(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsCachedAppManagement(final GBDevice device) {
+    public boolean supportsCachedAppManagement(@NonNull final GBDevice device) {
         try {
             return supportsAppsManagement(device) && getAppCacheDir() != null;
         } catch (final Exception e) {
@@ -517,12 +517,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsInstalledAppManagement(final GBDevice device) {
+    public boolean supportsInstalledAppManagement(@NonNull final GBDevice device) {
         return supportsAppsManagement(device);
     }
 
     @Override
-    public boolean supportsWatchfaceManagement(final GBDevice device) {
+    public boolean supportsWatchfaceManagement(@NonNull final GBDevice device) {
         return supportsAppsManagement(device);
     }
 
@@ -554,114 +554,114 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsDebugLogs() {
+    public boolean supportsDebugLogs(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsBodyEnergy() {
+    public boolean supportsBodyEnergy(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsHrvMeasurement(final GBDevice device) {
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsVO2Max() {
+    public boolean supportsVO2Max(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsVO2MaxCycling() {
+    public boolean supportsVO2MaxCycling(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsVO2MaxRunning() {
+    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsActiveCalories() {
+    public boolean supportsActiveCalories(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsTrainingLoad() {
+    public boolean supportsTrainingLoad(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsWorkoutLoad() {
+    public boolean supportsWorkoutLoad(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsActivityTabs() {
-        return supportsActivityTracking();
+    public boolean supportsActivityTabs(@NonNull GBDevice device) {
+        return supportsActivityTracking(device);
     }
     @Override
-    public boolean supportsSleepMeasurement() {
-        return supportsActivityTracking();
+    public boolean supportsSleepMeasurement(@NonNull GBDevice device) {
+        return supportsActivityTracking(device);
     }
     @Override
-    public boolean supportsStepCounter() {
-        return supportsActivityTracking();
+    public boolean supportsStepCounter(@NonNull GBDevice device) {
+        return supportsActivityTracking(device);
     }
     @Override
-    public boolean supportsSpeedzones() {
-        return supportsActivityTracking();
+    public boolean supportsSpeedzones(@NonNull GBDevice device) {
+        return supportsActivityTracking(device);
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+    public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsContinuousTemperature(final GBDevice device) {
+    public boolean supportsContinuousTemperature(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSpo2(final GBDevice device) {
+    public boolean supportsSpo2(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsHeartRateStats() {
+    public boolean supportsHeartRateStats(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsPai() {
+    public boolean supportsPai(@NonNull GBDevice device) {
         return false;
     }
 
@@ -671,13 +671,13 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsPaiTime() {
-        return supportsPai();
+    public boolean supportsPaiTime(@NonNull GBDevice device) {
+        return supportsPai(device);
     }
 
     @Override
-    public boolean supportsPaiLow() {
-        return supportsPai();
+    public boolean supportsPaiLow(@NonNull GBDevice device) {
+        return supportsPai(device);
     }
 
     @Override
@@ -686,32 +686,32 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRespiratoryRate() {
+    public boolean supportsRespiratoryRate(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsDayRespiratoryRate() {
+    public boolean supportsDayRespiratoryRate(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSleepRespiratoryRate() {
-        return supportsRespiratoryRate();
+    public boolean supportsSleepRespiratoryRate(@NonNull GBDevice device) {
+        return supportsRespiratoryRate(device);
     }
 
     @Override
-    public boolean supportsWeightMeasurement() {
+    public boolean supportsWeightMeasurement(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsAlarmSnoozing() {
+    public boolean supportsAlarmSnoozing(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsAlarmTitle(GBDevice device) {
+    public boolean supportsAlarmTitle(@NonNull GBDevice device) {
         return false;
     }
 
@@ -721,17 +721,17 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAlarmDescription(GBDevice device) {
+    public boolean supportsAlarmDescription(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsLedColor() {
+    public boolean supportsLedColor(@NonNull GBDevice device) {
         return false;
     }
 
@@ -771,12 +771,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsDisabledWorldClocks() {
+    public boolean supportsDisabledWorldClocks(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsAudioRecordings(final GBDevice device) {
+    public boolean supportsAudioRecordings(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -786,7 +786,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRgbLedColor() {
+    public boolean supportsRgbLedColor(@NonNull GBDevice device) {
         return false;
     }
 
@@ -797,62 +797,62 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsHeartRateRestingMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateRestingMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return supportsHeartRateMeasurement(device);
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsCyclingData() {
+    public boolean supportsCyclingData(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsAwakeSleep() {
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSleepScore(final GBDevice device) {
+    public boolean supportsSleepScore(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSleepAsAndroid() {
+    public boolean supportsSleepAsAndroid(@NonNull GBDevice device) {
         return false;
     }
 
@@ -933,7 +933,8 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return batteryConfigs;
     }
 
-    public boolean supportsOSBatteryLevel() {
+    @Override
+    public boolean supportsOSBatteryLevel(@NonNull GBDevice device) {
         return false;
     }
 
@@ -943,7 +944,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsPowerOff(final GBDevice device) {
+    public boolean supportsPowerOff(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -965,7 +966,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWidgets(final GBDevice device) {
+    public boolean supportsWidgets(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -975,7 +976,8 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return null;
     }
 
-    public boolean supportsNavigation(final GBDevice device) {
+    @Override
+    public boolean supportsNavigation(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -996,17 +998,17 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsNotificationVibrationPatterns() {
+    public boolean supportsNotificationVibrationPatterns(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsNotificationVibrationRepetitionPatterns() {
+    public boolean supportsNotificationVibrationRepetitionPatterns(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsNotificationLedPatterns() {
+    public boolean supportsNotificationLedPatterns(@NonNull GBDevice device) {
         return false;
     }
 

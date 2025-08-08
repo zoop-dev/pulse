@@ -17,9 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
 import androidx.annotation.DrawableRes;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
@@ -69,7 +67,7 @@ public class ViranC29Coordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRemSleep() {
+    public boolean supportsRemSleep(@NonNull GBDevice device) {
         return true;
     }
 }

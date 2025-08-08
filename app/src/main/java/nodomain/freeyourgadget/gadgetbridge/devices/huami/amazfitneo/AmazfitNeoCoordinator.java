@@ -61,7 +61,7 @@ public class AmazfitNeoCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsPai(){
+    public boolean supportsPai(@NonNull GBDevice device){
         return true;
     }
 

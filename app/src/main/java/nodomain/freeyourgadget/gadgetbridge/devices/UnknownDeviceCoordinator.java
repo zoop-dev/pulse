@@ -113,7 +113,7 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supports(GBDeviceCandidate candidate) {
+    public boolean supports(@NonNull GBDeviceCandidate candidate) {
         return false;
     }
 

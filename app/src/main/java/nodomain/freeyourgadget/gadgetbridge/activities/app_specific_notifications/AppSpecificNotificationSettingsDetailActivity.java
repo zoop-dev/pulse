@@ -79,7 +79,7 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
         for(AbstractNotificationPattern p: mCoordinator.getNotificationVibrationRepetitionPatterns())
             mVibrationCountValues.add(p.getValue());
 
-        if(!mCoordinator.supportsNotificationLedPatterns()) {
+        if(!mCoordinator.supportsNotificationLedPatterns(mDevice)) {
             mTextViewLedColorTitle.setVisibility(View.GONE);
             mSpinnerLedPattern.setVisibility(View.GONE);
         } else {
@@ -88,7 +88,7 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
             );
         }
 
-        if (!mCoordinator.supportsNotificationVibrationPatterns()) {
+        if (!mCoordinator.supportsNotificationVibrationPatterns(mDevice)) {
             mSpinnerVibrationPattern.setVisibility(View.GONE);
         } else {
             mSpinnerVibrationPattern.setAdapter(
@@ -96,7 +96,7 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
             );
         }
 
-        if (!mCoordinator.supportsNotificationVibrationRepetitionPatterns()) {
+        if (!mCoordinator.supportsNotificationVibrationRepetitionPatterns(mDevice)) {
             mSpinnerVibrationCount.setVisibility(View.GONE);
         } else {
             mSpinnerVibrationCount.setAdapter(
@@ -104,7 +104,7 @@ public class AppSpecificNotificationSettingsDetailActivity extends AbstractGBAct
             );
         }
 
-        if (!mCoordinator.supportsNotificationVibrationPatterns() && !mCoordinator.supportsNotificationVibrationRepetitionPatterns()) {
+        if (!mCoordinator.supportsNotificationVibrationPatterns(mDevice) && !mCoordinator.supportsNotificationVibrationRepetitionPatterns(mDevice)) {
             mTextViewVibration.setVisibility(View.GONE);
         }
 

@@ -146,7 +146,7 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return huaweiCoordinator.getSupportsFlashing();
     }
 
@@ -176,12 +176,12 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsActiveCalories() {
+    public boolean supportsActiveCalories(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -201,7 +201,7 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return huaweiCoordinator.supportsMusic();
     }
 
@@ -216,20 +216,20 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return huaweiCoordinator.supportsAutoStress();
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return huaweiCoordinator.supportsFindDeviceAbility();
     }
 
     @Override
-    public boolean supportsRemSleep() {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
+    public boolean supportsRemSleep(@NonNull GBDevice device) {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
 
     @Override
-    public boolean supportsAwakeSleep() {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
 
     @Override
     public boolean supportsSleepScore(final GBDevice device) { return huaweiCoordinator.getSupportsNewTrueSleep(device); }

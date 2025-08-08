@@ -96,7 +96,7 @@ public class BluetoothStateChangeReceiver extends BroadcastReceiver {
                 return;
             }
 
-            if (!gbDevice.getDeviceCoordinator().supportsOSBatteryLevel()) {
+            if (!gbDevice.getDeviceCoordinator().supportsOSBatteryLevel(gbDevice)) {
                 LOG.info("gbDevice {} does not support OS battery provided levels, ignoring incoming battery information.", gbDevice);
                 return;
             }

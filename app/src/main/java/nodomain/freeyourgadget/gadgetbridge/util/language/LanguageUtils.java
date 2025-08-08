@@ -135,7 +135,7 @@ public class LanguageUtils {
             transliterators.add(TRANSLITERATORS_MAP.get(language));
         }
 
-        if (!coordinator.supportsUnicodeEmojis()) {
+        if (!coordinator.supportsUnicodeEmojis(device)) {
             // For now, assume that if the device does not support unicode emoji, it also doesn't
             // support utf, so flatten to ASCII. This allows for devices that support unicode
             // characters to still use transliterators for languages not supported by the device,

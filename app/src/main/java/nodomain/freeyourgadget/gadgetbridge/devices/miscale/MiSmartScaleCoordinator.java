@@ -91,32 +91,32 @@ public class MiSmartScaleCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWeightMeasurement() {
+    public boolean supportsWeightMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTabs() {
+    public boolean supportsActivityTabs(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSleepMeasurement() {
+    public boolean supportsSleepMeasurement(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsStepCounter() {
+    public boolean supportsStepCounter(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSpeedzones() {
+    public boolean supportsSpeedzones(@NonNull GBDevice device) {
         return false;
     }
 

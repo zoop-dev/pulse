@@ -50,7 +50,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.PebbleHealthActivitySampleD
 import nodomain.freeyourgadget.gadgetbridge.entities.PebbleMisfitSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.PebbleMorpheuzSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.PebbleSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
@@ -104,12 +103,12 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing() {
+    public boolean supportsFlashing(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -185,17 +184,17 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() {
+    public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
 

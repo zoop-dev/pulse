@@ -48,12 +48,12 @@ public class VibratissimoCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsRealtimeData() {
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return false; // hmmm well, it has a temperature sensor :D
     }
 
     @Override
-    public boolean supportsFindDevice() {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 

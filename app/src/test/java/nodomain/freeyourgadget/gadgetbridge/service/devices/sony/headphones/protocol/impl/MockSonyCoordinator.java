@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.impl;
 
+import androidx.annotation.NonNull;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -32,7 +34,7 @@ public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
     private final Set<SonyHeadphonesCapabilities> capabilities = new LinkedHashSet<>();
 
     @Override
-    public boolean supports(final GBDeviceCandidate candidate) {
+    public boolean supports(@NonNull final GBDeviceCandidate candidate) {
         return true;
     }
 

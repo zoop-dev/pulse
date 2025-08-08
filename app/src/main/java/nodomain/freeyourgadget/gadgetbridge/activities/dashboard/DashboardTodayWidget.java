@@ -44,8 +44,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -544,7 +542,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
             List<BaseActivitySummary> activitySummaries = null;
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
                 for (GBDevice dev : devices) {
-                    if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking()) {
+                    if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                         List<? extends ActivitySample> activitySamples = DashboardUtils.getAllSamples(dbHandler, dev, dashboardData);
                         allActivitySamples.addAll(activitySamples);
                         StepAnalysis stepAnalysis = new StepAnalysis();

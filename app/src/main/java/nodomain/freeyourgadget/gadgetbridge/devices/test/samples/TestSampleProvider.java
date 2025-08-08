@@ -94,7 +94,7 @@ public class TestSampleProvider extends AbstractSampleProvider<TestSampleProvide
                 ActivityKind.LIGHT_SLEEP.getCode(),
                 ActivityKind.DEEP_SLEEP.getCode(),
         };
-        if (getDevice().getDeviceCoordinator().supportsRemSleep()) {
+        if (getDevice().getDeviceCoordinator().supportsRemSleep(getDevice())) {
             sleepStages = ArrayUtils.add(sleepStages, ActivityKind.REM_SLEEP.getCode());
         }
         int sleepStageCurrent = 0;

@@ -193,7 +193,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracking() {
+    public boolean supportsActivityTracking(@NonNull GBDevice device) {
         return true;
     }
 
@@ -218,7 +218,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSleepMeasurement() {
+    public boolean supportsSleepMeasurement(@NonNull GBDevice device) {
         return false;
     }
 
@@ -228,7 +228,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsStepCounter() {
+    public boolean supportsStepCounter(@NonNull GBDevice device) {
         return true;
     }
 
@@ -238,12 +238,12 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSpeedzones() {
+    public boolean supportsSpeedzones(@NonNull GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsStressMeasurement() {
+    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
 }

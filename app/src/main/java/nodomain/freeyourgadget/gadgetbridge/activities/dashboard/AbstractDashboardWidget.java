@@ -76,7 +76,7 @@ public abstract class AbstractDashboardWidget extends Fragment {
     protected abstract void fillData();
 
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsActivityTracking();
+        return device.getDeviceCoordinator().supportsActivityTracking(device);
     }
 
     protected List<GBDevice> getSupportedDevices(final DashboardFragment.DashboardData dashboardData) {

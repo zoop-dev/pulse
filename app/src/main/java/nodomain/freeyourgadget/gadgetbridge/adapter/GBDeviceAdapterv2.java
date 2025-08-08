@@ -432,7 +432,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                 batteryStatusLabels[batteryIndex].setVisibility(View.VISIBLE);
             }
         }
-        holder.heartRateStatusBox.setVisibility((device.isInitialized() && coordinator.supportsRealtimeData() && coordinator.supportsManualHeartRateMeasurement(device)) ? View.VISIBLE : View.GONE);
+        holder.heartRateStatusBox.setVisibility((device.isInitialized() && coordinator.supportsRealtimeData(device) && coordinator.supportsManualHeartRateMeasurement(device)) ? View.VISIBLE : View.GONE);
         if (parent.getContext() instanceof ControlCenterv2) {
             ActivitySample sample = ((ControlCenterv2) parent.getContext()).getCurrentHRSample(device);
             if (sample != null) {
@@ -551,7 +551,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //show graphs
-        holder.showActivityGraphs.setVisibility(coordinator.supportsActivityTracking() ? View.VISIBLE : View.GONE);
+        holder.showActivityGraphs.setVisibility(coordinator.supportsActivityTracking(device) ? View.VISIBLE : View.GONE);
         holder.showActivityGraphs.setOnClickListener(new View.OnClickListener()
 
                                                      {
@@ -599,7 +599,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             }
         });
 
-        holder.findDevice.setVisibility(device.isInitialized() && coordinator.supportsFindDevice() ? View.VISIBLE : View.GONE);
+        holder.findDevice.setVisibility(device.isInitialized() && coordinator.supportsFindDevice(device) ? View.VISIBLE : View.GONE);
         holder.findDevice.setOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View v) {
@@ -796,7 +796,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         });
 
         holder.ledColor.setVisibility(View.GONE);
-        if (device.isInitialized() && device.getExtraInfo("led_color") != null && coordinator.supportsLedColor()) {
+        if (device.isInitialized() && device.getExtraInfo("led_color") != null && coordinator.supportsLedColor(device)) {
             holder.ledColor.setVisibility(View.VISIBLE);
             final GradientDrawable ledColor = (GradientDrawable) holder.ledColor.getDrawable().mutate();
             ledColor.setColor((int) device.getExtraInfo("led_color"));
@@ -811,7 +811,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                     builder.setColor((int) device.getExtraInfo("led_color"));
                     builder.setShowAlphaSlider(false);
                     builder.setShowColorShades(false);
-                    if (coordinator.supportsRgbLedColor()) {
+                    if (coordinator.supportsRgbLedColor(device)) {
                         builder.setAllowCustom(true);
                         if (presets.length == 0) {
                             builder.setDialogType(ColorPickerDialog.TYPE_CUSTOM);
@@ -865,8 +865,8 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             });
         }
 
-        holder.cardViewActivityCardLayout.setVisibility(coordinator.supportsActivityTracking() ? View.VISIBLE : View.GONE);
-        holder.cardViewActivityCardLayout.setMinimumWidth(coordinator.supportsActivityTracking() ? View.VISIBLE : View.GONE);
+        holder.cardViewActivityCardLayout.setVisibility(coordinator.supportsActivityTracking(device) ? View.VISIBLE : View.GONE);
+        holder.cardViewActivityCardLayout.setMinimumWidth(coordinator.supportsActivityTracking(device) ? View.VISIBLE : View.GONE);
 
         // custom actions
         final List<DeviceCardAction> customActions = coordinator.getCustomActions();
@@ -897,14 +897,14 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             holder.customActions[i].layout.setVisibility(View.GONE);
         }
 
-        if (coordinator.supportsActivityTracking()) {
+        if (coordinator.supportsActivityTracking(device)) {
             setActivityCard(holder, device, dailyTotals);
         }
     }
 
     private boolean showInstallerItem(GBDevice device) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        return coordinator.supportsAppsManagement(device) || coordinator.supportsFlashing();
+        return coordinator.supportsAppsManagement(device) || coordinator.supportsFlashing(device);
     }
 
     private void showDeviceSubmenu(final View v, final GBDevice device) {
