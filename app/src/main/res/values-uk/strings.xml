@@ -3774,4 +3774,5 @@
     <string name="pref_check_permission_show_list">Показати статус дозволів</string>
     <string name="first_start_permissions_do_not_ask_again">Більше не питати</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Відмова від надання дозволу може спричинити проблеми. Ви можете знову відкрити цей екран з екрана налаштувань.</string>
+    <string name="manual_measurements">Ручні вимірювання</string>
 </resources>
