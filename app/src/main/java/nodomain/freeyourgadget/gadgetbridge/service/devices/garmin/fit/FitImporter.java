@@ -376,7 +376,7 @@ public class FitImporter {
         // If the file is not yet on the export directory (eg. we're importing from phone storage), copy it
         File finalExportFile = file;
         try {
-            final File exportDirectory = gbDevice.getDeviceCoordinator().getWritableExportDirectory(gbDevice);
+            final File exportDirectory = gbDevice.getDeviceCoordinator().getWritableExportDirectory(gbDevice, true);
             if (!file.getAbsolutePath().startsWith(exportDirectory.getAbsolutePath())) {
                 final File exportFile = new File(exportDirectory, getFilePath(fileId));
                 if (exportFile.isFile()) {

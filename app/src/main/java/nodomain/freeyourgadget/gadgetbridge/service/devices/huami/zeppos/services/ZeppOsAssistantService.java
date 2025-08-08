@@ -423,7 +423,7 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
         if (DUMP_RAW_VOICE) {
             // for decoding debug
             try {
-                final File writableExportDirectory = getCoordinator().getWritableExportDirectory(getSupport().getDevice());
+                final File writableExportDirectory = getCoordinator().getWritableExportDirectory(getSupport().getDevice(), true);
                 final File targetDir = new File(writableExportDirectory, "assistantRawVoice");
                 targetDir.mkdirs();
                 final String filename = DateTimeUtils.formatIso8601(new Date()) + ".opus";

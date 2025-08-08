@@ -3080,7 +3080,7 @@ public class HuaweiSupportProvider {
                         File targetFile;
                         try {
                             targetFile = new File(
-                                    getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice()),
+                                    getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice(), true),
                                     filename
                             );
                         } catch (IOException e) {

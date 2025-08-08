@@ -813,7 +813,7 @@ public class HuaweiFileDownloadManager {
 
         try {
             String filename = FileUtils.makeValidFileName(System.currentTimeMillis() + "_" + fileRequest.getFileId() + "_" + fileRequest.getFilename());
-            File dir = new File(supportProvider.getDevice().getDeviceCoordinator().getWritableExportDirectory(supportProvider.getDevice()) + File.separator + "raw");
+            File dir = new File(supportProvider.getDevice().getDeviceCoordinator().getWritableExportDirectory(supportProvider.getDevice(), true) + File.separator + "raw");
             if (!dir.isDirectory()) {
                 if (!dir.mkdir()) {
                     LOG.error("Error save raw file");

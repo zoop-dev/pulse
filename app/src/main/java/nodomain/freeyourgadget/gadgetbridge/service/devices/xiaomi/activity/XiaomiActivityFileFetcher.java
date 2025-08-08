@@ -205,7 +205,7 @@ public class XiaomiActivityFileFetcher {
     public static File getRawFile(final XiaomiSupport support, final XiaomiActivityFileId fileId) {
         try {
             final GBDevice device = support.getDevice();
-            final File exportDirectory = device.getDeviceCoordinator().getWritableExportDirectory(device);
+            final File exportDirectory = device.getDeviceCoordinator().getWritableExportDirectory(device, true);
             final File targetDir = new File(exportDirectory, "rawFetchOperations");
             final File outputFile = fileId.getOutputFile(targetDir);
             if (!outputFile.isFile()) {

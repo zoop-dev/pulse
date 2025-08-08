@@ -188,7 +188,7 @@ public interface DeviceCoordinator {
      * given device.
      * @throws GBException
      */
-    void deleteDevice(GBDevice device) throws GBException;
+    void deleteDevice(GBDevice device, boolean deleteFiles) throws GBException;
 
     /**
      * Returns the Activity class to be started in order to perform a pairing of a
@@ -604,7 +604,7 @@ public interface DeviceCoordinator {
     /**
      * Returns the dedicated writable export directory for this device.
      */
-    File getWritableExportDirectory(GBDevice device) throws IOException;
+    File getWritableExportDirectory(GBDevice device, boolean createIfRequired) throws IOException;
 
     /**
      * Returns a String containing the device app sort order filename.

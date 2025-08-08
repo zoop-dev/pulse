@@ -27,6 +27,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -94,6 +95,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeightSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WorkoutLoadSample;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -179,7 +181,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public final void deleteDevice(final GBDevice gbDevice) throws GBException {
+    public final void deleteDevice(final GBDevice gbDevice, boolean deleteFiles) throws GBException {
         LOG.info("will try to delete device: {}", gbDevice.getName());
         if (gbDevice.isConnected() || gbDevice.isConnecting()) {
             GBApplication.deviceService(gbDevice).disconnect();
@@ -213,6 +215,27 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
             }
         } catch (Exception e) {
             throw new GBException("Error deleting device: " + e.getMessage(), e);
+        }
+
+        if (deleteFiles) {
+            deleteDeviceFiles(gbDevice);
+        }
+    }
+
+
+    private void deleteDeviceFiles(final GBDevice gbDevice) {
+        File export = new File("(export)");
+        try {
+            export = getWritableExportDirectory(gbDevice, false);
+            if (!FileUtils.deleteRecursively(export)) {
+                String message = GBApplication.getContext().getString(R.string.error_deleting_file,
+                        export.getPath());
+                GB.toast(message, Toast.LENGTH_LONG, GB.ERROR);
+            }
+        } catch (Exception e) {
+            String message = GBApplication.getContext().getString(R.string.error_deleting_file_exception,
+                    export.getPath(), e.getLocalizedMessage());
+            GB.toast(message, Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
@@ -432,11 +455,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public File getWritableExportDirectory(final GBDevice device) throws IOException {
-        File dir;
-        dir = new File(FileUtils.getExternalFilesDir() + File.separator + device.getAddress());
+    public File getWritableExportDirectory(final GBDevice device, boolean createIfRequired) throws IOException {
+        File dir = new File(FileUtils.getExternalFilesDir(), device.getAddress());
         if (!dir.isDirectory()) {
-            if (!dir.mkdir()) {
+            if (createIfRequired && !dir.mkdir()) {
                 throw new IOException("Cannot create device specific directory for " + device.getName());
             }
         }

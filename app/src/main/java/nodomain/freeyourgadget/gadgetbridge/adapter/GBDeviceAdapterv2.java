@@ -86,6 +86,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -979,35 +980,63 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     }
 
     private void showRemoveDeviceDialog(final GBDevice device) {
-        new MaterialAlertDialogBuilder(context)
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context)
                 .setCancelable(true)
                 .setTitle(context.getString(R.string.controlcenter_delete_device_name, device.getName()))
                 .setMessage(R.string.controlcenter_delete_device_dialogmessage)
-                .setPositiveButton(R.string.Delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            DeviceCoordinator coordinator = device.getDeviceCoordinator();
-                            coordinator.deleteDevice(device);
-                            BondingUtil.Unpair(context, device.getAddress());
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                removeDynamicShortcut(device);
-                            }
-                        } catch (Exception ex) {
-                            GB.toast(context, context.getString(R.string.error_deleting_device, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
-                        } finally {
-                            Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .show();
+                .setPositiveButton(R.string.Delete,
+                        (dialog, which) -> removeDevice(device, true))
+                .setNegativeButton(R.string.Cancel, (dialog, which) -> {});
+
+        if (deviceHasFiles(device)) {
+            builder.setNeutralButton(R.string.delete_device_and_retain_files,
+                    (dialog, which) -> removeDevice(device, false));
+        }
+        builder.show();
+    }
+
+    private void removeDevice(GBDevice device, boolean deleteFiles) {
+        try {
+            DeviceCoordinator coordinator = device.getDeviceCoordinator();
+            coordinator.deleteDevice(device, deleteFiles);
+            BondingUtil.Unpair(context, device.getAddress());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                removeDynamicShortcut(device);
+            }
+        } catch (Exception ex) {
+            GB.toast(context, context.getString(R.string.error_deleting_device, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+        } finally {
+            Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
+        }
+    }
+
+    private boolean deviceHasFiles(final GBDevice device) {
+        DeviceCoordinator coordinator = device.getDeviceCoordinator();
+
+        try {
+            File cache = coordinator.getAppCacheDir();
+            if (cache != null && cache.exists()) {
+                return true;
+            }
+        } catch (Exception e) {
+            LOG.warn("failed to check cache dir", e);
+            // assume device has cache files
+            return true;
+        }
+
+        try {
+            File export = coordinator.getWritableExportDirectory(device, false);
+            if (export != null && export.exists()) {
+                return true;
+            }
+        } catch (Exception e) {
+            LOG.warn("failed to check export dir", e);
+            // assume device has export files
+            return true;
+        }
+
+        return false;
     }
 
     private void showSetParentFolderDialog(final GBDevice device) {

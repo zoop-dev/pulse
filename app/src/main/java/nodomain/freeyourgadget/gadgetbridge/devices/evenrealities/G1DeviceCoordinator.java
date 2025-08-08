@@ -147,7 +147,7 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
             GBDevice rightDevice =
                     new GBDevice(right_address.getDetails(), right_name.getDetails(), null,
                                  gbDevice.getParentFolder(), gbDevice.getType());
-            super.deleteDevice(rightDevice);
+            super.deleteDevice(rightDevice, true);
             BondingUtil.Unpair(GBApplication.getContext(), rightDevice.getAddress());
         }
     }

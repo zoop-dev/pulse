@@ -165,7 +165,7 @@ public class ZeppOsVoiceMemosService extends AbstractZeppOsService {
 
         final File targetFile;
         try {
-            final File exportDirectory = getCoordinator().getWritableExportDirectory(getSupport().getDevice());
+            final File exportDirectory = getCoordinator().getWritableExportDirectory(getSupport().getDevice(), true);
             final File voiceMemosDirectory = new File(exportDirectory, "voicememo");
             //noinspection ResultOfMethodCallIgnored
             voiceMemosDirectory.mkdirs();
