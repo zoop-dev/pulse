@@ -12,8 +12,6 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -51,8 +49,8 @@ public class HuaweiSleepStatsSampleProvider extends AbstractTimeSampleProvider<H
         Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
         if (dbDevice == null)
             return 0;
-        final Property deviceProperty = HuaweiActivitySampleDao.Properties.DeviceId;
-        final Property timestampProperty = HuaweiActivitySampleDao.Properties.Timestamp;
+        final Property deviceProperty = HuaweiSleepStatsSampleDao.Properties.DeviceId;
+        final Property timestampProperty = HuaweiSleepStatsSampleDao.Properties.Timestamp;
 
         qb.where(deviceProperty.eq(dbDevice.getId()))
                 .orderDesc(timestampProperty)
