@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.workouts
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
@@ -44,12 +45,17 @@ import androidx.fragment.app.Fragment
 import androidx.gridlayout.widget.GridLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.LineData
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFragment
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryGroup
@@ -393,7 +399,44 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             )
         }
 
-        // TODO add chartData
+        val chartTextColor = GBApplication.getSecondaryTextColor(context);
+        val lineChart = LineChart(requireContext()).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+            legend.textColor = GBApplication.getTextColor(context)
+            isScaleXEnabled = false
+            isScaleYEnabled = false
+            isHighlightPerDragEnabled = false
+            isHighlightPerTapEnabled = false
+            isDragEnabled = false
+
+        }
+        lineChart.xAxis.apply {
+            setDrawLabels(true)
+            setDrawGridLines(false)
+            setDrawLimitLinesBehindData(true)
+            isEnabled = true
+            textColor = chartTextColor
+            position = XAxis.XAxisPosition.BOTTOM
+            valueFormatter = DurationXLabelFormatter("mm:ss")
+        }
+        lineChart.axisLeft.apply {
+            setDrawGridLines(false)
+            setDrawTopYLabelEntry(true)
+            textColor = chartTextColor
+            isEnabled = true
+            if (chart.chartYLabelFormatter != null) {
+                valueFormatter = chart.chartYLabelFormatter;
+            }
+        }
+        lineChart.axisRight.apply {
+            isEnabled = false
+        }
+        lineChart.data = chart.chartData as LineData?
+        lineChart.invalidate()
+        chartsFragmentHolder.addView(lineChart)
 
         binding.dynamicCharts.addView(chartsFragmentHolder)
     }

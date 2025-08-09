@@ -46,7 +46,7 @@ public class WorkoutValueFormatter {
         this.show_raw_data = !show_raw_data;
     }
 
-    public String formatValue(final Object rawValue, String unit) {
+    public String formatValue(final Object rawValue, String unit, boolean showUnit) {
         if (rawValue == null) {
             return GBApplication.getContext().getString(R.string.stats_empty_value);
         }
@@ -172,19 +172,25 @@ public class WorkoutValueFormatter {
             }
         }
 
-        if (unit.equals("seconds") && !show_raw_data) { //rather then plain seconds, show formatted duration
+        if (unit.equals("seconds") && !show_raw_data && showUnit) { //rather then plain seconds, show formatted duration
             return DateTimeUtils.formatDurationHoursMinutes((long) value, TimeUnit.SECONDS);
         } else if (unit.equals("minutes_km") || unit.equals("minutes_mi") || unit.equals("minutes_100m") || unit.equals("minutes_100yd")) {
             // Format pace
+            String format = showUnit ? "%d:%02d %s" : "%d:%02d";
             return String.format(
                     Locale.getDefault(),
-                    "%d:%02d %s",
+                    format,
                     (int) Math.floor(value), (int) Math.round(60 * (value - (int) Math.floor(value))),
                     getStringResourceByName(unit)
             );
         } else {
-            return String.format("%s %s", df.format(value), getStringResourceByName(unit));
+            String format = showUnit ? "%s %s" : "%s";
+            return String.format(format, df.format(value), getStringResourceByName(unit));
         }
+    }
+
+    public String formatValue(final Object rawValue, String unit) {
+        return formatValue(rawValue, unit, true);
     }
 
     public String getStringResourceByName(String aString) {
