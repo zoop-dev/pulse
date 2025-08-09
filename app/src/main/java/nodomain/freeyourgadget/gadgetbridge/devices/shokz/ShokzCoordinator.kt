@@ -40,6 +40,7 @@ abstract class ShokzCoordinator : AbstractBLClassicDeviceCoordinator() {
     override fun getDeviceSpecificSettings(device: GBDevice): DeviceSpecificSettings {
         val settings = DeviceSpecificSettings()
 
+        settings.addRootScreen(R.xml.devicesettings_multipoint)
         settings.addRootScreen(R.xml.devicesettings_media_source)
         settings.addRootScreen(R.xml.devicesettings_shokz_equalizer)
         settings.addRootScreen(R.xml.devicesettings_playback_mode)
@@ -51,6 +52,7 @@ abstract class ShokzCoordinator : AbstractBLClassicDeviceCoordinator() {
         settings.addSubScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS, R.xml.devicesettings_headphones)
 
         settings.addConnectedPreferences(
+            DeviceSettingsPreferenceConst.PREF_MULTIPOINT,
             DeviceSettingsPreferenceConst.PREF_LANGUAGE,
             DeviceSettingsPreferenceConst.PREF_MEDIA_SOURCE,
             DeviceSettingsPreferenceConst.PREF_SHOKZ_EQUALIZER_BLUETOOTH,

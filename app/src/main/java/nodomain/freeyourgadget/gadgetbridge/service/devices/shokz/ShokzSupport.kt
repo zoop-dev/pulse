@@ -1,7 +1,16 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.shokz
 
+import android.bluetooth.BluetoothAdapter
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Handler
+import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
+import nodomain.freeyourgadget.gadgetbridge.activities.multipoint.MultipointDevice
+import nodomain.freeyourgadget.gadgetbridge.activities.multipoint.MultipointPairingActivity
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo
@@ -9,6 +18,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneBTBRDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums
+import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.stringUntilNullTerminator
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
@@ -32,6 +42,11 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
 
     override fun useAutoConnect(): Boolean {
         return true
+    }
+
+    override fun setContext(gbDevice: GBDevice, btAdapter: BluetoothAdapter, context: Context) {
+        super.setContext(gbDevice, btAdapter, context)
+        setupMultipointBroadcastReceiver()
     }
 
     override fun initializeDevice(builder: TransactionBuilder): TransactionBuilder {
@@ -63,6 +78,7 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
     override fun dispose() {
         synchronized(ConnectionMonitor) {
             timeoutHandler.removeCallbacksAndMessages(null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(multipointBroadcastReceiver)
             super.dispose()
         }
     }
@@ -536,6 +552,98 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
                 )
             }
 
+            ShokzCommand.MULTIPOINT_RET -> {
+                val status = buf.getInt()
+                val statusBool = status == 0x00010100
+                LOG.info("Multipoint status={} (0x{})", statusBool, status.toHexString())
+                broadcastMultipointStatus(statusBool)
+            }
+
+            ShokzCommand.MULTIPOINT_ON_ACK -> {
+                val enabled: Boolean
+                if (buf.remaining() >= 4) {
+                    val status = buf.getInt()
+                    LOG.info("Multipoint on ACK status={}", status)
+                    enabled = status == 0
+                } else {
+                    LOG.warn("Multipoint on ACK payload too short")
+                    enabled = false
+                }
+                broadcastMultipointStatus(enabled)
+            }
+
+            ShokzCommand.MULTIPOINT_OFF_ACK -> {
+                val disabled: Boolean
+                if (buf.remaining() >= 4) {
+                    val status = buf.getInt()
+                    LOG.info("Multipoint off ACK status={}", status)
+                    disabled = status == 0
+                } else {
+                    LOG.warn("Multipoint off ACK payload too short")
+                    disabled = false
+                }
+                broadcastMultipointStatus(!disabled)
+            }
+
+            ShokzCommand.MULTIPOINT_DEVICES_RET -> {
+                buf.get() // 0
+                val numDevices = buf.get().toInt() and 0xff
+                LOG.debug("Got {} multipoint devices", numDevices);
+                val devices = mutableListOf<MultipointDevice>()
+                repeat(numDevices) {
+                    val idx = buf.get().toInt() and 0xff
+                    val macAddress = ByteArray(6)
+                    buf.get(macAddress)
+                    macAddress.reverse()
+                    val connected = buf.get()
+                    val nameLength = buf.get().toInt() and 0xff
+                    val nameBytes = ByteArray(nameLength)
+                    buf.get(nameBytes)
+                    val name = String(nameBytes, Charsets.UTF_8)
+                    LOG.debug("Device {}: {} - {} ({})", idx, macAddress.toHexString(), name, connected)
+                    devices.add(
+                        MultipointDevice(
+                            macAddress.joinToString(separator = ":") {
+                                String.format("%02X", it)
+                            },
+                            name,
+                            connected.toInt() == 1
+                        )
+                    )
+                }
+
+                broadcastMultipointList(devices)
+            }
+
+            ShokzCommand.MULTIPOINT_CONNECT_ACK -> {
+                val status = buf.getInt()
+                LOG.info("Multipoint connect ack, status = 0x{}", status.toHexString())
+                when (status) {
+                    0x00000400 -> {
+                        GB.toast("Too many connected devices", Toast.LENGTH_LONG, GB.WARN)
+                    }
+                }
+            }
+
+            ShokzCommand.MULTIPOINT_DEVICE_CONNECTION_NOTIFY -> {
+                LOG.info("Got multipoint device connection, requesting list")
+                requestPairedDevices()
+            }
+
+            ShokzCommand.MULTIPOINT_DISCONNECT_ACK -> {
+                LOG.info("Multipoint disconnect ack, status = 0x{}", buf.getInt().toHexString())
+            }
+
+            ShokzCommand.MULTIPOINT_PAIR_SECOND_FINISH -> {
+                LOG.info("Multipoint pair second finish")
+                broadcastMultipointPairing(false)
+            }
+
+            ShokzCommand.MULTIPOINT_START_PAIR_ACK -> {
+                LOG.info("Multipoint start pair ack, status = 0x{}", buf.getInt().toHexString())
+                broadcastMultipointPairing(true)
+            }
+
             else -> LOG.warn("Unhandled command {}, args={}", command, args.toHexString())
         }
     }
@@ -581,7 +689,142 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
         builder.write(*encodeCommand(message.command, message.args))
         builder.queue()
 
-        timeoutHandler.postDelayed({ onCommandTimeout() }, 2000L)
+        when (message.command) {
+            ShokzCommand.MULTIPOINT_PAIR_SECOND_FINISH,
+            ShokzCommand.MULTIPOINT_START_PAIR_REQ -> {
+                sendNextCommand()
+            }
+
+            else -> {
+                timeoutHandler.postDelayed({ onCommandTimeout() }, 2000L)
+            }
+        }
+    }
+
+    private fun setupMultipointBroadcastReceiver() {
+        val intentFilter = IntentFilter().apply {
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_ENABLE)
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_DISABLE)
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_GET_DEVICES)
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_GET_STATUS)
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_CONNECT_DEVICE)
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_DISCONNECT_DEVICE)
+            addAction(MultipointPairingActivity.ACTION_MULTIPOINT_START_PAIRING)
+        }
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(
+            multipointBroadcastReceiver,
+            intentFilter
+        )
+    }
+
+    private val multipointBroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val device = intent?.getParcelableExtra<GBDevice>(GBDevice.EXTRA_DEVICE)
+            if (device?.address != gbDevice.address) {
+                return // not for this device
+            }
+
+            when (intent.action) {
+                MultipointPairingActivity.ACTION_MULTIPOINT_ENABLE -> {
+                    LOG.info("Enabling multipoint")
+                    queueCommand(ShokzCommand.MULTIPOINT_ON)
+                }
+
+                MultipointPairingActivity.ACTION_MULTIPOINT_DISABLE -> {
+                    val macAddress = bluetoothAdapter.address
+                    LOG.debug("Disabling multipoint from mac address {}", macAddress)
+                    val macAddressBytes = macAddress.replace(":", "").hexToByteArray()
+                    macAddressBytes.reverse()
+                    queueCommand(ShokzCommand.MULTIPOINT_OFF, macAddressBytes)
+                }
+
+                MultipointPairingActivity.ACTION_MULTIPOINT_GET_DEVICES -> requestPairedDevices()
+                MultipointPairingActivity.ACTION_MULTIPOINT_GET_STATUS -> requestMultipointStatus()
+                MultipointPairingActivity.ACTION_MULTIPOINT_CONNECT_DEVICE -> {
+                    val deviceAddress = intent.getStringExtra(MultipointPairingActivity.EXTRA_DEVICE_ADDRESS)
+                    if (deviceAddress != null) {
+                        connectToDevice(deviceAddress)
+                    }
+                }
+
+                MultipointPairingActivity.ACTION_MULTIPOINT_DISCONNECT_DEVICE -> {
+                    val deviceAddress = intent.getStringExtra(MultipointPairingActivity.EXTRA_DEVICE_ADDRESS)
+                    if (deviceAddress != null) {
+                        disconnectFromDevice(deviceAddress)
+                    }
+                }
+
+                MultipointPairingActivity.ACTION_MULTIPOINT_START_PAIRING -> {
+                    val enabled = intent.getBooleanExtra(MultipointPairingActivity.EXTRA_PAIRING_ENABLED, false)
+                    startPairingMode(enabled)
+                }
+
+                else -> LOG.warn("Unknown action {}", intent.action)
+            }
+        }
+    }
+
+    private fun requestPairedDevices() {
+        LOG.info("Requesting paired devices")
+        queueCommand(ShokzCommand.MULTIPOINT_DEVICES_GET)
+    }
+
+    private fun requestMultipointStatus() {
+        LOG.info("Requesting multipoint status")
+        queueCommand(ShokzCommand.MULTIPOINT_GET)
+    }
+
+    private fun connectToDevice(deviceAddress: String) {
+        LOG.info("Connecting to {}", deviceAddress)
+
+        val macAddress = deviceAddress.replace(":", "").hexToByteArray()
+        macAddress.reverse()
+        queueCommand(ShokzCommand.MULTIPOINT_CONNECT_REQ, macAddress)
+    }
+
+    private fun disconnectFromDevice(deviceAddress: String) {
+        LOG.info("Disconnecting from {}", deviceAddress)
+
+        val macAddress = deviceAddress.replace(":", "").hexToByteArray()
+        macAddress.reverse()
+        queueCommand(ShokzCommand.MULTIPOINT_DISCONNECT_REQ, macAddress)
+    }
+
+    private fun startPairingMode(enabled: Boolean) {
+        LOG.info("Starting pairing mode enabled={}", enabled)
+        if (enabled) {
+            queueCommand(ShokzCommand.MULTIPOINT_START_PAIR_REQ)
+        } else {
+            queueCommand(ShokzCommand.MULTIPOINT_PAIR_SECOND_FINISH)
+        }
+    }
+
+    private fun broadcastMultipointStatus(enabled: Boolean) {
+        val intent = Intent(MultipointPairingActivity.ACTION_MULTIPOINT_STATUS_UPDATE).apply {
+            putExtra(GBDevice.EXTRA_DEVICE, device)
+            putExtra(MultipointPairingActivity.EXTRA_MULTIPOINT_ENABLED, enabled)
+        }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+    }
+
+    private fun broadcastMultipointPairing(enabled: Boolean) {
+        val intent = Intent(MultipointPairingActivity.ACTION_MULTIPOINT_PAIRING_UPDATE).apply {
+            putExtra(GBDevice.EXTRA_DEVICE, device)
+            putExtra(MultipointPairingActivity.EXTRA_PAIRING_ENABLED, enabled)
+        }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+    }
+
+    private fun broadcastMultipointList(devices: List<MultipointDevice>) {
+        val intent = Intent(MultipointPairingActivity.ACTION_MULTIPOINT_DEVICE_LIST).apply {
+            putExtra(GBDevice.EXTRA_DEVICE, device)
+            putParcelableArrayListExtra(
+                MultipointPairingActivity.EXTRA_DEVICE_LIST,
+                ArrayList(devices)
+            )
+        }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
     }
 
     companion object {

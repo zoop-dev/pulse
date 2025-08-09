@@ -4240,4 +4240,11 @@
     <string name="shokz_controls_long_press_multi_function">Long-press the multi-function button</string>
     <string name="shokz_controls_simultaneous_volume_up_down">Long-press volume up and down simultaneously</string>
     <string name="track_name_required">Track name cannot be empty</string>
+    <string name="bluetooth_multipoint_pairing">Multipoint pairing</string>
+    <string name="bluetooth_multipoint">Multipoint</string>
+    <string name="bluetooth_multipoint_pair_new">Pair New Device</string>
+    <string name="bluetooth_multipoint_no_devices">No paired devices found\n\nTap "Pair New Device" to add a device</string>
+    <string name="bluetooth_multipoint_pair_stop">Stop pairing</string>
+    <string name="bluetooth_paired_devices">Paired Devices</string>
+    <string name="connect">Connect</string>
 </resources>

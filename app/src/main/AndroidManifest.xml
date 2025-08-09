@@ -678,6 +678,12 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|layoutDirection|uiMode"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
+            android:name=".activities.multipoint.MultipointPairingActivity"
+            android:label="@string/bluetooth_multipoint_pairing"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|layoutDirection|uiMode"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
             android:name=".devices.miband.MiBandPairingActivity"
             android:label="@string/title_activity_mi_band_pairing" />
         <activity

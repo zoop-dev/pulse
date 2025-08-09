@@ -81,6 +81,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.app_specific_notification
 import nodomain.freeyourgadget.gadgetbridge.activities.audiorecordings.AudioRecordingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.LoyaltyCardsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.LoyaltyCardsSettingsConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.multipoint.MultipointPairingActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.musicmanager.MusicManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.widgets.WidgetScreensListActivity;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
@@ -1471,6 +1472,16 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         if (loyaltyCards != null) {
             loyaltyCards.setOnPreferenceClickListener(preference -> {
                 final Intent intent = new Intent(getContext(), LoyaltyCardsSettingsActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, getDevice());
+                startActivity(intent);
+                return true;
+            });
+        }
+
+        final Preference multipointPref = findPreference(PREF_MULTIPOINT);
+        if (multipointPref != null) {
+            multipointPref.setOnPreferenceClickListener(preference -> {
+                final Intent intent = new Intent(getContext(), MultipointPairingActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, getDevice());
                 startActivity(intent);
                 return true;
