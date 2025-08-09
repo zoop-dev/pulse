@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(112, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(113, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -211,6 +211,7 @@ public class GBDaoGenerator {
         addGenericSleepStageSample(schema, user, device);
         addGenericTrainingLoadAcuteSample(schema, user, device);
         addGenericTrainingLoadChronicSample(schema, user, device);
+        addGenericWeightSample(schema, user, device);
 
         new DaoGenerator().generateAll(schema, "app/src/main/java");
     }
@@ -1965,6 +1966,13 @@ public class GBDaoGenerator {
         Entity sample = addEntity(schema, "GenericTrainingLoadChronicSample");
         addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
         sample.addIntProperty("value").notNull();
+        return sample;
+    }
+
+    private static Entity addGenericWeightSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GenericWeightSample");
+        addCommonTimeSampleProperties("AbstractWeightSample", sample, user, device);
+        sample.addFloatProperty(SAMPLE_WEIGHT_KG).notNull().codeBeforeGetter(OVERRIDE);
         return sample;
     }
 }

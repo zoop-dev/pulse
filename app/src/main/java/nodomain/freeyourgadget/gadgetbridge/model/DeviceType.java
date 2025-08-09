@@ -146,6 +146,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosmart.Gar
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosport.GarminVivosportCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_headphones.GenericHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_hr.GenericHeartRateCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.generic_scale.GenericWeightScaleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.DotnP66DCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.OukitelBT103Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gree.GreeAcCoordinator;
@@ -781,6 +782,7 @@ public enum DeviceType {
     COOSPO_H6(CoospoH6Coordinator.class),
     COOSPO_HW9(CoospoHW9Coordinator.class),
     COOSPO_HW807(CoospoHW807Coordinator.class),
+    GENERIC_WEIGHT_SCALE(GenericWeightScaleCoordinator.class),
     TEST(TestDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;

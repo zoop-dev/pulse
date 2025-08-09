@@ -1,7 +1,7 @@
-/*  Copyright (C) 2019-2024 akasaka / Genjitsu Labs, Alicia Hormann, Andreas
+/*  Copyright (C) 2019-2025 akasaka / Genjitsu Labs, Alicia Hormann, Andreas
     Böhler, Andreas Shimokawa, Arjan Schrijver, Cre3per, Damien Gaignon, Daniel
     Dakhno, Daniele Gobbetti, Davis Mosenkovs, foxstidious, José Rebelo, mamucho,
-    NekoBox, opavlov, Petr Vaněk, Yoran Vulker, Yukai Li, Zhong Jianxin
+    NekoBox, opavlov, Petr Vaněk, Yoran Vulker, Yukai Li, Zhong Jianxin, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -425,6 +425,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         final ListPreference transliterationPreference = findPreference(DeviceSettingsPreferenceConst.PREF_TRANSLITERATION_LANGUAGES);
         if (transliterationPreference != null) {
             DeviceSettingsUtils.sortListPreference(transliterationPreference, false);
+        }
+
+        final ListPreference weightScaleUnitPreference = findPreference(PREF_WEIGHT_SCALE_UNIT);
+        if (weightScaleUnitPreference != null) {
+            DeviceSettingsUtils.sortListPreference(weightScaleUnitPreference, false);
         }
 
         String disconnectNotificationState = prefs.getString(PREF_DISCONNECT_NOTIFICATION, PREF_DO_NOT_DISTURB_OFF);

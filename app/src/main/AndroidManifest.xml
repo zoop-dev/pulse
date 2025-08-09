@@ -280,6 +280,10 @@
             android:label="@string/devicetype_ultrahuma_ring_air"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
+            android:name=".devices.generic_scale.GenericWeightScaleMeasurementActivity"
+            android:label="@string/devicetype_generic_weight_scale"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
             android:name=".devices.thermalprinter.SendToPrinterActivity"
             android:label="@string/devicetype_generic_thermal_printer"
             android:parentActivityName=".activities.ControlCenterv2" />

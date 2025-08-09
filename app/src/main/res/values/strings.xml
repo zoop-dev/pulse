@@ -2130,6 +2130,7 @@
     <string name="devicetype_generic_thermal_printer">Thermal Printer</string>
     <string name="devicetype_generic_headphones">Headphones</string>
     <string name="devicetype_generic_heart_rate_sensor">Heart Rate Sensor</string>
+    <string name="devicetype_generic_weight_scale">Weight Scale</string>
     <string name="devicetype_coospo_h6" translatable="false">Coospo H6</string>
     <string name="devicetype_coospo_hw9" translatable="false">Coospo HW9</string>
     <string name="devicetype_coospo_hw807" translatable="false">Coospo HW807</string>
@@ -4108,6 +4109,17 @@
     <string name="ultrahuman_breathing_stop">Stop</string>
     <string name="ultrahuman_unhandled_error_response">unhandled response %2$#02x %3$#02x for operation %1$#02x</string>
     <string name="ultrahuman_unhandled_operation_response">unhandled operation response %s</string>
+    <string name="weight_scale_jin">jin - 市斤</string>
+    <string name="weight_scale_jin_format">%1$.2f 市斤</string>
+    <string name="weight_scale_kilogram">kilogram - kg</string>
+    <string name="weight_scale_kilogram_format">%1$.3f kg</string>
+    <string name="weight_scale_pound">pound - lb</string>
+    <string name="weight_scale_pound_format">%1$.3f lb</string>
+    <string name="weight_scale_show_measurement">Show Weight</string>
+    <string name="weight_scale_stone">stone - st</string>
+    <string name="weight_scale_stone_format">%1$d st %2$d lb</string>
+    <string name="weight_scale_unknown">\?\?\?.\?\?\? \?\?</string>
+    <string name="record_data">Save</string>
     <string name="huawei_stress_test_enable">Automatic stress test</string>
     <string name="huawei_stress_test_enable_summary">Enable or disable automatic stress test</string>
     <string name="huawei_stress_no_calibration_data">No initial data - calibrate first</string>

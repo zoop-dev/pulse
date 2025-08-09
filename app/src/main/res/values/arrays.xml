@@ -5230,4 +5230,18 @@
         <item>8000</item>
         <item>10000</item>
       </string-array>
+
+    <string-array name="weight_scale_units">
+        <item>@string/weight_scale_jin</item>
+        <item>@string/weight_scale_kilogram</item>
+        <item>@string/weight_scale_pound</item>
+        <item>@string/weight_scale_stone</item>
+    </string-array>
+
+    <string-array name="weight_scale_values">
+        <item>jin</item>
+        <item>kilogram</item>
+        <item>pound</item>
+        <item>stone</item>
+    </string-array>
 </resources>

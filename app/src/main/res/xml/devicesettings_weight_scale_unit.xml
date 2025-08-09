@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:entries="@array/weight_scale_units"
+        android:entryValues="@array/weight_scale_values"
+        android:icon="@drawable/ic_weight"
+        android:key="pref_weight_scale_unit"
+        android:title="@string/pref_header_display"
+        app:useSimpleSummaryProvider="true" />
+</androidx.preference.PreferenceScreen>

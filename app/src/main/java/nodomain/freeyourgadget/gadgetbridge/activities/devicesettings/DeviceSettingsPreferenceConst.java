@@ -90,6 +90,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_CALENDAR_MAX_DESC_LENGTH = "calendar_sync_event_desc_length";
     public static final String PREF_CALENDAR_TARGET_APP = "calendar_sync_target_app";
     public static final String PREF_TIME_SYNC = "time_sync";
+    public static final String PREF_WEIGHT_SCALE_UNIT = "pref_weight_scale_unit";
     public static final String PREF_USE_CUSTOM_DEVICEICON = "use_custom_deviceicon";
     public static final String PREF_BUTTON_1_FUNCTION_SHORT = "button_1_function_short";
     public static final String PREF_BUTTON_2_FUNCTION_SHORT = "button_2_function_short";
