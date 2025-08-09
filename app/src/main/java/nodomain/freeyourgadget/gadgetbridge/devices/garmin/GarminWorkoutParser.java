@@ -130,6 +130,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
@@ -247,23 +248,23 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             if (!heartRateDataPoints.isEmpty()) {
                 String label = String.format("%s(%s)", context.getString(R.string.heart_rate), getUnitString(UNIT_BPM));
                 LineDataSet dataset = createDataSet(heartRateDataPoints, label, Color.RED);
-                charts.add(new WorkoutChart(context.getString(R.string.heart_rate), new LineData(dataset)));
+                charts.add(new WorkoutChart(context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE_ZONES, new LineData(dataset)));
             }
             if (hasSpeedValues && !speedDataPoints.isEmpty()) {
                 if (ActivityKind.isPaceActivity(activityKind)) {
                     String label = String.format("%s(%s)", context.getString(R.string.Pace), getUnitString(UNIT_SECONDS_PER_KM));
                     LineDataSet dataset = createDataSet(speedDataPoints, label, Color.BLUE);
-                    charts.add(new WorkoutChart(context.getString(R.string.Pace), new LineData(dataset), new SpeedYLabelFormatter(UNIT_SECONDS_PER_KM)));
+                    charts.add(new WorkoutChart(context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_SECONDS_PER_KM)));
                 } else {
                     String label = String.format("%s(%s)", context.getString(R.string.Speed), getUnitString(UNIT_METERS_PER_SECOND));
                     LineDataSet dataset = createDataSet(speedDataPoints, label, Color.BLUE);
-                    charts.add(new WorkoutChart(context.getString(R.string.Speed), new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND)));
+                    charts.add(new WorkoutChart(context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND)));
                 }
             }
             if (!elevationDataPoints.isEmpty()) {
                 String label = String.format("%s(%s)", context.getString(R.string.Elevation), getUnitString(UNIT_METERS));
                 LineDataSet dataset = createDataSet(elevationDataPoints, label, Color.GREEN);
-                charts.add(new WorkoutChart(context.getString(R.string.Elevation), new LineData(dataset)));
+                charts.add(new WorkoutChart(context.getString(R.string.Elevation), ActivitySummaryEntries.GROUP_ELEVATION, new LineData(dataset)));
             }
         }
 

@@ -248,6 +248,10 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 addGroupHeader(groupKey)
             }
             addGroupContent(entries)
+
+            workout.charts.filter { chart -> groupKey == chart.group }.forEach { chart ->
+                addChart(binding.summaryDetails, false, chart)
+            }
         }
     }
 
@@ -339,7 +343,9 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
         binding.dynamicCharts.removeAllViews()
         for (chart in workout.charts) {
-            addChart(chart)
+            if (chart.group == null) {
+                addChart(binding.dynamicCharts, true, chart)
+            }
         }
 
         if (workoutHasGps(workout.summary)) {
@@ -350,46 +356,50 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun addChart(chart: WorkoutChart) {
-        val separator1 = View(context).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                (2 * resources.displayMetrics.density).toInt()
-            )
+    private fun addChart(chartsLayout: LinearLayout,
+                         includeHeader: Boolean,
+                         chart: WorkoutChart) {
+        if (includeHeader) {
+            val separator1 = View(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    (2 * resources.displayMetrics.density).toInt()
+                )
 
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
-            setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
+                setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
+            }
+            chartsLayout.addView(separator1)
+
+            val chartTitle = TextView(context).apply {
+                id = View.generateViewId()
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                text = chart.title
+                gravity = Gravity.CENTER
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+                typeface = Typeface.create("sans-serif-black", Typeface.NORMAL)
+
+                val paddingPx = (16 * resources.displayMetrics.density).toInt()
+                setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
+            }
+            chartsLayout.addView(chartTitle)
+
+            val separator2 = View(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    (2 * resources.displayMetrics.density).toInt()
+                )
+
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
+                setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
+            }
+            chartsLayout.addView(separator2)
         }
-        binding.dynamicCharts.addView(separator1)
-
-        val chartTitle = TextView(context).apply {
-            id = View.generateViewId()
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            text = chart.title
-            gravity = Gravity.CENTER
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-            typeface = Typeface.create("sans-serif-black", Typeface.NORMAL)
-
-            val paddingPx = (16 * resources.displayMetrics.density).toInt()
-            setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
-        }
-        binding.dynamicCharts.addView(chartTitle)
-
-        val separator2 = View(context).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                (2 * resources.displayMetrics.density).toInt()
-            )
-
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
-            setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
-        }
-        binding.dynamicCharts.addView(separator2)
 
         val chartsFragmentHolder = FrameLayout(requireContext()).apply {
             id = View.generateViewId()
@@ -438,7 +448,19 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         lineChart.invalidate()
         chartsFragmentHolder.addView(lineChart)
 
-        binding.dynamicCharts.addView(chartsFragmentHolder)
+        chartsLayout.addView(chartsFragmentHolder)
+
+        val separator3 = View(context).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                (2 * resources.displayMetrics.density).toInt()
+            )
+
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
+            setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
+        }
+        chartsLayout.addView(separator3)
     }
 
     private fun workoutHasGps(summary: BaseActivitySummary): Boolean {
