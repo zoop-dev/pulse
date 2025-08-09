@@ -60,16 +60,15 @@ public class BatteryInfoProfile<T extends AbstractBTLESingleDeviceSupport> exten
 
     @Override
     public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
-        if (status == BluetoothGatt.GATT_SUCCESS) {
-            UUID charUuid = characteristic.getUuid();
-            if (charUuid.equals(UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
+        UUID charUuid = characteristic.getUuid();
+        if (charUuid.equals(UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
                 handleBatteryLevel(gatt, characteristic, value);
                 return true;
             } else {
-                LOG.info("Unexpected onCharacteristicRead: " + GattCharacteristic.toString(characteristic));
+                LOG.warn("error reading characteristic: {}", GattCharacteristic.toString(characteristic));
+                return false;
             }
-        } else {
-            LOG.warn("error reading from characteristic:" + GattCharacteristic.toString(characteristic));
         }
         return false;
     }
