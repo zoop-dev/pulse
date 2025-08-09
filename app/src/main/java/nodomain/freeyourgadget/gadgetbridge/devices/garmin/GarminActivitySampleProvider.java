@@ -100,11 +100,17 @@ public class GarminActivitySampleProvider extends AbstractSampleProvider<GarminA
 
         final long nanoStart = System.nanoTime();
 
+        // Each Garmin sample contains the cumulative value measured up until that specific timestamp. For example the
+        // sample at midnight will actually contain the number of steps taken in the entire previous day.
+        // This goes against what Gb expects (each sample actually corresponds to the value at the end of the minute).
+        // Therefore, we fetch the data with an offset and then adjust by 1 minute
         final List<GarminActivitySample> samples = fillGaps(
-                super.getGBActivitySamples(timestamp_from, timestamp_to),
-                timestamp_from,
-                timestamp_to
+                super.getGBActivitySamples(timestamp_from + 60, timestamp_to + 60),
+                timestamp_from + 60,
+                timestamp_to + 60
         );
+
+        samples.forEach(s -> s.setTimestamp(s.getTimestamp() - 60));
 
         if (!samples.isEmpty()) {
             convertCumulativeSteps(samples, GarminActivitySampleDao.Properties.Steps);
