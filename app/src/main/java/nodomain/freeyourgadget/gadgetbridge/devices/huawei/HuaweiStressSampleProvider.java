@@ -18,9 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;

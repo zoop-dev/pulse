@@ -185,15 +185,19 @@ public class HuaweiEphemerisManager {
                 if (entry.getName().equals(name)) {
                     InputStream inputStream = zipFile.getInputStream(entry);
                     ret = new byte[inputStream.available()];
-                    inputStream.read(ret);
+                    if(inputStream.read(ret) != ret.length) {
+                        ret = null;
+                    }
                     inputStream.close();
                 }
             }
             zipFile.close();
         } catch (ZipException e) {
             LOG.error("zip exception", e);
+            ret = null;
         } catch (IOException e) {
             LOG.error("zip IO exception", e);
+            ret = null;
         }
         return ret;
     }
@@ -205,6 +209,7 @@ public class HuaweiEphemerisManager {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
                 if (!entry.isDirectory() && entry.getName().equals(name)) {
+                    zipFile.close();
                     return true;
                 }
             }
@@ -218,6 +223,7 @@ public class HuaweiEphemerisManager {
     }
 
     public void handleOperatorRequest(byte operationInfo, int operationTime) {
+        LOG.debug("handleOperatorRequest: operationInfo {} operationTime: {}", operationInfo, operationTime);
         //TODO:
         // 100007 - no network connection
         if (operationInfo == 1) {
@@ -345,7 +351,7 @@ public class HuaweiEphemerisManager {
 
         if(fileType == 0) {
             //TODO: find all files that name contain productId and send
-            LOG.error("Currently not supported. File type: 0");
+            LOG.error("Currently not supported. File type: 0 Product Id: {}", productId);
         } else if(fileType == 1){
             if(currentRequest.getTagVersion() == 0) {
                 //TODO: implement this type
@@ -552,7 +558,7 @@ public class HuaweiEphemerisManager {
     }
 
     void handleFileDoneRequest(byte uploadResult) {
-        LOG.info("handleFileDoneRequest");
+        LOG.info("handleFileDoneRequest uploadResult: {}", uploadResult);
         cleanupUpload(false);
         try {
             SendEphemerisFileUploadDoneResponse sendEphemerisFileUploadDoneResponse = new SendEphemerisFileUploadDoneResponse(this.support, 100000);

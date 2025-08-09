@@ -1247,7 +1247,7 @@ public class HuaweiSupportProvider {
         if (huaweiDataSyncTreeCircleGoals != null) {
             int stepGoal = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
             if (!huaweiDataSyncTreeCircleGoals.sendStepsGoal(stepGoal)) {
-                LOG.error("Error to set stand goal");
+                LOG.error("Error to set steps goal");
             }
         } else {
             try {

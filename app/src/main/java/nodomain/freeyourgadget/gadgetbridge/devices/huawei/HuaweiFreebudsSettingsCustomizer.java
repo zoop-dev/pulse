@@ -76,7 +76,7 @@ public class HuaweiFreebudsSettingsCustomizer implements DeviceSpecificSettingsC
         return Collections.emptySet();
     }
 
-    public static final Creator<HuaweiFreebudsSettingsCustomizer> CREATOR = new Creator<HuaweiFreebudsSettingsCustomizer>() {
+    public static final Creator<HuaweiFreebudsSettingsCustomizer> CREATOR = new Creator<>() {
         @Override
         public HuaweiFreebudsSettingsCustomizer createFromParcel(final Parcel in) {
             final GBDevice device = in.readParcelable(HuaweiFreebudsSettingsCustomizer.class.getClassLoader());

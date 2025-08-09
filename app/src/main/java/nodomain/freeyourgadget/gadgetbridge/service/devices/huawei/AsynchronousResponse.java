@@ -261,7 +261,7 @@ public class AsynchronousResponse {
 
                 MusicControl.MusicStatusResponse resp = (MusicControl.MusicStatusResponse) response;
                 if (resp.status != -1 && resp.status != 0x000186A0) {
-                    LOG.warn("Music information error, will stop here: " + Integer.toHexString(resp.status));
+                    LOG.warn("Music information error, will stop here: {}", Integer.toHexString(resp.status));
                     return;
                 }
 
@@ -319,26 +319,22 @@ public class AsynchronousResponse {
                 if (resp.volumePresent) {
                     byte volume = resp.volume;
                     if (volume > audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) {
-                        LOG.warn("Music - Received volume is too high: 0x"
-                                + Integer.toHexString(volume)
-                                + " > 0x"
-                                + Integer.toHexString(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
-                        );
+                        LOG.warn("Music - Received volume is too high: 0x{} > 0x{}",
+                                Integer.toHexString(volume),
+                                Integer.toHexString(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)));
                         // TODO: probably best to send back an error code, though I wouldn't know which
                         return;
                     }
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                         if (volume < audioManager.getStreamMinVolume(AudioManager.STREAM_MUSIC)) {
-                            LOG.warn("Music - Received volume is too low: 0x"
-                                    + Integer.toHexString(volume)
-                                    + " < 0x"
-                                    + audioManager.getStreamMinVolume(AudioManager.STREAM_MUSIC)
-                            );
+                            LOG.warn("Music - Received volume is too low: 0x{} < 0x{}",
+                                    Integer.toHexString(volume),
+                                    audioManager.getStreamMinVolume(AudioManager.STREAM_MUSIC));
                             // TODO: probably best to send back an error code, though I wouldn't know which
                             return;
                         }
                     }
-                    LOG.debug("Music - Setting volume to: 0x" + Integer.toHexString(volume));
+                    LOG.debug("Music - Setting volume to: 0x{}", Integer.toHexString(volume));
                     audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
                 }
 
