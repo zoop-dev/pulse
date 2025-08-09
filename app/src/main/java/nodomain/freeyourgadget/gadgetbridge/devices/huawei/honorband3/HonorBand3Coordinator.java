@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband3;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -41,7 +43,7 @@ public class HonorBand3Coordinator extends HuaweiLECoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return true;
     }
 

@@ -92,12 +92,12 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsSmartWakeup(GBDevice device, int position) {
+    public boolean supportsSmartWakeup(@NonNull GBDevice device, int position) {
         return huaweiCoordinator.supportsSmartAlarm(device, position);
     }
 
     @Override
-    public boolean supportsSmartWakeupInterval(GBDevice device, int alarmPosition) {
+    public boolean supportsSmartWakeupInterval(@NonNull GBDevice device, int alarmPosition) {
         return supportsSmartWakeup(device, alarmPosition);
     }
 
@@ -107,12 +107,12 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsAlarmTitle(GBDevice device) {
+    public boolean supportsAlarmTitle(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return huaweiCoordinator.supportsWeather();
     }
 
@@ -122,26 +122,26 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return huaweiCoordinator.getSupportsAppListFetching();
     }
     @Override
-    public boolean supportsAppsManagement(GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull GBDevice device) {
         return huaweiCoordinator.getSupportsAppsManagement(device);
     }
 
     @Override
-    public boolean supportsWatchfaceManagement(GBDevice device) {
+    public boolean supportsWatchfaceManagement(@NonNull GBDevice device) {
         return supportsAppsManagement(device);
     }
 
     @Override
-    public boolean supportsInstalledAppManagement(GBDevice device) {
+    public boolean supportsInstalledAppManagement(@NonNull GBDevice device) {
         return huaweiCoordinator.getSupportsInstalledAppManagement(device);
     }
 
     @Override
-    public boolean supportsCachedAppManagement(GBDevice device) {
+    public boolean supportsCachedAppManagement(@NonNull GBDevice device) {
         return huaweiCoordinator.getSupportsCachedAppManagement(device);
     }
 
@@ -166,12 +166,12 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return huaweiCoordinator.supportsCalendarEvents();
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -186,17 +186,17 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return huaweiCoordinator.supportsHeartRate(device);
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull GBDevice device) {
         return huaweiCoordinator.supportsSPo2(device);
     }
 
@@ -206,12 +206,12 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+    public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return huaweiCoordinator.supportsTemperature();
     }
 
     @Override
-    public boolean supportsContinuousTemperature(final GBDevice device) {
+    public boolean supportsContinuousTemperature(@NonNull final GBDevice device) {
         return huaweiCoordinator.supportsTemperature();
     }
 
@@ -232,7 +232,7 @@ public abstract class HuaweiBRCoordinator extends AbstractBLClassicDeviceCoordin
     public boolean supportsAwakeSleep(@NonNull GBDevice device) {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
 
     @Override
-    public boolean supportsSleepScore(final GBDevice device) { return huaweiCoordinator.getSupportsNewTrueSleep(device); }
+    public boolean supportsSleepScore(@NonNull final GBDevice device) { return huaweiCoordinator.getSupportsNewTrueSleep(device); }
 
 
     @Override
