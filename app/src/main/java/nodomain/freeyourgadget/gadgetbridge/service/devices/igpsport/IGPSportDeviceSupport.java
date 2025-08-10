@@ -20,8 +20,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 import static nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants.DATA_HEADER_SIZE;
 import static nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,6 +58,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
@@ -80,6 +84,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Factory;
+import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 
 
 public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
@@ -96,6 +101,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private IGPSportRoutesManager routeManager;
     private IGPSportDownloadManager downloadManager;
     private IGPSportWeather weatherManager;
+    private MediaManager mediaManager;
 
 
     private int mtuSize=247; //FIXME use actual device mtu
@@ -707,6 +713,117 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (!specs.isEmpty()) {
             weatherManager.handleWeather(specs.get(0));
         }
+    }
+
+    @Override
+    public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
+        super.setContext(gbDevice, btAdapter, context);
+        this.mediaManager = new MediaManager(context);
+    }
+
+    @Override
+    public void onSetMusicInfo(MusicSpec musicSpec) {
+        if (!mediaManager.onSetMusicInfo(musicSpec)) {
+            return;
+        }
+
+        TransactionBuilder builder = createTransactionBuilder("Music");
+
+        LOG.debug("onSetMusicInfo: {}", musicSpec.toString());
+
+        Media.track_message.Builder track_message = Media.track_message.newBuilder()
+                .setAlbum(musicSpec.album)
+                .setArtist(musicSpec.artist)
+                .setTitle(musicSpec.track)
+                .setTotalTime(musicSpec.duration);
+
+        Media.queue_message.Builder queue_message = Media.queue_message.newBuilder()
+                .setQueueCount(musicSpec.trackCount)
+                .setQueueIndex(musicSpec.trackNr);
+
+
+        Media.player_message.Builder player_message = Media.player_message.newBuilder();
+
+
+        final MusicStateSpec bufferMusicStateSpec = mediaManager.getBufferMusicStateSpec();
+        if (bufferMusicStateSpec != null) {
+            player_message.setPlayerState(getPlayerState(bufferMusicStateSpec.state))
+                    .setPlayerRate(bufferMusicStateSpec.playRate)
+                    .setElapsedTime(bufferMusicStateSpec.position)
+                    .setVolumeCur(mediaManager.getPhoneVolume())
+                    .setVolumeMax(100);
+        }
+
+        Media.media_message.Builder media_message = Media.media_message.newBuilder()
+                .setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_MUSIC_CTL)
+                .setOperateType(Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_SET)
+                .setTrackMsg(track_message)
+                .setQueueMsg(queue_message)
+                .setPlayerMsg(player_message);
+
+        byte[] mediaData = craftData(media_message.getServiceType().getNumber(), 0xff, media_message.getOperateType().getNumber(), media_message.build().toByteArray());
+        builder.write(writeCharacteristic, mediaData);
+        builder.queue();
+
+    }
+
+    @Override
+    public void onSetMusicState(MusicStateSpec stateSpec) {
+        if (!mediaManager.onSetMusicState(stateSpec)) {
+            return;
+        }
+
+        LOG.debug("onSetMusicState: {}", stateSpec.toString());
+        TransactionBuilder builder = createTransactionBuilder("Music");
+
+        Media.player_message.Builder player_message = Media.player_message.newBuilder();
+        final MusicStateSpec bufferMusicStateSpec = mediaManager.getBufferMusicStateSpec();
+        if (bufferMusicStateSpec != null) {
+            player_message.setPlayerState(getPlayerState(bufferMusicStateSpec.state))
+                    .setPlayerRate(bufferMusicStateSpec.playRate)
+                    .setElapsedTime(bufferMusicStateSpec.position);
+        }
+
+        Media.media_message.Builder media_message = Media.media_message.newBuilder()
+                .setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_MUSIC_CTL)
+                .setOperateType(Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_SET)
+                .setPlayerMsg(player_message);
+
+        byte[] mediaData = craftData(media_message.getServiceType().getNumber(), 0xff, media_message.getOperateType().getNumber(), media_message.build().toByteArray());
+        builder.write(writeCharacteristic, mediaData);
+        builder.queue();
+
+    }
+
+    @Override
+    public void onSetPhoneVolume(float volume) {
+        TransactionBuilder builder = createTransactionBuilder("Music");
+
+        Media.player_message.Builder player_message = Media.player_message.newBuilder();
+        player_message.setVolumeCur(Math.round(volume))
+                .setVolumeMax(100);
+
+        Media.media_message.Builder media_message = Media.media_message.newBuilder()
+                .setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_MUSIC_CTL)
+                .setOperateType(Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_SET)
+                .setPlayerMsg(player_message);
+
+        byte[] mediaData = craftData(media_message.getServiceType().getNumber(), 0xff, media_message.getOperateType().getNumber(), media_message.build().toByteArray());
+        builder.write(writeCharacteristic, mediaData);
+        builder.queue();
+
+    }
+
+    Media.PLAYER_STATE getPlayerState(byte gbState) {
+        switch (gbState) {
+            case MusicStateSpec.STATE_PLAYING:
+                return Media.PLAYER_STATE.PLAYING;
+            case  MusicStateSpec.STATE_UNKNOWN:
+            case MusicStateSpec.STATE_PAUSED:
+            case MusicStateSpec.STATE_STOPPED:
+                return Media.PLAYER_STATE.PAUSED;
+        }
+        return Media.PLAYER_STATE.PAUSED;
     }
 
 

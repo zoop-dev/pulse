@@ -41,4 +41,9 @@ public class IGPSportiGS800Coordinator extends IGPSportAbstractCoordinator {
     public boolean supportsWeather(final GBDevice device) {
         return true;
     }
+
+    @Override
+    public boolean supportsMusicInfo() {
+        return true;
+    }
 }
