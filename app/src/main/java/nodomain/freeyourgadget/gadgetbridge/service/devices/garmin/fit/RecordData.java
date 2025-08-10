@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +29,9 @@ public class RecordData {
 
     /**
      * The computed timestamp consists of the running timestamp for this record, which may come from
-     *  a timestamp field 253, or from a compressed timestamp, or simply be the same timestamp as the
-     *  previously seen sample. This does not take into account sample-specific timestamps such as
-     *  timestamp16.
+     * a timestamp field 253, or from a compressed timestamp, or simply be the same timestamp as the
+     * previously seen sample. This does not take into account sample-specific timestamps such as
+     * timestamp16.
      */
     public Long computedTimestamp = null;
 
@@ -179,24 +180,25 @@ public class RecordData {
             tsb.append(new Date(getComputedTimestamp() * 1000L));
         }
 
-        for (FieldData fieldData : fieldDataList) {
-            final String fieldName;
-            if (!StringUtils.isBlank(fieldData.getName())) {
-                fieldName = fieldData.getName();
-            } else {
-                fieldName = "unknown_" + fieldData.getNumber() + fieldData;
-            }
-            Object o = fieldData.decode();
-            final String fieldValueString;
-            if (o == null) {
-                fieldValueString = null;
-            } else if (o instanceof Object[]) {
-                fieldValueString = "[" + StringUtils.join((Object[]) o, ",") + "]";
-            } else {
-                fieldValueString = o.toString();
-            }
-            tsb.append(fieldName, fieldValueString);
-        }
+        fieldDataList.stream().sorted(Comparator.comparingInt(FieldData::getNumber))
+                .forEach(fieldData -> {
+                    final String fieldName;
+                    if (!StringUtils.isBlank(fieldData.getName())) {
+                        fieldName = fieldData.getName();
+                    } else {
+                        fieldName = "unknown_" + fieldData.getNumber() + fieldData;
+                    }
+                    Object o = fieldData.decode();
+                    final String fieldValueString;
+                    if (o == null) {
+                        fieldValueString = null;
+                    } else if (o instanceof Object[]) {
+                        fieldValueString = "[" + StringUtils.join((Object[]) o, ",") + "]";
+                    } else {
+                        fieldValueString = o.toString();
+                    }
+                    tsb.append(fieldName, fieldValueString);
+                });
         return tsb.build();
     }
 

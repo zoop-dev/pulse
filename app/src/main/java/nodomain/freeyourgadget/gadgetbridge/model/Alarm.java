@@ -17,7 +17,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import androidx.annotation.StringRes;
+
 import java.io.Serializable;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 
 public interface Alarm extends Serializable {
     /**
@@ -35,6 +39,51 @@ public interface Alarm extends Serializable {
     byte ALARM_SUN = 64;
 
     byte ALARM_DAILY = Alarm.ALARM_MON | Alarm.ALARM_TUE | Alarm.ALARM_WED | Alarm.ALARM_THU | Alarm.ALARM_FRI | Alarm.ALARM_SAT | Alarm.ALARM_SUN;
+
+    enum ALARM_SOUND {
+        UNSET(R.string.unset),
+        OFF(R.string.off),
+        TONE(R.string.pref_header_sound),
+        VIBRATION(R.string.title_activity_vibration),
+        TONE_AND_VIBRATION(R.string.sound_and_vibration),
+        ;
+
+        @StringRes
+        private final int label;
+
+        ALARM_SOUND(final int label) {
+            this.label = label;
+        }
+
+        public int getLabel() {
+            return label;
+        }
+    }
+
+    /// Enum name will be persisted as the title
+    enum ALARM_LABEL {
+        NONE(R.string.none),
+        WAKE_UP(R.string.wake_up_time),
+        WORKOUT(R.string.pref_header_workout),
+        REMINDER(R.string.reminder),
+        APPOINTMENT(R.string.alarm_label_appointment),
+        TRAINING(R.string.alarm_label_training),
+        CLASS(R.string.alarm_label_class),
+        MEDITATE(R.string.alarm_label_meditate),
+        BEDTIME(R.string.bedtime),
+        ;
+
+        @StringRes
+        private final int label;
+
+        ALARM_LABEL(final int label) {
+            this.label = label;
+        }
+
+        public int getLabel() {
+            return label;
+        }
+    }
 
     int getPosition();
 
@@ -61,4 +110,8 @@ public interface Alarm extends Serializable {
     String getTitle();
 
     String getDescription();
+
+    int getSoundCode();
+
+    boolean getBacklight();
 }

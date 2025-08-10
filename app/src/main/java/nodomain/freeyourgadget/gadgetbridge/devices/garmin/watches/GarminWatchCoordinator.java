@@ -2,14 +2,54 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+import java.util.List;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 
 public abstract class GarminWatchCoordinator extends GarminCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_zetime;
+    }
+
+    @Override
+    public int getAlarmSlotCount(final GBDevice device) {
+        return supports(device, GarminCapability.REALTIME_SETTINGS) ? 0 : 10;
+    }
+
+    @Override
+    public boolean supportsAlarmSounds(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAlarmBacklight(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAlarmTitlePresets(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public List<Alarm.ALARM_LABEL> getAlarmTitlePresets(@NonNull final GBDevice device) {
+        return Arrays.asList(
+                Alarm.ALARM_LABEL.NONE,
+                Alarm.ALARM_LABEL.WAKE_UP,
+                Alarm.ALARM_LABEL.WORKOUT,
+                Alarm.ALARM_LABEL.REMINDER,
+                Alarm.ALARM_LABEL.APPOINTMENT,
+                Alarm.ALARM_LABEL.TRAINING,
+                Alarm.ALARM_LABEL.CLASS,
+                Alarm.ALARM_LABEL.MEDITATE,
+                Alarm.ALARM_LABEL.BEDTIME
+        );
     }
 
     @Override

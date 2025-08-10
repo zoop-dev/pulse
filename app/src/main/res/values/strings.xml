@@ -216,6 +216,7 @@
     <string name="pref_header_generic">Generic</string>
     <string name="pref_header_health">Health</string>
     <string name="pref_header_sound_vibration">Sound &amp; Vibration</string>
+    <string name="sound_and_vibration">Sound + Vibration</string>
     <string name="pref_header_offline_voice">Offline Voice</string>
     <string name="pref_header_sound">Sound</string>
     <string name="pref_header_time">Time</string>
@@ -3407,6 +3408,7 @@
     <string name="error_deleting_device">Error deleting device: %s</string>
     <string name="controlcenter_folder_name">Folder name:</string>
     <string name="controlcenter_add_new_folder">Add new folder</string>
+    <string name="unset">Unset</string>
     <string name="controlcenter_unset_folder">Unset folder</string>
     <string name="controlcenter_set_folder_title">Set or create new folder</string>
     <string name="auto_reconnect_ble_title">Auto reconnect to device</string>
@@ -3660,6 +3662,11 @@
     <string name="menuitem_alerts">Alerts</string>
     <string name="menuitem_focus">Focus</string>
     <string name="bedtime">Bedtime</string>
+    <string name="reminder">Reminder</string>
+    <string name="alarm_label_appointment">Appointment</string>
+    <string name="alarm_label_training">Training</string>
+    <string name="alarm_label_class">Class</string>
+    <string name="alarm_label_meditate">Meditate</string>
     <string name="wake_up_time">Wake Up</string>
     <string name="pref_sleep_mode_schedule_title">Sleep Mode Schedule</string>
     <string name="pref_sleep_mode_schedule_summary">Send a reminder and enter sleep mode at bedtime. At the scheduled wake-up time, the wake-up alarm will sound.</string>

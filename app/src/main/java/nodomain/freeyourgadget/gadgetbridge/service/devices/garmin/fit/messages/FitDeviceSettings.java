@@ -47,8 +47,44 @@ public class FitDeviceSettings extends RecordData {
     }
 
     @Nullable
+    public Number[] getAlarmsTime() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(8);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAlarmsUnk5() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(9);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
     public Integer getBacklightMode() {
         return (Integer) getFieldByNumber(12);
+    }
+
+    @Nullable
+    public Number[] getAlarmsEnabled() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(28);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -101,6 +137,18 @@ public class FitDeviceSettings extends RecordData {
         return (Long) getFieldByNumber(90);
     }
 
+    @Nullable
+    public Number[] getAlarmsRepeat() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(92);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
             super(2);
@@ -131,8 +179,23 @@ public class FitDeviceSettings extends RecordData {
             return this;
         }
 
+        public Builder setAlarmsTime(final Number[] value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setAlarmsUnk5(final Number[] value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
         public Builder setBacklightMode(final Integer value) {
             setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setAlarmsEnabled(final Number[] value) {
+            setFieldByNumber(28, value);
             return this;
         }
 
@@ -183,6 +246,11 @@ public class FitDeviceSettings extends RecordData {
 
         public Builder setAutoActivityDetect(final Long value) {
             setFieldByNumber(90, value);
+            return this;
+        }
+
+        public Builder setAlarmsRepeat(final Number[] value) {
+            setFieldByNumber(92, value);
             return this;
         }
 

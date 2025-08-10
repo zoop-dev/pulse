@@ -16,12 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.documentfile.provider.DocumentFile;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -53,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
@@ -77,10 +80,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.SupportedFileTypesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.WeatherRequestDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitAsyncProcessor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteFileConverter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.PredefinedLocalMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ConfigurationMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.DownloadRequestMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
@@ -760,6 +768,99 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                         .setFindMyWatchService(a).build());
 
         sendOutgoingMessage("find device", findMyWatch);
+    }
+
+    @Override
+    public void onSetAlarms(final ArrayList<? extends Alarm> alarms) {
+        final int alarmSlotCount = getCoordinator().getAlarmSlotCount(getDevice());
+
+        final List<RecordData> dataRecords = new ArrayList<>(1 + alarmSlotCount);
+
+        final int currentTime = (int) (System.currentTimeMillis() / 1000);
+
+        dataRecords.add(new FitFileId.Builder()
+                .setType(FileType.FILETYPE.SETTINGS)
+                .setManufacturer(1) // garmin
+                .setProduct(65534) // connect
+                .setTimeCreated((long) currentTime)
+                .setSerialNumber(1L)
+                .setNumber(1)
+                .build());
+
+        final List<Number> deviceSettingsTimes = new ArrayList<>();
+        final List<Number> deviceSettingsUnk5 = new ArrayList<>();
+        final List<Number> deviceSettingsEnabled = new ArrayList<>();
+        final List<Number> deviceSettingsRepeat = new ArrayList<>();
+
+        int numberEnabledAlarms = 0;
+        for (Alarm alarm : alarms) {
+            if (alarm.getUnused()) {
+                continue;
+            }
+
+            final int soundCode = switch (Alarm.ALARM_SOUND.values()[alarm.getSoundCode()]) {
+                case OFF -> 0;
+                case TONE -> 1;
+                case VIBRATION -> 2;
+                case UNSET, TONE_AND_VIBRATION -> 3;
+            };
+            final FieldDefinitionAlarmLabel.Label label;
+
+            final String alarmTitle = alarm.getTitle();
+            if (StringUtils.isBlank(alarmTitle)) {
+                label = FieldDefinitionAlarmLabel.Label.NONE;
+            } else {
+                FieldDefinitionAlarmLabel.Label alarmLabel;
+                try {
+                    alarmLabel = FieldDefinitionAlarmLabel.Label.valueOf(alarmTitle);
+                } catch (final Exception e) {
+                    LOG.error("Invalid alarm label {}", alarmTitle, e);
+                    alarmLabel = FieldDefinitionAlarmLabel.Label.NONE;
+                }
+                label = alarmLabel;
+            }
+
+            final long repetitionCode = alarm.getRepetition() != 0 ? alarm.getRepetition() : 128L;
+
+            final FitAlarmSettings.Builder alarmBuilder = new FitAlarmSettings.Builder()
+                    .setTime(LocalTime.of(alarm.getHour(), alarm.getMinute()))
+                    .setRepeat(repetitionCode)
+                    .setEnabled(alarm.getEnabled() ? 1 : 0)
+                    .setSound(soundCode)
+                    .setBacklight(alarm.getBacklight() ? 1 : 0)
+                    .setSomeTimestamp((long) currentTime)
+                    .setUnknown7(0)
+                    .setLabel(label)
+                    .setMessageIndex(numberEnabledAlarms);
+
+            dataRecords.add(alarmBuilder.build());
+
+            deviceSettingsTimes.add(alarm.getHour() * 60 + alarm.getMinute());
+            deviceSettingsUnk5.add(5);
+            deviceSettingsEnabled.add(alarm.getEnabled() ? 1 : 0);
+            deviceSettingsRepeat.add(repetitionCode);
+
+            numberEnabledAlarms++;
+        }
+
+        if (numberEnabledAlarms > 0) {
+            final FitDeviceSettings.Builder deviceSettingsBuilder = new FitDeviceSettings.Builder()
+                    .setAlarmsTime(deviceSettingsTimes.toArray(new Number[0]))
+                    .setAlarmsUnk5(deviceSettingsUnk5.toArray(new Number[0]))
+                    .setAlarmsEnabled(deviceSettingsEnabled.toArray(new Number[0]))
+                    .setAlarmsRepeat(deviceSettingsRepeat.toArray(new Number[0]));
+
+            dataRecords.add(deviceSettingsBuilder.build());
+        }
+
+        final FitFile fitFile = new FitFile(dataRecords);
+        communicator.sendMessage(
+                "set alarms",
+                fileTransferHandler.initiateUpload(
+                        fitFile.getOutgoingMessage(),
+                        FileType.FILETYPE.SETTINGS
+                ).getOutgoingMessage()
+        );
     }
 
     @Override

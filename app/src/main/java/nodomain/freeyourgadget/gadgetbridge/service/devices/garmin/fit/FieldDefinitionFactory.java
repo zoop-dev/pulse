@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarm;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionArray;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionDayOfWeek;
@@ -26,48 +27,28 @@ public class FieldDefinitionFactory {
         if (null == field) {
             return new FieldDefinition(localNumber, size, baseType, name, scale, offset);
         }
-        switch (field) {
-            case ALARM:
-                return new FieldDefinitionAlarm(localNumber, size, baseType, name);
-            case ARRAY:
-                return new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
-            case DAY_OF_WEEK:
-                return new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
-            case EXERCISE_CATEGORY:
-                return new FieldDefinitionExerciseCategory(localNumber, size, baseType, name);
-            case FILE_TYPE:
-                return new FieldDefinitionFileType(localNumber, size, baseType, name);
-            case GOAL_SOURCE:
-                return new FieldDefinitionGoalSource(localNumber, size, baseType, name);
-            case GOAL_TYPE:
-                return new FieldDefinitionGoalType(localNumber, size, baseType, name);
-            case HRV_STATUS:
-                return new FieldDefinitionHrvStatus(localNumber, size, baseType, name);
-            case HR_TIME_IN_ZONE:
-                return new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
-            case HR_ZONE_HIGH_BOUNDARY:
-                return new FieldDefinitionHrZoneHighBoundary(localNumber, size, baseType, name);
-            case MEASUREMENT_SYSTEM:
-                return new FieldDefinitionMeasurementSystem(localNumber, size, baseType, name);
-            case TEMPERATURE:
-                return new FieldDefinitionTemperature(localNumber, size, baseType, name);
-            case TIMESTAMP:
-                return new FieldDefinitionTimestamp(localNumber, size, baseType, name);
-            case WEATHER_CONDITION:
-                return new FieldDefinitionWeatherCondition(localNumber, size, baseType, name);
-            case LANGUAGE:
-                return new FieldDefinitionLanguage(localNumber, size, baseType, name);
-            case SLEEP_STAGE:
-                return new FieldDefinitionSleepStage(localNumber, size, baseType, name);
-            case WEATHER_AQI:
-                return new FieldDefinitionWeatherAqi(localNumber, size, baseType, name);
-            case COORDINATE:
-                return new FieldDefinitionCoordinate(localNumber, size, baseType, name);
-            case SWIM_STYLE:
-                return new FieldDefinitionSwimStyle(localNumber, size, baseType, name);
-            default:
-                return new FieldDefinition(localNumber, size, baseType, name);
-        }
+        return switch (field) {
+            case ALARM -> new FieldDefinitionAlarm(localNumber, size, baseType, name);
+            case ARRAY -> new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
+            case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
+            case EXERCISE_CATEGORY -> new FieldDefinitionExerciseCategory(localNumber, size, baseType, name);
+            case ALARM_LABEL -> new FieldDefinitionAlarmLabel(localNumber, size, baseType, name);
+            case FILE_TYPE -> new FieldDefinitionFileType(localNumber, size, baseType, name);
+            case GOAL_SOURCE -> new FieldDefinitionGoalSource(localNumber, size, baseType, name);
+            case GOAL_TYPE -> new FieldDefinitionGoalType(localNumber, size, baseType, name);
+            case HRV_STATUS -> new FieldDefinitionHrvStatus(localNumber, size, baseType, name);
+            case HR_TIME_IN_ZONE -> new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
+            case HR_ZONE_HIGH_BOUNDARY -> new FieldDefinitionHrZoneHighBoundary(localNumber, size, baseType, name);
+            case MEASUREMENT_SYSTEM -> new FieldDefinitionMeasurementSystem(localNumber, size, baseType, name);
+            case TEMPERATURE -> new FieldDefinitionTemperature(localNumber, size, baseType, name);
+            case TIMESTAMP -> new FieldDefinitionTimestamp(localNumber, size, baseType, name);
+            case WEATHER_CONDITION -> new FieldDefinitionWeatherCondition(localNumber, size, baseType, name);
+            case LANGUAGE -> new FieldDefinitionLanguage(localNumber, size, baseType, name);
+            case SLEEP_STAGE -> new FieldDefinitionSleepStage(localNumber, size, baseType, name);
+            case WEATHER_AQI -> new FieldDefinitionWeatherAqi(localNumber, size, baseType, name);
+            case COORDINATE -> new FieldDefinitionCoordinate(localNumber, size, baseType, name);
+            case SWIM_STYLE -> new FieldDefinitionSwimStyle(localNumber, size, baseType, name);
+        };
     }
 
     public enum FIELD {
@@ -75,6 +56,7 @@ public class FieldDefinitionFactory {
         ARRAY,
         DAY_OF_WEEK,
         EXERCISE_CATEGORY,
+        ALARM_LABEL,
         FILE_TYPE,
         GOAL_SOURCE,
         GOAL_TYPE,

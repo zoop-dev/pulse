@@ -8,6 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecord
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel.Label;
 
 //
 // WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -44,7 +45,7 @@ public class FitAlarmSettings extends RecordData {
     }
 
     @Nullable
-    public Integer getUnknown4() {
+    public Integer getBacklight() {
         return (Integer) getFieldByNumber(4);
     }
 
@@ -59,8 +60,8 @@ public class FitAlarmSettings extends RecordData {
     }
 
     @Nullable
-    public Integer getLabel() {
-        return (Integer) getFieldByNumber(8);
+    public Label getLabel() {
+        return (Label) getFieldByNumber(8);
     }
 
     @Nullable
@@ -93,7 +94,7 @@ public class FitAlarmSettings extends RecordData {
             return this;
         }
 
-        public Builder setUnknown4(final Integer value) {
+        public Builder setBacklight(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
@@ -108,7 +109,7 @@ public class FitAlarmSettings extends RecordData {
             return this;
         }
 
-        public Builder setLabel(final Integer value) {
+        public Builder setLabel(final Label value) {
             setFieldByNumber(8, value);
             return this;
         }

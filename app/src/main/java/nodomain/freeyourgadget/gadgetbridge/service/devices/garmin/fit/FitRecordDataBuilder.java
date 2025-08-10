@@ -47,7 +47,7 @@ public class FitRecordDataBuilder {
                         new RecordHeader((byte) 0x40),
                         ByteOrder.BIG_ENDIAN,
                         globalMessage,
-                        values.keySet().stream().map(globalMessage::getFieldDefinition).collect(Collectors.toList()),
+                        values.entrySet().stream().map(e -> globalMessage.getFieldDefinition(e.getKey(), e.getValue().length)).collect(Collectors.toList()),
                         null
                 ),
                 new RecordHeader((byte) 0x00)

@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -72,6 +73,7 @@ public final class DeviceSettingsUtils {
 
     /**
      * Populates a list preference, or hides it if no known supported values are known.
+     * @noinspection ConstantValue
      */
     public static void populateOrHideListPreference(final CharSequence prefKey,
                                                     final DeviceSpecificSettingsHandler handler,
@@ -137,11 +139,10 @@ public final class DeviceSettingsUtils {
             final String possibleValue = possibleValues.get(i);
             final CharSequence knownLabel = entryNames.get(possibleValue);
 
-            if (knownLabel != null) {
-                entries[i] = knownLabel;
-            } else {
-                entries[i] = handler.getContext().getString(R.string.menuitem_unknown_app, possibleValue);
-            }
+            entries[i] = Objects.requireNonNullElseGet(
+                    knownLabel,
+                    () -> handler.getContext().getString(R.string.menuitem_unknown_app, possibleValue)
+            );
             values[i] = possibleValue;
         }
 
@@ -194,7 +195,7 @@ public final class DeviceSettingsUtils {
         });
     }
 
-    public static void sortListPreference(final ListPreference listPreference) {
+    public static void sortListPreference(final ListPreference listPreference, final boolean keepFirst) {
         final CharSequence[] entries = listPreference.getEntries();
         final CharSequence[] entryValues = listPreference.getEntryValues();
 
@@ -211,9 +212,8 @@ public final class DeviceSettingsUtils {
             combined[i][1] = entryValues[i].toString();
         }
 
-        // Sort, keeping "auto" at the top
-        final boolean hasAuto = "auto".contentEquals(entryValues[0]);
-        Arrays.sort(combined, hasAuto ? 1 : 0, length, Comparator.comparing(o -> o[0]));
+        // Sort, keeping "the first" at the top
+        Arrays.sort(combined, keepFirst ? 1 : 0, length, Comparator.comparing(o -> o[0]));
 
         // Reassign sorted values
         for (int i = 0; i < length; i++) {

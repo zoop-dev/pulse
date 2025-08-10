@@ -237,7 +237,9 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
         private UploadRequestMessage setCreateFileStatusMessage(CreateFileStatusMessage createFileStatusMessage) {
             if (createFileStatusMessage.canProceed()) {
                 LOG.info("SENDING UPLOAD FILE");
-                updateUploadProgress(0);
+                if (currentlyUploading.directoryEntry.filetype != FileType.FILETYPE.SETTINGS) {
+                    updateUploadProgress(0);
+                }
                 return new UploadRequestMessage(createFileStatusMessage.getFileIndex(), currentlyUploading.getDataSize());
             } else {
                 LOG.warn("Cannot proceed with upload");
@@ -255,23 +257,31 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
                 return currentlyUploading.take();
             } else {
                 LOG.warn("Cannot proceed with upload");
-                updateUploadProgress(-1);
+                if (currentlyUploading.directoryEntry.filetype != FileType.FILETYPE.SETTINGS) {
+                    updateUploadProgress(-1);
+                }
                 this.currentlyUploading = null;
             }
             return null;
         }
 
         private GFDIMessage processUploadProgress(FileTransferDataStatusMessage fileTransferDataStatusMessage) {
+            final boolean showNotification = currentlyUploading.directoryEntry.filetype != FileType.FILETYPE.SETTINGS;
+
             if (currentlyUploading.getDataSize() <= fileTransferDataStatusMessage.getDataOffset()) {
                 this.currentlyUploading = null;
                 LOG.info("SENDING SYNC COMPLETE!!!");
-                updateUploadProgress(100);
+                if (showNotification) {
+                    updateUploadProgress(100);
+                }
 
                 return new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0);
             } else {
                 if (fileTransferDataStatusMessage.canProceed()) {
                     LOG.info("SENDING NEXT CHUNK!!!");
-                    updateUploadProgress((100 * currentlyUploading.dataHolder.position()) / currentlyUploading.dataHolder.limit());
+                    if (showNotification) {
+                        updateUploadProgress((100 * currentlyUploading.dataHolder.position()) / currentlyUploading.dataHolder.limit());
+                    }
                     if (fileTransferDataStatusMessage.getDataOffset() != currentlyUploading.dataHolder.position())
                         throw new IllegalStateException("Received file transfer status with unaligned offset");
                     return currentlyUploading.take();

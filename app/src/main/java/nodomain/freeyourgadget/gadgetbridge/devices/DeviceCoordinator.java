@@ -52,6 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
@@ -543,6 +544,11 @@ public interface DeviceCoordinator {
      * @return
      */
     boolean supportsAlarmDescription(@NonNull GBDevice device);
+
+    boolean supportsAlarmSounds(@NonNull GBDevice device);
+    boolean supportsAlarmBacklight(@NonNull GBDevice device);
+    boolean supportsAlarmTitlePresets(@NonNull GBDevice device);
+    List<Alarm.ALARM_LABEL> getAlarmTitlePresets(@NonNull GBDevice device);
 
     /**
      * Returns true if the given device supports heart rate measurements.

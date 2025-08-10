@@ -75,6 +75,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
@@ -723,6 +724,25 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     public boolean supportsAlarmDescription(@NonNull GBDevice device) {
         return false;
+    }
+
+    public boolean supportsAlarmSounds(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsAlarmBacklight(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsAlarmTitlePresets(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public List<Alarm.ALARM_LABEL> getAlarmTitlePresets(@NonNull GBDevice device) {
+        return Collections.emptyList();
     }
 
     @Override

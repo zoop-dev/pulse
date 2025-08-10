@@ -255,7 +255,7 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
         // Since we populate the values dynamically, we need to sort it here
         final Preference languagePref = handler.findPreference("language");
         if (languagePref != null) {
-            DeviceSettingsUtils.sortListPreference((ListPreference) languagePref);
+            DeviceSettingsUtils.sortListPreference((ListPreference) languagePref, true);
         }
     }
 

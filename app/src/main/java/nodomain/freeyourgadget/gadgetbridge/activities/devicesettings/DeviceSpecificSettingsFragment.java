@@ -416,13 +416,15 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 languageListPreference.setEntries(entries);
                 languageListPreference.setEntryValues(values);
             }
-
-            DeviceSettingsUtils.sortListPreference(languageListPreference);
+            DeviceSettingsUtils.sortListPreference(
+                    languageListPreference,
+                    supportedLanguages.length > 0 && "auto".equals(supportedLanguages[0])
+            );
         }
 
         final ListPreference transliterationPreference = findPreference(DeviceSettingsPreferenceConst.PREF_TRANSLITERATION_LANGUAGES);
         if (transliterationPreference != null) {
-            DeviceSettingsUtils.sortListPreference(transliterationPreference);
+            DeviceSettingsUtils.sortListPreference(transliterationPreference, false);
         }
 
         String disconnectNotificationState = prefs.getString(PREF_DISCONNECT_NOTIFICATION, PREF_DO_NOT_DISTURB_OFF);

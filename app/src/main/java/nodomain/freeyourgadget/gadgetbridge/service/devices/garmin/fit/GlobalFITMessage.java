@@ -31,7 +31,10 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "time_offset"),
             new FieldDefinitionPrimitive(4, BaseType.ENUM, "time_mode"),
             new FieldDefinitionPrimitive(5, BaseType.SINT8, "time_zone_offset"),
+            new FieldDefinitionPrimitive(8, BaseType.UINT16, "alarms_time", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(9, BaseType.ENUM, "alarms_unk5", FieldDefinitionFactory.FIELD.ARRAY), // [5, 5]
             new FieldDefinitionPrimitive(12, BaseType.ENUM, "backlight_mode"),
+            new FieldDefinitionPrimitive(28, BaseType.ENUM, "alarms_enabled", FieldDefinitionFactory.FIELD.ARRAY), // [1,1]
             new FieldDefinitionPrimitive(36, BaseType.ENUM, "activity_tracker_enabled"),
             new FieldDefinitionPrimitive(46, BaseType.ENUM, "move_alert_enabled"),
             new FieldDefinitionPrimitive(47, BaseType.ENUM, "date_mode"),
@@ -41,7 +44,8 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(58, BaseType.UINT16, "autosync_min_steps"),
             new FieldDefinitionPrimitive(59, BaseType.UINT16, "autosync_min_time"),
             new FieldDefinitionPrimitive(86, BaseType.ENUM, "ble_auto_upload_enabled"),
-            new FieldDefinitionPrimitive(90, BaseType.UINT32, "auto_activity_detect")
+            new FieldDefinitionPrimitive(90, BaseType.UINT32, "auto_activity_detect"),
+            new FieldDefinitionPrimitive(92, BaseType.UINT32Z, "alarms_repeat", FieldDefinitionFactory.FIELD.ARRAY)
     ));
 
     public static GlobalFITMessage USER_PROFILE = new GlobalFITMessage(3, "USER_PROFILE", Arrays.asList(
@@ -404,10 +408,10 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(1, BaseType.UINT32Z, "repeat"), // 31 weekday 96 weekend 126 all except mon 127 daily 128 once
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "enabled"), // 0/1
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "sound"), // 0 none 1 sound 2 vibrate 3 sound+vibrate
-            new FieldDefinitionPrimitive(4, BaseType.ENUM, "unknown4"), // 1
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "backlight"), // 1
             new FieldDefinitionPrimitive(5, BaseType.UINT32, "some_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(7, BaseType.UINT8, "unknown7"), // 0
-            new FieldDefinitionPrimitive(8, BaseType.ENUM, "label"), // 0 none 2 workout 3 reminder 4 appointment 6 class 7 meditate 8 bedtime
+            new FieldDefinitionPrimitive(8, BaseType.ENUM, "label", FieldDefinitionFactory.FIELD.ALARM_LABEL), // 0 none 2 workout 3 reminder 4 appointment 6 class 7 meditate 8 bedtime
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
@@ -684,13 +688,13 @@ public class GlobalFITMessage {
         return subset;
     }
 
-    public FieldDefinition getFieldDefinition(final String name) {
+    public FieldDefinition getFieldDefinition(final String name, final int count) {
         for (FieldDefinitionPrimitive fieldDefinitionPrimitive :
                 fieldDefinitionPrimitives) {
             if (name.equals(fieldDefinitionPrimitive.name)) {
                 return FieldDefinitionFactory.create(
                         fieldDefinitionPrimitive.number,
-                        fieldDefinitionPrimitive.size,
+                        fieldDefinitionPrimitive.size * count,
                         fieldDefinitionPrimitive.type,
                         fieldDefinitionPrimitive.baseType,
                         fieldDefinitionPrimitive.name,
