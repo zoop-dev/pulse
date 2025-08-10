@@ -38,7 +38,6 @@ import java.util.Map;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -60,7 +59,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.AudioRecordingDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHrvValueSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySampleDao;
@@ -105,11 +103,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice,
-                                @NonNull final Device device,
-                                @NonNull final DaoSession session) throws GBException {
-        final Long deviceId = device.getId();
-
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
         final Map<AbstractDao<?, ?>, Property> daoMap = new HashMap<AbstractDao<?, ?>, Property>() {{
             put(session.getMiBandActivitySampleDao(), MiBandActivitySampleDao.Properties.DeviceId);
             put(session.getHuamiExtendedActivitySampleDao(), HuamiExtendedActivitySampleDao.Properties.DeviceId);
@@ -127,11 +121,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
             put(session.getAudioRecordingDao(), AudioRecordingDao.Properties.DeviceId);
         }};
 
-        for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
-            e.getKey().queryBuilder()
-                    .where(e.getValue().eq(deviceId))
-                    .buildDelete().executeDeleteWithoutDetachingEntities();
-        }
+        return daoMap;
     }
 
     @Override

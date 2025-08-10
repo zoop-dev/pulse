@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2024-2025 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -31,11 +31,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -48,14 +51,15 @@ import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.samples.CmfActiv
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.samples.CmfSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.samples.CmfStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout.CmfWorkoutSummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfHeartRateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfSleepSessionSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfSleepStageSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfSpo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfStressSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.CmfWorkoutGpsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
@@ -93,34 +97,17 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice,
-                                @NonNull final Device device,
-                                @NonNull final DaoSession session) throws GBException {
-        final Long deviceId = device.getId();
-
-        session.getCmfActivitySampleDao().queryBuilder()
-                .where(CmfActivitySampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getCmfStressSampleDao().queryBuilder()
-                .where(CmfStressSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getCmfHeartRateSampleDao().queryBuilder()
-                .where(CmfHeartRateSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getCmfSleepSessionSampleDao().queryBuilder()
-                .where(CmfSleepSessionSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getCmfSleepStageSampleDao().queryBuilder()
-                .where(CmfSleepStageSampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getCmfSpo2SampleDao().queryBuilder()
-                .where(CmfSpo2SampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(8);
+        map.put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
+        map.put(session.getCmfActivitySampleDao(), CmfActivitySampleDao.Properties.DeviceId);
+        map.put(session.getCmfStressSampleDao(), CmfStressSampleDao.Properties.DeviceId);
+        map.put(session.getCmfHeartRateSampleDao(), CmfHeartRateSampleDao.Properties.DeviceId);
+        map.put(session.getCmfSleepSessionSampleDao(), CmfSleepSessionSampleDao.Properties.DeviceId);
+        map.put(session.getCmfSleepStageSampleDao(), CmfSleepStageSampleDao.Properties.DeviceId);
+        map.put(session.getCmfSpo2SampleDao(), CmfSpo2SampleDao.Properties.DeviceId);
+        map.put(session.getCmfWorkoutGpsSampleDao(), CmfWorkoutGpsSampleDao.Properties.DeviceId);
+        return map;
     }
 
     @Override

@@ -18,15 +18,16 @@ package nodomain.freeyourgadget.gadgetbridge.devices.withingssteelhr;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
-import de.greenrobot.dao.query.QueryBuilder;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.WithingsSteelHRActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
@@ -37,10 +38,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.With
 public class WithingsSteelHRDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        Long deviceId = device.getId();
-        QueryBuilder<?> qb = session.getWithingsSteelHRActivitySampleDao().queryBuilder();
-        qb.where(WithingsSteelHRActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
+        map.put(session.getWithingsSteelHRActivitySampleDao(), WithingsSteelHRActivitySampleDao.Properties.DeviceId);
+        return map;
     }
 
     @Override

@@ -22,16 +22,18 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3ActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3BehaviorSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3CaloriesSampleDao;
@@ -83,24 +85,16 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) {
-        Long deviceId = device.getId();
-        QueryBuilder<?> qb;
-        
-        qb = session.getWena3HeartRateSampleDao().queryBuilder();
-        qb.where(Wena3HeartRateSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getWena3BehaviorSampleDao().queryBuilder();
-        qb.where(Wena3BehaviorSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getWena3CaloriesSampleDao().queryBuilder();
-        qb.where(Wena3CaloriesSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getWena3EnergySampleDao().queryBuilder();
-        qb.where(Wena3EnergySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getWena3ActivitySampleDao().queryBuilder();
-        qb.where(Wena3ActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getWena3Vo2SampleDao().queryBuilder();
-        qb.where(Wena3Vo2SampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getWena3StressSampleDao().queryBuilder();
-        qb.where(Wena3StressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(7);
+        map.put(session.getWena3HeartRateSampleDao(), Wena3HeartRateSampleDao.Properties.DeviceId);
+        map.put(session.getWena3BehaviorSampleDao(), Wena3BehaviorSampleDao.Properties.DeviceId);
+        map.put(session.getWena3CaloriesSampleDao(), Wena3CaloriesSampleDao.Properties.DeviceId);
+        map.put(session.getWena3EnergySampleDao(), Wena3EnergySampleDao.Properties.DeviceId);
+        map.put(session.getWena3ActivitySampleDao(), Wena3ActivitySampleDao.Properties.DeviceId);
+        map.put(session.getWena3Vo2SampleDao(), Wena3Vo2SampleDao.Properties.DeviceId);
+        map.put(session.getWena3StressSampleDao(), Wena3StressSampleDao.Properties.DeviceId);
+        return map;
     }
 
     @Override

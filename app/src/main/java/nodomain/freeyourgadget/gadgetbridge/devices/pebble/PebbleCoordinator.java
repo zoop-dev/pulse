@@ -28,12 +28,14 @@ import androidx.annotation.StringRes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -44,7 +46,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.PebbleHealthActivityOverlayDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.PebbleHealthActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.PebbleMisfitSampleDao;
@@ -73,16 +74,13 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        Long deviceId = device.getId();
-        QueryBuilder<?> qb = session.getPebbleHealthActivitySampleDao().queryBuilder();
-        qb.where(PebbleHealthActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getPebbleHealthActivityOverlayDao().queryBuilder();
-        qb.where(PebbleHealthActivityOverlayDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getPebbleMisfitSampleDao().queryBuilder();
-        qb.where(PebbleMisfitSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-        qb = session.getPebbleMorpheuzSampleDao().queryBuilder();
-        qb.where(PebbleMorpheuzSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(4);
+        map.put(session.getPebbleHealthActivitySampleDao(), PebbleHealthActivitySampleDao.Properties.DeviceId);
+        map.put(session.getPebbleHealthActivityOverlayDao(), PebbleHealthActivityOverlayDao.Properties.DeviceId);
+        map.put(session.getPebbleMisfitSampleDao(), PebbleMisfitSampleDao.Properties.DeviceId);
+        map.put(session.getPebbleMorpheuzSampleDao(), PebbleMorpheuzSampleDao.Properties.DeviceId);
+        return map;
     }
 
     @Override

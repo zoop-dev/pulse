@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Andreas Shimokawa, José Rebelo, Yoran Vulker
+/*  Copyright (C) 2023-2025 Andreas Shimokawa, José Rebelo, Yoran Vulker, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -32,12 +32,15 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
@@ -50,9 +53,13 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiDailySummarySampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiManualSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiSleepStageSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiSleepTimeSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
@@ -113,14 +120,15 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    protected void deleteDevice(@NonNull final GBDevice gbDevice,
-                                @NonNull final Device device,
-                                @NonNull final DaoSession session) throws GBException {
-        final Long deviceId = device.getId();
-
-        session.getXiaomiActivitySampleDao().queryBuilder()
-                .where(XiaomiActivitySampleDao.Properties.DeviceId.eq(deviceId))
-                .buildDelete().executeDeleteWithoutDetachingEntities();
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(6);
+        map.put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
+        map.put(session.getXiaomiActivitySampleDao(), XiaomiActivitySampleDao.Properties.DeviceId);
+        map.put(session.getXiaomiDailySummarySampleDao(), XiaomiDailySummarySampleDao.Properties.DeviceId);
+        map.put(session.getXiaomiManualSampleDao(), XiaomiManualSampleDao.Properties.DeviceId);
+        map.put(session.getXiaomiSleepStageSampleDao(), XiaomiSleepStageSampleDao.Properties.DeviceId);
+        map.put(session.getXiaomiSleepTimeSampleDao(), XiaomiSleepTimeSampleDao.Properties.DeviceId);
+        return map;
     }
 
     @Override
