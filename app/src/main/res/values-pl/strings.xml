@@ -1642,7 +1642,7 @@
     <string name="pref_title_notification_prefer_long_text">Preferuj długi tekst powiadomienia</string>
     <string name="pref_summary_notification_prefer_long_text">Jeśli jest dostępny, wyślij długi tekst powiadomienia do urządzenia</string>
     <string name="pref_title_screen_on_on_notifications">Ekran włączony przy powiadomieniach</string>
-    <string name="pref_summary_screen_on_on_notifications">Włącz ekran opaski, gdy nadejdzie powiadomienie</string>
+    <string name="pref_summary_screen_on_on_notifications">Włącz ekran urządzenia po otrzymaniu powiadomienia</string>
     <string name="pref_workout_send_gps_summary">Wyślij aktualną lokalizację GPS do opaski podczas treningu</string>
     <string name="controlcenter_get_heartrate_measurement">Uzyskaj pomiar tętna</string>
     <string name="open_fw_installer_getting_files_text">Ponieważ nie możemy rozpowszechniać plików oprogramowania sprzętowego, będziesz musiał zdobyć je samodzielnie. Oznacza to, że będziesz musiał szukać plików w plikach apk, online, na forach, na Amazfitwatchfaces (dla urządzeń Miband/Amazfit) i tak dalej.</string>
@@ -3958,4 +3958,13 @@
     <string name="first_start_permissions_do_not_ask_again">Nie pytaj ponownie</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Brak udzielenia uprawnienia może skutkować wystąpieniem problemów. Ekran ten można ponownie otworzyć z poziomu Ustawień.</string>
     <string name="manual_measurements">Ręczne pomiary</string>
+    <string name="pref_title_screen_on_on_notifications_timeout">Czas wyświetlania powiadomienia</string>
+    <string name="pref_summary_screen_on_on_notifications_timeout">Opóźnij o %s wyłączenie ekranu po otrzymaniu powiadomienia</string>
+    <string name="bluetooth_multipoint_pairing">Parowanie wielopunktowe</string>
+    <string name="bluetooth_multipoint">Wielopunktowy</string>
+    <string name="bluetooth_multipoint_pair_new">Sparuj nowe urządzenie</string>
+    <string name="bluetooth_multipoint_no_devices">Nie znaleziono sparowanych urządzeń\n\nStuknij Sparuj nowe urządzenie, aby dodać urządzenie</string>
+    <string name="bluetooth_multipoint_pair_stop">Zatrzymaj parowanie</string>
+    <string name="bluetooth_paired_devices">Sparowane urządzenia</string>
+    <string name="connect">Połącz</string>
 </resources>
