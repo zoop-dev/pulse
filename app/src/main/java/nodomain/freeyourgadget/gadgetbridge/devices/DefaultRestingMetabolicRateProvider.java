@@ -47,10 +47,12 @@ public class DefaultRestingMetabolicRateProvider extends AbstractTimeSampleProvi
         mSession = session;
     }
 
+    @Override
     public GBDevice getDevice() {
         return mDevice;
     }
 
+    @Override
     public DaoSession getSession() {
         return mSession;
     }
@@ -100,11 +102,13 @@ public class DefaultRestingMetabolicRateProvider extends AbstractTimeSampleProvi
         return new DefaultRestingMetabolicRateSample(System.currentTimeMillis());
     }
 
+    @Override
     @Nullable
     public RestingMetabolicRateSample getLastSampleBefore(final long timestampTo) {
         return new DefaultRestingMetabolicRateSample(timestampTo);
     }
 
+    @Override
     @Nullable
     public RestingMetabolicRateSample getNextSampleAfter(final long timestampFrom) {
         return new DefaultRestingMetabolicRateSample(timestampFrom);

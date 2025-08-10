@@ -8,6 +8,7 @@ public interface Vo2MaxSampleProvider<T extends Vo2MaxSample> extends TimeSample
     @Nullable
     T getLatestSample(Vo2MaxSample.Type type, long until);
 
+    @Override
     @Nullable
     default T getLatestSample(long until) {
         return getLatestSample(Vo2MaxSample.Type.ANY, until);

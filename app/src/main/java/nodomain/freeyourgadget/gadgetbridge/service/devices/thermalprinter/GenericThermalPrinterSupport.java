@@ -341,6 +341,7 @@ public class GenericThermalPrinterSupport extends AbstractBTLESingleDeviceSuppor
         return true;
     }
 
+    @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         builder.setCallback(this);

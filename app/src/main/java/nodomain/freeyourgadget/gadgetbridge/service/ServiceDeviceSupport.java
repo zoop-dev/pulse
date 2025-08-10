@@ -384,6 +384,7 @@ public class ServiceDeviceSupport implements DeviceSupport {
         delegate.onSetContacts(contacts);
     }
 
+    @Override
     public void onSetLoyaltyCards(final ArrayList<LoyaltyCard> cards) {
         if (checkBusy("set loyalty cards")) {
             return;

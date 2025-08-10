@@ -172,6 +172,7 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         Logging.logBytes(logger, value);
     }
 
+    @Override
     public void onConnectionEstablished() {
         try {
             initializeDevice(createTransactionBuilder("Initializing device")).queue();

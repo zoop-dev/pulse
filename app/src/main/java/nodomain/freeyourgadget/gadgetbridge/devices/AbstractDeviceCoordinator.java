@@ -726,6 +726,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return false;
     }
 
+    @Override
     public boolean supportsAlarmSounds(@NonNull GBDevice device) {
         return false;
     }
@@ -1057,6 +1058,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return !(authKey.getBytes().length < 34 || !authKey.startsWith("0x"));
     }
 
+    @Override
     @Nullable
     public String getAuthHelp() {
         return null;
