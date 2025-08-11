@@ -133,7 +133,7 @@ public class ActivityChartsActivity extends AbstractChartsActivity {
         if (!coordinator.supportsVO2Max(device)) {
             tabList.remove("vo2max");
         }
-        if (!coordinator.supportsWorkoutLoad(device)) {
+        if (!coordinator.supportsTrainingLoad(device)) {
             tabList.remove("load");
         }
         if (!coordinator.supportsActiveCalories(device)) {
