@@ -384,7 +384,11 @@ public class FitImporter {
                     LOG.warn("Fit file {} already exists as {}", file, exportFile);
                 } else {
                     LOG.debug("Copying {} to {}", file, exportFile);
-
+                    final File parentFile = exportFile.getParentFile();
+                    if (parentFile != null) {
+                        //noinspection ResultOfMethodCallIgnored
+                        parentFile.mkdirs();
+                    }
                     FileUtils.copyFile(file, exportFile);
                     //noinspection ResultOfMethodCallIgnored
                     exportFile.setLastModified(file.lastModified());
