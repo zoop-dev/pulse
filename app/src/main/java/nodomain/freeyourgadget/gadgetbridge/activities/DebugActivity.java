@@ -45,7 +45,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -129,7 +128,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
 public class DebugActivity extends AbstractGBActivity {
@@ -497,10 +495,19 @@ public class DebugActivity extends AbstractGBActivity {
         shareLogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(DebugActivity.this);
-                Prefs prefs = new Prefs(sharedPrefs);
-                boolean logging_enabled = prefs.getBoolean("log_to_file", false);
-                if (logging_enabled) {
+                boolean hasLog = false;
+                String filePath = "???";
+                try {
+                    filePath = GBApplication.getLogPath();
+                    if (filePath != null && filePath.length() > 0) {
+                        File log = new File(filePath);
+                        hasLog = log.exists();
+                    }
+                } catch (Exception e) {
+                    LOG.warn("failed to check log existence: {}", filePath, e);
+                }
+
+                if (hasLog) {
                     showLogSharingWarning();
                 } else {
                     showLogSharingNotEnabledAlert();
@@ -998,10 +1005,12 @@ public class DebugActivity extends AbstractGBActivity {
     private void shareLog() {
         String fileName = GBApplication.getLogPath();
         if (fileName != null && fileName.length() > 0) {
-            // Flush the logs, so that we ensure latest lines are also there
-            GBApplication.getLogging().setImmediateFlush(true);
-            LOG.debug("Flushing logs before sharing");
-            GBApplication.getLogging().setImmediateFlush(false);
+            if(GBApplication.isFileLoggingEnabled()) {
+                // Flush the logs, so that we ensure latest lines are also there
+                GBApplication.getLogging().setImmediateFlush(true);
+                LOG.debug("Flushing logs before sharing");
+                GBApplication.getLogging().setImmediateFlush(false);
+            }
 
             File logFile = new File(fileName);
             if (!logFile.exists()) {

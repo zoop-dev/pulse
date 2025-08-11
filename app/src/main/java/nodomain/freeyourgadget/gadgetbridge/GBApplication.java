@@ -417,7 +417,15 @@ public class GBApplication extends Application {
     }
 
     public static String getLogPath() {
-        return logging.getLogPath();
+        String path = logging.getLogPath();
+        if (path == null) {
+            // file logging is currently disabled but there still might be an old logfile
+            try {
+                path = logging.createLogDirectory() + File.separator + "gadgetbridge.log";
+            } catch (Exception ignored) {
+            }
+        }
+        return path;
     }
 
     private void setupExceptionHandler(final boolean notifyOnCrash) {
