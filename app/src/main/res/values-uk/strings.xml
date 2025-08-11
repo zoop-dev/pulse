@@ -3784,4 +3784,11 @@
     <string name="connect">З\'єднання</string>
     <string name="pref_title_screen_on_on_notifications_timeout">Час відображення сповіщень</string>
     <string name="pref_summary_screen_on_on_notifications_timeout">Затримка %s перед повторним вимкненням дисплея після сповіщення</string>
+    <string name="sound_and_vibration">Звук + Вібрація</string>
+    <string name="unset">Зняти з налаштувань</string>
+    <string name="reminder">Нагадування</string>
+    <string name="alarm_label_appointment">Призначення</string>
+    <string name="alarm_label_training">Навчання</string>
+    <string name="alarm_label_class">Клас</string>
+    <string name="alarm_label_meditate">Медитуйте</string>
 </resources>
