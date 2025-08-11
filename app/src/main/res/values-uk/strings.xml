@@ -1608,7 +1608,7 @@
     <string name="permission_display_over_other_apps">%1$s потребує дозволу на відображення поверх інших програм, щоб годинники Bangle.js могли запускати дії через наміри, коли %1$s працює у фоновому режимі.\n\nЦе можна використовувати для запуску музичної програми та відтворення пісні, а також для багатьох інших речей.\n\nБудь ласка, натисніть %2$s, потім %1$s та увімкніть «Дозволити відображення поверх інших програм», а потім натисніть «Назад», щоб повернутися до %1$s.\n\nЩоб %1$s не запитував дозволи, перейдіть до «Налаштування» та зніміть прапорець «Перевіряти стан дозволів».\n\nПереконайтеся, що ви надали %1$s дозволи, необхідні для належної роботи.</string>
     <string name="pref_summary_canned_replies">Відповідайте з годинника за допомогою заздалегідь підготовлених повідомлень</string>
     <string name="pref_title_screen_on_on_notifications">Вмикати екран під час отримання сповіщень</string>
-    <string name="pref_summary_screen_on_on_notifications">Вмикати екран браслета, коли надходить сповіщення</string>
+    <string name="pref_summary_screen_on_on_notifications">Увімкнути екран пристрою, коли надходить сповіщення</string>
     <string name="heartrate_bpm_40">40 уд/хв</string>
     <string name="heartrate_bpm_50">50 уд/хв</string>
     <string name="heartrate_bpm_115">115 уд/хв</string>
@@ -3782,4 +3782,6 @@
     <string name="bluetooth_multipoint_pair_stop">Зупинити сполучення</string>
     <string name="bluetooth_paired_devices">Парні пристрої</string>
     <string name="connect">З\'єднання</string>
+    <string name="pref_title_screen_on_on_notifications_timeout">Час відображення сповіщень</string>
+    <string name="pref_summary_screen_on_on_notifications_timeout">Затримка %s перед повторним вимкненням дисплея після сповіщення</string>
 </resources>
