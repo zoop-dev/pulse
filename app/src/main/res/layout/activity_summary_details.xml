@@ -86,11 +86,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/gauge_line_color" />
-
             <LinearLayout
                 android:id="@+id/summaryDetails"
                 android:layout_width="fill_parent"

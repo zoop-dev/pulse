@@ -87,6 +87,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryItems;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryJsonSummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
@@ -349,16 +350,19 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
             final String groupKey = group.getKey();
             final List<Pair<String, ActivitySummaryEntry>> entries = group.getValue();
 
-            TableRow label_row = new TableRow(ActivitySummaryDetail.this);
-            TextView label_field = new TextView(ActivitySummaryDetail.this);
-            label_field.setId(View.generateViewId());
-            label_field.setTextSize(18);
-            label_field.setGravity(Gravity.CENTER);
-            label_field.setPaddingRelative(dpToPx(16), dpToPx(16), dpToPx(16), dpToPx(16));
-            label_field.setTypeface(null, Typeface.BOLD);
-            label_field.setText(workoutValueFormatter.getStringResourceByName(groupKey));
-            label_row.addView(label_field);
-            fieldLayout.addView(label_row);
+            // Do not add a header to the first ACTIVITY group, it's redundant
+            if (!ActivitySummaryEntries.GROUP_ACTIVITY.equals(groupKey)) {
+                TableRow label_row = new TableRow(ActivitySummaryDetail.this);
+                TextView label_field = new TextView(ActivitySummaryDetail.this);
+                label_field.setId(View.generateViewId());
+                label_field.setTextSize(18);
+                label_field.setGravity(Gravity.CENTER);
+                label_field.setPaddingRelative(dpToPx(16), dpToPx(16), dpToPx(16), dpToPx(16));
+                label_field.setTypeface(null, Typeface.BOLD);
+                label_field.setText(workoutValueFormatter.getStringResourceByName(groupKey));
+                label_row.addView(label_field);
+                fieldLayout.addView(label_row);
+            }
 
             GridLayout gridLayout = new GridLayout(ActivitySummaryDetail.this);
             gridLayout.setBackgroundColor(getResources().getColor(R.color.gauge_line_color));
@@ -404,15 +408,13 @@ public class ActivitySummaryDetail extends AbstractGBActivity {
         linearLayout.setPadding(dpToPx(15), dpToPx(15), dpToPx(15), dpToPx(15));
         linearLayout.setBackgroundColor(GBApplication.getWindowBackgroundColor(ActivitySummaryDetail.this));
         int marginLeft = 0;
-        int marginTop = 0;
+        int marginTop = 2;
         int marginBottom = 0;
         int marginRight = 0;
         if (i % 2 == 0) {
-            marginTop = 2;
             marginRight = 1;
         }
         if (i % 2 == 1) {
-            marginTop = 2;
             marginLeft = 1;
         }
         if (lastRow) {
