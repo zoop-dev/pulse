@@ -3946,4 +3946,6 @@
     <string name="bluetooth_multipoint_pair_stop">Zastavit párování</string>
     <string name="bluetooth_paired_devices">Spárovaná zařízení</string>
     <string name="connect">Připojit</string>
+    <string name="pref_title_screen_on_on_notifications_timeout">Čas zobrazení oznámení</string>
+    <string name="pref_summary_screen_on_on_notifications_timeout">Počkat %s před zhasnutím displeje po zobrazení oznámení</string>
 </resources>
