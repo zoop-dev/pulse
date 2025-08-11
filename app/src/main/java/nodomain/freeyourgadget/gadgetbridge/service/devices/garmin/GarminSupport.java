@@ -49,7 +49,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminFitFileInstallH
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminGpxRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPrgFileInstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsGpxRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
@@ -1099,7 +1098,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         final GarminGpxRouteInstallHandler garminGpxRouteInstallHandler = new GarminGpxRouteInstallHandler(uri, getContext());
         if (garminGpxRouteInstallHandler.isValid()) {
-            final String trackName = options.getString(ZeppOsGpxRouteInstallHandler.EXTRA_TRACK_NAME);
+            final String trackName = options.getString(GarminGpxRouteInstallHandler.EXTRA_TRACK_NAME);
             final GpxRouteFileConverter gpxRouteFileConverter = new GpxRouteFileConverter(
                     garminGpxRouteInstallHandler.getGpxFile(),
                     trackName
