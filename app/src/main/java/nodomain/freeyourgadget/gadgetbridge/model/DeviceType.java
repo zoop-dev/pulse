@@ -306,6 +306,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pinetime.PineTimeJFCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pixel.PixelBudsACoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH9DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qc35.QC35Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsAir5ProCoordinator;
@@ -533,6 +534,7 @@ public enum DeviceType {
     FOSSILQHYBRID(QHybridCoordinator.class),
     TLW64(TLW64Coordinator.class),
     PINETIME_JF(PineTimeJFCoordinator.class),
+    POLARH9(PolarH9DeviceCoordinator.class),
     POLARH10(PolarH10DeviceCoordinator.class),
     MIJIA_LYWSD02(MijiaLywsd02Coordinator.class),
     MIJIA_LYWSD03(MijiaLywsd03Coordinator.class),

@@ -4,14 +4,14 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 
-public class PolarH10DeviceCoordinator extends AbstractPolarDeviceCoordinator {
+public class PolarH9DeviceCoordinator extends AbstractPolarDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_polarh10;
+        return R.string.devicetype_polarh9;
     }
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Polar H10.*");
+        return Pattern.compile("Polar H9( \\w+)?$");
     }
 }
