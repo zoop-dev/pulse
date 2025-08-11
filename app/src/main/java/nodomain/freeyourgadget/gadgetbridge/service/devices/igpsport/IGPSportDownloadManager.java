@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
+import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminTimeUtils.garminTimestampToJavaMillis;
+
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.slf4j.Logger;
@@ -33,7 +36,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.FileDownload;
@@ -74,8 +79,17 @@ public class IGPSportDownloadManager {
         public void syncNextFile() {
             if (avaliableActivityFiles.isEmpty()) {
                 LOG.info("No files to sync");
+                if (support.getDevice().isBusy() ) {
+                    support.getDevice().unsetBusyTask();
+                    GB.signalActivityDataFinish(support.getDevice());
+                    support.getDevice().sendDeviceUpdateIntent(getContext());
+                }
                 return;
             } else {
+                if (!support.getDevice().isBusy() ) {
+                    support.getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
+                    support.getDevice().sendDeviceUpdateIntent(getContext());
+                }
                 LOG.info(avaliableActivityFiles.size() + " files to sync");
             }
             downloadingFile = avaliableActivityFiles.remove(0);
@@ -84,7 +98,7 @@ public class IGPSportDownloadManager {
                 CyclingData.cycling_data_msg.Builder cycleDataMsg = CyclingData.cycling_data_msg.newBuilder();
                 cycleDataMsg.setServiceType(Common.service_type_index.enum_SERVICE_TYPE_INDEX_CYCLING_DATA);
                 cycleDataMsg.setCyclingDataOperateType(CyclingData.CYCLING_DATA_OPERATE_TYPE.enum_CYCLING_DATA_OPERATE_TYPE_FILE_GET);
-                cycleDataMsg.addCyclingDataFileFlagMsg( CyclingData.cycling_data_file_flag_message.newBuilder().setTimestamp(downloadingFile.getTimeStamp()) );
+                cycleDataMsg.addCyclingDataFileFlagMsg( CyclingData.cycling_data_file_flag_message.newBuilder().setTimestamp(downloadingFile.getGarminTimeStamp()) );
                 byte[] cycleDataMsgBytes = IGPSportDeviceSupport.craftData(cycleDataMsg.getServiceType().getNumber(), 0xff, cycleDataMsg.getCyclingDataOperateType().getNumber(), cycleDataMsg.build().toByteArray(), true);
 
                 builder.write(support.writeCharacteristicThird, cycleDataMsgBytes);
@@ -132,7 +146,7 @@ public class IGPSportDownloadManager {
                     System.arraycopy(recievingDataBuffer.toByteArray(), 20+4, pbData, 0, pbSize);
                     FileDownload.file_download pbInfo = FileDownload.file_download.parseFrom(pbData);
                     FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 20+4+pbSize, pbInfo.getFileSize()), outputFile);
-                    outputFile.setLastModified(downloadingFile.getStandardTimeStamp());
+                    outputFile.setLastModified(garminTimestampToJavaMillis(downloadingFile.getGarminTimeStamp()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -153,30 +167,25 @@ public class IGPSportDownloadManager {
         }
 
         public static class FileInfo {
-            private int timestamp = 0;
+            private int garmin_timestamp = 0;
             private int file_size = 0;
             private String user_id = "";
             private String device_id = "";
             public FileInfo(CyclingData.cycling_data_file_flag_message message) {
-                timestamp = message.getTimestamp();
+                garmin_timestamp = message.getTimestamp();
                 file_size = message.getFileSize();
                 user_id = message.getUserId();
                 device_id = message.getDeviceId();
             }
 
-            public int getTimeStamp() {
-                return timestamp;
-            }
-
-            public long getStandardTimeStamp() {
-                return timestamp*1000L + 631065600000L;  //fit files use custom epoch 1989-12-31 00:00:00 UTC
-                                                        //TODO: it also could be shifted to TZ Asia/Shanghai (28800 seconds)
+            public int getGarminTimeStamp() {
+                return garmin_timestamp;
             }
 
             public String getFileName() {
-                long timestampMillis = getStandardTimeStamp();
+                long timestampMillis = garminTimestampToJavaMillis(garmin_timestamp);
                 Instant instant = Instant.ofEpochMilli(timestampMillis);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
                 ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
                 return zonedDateTime.format(formatter)+".fit";
             }
