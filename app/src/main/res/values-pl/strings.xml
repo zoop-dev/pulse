@@ -3967,4 +3967,13 @@
     <string name="bluetooth_multipoint_pair_stop">Zatrzymaj parowanie</string>
     <string name="bluetooth_paired_devices">Sparowane urządzenia</string>
     <string name="connect">Połącz</string>
+    <string name="sound_and_vibration">Dźwięk + wibracje</string>
+    <string name="activityTotalAscent">Całkowite przewyższenie</string>
+    <string name="activityTotalDescent">Całkowity spadek terenu</string>
+    <string name="unset">Nieustawiony</string>
+    <string name="reminder">Przypomnienie</string>
+    <string name="alarm_label_appointment">Spotkanie</string>
+    <string name="alarm_label_training">Trening</string>
+    <string name="alarm_label_class">Klasa alarmu</string>
+    <string name="alarm_label_meditate">Medytacja</string>
 </resources>
