@@ -284,10 +284,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             }
         }
         if (session.getTotalAscent() != null && !ActivityKind.isDiving(activityKind)) {
-            summaryData.add(ASCENT_DISTANCE, session.getTotalAscent(), UNIT_METERS);
+            summaryData.add(TOTAL_ASCENT, session.getTotalAscent(), UNIT_METERS);
         }
         if (session.getTotalDescent() != null && !ActivityKind.isDiving(activityKind)) {
-            summaryData.add(DESCENT_DISTANCE, session.getTotalDescent(), UNIT_METERS);
+            summaryData.add(TOTAL_DESCENT, session.getTotalDescent(), UNIT_METERS);
         }
         if (session.getAvgSwimCadence() != null) {
             summaryData.add(SWIM_AVG_CADENCE, session.getAvgSwimCadence(), UNIT_STROKES_PER_LENGTH);

@@ -2502,6 +2502,8 @@
     <string name="ascentMeters">Uphill</string>
     <string name="descentMeters">Downhill</string>
     <string name="ascentDistance">Uphill distance</string>
+    <string name="activityTotalAscent">Total ascent</string>
+    <string name="activityTotalDescent">Total descent</string>
     <string name="descentDistance">Downhill distance</string>
     <string name="flatDistance">Flat distance</string>
     <string name="elevationGain">Elevation gain</string>

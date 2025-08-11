@@ -36,6 +36,8 @@ public class ActivitySummaryEntries {
     public static final String ALTITUDE_MAX = "maxAltitude";
     public static final String ALTITUDE_MIN = "minAltitude";
 
+    public static final String TOTAL_ASCENT = "activityTotalAscent";
+    public static final String TOTAL_DESCENT = "activityTotalDescent";
     public static final String ASCENT_DISTANCE = "ascentDistance";
     public static final String ASCENT_METERS = "ascentMeters";
     public static final String ASCENT_SECONDS = "ascentSeconds";
