@@ -617,7 +617,18 @@ public class FitImporter {
                 sample.setActiveCalories(sumCalories);
             }
 
-            activitySamples.add(sample);
+            // Ignore empty samples
+            if (sample.getRawIntensity() != ActivitySample.NOT_MEASURED ||
+                    sample.getSteps() != ActivitySample.NOT_MEASURED ||
+                    sample.getHeartRate() != ActivitySample.NOT_MEASURED ||
+                    sample.getDistanceCm() != ActivitySample.NOT_MEASURED ||
+                    sample.getActiveCalories() != ActivitySample.NOT_MEASURED) {
+                activitySamples.add(sample);
+                prevActivityKind = sample.getRawKind();
+                prevTs = (int) ts;
+            } else {
+                LOG.debug("Ignoring empty sample at {}", sample.getTimestamp());
+            }
 
             if (minutesModerate != 0 || minutesVigorous != 0) {
                 final GarminIntensityMinutesSample intensityMinutesSample = new GarminIntensityMinutesSample();
@@ -626,9 +637,6 @@ public class FitImporter {
                 intensityMinutesSample.setVigorous(minutesVigorous);
                 intensityMinutesSamples.add(intensityMinutesSample);
             }
-
-            prevActivityKind = sample.getRawKind();
-            prevTs = (int) ts;
         }
 
         LOG.debug("Will persist {} activity samples", activitySamples.size());
