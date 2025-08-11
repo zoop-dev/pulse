@@ -4259,4 +4259,6 @@
     <string name="bluetooth_multipoint_pair_stop">Stop pairing</string>
     <string name="bluetooth_paired_devices">Paired Devices</string>
     <string name="connect">Connect</string>
+    <string name="pref_new_sync_protocol_title">New sync protocol</string>
+    <string name="pref_new_sync_protocol_summary">Enable this if some information is not being fetched. Experimental and potentially unstable.</string>
 </resources>

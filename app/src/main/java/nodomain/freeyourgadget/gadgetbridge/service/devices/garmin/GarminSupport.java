@@ -20,8 +20,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -64,6 +68,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCore;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiDeviceStatus;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFileSyncService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFindMyWatch;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiInstalledAppsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
@@ -80,10 +85,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.WeatherRequestDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitAsyncProcessor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitImporter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteFileConverter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.PredefinedLocalMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
@@ -98,6 +105,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SetF
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SupportedFileTypesMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SystemEventMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.NotificationSubscriptionStatusMessage;
+import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
@@ -113,7 +122,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private final ProtocolBufferHandler protocolBufferHandler;
     private final NotificationsHandler notificationsHandler;
     private final FileTransferHandler fileTransferHandler;
-    private final Queue<FileTransferHandler.DirectoryEntry> filesToDownload;
+    private final Queue<FileToDownload> filesToDownload;
+    private FileToDownload currentlyDownloading;
     private final List<MessageHandler> messageHandlers;
     private final List<FileType> supportedFileTypeList = new ArrayList<>();
     private ICommunicator communicator;
@@ -161,9 +171,32 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     public void addFileToDownloadList(FileTransferHandler.DirectoryEntry directoryEntry) {
-        filesToDownload.add(directoryEntry);
+        if (newSyncProtocol()) {
+            if (directoryEntry.getFiletype() == FileType.FILETYPE.DIRECTORY) {
+                LOG.debug("Got directory entry, syncing with new protocol");
+                sendOutgoingMessage(
+                        "request file list",
+                        protocolBufferHandler.prepareProtobufRequest(
+                                GdiSmartProto.Smart.newBuilder().setFileSyncService(
+                                        protocolBufferHandler.getFileSyncServiceHandler().requestFileList()
+                                ).build()
+                        )
+                );
+                return;
+            }
+            LOG.warn("Ignoring directory entry {} in new sync protocol", directoryEntry.getFileName());
+            return;
+        }
+        filesToDownload.add(new FileToDownload(directoryEntry));
         if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
             transferNotification.incrementTotalSize(directoryEntry.getFileSize());
+        }
+    }
+
+    public void addFileToDownloadList(GdiFileSyncService.File file) {
+        filesToDownload.add(new FileToDownload(file));
+        if (file.hasSize()) {
+            transferNotification.incrementTotalSize(file.getSize());
         }
     }
 
@@ -348,32 +381,55 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         } else if (deviceEvent instanceof SupportedFileTypesDeviceEvent) {
             this.supportedFileTypeList.clear();
             this.supportedFileTypeList.addAll(((SupportedFileTypesDeviceEvent) deviceEvent).getSupportedFileTypes());
-        } else if (deviceEvent instanceof FileDownloadedDeviceEvent) {
-            final FileTransferHandler.DirectoryEntry entry = ((FileDownloadedDeviceEvent) deviceEvent).directoryEntry;
-            final String filename = entry.getFileName();
-            LOG.debug("FILE DOWNLOAD COMPLETE {}", filename);
-            transferNotification.incrementTotalProgress(entry.getFileSize());
+        } else if (deviceEvent instanceof FileDownloadedDeviceEvent fileDownloadedDeviceEvent) {
+            final FileTransferHandler.DirectoryEntry entry = fileDownloadedDeviceEvent.directoryEntry;
+            if (entry != null) {
+                final String filename = entry.getFileName();
+                LOG.debug("FILE DOWNLOAD COMPLETE {}", filename);
+                transferNotification.incrementTotalProgress(entry.getFileSize());
 
-            if (entry.getFiletype().isFitFile()) {
+                if (entry.getFiletype().isFitFile()) {
+                    try (DBHandler handler = GBApplication.acquireDB()) {
+                        final DaoSession session = handler.getDaoSession();
+
+                        final PendingFileProvider pendingFileProvider = new PendingFileProvider(gbDevice, session);
+                        pendingFileProvider.addPendingFile(fileDownloadedDeviceEvent.localPath);
+                    } catch (final Exception e) {
+                        GB.toast(getContext(), "Error saving pending file", Toast.LENGTH_LONG, GB.ERROR, e);
+                    }
+                }
+
+                if (!getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
+                    sendOutgoingMessage("archive file " + entry.getFileIndex(), new SetFileFlagsMessage(entry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
+                }
+            } else if (fileDownloadedDeviceEvent.localPath != null) {
+                LOG.debug("ZIP DOWNLOAD COMPLETE {}", fileDownloadedDeviceEvent.localPath);
+                final File zipFile = new File(fileDownloadedDeviceEvent.localPath);
+                if (gbDevice.isBusy()) {
+                    transferNotification.incrementTotalProgress(zipFile.length());
+                }
+
                 try (DBHandler handler = GBApplication.acquireDB()) {
                     final DaoSession session = handler.getDaoSession();
 
                     final PendingFileProvider pendingFileProvider = new PendingFileProvider(gbDevice, session);
-                    pendingFileProvider.addPendingFile(((FileDownloadedDeviceEvent) deviceEvent).localPath);
+                    pendingFileProvider.addPendingFile(fileDownloadedDeviceEvent.localPath);
                 } catch (final Exception e) {
                     GB.toast(getContext(), "Error saving pending file", Toast.LENGTH_LONG, GB.ERROR, e);
                 }
+            } else {
+                LOG.error("Got invalid FileDownloadedDeviceEvent");
             }
 
-            if (!getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
-                sendOutgoingMessage("archive file " + entry.getFileIndex(), new SetFileFlagsMessage(entry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
-            }
+            currentlyDownloading = null;
         } else {
             super.evaluateGBDeviceEvent(deviceEvent);
         }
     }
 
-    /** @noinspection BooleanMethodIsAlwaysInverted*/
+    /**
+     * @noinspection BooleanMethodIsAlwaysInverted
+     */
     private boolean getKeepActivityDataOnDevice() {
         return getDevicePrefs().getBoolean("keep_activity_data_on_device", false);
     }
@@ -387,7 +443,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
         // FIXME respect dataTypes?
 
+        // We initiate download here even in the new sync protocol so that the watch "flushes" the data
+        // otherwise we might get incomplete monitor files
         sendOutgoingMessage("fetch recorded data", fileTransferHandler.initiateDownload());
+    }
+
+    public boolean newSyncProtocol() {
+        return getDevicePrefs().getBoolean("new_sync_protocol", false);
     }
 
     @Override
@@ -636,42 +698,58 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     private void processDownloadQueue() {
-        if (!filesToDownload.isEmpty() && !fileTransferHandler.isDownloading()) {
+        if (!filesToDownload.isEmpty() && currentlyDownloading == null) {
             if (!gbDevice.isBusy()) {
                 isBusyFetching = true;
                 transferNotification.start(
                         R.string.busy_task_fetch_activity_data,
                         0,
-                        filesToDownload.stream().mapToLong(FileTransferHandler.DirectoryEntry::getFileSize).sum()
+                        filesToDownload.stream().mapToLong(FileToDownload::getSize).sum()
                 );
                 getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
                 getDevice().sendDeviceUpdateIntent(getContext());
             }
 
             while (!filesToDownload.isEmpty()) {
-                final FileTransferHandler.DirectoryEntry directoryEntry = filesToDownload.remove();
-                if (alreadyDownloaded(directoryEntry)) {
-                    LOG.debug("File: {} already downloaded, not downloading again.", directoryEntry.getFileName());
-                    if (!getKeepActivityDataOnDevice()) { // delete file from watch if already downloaded
-                        sendOutgoingMessage("archive file " + directoryEntry.getFileIndex(), new SetFileFlagsMessage(directoryEntry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
+                currentlyDownloading = filesToDownload.remove();
+                if (currentlyDownloading.getDirectoryEntry() != null) {
+                    FileTransferHandler.DirectoryEntry directoryEntry = currentlyDownloading.getDirectoryEntry();
+                    if (alreadyDownloaded(directoryEntry)) {
+                        LOG.debug("File: {} already downloaded, not downloading again.", directoryEntry.getFileName());
+                        if (!getKeepActivityDataOnDevice()) { // delete file from watch if already downloaded
+                            currentlyDownloading = null;
+                            sendOutgoingMessage("archive file " + directoryEntry.getFileIndex(), new SetFileFlagsMessage(directoryEntry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
+                        }
+                        if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
+                            transferNotification.incrementTotalProgress(directoryEntry.getFileSize());
+                        }
+                        continue;
                     }
+
+                    final DownloadRequestMessage downloadRequestMessage = fileTransferHandler.downloadDirectoryEntry(directoryEntry);
+                    LOG.debug("Will download file: {}", directoryEntry.getOutputPath());
                     if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
-                        transferNotification.incrementTotalProgress(directoryEntry.getFileSize());
+                        transferNotification.setChunkProgress(0);
                     }
-                    continue;
+                    sendOutgoingMessage("download file " + directoryEntry.getFileIndex(), downloadRequestMessage);
+                } else if (currentlyDownloading.getSyncFile() != null) {
+                    LOG.debug("Will download file: {}/{}", currentlyDownloading.getSyncFile().getId().getId1(), currentlyDownloading.getSyncFile().getId().getId2());
+
+                    sendOutgoingMessage(
+                            "request file",
+                            protocolBufferHandler.prepareProtobufRequest(
+                                    GdiSmartProto.Smart.newBuilder().setFileSyncService(
+                                            protocolBufferHandler.getFileSyncServiceHandler().requestFile(currentlyDownloading.getSyncFile())
+                                    ).build()
+                            )
+                    );
                 }
 
-                final DownloadRequestMessage downloadRequestMessage = fileTransferHandler.downloadDirectoryEntry(directoryEntry);
-                LOG.debug("Will download file: {}", directoryEntry.getOutputPath());
-                if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
-                    transferNotification.setChunkProgress(0);
-                }
-                sendOutgoingMessage("download file " + directoryEntry.getFileIndex(), downloadRequestMessage);
                 return;
             }
         }
 
-        if (filesToDownload.isEmpty() && !fileTransferHandler.isDownloading() && isBusyFetching) {
+        if (filesToDownload.isEmpty() && currentlyDownloading == null && isBusyFetching) {
             final List<File> filesToProcess;
             try (DBHandler handler = GBApplication.acquireDB()) {
                 final DaoSession session = handler.getDaoSession();
@@ -1133,6 +1211,116 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         communicator.onEnableRealtimeSteps(enable);
     }
 
+    public void downloadFileFromServiceV2(final int fileHandle) {
+        LOG.warn("Requesting file service V2 handle={}", fileHandle);
+        if (!(communicator instanceof CommunicatorV2 communicatorV2)) {
+            LOG.error("Communicator is not V2");
+            return;
+        }
+        communicatorV2.startTransfer(new CommunicatorV2.ServiceCallback() {
+            private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            private boolean started = false;
+            private CommunicatorV2.ServiceWriter writer;
+
+            @Override
+            public void onConnect(final CommunicatorV2.ServiceWriter writer) {
+                this.writer = writer;
+
+                final ByteBuffer buf = ByteBuffer.allocate(7).order(ByteOrder.LITTLE_ENDIAN);
+                buf.put((byte) 0x00);
+                buf.put((byte) 0x00);
+                buf.put((byte) fileHandle);
+                buf.put((byte) 0x00);
+                buf.put((byte) 0x00);
+                buf.put((byte) 0x00);
+                writer.write("request file", buf.array());
+            }
+
+            @Override
+            public void onClose() {
+                if (baos.size() == 0) {
+                    LOG.warn("File transfer closed with 0 bytes in the buffer");
+                    return;
+                }
+
+                LOG.debug("Attempting to inflate {} bytes", baos.size());
+
+                final byte[] inflated = CompressionUtils.INSTANCE.inflate(baos.toByteArray());
+                if (inflated == null) {
+                    if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
+                        currentlyDownloading = null;
+                    }
+                    return;
+                }
+                LOG.debug("Inflated to {} bytes", inflated.length);
+
+                final File file;
+                try {
+                    file = File.createTempFile("activity-files-import", ".fit", getContext().getCacheDir());
+                    file.deleteOnExit();
+                    FileUtils.copyStreamToFile(new ByteArrayInputStream(inflated), file);
+                } catch (final IOException e) {
+                    LOG.error("Failed to create temp file for activity file", e);
+                    if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
+                        currentlyDownloading = null;
+                    }
+                    return;
+                }
+
+                LOG.debug("Dumped inflated bytes to {}", file.getAbsolutePath());
+
+                try {
+                    final FitImporter fitImporter = new FitImporter(getContext(), gbDevice);
+                    fitImporter.importFile(file);
+                } catch (final FitParseException e) {
+                    LOG.error("Inflated not fit file??", e);
+                    if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
+                        currentlyDownloading = null;
+                    }
+                    return;
+                } catch (IOException e) {
+                    LOG.error("Failed to read fit file", e);
+                    if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
+                        currentlyDownloading = null;
+                    }
+                    return;
+                }
+
+                if (!getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
+                    sendOutgoingMessage(
+                            "mark file as synced",
+                            protocolBufferHandler.prepareProtobufRequest(
+                                    GdiSmartProto.Smart.newBuilder().setFileSyncService(
+                                            protocolBufferHandler.getFileSyncServiceHandler().markSynced(currentlyDownloading.getSyncFile())
+                                    ).build()
+                            )
+                    );
+                }
+
+                LOG.debug("New file sync success");
+                if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
+                    transferNotification.incrementTotalProgress(currentlyDownloading.getSyncFile().getSize());
+                    currentlyDownloading = null;
+                }
+            }
+
+            @Override
+            public void onMessage(final byte[] value) {
+                if (!started) {
+                    if (!ArrayUtils.equals(new byte[]{0,0,0}, value, 0)) {
+                        LOG.error("Got unexpected first message");
+                        return;
+                    }
+                    started = true;
+                    return;
+                }
+                LOG.debug("Buffering {} bytes", value.length);
+                baos.write(value, 0, value.length);
+                transferNotification.setChunkProgress(baos.size());
+            }
+        });
+    }
+
     @Override
     public void onTestNewFunction() {
         parseAllFitFilesFromStorage();
@@ -1201,4 +1389,5 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             }
         });
     }
+
 }

@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
@@ -203,32 +201,12 @@ public abstract class ZeppOsFileTransferImpl {
         return baos.toByteArray();
     }
 
-    public static byte[] decompress(final byte[] data) {
-        final Inflater inflater = new Inflater();
-        final byte[] output = new byte[data.length];
-        inflater.setInput(data);
-        try {
-            inflater.inflate(output);
-        } catch (final DataFormatException e) {
-            LOG.error("Failed to decompress data", e);
-            return null;
-        } finally {
-            inflater.end();
-        }
-
-        return output;
-    }
-
     @Nullable
     protected static Boolean booleanFromByte(final byte b) {
-        switch (b) {
-            case 0x00:
-                return false;
-            case 0x01:
-                return true;
-            default:
-        }
-
-        return null;
+        return switch (b) {
+            case 0x00 -> false;
+            case 0x01 -> true;
+            default -> null;
+        };
     }
 }

@@ -17,6 +17,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -50,6 +52,10 @@ public class CommunicatorV2 implements ICommunicator {
     private BluetoothGattCharacteristic characteristicReceive;
 
     private final GarminSupport mSupport;
+
+    private final Map<Integer, Service> serviceByHandle = new HashMap<>();
+    private final Map<Service, Integer> handleByService = new HashMap<>();
+    private final Map<Service, ServiceCallback> serviceCallbacks = new HashMap<>();
 
     private int gfdiHandle = 0;
     public int maxWriteSize = 20;
@@ -153,10 +159,46 @@ public class CommunicatorV2 implements ICommunicator {
         } else if (this.realtimeHrvHandle == handle) {
             processRealtimeHrv(message);
         } else {
-            LOG.warn("Got message for unknown handle {}: {}", handle, GB.hexdump(value));
+            final Service service = serviceByHandle.get(handle & 0xff);
+            if (service != null) {
+                final ServiceCallback serviceCallback = serviceCallbacks.get(service);
+                if (serviceCallback != null) {
+                    serviceCallback.onMessage(Arrays.copyOfRange(value, 1, value.length));
+                } else {
+                    LOG.warn("Got message for {}, but no callback found", service);
+                }
+            } else {
+                LOG.warn("Got message for unknown service on handle {}: {}", handle, GB.hexdump(value));
+            }
         }
 
         return true;
+    }
+
+    public void startTransfer(final ServiceCallback callback) {
+        final Service service;
+        if (!handleByService.containsKey(Service.FILE_TRANSFER_2)) {
+            service = Service.FILE_TRANSFER_2;
+        } else if (!handleByService.containsKey(Service.FILE_TRANSFER_4)) {
+            service = Service.FILE_TRANSFER_4;
+        } else if (!handleByService.containsKey(Service.FILE_TRANSFER_6)) {
+            service = Service.FILE_TRANSFER_6;
+        } else if (!handleByService.containsKey(Service.FILE_TRANSFER_A)) {
+            service = Service.FILE_TRANSFER_A;
+        } else if (!handleByService.containsKey(Service.FILE_TRANSFER_C)) {
+            service = Service.FILE_TRANSFER_C;
+        } else if (!handleByService.containsKey(Service.FILE_TRANSFER_E)) {
+            service = Service.FILE_TRANSFER_E;
+        } else {
+            LOG.error("No file transfer services available");
+            callback.onClose();
+            return;
+        }
+
+        serviceCallbacks.put(service, callback);
+        mSupport.createTransactionBuilder("start file transfer")
+                .write(characteristicSend, registerService(service, false))
+                .queue();
     }
 
     @Override
@@ -235,6 +277,9 @@ public class CommunicatorV2 implements ICommunicator {
                 final int reliable = message.get();
                 LOG.debug("Got register response for {}, handle={}, reliable={}", registeredService, handle, reliable);
 
+                serviceByHandle.put(handle, registeredService);
+                handleByService.put(registeredService, handle);
+
                 switch (registeredService) {
                     case GFDI:
                         this.gfdiHandle = handle;
@@ -260,6 +305,20 @@ public class CommunicatorV2 implements ICommunicator {
                     case REALTIME_HRV:
                         this.realtimeHrvHandle = handle;
                         break;
+                    case FILE_TRANSFER_2:
+                    case FILE_TRANSFER_4:
+                    case FILE_TRANSFER_6:
+                    case FILE_TRANSFER_A:
+                    case FILE_TRANSFER_C:
+                    case FILE_TRANSFER_E:
+                        final ServiceCallback serviceCallback = serviceCallbacks.get(registeredService);
+                        if (serviceCallback == null) {
+                            LOG.error("Got file transfer registration, but got no callback");
+                            closeService(registeredService, handle);
+                            break;
+                        } else {
+                            serviceCallback.onConnect(new ServiceWriter(handle));
+                        }
                 }
                 break;
             }
@@ -292,8 +351,25 @@ public class CommunicatorV2 implements ICommunicator {
                         case REALTIME_HRV:
                             this.realtimeHrvHandle = 0;
                             break;
+                        case FILE_TRANSFER_2:
+                        case FILE_TRANSFER_4:
+                        case FILE_TRANSFER_6:
+                        case FILE_TRANSFER_A:
+                        case FILE_TRANSFER_C:
+                        case FILE_TRANSFER_E:
+                            final ServiceCallback serviceCallback = serviceCallbacks.get(service);
+                            if (serviceCallback == null) {
+                                LOG.error("Got file transfer registration, but got no callback");
+                            } else {
+                                serviceCallback.onClose();
+                            }
+                            break;
                     }
                 }
+
+                serviceByHandle.remove(handle);
+                handleByService.remove(service);
+                serviceCallbacks.remove(service);
                 break;
             }
             case CLOSE_ALL_RESP:
@@ -475,6 +551,12 @@ public class CommunicatorV2 implements ICommunicator {
         REALTIME_SPO2(19),
         REALTIME_BODY_BATTERY(20),
         REALTIME_RESPIRATION(21),
+        FILE_TRANSFER_2(0x2018),
+        FILE_TRANSFER_4(0x4018),
+        FILE_TRANSFER_6(0x6018),
+        FILE_TRANSFER_A(0xa018),
+        FILE_TRANSFER_C(0xc018),
+        FILE_TRANSFER_E(0xe018),
         ;
 
         private final short code;
@@ -496,6 +578,29 @@ public class CommunicatorV2 implements ICommunicator {
             }
 
             return null;
+        }
+    }
+
+    public interface ServiceCallback {
+        void onConnect(ServiceWriter writer);
+        void onClose();
+        void onMessage(byte[] value);
+    }
+
+    public class ServiceWriter {
+        private final int handle;
+
+        private ServiceWriter(final int handle) {
+            this.handle = handle;
+        }
+
+        public void write(final String taskName, final byte[] value) {
+            final ByteBuffer buf = ByteBuffer.allocate(value.length + 1);
+            buf.put((byte) handle);
+            buf.put(value);
+            mSupport.createTransactionBuilder(taskName)
+                    .write(characteristicSend, buf.array())
+                    .queue();
         }
     }
 }

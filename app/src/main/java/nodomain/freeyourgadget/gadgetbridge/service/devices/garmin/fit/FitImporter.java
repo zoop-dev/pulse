@@ -148,16 +148,14 @@ public class FitImporter {
 
             final Long ts = record.getComputedTimestamp();
 
-            if (record instanceof FitFileId) {
-                final FitFileId newFileId = (FitFileId) record;
+            if (record instanceof FitFileId newFileId) {
                 LOG.debug("File ID: {}", newFileId);
                 if (fileId != null) {
                     // Should not happen
                     LOG.warn("Already had a file ID: {}", fileId);
                 }
                 fileId = newFileId;
-            } else if (record instanceof FitStressLevel) {
-                final FitStressLevel stressRecord = (FitStressLevel) record;
+            } else if (record instanceof FitStressLevel stressRecord) {
                 final Integer stress = stressRecord.getStressLevelValue();
                 if (stress != null && stress >= 0) {
                     LOG.trace("Stress at {}: {}", ts, stress);
@@ -175,16 +173,14 @@ public class FitImporter {
                     sample.setEnergy(energy);
                     bodyEnergySamples.add(sample);
                 }
-            } else if (record instanceof FitSleepDataInfo) {
-                final FitSleepDataInfo newFitSleepDataInfo = (FitSleepDataInfo) record;
+            } else if (record instanceof FitSleepDataInfo newFitSleepDataInfo) {
                 LOG.debug("Sleep Data Info: {}", newFitSleepDataInfo);
                 if (fitSleepDataInfo != null) {
                     // Should not happen
                     LOG.warn("Already had sleep data info: {}", fitSleepDataInfo);
                 }
                 fitSleepDataInfo = newFitSleepDataInfo;
-            } else if (record instanceof FitSleepDataRaw) {
-                final FitSleepDataRaw fitSleepDataRaw = (FitSleepDataRaw) record;
+            } else if (record instanceof FitSleepDataRaw fitSleepDataRaw) {
                 //LOG.debug("Sleep Data Raw: {}", fitSleepDataRaw);
                 fitSleepDataRawSamples.add(fitSleepDataRaw);
             } else if (record instanceof FitSleepStats) {
@@ -207,8 +203,7 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setStage(stage.getId());
                 sleepStageSamples.add(sample);
-            } else if (record instanceof FitNap) {
-                final FitNap nap = (FitNap) record;
+            } else if (record instanceof FitNap nap) {
                 if (nap.getStartTimestamp() == null || nap.getEndTimestamp() == null) {
                     continue;
                 }
@@ -217,9 +212,8 @@ public class FitImporter {
                 sample.setTimestamp(nap.getStartTimestamp() * 1000L);
                 sample.setEndTimestamp(nap.getEndTimestamp() * 1000L);
                 napSamples.add(sample);
-            } else if (record instanceof FitMonitoring) {
+            } else if (record instanceof FitMonitoring monitoringRecord) {
                 LOG.trace("Monitoring at {}: {}", ts, record);
-                final FitMonitoring monitoringRecord = (FitMonitoring) record;
                 final Long currentMonitoringTimestamp = monitoringRecord.computeTimestamp(lastMonitoringTimestamp);
                 if (!activitySamplesPerTimestamp.containsKey(currentMonitoringTimestamp)) {
                     activitySamplesPerTimestamp.put(currentMonitoringTimestamp, new ArrayList<>());
@@ -257,8 +251,7 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setRespiratoryRate(respiratoryRate);
                 respiratoryRateSamples.add(sample);
-            } else if (record instanceof FitEvent) {
-                final FitEvent event = (FitEvent) record;
+            } else if (record instanceof FitEvent event) {
                 if (event.getEvent() == null) {
                     LOG.warn("Event in {} is null", event);
                     continue;
@@ -288,8 +281,7 @@ public class FitImporter {
                 // handled in workout parser
             } else if (record instanceof FitUserProfile) {
                 // handled in workout parser
-            } else if (record instanceof FitHrvSummary) {
-                final FitHrvSummary hrvSummary = (FitHrvSummary) record;
+            } else if (record instanceof FitHrvSummary hrvSummary) {
                 LOG.trace("HRV summary at {}: {}", ts, record);
                 final GarminHrvSummarySample sample = new GarminHrvSummarySample();
                 sample.setTimestamp(ts * 1000L);
@@ -316,8 +308,7 @@ public class FitImporter {
                     sample.setStatusNum(status.getId());
                 }
                 hrvSummarySamples.add(sample);
-            } else if (record instanceof FitHrvValue) {
-                final FitHrvValue hrvValue = (FitHrvValue) record;
+            } else if (record instanceof FitHrvValue hrvValue) {
                 if (hrvValue.getValue() == null) {
                     LOG.warn("HRV value at {} is null", ts);
                     continue;
@@ -327,8 +318,7 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setValue(Math.round(hrvValue.getValue()));
                 hrvValueSamples.add(sample);
-            } else if (record instanceof FitMonitoringInfo) {
-                final FitMonitoringInfo monitoringInfo = (FitMonitoringInfo) record;
+            } else if (record instanceof FitMonitoringInfo monitoringInfo) {
                 if (monitoringInfo.getRestingMetabolicRate() == null) {
                     continue;
                 }
@@ -337,8 +327,7 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setRestingMetabolicRate(monitoringInfo.getRestingMetabolicRate());
                 restingMetabolicRateSamples.add(sample);
-            } else if (record instanceof FitTrainingLoad) {
-                final FitTrainingLoad trainingLoad = (FitTrainingLoad) record;
+            } else if (record instanceof FitTrainingLoad trainingLoad) {
                 LOG.trace("Training load at {}: {}", ts, record);
                 if (trainingLoad.getTrainingLoadAcute() != null) {
                     final GenericTrainingLoadAcuteSample sample = new GenericTrainingLoadAcuteSample();
@@ -352,8 +341,7 @@ public class FitImporter {
                     sample.setValue(trainingLoad.getTrainingLoadChronic());
                     trainingLoadChronicSamples.add(sample);
                 }
-            } else if (record instanceof FitMonitoringHrData) {
-                final FitMonitoringHrData monitoringHrData = (FitMonitoringHrData) record;
+            } else if (record instanceof FitMonitoringHrData monitoringHrData) {
                 if (monitoringHrData.getRestingHeartRate() == null) {
                     LOG.warn("Resting HR at {} is null", ts);
                     continue;
@@ -390,14 +378,7 @@ public class FitImporter {
         try {
             final File exportDirectory = gbDevice.getDeviceCoordinator().getWritableExportDirectory(gbDevice);
             if (!file.getAbsolutePath().startsWith(exportDirectory.getAbsolutePath())) {
-                final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
-                final StringBuilder sb = new StringBuilder(fileId.getType().name());
-                if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
-                    sb.append("_").append(SDF.format(new Date(fileId.getTimeCreated() * 1000L)));
-                }
-                sb.append(".fit");
-
-                final File exportFile = new File(exportDirectory, sb.toString());
+                final File exportFile = new File(exportDirectory, getFilePath(fileId));
                 if (exportFile.isFile()) {
                     // Prevent overwrite
                     LOG.warn("Fit file {} already exists as {}", file, exportFile);
@@ -405,6 +386,7 @@ public class FitImporter {
                     LOG.debug("Copying {} to {}", file, exportFile);
 
                     FileUtils.copyFile(file, exportFile);
+                    //noinspection ResultOfMethodCallIgnored
                     exportFile.setLastModified(file.lastModified());
                 }
 
@@ -726,5 +708,35 @@ public class FitImporter {
     private <T extends AbstractTimeSample> void persistAbstractSamples(final List<T> samples,
                                                                        final AbstractTimeSampleProvider<T> sampleProvider) {
         sampleProvider.persistForDevice(context, gbDevice, samples);
+    }
+
+    public static String getFilePath(final FitFileId fileId) {
+        final SimpleDateFormat SDF_FULL = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
+        final SimpleDateFormat SDF_YEAR = new SimpleDateFormat("yyyy", Locale.ROOT);
+
+        // [FILE_TYPE]/
+        final StringBuilder sb = new StringBuilder();
+        if (fileId.getType() != null) {
+            sb.append(fileId.getType());
+        } else {
+            sb.append("NULL");
+        }
+        sb.append("/");
+
+        // If we have a valid date, place the file inside a folder for each year
+        // [YEAR]/
+        if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
+            sb.append(SDF_YEAR.format(new Date(fileId.getTimeCreated() * 1000L)));
+            sb.append("/");
+        }
+
+        // [FILE_TYPE]_[yyyy-MM-dd_HH-mm-ss]_[INDEX].[fit/bin]
+        sb.append(fileId.getType().name());
+        if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
+            sb.append("_").append(SDF_FULL.format(new Date(fileId.getTimeCreated() * 1000L)));
+        }
+        sb.append(".fit");
+
+        return sb.toString();
     }
 }

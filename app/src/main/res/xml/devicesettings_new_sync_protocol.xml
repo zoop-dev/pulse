@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_refresh"
+        android:key="new_sync_protocol"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_new_sync_protocol_summary"
+        android:title="@string/pref_new_sync_protocol_title" />
+</androidx.preference.PreferenceScreen>

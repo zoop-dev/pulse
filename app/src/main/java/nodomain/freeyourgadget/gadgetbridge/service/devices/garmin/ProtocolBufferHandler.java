@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCore;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiDataTransferService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiDeviceStatus;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFileSyncService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFindMyWatch;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiNotificationsService;
@@ -46,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiInstalledAppsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmsNotification;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiEcgService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.DataTransferHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.HttpHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
@@ -66,6 +68,8 @@ public class ProtocolBufferHandler implements MessageHandler {
     private int lastProtobufRequestId;
     private final HttpHandler httpHandler;
     private final DataTransferHandler dataTransferHandler;
+    private final FileSyncServiceHandler fileSyncServiceHandler;
+    private final EcgServiceHandler ecgServiceHandler;
 
     private final Map<GdiSmsNotification.SmsNotificationService.CannedListType, String[]> cannedListTypeMap = new HashMap<>();
 
@@ -74,6 +78,8 @@ public class ProtocolBufferHandler implements MessageHandler {
         chunkedFragmentsMap = new HashMap<>();
         httpHandler = new HttpHandler(deviceSupport);
         dataTransferHandler = new DataTransferHandler();
+        fileSyncServiceHandler = new FileSyncServiceHandler(deviceSupport);
+        ecgServiceHandler = new EcgServiceHandler(deviceSupport);
     }
 
     private int getNextProtobufRequestId() {
@@ -189,6 +195,30 @@ public class ProtocolBufferHandler implements MessageHandler {
                     if (status == GdiInstalledAppsService.InstalledAppsService.DeleteAppResponse.Status.OK) {
                         deviceSupport.onAppInfoReq();
                     }
+                }
+            }
+            if (smart.hasFileSyncService()) {
+                processed = true;
+                if (deviceSupport.getDevicePrefs().getBoolean("new_sync_protocol", false)) {
+                    processed = true;
+                    final GdiFileSyncService.FileSyncService response = fileSyncServiceHandler.handle(smart.getFileSyncService());
+                    if (response != null) {
+                        return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setFileSyncService(response).build(), message.getRequestId());
+                    }
+                } else {
+                    LOG.warn("Ignoring file sync service - new sync protocol is disabled");
+                }
+            }
+            if (smart.hasEcgService()) {
+                processed = true;
+                if (deviceSupport.getDevicePrefs().getBoolean("new_sync_protocol", false)) {
+                    processed = true;
+                    final GdiEcgService.EcgService response = ecgServiceHandler.handle(smart.getEcgService());
+                    if (response != null) {
+                        return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setEcgService(response).build(), message.getRequestId());
+                    }
+                } else {
+                    LOG.warn("Ignoring zip transfer service - new sync protocol is disabled");
                 }
             }
             if (processed) {
@@ -625,6 +655,10 @@ public class ProtocolBufferHandler implements MessageHandler {
                 ).build();
 
         return prepareProtobufRequest(smart);
+    }
+
+    public FileSyncServiceHandler getFileSyncServiceHandler() {
+        return fileSyncServiceHandler;
     }
 
     private class ProtobufFragment {

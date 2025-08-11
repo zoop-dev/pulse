@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
 
 public class ZeppOsFileTransferV2 extends ZeppOsFileTransferImpl {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFileTransferV2.class);
@@ -182,7 +183,7 @@ public class ZeppOsFileTransferV2 extends ZeppOsFileTransferImpl {
 
             final byte[] data;
             if (request.isCompressed()) {
-                data = decompress(request.getBytes());
+                data = CompressionUtils.INSTANCE.inflate(request.getBytes());
                 if (data == null) {
                     LOG.error("Failed to decompress bytes for session={}", session);
                     return;

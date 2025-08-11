@@ -35,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsFileTransferService;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
+import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
 
 public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsFileTransferV3.class);
@@ -362,7 +363,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
             if (currentReceiveChunkIsLast) {
                 final byte[] data;
                 if (currentReceiveRequest.isCompressed()) {
-                    data = decompress(currentReceiveRequest.getBytes());
+                    data = CompressionUtils.INSTANCE.inflate(currentReceiveRequest.getBytes());
                     if (data == null) {
                         LOG.error("Failed to decompress V3 bytes for {}", currentReceiveRequest.getFilename());
                         resetReceive();

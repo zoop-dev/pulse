@@ -168,6 +168,13 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
 
         private void parseDirectoryEntries() {
             LOG.debug("Parsing directory entries for {}", currentlyDownloading.directoryEntry);
+            if (deviceSupport.newSyncProtocol()) {
+                // Signal to the support class that we got the directory - but ignore the entries
+                // Well request them using the new sync protocol
+                deviceSupport.addFileToDownloadList(currentlyDownloading.directoryEntry);
+                return;
+            }
+
             if ((currentlyDownloading.getDataSize() % 16) != 0)
                 throw new IllegalArgumentException("Invalid directory data length");
             final GarminByteBufferReader reader = new GarminByteBufferReader(currentlyDownloading.dataHolder.array());

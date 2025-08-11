@@ -23,6 +23,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
@@ -86,6 +88,21 @@ public class GBZipFile {
 
             throw new ZipFileException(String.format("Path in ZIP file was not found: %s", path));
 
+        } catch (ZipException e) {
+            throw new ZipFileException("The ZIP file might be corrupted", e);
+        } catch (IOException e) {
+            throw new ZipFileException("General IO error", e);
+        }
+    }
+
+    public List<String> getAllFiles() throws ZipFileException {
+        try (InputStream is = new ByteArrayInputStream(zipBytes); ZipInputStream zipInputStream = new ZipInputStream(is)) {
+            final List<String> files = new ArrayList<>();
+            ZipEntry zipEntry;
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                files.add(zipEntry.getName());
+            }
+            return files;
         } catch (ZipException e) {
             throw new ZipFileException("The ZIP file might be corrupted", e);
         } catch (IOException e) {
