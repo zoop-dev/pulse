@@ -3791,4 +3791,6 @@
     <string name="alarm_label_training">Навчання</string>
     <string name="alarm_label_class">Клас</string>
     <string name="alarm_label_meditate">Медитуйте</string>
+    <string name="activityTotalAscent">Загальний підйом</string>
+    <string name="activityTotalDescent">Повний спуск</string>
 </resources>
