@@ -3793,4 +3793,6 @@
     <string name="alarm_label_meditate">Медитуйте</string>
     <string name="activityTotalAscent">Загальний підйом</string>
     <string name="activityTotalDescent">Повний спуск</string>
+    <string name="pref_new_sync_protocol_title">Новий протокол синхронізації</string>
+    <string name="pref_new_sync_protocol_summary">Увімкніть це, якщо якась інформація не отримується. Експериментально та потенційно нестабільно.</string>
 </resources>
