@@ -184,9 +184,17 @@ public class HuaweiEphemerisManager {
                 ZipEntry entry = entries.nextElement();
                 if (entry.getName().equals(name)) {
                     InputStream inputStream = zipFile.getInputStream(entry);
-                    ret = new byte[inputStream.available()];
-                    if(inputStream.read(ret) != ret.length) {
-                        ret = null;
+                    int length = inputStream.available();
+                    if (length > 0) {
+                        byte[] buf = new byte[length];
+                        int offset = 0;
+                        int n;
+                        while (offset < buf.length && (n = inputStream.read(buf, offset, buf.length - offset)) >= 0) {
+                            offset += n;
+                        }
+                        if (offset == buf.length) {
+                            ret = buf;
+                        }
                     }
                     inputStream.close();
                 }
@@ -245,7 +253,7 @@ public class HuaweiEphemerisManager {
                 }
 
                 long fileTime = Long.parseLong(new String(time));
-                if (fileTime < (System.currentTimeMillis() - (7200 * 1000))) { // 2 hours. Maybe should be decreased.
+                if (fileTime < (System.currentTimeMillis() - (1800 * 1000))) { // 30 minutes. Maybe should be decreased.
                     throw new Exception("Ephemeris file old");
                 }
 
@@ -300,12 +308,12 @@ public class HuaweiEphemerisManager {
             JsonObject conf = availableDataConfig.getAsJsonObject(downloadTag);
 
             int version = conf.get("ver").getAsInt();
-            if(version != downloadVersion) {
+            if (version != downloadVersion) {
                 throw new Exception("Ephemeris version mismatch");
             }
             String uuid = conf.get("uuid").getAsString();
 
-            if(uuid.isEmpty())
+            if (uuid.isEmpty())
                 throw new Exception("Ephemeris uuid is empty");
 
             JsonArray filesJs = conf.get("files").getAsJsonArray();
@@ -315,11 +323,11 @@ public class HuaweiEphemerisManager {
                 files.add(filesJs.get(i).getAsString());
             }
 
-            if(files.isEmpty())
+            if (files.isEmpty())
                 throw new Exception("Ephemeris file list is empty");
 
-            for(String fl: files) {
-                if(!checkZIPFileExists(file, uuid + File.separator + fl)) {
+            for (String fl : files) {
+                if (!checkZIPFileExists(file, uuid + File.separator + fl)) {
                     throw new Exception("Ephemeris file does not exist in ZIP");
                 }
             }
@@ -342,22 +350,22 @@ public class HuaweiEphemerisManager {
 
     //File transfer related
     public void handleFileSendRequest(byte fileType, String productId) {
-        if(currentRequest == null) {
+        if (currentRequest == null) {
             return;
         }
 
         StringBuilder fileList = new StringBuilder();
         int responseCode = 0;
 
-        if(fileType == 0) {
+        if (fileType == 0) {
             //TODO: find all files that name contain productId and send
             LOG.error("Currently not supported. File type: 0 Product Id: {}", productId);
-        } else if(fileType == 1){
-            if(currentRequest.getTagVersion() == 0) {
+        } else if (fileType == 1) {
+            if (currentRequest.getTagVersion() == 0) {
                 //TODO: implement this type
                 //fileList = "gpslocation.dat";
                 LOG.error("Currently not supported. File type 1. Tag version 0");
-            } else if (currentRequest.getTagVersion() == 1 || currentRequest.getTagVersion() == 2 || currentRequest.getTagVersion() == 3){
+            } else if (currentRequest.getTagVersion() == 1 || currentRequest.getTagVersion() == 2 || currentRequest.getTagVersion() == 3) {
                 int i = 0;
                 while (i < currentRequest.getTagFiles().size()) {
                     fileList.append(currentRequest.getTagFiles().get(i));
@@ -374,7 +382,7 @@ public class HuaweiEphemerisManager {
             LOG.error("Unknown file id");
         }
 
-        if(TextUtils.isEmpty(fileList.toString())) {
+        if (TextUtils.isEmpty(fileList.toString())) {
             responseCode = 100001;
             cleanupUpload(true);
         }
@@ -388,7 +396,7 @@ public class HuaweiEphemerisManager {
     }
 
     void handleFileConsultIncomingRequest(int responseCode, String protocolVersion, byte bitmapEnable, short transferSize, int maxDataSize, short timeOut, byte fileType) {
-        if(currentRequest == null) {
+        if (currentRequest == null) {
             return;
         }
 
@@ -406,7 +414,7 @@ public class HuaweiEphemerisManager {
 
         currentRequest.setUploadParameters(new UploadParameters(protocolVersion, bitmapEnable, transferSize, maxDataSize, timeOut, fileType));
 
-        if((!TextUtils.isEmpty(protocolVersion) && fileType == 0) || fileType == 1) {
+        if ((!TextUtils.isEmpty(protocolVersion) && fileType == 0) || fileType == 1) {
             try {
                 SendEphemerisFileConsultResponse sendEphemerisFileConsultResponse = new SendEphemerisFileConsultResponse(this.support, 100000);
                 sendEphemerisFileConsultResponse.doPerform();
@@ -420,12 +428,12 @@ public class HuaweiEphemerisManager {
     }
 
     void handleSingleFileIncomingRequest(String filename) {
-        if(currentRequest == null || currentRequest.getUploadParameters() == null) {
+        if (currentRequest == null || currentRequest.getUploadParameters() == null) {
             cleanupUpload(true);
             return;
         }
 
-        if(TextUtils.isEmpty(filename) || !currentRequest.getTagFiles().contains(filename)) {
+        if (TextUtils.isEmpty(filename) || !currentRequest.getTagFiles().contains(filename)) {
             cleanupUpload(true);
             try {
                 SendEphemerisSingleFileInfoResponse sendEphemerisSingleFileInfoResponse = new SendEphemerisSingleFileInfoResponse(this.support, 100001, 0, (short) 0);
@@ -460,15 +468,15 @@ public class HuaweiEphemerisManager {
         }
 
         short crc = 0;
-        if(currentRequest.getUploadParameters().getFileType() == 0) {
+        if (currentRequest.getUploadParameters().getFileType() == 0) {
             //TODO: implement this type
             responseCode = 100001;
-        } else if(currentRequest.getUploadParameters().getFileType()  == 1) {
-            crc = (short)CheckSums.getCRC16(currentRequest.getCurrentFileData(), 0x0000);
+        } else if (currentRequest.getUploadParameters().getFileType() == 1) {
+            crc = (short) CheckSums.getCRC16(currentRequest.getCurrentFileData(), 0x0000);
         }
 
         int size = 0;
-        if(currentRequest.getCurrentFileData() == null || crc == 0) {
+        if (currentRequest.getCurrentFileData() == null || crc == 0) {
             responseCode = 100001;
         } else {
             size = currentRequest.getCurrentFileData().length;
@@ -499,17 +507,17 @@ public class HuaweiEphemerisManager {
     }
 
     void handleDataRequestIncomingRequest(int responseCode, String fileName, int offset, int len, byte bitmap) {
-        if(currentRequest == null || currentRequest.getUploadParameters() == null) {
+        if (currentRequest == null || currentRequest.getUploadParameters() == null) {
             cleanupUpload(true);
             return;
         }
 
-        if(offset == -1 || fileName == null || fileName.isEmpty()) {
+        if (offset == -1 || fileName == null || fileName.isEmpty()) {
             cleanupUpload(true);
             return;
         }
 
-        if(!currentRequest.getCurrentFileName().equals(fileName)) {
+        if (!currentRequest.getCurrentFileName().equals(fileName)) {
             cleanupUpload(true);
             return;
         }
@@ -518,10 +526,10 @@ public class HuaweiEphemerisManager {
 
         String localFilename = "";
 
-        if(currentRequest.getUploadParameters().getFileType() == 0) {
+        if (currentRequest.getUploadParameters().getFileType() == 0) {
             //TODO: implement this type
             localResponseCode = 100001;
-        } else if(currentRequest.getUploadParameters().getFileType() == 1) {
+        } else if (currentRequest.getUploadParameters().getFileType() == 1) {
             localFilename = getHexDigest(support.deviceMac) + fileName;
         } else {
             LOG.error("Unsupported type: {}", currentRequest.getUploadParameters().getFileType());
@@ -535,8 +543,8 @@ public class HuaweiEphemerisManager {
             LOG.error("Error to send SendEphemerisDataRequestResponse");
         }
 
-        if(localResponseCode == 100000) {
-            int dataSize = Math.min(currentRequest.getCurrentFileData().length - offset,currentRequest.getUploadParameters().getMaxDataSize());
+        if (localResponseCode == 100000) {
+            int dataSize = Math.min(currentRequest.getCurrentFileData().length - offset, currentRequest.getUploadParameters().getMaxDataSize());
             int packetsCount = (int) Math.ceil((double) dataSize / currentRequest.getUploadParameters().getTransferSize());
             byte[] chunk = new byte[dataSize];
             System.arraycopy(currentRequest.getCurrentFileData(), offset, chunk, 0, dataSize);
@@ -552,7 +560,7 @@ public class HuaweiEphemerisManager {
 
     void handleFileUploadResponse(int responseCode) {
         LOG.info("handleFileUploadResponse {}", responseCode);
-        if(responseCode != 100000) {
+        if (responseCode != 100000) {
             cleanupUpload(true);
         }
     }
@@ -569,15 +577,15 @@ public class HuaweiEphemerisManager {
     }
 
     void cleanupUpload(boolean force) {
-        if(currentRequest != null) {
+        if (currentRequest != null) {
             currentRequest.setCurrentFileName(null);
             currentRequest.setCurrentFileData(null);
             currentRequest.setUploadParameters(null);
             boolean isAllProcessed = currentRequest.isAllProcessed();
             LOG.info("Ephemeris is Done: {}", isAllProcessed);
-            if(isAllProcessed || force) {
+            if (isAllProcessed || force) {
                 currentRequest = null;
-                LOG.info("Ephemeris All files uploaded. {} Cleanup...", force?"Force":"");
+                LOG.info("Ephemeris All files uploaded. {} Cleanup...", force ? "Force" : "");
             }
         }
     }
