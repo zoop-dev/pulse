@@ -224,6 +224,9 @@ public class ZeppOsFwHelper {
         if (firmwareBin == null) {
             firmwareBin = getFileFromZip(zipFile, "META/firmware_sign.bin");
         }
+        if (firmwareBin == null) {
+            firmwareBin = getFileFromZip(zipFile, "firmware_sign.bin");
+        }
         if (firmwareBin != null) {
             if (isCompatibleFirmwareBin(firmwareBin)) {
                 firmwareType = HuamiFirmwareType.FIRMWARE;
