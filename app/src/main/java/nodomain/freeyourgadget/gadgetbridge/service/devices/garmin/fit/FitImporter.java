@@ -733,13 +733,13 @@ public class FitImporter {
         } else {
             sb.append("NULL");
         }
-        sb.append("/");
+        sb.append(File.separator);
 
         // If we have a valid date, place the file inside a folder for each year
         // [YEAR]/
         if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
             sb.append(SDF_YEAR.format(new Date(fileId.getTimeCreated() * 1000L)));
-            sb.append("/");
+            sb.append(File.separator);
         }
 
         // [FILE_TYPE]_[yyyy-MM-dd_HH-mm-ss]_[INDEX].[fit/bin]

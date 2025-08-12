@@ -433,13 +433,13 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
         public String getOutputPath() {
             // [FILE_TYPE]/
             final StringBuilder sb = new StringBuilder(getFiletype().name());
-            sb.append("/");
+            sb.append(File.separator);
 
             // If we have a valid date, place the file inside a folder for each year
             // [YEAR]/
             if (fileDate.getTime() != GarminTimeUtils.GARMIN_TIME_EPOCH * 1000L) {
                 sb.append(SDF_YEAR.format(fileDate));
-                sb.append("/");
+                sb.append(File.separator);
             }
 
             // Finally, the filename

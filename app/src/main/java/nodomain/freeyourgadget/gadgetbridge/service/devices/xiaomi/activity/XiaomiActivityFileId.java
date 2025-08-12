@@ -158,7 +158,7 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
 
         // Year
         sb.append(SDF_YEAR.format(getTimestamp()));
-        sb.append("/");
+        sb.append(File.separator);
 
         // Type
         final Type typeName = Type.fromCode(type);
@@ -166,7 +166,7 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
         if (typeName == Type.UNKNOWN) {
             sb.append("_").append(String.format("%02X", type));
         }
-        sb.append("/");
+        sb.append(File.separator);
 
         // Subtype
         final Subtype subtypeName = Subtype.fromCode(typeName, subtype);
@@ -174,7 +174,7 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
         if (subtypeName == Subtype.UNKNOWN) {
             sb.append("_").append(String.format("%02X", subtype));
         }
-        sb.append("/");
+        sb.append(File.separator);
 
         // DetailType
         final DetailType detailTypeName = DetailType.fromCode(detailType);
@@ -182,7 +182,7 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
         if (detailTypeName == DetailType.UNKNOWN) {
             sb.append("_").append(String.format("%02X", subtype));
         }
-        sb.append("/");
+        sb.append(File.separator);
 
         // Filename
         sb.append(String.format(
