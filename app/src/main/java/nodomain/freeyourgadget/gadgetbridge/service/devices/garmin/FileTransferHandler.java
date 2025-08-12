@@ -141,8 +141,14 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
                 throw new IllegalStateException("Received file transfer of unknown file");
             if (downloadRequestStatusMessage.canProceed())
                 currentlyDownloading.setSize(downloadRequestStatusMessage);
-            else
+            else {
+                // Signal to the support class that the download failed so it can also continue to the next one
+                FileDownloadedDeviceEvent fileDownloadedDeviceEvent = new FileDownloadedDeviceEvent();
+                fileDownloadedDeviceEvent.directoryEntry = currentlyDownloading.directoryEntry;
+                fileDownloadedDeviceEvent.success = false;
+                deviceSupport.evaluateGBDeviceEvent(fileDownloadedDeviceEvent);
                 currentlyDownloading = null;
+            }
         }
 
         private void saveFileToExternalStorage() {

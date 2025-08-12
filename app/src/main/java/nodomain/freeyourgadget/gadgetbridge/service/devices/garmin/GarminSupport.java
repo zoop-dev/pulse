@@ -383,6 +383,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             this.supportedFileTypeList.addAll(((SupportedFileTypesDeviceEvent) deviceEvent).getSupportedFileTypes());
         } else if (deviceEvent instanceof FileDownloadedDeviceEvent fileDownloadedDeviceEvent) {
             final FileTransferHandler.DirectoryEntry entry = fileDownloadedDeviceEvent.directoryEntry;
+            if (!fileDownloadedDeviceEvent.success) {
+                LOG.warn("FILE DOWNLOAD FAILED");
+                // Continue to the next one
+                currentlyDownloading = null;
+                return;
+            }
+
             if (entry != null) {
                 final String filename = entry.getFileName();
                 LOG.debug("FILE DOWNLOAD COMPLETE {}", filename);
