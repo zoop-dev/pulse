@@ -34,7 +34,7 @@
     <string name="controlcenter_find_device">Buscar dispositivo perdido</string>
     <string name="search">Buscar</string>
     <string name="find_lost_device_message">Buscar por %1$s?</string>
-    <string name="controlcenter_take_screenshot">Fazer captura de ecrã</string>
+    <string name="controlcenter_take_screenshot">Capturar ecrã</string>
     <string name="controlcenter_power_off">Desligar</string>
     <string name="controlcenter_power_off_confirm_title">Desligar</string>
     <string name="controlcenter_power_off_confirm_description">Tem a certeza que deseja desligar o dispositivo?</string>
@@ -125,7 +125,7 @@
     <string name="fw_upgrade_notice_amazfitbip3">Está prestes a instalar o firmware %s no seu Amazfit Bip 3. \n \nCertifique-se de instalar o ficheiro .fw e depois o ficheiro .res. O seu relógio será reiniciado após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res se esse ficheiro for exatamente o mesmo que os instalados anteriormente. \n \nPROSSIGA POR SUA CONTA E RISCO!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Está prestes a instalar o firmware %s no seu Amazfit Bip 3 Pro. \n \nCertifique-se de instalar o ficheiro .fw e depois o ficheiro .res. O seu relógio será reiniciado após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res se esse ficheiro for exatamente o mesmo que os instalados anteriormente. \n \nPROSSIGA POR SUA CONTA E RISCO!</string>
     <string name="fw_upgrade_notice_amazfitcor">Está prestes a instalar o firmware %s no seu Amazfit Cor. \n \nCertifique-se de instalar o ficheiro .fw e depois disso o ficheiro .res. A sua pulseira será reiniciada após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Está prestes a instalar o firmware %s no seu Amazfit Cor 2. \n \nCertifique-se de instalar o ficheiro .fw e depois disso o ficheiro .res. A sua pulseira será reiniciada após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO! \n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISA INSTALAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Está prestes a instalar o firmware %s no seu Amazfit Cor 2. \n \nCertifique-se de instalar o ficheiro .fw e depois disso o ficheiro .res. A sua pulseira será reiniciada após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO! \n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISA INSTALAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR Amazfit Band 2</string>
     <string name="fw_upgrade_notice_amazfitgtr">Está prestes a instalar o firmware %s no seu Amazfit GTR. \n \nCertifique-se de instalar o ficheiro .fw, depois disso o ficheiro .res e finalmente o ficheiro .gps. O seu relógio será reiniciado após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res e .gps se estes ficheiros forem exatamente os mesmos que os instalados anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO!</string>
     <string name="fw_upgrade_notice_amazfitgts">Está prestes a instalar o firmware %s no seu Amazfit GTS. \n \nCertifique-se de instalar o ficheiro .fw, depois disso o ficheiro .res e finalmente o ficheiro .gps. O seu relógio será reiniciado após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res e .gps se estes ficheiros forem exatamente os mesmos que os instalados anteriormente. \n \nPROSSIGA AO SEU PRÓPRIO RISCO!</string>
     <string name="fw_upgrade_notice_amazfit_trex">Está prestes a instalar o firmware %s no seu Amazit T-Rex. \n \nCertifique-se de instalar o ficheiro .fw, depois o ficheiro .res e finalmente o ficheiro .gps. O seu relógio será reiniciado após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res e .gps se esse ficheiro for exatamente o mesmo que os instalados anteriormente. \n \nPROSSIGA POR SUA CONTA E RISCO!</string>
@@ -274,7 +274,7 @@
     <string name="pref_message_privacy_mode_complete">Ocultar todo o conteúdo</string>
     <string name="pref_title_weather">Clima</string>
     <string name="pref_title_weather_location">Localização climática (para provedor de clina do LineageOS)</string>
-    <string name="pref_title_weather_summary">Usado para o provedor do clima do LineageOS, outras versões do Android precisam usar uma app como o \"Notificação de clima\". Encontrará mais informações no wiki do Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Usado para o provedor do clima do LineageOS, outras versões do Android precisam usar uma app como o Notificação de clima. Encontrará mais informações no wiki do Gadgetbridge.</string>
     <string name="pref_applications_settings">Lista de aplicações</string>
     <string name="pref_blacklist_calendars">Calendários na lista negra</string>
     <string name="pref_blacklist_calendars_summary">Os calendários na lista negra não serão sincronizados com o dispositivo</string>
@@ -2202,9 +2202,9 @@
     <string name="huawei_stress_calibrate">Calibrar</string>
     <string name="huawei_stress_calibrate_start">Início</string>
     <string name="even_realities_frame_color_green">Verde</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="title_activity_file_installer">Instalador de ficheiros</string>
     <string name="zepp_os_install_map_instructions">Depois da instalação começar no telefone, precisa aceitar no relógio também.</string>
     <string name="title_activity_musicmanager">Gerente de música</string>
@@ -2212,4 +2212,12 @@
     <string name="pref_title_stable_connection">Conexão estável</string>
     <string name="pref_device_version">Versão do dispositivo</string>
     <string name="pref_gps_mode_preset">Modo do GPS</string>
+    <string name="title_activity_gps_track_installer">Instalador de rota GPS</string>
+    <string name="fw_upgrade_notice_zepp_os">Está prestes a instalar o firmware %1$s no seu %2$s.\n\nO seu relógio será reiniciado após a instalação do ficheiro .zip.\n\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
+    <string name="fw_upgrade_notice_huawei">Está prestes a instalar o firmware %1$s no seu %2$s.\n\nO seu firmware atual é %s\n\nO seu relógio será reiniciado após a instalação do ficheiro .zip.\n\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
+    <string name="sound_and_vibration">Som + Vibração</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="map_theme_motorider">Motorider</string>
+    <string name="pref_title_block_screenshot">Bloquear capturas de ecrã</string>
+    <string name="pref_summary_block_screenshots">Bloqueia capturas de ecrã e visualização em ecrãs não seguros. Necessita de um reinicio do Gb para ser aplicado completamente.</string>
 </resources>
