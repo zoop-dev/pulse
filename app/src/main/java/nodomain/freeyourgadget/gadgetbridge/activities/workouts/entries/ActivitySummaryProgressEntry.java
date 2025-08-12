@@ -50,7 +50,6 @@ public class ActivitySummaryProgressEntry extends ActivitySummarySimpleEntry {
         // Value
         final TextView valueTextView = new TextView(context);
         valueTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        valueTextView.setText(String.format("%s", "-"));
         valueTextView.setTextSize(12);
         valueTextView.setGravity(Gravity.END);
         valueTextView.setText(workoutValueFormatter.formatValue(getValue(), getUnit()));
