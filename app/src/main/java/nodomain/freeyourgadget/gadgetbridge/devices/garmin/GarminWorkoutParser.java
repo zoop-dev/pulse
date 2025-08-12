@@ -248,7 +248,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             if (!heartRateDataPoints.isEmpty()) {
                 String label = String.format("%s(%s)", context.getString(R.string.heart_rate), getUnitString(UNIT_BPM));
                 LineDataSet dataset = createDataSet(heartRateDataPoints, label, Color.RED);
-                charts.add(new WorkoutChart(context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE_ZONES, new LineData(dataset)));
+                charts.add(new WorkoutChart(context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE, new LineData(dataset)));
             }
             if (hasSpeedValues && !speedDataPoints.isEmpty()) {
                 if (ActivityKind.isPaceActivity(activityKind)) {
@@ -494,7 +494,6 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             }
         }
 
-        summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
         summaryData.add(AVG_POWER, session.getAvgPower(), UNIT_WATT);
         summaryData.add(MAX_POWER, session.getMaxPower(), UNIT_WATT);
         summaryData.add(NORMALIZED_POWER, session.getNormalizedPower(), UNIT_WATT);
@@ -709,6 +708,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.add(LACTATE_THRESHOLD_HR, physiologicalMetrics.getLactateThresholdHeartRate(), UNIT_BPM);
             }
         }
+        summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
 
         if (diveSummary != null) {
             if (diveSummary.getAvgDepth() != null) {

@@ -16,11 +16,17 @@ object ActivitySummaryGroup {
             .forEach { key ->
                 val item = activitySummaryData[key]
                 // Use the group if specified in the entry, otherwise fallback to the default mapping from getDefaultGroup
-                val groupName = item.group ?: getDefaultGroup(key)
+                val groups: List<String> = item.group?.let { listOf(it) } ?: getDefaultGroups(key)
 
-                // If the group is not defined the default groups, it will be added to the end
-                val group = activeGroups.getOrPut(groupName) { mutableListOf() }
-                group.add(Pair.of<String, ActivitySummaryEntry>(key, item))
+                for (groupName in groups) {
+                    if (groupName == ActivitySummaryEntries.GROUP_OTHER) {
+                        item.columnSpan = 2;
+                    }
+
+                    // If the group is not defined the default groups, it will be added to the end
+                    val group = activeGroups.getOrPut(groupName) { mutableListOf() }
+                    group.add(Pair.of<String, ActivitySummaryEntry>(key, item))
+                }
             }
 
         // activeGroups is already ordered, discard empty ones
@@ -30,11 +36,11 @@ object ActivitySummaryGroup {
     /**
      * Find the default group key for a given entry. Defaults to Activity if not found.
      */
-    private fun getDefaultGroup(searchItem: String): String {
+    private fun getDefaultGroups(searchItem: String): List<String> {
         return DEFAULT_GROUPS.entries
-            .firstOrNull { (_, items) -> items.contains(searchItem) }
-            ?.key
-            ?: ActivitySummaryEntries.GROUP_ACTIVITY
+            .filter { (_, items) -> items.contains(searchItem) }
+            .map { (key, _) -> key }
+            .ifEmpty { listOf(ActivitySummaryEntries.GROUP_OTHER) }
     }
 
     /**
@@ -46,24 +52,50 @@ object ActivitySummaryGroup {
             // be shown.
             put(
                 ActivitySummaryEntries.GROUP_ACTIVITY, listOf<String>(
-                    ActivitySummaryEntries.DISTANCE_METERS,
-                    ActivitySummaryEntries.STEPS,
-                    ActivitySummaryEntries.STEP_RATE_SUM,
                     ActivitySummaryEntries.ACTIVE_SECONDS,
+                    ActivitySummaryEntries.DISTANCE_METERS,
                     ActivitySummaryEntries.CALORIES_BURNT,
+                    ActivitySummaryEntries.HR_AVG,
+                    ActivitySummaryEntries.STEPS,
                     ActivitySummaryEntries.STRIDE_TOTAL,
+                    ActivitySummaryEntries.STEP_RATE_SUM,
+                    ActivitySummaryEntries.STANDING_TIME,
+                    ActivitySummaryEntries.STANDING_COUNT,
+                    ActivitySummaryEntries.PACE_AVG_SECONDS_KM,
+                    ActivitySummaryEntries.SPEED_AVG,
+                    ActivitySummaryEntries.SPEED_AVG,
+                    ActivitySummaryEntries.ELEVATION_GAIN,
+                    ActivitySummaryEntries.ASCENT_METERS,
+                )
+            )
+
+            // Sets
+            put(ActivitySummaryEntries.SETS, listOf<String>())
+
+            // Intervals
+            put(ActivitySummaryEntries.GROUP_INTERVALS, listOf<String>())
+
+            // Heart rate
+            put(
+                ActivitySummaryEntries.GROUP_HEART_RATE, listOf<String>(
                     ActivitySummaryEntries.HR_AVG,
                     ActivitySummaryEntries.HR_MAX,
                     ActivitySummaryEntries.HR_MIN,
-                    ActivitySummaryEntries.STRIDE_AVG,
-                    ActivitySummaryEntries.STRIDE_MAX,
-                    ActivitySummaryEntries.STRIDE_MIN,
-                    ActivitySummaryEntries.STEP_LENGTH_AVG,
-                    ActivitySummaryEntries.STANDING_TIME,
-                    ActivitySummaryEntries.STANDING_COUNT,
-                    ActivitySummaryEntries.AVG_POWER,
-                    ActivitySummaryEntries.MAX_POWER,
-                    ActivitySummaryEntries.NORMALIZED_POWER,
+                )
+            )
+
+            // Heart rate zones
+            put(
+                ActivitySummaryEntries.GROUP_HEART_RATE_ZONES, listOf<String>(
+                    ActivitySummaryEntries.HR_ZONE_NA,
+                    ActivitySummaryEntries.HR_ZONE_WARM_UP,
+                    ActivitySummaryEntries.HR_ZONE_FAT_BURN,
+                    ActivitySummaryEntries.HR_ZONE_EASY,
+                    ActivitySummaryEntries.HR_ZONE_AEROBIC,
+                    ActivitySummaryEntries.HR_ZONE_ANAEROBIC,
+                    ActivitySummaryEntries.HR_ZONE_THRESHOLD,
+                    ActivitySummaryEntries.HR_ZONE_EXTREME,
+                    ActivitySummaryEntries.HR_ZONE_MAXIMUM,
                 )
             )
 
@@ -104,6 +136,26 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.FLAT_DISTANCE,
                     ActivitySummaryEntries.ELEVATION_GAIN,
                     ActivitySummaryEntries.ELEVATION_LOSS,
+                )
+            )
+
+            // Power
+            put(
+                ActivitySummaryEntries.GROUP_POWER, listOf<String>(
+                    ActivitySummaryEntries.CYCLING_POWER_AVERAGE,
+                    ActivitySummaryEntries.CYCLING_POWER_MIN,
+                    ActivitySummaryEntries.CYCLING_POWER_MAX,
+                    ActivitySummaryEntries.AVG_POWER,
+                    ActivitySummaryEntries.MAX_POWER,
+                    ActivitySummaryEntries.MAX_POWER_SEATING,
+                    ActivitySummaryEntries.MAX_POWER_STANDING,
+                    ActivitySummaryEntries.NORMALIZED_POWER,
+                    ActivitySummaryEntries.AVG_LEFT_POWER_PHASE,
+                    ActivitySummaryEntries.AVG_LEFT_POWER_PHASE_PEAK,
+                    ActivitySummaryEntries.AVG_RIGHT_POWER_PHASE,
+                    ActivitySummaryEntries.AVG_RIGHT_POWER_PHASE_PEAK,
+                    ActivitySummaryEntries.AVG_POWER_SEATING,
+                    ActivitySummaryEntries.AVG_POWER_STANDING,
                 )
             )
 
@@ -207,21 +259,6 @@ object ActivitySummaryGroup {
                 )
             )
 
-            // Heart rate zones
-            put(
-                ActivitySummaryEntries.GROUP_HEART_RATE_ZONES, listOf<String>(
-                    ActivitySummaryEntries.HR_ZONE_NA,
-                    ActivitySummaryEntries.HR_ZONE_WARM_UP,
-                    ActivitySummaryEntries.HR_ZONE_FAT_BURN,
-                    ActivitySummaryEntries.HR_ZONE_EASY,
-                    ActivitySummaryEntries.HR_ZONE_AEROBIC,
-                    ActivitySummaryEntries.HR_ZONE_ANAEROBIC,
-                    ActivitySummaryEntries.HR_ZONE_THRESHOLD,
-                    ActivitySummaryEntries.HR_ZONE_EXTREME,
-                    ActivitySummaryEntries.HR_ZONE_MAXIMUM,
-                )
-            )
-
             // Diving
             put(
                 ActivitySummaryEntries.GROUP_DIVING, listOf<String>(
@@ -236,8 +273,21 @@ object ActivitySummaryGroup {
                 )
             )
 
-            // Sets
-            put(ActivitySummaryEntries.SETS, listOf<String>())
+            // Other
+            put(
+                ActivitySummaryEntries.GROUP_OTHER, listOf<String>(
+                    ActivitySummaryEntries.RESPIRATION_AVG,
+                    ActivitySummaryEntries.RESPIRATION_MIN,
+                    ActivitySummaryEntries.RESPIRATION_MAX,
+                    ActivitySummaryEntries.ESTIMATED_SWEAT_LOSS,
+                    ActivitySummaryEntries.CALORIES_ACTIVE,
+                    ActivitySummaryEntries.CALORIES_RESTING,
+                    ActivitySummaryEntries.STRIDE_AVG,
+                    ActivitySummaryEntries.STRIDE_MAX,
+                    ActivitySummaryEntries.STRIDE_MIN,
+                    ActivitySummaryEntries.STEP_LENGTH_AVG,
+                )
+            )
         }
     }
 }

@@ -12,7 +12,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueForm
 public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
     private final Object value;
     private final String unit;
-    private final int columnSpan;
 
     public ActivitySummarySimpleEntry(final Object value, final String unit) {
         this(null, value, unit);
@@ -35,11 +34,6 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
 
     public String getUnit() {
         return unit;
-    }
-
-    @Override
-    public int getColumnSpan() {
-        return columnSpan;
     }
 
     @Override

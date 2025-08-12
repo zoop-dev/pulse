@@ -5,9 +5,11 @@ import android.widget.LinearLayout;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueFormatter;
 
 public abstract class ActivitySummaryEntry {
-    private final String group;
+    private String group;
 
-    public ActivitySummaryEntry(final String group) {
+    protected int columnSpan;
+
+    public ActivitySummaryEntry(String group) {
         this.group = group;
     }
 
@@ -15,7 +17,17 @@ public abstract class ActivitySummaryEntry {
         return group;
     }
 
-    public abstract int getColumnSpan();
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public int getColumnSpan() {
+        return columnSpan;
+    }
+
+    public void setColumnSpan(int columnSpan) {
+        this.columnSpan = columnSpan;
+    }
 
     public abstract void populate(final String key,
                                   final LinearLayout linearLayout,
