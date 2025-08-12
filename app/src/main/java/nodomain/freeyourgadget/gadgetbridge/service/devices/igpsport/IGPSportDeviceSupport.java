@@ -720,6 +720,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
         super.setContext(gbDevice, btAdapter, context);
         this.mediaManager = new MediaManager(context);
+        this.downloadManager.setContext(context);
     }
 
     @Override

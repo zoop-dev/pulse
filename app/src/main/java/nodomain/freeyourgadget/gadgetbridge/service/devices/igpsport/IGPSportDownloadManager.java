@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminTimeUtils.garminTimestampToJavaMillis;
 
+import android.content.Context;
+
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.slf4j.Logger;
@@ -43,10 +45,11 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.FileDownload;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.fit.FitAsyncProcessor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.fit.FitImporter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification;
 
 
 public class IGPSportDownloadManager {
@@ -59,13 +62,21 @@ public class IGPSportDownloadManager {
         private Boolean downloadInProgress = false;
         private Boolean firstChunk = true;
         private FitImporter fitImporter;
+        private GBProgressNotification transferNotification;
+        private List<File> filesToProcess = new ArrayList<>();
         int pbSize=0;
+
 
 
         public IGPSportDownloadManager(IGPSportDeviceSupport support) {
             this.support = support;
+
             recievingDataBuffer = new ByteArrayOutputStream();
 
+        }
+
+        public void setContext(Context context) {
+            this.transferNotification = new GBProgressNotification(context, GB.NOTIFICATION_CHANNEL_ID_TRANSFER);
         }
 
         public void setFilesAvaliable(byte[] pbData) throws InvalidProtocolBufferException {
@@ -76,6 +87,7 @@ public class IGPSportDownloadManager {
             }
 
             LOG.info("Found " + message.size() + " files");
+            filesToProcess.clear();
             syncNextFile();
 
         }
@@ -83,11 +95,26 @@ public class IGPSportDownloadManager {
         public void syncNextFile() {
             if (avaliableActivityFiles.isEmpty()) {
                 LOG.info("No files to sync");
-                if (support.getDevice().isBusy() ) {
-                    support.getDevice().unsetBusyTask();
-                    GB.signalActivityDataFinish(support.getDevice());
-                    support.getDevice().sendDeviceUpdateIntent(getContext());
-                }
+
+                transferNotification.start(R.string.busy_task_processing_files, 0, filesToProcess.size());
+
+                final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), support.getDevice());
+                fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
+                    @Override
+                    public void onProgress(final int i) {
+                        transferNotification.setTotalProgress(i);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        support.getDevice().unsetBusyTask();
+                        GB.signalActivityDataFinish(support.getDevice());
+                        transferNotification.finish();
+                        support.getDevice().sendDeviceUpdateIntent(getContext());
+                    }
+                });
+
+
                 return;
             } else {
                 if (!support.getDevice().isBusy() ) {
@@ -117,7 +144,7 @@ public class IGPSportDownloadManager {
             recievingDataBuffer.reset();
             downloadInProgress = true;
             firstChunk = true;
-            fitImporter = new FitImporter(support.getContext(), support.getDevice());
+
         }
 
         public void addData(byte[] data) {
@@ -151,10 +178,8 @@ public class IGPSportDownloadManager {
                     FileDownload.file_download pbInfo = FileDownload.file_download.parseFrom(pbData);
                     FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 20+4+pbSize, pbInfo.getFileSize()), outputFile);
                     outputFile.setLastModified(garminTimestampToJavaMillis(downloadingFile.getGarminTimeStamp()));
-                    fitImporter.importFile(outputFile);
+                    filesToProcess.add(outputFile);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (FitParseException e) {
                     throw new RuntimeException(e);
                 }
 
