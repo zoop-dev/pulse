@@ -21,6 +21,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.IGPSportDeviceSupport;
 
@@ -51,6 +53,13 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return IGPSportDeviceSupport.class;
     }
+
+    @Nullable
+    @Override
+    public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
+        return new IGPSportWorkoutParser(context);
+    }
+
 
     @Override
     public int getBondingStyle(){

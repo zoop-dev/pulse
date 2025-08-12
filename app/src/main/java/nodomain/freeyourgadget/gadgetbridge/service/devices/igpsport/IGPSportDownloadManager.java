@@ -43,6 +43,8 @@ import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.FileDownload;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.fit.FitImporter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -56,12 +58,14 @@ public class IGPSportDownloadManager {
         private FileInfo downloadingFile;
         private Boolean downloadInProgress = false;
         private Boolean firstChunk = true;
+        private FitImporter fitImporter;
         int pbSize=0;
 
 
         public IGPSportDownloadManager(IGPSportDeviceSupport support) {
             this.support = support;
             recievingDataBuffer = new ByteArrayOutputStream();
+
         }
 
         public void setFilesAvaliable(byte[] pbData) throws InvalidProtocolBufferException {
@@ -113,7 +117,7 @@ public class IGPSportDownloadManager {
             recievingDataBuffer.reset();
             downloadInProgress = true;
             firstChunk = true;
-
+            fitImporter = new FitImporter(support.getContext(), support.getDevice());
         }
 
         public void addData(byte[] data) {
@@ -147,7 +151,10 @@ public class IGPSportDownloadManager {
                     FileDownload.file_download pbInfo = FileDownload.file_download.parseFrom(pbData);
                     FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 20+4+pbSize, pbInfo.getFileSize()), outputFile);
                     outputFile.setLastModified(garminTimestampToJavaMillis(downloadingFile.getGarminTimeStamp()));
+                    fitImporter.importFile(outputFile);
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (FitParseException e) {
                     throw new RuntimeException(e);
                 }
 
