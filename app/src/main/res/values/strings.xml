@@ -3923,6 +3923,7 @@
     <string name="backup_restore_import_complete">Import complete</string>
     <string name="backup_restore_error_export">Export to zip failed</string>
     <string name="backup_restore_error_import">Import from zip failed</string>
+    <string name="error_message">Error: %s</string>
     <string name="backup_restore_abort_title">Abort</string>
     <string name="backup_restore_abort_export_confirmation">Abort the export? The partial zip file will be deleted.</string>
     <string name="backup_restore_abort_import_confirmation">Abort the import? This may lead to a corrupted or inconsistent database.</string>

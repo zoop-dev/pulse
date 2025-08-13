@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityBackupRestoreProgressBinding;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.AbstractZipBackupJob;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.ZipBackupCallback;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.ZipBackupExportJob;
@@ -55,7 +57,8 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_backup_restore_progress);
+        final ActivityBackupRestoreProgressBinding binding = ActivityBackupRestoreProgressBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         final Bundle extras = getIntent().getExtras();
         if (extras == null) {
@@ -78,10 +81,10 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
             return;
         }
 
-        final TextView backupRestoreHint = findViewById(R.id.backupRestoreHint);
-        final ProgressBar backupRestoreProgressBar = findViewById(R.id.backupRestoreProgressBar);
-        final TextView backupRestoreProgressText = findViewById(R.id.backupRestoreProgressText);
-        final TextView backupRestoreProgressPercentage = findViewById(R.id.backupRestoreProgressPercentage);
+        final TextView backupRestoreHint = binding.backupRestoreHint;
+        final ProgressBar backupRestoreProgressBar = binding.backupRestoreProgressBar;
+        final TextView backupRestoreProgressText = binding.backupRestoreProgressText;
+        final TextView backupRestoreProgressPercentage = binding.backupRestoreProgressPercentage;
 
         final ZipBackupCallback zipBackupCallback = new ZipBackupCallback() {
             @Override
@@ -144,7 +147,8 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
                         break;
                 }
 
-                backupRestoreProgressText.setText(errorMessage);
+                backupRestoreProgressText.setText(getString(R.string.error_message, errorMessage));
+                backupRestoreProgressText.setTypeface(backupRestoreProgressText.getTypeface(), Typeface.BOLD);
                 backupRestoreProgressPercentage.setVisibility(View.GONE);
 
                 if ("export".equals(action)) {
