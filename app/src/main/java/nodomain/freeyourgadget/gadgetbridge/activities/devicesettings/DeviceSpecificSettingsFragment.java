@@ -418,7 +418,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             }
             DeviceSettingsUtils.sortListPreference(
                     languageListPreference,
-                    supportedLanguages.length > 0 && "auto".equals(supportedLanguages[0])
+                    (supportedLanguages != null) && supportedLanguages.length > 0 && "auto".equals(supportedLanguages[0])
             );
         }
 
