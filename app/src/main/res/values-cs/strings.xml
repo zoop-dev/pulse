@@ -3948,4 +3948,15 @@
     <string name="connect">Připojit</string>
     <string name="pref_title_screen_on_on_notifications_timeout">Čas zobrazení oznámení</string>
     <string name="pref_summary_screen_on_on_notifications_timeout">Počkat %s před zhasnutím displeje po zobrazení oznámení</string>
+    <string name="sound_and_vibration">Zvuk + vibrace</string>
+    <string name="activityTotalAscent">Celkové stoupání</string>
+    <string name="activityTotalDescent">Celkové klesání</string>
+    <string name="unset">Zrušit nastavení</string>
+    <string name="reminder">Připomínka</string>
+    <string name="alarm_label_appointment">Schůzka</string>
+    <string name="alarm_label_training">Trénink</string>
+    <string name="alarm_label_class">Třída</string>
+    <string name="alarm_label_meditate">Meditace</string>
+    <string name="pref_new_sync_protocol_title">Nový synchronizační protokol</string>
+    <string name="pref_new_sync_protocol_summary">Povolte, pokud nejsou načítány některé informace. Experimentální a potenciálně nestabilní.</string>
 </resources>
