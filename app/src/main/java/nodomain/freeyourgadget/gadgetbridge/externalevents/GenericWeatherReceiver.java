@@ -1,5 +1,5 @@
-/*  Copyright (C) 2022-2024 Daniele Gobbetti, Enrico Brambilla, José Rebelo,
-    TylerWilliamson
+/*  Copyright (C) 2022-2025 Daniele Gobbetti, Enrico Brambilla, José Rebelo,
+    TylerWilliamson, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -36,12 +36,14 @@ import java.util.Objects;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GenericWeatherReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(GenericWeatherReceiver.class);
 
     public final static String ACTION_GENERIC_WEATHER = "nodomain.freeyourgadget.gadgetbridge.ACTION_GENERIC_WEATHER";
+    public final static String EXTRA_WEATHER_GZ = "WeatherGz";
     public final static String EXTRA_WEATHER_JSON = "WeatherJson";
     public final static String EXTRA_WEATHER_SECONDARY_JSON = "WeatherSecondaryJson";
 
@@ -63,23 +65,38 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
             return;
         }
 
-        if (!bundle.containsKey(EXTRA_WEATHER_JSON)) {
-            LOG.warn("Bundle key {} not found", EXTRA_WEATHER_JSON);
-            return;
-        }
-
         try {
-            final JSONObject primaryWeatherJson = new JSONObject(Objects.requireNonNull(bundle.getString(EXTRA_WEATHER_JSON)));
-            final WeatherSpec primaryWeather = weatherFromJson(primaryWeatherJson);
-
             final ArrayList<WeatherSpec> weathers = new ArrayList<>();
-            weathers.add(primaryWeather);
 
-            if (bundle.containsKey(EXTRA_WEATHER_SECONDARY_JSON)) {
-                final JSONArray secondaryWeatherJson = new JSONArray(bundle.getString(EXTRA_WEATHER_SECONDARY_JSON, "[]"));
+            if (bundle.containsKey(EXTRA_WEATHER_GZ)) {
+                LOG.debug("use extra {}", EXTRA_WEATHER_GZ);
+                byte[] compressed = bundle.getByteArray(EXTRA_WEATHER_GZ);
+                String json = CompressionUtils.INSTANCE.gunzipUtf8String(compressed);
 
-                for (int i = 0; i < secondaryWeatherJson.length(); i++) {
-                    weathers.add(weatherFromJson(secondaryWeatherJson.getJSONObject(i)));
+                if (json != null && json.length() > 1){
+                    JSONArray weather = new JSONArray(json);
+                    for (int i = 0; i < weather.length(); i++) {
+                        weathers.add(weatherFromJson(weather.getJSONObject(i)));
+                    }
+                }
+            } else {
+                LOG.debug("use extra {}", EXTRA_WEATHER_JSON);
+                if (!bundle.containsKey(EXTRA_WEATHER_JSON)) {
+                    LOG.warn("Bundle key {} not found", EXTRA_WEATHER_JSON);
+                    return;
+                }
+
+                final JSONObject primaryWeatherJson = new JSONObject(Objects.requireNonNull(bundle.getString(EXTRA_WEATHER_JSON)));
+                final WeatherSpec primaryWeather = weatherFromJson(primaryWeatherJson);
+
+                weathers.add(primaryWeather);
+
+                if (bundle.containsKey(EXTRA_WEATHER_SECONDARY_JSON)) {
+                    final JSONArray secondaryWeatherJson = new JSONArray(bundle.getString(EXTRA_WEATHER_SECONDARY_JSON, "[]"));
+
+                    for (int i = 0; i < secondaryWeatherJson.length(); i++) {
+                        weathers.add(weatherFromJson(secondaryWeatherJson.getJSONObject(i)));
+                    }
                 }
             }
 
