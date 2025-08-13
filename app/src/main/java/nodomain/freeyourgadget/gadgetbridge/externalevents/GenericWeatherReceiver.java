@@ -101,6 +101,11 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
             }
 
             LOG.info("Got generic weather for {} locations", weathers.size());
+
+            // try to avoid TransactionTooLargeException in DeviceService
+            bundle.clear();
+            intent.replaceExtras((Bundle)null);
+
             Weather.setWeatherSpec(weathers);
             GBApplication.deviceService().onSendWeather(weathers);
         } catch (final Exception e) {
