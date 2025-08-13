@@ -966,7 +966,7 @@
     <string name="about_links">Linki</string>
     <string name="about_additional_contributions">Dziękujemy wszystkim nie notowanym na liście współtwórcom za udostępnienie kodu, tłumaczenia, wsparcie, pomysły, motywację, zgłoszenia błędów, pieniądze… ✊</string>
     <string name="about_core_team_title">Zespół główny (w kolejności od pierwszego wkładu w kod aplikacji)</string>
-    <string name="about_description_generic">Niewymagający chmury wolny zamiennik dla zamknięto źródłowych aplikacji dostarczanych przez producentów gadżetów na system Android.</string>
+    <string name="about_description_generic">Niewymagający chmury otwarty zamiennik dla zamknięto-źródłowych aplikacji dostarczanych przez producentów gadżetów na system Android.</string>
     <string name="activity_summary_edit_name_title">Edytuj etykietę</string>
     <string name="activity_type_pingpong">Ping-pong</string>
     <string name="activity_type_cricket">Krykiet</string>
@@ -1290,7 +1290,7 @@
     <string name="pref_title_equalizer_dynamic">Dynamiczne</string>
     <string name="toast_app_must_not_be_selected">Aplikacja nie może być wybrana, aby mogła być skonfigurowana</string>
     <string name="left_earbud">Lewa słuchawka</string>
-    <string name="battery_case">Etui ładujące</string>
+    <string name="battery_case">Etui zasilające</string>
     <string name="right_earbud">Prawa słuchawka</string>
     <string name="sony_automatic_power_off_1_hour">1 godzina</string>
     <string name="sony_equalizer_band_400">400</string>
