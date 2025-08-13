@@ -23,7 +23,6 @@ import android.net.Uri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -153,17 +152,15 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
     private static void exportDatabase(final ZipOutputStream zipOut, final Context context) throws IOException {
         LOG.debug("Exporting database");
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ZipEntry zipEntry = new ZipEntry(DATABASE_FILENAME);
+        zipOut.putNextEntry(zipEntry);
+
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             final DBHelper helper = new DBHelper(context);
-            helper.exportDB(dbHandler, baos);
+            helper.exportDB(dbHandler, zipOut);
         } catch (final Exception e) {
             throw new IOException("Failed to export database", e);
         }
-
-        final ZipEntry zipEntry = new ZipEntry(DATABASE_FILENAME);
-        zipOut.putNextEntry(zipEntry);
-        zipOut.write(baos.toByteArray());
     }
 
     /**
