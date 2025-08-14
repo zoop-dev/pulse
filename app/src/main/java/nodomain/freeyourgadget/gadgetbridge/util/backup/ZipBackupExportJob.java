@@ -215,9 +215,10 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
         LOG.trace("Exporting file: {}", relativePath);
 
         final ZipEntry zipEntry = new ZipEntry(EXTERNAL_FILES_FOLDER + "/" + relativePath);
+        zipEntry.setTime(file.lastModified());
         zipOut.putNextEntry(zipEntry);
 
-        try (final InputStream in = new FileInputStream(new File(externalFilesDir, relativePath))) {
+        try (final InputStream in = new FileInputStream(file)) {
             int read;
             while ((read = in.read(copyBuffer)) > 0) {
                 zipOut.write(copyBuffer, 0, read);

@@ -124,6 +124,12 @@ public class ZipBackupImportJob extends AbstractZipBackupJob {
                     failedFiles.add(externalFile.getName());
                 }
 
+                final long zipEntryTime = externalFile.getTime();
+                if (zipEntryTime > 0) {
+                    //noinspection ResultOfMethodCallIgnored
+                    targetExternalFile.setLastModified(zipEntryTime);
+                }
+
                 // 10% to 75%
                 final int progress = (int) (10 + 65 * (i / (float) externalFiles.size()));
                 updateProgress(progress, R.string.backup_restore_importing_files_i_of_n, i + 1, externalFiles.size());
