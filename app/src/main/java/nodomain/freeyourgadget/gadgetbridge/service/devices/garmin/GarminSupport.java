@@ -551,8 +551,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     @Override
-    public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) { //todo: find the closest one relative to the requested lat/long
-        sendWeatherConditions(weatherSpecs.get(0));
+    public void onSendWeather() { //todo: find the closest one relative to the requested lat/long
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
+        sendWeatherConditions(weatherSpec);
     }
 
     private void sendOutgoingMessage(final String taskName, final GFDIMessage message) {

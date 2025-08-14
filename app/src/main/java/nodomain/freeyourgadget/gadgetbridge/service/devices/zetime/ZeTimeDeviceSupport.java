@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -592,8 +593,12 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
         byte[] weather = new byte[weatherSpec.getLocation().getBytes(StandardCharsets.UTF_8).length + 26]; // 26 bytes for weatherdata and overhead
         weather[0] = ZeTimeConstants.CMD_PREAMBLE;
         weather[1] = ZeTimeConstants.CMD_PUSH_WEATHER_DATA;

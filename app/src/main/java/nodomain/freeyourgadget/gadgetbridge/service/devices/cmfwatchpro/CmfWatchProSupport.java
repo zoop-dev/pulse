@@ -71,6 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -801,8 +802,12 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     }
 
     @Override
-    public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) {
-        final WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
         // TODO consider adjusting the condition code for clear/sunny so "clear" at night doesn't show a sunny icon (perhaps 23 decimal)?
         // Each weather entry takes up 9 bytes
         // There are 7 of those weather entries - 7*9 bytes

@@ -144,7 +144,6 @@ public interface DeviceService extends EventHandler {
     String EXTRA_CONNECT_FIRST_TIME = "connect_first_time";
     String EXTRA_BOOLEAN_ENABLE = "enable_realtime_steps";
     String EXTRA_INTERVAL_SECONDS = "interval_seconds";
-    String EXTRA_WEATHER = "weather";
     String EXTRA_RECORDED_DATA_TYPES = "data_types";
     String EXTRA_FM_FREQUENCY = "fm_frequency";
     String EXTRA_LED_COLOR = "led_color";

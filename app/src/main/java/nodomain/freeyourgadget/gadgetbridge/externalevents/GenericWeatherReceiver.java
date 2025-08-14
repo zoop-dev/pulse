@@ -107,7 +107,7 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
             intent.replaceExtras((Bundle)null);
 
             Weather.setWeatherSpec(weathers);
-            GBApplication.deviceService().onSendWeather(weathers);
+            GBApplication.deviceService().onSendWeather();
         } catch (final Exception e) {
             GB.toast("Gadgetbridge received broken or incompatible weather data", Toast.LENGTH_SHORT, GB.ERROR, e);
         }

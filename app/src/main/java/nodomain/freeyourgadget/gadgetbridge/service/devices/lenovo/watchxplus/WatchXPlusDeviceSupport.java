@@ -73,6 +73,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -1213,8 +1214,12 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
         try {
             TransactionBuilder builder = performInitialized("setWeather");
             int currentTemp;

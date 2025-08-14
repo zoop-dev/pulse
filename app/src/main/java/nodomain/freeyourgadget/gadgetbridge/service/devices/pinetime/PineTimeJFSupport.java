@@ -90,6 +90,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
@@ -1015,8 +1016,12 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
 
         if (this.firmwareVersionMajor < 1 || (this.firmwareVersionMajor == 1 && this.firmwareVersionMinor <= 7)) {
             // Not supported

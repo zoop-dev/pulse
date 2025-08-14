@@ -178,7 +178,7 @@ public abstract class GBDeviceProtocol {
     }
 
     @Nullable
-    public byte[] encodeSendWeather(WeatherSpec weatherSpec) {
+    public byte[] encodeSendWeather() {
         return null;
     }
 

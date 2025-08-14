@@ -1983,35 +1983,26 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             }
     }
 
-    private void handleWeather(JSONObject json)
-    {
-        if (!json.has("v")) {
-            handleWeatherV1(Weather.getWeatherSpecs());
+    private void handleWeather(final JSONObject json) {
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
             return;
         }
-        try {
-            int version = json.getInt("v");
-            boolean forecast = false;
-            if (json.has("f")) {
-                forecast = json.getBoolean("f");
-            }
-            if (version == 1) {
-                handleWeatherV1(Weather.getWeatherSpecs());
-            } else if (version == 2) {
-                handleWeatherV2(Weather.getWeatherSpecs(), forecast);
-            }
-        } catch (JSONException e) {
-            LOG.info("JSONException: " + e.getLocalizedMessage());
+
+        final int version = json.optInt("v", 1);
+        switch (version) {
+            case 1:
+                handleWeatherV1(weatherSpec);
+                break;
+            case 2:
+                final boolean forecast = json.optBoolean("f", false);
+                handleWeatherV2(weatherSpec, forecast);
+                break;
         }
     }
 
-    private void handleWeatherV1(List<WeatherSpec> weatherSpecs)
-    {
-        if (weatherSpecs.isEmpty()) {
-            return;
-        }
-
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+    private void handleWeatherV1(final WeatherSpec weatherSpec) {
         try {
             JSONObject o = new JSONObject();
             o.put("t", "weather");
@@ -2036,13 +2027,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
     }
 
-    private void handleWeatherV2(List<WeatherSpec> weatherSpecs, boolean includeForecast)
-    {
-        if (weatherSpecs.isEmpty()) {
-            return;
-        }
-
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+    private void handleWeatherV2(final WeatherSpec weatherSpec, final boolean includeForecast) {
         try {
             JSONObject o = new JSONObject();
             o.put("t", "weather");
@@ -2182,8 +2167,13 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        handleWeatherV1(weatherSpecs);
+    public void onSendWeather() {
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
+        handleWeatherV1(weatherSpec);
     }
 
     public Bitmap textToBitmap(String text) {

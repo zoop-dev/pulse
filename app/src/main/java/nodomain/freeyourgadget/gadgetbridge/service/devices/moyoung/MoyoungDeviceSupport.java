@@ -447,13 +447,12 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (packetType == MoyoungConstants.CMD_NOTIFY_WEATHER_CHANGE) {
             LOG.info("Will transmit cached weather (if any) since the watch asks for it");
             if (Weather.getWeatherSpec() != null) {
-                final ArrayList<WeatherSpec> specs = new ArrayList<>(Weather.getWeatherSpecs());
-                GBApplication.deviceService().onSendWeather(specs);
+                onSendWeather();
             }
             return true;
         }
 
-        for (MoyoungSetting setting : queriedSettings) {
+        for (MoyoungSetting<?> setting : queriedSettings) {
             if (setting.cmdQuery == packetType) {
                 Object value = setting.decode(payload);
                 onReadConfigurationDone(setting, value, payload);
@@ -1982,9 +1981,13 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
+    public void onSendWeather() {
         try {
-            WeatherSpec weatherSpec = weatherSpecs.get(0);
+            WeatherSpec weatherSpec = Weather.getWeatherSpec();
+            if (weatherSpec == null) {
+                LOG.warn("No weather found in singleton");
+                return;
+            }
             TransactionBuilder builder = performInitialized("onSendWeather");
 
             // Weather today packet

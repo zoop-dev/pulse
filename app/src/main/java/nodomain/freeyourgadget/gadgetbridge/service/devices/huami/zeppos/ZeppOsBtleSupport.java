@@ -46,7 +46,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
@@ -344,8 +343,8 @@ public class ZeppOsBtleSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     @Override
-    public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) {
-        zeppOsSupport.onSendWeather(weatherSpecs);
+    public void onSendWeather() {
+        zeppOsSupport.onSendWeather();
     }
 
     @Override

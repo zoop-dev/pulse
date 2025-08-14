@@ -2543,8 +2543,13 @@ public class HuaweiSupportProvider {
         return huaweiWeatherManager.openWeatherMapConditionCodeToHuaweiIcon(conditionCode);
     }
 
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        huaweiWeatherManager.sendWeather(weatherSpecs.get(0));
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
+        huaweiWeatherManager.sendWeather(weatherSpec);
     }
 
     public void onSetGpsLocation(Location location) {

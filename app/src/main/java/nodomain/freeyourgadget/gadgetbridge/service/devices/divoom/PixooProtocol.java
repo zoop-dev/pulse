@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
@@ -312,7 +313,13 @@ public class PixooProtocol extends GBDeviceProtocol {
 
 
     @Override
-    public byte[] encodeSendWeather(WeatherSpec weatherSpec) {
+    public byte[] encodeSendWeather() {
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return null;
+        }
+
         byte pixooWeatherCode = 0;
         if (weatherSpec.getCurrentConditionCode() >= 200 && weatherSpec.getCurrentConditionCode() <= 299) {
             pixooWeatherCode = 5;

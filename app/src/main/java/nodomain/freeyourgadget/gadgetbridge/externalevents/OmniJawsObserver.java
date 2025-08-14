@@ -140,7 +140,7 @@ public class OmniJawsObserver extends ContentObserver {
 
                 ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
                 Weather.setWeatherSpec(weatherSpecs);
-                GBApplication.deviceService().onSendWeather(weatherSpecs);
+                GBApplication.deviceService().onSendWeather();
 
             } finally {
                 c.close();

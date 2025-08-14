@@ -120,6 +120,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsCannedMessagesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsWorldClocksService;
@@ -2848,7 +2849,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
+    public void onSendWeather() {
         final DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
         if (!coordinator.supportsWeather(getDevice())) {
             return;
@@ -2865,7 +2866,11 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             supportsConditionString = false;
         }
 
-        final WeatherSpec weatherSpec = weatherSpecs.get(0);
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
 
         MiBandConst.DistanceUnit unit = HuamiCoordinator.getDistanceUnit();
         int tz_offset_hours = SimpleTimeZone.getDefault().getOffset(weatherSpec.getTimestamp() * 1000L) / (1000 * 60 * 60);

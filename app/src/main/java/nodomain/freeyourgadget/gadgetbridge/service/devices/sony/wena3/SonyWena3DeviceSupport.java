@@ -599,8 +599,12 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
         if(weatherSpec.getForecasts().size() < 4) return;
 
         ArrayList<WeatherDay> days = new ArrayList<>();

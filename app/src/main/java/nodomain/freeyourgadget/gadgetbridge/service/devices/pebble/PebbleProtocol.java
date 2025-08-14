@@ -427,7 +427,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         mAppMessageHandlers.put(UUID_WEATHER, new AppMessageHandler(UUID_WEATHER, PebbleProtocol.this){
             @Override
             public GBDeviceEvent[] onAppStart() {
-                return new GBDeviceEvent[] {new GBDeviceEventSendBytes(encodeSendWeather(Weather.getWeatherSpec()))};
+                return new GBDeviceEvent[] {new GBDeviceEventSendBytes(encodeSendWeather())};
             }
         });
         if (!((PebbleCoordinator) device.getDeviceCoordinator()).isBackgroundJsEnabled(device)) {
@@ -1121,7 +1121,13 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
 
     @Override
-    public byte[] encodeSendWeather(WeatherSpec weatherSpec) {
+    public byte[] encodeSendWeather() {
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return null;
+        }
+
         byte[] forecastProtocol = null;
         byte[] watchfaceProtocol = null;
         int length = 0;

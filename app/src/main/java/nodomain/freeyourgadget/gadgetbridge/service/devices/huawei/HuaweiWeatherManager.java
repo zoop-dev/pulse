@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
@@ -277,8 +276,8 @@ public class HuaweiWeatherManager {
     public void handleAsyncMessage(HuaweiPacket response) {
         if (response.getTlv().getInteger(0x7f, -1) == 0x000186AA) {
             // Send weather
-            final ArrayList<WeatherSpec> specs = new ArrayList<>(nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpecs());
-            if (specs.isEmpty()) {
+            final WeatherSpec weatherSpec = nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpec();
+            if (weatherSpec == null) {
                 LOG.debug("Weather specs empty, returning that weather is disabled.");
                 try {
                     new SendWeatherErrorRequest(supportProvider, Weather.ErrorCode.WEATHER_DISABLED).doPerform();
@@ -287,7 +286,7 @@ public class HuaweiWeatherManager {
                 }
                 return;
             }
-            this.sendWeather(specs.get(0));
+            this.sendWeather(weatherSpec);
             return;
         }
 

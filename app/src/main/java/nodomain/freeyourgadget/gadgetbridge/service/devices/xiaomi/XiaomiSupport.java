@@ -58,7 +58,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
@@ -393,8 +392,8 @@ public class XiaomiSupport extends AbstractDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) {
-        weatherService.onSendWeather(weatherSpecs);
+    public void onSendWeather() {
+        weatherService.onSendWeather();
     }
 
     @Override

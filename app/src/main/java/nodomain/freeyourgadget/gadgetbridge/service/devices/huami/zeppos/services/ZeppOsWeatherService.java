@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 
@@ -56,8 +56,12 @@ public class ZeppOsWeatherService extends AbstractZeppOsService {
         }
     }
 
-    public void onSendWeather(final ArrayList<WeatherSpec> weatherSpecs) {
-        final WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec == null) {
+            LOG.warn("No weather found in singleton");
+            return;
+        }
 
         // Weather is not sent directly to the bands, they send HTTP requests for each location.
         // When we have a weather update, set the default location to that location on the band.

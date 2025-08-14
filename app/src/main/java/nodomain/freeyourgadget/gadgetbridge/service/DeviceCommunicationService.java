@@ -104,7 +104,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLEScanService;
 import nodomain.freeyourgadget.gadgetbridge.service.receivers.AutoConnectIntervalReceiver;
@@ -1162,10 +1161,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 break;
             }
             case ACTION_SEND_WEATHER: {
-                ArrayList<WeatherSpec> weatherSpecs = (ArrayList<WeatherSpec>) intentCopy.getSerializableExtra(EXTRA_WEATHER);
-                if (weatherSpecs != null && !weatherSpecs.isEmpty()) {
-                    deviceSupport.onSendWeather(weatherSpecs);
-                }
+                deviceSupport.onSendWeather();
                 break;
             }
             case ACTION_SET_LED_COLOR:

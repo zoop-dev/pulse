@@ -44,7 +44,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.Contact
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.VibrationKind
@@ -866,7 +865,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         builder.queue()
     }
 
-    override fun onSendWeather(weatherSpecs: ArrayList<WeatherSpec?>?) {
+    override fun onSendWeather() {
         // TODO onSendWeather
     }
 

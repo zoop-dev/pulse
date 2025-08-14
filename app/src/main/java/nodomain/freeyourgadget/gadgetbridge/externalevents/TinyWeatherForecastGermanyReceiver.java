@@ -44,7 +44,7 @@ public class TinyWeatherForecastGermanyReceiver extends BroadcastReceiver {
                         ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
                         weatherSpec.setTimestamp((int) (System.currentTimeMillis() / 1000));
                         Weather.setWeatherSpec(weatherSpecs);
-                        GBApplication.deviceService().onSendWeather(weatherSpecs);
+                        GBApplication.deviceService().onSendWeather();
                     }
                 } catch (Exception e) {
                     GB.toast("Gadgetbridge received broken or incompatible weather data", Toast.LENGTH_SHORT, GB.ERROR, e);

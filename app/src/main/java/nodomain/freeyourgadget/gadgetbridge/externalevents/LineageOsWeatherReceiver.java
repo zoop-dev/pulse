@@ -205,7 +205,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
             }
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
             Weather.setWeatherSpec(weatherSpecs);
-            GBApplication.deviceService().onSendWeather(weatherSpecs);
+            GBApplication.deviceService().onSendWeather();
         } else {
             LOG.info("request has returned null for WeatherInfo");
         }

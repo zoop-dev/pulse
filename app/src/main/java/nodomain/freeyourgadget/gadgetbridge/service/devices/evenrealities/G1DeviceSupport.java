@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
@@ -448,9 +447,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        // onSetTimeAndWeather() fetches the weather directly from the global state, so no need to
-        // pass in the weatherSpecs.
+    public void onSendWeather() {
         onSetTimeOrWeather();
     }
 

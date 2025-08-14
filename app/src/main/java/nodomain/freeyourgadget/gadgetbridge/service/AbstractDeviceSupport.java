@@ -49,9 +49,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 // TODO: support option for a single reminder notification when notifications could not be delivered?
@@ -566,13 +566,11 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
 
     /**
      * If the device can receive weather information, this method can be
-     * overridden and implemented by the device support class. It's guaranteed
-     * that there is always at least one weatherSpec, with the first being the
-     * primary weather (not necessarily current location).
-     * @param weatherSpecs weather information
+     * overridden and implemented by the device support class. Support classes
+     * should use {@link Weather#getWeatherSpecs()} to obtain the list of WeatherSpecs.
      */
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
+    public void onSendWeather() {
 
     }
 

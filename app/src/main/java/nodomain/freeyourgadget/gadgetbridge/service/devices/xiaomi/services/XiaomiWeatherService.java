@@ -20,6 +20,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -408,11 +409,12 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
         return getDevicePrefs().getBoolean(XiaomiPreferences.FEAT_MULTIPLE_WEATHER_LOCATIONS, false);
     }
 
-    public void onSendWeather(@NonNull final List<WeatherSpec> weatherSpecList) {
+    public void onSendWeather() {
+        final List<@NotNull WeatherSpec> weatherSpecList = Weather.getWeatherSpecs();
         if (supportsMultipleWeatherLocations()) {
             sendWeatherSpecList(weatherSpecList);
         } else {
-            if (!weatherSpecList.isEmpty() && weatherSpecList.get(0) != null) {
+            if (!weatherSpecList.isEmpty()) {
                 final WeatherSpec specToSend = weatherSpecList.get(0);
                 addWeatherLocationFromSpec(specToSend);
                 sendWeatherSpec(specToSend);
@@ -567,7 +569,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
             locationsInitialized = true;
 
             // now that the feature flag has been updated, send cached weather
-            onSendWeather(Weather.getWeatherSpecs());
+            onSendWeather();
 
             return;
         }
