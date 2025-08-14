@@ -3978,4 +3978,5 @@
     <string name="alarm_label_meditate">Medytacja</string>
     <string name="pref_new_sync_protocol_title">Nowy protokół synchronizacji</string>
     <string name="pref_new_sync_protocol_summary">Włącz tę opcję, jeśli niektóre informacje nie są pobierane. Funkcja eksperymentalna i potencjalnie niestabilna.</string>
+    <string name="error_message">Błąd: %s</string>
 </resources>
