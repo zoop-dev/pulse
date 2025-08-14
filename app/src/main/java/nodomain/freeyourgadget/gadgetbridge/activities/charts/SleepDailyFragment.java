@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -88,6 +89,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     private int heartRateAvg = 0;
     private float intensityTotal = 0;
 
+    private SleepDetailsView mSleepDetailsView;
 
 
     private int mSmartAlarmFrom = -1;
@@ -95,9 +97,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     private int mTimestampFrom = -1;
     private int mSmartAlarmGoneOff = -1;
     Prefs prefs = GBApplication.getPrefs();
-    private boolean CHARTS_SLEEP_RANGE_24H = prefs.getBoolean("chart_sleep_range_24h", false);
-    private boolean SHOW_CHARTS_AVERAGE = prefs.getBoolean("charts_show_average", true);
-    private int sleepLinesLimit = prefs.getInt("chart_sleep_lines_limit", 6);
+    private final boolean CHARTS_SLEEP_RANGE_24H = prefs.getBoolean("chart_sleep_range_24h", false);
+    private final boolean SHOW_CHARTS_AVERAGE = prefs.getBoolean("charts_show_average", true);
+    private final int sleepLinesLimit = prefs.getInt("chart_sleep_lines_limit", 6);
 
     @Override
     protected boolean isSingleDay() {
@@ -119,7 +121,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         MySleepChartsData mySleepChartsData = refreshSleepAmounts(device, samples, sleepScoreSamples);
 
         if (!CHARTS_SLEEP_RANGE_24H) {
-            if (mySleepChartsData.sleepSessions.size() > 0) {
+            if (!mySleepChartsData.sleepSessions.isEmpty()) {
                 long tstart = mySleepChartsData.sleepSessions.get(0).getSleepStart().getTime() / 1000;
                 long tend = mySleepChartsData.sleepSessions.get(mySleepChartsData.sleepSessions.size() - 1).getSleepEnd().getTime() / 1000;
 
@@ -134,7 +136,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         DefaultChartsData<LineData> chartsData = refresh(device, samples);
         Triple<Float, Integer, Integer> hrData = calculateHrData(samples);
         Triple<Float, Float, Float> intensityData = calculateIntensityData(samples);
-        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight());
+
+        List<SleepDetailsView.SleepDetail> stages = prepareStages(samples);
+        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages);
     }
 
     private MySleepChartsData refreshSleepAmounts(GBDevice mGBDevice, List<? extends ActivitySample> samples, List<? extends SleepScoreSample> sleepScoreSamples) {
@@ -188,14 +192,14 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     protected void sleepStagesGaugeUpdate(MySleepChartsData pieData) {
-        int[] colors = new int[] {
+        int[] colors = new int[]{
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_light_sleep_light),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_deep_sleep_light),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_rem_sleep_light),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_awake_sleep_light),
         };
         long total = pieData.getTotalSleep() + pieData.getTotalAwake();
-        float[] segments = new float[] {
+        float[] segments = new float[]{
                 pieData.getTotalLight() > 0 ? (float) pieData.getTotalLight() / total : 0,
                 pieData.getTotalDeep() > 0 ? (float) pieData.getTotalDeep() / total : 0,
                 pieData.getTotalRem() > 0 ? (float) pieData.getTotalRem() / total : 0,
@@ -229,6 +233,10 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     @Override
     protected void updateChartsnUIThread(MyChartsData mcd) {
         MySleepChartsData pieData = mcd.getPieData();
+
+        if (mcd.getStages() != null) {
+            mSleepDetailsView.setData(mcd.getStages());
+        }
 
         Date date = new Date((long) this.getTSEnd() * 1000);
         String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
@@ -284,7 +292,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     private Triple<Float, Integer, Integer> calculateHrData(List<? extends ActivitySample> samples) {
-        if (samples.size() < 1) {
+        if (samples.isEmpty()) {
             return Triple.of(0f, 0, 0);
         }
 
@@ -298,7 +306,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 }
             }
         }
-        if (heartRateValues.size() < 1) {
+        if (heartRateValues.isEmpty()) {
             return Triple.of(0f, 0, 0);
         }
 
@@ -327,7 +335,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     private Triple<Float, Float, Float> calculateIntensityData(List<? extends ActivitySample> samples) {
-        if (samples.size() < 1) {
+        if (samples.isEmpty()) {
             return Triple.of(0f, 0f, 0f);
         }
 
@@ -339,7 +347,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 allIntensities.add(intensity);
             }
         }
-        if (allIntensities.size() < 1) {
+        if (allIntensities.isEmpty()) {
             return Triple.of(0f, 0f, 0f);
         }
 
@@ -366,7 +374,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -374,7 +381,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            getChartsHost().enableSwipeRefresh(scrollY == 0);
+                getChartsHost().enableSwipeRefresh(scrollY == 0);
             });
         }
 
@@ -393,9 +400,20 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         movementIntensityText = rootView.findViewById(R.id.sleep_movement_intensity);
         sleepDateText = rootView.findViewById(R.id.sleep_date);
 
+
         mSleepchartInfo.setMaxLines(sleepLinesLimit);
 
         setupActivityChart();
+
+        mSleepDetailsView = rootView.findViewById(R.id.sleep_details);
+
+        SleepDetailsView.DataConfig[] config = new SleepDetailsView.DataConfig[]{
+                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.AWAKE_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_awake_sleep_light)),
+                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.REM_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_rem_sleep_light)),
+                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.LIGHT_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_light_sleep_light)),
+                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.DEEP_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_deep_sleep_light)),
+        };
+        mSleepDetailsView.setConfig(config);
 
         // refresh immediately instead of use refreshIfVisible(), for perceived performance
         refresh();
@@ -406,7 +424,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equals(ChartsHost.REFRESH)) {
+        if (action != null && action.equals(ChartsHost.REFRESH)) {
             // TODO: use LimitLines to visualize smart alarms?
             mSmartAlarmFrom = intent.getIntExtra("smartalarm_from", -1);
             mSmartAlarmTo = intent.getIntExtra("smartalarm_to", -1);
@@ -473,13 +491,13 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         mActivityChart.animateX(ANIM_TIME, Easing.EaseInOutQuart);
     }
 
-    private static class MySleepChartsData extends ChartsData {
-        private long totalSleep;
-        private long totalAwake;
-        private long totalRem;
-        private long totalDeep;
-        private long totalLight;
-        private int sleepScore;
+    protected static class MySleepChartsData extends ChartsData {
+        private final long totalSleep;
+        private final long totalAwake;
+        private final long totalRem;
+        private final long totalDeep;
+        private final long totalLight;
+        private final int sleepScore;
         private final List<SleepSession> sleepSessions;
 
         public MySleepChartsData(List<SleepSession> sleepSessions, long totalSleep, long totalAwake, long totalRem, long totalDeep, long totalLight, int sleepScore) {
@@ -512,7 +530,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return totalLight;
         }
 
-        public int getSleepScore() {return sleepScore;}
+        public int getSleepScore() {
+            return sleepScore;
+        }
 
         public List<SleepSession> getSleepSessions() {
             return sleepSessions;
@@ -523,13 +543,15 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         private final DefaultChartsData<LineData> chartsData;
         private final MySleepChartsData pieData;
         private final float heartRateAverage;
-        private int heartRateAxisMax;
-        private int heartRateAxisMin;
-        private float intensityAxisMax;
-        private float intensityAxisMin;
-        private float intensityTotal;
+        private final int heartRateAxisMax;
+        private final int heartRateAxisMin;
+        private final float intensityAxisMax;
+        private final float intensityAxisMin;
+        private final float intensityTotal;
 
-        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax) {
+        private final List<SleepDetailsView.SleepDetail> stages;
+
+        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages) {
             this.pieData = pieData;
             this.chartsData = chartsData;
             this.heartRateAverage = heartRateAverage;
@@ -538,6 +560,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             this.intensityTotal = intensityTotal;
             this.intensityAxisMin = intensityAxisMin;
             this.intensityAxisMax = intensityAxisMax;
+            this.stages = stages;
         }
 
         public MySleepChartsData getPieData() {
@@ -556,7 +579,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return heartRateAxisMax;
         }
 
-        public int getHeartRateAxisMin() { return heartRateAxisMin; }
+        public int getHeartRateAxisMin() {
+            return heartRateAxisMin;
+        }
 
         public float getIntensityAxisMax() {
             return intensityAxisMax;
@@ -566,7 +591,12 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return intensityAxisMin;
         }
 
-        public float getIntensityTotal() { return intensityTotal;}
+        public float getIntensityTotal() {
+            return intensityTotal;
+        }
 
+        public List<SleepDetailsView.SleepDetail> getStages() {
+            return stages;
+        }
     }
 }

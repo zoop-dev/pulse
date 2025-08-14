@@ -165,6 +165,16 @@
             </GridLayout>
         </LinearLayout>
 
+        <nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepDetailsView
+            android:id="@+id/sleep_details"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="4"  />
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/sleepchart"
             android:layout_width="fill_parent"
@@ -256,7 +266,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </GridLayout>
-
 
     </LinearLayout>
 </ScrollView>
