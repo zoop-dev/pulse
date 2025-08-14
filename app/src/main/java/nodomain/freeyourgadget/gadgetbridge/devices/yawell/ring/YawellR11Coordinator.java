@@ -23,7 +23,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 public class YawellR11Coordinator extends AbstractYawellRingCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^R11_[0-9A-F]{4}$");
+        return Pattern.compile("^R11C?_[0-9A-F]{4}$");
     }
 
     @Override
