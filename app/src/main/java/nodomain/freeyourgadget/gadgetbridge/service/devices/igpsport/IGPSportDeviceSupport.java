@@ -173,6 +173,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         // mark the device as initializing
         builder.setDeviceState(GBDevice.State.INITIALIZING);
+        builder.requestMtu(mtuSize);
         readCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_RX);
         writeCharacteristic = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_FIRST_TX);
         writeCharacteristicThird = getCharacteristic(IGPSportConstants.UUID_IGPSPORT_CHARACTERISTIC_THIRD_TX);
