@@ -225,7 +225,7 @@ public class ZeppOsFwHelper {
             firmwareBin = getFileFromZip(zipFile, "META/firmware_sign.bin");
         }
         if (firmwareBin == null) {
-            firmwareBin = getFileFromZip(zipFile, "firmware_sign.bin");
+            firmwareBin = getFileFromZip(zipFile, "firmware.bin");
         }
         if (firmwareBin != null) {
             if (isCompatibleFirmwareBin(firmwareBin)) {
