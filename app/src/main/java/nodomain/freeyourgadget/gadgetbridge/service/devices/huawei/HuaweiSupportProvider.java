@@ -2195,20 +2195,30 @@ public class HuaweiSupportProvider {
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
 
-            QueryBuilder<HuaweiDictData> qb = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
+            List<HuaweiDictData> results;
+
+            QueryBuilder<HuaweiDictData> qbModify = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
                     HuaweiDictDataDao.Properties.UserId.eq(userId),
                     HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
                     HuaweiDictDataDao.Properties.DictClass.eq(dictClass)
-            );
-            List<HuaweiDictData> results = qb.build().list();
-            for (HuaweiDictData data : results) {
-                if (data.getModifyTimestamp() != null) {
-                    lastTimestamp = Math.max(lastTimestamp, data.getModifyTimestamp());
-                }
-                if (data.getEndTimestamp() != null) {
-                    lastTimestamp = Math.max(lastTimestamp, data.getEndTimestamp());
-                }
-            }
+            ).orderDesc(
+                    HuaweiDictDataDao.Properties.ModifyTimestamp
+            ).limit(1);
+            results = qbModify.build().list();
+            if (!results.isEmpty())
+                lastTimestamp = Math.max(lastTimestamp, results.get(0).getModifyTimestamp());
+
+            QueryBuilder<HuaweiDictData> qbEndTimestamp = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
+                    HuaweiDictDataDao.Properties.UserId.eq(userId),
+                    HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
+                    HuaweiDictDataDao.Properties.DictClass.eq(dictClass)
+            ).orderDesc(
+                    HuaweiDictDataDao.Properties.EndTimestamp
+            ).limit(1);
+            results = qbEndTimestamp.build().list();
+            if (!results.isEmpty())
+                lastTimestamp = Math.max(lastTimestamp, results.get(0).getEndTimestamp());
+
         } catch (Exception e) {
             LOG.error("Failed to select last timestamp value to database", e);
         }
