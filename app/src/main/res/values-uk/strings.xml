@@ -3796,4 +3796,7 @@
     <string name="pref_new_sync_protocol_title">Новий протокол синхронізації</string>
     <string name="pref_new_sync_protocol_summary">Увімкніть це, якщо якась інформація не отримується. Експериментально та потенційно нестабільно.</string>
     <string name="error_message">Помилка: %s</string>
+    <string name="delete_device_and_retain_files">Зберігати файли</string>
+    <string name="error_deleting_file">Не вдалося видалити \"%1$s\"</string>
+    <string name="error_deleting_file_exception">Не вдалося видалити \"%1$s\": %2$s</string>
 </resources>
