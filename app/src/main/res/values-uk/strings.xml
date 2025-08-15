@@ -3799,4 +3799,25 @@
     <string name="delete_device_and_retain_files">Зберігати файли</string>
     <string name="error_deleting_file">Не вдалося видалити \"%1$s\"</string>
     <string name="error_deleting_file_exception">Не вдалося видалити \"%1$s\": %2$s</string>
+    <string name="pref_header_auto_export_db">Автоматичний експорт бази даних</string>
+    <string name="pref_header_auto_export_zip">Автоматичний експорт поштового індексу</string>
+    <string name="notif_export_location_not_set">Місце експорту не налаштовано</string>
+    <string name="notif_export_zip_failed_title">Не вдалося експортувати zip-архів! Перевірте налаштування.</string>
+    <string name="unknown_error">Невідома помилка</string>
+    <string name="intent_api_allow_trigger_zip_export_title">Дозволити експорт у zip-файл</string>
+    <string name="intent_api_allow_trigger_zip_export_summary">Дозволити запуск експорту zip-архіву через Intent API</string>
+    <string name="intent_api_broadcast_zip_export_title">Трансляція при експорті в zip-файл</string>
+    <string name="intent_api_broadcast_zip_export_summary">Транслювати намір після завершення експорту zip-файлу</string>
+    <string name="intent_activity_sync_title">Синхронізація активності</string>
+    <string name="auto_export_last_execution">Останнє виконання</string>
+    <string name="auto_export_next_execution">Наступне виконання</string>
+    <string name="work_info_status_running">Запуск</string>
+    <string name="work_info_status_enqueued">Поставлено в чергу</string>
+    <string name="work_info_status_succeeded">Успіх</string>
+    <string name="work_info_status_failed">Не вдалося</string>
+    <string name="work_info_status_blocked">Заблоковано</string>
+    <string name="work_info_status_cancelled">Скасовано</string>
+    <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
+    <string name="datetime_in_the_future">%1$s (з %2$s)</string>
+    <string name="datetime_in_the_past">%1$s (%2$s тому)</string>
 </resources>
