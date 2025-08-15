@@ -317,6 +317,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchultimate2.
 import nodomain.freeyourgadget.gadgetbridge.devices.id115.ID115Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.idasen.IdasenCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC200Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC200SCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportiGS630Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportiGS800Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.itag.ITagCoordinator;
@@ -945,6 +946,7 @@ public enum DeviceType {
     SILVERCREST_SBM_67(SilverCrestSBM67Coordinator.class),
     BRAUN_BPW4500(BraunBPW4500DeviceCoordinator.class),
     IGPSPORT_BSC200(IGPSportBSC200Coordinator.class),
+    IGPSPORT_BSC200s(IGPSportBSC200SCoordinator.class),
     IGPSPORT_IGS630(IGPSportiGS630Coordinator.class),
     IGPSPORT_IGS800(IGPSportiGS800Coordinator.class),
     TEST(TestDeviceCoordinator.class);
