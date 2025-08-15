@@ -3979,4 +3979,7 @@
     <string name="pref_new_sync_protocol_title">Nowy protokół synchronizacji</string>
     <string name="pref_new_sync_protocol_summary">Włącz tę opcję, jeśli niektóre informacje nie są pobierane. Funkcja eksperymentalna i potencjalnie niestabilna.</string>
     <string name="error_message">Błąd: %s</string>
+    <string name="delete_device_and_retain_files">Zachowaj pliki</string>
+    <string name="error_deleting_file">usunięcie pliku „%1$s” nie powiodło się</string>
+    <string name="error_deleting_file_exception">usunięcie pliku „%1$s” nie powiodło się: %2$s</string>
 </resources>
