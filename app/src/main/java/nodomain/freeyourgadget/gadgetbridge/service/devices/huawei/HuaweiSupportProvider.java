@@ -51,6 +51,7 @@ import java.util.UUID;
 
 import de.greenrobot.dao.query.DeleteQuery;
 import de.greenrobot.dao.query.QueryBuilder;
+import kotlin.Triple;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
@@ -1758,31 +1759,39 @@ public class HuaweiSupportProvider {
         responseManager.addHandler(request);
     }
 
-    public void addSleepActivity(int timestamp_start, int timestamp_end, byte type, byte source) {
-        LOG.debug("Adding sleep activity between {} and {}", timestamp_start, timestamp_end);
-
+    /**
+     * Add sleep activities
+     * @param data List of triples with [timestamp_start, timestamp_end, type]
+     * @param source Source of the data
+     */
+    public void addSleepActivities(List<Triple<Integer, Integer, Byte>> data, byte source) {
         try (DBHandler db = GBApplication.acquireDB()) {
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
             HuaweiSampleProvider sampleProvider = new HuaweiSampleProvider(gbDevice, db.getDaoSession());
 
-            HuaweiActivitySample activitySample = new HuaweiActivitySample(
-                    timestamp_start,
-                    deviceId,
-                    userId,
-                    timestamp_end,
-                    source,
-                    type,
-                    1,
-                    ActivitySample.NOT_MEASURED,
-                    ActivitySample.NOT_MEASURED,
-                    ActivitySample.NOT_MEASURED,
-                    ActivitySample.NOT_MEASURED,
-                    ActivitySample.NOT_MEASURED
-            );
-            activitySample.setProvider(sampleProvider);
+            List<HuaweiActivitySample> samples = new ArrayList<>(data.size());
+            for (Triple<Integer, Integer, Byte> d : data) {
+                HuaweiActivitySample activitySample = new HuaweiActivitySample(
+                        d.component1(),
+                        deviceId,
+                        userId,
+                        d.component2(),
+                        source,
+                        d.component3(),
+                        1,
+                        ActivitySample.NOT_MEASURED,
+                        ActivitySample.NOT_MEASURED,
+                        ActivitySample.NOT_MEASURED,
+                        ActivitySample.NOT_MEASURED,
+                        ActivitySample.NOT_MEASURED
+                );
+                activitySample.setProvider(sampleProvider);
 
-            sampleProvider.addGBActivitySample(activitySample);
+                samples.add(activitySample);
+            }
+
+            sampleProvider.addGBActivitySamples(samples.toArray(new HuaweiActivitySample[0]));
         } catch (Exception e) {
             LOG.error("Failed to add sleep activity to database", e);
         }
@@ -2921,8 +2930,10 @@ public class HuaweiSupportProvider {
                     syncState.stopActivitySync();
                     return;
                 }
+                List<Triple<Integer, Integer, Byte>> data = new ArrayList<>(results.length);
                 for (HuaweiTruSleepParser.TruSleepStatus status : results)
-                    addSleepActivity(status.startTime, status.endTime, (byte) 0x06, (byte) 0x0a);
+                    data.add(new Triple<>(status.startTime, status.endTime, (byte) 0x06));
+                addSleepActivities(data, (byte) 0x0a);
 
 //                HuaweiTruSleepParser.TruSleepData data = HuaweiTruSleepParser.parseData(sleepData);
 //                HuaweiTruSleepParser.analyze(this.provider, results, data);

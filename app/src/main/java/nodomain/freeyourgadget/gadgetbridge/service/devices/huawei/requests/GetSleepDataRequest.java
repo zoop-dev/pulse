@@ -19,8 +19,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Triple;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FitnessData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
@@ -51,7 +53,6 @@ public class GetSleepDataRequest extends Request {
 
     @Override
     protected void processResponse() throws ResponseParseException {
-        // FitnessData.MessageData.SleepResponse response = FitnessData.MessageData.SleepResponse.fromTlv(receivedPacket.tlv);
         if (!(receivedPacket instanceof FitnessData.MessageData.SleepResponse))
             throw new ResponseTypeMismatchException(receivedPacket, FitnessData.MessageData.SleepResponse.class);
 
@@ -62,6 +63,8 @@ public class GetSleepDataRequest extends Request {
         if (receivedCount != this.count) {
             LOG.warn("Counts do not match");
         }
+
+        List<Triple<Integer, Integer, Byte>> data = new ArrayList<>(response.containers.size());
 
         for (FitnessData.MessageData.SleepResponse.SubContainer subContainer : response.containers) {
             // TODO: it might make more sense to convert the timestamp in the FitnessData class
@@ -85,8 +88,10 @@ public class GetSleepDataRequest extends Request {
                             (timestampInts[5]);
             short duration = (short) (durationInt * 60);
 
-            this.supportProvider.addSleepActivity(timestamp, timestamp + duration, subContainer.type, FitnessData.MessageData.sleepId);
+            data.add(new Triple<>(timestamp, timestamp + duration, subContainer.type));
         }
+
+        supportProvider.addSleepActivities(data, FitnessData.MessageData.sleepId);
 
         if (count + 1 < maxCount) {
             GetSleepDataRequest nextRequest = new GetSleepDataRequest(supportProvider, this.maxCount, (short) (this.count + 1));
