@@ -137,7 +137,7 @@ public class HuaweiTLV {
             put(tag, value);
             parsed += size;
         }
-        LOG.debug("Parsed TLV: " + this);
+        LOG.debug("Parsed TLV: {}", this);
         return this;
     }
 
@@ -155,7 +155,7 @@ public class HuaweiTLV {
         ByteBuffer buffer = ByteBuffer.allocate(length);
         for (TLV entry : valueMap)
             buffer.put(entry.serialize());
-        LOG.debug("Serialized TLV: " + this);
+        LOG.debug("Serialized TLV: {}", this);
         return buffer.array();
     }
 
