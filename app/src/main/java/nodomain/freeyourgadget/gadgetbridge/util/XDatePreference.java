@@ -92,7 +92,7 @@ public class XDatePreference extends DialogPreference {
         return maxDate;
     }
 
-    String getPrefValue() {
+    public String getPrefValue() {
         return String.format(Locale.ROOT, "%04d-%02d-%02d", year, month, day);
     }
 
@@ -102,6 +102,8 @@ public class XDatePreference extends DialogPreference {
         this.day = day;
 
         persistStringValue(getPrefValue());
+
+        updateSummary();
     }
 
     void updateSummary() {

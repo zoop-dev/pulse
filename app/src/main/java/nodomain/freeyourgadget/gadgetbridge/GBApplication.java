@@ -79,7 +79,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.database.DBOpenHelper;
-import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
+import nodomain.freeyourgadget.gadgetbridge.database.PeriodicDbExporter;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoMaster;
@@ -103,6 +103,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITBIP;
@@ -176,10 +177,6 @@ public class GBApplication extends Application {
     private BluetoothStateChangeReceiver bluetoothStateChangeReceiver;
 
     private OpenTracksContentObserver openTracksObserver;
-
-    private long lastAutoExportTimestamp = 0;
-    private long autoExportScheduledTimestamp = 0;
-
 
     /// flush the log buffer and stop file logging
     private static final class ShutdownHook implements Runnable {
@@ -330,7 +327,8 @@ public class GBApplication extends Application {
         loadAppsPebbleBlackList();
 
         if (!GBEnvironment.env().isTest()) {
-            PeriodicExporter.enablePeriodicExport(context);
+            PeriodicDbExporter.INSTANCE.scheduleNextExecution(context);
+            PeriodicZipExporter.INSTANCE.scheduleNextExecution(context);
         }
 
         if (isRunningMarshmallowOrLater()) {
@@ -2294,22 +2292,6 @@ public class GBApplication extends Application {
 
     public OpenTracksContentObserver getOpenTracksObserver() {
         return openTracksObserver;
-    }
-
-    public long getLastAutoExportTimestamp() {
-        return lastAutoExportTimestamp;
-    }
-
-    public void setLastAutoExportTimestamp(long lastAutoExportTimestamp) {
-        this.lastAutoExportTimestamp = lastAutoExportTimestamp;
-    }
-
-    public long getAutoExportScheduledTimestamp() {
-        return autoExportScheduledTimestamp;
-    }
-
-    public void setAutoExportScheduledTimestamp(long autoExportScheduledTimestamp) {
-        this.autoExportScheduledTimestamp = autoExportScheduledTimestamp;
     }
 
     private static class GBActivityLifecycleCallbacks implements ActivityLifecycleCallbacks{

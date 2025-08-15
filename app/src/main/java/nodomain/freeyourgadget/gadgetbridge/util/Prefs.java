@@ -48,7 +48,7 @@ public class Prefs {
 
     public String getString(String key, String defaultValue) {
         String value = preferences.getString(key, defaultValue);
-        if (value == null || "".equals(value)) {
+        if (value == null || value.isEmpty()) {
             return defaultValue;
         }
         return value;

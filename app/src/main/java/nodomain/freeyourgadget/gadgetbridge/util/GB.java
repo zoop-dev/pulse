@@ -76,6 +76,7 @@ public class GB {
     public static final String NOTIFICATION_CHANNEL_ID_SCAN_SERVICE = "gadgetbridge_scan_service";
     public static final String NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID = "gadgetbridge_high_priority";
     public static final String NOTIFICATION_CHANNEL_ID_TRANSFER = "gadgetbridge transfer";
+    public static final String NOTIFICATION_CHANNEL_ID_EXPORT = "gadgetbridge export";
     public static final String NOTIFICATION_CHANNEL_ID_LOW_BATTERY = "low_battery";
     public static final String NOTIFICATION_CHANNEL_ID_FULL_BATTERY = "full_battery";
     public static final String NOTIFICATION_CHANNEL_ID_GPS = "gps";
@@ -146,6 +147,12 @@ public class GB {
                     context.getString(R.string.notification_channel_transfer_name),
                     NotificationManager.IMPORTANCE_LOW);
             notificationManager.createNotificationChannel(channelTransfer);
+
+            NotificationChannel channelExport = new NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID_EXPORT,
+                    context.getString(R.string.pref_header_auto_export),
+                    NotificationManager.IMPORTANCE_LOW);
+            notificationManager.createNotificationChannel(channelExport);
 
             NotificationChannel channelLowBattery = new NotificationChannel(
                     NOTIFICATION_CHANNEL_ID_LOW_BATTERY,

@@ -246,55 +246,11 @@
         android:title="@string/maps"
         app:iconSpaceReserved="false" />
 
-    <PreferenceScreen
+    <Preference
         android:icon="@drawable/ic_auto_awesome"
         android:key="pref_screen_automations"
         android:summary="@string/pref_description_automations"
-        android:title="@string/pref_header_automations">
-
-        <PreferenceCategory
-            android:title="@string/pref_header_auto_export">
-            <Preference
-                android:key="auto_export_location"
-                android:title="@string/pref_title_auto_export_location"
-                android:icon="@drawable/ic_file_export" />
-            <SwitchPreferenceCompat
-                android:defaultValue="false"
-                android:key="auto_export_enabled"
-                android:layout="@layout/preference_checkbox"
-                android:title="@string/pref_title_auto_export_enabled"
-                android:icon="@drawable/ic_toggle_on" />
-            <EditTextPreference
-                android:defaultValue="3"
-                android:dependency="auto_export_enabled"
-                android:inputType="number"
-                android:key="auto_export_interval"
-                android:maxLength="3"
-                android:summary="@string/pref_summary_auto_export_interval"
-                android:title="@string/pref_title_auto_export_interval"
-                android:icon="@drawable/ic_timer" />
-        </PreferenceCategory>
-
-        <PreferenceCategory
-            android:title="@string/pref_header_auto_fetch">
-            <SwitchPreferenceCompat
-                android:defaultValue="false"
-                android:key="auto_fetch_enabled"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/pref_auto_fetch_summary"
-                android:title="@string/pref_auto_fetch"
-                android:icon="@drawable/ic_refresh" />
-            <EditTextPreference
-                android:defaultValue="0"
-                android:dependency="auto_fetch_enabled"
-                android:inputType="number"
-                android:key="auto_fetch_interval_limit"
-                android:maxLength="3"
-                android:summary="@string/pref_auto_fetch_limit_fetches_summary"
-                android:title="@string/pref_auto_fetch_limit_fetches"
-                android:icon="@drawable/ic_timer" />
-        </PreferenceCategory>
-    </PreferenceScreen>
+        android:title="@string/pref_header_automations" />
 
     <PreferenceScreen
         android:icon="@drawable/ic_extension"
@@ -408,53 +364,97 @@
             android:title="@string/pref_cache_weather"
             app:iconSpaceReserved="false" />
 
-        <PreferenceCategory
+        <PreferenceScreen
             android:key="pref_screen_intent_api"
             android:title="@string/pref_header_intent_api"
             app:iconSpaceReserved="false">
 
-            <SwitchPreferenceCompat
-                android:key="prefs_key_allow_bluetooth_intent_api"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/activity_prefs_summary_allow_bluetooth_intent_api"
-                android:title="@string/activity_prefs_allow_bluetooth_intent_api"
-                app:iconSpaceReserved="false" />
+            <PreferenceCategory
+                android:key="pref_header_bluetooth"
+                android:title="@string/menuitem_bluetooth"
+                app:iconSpaceReserved="false">
 
-            <SwitchPreferenceCompat
-                android:key="intent_api_allow_activity_sync"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/intent_api_allow_activity_sync_summary"
-                android:title="@string/intent_api_allow_activity_sync_title"
-                app:iconSpaceReserved="false" />
+                <SwitchPreferenceCompat
+                    android:key="prefs_key_allow_bluetooth_intent_api"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/activity_prefs_summary_allow_bluetooth_intent_api"
+                    android:title="@string/activity_prefs_allow_bluetooth_intent_api"
+                    app:iconSpaceReserved="false" />
+            </PreferenceCategory>
 
-            <SwitchPreferenceCompat
-                android:key="intent_api_broadcast_activity_sync"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/intent_api_broadcast_activity_sync_summary"
-                android:title="@string/intent_api_broadcast_activity_sync_title"
-                app:iconSpaceReserved="false" />
+            <PreferenceCategory
+                android:key="pref_header_activity_sync"
+                android:title="@string/intent_activity_sync_title"
+                app:iconSpaceReserved="false">
 
-            <SwitchPreferenceCompat
-                android:key="intent_api_allow_trigger_export"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/intent_api_allow_trigger_export_summary"
-                android:title="@string/intent_api_allow_trigger_export_title"
-                app:iconSpaceReserved="false" />
+                <SwitchPreferenceCompat
+                    android:key="intent_api_allow_activity_sync"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_allow_activity_sync_summary"
+                    android:title="@string/intent_api_allow_activity_sync_title"
+                    app:iconSpaceReserved="false" />
 
-            <SwitchPreferenceCompat
-                android:key="intent_api_broadcast_export"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/intent_api_broadcast_export_summary"
-                android:title="@string/intent_api_broadcast_export_title"
-                app:iconSpaceReserved="false" />
+                <SwitchPreferenceCompat
+                    android:key="intent_api_broadcast_activity_sync"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_broadcast_activity_sync_summary"
+                    android:title="@string/intent_api_broadcast_activity_sync_title"
+                    app:iconSpaceReserved="false" />
+            </PreferenceCategory>
 
-            <SwitchPreferenceCompat
-                android:key="intent_api_allow_debug_commands"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/intent_api_allow_debug_commands_summary"
-                android:title="@string/intent_api_allow_debug_commands_title"
-                app:iconSpaceReserved="false" />
-        </PreferenceCategory>
+            <PreferenceCategory
+                android:key="pref_header_auto_export_db"
+                android:title="@string/pref_header_auto_export_db"
+                app:iconSpaceReserved="false">
+
+                <SwitchPreferenceCompat
+                    android:key="intent_api_allow_trigger_export"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_allow_trigger_export_summary"
+                    android:title="@string/intent_api_allow_trigger_export_title"
+                    app:iconSpaceReserved="false" />
+
+                <SwitchPreferenceCompat
+                    android:key="intent_api_broadcast_export"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_broadcast_export_summary"
+                    android:title="@string/intent_api_broadcast_export_title"
+                    app:iconSpaceReserved="false" />
+            </PreferenceCategory>
+
+            <PreferenceCategory
+                android:key="pref_header_auto_export_zip"
+                android:title="@string/pref_header_auto_export_zip"
+                app:iconSpaceReserved="false">
+
+                <SwitchPreferenceCompat
+                    android:key="intent_api_allow_trigger_zip_export"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_allow_trigger_zip_export_summary"
+                    android:title="@string/intent_api_allow_trigger_zip_export_title"
+                    app:iconSpaceReserved="false" />
+
+                <SwitchPreferenceCompat
+                    android:key="intent_api_broadcast_zip_export"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_broadcast_zip_export_summary"
+                    android:title="@string/intent_api_broadcast_zip_export_title"
+                    app:iconSpaceReserved="false" />
+            </PreferenceCategory>
+
+            <PreferenceCategory
+                android:key="pref_header_debug"
+                android:title="@string/action_debug"
+                app:iconSpaceReserved="false">
+
+                <SwitchPreferenceCompat
+                    android:key="intent_api_allow_debug_commands"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_allow_debug_commands_summary"
+                    android:title="@string/intent_api_allow_debug_commands_title"
+                    app:iconSpaceReserved="false" />
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceScreen>
 
     <PreferenceScreen

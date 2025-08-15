@@ -1,4 +1,4 @@
-/*  Copyright (C) 2018-2024 Daniele Gobbetti, José Rebelo, Martin
+/*  Copyright (C) 2018-2025 Daniele Gobbetti, José Rebelo, Martin
 
     This file is part of Gadgetbridge.
 
@@ -28,6 +28,7 @@ import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 
 public class GBAutoFetchReceiver extends BroadcastReceiver {
@@ -37,6 +38,9 @@ public class GBAutoFetchReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
+        if (!GBApplication.getPrefs().getBoolean(GBPrefs.PREF_AUTO_FETCH_ENABLED, false)) {
+            return;
+        }
         synchronized (this) {
             final Date now = new Date();
             final long timeSinceLast = now.getTime() - lastSync.getTime();

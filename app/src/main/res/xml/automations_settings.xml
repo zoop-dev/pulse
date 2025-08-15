@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/pref_header_auto_export">
+
+        <Preference
+            android:icon="@drawable/ic_database"
+            android:title="@string/pref_header_auto_export_db">
+            <intent
+                android:targetClass="nodomain.freeyourgadget.gadgetbridge.activities.automations.AutoExportDbSettingsActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+
+        <Preference
+            android:icon="@drawable/ic_zip"
+            android:title="@string/pref_header_auto_export_zip">
+            <intent
+                android:targetClass="nodomain.freeyourgadget.gadgetbridge.activities.automations.AutoExportZipSettingsActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_header_auto_fetch">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_refresh"
+            android:key="auto_fetch_enabled"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_auto_fetch_summary"
+            android:title="@string/pref_auto_fetch"
+            app:iconSpaceReserved="false" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dependency="auto_fetch_enabled"
+            android:icon="@drawable/ic_timer"
+            android:inputType="number"
+            android:key="auto_fetch_interval_limit"
+            android:maxLength="3"
+            android:summary="@string/pref_auto_fetch_limit_fetches_summary"
+            android:title="@string/pref_auto_fetch_limit_fetches"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

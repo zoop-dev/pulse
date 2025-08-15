@@ -36,7 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
+import nodomain.freeyourgadget.gadgetbridge.database.PeriodicDbExporter;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
 
 public class IntentApiReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(IntentApiReceiver.class);
@@ -52,7 +53,10 @@ public class IntentApiReceiver extends BroadcastReceiver {
     private static final String msgDebugNotAllowed = "Intent API Allow Debug Commands not allowed";
 
     public static final String COMMAND_ACTIVITY_SYNC = "nodomain.freeyourgadget.gadgetbridge.command.ACTIVITY_SYNC";
+    @Deprecated
     public static final String COMMAND_TRIGGER_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_EXPORT";
+    public static final String TRIGGER_DATABASE_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_DATABASE_EXPORT";
+    public static final String COMMAND_TRIGGER_ZIP_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_ZIP_EXPORT";
     public static final String COMMAND_DEBUG_SEND_NOTIFICATION = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_SEND_NOTIFICATION";
     public static final String COMMAND_DEBUG_INCOMING_CALL = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_INCOMING_CALL";
     public static final String COMMAND_DEBUG_END_CALL = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_END_CALL";
@@ -97,15 +101,31 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 break;
 
             case COMMAND_TRIGGER_EXPORT:
+                LOG.warn(
+                        "The action {} is deprecated, please use {}",
+                        COMMAND_TRIGGER_EXPORT,
+                        TRIGGER_DATABASE_EXPORT
+                );
+            case TRIGGER_DATABASE_EXPORT:
                 if (!prefs.getBoolean("intent_api_allow_trigger_export", false)) {
-                    LOG.warn("Intent API export trigger not allowed");
+                    LOG.warn("Intent API db export trigger not allowed");
                     return;
                 }
 
-                LOG.info("Triggering export");
+                LOG.info("Triggering db export");
 
-                final Intent exportIntent = new Intent(context, PeriodicExporter.class);
-                context.sendBroadcast(exportIntent);
+                PeriodicDbExporter.INSTANCE.executeNow();
+                break;
+
+            case COMMAND_TRIGGER_ZIP_EXPORT:
+                if (!prefs.getBoolean("intent_api_allow_trigger_zip_export", false)) {
+                    LOG.warn("Intent API zip export trigger not allowed");
+                    return;
+                }
+
+                LOG.info("Triggering zip export");
+
+                PeriodicZipExporter.INSTANCE.executeNow();
                 break;
 
             case COMMAND_DEBUG_SEND_NOTIFICATION:

@@ -25,14 +25,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
@@ -64,17 +61,15 @@ import java.util.Set;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.automations.AutomationsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
-import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherCacheManager;
-import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class SettingsActivity extends AbstractSettingsActivityV2 {
@@ -101,6 +96,8 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             open(NotificationManagementActivity.class, result);
         } else if (result.getResourceFile() == R.xml.map_settings) {
             open(MapsSettingsActivity.class, result);
+        } else if (result.getResourceFile() == R.xml.automations_settings) {
+            open(AutomationsSettingsActivity.class, result);
         } else {
             super.onSearchResultClicked(result);
         }
@@ -109,7 +106,6 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
     public static class SettingsFragment extends AbstractPreferenceFragment {
         private static final Logger LOG = LoggerFactory.getLogger(SettingsActivity.class);
 
-        private static final int EXPORT_LOCATION_FILE_REQUEST_CODE = 4711;
         private EditText fitnessAppEditText = null;
         private int fitnessAppSelectionListSpinnerFirstRun = 0;
 
@@ -124,12 +120,11 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             index(R.xml.discovery_pairing_preferences, R.string.activity_prefs_discovery_pairing);
             index(R.xml.notifications_preferences, R.string.pref_header_notifications);
             index(R.xml.map_settings, R.string.maps_settings);
+            index(R.xml.automations_settings, R.string.pref_header_automations);
 
             setInputTypeFor("rtl_max_line_length", InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
             setInputTypeFor("location_longitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-            setInputTypeFor("auto_export_interval", InputType.TYPE_CLASS_NUMBER);
-            setInputTypeFor("auto_fetch_interval_limit", InputType.TYPE_CLASS_NUMBER);
 
             Prefs prefs = GBApplication.getPrefs();
             Preference pref = findPreference("pref_category_activity_personal");
@@ -296,66 +291,6 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 });
             }
 
-
-            pref = findPreference(GBPrefs.AUTO_EXPORT_LOCATION);
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                    i.setType("application/x-sqlite3");
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                    i.putExtra(Intent.EXTRA_TITLE, "Gadgetbridge.db");
-                    i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    String title = requireContext().getApplicationContext().getString(R.string.choose_auto_export_location);
-                    startActivityForResult(Intent.createChooser(i, title), EXPORT_LOCATION_FILE_REQUEST_CODE);
-                    return true;
-                });
-                pref.setSummary(getAutoExportLocationSummary());
-            }
-
-            pref = findPreference(GBPrefs.AUTO_EXPORT_INTERVAL);
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, autoExportInterval) -> {
-                    String summary = String.format(
-                            requireContext().getApplicationContext().getString(R.string.pref_summary_auto_export_interval),
-                            Integer.valueOf((String) autoExportInterval));
-                    preference.setSummary(summary);
-                    boolean auto_export_enabled = GBApplication.getPrefs().getBoolean(GBPrefs.AUTO_EXPORT_ENABLED, false);
-                    PeriodicExporter.scheduleAlarm(requireContext().getApplicationContext(), Integer.valueOf((String) autoExportInterval), auto_export_enabled);
-                    return true;
-                });
-                int autoExportInterval = GBApplication.getPrefs().getInt(GBPrefs.AUTO_EXPORT_INTERVAL, 0);
-                String summary = String.format(
-                        requireContext().getApplicationContext().getString(R.string.pref_summary_auto_export_interval),
-                        autoExportInterval);
-                pref.setSummary(summary);
-            }
-
-            pref = findPreference(GBPrefs.AUTO_EXPORT_ENABLED);
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, autoExportEnabled) -> {
-                    int autoExportInterval = GBApplication.getPrefs().getInt(GBPrefs.AUTO_EXPORT_INTERVAL, 0);
-                    PeriodicExporter.scheduleAlarm(requireContext().getApplicationContext(), autoExportInterval, (boolean) autoExportEnabled);
-                    return true;
-                });
-            }
-
-            pref = findPreference("auto_fetch_interval_limit");
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, autoFetchInterval) -> {
-                    String summary = String.format(
-                            requireContext().getApplicationContext().getString(R.string.pref_auto_fetch_limit_fetches_summary),
-                            Integer.valueOf((String) autoFetchInterval));
-                    preference.setSummary(summary);
-                    return true;
-                });
-
-                int autoFetchInterval = GBApplication.getPrefs().getInt("auto_fetch_interval_limit", 0);
-                String summary = String.format(
-                        requireContext().getApplicationContext().getString(R.string.pref_auto_fetch_limit_fetches_summary),
-                        autoFetchInterval);
-                pref.setSummary(summary);
-            }
-
             final ListPreference audioPlayer = findPreference("audio_player");
             if (audioPlayer != null) {
                 // Get all receivers of Media Buttons
@@ -401,6 +336,15 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             if (pref != null) {
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), MapsSettingsActivity.class);
+                    startActivity(enableIntent);
+                    return true;
+                });
+            }
+
+            pref = findPreference("pref_screen_automations");
+            if (pref != null) {
+                pref.setOnPreferenceClickListener(preference -> {
+                    Intent enableIntent = new Intent(requireContext(), AutomationsSettingsActivity.class);
                     startActivity(enableIntent);
                     return true;
                 });
@@ -542,53 +486,6 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
             }
-        }
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-            if (requestCode == EXPORT_LOCATION_FILE_REQUEST_CODE && intent != null) {
-                Uri uri = intent.getData();
-                requireContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                GBApplication.getPrefs().getPreferences()
-                        .edit()
-                        .putString(GBPrefs.AUTO_EXPORT_LOCATION, uri.toString())
-                        .apply();
-                String summary = getAutoExportLocationSummary();
-                findPreference(GBPrefs.AUTO_EXPORT_LOCATION).setSummary(summary);
-                boolean autoExportEnabled = GBApplication
-                        .getPrefs().getBoolean(GBPrefs.AUTO_EXPORT_ENABLED, false);
-                int autoExportPeriod = GBApplication
-                        .getPrefs().getInt(GBPrefs.AUTO_EXPORT_INTERVAL, 0);
-                PeriodicExporter.scheduleAlarm(requireContext().getApplicationContext(), autoExportPeriod, autoExportEnabled);
-            }
-        }
-
-        /*
-        Either returns the file path of the selected document, or the display name, or an empty string
-         */
-        public String getAutoExportLocationSummary() {
-            String autoExportLocation = GBApplication.getPrefs().getString(GBPrefs.AUTO_EXPORT_LOCATION, null);
-            if (autoExportLocation == null) {
-                return "";
-            }
-            Uri uri = Uri.parse(autoExportLocation);
-            try {
-                return AndroidUtils.getFilePath(requireContext().getApplicationContext(), uri);
-            } catch (IllegalArgumentException e) {
-                try (
-                        Cursor cursor = requireContext().getContentResolver().query(
-                                uri,
-                                new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME},
-                                null, null, null, null
-                        )) {
-                    if (cursor != null && cursor.moveToFirst()) {
-                        return cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME));
-                    }
-                } catch (Exception e2) {
-                    LOG.warn("getAutoExportLocationSummary", e2);
-                }
-            }
-            return "";
         }
 
         /*

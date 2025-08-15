@@ -65,7 +65,7 @@ public class BluetoothStateChangeReceiver extends BroadcastReceiver {
                     return;
                 }
 
-                if (!prefs.getBoolean("general_autoconnectonbluetooth", false)) {
+                if (!prefs.getBoolean(GBPrefs.AUTO_CONNECT_BLUETOOTH, false)) {
                     return;
                 }
 

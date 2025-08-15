@@ -1468,8 +1468,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
             }
 
-            if (GBApplication.getPrefs().getBoolean("auto_fetch_enabled", false) &&
-                    features.supportsActivityDataFetching() && mGBAutoFetchReceiver == null) {
+            if (features.supportsActivityDataFetching() && mGBAutoFetchReceiver == null) {
                 mGBAutoFetchReceiver = new GBAutoFetchReceiver();
                 ContextCompat.registerReceiver(this, mGBAutoFetchReceiver, new IntentFilter("android.intent.action.USER_PRESENT"), ContextCompat.RECEIVER_EXPORTED);
             }

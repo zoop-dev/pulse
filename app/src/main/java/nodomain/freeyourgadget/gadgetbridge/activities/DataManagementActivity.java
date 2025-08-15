@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,15 +52,12 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.files.FileManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.database.PeriodicExporter;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.ImportExportSharedPreferences;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
 public class DataManagementActivity extends AbstractGBActivity {
@@ -181,69 +177,12 @@ public class DataManagementActivity extends AbstractGBActivity {
                 cleanExportDirectory();
             }
         });
-        GBApplication gbApp = GBApplication.app();
-        Prefs prefs = GBApplication.getPrefs();
-        boolean autoExportEnabled = prefs.getBoolean(GBPrefs.AUTO_EXPORT_ENABLED, false);
-        int autoExportInterval = prefs.getInt(GBPrefs.AUTO_EXPORT_INTERVAL, 0);
-        //returns an ugly content://...
-        //String autoExportLocation = prefs.getString(GBPrefs.AUTO_EXPORT_LOCATION, "");
-
-        int testExportVisibility = (autoExportInterval > 0 && autoExportEnabled) ? View.VISIBLE : View.GONE;
-        boolean isExportEnabled = autoExportInterval > 0 && autoExportEnabled;
-        TextView autoExportLocation_label = findViewById(R.id.autoExportLocation_label);
-        autoExportLocation_label.setVisibility(testExportVisibility);
-
-        TextView autoExportLocation_path = findViewById(R.id.autoExportLocation_path);
-        autoExportLocation_path.setVisibility(testExportVisibility);
-        autoExportLocation_path.setText(getAutoExportLocationUserString() + " (" + getAutoExportLocationPreferenceString() + ")" );
-
-        TextView autoExportEnabled_label = findViewById(R.id.autoExportEnabled);
-        if (isExportEnabled) {
-            autoExportEnabled_label.setText(getString(R.string.activity_db_management_autoexport_enabled_yes));
-        } else {
-            autoExportEnabled_label.setText(getString(R.string.activity_db_management_autoexport_enabled_no));
-        }
-
-        TextView autoExportScheduled = findViewById(R.id.autoExportScheduled);
-        autoExportScheduled.setVisibility(testExportVisibility);
-        long setAutoExportScheduledTimestamp = gbApp.getAutoExportScheduledTimestamp();
-        if (setAutoExportScheduledTimestamp > 0) {
-            autoExportScheduled.setText(getString(R.string.activity_db_management_autoexport_scheduled_yes,
-                    DateTimeUtils.formatDateTime(new Date(setAutoExportScheduledTimestamp))));
-        } else {
-            autoExportScheduled.setText(getResources().getString(R.string.activity_db_management_autoexport_scheduled_no));
-        }
-
-        TextView autoExport_lastTime_label = findViewById(R.id.autoExport_lastTime_label);
-        long lastAutoExportTimestamp = gbApp.getLastAutoExportTimestamp();
-
-        autoExport_lastTime_label.setVisibility(View.GONE);
-        autoExport_lastTime_label.setText(getString(R.string.autoExport_lastTime_label,
-                DateTimeUtils.formatDateTime(new Date(lastAutoExportTimestamp))));
-
-        if (lastAutoExportTimestamp > 0) {
-            autoExport_lastTime_label.setVisibility(testExportVisibility);
-            autoExport_lastTime_label.setVisibility(testExportVisibility);
-        }
-
-        final Context context = getApplicationContext();
-        Button testExportDBButton = findViewById(R.id.testExportDBButton);
-        testExportDBButton.setVisibility(testExportVisibility);
-        testExportDBButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GB.toast(context,
-                        context.getString(R.string.activity_DB_test_export_message),
-                        Toast.LENGTH_SHORT, GB.INFO);
-                PeriodicExporter.trigger();
-            }
-        });
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     private String getAutoExportLocationPreferenceString() {
-        String autoExportLocation = GBApplication.getPrefs().getString(GBPrefs.AUTO_EXPORT_LOCATION, null);
+        String autoExportLocation = GBApplication.getPrefs().getString(GBPrefs.AUTO_EXPORT_DB_LOCATION, null);
         if (autoExportLocation == null) {
             return "";
         }
@@ -275,14 +214,6 @@ public class DataManagementActivity extends AbstractGBActivity {
             }
         }
         return "";
-    }
-
-    private String getAutoExportLocationUserString() {
-        String location = getAutoExportLocationUri();
-        if (location == "") {
-            return getString(R.string.activity_db_management_autoexport_location);
-        }
-        return location;
     }
 
     private boolean hasOldActivityDatabase() {

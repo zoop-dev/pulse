@@ -69,6 +69,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" />
     <uses-permission android:name="android.permission.REQUEST_OBSERVE_COMPANION_DEVICE_PRESENCE" />
@@ -180,6 +181,18 @@
         <activity
             android:name=".activities.maps.MapsSettingsActivity"
             android:label="@string/maps_settings"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
+            android:name=".activities.automations.AutomationsSettingsActivity"
+            android:label="@string/pref_header_automations"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
+            android:name=".activities.automations.AutoExportDbSettingsActivity"
+            android:label="@string/pref_header_auto_export_db"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
+            android:name=".activities.automations.AutoExportZipSettingsActivity"
+            android:label="@string/pref_header_auto_export_zip"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".activities.maps.MapsTrackActivity"
@@ -516,6 +529,10 @@
             android:parentActivityName=".activities.app_specific_notifications.AppSpecificNotificationSettingsActivity"
             />
 
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false" />
         <service
             android:name=".externalevents.NotificationListener"
             android:label="@string/app_name"

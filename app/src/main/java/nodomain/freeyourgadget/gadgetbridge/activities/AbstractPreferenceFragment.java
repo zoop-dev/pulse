@@ -52,12 +52,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.XDatePreference;
 import nodomain.freeyourgadget.gadgetbridge.util.XDatePreferenceFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.XTimePreference;
@@ -266,8 +269,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
      */
     private class SharedPreferencesChangeHandler implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
-        public void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
+        public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
             LOG.trace("Preference changed: {}", key);
+
+            final Prefs prefs = new Prefs(sharedPreferences);
 
             if (key == null) {
                 LOG.warn("Preference null, ignoring");
@@ -281,18 +286,20 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
                 return;
             }
 
-            if (preference instanceof SeekBarPreference) {
-                final SeekBarPreference seekBarPreference = (SeekBarPreference) preference;
+            if (preference instanceof SeekBarPreference seekBarPreference) {
                 seekBarPreference.setValue(prefs.getInt(key, seekBarPreference.getValue()));
-            } else if (preference instanceof SwitchPreferenceCompat) {
-                final SwitchPreferenceCompat switchPreference = (SwitchPreferenceCompat) preference;
+            } else if (preference instanceof SwitchPreferenceCompat switchPreference) {
                 switchPreference.setChecked(prefs.getBoolean(key, switchPreference.isChecked()));
-            } else if (preference instanceof ListPreference) {
-                final ListPreference listPreference = (ListPreference) preference;
+            } else if (preference instanceof ListPreference listPreference) {
                 listPreference.setValue(prefs.getString(key, listPreference.getValue()));
-            } else if (preference instanceof EditTextPreference) {
-                final EditTextPreference editTextPreference = (EditTextPreference) preference;
+            } else if (preference instanceof EditTextPreference editTextPreference) {
                 editTextPreference.setText(prefs.getString(key, editTextPreference.getText()));
+            } else if (preference instanceof XTimePreference xTimePreference) {
+                final LocalTime localTime = prefs.getLocalTime(key, xTimePreference.getPrefValue());
+                xTimePreference.setValue(localTime.getHour(), localTime.getMinute());
+            } else if (preference instanceof XDatePreference xDatePreference) {
+                final LocalDate localDate = prefs.getLocalDate(key, xDatePreference.getPrefValue());
+                xDatePreference.setValue(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
             } else if (preference instanceof PreferenceScreen || Preference.class.equals(preference.getClass())) {
                 LOG.trace("Unknown preference class {} for {}, ignoring", preference.getClass(), key);
             } else {
@@ -303,12 +310,11 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
                 final String summary;
 
                 // For multi select preferences, let's set the summary to the values, comma-delimited
-                if (preference instanceof MultiSelectListPreference) {
+                if (preference instanceof MultiSelectListPreference multiSelectListPreference) {
                     final Set<String> prefSetValue = prefs.getStringSet(key, Collections.emptySet());
                     if (prefSetValue.isEmpty()) {
                         summary = requireContext().getString(R.string.not_set);
                     } else {
-                        final MultiSelectListPreference multiSelectListPreference = (MultiSelectListPreference) preference;
                         final CharSequence[] entries = multiSelectListPreference.getEntries();
                         final CharSequence[] entryValues = multiSelectListPreference.getEntryValues();
                         final List<String> translatedEntries = new ArrayList<>();

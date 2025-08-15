@@ -48,15 +48,41 @@ public class GBPrefs extends Prefs {
     public static final String DEVICE_AUTO_RECONNECT = "prefs_key_device_auto_reconnect";
     public static final String DEVICE_CONNECT_BACK = "prefs_key_device_reconnect_on_acl";
     private static final String AUTO_START = "general_autostartonboot";
-    public static final String AUTO_EXPORT_ENABLED = "auto_export_enabled";
-    public static final String AUTO_EXPORT_LOCATION = "auto_export_location";
+    public static final String AUTO_CONNECT_BLUETOOTH = "general_autoconnectonbluetooth";
     public static final String PING_TONE = "ping_tone";
-    public static final String AUTO_EXPORT_INTERVAL = "auto_export_interval";
     private static final boolean AUTO_START_DEFAULT = true;
     public static final String RTL_SUPPORT = "rtl";
     public static final String RTL_CONTEXTUAL_ARABIC = "contextualArabic";
     public static boolean AUTO_RECONNECT_DEFAULT = true;
     public static final String PREF_ALLOW_INTENT_API = "prefs_key_allow_bluetooth_intent_api";
+
+    public static final String PREF_AUTO_FETCH_ENABLED = "auto_fetch_enabled";
+    public static final String PREF_AUTO_FETCH_INTERVAL_LIMIT = "auto_fetch_interval_limit";
+
+    // These should get the prefix appended - see below
+    public static final String AUTO_EXPORT_ENABLED = "auto_export_enabled";
+    public static final String AUTO_EXPORT_LOCATION = "auto_export_location";
+    public static final String AUTO_EXPORT_INTERVAL = "auto_export_interval";
+    public static final String AUTO_EXPORT_LAST_EXECUTION = "auto_export_last_execution";
+    public static final String AUTO_EXPORT_NEXT_EXECUTION = "auto_export_next_execution";
+
+    // DB export has no prefix
+    public static final String AUTO_EXPORT_DB_ENABLED = AUTO_EXPORT_ENABLED;
+    public static final String AUTO_EXPORT_DB_LOCATION = AUTO_EXPORT_LOCATION;
+    public static final String AUTO_EXPORT_DB_INTERVAL = AUTO_EXPORT_INTERVAL;
+    public static final String AUTO_EXPORT_DB_LAST_EXECUTION = AUTO_EXPORT_LAST_EXECUTION;
+    public static final String AUTO_EXPORT_DB_NEXT_EXECUTION = AUTO_EXPORT_NEXT_EXECUTION;
+
+    // Zip export with "zip_" prefix
+    public static final String AUTO_EXPORT_ZIP_ENABLED = "zip_auto_export_enabled";
+    public static final String AUTO_EXPORT_ZIP_LOCATION = "zip_auto_export_location";
+    public static final String AUTO_EXPORT_ZIP_INTERVAL = "zip_auto_export_interval";
+    public static final String AUTO_EXPORT_ZIP_LAST_EXECUTION = "zip_auto_export_last_execution";
+    public static final String AUTO_EXPORT_ZIP_NEXT_EXECUTION = "zip_auto_export_next_execution";
+
+    // Intent API
+    public static final String INTENT_API_BROADCAST_EXPORT_DB = "intent_api_broadcast_export";
+    public static final String INTENT_API_BROADCAST_EXPORT_ZIP = "intent_api_broadcast_zip_export";
 
     public static final String RECONNECT_SCAN_KEY = "prefs_general_key_auto_reconnect_scan";
     public static final boolean RECONNECT_SCAN_DEFAULT = false;

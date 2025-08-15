@@ -625,6 +625,8 @@
     <string name="pref_sleep_mode_smart_enable_summary">Enable the sleep mode automatically when wearing the band during sleep</string>
     <!-- Auto export preferences -->
     <string name="pref_header_auto_export">Auto export</string>
+    <string name="pref_header_auto_export_db">Auto export database</string>
+    <string name="pref_header_auto_export_zip">Auto export zip</string>
     <string name="pref_title_auto_export_enabled">Auto export enabled</string>
     <string name="pref_title_auto_export_location">Export location</string>
     <string name="pref_title_auto_export_interval">Export interval</string>
@@ -936,6 +938,9 @@
     <string name="notif_battery_full">%1$s battery full</string>
     <string name="notif_battery_low_extended">%1$s battery low: %2$s</string>
     <string name="notif_export_failed_title">Export database failed! Please check your settings.</string>
+    <string name="notif_export_location_not_set">Export location not configured</string>
+    <string name="notif_export_zip_failed_title">Export zip failed! Please check your settings.</string>
+    <string name="unknown_error">Unknown error</string>
     <string name="prefs_charts_tabs">Charts tabs</string>
     <string name="prefs_charts_tabs_summary">Visible chart tabs</string>
     <string name="sleepchart_your_sleep">Sleep</string>
@@ -1360,13 +1365,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Old activity data deleted.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Old Activity database deletion failed.</string>
     <string name="dbmanagementactivity_overwrite">Overwrite</string>
-    <string name="activity_db_management_autoexport_explanation">Database autoexport location has been set to:</string>
-    <string name="autoExport_lastTime_label">Last AutoExport: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">AutoExport is enabled.</string>
-    <string name="activity_db_management_autoexport_enabled_no">AutoExport is not enabled.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">AutoExport has (originally) been scheduled for %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">AutoExport has not been not scheduled.</string>
-    <string name="activity_db_management_autoexport_label">AutoExport</string>
     <string name="activity_db_management_autoexport_location">Location could not be understood. Likely an issue of newer Android permission system. Most likely, autoexport is not working now.</string>
     <string name="activity_DB_ExportButton">Export Data</string>
     <string name="activity_DB_import_button">Import Data</string>
@@ -3452,8 +3452,13 @@
     <string name="intent_api_allow_trigger_export_summary">Allow triggering database export via Intent API</string>
     <string name="intent_api_broadcast_export_title">Broadcast on database export</string>
     <string name="intent_api_broadcast_export_summary">Broadcast an intent when database export finishes</string>
+    <string name="intent_api_allow_trigger_zip_export_title">Allow zip export</string>
+    <string name="intent_api_allow_trigger_zip_export_summary">Allow triggering zip export via Intent API</string>
+    <string name="intent_api_broadcast_zip_export_title">Broadcast on zip export</string>
+    <string name="intent_api_broadcast_zip_export_summary">Broadcast an intent when zip export finishes</string>
     <string name="intent_api_broadcast_activity_sync_title">Broadcast on activity sync finish</string>
     <string name="intent_api_broadcast_activity_sync_summary">Broadcast an intent when activity sync finishes for any device</string>
+    <string name="intent_activity_sync_title">Activity sync</string>
     <string name="intent_api_allow_debug_commands_title">Allow Debug Commands</string>
     <string name="intent_api_allow_debug_commands_summary">Allow triggering debug menu commands via Intent API</string>
     <string name="devicetype_super_cars" translatable="false">Shell Racing</string>
@@ -4265,4 +4270,15 @@
     <string name="connect">Connect</string>
     <string name="pref_new_sync_protocol_title">New sync protocol</string>
     <string name="pref_new_sync_protocol_summary">Enable this if some information is not being fetched. Experimental and potentially unstable.</string>
+    <string name="auto_export_last_execution">Last execution</string>
+    <string name="auto_export_next_execution">Next execution</string>
+    <string name="work_info_status_running">Running</string>
+    <string name="work_info_status_enqueued">Enqueued</string>
+    <string name="work_info_status_succeeded">Succeeded</string>
+    <string name="work_info_status_failed">Failed</string>
+    <string name="work_info_status_blocked">Blocked</string>
+    <string name="work_info_status_cancelled">Cancelled</string>
+    <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
+    <string name="datetime_in_the_future">%1$s (in %2$s)</string>
+    <string name="datetime_in_the_past">%1$s (%2$s ago)</string>
 </resources>

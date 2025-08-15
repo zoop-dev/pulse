@@ -256,11 +256,12 @@ public class AndroidUtils {
             String[] projection = {
                     MediaStore.Images.Media.DATA
             };
-            Cursor cursor = context.getContentResolver()
-                    .query(uri, projection, selection, selectionArgs, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            if (cursor.moveToFirst()) {
-                return cursor.getString(column_index);
+            try (Cursor cursor = context.getContentResolver()
+                    .query(uri, projection, selection, selectionArgs, null)) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
             }
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();

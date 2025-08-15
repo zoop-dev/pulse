@@ -46,7 +46,6 @@ public abstract class AbstractZipBackupJob implements Runnable {
             .create();
 
     private final Context mContext;
-    private final Handler mHandler;
     private final ZipBackupCallback mCallback;
 
     private final AtomicBoolean aborted = new AtomicBoolean(false);
@@ -56,7 +55,6 @@ public abstract class AbstractZipBackupJob implements Runnable {
 
     public AbstractZipBackupJob(final Context context, final ZipBackupCallback callback) {
         this.mContext = context;
-        this.mHandler = new Handler(context.getMainLooper());
         this.mCallback = callback;
     }
 
@@ -83,18 +81,16 @@ public abstract class AbstractZipBackupJob implements Runnable {
         }
         lastProgressUpdateTs = now;
         lastProgressUpdateMessage = message;
-        mHandler.post(() -> {
-            mCallback.onProgress(percentage, getContext().getString(message, formatArgs));
-        });
+        mCallback.onProgress(percentage, getContext().getString(message, formatArgs));
     }
 
     @WorkerThread
     protected void onSuccess(final String warnings) {
-        mHandler.post(() -> mCallback.onSuccess(warnings));
+        mCallback.onSuccess(warnings);
     }
 
     @WorkerThread
     protected void onFailure(final String errorMessage) {
-        mHandler.post(() -> mCallback.onFailure(errorMessage));
+        mCallback.onFailure(errorMessage);
     }
 }

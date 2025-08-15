@@ -156,58 +156,6 @@
                 android:text="@string/activity_db_management_clean_export_directory_label" />
 
             <TextView
-                android:id="@+id/autoExportTitleLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/activity_db_management_autoexport_label"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/accent" />
-
-            <TextView
-                android:id="@+id/autoExportEnabled"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/autoExportScheduled"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_db_management_autoexport_scheduled_no"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-            <TextView
-                android:id="@+id/autoExport_lastTime_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/autoExport_lastTime_label"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/autoExportLocation_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_db_management_autoexport_explanation"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/autoExportLocation_path"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/testExportDBButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_DB_test_export_button"
-                grid:layout_gravity="center" />
-
-            <TextView
                 android:id="@+id/mergeOldActivityDataTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

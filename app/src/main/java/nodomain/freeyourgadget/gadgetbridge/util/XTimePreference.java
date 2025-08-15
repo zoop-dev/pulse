@@ -31,34 +31,19 @@ public class XTimePreference extends DialogPreference {
 
     protected Format format = Format.AUTO;
 
-    public XTimePreference(Context context, AttributeSet attrs) {
+    public XTimePreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
+    protected Object onGetDefaultValue(final TypedArray a, final int index) {
         return a.getString(index);
     }
 
     @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String time;
-
-        if (restoreValue) {
-            if (defaultValue == null) {
-                time = getPersistedString("00:00");
-            } else {
-                time = getPersistedString(defaultValue.toString());
-            }
-        } else {
-            if (defaultValue != null) {
-                time = defaultValue.toString();
-            } else {
-                time = "00:00";
-            }
-        }
-
-        String[] pieces = time.split(":");
+    protected void onSetInitialValue(final Object defaultValue) {
+        final String time = getPersistedString((String) defaultValue);
+        final String[] pieces = time.split(":");
 
         hour = Integer.parseInt(pieces[0]);
         minute = Integer.parseInt(pieces[1]);
@@ -75,6 +60,8 @@ public class XTimePreference extends DialogPreference {
         this.minute = minute;
 
         persistStringValue(getPrefValue());
+
+        updateSummary();
     }
 
     void updateSummary() {
@@ -85,14 +72,14 @@ public class XTimePreference extends DialogPreference {
     }
 
     String getTime24h() {
-        return String.format("%02d", hour) + ":" + String.format("%02d", minute);
+        return String.format(Locale.ROOT, "%02d:%02d", hour, minute);
     }
 
     private String getTime12h() {
-        String suffix = hour < 12 ? " AM" : " PM";
-        int h = hour > 12 ? hour - 12 : hour;
+        final String suffix = hour < 12 ? "AM" : "PM";
+        final int h = hour > 12 ? hour - 12 : hour;
 
-        return h + ":" + String.format("%02d", minute) + suffix;
+        return String.format(Locale.ROOT, "%d:%02d %s",h, minute, suffix);
     }
 
     public void setFormat(final Format format) {
@@ -103,26 +90,21 @@ public class XTimePreference extends DialogPreference {
         return format;
     }
 
-    void persistStringValue(String value) {
+    void persistStringValue(final String value) {
         persistString(value);
     }
 
     public boolean is24HourFormat() {
-        switch (format) {
-            case FORMAT_24H:
-                return true;
-            case FORMAT_12H:
-                return false;
-            case AUTO:
-            default:
-                return DateFormat.is24HourFormat(getContext());
-        }
+        return switch (format) {
+            case FORMAT_24H -> true;
+            case FORMAT_12H -> false;
+            default -> DateFormat.is24HourFormat(getContext());
+        };
     }
 
     public enum Format {
         AUTO,
         FORMAT_24H,
         FORMAT_12H,
-        ;
     }
 }
