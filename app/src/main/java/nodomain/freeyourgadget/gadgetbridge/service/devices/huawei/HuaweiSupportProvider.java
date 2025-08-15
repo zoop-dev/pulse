@@ -1788,34 +1788,6 @@ public class HuaweiSupportProvider {
         }
     }
 
-    public void addStepData(int timestamp, short steps, short calories, short distance, byte spo, byte heartrate) {
-        try (DBHandler db = GBApplication.acquireDB()) {
-            Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-            Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
-            HuaweiSampleProvider sampleProvider = new HuaweiSampleProvider(gbDevice, db.getDaoSession());
-
-            HuaweiActivitySample activitySample = new HuaweiActivitySample(
-                    timestamp,
-                    deviceId,
-                    userId,
-                    timestamp + 60,
-                    FitnessData.MessageData.stepId,
-                    ActivitySample.NOT_MEASURED,
-                    1,
-                    steps,
-                    calories,
-                    distance,
-                    spo,
-                    heartrate
-            );
-            activitySample.setProvider(sampleProvider);
-
-            sampleProvider.addGBActivitySample(activitySample);
-        } catch (Exception e) {
-            LOG.error("Failed to add step data to database", e);
-        }
-    }
-
     public void addStressData(long startTime, long endTime, byte stress, byte level) {
         try (DBHandler db = GBApplication.acquireDB()) {
             final Device device = DBHelper.getDevice(getDevice(), db.getDaoSession());
