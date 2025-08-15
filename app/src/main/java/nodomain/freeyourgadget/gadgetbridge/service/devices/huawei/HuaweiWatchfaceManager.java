@@ -29,6 +29,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -44,13 +45,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetW
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWatchfaceOperation;
 
-public class HuaweiWatchfaceManager
-{
+public class HuaweiWatchfaceManager {
     static Logger LOG = LoggerFactory.getLogger(HuaweiCoordinator.class);
 
     public static class Resolution {
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
+
         public Resolution() {
             // Huawei sizes    "height*width"
             map.put("HWHD01", "390*390");
@@ -68,29 +69,24 @@ public class HuaweiWatchfaceManager
             map.put("HWHD13", "480*408");
             //Honor sizes
             map.put("HNHD01", "466*466");
-            map.put("HNHD02","368*194");
-            map.put("HNHD03","450*390");
-            map.put("HNHD04","454*454");
-            map.put("QXHD01","402*256");
-            map.put("QXHD02","502*410");
+            map.put("HNHD02", "368*194");
+            map.put("HNHD03", "450*390");
+            map.put("HNHD04", "454*454");
+            map.put("QXHD01", "402*256");
+            map.put("QXHD02", "502*410");
         }
 
-        public boolean  isValid(String themeVersion, String screenResolution) {
-            if(!map.containsKey(themeVersion))
+        public boolean isValid(String themeVersion, String screenResolution) {
+            if (!map.containsKey(themeVersion))
                 return false;
-            String screen = map.get(themeVersion).toString();
-            if (screenResolution.equals(screen)) {
-                return true;
-            } else {
-                return false;
-            }
+            String screen = map.get(themeVersion);
+            return screenResolution.equals(screen);
         }
 
         public String screenByThemeVersion(String themeVersion) {
-            if(!map.containsKey(themeVersion))
+            if (!map.containsKey(themeVersion))
                 return "0x0";
-            String screen = map.get(themeVersion).toString();
-            return screen;
+            return map.get(themeVersion);
         }
 
     }
@@ -115,6 +111,7 @@ public class HuaweiWatchfaceManager
                 return "";
             }
         }
+
         public WatchfaceDescription(String xmlStr) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder;
@@ -133,13 +130,13 @@ public class HuaweiWatchfaceManager
                 }
 
                 this.title = parseElement(doc, "title");
-                this.title_cn = parseElement(doc,"title-cn");
-                this.author = parseElement(doc,"author");
-                this.designer = parseElement(doc,"designer");
-                this.screen = parseElement(doc,"screen");
-                this.version = parseElement(doc,"version");
-                this.font = parseElement(doc,"font");
-                this.font_cn = parseElement(doc,"font-cn");
+                this.title_cn = parseElement(doc, "title-cn");
+                this.author = parseElement(doc, "author");
+                this.designer = parseElement(doc, "designer");
+                this.screen = parseElement(doc, "screen");
+                this.version = parseElement(doc, "version");
+                this.font = parseElement(doc, "font");
+                this.font_cn = parseElement(doc, "font-cn");
 
             } catch (Exception e) {
                 LOG.warn("exception in constructor", e);
@@ -150,7 +147,7 @@ public class HuaweiWatchfaceManager
     private List<Watchface.InstalledWatchfaceInfo> installedWatchfaceInfoList;
     private HashMap<String, String> watchfacesNames;
 
-    private HuaweiSupportProvider support;
+    private final HuaweiSupportProvider support;
 
     public HuaweiWatchfaceManager(HuaweiSupportProvider support) {
         this.support = support;
@@ -160,27 +157,19 @@ public class HuaweiWatchfaceManager
         this.installedWatchfaceInfoList = list;
     }
 
-    public List<Watchface.InstalledWatchfaceInfo> getInstalledWatchfaceInfoList()
-    {
+    public List<Watchface.InstalledWatchfaceInfo> getInstalledWatchfaceInfoList() {
         return installedWatchfaceInfoList;
     }
 
-    public void  setWatchfacesNames(HashMap<String, String> map) {
+    public void setWatchfacesNames(HashMap<String, String> map) {
         this.watchfacesNames = map;
     }
 
 
     public String getRandomName() {
         Random random = new Random();
-
-        String res="";
-        for (int i = 0; i < 9; i++) {
-            int ran = random.nextInt(9);
-            res += String.valueOf(ran);
-        }
-
-        res += "_1.0.0";
-        return res;
+        int value = random.nextInt(1_000_000_000); // 0..999,999,999
+        return String.format(Locale.ROOT, "%09d_1.0.0", value);
     }
 
     public static UUID toWatchfaceUUID(final String id) {
@@ -241,7 +230,6 @@ public class HuaweiWatchfaceManager
         } catch (IOException e) {
             LOG.error("Could not get watchface names", e);
         }
-
     }
 
     public void requestWatchfaceList() {
@@ -257,7 +245,6 @@ public class HuaweiWatchfaceManager
             }
         };
 
-
         try {
             GetWatchfacesList getWatchfacesList = new GetWatchfacesList(support);
             getWatchfacesList.setFinalizeReq(finalizeReq);
@@ -265,8 +252,7 @@ public class HuaweiWatchfaceManager
         } catch (IOException e) {
             LOG.error("Failed to get watchfaces list", e);
         }
-
-    };
+    }
 
     public void setWatchface(UUID uuid) {
         Request.RequestCallback finalizeReq = new Request.RequestCallback() {
@@ -325,7 +311,6 @@ public class HuaweiWatchfaceManager
                 break;
             }
         }
-        String filename = name + "_" + version;
-        return filename;
+        return name + "_" + version;
     }
 }

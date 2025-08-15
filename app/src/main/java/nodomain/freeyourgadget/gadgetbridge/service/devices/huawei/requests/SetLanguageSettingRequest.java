@@ -51,21 +51,21 @@ public class SetLanguageSettingRequest extends Request {
         String localeString = GBApplication
             .getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress())
             .getString(DeviceSettingsPreferenceConst.PREF_LANGUAGE, "auto");
-        if (localeString == null || localeString.equals("auto")) {
+        if (localeString.equals("auto")) {
             String language = Locale.getDefault().getLanguage();
             String country = Locale.getDefault().getCountry();
-            if (country.equals("")) {
+            if (country.isEmpty()) {
                 country = language;
             }
             localeString = language + "-" + country.toUpperCase();
         } else {
             localeString = localeString.replace("_", "-");
         }
-        LOG.debug("localeString: " + localeString);
+        LOG.debug("localeString: {}", localeString);
         String measurementString = GBApplication
             .getPrefs()
             .getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, getContext().getString(R.string.p_unit_metric));
-        LOG.debug("measurementString: " + measurementString);
+        LOG.debug("measurementString: {}", measurementString);
         byte measurement = measurementString.equals("metric") ? LocaleConfig.MeasurementSystem.metric : LocaleConfig.MeasurementSystem.imperial;
         try {
             return new SetLanguageSetting(paramsProvider, localeString.getBytes(StandardCharsets.UTF_8), measurement).serialize();

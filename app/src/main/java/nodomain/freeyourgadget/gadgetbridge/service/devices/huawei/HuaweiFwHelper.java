@@ -263,7 +263,7 @@ public class HuaweiFwHelper {
                 previewBitmap = BitmapFactory.decodeByteArray(preview, 0, preview.length);
             }
 
-            String watchfacePath="";
+            String watchfacePath;
             if (watchfaceDescription.isHonor) {
                 watchfacePath ="com.honor.watchface";
             } else {
