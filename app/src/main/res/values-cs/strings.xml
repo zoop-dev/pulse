@@ -3959,4 +3959,8 @@
     <string name="alarm_label_meditate">Meditace</string>
     <string name="pref_new_sync_protocol_title">Nový synchronizační protokol</string>
     <string name="pref_new_sync_protocol_summary">Povolte, pokud nejsou načítány některé informace. Experimentální a potenciálně nestabilní.</string>
+    <string name="delete_device_and_retain_files">Ponechat soubory</string>
+    <string name="error_message">Chyba: %s</string>
+    <string name="error_deleting_file">nepodařilo se smazat soubor „%1$s“</string>
+    <string name="error_deleting_file_exception">nepodařilo se smazat soubor „%1$s“: %2$s</string>
 </resources>
