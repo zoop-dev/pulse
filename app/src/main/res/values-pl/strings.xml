@@ -3083,7 +3083,7 @@
     <string name="activity_type_free_training">Wolny trening</string>
     <string name="activity_type_javelin">Rzut oszczepem</string>
     <string name="agps_status_missing">Brak</string>
-    <string name="agps_status_pending">W trakcie</string>
+    <string name="agps_status_pending">Oczekuje na dane</string>
     <string name="agps_status_current">Aktualny</string>
     <string name="hr_resting">Spoczynkowe</string>
     <string name="hr_maximum">Maksymalne</string>
@@ -3982,4 +3982,25 @@
     <string name="delete_device_and_retain_files">Zachowaj pliki</string>
     <string name="error_deleting_file">usunięcie pliku „%1$s” nie powiodło się</string>
     <string name="error_deleting_file_exception">usunięcie pliku „%1$s” nie powiodło się: %2$s</string>
+    <string name="pref_header_auto_export_db">Automatyczny eksport bazy danych</string>
+    <string name="pref_header_auto_export_zip">Automatyczny eksport do ZIP</string>
+    <string name="notif_export_location_not_set">Lokalizacja eksportu nie została skonfigurowana</string>
+    <string name="notif_export_zip_failed_title">Eksport do ZIP nie powiódł się! Sprawdź swoje ustawienia.</string>
+    <string name="unknown_error">Nieznany błąd</string>
+    <string name="intent_api_allow_trigger_zip_export_title">Zezwól na eksport do ZIP</string>
+    <string name="intent_api_allow_trigger_zip_export_summary">Zezwól na wyzwalanie eksportu do ZIP przez Intent API</string>
+    <string name="intent_api_broadcast_zip_export_title">Emisja (Broadcast) przy eksporcie do ZIP</string>
+    <string name="intent_api_broadcast_zip_export_summary">Wyślij intencję, gdy eksport do ZIP się zakończy</string>
+    <string name="intent_activity_sync_title">Synchronizacja aktywności</string>
+    <string name="auto_export_last_execution">Ostatnie wykonanie</string>
+    <string name="auto_export_next_execution">Następne wykonanie</string>
+    <string name="work_info_status_running">W trakcie</string>
+    <string name="work_info_status_enqueued">W kolejce</string>
+    <string name="work_info_status_succeeded">Powiodło się</string>
+    <string name="work_info_status_failed">Nie powiodło się</string>
+    <string name="work_info_status_blocked">Zablokowano</string>
+    <string name="work_info_status_cancelled">Anulowano</string>
+    <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
+    <string name="datetime_in_the_future">%1$s (za %2$s)</string>
+    <string name="datetime_in_the_past">%1$s (%2$s temu)</string>
 </resources>
