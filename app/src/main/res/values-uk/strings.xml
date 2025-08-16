@@ -2958,10 +2958,10 @@
     <string name="pref_force_enable_heartrate_support_summary">Примусово ввімкнути підтримування вимірювання пульсу.\nВИКОРИСТОВУЙТЕ НА ВЛАСНИЙ РИЗИК</string>
     <string name="pref_force_enable_spo2_support">Примусове підтримування вимірювання SpO2</string>
     <string name="idasen_pref_stand_height">Висота положення для стояння (у сантиметрах)</string>
-    <string name="huawei_trusleep_summary">Відстежуйте якість сну та дихання в реальному часі.\nАналізуйте свої моделі сну та точно діагностуйте до 6 типів проблем зі сном.</string>
+    <string name="huawei_trusleep_summary">Слідкуйте за якістю свого сну в режимі реального часу.</string>
     <string name="soundcore_equalizer_band7">Діапазон 7</string>
     <string name="mijia_lywsd_comfort_humidity_title">Вологість (%)</string>
-    <string name="huawei_trusleep_warning">Попередження: увімкнення цієї функції призведе до того, що весь сон показуватиметься як легкий у Gadgetbridge! Натисніть тут, якщо ви погоджуєтеся.</string>
+    <string name="huawei_trusleep_warning">Попередження: TruSleep™ реалізовано не повністю. Його ввімкнення на деяких пристроях призведе до того, що всі дані про сон відображатимуться як легкий сон у Gadgetbridge!</string>
     <string name="soundcore_equalizer_value">Значення</string>
     <string name="soundcore_equalizer_band8">Діапазон 8</string>
     <string name="pref_heart_rate_realtime_mode">Режим автоматичного вимірювання пульсу в реальному часі</string>
@@ -2989,7 +2989,7 @@
     <string name="miscale_weight_unit_imperial">Англійська (фунти)</string>
     <string name="idasen_control_button_stand">ДЛЯ СТОЯННЯ</string>
     <string name="idasen_pref_value_warning">Значення має бути між 62 – 126 см</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
     <string name="pref_spo_automatic_enable">Увімкнути автоматичне вимірювання SpO2</string>
     <string name="pref_force_dnd_support">Примусове підтримування режиму «Не турбувати»</string>
     <string name="idasen_pref_sit_height">Висота положення для сидіння (у сантиметрах)</string>
@@ -3820,4 +3820,5 @@
     <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
     <string name="datetime_in_the_future">%1$s (з %2$s)</string>
     <string name="datetime_in_the_past">%1$s (%2$s тому)</string>
+    <string name="huawei_sleep_breath_summary">Оцініть своє дихання в тихому середовищі. Це може вплинути на час роботи батареї.\nПопередження: Ще не синхронізовано з Gadgetbridge.</string>
 </resources>
