@@ -2490,8 +2490,7 @@
     <string name="huawei_alarm_event_description">لا تحدد خانة اختيار التنبيه الذكي.</string>
     <string name="huawei_trusleep_title">هواوي ترو سليب™</string>
     <string name="huawei_trusleep_summary_light">تحسين مراقبة النوم</string>
-    <string name="huawei_trusleep_summary">مراقبة نوعية نومك ونمط التنفس في الوقت الحقيقي.
-\nقم بتحليل أنماط نومك وتشخيص 6 أنواع من مشاكل النوم بدقة.</string>
+    <string name="huawei_trusleep_summary">مراقبة نوعية نومك ونمط التنفس في الوقت الحقيقي. \nقم بتحليل أنماط نومك وتشخيص 6 أنواع من مشاكل النوم بدقة.</string>
     <string name="pref_force_wear_location_summary">فرض دعم موقع wear.
 \nاستخدام على مسؤوليتك الخاصة</string>
     <string name="huawei_reparse_workout_data_description">لن يقدم هذا شيئا إلا بعد تحديثات معينة</string>
