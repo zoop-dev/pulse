@@ -2430,8 +2430,7 @@ Temps de sommeil préféré en heures</string>
     <string name="sony_protocol_v3">Version 3</string>
     <string name="huawei_alarm_smart_description">Ne pas désactiver l\'option réveil intelligent.</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="huawei_trusleep_summary">Surveiller la qualité de votre sommeil et de votre respiration en temps réel.
-\nAnalyser votre mode de sommeil afin de diagnostiquer efficacement 6 types de problèmes de sommeil.</string>
+    <string name="huawei_trusleep_summary">Surveiller la qualité de votre sommeil et de votre respiration en temps réel. \nAnalyser votre mode de sommeil afin de diagnostiquer efficacement 6 types de problèmes de sommeil.</string>
     <string name="pref_enable_call_accept">Autoriser les appels</string>
     <string name="pref_enable_call_reject_summary">Permettre le rejet des appels depuis l\'appareil</string>
     <string name="pref_heartrate_automatic_enable">Permettre la mesure automatique du rythme cardiaque</string>
