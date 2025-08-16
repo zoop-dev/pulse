@@ -14,9 +14,7 @@ import android.widget.Toast
 import androidx.core.app.NavUtils
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
@@ -29,10 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager
-import org.mapsforge.core.model.BoundingBox
-import org.mapsforge.core.model.Dimension
-import org.mapsforge.core.model.LatLong
-import org.mapsforge.core.util.LatLongUtils
 
 class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
     companion object {
@@ -262,7 +256,7 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
             }
 
             setInstallEnabled(false)
-            installHandler?.onStartInstall(device)
+            installHandler.onStartInstall(device)
 
             val bundle = Bundle().apply {
                 putString(GpxRouteInstallHandler.EXTRA_TRACK_NAME, trackName)
@@ -285,36 +279,10 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
 
     private fun loadMapTrack(gpxFile: GpxFile) {
         lifecycleScope.launch {
-            val (center, zoom, trackPoints) = withContext(Dispatchers.Default) {
-                val points = gpxFile.activityPoints.mapNotNull { it.location }
+            val points = gpxFile.activityPoints.mapNotNull { it.location }
 
-                if (points.isEmpty()) {
-                    return@withContext Triple(null, null, emptyList<LatLong>())
-                }
-
-                val latitudes = points.map { it.latitude }
-                val longitudes = points.map { it.longitude }
-
-                val maxLat = latitudes.maxOrNull() ?: 0.0
-                val minLat = latitudes.minOrNull() ?: 0.0
-                val maxLon = longitudes.maxOrNull() ?: 0.0
-                val minLon = longitudes.minOrNull() ?: 0.0
-
-                val latLongs = points.map { LatLong(it.latitude, it.longitude) }
-
-                val mapCenter = LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2)
-                val mapZoom = LatLongUtils.zoomForBounds(
-                    Dimension(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels),
-                    BoundingBox(minLat, minLon, maxLat, maxLon),
-                    binding.gpxMapView.model.displayModel.tileSize
-                )
-                Triple(mapCenter, mapZoom, latLongs)
-            }
-
-            if (trackPoints.isNotEmpty() && center != null && zoom != null) {
-                mapsManager?.setTrack(trackPoints)
-                binding.gpxMapView.setCenter(center)
-                binding.gpxMapView.setZoomLevel(zoom)
+            if (points.isNotEmpty()) {
+                mapsManager?.setTrack(points)
             } else {
                 binding.gpxMapView.visibility = View.GONE
             }

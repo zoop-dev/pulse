@@ -51,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsHost;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DefaultChartsData;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SampleXLabelFormatter;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslation;
+import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel;
 import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -72,6 +73,8 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     private int startTime;
     private int endTime;
 
+    private boolean chartsSetUp;
+
     @Override
     protected void onReceive(final Context context, final Intent intent) {
         // FIXME: We need to override this, or we crash
@@ -90,6 +93,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         this.endTime = (int) endTime;
         this.gbDevice = gbDevice;
         if (this.view != null) {
+            setupChart();
             createLocalRefreshTask("getting hr and activity", getActivity()).execute();
         }
     }
@@ -124,6 +128,9 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     }
 
     private void setupChart() {
+        if (chartsSetUp) {
+            return;
+        }
         mChart.setBackgroundColor(BACKGROUND_COLOR);
         mChart.getDescription().setTextColor(DESCRIPTION_COLOR);
         configureBarLineChartDefaults(mChart);
@@ -156,6 +163,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         yAxisRight.setAxisMaximum(HeartRateUtils.getInstance().getMaxHeartRate());
         yAxisRight.setAxisMinimum(HeartRateUtils.getInstance().getMinHeartRate());
 
+        chartsSetUp = true;
     }
 
     @Override
@@ -219,7 +227,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
             final DefaultChartsData<LineData> activitySamplesData = buildChartFromSamples(handler);
 
             if (trackFile != null) {
-                final List<ActivityPoint> activityPoints = ActivitySummariesGpsFragment.getActivityPoints(trackFile)
+                final List<ActivityPoint> activityPoints = MapsTrackViewModel.Companion.getActivityPoints(trackFile)
                         .stream()
                         .filter(ap -> ap.getHeartRate() > 0)
                         .collect(Collectors.toList());

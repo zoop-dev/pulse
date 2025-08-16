@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2024-2025 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -18,12 +18,16 @@ package nodomain.freeyourgadget.gadgetbridge.util.maps;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 
 import androidx.documentfile.provider.DocumentFile;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
@@ -39,9 +43,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
+import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 public final class MapsManager {
@@ -171,7 +178,22 @@ public final class MapsManager {
         isMapLoaded = false;
     }
 
-    public void setTrack(final List<LatLong> points) {
+    public void setTrack(final List<? extends GPSCoordinate> trackPoints) {
+        final Accumulator latitudeAccumulator = new Accumulator();
+        final Accumulator longitudeAccumulator = new Accumulator();
+        for (GPSCoordinate trackPoint : trackPoints) {
+            latitudeAccumulator.add(trackPoint.getLatitude());
+            longitudeAccumulator.add(trackPoint.getLongitude());
+        }
+        final double maxLat = latitudeAccumulator.getMax();
+        final double minLat = latitudeAccumulator.getMin();
+        final double maxLon = longitudeAccumulator.getMax();
+        final double minLon = longitudeAccumulator.getMin();
+
+        final List<LatLong> points = trackPoints.stream()
+                .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
+                .collect(Collectors.toList());
+
         if (polyline == null) {
             final Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
             final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, mContext.getResources().getColor(R.color.map_track_default));
@@ -184,6 +206,15 @@ public final class MapsManager {
         }
         polyline.setPoints(points);
         mapView.getLayerManager().redrawLayers();
+
+        mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
+        final DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        final byte zoom = LatLongUtils.zoomForBounds(
+                new Dimension(displayMetrics.widthPixels, displayMetrics.heightPixels),
+                new BoundingBox(minLat, minLon, maxLat, maxLon),
+                mapView.getModel().displayModel.getTileSize()
+        );
+        mapView.setZoomLevel(zoom);
     }
 
     public void reload() {

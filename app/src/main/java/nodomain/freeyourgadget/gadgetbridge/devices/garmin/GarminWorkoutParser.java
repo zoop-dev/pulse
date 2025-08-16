@@ -1,6 +1,101 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.*;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.ACTIVE_SECONDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_CADENCE_SEATING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_CADENCE_STANDING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_DEPTH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_GROUND_CONTACT_TIME;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_GROUND_CONTACT_TIME_BALANCE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_LEFT_PCO;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_LEFT_POWER_PHASE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_LEFT_POWER_PHASE_PEAK;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_PEDAL_SMOOTHNESS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_POWER;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_POWER_SEATING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_POWER_STANDING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_RIGHT_PCO;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_RIGHT_POWER_PHASE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_RIGHT_POWER_PHASE_PEAK;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_TORQUE_EFFECTIVENESS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_VERTICAL_OSCILLATION;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.AVG_VERTICAL_RATIO;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.BOTTOM_TIME;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.CALORIES_ACTIVE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.CALORIES_BURNT;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.CALORIES_RESTING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.DISTANCE_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.DIVE_NUMBER;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.END_CNS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.END_N2;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.ESTIMATED_SWEAT_LOSS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.FRONT_GEAR_SHIFTS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.GAS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.GROUP_INTERVALS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HRV_RMSSD;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HRV_SDRR;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_MAX;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_AEROBIC;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_EASY;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_MAXIMUM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_NA;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_THRESHOLD;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_WARM_UP;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.INTENSITY_FACTOR;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.INTERNAL_HAS_GPS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.LACTATE_THRESHOLD_HR;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.LEFT_RIGHT_BALANCE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAX_CADENCE_SEATING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAX_CADENCE_STANDING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAX_DEPTH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAX_POWER;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAX_POWER_SEATING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAX_POWER_STANDING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.NORMALIZED_POWER;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.PACE_AVG_SECONDS_KM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.PACE_MAX;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.POOL_LENGTH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.REAR_GEAR_SHIFTS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.RECOVERY_TIME;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.RESPIRATION_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.RESPIRATION_MAX;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.RESPIRATION_MIN;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SETS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPEED_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPEED_MAX;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPO2_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STANDING_COUNT;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STANDING_TIME;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.START_CNS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.START_N2;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STEP_LENGTH_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STRESS_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SWIM_AVG_CADENCE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SWOLF_AVG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TOTAL_ASCENT;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TOTAL_DESCENT;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_EFFECT_AEROBIC;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_EFFECT_ANAEROBIC;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_LOAD;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_STRESS_SCORE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BREATHS_PER_MIN;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KCAL;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KG;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_LB;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILLISECONDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_ML;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_ML_KG_MIN;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NONE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_PERCENTAGE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_RPM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_STROKES_PER_LENGTH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_WATT;
 
 import android.content.Context;
 
@@ -14,7 +109,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -25,8 +119,9 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
+import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
@@ -34,6 +129,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDiveGas;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDiveSummary;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitPhysiologicalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
@@ -42,7 +138,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitTimeInZone;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitUserProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDiveSummary;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -67,10 +162,16 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     }
 
     @Override
-    public BaseActivitySummary parseBinaryData(final BaseActivitySummary summary, final boolean forDetails) {
+    public BaseActivitySummary parseBinaryData(BaseActivitySummary summary, boolean forDetails) {
+        // FIXME Do not use this
+        return parseWorkout(summary, forDetails).getSummary();
+    }
+
+    @Override
+    public Workout parseWorkout(BaseActivitySummary summary, final boolean forDetails) {
         if (!forDetails) {
             // Our parsing is too slow, especially without a RecyclerView
-            return summary;
+            return new Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
         }
 
         final long nanoStart = System.nanoTime();
@@ -80,12 +181,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         final String rawDetailsPath = summary.getRawDetailsPath();
         if (rawDetailsPath == null) {
             LOG.warn("No rawDetailsPath");
-            return summary;
+            return new Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
         }
         final File file = FileUtils.tryFixPath(new File(rawDetailsPath));
         if (file == null || !file.isFile() || !file.canRead()) {
             LOG.warn("Unable to read {}", rawDetailsPath);
-            return summary;
+            return new Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
         }
 
         final FitFile fitFile;
@@ -93,20 +194,28 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             fitFile = FitFile.parseIncoming(file);
         } catch (final IOException | FitParseException e) {
             LOG.error("Failed to parse fit file", e);
-            return summary;
+            return new Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
         }
 
         for (final RecordData record : fitFile.getRecords()) {
             handleRecord(record);
         }
 
-        updateSummary(summary);
+        final ActivitySummaryData activitySummaryData = updateSummary(summary);
+
+        final List<WorkoutChart> charts = new LinkedList<>();
+
+        // TODO charts
 
         final long nanoEnd = System.nanoTime();
         final long executionTime = (nanoEnd - nanoStart) / 1000000;
         LOG.trace("Updating summary took {}ms", executionTime);
 
-        return summary;
+        return new Workout(
+                summary,
+                activitySummaryData,
+                charts
+        );
     }
 
     public void reset() {
@@ -177,13 +286,13 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         return true;
     }
 
-    public void updateSummary(final BaseActivitySummary summary) {
+    public ActivitySummaryData updateSummary(final BaseActivitySummary summary) {
+        final ActivitySummaryData summaryData = new ActivitySummaryData();
+
         if (session == null) {
             LOG.error("Got workout, but no session");
-            return;
+            return summaryData;
         }
-
-        final ActivitySummaryData summaryData = new ActivitySummaryData();
 
         final ActivityKind activityKind;
         if (sport != null) {
@@ -660,6 +769,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         );
 
         summary.setSummaryData(summaryData.toString());
+
+        return summaryData;
     }
 
     public Number safeRound(final Number number) {

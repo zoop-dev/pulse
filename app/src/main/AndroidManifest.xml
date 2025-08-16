@@ -657,7 +657,7 @@
             android:parentActivityName=".activities.ControlCenterv2" />
 
         <activity
-            android:name=".activities.ActivitySummaryDetail"
+            android:name=".activities.workouts.WorkoutDetailsActivity"
             android:label="@string/activity_summary_detail"
             android:parentActivityName=".activities.ActivitySummariesActivity"
             android:windowSoftInputMode="stateHidden" />

@@ -140,10 +140,10 @@ public class ActivitySummaryData {
         return Boolean.parseBoolean((String) value);
     }
 
-    @Nullable
+    @NonNull
     public static ActivitySummaryData fromJson(final String string) {
         if (StringUtils.isBlank(string)) {
-            return null;
+            return new ActivitySummaryData();
         }
 
         final Type type = new TypeToken<LinkedHashMap<String, ActivitySummaryEntry>>(){}.getType();

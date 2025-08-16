@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -34,6 +33,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.dao.query.QueryBuilder;
@@ -67,14 +67,14 @@ import com.google.gson.GsonBuilder;
 public class ActivitySummariesAdapter extends AbstractActivityListingAdapter<BaseActivitySummary> {
     protected static final Logger LOG = LoggerFactory.getLogger(ActivitySummariesAdapter.class);
     private final GBDevice device;
-    long dateFromFilter = 0;
-    long dateToFilter = 0;
+    long dateFromFilter;
+    long dateToFilter;
     long deviceFilter;
     String nameContainsFilter;
     List<Long> itemsFilter;
     private int activityKindFilter;
 
-    public ActivitySummariesAdapter(Context context, GBDevice device, int activityKindFilter, long dateFromFilter, long dateToFilter, String nameContainsFilter, long deviceFilter, List itemsFilter) {
+    public ActivitySummariesAdapter(Context context, GBDevice device, int activityKindFilter, long dateFromFilter, long dateToFilter, String nameContainsFilter, long deviceFilter, List<Long> itemsFilter) {
         super(context);
         this.device = device;
         this.activityKindFilter = activityKindFilter;
@@ -91,6 +91,7 @@ public class ActivitySummariesAdapter extends AbstractActivityListingAdapter<Bas
         try (DBHandler handler = GBApplication.acquireDB()) {
             BaseActivitySummaryDao summaryDao = handler.getDaoSession().getBaseActivitySummaryDao();
             Device dbDevice = DBHelper.findDevice(device, handler.getDaoSession());
+            assert dbDevice != null;
 
             QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
 
@@ -149,14 +150,13 @@ public class ActivitySummariesAdapter extends AbstractActivityListingAdapter<Bas
     @NonNull
     @Override
     public AbstractActivityListingViewHolder<BaseActivitySummary> onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        switch (viewType) {
-            case 0: // dashboard
-                return new DashboardViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.activity_summary_dashboard_item, parent, false));
-            case 2: // item
-                return new ActivityItemViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.activity_list_item, parent, false));
-        }
-
-        return super.onCreateViewHolder(parent, viewType);
+        return switch (viewType) {
+            case 0 -> // dashboard
+                    new DashboardViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.activity_summary_dashboard_item, parent, false));
+            case 2 -> // item
+                    new ActivityItemViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.activity_list_item, parent, false));
+            default -> super.onCreateViewHolder(parent, viewType);
+        };
     }
 
     public void setActivityKindFilter(int filter) {
@@ -183,7 +183,7 @@ public class ActivitySummariesAdapter extends AbstractActivityListingAdapter<Bas
         this.deviceFilter = device;
     }
 
-    public int gettActivityKindFilter() {
+    public int getActivityKindFilter() {
         return this.activityKindFilter;
     }
 
@@ -205,7 +205,7 @@ public class ActivitySummariesAdapter extends AbstractActivityListingAdapter<Bas
                 hasGps = true;
             } else if (summary.getSummaryData() != null && summary.getSummaryData().contains(ActivitySummaryEntries.INTERNAL_HAS_GPS)) {
                 final ActivitySummaryData summaryData = ActivitySummaryData.fromJson(summary.getSummaryData());
-                hasGps = summaryData != null && summaryData.getBoolean(INTERNAL_HAS_GPS, false);
+                hasGps = summaryData.getBoolean(INTERNAL_HAS_GPS, false);
             } else {
                 hasGps = false;
             }
@@ -281,8 +281,8 @@ public class ActivitySummariesAdapter extends AbstractActivityListingAdapter<Bas
             activeSecondsSumView.setText(String.format("%s", DateTimeUtils.formatDurationHoursMinutes((long) stats.activeSecondsSum, TimeUnit.SECONDS)));
             activitiesCountView.setText(String.valueOf(activitiesCount));
             String activityName = getContext().getString(R.string.activity_summaries_all_activities);
-            if (gettActivityKindFilter() != 0) {
-                ActivityKind activityKind = ActivityKind.fromCode(gettActivityKindFilter());
+            if (getActivityKindFilter() != 0) {
+                ActivityKind activityKind = ActivityKind.fromCode(getActivityKindFilter());
                 activityName = activityKind.getLabel(getContext());
                 activityIconView.setImageResource(activityKind.getIcon());
                 activityIconBigView.setImageResource(activityKind.getIcon());

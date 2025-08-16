@@ -24,15 +24,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -57,6 +54,7 @@ import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutDetailsActivity;
 import nodomain.freeyourgadget.gadgetbridge.adapter.ActivitySummariesAdapter;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -90,37 +88,29 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch (Objects.requireNonNull(action)) {
-                case GBDevice.ACTION_DEVICE_CHANGED:
-                    GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-                    if (device == null) {
-                        LOG.error("Got device changed without device");
-                        return;
-                    }
-                    if (!device.equals(mGBDevice)) {
-                        return;
-                    }
-                    if (device.isBusy()) {
-                        swipeLayout.setRefreshing(true);
-                    } else {
-                        boolean wasBusy = swipeLayout.isRefreshing();
-                        swipeLayout.setRefreshing(false);
-                        if (wasBusy) {
-                            refresh();
-                        }
-                    }
-                    break;
+            if (!GBDevice.ACTION_DEVICE_CHANGED.equals(intent.getAction())) {
+                LOG.warn("Got unexpected action {}", intent.getAction());
+                return;
+            }
+            final GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+            if (device == null) {
+                LOG.error("Got device changed without device");
+                return;
+            }
+            if (!device.equals(mGBDevice)) {
+                return;
+            }
+            if (device.isBusy()) {
+                swipeLayout.setRefreshing(true);
+            } else {
+                boolean wasBusy = swipeLayout.isRefreshing();
+                swipeLayout.setRefreshing(false);
+                if (wasBusy) {
+                    refresh();
+                }
             }
         }
     };
-
-    public static int getBackgroundColor(Context context) {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.sports_activity_summary_background, typedValue, true);
-        return typedValue.data;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,13 +142,14 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == ACTIVITY_FILTER && resultData != null) {
+        if (requestCode == ACTIVITY_FILTER && resultData != null && resultData.getExtras() != null) {
             Bundle bundle = resultData.getExtras();
             activityFilter = bundle.getInt("activityFilter", 0);
             dateFromFilter = bundle.getLong("dateFromFilter", 0);
             dateToFilter = bundle.getLong("dateToFilter", 0);
             deviceFilter = bundle.getLong("deviceFilter", 0);
             nameContainsFilter = bundle.getString("nameContainsFilter");
+            //noinspection unchecked
             itemsFilter = (List<Long>) bundle.getSerializable("itemsFilter");
             setActivityKindFilter(activityFilter);
             setDateFromFilter(dateFromFilter);
@@ -206,7 +197,7 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
             ActivitySummary summary = activitySummariesAdapter.getItem(position);
             if (summary != null) {
                 try {
-                    showActivityDetail(position);
+                    showActivityDetail(position - 1);
                 } catch (Exception e) {
                     GB.toast(getApplicationContext(), "Unable to display Activity Detail, maybe the activity is not available yet: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                 }
@@ -284,11 +275,7 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
                             .setTitle(ActivitySummariesActivity.this.getString(R.string.sports_activity_confirm_delete_title, toDelete.size()))
                             .setMessage(ActivitySummariesActivity.this.getString(R.string.sports_activity_confirm_delete_description, toDelete.size()))
                             .setIcon(R.drawable.ic_delete_forever)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(final DialogInterface dialog, final int whichButton) {
-                                    deleteItems(toDelete);
-                                }
-                            })
+                            .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> deleteItems(toDelete))
                             .setNegativeButton(android.R.string.no, null)
                             .show();
 
@@ -370,18 +357,15 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
 
     public void resetFetchTimestampToChosenDate() {
         final Calendar currentDate = Calendar.getInstance();
-        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar date = Calendar.getInstance();
-                date.set(year, monthOfYear, dayOfMonth);
+        new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar date = Calendar.getInstance();
+            date.set(year, monthOfYear, dayOfMonth);
 
-                long timestamp = date.getTimeInMillis() - 1000;
-                SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()).edit();
-                editor.remove("lastSportsActivityTimeMillis"); //FIXME: key reconstruction is BAD
-                editor.putLong("lastSportsActivityTimeMillis", timestamp);
-                editor.apply();
-            }
+            long timestamp = date.getTimeInMillis() - 1000;
+            SharedPreferences.Editor editor = GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()).edit();
+            editor.remove("lastSportsActivityTimeMillis"); //FIXME: key reconstruction is BAD
+            editor.putLong("lastSportsActivityTimeMillis", timestamp);
+            editor.apply();
         }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
     }
 
@@ -433,23 +417,20 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
         }
     }
 
-    private void showActivityDetail(int position) {
-        Intent ActivitySummaryDetailIntent = new Intent(this, ActivitySummaryDetail.class);
-        Bundle bundle = new Bundle();
+    private void showActivityDetail(final int position) {
+        final Intent intent = WorkoutDetailsActivity.Companion.createFilteredListIntent(
+                this,
+                mGBDevice,
+                position,
+                activityFilter,
+                dateFromFilter,
+                dateToFilter,
+                nameContainsFilter,
+                deviceFilter,
+                itemsFilter
+        );
 
-        bundle.putInt("position", position);
-        bundle.putSerializable("activityKindMap", activityKindMap);
-        bundle.putSerializable("itemsFilter", (Serializable) itemsFilter);
-        bundle.putInt("activityFilter", activityFilter);
-        bundle.putLong("dateFromFilter", dateFromFilter);
-        bundle.putLong("dateToFilter", dateToFilter);
-        bundle.putLong("deviceFilter", deviceFilter);
-        bundle.putLong("initial_deviceFilter", getDeviceId(mGBDevice));
-        bundle.putString("nameContainsFilter", nameContainsFilter);
-        ActivitySummaryDetailIntent.putExtras(bundle);
-
-        ActivitySummaryDetailIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
-        startActivityForResult(ActivitySummaryDetailIntent, ACTIVITY_DETAIL);
+        startActivityForResult(intent, ACTIVITY_DETAIL);
     }
 
     private void runFilterActivity() {
@@ -467,11 +448,12 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
         startActivityForResult(filterIntent, ACTIVITY_FILTER);
     }
 
-    private long getDeviceId(GBDevice device) {
+    private long getDeviceId(final GBDevice device) {
         try (DBHandler handler = GBApplication.acquireDB()) {
-            Device dbDevice = DBHelper.findDevice(device, handler.getDaoSession());
-            return dbDevice.getId();
+            final Device dbDevice = DBHelper.findDevice(device, handler.getDaoSession());
+            return Objects.requireNonNull(dbDevice).getId();
         } catch (Exception e) {
+            LOG.error("Failed to get device id", e);
         }
         return 0;
     }

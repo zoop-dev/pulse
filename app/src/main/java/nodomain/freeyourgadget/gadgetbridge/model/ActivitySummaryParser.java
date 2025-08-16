@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 
 public interface ActivitySummaryParser {
     /**
@@ -37,9 +39,20 @@ public interface ActivitySummaryParser {
      * @param forDetails whether the parsing is for the details page. If this is false, the parser
      *                   should avoid slow operations such as reading and parsing raw files from
      *                   storage.
-     * @return the update {@link BaseActivitySummary}
+     * @return the {@link Workout}
+     * @deprecated Use/implement {@link #parseWorkout(BaseActivitySummary, boolean)} instead.
      */
+    @Deprecated
     BaseActivitySummary parseBinaryData(BaseActivitySummary summary, final boolean forDetails);
+
+    default Workout parseWorkout(BaseActivitySummary summary, final boolean forDetails) {
+        final BaseActivitySummary baseActivitySummary = parseBinaryData(summary, forDetails);
+        return new Workout(
+                baseActivitySummary,
+                ActivitySummaryData.fromJson(baseActivitySummary.getSummaryData()),
+                Collections.emptyList()
+        );
+    }
 
     static BaseActivitySummary findOrCreateBaseActivitySummary(final DaoSession session,
                                                                final GBDevice gbDevice,
