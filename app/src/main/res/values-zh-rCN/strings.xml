@@ -2446,8 +2446,7 @@
     <string name="prefs_active_noise_cancelling_light">轻度主动降噪</string>
     <string name="prefs_active_noise_cancelling_transparency">通透度</string>
     <string name="huawei_alarm_smart_description">不要取消选中智能唤醒复选框。</string>
-    <string name="huawei_trusleep_summary">实时监控您的睡眠质量和呼吸模式。
-\n分析您的睡眠模式并准确诊断 6 种睡眠问题。</string>
+    <string name="huawei_trusleep_summary">实时监控您的睡眠质量和呼吸模式。 \n分析您的睡眠模式并准确诊断 6 种睡眠问题。</string>
     <string name="pref_enable_call_accept">启用接听电话</string>
     <string name="pref_enable_call_accept_summary">启用从设备接受电话</string>
     <string name="pref_heartrate_automatic_enable">启用自动心率测量</string>
