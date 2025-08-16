@@ -2268,7 +2268,7 @@
     <string name="dnd_all_day">Celodenní</string>
     <string name="pref_device_action_dnd_off">Nerušit - vypnuto</string>
     <string name="menuitem_headphone">Sluchátko</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
     <string name="pref_enable_call_accept">Povolit přijímání hovorů</string>
     <string name="busy_task_fetch_temperature">Získávání teplotních dat</string>
     <string name="protocol_version">Verze protokolu</string>
@@ -2516,8 +2516,7 @@
     <string name="authentication_failed_check_key">Ověření se nezdařilo, zkontrolujte prosím autentizační klíč</string>
     <string name="activity_type_stair_stepper">Stepper</string>
     <string name="activity_type_crossfit">Crossfit</string>
-    <string name="huawei_trusleep_summary">Sledujte kvalitu svého spánku a způsob dýchání v reálném čase.
-\nAnalyzujte své spánkové vzorce a přesně diagnostikujte 6 typů problémů se spánkem.</string>
+    <string name="huawei_trusleep_summary">Sledujte kvalitu svého spánku v reálném čase.</string>
     <string name="huawei_ignore_wakeup_status_end_description">Může pomoci se správnou detekcí spánku. Viditelné ihned v denním přehledu aktivit.</string>
     <string name="prefs_wena3_receive_calls_hint">Po vypnutí nebudete dostávat oznámení o příchozích hovorech na Wena</string>
     <string name="prefs_wena3_notification_vibration_repetition_0">Nekonečně</string>
@@ -2591,7 +2590,7 @@
     <string name="activity_type_functional_training">Funkční trénink</string>
     <string name="pref_adaptive_noise_cancelling_summary">Automaticky nastavovat sílu potlačení hluku v závislosti na úrovni hladině okolního zvuku</string>
     <string name="huawei_alarm_smart_description">Neodškrtávejte zaškrtávací políčko inteligentní probuzení.</string>
-    <string name="huawei_trusleep_warning">Varování: po povolení této funkce se v aplikaci Gadgetbridge bude veškerý spánek zobrazovat jako lehký spánek! Klepněte sem, pokud toto přijímáte.</string>
+    <string name="huawei_trusleep_warning">Varování: funkce TruSleep™ není plně implementována. Její povolení způsobí v Gadgetbridge u některých zařízení zobrazení všech dat o spánku jako lehký spánek!</string>
     <string name="pref_force_enable_spo2_support">Vynutit podporu SpO2</string>
     <string name="purple">Fialová</string>
     <string name="prefs_wena3_item_background_sync">Synchronizace dat aktivit na pozadí</string>
@@ -3963,4 +3962,9 @@
     <string name="error_message">Chyba: %s</string>
     <string name="error_deleting_file">nepodařilo se smazat soubor „%1$s“</string>
     <string name="error_deleting_file_exception">nepodařilo se smazat soubor „%1$s“: %2$s</string>
+    <string name="pref_header_auto_export_db">Automatický export databáze</string>
+    <string name="pref_header_auto_export_zip">Automatický export souboru zip</string>
+    <string name="notif_export_location_not_set">Umístění exportu nenastaveno</string>
+    <string name="notif_export_zip_failed_title">Exportování souboru zip selhalo! Zkontrolujte prosím svá nastavení.</string>
+    <string name="unknown_error">Neznámá chyba</string>
 </resources>
