@@ -2449,8 +2449,7 @@
     <string name="huawei_alarm_smart_description">Не отключать \"умный подъём\".</string>
     <string name="huawei_alarm_event_description">Не включать \"умный подъём\".</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="huawei_trusleep_summary">Отслеживание качества сна и характера дыхания в реальном времени.
-\nАнализ закономерностей сна и точный диагноз 6 типов проблем со сном.</string>
+    <string name="huawei_trusleep_summary">Отслеживание качества сна и характера дыхания в реальном времени. \nАнализ закономерностей сна и точный диагноз 6 типов проблем со сном.</string>
     <string name="pref_title_general_reconnectonlytoconnected">Переподключаться только к подключенным устройствам</string>
     <string name="pref_activity_recognize_biking">распознавать езду на велосипеде</string>
     <string name="pref_activity_recognize_walking">распознавать ходьбу</string>
