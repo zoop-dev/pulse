@@ -2657,7 +2657,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_adaptive_volume_control_summary">Augmenter le volume automatiquement quand le bruit ambiant est important</string>
     <string name="pref_adaptive_noise_cancelling_title">ANC adaptatif</string>
     <string name="pref_adaptive_noise_cancelling_summary">Régler la forte de l\'ANC automatiquement selon le niveau de bruit ambiant</string>
-    <string name="huawei_trusleep_warning">Avertissement : activer cette option fera apparaitre tous les sommeils comme sommeil léger dans GadgetBridge ! Cliquer ici pour plus de détails.</string>
+    <string name="huawei_trusleep_warning">Avertissement : activer cette option fera apparaitre tous les sommeils comme sommeil léger dans GadgetBridge ! Cliquer ici pour plus de détails.</string>
     <string name="pref_force_enable_heartrate_support">Forcer la prise en charge du rythme cardiaque</string>
     <string name="pref_force_enable_spo2_support_summary">Forcer la prise en charge du SpO₂ \nUTILISER À VOS RISQUES ET PÉRILS</string>
     <string name="widget_name_colored_tile">%1$s (tuile colorée)</string>
