@@ -157,7 +157,7 @@
         </GridLayout>
 
         <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/weekstepschart"
+                android:id="@+id/week_sleep_chart"
                 android:layout_width="fill_parent"
                 android:layout_height="350dp"
         />
@@ -180,8 +180,78 @@
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/sleep_score_chart"
             android:layout_width="fill_parent"
-            android:layout_height="350dp"
+            android:layout_height="250dp"
             />
+        <GridLayout
+            android:background="@color/gauge_line_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:layout_marginTop="15dp"
+            >
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="2dp"
+                >
+                <TextView
+                    android:id="@+id/sleep_score_highest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/highest"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="2dp"
+                >
+                <TextView
+                    android:id="@+id/sleep_score_lowest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lowest"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginEnd="1dp"
+                >
+                <TextView
+                    android:id="@+id/sleep_score_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_empty_value"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hr_average"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <LinearLayout
+                style="@style/GridTile"
+                android:layout_marginStart="1dp"
+                >
+
+            </LinearLayout>
+        </GridLayout>
     </LinearLayout>
 
     </LinearLayout>
