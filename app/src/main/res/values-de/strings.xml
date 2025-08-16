@@ -2387,8 +2387,7 @@
     <string name="widget_screen">Widget-Bildschirm</string>
     <string name="widget_screen_min_screens">Es müssen mindestens %1$s Widget-Bildschirme vorhanden sein</string>
     <string name="widget_screen_no_free_slots_description">Das Gerät hat keine freien Plätze für Widget-Bildschirme (insgesamt: %1$s)</string>
-    <string name="huawei_trusleep_summary">Überwache deine Schlafqualität und dein Atemmuster in Echtzeit.
-\nAnalysiere dein Schlafmuster und diagnostiziere genau 6 Arten von Schlafproblemen.</string>
+    <string name="huawei_trusleep_summary">Überwache deine Schlafqualität und dein Atemmuster in Echtzeit. \nAnalysiere dein Schlafmuster und diagnostiziere genau 6 Arten von Schlafproblemen.</string>
     <string name="prefs_wena3_button_action_item_double">Doppelt Drücken</string>
     <string name="prefs_wena3_day_start_hour_item">Der Tag beginnt um</string>
     <string name="prefs_wena3_vibration_step_up">Schritt hoch</string>
