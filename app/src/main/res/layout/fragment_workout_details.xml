@@ -126,6 +126,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="300dp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="?attr/row_separator" />
+
                 </LinearLayout>
 
                 <!-- Dynamic charts, provided by the device -->
