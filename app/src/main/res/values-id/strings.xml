@@ -2393,8 +2393,7 @@
     <string name="prefs_password_4_digits_0_to_9_summary">Kata sandi harus memiliki 4 digit, menggunakan nomor saja</string>
     <string name="activity_type_trail_run">Lari jejak</string>
     <string name="menuitem_buzzer_intensity">Intensitas Bel</string>
-    <string name="huawei_trusleep_summary">Pantau kualitas tidur dan pola penghirupan napas Anda dalam waktu nyata.
-\nAnalisa pola tidur Anda dan diagnosis 6 jenis permasalahan tidur secara akurat.</string>
+    <string name="huawei_trusleep_summary">Pantau kualitas tidur dan pola penghirupan napas Anda dalam waktu nyata. \nAnalisa pola tidur Anda dan diagnosis 6 jenis permasalahan tidur secara akurat.</string>
     <string name="wake_up_time">Bangun</string>
     <string name="not_set">Tidak diatur</string>
     <string name="silent_mode_normal_silent">Normal / Diam</string>
