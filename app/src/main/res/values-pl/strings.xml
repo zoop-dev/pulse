@@ -2479,8 +2479,7 @@
     <string name="prefs_workmode">Tryb pracy</string>
     <string name="huawei_alarm_smart_description">Nie odznaczaj inteligentnego wybudzania.</string>
     <string name="huawei_alarm_event_description">Nie zaznaczaj inteligentnego wybudzania.</string>
-    <string name="huawei_trusleep_summary">Monitoruj jakość snu i sposób oddychania w czasie rzeczywistym.
-\nPrzeanalizuj swoje wzorce snu i dokładnie zdiagnozuj 6 rodzajów problemów ze snem.</string>
+    <string name="huawei_trusleep_summary">Monitoruj jakość snu i sposób oddychania w czasie rzeczywistym. \nPrzeanalizuj swoje wzorce snu i dokładnie zdiagnozuj 6 rodzajów problemów ze snem.</string>
     <string name="pref_force_smart_alarm">Wymuś inteligentny alarm</string>
     <string name="huawei_ignore_wakeup_status_start">Ignoruj stan rozpoczęcia wybudzania</string>
     <string name="huawei_ignore_wakeup_status_start_description">Może pomóc w prawidłowym wykrywaniu snu. Widoczne natychmiast w widoku codziennych aktywności.</string>
