@@ -166,7 +166,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                         .parseWorkout(summary, true)
                 }
 
-                requireActivity().addMenuProvider(this@WorkoutDetailsFragment, viewLifecycleOwner, Lifecycle.State.RESUMED)
+                requireActivity().addMenuProvider(
+                    this@WorkoutDetailsFragment,
+                    viewLifecycleOwner,
+                    Lifecycle.State.RESUMED
+                )
 
                 currentWorkout?.let { workout ->
                     updateWorkoutHeader(workout.summary)
@@ -334,12 +338,16 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     private fun updateFragments(workout: Workout) {
         val trackFile = ActivitySummaryUtils.getTrackFile(workout.summary)
 
-        chartFragment?.setDateAndGetData(
-            trackFile,
-            gbDevice,
-            workout.summary.startTime.time / 1000,
-            workout.summary.endTime.time / 1000
-        )
+        if (workout.charts.any { chart -> chart.group == ActivitySummaryEntries.GROUP_HEART_RATE }) {
+            binding.heartRateChartWrapper.visibility = View.GONE
+        } else {
+            chartFragment?.setDateAndGetData(
+                trackFile,
+                gbDevice,
+                workout.summary.startTime.time / 1000,
+                workout.summary.endTime.time / 1000
+            )
+        }
 
         binding.dynamicCharts.removeAllViews()
         for (chart in workout.charts) {
@@ -356,9 +364,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun addChart(chartsLayout: LinearLayout,
-                         includeHeader: Boolean,
-                         chart: WorkoutChart) {
+    private fun addChart(
+        chartsLayout: LinearLayout,
+        includeHeader: Boolean,
+        chart: WorkoutChart
+    ) {
         if (includeHeader) {
             val separator1 = View(context).apply {
                 layoutParams = LinearLayout.LayoutParams(
