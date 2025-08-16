@@ -165,7 +165,11 @@ class GBProgressNotification(
         val text = if (textRes != 0) {
             context.getString(textRes)
         } else if (totalSize != 0L) {
-            context.getString(R.string.busy_task_progress_int, totalProgress + chunkProgress, totalSize)
+            context.getString(
+                R.string.work_info_running_percentage,
+                context.getString(R.string.busy_task_progress_int, totalProgress + chunkProgress, totalSize),
+                percentage
+            )
         } else {
             ""
         }
