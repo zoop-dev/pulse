@@ -48,6 +48,7 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstant
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_HIGH_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_LOW_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_REALTIME_MODE;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_SLEEP_BREATH;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_SPO_LOW_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_STRESS_CALIBRATE;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_STRESS_SWITCH;
@@ -116,6 +117,7 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
 
         handler.addPreferenceHandlerFor(PREF_HUAWEI_WORKMODE);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_TRUSLEEP);
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_SLEEP_BREATH);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_DEBUG_REQUEST);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_CONTINUOUS_SKIN_TEMPERATURE_MEASUREMENT);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_HEART_RATE_REALTIME_MODE);
@@ -146,6 +148,12 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
             final SwitchPreferenceCompat forceSpO2 = handler.findPreference(PREF_FORCE_ENABLE_SPO2_SUPPORT);
             forceSpO2.setVisible(!supportsSpO2);
         }
+
+        final SwitchPreferenceCompat sleepBreath = handler.findPreference(PREF_HUAWEI_SLEEP_BREATH);
+        if(sleepBreath != null && !coordinator.supportsSleepBreath()) {
+            sleepBreath.setVisible(false);
+        }
+
 
         final SwitchPreferenceCompat reparseWorkout = handler.findPreference("huawei_reparse_workout_data");
         if (reparseWorkout != null) {

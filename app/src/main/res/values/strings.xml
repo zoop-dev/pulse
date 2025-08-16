@@ -3340,10 +3340,11 @@
     <string name="prefs_workmode">Work Mode</string>
     <string name="huawei_alarm_smart_description">Do not uncheck smart wakeup checkbox.</string>
     <string name="huawei_alarm_event_description">Do not check smart wakeup checkbox.</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep &#8482;</string>
-    <string name="huawei_trusleep_summary">Monitor your sleep quality and breathing pattern in real time.\nAnalyze your sleep patterns and accurately diagnose 6 types of sleeping problems.</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep&#8482;</string>
+    <string name="huawei_trusleep_summary">Monitor your sleep quality in real time.</string>
     <string name="huawei_trusleep_summary_light">Improved sleep monitoring</string>
-    <string name="huawei_trusleep_warning">Warning: enabling this will make all sleep show up as light sleep in Gadgetbridge! Click here if you accept this.</string>
+    <string name="huawei_trusleep_warning">Warning: TruSleep&#8482; is not fully implemented. Enabling it on some devices will cause all sleep data to show up as light sleep in Gadgetbridge!</string>
+    <string name="huawei_sleep_breath_summary">Assess your breathing in a quiet environment. May affect battery life.\nWarning: Not synced to the Gadgetbridge yet.</string>
     <string name="prefs_activity_recognition">Activity recognition settings</string>
     <string name="pref_activity_recognize_running">recognize running</string>
     <string name="pref_activity_recognize_biking">recognize biking</string>

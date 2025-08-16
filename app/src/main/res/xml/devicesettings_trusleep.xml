@@ -4,23 +4,33 @@
         android:icon="@drawable/ic_activity_sleep"
         android:key="screen_trusleep"
         android:persistent="false"
-        android:title="@string/huawei_trusleep_title"
-        android:summary="@string/huawei_trusleep_summary_light">
+        android:summary="@string/huawei_trusleep_summary_light"
+        android:title="@string/huawei_trusleep_title">
 
         <PreferenceScreen
-            android:icon="@drawable/ic_activity_sleep"
+            android:icon="@drawable/ic_warning"
             android:key="screen_trusleep_warning"
-            android:title="@string/huawei_trusleep_title"
-            android:summary="@string/huawei_trusleep_warning">
+            android:persistent="false"
+            android:selectable="false"
+            android:summary="@string/huawei_trusleep_warning"
+            android:title="@string/huawei_trusleep_title" />
 
-            <SwitchPreferenceCompat
-                android:icon="@drawable/ic_activity_sleep"
-                android:defaultValue="false"
-                android:key="trusleep"
-                android:layout="@layout/preference_checkbox"
-                android:title="@string/huawei_trusleep_title"
-                android:summary="@string/huawei_trusleep_summary"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_activity_sleep"
+            android:key="trusleep"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/huawei_trusleep_summary"
+            android:title="@string/huawei_trusleep_title" />
 
-        </PreferenceScreen>
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="trusleep"
+            android:icon="@drawable/ic_activity_sleep"
+            android:key="huawei_sleep_breath"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/huawei_sleep_breath_summary"
+            android:title="@string/pref_sleep_breathing_quality_monitoring" />
+
     </PreferenceScreen>
 </androidx.preference.PreferenceScreen>

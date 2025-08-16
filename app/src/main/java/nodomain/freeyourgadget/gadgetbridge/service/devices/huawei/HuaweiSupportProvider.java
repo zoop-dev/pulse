@@ -167,6 +167,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSetContactsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotifyHeartRateCapabilityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotifyRestHeartRateCapabilityRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSleepBreathRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAutomaticHeartrateRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAutomaticSpoRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetDisconnectNotification;
@@ -882,6 +883,7 @@ public class HuaweiSupportProvider {
             initRequestQueue.add(new SetDateFormatRequest(this));
             initRequestQueue.add(new SetActivityReminderRequest(this));
             initRequestQueue.add(new SetTruSleepRequest(this));
+            initRequestQueue.add(new SendSleepBreathRequest(this));
             initRequestQueue.add(new GetContactsCount(this));
             initRequestQueue.add(new SendOTASetAutoUpdate(this));
             initRequestQueue.add(new GetOTAChangeLog(this));
@@ -1111,6 +1113,10 @@ public class HuaweiSupportProvider {
                 }
                 case HuaweiConstants.PREF_HUAWEI_TRUSLEEP: {
                     setTrusleep();
+                    break;
+                }
+                case HuaweiConstants.PREF_HUAWEI_SLEEP_BREATH: {
+                    setSleepBreath();
                     break;
                 }
                 case HuaweiConstants.PREF_HUAWEI_CONTINUOUS_SKIN_TEMPERATURE_MEASUREMENT: {
@@ -2302,6 +2308,16 @@ public class HuaweiSupportProvider {
         } catch (IOException e) {
             GB.toast(context, "Failed to configure truSleep", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("Failed to configure truSleep", e);
+        }
+    }
+
+    public void setSleepBreath() {
+        try {
+            SendSleepBreathRequest setSleepBreathReq = new SendSleepBreathRequest(this);
+            setSleepBreathReq.doPerform();
+        } catch (IOException e) {
+            GB.toast(context, "Failed to configure sleep breathing awareness", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("Failed to configure sleep breathing awareness", e);
         }
     }
 
