@@ -2529,8 +2529,7 @@
     <string name="pref_adaptive_noise_cancelling_summary">Imposta automaticamente l\'intensità dell\'ANC in base al livello sonoro dell\'ambiente</string>
     <string name="huawei_alarm_smart_description">Non disattivare la casella di controllo risveglio intelligente.</string>
     <string name="huawei_alarm_event_description">Non attivare la casella di controllo risveglio intelligente.</string>
-    <string name="huawei_trusleep_summary">Monitora la qualità del sonno e il modello di respirazione in tempo reale.
-\nAnalizza i modelli di sonno e diagnostica con precisione 6 tipi di problemi del sonno.</string>
+    <string name="huawei_trusleep_summary">Monitora la qualità del sonno e il modello di respirazione in tempo reale. \nAnalizza i modelli di sonno e diagnostica con precisione 6 tipi di problemi del sonno.</string>
     <string name="prefs_wena3_smart_alarm_margin_item">Margine Sveglia Intelligente</string>
     <string name="pref_adaptive_volume_control_title">Controllo volume adattivo</string>
     <string name="pref_heartrate_automatic_enable">Abilita la misurazione automatica della frequenza cardiaca</string>
