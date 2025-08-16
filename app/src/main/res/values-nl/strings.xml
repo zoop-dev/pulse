@@ -2467,8 +2467,7 @@
     <string name="prefs_disconnect_notification_summary">Melding op het apparaat bij verbroken Bluetooth-verbinding.</string>
     <string name="prefs_workmode">Werkmodus</string>
     <string name="huawei_alarm_event_description">Plaats geen vinkje bij slim wakker worden.</string>
-    <string name="huawei_trusleep_summary">Monitor uw slaapkwaliteit en adempatroon in realtime.
-\nAnalyseer uw slaappatronen en diagnosticeer 6 types slaapproblemen.</string>
+    <string name="huawei_trusleep_summary">Monitor uw slaapkwaliteit en adempatroon in realtime. \nAnalyseer uw slaappatronen en diagnosticeer 6 types slaapproblemen.</string>
     <string name="pref_force_options">Opties forceren</string>
     <string name="pref_force_options_summary">Sommige apparaten geven onterecht aan sommige opties niet te ondersteunen. Deze instellingen gebruikt worden om ze alsnog in te schakelen.
 \nGEBRUIK OP EIGEN RISICO
