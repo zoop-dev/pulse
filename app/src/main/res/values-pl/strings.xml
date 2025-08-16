@@ -2462,7 +2462,7 @@
     <string name="prefs_active_noise_cancelling_transparency">Przezroczyste</string>
     <string name="pref_summary_debug">Wyślij żądanie debugowania do urządzenia Huawei</string>
     <string name="pref_title_debug">Żądanie debugowania</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
     <string name="pref_spo_automatic_enable">Włącz automatyczne mierzenie SpO2</string>
     <string name="manual">Ręcznie</string>
     <string name="pref_title_general_reconnectonlytoconnected">Połącz się ponownie tylko z połączonymi urządzeniami</string>
@@ -2479,7 +2479,7 @@
     <string name="prefs_workmode">Tryb pracy</string>
     <string name="huawei_alarm_smart_description">Nie odznaczaj inteligentnego wybudzania.</string>
     <string name="huawei_alarm_event_description">Nie zaznaczaj inteligentnego wybudzania.</string>
-    <string name="huawei_trusleep_summary">Monitoruj jakość snu i sposób oddychania w czasie rzeczywistym. \nPrzeanalizuj swoje wzorce snu i dokładnie zdiagnozuj 6 rodzajów problemów ze snem.</string>
+    <string name="huawei_trusleep_summary">Monitoruj jakość snu w czasie rzeczywistym.</string>
     <string name="pref_force_smart_alarm">Wymuś inteligentny alarm</string>
     <string name="huawei_ignore_wakeup_status_start">Ignoruj stan rozpoczęcia wybudzania</string>
     <string name="huawei_ignore_wakeup_status_start_description">Może pomóc w prawidłowym wykrywaniu snu. Widoczne natychmiast w widoku codziennych aktywności.</string>
@@ -2769,7 +2769,7 @@
     <string name="hrv_status_day_avg">Średnia dzienna</string>
     <string name="hrv_status_baseline">%1$d – %2$d ms</string>
     <string name="body_energy_gained">Zyskano</string>
-    <string name="huawei_trusleep_warning">Uwaga: włączenie tej funkcji sparawi, że Gadgetbridge będzie wyświetlał każdy sen jako płytki sen! Kliknij tutaj, by to zaakceptować.</string>
+    <string name="huawei_trusleep_warning">Ostrzeżenie: TruSleep™ nie jest w pełni zaimplementowany. Włączenie tej funkcji na niektórych urządzeniach spowoduje, że wszystkie dane dotyczące snu będą wyświetlane w Gadgetbridge jako sen płytki!</string>
     <string name="cyclingPowerAverage">Średnia moc rowerowa</string>
     <string name="cyclingPowerMin">Minimalna moc rowerowa</string>
     <string name="pref_adaptive_volume_control_summary">Automatycznie zwiększaj głośność, gdy dźwięki otoczenia są głośne</string>
@@ -4002,4 +4002,5 @@
     <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
     <string name="datetime_in_the_future">%1$s (za %2$s)</string>
     <string name="datetime_in_the_past">%1$s (%2$s temu)</string>
+    <string name="huawei_sleep_breath_summary">Oceń swój oddech w cichym otoczeniu. Może wpłynąć na żywotność baterii.\nOstrzeżenie: Nie zsynchronizowano jeszcze z Gadgetbridge.</string>
 </resources>
