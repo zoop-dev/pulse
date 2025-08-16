@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,10 +67,15 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
             valueTextView.setTypeface(Typeface.create(valueTextView.getTypeface(), Typeface.BOLD));
             valueTextView.setGravity(Gravity.END);
 
+            final View spacer = new View(context);
+            spacer.setLayoutParams(new LinearLayout.LayoutParams(0, 0, 1f));
+
             // Layout for the labels, so the value is at the right
             final LinearLayout labelsLinearLayout = new LinearLayout(context);
             labelsLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            labelsLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             labelsLinearLayout.addView(labelTextView);
+            labelsLinearLayout.addView(spacer);
             labelsLinearLayout.addView(valueTextView);
 
             linearLayout.addView(labelsLinearLayout);
