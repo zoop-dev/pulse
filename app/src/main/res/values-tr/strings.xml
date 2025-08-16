@@ -2287,8 +2287,7 @@
     <string name="activity_type_other">Diğer</string>
     <string name="watchface_widget_type_uv_index">UV göstergesi</string>
     <string name="prefs_active_noise_cancelling_light">Hafif Etkin Gürültü Engelleme</string>
-    <string name="huawei_trusleep_summary">Uyku kalitenizi ve solunum düzeninizi gerçek zamanlı olarak izleyin.
-\nUyku düzeninizi inceleyin ve 6 tür uyku problemini doğru bir şekilde teşhis edin.</string>
+    <string name="huawei_trusleep_summary">Uyku kalitenizi ve solunum düzeninizi gerçek zamanlı olarak izleyin. \nUyku düzeninizi inceleyin ve 6 tür uyku problemini doğru bir şekilde teşhis edin.</string>
     <string name="stress_high">Yüksek</string>
     <string name="pai_total">Toplam</string>
     <string name="sony_button_mode_help_title">Düğme Modları - Yardım</string>
