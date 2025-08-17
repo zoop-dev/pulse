@@ -55,6 +55,8 @@ import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
+import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel.Companion.getActivityPoints
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryGroup
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry
@@ -80,6 +82,7 @@ import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import java.util.stream.Collectors
 
 class WorkoutDetailsFragment : Fragment(), MenuProvider {
     private var workoutId: Long = -1
@@ -160,8 +163,27 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                         dbHandler.daoSession.baseActivitySummaryDao.load(workoutId)
                     }
                     gbDevice = getGBDevice(summary.device)
-                    return@withContext gbDevice!!.deviceCoordinator.getActivitySummaryParser(gbDevice, requireContext())
+                    val parsedWorkout = gbDevice!!.deviceCoordinator.getActivitySummaryParser(gbDevice, requireContext())
                         .parseWorkout(summary, true)
+                    if (parsedWorkout.charts.isEmpty()) {
+                        try {
+                            val trackFile = ActivitySummaryUtils.getTrackFile(parsedWorkout.summary)
+                            if (trackFile != null) {
+                                val activityPoints = getActivityPoints(trackFile)
+                                    .stream()
+                                    .collect(Collectors.toList())
+                                val defaultCharts = DefaultWorkoutCharts.buildDefaultCharts(
+                                    requireContext(),
+                                    activityPoints,
+                                    ActivityKind.fromCode(parsedWorkout.summary.activityKind)
+                                )
+                                return@withContext Workout(parsedWorkout.summary, parsedWorkout.data, defaultCharts)
+                            }
+                        } catch (e: Exception) {
+                            LOG.error("Failed to build default charts", e)
+                        }
+                    }
+                    return@withContext parsedWorkout
                 }
 
                 requireActivity().addMenuProvider(
