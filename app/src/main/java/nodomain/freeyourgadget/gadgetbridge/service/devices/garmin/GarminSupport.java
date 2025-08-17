@@ -1238,11 +1238,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             public void onConnect(final CommunicatorV2.ServiceWriter writer) {
                 this.writer = writer;
 
-                final ByteBuffer buf = ByteBuffer.allocate(7).order(ByteOrder.LITTLE_ENDIAN);
+                final ByteBuffer buf = ByteBuffer.allocate(6).order(ByteOrder.LITTLE_ENDIAN);
                 buf.put((byte) 0x00);
                 buf.put((byte) 0x00);
-                buf.put((byte) fileHandle);
-                buf.put((byte) 0x00);
+                buf.putShort((short) fileHandle);
                 buf.put((byte) 0x00);
                 buf.put((byte) 0x00);
                 writer.write("request file", buf.array());
