@@ -2303,7 +2303,7 @@
     <string name="workout_set_reps">Понављања</string>
     <string name="backstroke">Леђно пливање</string>
     <string name="groundContactTimeAvg">Просечно време додира тла</string>
-    <string name="workout_set_repetitions"/>
+    <string name="workout_set_repetitions"></string>
     <string name="stepRateSum">Збир брзина корака</string>
     <string name="restingCalories">Калорије мировања</string>
     <string name="metabolic_rate">Разина метаболизма</string>
