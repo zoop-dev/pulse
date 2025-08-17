@@ -2713,8 +2713,7 @@
     <string name="Swimming">Swimming</string>
     <string name="Distance">Distance</string>
     <string name="Elevation">Elevation</string>
-    <string name="Power">Power</string>
-    <string name="HeartRate">Heart rate</string>
+    <string name="workout_power">Power</string>
     <string name="Speed">Speed</string>
     <string name="Activity">Activity</string>
     <string name="Steps">Steps</string>

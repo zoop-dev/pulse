@@ -336,6 +336,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     private fun updateFragments(workout: Workout) {
         val trackFile = ActivitySummaryUtils.getTrackFile(workout.summary)
 
+        // If there's a device-specific HR chart, prefer it over the default one
         if (workout.charts.any { chart -> chart.group == ActivitySummaryEntries.GROUP_HEART_RATE }) {
             binding.heartRateChartWrapper.visibility = View.GONE
         } else {
@@ -368,18 +369,6 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         chart: WorkoutChart
     ) {
         if (includeHeader) {
-            val separator1 = View(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    (2 * resources.displayMetrics.density).toInt()
-                )
-
-                val typedValue = TypedValue()
-                context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
-                setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
-            }
-            chartsLayout.addView(separator1)
-
             val chartTitle = TextView(context).apply {
                 id = View.generateViewId()
                 layoutParams = LinearLayout.LayoutParams(
@@ -394,19 +383,10 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 val paddingPx = (16 * resources.displayMetrics.density).toInt()
                 setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
             }
+
+            chartsLayout.addView(createSeparator())
             chartsLayout.addView(chartTitle)
-
-            val separator2 = View(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    (2 * resources.displayMetrics.density).toInt()
-                )
-
-                val typedValue = TypedValue()
-                context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
-                setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
-            }
-            chartsLayout.addView(separator2)
+            chartsLayout.addView(createSeparator())
         }
 
         val chartsFragmentHolder = FrameLayout(requireContext()).apply {
@@ -458,8 +438,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         chartsFragmentHolder.addView(lineChart)
 
         chartsLayout.addView(chartsFragmentHolder)
+        chartsLayout.addView(createSeparator())
+    }
 
-        val separator3 = View(context).apply {
+    private fun createSeparator(): View {
+        return View(context).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 (2 * resources.displayMetrics.density).toInt()
@@ -469,7 +452,6 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             context.theme.resolveAttribute(R.attr.row_separator, typedValue, true)
             setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
         }
-        chartsLayout.addView(separator3)
     }
 
     private fun workoutHasGps(summary: BaseActivitySummary): Boolean {

@@ -19,14 +19,9 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
     }
 
     public ActivitySummarySimpleEntry(final String group, final Object value, final String unit) {
-        this(group, value, unit, 1);
-    }
-
-    public ActivitySummarySimpleEntry(final String group, final Object value, final String unit, final int columnSpan) {
         super(group);
         this.value = value;
         this.unit = unit;
-        this.columnSpan = columnSpan;
     }
 
     public Object getValue() {
@@ -35,6 +30,11 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
 
     public String getUnit() {
         return unit;
+    }
+
+    @Override
+    public int getColumnSpan() {
+        return 1;
     }
 
     @Override
@@ -53,10 +53,10 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
         labelTextView.setTextSize(12);
         labelTextView.setText(workoutValueFormatter.getStringResourceByName(key));
 
-        if (columnSpan == 1) {
+        if (getColumnSpan() == 1) {
             linearLayout.addView(valueTextView);
             linearLayout.addView(labelTextView);
-        } else if (columnSpan == 2) {
+        } else if (getColumnSpan() == 2) {
             // Label
             labelTextView.setTextSize(14);
             labelTextView.setMaxLines(1);
@@ -80,7 +80,7 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
 
             linearLayout.addView(labelsLinearLayout);
         } else {
-            throw new IllegalArgumentException("Invalid columnSpan " + columnSpan);
+            throw new IllegalArgumentException("Invalid columnSpan " + getColumnSpan());
         }
     }
 }

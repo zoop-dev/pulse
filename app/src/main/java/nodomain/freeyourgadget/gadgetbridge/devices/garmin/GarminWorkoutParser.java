@@ -86,7 +86,6 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_LB;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILLISECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_ML;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_ML_KG_MIN;
@@ -95,17 +94,10 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_PERCENTAGE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_RPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_STROKES_PER_LENGTH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_WATT;
 
 import android.content.Context;
-import android.graphics.Color;
-
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,11 +111,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.SpeedYLabelFormatter;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslation;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableBuilder;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
@@ -131,7 +120,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
@@ -169,10 +157,6 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private final List<FitDiveGas> diveGases = new ArrayList<>();
     private final List<FitSet> sets = new ArrayList<>();
     private final List<FitLap> laps = new ArrayList<>();
-
-    TimestampTranslation tsTranslation = new TimestampTranslation();
-
-    ActivityKind activityKind;
 
     public GarminWorkoutParser(final Context context) {
         this.context = context;
@@ -219,48 +203,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
 
         final ActivitySummaryData activitySummaryData = updateSummary(summary);
-
+        final ActivityKind activityKind = ActivityKind.fromCode(summary.getActivityKind());
         final List<WorkoutChart> charts = new LinkedList<>();
         if (!this.activityPoints.isEmpty()) {
-            final List<Entry> heartRateDataPoints = new ArrayList<>();
-            final List<Entry> speedDataPoints = new ArrayList<>();
-            final List<Entry> elevationDataPoints = new ArrayList<>();
-            boolean hasSpeedValues = false;
-            for (int i=0; i<=activityPoints.size()-1; i++) {
-                ActivityPoint point = activityPoints.get(i);
-                long tsShorten = tsTranslation.shorten((int) point.getTime().getTime());
-                if (point.getHeartRate() > 0) {
-                    heartRateDataPoints.add(new Entry(tsShorten, point.getHeartRate()));
-                }
-                if (point.getLocation() != null) {
-                    elevationDataPoints.add(new Entry(tsShorten, (float) point.getLocation().getAltitude()));
-                }
-                speedDataPoints.add(new Entry(tsShorten, point.getSpeed()));
-                if (!hasSpeedValues && point.getSpeed() > 0) {
-                    hasSpeedValues = true;
-                }
-            }
-            if (!heartRateDataPoints.isEmpty()) {
-                String label = String.format("%s(%s)", context.getString(R.string.heart_rate), getUnitString(UNIT_BPM));
-                LineDataSet dataset = createDataSet(heartRateDataPoints, label, Color.RED);
-                charts.add(new WorkoutChart(context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE, new LineData(dataset)));
-            }
-            if (hasSpeedValues && !speedDataPoints.isEmpty()) {
-                if (ActivityKind.isPaceActivity(activityKind)) {
-                    String label = String.format("%s(%s)", context.getString(R.string.Pace), getUnitString(UNIT_SECONDS_PER_KM));
-                    LineDataSet dataset = createDataSet(speedDataPoints, label, Color.BLUE);
-                    charts.add(new WorkoutChart(context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_SECONDS_PER_KM)));
-                } else {
-                    String label = String.format("%s(%s)", context.getString(R.string.Speed), getUnitString(UNIT_METERS_PER_SECOND));
-                    LineDataSet dataset = createDataSet(speedDataPoints, label, Color.BLUE);
-                    charts.add(new WorkoutChart(context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND)));
-                }
-            }
-            if (!elevationDataPoints.isEmpty()) {
-                String label = String.format("%s(%s)", context.getString(R.string.Elevation), getUnitString(UNIT_METERS));
-                LineDataSet dataset = createDataSet(elevationDataPoints, label, Color.GREEN);
-                charts.add(new WorkoutChart(context.getString(R.string.Elevation), ActivitySummaryEntries.GROUP_ELEVATION, new LineData(dataset)));
-            }
+            charts.addAll(DefaultWorkoutCharts.buildDefaultCharts(context, activityPoints, activityKind));
         }
 
         final long nanoEnd = System.nanoTime();
@@ -272,29 +218,6 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 activitySummaryData,
                 charts
         );
-    }
-
-    public String getUnitString(String unit) {
-        int resId = context.getResources().getIdentifier(unit, "string", context.getPackageName());
-        if (resId != 0) {
-            return context.getString(resId);
-        }
-        return "";
-    }
-
-    public LineDataSet createDataSet(List<Entry> entities, String label, int color) {
-        LineDataSet dataSet = new LineDataSet(entities, label);
-        dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        dataSet.setCubicIntensity(0.05f);
-        dataSet.setDrawCircles(false);
-        dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        dataSet.setColor(color);
-        dataSet.setValueTextColor(GBApplication.getSecondaryTextColor(context));
-        dataSet.setLineWidth(1.5f);
-        dataSet.setHighlightLineWidth(2f);
-        dataSet.setDrawValues(false);
-        dataSet.setDrawHorizontalHighlightIndicator(false);
-        return dataSet;
     }
 
     public void reset() {
@@ -373,6 +296,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             return summaryData;
         }
 
+        final ActivityKind activityKind;
         if (sport != null) {
             if (StringUtils.isNullOrEmpty(summary.getName())) {
                 summary.setName(sport.getName());
@@ -754,8 +678,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
             int i = 1;
             for (final FitDiveGas gas : diveGases) {
-                int helium = gas.getHeliumContent() != null ? gas.getHeliumContent(): 0;
-                int oxygen = gas.getOxygenContent() != null ? gas.getOxygenContent(): 0;
+                int helium = gas.getHeliumContent() != null ? gas.getHeliumContent() : 0;
+                int oxygen = gas.getOxygenContent() != null ? gas.getOxygenContent() : 0;
                 int nitrogen = 100 - helium - oxygen;
                 tableBuilder.addRow(
                         "gas_" + i,

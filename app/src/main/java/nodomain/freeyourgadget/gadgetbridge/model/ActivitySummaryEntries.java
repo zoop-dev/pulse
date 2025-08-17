@@ -227,8 +227,8 @@ public class ActivitySummaryEntries {
     public static final String GROUP_ACTIVITY = "Activity";
     public static final String GROUP_SPEED = "Speed";
     public static final String GROUP_ELEVATION = "Elevation";
-    public static final String GROUP_POWER = "Power";
-    public static final String GROUP_HEART_RATE = "HeartRate";
+    public static final String GROUP_POWER = "workout_power";
+    public static final String GROUP_HEART_RATE = "heart_rate";
     public static final String GROUP_OTHER = "Other";
     public static final String GROUP_HEART_RATE_ZONES = "HeartRateZones";
     public static final String GROUP_STROKES = "Strokes";

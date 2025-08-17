@@ -14,17 +14,11 @@ object ActivitySummaryGroup {
         activitySummaryData.keys
             .filterNot { it.startsWith("internal") }
             .forEach { key ->
-                var item = activitySummaryData[key]
+                val item = activitySummaryData[key]
                 // Use the group if specified in the entry, otherwise fallback to the default mapping from getDefaultGroup
                 val groups: List<String> = item.group?.let { listOf(it) } ?: getDefaultGroups(key)
 
-                for ((index, groupName) in groups.withIndex()) {
-                    if (index > 0) {
-                        item = item.clone();
-                    }
-                    if (groupName == ActivitySummaryEntries.GROUP_OTHER) {
-                        item.columnSpan = 2;
-                    }
+                for (groupName in groups) {
                     // If the group is not defined the default groups, it will be added to the end
                     val group = activeGroups.getOrPut(groupName) { mutableListOf() }
                     group.add(Pair.of<String, ActivitySummaryEntry>(key, item))
