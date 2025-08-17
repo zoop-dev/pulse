@@ -408,7 +408,7 @@
     <string name="mi2_prefs_button_actions_summary">Nastavení akcí po stisknutí tlačítka</string>
     <string name="mi2_prefs_button_press_count">Počet stisknutí tlačítka</string>
     <string name="mi2_prefs_button_press_count_summary">Počet stisknutí tlačítka pro vyvolání Události 1. Další stejné množství stisků vyvolá Událost 2 atd.</string>
-    <string name="mi2_prefs_button_press_broadcast">Vysílání zpráv</string>
+    <string name="mi2_prefs_button_press_broadcast">Zpráva k vysílání</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Vysílání zprávy odeslané s událostí. Parametr `button_id` je doplněn do každé zprávy automaticky.</string>
     <string name="mi2_prefs_button_action">Zapnout akci tlačítka</string>
     <string name="mi2_prefs_button_action_summary">Zapnout akci na zadaný počet stisknutí tlačítka</string>
@@ -1993,7 +1993,7 @@
     <string name="pref_gps_combination">GPS kombinace</string>
     <string name="offline_voice_respond_screen_on">Odpovědět při aktivní obrazovce</string>
     <string name="pref_sleep_mode_sleep_screen_summary">Zobrazit Spánkovou Obrazovku při probuzení obrazovky během režimu spánku, ke snížení rozptylů</string>
-    <string name="pref_title_mb_intents">Přímo odesílat intenty tlačítek médií</string>
+    <string name="pref_title_mb_intents">Přímo vysílat intenty tlačítek médií</string>
     <string name="pref_summary_mb_intents">Zapněte, pokud ovládání médií nefunguje pro určité aplikace</string>
     <string name="title_activity_set_contacts">Konfigurace kontaktů</string>
     <string name="pref_header_navigation">Navigace</string>
@@ -2150,8 +2150,8 @@
     <string name="zepp_os_watchface_rotating_earth">Rotating Earth</string>
     <string name="intent_api_allow_activity_sync_summary">Povolit vyvolání synchronizace aktivit prostřednictvím Intent API</string>
     <string name="intent_api_allow_trigger_export_summary">Povolit vyvolání exportu databáze prostřednictvím Intent API</string>
-    <string name="intent_api_broadcast_export_title">Vysílat broadcast zprávu při exportu databáze</string>
-    <string name="intent_api_broadcast_export_summary">Vyslat broadcastový intent po dokončení exportu databáze</string>
+    <string name="intent_api_broadcast_export_title">Vysílat zprávu při exportu databáze</string>
+    <string name="intent_api_broadcast_export_summary">Vyslat intent po dokončení exportu databáze</string>
     <string name="supercars_turbo_speed_label">Turbo Rychlost</string>
     <string name="supercars_lights_label">Reflektory</string>
     <string name="wifi_hotspot_summary">Nastavení Wi-Fi hotspotu na hodinkách</string>
@@ -3967,4 +3967,21 @@
     <string name="notif_export_location_not_set">Umístění exportu nenastaveno</string>
     <string name="notif_export_zip_failed_title">Exportování souboru zip selhalo! Zkontrolujte prosím svá nastavení.</string>
     <string name="unknown_error">Neznámá chyba</string>
+    <string name="huawei_sleep_breath_summary">Sledujte své dýchání v tichém prostředí. Může ovlivnit výdrž baterie.\nVarování: zatím není synchronizováno s Gadgetbridge.</string>
+    <string name="intent_api_allow_trigger_zip_export_title">Povolit export souboru zip</string>
+    <string name="intent_api_allow_trigger_zip_export_summary">Povolit spuštění exportu souboru zip skrze Intent API</string>
+    <string name="intent_api_broadcast_zip_export_title">Vysílat zprávu při exportu souboru zip</string>
+    <string name="intent_api_broadcast_zip_export_summary">Vysílat intent, když se dokončí export souboru zip</string>
+    <string name="intent_activity_sync_title">Synchronizace aktivit</string>
+    <string name="auto_export_last_execution">Poslední spuštění</string>
+    <string name="auto_export_next_execution">Další spuštění</string>
+    <string name="work_info_status_running">Běží</string>
+    <string name="work_info_status_enqueued">Ve frontě</string>
+    <string name="work_info_status_succeeded">Úspěch</string>
+    <string name="work_info_status_failed">Selhalo</string>
+    <string name="work_info_status_blocked">Zablokováno</string>
+    <string name="work_info_status_cancelled">Zrušeno</string>
+    <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
+    <string name="datetime_in_the_future">%1$s (za %2$s)</string>
+    <string name="datetime_in_the_past">%1$s (před %2$s)</string>
 </resources>
