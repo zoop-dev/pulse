@@ -2130,22 +2130,51 @@ public class HuaweiSupportProvider {
     }
 
     public void addDictData(List<HuaweiP2PDataDictionarySyncService.DictData> dictData) {
+        if (dictData.isEmpty())
+            return;
+
         try (DBHandler db = GBApplication.acquireDB()) {
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
 
+            // TODO: Cache probably not necessary with an index on StartTimestamp
+            // Assume it's in order, though we'll be fine if it is not
+            // Note that SQLite BETWEEN is inclusive
+            long cacheStartTime = dictData.get(0).getStartTimestamp();
+            long cacheEndTime = dictData.get(dictData.size() - 1).getStartTimestamp();
+            QueryBuilder<HuaweiDictData> qbCache = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
+                    HuaweiDictDataDao.Properties.UserId.eq(userId),
+                    HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
+                    HuaweiDictDataDao.Properties.StartTimestamp.between(cacheStartTime, cacheEndTime)
+            );
+            List<HuaweiDictData> cache = qbCache.build().list();
+
             for (HuaweiP2PDataDictionarySyncService.DictData data : dictData) {
                 // Avoid duplicates
-                QueryBuilder<HuaweiDictData> qb = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
-                        HuaweiDictDataDao.Properties.UserId.eq(userId),
-                        HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
-                        HuaweiDictDataDao.Properties.DictClass.eq(data.getDictClass()),
-                        HuaweiDictDataDao.Properties.StartTimestamp.eq(data.getStartTimestamp())
-                );
-                List<HuaweiDictData> results = qb.build().list();
                 Long dictId = null;
-                if (!results.isEmpty())
-                    dictId = results.get(0).getDictId();
+                if (data.getStartTimestamp() >= cacheStartTime && data.getStartTimestamp() <= cacheEndTime) {
+                    // Cache hit - if it exists it will be in the cache
+                    for (HuaweiDictData d : cache) {
+                        if (d.getStartTimestamp() == data.getStartTimestamp() && d.getDictClass() == data.getDictClass()) {
+                            dictId = d.getDictId();
+                            break;
+                        }
+                    }
+                } else {
+                    // Cache miss - check the database
+                    LOG.warn("P2P dedup cache miss");
+
+                    // TODO: No index on StartTimestamp/DictClass, so terribly slow
+                    QueryBuilder<HuaweiDictData> qb = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
+                            HuaweiDictDataDao.Properties.UserId.eq(userId),
+                            HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
+                            HuaweiDictDataDao.Properties.DictClass.eq(data.getDictClass()),
+                            HuaweiDictDataDao.Properties.StartTimestamp.eq(data.getStartTimestamp())
+                    );
+                    List<HuaweiDictData> results = qb.build().list();
+                    if (!results.isEmpty())
+                        dictId = results.get(0).getDictId();
+                }
 
                 HuaweiDictData dictSample = new HuaweiDictData(
                         dictId,
