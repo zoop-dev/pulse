@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
-        android:icon="@drawable/ic_bolt"
+        android:icon="@drawable/ic_battery_saver"
         android:key="stamina_preference"
         android:layout="@layout/preference_checkbox"
         android:title="@string/sonyswr12_settings_stamina"

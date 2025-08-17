@@ -5,15 +5,15 @@
         android:defaultValue="@string/p_pebble_privacy_mode_off"
         android:entries="@array/pebble_privacymode"
         android:entryValues="@array/pebble_privacymode_values"
+        android:icon="@drawable/ic_shield"
         android:key="pebble_pref_privacy_mode"
         android:summary="%s"
-        android:title="@string/pref_title_pebble_privacy_mode"
-        app:iconSpaceReserved="false" />
+        android:title="@string/pref_title_pebble_privacy_mode" />
     <SwitchPreferenceCompat
         android:defaultValue="true"
+        android:icon="@drawable/ic_watch_vibration"
         android:key="pebble_enable_outgoing_call"
         android:layout="@layout/preference_checkbox"
         android:summary="@string/pref_summary_enable_outgoing_call"
-        android:title="@string/pref_title_enable_outgoing_call"
-        app:iconSpaceReserved="false" />
+        android:title="@string/pref_title_enable_outgoing_call" />
 </androidx.preference.PreferenceScreen>

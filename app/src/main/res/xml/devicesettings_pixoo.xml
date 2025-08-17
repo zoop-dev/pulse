@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
-        android:icon="@drawable/ic_power_settings_new"
+        android:icon="@drawable/ic_cheer"
         android:key="pref_key_clap_hands_to_wakeup_device"
         android:layout="@layout/preference_checkbox"
         android:title="@string/clap_hands_to_wakeup_device"
         android:summary="@string/clap_hands_to_wakeup_device_summary"
         android:defaultValue="false" />
     <SwitchPreferenceCompat
-        android:icon="@drawable/ic_music_note"
+        android:icon="@drawable/ic_microphone"
         android:key="pref_key_power_saving"
         android:layout="@layout/preference_checkbox"
         android:title="@string/power_saving"

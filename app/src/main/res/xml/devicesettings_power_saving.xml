@@ -2,7 +2,7 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
         android:defaultValue="true"
-        android:icon="@drawable/ic_power_settings_new"
+        android:icon="@drawable/ic_battery_saver"
         android:key="pref_key_power_saving"
         android:layout="@layout/preference_checkbox"
         android:title="@string/power_saving" />

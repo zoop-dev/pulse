@@ -35,11 +35,13 @@
     <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
         android:dependency="display_all_day"
         android:defaultValue="07:00"
+        android:icon="@drawable/ic_start"
         android:key="display_on_start"
         android:title="@string/mi2_prefs_do_not_disturb_start" />
     <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
         android:dependency="display_all_day"
         android:defaultValue="22:00"
+        android:icon="@drawable/ic_keyboard_tab"
         android:key="display_on_end"
         android:title="@string/mi2_prefs_do_not_disturb_end" />
 </PreferenceScreen>

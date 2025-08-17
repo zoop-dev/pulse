@@ -9,11 +9,13 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:icon="@drawable/ic_drink"
             android:key="pref_hydration_switch"
             android:layout="@layout/preference_checkbox"
             android:title="@string/lefun_prefs_hydration_reminder_title" />
         <EditTextPreference
             android:defaultValue="60"
+            android:icon="@drawable/ic_timer"
             android:key="pref_hydration_period"
             android:summary="@string/lefun_prefs_hydration_reminder_summary"
             android:title="@string/lefun_prefs_hydration_reminder_interval_title"/>
@@ -21,6 +23,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:dependency="screen_hydration_reminder"
+            android:icon="@drawable/ic_dnd"
             android:key="pref_hydration_dnd"
             android:layout="@layout/preference_checkbox"
             android:summary="@string/hydration_dnd_summary"
@@ -29,12 +32,14 @@
         <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
             android:defaultValue="12:00"
             android:dependency="pref_hydration_dnd"
+            android:icon="@drawable/ic_start"
             android:key="pref_hydration_dnd_start"
             android:title="@string/mi2_prefs_do_not_disturb_start" />
 
         <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
             android:defaultValue="14:00"
             android:dependency="pref_hydration_dnd"
+            android:icon="@drawable/ic_keyboard_tab"
             android:key="pref_hydration_dnd_end"
             android:title="@string/mi2_prefs_do_not_disturb_end" />
     </PreferenceScreen>

@@ -3,7 +3,7 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_export_notes"
         android:key="pref_printer_print_received_text"
         android:layout="@layout/preference_checkbox"
         android:title="@string/pref_printer_print_received_text" />

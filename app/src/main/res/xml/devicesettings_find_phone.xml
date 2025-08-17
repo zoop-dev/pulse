@@ -11,11 +11,13 @@
             android:defaultValue="@string/p_off"
             android:entries="@array/prefs_find_phone"
             android:entryValues="@array/prefs_find_phone_values"
+            android:icon="@drawable/ic_vibration"
             android:key="prefs_find_phone"
             android:title="@string/prefs_enable_find_phone" />
 
         <EditTextPreference
             android:defaultValue="60"
+            android:icon="@drawable/ic_timer"
             android:inputType="number"
             android:key="prefs_find_phone_duration"
             android:title="@string/prefs_find_phone_duration" />

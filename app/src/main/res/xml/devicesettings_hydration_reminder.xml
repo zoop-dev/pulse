@@ -9,11 +9,13 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:icon="@drawable/ic_drink"
             android:key="pref_hydration_switch"
             android:layout="@layout/preference_checkbox"
             android:title="@string/lefun_prefs_hydration_reminder_title" />
         <EditTextPreference
             android:defaultValue="60"
+            android:icon="@drawable/ic_watch_vibration"
             android:key="pref_hydration_period"
             android:summary="@string/lefun_prefs_hydration_reminder_summary"
             android:title="@string/lefun_prefs_hydration_reminder_interval_title"/>

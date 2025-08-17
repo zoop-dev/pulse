@@ -6,11 +6,11 @@
         android:title="@string/pref_header_pebble_timeline"
         app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
+            android:icon="@drawable/ic_wb_twilight"
             android:key="send_sunrise_sunset"
             android:layout="@layout/preference_checkbox"
             android:summary="@string/pref_summary_sunrise_sunset"
-            android:title="@string/pref_title_sunrise_sunset"
-            app:iconSpaceReserved="false" />
+            android:title="@string/pref_title_sunrise_sunset" />
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>
