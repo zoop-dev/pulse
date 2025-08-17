@@ -42,7 +42,7 @@ message FileRequest {
 }
 
 message FileResponse {
-  optional uint32 unk1 = 1; // 0
+  optional uint32 status = 1; // 0 success 3 failure
   optional uint32 unk2 = 2; // 0
   optional uint32 handle = 3; // varies
   optional uint32 unk7 = 7; // 11

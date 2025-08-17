@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin
 
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFileSyncService
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.FileDownloadedDeviceEvent
 import nodomain.freeyourgadget.gadgetbridge.util.protobuf.buildWith
 import org.slf4j.LoggerFactory
 
@@ -27,7 +28,17 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
 
     private fun handleFileResponse(fileResponse: GdiFileSyncService.FileResponse): GdiFileSyncService.FileSyncService? {
         LOG.debug("Got file response: {}", fileResponse)
-        deviceSupport.downloadFileFromServiceV2(fileResponse.handle)
+
+        if (fileResponse.status != 0) {
+            LOG.warn("File download failed with status {}", fileResponse.status)
+            // Signal to the support class that the download failed so it can also continue to the next one
+            val fileDownloadedDeviceEvent = FileDownloadedDeviceEvent()
+            fileDownloadedDeviceEvent.success = false
+            deviceSupport.evaluateGBDeviceEvent(fileDownloadedDeviceEvent)
+        } else {
+            deviceSupport.downloadFileFromServiceV2(fileResponse.handle)
+        }
+
         return null
     }
 

@@ -1320,6 +1320,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 if (!started) {
                     if (!ArrayUtils.equals(new byte[]{0,0,0}, value, 0)) {
                         LOG.error("Got unexpected first message");
+                        if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
+                            transferNotification.incrementTotalProgress(currentlyDownloading.getSyncFile().getSize());
+                            currentlyDownloading = null;
+                        }
                         return;
                     }
                     started = true;
