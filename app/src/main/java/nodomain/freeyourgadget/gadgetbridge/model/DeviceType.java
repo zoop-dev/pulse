@@ -283,6 +283,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiI28UltraCoordin
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiP76Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiP80Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV72Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV76Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV89Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.FireBolttTalkCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.KT80Coordinator;
@@ -753,6 +754,7 @@ public enum DeviceType {
     COLMI_P76(ColmiP76Coordinator.class),
     COLMI_P80(ColmiP80Coordinator.class),
     COLMI_V72(ColmiV72Coordinator.class),
+    COLMI_V76(ColmiV76Coordinator.class),
     COLMI_V89(ColmiV89Coordinator.class),
     BLACKVIEW_R60(BlackviewR60Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
