@@ -22,7 +22,6 @@ import android.content.Context;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +30,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.Transaction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.DebugRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
@@ -127,11 +125,6 @@ public class TestDebugRequestParser {
 
         @Override
         public void addTotalFitnessData(int steps, int calories, int distance) {
-
-        }
-
-        @Override
-        public void addStepData(int timestamp, short steps, short calories, short distance, byte spo, byte heartrate) {
 
         }
 
