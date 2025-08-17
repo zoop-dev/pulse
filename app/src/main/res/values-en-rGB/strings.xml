@@ -1289,7 +1289,7 @@
     <string name="seconds_km">sec/km</string>
     <string name="averageStrokeDistance">Average Stroke Distance</string>
     <string name="averageHR">Heartrate</string>
-    <string name="averageKMPaceSeconds">Pace</string>
+    <string name="averageKMPaceSeconds">Avg Pace</string>
     <string name="totalStride">Total stride</string>
     <string name="activeSeconds">Active</string>
     <string name="caloriesBurnt">Calories</string>
@@ -1390,7 +1390,7 @@
     <string name="reminder_no_free_slots_description">The device has no free slots for reminders (total slots: %1$s)</string>
     <string name="prefs_reserve_reminder_calendar_summary">Number of calendar events that will be synchronized</string>
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Activate display upon lift during Do Not Disturb</string>
-    <string name="maxHR">Max Heartrate</string>
+    <string name="maxHR">Max Heart Rate</string>
     <string name="spm">steps/min</string>
     <string name="minSpeed">Minimum</string>
     <string name="averageCadence">Average Cadence</string>

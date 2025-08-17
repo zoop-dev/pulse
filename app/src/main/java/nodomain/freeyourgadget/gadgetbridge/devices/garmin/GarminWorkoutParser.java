@@ -121,6 +121,7 @@ import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SpeedYLabelFormatter;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslation;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
@@ -217,14 +218,6 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             handleRecord(record);
         }
 
-        if (sport != null) {
-            if (StringUtils.isNullOrEmpty(summary.getName())) {
-                summary.setName(sport.getName());
-            }
-            activityKind = getActivityKind(sport.getSport(), sport.getSubSport());
-        } else {
-            activityKind = getActivityKind(session.getSport(), session.getSubSport());
-        }
         final ActivitySummaryData activitySummaryData = updateSummary(summary);
 
         final List<WorkoutChart> charts = new LinkedList<>();
@@ -235,14 +228,16 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             boolean hasSpeedValues = false;
             for (int i=0; i<=activityPoints.size()-1; i++) {
                 ActivityPoint point = activityPoints.get(i);
-                long time = tsTranslation.shorten((int) point.getTime().getTime());
-                heartRateDataPoints.add(new Entry(time, point.getHeartRate()));
-                speedDataPoints.add(new Entry(time, point.getSpeed()));
-                if (!hasSpeedValues && point.getSpeed() > 0) {
-                    hasSpeedValues = true;
+                long tsShorten = tsTranslation.shorten((int) point.getTime().getTime());
+                if (point.getHeartRate() > 0) {
+                    heartRateDataPoints.add(new Entry(tsShorten, point.getHeartRate()));
                 }
                 if (point.getLocation() != null) {
-                    elevationDataPoints.add(new Entry(time, (float) point.getLocation().getAltitude()));
+                    elevationDataPoints.add(new Entry(tsShorten, (float) point.getLocation().getAltitude()));
+                }
+                speedDataPoints.add(new Entry(tsShorten, point.getSpeed()));
+                if (!hasSpeedValues && point.getSpeed() > 0) {
+                    hasSpeedValues = true;
                 }
             }
             if (!heartRateDataPoints.isEmpty()) {
@@ -378,6 +373,14 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             return summaryData;
         }
 
+        if (sport != null) {
+            if (StringUtils.isNullOrEmpty(summary.getName())) {
+                summary.setName(sport.getName());
+            }
+            activityKind = getActivityKind(sport.getSport(), sport.getSubSport());
+        } else {
+            activityKind = getActivityKind(session.getSport(), session.getSubSport());
+        }
         final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
 
         final String weightUnit;

@@ -14,15 +14,17 @@ object ActivitySummaryGroup {
         activitySummaryData.keys
             .filterNot { it.startsWith("internal") }
             .forEach { key ->
-                val item = activitySummaryData[key]
+                var item = activitySummaryData[key]
                 // Use the group if specified in the entry, otherwise fallback to the default mapping from getDefaultGroup
                 val groups: List<String> = item.group?.let { listOf(it) } ?: getDefaultGroups(key)
 
-                for (groupName in groups) {
+                for ((index, groupName) in groups.withIndex()) {
+                    if (index > 0) {
+                        item = item.clone();
+                    }
                     if (groupName == ActivitySummaryEntries.GROUP_OTHER) {
                         item.columnSpan = 2;
                     }
-
                     // If the group is not defined the default groups, it will be added to the end
                     val group = activeGroups.getOrPut(groupName) { mutableListOf() }
                     group.add(Pair.of<String, ActivitySummaryEntry>(key, item))
@@ -54,7 +56,7 @@ object ActivitySummaryGroup {
                 ActivitySummaryEntries.GROUP_ACTIVITY, listOf<String>(
                     ActivitySummaryEntries.ACTIVE_SECONDS,
                     ActivitySummaryEntries.DISTANCE_METERS,
-                    ActivitySummaryEntries.CALORIES_BURNT,
+                    ActivitySummaryEntries.CALORIES_ACTIVE,
                     ActivitySummaryEntries.HR_AVG,
                     ActivitySummaryEntries.STEPS,
                     ActivitySummaryEntries.STRIDE_TOTAL,
@@ -109,11 +111,6 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.PACE_MIN,
                     ActivitySummaryEntries.PACE_MAX,
                     "averageSpeed2",
-                    ActivitySummaryEntries.CADENCE_AVG,
-                    ActivitySummaryEntries.CADENCE_MAX,
-                    ActivitySummaryEntries.CADENCE_MIN,
-                    ActivitySummaryEntries.STEP_RATE_AVG,
-                    ActivitySummaryEntries.STEP_RATE_MAX,
                 )
             )
 
@@ -280,12 +277,18 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.RESPIRATION_MIN,
                     ActivitySummaryEntries.RESPIRATION_MAX,
                     ActivitySummaryEntries.ESTIMATED_SWEAT_LOSS,
+                    ActivitySummaryEntries.CALORIES_BURNT,
                     ActivitySummaryEntries.CALORIES_ACTIVE,
                     ActivitySummaryEntries.CALORIES_RESTING,
                     ActivitySummaryEntries.STRIDE_AVG,
                     ActivitySummaryEntries.STRIDE_MAX,
                     ActivitySummaryEntries.STRIDE_MIN,
                     ActivitySummaryEntries.STEP_LENGTH_AVG,
+                    ActivitySummaryEntries.CADENCE_AVG,
+                    ActivitySummaryEntries.CADENCE_MAX,
+                    ActivitySummaryEntries.CADENCE_MIN,
+                    ActivitySummaryEntries.STEP_RATE_AVG,
+                    ActivitySummaryEntries.STEP_RATE_MAX,
                 )
             )
         }

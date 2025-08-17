@@ -453,6 +453,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             isEnabled = false
         }
         lineChart.data = chart.chartData as LineData?
+        lineChart.description.isEnabled = false;
         lineChart.invalidate()
         chartsFragmentHolder.addView(lineChart)
 
