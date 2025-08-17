@@ -54,25 +54,25 @@ public class DefaultWorkoutCharts {
 
         if (!heartRateDataPoints.isEmpty()) {
             final String label = String.format("%s(%s)", context.getString(R.string.heart_rate), getUnitString(context, UNIT_BPM));
-            final LineDataSet dataset = createDataSet(context, heartRateDataPoints, label, Color.RED);
+            final LineDataSet dataset = createDataSet(context, heartRateDataPoints, label, context.getResources().getColor(R.color.chart_line_heart_rate));
             charts.add(new WorkoutChart(context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE, new LineData(dataset)));
         }
 
         if (hasSpeedValues && !speedDataPoints.isEmpty()) {
             if (ActivityKind.isPaceActivity(activityKind)) {
                 final String label = String.format("%s (%s)", context.getString(R.string.Pace), getUnitString(context, UNIT_SECONDS_PER_KM));
-                final LineDataSet dataset = createDataSet(context, speedDataPoints, label, Color.BLUE);
+                final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
                 charts.add(new WorkoutChart(context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_SECONDS_PER_KM)));
             } else {
                 final String label = String.format("%s (%s)", context.getString(R.string.Speed), getUnitString(context, UNIT_METERS_PER_SECOND));
-                final LineDataSet dataset = createDataSet(context, speedDataPoints, label, Color.BLUE);
+                final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
                 charts.add(new WorkoutChart(context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND)));
             }
         }
 
         if (!elevationDataPoints.isEmpty()) {
             final String label = String.format("%s (%s)", context.getString(R.string.Elevation), getUnitString(context, UNIT_METERS));
-            LineDataSet dataset = createDataSet(context, elevationDataPoints, label, Color.GREEN);
+            LineDataSet dataset = createDataSet(context, elevationDataPoints, label, context.getResources().getColor(R.color.chart_line_elevation));
             charts.add(new WorkoutChart(context.getString(R.string.Elevation), ActivitySummaryEntries.GROUP_ELEVATION, new LineData(dataset)));
         }
 
