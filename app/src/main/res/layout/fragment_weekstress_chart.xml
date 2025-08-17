@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
+            android:textColor="?attr/textColorPrimary"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp" />
 
@@ -43,6 +44,7 @@
                 <TextView
                     android:id="@+id/stress_chart_relaxed_time"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -64,6 +66,7 @@
                 <TextView
                     android:id="@+id/stress_chart_mild_time"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -85,6 +88,7 @@
                 <TextView
                     android:id="@+id/stress_chart_moderate_time"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -106,6 +110,7 @@
                 <TextView
                     android:id="@+id/stress_chart_high_time"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

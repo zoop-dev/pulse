@@ -87,6 +87,7 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
     protected int DESCRIPTION_COLOR;
     protected int CHART_TEXT_COLOR;
     protected int LEGEND_TEXT_COLOR;
+    protected int TEXT_COLOR;
 
     protected int PAI_TOTAL_COLOR;
     protected int PAI_DAY_COLOR;
@@ -94,7 +95,7 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
     @Override
     protected void init() {
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
-        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(requireContext());
+        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = ContextCompat.getColor(requireContext(), R.color.secondarytext);
 
         PAI_TOTAL_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_pai_weekly);
@@ -315,7 +316,7 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         set.setValueFormatter(getRoundFormatter());
 
         BarData barData = new BarData(set);
-        barData.setValueTextColor(Color.GRAY); //prevent tearing other graph elements with the black text. Another approach would be to hide the values cmpletely with data.setDrawValues(false);
+        barData.setValueTextColor(TEXT_COLOR); //prevent tearing other graph elements with the black text. Another approach would be to hide the values cmpletely with data.setDrawValues(false);
         barData.setValueTextSize(10f);
 
         barChart.getAxisLeft().setAxisMaximum(Math.max(maxPai, getPaiTarget()));

@@ -66,6 +66,7 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
 
     private int BACKGROUND_COLOR;
     private int CHART_TEXT_COLOR;
+    private int TEXT_COLOR;
     private int LEGEND_TEXT_COLOR;
 
     private TimestampTranslation tsTranslation;
@@ -73,7 +74,7 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
     @Override
     protected void init() {
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
-        LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
+        LEGEND_TEXT_COLOR = TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
     }
 
@@ -112,7 +113,7 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         lineDataSet.setDrawCircles(false);
         lineDataSet.setLineWidth(2.2f);
         lineDataSet.setFillAlpha(255);
-        lineDataSet.setValueTextColor(CHART_TEXT_COLOR);
+        lineDataSet.setValueTextColor(TEXT_COLOR);
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         if (manualPoints) {
             lineDataSet.setDrawCircles(true);

@@ -25,6 +25,8 @@ abstract class StressFragment<D extends ChartsData> extends AbstractChartFragmen
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
     protected int CHART_TEXT_COLOR;
+    protected int TEXT_COLOR;
+    protected int SUB_TEXT_COLOR;
     protected int LEGEND_TEXT_COLOR;
 
     @Override
@@ -35,8 +37,8 @@ abstract class StressFragment<D extends ChartsData> extends AbstractChartFragmen
     @Override
     protected void init() {
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
-        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(requireContext());
-        CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
+        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = TEXT_COLOR = GBApplication.getTextColor(requireContext());
+        CHART_TEXT_COLOR = SUB_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
     }
 
     protected List<? extends StressSample> getStressSamples(DBHandler db, GBDevice device, int tsStart, int tsEnd) {

@@ -232,12 +232,12 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
         lineDataSet.setFillAlpha(255);
         lineDataSet.setCircleRadius(5f);
         lineDataSet.setDrawCircles(true);
-        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setDrawCircleHole(false);
         lineDataSet.setCircleColor(color);
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(true);
         lineDataSet.setValueTextSize(10f);
-        lineDataSet.setValueTextColor(CHART_TEXT_COLOR);
+        lineDataSet.setValueTextColor(TEXT_COLOR);
         lineDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {

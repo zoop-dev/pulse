@@ -61,6 +61,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
     protected int LEGEND_TEXT_COLOR;
+    protected int TEXT_COLOR;
 
     private TextView mDateView;
     private TextView hrResting;
@@ -137,7 +138,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
     protected void init() {
         Prefs prefs = GBApplication.getPrefs();
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(getContext());
-        DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = GBApplication.getTextColor(getContext());
+        DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = TEXT_COLOR = GBApplication.getTextColor(getContext());
         if (prefs.getBoolean("chart_heartrate_color", false)) {
             HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_alternative);
         }else{
@@ -277,7 +278,8 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         dataSet.setDrawValues(true);
         dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         dataSet.setColor(color);
-        dataSet.setValueTextColor(CHART_TEXT_COLOR);
+        dataSet.setValueTextColor(TEXT_COLOR);
+        dataSet.setValueTextSize(10f);
         return dataSet;
     }
 

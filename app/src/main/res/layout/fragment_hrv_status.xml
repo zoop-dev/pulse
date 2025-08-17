@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
+            android:textColor="?attr/textColorPrimary"
             android:layout_marginTop="15dp"
             />
 
@@ -40,6 +41,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="28dp"
                 android:text="@string/stats_empty_value"
+                android:textColor="?attr/textColorPrimary"
                 android:textSize="30sp" />
 
             <TextView
@@ -69,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -87,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,6 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -123,6 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -140,6 +146,8 @@
                     android:id="@+id/hrv_status_last_night"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,6 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView

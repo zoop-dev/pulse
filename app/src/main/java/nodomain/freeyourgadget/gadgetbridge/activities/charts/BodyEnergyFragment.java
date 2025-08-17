@@ -59,6 +59,7 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
     protected int CHART_TEXT_COLOR;
     protected int LEGEND_TEXT_COLOR;
     protected int TEXT_COLOR;
+    protected int SUBTEXT_COLOR;
     protected int AVERAGE_LINE_COLOR;
 
     // Number of days to include in the average calculation
@@ -96,6 +97,7 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
     @Override
     protected void init() {
         TEXT_COLOR = GBApplication.getTextColor(requireContext());
+        SUBTEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
         LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
         AVERAGE_LINE_COLOR = Color.GRAY;
@@ -366,7 +368,7 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         int yPos = (int) ((float) height / 2 - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
         canvas.drawText(String.valueOf(value), width / 2f, yPos, textPaint);
         Paint textLowerPaint = new Paint();
-        textLowerPaint.setColor(TEXT_COLOR);
+        textLowerPaint.setColor(SUBTEXT_COLOR);
         textLowerPaint.setTextAlign(Paint.Align.CENTER);
         float textLowerPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, width * 0.025f, requireContext().getResources().getDisplayMetrics());
         textLowerPaint.setTextSize(textLowerPixels);

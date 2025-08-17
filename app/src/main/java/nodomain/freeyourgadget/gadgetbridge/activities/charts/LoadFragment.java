@@ -211,7 +211,7 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
         dailyLoadChart.getAxisLeft().setAxisMaximum(Math.max(set.getYMax(), 200) + 100);
         dailyLoadChart.setRenderer(new AngledLabelsChartRenderer(dailyLoadChart, dailyLoadChart.getAnimator(), dailyLoadChart.getViewPortHandler()));
         BarData barData = new BarData(set);
-        barData.setValueTextColor(Color.GRAY);
+        barData.setValueTextColor(TEXT_COLOR);
         barData.setValueTextSize(10f);
         dailyLoadChart.setData(barData);
 

@@ -97,6 +97,7 @@
 
     <!-- Material 3 dynamic color (Material You) themes -->
     <style name="GadgetbridgeThemeDynamicLight" parent="Theme.Material3.DynamicColors.Light">
+        <item name="textColorPrimary">@color/primarytext_light</item>
         <item name="actionBarStyle">@style/GadgetbridgeThemeDynamic.ActionBar</item>
         <item name="actionOverflowMenuStyle">@style/GadgetbridgeTheme.OverflowMenuStyle</item>
         <item name="android:statusBarColor">?attr/colorSurface</item>
@@ -118,6 +119,7 @@
         <item name="deviceIconDark">?attr/colorPrimaryDark</item>
     </style>
     <style name="GadgetbridgeThemeDynamicDark" parent="Theme.Material3.DynamicColors.Dark">
+        <item name="textColorPrimary">@color/primarytext_dark</item>
         <item name="actionBarStyle">@style/GadgetbridgeThemeDynamic.ActionBar</item>
         <item name="actionOverflowMenuStyle">@style/GadgetbridgeTheme.OverflowMenuStyle</item>
         <item name="android:statusBarColor">?attr/colorSurface</item>

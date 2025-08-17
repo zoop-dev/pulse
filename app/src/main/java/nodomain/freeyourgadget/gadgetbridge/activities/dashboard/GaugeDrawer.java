@@ -205,6 +205,7 @@ public class GaugeDrawer {
                                                   String lowerText,
                                                   Context context) {
         int TEXT_COLOR = GBApplication.getTextColor(context);
+        int SUBTEXT_COLOR = GBApplication.getSecondaryTextColor(context);
         int height = width;
         int barMargin = (int) Math.ceil(barWidth / 2f);
 
@@ -276,7 +277,7 @@ public class GaugeDrawer {
         int yPos = (int) ((float) height / 2 - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
         canvas.drawText(String.valueOf(text), width / 2f, yPos, textPaint);
         Paint textLowerPaint = new Paint();
-        textLowerPaint.setColor(TEXT_COLOR);
+        textLowerPaint.setColor(SUBTEXT_COLOR);
         textLowerPaint.setTextAlign(Paint.Align.CENTER);
         float textLowerPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, width * 0.025f, context.getResources().getDisplayMetrics());
         textLowerPaint.setTextSize(textLowerPixels);
@@ -293,6 +294,7 @@ public class GaugeDrawer {
                                          int maxValue,
                                          Context context) {
         int TEXT_COLOR = GBApplication.getTextColor(context);
+        int SUB_TEXT_COLOR = GBApplication.getSecondaryTextColor(context);
         int height = width;
         int barMargin = (int) Math.ceil(barWidth / 2f);
         float filledFactor = (float) value / maxValue;
@@ -335,7 +337,7 @@ public class GaugeDrawer {
         int yPos = (int) ((float) height / 2 - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
         canvas.drawText(String.valueOf(value), width / 2f, yPos, textPaint);
         Paint textLowerPaint = new Paint();
-        textLowerPaint.setColor(TEXT_COLOR);
+        textLowerPaint.setColor(SUB_TEXT_COLOR);
         textLowerPaint.setTextAlign(Paint.Align.CENTER);
         float textLowerPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, width * 0.025f, context.getResources().getDisplayMetrics());
         textLowerPaint.setTextSize(textLowerPixels);

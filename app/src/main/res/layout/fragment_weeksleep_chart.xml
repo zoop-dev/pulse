@@ -15,6 +15,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="20sp"
+                android:textColor="?attr/textColorPrimary"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
         />
@@ -49,6 +50,7 @@
                 <TextView
                     android:id="@+id/sleep_chart_legend_deep_time"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,6 +76,7 @@
                 <TextView
                     android:id="@+id/sleep_chart_legend_light_time"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,6 +110,7 @@
                     <TextView
                         android:id="@+id/sleep_chart_legend_rem_time"
                         android:text="@string/stats_empty_value"
+                        android:textColor="?attr/textColorPrimary"
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -141,6 +145,7 @@
                     <TextView
                         android:id="@+id/sleep_chart_legend_awake_time"
                         android:text="@string/stats_empty_value"
+                        android:textColor="?attr/textColorPrimary"
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -199,6 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -219,6 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -237,6 +244,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/stats_empty_value"
+                    android:textColor="?attr/textColorPrimary"
                     android:textSize="20sp" />
 
                 <TextView

@@ -143,12 +143,12 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
         lineDataSet.setFillAlpha(255);
         lineDataSet.setCircleRadius(5f);
         lineDataSet.setDrawCircles(true);
-        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setDrawCircleHole(false);
         lineDataSet.setCircleColor(getResources().getColor(R.color.hrv_status_char_line_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(true);
         lineDataSet.setValueTextSize(10f);
-        lineDataSet.setValueTextColor(CHART_TEXT_COLOR);
+        lineDataSet.setValueTextColor(TEXT_COLOR);
         lineDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -325,8 +325,8 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
         xAxisBottom.setDrawGridLines(false);
         xAxisBottom.setEnabled(true);
         xAxisBottom.setDrawLimitLinesBehindData(true);
-        xAxisBottom.setAxisMaximum(6 + 0.5f);
-        xAxisBottom.setAxisMinimum(0 - 0.5f);
+        xAxisBottom.setAxisMaximum(6);
+        xAxisBottom.setAxisMinimum(0);
         xAxisBottom.setTextColor(CHART_TEXT_COLOR);
 
         final YAxis yAxisLeft = mWeeklyHRVStatusChart.getAxisLeft();
