@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -226,7 +227,7 @@ public class DashboardUtils {
 
     public static List<? extends ActivitySample> getAllSamples(DBHandler db, GBDevice device, DashboardFragment.DashboardData dashboardData) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
-        return provider.getAllActivitySamples(dashboardData.timeFrom, dashboardData.timeTo);
+        return provider != null ? provider.getAllActivitySamples(dashboardData.timeFrom, dashboardData.timeTo) : Collections.emptyList();
     }
 
     protected static SampleProvider<? extends AbstractActivitySample> getProvider(DBHandler db, GBDevice device) {

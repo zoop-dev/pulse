@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -196,12 +197,12 @@ public class DailyTotals implements Serializable {
 
     protected static List<? extends ActivitySample> getAllSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
-        return provider.getAllActivitySamples(tsFrom, tsTo);
+        return provider != null ? provider.getAllActivitySamples(tsFrom, tsTo) : Collections.emptyList();
     }
 
     public static ActivitySample getFirstSample(DBHandler db, GBDevice device) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
-        return provider.getFirstActivitySample();
+        return provider != null ? provider.getFirstActivitySample() : null;
     }
 
 }
