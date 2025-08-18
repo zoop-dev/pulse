@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
@@ -104,6 +105,9 @@ public class BangleJSWorkoutParser implements ActivitySummaryParser {
             }
             if (p.getSteps() > 0) {
                 accStride.add(distanceDiff / p.getSteps());
+            }
+            if (p.getLocation() != null && p.getLocation().getAltitude() != GPSCoordinate.UNKNOWN_ALTITUDE) {
+                accAltitude.add(p.getLocation().getAltitude());
             }
             totalTime += timeDiff;
             totalDistance += distanceDiff;
