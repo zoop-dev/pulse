@@ -53,7 +53,8 @@ public class WaspOSCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("DS-D6.*|K9.*|PineTime.*|P8.*");
+        // Avoids conflict with Colmi P80/P81
+        return Pattern.compile("^(DS-D6.*|K9.*|PineTime.*|P8([^0-9].*)?)$");
     }
 
     @Override
