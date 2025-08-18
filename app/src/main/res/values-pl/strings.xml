@@ -4005,4 +4005,5 @@
     <string name="huawei_sleep_breath_summary">Oceń swój oddech w cichym otoczeniu. Może wpłynąć na żywotność baterii.\nOstrzeżenie: Nie zsynchronizowano jeszcze z Gadgetbridge.</string>
     <string name="workout_power">Moc</string>
     <string name="Other">Inne</string>
+    <string name="devicetype_generic_weight_scale">Waga</string>
 </resources>
