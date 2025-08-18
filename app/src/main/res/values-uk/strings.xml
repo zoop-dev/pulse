@@ -861,8 +861,8 @@
     <string name="averageStrokesPerSecond">Середня кількість гребків</string>
     <string name="averageStrokeDistance">Середня відстань гребка</string>
     <string name="averageStride">Середній крок</string>
-    <string name="averageKMPaceSeconds">Середній темп</string>
-    <string name="averageHR">Середній пульс</string>
+    <string name="averageKMPaceSeconds">Середній Темп</string>
+    <string name="averageHR">Середній Оцінка Пульс</string>
     <string name="totalStride">Звичайний крок</string>
     <string name="maxPace">Найшвидший темп</string>
     <string name="minPace">Найповільніший темп</string>
@@ -986,7 +986,7 @@
     <string name="dbmanagementactivity_export_confirmation">Ви впевнені, що хочете експортувати дані? Попередньо експортовані дані (якщо вони є) та налаштування будуть перезаписані.</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Помилка видалення файлів із теки для експорту %1$s</string>
     <string name="dbmanagementactivity_export_data_title">Експортувати дані\?</string>
-    <string name="charts_legend_heartrate_average">Середній пульс</string>
+    <string name="charts_legend_heartrate_average">Середній оцінка пульс</string>
     <string name="activity_prefs_chart_min_session_length">Найнижча тривалість діяльності (у хвилинах)</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Тривалість паузи для відокремлення діяльностей (у хвилинах)</string>
     <string name="prefs_charts_tabs">Вкладки діаграм</string>
@@ -1291,7 +1291,7 @@
     <string name="minSpeed">Найнижча</string>
     <string name="maxHR">Максимальна частота серцевих скорочень</string>
     <string name="spm">кроків/хв</string>
-    <string name="averageCadence">Середній темп</string>
+    <string name="averageCadence">Середній Каденс</string>
     <string name="maxCadence">Найвищий темп</string>
     <string name="minHR">Мінімальна частота серцевих скорочень</string>
     <string name="maxStride">Максимальний крок</string>
@@ -2571,7 +2571,7 @@
     <string name="active_calories_short">Активні</string>
     <string name="sleep_avg">Сон (середнє)</string>
     <string name="highest">Найвищий</string>
-    <string name="stats_average_hr">Середній пульс</string>
+    <string name="stats_average_hr">Середній HR</string>
     <string name="hr_resting">Відпочинок</string>
     <string name="lowest">Найнижчий</string>
     <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
@@ -3823,4 +3823,16 @@
     <string name="huawei_sleep_breath_summary">Оцініть своє дихання в тихому середовищі. Це може вплинути на час роботи батареї.\nПопередження: Ще не синхронізовано з Gadgetbridge.</string>
     <string name="workout_power">Потужність</string>
     <string name="Other">Інше</string>
+    <string name="devicetype_generic_weight_scale">Масштаб Ваги</string>
+    <string name="weight_scale_jin">чути - 市斤</string>
+    <string name="weight_scale_jin_format">%1$.2f 市斤</string>
+    <string name="weight_scale_kilogram">кілограм - кг</string>
+    <string name="weight_scale_kilogram_format">%1$.3f кг</string>
+    <string name="weight_scale_pound">фунт - фунт</string>
+    <string name="weight_scale_pound_format">%1$.3f фунт</string>
+    <string name="weight_scale_show_measurement">Показати вагу</string>
+    <string name="weight_scale_stone">камінь - вул</string>
+    <string name="weight_scale_stone_format">%1$d вул %2$d фунт</string>
+    <string name="weight_scale_unknown">\???.??? ??</string>
+    <string name="record_data">Зберегти</string>
 </resources>
