@@ -198,7 +198,6 @@ public class ProtocolBufferHandler implements MessageHandler {
                 }
             }
             if (smart.hasFileSyncService()) {
-                processed = true;
                 if (deviceSupport.getDevicePrefs().getBoolean("new_sync_protocol", false)) {
                     processed = true;
                     final GdiFileSyncService.FileSyncService response = fileSyncServiceHandler.handle(smart.getFileSyncService());
@@ -210,7 +209,6 @@ public class ProtocolBufferHandler implements MessageHandler {
                 }
             }
             if (smart.hasEcgService()) {
-                processed = true;
                 if (deviceSupport.getDevicePrefs().getBoolean("new_sync_protocol", false)) {
                     processed = true;
                     final GdiEcgService.EcgService response = ecgServiceHandler.handle(smart.getEcgService());

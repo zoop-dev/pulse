@@ -21,8 +21,19 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
     }
 
     private fun handleNewFileNotification(newFileNotification: GdiFileSyncService.NewFileNotification): GdiFileSyncService.FileSyncService? {
-        LOG.debug("Got new file notification: {}, ignoring", newFileNotification)
-        //deviceSupport.addFileToDownloadList(newFileNotification.file)
+        LOG.debug("Got new file notification: {}", newFileNotification)
+        if (!newFileNotification.file.hasType() || !newFileNotification.file.type.hasName()) {
+            LOG.warn("New file has no type name")
+            return null
+        }
+        val fetchUnknownFiles = deviceSupport.devicePrefs.fetchUnknownFiles
+        val typeName = newFileNotification.file.type.name
+        if (!FILE_TYPES_TO_PROCESS.contains(typeName) && !fetchUnknownFiles) {
+            LOG.warn("Ignoring file type: {}", typeName)
+            return null
+        }
+
+        deviceSupport.addFileToDownloadList(newFileNotification.file)
         return null
     }
 
