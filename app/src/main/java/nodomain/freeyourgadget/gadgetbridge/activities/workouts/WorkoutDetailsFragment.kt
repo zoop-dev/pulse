@@ -268,12 +268,20 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         val groups = ActivitySummaryGroup.buildGroupedList(workout.data)
 
         for ((groupKey, entries) in groups) {
+            val groupCharts = workout.charts.filter { chart -> groupKey == chart.group }
+            if (entries.isEmpty() && groupCharts.isEmpty()) {
+                continue
+            }
+
             if (ActivitySummaryEntries.GROUP_ACTIVITY != groupKey) {
                 addGroupHeader(groupKey)
             }
-            addGroupContent(entries)
 
-            workout.charts.filter { chart -> groupKey == chart.group }.forEach { chart ->
+            if (!entries.isEmpty()) {
+                addGroupContent(entries)
+            }
+
+            groupCharts.forEach { chart ->
                 addChart(binding.summaryDetails, false, chart)
             }
         }

@@ -25,8 +25,8 @@ object ActivitySummaryGroup {
                 }
             }
 
-        // activeGroups is already ordered, discard empty ones
-        return activeGroups.filterValues { it.isNotEmpty() }
+        // activeGroups is already ordered
+        return activeGroups
     }
 
     /**
