@@ -202,10 +202,10 @@ public class FitFile {
             this.dataSize = dataSize;
         }
 
-        static Header parseIncomingHeader(GarminByteBufferReader garminByteBufferReader) {
+        static Header parseIncomingHeader(GarminByteBufferReader garminByteBufferReader) throws FitParseException {
             int headerSize = garminByteBufferReader.readByte();
             if (headerSize < 12) {
-                throw new IllegalArgumentException("Too short header in FIT file.");
+                throw new FitParseException("Too short header in FIT file.");
             }
             boolean hasCRC = headerSize == 14;
             int protocolVersion = garminByteBufferReader.readByte();
@@ -213,13 +213,13 @@ public class FitFile {
             int dataSize = garminByteBufferReader.readInt();
             int magic = garminByteBufferReader.readInt();
             if (magic != MAGIC) {
-                throw new IllegalArgumentException("Wrong magic header in FIT file");
+                throw new FitParseException("Wrong magic header in FIT file");
             }
             if (hasCRC) {
                 int incomingCrc = garminByteBufferReader.readShort();
 
                 if (incomingCrc != 0 && incomingCrc != ChecksumCalculator.computeCrc(garminByteBufferReader.asReadOnlyBuffer(), 0, headerSize - 2)) {
-                    throw new IllegalArgumentException("Wrong CRC for header in FIT file");
+                    throw new FitParseException("Wrong CRC for header in FIT file");
                 }
                 //            LOG.info("Fit File Header didn't have CRC, no check performed.");
             }

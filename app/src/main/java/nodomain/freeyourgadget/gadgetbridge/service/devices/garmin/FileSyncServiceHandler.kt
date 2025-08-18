@@ -49,6 +49,8 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
             fileListResponse.nextPageId
         )
 
+        val fetchUnknownFiles = deviceSupport.devicePrefs.fetchUnknownFiles
+
         nextPageId = fileListResponse.nextPageId
 
         // Only the first entry for a type seems to contain the type name, so keep track of them
@@ -67,7 +69,7 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
                 continue
             }
 
-            if (!FILE_TYPES_TO_PROCESS.contains(typeName)) {
+            if (!FILE_TYPES_TO_PROCESS.contains(typeName) && !fetchUnknownFiles) {
                 LOG.warn("Ignoring file type: {}", typeName)
                 continue
             }
@@ -92,7 +94,12 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
     }
 
     fun requestFile(fileToRequest: GdiFileSyncService.File): GdiFileSyncService.FileSyncService {
-        LOG.debug("Requesting file: {}/{}", fileToRequest.id.id1, fileToRequest.id.id2)
+        LOG.debug(
+            "Requesting file: {}/{} ({})",
+            fileToRequest.id.id1,
+            fileToRequest.id.id2,
+            fileToRequest.type.name
+        )
         return GdiFileSyncService.FileSyncService.newBuilder().buildWith {
             fileRequest = GdiFileSyncService.FileRequest.newBuilder().buildWith {
                 file = fileToRequest
@@ -104,7 +111,26 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
         }
     }
 
-    fun markSynced(syncFile: GdiFileSyncService.File): GdiFileSyncService.FileSyncService {
+    fun markSynced(syncFile: GdiFileSyncService.File): GdiFileSyncService.FileSyncService? {
+        val fetchUnknownFiles = deviceSupport.devicePrefs.fetchUnknownFiles
+        if (fetchUnknownFiles) {
+            // Since some of the unknown files are not really supposed to be marked as synced (eg. settings, courses, locations)
+            // let's avoid sending the command if it's not a file that we process
+            if (syncFile.type.name == null) {
+                LOG.warn("Will not mark {}/{} as synced - unknown type", syncFile.id.id1, syncFile.id.id2)
+                return null
+            }
+            if (!FILE_TYPES_TO_PROCESS.contains(syncFile.type.name)) {
+                LOG.warn(
+                    "Will not mark {}/{} ({}) as synced - not a file to process",
+                    syncFile.id.id1,
+                    syncFile.id.id2,
+                    syncFile.type.name
+                )
+                return null
+            }
+        }
+
         return GdiFileSyncService.FileSyncService.newBuilder().buildWith {
             fileSetFlags = GdiFileSyncService.FileSetFlags.newBuilder().buildWith {
                 file = syncFile.id

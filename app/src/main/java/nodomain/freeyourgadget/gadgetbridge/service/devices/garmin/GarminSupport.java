@@ -1298,14 +1298,16 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 }
 
                 if (!getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
-                    sendOutgoingMessage(
-                            "mark file as synced",
-                            protocolBufferHandler.prepareProtobufRequest(
-                                    GdiSmartProto.Smart.newBuilder().setFileSyncService(
-                                            protocolBufferHandler.getFileSyncServiceHandler().markSynced(currentlyDownloading.getSyncFile())
-                                    ).build()
-                            )
-                    );
+                    final GdiFileSyncService.FileSyncService syncedCommand = protocolBufferHandler.getFileSyncServiceHandler()
+                            .markSynced(currentlyDownloading.getSyncFile());
+                    if (syncedCommand != null) {
+                        sendOutgoingMessage(
+                                "mark file as synced",
+                                protocolBufferHandler.prepareProtobufRequest(
+                                        GdiSmartProto.Smart.newBuilder().setFileSyncService(syncedCommand).build()
+                                )
+                        );
+                    }
                 }
 
                 LOG.debug("New file sync success");
