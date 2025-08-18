@@ -861,8 +861,8 @@
     <string name="averageStrokesPerSecond">Середня кількість гребків</string>
     <string name="averageStrokeDistance">Середня відстань гребка</string>
     <string name="averageStride">Середній крок</string>
-    <string name="averageKMPaceSeconds">Темп</string>
-    <string name="averageHR">Пульс</string>
+    <string name="averageKMPaceSeconds">Середній темп</string>
+    <string name="averageHR">Середній пульс</string>
     <string name="totalStride">Звичайний крок</string>
     <string name="maxPace">Найшвидший темп</string>
     <string name="minPace">Найповільніший темп</string>
@@ -1289,11 +1289,11 @@
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Вмикати екран у разі підняття руки під час режиму «Не турбувати»</string>
     <string name="averageAltitude">Середня</string>
     <string name="minSpeed">Найнижча</string>
-    <string name="maxHR">Найвищий пульс</string>
+    <string name="maxHR">Максимальна частота серцевих скорочень</string>
     <string name="spm">кроків/хв</string>
     <string name="averageCadence">Середній темп</string>
     <string name="maxCadence">Найвищий темп</string>
-    <string name="minHR">Найнижчий пульс</string>
+    <string name="minHR">Мінімальна частота серцевих скорочень</string>
     <string name="maxStride">Максимальний крок</string>
     <string name="minStride">Мінімальний крок</string>
     <string name="minCadence">Найнижчий темп</string>
@@ -3821,4 +3821,6 @@
     <string name="datetime_in_the_future">%1$s (з %2$s)</string>
     <string name="datetime_in_the_past">%1$s (%2$s тому)</string>
     <string name="huawei_sleep_breath_summary">Оцініть своє дихання в тихому середовищі. Це може вплинути на час роботи батареї.\nПопередження: Ще не синхронізовано з Gadgetbridge.</string>
+    <string name="workout_power">Потужність</string>
+    <string name="Other">Інше</string>
 </resources>
