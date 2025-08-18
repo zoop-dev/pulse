@@ -34,6 +34,19 @@ public class MusicPlaybackReceiver extends BroadcastReceiver {
     private static MusicSpec lastMusicSpec = new MusicSpec();
     private static MusicStateSpec lastStateSpec = new MusicStateSpec();
 
+    public int parseTime(String time) {
+        // will accept "23", "1:23", "03:07:23"
+        String[] segments = time.split(":");
+        int result = 0;
+        for (String element : segments) {
+            result = result*60 + Integer.parseInt(element, 10);
+        }
+        // single number must be milliseconds
+        if (segments.length == 1)
+            return result / 1000;
+        return result;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         /*
@@ -76,7 +89,7 @@ public class MusicPlaybackReceiver extends BroadcastReceiver {
                 stateSpec.state = (byte) (((Boolean) incoming) ? MusicStateSpec.STATE_PLAYING : MusicStateSpec.STATE_PAUSED);
                 stateSpec.playRate = (byte) (((Boolean) incoming) ? 100 : 0);
             } else if (incoming instanceof String && "duration".equals(key)) {
-                musicSpec.duration = Integer.parseInt((String) incoming) / 1000;
+                musicSpec.duration = parseTime((String) incoming);
             } else if (incoming instanceof String && "trackno".equals(key)) {
                 musicSpec.trackNr = Integer.parseInt((String) incoming);
             } else if (incoming instanceof String && "totaltrack".equals(key)) {
