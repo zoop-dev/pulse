@@ -869,8 +869,8 @@
     <string name="bpm">bpm</string>
     <string name="ascentSeconds">Rosnąco</string>
     <string name="averageLapPace">Średnie tempo okrążenia</string>
-    <string name="averageKMPaceSeconds">Tempo</string>
-    <string name="averageHR">Tętno</string>
+    <string name="averageKMPaceSeconds">Średnie tempo</string>
+    <string name="averageHR">Średnie tętno</string>
     <string name="maxPace">Najszybsze tempo</string>
     <string name="minPace">Najwolniejsze tempo</string>
     <string name="maxSpeed">Maksimum</string>
@@ -1387,7 +1387,7 @@
     <string name="averageAltitude">Średnia</string>
     <string name="minSpeed">Minimum</string>
     <string name="minStride">Minimalny krok</string>
-    <string name="averageCadence">Średnie tempo</string>
+    <string name="averageCadence">Średnia kadencja</string>
     <string name="maxCadence">Maksymalne tempo</string>
     <string name="minCadence">Minimalne tempo</string>
     <string name="prefs_active_noise_cancelling">Aktywna redukcja szumów</string>
@@ -4003,4 +4003,6 @@
     <string name="datetime_in_the_future">%1$s (za %2$s)</string>
     <string name="datetime_in_the_past">%1$s (%2$s temu)</string>
     <string name="huawei_sleep_breath_summary">Oceń swój oddech w cichym otoczeniu. Może wpłynąć na żywotność baterii.\nOstrzeżenie: Nie zsynchronizowano jeszcze z Gadgetbridge.</string>
+    <string name="workout_power">Moc</string>
+    <string name="Other">Inne</string>
 </resources>
