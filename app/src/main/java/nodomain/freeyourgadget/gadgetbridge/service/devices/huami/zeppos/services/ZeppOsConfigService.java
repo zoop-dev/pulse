@@ -30,6 +30,7 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -295,9 +296,9 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
         final byte version = payload[3];
         if (configGroup.getVersion() != version) {
-            // Special case for HEALTH, where we actually support version 1 as well
+            // Special case for HEALTH, where we actually support versions 1 and 2 as well
             // TODO: Support multiple versions in a cleaner way...
-            if (!(configGroup == ConfigGroup.HEALTH && version == 1)) {
+            if (!(configGroup == ConfigGroup.HEALTH && version <= configGroup.getVersion())) {
                 LOG.warn("Unexpected version {} for {}", String.format("0x%02x", version), configGroup);
                 return;
             }
@@ -368,7 +369,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         WEARING_DIRECTION(0x05, 0x02),
         OFFLINE_VOICE(0x06, 0x02),
         LANGUAGE(0x07, 0x02),
-        HEALTH(0x08, 0x02),
+        HEALTH(0x08, 0x03),
         WORKOUT(0x09, 0x01),
         SYSTEM(0x0a, 0x01),
         BLUETOOTH(0x0b, 0x01),
@@ -572,13 +573,21 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                     return null;
                 }
 
-                switch (groupVersion) {
-                    case 0x01:
-                        return ConfigType.SHORT;
-                    case 0x02:
-                    default:
-                        return ConfigType.INT;
+                return groupVersion == 1 ? ConfigType.SHORT : ConfigType.INT;
+            }
+
+            if (this == FITNESS_GOAL_WEIGHT) {
+                if (groupVersions == null) {
+                    return ConfigType.SHORT;
                 }
+
+                final Byte groupVersion = groupVersions.get(getConfigGroup());
+                if (groupVersion == null) {
+                    LOG.error("Version for {} is not known", getConfigGroup());
+                    return null;
+                }
+
+                return groupVersion < 3 ? ConfigType.SHORT : ConfigType.INT;
             }
 
             return configType;
@@ -1420,7 +1429,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 return new HashMap<>();
             }
 
-            return new HashMap<String, Object>() {{
+            return new HashMap<>() {{
                 put(key, value);
             }};
         }
@@ -1441,6 +1450,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigBoolean(buf.get() == 1);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format("ConfigBoolean{value=%s}", value);
@@ -1480,6 +1490,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigString(value, maxLength);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format("ConfigString{value=%s}", value);
@@ -1524,6 +1535,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigStringList(value, possibleValues);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format("ConfigStringList{value=%s, possibleValues=%s}", value, possibleValues);
@@ -1578,6 +1590,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigShort(value, min, max);
         }
 
+        @NonNull
         @Override
         public String toString() {
             if (isMinMaxKnown()) {
@@ -1636,6 +1649,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigInt(value, min, max);
         }
 
+        @NonNull
         @Override
         public String toString() {
             if (isMinMaxKnown()) {
@@ -1663,6 +1677,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigTimestamp(value);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format(Locale.ROOT, "ConfigTimestamp{value=%s}", new Date(value));
@@ -1703,6 +1718,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigByte(value, new byte[0]);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format("ConfigByte{value=0x%02x, possibleValues=%s}", value, GB.hexdump(possibleValues));
@@ -1748,6 +1764,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigByteList(values, null);
         }
 
+        @NonNull
         @Override
         public String toString() {
             if (possibleValues != null) {
@@ -1781,6 +1798,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return new ConfigDatetimeHhMm(hhmm);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return String.format("ConfigDatetimeHhMm{value=%s}", value);
@@ -1827,85 +1845,85 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         }
     }
 
-    private static final Map<Byte, Enum<?>> ALWAYS_ON_DISPLAY_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> ALWAYS_ON_DISPLAY_MAP = new HashMap<>() {{
         put((byte) 0x00, AlwaysOnDisplay.OFF);
         put((byte) 0x01, AlwaysOnDisplay.AUTOMATIC);
         put((byte) 0x02, AlwaysOnDisplay.SCHEDULED);
         put((byte) 0x03, AlwaysOnDisplay.ALWAYS);
     }};
 
-    private static final Map<Byte, String> NIGHT_MODE_MAP = new HashMap<Byte, String>() {{
+    private static final Map<Byte, String> NIGHT_MODE_MAP = new HashMap<>() {{
         put((byte) 0x00, MiBandConst.PREF_NIGHT_MODE_OFF);
         put((byte) 0x01, MiBandConst.PREF_NIGHT_MODE_SUNSET);
         put((byte) 0x02, MiBandConst.PREF_NIGHT_MODE_SCHEDULED);
     }};
 
-    private static final Map<Byte, Enum<?>> DND_MODE_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> DND_MODE_MAP = new HashMap<>() {{
         put((byte) 0x00, DoNotDisturb.OFF);
         put((byte) 0x01, DoNotDisturb.SCHEDULED);
         put((byte) 0x02, DoNotDisturb.AUTOMATIC);
         put((byte) 0x03, DoNotDisturb.ALWAYS);
     }};
 
-    private static final Map<Byte, Enum<?>> DISTANCE_UNIT_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> DISTANCE_UNIT_MAP = new HashMap<>() {{
         put((byte) 0x00, MiBandConst.DistanceUnit.METRIC);
         put((byte) 0x01, MiBandConst.DistanceUnit.IMPERIAL);
     }};
 
-    private static final Map<Byte, Enum<?>> TEMPERATURE_UNIT_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> TEMPERATURE_UNIT_MAP = new HashMap<>() {{
         put((byte) 0x00, MiBandConst.DistanceUnit.METRIC);
         put((byte) 0x01, MiBandConst.DistanceUnit.IMPERIAL);
     }};
 
-    private static final Map<Byte, Enum<?>> WEIGHT_UNIT_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> WEIGHT_UNIT_MAP = new HashMap<>() {{
         put((byte) 0x00, MiBandConst.DistanceUnit.METRIC);
         //put((byte) 0x01, MiBandConst.DistanceUnit.IMPERIAL); // jin (500g)
         put((byte) 0x02, MiBandConst.DistanceUnit.IMPERIAL);
         //put((byte) 0x03, MiBandConst.DistanceUnit.IMPERIAL); // stone (1 stone = 14 pounds)
     }};
 
-    private static final Map<Byte, String> TIME_FORMAT_MAP = new HashMap<Byte, String>() {{
+    private static final Map<Byte, String> TIME_FORMAT_MAP = new HashMap<>() {{
         put((byte) 0x00, DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_24H);
         put((byte) 0x01, DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_12H);
     }};
 
-    private static final Map<Byte, Enum<?>> LIFT_WRIST_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> LIFT_WRIST_MAP = new HashMap<>() {{
         put((byte) 0x00, ActivateDisplayOnLift.OFF);
         put((byte) 0x01, ActivateDisplayOnLift.SCHEDULED);
         put((byte) 0x02, ActivateDisplayOnLift.ON);
         put((byte) 0x03, ActivateDisplayOnLift.SMART);
     }};
 
-    private static final Map<Byte, Enum<?>> LIFT_WRIST_SENSITIVITY_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> LIFT_WRIST_SENSITIVITY_MAP = new HashMap<>() {{
         put((byte) 0x00, ActivateDisplayOnLiftSensitivity.NORMAL);
         put((byte) 0x01, ActivateDisplayOnLiftSensitivity.SENSITIVE);
     }};
 
-    private static final Map<Byte, String> WEARING_DIRECTION_MAP = new HashMap<Byte, String>() {{
+    private static final Map<Byte, String> WEARING_DIRECTION_MAP = new HashMap<>() {{
         put((byte) 0x00, "buttons_on_left");
         put((byte) 0x01, "buttons_on_right");
     }};
 
-    private static final Map<Byte, String> OFFLINE_VOICE_LANGUAGE_MAP = new HashMap<Byte, String>() {{
+    private static final Map<Byte, String> OFFLINE_VOICE_LANGUAGE_MAP = new HashMap<>() {{
         put((byte) 0x01, "zh_CN"); // TODO confirm
         put((byte) 0x02, "en_US");
         put((byte) 0x03, "de_DE");
         put((byte) 0x04, "es_ES");
     }};
 
-    private static final Map<Byte, Enum<?>> GPS_PRESET_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> GPS_PRESET_MAP = new HashMap<>() {{
         put((byte) 0x00, GpsCapability.Preset.ACCURACY);
         put((byte) 0x01, GpsCapability.Preset.BALANCED);
         put((byte) 0x02, GpsCapability.Preset.POWER_SAVING);
         put((byte) 0x04, GpsCapability.Preset.CUSTOM);
     }};
 
-    private static final Map<Byte, Enum<?>> GPS_BAND_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> GPS_BAND_MAP = new HashMap<>() {{
         put((byte) 0x00, GpsCapability.Band.SINGLE_BAND);
         put((byte) 0x01, GpsCapability.Band.DUAL_BAND);
     }};
 
-    private static final Map<Byte, Enum<?>> GPS_COMBINATION_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> GPS_COMBINATION_MAP = new HashMap<>() {{
         put((byte) 0x00, GpsCapability.Combination.LOW_POWER_GPS);
         put((byte) 0x01, GpsCapability.Combination.GPS);
         put((byte) 0x02, GpsCapability.Combination.GPS_BDS);
@@ -1914,12 +1932,12 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         put((byte) 0x05, GpsCapability.Combination.ALL_SATELLITES);
     }};
 
-    private static final Map<Byte, Enum<?>> GPS_SATELLITE_SEARCH_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> GPS_SATELLITE_SEARCH_MAP = new HashMap<>() {{
         put((byte) 0x00, GpsCapability.SatelliteSearch.SPEED_FIRST);
         put((byte) 0x01, GpsCapability.SatelliteSearch.ACCURACY_FIRST);
     }};
 
-    private static final Map<Byte, Enum<?>> WORKOUT_DETECTION_CATEGORY_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> WORKOUT_DETECTION_CATEGORY_MAP = new HashMap<>() {{
         put((byte) 0x03, WorkoutDetectionCapability.Category.WALKING);
         put((byte) 0x28, WorkoutDetectionCapability.Category.INDOOR_WALKING);
         put((byte) 0x01, WorkoutDetectionCapability.Category.OUTDOOR_RUNNING);
@@ -1930,13 +1948,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         put((byte) 0x17, WorkoutDetectionCapability.Category.ROWING_MACHINE);
     }};
 
-    private static final Map<Byte, Enum<?>> WORKOUT_DETECTION_SENSITIVITY_MAP = new HashMap<Byte, Enum<?>>() {{
+    private static final Map<Byte, Enum<?>> WORKOUT_DETECTION_SENSITIVITY_MAP = new HashMap<>() {{
         put((byte) 0x00, WorkoutDetectionCapability.Sensitivity.HIGH);
         put((byte) 0x01, WorkoutDetectionCapability.Sensitivity.STANDARD);
         put((byte) 0x02, WorkoutDetectionCapability.Sensitivity.LOW);
     }};
 
-    private static final Map<Byte, String> VIBRATION_INTENSITY_MAP = new HashMap<Byte, String>() {{
+    private static final Map<Byte, String> VIBRATION_INTENSITY_MAP = new HashMap<>() {{
         put((byte) 0x00, "normal");
         put((byte) 0x01, "enhanced");
     }};
