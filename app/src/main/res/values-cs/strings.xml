@@ -1017,9 +1017,7 @@
     <string name="charts_activity_list">Seznam aktivit</string>
     <string name="charts_legend_heartrate_average">Průměrný tep</string>
     <string name="activity_prefs_step_length_cm">Délka kroku v cm</string>
-    <string name="charts_min_max_heartrate_popup">Nejnižší tep: %1$d
-\nNejvyšší tep: %2$d
-\nIntenzita pohybu: %3$s</string>
+    <string name="charts_min_max_heartrate_popup">Nejnižší tep: %1$d \nNejvyšší tep: %2$d \nIntenzita pohybu: %3$s</string>
     <string name="find_lost_device_message">Vyhledat %1$s\?</string>
     <string name="qhybrid_calibration_align_hint">Pomocí tlačítek níže srovnejte ručičky na 12:00.</string>
     <string name="gps_track">GPS záznam</string>
