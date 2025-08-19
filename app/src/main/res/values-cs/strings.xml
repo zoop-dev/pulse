@@ -890,8 +890,8 @@
     <string name="averageStrokesPerSecond">Průměrné Záběry</string>
     <string name="averageStrokeDistance">Průměrná Délka Záběru</string>
     <string name="averageStride">Průměrný Krok</string>
-    <string name="averageKMPaceSeconds">Tempo</string>
-    <string name="averageHR">Tepová frekvence</string>
+    <string name="averageKMPaceSeconds">Prům. tempo</string>
+    <string name="averageHR">Prům. tepová frekvence</string>
     <string name="totalStride">Celkově ujito</string>
     <string name="maxPace">Nejrychlejší Tempo</string>
     <string name="minPace">Nejpomalejší Tempo</string>
@@ -3984,4 +3984,18 @@
     <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
     <string name="datetime_in_the_future">%1$s (za %2$s)</string>
     <string name="datetime_in_the_past">%1$s (před %2$s)</string>
+    <string name="devicetype_generic_weight_scale">Osobní váha</string>
+    <string name="workout_power">Výkon</string>
+    <string name="Other">Jiné</string>
+    <string name="weight_scale_jin">jin – 市斤</string>
+    <string name="weight_scale_jin_format">%1$.2f 市斤</string>
+    <string name="weight_scale_kilogram">kilogram – kg</string>
+    <string name="weight_scale_kilogram_format">%1$.3f kg</string>
+    <string name="weight_scale_pound">libra – lb</string>
+    <string name="weight_scale_pound_format">%1$.3f lb</string>
+    <string name="weight_scale_show_measurement">Zobrazit váhu</string>
+    <string name="weight_scale_stone">kámen – st</string>
+    <string name="weight_scale_stone_format">%1$d st %2$d lb</string>
+    <string name="weight_scale_unknown">\???.??? ??</string>
+    <string name="record_data">Uložit</string>
 </resources>
