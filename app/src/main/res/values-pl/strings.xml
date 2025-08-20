@@ -4006,4 +4006,15 @@
     <string name="workout_power">Moc</string>
     <string name="Other">Inne</string>
     <string name="devicetype_generic_weight_scale">Waga</string>
+    <string name="weight_scale_jin">jin - 市斤</string>
+    <string name="weight_scale_jin_format">%1$.2f 市斤</string>
+    <string name="weight_scale_kilogram">kilogram - kg</string>
+    <string name="weight_scale_kilogram_format">%1$.3f kg</string>
+    <string name="weight_scale_pound">funt - lb</string>
+    <string name="weight_scale_pound_format">%1$.3f lb</string>
+    <string name="weight_scale_show_measurement">Pokaż wagę</string>
+    <string name="weight_scale_stone">kamień - st</string>
+    <string name="weight_scale_stone_format">%1$d st %2$d lb</string>
+    <string name="weight_scale_unknown">\???.??? ??</string>
+    <string name="record_data">Zapisz</string>
 </resources>
