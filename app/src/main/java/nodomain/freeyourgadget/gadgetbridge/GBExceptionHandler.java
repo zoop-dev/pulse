@@ -32,6 +32,8 @@ import androidx.core.app.NotificationCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
@@ -66,10 +68,28 @@ public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
             }
         }
 
+        // Heap dump on OOM in debug builds
+        if (BuildConfig.DEBUG && (ex.getClass().equals(OutOfMemoryError.class)
+                || (ex.getCause() != null && ex.getCause().getClass().equals(OutOfMemoryError.class)))) {
+            try {
+                final File cacheDir = GBApplication.getContext().getExternalCacheDir();
+                if (cacheDir != null) {
+                    final File oomDir = new File(cacheDir.getAbsolutePath() + File.separator + "oom");
+                    //noinspection ResultOfMethodCallIgnored
+                    oomDir.mkdirs();
+                    final String dumpPath = oomDir.getAbsolutePath() + File.separator + "oom-" + System.currentTimeMillis() + ".hprof";
+                    LOG.debug("Dumping hprof data to: {}", dumpPath);
+                    android.os.Debug.dumpHprofData(dumpPath);
+                }
+            } catch (final Throwable t) {
+                LOG.error("Failed to dump hprof on oom", t);
+            }
+        }
+
         if (mDelegate != null) {
             try {
                 mDelegate.uncaughtException(thread, ex);
-            }catch (Throwable ignored){
+            } catch (Throwable ignored) {
             }
         } else {
             System.exit(1);
