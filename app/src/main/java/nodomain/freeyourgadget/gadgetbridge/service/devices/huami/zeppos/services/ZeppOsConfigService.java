@@ -272,13 +272,17 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         }
         final int numGroups = payload[2] & 0xFF;
         if (payload.length != numGroups + 3) {
-            LOG.error("Unexpected config capabilities response length {} for {} groups", payload.length, numGroups);
-            return;
+            // Sometimes there are some extra bytes at the end?
+            LOG.warn("Unexpected config capabilities response length {} for {} groups", payload.length, numGroups);
         }
 
         final ZeppOsTransactionBuilder builder = createTransactionBuilder("configs request");
         for (int i = 0; i < numGroups; i++) {
             final ConfigGroup configGroup = ConfigGroup.fromValue(payload[3 + i]);
+            if (configGroup == null) {
+                LOG.warn("Unknown config group {}", String.format("0x%02x", payload[3 + i]));
+                continue;
+            }
             LOG.debug("Got supported config group {}: {}", String.format("0x%02x", payload[3 + i]), configGroup);
             requestConfig(builder, configGroup);
         }
