@@ -63,6 +63,7 @@ public final class MapsManager {
     private Polyline polyline;
 
     private TileRendererLayer tileRendererLayer;
+    private boolean tileRenderedAdded;
 
     private boolean isMapLoaded = false;
 
@@ -153,8 +154,8 @@ public final class MapsManager {
             theme = MapTheme.DEFAULT;
         }
         tileRendererLayer.setXmlRenderTheme(theme);
-
-        mapView.getLayerManager().getLayers().add(0, tileRendererLayer);
+        // Do not add the tile renderer layer before setting the bounding box in setTrack,
+        // otherwise we load the entire map to memory and might crash with OOM
     }
 
     public boolean isMapLoaded() {
@@ -169,7 +170,9 @@ public final class MapsManager {
         }
 
         if (tileRendererLayer != null) {
-            mapView.getLayerManager().getLayers().remove(tileRendererLayer);
+            if (tileRenderedAdded) {
+                mapView.getLayerManager().getLayers().remove(tileRendererLayer);
+            }
             tileRendererLayer.onDestroy();
             tileRendererLayer.getTileCache().purge();
             tileRendererLayer = null;
@@ -205,7 +208,6 @@ public final class MapsManager {
             mapView.addLayer(polyline);
         }
         polyline.setPoints(points);
-        mapView.getLayerManager().redrawLayers();
 
         mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
         final DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
@@ -215,6 +217,11 @@ public final class MapsManager {
                 mapView.getModel().displayModel.getTileSize()
         );
         mapView.setZoomLevel(zoom);
+
+        if (!tileRenderedAdded) {
+            mapView.getLayerManager().getLayers().add(0, tileRendererLayer);
+            tileRenderedAdded = true;
+        }
     }
 
     public void reload() {
