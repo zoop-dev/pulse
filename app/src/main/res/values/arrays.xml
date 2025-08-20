@@ -5150,9 +5150,9 @@
         <item name="15">TI 1200 BWR</item>
         <item name="23">TI 1200 BWR V2</item>
 
+        <item name="41">WO 260 BWRY JD V2</item>
         <item name="36">WO 290 BWRY JD</item>
         <item name="39">WO 290 BWRY JD V2</item>
-
 
     </string-array>
 
@@ -5205,6 +5205,7 @@
         <item>15</item>
         <item>23</item>
 
+        <item>41</item>
         <item>36</item>
         <item>39</item>
     </string-array>
