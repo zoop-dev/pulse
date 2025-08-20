@@ -8,8 +8,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.StressDailyFragmen
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.StressPeriodFragment;
 
 public class StressFragmentAdapter extends NestedFragmentAdapter {
-    public StressFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
-        super(fragment, childFragmentManager);
+    public StressFragmentAdapter(Fragment fragment) {
+        super(fragment);
     }
 
     @Override

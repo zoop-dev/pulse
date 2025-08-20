@@ -21,54 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 /**
- * Abstract base class for fragments. Provides hooks that are called when
- * the fragment is made visible and invisible in the activity. also allows
+ * Abstract base class for fragments. Allows
  * the fragment to define the title to be shown in the activity.
  *
- * @see AbstractGBFragmentActivity
  */
 public abstract class AbstractGBFragment extends Fragment {
-    private boolean mVisibleInActivity;
-
-    /**
-     * Called when this fragment has been fully scrolled into the activity.
-     *
-     * @see #isVisibleInActivity()
-     * @see #onMadeInvisibleInActivity()
-     */
-    protected void onMadeVisibleInActivity() {
-    }
-
-    /**
-     * Called when this fragment has been scrolled out of the activity.
-     *
-     * @see #isVisibleInActivity()
-     * @see #onMadeVisibleInActivity()
-     */
-    public void onMadeInvisibleInActivity() {
-        mVisibleInActivity = false;
-    }
-
-    /**
-     * Returns true if this fragment is currently visible in the hosting
-     * activity, not taking into account whether the screen is enabled at all.
-     */
-    public boolean isVisibleInActivity() {
-        return mVisibleInActivity;
-    }
-
     @Nullable
     protected abstract CharSequence getTitle();
-
-    /**
-     * Internal
-     *
-     * @hide
-     */
-    public void onMadeVisibleInActivityInternal() {
-        mVisibleInActivity = true;
-        if (isVisible()) {
-            onMadeVisibleInActivity();
-        }
-    }
 }

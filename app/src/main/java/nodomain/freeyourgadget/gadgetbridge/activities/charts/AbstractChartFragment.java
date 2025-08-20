@@ -147,17 +147,17 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
     /**
      * Called when this fragment has been fully scrolled into the activity.
      *
-     * @see #isVisibleInActivity()
-     * @see #onMadeInvisibleInActivity()
      */
     @Override
-    protected void onMadeVisibleInActivity() {
-        super.onMadeVisibleInActivity();
-        showDateBar(true);
-        updateDateInfo(getStartDate(), getEndDate());
-        if (mChartDirty) {
-            refresh();
+    public void onResume() {
+        if ((requireActivity() instanceof ChartsHost)) {
+            showDateBar(true);
+            updateDateInfo(getStartDate(), getEndDate());
+            if (mChartDirty) {
+                refresh();
+            }
         }
+        super.onResume();
     }
 
     protected ChartsHost getChartsHost() {
@@ -248,7 +248,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
      * @param offset    the offset, in days
      */
     private void handleDate(Date startDate, Date endDate, Integer offset) {
-        if (isVisibleInActivity()) {
+        if (isResumed()) {
             if (!shiftDates(startDate, endDate, offset)) {
                 return;
             }
@@ -259,7 +259,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
     }
 
     private void refreshIfVisible() {
-        if (isVisibleInActivity()) {
+        if (isResumed()) {
             refresh();
         } else {
             mChartDirty = true;

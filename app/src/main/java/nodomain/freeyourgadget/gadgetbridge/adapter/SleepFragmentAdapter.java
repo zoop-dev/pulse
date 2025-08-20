@@ -2,7 +2,6 @@ package nodomain.freeyourgadget.gadgetbridge.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
@@ -10,8 +9,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepDailyFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepPeriodFragment;
 
 public class SleepFragmentAdapter extends NestedFragmentAdapter {
-    public SleepFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
-        super(fragment, childFragmentManager);
+    public SleepFragmentAdapter(Fragment fragment) {
+        super(fragment);
     }
 
     @NonNull

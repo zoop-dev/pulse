@@ -12,20 +12,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <nodomain.freeyourgadget.gadgetbridge.activities.charts.NonSwipeableViewPager
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/charts_pagerTabStrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:tabMode="scrollable" />
+
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/charts_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             tools:context="nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity">
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/charts_pagerTabStrip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:tabMode="scrollable" />
-        </nodomain.freeyourgadget.gadgetbridge.activities.charts.NonSwipeableViewPager>
+        </androidx.viewpager2.widget.ViewPager2>
 
     <LinearLayout
         android:id="@+id/charts_date_bar"

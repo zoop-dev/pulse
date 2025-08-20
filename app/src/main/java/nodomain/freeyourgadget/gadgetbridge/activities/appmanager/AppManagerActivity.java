@@ -26,6 +26,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,11 +44,11 @@ import java.util.UUID;
 import androidx.annotation.NonNull;
 import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractFragmentPagerAdapter;
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragmentActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -54,7 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 
-public class AppManagerActivity extends AbstractGBFragmentActivity {
+public class AppManagerActivity extends AbstractGBActivity {
 
     private static final Logger LOG = LoggerFactory.getLogger(AppManagerActivity.class);
     private static final int READ_REQUEST_CODE = 42;
@@ -109,15 +111,16 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         }
 
         // Set up the ViewPager with the sections adapter.
-        ViewPager viewPager = findViewById(R.id.appmanager_pager);
+        ViewPager2 viewPager = findViewById(R.id.appmanager_pager);
         if (viewPager != null) {
-            viewPager.setAdapter(getPagerAdapter());
+            viewPager.setAdapter(new SectionsStateAdapter(this));
         }
-    }
 
-    @Override
-    protected AbstractFragmentPagerAdapter createFragmentPagerAdapter(FragmentManager fragmentManager) {
-        return new SectionsPagerAdapter(fragmentManager);
+        TabLayout tabLayout = findViewById(R.id.charts_pagerTabStrip);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    tab.setText(getPageTitle(position));
+                }).attach();
     }
 
     public static synchronized void deleteFromAppOrderFile(String filename, UUID uuid) {
@@ -126,16 +129,14 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         rewriteAppOrderFile(filename, uuids);
     }
 
-    public class SectionsPagerAdapter extends AbstractFragmentPagerAdapter {
-
-        SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+    public class SectionsStateAdapter extends FragmentStateAdapter {
+        SectionsStateAdapter(FragmentActivity activity) {
+            super(activity);
         }
 
         @NonNull
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
+        public Fragment createFragment(int position) {
             return switch (enabledTabsList.get(position)) {
                 case "cache" -> new AppManagerFragmentCache();
                 case "apps" -> new AppManagerFragmentInstalledApps();
@@ -145,19 +146,18 @@ public class AppManagerActivity extends AbstractGBFragmentActivity {
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return enabledTabsList.size();
         }
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return switch (enabledTabsList.get(position)) {
-                case "cache" -> getString(R.string.appmanager_cached_watchapps_watchfaces);
-                case "apps" -> getString(R.string.appmanager_installed_watchapps);
-                case "watchfaces" -> getString(R.string.appmanager_installed_watchfaces);
-                default -> super.getPageTitle(position);
-            };
-        }
+    public CharSequence getPageTitle(int position) {
+        return switch (enabledTabsList.get(position)) {
+            case "cache" -> getString(R.string.appmanager_cached_watchapps_watchfaces);
+            case "apps" -> getString(R.string.appmanager_installed_watchapps);
+            case "watchfaces" -> getString(R.string.appmanager_installed_watchfaces);
+            default -> "";
+        };
     }
 
     @Override

@@ -18,11 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
 import nodomain.freeyourgadget.gadgetbridge.adapter.CaloriesFragmentAdapter;
-import nodomain.freeyourgadget.gadgetbridge.adapter.NestedFragmentAdapter;
 
 public class CaloriesCollectionFragment extends AbstractCollectionFragment {
     public CaloriesCollectionFragment() {
@@ -38,8 +36,8 @@ public class CaloriesCollectionFragment extends AbstractCollectionFragment {
     }
 
     @Override
-    public NestedFragmentAdapter getNestedFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
-        return new CaloriesFragmentAdapter(this, getChildFragmentManager());
+    public FragmentStateAdapter getFragmentAdapter() {
+        return new CaloriesFragmentAdapter(this);
     }
 }
 

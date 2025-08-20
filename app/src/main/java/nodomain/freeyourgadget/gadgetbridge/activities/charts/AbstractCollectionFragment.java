@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -31,18 +31,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
-import nodomain.freeyourgadget.gadgetbridge.adapter.NestedFragmentAdapter;
 
 public abstract class AbstractCollectionFragment extends AbstractGBFragment {
     protected static final String ARG_ALLOW_SWIPE = "allow_swipe";
-
-    protected NestedFragmentAdapter nestedFragmentsAdapter;
+    protected FragmentStateAdapter fragmentAdapter;
     protected ViewPager2 viewPager;
-    private int last_position = 0;
     private boolean allowSwipe;
 
-    public abstract NestedFragmentAdapter getNestedFragmentAdapter(final AbstractGBFragment fragment,
-                                                                   final FragmentManager childFragmentManager);
+    public abstract FragmentStateAdapter getFragmentAdapter();
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -52,44 +48,18 @@ public abstract class AbstractCollectionFragment extends AbstractGBFragment {
         }
     }
 
-    @Override
-    protected void onMadeVisibleInActivity() {
-        super.onMadeVisibleInActivity();
-        nestedFragmentsAdapter.updateFragments(last_position);
-    }
-
-    @Override
-    public void onMadeInvisibleInActivity() {
-        if (nestedFragmentsAdapter != null) {
-            nestedFragmentsAdapter.updateFragments(-1);
-        }
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nested_tabs, container, false);
-        nestedFragmentsAdapter = getNestedFragmentAdapter(this, getChildFragmentManager());
+
+        fragmentAdapter = getFragmentAdapter();
         viewPager = rootView.findViewById(R.id.pager);
-        viewPager.setAdapter(nestedFragmentsAdapter);
+        viewPager.setAdapter(fragmentAdapter);
+
         if (!allowSwipe) {
             viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
             viewPager.setUserInputEnabled(false);
         }
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                last_position = position;
-                viewPager.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isVisibleInActivity()) {
-                            nestedFragmentsAdapter.updateFragments(position);
-                        }
-                    }
-                });
-            }
-        });
 
         return rootView;
     }

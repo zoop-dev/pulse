@@ -16,19 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.adapter;
 
-import androidx.fragment.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
-
 public abstract class NestedFragmentAdapter extends FragmentStateAdapter {
-    protected FragmentManager fragmentManager;
-
-    public NestedFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
+    public NestedFragmentAdapter(@NonNull Fragment fragment) {
         super(fragment);
-        fragmentManager = childFragmentManager;
     }
 
     @Override
@@ -36,17 +30,6 @@ public abstract class NestedFragmentAdapter extends FragmentStateAdapter {
         return 3;
     }
 
-    public void updateFragments(int position) {
-        List<AbstractGBFragment> fragments = fragmentManager.getFragments()
-                .stream()
-                .map(e -> (AbstractGBFragment) e)
-                .collect(Collectors.toList());
-        for (AbstractGBFragment fragment : fragments) {
-            if (position < 0 || fragment != fragmentManager.findFragmentByTag("f" + position)) {
-                fragment.onMadeInvisibleInActivity();
-            } else {
-                fragment.onMadeVisibleInActivityInternal();
-            }
-        }
-    }
+    @Override
+    abstract public Fragment createFragment(int position);
 }

@@ -369,12 +369,6 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
         GBApplication.deviceService(getChartsHost().getDevice()).onEnableRealtimeHeartRateMeasurement(true);
     }
 
-    @Override
-    protected void onMadeVisibleInActivity() {
-        super.onMadeVisibleInActivity();
-        enableRealtimeTracking(true);
-    }
-
     private void enableRealtimeTracking(boolean enable) {
         if (enable && pulseScheduler != null) {
             // already running
@@ -403,15 +397,9 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
         }
     }
 
-    @Override
-    public void onMadeInvisibleInActivity() {
-        enableRealtimeTracking(false);
-        super.onMadeInvisibleInActivity();
-    }
 
     @Override
     public void onDestroyView() {
-        onMadeInvisibleInActivity();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
         super.onDestroyView();
     }

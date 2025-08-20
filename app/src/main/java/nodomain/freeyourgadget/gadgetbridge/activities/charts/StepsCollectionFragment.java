@@ -18,10 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
-import nodomain.freeyourgadget.gadgetbridge.adapter.NestedFragmentAdapter;
 import nodomain.freeyourgadget.gadgetbridge.adapter.StepsFragmentAdapter;
 
 public class StepsCollectionFragment extends AbstractCollectionFragment {
@@ -38,8 +36,8 @@ public class StepsCollectionFragment extends AbstractCollectionFragment {
     }
 
     @Override
-    public NestedFragmentAdapter getNestedFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
-        return new StepsFragmentAdapter(this, getChildFragmentManager());
+    public FragmentStateAdapter getFragmentAdapter() {
+        return new StepsFragmentAdapter(this);
     }
 }
 

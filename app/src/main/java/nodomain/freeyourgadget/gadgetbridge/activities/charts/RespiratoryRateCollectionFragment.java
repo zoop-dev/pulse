@@ -2,10 +2,8 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
-import nodomain.freeyourgadget.gadgetbridge.adapter.NestedFragmentAdapter;
 import nodomain.freeyourgadget.gadgetbridge.adapter.RespiratoryRateFragmentAdapter;
 
 public class RespiratoryRateCollectionFragment extends AbstractCollectionFragment {
@@ -22,8 +20,8 @@ public class RespiratoryRateCollectionFragment extends AbstractCollectionFragmen
     }
 
     @Override
-    public NestedFragmentAdapter getNestedFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
-        return new RespiratoryRateFragmentAdapter(this, getChildFragmentManager());
+    public FragmentStateAdapter getFragmentAdapter() {
+        return new RespiratoryRateFragmentAdapter(this);
     }
 }
 

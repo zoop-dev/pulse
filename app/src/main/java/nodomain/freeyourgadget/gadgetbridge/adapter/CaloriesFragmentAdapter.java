@@ -9,11 +9,9 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.CaloriesDailyFragm
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.CaloriesPeriodFragment;
 
 public class CaloriesFragmentAdapter extends NestedFragmentAdapter {
-    protected FragmentManager fragmentManager;
 
-    public CaloriesFragmentAdapter(AbstractGBFragment fragment, FragmentManager childFragmentManager) {
-        super(fragment, childFragmentManager);
-        fragmentManager = childFragmentManager;
+    public CaloriesFragmentAdapter(Fragment fragment) {
+        super(fragment);
     }
 
     @NonNull
