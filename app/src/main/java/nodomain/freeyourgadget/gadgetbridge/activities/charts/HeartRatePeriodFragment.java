@@ -31,8 +31,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -41,14 +42,16 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.TimeWeightedAverageAccumulator;
 
 public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeriodFragment.HeartRatePeriodData> {
+
+    protected static final Logger LOG = LoggerFactory.getLogger(HeartRatePeriodFragment.class);
 
     static int SEC_PER_DAY = 24 * 60 * 60;
     static int DATA_INVALID = -1;
@@ -95,9 +98,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         View rootView = inflater.inflate(R.layout.fragment_heart_rate, container, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                getChartsHost().enableSwipeRefresh(scrollY == 0);
-            });
+            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> getChartsHost().enableSwipeRefresh(scrollY == 0));
         }
 
         mDateView = rootView.findViewById(R.id.hr_date_view);
@@ -141,7 +142,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = TEXT_COLOR = GBApplication.getTextColor(getContext());
         if (prefs.getBoolean("chart_heartrate_color", false)) {
             HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_alternative);
-        }else{
+        } else {
             HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate);
         }
         HEARTRATE_MIN_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_minimum);
@@ -152,6 +153,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
     private HeartRateData fetchHeartRateDataForDay(ChartsHost chartsHost, DBHandler db, GBDevice device, int startTs) {
         int endTs = startTs + SEC_PER_DAY - 1;
         List<? extends ActivitySample> samples = getActivitySamples(db, device, startTs, endTs);
+        final HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
 
         int restingHeartRate = DATA_INVALID;
         if (supportsHeartRateRestingMeasurement()) {
@@ -163,12 +165,12 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
                     .map(HeartRateSample::getHeartRate)
                     .orElse(DATA_INVALID);
         }
-        HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
-        final Accumulator accumulator = new Accumulator();
+
+        final TimeWeightedAverageAccumulator accumulator = new TimeWeightedAverageAccumulator(60 * HeartRateUtils.MAX_HR_MEASUREMENTS_GAP_MINUTES, 60);
         for (int i = 0; i < samples.size(); i++) {
             final ActivitySample sample = samples.get(i);
             if (heartRateUtilsInstance.isValidHeartRateValue(sample.getHeartRate())) {
-                accumulator.add(sample.getHeartRate());
+                accumulator.add(sample.getTimestamp(), sample.getHeartRate());
             }
         }
 
@@ -184,7 +186,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         Pair<Integer, Integer> startAndEndTs = getStartAndEndTS();
         final int startTs = startAndEndTs.getKey();
 
-        List<HeartRateData> result = new ArrayList<HeartRateData>();
+        List<HeartRateData> result = new ArrayList<>();
         for (int i = 0; i < TOTAL_DAYS; i++) {
             HeartRateData dayData = fetchHeartRateDataForDay(chartsHost, db, device, startTs + i * SEC_PER_DAY);
             result.add(dayData);
@@ -215,8 +217,8 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         YAxis yAxisRight = hrLineChart.getAxisRight();
         yAxisRight.setDrawLabels(true);
 
-        YAxis[] yAxixArr = {yAxisLeft, yAxisRight};
-        for (YAxis y : yAxixArr) {
+        YAxis[] yAxisArr = {yAxisLeft, yAxisRight};
+        for (YAxis y : yAxisArr) {
             y.setAxisMaximum(HeartRateUtils.getInstance().getMaxHeartRate());
             y.setAxisMinimum(HeartRateUtils.getInstance().getMinHeartRate());
             y.setDrawGridLines(false);
@@ -318,7 +320,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         final int startTs = startAndEndTs.getKey();
         final int endTs = startAndEndTs.getValue();
 
-        Date date = new Date((long) endTs * 1000);
+        //Date date = new Date((long) endTs * 1000);
         mDateView.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
         final XAxis x = hrLineChart.getXAxis();
         if (TOTAL_DAYS == 1) {
@@ -430,7 +432,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                int ts = startTs + SEC_PER_DAY * (int)value;
+                int ts = startTs + SEC_PER_DAY * (int) value;
                 return formatDay.format(new Date(ts * 1000L));
             }
         };
@@ -442,7 +444,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         final int restingAvg = restingAccumulator.getCount() > 0 ? (int) Math.round(restingAccumulator.getAverage()) : DATA_INVALID;
         setStatistics(average, minimum, maximum, restingAvg);
 
-        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        List<ILineDataSet> dataSets = new ArrayList<>();
         if (GBApplication.getPrefs().getBoolean("charts_show_average", true)) {
             dataSets.add(createHeartRateDataSet(avgLineData, HEARTRATE_COLOR));
         }
