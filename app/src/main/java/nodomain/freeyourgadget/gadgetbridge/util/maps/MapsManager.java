@@ -18,7 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.util.maps;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.DisplayMetrics;
 
 import androidx.documentfile.provider.DocumentFile;
 
@@ -207,9 +206,8 @@ public final class MapsManager {
         polyline.setPoints(points);
 
         mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
-        final DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
         final byte zoom = LatLongUtils.zoomForBounds(
-                new Dimension(displayMetrics.widthPixels, displayMetrics.heightPixels),
+                new Dimension(mapView.getWidth(), mapView.getHeight()),
                 new BoundingBox(minLat, minLon, maxLat, maxLon),
                 mapView.getModel().displayModel.getTileSize()
         );
