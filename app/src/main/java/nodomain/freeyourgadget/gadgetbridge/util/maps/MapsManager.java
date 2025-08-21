@@ -93,13 +93,10 @@ public final class MapsManager {
         }
 
         final DocumentFile folder = DocumentFile.fromTreeUri(mContext, Uri.parse(folderUri));
-        if (folder == null || folder.listFiles().length == 0) {
-            return;
-        }
 
         final MultiMapDataStore multiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
 
-        final DocumentFile[] documentFiles = folder.listFiles();
+        final DocumentFile[] documentFiles = folder != null ? folder.listFiles() : new DocumentFile[0];
 
         LOG.debug("Got {} map files", documentFiles.length);
 

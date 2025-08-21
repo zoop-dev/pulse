@@ -114,7 +114,7 @@ class WorkoutGpsFragment : Fragment() {
 
     fun setTrackData(inputFile: File?) {
         this.inputFile = inputFile
-        if (mapsManager.isMapLoaded && inputFile != null) {
+        if (inputFile != null) {
             viewModel.loadTrackData(inputFile)
         }
     }
