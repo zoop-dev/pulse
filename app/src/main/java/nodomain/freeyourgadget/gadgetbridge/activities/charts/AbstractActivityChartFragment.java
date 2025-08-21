@@ -39,6 +39,8 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SimpleSleepDetailsHROverlay;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetailsView;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
@@ -340,6 +342,40 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
         }
 
         result.add(new SleepDetailsView.SleepDetail(currentType, duration, timestamp));
+        return result;
+    }
+
+    public int[] prepareHR(List<? extends ActivitySample> samples) {
+        if (samples.isEmpty()) {
+            return null;
+        }
+
+        //NOTE: The start and end times of the samples should correspond to the sleep stages.
+        // The time interval between samples is not important (it can be in minutes, seconds, etc.), but all intervals must be filled.
+        // If there is a gap in the raw data, 'SimpleSleepDetailsHROverlay.NO_DATA' should be used.
+        // As we exactly know the intervals, we can use primitive types (which have better performance during drawing).
+        // Samples already prepared in minute's interval  can simply be copied with filtering.
+
+        TimestampTranslation tsTranslation = new TimestampTranslation();
+        HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
+
+        int[] result = new int[samples.size()];
+        int idx = 0;
+        int lastTsShorten = 0;
+        for (ActivitySample sample : samples) {
+            if (sample.getKind() == ActivityKind.NOT_WORN || !heartRateUtilsInstance.isValidHeartRateValue(sample.getHeartRate())) {
+                result[idx++] = -1;
+                continue;
+            }
+            int tsShorten = tsTranslation.shorten(sample.getTimestamp());
+            if (lastTsShorten == 0 || (tsShorten - lastTsShorten) <= 60 * HeartRateUtils.MAX_HR_MEASUREMENTS_GAP_MINUTES) {
+                result[idx++] = sample.getHeartRate();
+            } else {
+                result[idx++] = SimpleSleepDetailsHROverlay.NO_DATA;
+            }
+            lastTsShorten = tsShorten;
+        }
+
         return result;
     }
 

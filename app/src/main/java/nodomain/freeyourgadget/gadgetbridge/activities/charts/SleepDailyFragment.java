@@ -27,11 +27,12 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -39,6 +40,8 @@ import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.*;
 import com.github.mikephil.charting.data.LineData;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
@@ -57,6 +60,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepAnalysis.SleepSession;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SimpleSleepDetailsHROverlay;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetailsView;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.GaugeDrawer;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -138,7 +143,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         Triple<Float, Float, Float> intensityData = calculateIntensityData(samples);
 
         List<SleepDetailsView.SleepDetail> stages = prepareStages(samples);
-        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages);
+
+        int[] hr = hrOverlay?prepareHR(samples):null;
+        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, hr);
     }
 
     private MySleepChartsData refreshSleepAmounts(GBDevice mGBDevice, List<? extends ActivitySample> samples, List<? extends SleepScoreSample> sleepScoreSamples) {
@@ -236,6 +243,10 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         if (mcd.getStages() != null) {
             mSleepDetailsView.setData(mcd.getStages());
+        }
+        if(mcd.getHr() != null) {
+            int average = SHOW_CHARTS_AVERAGE?Math.round(mcd.getHeartRateAverage()):SimpleSleepDetailsHROverlay.NO_DATA;
+            mSleepDetailsView.setOverlay(new SimpleSleepDetailsHROverlay(20, 140, mcd.getHr(), average, HEARTRATE_COLOR, Color.BLACK, Color.RED));
         }
 
         Date date = new Date((long) this.getTSEnd() * 1000);
@@ -373,6 +384,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         return result.toString();
     }
 
+    private boolean hrOverlay = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -400,6 +412,23 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         movementIntensityText = rootView.findViewById(R.id.sleep_movement_intensity);
         sleepDateText = rootView.findViewById(R.id.sleep_date);
 
+
+        ChipGroup chipGroup = rootView.findViewById(R.id.sleep_chart_overlay_group);
+
+        if(supportsHeartrate(getChartsHost().getDevice())) {
+            Chip hrChip = (Chip) inflater.inflate(R.layout.layout_chart_chip, chipGroup, false);
+            hrChip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.heart_rate));
+            hrChip.setChipIconVisible(true);
+            hrChip.setChipIconResource(R.drawable.ic_heartrate);
+            chipGroup.addView(hrChip);
+            hrChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
+                    hrOverlay = isChecked;
+                    refresh();
+                }
+            });
+        }
 
         mSleepchartInfo.setMaxLines(sleepLinesLimit);
 
@@ -551,7 +580,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         private final List<SleepDetailsView.SleepDetail> stages;
 
-        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages) {
+        private final int[] hr;
+
+        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages, int[] hr) {
             this.pieData = pieData;
             this.chartsData = chartsData;
             this.heartRateAverage = heartRateAverage;
@@ -561,6 +592,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             this.intensityAxisMin = intensityAxisMin;
             this.intensityAxisMax = intensityAxisMax;
             this.stages = stages;
+            this.hr = hr;
         }
 
         public MySleepChartsData getPieData() {
@@ -597,6 +629,10 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         public List<SleepDetailsView.SleepDetail> getStages() {
             return stages;
+        }
+
+        public int[] getHr() {
+            return hr;
         }
     }
 }

@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -171,23 +172,24 @@
             </GridLayout>
         </LinearLayout>
 
-        <nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepDetailsView
+        <nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetailsView
             android:id="@+id/sleep_details"
             android:layout_width="fill_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="25dp"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_weight="4"  />
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/sleepchart"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="2dp"
             android:layout_marginBottom="25dp"
             android:layout_weight="4" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/sleep_chart_overlay_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            app:singleSelection="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <GridLayout
             android:background="@color/gauge_line_color"
@@ -276,6 +278,14 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </GridLayout>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/sleepchart"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="25dp"
+            android:layout_weight="4" />
 
     </LinearLayout>
 </ScrollView>

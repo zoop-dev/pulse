@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.activities.charts;
+package nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -25,9 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.Shader;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -71,6 +69,8 @@ public class SleepDetailsView extends View {
     private List<SleepDetail> sleepDetails = new ArrayList<>();
     private int sleepMinutesCount = 0;
 
+    private SleepDetailsOverlay curOverlay = null;
+
     private long startTimestamp;
     private long endTimestamp;
 
@@ -91,11 +91,13 @@ public class SleepDetailsView extends View {
     private final Paint timeInfoTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint infoTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint selectorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Path cornerPath = new Path();
-    private final Path rectPath = new Path();
+    private final Path detailBarPath = new Path();
     private final RectF rectF = new RectF();
     private final Rect timeInfoTextRect = new Rect();
     private final Rect infoTextRect = new Rect();
+
+
+    private final int overlayAlpha = 128;
 
     private final int infoTextSize = 25;
 
@@ -180,6 +182,10 @@ public class SleepDetailsView extends View {
 
         canvas.drawLine(chartLeftStart, chartTopStart, chartLeftStart, chartTopStart + chartHeight, gridPaint);
         canvas.drawLine(chartLeftStart + chartWidth, chartTopStart, chartLeftStart + chartWidth, chartTopStart + chartHeight, gridPaint);
+
+        if(curOverlay != null) {
+            curOverlay.drawOverlayScale(canvas, lineSpacing, horizontalLineCount, chartTopStart, chartLeftStart + chartWidth);
+        }
     }
 
     private int getPositionFromType(int type) {
@@ -199,82 +205,6 @@ public class SleepDetailsView extends View {
             return Color.GRAY;
         }
         return config[idx].color;
-    }
-
-    private enum Corner {
-        TOP_LEFT,
-        BOTTOM_LEFT,
-        TOP_RIGHT,
-        BOTTOM_RIGHT
-    }
-
-    private void drawCorner(Canvas canvas, float tipX, float tipY, float left, float barWidth, int color, Corner corner) {
-        final float halfBarHeight = barHeight / 2f;
-        final float curveEdgeHeight = halfBarHeight + 3f;
-        final float halfWidth = barWidth / 2f;
-
-        final boolean isLeft = (corner == Corner.TOP_LEFT || corner == Corner.BOTTOM_LEFT);
-        final boolean isTop = (corner == Corner.TOP_LEFT || corner == Corner.TOP_RIGHT);
-        final float horizontalOffset = isLeft ? -0.5f : 0.5f;
-        final float verticalOffset = isTop ? -curveEdgeHeight : curveEdgeHeight;
-
-        final float secondX = tipX + horizontalOffset;
-        final float thirdX = tipX + (horizontalOffset < 0 ? halfWidth : -halfWidth);
-
-        cornerPath.reset();
-        cornerPath.moveTo(tipX, tipY);
-        cornerPath.lineTo(secondX, tipY + verticalOffset);
-        cornerPath.lineTo(thirdX, tipY + verticalOffset);
-        cornerPath.lineTo(thirdX, tipY);
-        cornerPath.close();
-
-        final float top = isTop ? tipY - barHeight : tipY + halfBarHeight;
-        final float bottom = top + halfBarHeight;
-        rectPath.reset();
-        rectF.set(left, top, left + barWidth, bottom);
-        rectPath.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW);
-
-        cornerPaint.setColor(color);
-
-        canvas.save();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            canvas.clipOutPath(rectPath);
-        } else {
-            canvas.clipPath(rectPath, Region.Op.DIFFERENCE);
-        }
-
-        canvas.drawPath(cornerPath, fillPaint);
-        canvas.restore();
-    }
-
-    private void drawEdges(Canvas canvas, List<SleepDetail> details, int currentIndex, float left, float top) {
-        if (currentIndex < 0 || currentIndex >= details.size()) return;
-
-        SleepDetail currentData = details.get(currentIndex);
-        final int currentType = currentData.type;
-        final int currentIdx = getIndexByType(currentType);
-        if (currentIdx == -1) return;
-
-        final float posY = top + (barHeight / 2f);
-        final int color = getColorFromType(currentType);
-
-        final float currentUnitWidth = currentData.durationMinutes * unitWidth;
-        if (currentIndex > 0) {
-            final int prevIdx = getIndexByType(details.get(currentIndex - 1).type);
-            if (prevIdx != -1) {
-                Corner corner = (currentIdx > prevIdx) ? Corner.TOP_LEFT : Corner.BOTTOM_LEFT;
-                drawCorner(canvas, left, posY, left, currentUnitWidth, color, corner);
-            }
-        }
-
-        if (currentIndex < details.size() - 1) {
-            final int nextIdx = getIndexByType(details.get(currentIndex + 1).type);
-            if (nextIdx != -1) {
-                final float rightX = left + currentUnitWidth;
-                Corner corner = (currentIdx > nextIdx) ? Corner.TOP_RIGHT : Corner.BOTTOM_RIGHT;
-                drawCorner(canvas, rightX, posY, left, currentUnitWidth, color, corner);
-            }
-        }
     }
 
     private void drawConnections(Canvas canvas, List<SleepDetail> details, int currentIndex, float left) {
@@ -302,8 +232,94 @@ public class SleepDetailsView extends View {
 
         Shader shader = new LinearGradient(left, topY, left, bottomY, startColor, endColor, Shader.TileMode.MIRROR);
         connectionPaint.setShader(shader);
+        if (curOverlay != null) {
+            connectionPaint.setAlpha(overlayAlpha);
+        }
         canvas.drawLine(left, topY, left, bottomY, connectionPaint);
         connectionPaint.setShader(null);
+    }
+
+    public static final int CORNER_TOP_LEFT = 1;
+    public static final int CORNER_TOP_RIGHT = 2;
+    public static final int CORNER_BOTTOM_LEFT = 4;
+    public static final int CORNER_BOTTOM_RIGHT = 8;
+
+    public static boolean isFlagSet(int value, int flag) {
+        return (value & flag) == flag;
+    }
+
+    public static int setFlag(int value, int flag) {
+        return value | flag;
+    }
+
+    private void drawRoundedRectWithCorners(Canvas canvas, float left, float top, float width, float height, int corners) {
+        final float right = left + width;
+        final float bottom = top + height;
+        final float centerX = (left + right) / 2f;
+
+        detailBarPath.reset();
+
+        if (left + cornerRadius < centerX) {
+            detailBarPath.moveTo(left + cornerRadius, top);
+            detailBarPath.lineTo(right - cornerRadius, top);
+        } else {
+            detailBarPath.moveTo(centerX, top);
+        }
+
+        detailBarPath.quadTo(right, top, right, isFlagSet(corners, CORNER_TOP_RIGHT) ? top - cornerRadius : top + cornerRadius);
+
+        detailBarPath.lineTo(right, isFlagSet(corners, CORNER_BOTTOM_RIGHT) ? bottom + cornerRadius : bottom - cornerRadius);
+
+        if (left + cornerRadius < centerX) {
+            detailBarPath.quadTo(right, bottom, right - cornerRadius, bottom);
+            detailBarPath.lineTo(left + cornerRadius, bottom);
+        } else {
+            detailBarPath.quadTo(right, bottom, centerX, bottom);
+        }
+
+        detailBarPath.quadTo(left, bottom, left, isFlagSet(corners, CORNER_BOTTOM_LEFT) ? bottom + cornerRadius : bottom - cornerRadius);
+
+        detailBarPath.lineTo(left, isFlagSet(corners, CORNER_TOP_LEFT) ? top - cornerRadius : top + cornerRadius);
+
+        if (left + cornerRadius < centerX) {
+            detailBarPath.quadTo(left, top, left + cornerRadius, top);
+        } else {
+            detailBarPath.quadTo(left, top, centerX, top);
+        }
+
+        detailBarPath.close();
+
+        if (curOverlay != null) {
+            fillPaint.setAlpha(overlayAlpha);
+        }
+        canvas.drawPath(detailBarPath, fillPaint);
+    }
+
+
+    private int getEdgeFlags(List<SleepDetail> details, int currentIndex) {
+        int ret = 0;
+
+        if (currentIndex < 0 || currentIndex >= details.size()) return ret;
+
+        SleepDetail currentData = details.get(currentIndex);
+        final int currentType = currentData.type;
+        final int currentIdx = getIndexByType(currentType);
+        if (currentIdx == -1) return ret;
+
+        if (currentIndex > 0) {
+            final int prevIdx = getIndexByType(details.get(currentIndex - 1).type);
+            if (prevIdx != -1) {
+                ret = setFlag(ret, (currentIdx > prevIdx) ? CORNER_TOP_LEFT : CORNER_BOTTOM_LEFT);
+            }
+        }
+
+        if (currentIndex < details.size() - 1) {
+            final int nextIdx = getIndexByType(details.get(currentIndex + 1).type);
+            if (nextIdx != -1) {
+                ret = setFlag(ret, (currentIdx > nextIdx) ? CORNER_TOP_RIGHT : CORNER_BOTTOM_RIGHT);
+            }
+        }
+        return ret;
     }
 
     private void drawDetails(Canvas canvas) {
@@ -318,10 +334,8 @@ public class SleepDetailsView extends View {
 
             final float currentUnitWidth = sd.durationMinutes * unitWidth;
 
-            rectF.set(x, top, x + currentUnitWidth, top + barHeight);
-            canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, fillPaint);
-
-            drawEdges(canvas, sleepDetails, i, x, top);
+            int corners = getEdgeFlags(sleepDetails, i);
+            drawRoundedRectWithCorners(canvas, x, top, currentUnitWidth, barHeight, corners);
             drawConnections(canvas, sleepDetails, i, x);
 
             x += currentUnitWidth;
@@ -371,12 +385,12 @@ public class SleepDetailsView extends View {
 
         final int iconSize = infoTextSize;
 
-        final float infoIconX = chartLeftStart + ((float) chartWidth /2) - (float) infoTextRect.width() / 2 - iconSize - 5;
+        final float infoIconX = chartLeftStart + ((float) chartWidth / 2) - (float) infoTextRect.width() / 2 - iconSize - 5;
 
         rectF.set(infoIconX, infoTextRect.height() - iconSize, infoIconX + iconSize, infoTextRect.height());
         canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, fillPaint);
 
-        final float infoTextX = chartLeftStart + ((float) chartWidth /2) - (float) infoTextRect.width() / 2;
+        final float infoTextX = chartLeftStart + ((float) chartWidth / 2) - (float) infoTextRect.width() / 2;
         canvas.drawText(info, infoTextX, infoTextRect.height(), infoTextPaint);
 
     }
@@ -405,6 +419,10 @@ public class SleepDetailsView extends View {
         drawGrid(canvas);
         drawDetails(canvas);
 
+        if (curOverlay != null) {
+            curOverlay.drawOverlay(canvas, chartLeftStart, chartTopStart, chartHeight, chartWidth);
+        }
+
         //draw start/end Time Info
         final String endDate = formatDurationHoursMinutes(this.endTimestamp);
         float timeInfoY = chartTopStart + chartHeight + timeInfoHeight;
@@ -414,6 +432,9 @@ public class SleepDetailsView extends View {
         //draw selector
         if (selectorPos > chartLeftStart && selectorPos < chartLeftStart + chartWidth) {
             canvas.drawLine(selectorPos, chartTopStart, selectorPos, chartTopStart + chartHeight, selectorPaint);
+            if (curOverlay != null) {
+                curOverlay.drawOverlaySelector(canvas, chartLeftStart, chartTopStart, chartHeight, chartWidth, selectorPos);
+            }
             if (selectorPos > (chartLeftStart + timeInfoTextRect.width()) && selectorPos < (chartLeftStart + chartWidth - timeInfoTextRect.width())) {
                 final String selectedDate = formatDurationHoursMinutes(this.startTimestamp + (long) ((selectorPos - chartLeftStart) / unitWidth) * 60000L);
                 canvas.drawText(selectedDate, selectorPos, timeInfoY, timeInfoTextPaint);
@@ -429,6 +450,7 @@ public class SleepDetailsView extends View {
     }
 
     public void setData(List<SleepDetail> sleepDetails) {
+        curOverlay = null;
         this.sleepDetails = sleepDetails;
         this.sleepMinutesCount = 0;
         for (SleepDetail sd : sleepDetails) {
@@ -442,6 +464,11 @@ public class SleepDetailsView extends View {
         selectorPos = -1.0F;
         invalidate();
     }
+
+    public void setOverlay(SleepDetailsOverlay overlay) {
+        curOverlay = overlay;
+    }
+
 
 
     @Override
@@ -466,12 +493,12 @@ public class SleepDetailsView extends View {
             case MotionEvent.ACTION_MOVE: {
                 final float x = ev.getX();
                 final float dx = x - moveEventLastX;
-                if(dx != 0) {
-                    if(selectorPos < 0) {
-                        selectorPos = (dx < 0)?chartLeftStart + chartWidth:0;
+                if (dx != 0) {
+                    if (selectorPos < 0) {
+                        selectorPos = (dx < 0) ? chartLeftStart + chartWidth : 0;
                     }
                     selectorPos = Math.max(0, Math.min(chartLeftStart + chartWidth, selectorPos + dx));
-                    if (isStart && Math.abs(dx) > 5.0) {
+                    if (isStart && Math.abs(dx) > 10.0) {
                         getParent().requestDisallowInterceptTouchEvent(true);
                         isStart = false;
                     }
