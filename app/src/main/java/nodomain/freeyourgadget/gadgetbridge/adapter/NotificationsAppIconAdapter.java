@@ -43,7 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
 public class NotificationsAppIconAdapter extends RecyclerView.Adapter<NotificationsAppIconAdapter.NotificationsAppIconViewHolder> implements Filterable {
 
-    public static int MAX_SELECT_COUNT = 10;
+    public static int MAX_SELECT_COUNT = 30;
 
     private final Context context;
 
