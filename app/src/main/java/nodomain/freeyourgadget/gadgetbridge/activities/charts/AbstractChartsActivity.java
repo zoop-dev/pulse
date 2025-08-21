@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -341,7 +340,7 @@ public abstract class AbstractChartsActivity extends AbstractGBFragmentActivity 
 
     @Override
     public void enableSwipeRefresh(final boolean enable) {
-        swipeLayout.setEnabled(enable && allowRefresh());
+        swipeLayout.setEnabled(enable && GBApplication.getPrefs().refreshOnSwipe() && allowRefresh());
     }
 
     protected abstract boolean supportsRefresh();

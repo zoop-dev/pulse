@@ -76,8 +76,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBChangeLog;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 //TODO: extend AbstractGBActivity, but it requires actionbar that is not available
 public class ControlCenterv2 extends AppCompatActivity
@@ -149,7 +149,7 @@ public class ControlCenterv2 extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Prefs prefs = GBApplication.getPrefs();
+        GBPrefs prefs = GBApplication.getPrefs();
 
         // Determine availability of device with activity tracking functionality
         boolean activityTrackerAvailable = false;
@@ -259,17 +259,21 @@ public class ControlCenterv2 extends AppCompatActivity
         // Set pull-down-to-refresh action
         swipeLayout = findViewById(R.id.dashboard_swipe_layout);
         swipeLayout.setOnRefreshListener(() -> {
-            // Fetch activity for all connected devices
-            GBApplication.deviceService().onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
-            // Hide 'refreshing' animation immediately if no health devices are connected
-            List<GBDevice> devices1 = GBApplication.app().getDeviceManager().getDevices();
-            for (GBDevice dev : devices1) {
-                if (dev.getDeviceCoordinator().supportsActivityDataFetching(dev) && dev.isInitialized()) {
-                    return;
+            if (prefs.refreshOnSwipe()) {
+                // Fetch activity for all connected devices
+                GBApplication.deviceService().onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
+                // Hide 'refreshing' animation immediately if no health devices are connected
+                List<GBDevice> devices1 = GBApplication.app().getDeviceManager().getDevices();
+                for (GBDevice dev : devices1) {
+                    if (dev.getDeviceCoordinator().supportsActivityDataFetching(dev) && dev.isInitialized()) {
+                        return;
+                    }
                 }
+                swipeLayout.setRefreshing(false);
+                GB.toast(getString(R.string.info_no_devices_connected), Toast.LENGTH_LONG, GB.WARN);
+            } else {
+                swipeLayout.setRefreshing(false);
             }
-            swipeLayout.setRefreshing(false);
-            GB.toast(getString(R.string.info_no_devices_connected), Toast.LENGTH_LONG, GB.WARN);
         });
 
         // Set up local intent listener

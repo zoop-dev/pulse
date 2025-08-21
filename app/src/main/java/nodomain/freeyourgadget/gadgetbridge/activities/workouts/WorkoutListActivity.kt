@@ -187,7 +187,13 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
         setItemAdapter(workoutSummariesAdapter)
 
         swipeLayout = findViewById(R.id.list_activity_swipe_layout)
-        swipeLayout.setOnRefreshListener { fetchTrackData() }
+        swipeLayout.setOnRefreshListener {
+            if (GBApplication.getPrefs().refreshOnSwipe()) {
+                fetchTrackData()
+            } else {
+                swipeLayout.isRefreshing = false
+            }
+        }
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { fetchTrackData() }

@@ -3893,6 +3893,8 @@
     <string name="pref_import_activity_files_summary">Manually import activity files from the phone storage</string>
     <string name="pref_fetch_unknown_files_title">Fetch unknown files</string>
     <string name="pref_fetch_unknown_files_summary">Fetch unknown activity files from the watch. They will not be processed, but will be saved in the phone.</string>
+    <string name="pref_refresh_on_swipe_summary">Swipe down to fetch new data from connected devices.</string>
+    <string name="pref_refresh_on_swipe_title">Refresh on swipe</string>
     <string name="cannot_upload_watchface_too_many_watchfaces_installed">Cannot upload watchface, too many watchfaces installed</string>
     <string name="insufficient_space_for_upload">Insufficient space for upload</string>
     <string name="file_already_exists">File already exists</string>

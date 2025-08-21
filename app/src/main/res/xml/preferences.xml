@@ -202,6 +202,14 @@
             android:summary="@string/pref_summary_block_screenshots"
             android:title="@string/pref_title_block_screenshot" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_swipe_down"
+            android:key="pref_refresh_on_swipe"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_refresh_on_swipe_summary"
+            android:title="@string/pref_refresh_on_swipe_title" />
+
         <PreferenceCategory
             android:key="pref_screen_theme"
             android:title="@string/pref_header_main_screen"

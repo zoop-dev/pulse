@@ -183,4 +183,8 @@ public class GBPrefs extends Prefs {
     public boolean syncTime() {
         return getBoolean("datetime_synconconnect", true);
     }
+
+    public boolean refreshOnSwipe() {
+        return getBoolean("pref_refresh_on_swipe", true);
+    }
 }
