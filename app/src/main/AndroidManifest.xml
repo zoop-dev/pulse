@@ -247,7 +247,7 @@
             android:label="@string/notifications_app_icon_upload"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
-            android:name=".activities.ActivitySummariesActivity"
+            android:name=".activities.workouts.WorkoutListActivity"
             android:label="@string/activity_summaries"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
@@ -663,12 +663,12 @@
         <activity
             android:name=".activities.workouts.WorkoutDetailsActivity"
             android:label="@string/activity_summary_detail"
-            android:parentActivityName=".activities.ActivitySummariesActivity"
+            android:parentActivityName=".activities.workouts.WorkoutListActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.ActivitySummariesFilter"
             android:label="@string/activity_filter_filter_title"
-            android:parentActivityName=".activities.ActivitySummariesActivity"
+            android:parentActivityName=".activities.workouts.WorkoutListActivity"
             android:excludeFromRecents="true"/>
 
         <activity
