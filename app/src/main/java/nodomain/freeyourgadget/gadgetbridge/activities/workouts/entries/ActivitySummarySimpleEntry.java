@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueFormatter;
 
 public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
@@ -46,6 +47,7 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
         valueTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         valueTextView.setTextSize(20);
         valueTextView.setText(workoutValueFormatter.formatValue(value, unit));
+        valueTextView.setTextColor(GBApplication.getTextColor(context));
 
         // Label
         final TextView labelTextView = new TextView(context);
