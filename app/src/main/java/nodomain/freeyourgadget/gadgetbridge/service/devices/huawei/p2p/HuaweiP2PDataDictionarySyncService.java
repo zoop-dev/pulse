@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,12 +39,14 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
 
     public static final String MODULE = "hw.unitedevice.datadictionarysync";
 
-    private AtomicBoolean serviceAvailable = new AtomicBoolean(false);
+    private final AtomicBoolean serviceAvailable = new AtomicBoolean(false);
 
 
     private List<Integer> classesToSync = null;
 
     public interface DictionarySyncCallback {
+        long onGetLastDataSyncTimestamp(int dictClass);
+        void onData(int dictClass, List<HuaweiP2PDataDictionarySyncService.DictData> dictData);
         void onComplete(boolean complete);
     }
 
@@ -90,17 +94,25 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
 
     public void startSync(List<Integer> dictClasses, DictionarySyncCallback callback) {
         LOG.info("P2PDataDictionarySyncService startSync {}", dictClasses);
+        if(callback == null) {
+            LOG.error("P2PDataDictionarySyncService  startSync callback is null");
+            return;
+        }
         classesToSync = dictClasses;
         if(classesToSync.isEmpty()) {
             callback.onComplete(false);
             return;
         }
-        sendSyncRequest(classesToSync.remove(0), callback);
+        sendSyncRequest(classesToSync.remove(0), 0, callback);
     }
 
-    private void sendSyncRequest(int dictClass, DictionarySyncCallback callback) {
+    private void sendSyncRequest(int dictClass, long startTime, DictionarySyncCallback callback) {
 
         LOG.info("P2PDataDictionarySyncService class {}", dictClass);
+        if(callback == null) {
+            LOG.error("P2PDataDictionarySyncService sendSyncRequest callback is null");
+            return;
+        }
 
         if (!serviceAvailable.get()) {
             LOG.info("P2PDataDictionarySyncService not available");
@@ -113,8 +125,15 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
             callback.onComplete(false);
             return;
         }
+        if(startTime == 0) {
+            startTime = callback.onGetLastDataSyncTimestamp(dictClass);
+        }
+        if(startTime < 0) {
+            LOG.info("P2PDataDictionarySyncService start time is less then 0");
+            callback.onComplete(false);
+            return;
+        }
 
-        long startTime =  manager.getSupportProvider().getLastDataDictLastTimestamp(dictClass);
         if(startTime > 0) {
             startTime += 1000;
         }
@@ -146,15 +165,11 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
 
     @Override
     public void registered() {
-        sendPing(new HuaweiP2PCallback() {
-            @Override
-            public void onResponse(int code, byte[] data) {
-                if ((byte) code != (byte) 0xca)
-                    return;
-                serviceAvailable.set(true);
-            }
+        sendPing((code, data) -> {
+            if ((byte) code != (byte) 0xca)
+                return;
+            serviceAvailable.set(true);
         });
-
     }
 
     @Override
@@ -186,6 +201,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 return value;
             }
 
+            @NonNull
             @Override
             public String toString() {
                 final StringBuffer sb = new StringBuffer("HuaweiDictDataValue{");
@@ -237,6 +253,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
             return data;
         }
 
+        @NonNull
         @Override
         public String toString() {
             final StringBuffer sb = new StringBuffer("HuaweiDictSample{");
@@ -255,12 +272,10 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
         if (data[0] == 1) {
             DictionarySyncCallback callback = null;
             try {
-
-
                 HuaweiTLV tlv = new HuaweiTLV();
                 tlv.parse(data, 1, data.length - 1);
 
-                int operation = tlv.getInteger(0x01); ///???
+                int operation = tlv.getInteger(0x01);
                 int dictClass = tlv.getInteger(0x02);
 
                 if(!currentRequests.containsKey(dictClass)) {
@@ -272,9 +287,17 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                     return;
                 }
 
+                if(operation != 1) {
+                    return;
+                    //I never see value differ from 1. So I don't know how to interpret others. Just ignore for now
+                    //callback.onComplete(true);
+                }
+
                 //NOTE: all tags with high bit set should be parsed as container
 
                 List<DictData> result =  new ArrayList<>();
+
+                long lastTimestamp = 0;
 
                 for (HuaweiTLV blockTlv : tlv.getObjects(0x83)) {
                     for (HuaweiTLV l : blockTlv.getObjects(0x84)) {
@@ -297,19 +320,20 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                             }
                         }
                         result.add(new DictData(dictClass, startTimestamp, endTimestamp, modifyTimestamp, dataValues));
+                        lastTimestamp = Math.max(lastTimestamp, Math.max(endTimestamp, modifyTimestamp));
                     }
                 }
 
-                manager.getSupportProvider().addDictData(result);
+                callback.onData(dictClass, result);
 
                 if (!result.isEmpty()) {
-                    sendSyncRequest(dictClass, callback);
+                    sendSyncRequest(dictClass, lastTimestamp, callback);
                 } else {
                     if(classesToSync.isEmpty()) {
                         classesToSync = null;
                         callback.onComplete(true);
                     } else {
-                        sendSyncRequest(classesToSync.remove(0), callback);
+                        sendSyncRequest(classesToSync.remove(0), 0, callback);
                     }
                 }
             } catch (HuaweiPacket.MissingTagException e) {

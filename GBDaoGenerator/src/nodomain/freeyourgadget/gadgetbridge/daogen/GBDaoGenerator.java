@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(113, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(114, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -172,6 +172,7 @@ public class GBDaoGenerator {
         addHuaweiStressSample(schema, user, device);
         addHuaweiSleepStageSample(schema, user, device);
         addHuaweiSleepStatsSample(schema, user, device);
+        addHuaweiTemperatureSample(schema, user, device);
 
         addUltrahumanActivitySample(schema, user, device);
         addUltrahumanDeviceStateSample(schema, user, device);
@@ -1585,6 +1586,16 @@ public class GBDaoGenerator {
         final Index indexWakeUp = new Index();
         indexWakeUp.addProperty(wakeupTime);
         sample.addIndex(indexWakeUp);
+
+        return sample;
+    }
+
+    private static Entity addHuaweiTemperatureSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "HuaweiTemperatureSample");
+        addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
+        sample.addLongProperty("lastTimestamp").notNull().index();
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty(SAMPLE_TEMPERATURE_TYPE).notNull().primaryKey().codeBeforeGetter(OVERRIDE);
 
         return sample;
     }

@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -39,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ import de.greenrobot.dao.query.DeleteQuery;
 import de.greenrobot.dao.query.QueryBuilder;
 import kotlin.Triple;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -77,6 +80,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepStageSampl
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepStatsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTruSleepParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTrueSleepSequenceDataParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
@@ -95,6 +99,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSample;
@@ -226,7 +231,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWearLocationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWearMessagePushRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetNotificationCapabilitiesRequest;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FitnessData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWorkModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
@@ -952,7 +956,7 @@ public class HuaweiSupportProvider {
                         huaweiDataSyncFindDevice = new HuaweiDataSyncFindDevice(HuaweiSupportProvider.this);
                     }
 
-                    if(getHuaweiCoordinator().supportsEmotion()) {
+                    if (getHuaweiCoordinator().supportsEmotion()) {
                         huaweiDataSyncEmotion = new HuaweiDataSyncEmotion(HuaweiSupportProvider.this);
                     }
                 }
@@ -1513,12 +1517,64 @@ public class HuaweiSupportProvider {
         HuaweiP2PDataDictionarySyncService P2PSyncService = HuaweiP2PDataDictionarySyncService.getRegisteredInstance(huaweiP2PManager);
 
         if (P2PSyncService != null) {
-            List<Integer> list = P2PSyncService.checkSupported(this.getHuaweiCoordinator(), Arrays.asList(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS, HuaweiDictTypes.BLOOD_PRESSURE_CLASS));
+            List<Integer> list = P2PSyncService.checkSupported(this.getHuaweiCoordinator(), Arrays.asList(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS));
             if (!list.isEmpty()) {
                 syncState.setP2pSync(true);
-                P2PSyncService.startSync(list, complete -> {
-                    LOG.info("Sync P2P Data complete");
-                    syncState.setP2pSync(false);
+                P2PSyncService.startSync(list, new HuaweiP2PDataDictionarySyncService.DictionarySyncCallback() {
+                    @Override
+                    public long onGetLastDataSyncTimestamp(int dictClass) {
+                        LOG.info("DictionarySyncCallback onGetLastDataDictLastTimestamp: {}", dictClass);
+                        if (dictClass == HuaweiDictTypes.SKIN_TEMPERATURE_CLASS) {
+                            try (DBHandler db = GBApplication.acquireDB()) {
+                                HuaweiTemperatureSampleProvider sleepStatsSampleProvider = new HuaweiTemperatureSampleProvider(gbDevice, db.getDaoSession());
+                                return sleepStatsSampleProvider.getLastFetchTimestamp();
+                            } catch (Exception e) {
+                                LOG.warn("Exception for getting temperature start time", e);
+                            }
+                            return 0;
+                        }
+                        return -1;
+                    }
+
+                    @Override
+                    public void onData(int dictClass, List<HuaweiP2PDataDictionarySyncService.DictData> dictData) {
+                        LOG.info("DictionarySyncCallback onData: {}", dictClass);
+                        if (dictClass == HuaweiDictTypes.SKIN_TEMPERATURE_CLASS) {
+
+                            List<HuaweiTemperatureSample> temperatureSamples = new ArrayList<>();
+
+                            for (HuaweiP2PDataDictionarySyncService.DictData dt : dictData) {
+                                long timestamp = dt.getStartTimestamp();
+                                long lastTime = Math.max(dt.getEndTimestamp(), dt.getModifyTimestamp());
+                                for (HuaweiP2PDataDictionarySyncService.DictData.DictDataValue val : dt.getData()) {
+                                    if (val.getTag() == 10 && val.getDataType() == HuaweiDictTypes.SKIN_TEMPERATURE_VALUE) {
+                                        double skinTemperature = conv2Double(val.getValue());
+                                        if (skinTemperature >= 20 && skinTemperature <= 42) {
+                                            HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
+                                            sample.setTimestamp(timestamp);
+                                            sample.setLastTimestamp(lastTime);
+                                            sample.setTemperatureType(0);
+                                            sample.setTemperature((float) skinTemperature);
+                                            temperatureSamples.add(sample);
+                                        }
+                                    }
+
+                                }
+                            }
+                            try (DBHandler db = GBApplication.acquireDB()) {
+                                final DaoSession session = db.getDaoSession();
+                                new HuaweiTemperatureSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, temperatureSamples);
+                            } catch (Exception e) {
+                                LOG.error("Cannot save skin temperature samples, continue");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onComplete(boolean complete) {
+                        LOG.info("Sync P2P Data complete");
+                        syncState.setP2pSync(false);
+                    }
                 });
             }
         }
@@ -1761,7 +1817,8 @@ public class HuaweiSupportProvider {
 
     /**
      * Add sleep activities
-     * @param data List of triples with [timestamp_start, timestamp_end, type]
+     *
+     * @param data   List of triples with [timestamp_start, timestamp_end, type]
      * @param source Source of the data
      */
     public void addSleepActivities(List<Triple<Integer, Integer, Byte>> data, byte source) {
@@ -2129,125 +2186,6 @@ public class HuaweiSupportProvider {
         }
     }
 
-    public void addDictData(List<HuaweiP2PDataDictionarySyncService.DictData> dictData) {
-        if (dictData.isEmpty())
-            return;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-            Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
-
-            // TODO: Cache probably not necessary with an index on StartTimestamp
-            // Assume it's in order, though we'll be fine if it is not
-            // Note that SQLite BETWEEN is inclusive
-            long cacheStartTime = dictData.get(0).getStartTimestamp();
-            long cacheEndTime = dictData.get(dictData.size() - 1).getStartTimestamp();
-            QueryBuilder<HuaweiDictData> qbCache = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
-                    HuaweiDictDataDao.Properties.UserId.eq(userId),
-                    HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
-                    HuaweiDictDataDao.Properties.StartTimestamp.between(cacheStartTime, cacheEndTime)
-            );
-            List<HuaweiDictData> cache = qbCache.build().list();
-
-            for (HuaweiP2PDataDictionarySyncService.DictData data : dictData) {
-                // Avoid duplicates
-                Long dictId = null;
-                if (data.getStartTimestamp() >= cacheStartTime && data.getStartTimestamp() <= cacheEndTime) {
-                    // Cache hit - if it exists it will be in the cache
-                    for (HuaweiDictData d : cache) {
-                        if (d.getStartTimestamp() == data.getStartTimestamp() && d.getDictClass() == data.getDictClass()) {
-                            dictId = d.getDictId();
-                            break;
-                        }
-                    }
-                } else {
-                    // Cache miss - check the database
-                    LOG.warn("P2P dedup cache miss");
-
-                    // TODO: No index on StartTimestamp/DictClass, so terribly slow
-                    QueryBuilder<HuaweiDictData> qb = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
-                            HuaweiDictDataDao.Properties.UserId.eq(userId),
-                            HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
-                            HuaweiDictDataDao.Properties.DictClass.eq(data.getDictClass()),
-                            HuaweiDictDataDao.Properties.StartTimestamp.eq(data.getStartTimestamp())
-                    );
-                    List<HuaweiDictData> results = qb.build().list();
-                    if (!results.isEmpty())
-                        dictId = results.get(0).getDictId();
-                }
-
-                HuaweiDictData dictSample = new HuaweiDictData(
-                        dictId,
-                        deviceId,
-                        userId,
-                        data.getDictClass(),
-                        data.getStartTimestamp(),
-                        data.getEndTimestamp(),
-                        data.getModifyTimestamp()
-                );
-                db.getDaoSession().getHuaweiDictDataDao().insertOrReplace(dictSample);
-                addDictDataValue(dictSample.getDictId(), data.getData());
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add dict data", e);
-        }
-    }
-
-    public void addDictDataValue(Long dictId, List<HuaweiP2PDataDictionarySyncService.DictData.DictDataValue> dictDataValues) {
-        if (dictId == null)
-            return;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            HuaweiDictDataValuesDao dao = db.getDaoSession().getHuaweiDictDataValuesDao();
-
-            for (HuaweiP2PDataDictionarySyncService.DictData.DictDataValue dataValues : dictDataValues) {
-
-                HuaweiDictDataValues dictValue = new HuaweiDictDataValues(
-                        dictId,
-                        dataValues.getDataType(),
-                        dataValues.getTag(),
-                        dataValues.getValue()
-                );
-                dao.insertOrReplace(dictValue);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add dict value to database", e);
-        }
-    }
-
-    public long getLastDataDictLastTimestamp(int dictClass) {
-        long lastTimestamp = 0;
-        if (dictClass == 0)
-            return lastTimestamp;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-            Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
-
-            QueryBuilder<HuaweiDictData> qb = db.getDaoSession().getHuaweiDictDataDao().queryBuilder().where(
-                    HuaweiDictDataDao.Properties.UserId.eq(userId),
-                    HuaweiDictDataDao.Properties.DeviceId.eq(deviceId),
-                    HuaweiDictDataDao.Properties.DictClass.eq(dictClass)
-            ).orderRaw(
-                    // "max(MODIFY_TIMESTAMP, END_TIMESTAMP) DESC"
-                    String.format(
-                            "max(%s, %s) DESC",
-                            HuaweiDictDataDao.Properties.ModifyTimestamp.columnName,
-                            HuaweiDictDataDao.Properties.EndTimestamp.columnName
-                    )
-            ).limit(1);
-            List<HuaweiDictData> results = qb.build().list();
-            if (!results.isEmpty()) {
-                lastTimestamp = Math.max(lastTimestamp, results.get(0).getModifyTimestamp());
-                lastTimestamp = Math.max(lastTimestamp, results.get(0).getEndTimestamp());
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to select last timestamp value to database", e);
-        }
-        return lastTimestamp;
-    }
-
-
     public void setWearLocation() {
         try {
             SetWearLocationRequest setWearLocationReq = new SetWearLocationRequest(this);
@@ -2456,7 +2394,7 @@ public class HuaweiSupportProvider {
             }
         }
 
-        if(huaweiDataSyncEmotion != null && !automaticStressEnabled) {
+        if (huaweiDataSyncEmotion != null && !automaticStressEnabled) {
             return;
         }
 
@@ -2872,7 +2810,7 @@ public class HuaweiSupportProvider {
                             for (HuaweiSequenceDataParser.SequenceData sd : sequenceFileData.getSequenceDataList()) {
                                 LOG.info("SLEEP SequenceData: {}", sd);
                                 HuaweiTrueSleepSequenceDataParser.SleepSummary sleepDataSummary = HuaweiTrueSleepSequenceDataParser.parseSleepDataSummary(sequenceFileData, sd);
-                                if(sleepDataSummary == null) {
+                                if (sleepDataSummary == null) {
                                     LOG.warn("SLEEP DataSummary is null");
                                     continue;
                                 }
@@ -2904,7 +2842,7 @@ public class HuaweiSupportProvider {
                                 LOG.info("SLEEP Time: {}", time);
                                 List<HuaweiTrueSleepSequenceDataParser.SleepStage> stages = HuaweiTrueSleepSequenceDataParser.parseSleepDetails(sd.getDetails(), time);
                                 LOG.info("SLEEP Stages: {}", stages);
-                                if(stages != null) {
+                                if (stages != null) {
                                     for (HuaweiTrueSleepSequenceDataParser.SleepStage st : stages) {
                                         HuaweiSleepStageSample sample = new HuaweiSleepStageSample();
                                         sample.setTimestamp(st.getTime() * 1000L);
@@ -3183,12 +3121,93 @@ public class HuaweiSupportProvider {
         syncState.updateState(needSync);
     }
 
+    private double conv2Double(byte[] b) {
+        return ByteBuffer.wrap(b).getDouble();
+    }
 
     public void onTestNewFunction() {
-        gbDevice.setBusyTask(R.string.busy_task_downloading, getContext());
-        gbDevice.sendDeviceUpdateIntent(getContext());
 
-        downloadDictTrueSleepData(0, (int) (System.currentTimeMillis() / 1000));
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.nanoTime();
+                long count = 0;
+                try (DBHandler db = GBApplication.acquireDB()) {
+                    DaoSession daoSession = db.getDaoSession();
+                    QueryBuilder<HuaweiDictDataValues> qbv1 = daoSession.getHuaweiDictDataValuesDao().queryBuilder();
+                    count = qbv1.count();
+
+                } catch (
+                        GBException e) {
+                    LOG.error("EX", e);
+                } catch (
+                        Exception e) {
+                    LOG.error("EX2", e);
+                }
+
+                int limit = 10000;
+                int offset = 0;
+                while (true) {
+                    try (DBHandler db = GBApplication.acquireDB()) {
+                        DaoSession daoSession = db.getDaoSession();
+
+                        QueryBuilder<HuaweiDictDataValues> qbv = daoSession.getHuaweiDictDataValuesDao().queryBuilder();
+
+                        qbv.where(HuaweiDictDataValuesDao.Properties.DictType.eq(HuaweiDictTypes.SKIN_TEMPERATURE_VALUE)).where(HuaweiDictDataValuesDao.Properties.Tag.eq(10)).limit(limit).offset(offset);
+
+                        final List<HuaweiDictDataValues> valuesData = qbv.build().list();
+
+                        if (valuesData.isEmpty())
+                            break;
+
+
+                        List<HuaweiTemperatureSample> res = new ArrayList<>();
+                        for (HuaweiDictDataValues vl : valuesData) {
+                            double skinTemperature = conv2Double(vl.getValue());
+                            if (skinTemperature >= 20 && skinTemperature <= 42) {
+                                res.add(new HuaweiTemperatureSample(vl.getHuaweiDictData().getStartTimestamp(), vl.getHuaweiDictData().getDeviceId(), vl.getHuaweiDictData().getUserId(), Math.max(vl.getHuaweiDictData().getModifyTimestamp(), vl.getHuaweiDictData().getEndTimestamp()), (float) skinTemperature, 0));
+                            }
+                        }
+                        daoSession.getHuaweiTemperatureSampleDao().insertInTx(res);
+                        offset += limit;
+                        LOG.info("Migrating: {}/{}", offset, count);
+                    } catch (GBException e) {
+                        LOG.error("EX", e);
+                        return;
+                    } catch (Exception e) {
+                        LOG.error("EX2", e);
+                        return;
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        LOG.error("Sleep error", e);
+                    }
+                }
+
+                try (DBHandler db = GBApplication.acquireDB()) {
+                    DaoSession daoSession = db.getDaoSession();
+
+                    final DeleteQuery<HuaweiDictDataValues> tableValuesDeleteQuery = daoSession.getHuaweiDictDataValuesDao().queryBuilder()
+                            .where(HuaweiDictDataValuesDao.Properties.DictType.eq(HuaweiDictTypes.SKIN_TEMPERATURE_VALUE))
+                            .buildDelete();
+                    tableValuesDeleteQuery.executeDeleteWithoutDetachingEntities();
+
+                    final DeleteQuery<HuaweiDictData> tableDataDeleteQuery = daoSession.getHuaweiDictDataDao().queryBuilder()
+                            .where(HuaweiDictDataDao.Properties.DictClass.eq(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS))
+                            .buildDelete();
+                    tableDataDeleteQuery.executeDeleteWithoutDetachingEntities();
+
+                } catch (
+                        GBException e) {
+                    LOG.error("EX", e);
+                } catch (
+                        Exception e) {
+                    LOG.error("EX2", e);
+                }
+                LOG.info("Migrating took : {} ms", ((System.nanoTime() - startTime) / 1000000.0));
+            }
+        });
     }
 
     public void onMusicListReq() {

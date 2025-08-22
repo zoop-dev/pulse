@@ -265,7 +265,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
-        return new HuaweiTemperatureSampleProvider(device, session);
+        return new HuaweiCompatTemperatureSampleProvider(device, session);
     }
 
     @Override
