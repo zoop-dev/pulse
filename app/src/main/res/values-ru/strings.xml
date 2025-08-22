@@ -128,7 +128,7 @@
     <string name="pref_title_pebble_forcele">Всегда отдавать предпочтение BLE</string>
     <string name="pref_summary_pebble_forcele">Использовать экспериментальную поддержку Pebble LE для всех Pebble вместо BT classic, требует сопряжения «Pebble LE» после того, как был подключен не LE</string>
     <string name="pref_title_pebble_mtu_limit">Ограничение GATT MTU для Pebble 2/LE</string>
-    <string name="pref_summary_pebble_mtu_limit">Если ваш Pebble 2/Pebble LE работает некорректно, попробуйте при помощи данной настройки ограничить MTU (допустимый диапазон от 20 до 512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Если ваш Pebble 2/Pebble LE работает неправильно, попробуйте при помощи данной настройки ограничить MTU (допустимые значения от 20 до 512)</string>
     <string name="pref_title_pebble_enable_applogs">Включить ведение логов приложений</string>
     <string name="pref_summary_pebble_enable_applogs">Логи приложений будут вестись в Gadgetbridge (требуется переподключение)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Преждевременное ACK PebbleKit</string>
@@ -238,7 +238,7 @@
     <string name="chart_no_data_synchronize">Нет данных. Синхронизировать устройство?</string>
     <string name="user_feedback_miband_activity_data_transfer">Будет передано %1$s данных, начиная с %2$s</string>
     <string name="miband_prefs_fitness_goal">Ежедневная цель шагов</string>
-    <string name="dbaccess_error_executing">Произошла ошибка при выполнении \'%1$s\'</string>
+    <string name="dbaccess_error_executing">Произошла ошибка при выполнении %1$s</string>
     <string name="controlcenter_start_activitymonitor">Ваша активность</string>
     <string name="cannot_connect">Подключиться не удалось: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Не удалось найти обработчик для установки этого файла.</string>
@@ -293,7 +293,7 @@
     <string name="abstract_chart_fragment_kind_light_sleep">Быстрый сон</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">Глубокий сон</string>
     <string name="abstract_chart_fragment_kind_not_worn">Не носилось</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Вы не спали</string>
     <string name="device_not_connected">Не подключен.</string>
     <string name="user_feedback_all_alarms_disabled">Все будильники отключены</string>
@@ -329,7 +329,7 @@
     <string name="charts_legend_heartrate">Пульс</string>
     <string name="live_activity_heart_rate">Пульс</string>
     <string name="pref_title_pebble_health_store_raw">Хранить необработанные записи в базе данных</string>
-    <string name="pref_summary_pebble_health_store_raw">Если флажок установлен, данные сохраняются как есть. В дальнейшем их можно будет обрабатывать. Обратите внимание: в этом случае база данных будет занимать больше места.</string>
+    <string name="pref_summary_pebble_health_store_raw">Сохранять данные как есть, увеличивая использование базы данных для последующей интерпретации.</string>
     <string name="action_db_management">Управление данными</string>
     <string name="title_activity_db_management">Управление данными</string>
     <string name="activity_db_management_import_export_explanation">Для операций экспорта/импорта используется следующий путь (см. ниже) к директории на вашем устройстве. Эта директория доступна другим приложениям Android и вашему компьютеру. Обратите внимание, что эта директория и все содержащиеся в ней файлы удаляются при удалении Gadgetbridge. Данные включают в себя:
@@ -671,7 +671,7 @@
     <string name="title_activity_device_specific_settings">Специфичные для устройства настройки</string>
     <string name="pref_title_authkey">Ключ авторизации</string>
     <string name="pref_summary_authkey">Измените ключ авторизации на общий ключ на всех ваших Android-устройствах, с которых вы хотели бы подключиться. Предыдущий ключ по умолчанию для всех устройств 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Вы собираетесь установить прошивку %s на ваш Amazfit Cor 2. \n \nБудьте внимательны: вначале установите файл .fw, затем .res. После установки .fw ваш браслет будет перезагружен. \n \nПримечание: если версия файла .res совпадает с установленной, его не нужно переустанавливать. \n \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК! \n \nПОЛНОСТЬЮ НЕ ПРОТЕСТИРОВАНО. ВОЗМОЖНО, НУЖНО ПРОШИТЬ ПРОШИВКУ BEATS_W, ЕСЛИ ИМЯ ВАШЕГО УСТРОЙСТВА \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Вы собираетесь установить прошивку %s на ваш Amazfit Cor 2. \n \nБудьте внимательны: вначале установите файл .fw, затем .res. После установки .fw ваш браслет будет перезагружен. \n \nПримечание: если версия файла .res совпадает с установленной, его не нужно переустанавливать. \n \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК! \n \nПОЛНОСТЬЮ НЕ ПРОТЕСТИРОВАНО. ВОЗМОЖНО, НУЖНО ПРОШИТЬ ПРОШИВКУ BEATS_W, ЕСЛИ ИМЯ ВАШЕГО УСТРОЙСТВА Amazfit Band 2</string>
     <string name="dutch">Голландский</string>
     <string name="turkish">Турецкий</string>
     <string name="ukrainian">Украинский</string>
@@ -727,7 +727,7 @@
     <string name="activity_error_no_app_for_gpx">Для просмотра трассировки активности установите приложение, которое может работать с GPX файлами.</string>
     <string name="preferences_makibes_hr3_settings">Настройки Makibes HR3</string>
     <string name="prefs_find_phone">Найти телефон</string>
-    <string name="prefs_enable_find_phone">Включить \'Найти телефон\'</string>
+    <string name="prefs_enable_find_phone">Включить Найти телефон</string>
     <string name="prefs_find_phone_summary">Использовать ваш браслет для проигрывания рингтонов.</string>
     <string name="prefs_find_phone_duration">Продолжительность звонка в секундах</string>
     <string name="maximum_duration">Продолжительность</string>
@@ -859,7 +859,7 @@
     <string name="pref_notifications_and_calls_enable_misscall">Уведомлять о пропущенных вызовах</string>
     <string name="prefs_notifications_and_calls_continious_ring">Разрешить уведомления во время звонка</string>
     <string name="title_activity_LenovoWatch_calibration">Калибровка часов Watch X Plus</string>
-    <string name="pref_title_weather_summary">Используется для провайдера погоды LineageOS, другие версии Android должны использовать приложение типа \"Уведомление о погоде\". Дополнительную информацию можно найти в вики-проекте Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Используется для поставщика погоды LineageOS, другие версии Android должны использовать приложение типа Уведомление о погоде. Подробнее смотрите в вики Gadgetbridge.</string>
     <string name="fw_upgrade_notice_miband5">Вы собираетесь установить прошивку %s на свой Mi Band 5.
 \n
 \nБудьте внимательны: сначала установите .fw файл, и только потом .res файл. После установки .fw ваш браслет будет перезагружен.
@@ -1358,7 +1358,7 @@
     <string name="pref_cache_weather_summary">Данные о погоде будут кэшироваться во время перезапуска приложения.</string>
     <string name="activity_prefs_discovery_pairing">Параметры обнаружения и сопряжения</string>
     <string name="permission_display_over_other_apps">%1$s необходимо разрешение на отображение поверх других приложений, чтобы часы Bangle.js могли выполнять действия через намерения, когда %1$s находится в фоновом режиме. \n \nЭто можно использовать для запуска приложения воспроизведения и прослушивания музыки, а также для многих других действий. \n \nПожалуйста, нажмите «%2$s», затем «%1$s» и включите «Поверх других приложений», затем нажмите «Назад» чтобы вернуться к %1$s. \n \nЧтобы прекратить запросы разрешений от %1$s, перейдите в Настройки и выключите «Проверять статус разрешений». \n \nДля корректной работы %1$s должны быть выданы все необходимые разрешения.</string>
-    <string name="permission_notification_listener">Для отображения уведомлений на часах при выключенном экране %1$s требуется доступ к Уведомлениям. \n \nПожалуйста, нажмите «%2$s», затем «%1$s» и включите «Доступ к уведомлениям», затем нажмите «Назад», чтобы вернуться к %1$s.</string>
+    <string name="permission_notification_listener">Для отображения уведомлений на часах при выключенном экране %1$s требуется доступ к Уведомлениям. \n \nПожалуйста, нажмите %2$s, затем %1$s и включите Доступ к уведомлениям, затем нажмите Назад, чтобы вернуться к %1$s.</string>
     <string name="fw_upgrade_notice_miband7">Вы собираетесь установить прошивку %s на свой Xiaomi Smart Band 7.
 \n
 \nПосле установки файла .zip ваш браслет будет перезагружен.
@@ -1369,10 +1369,10 @@
     <string name="pref_header_calendar">Календарь</string>
     <string name="pref_title_screen_on_on_notifications">Включение экрана при уведомлении</string>
     <string name="pref_header_authentication">Аутентификация</string>
-    <string name="pref_summary_screen_on_on_notifications">Включать экран часов, когда поступает оповещение</string>
+    <string name="pref_summary_screen_on_on_notifications">Подсвечивать экран при получении уведомлений</string>
     <string name="dismiss">Отклонить</string>
     <string name="pref_title_notification_use_as_deny">Запретить выбранным приложениям показывать уведомления</string>
-    <string name="permission_notification_policy_access">%1$s необходимо предоставить доступ к функции Не беспокоить для того, чтобы была возможность чтения на часах, когда экран телефона выключен. \n \nПожалуйста, нажмите «%2$s», затем «%1$s» и включите «Не беспокоить», затем нажмите «Назад», чтобы вернуться к %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s необходимо предоставить доступ к функции Не беспокоить для того, чтобы была возможность чтения на часах, когда экран телефона выключен. \n \nПожалуйста, нажмите %2$s, затем %1$s и включите Не беспокоить, затем нажмите Назад, чтобы вернуться к %1$s.</string>
     <string name="pref_title_banglejs_text_bitmap">Текст в виде растровых изображений</string>
     <string name="open_fw_installer_pick_file">Выбрать файл</string>
     <string name="pref_title_device_internet_access">Разрешить доступ в Интернет</string>
@@ -1400,7 +1400,7 @@
     <string name="pref_title_banglejs_webview_url">URL-адрес загрузчика приложения</string>
     <string name="check_all_applications">Отметить все приложения</string>
     <string name="pref_title_opentracks_packagename">Название пакета OpenTracks</string>
-    <string name="permission_location">Приложение %1$s нуждается в доступе к вашему местоположению в фоновом режиме, чтобы оставаться на связи с вашими часами даже при выключенном экране.\n\nПожалуйста, выберите \"%2$s\" на следующем экране, затем нажмите \"Назад\", чтобы вернуться к %1$s.</string>
+    <string name="permission_location">Приложение %1$s нуждается в доступе к вашему местоположению в фоновом режиме, чтобы оставаться на связи с вашими часами даже при выключенном экране.\n\nПожалуйста, выберите %2$s на следующем экране, затем нажмите Назад, чтобы вернуться к %1$s.</string>
     <string name="pref_summary_opentracks_packagename">Используется для запуска/остановки записи GPS-трека во внешнем фитнес-приложении.</string>
     <string name="pref_title_notification_delay_calls">Задержка уведомления о вызове</string>
     <string name="pref_title_notifications_generic_settings">Настройки уведомлений Android</string>
@@ -1513,14 +1513,14 @@
     <string name="heartrate_bpm_150">150 уд/мин</string>
     <string name="spo2_perc_80">80%</string>
     <string name="spo2_perc_85">85%</string>
-    <string name="world_clock_delete_confirm_title">Удалить \'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">Удалить %1$s</string>
     <string name="pref_screen_notification_profile_schedule">Расписание</string>
     <string name="pref_screen_vibration_patterns_title">Профили вибрации</string>
     <string name="heartrate_bpm_40">40 уд/мин</string>
     <string name="pref_explanation_authkey">Некоторые устройства требуют специального ключа сопряжения для первой инициализации устройства. Нажмите здесь, чтобы узнать подробности на вики.</string>
     <string name="pref_screen_notification_profile_todo_list">Список дел</string>
     <string name="spo2_perc_90">90%</string>
-    <string name="pref_explanation_authkey_new_protocol">Если вы на браслете получаете сообщение \"Обновить приложение до последней версии\", убедитесь, что проверили \"Новый протокол авторизации\" выше. Нажмите здесь, чтобы узнать подробности на вики.</string>
+    <string name="pref_explanation_authkey_new_protocol">Если вы на браслете получаете сообщение «Обновить приложение до последней версии», убедитесь, что выбрали Новый протокол авторизации выше. Нажмите здесь, чтобы узнать подробности на вики.</string>
     <string name="pref_screen_notification_profile_find_device">Поиск устройства</string>
     <string name="pref_workout_detection_alert_summary">Уведомление при обнаружении тренировки</string>
     <string name="heartrate_bpm_120">120 уд/мин</string>
@@ -1777,7 +1777,7 @@
     <string name="pref_pair_bluetooth_calls_title">Привязать для звонков по Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_summary">Нажмите сюда, чтобы начать процесс привязки</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Чтобы получать звонки по Bluetooth, вам требуется привязать ваш телефон к второму экземпляру часов.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Зайдите в настройки Bluetooth на вашем телефоне и выполните сопряжение с новым устройством который появится в списке(похожее название как у ваших текущих часов, но с суффиксом, например \"Amazfit GTR 4 - AFC8\").</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Зайдите в настройки Bluetooth на вашем телефоне и выполните сопряжение с новым устройством который появится в списке(похожее название как у ваших текущих часов, но с суффиксом, например Amazfit GTR 4 - AFC8).</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ВНИМАНИЕ: Если вы включите звонки по Bluetooth без сопряжения второго экземпляра, уведомления о звонках могут работать не так, как обычно.</string>
     <string name="pref_summary_device_intents">Разрешить Bangle.js приложениям отправлять Интенты Android, и разрешить другим приложениям на Android(как Tasker) отправлять данные на Bangle.js через интент com.banglejs.uart.tx. Требует разрешение на отображение поверх других приложений для работы в фоне.</string>
     <string name="pref_title_notification_cache_while_disconnected">Кэшировать когда вне радиуса</string>
@@ -1830,7 +1830,7 @@
     <string name="pref_workout_detection_time">Минуты активности перед обнаружением</string>
     <string name="pref_workout_detection_time_summary">Количество минут, в течение которых тренировка должна продолжаться, прежде чем она будет обнаружена</string>
     <string name="pref_contacts_summary">Настроить контакты на часах</string>
-    <string name="contact_delete_confirm_description">Вы точно хотите удалить контакт «%1$s»?</string>
+    <string name="contact_delete_confirm_description">Вы точно хотите удалить контакт %1$s?</string>
     <string name="title_activity_contact_details">Контактная информация</string>
     <string name="fwapp_install_device_not_supported">Файл не может быть установлен, устройство не поддерживается.</string>
     <string name="activity_error_share_failed">Не удалось поделиться файлом.</string>
@@ -2186,7 +2186,7 @@
     <string name="changelog_show_full">Дальше…</string>
     <string name="sony_button_mode_help_summary">Описание режимов каждой кнопки</string>
     <string name="pref_header_sony_equalizer_preset_custom_2">Своя предустановка 2</string>
-    <string name="permission_request">%1$s позволяет отправлять сообщения и другую информацию с Android на Ваше устройство. Для этого ему необходимы разрешения на доступ к этой информации. Без них ничего нормально работать не будет. \n \nВам будут выведены несколько диалогов с запросами на эти разрешения. \n \nНажмите «%2$s», чтобы продолжить.</string>
+    <string name="permission_request">%1$s позволяет отправлять сообщения и другую информацию с Android на ваше устройство. Для этого ему необходимы разрешения на доступ к этой информации. Без них ничего нормально работать не будет. \n \nВам будут выведены несколько диалогов с запросами на эти разрешения. \n \nНажмите %2$s, чтобы продолжить.</string>
     <string name="pref_device_action_broadcast">Отправить трансляцию</string>
     <string name="prefs_ambient_sound_during_call_summary">Отчётливо слышать свой голос во время звонков</string>
     <string name="device_experimental">ЭКСПЕРИМЕНТАЛЬНО</string>
@@ -2327,7 +2327,7 @@
     <string name="zepp_os_watchface_the_ultima">Ультима</string>
     <string name="zepp_os_watchface_city_of_speed">Город Скорости</string>
     <string name="menuitem_headphone">Наушник</string>
-    <string name="femometer_measurement_mode_normal">Нормальный (60-90 сек.)</string>
+    <string name="femometer_measurement_mode_normal">Нормальный (60–90 сек.)</string>
     <string name="zepp_os_watchface_free_combination">Свободная комбинация</string>
     <string name="menuitem_body_composition">Состав тела</string>
     <string name="menuitem_zepp_pay">Zepp Pay</string>
@@ -3002,7 +3002,7 @@
     <string name="first_start_permissions_title">Разрешения</string>
     <string name="first_start_overview_title">Обзор</string>
     <string name="mijia_lywsd_comfort_upper">Верхняя граница</string>
-    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="pref_music_management_title">Управление музыкой</string>
     <string name="pref_music_management_summary">Управление сохранённой музыкой</string>
     <string name="music_delete_confirm_description">Вы точно хотите удалить «%1$s»?</string>
@@ -3105,7 +3105,7 @@
     <string name="activity_type_orienteering">Ориентирование</string>
     <string name="bpm_value_unit">%1$d уд./мин</string>
     <string name="steps_distance_unit">%1$,.2f км</string>
-    <string name="hrv_status_baseline">%1$d-%2$d мс</string>
+    <string name="hrv_status_baseline">%1$d – %2$d мс</string>
     <string name="hrv_status_baseline_label">Базовая линия</string>
     <string name="activity_type_indoor_push_walk_speed">Отжимание в помещении - скорость ходьбы</string>
     <string name="activity_type_breaking">Взлом</string>
@@ -3461,8 +3461,8 @@
     <string name="prefs_active_noise_cancelling_indoor">В помещении</string>
     <string name="pref_garmin_fake_oauth_summary">Исправляет некоторые функции, такие как отображение погоды и получение обновлений AGPS без подключения к официальному приложению каждые 90 дней.</string>
     <string name="activity_type_atv">Мотовездеход</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="activity_prefs_goal_standing_hours">Ежедневная цель: часы стояния</string>
     <string name="unit_revolutions_per_minute">об/мин</string>
     <string name="reset">Перезагрузить</string>
@@ -3493,7 +3493,7 @@
     <string name="music_upload_failed">Не удалось загрузить музыку</string>
     <string name="music_upload_complete">Музыка успешно загружена</string>
     <string name="prefs_active_noise_cancelling_level_normal">Обычный</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="pref_title_equalizer_natural">Естественный</string>
     <string name="prefs_active_noise_cancelling_level_comfort">Комфортный</string>
     <string name="prefs_active_noise_cancelling_level_ultra">Ультра</string>
@@ -3616,7 +3616,7 @@
     <string name="interval_3_hour">каждые 3 часа</string>
     <string name="interval_4_hour">каждые 4 часа</string>
     <string name="interval_6_hour">каждые 6 часов</string>
-    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Отключить предупреждения о неактивности во время обеденного перерыва (12:00 - 14:00)</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Отключить предупреждения о неактивности во время обеденного перерыва (12:00 – 14:00)</string>
     <string name="silent_mode">Беззвучный режим</string>
     <string name="discovery_bonding_error">Ошибка связывания: %1$s</string>
     <string name="activity_type_free_diving">Фридайвинг</string>
@@ -3900,4 +3900,7 @@
     <string name="diving_bottom_time">Нижнее время</string>
     <string name="exercise_category_bench_press">Жим лёжа</string>
     <string name="pref_title_block_screenshot">Блокировать скриншоты</string>
+    <string name="title_activity_gps_track_installer">Установщик GPS-трекера</string>
+    <string name="sound_and_vibration">Звук + Вибрация</string>
+    <string name="datetime_in_the_past">%1$s (%2$s тому)</string>
 </resources>
