@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <FrameLayout
-        android:id="@+id/summary_dashboard_layout_content"
+        android:id="@+id/summary_dashboard_layout_outer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -21,6 +21,7 @@
             android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/summary_dashboard_layout_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -483,7 +484,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/summary_dashboard_layout_content"
+        android:layout_below="@id/summary_dashboard_layout_outer"
         android:background="?attr/row_separator" />
 
 </RelativeLayout>
