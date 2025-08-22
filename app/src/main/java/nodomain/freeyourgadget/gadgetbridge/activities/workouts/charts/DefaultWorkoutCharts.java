@@ -24,6 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslati
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 
 public class DefaultWorkoutCharts {
@@ -43,7 +44,7 @@ public class DefaultWorkoutCharts {
             if (point.getHeartRate() > 0) {
                 heartRateDataPoints.add(new Entry(tsShorten, point.getHeartRate()));
             }
-            if (point.getLocation() != null) {
+            if (point.getLocation() != null && point.getLocation().getAltitude() != GPSCoordinate.UNKNOWN_ALTITUDE) {
                 elevationDataPoints.add(new Entry(tsShorten, (float) point.getLocation().getAltitude()));
             }
             speedDataPoints.add(new Entry(tsShorten, point.getSpeed()));
