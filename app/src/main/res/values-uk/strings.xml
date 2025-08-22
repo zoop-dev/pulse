@@ -412,8 +412,6 @@
     <string name="zetime_title_settings">Налаштування ZeTime</string>
     <string name="zetime_title_heartrate">Налаштування вимірювання пульсу</string>
     <string name="zetime_title_screentime">Тривалість роботи екрана в секундах</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Максимальний пульс</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Мінімальний пульс</string>
     <string name="zetime_analog_mode">Аналоговий режим</string>
     <string name="zetime_analog_mode_hands">Лише стрілки</string>
     <string name="zetime_date_format">Формат дати</string>
@@ -488,8 +486,6 @@
     <string name="norwegian_bokmal">Норвезька (Букмол)</string>
     <string name="mi3_prefs_night_mode">Нічний режим</string>
     <string name="activity_prefs_charts">Налаштування діаграми</string>
-    <string name="activity_prefs_chart_max_heart_rate">Найвищий пульс</string>
-    <string name="activity_prefs_chart_min_heart_rate">Найнижчий пульс</string>
     <string name="notif_battery_low">Акумулятор %1$s розряджений</string>
     <string name="notif_battery_low_extended">Акумулятор %1$s розряджений: %2$s</string>
     <string name="pref_summary_rtl">Увімкніть це, якщо ваш пристрій не може показувати мови з написанням справа наліво</string>
@@ -2446,8 +2442,6 @@
     <string name="sleep_colored_stats_deep">Глибокий</string>
     <string name="sleep_colored_stats_light">Легкий</string>
     <string name="stats_empty_value">–</string>
-    <string name="stats_lowest_hr">Найнижчий пульс</string>
-    <string name="stats_highest_hr">Найвищий пульс</string>
     <string name="pref_dashboard_all_devices_title">Усі пристрої</string>
     <string name="pref_title_notification_times_enabled">Час сповіщень</string>
     <string name="garmin_agps_local_file">Локальний файл</string>
@@ -2571,7 +2565,6 @@
     <string name="active_calories_short">Активні</string>
     <string name="sleep_avg">Сон (середнє)</string>
     <string name="highest">Найвищий</string>
-    <string name="stats_average_hr">Середній HR</string>
     <string name="hr_resting">Відпочинок</string>
     <string name="lowest">Найнижчий</string>
     <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>

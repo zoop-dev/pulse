@@ -1184,8 +1184,6 @@
     <string name="prefs_events_forwarding_broadcast_title">رسالة البث</string>
     <string name="prefs_ambient_mode">الوضع المحيطي</string>
     <string name="menuitem_menu">القائمة</string>
-    <string name="activity_prefs_alarm_min_heart_rate">الحد الأدنى لمعدل نبضات القلب</string>
-    <string name="activity_prefs_alarm_max_heart_rate">أقصى معدل لنبضات القلب</string>
     <string name="pref_header_vibration_settings">إعدادات الاهتزاز</string>
     <string name="pref_screen_notification_profile_generic">الإشعار العام</string>
     <string name="reminder_delete_confirm_title">حذف التذكير</string>
@@ -2007,8 +2005,6 @@
     <string name="title_activity_reminder_details">تفاصيل التذكير</string>
     <string name="alarm_smart_wakeup">الاستيقاظ الذكي</string>
     <string name="prefs_heartrate_alert_threshold">حد تنبيه معدل نبضات القلب</string>
-    <string name="activity_prefs_chart_max_heart_rate">أقصى معدل لنبضات القلب</string>
-    <string name="activity_prefs_chart_min_heart_rate">الحد الأدنى لمعدل نبضات القلب</string>
     <string name="dbmanagementactivity_error_exporting_db">خطأ في تصدير قاعدة البيانات: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">خطأ في استيراد التفضيل: %1$s</string>
     <string name="menuitem_brightness">السطوع</string>
@@ -2866,8 +2862,6 @@
     <string name="sleep_colored_stats_light">الخفيف</string>
     <string name="sleep_colored_stats_rem">REM</string>
     <string name="sleep_colored_stats_light_avg">متوسط الخفيف</string>
-    <string name="stats_highest_hr">أعلى معدل لنبضات القلب</string>
-    <string name="stats_lowest_hr">أدنى معدل لنبضات القلب</string>
     <string name="hrv_status_day_avg">متوسط اليوم</string>
     <string name="hrv_status_day_avg_legend">المتوسط اليومي (مللي ثانية)</string>
     <string name="hrv_status_seven_days_avg">متوسط 7 أيام</string>

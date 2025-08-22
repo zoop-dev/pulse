@@ -549,8 +549,6 @@
     <string name="korean">Korejština</string>
     <string name="japanese">Japonština</string>
     <string name="activity_prefs_charts">Nastavení grafů</string>
-    <string name="activity_prefs_chart_max_heart_rate">Maximální tepová frekvence</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimální tepová frekvence</string>
     <string name="ok">Ok</string>
     <string name="mi3_night_mode_sunset">Při západu slunce</string>
     <string name="controlcenter_start_activity_tracks">Záznamy aktivit</string>
@@ -600,8 +598,6 @@
     <string name="zetime_title_heart_rate_alarm">Poplach měření tepu</string>
     <string name="zetime_title_heart_rate_alarm_summary">Hodinky spustí varování při překročení limitu tepové frekvence.</string>
     <string name="zetime_heart_rate_alarm_enable">Povolit poplach měření tepu</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Maximální tepová frekvence</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimální tepová frekvence</string>
     <string name="zetime_analog_mode">Analogový mód</string>
     <string name="zetime_analog_mode_hands">Pouze ručičky</string>
     <string name="zetime_analog_mode_handsandsteps">Ručičky a kroky</string>
@@ -2841,9 +2837,7 @@
     <string name="sleep_colored_stats_deep_avg">Prům. hlubokého</string>
     <string name="sleep_colored_stats_light_avg">Prům. lehkého</string>
     <string name="sleep_colored_stats_rem_avg">Prům. REM</string>
-    <string name="stats_highest_hr">Nejvyšší tep</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">Nejnižší tep</string>
     <string name="minutes_20">20 minut</string>
     <string name="hrv_status_balanced">Vyvážený</string>
     <string name="hrv_status_unbalanced">Nevyvážený</string>
@@ -3540,7 +3534,6 @@
     <string name="huawei_stress_calibrate_started">Kalibrace stresu spuštěna</string>
     <string name="huawei_stress_calibrate_error">Chyba kalibrace stresu</string>
     <string name="huawei_stress_calibrate_information">Pro optimální výsledky si před spuštěním měření odpočiňte a během měření zůstaňte v klidu. \n Zařízení utáhněte, obrazovka by měla být nahoře a senzor by se měl přímo dotýkat vaší kůže.</string>
-    <string name="stats_average_hr">Průměrný tep</string>
     <string name="banglejs_notification_missed_call_title">Zmeškaný hovor</string>
     <string name="open_source_licenses">Licence</string>
     <string name="dialog_close">Zavřít</string>

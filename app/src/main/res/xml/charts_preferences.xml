@@ -24,7 +24,7 @@
             android:inputType="number"
             android:key="chart_max_heart_rate"
             android:maxLength="3"
-            android:title="@string/activity_prefs_chart_max_heart_rate"
+            android:title="@string/maxHR"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -33,7 +33,7 @@
             android:inputType="number"
             android:key="chart_min_heart_rate"
             android:maxLength="3"
-            android:title="@string/activity_prefs_chart_min_heart_rate"
+            android:title="@string/minHR"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 

@@ -495,8 +495,6 @@
     <string name="zetime_analog_mode_handsandsteps">Aiguilles et Pas</string>
     <string name="zetime_analog_mode_hands">Aiguilles seulement</string>
     <string name="zetime_analog_mode">Mode analogique</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Fréquence cardiaque minimale</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Fréquence cardiaque maximale</string>
     <string name="zetime_heart_rate_alarm_enable">Activer l\'alarme de fréquence cardiaque</string>
     <string name="zetime_title_heart_rate_alarm_summary">La montre vous alertera quand votre fréquence cardiaque dépasse les limites.</string>
     <string name="zetime_title_heart_rate_alarm">Alarme Fréquence Cardiaque</string>
@@ -529,8 +527,6 @@
     <string name="pref_rtl_max_line_length">Longueur max. d\'une ligne en mode Droite-à-Gauche</string>
     <string name="pref_summary_rtl">Cocher ceci si votre appareil n\'est pas compatible avec les langues \"droite-à-gauche\"</string>
     <string name="pref_title_rtl">De droite à gauche</string>
-    <string name="activity_prefs_chart_min_heart_rate">Fréquence cardiaque minimum</string>
-    <string name="activity_prefs_chart_max_heart_rate">Fréquence cardiaque maximum</string>
     <string name="activity_prefs_charts">Paramètres des graphiques</string>
     <string name="pref_invalid_frequency_message">Veuillez introduire une fréquence entre 87.5 et 108.0</string>
     <string name="pref_invalid_frequency_title">Fréquence non-valide</string>

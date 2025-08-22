@@ -579,8 +579,6 @@
     <string name="notif_battery_low">Аккумулятор %1$s почти разряжен</string>
     <string name="notif_battery_low_extended">Аккумулятор %1$s почти разряжен: %2$s</string>
     <string name="activity_prefs_charts">Настройки статистики активности</string>
-    <string name="activity_prefs_chart_max_heart_rate">Максимальный пульс</string>
-    <string name="activity_prefs_chart_min_heart_rate">Минимальный пульс</string>
     <string name="pref_title_rtl">Справа налево</string>
     <string name="pref_summary_rtl">Включите, если устройство не отображает письмо справа налево</string>
     <string name="pref_rtl_max_line_length">Длина строки при вводе справа налево</string>
@@ -637,8 +635,6 @@
     <string name="zetime_title_heart_rate_alarm">Пульсовой сигнал</string>
     <string name="zetime_title_heart_rate_alarm_summary">Часы предупредят вас, когда частота пульса превысит допустимые значения.</string>
     <string name="zetime_heart_rate_alarm_enable">Включить пульсовой сигнал</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Максимальный пульс</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Минимальный пульс</string>
     <string name="zetime_analog_mode">Аналоговый режим</string>
     <string name="zetime_analog_mode_hands">Только руки</string>
     <string name="zetime_analog_mode_handsandsteps">Руки и шаги</string>
@@ -2862,7 +2858,6 @@
     <string name="activity_type_video_gaming">Видеоигры</string>
     <string name="activity_type_aerobics">Аэробика</string>
     <string name="activity_type_aerobic_combo">Аэробика комбо</string>
-    <string name="stats_lowest_hr">Минимальный пульс</string>
     <string name="activity_type_beach_volleyball">Пляжный волейбол</string>
     <string name="activity_type_indoor_track">Крытая Дорожка</string>
     <string name="activity_type_handcycling">Хэндбайк</string>
@@ -2891,7 +2886,6 @@
     <string name="find_my_phone_companion_warning">Для функции поиска телефона требуется сопряжение с компаньоном. Нажмите здесь для получения дополнительной информации.</string>
     <string name="abstract_chart_fragment_kind_awake_sleep">Пробуждения</string>
     <string name="sleep_colored_stats_rem">REM</string>
-    <string name="stats_highest_hr">Максимальный пульс</string>
     <string name="activity_type_tae_bo">Тай Бо</string>
     <string name="activity_type_gateball">Гейтбол</string>
     <string name="pref_header_sound">Звук</string>
@@ -3485,7 +3479,6 @@
     <string name="dialog_open_url">Открыть ссылку</string>
     <string name="map_upload_complete">Карта успешно загружена</string>
     <string name="map_upload_in_progress">Загрузка карты</string>
-    <string name="stats_average_hr">Средний пульс</string>
     <string name="pref_title_stable_connection">Стабильное соединение</string>
     <string name="zepp_os_install_map_instructions">После того, как на телефоне начнётся установка, нужно будет её подтвердить и на часах.</string>
     <string name="map_upload_failed">Ошибка загрузки карты</string>

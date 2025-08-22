@@ -801,8 +801,6 @@
     <string name="zetime_analog_mode_handsandsteps">Mãos e passos</string>
     <string name="zetime_analog_mode_hands">Apenas mãos</string>
     <string name="zetime_analog_mode">Modo analógico</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Frequência cardíaca mínima</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Frequência cardíaca máxima</string>
     <string name="zetime_heart_rate_alarm_enable">Ativar o alarme de frequência cardíaca</string>
     <string name="zetime_title_heart_rate_alarm_summary">O relógio vai avisar-lo quando sua frequência cardíaca exceder os limites.</string>
     <string name="zetime_title_heart_rate_alarm">Alarme de frequência cardíaca</string>
@@ -836,8 +834,6 @@
     <string name="pref_title_contextual_arabic">Árabe contextual</string>
     <string name="notif_battery_low_extended">%1$s com bateria baixa: %2$s</string>
     <string name="notif_battery_low">%1$s com bateria baixa</string>
-    <string name="activity_prefs_chart_min_heart_rate">Frequência cardíaca mínima</string>
-    <string name="activity_prefs_chart_max_heart_rate">Frequência cardíaca máxima</string>
     <string name="activity_prefs_charts">Configurações do gráfico</string>
     <string name="warning">Atenção!</string>
     <string name="share_log_warning">Lembre-se de ficheiros log do Gadgetbridge que podem conter muitas informações pessoais, incluindo, mas não se limitando a, dados de saúde, identificadores únicos (como o endereço MAC de um aparelho), preferências de música etc. Considere editar o ficheiro e remover essas informações antes de enviá-lo para um relatório público dos problemas.</string>

@@ -374,7 +374,6 @@
     <string name="prefs_equalizer">Taajuuskorjain</string>
     <string name="menuitem_status">Tila</string>
     <string name="prefs_left">Vasen</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimisyke</string>
     <string name="pref_title_charts_average">Näytä keskiarvot taulukoissa</string>
     <string name="charts_legend_heartrate">Syke</string>
     <string name="hr_widget_heart_rate">Syke</string>
@@ -410,7 +409,6 @@
     <string name="watch9_calibration_button">Kalibroi</string>
     <string name="menuitem_mutephone">Mykistä puhelin</string>
     <string name="appwidget_text">Zzz</string>
-    <string name="activity_prefs_chart_max_heart_rate">Maksimisyke</string>
     <string name="activity_prefs_weight_kg">Paino (kg)</string>
     <string name="activity_prefs_year_birth">Syntymävuosi</string>
     <string name="activity_prefs_charts">Taulukoiden asetukset</string>

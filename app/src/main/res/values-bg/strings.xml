@@ -12,8 +12,6 @@
     <string name="pref_header_charts">Настройки на Графиката</string>
     <string name="pref_title_charts_average">Показвай средни стойности</string>
     <string name="activity_prefs_charts">Настройки на графика</string>
-    <string name="activity_prefs_chart_max_heart_rate">Max сърдечен ритъм</string>
-    <string name="activity_prefs_chart_min_heart_rate">Min сърдечен ритъм</string>
     <string name="pref_title_charts_range">Обхват на Графиката</string>
     <string name="pref_charts_range_on">Обхвата е Месец</string>
     <string name="pref_charts_range_off">Обхвата е Седмица</string>
@@ -349,8 +347,6 @@
     <string name="zetime_title_heart_rate_alarm">Сърдечен ритъм аларма</string>
     <string name="zetime_title_heart_rate_alarm_summary">Часовникът ще ви предупреди, когато сърдечният ритъм премине границите.</string>
     <string name="zetime_heart_rate_alarm_enable">Включване на алармата за сърдечния ритъм</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Максимален сърдечен ритъм</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Минимален сърдечен ритъм</string>
     <string name="zetime_analog_mode">Аналогов режим</string>
     <string name="zetime_analog_mode_hands">Само ръце</string>
     <string name="zetime_analog_mode_handsandsteps">Ръце и крачки</string>

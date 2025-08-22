@@ -521,8 +521,6 @@
     <string name="korean">Coreano</string>
     <string name="japanese">Japonés</string>
     <string name="activity_prefs_charts">Configuraciones de gráfico</string>
-    <string name="activity_prefs_chart_max_heart_rate">Frecuencia cardíaca máxima</string>
-    <string name="activity_prefs_chart_min_heart_rate">Frecuencia cardíaca mínima</string>
     <string name="ok">Aceptar</string>
     <string name="on">Encendido</string>
     <string name="mi3_night_mode_sunset">Al atardecer</string>
@@ -575,8 +573,6 @@
     <string name="zetime_title_heart_rate_alarm">Alarma de frecuencia cardíaca</string>
     <string name="zetime_title_heart_rate_alarm_summary">El reloj le avisará cuando su frecuencia cardíaca exceda los límites.</string>
     <string name="zetime_heart_rate_alarm_enable">Activar alarma de frecuencia cardíaca</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Frecuencia cardíaca máxima</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Frecuencia cardíaca mínima</string>
     <string name="zetime_analog_mode">Modo analógico</string>
     <string name="zetime_analog_mode_hands">Solo manos</string>
     <string name="zetime_analog_mode_handsandsteps">Manos y pasos</string>
@@ -2684,7 +2680,6 @@
     <string name="find_my_phone_companion_warning">Para encontrar el teléfono es necesario emparejar el dispositivo. Pulse aquí para obtener más información.</string>
     <string name="sleep_colored_stats_rem">REM</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">Frec. cardíaca más baja</string>
     <string name="hrv_status_unbalanced">Desequilibrado</string>
     <string name="hrv_status_low">Bajo</string>
     <string name="hrv_status_poor">Pobre</string>
@@ -2695,7 +2690,6 @@
     <string name="hrv_status_baseline_label">Base</string>
     <string name="hrv_status">Estado de VFC</string>
     <string name="sleep_colored_stats_deep">Profundo</string>
-    <string name="stats_highest_hr">Frec. cardíaca más alta</string>
     <string name="hrv_status_day_avg">Promedio diario</string>
     <string name="sleep_colored_stats_light">Ligero</string>
     <string name="hrv_status_day_avg_legend">Promedio diario (ms)</string>
@@ -3345,7 +3339,6 @@
     <string name="range_percentage_float">%1$.1f %% - %2$.1f %%</string>
     <string name="maps_settings">Configuración de mapas</string>
     <string name="open_source_licenses">Licencias</string>
-    <string name="stats_average_hr">Frec. cardíaca media</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">tormenta eléctrica con lluvia fuerte</string>
     <string name="weather_condition_thunderstorm_with_drizzle">tormenta eléctrica con llovizna</string>
     <string name="weather_condition_light_snow">nieve ligera</string>

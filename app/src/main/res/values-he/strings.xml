@@ -566,8 +566,6 @@
     <string name="notif_battery_low">הסוללה של %1$s חלשה</string>
     <string name="notif_battery_low_extended">הסוללה של %1$s חלשה: %2$s</string>
     <string name="activity_prefs_charts">הגדרות תרשימים</string>
-    <string name="activity_prefs_chart_max_heart_rate">דופק מרבי</string>
-    <string name="activity_prefs_chart_min_heart_rate">דופק מזערי</string>
     <string name="pref_title_rtl">מימין לשמאל</string>
     <string name="pref_summary_rtl">יש להפעיל אפשרות זו אם ההתקן לא יכול להציג שפות מימין לשמאל</string>
     <string name="pref_rtl_max_line_length">גודל שורה מרבי מימין לשמאל</string>
@@ -605,8 +603,6 @@
     <string name="zetime_title_heart_rate_alarm">התראת דופק</string>
     <string name="zetime_title_heart_rate_alarm_summary">השעון יזהיר אותך כשהדופק חורג מהגבולות.</string>
     <string name="zetime_heart_rate_alarm_enable">הפעלת התראת דופק</string>
-    <string name="activity_prefs_alarm_max_heart_rate">דופק מרבי</string>
-    <string name="activity_prefs_alarm_min_heart_rate">דופק מזערי</string>
     <string name="zetime_analog_mode">מצב מחוגים</string>
     <string name="zetime_analog_mode_hands">ידיים בלבד</string>
     <string name="zetime_analog_mode_handsandsteps">ידיים וצעדים</string>
@@ -2849,7 +2845,6 @@
     <string name="active_calories">קלוריות פעילות</string>
     <string name="respiratoryrate">קצב נשימה</string>
     <string name="active_calories_short">פעיל</string>
-    <string name="stats_highest_hr">הדופק הגבוה ביותר</string>
     <string name="activity_prefs_goal_active_calories_burnt">יעד יומי: קלוריות פעילות שנשרפו</string>
     <string name="soundcore_equalizer_value">ערך</string>
     <string name="music_upload_info">הפעולה הזאת תעלה את קובץ המוזיקה הבא:\n\n%1$s\nשם השיר: %2$s\nאלבום: %3$s\n</string>
@@ -2860,7 +2855,6 @@
     <string name="miscale_weight_unit_metric">מטרי (ק״ג)</string>
     <string name="sleep_score_value">ציון: %1d</string>
     <string name="sleep_score">ציון שינה</string>
-    <string name="stats_lowest_hr">הדופק הנמוך ביותר</string>
     <string name="miscale_weight_unit_title">יחידת משקל</string>
     <string name="workout_set_reps">חזרות</string>
     <string name="soundcore_equalizer_frequency">תדירות</string>

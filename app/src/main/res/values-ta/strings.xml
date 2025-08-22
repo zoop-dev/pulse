@@ -358,7 +358,6 @@
     <string name="minutes_90">90 நிமிடங்கள்</string>
     <string name="minutes_210">210 நிமிடங்கள்</string>
     <string name="minutes_240">240 நிமிடங்கள்</string>
-    <string name="stats_highest_hr">மிக உயர்ந்த மனிதவள</string>
     <string name="transition">மாற்றம்</string>
     <string name="mi2_prefs_button_action">பொத்தானை இயக்கவும்</string>
     <string name="italian">இத்தாலிய</string>
@@ -624,7 +623,6 @@
     <string name="abstract_chart_fragment_kind_activity">செய்கைப்பாடு</string>
     <string name="sleep_colored_stats_deep_avg">ஆழமான சராசரி</string>
     <string name="sleep_colored_stats_light_avg">லைட் ஏ.வி.சி</string>
-    <string name="stats_lowest_hr">குறைந்த மனிதவள</string>
     <string name="device_not_connected">இணைக்கப்படவில்லை.</string>
     <string name="pref_sleep_breathing_quality_monitoring">தூக்கம் சுவாச தர கண்காணிப்பு</string>
     <string name="mi2_prefs_button_press_count">பொத்தான் எண்ணிக்கையை அழுத்தவும்</string>
@@ -1852,8 +1850,6 @@
     <string name="french_ca">பிரஞ்சு (கனடா)</string>
     <string name="activity_prefs_about_you">உங்களைப் பற்றி</string>
     <string name="activity_prefs_height_inches">அங்குல உயரம்</string>
-    <string name="activity_prefs_chart_max_heart_rate">அதிகபட்ச இதய துடிப்பு</string>
-    <string name="activity_prefs_chart_min_heart_rate">குறைந்த நாடி துடிப்பு</string>
     <string name="pref_charts_range_on">விளக்கப்படங்கள் வரம்பு ஒரு மாதத்திற்கு அமைக்கப்பட்டுள்ளது</string>
     <string name="weekstepschart_steps_a_month">மாதத்திற்கு படிகள்</string>
     <string name="pref_title_pebble_health_store_raw">மூல பதிவை தரவுத்தளத்தில் சேமிக்கவும்</string>
@@ -1985,8 +1981,6 @@
     <string name="zetime_title_settings">சீ்டைம் அமைப்புகள்</string>
     <string name="zetime_title_heartrate">இதய துடிப்பு அமைப்புகள்</string>
     <string name="zetime_title_heart_rate_alarm">இதய துடிப்பு அலாரம்</string>
-    <string name="activity_prefs_alarm_max_heart_rate">அதிகபட்ச இதய துடிப்பு</string>
-    <string name="activity_prefs_alarm_min_heart_rate">குறைந்த நாடி துடிப்பு</string>
     <string name="zetime_activity_tracking_summary">செயல்பாட்டு கண்காணிப்பை மாற்றுவது, உங்கள் படிகளை எண்ணும்.</string>
     <string name="zetime_handmove_display_summary">காட்சியை செயல்படுத்த அல்லது செயலிழக்க உங்கள் மணிக்கட்டை சுழற்றுங்கள்.</string>
     <string name="zetime_calories_type_all">செயலில் மற்றும் செயலற்ற எரிந்த கலோரிகள்</string>
@@ -3242,7 +3236,6 @@
     <string name="music_upload_failed">இசை பதிவேற்றம் தோல்வியடைந்தது</string>
     <string name="music_upload_complete">இசை பதிவேற்றம் முடிந்தது</string>
     <string name="music_upload_in_progress">இசை பதிவேற்றும்</string>
-    <string name="stats_average_hr">சராசரி மனிதவள</string>
     <string name="silent_mode">அமைதியான பயன்முறை</string>
     <string name="serbian_latin">செர்பிய (லத்தீன்)</string>
     <string name="catalan">கற்றலான்</string>

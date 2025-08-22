@@ -552,8 +552,6 @@
     <string name="polish">Polacco</string>
     <string name="korean">Coreano</string>
     <string name="japanese">Giapponese</string>
-    <string name="activity_prefs_chart_max_heart_rate">Frequenza cardiaca massima</string>
-    <string name="activity_prefs_chart_min_heart_rate">Frequenza cardiaca minima</string>
     <string name="ok">OK</string>
     <string name="mi3_night_mode_sunset">Al tramonto</string>
     <string name="menuitem_notifications">Notifiche</string>
@@ -606,8 +604,6 @@
     <string name="zetime_title_heartrate">Impostazioni Battito cardiaco</string>
     <string name="zetime_title_screentime">Durata schermo acceso in secondi</string>
     <string name="zetime_title_heart_rate_alarm_summary">L\'orologio ti avviserà quando la frequenza del tuo battito cardiaco supererà il limite.</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Frequenza cardiaca massima</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Frequenza cardiaca minima</string>
     <string name="zetime_handmove_display_summary">Ruota il polso per attivare o disattivare il display.</string>
     <string name="zetime_date_format">Formato data</string>
     <string name="zetime_date_format_1">AA/MM/GG</string>
@@ -2702,7 +2698,6 @@
     <string name="activity_detail_share_json_details">Condividi Dettagli JSON</string>
     <string name="moondrop_touch_action_play_pause">Riproduci/Pausa</string>
     <string name="moondrop_touch_action_call_pick_hang">Rispondi/Rifiuta Chiamata</string>
-    <string name="stats_highest_hr">HR massimo</string>
     <string name="activity_type_meditation">Meditazione</string>
     <string name="activity_type_wakesurfing">Wakesurf</string>
     <string name="activity_type_breaking">Breaking</string>
@@ -2873,7 +2868,6 @@
     <string name="activity_type_futsal">Futsal</string>
     <string name="weight_kg">%1$.2f kg</string>
     <string name="abstract_chart_fragment_kind_awake_sleep">Sveglio</string>
-    <string name="stats_lowest_hr">HR minimo</string>
     <string name="pref_header_sound">Audio</string>
     <string name="activity_type_sepak_takraw">Sepak Takraw</string>
     <string name="activity_type_snowmobiling">Motoslitta</string>
@@ -3388,7 +3382,6 @@
     <string name="zepp_os_install_map_instructions">Dopo l\'inizio dell\'installazione sul telefono, è necessario accettare anche sull\'orologio.</string>
     <string name="catalan">Catalano</string>
     <string name="activity_prefs_goal_standing_hours">Obiettivo giornaliero: ore in piedi</string>
-    <string name="stats_average_hr">FC media</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="pairing_even_realities_g1_working">Abbinamento con %1s...</string>
     <string name="weather_condition_hail">grandine</string>

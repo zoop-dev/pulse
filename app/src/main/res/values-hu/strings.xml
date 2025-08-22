@@ -664,9 +664,7 @@
     <string name="changelog_title">Újdonságok</string>
     <string name="about_activity_title_banglejs_nightly">A Bangle.js Gadgetbridge (korai hozzáférésű kiadás) névjegye</string>
     <string name="sony_automatic_power_off_3_hour">3 óra</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimális pulzusszám</string>
     <string name="yesterdays_activity">Tegnapi tevékenység</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Maximális pulzusszám</string>
     <string name="zetime_activity_tracking">Tevékenységmérés</string>
     <string name="sony_equalizer_band_16000">16k</string>
     <string name="activity_filter_to_placeholder">ma</string>
@@ -719,7 +717,6 @@
     <string name="descentMeters">Lejtő</string>
     <string name="watch9_time_hours">Óra:</string>
     <string name="hebrew">Héber</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimális pulzusszám</string>
     <string name="widget_5_minutes">5 perc</string>
     <string name="maxAltitude">Maximum</string>
     <string name="minAltitude">Minimum</string>
@@ -814,7 +811,6 @@
     <string name="activity_type_swimming">Úszás</string>
     <string name="meters_second">m/s</string>
     <string name="activity_db_management_autoexport_label">Automatikus exportálás</string>
-    <string name="activity_prefs_chart_max_heart_rate">Maximális pulzusszám</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="bpm">bpm</string>
     <string name="activeSeconds">Aktív</string>
@@ -2196,8 +2192,6 @@
     <string name="minutes_2">2 perc</string>
     <string name="minutes_3">3 perc</string>
     <string name="minutes_150">150 perc</string>
-    <string name="stats_lowest_hr">Legalacsonyabb pulzusszám</string>
-    <string name="stats_highest_hr">Legmagasabb pulzusszám</string>
     <string name="activity_type_auto_racing">Autóversenyzés</string>
     <string name="pref_summary_debug">Hibakeresési kérelem küldése egy Huawei eszköz felé</string>
     <string name="pref_title_sync_birthdays">Születésnapok szinkronizálása</string>
@@ -3381,7 +3375,6 @@
     <string name="huawei_stress_test_enable">Automatikus terhelési teszt</string>
     <string name="huawei_stress_test_enable_summary">Automatikus terhelési teszt engedélyezése vagy letiltása</string>
     <string name="huawei_stress_calibrate_summary">Automatikus terhelési teszt kalibrálása</string>
-    <string name="stats_average_hr">Átlagos pulzusszám</string>
     <string name="open_source_licenses">Licencek</string>
     <string name="dialog_close">Bezárás</string>
     <string name="dialog_open_url">Webcím megnyitása</string>

@@ -563,8 +563,6 @@ Temps de sommeil préféré en heures</string>
     <string name="korean">Coréen</string>
     <string name="japanese">Japonais</string>
     <string name="activity_prefs_charts">Paramètres des graphiques</string>
-    <string name="activity_prefs_chart_max_heart_rate">Fréquence cardiaque maximum</string>
-    <string name="activity_prefs_chart_min_heart_rate">Fréquence cardiaque minimum</string>
     <string name="ok">Ok</string>
     <string name="mi3_night_mode_sunset">Au coucher du soleil</string>
     <string name="watch9_time_minutes">Minutes :</string>
@@ -611,8 +609,6 @@ Temps de sommeil préféré en heures</string>
     <string name="zetime_title_heart_rate_alarm">Alarme Fréquence Cardiaque</string>
     <string name="zetime_title_heart_rate_alarm_summary">La montre vous alertera quand votre fréquence cardiaque dépasse les limites.</string>
     <string name="zetime_heart_rate_alarm_enable">Activer l\'alarme de fréquence cardiaque</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Fréquence cardiaque maximale</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Fréquence cardiaque minimale</string>
     <string name="zetime_analog_mode">Mode analogique</string>
     <string name="zetime_analog_mode_hands">Aiguilles seulement</string>
     <string name="zetime_analog_mode_handsandsteps">Aiguilles et Pas</string>
@@ -2813,8 +2809,6 @@ Temps de sommeil préféré en heures</string>
     <string name="sleep_colored_stats_light_avg">Léger moy</string>
     <string name="sleep_colored_stats_rem_avg">REM moy</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">FC la plus basse</string>
-    <string name="stats_highest_hr">FC la plus haute</string>
     <string name="sleep_colored_stats_light">Léger</string>
     <string name="sleep_colored_stats_deep_avg">Profond moy</string>
     <string name="hrv_status">Statut VFC</string>
@@ -3520,7 +3514,6 @@ Temps de sommeil préféré en heures</string>
     <string name="music_upload_failed">Échec envoi musique</string>
     <string name="music_upload_complete">Envoi musique réussi</string>
     <string name="music_upload_in_progress">Envoi de musique</string>
-    <string name="stats_average_hr">HR moyen</string>
     <string name="silent_mode">Mode silence</string>
     <string name="earfun_low_latency_mode">Mode latence faible</string>
     <string name="earfun_low_latency_mode_hint">Le mode à latence faible réduit le décalage audio en utilisant un tampon plus petit, bien que cela puisse parfois entraîner une connexion moins stable.</string>

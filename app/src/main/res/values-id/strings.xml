@@ -682,7 +682,6 @@
     <string name="pref_title_charts_average">Tampilkan rata-rata dalam bagan</string>
     <string name="pref_title_charts_swipe">Aktifkan usapan kiri/kanan dalam bagan aktivitas</string>
     <string name="pref_title_charts_range">Jangka Bagan</string>
-    <string name="activity_prefs_chart_min_heart_rate">Detak jantung min</string>
     <string name="pref_chart_sleep_lines_limit">Berapa garis sesi tidur untuk ditampilkan sebelum menggulirnya</string>
     <string name="pref_summary_pebble_health_store_raw">Menyimpan data dengan adanya, meningkatkan penggunaan basis data untuk memperbolehkan interpretasi nanti.</string>
     <string name="Cancel">Batalkan</string>
@@ -762,7 +761,6 @@
     <string name="pref_title_screentime">Layar pada durasi</string>
     <string name="preferences_hplus_settings">Pengaturan HPlus/Makibes</string>
     <string name="pref_notifications_and_calls_enable_misscall">Beri tahu untuk panggilan tidak terjawab</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Detak jantung min</string>
     <string name="zetime_title_heart_rate_alarm_summary">Jam tangan akan memperingati Anda ketika detak jantung Anda melebihi batasan.</string>
     <string name="zetime_heart_rate_alarm_enable">Aktifkan alarm detak jantung</string>
     <string name="pref_title_auto_export_location">Ekspor lokasi</string>
@@ -1251,7 +1249,6 @@
     <string name="pref_write_logfiles_not_available">Pemulaian pencatatan berkas gagal, menulis berkas catatan saat ini tidak dimungkinkan. Mulai ulang aplikasi untuk mencoba memulai catatan berkas lagi.</string>
     <string name="interval_forty_five_minutes">setiap 45 menit</string>
     <string name="korean">Korea</string>
-    <string name="activity_prefs_chart_max_heart_rate">Detak jantung maks</string>
     <string name="pref_title_lower_button_function_long">Tombol Bawah panjang</string>
     <string name="ascentMeters">Naik</string>
     <string name="menuitem_workout_status">Status Olahraga</string>
@@ -1381,7 +1378,6 @@
     <string name="activity_type_light_sleep">Tidur ringan</string>
     <string name="devicetype_binary_sensor">Sensor biner</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Otomatis</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Detak jantung maks</string>
     <string name="dateformat_time">Waktu</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="descentMeters">Turun</string>

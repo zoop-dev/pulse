@@ -532,8 +532,6 @@
     <string name="korean">韩语</string>
     <string name="japanese">日语</string>
     <string name="activity_prefs_charts">图表设置</string>
-    <string name="activity_prefs_chart_max_heart_rate">最高心率</string>
-    <string name="activity_prefs_chart_min_heart_rate">最低心率</string>
     <string name="ok">好</string>
     <string name="on">开</string>
     <string name="mi3_night_mode_sunset">在日落时</string>
@@ -607,8 +605,6 @@
     <string name="zetime_title_heart_rate_alarm">心率警示</string>
     <string name="zetime_title_heart_rate_alarm_summary">心率超过限值时，手表将提醒您。</string>
     <string name="zetime_heart_rate_alarm_enable">启用心率警示</string>
-    <string name="activity_prefs_alarm_max_heart_rate">最高心率</string>
-    <string name="activity_prefs_alarm_min_heart_rate">最低心率</string>
     <string name="zetime_analog_mode">模拟模式</string>
     <string name="zetime_analog_mode_hands">仅指针</string>
     <string name="zetime_analog_mode_handsandsteps">指针和走动</string>
@@ -2844,8 +2840,6 @@
     <string name="sleep_colored_stats_light_avg">平均浅度</string>
     <string name="sleep_colored_stats_rem_avg">平均快速眼动睡眠</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">最低心率</string>
-    <string name="stats_highest_hr">最高心率</string>
     <string name="hrv_status_day_avg">日平均</string>
     <string name="hrv_status_seven_days_avg">7 天平均</string>
     <string name="hrv_status_seven_days_avg_status">状态</string>
@@ -3543,7 +3537,6 @@
     <string name="huawei_stress_calibrate_started">压力校准已开始</string>
     <string name="huawei_stress_test_enable_summary">启用或禁用自动压力测试</string>
     <string name="huawei_stress_calibrate_information">为了获得最佳效果，请在开始测试前休息一会儿，并在测试期间保持静止。\n将设备紧紧固定，使屏幕朝上并且传感器直接接触您的皮肤。</string>
-    <string name="stats_average_hr">平均心率</string>
     <string name="music_upload_failed">上传音乐失败</string>
     <string name="music_upload_complete">上传音乐完成</string>
     <string name="music_upload_in_progress">正在上传音乐</string>

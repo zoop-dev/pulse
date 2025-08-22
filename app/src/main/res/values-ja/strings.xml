@@ -563,8 +563,6 @@
     <string name="korean">朝鮮語</string>
     <string name="japanese">日本語</string>
     <string name="activity_prefs_charts">チャート設定</string>
-    <string name="activity_prefs_chart_max_heart_rate">最大心拍数</string>
-    <string name="activity_prefs_chart_min_heart_rate">最小心拍数</string>
     <string name="ok">OK</string>
     <string name="mi3_night_mode_sunset">日没時</string>
     <string name="menuitem_notifications">通知</string>
@@ -662,8 +660,6 @@
     <string name="zetime_prefs_inactivity_tu">火曜日</string>
     <string name="zetime_prefs_inactivity_mo">月曜日</string>
     <string name="zetime_analog_mode">アナログモード</string>
-    <string name="activity_prefs_alarm_min_heart_rate">最小心拍数</string>
-    <string name="activity_prefs_alarm_max_heart_rate">最大心拍数</string>
     <string name="zetime_heart_rate_alarm_enable">心拍数アラームを有効にする</string>
     <string name="zetime_title_heart_rate_alarm">心拍数アラーム</string>
     <string name="zetime_title_heartrate">心拍数の設定</string>

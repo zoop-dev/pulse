@@ -215,7 +215,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_lowest_hr"
+                    android:text="@string/minHR"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
@@ -234,7 +234,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_highest_hr"
+                    android:text="@string/maxHR"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
@@ -253,7 +253,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_average_hr"
+                    android:text="@string/averageHR"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout

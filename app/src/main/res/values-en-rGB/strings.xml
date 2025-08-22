@@ -197,8 +197,6 @@
     <string name="zetime_analog_mode_handsandsteps">Hands and steps</string>
     <string name="zetime_analog_mode_hands">Only hands</string>
     <string name="zetime_analog_mode">Analog mode</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Min heart rate</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Max heart rate</string>
     <string name="zetime_heart_rate_alarm_enable">Enable the heart rate alarm</string>
     <string name="zetime_title_heart_rate_alarm_summary">The watch will warn you when your heart rate exceeds the limits.</string>
     <string name="zetime_title_heart_rate_alarm">Heart rate alarm</string>
@@ -226,8 +224,6 @@
     <string name="pref_rtl_max_line_length">Right-To-Left Max Line Length</string>
     <string name="pref_summary_rtl">Enable this if your device can not show right-to-left languages</string>
     <string name="pref_title_rtl">Right-To-Left</string>
-    <string name="activity_prefs_chart_min_heart_rate">Min heart rate</string>
-    <string name="activity_prefs_chart_max_heart_rate">Max heart rate</string>
     <string name="activity_prefs_charts">Chart settings</string>
     <string name="pref_invalid_frequency_message">Please enter a frequency between 87.5 and 108.0</string>
     <string name="pref_invalid_frequency_title">Invalid frequency</string>

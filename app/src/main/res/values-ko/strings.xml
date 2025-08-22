@@ -530,8 +530,6 @@
     <string name="korean">한국어</string>
     <string name="japanese">일본어</string>
     <string name="activity_prefs_charts">차트 설정</string>
-    <string name="activity_prefs_chart_max_heart_rate">최대 심박수</string>
-    <string name="activity_prefs_chart_min_heart_rate">최소 심박수</string>
     <string name="ok">확인</string>
     <string name="on">켜기</string>
     <string name="mi3_night_mode_sunset">일몰 시</string>
@@ -886,8 +884,6 @@
     <string name="zetime_title_heart_rate_alarm">심박수 알람</string>
     <string name="zetime_title_heart_rate_alarm_summary">심박수가 한계를 초과하면 시계에서 경고합니다.</string>
     <string name="zetime_heart_rate_alarm_enable">심박수 알람 활성화</string>
-    <string name="activity_prefs_alarm_max_heart_rate">최대 심박수</string>
-    <string name="activity_prefs_alarm_min_heart_rate">최소 심박수</string>
     <string name="zetime_analog_mode">아날로그 모드</string>
     <string name="zetime_analog_mode_hands">시계 바늘만</string>
     <string name="zetime_analog_mode_handsandsteps">시계 바늘 및 걸음 수</string>
@@ -1274,9 +1270,6 @@
     <string name="stats_empty_value">-</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
-    <string name="stats_lowest_hr">최저 심박수</string>
-    <string name="stats_highest_hr">최고 심박수</string>
-    <string name="stats_average_hr">평균 심박수</string>
     <string name="transition">전환</string>
     <string name="charts_min_max_heartrate_popup">최저 심박수: %1$d\n최고 심박수: %2$d\n움직임 강도: %3$s</string>
     <string name="fwinstaller_file_not_compatible_to_device">선택한 파일이 기기와 호환되지 않습니다.</string>

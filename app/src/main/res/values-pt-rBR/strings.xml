@@ -576,8 +576,6 @@
     <string name="pref_invalid_frequency_title">Frequência inválida</string>
     <string name="pref_invalid_frequency_message">Insira uma frequência entre 87.5 e 108.0</string>
     <string name="activity_prefs_charts">Configurações do gráfico</string>
-    <string name="activity_prefs_chart_max_heart_rate">Frequência cardíaca máxima</string>
-    <string name="activity_prefs_chart_min_heart_rate">Frequência cardíaca mínima</string>
     <string name="notif_battery_low">%1$s com bateria baixa</string>
     <string name="notif_battery_low_extended">%1$s com bateria baixa: %2$s</string>
     <string name="pref_rtl_max_line_length">Tamanho máximo de linha RTL</string>
@@ -614,8 +612,6 @@
     <string name="zetime_title_heart_rate_alarm">Alarme de frequência cardíaca</string>
     <string name="zetime_title_heart_rate_alarm_summary">O relógio vai avisar você quando sua frequência cardíaca exceder os limites.</string>
     <string name="zetime_heart_rate_alarm_enable">Ativar o alarme de frequência cardíaca</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Frequência cardíaca máxima</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Frequência cardíaca mínima</string>
     <string name="zetime_analog_mode">Modo analógico</string>
     <string name="zetime_analog_mode_hands">Apenas mãos</string>
     <string name="zetime_analog_mode_handsandsteps">Mãos e passos</string>

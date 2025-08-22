@@ -360,7 +360,6 @@
     <string name="pref_theme_black_background">Utilizare fundal negru în Tema întunecată</string>
     <string name="pref_summary_notification_delay_calls">Întârziere înainte de a trimite notificări privind apelurile primite către dispozitiv, în secunde.</string>
     <string name="pref_title_canned_reply_suffix">Sufix comun</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Puls minim</string>
     <string name="pref_screen_notification_profile_calendar">Notificare calendar</string>
     <string name="reminder_time">Timp</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Accesează setările Bluetooth de pe telefon și asociază cu noul dispozitiv care apare în listă (nume similar cu ceasul actual, dar cu un sufix, de exemplu „Amazfit GTR 4 - AFC8”).</string>
@@ -630,7 +629,6 @@
     <string name="zetime_title_screentime">Durata afișării în secunde</string>
     <string name="zetime_title_heart_rate_alarm">Alarmă de puls</string>
     <string name="zetime_title_heart_rate_alarm_summary">Ceasul va avertiza când pulsul depășește limitele.</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Puls maxim</string>
     <string name="zetime_analog_mode_handsandsteps">Mâinile și pașii</string>
     <string name="zetime_prefs_inactivity_we">Miercuri</string>
     <string name="zetime_prefs_inactivity_th">Joi</string>
@@ -806,8 +804,6 @@
     <string name="sleep_colored_stats_deep_avg">Mediu profund</string>
     <string name="sleep_colored_stats_light_avg">Mediu ușor</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">Cel mai mic puls</string>
-    <string name="stats_highest_hr">Cel mai mare puls</string>
     <string name="femometer_measurement_mode_quick">Modul rapid (30s)</string>
     <string name="pref_workout_detection_title">Detectarea antrenamentului</string>
     <string name="prefs_charts_tabs">File de diagrame</string>

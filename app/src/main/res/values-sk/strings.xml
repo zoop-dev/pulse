@@ -680,9 +680,6 @@
     <string name="sleep_colored_stats_light">Ľahký</string>
     <string name="charts_legend_heartrate_average">Priemerný tep</string>
     <string name="averageHR">Priemerný tep</string>
-    <string name="stats_lowest_hr">Najnižší tep</string>
-    <string name="stats_highest_hr">Najvyšší tep</string>
-    <string name="stats_average_hr">Priemerný tep</string>
     <string name="movement_intensity">Intenzita pohybu</string>
     <string name="charts_min_max_heartrate_popup">Najnižší tep: %1$d \nNajvyšší tep: %2$d \nIntenzita pohybu: %3$s</string>
     <string name="heartrate_bpm_40">40 úderov/min</string>

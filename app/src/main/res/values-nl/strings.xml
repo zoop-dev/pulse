@@ -563,8 +563,6 @@
     <string name="mi3_prefs_night_mode">Nacht modus</string>
     <string name="mi3_prefs_night_mode_summary">Verlaag \'s nachts automatisch de scherm helderheid</string>
     <string name="activity_prefs_charts">Grafiekinstellingen</string>
-    <string name="activity_prefs_chart_max_heart_rate">Maximum hartslag</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimum hartslag</string>
     <string name="ok">OK</string>
     <string name="mi3_night_mode_sunset">Bij zonsondergang</string>
     <string name="menuitem_music">Muziek</string>
@@ -609,8 +607,6 @@
     <string name="zetime_title_heart_rate_alarm">Hartslag alarm</string>
     <string name="zetime_title_heart_rate_alarm_summary">Het horloge waarschuwt je zodra je hartslag de grenswaarden overschrijdt.</string>
     <string name="zetime_heart_rate_alarm_enable">Hartslagalarm inschakelen</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Maximale hartslag</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimale hartslag</string>
     <string name="zetime_analog_mode">Analoge modus</string>
     <string name="zetime_analog_mode_hands">Alleen wijzers</string>
     <string name="zetime_analog_mode_handsandsteps">Wijzers en streepjes</string>
@@ -2846,7 +2842,6 @@
     <string name="sleep_colored_stats_rem">REM</string>
     <string name="sleep_colored_stats_deep_avg">Diep gemiddeld</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">Laagste HR</string>
     <string name="hrv_status_day_avg">Daggemiddelde</string>
     <string name="hrv_status_day_avg_legend">Daggemiddelde (ms)</string>
     <string name="hrv_status_balanced">Gebalanceerd</string>
@@ -2859,7 +2854,6 @@
     <string name="sleep_colored_stats_light_avg">Licht gemiddeld</string>
     <string name="sleep_colored_stats_rem_avg">REM gemiddeld</string>
     <string name="find_my_phone_companion_warning">Companion-koppeling is vereist voor de telefoon-vinden-functionaliteit. Klik hier voor meer informatie.</string>
-    <string name="stats_highest_hr">Hoogste HR</string>
     <string name="hrv_status">HRV-status</string>
     <string name="hrv_status_low">Laag</string>
     <string name="hrv_status_poor">Slecht</string>
@@ -3572,7 +3566,6 @@
     <string name="dialog_close">Sluiten</string>
     <string name="dialog_open_url">Open URL</string>
     <string name="audio_recordings">Audio-opnamen</string>
-    <string name="stats_average_hr">Gemiddelde HR</string>
     <string name="aqi_level_very_unhealthy">zeer ongezond</string>
     <string name="aqi_level_dangerous">gevaarlijk</string>
     <string name="maps_not_found">Geen kaarten gevonden - selecteer een kaarten-directory in de instellingen</string>

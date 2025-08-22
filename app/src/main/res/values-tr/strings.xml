@@ -42,11 +42,7 @@
     <string name="activity_error_no_app_for_gpx">Etkinlik izlemesini görüntülemek için GPX dosyalarını işleyebilen bir uygulama kurun.</string>
     <string name="activity_prefs_about_you">Hakkınızda</string>
     <string name="activity_prefs_activetime_minutes">Günlük hedef: dakika cinsinden etkin zaman</string>
-    <string name="activity_prefs_alarm_max_heart_rate">En yüksek kalp ritmi</string>
-    <string name="activity_prefs_alarm_min_heart_rate">En düşük kalp ritmi</string>
     <string name="activity_prefs_calories_burnt">Günlük hedef: harcanan kalori</string>
-    <string name="activity_prefs_chart_max_heart_rate">En yüksek kalp ritmi</string>
-    <string name="activity_prefs_chart_min_heart_rate">En düşük kalp ritmi</string>
     <string name="activity_prefs_charts">Çizelge ayarları</string>
     <string name="activity_prefs_distance_meters">Günlük hedef: metre cinsinden mesafe</string>
     <string name="activity_prefs_gender">Cinsiyet</string>
@@ -2862,8 +2858,6 @@
     <string name="sleep_colored_stats_light_avg">Hafif AVG</string>
     <string name="sleep_colored_stats_rem_avg">REM AVG</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">En düşük kalp ritmi</string>
-    <string name="stats_highest_hr">En yüksek kalp ritmi</string>
     <string name="sleep_colored_stats_deep_avg">Derin AVG</string>
     <string name="sleep_colored_stats_light">Hafif</string>
     <string name="hrv_status">Kalp Ritmi Değişkenliği Durumu</string>

@@ -265,8 +265,6 @@
     <string name="pref_title_charts_swipe">啟用左/右滑動切換圖表</string>
     <string name="pref_title_charts_average">在圖表中顯示平均值</string>
     <string name="activity_prefs_charts">圖表設定</string>
-    <string name="activity_prefs_chart_max_heart_rate">最高心率</string>
-    <string name="activity_prefs_chart_min_heart_rate">最低心率</string>
     <string name="pref_title_charts_range">圖表範圍</string>
     <string name="pref_charts_range_on">圖表範圍設定為一個月</string>
     <string name="pref_charts_range_off">圖表範圍設定為一週</string>
@@ -368,7 +366,6 @@
     <string name="app_move_to_top">移到最上方</string>
     <string name="pref_title_notifications_repetitions">重複次數</string>
     <string name="pref_summary_expose_hr">允許其他應用程式在裝置已連線時存取即時心率資料</string>
-    <string name="activity_prefs_alarm_max_heart_rate">最高心率</string>
     <string name="zetime_prefs_inactivity_repetitions">重複次數</string>
     <string name="appinstaller_install">安裝</string>
     <string name="vibration_profile_alarm_clock">鬧鐘</string>
@@ -399,7 +396,6 @@
     <string name="pref_title_location_longitude">經度</string>
     <string name="pref_title_screentime">螢幕逾時</string>
     <string name="zetime_title_screentime">螢幕逾時（秒）</string>
-    <string name="activity_prefs_alarm_min_heart_rate">最低心率</string>
     <string name="test">測試</string>
     <string name="cannot_connect_bt_address_invalid_">無法連線。藍牙位址無效？</string>
     <string name="n_a">不適用</string>
@@ -1313,8 +1309,6 @@
     <string name="sleep_colored_stats_light_avg">淺睡平均</string>
     <string name="sleep_colored_stats_rem_avg">REM平均</string>
     <string name="sleep_colored_stats_awake_avg">醒來平均</string>
-    <string name="stats_lowest_hr">最低心率</string>
-    <string name="stats_highest_hr">最高人力資源</string>
     <string name="charts_min_max_heartrate_popup">最低心率: %1$d
 \n最高心率: %2$d
 \n運動強度: %3$s</string>

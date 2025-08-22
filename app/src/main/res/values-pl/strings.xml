@@ -452,8 +452,6 @@
     <string name="korean">Koreański</string>
     <string name="japanese">Japoński</string>
     <string name="activity_prefs_charts">Ustawienia wykresów</string>
-    <string name="activity_prefs_chart_max_heart_rate">Tętno maksymalne</string>
-    <string name="activity_prefs_chart_min_heart_rate">Tętno minimalne</string>
     <string name="authenticating">Uwierzytelnianie</string>
     <string name="authentication_required">Wymagane uwierzytelnienie</string>
     <string name="appwidget_text">Zzz</string>
@@ -583,8 +581,6 @@
     <string name="zetime_title_heart_rate_alarm">Alarm o poziomie tętna</string>
     <string name="zetime_title_heart_rate_alarm_summary">Zegarek cię poinformuje, kiedy twoje tętno przekroczy limit.</string>
     <string name="zetime_heart_rate_alarm_enable">Włącz alarm o nieprawidłowym poziomie tętna</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Maksymalny poziom tętna</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimalny poziom tętna</string>
     <string name="zetime_analog_mode">Tryb analogowy</string>
     <string name="zetime_analog_mode_hands">Tylko ręce</string>
     <string name="zetime_analog_mode_handsandsteps">Ręce i kroki</string>
@@ -2601,8 +2597,6 @@
     <string name="agps_status_error">Błąd</string>
     <string name="activity_type_luge">Saneczkarstwo</string>
     <string name="show_in_notification">Wyświetlaj w powiadomieniach</string>
-    <string name="stats_lowest_hr">Najniższe tętno</string>
-    <string name="stats_highest_hr">Najwyższe tętno</string>
     <string name="transition">Przejście</string>
     <string name="activity_type_tae_bo">Tae Bo</string>
     <string name="activity_type_beach_soccer">Piłka nożna plażowa</string>
@@ -3560,7 +3554,6 @@
     <string name="huawei_stress_calibrate_again">Skalibruj ponownie</string>
     <string name="huawei_stress_calibrate_adjust_score">Dostosuj wynik</string>
     <string name="huawei_stress_calibrate_information">Aby uzyskać optymalne wyniki, odpocznij chwilę przed rozpoczęciem testu i pozostań nieruchomo podczas testu.\nMocno zamocuj urządzenie, ekranem skierowanym do góry, a czujnikiem w bezpośrednim kontakcie ze skórą.</string>
-    <string name="stats_average_hr">Średnie tętno</string>
     <string name="earfun_audio_codec_hint"><b>LDAC</b> to kodek o wysokiej rozdzielczości zapewniający doskonałą jakość dźwięku.\n<b>aptX</b> zapewnia niskie opóźnienie i strumieniowanie dźwięku o wysokiej wierności.\n<b>aptX Adaptive</b> dynamicznie dostosowuje szybkość transmisji danych na podstawie zawartości i połączenia.\n<b>aptX Adaptive Lossless</b> zapewnia bezstratny dźwięk dla muzyki o wysokiej rozdzielczości.\n<b>Stabilne połączenie</b> minimalizuje zacinanie się lub przeskakiwanie dźwięku.</string>
     <string name="earfun_connect_two_devices_hint">Połącz się z dwoma urządzeniami Bluetooth jednocześnie. Aby uzyskać stabilny sygnał, unikaj jednoczesnego korzystania z funkcji Dual Device Connection i trybu LDAP.</string>
     <string name="prefs_active_noise_cancelling_level_comfort">Komfortowy</string>

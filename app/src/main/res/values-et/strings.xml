@@ -186,8 +186,6 @@
     <string name="zetime_title_heart_rate_alarm">Pulsihoiatus</string>
     <string name="zetime_title_heart_rate_alarm_summary">Kell annab märku, kui pulss ületab lubatud väärtusi.</string>
     <string name="zetime_heart_rate_alarm_enable">Luba südame pulsihoiatus</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Maksimaalne pulss</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimaalne pulss</string>
     <string name="zetime_analog_mode">Analoog režiim</string>
     <string name="zetime_analog_mode_hands">Ainult käed</string>
     <string name="zetime_analog_mode_handsandsteps">Käed ja sammud</string>
@@ -412,8 +410,6 @@
     <string name="minutes_30">30 minutit</string>
     <string name="mi3_prefs_night_mode">Öörežiim</string>
     <string name="activity_prefs_charts">Diagrammi seaded</string>
-    <string name="activity_prefs_chart_max_heart_rate">Maksimaalne pulss</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimaalne pulss</string>
     <string name="notif_battery_low">%1$s akutase madal</string>
     <string name="lack_of_sleep">Unepuudus: %1$s</string>
     <string name="overslept">Ülemagamine: %1$s</string>

@@ -230,8 +230,6 @@
     <string name="zetime_title_settings">ZeTime nustatymai</string>
     <string name="zetime_title_heartrate">Širdies ritmo nustatymai</string>
     <string name="zetime_heart_rate_alarm_enable">Leisti širdies ritmo aliarmą</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Maksimalus širdies ritmas</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimalus širdies ritmas</string>
     <string name="zetime_analog_mode_hands">Tik rankos</string>
     <string name="zetime_analog_mode_handsandsteps">Rankos ir žingsniai</string>
     <string name="zetime_activity_tracking">veiklos sekimas</string>

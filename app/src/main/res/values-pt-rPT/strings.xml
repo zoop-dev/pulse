@@ -422,8 +422,6 @@
     <string name="zetime_title_heart_rate_alarm">Alarme de frequência cardíaca</string>
     <string name="zetime_title_heart_rate_alarm_summary">O relógio vai avisar quando a sua frequência cardíaca exceder os limites.</string>
     <string name="zetime_heart_rate_alarm_enable">Ativar o alarme de frequência cardíaca</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Frequência cardíaca máxima</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Frequência cardíaca mínima</string>
     <string name="zetime_analog_mode">Modo analógico</string>
     <string name="zetime_analog_mode_hands">Apenas mãos</string>
     <string name="zetime_analog_mode_handsandsteps">Mãos e passos</string>
@@ -980,8 +978,6 @@
     <string name="pref_title_charts_swipe">Ativar deslizar para a esquerda/direita no gráfico de atividades</string>
     <string name="pref_title_charts_average">Mostrar médias nos gráficos</string>
     <string name="activity_prefs_charts">Configurações do gráfico</string>
-    <string name="activity_prefs_chart_max_heart_rate">Frequência cardíaca máxima</string>
-    <string name="activity_prefs_chart_min_heart_rate">Frequência cardíaca mínima</string>
     <string name="pref_title_charts_range">Intervalo de gráficos</string>
     <string name="pref_charts_range_on">O intervalo de gráficos está definido para um Mês</string>
     <string name="pref_charts_range_off">O intervalo de gráficos está definido para uma Semana</string>

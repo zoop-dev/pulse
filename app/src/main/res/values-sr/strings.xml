@@ -516,7 +516,6 @@
     <string name="world_clock_label">Ознака</string>
     <string name="title_activity_reminder_details">Појединости подсетника</string>
     <string name="zetime_analog_mode_hands">Само руке</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Највиши откуцаји срца</string>
     <string name="zetime_analog_mode">Аналогни рад</string>
     <string name="zetime_handmove_display">Покрети руку</string>
     <string name="zetime_prefs_inactivity_th">Четвртак</string>
@@ -537,7 +536,6 @@
     <string name="pref_gps_combination">Преплет ГПС-а</string>
     <string name="dual_band">Двострука веза</string>
     <string name="power_mode_saving">Уштеда напајања</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Најнижи откуцаји срца</string>
     <string name="zetime_prefs_inactivity_sa">Субота</string>
     <string name="pref_title_enable_outgoing_call">Подржи одлазне позиве</string>
     <string name="pref_workout_detection_categories_summary">Врсте вежбања за самораспознавање</string>
@@ -1042,7 +1040,6 @@
     <string name="spo2_perc_90">90%</string>
     <string name="prefs_always_on_display_summary">Увек задржавај заслон уређаја укљученим</string>
     <string name="activity_prefs_charts">Поставке таблице</string>
-    <string name="activity_prefs_chart_min_heart_rate">Најмањи број откуцаја срца</string>
     <string name="pref_title_charts_range">Опсег таблица</string>
     <string name="pref_title_chart_heartrate_color">Боја срчаних откуцаја</string>
     <string name="authenticating">Пријава</string>
@@ -1054,7 +1051,6 @@
     <string name="prefs_control_center_summary">Изаберите ставке за приказ у падајућем управљачком центру</string>
     <string name="lefun_prefs_hydration_reminder_interval_title">Међувреме одсетника за пијење течности (у минутима)</string>
     <string name="activity_prefs_discovery_pairing">Могућности откривања и упаривања</string>
-    <string name="activity_prefs_chart_max_heart_rate">Највиши број откуцаја срца</string>
     <string name="pref_chart_heartrate_color_orange">Поморанџаста</string>
     <string name="dbmanagementactivity_database_successfully_deleted">Подаци су избрисани.</string>
     <string name="dbmanagementactivity_db_deletion_failed">Нисам успео да избришем хранилиште података.</string>
@@ -2007,8 +2003,6 @@
     <string name="music_upload_failed">Нисам успео да отпремим музику</string>
     <string name="sleep_score">Извештај спавања</string>
     <string name="sleep_score_value">Извештај: %1d</string>
-    <string name="stats_average_hr">Просечни откуцаји</string>
-    <string name="stats_lowest_hr">Најнижи откуцаји</string>
     <string name="transition">Прелаз</string>
     <string name="body_energy_gained">Добијено</string>
     <string name="menuitem_heart_rate_push">Гурање срчаних откуцаја</string>
@@ -2063,7 +2057,6 @@
     <string name="map_upload_failed">Нисам успео да отпремим карту</string>
     <string name="date_placeholders__start_time__end_time">%1$s, %2$s</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
-    <string name="stats_highest_hr">Највиши откуцаји</string>
     <string name="enhanced">Побољшано</string>
     <string name="copy_to_clipboard">Умножи</string>
     <string name="activity_type_biking">Вожње бицикла</string>

@@ -574,8 +574,6 @@
     <string name="overstep">Περισσότερα βήματα: %1$d</string>
     <string name="live_activity_max_heart_rate">Τωρινοί / Μέγιστοι παλμοί: %1$d / %2$d</string>
     <string name="activity_prefs_charts">Ρυθμίσεις γραφήματος</string>
-    <string name="activity_prefs_chart_max_heart_rate">Μέγιστοι παλμοί</string>
-    <string name="activity_prefs_chart_min_heart_rate">Ελάχιστοι παλμοί</string>
     <string name="pref_title_contextual_arabic">Συμφραζόμενα Αραβικά</string>
     <string name="pref_summary_contextual_arabic">Ενεργοποιήστε αυτή την επιλογή για υποστήριξη συμφραζόμενων Αραβικών</string>
     <string name="preferences_rtl_settings">Υποστήριξη γλωσσών γραφής από τα δεξιά</string>
@@ -604,8 +602,6 @@
     <string name="zetime_title_heart_rate_alarm">προειδοποίηση καρδιακού ρυθμού</string>
     <string name="zetime_title_heart_rate_alarm_summary">Το smartwatch σας θα σας ειδοποιήσει όταν οι καρδιακοί παλμοί ξεπεράσουν τα όρια.</string>
     <string name="zetime_heart_rate_alarm_enable">Ενεργοποίηση ειδοποιήσεων ορίων καρδιακού παλμού</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Μέγιστος καρδιακός παλμός</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Ελάχιστος καρδιακός παλμός</string>
     <string name="zetime_analog_mode">Αναλογική λειτουργία</string>
     <string name="zetime_analog_mode_hands">Μόνο χέρια</string>
     <string name="zetime_analog_mode_handsandsteps">Χέρια και βήματα</string>

@@ -34,7 +34,7 @@
             android:inputType="number"
             android:key="alarm_max_heart_rate"
             android:maxLength="3"
-            android:title="@string/activity_prefs_alarm_max_heart_rate"
+            android:title="@string/maxHR"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -44,7 +44,7 @@
             android:inputType="number"
             android:key="alarm_min_heart_rate"
             android:maxLength="3"
-            android:title="@string/activity_prefs_alarm_min_heart_rate"
+            android:title="@string/minHR"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
     </PreferenceScreen>

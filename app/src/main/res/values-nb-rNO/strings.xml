@@ -582,8 +582,6 @@
     <string name="overstep">For mange steg: %1$d</string>
     <string name="live_activity_max_heart_rate">Nåværende / makspuls: %1$d /%2$d</string>
     <string name="activity_prefs_charts">Poengtavleinnstillinger</string>
-    <string name="activity_prefs_chart_max_heart_rate">Makspuls</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimumspuls</string>
     <string name="pref_title_contextual_arabic">Kontekstuell arabisk</string>
     <string name="pref_summary_contextual_arabic">Skru på dette for kontekstuell arabisk støtte</string>
     <string name="preferences_rtl_settings">Høyre-til-venstre -støtte</string>
@@ -648,8 +646,6 @@
     <string name="zetime_title_heart_rate_alarm">Pulsalarm</string>
     <string name="zetime_title_heart_rate_alarm_summary">Klokken vil advare deg når pulsen overskrider grensene.</string>
     <string name="zetime_heart_rate_alarm_enable">Aktiver pulsalarmen</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Makspuls</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Minimumspuls</string>
     <string name="zetime_analog_mode_handsandsteps">Hender og trinn</string>
     <string name="zetime_activity_tracking_summary">Påslag av aktivitetssporing vil telle skrittene dine, osv.</string>
     <string name="zetime_handmove_display_summary">Vri håndleddet for å skru på eller av skjermen.</string>

@@ -557,8 +557,6 @@
     <string name="mi3_prefs_night_mode">Nachtmodus</string>
     <string name="mi3_prefs_night_mode_summary">Bandhelligkeit nachts automatisch verringern</string>
     <string name="activity_prefs_charts">Diagrammeinstellungen</string>
-    <string name="activity_prefs_chart_max_heart_rate">Maximaler Puls</string>
-    <string name="activity_prefs_chart_min_heart_rate">Minimaler Puls</string>
     <string name="ok">OK</string>
     <string name="mi3_night_mode_sunset">Bei Sonnenuntergang</string>
     <string name="pref_rtl_max_line_length">Maximale Zeilenlänge linksläufiger Text</string>
@@ -604,8 +602,6 @@
     <!-- ZeTime Preferences -->
     <string name="zetime_title_settings">ZeTime-Einstellungen</string>
     <string name="zetime_title_screentime">Display-Aktivierungsdauer in Sekunden</string>
-    <string name="activity_prefs_alarm_max_heart_rate">Hohe Herzfrequenzschwelle</string>
-    <string name="activity_prefs_alarm_min_heart_rate">Niedrige Herzfrequenzschwelle</string>
     <string name="zetime_title_heartrate">Herzfrequenz-Menü</string>
     <string name="zetime_title_heart_rate_alarm">Herzfrequenz Alarm</string>
     <string name="zetime_heart_rate_alarm_enable">Herzfrequenzalarm aktivieren</string>
@@ -2775,8 +2771,6 @@
     <string name="hrv_status_seven_days_avg_long">7-Tage-Durchschnitt</string>
     <string name="hrv_status_baseline_label">Grundlinie</string>
     <string name="stats_empty_value">-</string>
-    <string name="stats_lowest_hr">Minimaler Puls</string>
-    <string name="stats_highest_hr">Maximaler Puls</string>
     <string name="soundcore_equalizer_direction">Geräteausrichtung</string>
     <string name="soundcore_equalizer_direction_lying">Liegend</string>
     <string name="soundcore_equalizer_direction_hanging">Hängend</string>
@@ -3407,7 +3401,6 @@
     <string name="huawei_stress_calibrate">Kalibrieren</string>
     <string name="huawei_voice_boost">Sprachverstärkung</string>
     <string name="huawei_stress_calibrate_information">Für optimale Ergebnisse ruhe dich vor dem Test eine Weile aus und bleibe während des Tests möglichst still.\n Befestige das Gerät fest, mit dem Display nach oben und dem Sensor in direktem Kontakt mit deiner Haut.</string>
-    <string name="stats_average_hr">∅ Puls</string>
     <string name="huawei_stress_calibrate_summary">Automatische Stressmessung kalibrieren</string>
     <string name="huawei_stress_calibrate_in_progress">Stresskalibrierung läuft bereits</string>
     <string name="banglejs_notification_missed_call_title">Verpasster Anruf</string>
