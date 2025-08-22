@@ -788,7 +788,7 @@
     <string name="error_background_service_reason">Не удалось запустить фоновую службу из-за исключения. Нажмите для получения подробностей.\n\nОшибка:</string>
     <string name="error_background_service_reason_truncated">Не удается запустить фоновую службу из-за…</string>
     <string name="error_background_service">Не удалось запустить фоновую службу</string>
-    <string name="error_version_check_extreme_caution">ВНИМАНИЕ: Ошибка при проверке информации о версии! Не продолжайте! Обнаруженное имя версии \"%s\"</string>
+    <string name="error_version_check_extreme_caution">ВНИМАНИЕ: Ошибка при проверке информации о версии! Не продолжайте! Обнаруженная версия %s</string>
     <string name="permission_granting_mandatory">Все эти разрешения необходимы, и если они не будут выданы, приложение может работать нестабильно</string>
     <string name="about_additional_contributions">Большое спасибо всем участникам, не внесённым в список, за предоставленный код, переводы, поддержку, идеи, мотивацию, отчеты об ошибках, деньги… ✊</string>
     <string name="about_additional_device_support">Дополнительная поддержка устройств</string>
@@ -919,8 +919,8 @@
     <string name="averageLapPace">Средний темп круга</string>
     <string name="averageStride">Средний шаг</string>
     <string name="averageStrokeDistance">Среднее расстояние хода</string>
-    <string name="averageKMPaceSeconds">Темп</string>
-    <string name="averageHR">Пульс</string>
+    <string name="averageKMPaceSeconds">Средний темп</string>
+    <string name="averageHR">Средний пульс</string>
     <string name="totalStride">Общий шаг</string>
     <string name="maxPace">Быстрый темп</string>
     <string name="minPace">Медленный темп</string>
@@ -938,7 +938,7 @@
     <string name="error_setting_alias">Ошибка настройки псевдонима:</string>
     <string name="error_exporting_device_preferences">Ошибка при экспорте специфичных настроек устройства</string>
     <string name="pref_check_permission_status_summary">Проверять и запрашивать недостающие разрешения, даже если в них не всегда есть необходимость. Отключите, если ваши устройства действительно не поддерживают ни одну из этих функций. Отсутствие разрешений может вызвать проблемы в работе!</string>
-    <string name="pref_check_permission_status">Проверять статус разрешений</string>
+    <string name="pref_check_permission_status">Проверять наличие разрешений</string>
     <string name="device_requires_key">НЕОБХОДИМ КЛЮЧ, ДОЛГОЕ ЗАЖАТИЕ ДЛЯ ВХОДА</string>
     <string name="device_is_currently_bonded">УЖЕ СВЯЗАНЫ</string>
     <string name="companiondevice_pairing">Сопряжение с CompanionDevice</string>
@@ -1357,7 +1357,7 @@
     <string name="pref_summary_device_internet_access">Разрешить приложениям на этом устройстве доступ к Интернету</string>
     <string name="pref_cache_weather_summary">Данные о погоде будут кэшироваться во время перезапуска приложения.</string>
     <string name="activity_prefs_discovery_pairing">Параметры обнаружения и сопряжения</string>
-    <string name="permission_display_over_other_apps">%1$s необходимо разрешение на отображение поверх других приложений, чтобы часы Bangle.js могли выполнять действия через намерения, когда %1$s находится в фоновом режиме. \n \nЭто можно использовать для запуска приложения воспроизведения и прослушивания музыки, а также для многих других действий. \n \nПожалуйста, нажмите «%2$s», затем «%1$s» и включите «Поверх других приложений», затем нажмите «Назад» чтобы вернуться к %1$s. \n \nЧтобы прекратить запросы разрешений от %1$s, перейдите в Настройки и выключите «Проверять статус разрешений». \n \nДля корректной работы %1$s должны быть выданы все необходимые разрешения.</string>
+    <string name="permission_display_over_other_apps">%1$s необходимо разрешение на отображение поверх других приложений, чтобы часы Bangle.js могли выполнять действия через намерения, когда %1$s находится в фоновом режиме. \n \nЭто можно использовать для запуска приложения воспроизведения и прослушивания музыки, а также для многих других действий. \n \nПожалуйста, нажмите %2$s, затем %1$s и включите Поверх других приложений, затем нажмите Назад чтобы вернуться к %1$s. \n \nЧтобы прекратить запросы разрешений от %1$s, перейдите в Настройки и выключите Проверять наличие разрешений.\n \nДля корректной работы %1$s должны быть выданы все необходимые разрешения.</string>
     <string name="permission_notification_listener">Для отображения уведомлений на часах при выключенном экране %1$s требуется доступ к Уведомлениям. \n \nПожалуйста, нажмите %2$s, затем %1$s и включите Доступ к уведомлениям, затем нажмите Назад, чтобы вернуться к %1$s.</string>
     <string name="fw_upgrade_notice_miband7">Вы собираетесь установить прошивку %s на свой Xiaomi Smart Band 7.
 \n
@@ -2121,7 +2121,7 @@
     <string name="pref_activity_full_sync_trigger_title">Полная синхронизация</string>
     <string name="info_menu_structure_set">Структура меню JSON, заданная в ГБ</string>
     <string name="button_open_menu_companion">Открыть меню приложения-спутника</string>
-    <string name="error_menu_companion_not_installed">Скорее всего, «Спутник меню HR»‎ не установлено</string>
+    <string name="error_menu_companion_not_installed">Скорее всего, не установлено приложение HR Menu Companion</string>
     <string name="loyalty_cards_catima_not_installed">Для управления бонусными картами требуется Catima</string>
     <string name="loyalty_cards_catima_permissions_title">Отсутствующие разрешения</string>
     <string name="error_invalid_menu_structure">Некорректная структура меню JSON</string>
@@ -2394,7 +2394,7 @@
     <string name="prefs_wearmode">Тип ношения</string>
     <string name="wearmode_pebble">Pebble (на обуви)</string>
     <string name="widget_move_up">Переместить выше</string>
-    <string name="widget_screen_delete_confirm_description">Вы точно хотите удалить «%1$s»?</string>
+    <string name="widget_screen_delete_confirm_description">Вы точно хотите удалить %1$s?</string>
     <string name="silent_mode_normal_vibrate">Нормальный / На вибрации</string>
     <string name="pref_title_goal_secondary">Дополнительная цель</string>
     <string name="pref_vitality_score_7_day_summary">Отправлять уведомление, когда уровень жизненной энергии за последние 7 дней достигает 30, 60 или 100</string>
@@ -2448,8 +2448,8 @@
     <string name="prefs_workmode">Режим работы</string>
     <string name="huawei_alarm_smart_description">Не отключать \"умный подъём\".</string>
     <string name="huawei_alarm_event_description">Не включать \"умный подъём\".</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="huawei_trusleep_summary">Отслеживание качества сна и характера дыхания в реальном времени. \nАнализ закономерностей сна и точный диагноз 6 типов проблем со сном.</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
+    <string name="huawei_trusleep_summary">Отслеживайте качества сна в текущем времени.</string>
     <string name="pref_title_general_reconnectonlytoconnected">Переподключаться только к подключенным устройствам</string>
     <string name="pref_activity_recognize_biking">распознавать езду на велосипеде</string>
     <string name="pref_activity_recognize_walking">распознавать ходьбу</string>
@@ -2626,7 +2626,7 @@
     <string name="pref_dashboard_widget_today_24h_title">24ч стиль</string>
     <string name="bottom_nav_dashboard">Приборная панель</string>
     <string name="notification_channel_scan_service_name">Служба сканирования</string>
-    <string name="huawei_trusleep_warning">Предупреждение: включение этой функции приведёт к отображению всего сна в Gatgetbride как быстрого! Нажмите, если согласны.</string>
+    <string name="huawei_trusleep_warning">Внимание: функциональнось TruSleep™ сделана не полностью. При её включении на некоторых устройствах все данные о сне будут отображаться в Gadgetbridge как неглубокий сон!</string>
     <string name="activity_type_mountain_hike">Горная прогулка</string>
     <string name="pref_touch_tone_summary">Проигрывать сигнал при касании к наушнику</string>
     <string name="pref_wearing_tone_summary">Проигрывать сигнал, когда вставлен наушник</string>
@@ -2733,7 +2733,7 @@
     <string name="pref_dashboard_select_devices_summary">Объедините данные об активности с определенных устройств для получения итоговых показателей на приборной панели</string>
     <string name="pref_dashboard_all_devices_summary">Объедините данные об активности со всех добавленных устройств для получения итоговых показателей на приборной панели</string>
     <string name="pref_dashboard_widget_today_upside_down_summary">В режиме 24 часа нарисуйте полночь внизу, а полдень - вверху графика</string>
-    <string name="sleepasandroid_settings">Sleep As Android</string>
+    <string name="sleepasandroid_settings">Sleep As Android: Будильник с фазами сна</string>
     <string name="pref_sleepasandroid_slot_summary">Какой слот будильника использовать при установке будильников</string>
     <string name="pref_sleepasandroid_slot_title">Слот для сигнализации</string>
     <string name="swingAngleAvg">Средний угол поворота</string>
@@ -2766,7 +2766,7 @@
     <string name="pref_dashboard_cards_title">Показывайте виджеты на карточках</string>
     <string name="pref_dashboard_widget_settings">Настройки виджета</string>
     <string name="pref_dashboard_widget_goals_chart_title">Таблица целей</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">Количество минут, в течение которых на графике отображается \"ношение\" после каждого успешного замера пульса</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Количество минут, в течение которых на графике отображается ношение после каждого успешного замера пульса</string>
     <string name="pref_speak_notifications_aloud_summary">Уведомления будут читаться вслух через наушники</string>
     <string name="pref_summary_garmin_default_reply_suffix">Прилагательное в дополнение к суффиксу, установленному в Гаджетбридже</string>
     <string name="pref_dashboard_widget_today_upside_down_title">Полночь на дне</string>
@@ -2781,7 +2781,7 @@
     <string name="devicesetting_scannable_minimum_unseen_summary">После сканирования устройство должно оставаться незамеченным в течение определенного времени, прежде чем его снова зарегистрируют</string>
     <string name="pref_title_garmin_default_reply_suffix">Используйте предопределенный суффикс ответа</string>
     <string name="garmin_agps_url_i">AGPS URL %1$d</string>
-    <string name="pref_garmin_agps_help">В приведенном ниже списке содержатся все URL-адреса, запрашиваемые часами для обновления AGPS. Вы можете выбрать файл из хранилища телефона, который будет отправлен на часы при запросе обновления.</string>
+    <string name="pref_garmin_agps_help">В приведенном ниже списке содержатся все URL-адреса, запрашиваемые часами для обновления AGPS. Вы можете выбрать файл из хранилища телефона, который будет отправлен на часы при запросе обновления.\n\nНужно настроить только один из файлов.</string>
     <string name="no_folder_selected">Не выбрана папка</string>
     <string name="folder_is_empty">Папка пустая</string>
     <string name="activity_prefs_height_inches">Рост в дюймах</string>
@@ -2964,11 +2964,11 @@
     <string name="activity_type_table_football">Настольный футбол</string>
     <string name="idasen_control_button_stand">СТОЯ</string>
     <string name="idasen_control_button_sit">СИДЯ</string>
-    <string name="idasen_pref_value_warning">Значение должно быть в пределах 62-126 см</string>
+    <string name="idasen_pref_value_warning">Значение должно быть в пределах 62 – 126 см</string>
     <string name="music_upload_info">Вы отправляете файл композиции:\n\n%1$s\nНазвание: %2$s\nАльбом: %3$s\n</string>
     <string name="smart_ring_measurement_error_worn_incorrectly">Измерение не удалось. Проверьте правильность расположения сенсоров.</string>
     <string name="file_already_exists">Этот файл уже существует</string>
-    <string name="mijia_lywsd_comfort_humidity_summary">Рекомендуемый диапазон: 20 - 85</string>
+    <string name="mijia_lywsd_comfort_humidity_summary">Рекомендуемый диапазон: 20 – 85</string>
     <string name="mijia_lywsd_comfort_lower">Нижняя граница</string>
     <string name="battery_polling_failed_start">Не удалось начать опрос батареи</string>
     <string name="mijia_lywsd_comfort_level_title">Уровень комфорта</string>
@@ -2984,7 +2984,7 @@
     <string name="soundcore_equalizer_value">Значение</string>
     <string name="miscale_small_objects_title">Небольшие предметы</string>
     <string name="mijia_lywsd_comfort_humidity_title">Влажность (%)</string>
-    <string name="mijia_lywsd_comfort_temperature_summary">Рекомендуемый диапазон: 19 - 27</string>
+    <string name="mijia_lywsd_comfort_temperature_summary">Рекомендуемый диапазон: 19 – 27</string>
     <string name="mijia_lywsd_comfort_temperature_title">Температура (°C)</string>
     <string name="pref_dnd_follow_phone_title">Соответствовать режиму «не беспокоить» устройства</string>
     <string name="music_new_playlist">Создать плейлист</string>
@@ -3005,7 +3005,7 @@
     <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="pref_music_management_title">Управление музыкой</string>
     <string name="pref_music_management_summary">Управление сохранённой музыкой</string>
-    <string name="music_delete_confirm_description">Вы точно хотите удалить «%1$s»?</string>
+    <string name="music_delete_confirm_description">Вы точно хотите удалить %1$s?</string>
     <string name="music_add_to_playlist">Добавить в плейлист</string>
     <string name="music_delete_from_playlist">Удалить из плейлиста</string>
     <string name="music_delete">Удалить трек</string>
@@ -3186,7 +3186,7 @@
     <string name="soundcore_equalizer_reset_title">Сброс настроек по умолчанию</string>
     <string name="idasen_pref_mid_height">Высота среднего положения (в сантиметрах)</string>
     <string name="steps_avg">Шаги (ср.)</string>
-    <string name="weight_lbs">%1$.2f lbs</string>
+    <string name="weight_lbs">%1$.2f фунтов</string>
     <string name="soundcore_button_brightness">Кнопка Яркость</string>
     <string name="soundcore_equalizer_preset_signature">саундкор Подпись</string>
     <string name="soundcore_equalizer_direction_hanging">Подвесной</string>
@@ -3243,7 +3243,7 @@
     <string name="pref_developer_add_test_activities_title">Добавьте тестовые мероприятия</string>
     <string name="pref_developer_add_test_activities_summary">Наполните базу данных фиктивными тестовыми заданиями</string>
     <string name="smart_ring_measurement_error_unknown">Неизвестная ошибка измерения %d, полученная от кольца</string>
-    <string name="prefs_title_ble_intent_api">BLE Intent API</string>
+    <string name="prefs_title_ble_intent_api">API намерений BLE</string>
     <string name="pref_battery_polling_interval">Интервал опроса батареи</string>
     <string name="prefs_title_gatt_client_notification_intents">Передача уведомлений о намерениях GATT через BLE Intent API</string>
     <string name="workout_set_reps">Повторы</string>
@@ -3314,7 +3314,7 @@
     <string name="permission_external_storage_summary">Использование изображений, мелодий, файлов приложений и многого другого</string>
     <string name="first_start_overview_desc">В Гаджетбридже есть два основных вида, каждый из которых имеет свое предназначение.</string>
     <string name="first_start_get_started_add_first_device_button">Добавьте первое устройство</string>
-    <string name="music_delete_multiple_confirm_description">Вы уверены, что хотите удалить \'%1$d\' песен?</string>
+    <string name="music_delete_multiple_confirm_description">Вы уверены, что хотите удалить %1$d песен?</string>
     <string name="first_start_overview_dashboard">Приборная панель позволяет быстро получить представление о том, как обстоят ваши дела на сегодняшний день. В календаре отображается состояние ваших целей за целый месяц.</string>
     <string name="first_start_overview_devices">В окне устройств отображаются все настроенные устройства и их состояние, а также доступ к функциям конкретного устройства, таким как подробные графики, настройки, приложения и сигналы тревоги.</string>
     <string name="first_start_permissions_request_button">Запрос</string>
@@ -3510,7 +3510,7 @@
     <string name="earfun_audio_codec_hint"><b>LDAC</b> – кодек с высоким битрейтом для превосходного качества звука.\n<b>aptX</b> – обеспечивает низкую задержку и высокое качество.\n<b>aptX Adaptive</b> – динамически подстраивает битрейт в зависимости от соединения и содержимого.\n<b>aptX Adaptive Lossless</b> – обеспечивает звук без потерь звук для музыки с высоким битрейтом.\n<b>Стабильное соединение</b> – уменьшает прерывания и пропуски звука.</string>
     <string name="earfun_change_confirm_title">Изменить %s?</string>
     <string name="earfun_earbud_mode_both">Оба наушника</string>
-    <string name="earfun_reboot_confirm_message">После применения этой настройки, Ваше устройство будет перезагружено. После того, как оно включится, перейдите на экран «Устройства» и подключите его снова.</string>
+    <string name="earfun_reboot_confirm_message">После применения этой настройки, ваше устройство будет перезагружено. После того, как оно включится, перейдите на экран Устройства и подключите его снова.</string>
     <string name="earfun_microphone_mode">Режим микрофона</string>
     <string name="enhanced">Улучшенный</string>
     <string name="banglejs_notification_missed_call_title">Пропущенный вызов</string>
