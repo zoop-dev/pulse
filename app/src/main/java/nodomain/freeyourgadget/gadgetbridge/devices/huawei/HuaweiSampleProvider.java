@@ -19,6 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -44,8 +47,11 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleD
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivitySample> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HuaweiSampleProvider.class);
 
     /*
      * We save all data by saving a marker at the begin and end. We do not actively use these for
@@ -274,6 +280,9 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
         List<HuaweiActivitySample> samples = qb.build().list();
         for (HuaweiActivitySample sample : samples) {
             sample.setProvider(this);
+            if(sample.getHeartRate() != ActivitySample.NOT_MEASURED) {
+                sample.setHeartRate(sample.getHeartRate() & 0xFF);
+            }
         }
         detachFromSession();
         return samples;
@@ -498,8 +507,12 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
             // Skip the processed sample that are before this workout sample
             while (workoutSamples.get(i).getTimestamp() > processedSamples.get(currentIndex).getTimestamp()) {
                 if (inWorkout) {
-                    processedSamples.get(currentIndex).setHeartRate(lastHr);
-                    processedSamples.get(currentIndex).setRawIntensity(0);
+                    // In the DB we have samples where timestamp > otherTimestamp and where otherTimestamp > timestamp.
+                    // Do not overwrite this sample
+                    if(workoutSamples.get(i).getTimestamp() > processedSamples.get(currentIndex).getOtherTimestamp() || processedSamples.get(currentIndex).getHeartRate() == ActivitySample.NOT_MEASURED) {
+                        processedSamples.get(currentIndex).setHeartRate(lastHr);
+                        processedSamples.get(currentIndex).setRawIntensity(0);
+                    }
                 }
 
                 // Reset
@@ -537,8 +550,12 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
             // and intensity - see #4126 for the reasoning
             while (currentIndex < processedSamples.size() && workoutSamples.get(i).getTimestamp() > processedSamples.get(currentIndex).getTimestamp()) {
                 if (inWorkout) {
-                    processedSamples.get(currentIndex).setHeartRate(ActivitySample.NOT_MEASURED);
-                    processedSamples.get(currentIndex).setRawIntensity(0);
+                    // In the DB we have samples where timestamp > otherTimestamp and where otherTimestamp > timestamp.
+                    // Do not clear this sample
+                    if(workoutSamples.get(i).getTimestamp() > processedSamples.get(currentIndex).getOtherTimestamp() || processedSamples.get(currentIndex).getHeartRate() == ActivitySample.NOT_MEASURED) {
+                        processedSamples.get(currentIndex).setHeartRate(ActivitySample.NOT_MEASURED);
+                        processedSamples.get(currentIndex).setRawIntensity(0);
+                    }
                 }
 
                 currentIndex += 1;
