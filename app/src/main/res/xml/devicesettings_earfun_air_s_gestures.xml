@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceScreen
         android:icon="@drawable/ic_touch"
@@ -15,7 +16,7 @@
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:icon="@drawable/ic_filter_1"
                 android:key="pref_earfun_single_tap_left_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_left" />
 
             <ListPreference
@@ -23,7 +24,7 @@
                 android:entries="@array/earfun_air_s_tap_action_names"
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:key="pref_earfun_single_tap_right_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_right" />
 
         </PreferenceCategory>
@@ -36,7 +37,7 @@
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:icon="@drawable/ic_filter_2"
                 android:key="pref_earfun_double_tap_left_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_left" />
 
             <ListPreference
@@ -44,7 +45,7 @@
                 android:entries="@array/earfun_air_s_tap_action_names"
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:key="pref_earfun_double_tap_right_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_right" />
         </PreferenceCategory>
 
@@ -56,7 +57,7 @@
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:icon="@drawable/ic_filter_3"
                 android:key="pref_earfun_tripple_tap_left_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_left" />
 
             <ListPreference
@@ -64,7 +65,7 @@
                 android:entries="@array/earfun_air_s_tap_action_names"
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:key="pref_earfun_tripple_tap_right_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_right" />
         </PreferenceCategory>
 
@@ -76,7 +77,7 @@
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:icon="@drawable/ic_touch"
                 android:key="pref_earfun_long_tap_left_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_left" />
 
             <ListPreference
@@ -84,7 +85,7 @@
                 android:entries="@array/earfun_air_s_tap_action_names"
                 android:entryValues="@array/earfun_air_s_tap_action_values"
                 android:key="pref_earfun_long_tap_right_action"
-                android:summary="%s"
+                app:useSimpleSummaryProvider="true"
                 android:title="@string/prefs_right" />
 
         </PreferenceCategory>

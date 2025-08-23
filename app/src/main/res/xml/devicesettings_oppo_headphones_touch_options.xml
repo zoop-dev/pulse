@@ -12,7 +12,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_filter_2"
             android:key="oppo_touch__left__tap_2"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/double_tap" />
         <ListPreference
             android:defaultValue="off"
@@ -20,7 +20,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_filter_3"
             android:key="oppo_touch__left__tap_3"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/triple_tap" />
         <ListPreference
             android:defaultValue="off"
@@ -28,7 +28,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_horizontal_rule"
             android:key="oppo_touch__left__hold"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/long_press" />
     </PreferenceCategory>
 
@@ -42,7 +42,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_filter_2"
             android:key="oppo_touch__right__tap_2"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/double_tap" />
         <ListPreference
             android:defaultValue="off"
@@ -50,7 +50,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_filter_3"
             android:key="oppo_touch__right__tap_3"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/triple_tap" />
         <ListPreference
             android:defaultValue="off"
@@ -58,7 +58,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_horizontal_rule"
             android:key="oppo_touch__right__hold"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/long_press" />
     </PreferenceCategory>
 
@@ -72,7 +72,7 @@
             android:entryValues="@array/oppo_touch_tap_values"
             android:icon="@drawable/ic_horizontal_rule"
             android:key="oppo_touch__both__hold"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/long_press" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

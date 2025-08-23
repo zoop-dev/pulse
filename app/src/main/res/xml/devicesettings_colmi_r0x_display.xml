@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:icon="@drawable/ic_power_settings_new"
@@ -15,7 +16,7 @@
         android:entryValues="@array/wearside_values"
         android:key="wearlocation"
         android:title="@string/prefs_wearside"
-        android:summary="%s" />
+        app:useSimpleSummaryProvider="true" />
     <SeekBarPreference
         android:dependency="display_enabled"
         android:defaultValue="2"

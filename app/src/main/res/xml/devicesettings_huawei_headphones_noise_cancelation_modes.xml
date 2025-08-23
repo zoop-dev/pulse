@@ -6,6 +6,6 @@
         android:entryValues="@array/huawei_freebuds_anc_mode_values"
         android:icon="@drawable/ic_noise_control_on"
         android:key="pref_freebuds_anc_mode"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/earfun_anc_mode" />
 </androidx.preference.PreferenceScreen>

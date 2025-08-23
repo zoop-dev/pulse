@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:defaultValue="1"
         android:entries="@array/atc_ble_oepl_models"
         android:entryValues="@array/atc_ble_oepl_models_values"
         android:key="pref_atc_ble_oepl_model"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/pref_atc_ble_oepl_model_title" />
     <ListPreference
         android:defaultValue="3200"
         android:entries="@array/atc_ble_oepl_ble_adv_interval"
         android:entryValues="@array/atc_ble_oepl_ble_adv_interval_values"
         android:key="pref_atc_ble_oepl_ble_adv_interval"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/pref_atc_ble_oepl_ble_adv_interval_title" />
     <SwitchPreferenceCompat
         android:defaultValue="true"

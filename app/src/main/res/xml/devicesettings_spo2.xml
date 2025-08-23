@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceScreen
         android:icon="@drawable/ic_spo2"
         android:key="pref_screen_spo2"
@@ -20,7 +21,7 @@
             android:entries="@array/prefs_spo2_measurement_interval"
             android:entryValues="@array/prefs_spo2_measurement_interval_values"
             android:key="spo2_measurement_interval"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/pref_title_time_interval" />
 
         <SwitchPreferenceCompat

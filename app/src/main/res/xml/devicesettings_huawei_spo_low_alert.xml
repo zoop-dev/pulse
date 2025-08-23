@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:dependency="spo_automatic_enable"
         android:entries="@array/prefs_huawei_spo_low_alert_names"
@@ -7,6 +8,6 @@
         android:icon="@drawable/ic_spo2"
         android:defaultValue="0"
         android:key="pref_huawei_spo_low_alert"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/pref_spo_low_alert" />
 </androidx.preference.PreferenceScreen>

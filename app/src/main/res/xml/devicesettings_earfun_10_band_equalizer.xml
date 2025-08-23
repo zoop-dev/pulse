@@ -11,7 +11,7 @@
         <ListPreference
             android:icon="@drawable/ic_equalizer"
             android:key="pref_earfun_equalizer_preset"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/prefs_equalizer_preset" />
 
         <SeekBarPreference

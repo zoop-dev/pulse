@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:key="pref_key_header_redmibuds5pro_system"
         android:title="@string/pref_header_system">
@@ -17,14 +18,14 @@
                     android:icon="@drawable/ic_filter_1"
                     android:defaultValue="8"
                     android:key="pref_redmi_buds_5_pro_control_single_tap_left"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/prefs_left" />
                 <ListPreference
                     android:entries="@array/redmi_buds_5_pro_single_button_function_names"
                     android:entryValues="@array/redmi_buds_5_pro_single_button_function_values"
                     android:defaultValue="8"
                     android:key="pref_redmi_buds_5_pro_control_single_tap_right"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/prefs_right" />
             </PreferenceCategory>
 
@@ -35,14 +36,14 @@
                     android:icon="@drawable/ic_filter_2"
                     android:defaultValue="1"
                     android:key="pref_redmi_buds_5_pro_control_double_tap_left"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/prefs_left" />
                 <ListPreference
                     android:entries="@array/redmi_buds_5_pro_button_function_names"
                     android:entryValues="@array/redmi_buds_5_pro_button_function_values"
                     android:defaultValue="1"
                     android:key="pref_redmi_buds_5_pro_control_double_tap_right"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/prefs_right" />
             </PreferenceCategory>
 
@@ -53,14 +54,14 @@
                     android:icon="@drawable/ic_filter_3"
                     android:defaultValue="2"
                     android:key="pref_redmi_buds_5_pro_control_triple_tap_left"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/prefs_left" />
                 <ListPreference
                     android:entries="@array/redmi_buds_5_pro_button_function_names"
                     android:entryValues="@array/redmi_buds_5_pro_button_function_values"
                     android:defaultValue="3"
                     android:key="pref_redmi_buds_5_pro_control_triple_tap_right"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/prefs_right" />
             </PreferenceCategory>
 
@@ -71,14 +72,14 @@
                     android:icon="@drawable/ic_touch"
                     android:defaultValue="6"
                     android:key="pref_redmi_buds_5_pro_control_long_tap_mode_left"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/sony_button_mode_left" />
                 <ListPreference
                     android:entries="@array/redmi_buds_5_pro_long_button_settings_names"
                     android:entryValues="@array/redmi_buds_5_pro_long_button_settings_values"
                     android:defaultValue="7"
                     android:key="pref_redmi_buds_5_pro_control_long_tap_settings_left"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/sony_ambient_sound_control_button_modes" />
                 <ListPreference
                     android:entries="@array/redmi_buds_5_pro_long_button_mode_names"
@@ -86,14 +87,14 @@
                     android:icon="@drawable/ic_touch"
                     android:defaultValue="6"
                     android:key="pref_redmi_buds_5_pro_control_long_tap_mode_right"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/sony_button_mode_right" />
                 <ListPreference
                     android:entries="@array/redmi_buds_5_pro_long_button_settings_names"
                     android:entryValues="@array/redmi_buds_5_pro_long_button_settings_values"
                     android:defaultValue="7"
                     android:key="pref_redmi_buds_5_pro_control_long_tap_settings_right"
-                    android:summary="%s"
+                    app:useSimpleSummaryProvider="true"
                     android:title="@string/sony_ambient_sound_control_button_modes" />
             </PreferenceCategory>
         </PreferenceScreen>

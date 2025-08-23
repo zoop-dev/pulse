@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
@@ -23,7 +24,7 @@
         android:entryValues="@array/earfun_audio_codec_values"
         android:icon="@drawable/ic_equalizer"
         android:key="pref_earfun_audio_codec"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/audio_codec" />
     <Preference
         android:key="pref_earfun_audio_codec_hint"
@@ -36,7 +37,7 @@
         android:entryValues="@array/earfun_advanced_audio_mode_values"
         android:icon="@drawable/ic_bluetooth"
         android:key="pref_earfun_advanced_audio_mode"
-        android:summary="%s"
+        app:useSimpleSummaryProvider="true"
         android:title="@string/earfun_advanced_audio_mode" />
     <Preference
         android:key="pref_earfun_advanced_audio_mode_hint"

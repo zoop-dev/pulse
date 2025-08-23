@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:key="pref_key_header_redmibuds5pro_sound"
         android:title="@string/pref_header_equalizer">
@@ -10,7 +11,7 @@
             android:entryValues="@array/redmi_buds_3_pro_equalizer_presets_values"
             android:icon="@drawable/ic_graphic_eq"
             android:key="pref_redmi_buds_5_pro_equalizer_preset"
-            android:summary="%s"
+            app:useSimpleSummaryProvider="true"
             android:title="@string/prefs_equalizer_preset" />
 
     </PreferenceCategory>
