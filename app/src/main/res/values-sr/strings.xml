@@ -574,7 +574,7 @@
     <string name="pref_screen_notification_profile_missed_call">Обавештења пропуштених позива</string>
     <string name="candidate_item_device_image">Слика уређаја</string>
     <string name="sleep_activity_date_range">Од %1$s до %2$s</string>
-    <string name="world_clock_delete_confirm_title">Избриши „%1$s“</string>
+    <string name="world_clock_delete_confirm_title">Избриши %1$s</string>
     <string name="prefs_wearside">Ношња на левој или десној руци\?</string>
     <string name="prefs_weardirection">Препознавање ношње</string>
     <string name="vibration_profile_default">Подразумевано</string>
@@ -697,7 +697,7 @@
     <string name="seconds_25">25 секунди</string>
     <string name="live_activity_max_heart_rate">Тренутни / највиши срчани откуцаји: %1$d / %2$d</string>
     <string name="dateformat_date_time"><![CDATA[Време и датум]]></string>
-    <string name="prefs_enable_find_phone">Укључи „Пронађи телефон“</string>
+    <string name="prefs_enable_find_phone">Укључи Пронађи телефон</string>
     <string name="prefs_find_phone_duration">Трајање звона у секундама</string>
     <string name="miband2_prefs_dateformat">Облик датума</string>
     <string name="dateformat_time">Време</string>
@@ -722,7 +722,7 @@
     <string name="prefs_control_center">Надзорно средиште</string>
     <string name="bip_prefs_shotcuts_summary">Изаберите пречице на заслону уређаја</string>
     <string name="mi5_prefs_workout_activity_types">Врсте дејстава</string>
-    <string name="simplified_chinese">Поједностављени Кинески</string>
+    <string name="simplified_chinese">Кинески (поједностављени)</string>
     <string name="german">Немачни</string>
     <string name="persian">Парсијски</string>
     <string name="scandinavian">Скандинавски</string>
@@ -745,7 +745,7 @@
     <string name="prefs_stress_monitoring_description">Надгледање прага стреса приликом одмора</string>
     <string name="prefs_spo2_monitoring_title">Надгледање засићености кисеоника у крви</string>
     <string name="prefs_spo2_monitoring_description">Самостално надгледај засићеност кисеоника у крви током дана</string>
-    <string name="dbaccess_error_executing">Десила се грешка при извршавању „%1$s“</string>
+    <string name="dbaccess_error_executing">Десила се грешка при извршавању %1$s</string>
     <string name="prefs_charts_tabs">Листови табела</string>
     <string name="sleepchart_your_sleep">Спавање</string>
     <string name="weeksleepchart_sleep_a_week">Седмично спавање</string>
@@ -805,7 +805,7 @@
     <string name="prefs_password_6_digits_0_to_9_summary">Лозинка мора имати 6 бројева, коришћењем само бројева</string>
     <string name="mi3_prefs_night_mode">Ноћни рад</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Превуците ради откључавања заслона уређаја</string>
-    <string name="traditional_chinese">Традиционални Кинески</string>
+    <string name="traditional_chinese">Кинески (традиционални)</string>
     <string name="activity_prefs_year_birth">Година рођења</string>
     <string name="activity_prefs_gender">Пол</string>
     <string name="activity_prefs_weight_kg">Тежина у кг</string>
@@ -817,7 +817,7 @@
     <string name="live_activity_current_steps_per_minute">Тренутни кораци по минуту</string>
     <string name="live_activity_start_your_activity">Почните своја дејства</string>
     <string name="live_activity_steps_per_minute_history">Повест корака по минутима</string>
-    <string name="you_slept">%1$s _%2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Нисте спавали</string>
     <string name="charts_min_max_heartrate_popup">Најнижи откуцаји срца: %1$d
 \nНајвиши откуцаји срца: %2$d
@@ -957,7 +957,7 @@
     <string name="pref_chart_heartrate_color_red">Црвена</string>
     <string name="error_creating_directory_for_logfiles">Десила се грешка приликом стварања фасцикле дневника: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Десила се грешка приликом извоза хранилишта података: %1$s</string>
-    <string name="pref_summary_pebble_health_store_raw">Храни податке „какви јесу“, повећавајући употребу хранилишта података за касније тумачење.</string>
+    <string name="pref_summary_pebble_health_store_raw">Храни податке какви јесу, повећавајући употребу склаишта података за касније тумачење.</string>
     <string name="title_activity_db_management">Управљање подацима</string>
     <string name="dbmanagementactivity_exported_to">Извезено у: %1$s</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Десила се грешка приликом брисања датотека из извозне фасцикле %1$s</string>
@@ -1562,7 +1562,7 @@
     <string name="pref_title_banglejs_webview_url">Адреса пуњача програма</string>
     <string name="pref_summary_banglejs_webview_url">Ако желите произвољни пуњач програма усмерите своју адресу https://…/android.html овде. Иначе оставите празним https://banglejs.com/apps</string>
     <string name="pref_rtl_max_line_length">Највећа дужина с’десна-на-лево</string>
-    <string name="pref_title_weather_summary">Коришћено за погон временских прилика на ЛинеагеОС-у, друго издање Андроида које је потребно ради коришћења програма као што је „Временска обавештења„. Пронађите опширније податке на викију ГеџетБрвна.</string>
+    <string name="pref_title_weather_summary">Коришћено за погон временских прилика на ЛинеагеОС-у, друго издање Андроида које је потребно ради коришћења програма као што је „Временска обавештења“. Пронађите опширније податке на викију ГеџетБрвна.</string>
     <string name="pref_summary_pebble_forcele">Користи опитну подршку Пебла ЛЕ за све Пебле, уместо БТ уобичајеног. Захтева упаривање за не-ЛЕ претходно, па затим на Пебл ЛЕ</string>
     <string name="fw_upgrade_notice_miband3">Уградићете драм %s на свој Ми Банд 3.
 \n
@@ -1628,7 +1628,7 @@
     <string name="pref_summary_pebble_enable_applogs">Узроковаће дневник из програма часовника да буде заведен преко Геџетбрвна (захтева поновно покретање)</string>
     <string name="pref_summary_expose_hr">Омогућава другим програмима да приступе подацима ХР правовремено док је Геџетбрвно повезано</string>
     <string name="pref_title_pebble_mtu_limit">Ограничење МТУ-а Пебла 2/ЛЕ ГАТТ</string>
-    <string name="pref_summary_pebble_mtu_limit">Ако ли Ваш Пебл 2/Пебл ЛЕ не ради очекивано, покушајте ову поставку ради ограничавања МТУ-а (исправан опсег је 20-512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Ако ли Ваш Пебл 2/Пебл ЛЕ не ради очекивано, покушајте ову поставку ради ограничавања МТУ-а (исправан опсег је 20 - 512)</string>
     <string name="fw_upgrade_notice_amazfit_gts4_mini">Уградићете драм %s на свој Амејзфит ГТС 4 Мини.
 \n
 \nВаша наруквица ће се поново покренути након уградње датотеке .zip.
@@ -1738,7 +1738,7 @@
     <string name="silent_mode_normal_silent">Обично / тихо</string>
     <string name="sony_anc_optimize_confirmation_description">Користите слушалице као што би и обично. Уколико услови ношења или притисак ваздуха одступе, покрените прилагођавање поново.</string>
     <string name="silent_mode_normal_vibrate">Обично / трешња</string>
-    <string name="femometer_measurement_mode_normal">Обичан начин (60s-90s)</string>
+    <string name="femometer_measurement_mode_normal">Обичан начин (60s - 90s)</string>
     <string name="device_name_bicycle_sensor">Пријемник бицикла</string>
     <string name="femometer_measurement_mode_quick">Брзи начин (30с)</string>
     <string name="preferences_miband_1_2_settings" tools:ignore="TypographyFractions">Поставке Ми Банда 1/2</string>
@@ -1827,7 +1827,7 @@
     <string name="busy_task_fetch_stress_data">Добављам податке о стресу</string>
     <string name="title_activity_contact_details">Подаци о познанику</string>
     <string name="contact_delete_confirm_title">Избриши познаника</string>
-    <string name="contact_delete_confirm_description">Да ли поуздано желите избрисати „%1$s“?</string>
+    <string name="contact_delete_confirm_description">Да ли заиста желите избрисати %1$s?</string>
     <string name="femometer_measurement_mode_title">Начин мерења</string>
     <string name="busy_task_fetch_pai_data">Добављам податке о ПАИ</string>
     <string name="sleep_colored_stats_rem">РЕМ</string>
@@ -1942,7 +1942,7 @@
     <string name="zepp_os_watchface_silver_shadows">Сребрне сене</string>
     <string name="zepp_os_watchface_vibrant">Тресиво</string>
     <string name="zepp_os_watchface_business_style">Пословно</string>
-    <string name="pairing_even_realities_g1_working">Упарујем са %1s...</string>
+    <string name="pairing_even_realities_g1_working">Упарујем са %1s…</string>
     <string name="lowest">Најниже</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">грмљавина са провалом облака</string>
     <string name="silent_mode">Тихи рад</string>
@@ -1971,7 +1971,7 @@
     <string name="active_calories_goal">Циљ дејства</string>
     <string name="total_calories_burnt">Потпуно сагоревање</string>
     <string name="active_calories_short">Дејствене</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="pref_workout_send_gps_timeout_title">Шаљи истек времена ГПС-а</string>
     <string name="updatefirmwareoperation_update_complete">Уградња драма је потпуна</string>
     <string name="respiratoryrate">Учесталост дисања</string>
@@ -2035,7 +2035,7 @@
     <string name="updatefirmwareoperation_metadata_updateproblem">Грешка при преносу података драма</string>
     <string name="pref_title_stable_connection">Поуздана веза</string>
     <string name="watchface_install_info">Уградићете следеће сучеље часовника:\n\n%1$s\nИздање %2$s од %3$s\n</string>
-    <string name="pairing_even_realities_g1_final_connect">Подешавам уређај, молим, сачекајте...</string>
+    <string name="pairing_even_realities_g1_final_connect">Подешавам уређај, молим, сачекајте…</string>
     <string name="updatefirmwareoperation_updateproblem_do_not_reboot">Десила се грешка при преносу драма. НЕ ПРЕПОКРЕЋИТЕ свом Ми Банд!</string>
     <string name="pairing_even_realities_g1_find_both_fail">Нисам успео да пронађем и десно и лево сочиво. Молим, претражите их поново.</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Скрати добављање временских размака поступка у минуте. Онемогући ове поставке ради држања временског размака у секундама, уколико постоје потешкоће приликом добављања врло кратких вежби.</string>
@@ -2082,8 +2082,8 @@
     <string name="pref_description_developer_options">Дневници, циљани АПИ</string>
     <string name="busy_task_fetch_hrv_data">Добављам податке о променама рада срца</string>
     <string name="menuitem_calculator">Рачунаљка</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="activity_prefs_goal_standing_hours">Дневни циљ: време на ногама</string>
     <string name="sleep_colored_stats_awake_avg">Просечна будност</string>
     <string name="DEVINFO_HR_VER">"Откуцаји срца "</string>
@@ -2507,4 +2507,38 @@
     <string name="backup_restore_restart_summary">%1s ће се поново покренути сада.</string>
     <string name="label_distance_trip">Путовање: %.1f км</string>
     <string name="label_distance_total">Укупно: %.1f км</string>
+    <string name="title_activity_file_installer">Ниске односне на ФвАпинсталер</string>
+    <string name="title_activity_gps_track_installer">Уграђивач трага ГПС-а</string>
+    <string name="sound_and_vibration">Звук + трешња</string>
+    <string name="pref_title_block_screenshot">Онемогући сликање заслона</string>
+    <string name="pref_summary_block_screenshots">Онемогући сликање заслона и преглед на небезбедним заслонима. Захтева препокретање ГБ-а ради ступања у дејство.</string>
+    <string name="phone_calls">Позиви</string>
+    <string name="pref_title_screen_on_on_notifications_timeout">Време приказа обавештења</string>
+    <string name="pref_summary_screen_on_on_notifications_timeout">Одложи %s пре враћања приказа након приказа обавештења</string>
+    <string name="title_gpx_track_name">Име трага</string>
+    <string name="pref_header_auto_export_db">Сам извези складиште података</string>
+    <string name="pref_header_auto_export_zip">Сам извези зип</string>
+    <string name="busy_task_processing_files">Обрађујем датотеке</string>
+    <string name="busy_task_progress_int">%1$d од %2$d</string>
+    <string name="busy_task_busy">Заузет…</string>
+    <string name="busy_task_configuring">Подешавам</string>
+    <string name="busy_task_downloading">Преузимам</string>
+    <string name="busy_task_fetch_configuration">Добављам поставке</string>
+    <string name="busy_task_fetch_ppg">Добављам ППГ</string>
+    <string name="busy_task_fetch_steps">Добављам кораке</string>
+    <string name="busy_task_setting_alarms">Постављам ларме</string>
+    <string name="busy_task_syncing">Усклађујем</string>
+    <string name="interval_1_hour">сваког 1 часа</string>
+    <string name="interval_2_hour">сваких 2 часа</string>
+    <string name="interval_3_hour">свака 3 часа</string>
+    <string name="interval_4_hour">свака 4 часа</string>
+    <string name="interval_6_hour">сваких 5 часова</string>
+    <string name="notif_export_location_not_set">Није подешено место извоза</string>
+    <string name="notif_export_zip_failed_title">Нисам успео да извезем зип! Молим, проверите поставке.</string>
+    <string name="unknown_error">Непозната грешка</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Означена датотека није одговарајућа за уређај</string>
+    <string name="fwinstaller_no_compatible_device_found">Нисам пронашао одговарајућу датотеку ради уградње %1s</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Онемогући упозорења о мировању током одмора за ручак (12:00 – 14:00)</string>
+    <string name="chinese">Кинески</string>
+    <string name="delete_device_and_retain_files">Задржавај датотеке</string>
 </resources>
