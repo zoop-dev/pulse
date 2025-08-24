@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="?android:attr/windowBackground"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.WorkoutChartsActivity">
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/workout_data_chart"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/workout_data_chart_chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/workout_data_chart"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="8dp"
+        />
+
+</RelativeLayout>

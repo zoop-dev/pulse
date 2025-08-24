@@ -199,6 +199,10 @@
             android:label="@string/maps"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
+            android:name=".activities.workouts.charts.WorkoutChartsActivity"
+            android:label="@string/workout_charts"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
             android:name=".activities.SleepAsAndroidPreferencesActivity"
             android:label="@string/sleepasandroid_settings"
             android:parentActivityName=".activities.SettingsActivity" />

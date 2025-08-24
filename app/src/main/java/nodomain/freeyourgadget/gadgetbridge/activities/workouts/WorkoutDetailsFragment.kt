@@ -27,6 +27,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -46,7 +47,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.ChartTouchListener
+import com.github.mikephil.charting.listener.OnChartGestureListener
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,9 +60,13 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.marker.ValueMarker
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
+import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel.Companion.getActivityPoints
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.ChartDataRepository
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.WorkoutChartsActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryGroup
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry
@@ -282,7 +292,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             }
 
             groupCharts.forEach { chart ->
-                addChart(binding.summaryDetails, false, chart)
+                addChart(binding.summaryDetails, false, chart, workout.charts)
             }
         }
     }
@@ -381,7 +391,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         binding.dynamicCharts.removeAllViews()
         for (chart in workout.charts) {
             if (chart.group == null) {
-                addChart(binding.dynamicCharts, true, chart)
+                addChart(binding.dynamicCharts, true, chart, workout.charts)
             }
         }
 
@@ -396,7 +406,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     private fun addChart(
         chartsLayout: LinearLayout,
         includeHeader: Boolean,
-        chart: WorkoutChart
+        chart: WorkoutChart,
+        allChartsData: List<WorkoutChart>
     ) {
         if (includeHeader) {
             val chartTitle = TextView(context).apply {
@@ -464,6 +475,22 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
         lineChart.data = chart.chartData as LineData?
         lineChart.description.isEnabled = false;
+        lineChart.onChartGestureListener = object : OnChartGestureListener {
+            override fun onChartLongPressed(me: MotionEvent?) {}
+            override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+            override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+            override fun onChartSingleTapped(me: MotionEvent?) {
+                ChartDataRepository.chartData = allChartsData
+                val intent = Intent(requireContext(), WorkoutChartsActivity::class.java).apply {
+                    putExtra(WorkoutChartsActivity.INIT_CHART_ID, chart.id)
+                }
+                startActivity(intent)
+            }
+            override fun onChartDoubleTapped(me: MotionEvent?) {}
+            override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {}
+            override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
+            override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
+        }
         lineChart.invalidate()
         chartsFragmentHolder.addView(lineChart)
 

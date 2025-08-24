@@ -4151,6 +4151,7 @@
     <string name="huawei_better_audio_quality_title">Prioritise better audio quality.</string>
     <string name="huawei_better_audio_quality_summary">Enable better audio codecs (LDAC). This should improve sound quality, but it increases power consumption and can cause delays.</string>
     <string name="maps">Maps</string>
+    <string name="workout_charts">Workout Charts</string>
     <string name="maps_settings">Maps settings</string>
     <string name="maps_download_title">Download Maps</string>
     <string name="maps_download_summary">Click here to download map files. They should be saved to the folder selected in the preference below.</string>

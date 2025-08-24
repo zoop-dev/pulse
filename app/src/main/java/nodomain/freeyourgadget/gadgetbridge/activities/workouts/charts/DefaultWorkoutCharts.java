@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -56,25 +58,31 @@ public class DefaultWorkoutCharts {
         if (!heartRateDataPoints.isEmpty()) {
             final String label = String.format("%s(%s)", context.getString(R.string.heart_rate), getUnitString(context, UNIT_BPM));
             final LineDataSet dataset = createDataSet(context, heartRateDataPoints, label, context.getResources().getColor(R.color.chart_line_heart_rate));
-            charts.add(new WorkoutChart(context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE, new LineData(dataset)));
+            ValueFormatter integerFormatter = new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) value);
+                }
+            };
+            charts.add(new WorkoutChart("heart_rate", context.getString(R.string.heart_rate), ActivitySummaryEntries.GROUP_HEART_RATE, new LineData(dataset), integerFormatter, getUnitString(context, UNIT_BPM)));
         }
 
         if (hasSpeedValues && !speedDataPoints.isEmpty()) {
             if (ActivityKind.isPaceActivity(activityKind)) {
-                final String label = String.format("%s (%s)", context.getString(R.string.Pace), getUnitString(context, UNIT_SECONDS_PER_KM));
+                final String label = String.format("%s (%s)", context.getString(R.string.Pace), getUnitString(context, UNIT_MINUTES_PER_KM));
                 final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
-                charts.add(new WorkoutChart(context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_SECONDS_PER_KM)));
+                charts.add(new WorkoutChart("pace", context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_MINUTES_PER_KM), getUnitString(context, UNIT_MINUTES_PER_KM)));
             } else {
                 final String label = String.format("%s (%s)", context.getString(R.string.Speed), getUnitString(context, UNIT_METERS_PER_SECOND));
                 final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
-                charts.add(new WorkoutChart(context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND)));
+                charts.add(new WorkoutChart("speed", context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND), getUnitString(context, UNIT_METERS_PER_SECOND)));
             }
         }
 
         if (!elevationDataPoints.isEmpty()) {
             final String label = String.format("%s (%s)", context.getString(R.string.Elevation), getUnitString(context, UNIT_METERS));
             LineDataSet dataset = createDataSet(context, elevationDataPoints, label, context.getResources().getColor(R.color.chart_line_elevation));
-            charts.add(new WorkoutChart(context.getString(R.string.Elevation), ActivitySummaryEntries.GROUP_ELEVATION, new LineData(dataset)));
+            charts.add(new WorkoutChart("elevation", context.getString(R.string.Elevation), ActivitySummaryEntries.GROUP_ELEVATION, new LineData(dataset), null, getUnitString(context, UNIT_METERS)));
         }
 
         return charts;

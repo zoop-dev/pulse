@@ -195,6 +195,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_SECONDS = "seconds";
     public static final String UNIT_MILLISECONDS = "milliseconds_ms";
     public static final String UNIT_SECONDS_PER_KM = "seconds_km";
+    public static final String UNIT_MINUTES_PER_KM = "minutes_km";
     public static final String UNIT_SECONDS_PER_M = "seconds_m";
     public static final String UNIT_METERS_PER_SECOND = "meters_second";
     public static final String UNIT_KMPH = "km_h";
