@@ -108,6 +108,15 @@ object ActivitySummaryGroup {
                 )
             )
 
+            // Cadence
+            put(
+                ActivitySummaryEntries.GROUP_CADENCE, listOf<String>(
+                    ActivitySummaryEntries.CADENCE_AVG,
+                    ActivitySummaryEntries.CADENCE_MAX,
+                    ActivitySummaryEntries.CADENCE_MIN,
+                )
+            )
+
             // Elevation
             put(
                 ActivitySummaryEntries.GROUP_ELEVATION, listOf<String>(

@@ -2496,6 +2496,7 @@
     <string name="distanceMeters">Distance</string>
     <string name="poolLength">Pool length</string>
     <string name="swim_avg_cadence">Avg Swim Cadence</string>
+    <string name="workout_cadence">Cadence</string>
     <string name="strokes_per_length">strokes/length</string>
     <string name="ascentMeters">Uphill</string>
     <string name="descentMeters">Downhill</string>

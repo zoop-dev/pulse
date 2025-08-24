@@ -7,7 +7,6 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -33,12 +32,15 @@ public class DefaultWorkoutCharts {
     public static List<WorkoutChart> buildDefaultCharts(final Context context,
                                                         final List<ActivityPoint> activityPoints,
                                                         final ActivityKind activityKind) {
+        final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
         final List<WorkoutChart> charts = new LinkedList<>();
         final TimestampTranslation tsTranslation = new TimestampTranslation();
         final List<Entry> heartRateDataPoints = new ArrayList<>();
         final List<Entry> speedDataPoints = new ArrayList<>();
+        final List<Entry> cadenceDataPoints = new ArrayList<>();
         final List<Entry> elevationDataPoints = new ArrayList<>();
         boolean hasSpeedValues = false;
+        boolean hasCadenceValues = false;
 
         for (int i = 0; i <= activityPoints.size() - 1; i++) {
             final ActivityPoint point = activityPoints.get(i);
@@ -52,6 +54,10 @@ public class DefaultWorkoutCharts {
             speedDataPoints.add(new Entry(tsShorten, point.getSpeed()));
             if (!hasSpeedValues && point.getSpeed() > 0) {
                 hasSpeedValues = true;
+            }
+            cadenceDataPoints.add(new Entry(tsShorten, point.getCadence()));
+            if (!hasCadenceValues && point.getCadence() > 0) {
+                hasCadenceValues = true;
             }
         }
 
@@ -77,6 +83,18 @@ public class DefaultWorkoutCharts {
                 final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
                 charts.add(new WorkoutChart("speed", context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND), getUnitString(context, UNIT_METERS_PER_SECOND)));
             }
+        }
+
+        if (hasCadenceValues && !cadenceDataPoints.isEmpty()) {
+            final String label = String.format("%s (%s)", context.getString(R.string.workout_cadence), getUnitString(context, getCadenceUnit(cycleUnit)));
+            final LineDataSet dataset = createDataSet(context, cadenceDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
+            final ValueFormatter integerFormatter = new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) value);
+                }
+            };
+            charts.add(new WorkoutChart("cadence", context.getString(R.string.workout_cadence), ActivitySummaryEntries.GROUP_CADENCE, new LineData(dataset), integerFormatter));
         }
 
         if (!elevationDataPoints.isEmpty()) {
@@ -112,5 +130,15 @@ public class DefaultWorkoutCharts {
         dataSet.setDrawValues(false);
         dataSet.setDrawHorizontalHighlightIndicator(false);
         return dataSet;
+    }
+
+    public static String getCadenceUnit(final ActivityKind.CycleUnit unit) {
+        return switch (unit) {
+            case STROKES -> ActivitySummaryEntries.UNIT_STROKES_PER_MINUTE;
+            case JUMPS -> ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE;
+            case REPS -> ActivitySummaryEntries.UNIT_REPS_PER_MINUTE;
+            case REVOLUTIONS -> ActivitySummaryEntries.UNIT_REVS_PER_MINUTE;
+            default -> ActivitySummaryEntries.UNIT_SPM;
+        };
     }
 }
