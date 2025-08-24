@@ -4310,4 +4310,5 @@
     <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
     <string name="datetime_in_the_future">%1$s (in %2$s)</string>
     <string name="datetime_in_the_past">%1$s (%2$s ago)</string>
+    <string name="rotate_screen">Rotate screen</string>
 </resources>

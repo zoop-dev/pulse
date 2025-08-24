@@ -1,7 +1,13 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
@@ -17,9 +23,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelForm
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.marker.ValueMarker
 import nodomain.freeyourgadget.gadgetbridge.databinding.WorkoutChartsBinding
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart
-import kotlin.math.max
 
-class WorkoutChartsActivity : AbstractGBActivity() {
+class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
     private lateinit var binding: WorkoutChartsBinding
     private var chartData: List<WorkoutChart>? = null
     val selectedCharts = mutableListOf<Any>()
@@ -28,6 +33,7 @@ class WorkoutChartsActivity : AbstractGBActivity() {
         super.onCreate(savedInstanceState)
         binding = WorkoutChartsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        addMenuProvider(this)
         chartData = ChartDataRepository.chartData
 
         if (chartData == null) {
@@ -129,6 +135,26 @@ class WorkoutChartsActivity : AbstractGBActivity() {
         binding.workoutDataChart.marker = ValueMarker(this, lineData, lineDataSetsMarkerFormatters, lineDataSetsMarkerUnits);
         binding.workoutDataChart.highlightValues(null)
         binding.workoutDataChart.invalidate()
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        getMenuInflater().inflate(R.menu.workout_charts_menu, menu);
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_rotate_screen -> {
+                val currentOrientation = getResources().configuration.orientation
+                if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                } else {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                }
+                true
+            }
+
+            else -> false
+        }
     }
 
     companion object {
