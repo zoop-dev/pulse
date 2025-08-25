@@ -3828,4 +3828,10 @@
     <string name="weight_scale_stone_format">%1$d вул %2$d фунт</string>
     <string name="weight_scale_unknown">\???.??? ??</string>
     <string name="record_data">Зберегти</string>
+    <string name="soundcore_auto_power_off_title">Автоматичне вимкнення живлення</string>
+    <string name="soundcore_auto_power_off_summary">Після відключення від телефону пристрій вимкнеться після закінчення заданого часу очікування</string>
+    <string name="soundcore_battery_low_tone_title">Сигнал низького заряду батареї</string>
+    <string name="soundcore_battery_low_tone_summary">Прослуховувати звуковий сигнал, коли рівень заряду батареї нижче 20% та 10%</string>
+    <string name="soundcore_gaming_mode_title">Ігровий Режим</string>
+    <string name="soundcore_gaming_mode_summary">Зменште затримку та покращте звуки кроків і голосів. Може знизити стабільність з’єднання.</string>
 </resources>
