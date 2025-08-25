@@ -39,15 +39,14 @@ public class ZeppOsAgpsFile {
 
     public boolean isValid() {
         if (GBZipFile.isZipFile(fileBytes)) {
-            return isValidAsEpoZip();
+            final GBZipFile zipFile = new GBZipFile(fileBytes);
+            return isValidAsEpoZip(zipFile) || isValidAsBrmZip(zipFile);
         } else {
             return isValidAsUihh();
         }
     }
 
-    private boolean isValidAsEpoZip() {
-        final GBZipFile zipFile = new GBZipFile(fileBytes);
-
+    private boolean isValidAsEpoZip(final GBZipFile zipFile) {
         try {
             final byte[] manifestBin = zipFile.getFileFromZip("META-INF/MANIFEST.MF");
             if (manifestBin == null) {
@@ -65,6 +64,17 @@ public class ZeppOsAgpsFile {
                     zipFile.fileExists("EPO_GR_3.DAT");
         } catch (final Exception e) {
             LOG.error("Failed to parse read MANIFEST or check file", e);
+        }
+
+        return false;
+    }
+
+    private boolean isValidAsBrmZip(final GBZipFile zipFile) {
+        try {
+            // There's another lto2dv5.brm but we don't what type it gets sent as
+            return zipFile.fileExists("lto7dv5.brm");
+        } catch (final Exception e) {
+            LOG.error("Failed to check brm files", e);
         }
 
         return false;
@@ -104,15 +114,21 @@ public class ZeppOsAgpsFile {
 
     public byte[] getUihhBytes() {
         if (GBZipFile.isZipFile(fileBytes)) {
-            // EPO zip - repackage into UIHH
+            // zip - repackage into UIHH
             final UIHHContainer uihh = new UIHHContainer();
 
             final GBZipFile zipFile = new GBZipFile(fileBytes);
 
             try {
-                uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GR_3, zipFile.getFileFromZip("EPO_GR_3.DAT"));
-                uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GAL_7, zipFile.getFileFromZip("EPO_GAL_7.DAT"));
-                uihh.addFile(UIHHContainer.FileType.AGPS_EPO_BDS_3, zipFile.getFileFromZip("EPO_BDS_3.DAT"));
+                if (isValidAsEpoZip(zipFile)) {
+                    uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GR_3, zipFile.getFileFromZip("EPO_GR_3.DAT"));
+                    uihh.addFile(UIHHContainer.FileType.AGPS_EPO_GAL_7, zipFile.getFileFromZip("EPO_GAL_7.DAT"));
+                    uihh.addFile(UIHHContainer.FileType.AGPS_EPO_BDS_3, zipFile.getFileFromZip("EPO_BDS_3.DAT"));
+                } else if (isValidAsBrmZip(zipFile)) {
+                    uihh.addFile(UIHHContainer.FileType.AGPS_BRM_LTO_7D, zipFile.getFileFromZip("lto7dv5.brm"));
+                } else {
+                    throw new IllegalStateException("Unknown agps zip file - this should never happen");
+                }
             } catch (final ZipFileException e) {
                 throw new IllegalStateException("Failed to read file from zip", e);
             }

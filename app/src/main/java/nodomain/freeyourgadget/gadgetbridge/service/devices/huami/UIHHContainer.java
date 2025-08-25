@@ -182,6 +182,7 @@ public class UIHHContainer {
         AGPS_EPO_GR_3(-116, "EPO_GR_3.DAT"),
         AGPS_EPO_GAL_7(-115, "EPO_GAL_7.DAT"),
         AGPS_EPO_BDS_3(-114, "EPO_BDS_3.DAT"),
+        AGPS_BRM_LTO_7D(0x8b, "lto7dv5.brm"),
         ;
 
         private final byte value;
