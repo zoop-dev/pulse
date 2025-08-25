@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -175,6 +176,7 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
             return ret;
         }
 
+        Arrays.sort(childEntries);
         for (final String child : childEntries) {
             getAllRelativeFilesAux(ret, dir, child);
         }
@@ -193,6 +195,7 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
                 return;
             }
 
+            Arrays.sort(childEntries);
             for (final String child : childEntries) {
                 getAllRelativeFilesAux(currentList, externalFilesDir, relativePath + "/" + child);
             }
