@@ -4010,4 +4010,10 @@
     <string name="weight_scale_stone_format">%1$d st %2$d lb</string>
     <string name="weight_scale_unknown">\???.??? ??</string>
     <string name="record_data">Zapisz</string>
+    <string name="soundcore_auto_power_off_title">Auto wyłączanie</string>
+    <string name="soundcore_auto_power_off_summary">Po rozłączeniu urządzenie wyłączy się po określonym czasie</string>
+    <string name="soundcore_battery_low_tone_title">Alarm niskiej baterii</string>
+    <string name="soundcore_battery_low_tone_summary">Odtwarzaj dźwięk powiadomienia, gdy poziom baterii spadnie poniżej 20% i 10%</string>
+    <string name="soundcore_gaming_mode_title">Tryb gry</string>
+    <string name="soundcore_gaming_mode_summary">Zmniejsz opóźnienia i wzmocnij dźwięki kroków oraz głosów. Może zmniejszyć stabilność połączenia.</string>
 </resources>
