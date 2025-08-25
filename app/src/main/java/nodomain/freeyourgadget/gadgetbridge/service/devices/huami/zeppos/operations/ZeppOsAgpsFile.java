@@ -25,11 +25,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.UIHHContainer;
+import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GBZipFile;
 import nodomain.freeyourgadget.gadgetbridge.util.ZipFileException;
 
 public class ZeppOsAgpsFile {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsAgpsFile.class);
+
+    private static final byte[] BRM_HEADER = new byte[]{
+            (byte) 0xb5, 0x62, 0x13, 0x20,
+            0x4c, 0x00, 0x00, 0x00, 0x01,
+    };
 
     private final byte[] fileBytes;
 
@@ -42,7 +48,7 @@ public class ZeppOsAgpsFile {
             final GBZipFile zipFile = new GBZipFile(fileBytes);
             return isValidAsEpoZip(zipFile) || isValidAsBrmZip(zipFile);
         } else {
-            return isValidAsUihh();
+            return isValidAsRawBrm() || isValidAsUihh();
         }
     }
 
@@ -78,6 +84,12 @@ public class ZeppOsAgpsFile {
         }
 
         return false;
+    }
+
+    private boolean isValidAsRawBrm() {
+        // Avoid installing the smaller lto2dv5.brm, since the header seems to be the same
+        return ArrayUtils.equals(fileBytes, BRM_HEADER, 0)
+                && fileBytes.length > 300_000 && fileBytes.length < 500_000;
     }
 
     private boolean isValidAsUihh() {
@@ -133,6 +145,11 @@ public class ZeppOsAgpsFile {
                 throw new IllegalStateException("Failed to read file from zip", e);
             }
 
+            return uihh.toRawBytes();
+        } else if (isValidAsRawBrm()) {
+            // lto7dv5.brm - repackage into UIHH
+            final UIHHContainer uihh = new UIHHContainer();
+            uihh.addFile(UIHHContainer.FileType.AGPS_BRM_LTO_7D, fileBytes);
             return uihh.toRawBytes();
         } else {
             final UIHHContainer uihhContainer = UIHHContainer.fromRawBytes(fileBytes);
