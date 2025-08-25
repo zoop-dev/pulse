@@ -35,18 +35,15 @@ public class UltrahumanActivitySampleProvider extends AbstractSampleProvider<Ult
     }
 
     public static ActivityKind normalizeTypeStatic(int rawType) {
-        switch (rawType) {
-            case 5:
-                return ActivityKind.BREATHWORK;
-            case 6:
-                return ActivityKind.EXERCISE;
-            default:
-                return (rawType >= 100) ? ActivityKind.NOT_WORN : ActivityKind.UNKNOWN;
-        }
+        return switch (rawType) {
+            case 5 -> ActivityKind.BREATHWORK;
+            case 6 -> ActivityKind.EXERCISE;
+            default -> (rawType >= 100) ? ActivityKind.NOT_WORN : ActivityKind.UNKNOWN;
+        };
     }
 
     public static float normalizeIntensityStatic(int rawIntensity) {
-        return rawIntensity / 150f;
+        return rawIntensity / 150.0f;
     }
 
     @NonNull
@@ -80,18 +77,13 @@ public class UltrahumanActivitySampleProvider extends AbstractSampleProvider<Ult
 
     @Override
     public int toRawActivityKind(ActivityKind activityKind) {
-        switch (activityKind) {
-            case UNKNOWN:
-                return 1;
-            case BREATHWORK:
-                return 5;
-            case EXERCISE:
-                return 6;
-            case NOT_WORN:
-                return 100;
-            default:
-                return 0;
-        }
+        return switch (activityKind) {
+            case UNKNOWN -> 1;
+            case BREATHWORK -> 5;
+            case EXERCISE -> 6;
+            case NOT_WORN -> 100;
+            default -> 0;
+        };
     }
 
     @Override

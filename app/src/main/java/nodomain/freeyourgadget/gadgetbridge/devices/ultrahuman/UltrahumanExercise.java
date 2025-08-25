@@ -18,9 +18,11 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 
 public enum UltrahumanExercise {
-    CHECK((byte) 0),
+    CHECK(UltrahumanConstants.OPERATION_CHECK_DATA),
     BREATHING_START(UltrahumanConstants.OPERATION_BREATHING_START),
-    BREATHING_STOP(UltrahumanConstants.OPERATION_BREATHING_STOP);
+    BREATHING_STOP(UltrahumanConstants.OPERATION_BREATHING_STOP),
+    EXERCISE_START(UltrahumanConstants.OPERATION_EXERCISE_START),
+    EXERCISE_STOP(UltrahumanConstants.OPERATION_EXERCISE_STOP);
 
     public final byte Code;
 

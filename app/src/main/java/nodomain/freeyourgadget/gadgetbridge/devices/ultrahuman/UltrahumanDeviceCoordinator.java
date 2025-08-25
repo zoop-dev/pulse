@@ -34,6 +34,7 @@ import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider;
@@ -80,7 +81,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
         editor.putBoolean(GBPrefs.DEVICE_CONNECT_BACK, true);
         editor.putBoolean(GBPrefs.DEVICE_AUTO_RECONNECT, true);
 
-        // when the battery is low the gadget loses it's clock
+        // the gadget loses it's clock when the battery is low
         editor.putBoolean(DeviceSettingsPreferenceConst.PREF_TIME_SYNC, true);
 
         // O2 measurement with smart rings is still work in progress
@@ -133,6 +134,13 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public DeviceSpecificSettings getDeviceSpecificSettings(GBDevice device) {
+        final DeviceSpecificSettings settings = new DeviceSpecificSettings();
+        settings.addRootScreen(R.xml.devicesettings_ultrahuman_air);
+        return settings;
+    }
+
+    @Override
     public String getManufacturer() {
         return "Ultrahuman Healthcare Pvt Ltd";
     }
@@ -168,11 +176,6 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
-        return new int[]{R.xml.devicesettings_ultrahuman_air};
-    }
-
-    @Override
     public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(GBDevice device, DaoSession session) {
         return new GenericTemperatureSampleProvider(device, session);
     }
@@ -188,7 +191,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -198,23 +201,28 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsContinuousTemperature(final GBDevice device) {
+    public boolean supportsContinuousTemperature(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsHrvMeasurement(final GBDevice device) {
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return false;
+    }
+
+    @Override
+    public boolean supportsRealtimeData(@NonNull GBDevice device) {
+        return true;
     }
 
     @Override
@@ -223,7 +231,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull GBDevice device) {
         return true;
     }
 
@@ -233,7 +241,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+    public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 

@@ -19,20 +19,31 @@ package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 
 import java.io.Serializable;
 
-public class UltrahumanExerciseData implements Serializable {
+import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+
+/**
+ * Helper for DeviceService#ACTION_REALTIME_SAMPLES and UltrahumanConstants.ACTION_EXERCISE_UPDATE intents.
+  */
+public class UltrahumanExerciseData implements ActivitySample, Serializable{
     public int BatteryLevel;
     public int Exercise;
+
+    public int Timestamp;
+    public int MeasurementType;
     public int HR;
     public int HRV;
     public float Temperature;
-    public int Timestamp;
+
+    public String Mystery;
 
     public UltrahumanExerciseData() {
         BatteryLevel = -1;
         Exercise = -1;
         HR = -1;
         HRV = -1;
-        Temperature = -1;
+        Temperature = -1.0f;
         Timestamp = -1;
     }
 
@@ -40,5 +51,65 @@ public class UltrahumanExerciseData implements Serializable {
         this();
         BatteryLevel = batteryLevel;
         Exercise = exercise;
+    }
+
+    public UltrahumanExerciseData(int batteryLevel, int exercise, byte type) {
+        this(batteryLevel,exercise);
+        MeasurementType = type;
+    }
+
+    @Override
+    public SampleProvider<?> getProvider() {
+        return null;
+    }
+
+    @Override
+    public int getRawKind() {
+        return 0;
+    }
+
+    @Override
+    public ActivityKind getKind() {
+        return ActivityKind.UNKNOWN;
+    }
+
+    @Override
+    public int getRawIntensity() {
+        return 0;
+    }
+
+    @Override
+    public float getIntensity() {
+        return 0.0f;
+    }
+
+    @Override
+    public int getSteps() {
+        return 0;
+    }
+
+    @Override
+    public int getDistanceCm() {
+        return 0;
+    }
+
+    @Override
+    public int getActiveCalories() {
+        return 0;
+    }
+
+    @Override
+    public int getHeartRate() {
+        return HR;
+    }
+
+    @Override
+    public void setHeartRate(int value) {
+        HR = value;
+    }
+
+    @Override
+    public int getTimestamp() {
+        return Timestamp;
     }
 }

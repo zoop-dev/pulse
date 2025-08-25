@@ -22,11 +22,11 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanConstants;
 
 public enum UltrahumanCharacteristic {
-    COMMAND(UltrahumanConstants.UUID_CHARACTERISTIC_COMMAND),
-    RESPONSE(UltrahumanConstants.UUID_CHARACTERISTIC_RESPONSE),
-    STATE(UltrahumanConstants.UUID_CHARACTERISTIC_STATE),
-    DATA(UltrahumanConstants.UUID_CHARACTERISTIC_DATA),
-    TODO(UltrahumanConstants.UUID_CHARACTERISTIC_TODO);
+    COMMAND(UltrahumanConstants.UUID_COMMAND),
+    RESPONSE(UltrahumanConstants.UUID_RESPONSE),
+    STATE(UltrahumanConstants.UUID_STATE),
+    DATA(UltrahumanConstants.UUID_DATA),
+    TODO(UltrahumanConstants.UUID_TODO);
 
     public final UUID uuid;
 

@@ -33,8 +33,10 @@ public final class UltrahumanConstants {
     public static final byte OPERATION_ACTIVATE_AIRPLANE_MODE = 0x70;
     public static final byte OPERATION_BREATHING_START = 0x72;
     public static final byte OPERATION_BREATHING_STOP = 0x74;
-    public static final byte OPERATION_DISABLE_POWERSAVE = (byte) 0xD1;
-    public static final byte OPERATION_ENABLE_POWERSAVE = (byte) 0xD2;
+    public static final byte OPERATION_ENABLE_SPO2 = (byte) 0xD1;
+    public static final byte OPERATION_DISABLE_SPO2 = (byte) 0xD2;
+    public static final byte OPERATION_EXERCISE_START = 0x62;
+    public static final byte OPERATION_EXERCISE_STOP = 0x64;
     public static final byte OPERATION_GET_FIRST_RECORDING_NR = 0x07;
     public static final byte OPERATION_GET_LAST_RECORDING_NR = 0x08;
     public static final byte OPERATION_GET_RECORDINGS = 0x04;
@@ -43,15 +45,15 @@ public final class UltrahumanConstants {
     public static final byte OPERATION_SETTIME = 0x02;
 
     public static final UUID UUID_SERVICE_DATA = UUID.fromString("86f66000-f706-58a0-95b2-1fb9261e4dc7");
-    public static final UUID UUID_CHARACTERISTIC_DATA = UUID.fromString("86f66001-f706-58a0-95b2-1fb9261e4dc7");
+    public static final UUID UUID_DATA = UUID.fromString("86f66001-f706-58a0-95b2-1fb9261e4dc7");
 
     public static final UUID UUID_SERVICE_REQUEST = UUID.fromString("86f65000-f706-58a0-95b2-1fb9261e4dc7");
-    public static final UUID UUID_CHARACTERISTIC_COMMAND = UUID.fromString("86f65001-f706-58a0-95b2-1fb9261e4dc7");
-    public static final UUID UUID_CHARACTERISTIC_RESPONSE = UUID.fromString("86f65002-f706-58a0-95b2-1fb9261e4dc7");
+    public static final UUID UUID_COMMAND = UUID.fromString("86f65001-f706-58a0-95b2-1fb9261e4dc7");
+    public static final UUID UUID_RESPONSE = UUID.fromString("86f65002-f706-58a0-95b2-1fb9261e4dc7");
 
     public static final UUID UUID_SERVICE_STATE = UUID.fromString("86f61000-f706-58a0-95b2-1fb9261e4dc7");
-    public static final UUID UUID_CHARACTERISTIC_STATE = UUID.fromString("86f61001-f706-58a0-95b2-1fb9261e4dc7");
+    public static final UUID UUID_STATE = UUID.fromString("86f61001-f706-58a0-95b2-1fb9261e4dc7");
 
     public static final UUID UUID_SERVICE_TODO = UUID.fromString("86f63000-f706-58a0-95b2-1fb9261e4dc7");
-    public static final UUID UUID_CHARACTERISTIC_TODO = UUID.fromString("86f63001-f706-58a0-95b2-1fb9261e4dc7");
+    public static final UUID UUID_TODO = UUID.fromString("86f63001-f706-58a0-95b2-1fb9261e4dc7");
 }

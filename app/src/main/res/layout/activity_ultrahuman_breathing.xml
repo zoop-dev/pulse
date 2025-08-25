@@ -1,75 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/ultrahuman_breathing_status"
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
-        android:text="b:000% t:00"
-        android:textAlignment="center" />
+        android:columnCount="2">
 
-    <TextView
-        android:id="@+id/ultrahuman_breathing_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
-        android:text="00:00:00"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/ultrahuman_breathing_HR"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
-        android:text="000 bpm"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/ultrahuman_breathing_temp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
-        android:text="00.000 °C"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/ultrahuman_breathing_HRV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:autoSizeTextType="uniform"
-        android:text="000 ms"
-        android:textAlignment="center" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/ultrahuman_exercise_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="3"
+            android:layout_gravity="fill"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="00:00:00" />
 
         <Button
-            android:id="@+id/ultrahuman_breathing_start"
+            android:id="@+id/ultrahuman_exercise_batGadget"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
-            android:text="@string/ultrahuman_breathing_start" />
+            android:enabled="false"
+            android:text="100 %" />
 
         <Button
-            android:id="@+id/ultrahuman_breathing_stop"
+            android:id="@+id/ultrahuman_exercise_type"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
-            android:text="@string/ultrahuman_breathing_stop" />
-    </LinearLayout>
-</LinearLayout>
+            android:clickable="false"
+            android:enabled="true"
+            android:text="DT" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_batAndroid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:enabled="false"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/ultrahuman_exercise_hr_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="3"
+            android:layout_gravity="fill"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="80" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_hr_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false"
+            android:text="" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_hr_uom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:text="BPM" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_hr_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/ultrahuman_exercise_temperature_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="3"
+            android:layout_gravity="fill"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="36.000" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_temperature_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false"
+            android:text="" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_temperature_uom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:text="@string/unit_celsius" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_temperature_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/ultrahuman_exercise_hrv_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="3"
+            android:layout_gravity="fill"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="120" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_hrv_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false"
+            android:text="" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_hrv_uom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:text="ms" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_hrv_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false"
+            android:text="" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_start1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="3"
+            android:layout_gravity="fill"
+            android:autoSizeTextType="uniform"
+            android:text="@string/start"
+            app:icon="@drawable/ic_play" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false"
+            android:text="" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_stop1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:text="@string/stop" />
+
+        <Button
+            android:id="@+id/ultrahuman_exercise_stop2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:enabled="false" />
+    </GridLayout>
+</ScrollView>

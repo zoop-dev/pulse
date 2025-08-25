@@ -26,6 +26,7 @@ import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -333,5 +334,18 @@ public class DateTimeUtils {
         Date date = new Date(epochMilli);
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
         return format.format(date);
+    }
+
+    /// number of seconds since UTC epoch of 1970-01-01T00:00:00Z
+    public static long getEpochSeconds() {
+        final long epoc;
+        if (GBApplication.isRunningOreoOrLater()) {
+            epoc = Instant.now().getEpochSecond();
+        } else {
+            Calendar calendar = getCalendarUTC();
+            long millis = calendar.getTimeInMillis();
+            epoc = Math.round(millis / 1000.0d);
+        }
+        return epoc;
     }
 }

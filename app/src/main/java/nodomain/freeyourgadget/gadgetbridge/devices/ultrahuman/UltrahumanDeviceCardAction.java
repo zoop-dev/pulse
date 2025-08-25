@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -33,10 +35,12 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
     private final int Description;
     private final int Question;
 
+    @Nullable
     private final String IntentAction;
+    @Nullable
     private final Class<?> IntentClass;
 
-    public UltrahumanDeviceCardAction(int icon, int description, int question, String action) {
+    UltrahumanDeviceCardAction(int icon, int description, int question, String action) {
         Icon = icon;
         Description = description;
         Question = question;
@@ -44,7 +48,7 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
         IntentClass = null;
     }
 
-    public UltrahumanDeviceCardAction(int icon, int description, Class<?> cls) {
+    UltrahumanDeviceCardAction(int icon, int description, Class<?> cls) {
         Icon = icon;
         Description = description;
         Question = 0;
@@ -64,7 +68,9 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
 
     @Override
     public void onClick(GBDevice device, Context context) {
-        if (Question != 0) {
+        if (Question == 0) {
+            sendIntent(device, context);
+        } else {
             new MaterialAlertDialogBuilder(context)
                     .setTitle(Description)
                     .setMessage(Question)
@@ -73,8 +79,6 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
                             -> sendIntent(device, context))
                     .setNegativeButton(android.R.string.no, null)
                     .show();
-        } else {
-            sendIntent(device, context);
         }
     }
 
