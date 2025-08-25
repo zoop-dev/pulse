@@ -3998,4 +3998,10 @@
     <string name="weight_scale_jin">jin - 市斤</string>
     <string name="weight_scale_jin_format">%1$.2f 市斤</string>
     <string name="bluetooth_multipoint_no_devices">Нет сопряженных устройств.\n\nНажмите Подключить новое устройство, чтобы добавить</string>
+    <string name="soundcore_auto_power_off_title">Автоматическое выключение питания</string>
+    <string name="soundcore_auto_power_off_summary">При отключении от телефона устройство будет отключаться после указанного периода</string>
+    <string name="soundcore_battery_low_tone_title">Сигнал низкого заряда батареи</string>
+    <string name="soundcore_battery_low_tone_summary">Издавать звуковой сигнал, когда уровень заряда батареи опустился ниже 20% и 10%</string>
+    <string name="soundcore_gaming_mode_title">Игровой режим</string>
+    <string name="soundcore_gaming_mode_summary">Уменьшить задержку и улучшить звучание шагов и голосов. Может снизить стабильность соединения.</string>
 </resources>
