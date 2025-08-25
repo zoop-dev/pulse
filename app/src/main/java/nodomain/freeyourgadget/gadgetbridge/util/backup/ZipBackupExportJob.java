@@ -43,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class ZipBackupExportJob extends AbstractZipBackupJob {
@@ -243,8 +244,17 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
         );
         final String metadataJson = GSON.toJson(metadata);
 
+        // the comment is deliberately not localized
+        // store the same comment both as zip archive comment and metadata file comment
+        // a few tools show both, some tools only show one and yet other tools show neither
+        final String date = DateTimeUtils.formatIso8601UTC(metadata.getBackupDate());
+        final String comment = "data export from Android application " + metadata.getAppId() + " version " + metadata.getAppVersionName() + " from " + date;
+
         final ZipEntry zipEntry = new ZipEntry(METADATA_FILENAME);
+        zipEntry.setComment(comment);
         zipOut.putNextEntry(zipEntry);
         zipOut.write(metadataJson.getBytes(StandardCharsets.UTF_8));
+
+        zipOut.setComment(comment);
     }
 }
