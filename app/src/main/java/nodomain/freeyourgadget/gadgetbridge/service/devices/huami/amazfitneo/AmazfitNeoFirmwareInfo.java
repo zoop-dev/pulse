@@ -35,10 +35,12 @@ public class AmazfitNeoFirmwareInfo extends HuamiFirmwareInfo {
 
     public static final int FW_HEADER_OFFSET = 0x90;
 
-    private static Map<Integer, String> crcToVersion = new HashMap<>();
+    private static final Map<Integer, String> crcToVersion = new HashMap<>();
 
     static {
-        // no known fw so far
+        // 1.1.2.58 - #5280
+        crcToVersion.put(25427, "1.1.2.58"); // firmware
+        crcToVersion.put(51301, "1.1.2.58"); // resources
     }
 
     public AmazfitNeoFirmwareInfo(byte[] bytes) {
