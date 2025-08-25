@@ -367,7 +367,7 @@
     <string name="charts_legend_heartrate">心率</string>
     <string name="live_activity_heart_rate">心率</string>
     <string name="pref_title_pebble_health_store_raw">在数据库中存储原始记录</string>
-    <string name="pref_summary_pebble_health_store_raw">以\"原样\"保存数据，增加数据库使用量以允许稍后翻译。</string>
+    <string name="pref_summary_pebble_health_store_raw">以原样保存数据，增加数据库使用量以允许稍后翻译。</string>
     <string name="action_db_management">数据管理</string>
     <string name="title_activity_db_management">数据管理</string>
     <string name="activity_db_management_import_export_explanation">导入/导出操作将会使用您设备的以下路径（见下）。该目录可以被您的其他应用和您的计算机访问。请注意：若您卸载Gadgetbridge，该目录中的所有内容也会被删除。其中包括的数据有：
@@ -710,7 +710,7 @@
     <string name="activity_error_no_app_for_gpx">若需要查看活动轨迹，请安装一个能查看 GPX 文件的应用。</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 设置</string>
     <string name="prefs_find_phone">查找手机</string>
-    <string name="prefs_enable_find_phone">启用“查找手机”</string>
+    <string name="prefs_enable_find_phone">启用查找手机</string>
     <string name="prefs_find_phone_summary">使用您的手环以在手机上播放铃声。</string>
     <string name="prefs_find_phone_duration">铃声将持续数秒</string>
     <string name="maximum_duration">持续</string>
@@ -858,7 +858,7 @@
     <string name="error_background_service_reason">由于意外错误，启动后台服务失败。 - 点击此处查看更多详情。\n\n错误：</string>
     <string name="error_background_service_reason_truncated">无法启动后台服务是由于…</string>
     <string name="error_background_service">启动后台服务失败</string>
-    <string name="error_version_check_extreme_caution">注意：检查版本信息时发生错误！您不应该继续下去，已知版本名 \"%s\"</string>
+    <string name="error_version_check_extreme_caution">注意：检查版本信息时发生错误！您不应该继续下去！已知版本名 %s</string>
     <string name="menuitem_stress">压力</string>
     <string name="menuitem_cycles">周期跟踪</string>
     <string name="menuitem_breathing">呼吸</string>
@@ -1587,8 +1587,8 @@
     <string name="pref_workout_start_on_phone_title">健身应用追踪</string>
     <string name="pref_workout_start_on_phone_summary">在手环上开始 GPS 锻炼时，在手机上开始/停止健身应用跟踪</string>
     <string name="notification_channel_gps">GPS跟踪</string>
-    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。 \n \n请点击\'%2$s\'然后\'%1$s\'并启用\'允许通知访问\'，然后点击\'返回\'以返回到%1$s。</string>
-    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。 \n \n请点击“%2$s”然后点击“%1$s”并启用“允许请勿打扰”，然后点击“返回”返回到%1$s。</string>
+    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。 \n \n请点击 %2$s 然后 %1$s 并启用允许通知访问，然后点击返回至 %1$s。</string>
+    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。 \n \n请点击 %2$s 然后点击 %1$s 并启用允许请勿打扰，然后点击返回至 %1$s。</string>
     <string name="pref_workout_send_gps_title">在锻炼期间发送 GPS</string>
     <string name="pref_workout_send_gps_summary">锻炼时将当前的GPS位置发送到手环上</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
@@ -1602,7 +1602,7 @@
     <string name="info_connected_count">%d 设备已连接</string>
     <string name="pref_title_banglejs_webview_url">应用加载程序网址</string>
     <string name="pref_summary_banglejs_webview_url">如果您想要一个自定义的应用程序加载器，请将您的 https://…/android.html 网址放在这里。留空的话则为： https://banglejs.com/apps</string>
-    <string name="permission_location">%1$s 需要在后台访问您的位置，以使其即使在屏幕关闭时也能与您的手表保持连接。 \n \n请在稍后出现的页面中选择 \'%2$s\' ，并点击返回至 %1$s 。</string>
+    <string name="permission_location">%1$s 需要在后台访问您的位置，以使其即使在屏幕关闭时也能与您的手表保持连接。 \n \n请在稍后出现的页面中选择 %2$s ，然后点击返回至 %1$s 。</string>
     <string name="lithuanian">立陶宛语</string>
     <string name="persian">波斯语</string>
     <string name="scandinavian">斯堪的纳维亚语</string>
@@ -1702,14 +1702,14 @@
     <string name="prefs_hourly_chime_summary">手表每小时将发出一次蜂鸣音</string>
     <string name="step_streaks_achievements_sharing_message">我每天的步数成就!</string>
     <string name="step_streaks_achievements_sharing_title">步数成就</string>
-    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。 \n \n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。 \n \n请点击“%2$s”，然后点击“%1$s”并启用“允许显示在其他应用程序上”，然后点击“返回”返回到%1$s。 \n \n若需要停止 %1$s 询问权限，请进入“设置”，并取消“检查权限状态”。 \n \n请确保 %1$s 已经给予了必要的权限。</string>
+    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。 \n \n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。 \n \n请点击 %2$s，然后点击 %1$s 并启用允许显示在其他应用程序上，然后点击返回至 %1$s。 \n \n若需要停止 %1$s 询问权限，请进入设置，并取消检查权限状态。 \n \n请确保 %1$s 已经给予了必要的权限。</string>
     <string name="pref_header_display">显示</string>
     <string name="pref_header_health">健康</string>
     <string name="pref_header_time">时间</string>
     <string name="pref_header_workout">锻炼</string>
     <string name="pref_summary_canned_replies">在手表上使用预设的消息进行回复</string>
     <string name="pref_title_screen_on_on_notifications">来通知时亮屏</string>
-    <string name="pref_summary_screen_on_on_notifications">收到通知时亮起手环屏幕</string>
+    <string name="pref_summary_screen_on_on_notifications">收到通知时亮起设备屏幕</string>
     <string name="pref_cache_weather">缓存天气信息</string>
     <string name="heartrate_bpm_40">40 次/分钟</string>
     <string name="heartrate_bpm_45">45 次/分钟</string>
@@ -2155,7 +2155,7 @@
     <string name="busy_task_fetch_sleep_respiratory_rate_data">正在获取睡眠呼吸频率数据</string>
     <string name="activity_prefs_goals">目标</string>
     <string name="error_no_bluetooth_scan">必须授予并启用蓝牙扫描访问权限才能使扫描正常的工作</string>
-    <string name="permission_request">%1$s 允许您将消息和其他数据从 Android 发送到您的设备。 为此，它需要访问该数据的权限，如果没有该权限，它可能无法正常运行。 \n \n现在您将看到一些请求这些权限的 Android 对话框。 \n \n请点击“%2$s”继续。</string>
+    <string name="permission_request">%1$s 允许您将消息和其他数据从 Android 发送到您的设备。 为此，它需要访问该数据的权限，如果没有该权限，它可能无法正常运行。 \n \n现在您将看到一些请求这些权限的 Android 对话框。 \n \n请点击 %2$s 继续。</string>
     <string name="error_no_bluetooth_connect">必须授予并启用蓝牙连接访问权限才能使扫描正常的工作</string>
     <string name="activity_type_surfing">冲浪</string>
     <string name="activity_type_kitesurfing">风筝冲浪</string>
@@ -2850,7 +2850,7 @@
     <string name="hrv_status_last_night_highest_5">最后一晚 5 分钟平最高均值</string>
     <string name="hrv_status_seven_days_avg_long">7天平均</string>
     <string name="hrv_status_unit">%1$d 毫秒</string>
-    <string name="hrv_status_baseline">%1$d-%2$d 毫秒</string>
+    <string name="hrv_status_baseline">%1$d–%2$d 毫秒</string>
     <string name="hrv_status_baseline_label">基线</string>
     <string name="pref_header_hrv_status">心率变异状况</string>
     <string name="hrv_status">心率变异状况</string>
@@ -3831,7 +3831,7 @@
     <string name="interval_6_hour">每 6 小时</string>
     <string name="fwinstaller_file_not_compatible_to_device">所选文件与设备不兼容</string>
     <string name="fwinstaller_no_compatible_device_found">未找到兼容设备安装 %1s</string>
-    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">午休期间 (12:00-14:00) 禁用久坐提醒</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">午休期间 (12:00–14:00) 禁用久坐提醒</string>
     <string name="activity_type_free_diving">自由潜水</string>
     <string name="activity_type_apnea_training">闭气训练</string>
     <string name="activity_type_apnea_test">闭气测试</string>
