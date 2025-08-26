@@ -447,7 +447,8 @@ public class FitImporter {
         }
 
         for (final Map.Entry<Integer, Integer> e : unknownRecords.entrySet()) {
-            LOG.warn("Unknown record of global number {} seen {} times", e.getKey(), e.getValue());
+            final String globalNumber = FitDebug.mesgNumLookup(e.getKey());
+            LOG.warn("Unknown record of global number {} seen {} times", globalNumber, e.getValue());
         }
     }
 

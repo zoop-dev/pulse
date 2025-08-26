@@ -648,7 +648,8 @@ public class GlobalFITMessage {
         if (found != null) {
             return found;
         }
-        return new GlobalFITMessage(number, "UNK_" + number, null);
+
+        return new GlobalFITMessage(number, "UNK_" + FitDebug.mesgNumLookup(number), null);
     }
 
     public String name() {
