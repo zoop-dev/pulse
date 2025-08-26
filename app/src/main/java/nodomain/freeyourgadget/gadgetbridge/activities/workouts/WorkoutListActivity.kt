@@ -101,9 +101,9 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-        resultData?.extras?.let { bundle ->
-            when (requestCode) {
-                ACTIVITY_FILTER -> {
+        when (requestCode) {
+            ACTIVITY_FILTER -> {
+                resultData?.extras?.let { bundle ->
                     activityFilter = bundle.getInt("activityFilter", 0)
                     dateFromFilter = bundle.getLong("dateFromFilter", 0)
                     dateToFilter = bundle.getLong("dateToFilter", 0)
@@ -113,7 +113,12 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
                     itemsFilter = bundle.getSerializable("itemsFilter") as? List<Long>
                     refresh()
                 }
-                ACTIVITY_DETAIL -> refresh()
+            }
+            ACTIVITY_DETAIL -> {
+                if (resultCode == WorkoutDetailsActivity.RESULT_WORKOUT_CHANGED) {
+                    // FIXME we could try to only update the workouts that changed
+                    refresh()
+                }
             }
         }
     }

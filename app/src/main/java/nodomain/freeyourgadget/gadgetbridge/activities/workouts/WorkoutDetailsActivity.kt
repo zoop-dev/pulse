@@ -117,6 +117,7 @@ class WorkoutDetailsActivity : AbstractGBActivity() {
 
     companion object {
         const val EXTRA_WORKOUT_ID = "workout_id"
+        const val RESULT_WORKOUT_CHANGED = 2
 
         fun createSingleWorkoutIntent(
             context: Context,

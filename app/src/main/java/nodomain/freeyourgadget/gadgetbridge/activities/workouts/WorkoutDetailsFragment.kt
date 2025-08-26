@@ -566,6 +566,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 currentWorkout?.let {
                     workoutEditor.editWorkoutName(it, object : WorkoutEditor.Callback {
                         override fun onWorkoutUpdated() {
+                            notifyWorkoutChanged()
                             updateWorkoutHeader(workout.summary)
                         }
                     })
@@ -577,6 +578,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 currentWorkout?.let {
                     workoutEditor.editGpsTrack(it, object : WorkoutEditor.Callback {
                         override fun onWorkoutUpdated() {
+                            notifyWorkoutChanged()
                             // Reload the entire workout data so that we can refresh the charts
                             loadWorkoutData()
                         }
@@ -592,6 +594,13 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
             else -> false
         }
+    }
+
+    private fun notifyWorkoutChanged() {
+        val resultIntent = Intent().apply {
+            putExtra(ARG_WORKOUT_ID, workoutId)
+        }
+        requireActivity().setResult(WorkoutDetailsActivity.RESULT_WORKOUT_CHANGED, resultIntent)
     }
 
     private fun updateMenuItems(menu: Menu) {
