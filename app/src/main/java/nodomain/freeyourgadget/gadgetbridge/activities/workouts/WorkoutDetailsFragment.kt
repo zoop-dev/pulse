@@ -47,12 +47,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -60,9 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.marker.ValueMarker
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
-import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel.Companion.getActivityPoints
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.ChartDataRepository
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
@@ -450,7 +445,6 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             isHighlightPerDragEnabled = false
             isHighlightPerTapEnabled = false
             isDragEnabled = false
-
         }
         lineChart.xAxis.apply {
             setDrawLabels(true)
@@ -473,6 +467,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         lineChart.axisRight.apply {
             isEnabled = false
         }
+        chart.lineChart(lineChart);
         lineChart.data = chart.chartData as LineData?
         lineChart.description.isEnabled = false;
         lineChart.onChartGestureListener = object : OnChartGestureListener {

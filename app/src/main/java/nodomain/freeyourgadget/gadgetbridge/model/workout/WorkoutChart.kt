@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.model.workout
 
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.formatter.ValueFormatter
 
@@ -10,4 +11,5 @@ data class WorkoutChart @JvmOverloads constructor(
     val chartData: ChartData<*>,
     var chartYLabelFormatter: ValueFormatter? = null,
     var unitString: String? = null,
+    val lineChart: (LineChart) -> Unit = {}
 )

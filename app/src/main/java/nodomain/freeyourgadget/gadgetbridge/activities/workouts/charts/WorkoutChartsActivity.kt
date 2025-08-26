@@ -153,6 +153,12 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                 true
             }
 
+            android.R.id.home -> {
+                // back button
+                finish()
+                true
+            }
+
             else -> false
         }
     }
