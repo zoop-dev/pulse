@@ -328,10 +328,16 @@ public class ZeppOsFwHelper {
         }
 
         // Attempt to handle as a zab file
-        final byte[] zpkBytes = handleZabPackage(zipFile);
-        if (zpkBytes != null) {
+        byte[] zpkDeviceZipBytes = handleZabPackage(zipFile);
+        if (zpkDeviceZipBytes == null) {
+            // Attempt to handle as direct zpk
+            zpkDeviceZipBytes = getFileFromZip(zipFile, "device.zip");
+        }
+
+        if (zpkDeviceZipBytes != null) {
             final File cacheDir = context.getCacheDir();
             final File zpkCacheDir = new File(cacheDir, "zpk");
+            //noinspection ResultOfMethodCallIgnored
             zpkCacheDir.mkdir();
 
             final File zpkFile;
@@ -344,7 +350,7 @@ public class ZeppOsFwHelper {
             }
 
             try (FileOutputStream outputStream = new FileOutputStream(zpkFile)) {
-                outputStream.write(zpkBytes);
+                outputStream.write(zpkDeviceZipBytes);
             } catch (final IOException e) {
                 LOG.error("Failed to write zpk bytes to temporary file", e);
                 return;
@@ -360,7 +366,7 @@ public class ZeppOsFwHelper {
 
             if (firmwareType != HuamiFirmwareType.INVALID) {
                 file = zpkFile;
-                crc32 = CheckSums.getCRC32(zpkBytes);
+                crc32 = CheckSums.getCRC32(zpkDeviceZipBytes);
             }
         }
     }
