@@ -577,12 +577,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 currentWorkout?.let {
                     workoutEditor.editGpsTrack(it, object : WorkoutEditor.Callback {
                         override fun onWorkoutUpdated() {
-                            if (workoutHasGps(workout.summary)) {
-                                showGpsCanvas()
-                                gpsFragment?.setTrackData(ActivitySummaryUtils.getTrackFile(it.summary))
-                            } else {
-                                hideGpsCanvas()
-                            }
+                            // Reload the entire workout data so that we can refresh the charts
+                            loadWorkoutData()
                         }
                     })
                 }
