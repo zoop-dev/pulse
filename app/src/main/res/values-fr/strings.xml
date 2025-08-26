@@ -1011,7 +1011,7 @@ Temps de sommeil préféré en heures</string>
     <string name="sonyswr12_settings_alarm_interval_summary">L\'intervalle d\'alarme intelligente est l\'intervalle avant l\'alarme installée. Dans cet intervalle, l\'appareil tente de détecter la phase de sommeil la plus légère pour réveiller l\'utilisateur</string>
     <string name="descentSeconds">Descendant</string>
     <string name="activity_error_no_app_for_png">Pour partager cette capture écran, installer une application pour gérer les fichiers images.</string>
-    <string name="firmware_update_progress">Envoi en cours \n%1d%% à %.2fkbps (moyenne %.2fkbps) \nÉlément %1d de %1d</string>
+    <string name="firmware_update_progress">Envoi en cours\n%1$d%% à %2$.2f kbps (moyenne %3$.2f kbps)\nÉlément %4$d de %5$d</string>
     <string name="devicestatus_upload_failed">L\'envoi n\'a pas réussi</string>
     <string name="devicestatus_upload_aborted">L\'envoi a avorté !</string>
     <string name="devicestatus_upload_validating">L\'envoi est en cours de validation</string>
@@ -1568,7 +1568,7 @@ Temps de sommeil préféré en heures</string>
     <string name="notification_gps_title">GPS Gadgebridge</string>
     <string name="notification_gps_text">Envoi des données GPS au(x) appareil(s) %1$d</string>
     <string name="notification_channel_gps">Suivi GPS</string>
-    <string name="permission_notification_listener">%2$s%2$s%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint. \n \nMerci de sélectionner %2$s puis %1$s et activer \"Autoriser l\'accès aux notifications\", puis appuyer sur \"Retour\" pour revenir à %1$s.</string>
+    <string name="permission_notification_listener">%1$s a besoin d\'accéder aux notifications pour les afficher sur votre montre quand l\'écran de votre téléphone est éteint. \n \nMerci de sélectionner %2$s puis %1$s et activer \"Autoriser l\'accès aux notifications\", puis appuyer sur \"Retour\" pour revenir à %1$s.</string>
     <string name="portuguese_br">Portugais (Brésil)</string>
     <string name="portuguese_pt">Portugais (Portugal)</string>
     <string name="prefs_active_noise_cancelling_level_low">Bas</string>
@@ -1626,7 +1626,7 @@ Temps de sommeil préféré en heures</string>
     <string name="controlcenter_toggle_details">Afficher les détails</string>
     <string name="pref_blacklist_calendars_summary">Les calendriers bloqués ne seront pas synchronisés avec l\'appareil</string>
     <string name="controlcenter_set_preferences">Configurer les préférences</string>
-    <string name="controlcenter_connected_fraction">Connecté : %d/%d</string>
+    <string name="controlcenter_connected_fraction">Connecté : %1$d/%2$d</string>
     <string name="error_deleting_device">Erreur lors de l\'effacement de l\'appareil : %s</string>
     <string name="controlcenter_folder_name">Nom du dossier :</string>
     <string name="controlcenter_add_new_folder">Ajouter un nouveau dossier</string>
@@ -2311,7 +2311,7 @@ Temps de sommeil préféré en heures</string>
     <string name="prefs_home_icon_center_item">Centre</string>
     <string name="prefs_wena3_hint_rich_design">Ajoute des rectangles ronds autour des icônes de l\'écran d\'accueil</string>
     <string name="prefs_wena3_notification_default_led">Couleur de la LED de notification</string>
-    <string name="prefs_wena3_auto_power_off_item">Extinction automatique</string>
+    <string name="prefs_wena3_auto_power_off_item">Extinction auto</string>
     <string name="prefs_wena3_home_icon_name_edy">Balance Edy</string>
     <string name="prefs_wena3_vibration_warning">Avertissement</string>
     <string name="prefs_wena3_smart_alarm_margin_item">Marge de l\'alarme intelligente</string>
@@ -2426,7 +2426,7 @@ Temps de sommeil préféré en heures</string>
     <string name="sony_protocol_v3">Version 3</string>
     <string name="huawei_alarm_smart_description">Ne pas désactiver l\'option réveil intelligent.</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
-    <string name="huawei_trusleep_summary">Surveiller la qualité de votre sommeil et de votre respiration en temps réel. \nAnalyser votre mode de sommeil afin de diagnostiquer efficacement 6 types de problèmes de sommeil.</string>
+    <string name="huawei_trusleep_summary">Surveiller la qualité de votre sommeil temps réel.</string>
     <string name="pref_enable_call_accept">Autoriser les appels</string>
     <string name="pref_enable_call_reject_summary">Permettre le rejet des appels depuis l\'appareil</string>
     <string name="pref_heartrate_automatic_enable">Permettre la mesure automatique du rythme cardiaque</string>
@@ -2533,7 +2533,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_type_kabaddi">Kabaddi</string>
     <string name="activity_type_karting">Course de mini-voitures</string>
     <string name="activity_type_billiards">Billard</string>
-    <string name="activity_type_shuttlecock">Badminton</string>
+    <string name="activity_type_shuttlecock">Jeu de volant</string>
     <string name="activity_type_softball">Softball</string>
     <string name="activity_type_dodgeball">Dodgeball</string>
     <string name="activity_type_australian_football">Football australien</string>
@@ -2653,7 +2653,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_adaptive_volume_control_summary">Augmenter le volume automatiquement quand le bruit ambiant est important</string>
     <string name="pref_adaptive_noise_cancelling_title">ANC adaptatif</string>
     <string name="pref_adaptive_noise_cancelling_summary">Régler la forte de l\'ANC automatiquement selon le niveau de bruit ambiant</string>
-    <string name="huawei_trusleep_warning">Avertissement : activer cette option fera apparaitre tous les sommeils comme sommeil léger dans GadgetBridge ! Cliquer ici pour plus de détails.</string>
+    <string name="huawei_trusleep_warning">Avertissement : TruSleep™ n’est pas entièrement implémenté. L’activer sur certains appareils fera apparaître dans Gadgetbridge toutes les données de sommeil comme sommeil léger !</string>
     <string name="pref_force_enable_heartrate_support">Forcer la prise en charge du rythme cardiaque</string>
     <string name="pref_force_enable_spo2_support_summary">Forcer la prise en charge du SpO₂ \nUTILISER À VOS RISQUES ET PÉRILS</string>
     <string name="widget_name_colored_tile">%1$s (tuile colorée)</string>
@@ -2778,7 +2778,7 @@ Temps de sommeil préféré en heures</string>
     <string name="loading">Chargement…</string>
     <string name="battery_low_threshold">Seuil de batterie faible</string>
     <string name="pref_title_garmin_default_reply_suffix">Utiliser un suffixe de réponse prédéfini</string>
-    <string name="pref_garmin_agps_help">La liste ci-dessous contient toutes les URLs demandées par la montre pour la mise à jour de l\'AGPS. Vous pouvez sélectionner un fichier depuis le téléphone qui sera envoyé à la montre quand une demande de mise à jour sera faite.</string>
+    <string name="pref_garmin_agps_help">La liste ci-dessous contient toutes les URLs demandées par la montre pour la mise à jour de l\'AGPS. Vous pouvez sélectionner un fichier depuis le téléphone qui sera envoyé à la montre quand une demande de mise à jour sera faite.\n\nUn seul des fichiers doit être configuré.</string>
     <string name="copied_to_clipboard">Copier dans le presse-papier</string>
     <string name="notification_channel_full_battery_name">Batterie pleine</string>
     <string name="battery_i">Batterie %d</string>
@@ -3082,8 +3082,8 @@ Temps de sommeil préféré en heures</string>
     <string name="workoutSets">Série</string>
     <string name="workout_set_i">Série %1d</string>
     <string name="workout_set_repetitions">%1d x</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f kg</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f lbs</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f Kg</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f Lbs</string>
     <string name="choose_device">Choisissez un appareil</string>
     <string name="no_supported_devices_found">Aucun appareil pris en charge trouvé</string>
     <string name="search">Recherche</string>
@@ -3356,7 +3356,7 @@ Temps de sommeil préféré en heures</string>
     <string name="activity_type_lower_body">Bas du corps</string>
     <string name="totalJumps">Total de sauts</string>
     <string name="charts_show_balance_sleep_title">Afficher équilibre sommeil</string>
-    <string name="fw_upgrade_notice_huawei">%1$sVous êtes sur le point de télécharger le micrologiciel %2$s%2$s sur votre %2$s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
+    <string name="fw_upgrade_notice_huawei">Vous êtes sur le point de télécharger le micrologiciel %1$s sur votre %2$s.\n\nVotre micrologiciel actuel est %s\n\nVotre appareil va redémarrer après le téléchargement.\n\nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
     <string name="remote_control">Commande à distance</string>
     <string name="charts_show_balance_sleep_summary">Afficher excès/manque de sommeil dans des graphiques hebdomadaires et mensuels</string>
     <string name="charts_show_balance_steps_title">Afficher le solde de pas</string>
@@ -3439,7 +3439,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_import_activity_files_title">Importer fichiers d’activité</string>
     <string name="pref_import_activity_files_summary">Importer manuellement des fichiers d’activité depuis le stockage du téléphone</string>
     <string name="gree_pair_status_success">Succès du jumelage.\n\nLier la clé : %s</string>
-    <string name="gree_pair_info">Vous êtes sur le point de jumeler avec %s (%s). Veuillez saisir les informations relatives au Wi-Fi et au serveur hôte pour le jumelage. Consultez le site Web pour plus d’informations.</string>
+    <string name="gree_pair_info">Vous êtes sur le point de jumeler avec %1$s (%2$s). Veuillez saisir les informations relatives au Wi-Fi et au serveur hôte pour le jumelage. Consultez le site Web pour plus d’informations.</string>
     <string name="gree_pair_status_failure">Jumelage échoué :%s</string>
     <string name="earfun_anc_mode">Mode ANC</string>
     <string name="earfun_anc_mode_strong">ANC fort</string>
@@ -3520,7 +3520,7 @@ Temps de sommeil préféré en heures</string>
     <string name="earfun_connect_two_devices">Double connexion d’appareil</string>
     <string name="earfun_connect_two_devices_hint">Connectez-vous à deux appareils Bluetooth simultanément. Pour un signal stable, évitez d’utiliser la connexion double appareil et le mode LDAP en même temps.</string>
     <string name="earfun_advanced_audio_mode">Mode audio avancé</string>
-    <string name="earfun_advanced_audio_mode_hint">&lt;b&gt;Google Fast Pair&lt;/b&gt; air&lt;/b&gt; offre un jumelage d’appareils instantanément.\n&lt;b&gt;LE Audio&lt;/b&gt; fournit une qualité sonore améliorée, une consommation d’énergie réduite et une prise en charge de plusieurs flux audio.</string>
+    <string name="earfun_advanced_audio_mode_hint"><b>Google Fast Pair</b> permet le jumelage d’appareils instantanément.\n<b>LE Audio</b> fournit une qualité sonore améliorée, une consommation d’énergie réduite et une prise en charge de plusieurs flux audio.</string>
     <string name="earfun_microphone_mode_hint">Lors de l’utilisation du microphone du casque, il peut soit basculer automatiquement entre les écouteurs gauche et droit, soit rester fixé d’un côté selon votre préférence.</string>
     <string name="earfun_find_headphones_hint">Cette option émet un son fort à travers le casque audio pour aider à le localiser. Évitez de porter le casque pour éviter d’éventuels dommages auditifs.</string>
     <string name="earfun_find_headphones">Trouver casque audio</string>
