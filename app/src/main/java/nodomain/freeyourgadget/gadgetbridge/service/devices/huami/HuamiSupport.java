@@ -2657,7 +2657,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                     break;
                 case ActivityUser.PREF_USER_STEPS_GOAL:
                 case ActivityUser.PREF_USER_CALORIES_BURNT:
-                case ActivityUser.PREF_USER_SLEEP_DURATION:
+                case ActivityUser.PREF_USER_SLEEP_DURATION_MINUTES:
                 case ActivityUser.PREF_USER_GOAL_WEIGHT_KG:
                 case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
                 case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES:

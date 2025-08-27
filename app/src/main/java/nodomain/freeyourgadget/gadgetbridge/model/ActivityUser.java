@@ -55,7 +55,7 @@ public class ActivityUser {
     public static final int defaultUserAge = 0;
     public static final int defaultUserHeightCm = 175;
     public static final int defaultUserWeightKg = 70;
-    public static final int defaultUserSleepDurationGoal = 7;
+    public static final int defaultUserSleepDurationGoal = 7 * 60;
     public static final int defaultUserStepsGoal = 8000;
     public static final int defaultUserCaloriesBurntGoal = 350;
     public static final int defaultUserDistanceGoalMeters = 5000;
@@ -70,7 +70,7 @@ public class ActivityUser {
     public static final String PREF_USER_GENDER = "activity_user_gender";
     public static final String PREF_USER_HEIGHT_CM = "activity_user_height_cm";
     public static final String PREF_USER_WEIGHT_KG = "activity_user_weight_kg";
-    public static final String PREF_USER_SLEEP_DURATION = "activity_user_sleep_duration";
+    public static final String PREF_USER_SLEEP_DURATION_MINUTES = "activity_user_sleep_duration_minutes";
     public static final String PREF_USER_STEPS_GOAL = "fitness_goal"; // FIXME: for compatibility
     public static final String PREF_USER_CALORIES_BURNT = "activity_user_calories_burnt";
     public static final String PREF_USER_DISTANCE_METERS = "activity_user_distance_meters";
@@ -129,11 +129,11 @@ public class ActivityUser {
     }
 
     /**
-     * @return the user defined sleep duration or the default value when none is set or the stored
+     * @return the user defined sleep duration in minutes or the default value when none is set or the stored
      * value is out of any logical bounds.
      */
     public int getSleepDurationGoal() {
-        if (activityUserSleepDurationGoal < 1 || activityUserSleepDurationGoal > 24) {
+        if (activityUserSleepDurationGoal < 1 || activityUserSleepDurationGoal > 24 * 60) {
             activityUserSleepDurationGoal = defaultUserSleepDurationGoal;
         }
         return activityUserSleepDurationGoal;
@@ -157,7 +157,7 @@ public class ActivityUser {
         activityUserHeightCm = prefs.getInt(PREF_USER_HEIGHT_CM, defaultUserHeightCm);
         activityUserWeightKg = prefs.getInt(PREF_USER_WEIGHT_KG, defaultUserWeightKg);
         activityUserDateOfBirth = prefs.getLocalDate(PREF_USER_DATE_OF_BIRTH, defaultUserDateOfBirth);
-        activityUserSleepDurationGoal = prefs.getInt(PREF_USER_SLEEP_DURATION, defaultUserSleepDurationGoal);
+        activityUserSleepDurationGoal = prefs.getInt(PREF_USER_SLEEP_DURATION_MINUTES, defaultUserSleepDurationGoal);
         activityUserStepsGoal = prefs.getInt(PREF_USER_STEPS_GOAL, defaultUserStepsGoal);
         activityUserCaloriesBurntGoal = prefs.getInt(PREF_USER_CALORIES_BURNT, defaultUserCaloriesBurntGoal);
         activityUserDistanceGoalMeters = prefs.getInt(PREF_USER_DISTANCE_METERS, defaultUserDistanceGoalMeters);

@@ -135,7 +135,7 @@ public class DashboardUtils {
 
     public static float getSleepMinutesGoalFactor(DashboardFragment.DashboardData dashboardData) {
         ActivityUser activityUser = new ActivityUser();
-        int sleepMinutesGoal = activityUser.getSleepDurationGoal() * 60;
+        int sleepMinutesGoal = activityUser.getSleepDurationGoal();
         float goalFactor = (float) getSleepMinutesTotal(dashboardData) / sleepMinutesGoal;
         if (goalFactor > 1) goalFactor = 1;
 

@@ -1312,7 +1312,7 @@
     <string name="authentication_required">Authentication required</string>
     <string name="authentication_failed_check_key">Authentication failed, please check auth key</string>
     <string name="authentication_failed_negotiation">Authentication key negotiation failed</string>
-    <string name="activity_prefs_sleep_duration">Preferred sleep duration in hours</string>
+    <string name="activity_prefs_sleep_duration_minutes">Preferred sleep duration in minutes</string>
     <string name="device_hw">Hardware revision: %1$s</string>
     <string name="device_fw">Firmware version: %1$s</string>
     <string name="error_creating_directory_for_logfiles">Error creating directory for log files: %1$s</string>
@@ -2817,11 +2817,8 @@
     <string name="qhybrid_calibration_align_hint">Use the buttons below to align the watch hands to 12:00.</string>
     <string name="lorem_ipsum" translatable="false">Lorem Ipsum</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="two">%d hours</item>
-        <item quantity="few">%d hours</item>
-        <item quantity="many">%d hours</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%1$d:%2$02d hour</item>
+        <item quantity="other">%1$d:%2$02d hours</item>
     </plurals>
     <string name="prefs_autolight">Automatic light</string>
     <string name="prefs_light_duration_longer">Longer light duration</string>

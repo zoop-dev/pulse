@@ -1457,8 +1457,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         int distanceCm = (int) dailyTotals.getDistance();
         ActivityUser activityUser = new ActivityUser();
         int stepGoal = activityUser.getStepsGoal();
-        int sleepGoal = activityUser.getSleepDurationGoal();
-        int sleepGoalMinutes = sleepGoal * 60;
+        int sleepGoalMinutes = activityUser.getSleepDurationGoal();
         int distanceGoal = activityUser.getDistanceGoalMeters() * 100;
         int stepLength = activityUser.getStepLengthCm();
         double distanceMeters = (distanceCm > 0 ? distanceCm : steps * stepLength) * 0.01;

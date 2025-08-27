@@ -58,7 +58,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(114, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(115, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -279,9 +279,10 @@ public class GBDaoGenerator {
         userAttributes.addIdProperty();
         userAttributes.addIntProperty("heightCM").notNull();
         userAttributes.addIntProperty("weightKG").notNull();
-        userAttributes.addIntProperty("sleepGoalHPD").javaDocGetterAndSetter("Desired number of hours of sleep per day.");
+        userAttributes.addIntProperty("sleepGoalHPD").javaDocGetterAndSetter("@deprecated").codeBeforeGetterAndSetter("@Deprecated");
         userAttributes.addIntProperty("stepsGoalSPD").javaDocGetterAndSetter("Desired number of steps per day.");
         addDateValidityTo(userAttributes);
+        userAttributes.addIntProperty("sleepGoalMPD").javaDocGetterAndSetter("Desired number of minutes of sleep per day.");
 
         return userAttributes;
     }

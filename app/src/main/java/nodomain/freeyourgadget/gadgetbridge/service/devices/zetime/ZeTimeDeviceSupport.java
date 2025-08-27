@@ -214,7 +214,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     setHeartRateLimits(builder);
                     break;
                 case DeviceSettingsPreferenceConst.PREF_USER_FITNESS_GOAL:
-                case ActivityUser.PREF_USER_SLEEP_DURATION:
+                case ActivityUser.PREF_USER_SLEEP_DURATION_MINUTES:
                 case ActivityUser.PREF_USER_CALORIES_BURNT:
                 case ActivityUser.PREF_USER_DISTANCE_METERS:
                 case ActivityUser.PREF_USER_ACTIVETIME_MINUTES:
@@ -1509,7 +1509,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
         int steps = activityUser.getStepsGoal() / 100; // ZeTime expect the steps in 100 increment
         int calories = activityUser.getCaloriesBurntGoal();
         int distance = activityUser.getDistanceGoalMeters() / 1000;  // ZeTime only accepts km goals
-        int sleep = activityUser.getSleepDurationGoal();
+        int sleep = Math.round(activityUser.getSleepDurationGoal() / 60.0f);
         int activeTime = activityUser.getActiveTimeGoalMinutes();
 
         // set steps goal

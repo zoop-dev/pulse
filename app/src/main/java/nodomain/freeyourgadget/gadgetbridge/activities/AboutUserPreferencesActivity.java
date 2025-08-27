@@ -26,7 +26,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_GOAL_WEIGHT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_HEIGHT_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_NAME;
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_SLEEP_DURATION;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_SLEEP_DURATION_MINUTES;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_STEPS_GOAL;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_STEP_LENGTH_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_WEIGHT_KG;
@@ -69,7 +69,7 @@ public class AboutUserPreferencesActivity extends AbstractSettingsActivityV2 {
             addPreferenceHandlerFor(PREF_USER_GOAL_WEIGHT_KG, true, true);
             addPreferenceHandlerFor(PREF_USER_GOAL_STANDING_TIME_HOURS, true, true);
             addPreferenceHandlerFor(PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, true, true);
-            addPreferenceHandlerFor(PREF_USER_SLEEP_DURATION, false, true);
+            addPreferenceHandlerFor(PREF_USER_SLEEP_DURATION_MINUTES, false, true);
             addPreferenceHandlerFor(PREF_USER_STEP_LENGTH_CM, false, true);
             addPreferenceHandlerFor(PREF_USER_DISTANCE_METERS, false, true);
 
@@ -79,7 +79,7 @@ public class AboutUserPreferencesActivity extends AbstractSettingsActivityV2 {
             setInputTypeFor(PREF_USER_GOAL_WEIGHT_KG, InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor(PREF_USER_GOAL_STANDING_TIME_HOURS, InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor(PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, InputType.TYPE_CLASS_NUMBER);
-            setInputTypeFor(PREF_USER_SLEEP_DURATION, InputType.TYPE_CLASS_NUMBER);
+            setInputTypeFor(PREF_USER_SLEEP_DURATION_MINUTES, InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor(PREF_USER_CALORIES_BURNT, InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor(PREF_USER_ACTIVETIME_MINUTES, InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor(PREF_USER_STEP_LENGTH_CM, InputType.TYPE_CLASS_NUMBER);
@@ -87,7 +87,7 @@ public class AboutUserPreferencesActivity extends AbstractSettingsActivityV2 {
         }
 
         /**
-         * @param prefKey           the pref key that chagned
+         * @param prefKey           the pref key that changed
          * @param sendToDevice      notify all device support classes of the preference change
          * @param refreshDeviceList Ensure that the Control center is re-rendered when user preferences change
          */

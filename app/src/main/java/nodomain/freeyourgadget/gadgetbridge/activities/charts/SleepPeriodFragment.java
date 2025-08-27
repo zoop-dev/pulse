@@ -464,7 +464,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
     }
 
     int getGoal() {
-        return GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION, 8) * 60;
+        return GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION_MINUTES, ActivityUser.defaultUserSleepDurationGoal);
     }
 
     int getOffsetHours() {

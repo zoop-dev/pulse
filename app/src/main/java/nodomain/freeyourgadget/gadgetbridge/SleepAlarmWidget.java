@@ -108,7 +108,7 @@ public class SleepAlarmWidget extends AppWidgetProvider {
             GregorianCalendar calendar = new GregorianCalendar();
             // add preferred sleep duration
             if (userSleepDuration > 0) {
-                calendar.add(Calendar.HOUR_OF_DAY, userSleepDuration);
+                calendar.add(Calendar.MINUTE, userSleepDuration);
             } else { // probably testing
                 calendar.add(Calendar.MINUTE, 1);
             }

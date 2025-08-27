@@ -78,9 +78,9 @@
         <EditTextPreference
             android:icon="@drawable/ic_airline_seat_flat"
             android:inputType="number"
-            android:key="activity_user_sleep_duration"
-            android:maxLength="2"
-            android:title="@string/activity_prefs_sleep_duration"
+            android:key="activity_user_sleep_duration_minutes"
+            android:maxLength="4"
+            android:title="@string/activity_prefs_sleep_duration_minutes"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference

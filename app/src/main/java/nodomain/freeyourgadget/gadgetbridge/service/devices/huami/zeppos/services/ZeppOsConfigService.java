@@ -147,7 +147,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             // Fitness goals are global
             case ActivityUser.PREF_USER_STEPS_GOAL:
             case ActivityUser.PREF_USER_CALORIES_BURNT:
-            case ActivityUser.PREF_USER_SLEEP_DURATION:
+            case ActivityUser.PREF_USER_SLEEP_DURATION_MINUTES:
             case ActivityUser.PREF_USER_GOAL_WEIGHT_KG:
             case ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS:
             case ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES: {
@@ -221,7 +221,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     protected void setFitnessGoal(final ZeppOsTransactionBuilder builder) {
         final int goalSteps = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
         final int goalCalories = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_CALORIES_BURNT, ActivityUser.defaultUserCaloriesBurntGoal);
-        final int goalSleep = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION, ActivityUser.defaultUserSleepDurationGoal);
+        final int goalSleep = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_SLEEP_DURATION_MINUTES, ActivityUser.defaultUserSleepDurationGoal);
         final int goalWeight = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_WEIGHT_KG, ActivityUser.defaultUserGoalWeightKg);
         final int goalStandingTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_STANDING_TIME_HOURS, ActivityUser.defaultUserGoalStandingTimeHours);
         final int goalFatBurnTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, ActivityUser.defaultUserFatBurnTimeMinutes);
@@ -229,7 +229,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
         final ConfigSetter setter = newSetter()
                 .setShort(ConfigArg.FITNESS_GOAL_CALORIES, (short) goalCalories)
-                .setShort(ConfigArg.FITNESS_GOAL_SLEEP, (short) (goalSleep * 60))
+                .setShort(ConfigArg.FITNESS_GOAL_SLEEP, (short) goalSleep)
                 .setShort(ConfigArg.FITNESS_GOAL_STANDING_TIME, (short) (goalStandingTime))
                 .setShort(ConfigArg.FITNESS_GOAL_FAT_BURN_TIME, (short) goalFatBurnTime);
 

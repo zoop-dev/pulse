@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -36,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class WidgetAlarmsActivity extends Activity implements View.OnClickListener {
@@ -71,8 +73,12 @@ public class WidgetAlarmsActivity extends Activity implements View.OnClickListen
                 int userSleepDuration = new ActivityUser().getSleepDurationGoal();
                 textView = findViewById(R.id.alarm5);
                 if (userSleepDuration > 0) {
+                    Duration duration = Duration.ofMinutes(userSleepDuration);
+                    int hours = (int) duration.toHours();
+                    int mins = (int) duration.minusHours(hours).toMinutes();
+
                     Resources res = getResources();
-                    textView.setText(res.getQuantityString(R.plurals.widget_alarm_target_hours, userSleepDuration, userSleepDuration));
+                    textView.setText(res.getQuantityString(R.plurals.widget_alarm_target_hours, hours, hours, mins));
                 } else {
                     textView.setVisibility(View.GONE);
                 }
@@ -113,7 +119,7 @@ public class WidgetAlarmsActivity extends Activity implements View.OnClickListen
             int userSleepDuration = new ActivityUser().getSleepDurationGoal();
             // add preferred sleep duration
             if (userSleepDuration > 0) {
-                calendar.add(Calendar.HOUR_OF_DAY, userSleepDuration);
+                calendar.add(Calendar.MINUTE, userSleepDuration);
             } else { // probably testing
                 calendar.add(Calendar.MINUTE, 1);
             }
