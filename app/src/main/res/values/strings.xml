@@ -1113,6 +1113,8 @@
     <string name="transition">Transition</string>
     <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">You did not sleep</string>
+    <string name="charts_two_items_only">You can only compare two items at a time.</string>
+    <string name="charts_at_least_one_item">There should be at least one item selected.</string>
     <string name="charts_min_max_heartrate_popup">Lowest heart rate: %1$d \nHighest heart rate: %2$d \nMovement intensity: %3$s</string>
     <string name="device_not_connected">Not connected.</string>
     <string name="user_feedback_all_alarms_disabled">All alarms disabled</string>
@@ -4311,4 +4313,5 @@
     <string name="datetime_in_the_future">%1$s (in %2$s)</string>
     <string name="datetime_in_the_past">%1$s (%2$s ago)</string>
     <string name="rotate_screen">Rotate screen</string>
+    <string name="filter_charts">Filter charts</string>
 </resources>

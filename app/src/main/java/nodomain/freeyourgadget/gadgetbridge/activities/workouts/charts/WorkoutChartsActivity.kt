@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.MenuProvider
+import androidx.core.view.children
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
@@ -16,6 +18,8 @@ import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
@@ -25,9 +29,13 @@ import nodomain.freeyourgadget.gadgetbridge.databinding.WorkoutChartsBinding
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart
 
 class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
+
+    private var context: Context = GBApplication.getContext();
     private lateinit var binding: WorkoutChartsBinding
     private var chartData: List<WorkoutChart>? = null
     val selectedCharts = mutableListOf<Any>()
+
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +51,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
         }
         ChartDataRepository.clear()
 
-        val chartTextColor = GBApplication.getSecondaryTextColor(baseContext);
+        val chartTextColor = GBApplication.getSecondaryTextColor(context);
         binding.workoutDataChart.xAxis.apply {
             setDrawLabels(true)
             setDrawGridLines(false)
@@ -66,15 +74,15 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
             isEnabled = true
         }
         binding.workoutDataChart.description.isEnabled = false;
-        binding.workoutDataChart.legend.textColor = GBApplication.getTextColor(baseContext);
+        binding.workoutDataChart.legend.textColor = GBApplication.getTextColor(context);
 
         val initChartId = intent.getStringExtra(INIT_CHART_ID) ?: "none"
         selectedCharts.add(0, initChartId);
-        setupChipGroup(initChartId);
+        setupChipGroup(binding.workoutDataChartChipGroup, initChartId);
         refreshChart()
     }
 
-    fun setupChipGroup(initChartId: String) {
+    fun setupChipGroup(chipGroup: ChipGroup, initChartId: String) {
         for (chart in chartData!!) {
             val chip = Chip(this).apply {
                 text = chart.title
@@ -85,26 +93,36 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
             }
             chip.setOnCheckedChangeListener { _, isChecked ->
                 val tag = chip.tag
+                val checkedCount = binding.workoutDataChartChipGroup.children
+                    .filterIsInstance<Chip>()
+                    .count { it.isChecked }
                 if (isChecked) {
-                    if (selectedCharts.size >= 2) {
+                    if (checkedCount > 2) {
                         chip.isChecked = false
-                        Toast.makeText(this, "You can only compare two items at a time.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, context.getString(R.string.charts_two_items_only), Toast.LENGTH_SHORT).show()
                     } else {
                         selectedCharts.add(tag)
                         refreshChart()
                     }
                 } else {
-                    if (selectedCharts.size == 1 && selectedCharts.contains(tag)) {
+                    if (checkedCount == 0) {
                         chip.isChecked = true
-                        Toast.makeText(this, "There should be at least one item selected.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, context.getString(R.string.charts_at_least_one_item), Toast.LENGTH_SHORT).show()
                     } else {
                         selectedCharts.remove(tag)
                         refreshChart()
                     }
                 }
             }
-            binding.workoutDataChartChipGroup.addView(chip)
+            chipGroup.addView(chip)
         }
+    }
+
+    fun chipUpdate(tag: String, checked: Boolean) {
+        val chip = binding.workoutDataChartChipGroup.children
+            .filterIsInstance<com.google.android.material.chip.Chip>()
+            .firstOrNull { it.tag == tag }
+        chip?.isChecked = checked;
     }
 
     fun refreshChart() {
@@ -115,7 +133,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
         selectedCharts.forEach { selectedChart ->
             val workoutChart = chartData?.find { it.id == selectedChart } ?: return@forEach
             val dataSet = workoutChart.chartData.getDataSetByIndex(0) as? LineDataSet ?: return@forEach
-            dataSet.highLightColor = this.getColor(R.color.chart_highline_dolor)
+            dataSet.highLightColor = context.getColor(R.color.chart_highline_dolor);
             dataSet.highlightLineWidth = 1f;
             dataSet.axisDependency = if(leftY) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT;
             lineDataSets.add(dataSet)
@@ -138,7 +156,13 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.workout_charts_menu, menu);
+        setMenuFilterItemVisibility(getResources().configuration.orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+    }
+
+    fun setMenuFilterItemVisibility(visibility: Boolean) {
+        menu?.findItem(R.id.action_filter_charts)?.isVisible = visibility;
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -147,9 +171,15 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                 val currentOrientation = getResources().configuration.orientation
                 if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                    setMenuFilterItemVisibility(true);
                 } else {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    setMenuFilterItemVisibility(false);
                 }
+                true
+            }
+            R.id.action_filter_charts -> {
+                showFiltersDialog();
                 true
             }
 
@@ -161,6 +191,46 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
 
             else -> false
         }
+    }
+
+    private fun showFiltersDialog() {
+        val items = chartData!!.map { it.title }.toTypedArray()
+        val ids = chartData!!.map { it.id }
+        val checkedItems = BooleanArray(items.size) { index ->
+            selectedCharts.contains(ids[index])
+        }
+        val selectedIndices = mutableSetOf<Int>()
+        checkedItems.forEachIndexed { index, isChecked ->
+            if (isChecked) selectedIndices.add(index)
+        }
+        val builder = MaterialAlertDialogBuilder(this)
+            .setCancelable(true)
+            .setMultiChoiceItems(items, checkedItems, null)
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            val listView = dialog.listView
+            listView.setOnItemClickListener { _, _, which, _ ->
+                val isChecked = listView.isItemChecked(which)
+                if (isChecked) {
+                    if (selectedIndices.size == 2) {
+                        listView.setItemChecked(which, false)
+                        Toast.makeText(this, context.getString(R.string.charts_two_items_only), Toast.LENGTH_SHORT).show()
+                    } else {
+                        selectedIndices.add(which)
+                        chipUpdate(ids[which], true);
+                    }
+                } else {
+                    if (selectedIndices.size == 1) {
+                        listView.setItemChecked(which, true)
+                        Toast.makeText(this, context.getString(R.string.charts_at_least_one_item), Toast.LENGTH_SHORT).show()
+                    } else {
+                        selectedIndices.remove(which)
+                        chipUpdate(ids[which], false);
+                    }
+                }
+            }
+        }
+        dialog.show()
     }
 
     companion object {
