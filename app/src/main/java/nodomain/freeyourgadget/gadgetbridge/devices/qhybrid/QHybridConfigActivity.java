@@ -610,7 +610,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             Canvas c = new Canvas(bitmap);
 
             Paint black = new Paint();
-            black.setColor(Color.BLACK);
+            black.setColor(GBApplication.getTextColor(getContext()));
             black.setStyle(Paint.Style.STROKE);
             black.setStrokeWidth(5);
 
