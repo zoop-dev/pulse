@@ -86,18 +86,18 @@ public final class MapsManager {
         AndroidGraphicFactory.createInstance(GBApplication.app());
         final GBPrefs prefs = GBApplication.getPrefs();
 
+        final DocumentFile[] documentFiles;
         final String folderUri = prefs.getString(PREF_MAPS_FOLDER, "");
-        if (folderUri.isEmpty()) {
-            return;
+        if (!folderUri.isEmpty()) {
+            final DocumentFile folder = DocumentFile.fromTreeUri(mContext, Uri.parse(folderUri));
+            documentFiles = folder != null ? folder.listFiles() : new DocumentFile[0];
+        } else {
+            documentFiles = new DocumentFile[0];
         }
 
-        final DocumentFile folder = DocumentFile.fromTreeUri(mContext, Uri.parse(folderUri));
+        LOG.debug("Got {} map files", documentFiles.length);
 
         final MultiMapDataStore multiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
-
-        final DocumentFile[] documentFiles = folder != null ? folder.listFiles() : new DocumentFile[0];
-
-        LOG.debug("Got {} map files", documentFiles.length);
 
         for (final DocumentFile documentFile : documentFiles) {
             if (!documentFile.canRead()) {
