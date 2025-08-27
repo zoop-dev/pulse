@@ -4016,4 +4016,8 @@
     <string name="soundcore_battery_low_tone_summary">Odtwarzaj dźwięk powiadomienia, gdy poziom baterii spadnie poniżej 20% i 10%</string>
     <string name="soundcore_gaming_mode_title">Tryb gry</string>
     <string name="soundcore_gaming_mode_summary">Zmniejsz opóźnienia i wzmocnij dźwięki kroków oraz głosów. Może zmniejszyć stabilność połączenia.</string>
+    <string name="pref_refresh_on_swipe_summary">Przeciągnij w dół, aby pobrać nowe dane z podłączonych urządzeń.</string>
+    <string name="pref_refresh_on_swipe_title">Odśwież przy przeciągnięciu</string>
+    <string name="unit_celsius">℃</string>
+    <string name="unit_fahrenheit">℉</string>
 </resources>
