@@ -3041,7 +3041,7 @@
     <string name="sleep_avg">Сон (ср.)</string>
     <string name="lowest">Самый низкий</string>
     <string name="highest">Самый высокий</string>
-    <string name="activity_type_navigate">Ведение</string>
+    <string name="activity_type_navigate">Поиск пути</string>
     <string name="activity_type_xc_classic_ski">Классические лыжи XC</string>
     <string name="activity_type_mountaineering">Альпинизм</string>
     <string name="activity_type_driving">Вождение</string>
