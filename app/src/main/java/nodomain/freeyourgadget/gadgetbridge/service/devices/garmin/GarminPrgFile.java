@@ -67,7 +67,7 @@ public class GarminPrgFile {
             return;
         }
 
-        final int maxExpectedFileSize = 1024 * 1024; // 1MB
+        final int maxExpectedFileSize = 10 * 1024 * 1024; // 10MB
         if (uriHelper.getFileSize() > maxExpectedFileSize) {
             LOG.warn("File size is larger than the maximum expected file size of {}", maxExpectedFileSize);
             return;
@@ -77,7 +77,6 @@ public class GarminPrgFile {
             this.fw = FileUtils.readAll(in, maxExpectedFileSize);
         } catch (final IOException e) {
             LOG.error("Failed to read bytes from {}", uri, e);
-            return;
         }
 
         // TODO parse bytes
@@ -92,7 +91,7 @@ public class GarminPrgFile {
     }
 
     public boolean isValid() {
-        return valid;
+        return valid && fw != null;
     }
 
     public byte[] getBytes() {
