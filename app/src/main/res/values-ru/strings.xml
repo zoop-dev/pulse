@@ -3041,7 +3041,7 @@
     <string name="sleep_avg">Сон (ср.)</string>
     <string name="lowest">Самый низкий</string>
     <string name="highest">Самый высокий</string>
-    <string name="activity_type_navigate">Навигация</string>
+    <string name="activity_type_navigate">Ведение</string>
     <string name="activity_type_xc_classic_ski">Классические лыжи XC</string>
     <string name="activity_type_mountaineering">Альпинизм</string>
     <string name="activity_type_driving">Вождение</string>
@@ -4004,4 +4004,8 @@
     <string name="soundcore_battery_low_tone_summary">Издавать звуковой сигнал, когда уровень заряда батареи опустился ниже 20% и 10%</string>
     <string name="soundcore_gaming_mode_title">Игровой режим</string>
     <string name="soundcore_gaming_mode_summary">Уменьшить задержку и улучшить звучание шагов и голосов. Может снизить стабильность соединения.</string>
+    <string name="pref_refresh_on_swipe_summary">Проведите пальцем вниз, чтобы получить данные с подключенных устройств.</string>
+    <string name="pref_refresh_on_swipe_title">Обновить при смахивании</string>
+    <string name="unit_celsius">℃</string>
+    <string name="unit_fahrenheit">℉</string>
 </resources>
