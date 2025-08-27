@@ -191,8 +191,8 @@ public class QHybridSupport extends QHybridBaseSupport {
                         MoveHandsRequest.MovementConfiguration movement = new MoveHandsRequest.MovementConfiguration(false);
                         if (config != null) {
                             if(config.getHour() != -1) movement.setHourDegrees(config.getHour());
-                            if(config.getMin() != -1) movement.setHourDegrees(config.getMin());
-                            if(config.getSubEye() != -1) movement.setHourDegrees(config.getSubEye());
+                            if(config.getMin() != -1) movement.setMinuteDegrees(config.getMin());
+                            if(config.getSubEye() != -1) movement.setSubDegrees(config.getSubEye());
                             watchAdapter.setHands(movement);
                         } else {
                             movement.setHourDegrees(0);
@@ -210,8 +210,8 @@ public class QHybridSupport extends QHybridBaseSupport {
                         if(config == null) break;
                         MoveHandsRequest.MovementConfiguration movement = new MoveHandsRequest.MovementConfiguration(false);
                         if(config.getHour() != -1) movement.setHourDegrees(config.getHour());
-                        if(config.getMin() != -1) movement.setHourDegrees(config.getMin());
-                        if(config.getSubEye() != -1) movement.setHourDegrees(config.getSubEye());
+                        if(config.getMin() != -1) movement.setMinuteDegrees(config.getMin());
+                        if(config.getSubEye() != -1) movement.setSubDegrees(config.getSubEye());
                         watchAdapter.setHands(movement);
                         break;
                     }
