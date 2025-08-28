@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.children
 import com.github.mikephil.charting.components.XAxis
@@ -34,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart
 
 class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
 
-    private var context: Context = GBApplication.getContext();
+    private var context: Context = GBApplication.getContext()
     private lateinit var binding: WorkoutChartsBinding
     private var chartData: List<WorkoutChart>? = null
     val selectedCharts = mutableListOf<Any>()
@@ -55,7 +56,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
         }
         ChartDataRepository.clear()
 
-        val chartTextColor = GBApplication.getSecondaryTextColor(context);
+        val chartTextColor = GBApplication.getSecondaryTextColor(context)
         binding.workoutDataChart.xAxis.apply {
             setDrawLabels(true)
             setDrawGridLines(false)
@@ -77,12 +78,12 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
             textColor = chartTextColor
             isEnabled = true
         }
-        binding.workoutDataChart.description.isEnabled = false;
-        binding.workoutDataChart.legend.textColor = GBApplication.getTextColor(context);
+        binding.workoutDataChart.description.isEnabled = false
+        binding.workoutDataChart.legend.textColor = GBApplication.getTextColor(context)
 
         val initChartId = intent.getStringExtra(INIT_CHART_ID) ?: "none"
-        selectedCharts.add(0, initChartId);
-        setupChipGroup(binding.workoutDataChartChipGroup, initChartId);
+        selectedCharts.add(0, initChartId)
+        setupChipGroup(binding.workoutDataChartChipGroup, initChartId)
         refreshChart()
     }
 
@@ -93,7 +94,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                 isCheckable = true
                 isClickable = true
                 tag = chart.id
-                isChecked = chart.id.equals(initChartId)
+                isChecked = chart.id == initChartId
             }
             chip.setOnCheckedChangeListener { _, isChecked ->
                 val tag = chip.tag
@@ -124,13 +125,13 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
 
     fun chipUpdate(tag: String, checked: Boolean) {
         val chip = binding.workoutDataChartChipGroup.children
-            .filterIsInstance<com.google.android.material.chip.Chip>()
+            .filterIsInstance<Chip>()
             .firstOrNull { it.tag == tag }
-        chip?.isChecked = checked;
+        chip?.isChecked = checked
     }
 
     fun refreshChart() {
-        val combinedData = CombinedData();
+        val combinedData = CombinedData()
         val lineData = LineData()
         val scatterData = ScatterData()
         val lineDataSetsMarkerFormatters = mutableListOf<ValueFormatter?>()
@@ -139,9 +140,9 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
         selectedCharts.forEach { selectedChart ->
             val workoutChart = chartData?.find { it.id == selectedChart } ?: return@forEach
             val dataSet = workoutChart.chartData.getDataSetByIndex(0) as? LineScatterCandleRadarDataSet<Entry> ?: return@forEach
-            dataSet.highLightColor = context.getColor(R.color.chart_highline_dolor);
-            dataSet.highlightLineWidth = 1f;
-            dataSet.axisDependency = if(leftY) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT;
+            dataSet.highLightColor = ContextCompat.getColor(context, R.color.chart_highline_dolor)
+            dataSet.highlightLineWidth = 1f
+            dataSet.axisDependency = if(leftY) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT
             when (dataSet) {
                 is LineDataSet -> {
                     lineData.addDataSet(dataSet)
@@ -151,8 +152,8 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                 }
                 else -> {}
             }
-            lineDataSetsMarkerFormatters.add(workoutChart.chartYLabelFormatter);
-            lineDataSetsMarkerUnits.add(workoutChart.unitString);
+            lineDataSetsMarkerFormatters.add(workoutChart.chartYLabelFormatter)
+            lineDataSetsMarkerUnits.add(workoutChart.unitString)
             val axis = if (leftY) binding.workoutDataChart.axisLeft else binding.workoutDataChart.axisRight
             axis.valueFormatter = workoutChart.chartYLabelFormatter ?: DefaultAxisValueFormatter(0)
             leftY = false
@@ -160,24 +161,24 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
         if (selectedCharts.size == 1) {
             val selectedChartId = selectedCharts.first()
             val workoutChart = chartData?.find { it.id == selectedChartId } ?: return
-            binding.workoutDataChart.axisRight.valueFormatter = workoutChart?.chartYLabelFormatter ?: DefaultAxisValueFormatter(0)
+            binding.workoutDataChart.axisRight.valueFormatter = workoutChart.chartYLabelFormatter ?: DefaultAxisValueFormatter(0)
         }
         combinedData.setData(lineData)
         combinedData.setData(scatterData)
-        binding.workoutDataChart.data = combinedData;
-        binding.workoutDataChart.marker = ValueMarker(this, combinedData, lineDataSetsMarkerFormatters, lineDataSetsMarkerUnits);
+        binding.workoutDataChart.data = combinedData
+        binding.workoutDataChart.marker = ValueMarker(this, combinedData, lineDataSetsMarkerFormatters, lineDataSetsMarkerUnits)
         binding.workoutDataChart.highlightValues(null)
         binding.workoutDataChart.invalidate()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        this.menu = menu;
-        getMenuInflater().inflate(R.menu.workout_charts_menu, menu);
+        this.menu = menu
+        getMenuInflater().inflate(R.menu.workout_charts_menu, menu)
         setMenuFilterItemVisibility(getResources().configuration.orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
     }
 
     fun setMenuFilterItemVisibility(visibility: Boolean) {
-        menu?.findItem(R.id.action_filter_charts)?.isVisible = visibility;
+        menu?.findItem(R.id.action_filter_charts)?.isVisible = visibility
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -186,15 +187,15 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                 val currentOrientation = getResources().configuration.orientation
                 if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
-                    setMenuFilterItemVisibility(true);
+                    setMenuFilterItemVisibility(true)
                 } else {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                    setMenuFilterItemVisibility(false);
+                    setMenuFilterItemVisibility(false)
                 }
                 true
             }
             R.id.action_filter_charts -> {
-                showFiltersDialog();
+                showFiltersDialog()
                 true
             }
 
@@ -232,7 +233,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                         Toast.makeText(this, context.getString(R.string.charts_two_items_only), Toast.LENGTH_SHORT).show()
                     } else {
                         selectedIndices.add(which)
-                        chipUpdate(ids[which], true);
+                        chipUpdate(ids[which], true)
                     }
                 } else {
                     if (selectedIndices.size == 1) {
@@ -240,7 +241,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
                         Toast.makeText(this, context.getString(R.string.charts_at_least_one_item), Toast.LENGTH_SHORT).show()
                     } else {
                         selectedIndices.remove(which)
-                        chipUpdate(ids[which], false);
+                        chipUpdate(ids[which], false)
                     }
                 }
             }
