@@ -42,7 +42,6 @@ public class MiBand9ProCoordinator extends XiaomiCoordinator {
         return ConnectionType.BT_CLASSIC;
     }
 
-
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_default;

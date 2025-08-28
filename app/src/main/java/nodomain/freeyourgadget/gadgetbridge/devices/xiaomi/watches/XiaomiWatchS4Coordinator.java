@@ -40,6 +40,6 @@ public class XiaomiWatchS4Coordinator extends XiaomiCoordinator {
 
     @Override
     public ConnectionType getConnectionType() {
-        return ConnectionType.BOTH;
+        return ConnectionType.BT_CLASSIC;
     }
 }
