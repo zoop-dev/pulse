@@ -248,10 +248,10 @@
     <string name="caloriesBurnt">Kalorije</string>
     <string name="maxSpeed">Maksimum</string>
     <string name="totalStride">Ukupni korak</string>
-    <string name="averageHR">Broj otkucaja srca</string>
-    <string name="maxHR">Maksimalni broj otkucaja srca</string>
+    <string name="averageHR">Prosj. broj otkucaja srca</string>
+    <string name="maxHR">Maks. broj otkucaja srca</string>
     <string name="minHR">Min. broj otkucaja srca</string>
-    <string name="averageKMPaceSeconds">Tempo</string>
+    <string name="averageKMPaceSeconds">Prosj. tempo</string>
     <string name="averageStride">Prosječna duljina koraka</string>
     <string name="maxStride">Maksimalna duljina koraka</string>
     <string name="minStride">Min. duljina koraka</string>
@@ -271,7 +271,7 @@
     <string name="steps_unit">koraci</string>
     <string name="km_h">km/h</string>
     <string name="strokes_second">zamaha/s</string>
-    <string name="strokes_unit">zamah</string>
+    <string name="strokes_unit">zamasi</string>
     <string name="seconds">s</string>
     <string name="swolf_index">swolf-indeks</string>
     <string name="swim_style">stil plivanja</string>
@@ -341,7 +341,7 @@
     <string name="button_watchface_settings">Postavke brojčanika</string>
     <string name="watchface_dialog_title_set_name">Postavi naziv brojčanika</string>
     <string name="watchface_widget_type_steps">Koraci</string>
-    <string name="watchface_widget_type_heart_rate">Broj otkucaja srca</string>
+    <string name="watchface_widget_type_heart_rate">Otkucaji srca</string>
     <string name="button_watchface_preview">Pregled na satu</string>
     <string name="button_watchface_save_apply">Spremi i primijeni</string>
     <string name="watchface_dialog_widget_type">Vrsta</string>
@@ -523,7 +523,7 @@
     <string name="menuitem_breathing">Disanje</string>
     <string name="menuitem_timer">Odbrojavanje</string>
     <string name="menuitem_stress">Stres</string>
-    <string name="menuitem_hr">Broj otkucaja srca</string>
+    <string name="menuitem_hr">Otkucaji srca</string>
     <string name="menuitem_findphone">Pronađi telefon</string>
     <string name="menuitem_takephoto">Daljinski za kameru</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -888,8 +888,8 @@
     <string name="device_fw">Firmware verzija: %1$s</string>
     <string name="error_creating_directory_for_logfiles">Pogreška pri izradi direktorija za datoteke zapisa: %1$s</string>
     <string name="updatefirmwareoperation_update_in_progress">Flashanje firmware</string>
-    <string name="charts_legend_heartrate">Broj otkucaja srca</string>
-    <string name="live_activity_heart_rate">Broj otkucaja srca</string>
+    <string name="charts_legend_heartrate">Otkucaji srca</string>
+    <string name="live_activity_heart_rate">Otkucaji srca</string>
     <string name="activity_prefs_calories_burnt">Dnevni cilj: potrošene kalorije</string>
     <string name="action_db_management">Upravljanje podacima</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Ne mogu pristupiti putu izvoza. Molimo kontaktirajte programere.</string>
@@ -1081,7 +1081,7 @@
 \n%1$s
 \nVerzija %2$s od %3$s
 \n</string>
-    <string name="n_a">N/A</string>
+    <string name="n_a">- -</string>
     <string name="initialized">Pokrenuto</string>
     <string name="appversion_by_creator">%1$s od %2$s</string>
     <string name="discovery_stop_scanning">Zaustavi skeniranje</string>
@@ -1413,7 +1413,7 @@
     <string name="menuitem_unknown">Nepoznato</string>
     <string name="menuitem_worldclock">Svjetski sat</string>
     <string name="qhybrid_offset_time_by">pomak vremena za</string>
-    <string name="hr_widget_heart_rate">Broj otkucaja srca</string>
+    <string name="hr_widget_heart_rate">Otkucaji srca</string>
     <string name="hr_widget_steps">Koraci</string>
     <string name="hr_widget_date">Datum</string>
     <string name="error_no_location_access">Pristup lokaciji mora biti odobren i omogućen da bi skeniranje ispravno radilo</string>
@@ -1553,9 +1553,9 @@
     <string name="activity_type_artistic_swimming">Sinkronizirano plivanje</string>
     <string name="activity_type_finswimming">Plivanje s perajama</string>
     <string name="zepp_os_watchface_minimalist">Minimalistički</string>
-    <string name="min_respiration_rate">Min. stopa disanja</string>
+    <string name="min_respiration_rate">Min. frekvencija disanja</string>
     <string name="breaths_per_min">udisaja/min</string>
-    <string name="strokes_minute">poteza/min</string>
+    <string name="strokes_minute">zamaha/min</string>
     <string name="jumps_minute">skokova/min</string>
     <string name="unit_repetitions_per_minute">ponavljanja/min</string>
     <string name="unit_revolutions_per_minute">okretaja/min</string>
@@ -1604,4 +1604,37 @@
     <string name="prefs_heartrate_alert_high_threshold">Prag alarma visokih otkucaja srca</string>
     <string name="prefs_heartrate_alert_active_high_threshold">Prag alarma visoke aktivnosti otkucaja srca</string>
     <string name="prefs_heartrate_alert_low_threshold">Prag alarma niskih otkucaja srca</string>
+    <string name="HeartRateZones">Zone otkucaja srca</string>
+    <string name="hrZoneNa">- -</string>
+    <string name="music_upload_info">Spremate se instalirati sljedeći glazbenu datoteku: \n \n%1$s\nNaslov pjesme: %2$s\nAlbum: %3$s\n</string>
+    <string name="degrees">stupnjeva</string>
+    <string name="Pace">Tempo</string>
+    <string name="swimming_stroke">Zaveslaj</string>
+    <string name="Jumps">Skokovi</string>
+    <string name="jumps_unit">skokova</string>
+    <string name="unit_repetitions">ponavljanja</string>
+    <string name="unit_revolutions">okretaji</string>
+    <string name="unit_rpm">okretaji/min</string>
+    <string name="unit_millimeter">mm</string>
+    <string name="unit_watt">Watt</string>
+    <string name="unit_joule">Joule</string>
+    <string name="respiratoryrate">Frekvencija disanja</string>
+    <string name="active_calories">Aktivne kalorije</string>
+    <string name="gpx_route_upload_failed">Prijenos Gpx rute neuspio</string>
+    <string name="gpx_route_upload_complete">Prijenos Gpx rute dovršen</string>
+    <string name="gpx_route_upload_in_progress">Prijenos Gpx rute</string>
+    <string name="map_upload_failed">Prijenos karte neuspio</string>
+    <string name="map_upload_complete">Prijenos karte dovršen</string>
+    <string name="map_upload_in_progress">Prijenos karte</string>
+    <string name="music_upload_failed">Prijenos glazbe neuspio</string>
+    <string name="music_upload_complete">Prijenos glazbe dovršen</string>
+    <string name="music_upload_in_progress">Prijenos glazbe</string>
+    <string name="average_respiration_rate">Frekvencija disanja</string>
+    <string name="max_respiration_rate">Maks. frekvencija disanja</string>
+    <string name="hrv_sdrr">HRV SDRR</string>
+    <string name="hrv_rmssd">HRV RMSSD</string>
+    <string name="TrainingEffect">Efekt treninga</string>
+    <string name="cycling">Biciklizam</string>
+    <string name="title_cycling">Biciklizam</string>
+    <string name="aerobicTrainingEffect">Efekt aerobika</string>
 </resources>
