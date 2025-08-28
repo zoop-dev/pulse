@@ -125,7 +125,7 @@
 \nNapomena: Ne morate instalirati .res i .gps ako su ove datoteke potpuno iste kao one prethodno instalirane.
 \n
 \nNASTAVITE NA VLASTITU ODGOVORNOST!</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Spremate se instalirati %s firmware na vaš Amazfit Cor 2. \n \nObavezno instalirajte .fw datoteku, a nakon toga .res datoteku. Vaš band će se ponovno pokrenuti nakon instaliranja. \n \nNapomena: Ne morate instalirati .res ako je potpuno isti kao onaj koji je prethodno instaliran. \n \nNASTAVITE NA VLASTITU ODGOVORNOST! \n \nPOTPUNO NETESTIRANO, VJEROJATNO TREBATE FLASHATI BEATS_W FIRMWARE AKO JE VAŠ UREĐAJ \"Amazfit Band 2\"</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Spremate se instalirati %s firmware na vaš Amazfit Cor 2. \n \nObavezno instalirajte .fw datoteku, a nakon toga .res datoteku. Vaš band će se ponovno pokrenuti nakon instaliranja. \n \nNapomena: Ne morate instalirati .res ako je potpuno isti kao onaj koji je prethodno instaliran. \n \nNASTAVITE NA VLASTITU ODGOVORNOST! \n \nPOTPUNO NETESTIRANO, VJEROJATNO TREBATE FLASHATI BEATS_W FIRMWARE AKO JE IME VAŠEG UREĐAJA „Amazfit Band 2”</string>
     <string name="fw_upgrade_notice_miband4">Spremate se instalirati %s firmware na vaš Mi Band 4.
 \n
 \nObavezno instalirajte .fw datoteku, a nakon toga .res datoteku. Vaš band će se ponovno pokrenuti nakon instaliranja.
@@ -229,7 +229,7 @@
     <string name="hr_widget_weather">Vrijeme</string>
     <string name="hr_widget_nothing">Ništa</string>
     <string name="about_additional_contributions">Veliko hvala svim nenavedenim suradnicima na doprinosu kodu, prijevodima, podršci, idejama, motivaciji, izvješćima o greškama, novcu… ✊</string>
-    <string name="error_version_check_extreme_caution">OPREZ: Pogreška prilikom provjere informacija o verziji! Ne biste trebali nastaviti! Vidio sam naziv verzije \"%s\"</string>
+    <string name="error_version_check_extreme_caution">OPREZ: Pogreška prilikom provjere informacija o verziji! Ne biste trebali nastaviti! Pronađen naziv verzije %s</string>
     <string name="require_location_provider">Lokacija mora biti omogućena</string>
     <string name="error_background_service">Pokretanje pozadinske usluge nije uspjelo</string>
     <string name="error_background_service_reason_truncated">Pokretanje pozadinske usluge nije uspjelo jer…</string>
@@ -665,7 +665,7 @@
     <string name="pref_title_pebble_forceprotocol">Prisilni protokol za obavijesti</string>
     <string name="pref_summary_pebble_forceprotocol">Ova opcija prisiljava korištenje najnovijeg protokola obavijesti ovisno o verziji firmvera. ZNAJ ŠTO RADIŠ!</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU ograničenje</string>
-    <string name="pref_summary_pebble_mtu_limit">Ako vaš Pebble 2/Pebble LE ne radi prema očekivanjima, pokušajte s ovom postavkom ograničiti MTU (važeći raspon 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Ako vaš Pebble 2/Pebble LE ne radi prema očekivanjima, pokušajte s ovom postavkom ograničiti MTU (važeći raspon 20 – 512)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Preuranjeno ACK PebbleKit</string>
     <string name="pref_summary_pebble_enable_bgjs">Kada je omogućeno, dopušta brojčanicima prikaz vremena, podataka o bateriji itd.</string>
     <string name="pref_summary_expose_hr">Omogućuje drugim aplikacijama pristup HR podacima u stvarnom vremenu dok je Gadgetbridge povezan</string>
@@ -754,7 +754,7 @@
     <string name="alarm_smart_wakeup">Pametno buđenje</string>
     <string name="alarm_snooze">Odgodi</string>
     <string name="user_feedback_miband_set_alarms_failed">Došlo je do pogreške prilikom postavljanja alarma, pokušajte ponovno.</string>
-    <string name="dbaccess_error_executing">Pogreška pri izvršavanju \'%1$s\'</string>
+    <string name="dbaccess_error_executing">Pogreška pri izvršavanju %1$s</string>
     <string name="controlcenter_start_activitymonitor">Vaša aktivnost</string>
     <string name="cannot_connect">Ne mogu se povezati: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Nije moguće pronaći rukovatelja za instalaciju ove datoteke.</string>
@@ -782,7 +782,7 @@
     <string name="devicestatus_connected">Uređaj je povezan</string>
     <string name="devicestatus_disconnecting">Uređaj se prekida!</string>
     <string name="devicestatus_upload_failed">Prijenos nije uspio</string>
-    <string name="firmware_update_progress">Prijenos je u tijeku \n%1d%% pri %.2fkbps (prosječno %.2fkbps) \nDio %1d od %1d</string>
+    <string name="firmware_update_progress">Prijenos je u tijeku \n%1$d %% pri %2$.2f kbps (prosječno %3$.2f kbps) \nDio %4$d od %5$d</string>
     <string name="updating_firmware">Flashanje firmware…</string>
     <string name="fwapp_install_device_not_ready">Datoteka se ne može instalirati, uređaj nije spreman.</string>
     <string name="miband_fwinstaller_compatible_version">Kompatibilna verzija</string>
@@ -821,7 +821,7 @@
     <string name="miband_prefs_reserve_alarm_calendar">Alarmi za rezerviranje za nadolazeće događaje</string>
     <string name="miband_prefs_hr_sleep_detection">Koristite senzor otkucaja srca da poboljšate detekciju sna</string>
     <string name="miband_prefs_device_time_offset_hours">Pomak vremena uređaja u satima (za otkrivanje spavanja radnika u smjenama)</string>
-    <string name="prefs_enable_find_phone">Uključite \'Pronađi telefon\'</string>
+    <string name="prefs_enable_find_phone">Uključite „Pronađi telefon”</string>
     <string name="mi2_prefs_button_press_count">Broj pritisaka gumba</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Poruka emitiranja poslana uz događaj. Parametar `button_id` se automatski dodaje svakoj poruci.</string>
     <string name="mi2_prefs_button_action_vibrate">Omogući vibraciju trake</string>
@@ -845,8 +845,8 @@
     <string name="lefun_prefs_antilost_title">Bez gubitka</string>
     <string name="lefun_prefs_antilost_summary">Band će vibrirati ako se vaš telefon odvoji od banda</string>
     <string name="lefun_prefs_interface_language_title">Jezik sučelja</string>
-    <string name="simplified_chinese">Pojednostavljeni kineski</string>
-    <string name="traditional_chinese">Tradicionalni kineski</string>
+    <string name="simplified_chinese">Kineski (pojednostavljeni)</string>
+    <string name="traditional_chinese">Kineski (tradicionalni)</string>
     <string name="english">engleski</string>
     <string name="norwegian_bokmal">Norwegian Bokmål</string>
     <string name="spanish">Španjolski</string>
@@ -1168,7 +1168,7 @@
     <string name="pref_chart_sleep_rolling_24_on">Posljednja 24 sata</string>
     <string name="activity_prefs_activetime_minutes">Dnevni cilj: aktivno vrijeme u minutama</string>
     <string name="pref_title_pebble_health_store_raw">Spremi neobrađeni zapis u bazu podataka</string>
-    <string name="pref_summary_pebble_health_store_raw">Pohranjuje podatke \"kakvi jesu\", povećavajući korištenje baze podataka kako bi se omogućila kasnija interpretacija.</string>
+    <string name="pref_summary_pebble_health_store_raw">Pohranjuje podatke nepromijenjeno, povećavajući korištenje baze podataka kako bi se omogućila kasnija interpretacija.</string>
     <string name="dbmanagementactivity_import_data_title">Uvesti podatke\?</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Brisanje baze podataka stare aktivnosti nije uspjelo.</string>
     <string name="dbmanagementactivity_overwrite">Prepiši</string>
@@ -1362,7 +1362,7 @@
     <string name="pref_title_canned_reply_suffix">Uobičajeni sufiks</string>
     <string name="pref_blacklist_calendars">Kalendari na crnoj listi</string>
     <string name="pref_header_cannned_messages">Sadržajne poruke</string>
-    <string name="pref_title_weather_summary">Koristi se za davatelja vremenske prognoze LineageOS, druge verzije Androida moraju koristiti aplikaciju kao što je \"Obavijest o vremenu\". Više informacija potražite na wikiju Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Koristi se za davatelja vremenske prognoze LineageOS, druge verzije Androida moraju koristiti aplikaciju kao što je „Obavijest o vremenu”. Više informacija potražite na wikiju Gadgetbridge.</string>
     <string name="pref_title_weather">Vrijeme</string>
     <string name="pref_title_weather_location">Vremenska lokacija (za davatelja vremena LineageOS)</string>
     <string name="pref_call_privacy_mode_name">Sakrij ime, ali prikaži broj</string>
