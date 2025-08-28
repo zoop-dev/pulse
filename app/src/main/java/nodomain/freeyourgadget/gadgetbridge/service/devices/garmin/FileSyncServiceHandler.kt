@@ -95,12 +95,15 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
     fun requestFileList(): GdiFileSyncService.FileSyncService {
         LOG.debug("Requesting file list starting at page {}", nextPageId)
 
+        val fileListRequestBuilder = GdiFileSyncService.FileListRequest.newBuilder().apply {
+            flags1 = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
+            flags2 = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
+        }
+
+        nextPageId?.let { fileListRequestBuilder.startPageId = it }
+
         return GdiFileSyncService.FileSyncService.newBuilder().buildWith {
-            fileListRequest = GdiFileSyncService.FileListRequest.newBuilder().buildWith {
-                startPageId = nextPageId ?: 0
-                flags1 = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
-                flags2 = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
-            }
+            fileListRequest = fileListRequestBuilder.build()
         }
     }
 
