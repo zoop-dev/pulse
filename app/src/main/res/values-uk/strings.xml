@@ -3838,4 +3838,10 @@
     <string name="pref_refresh_on_swipe_title">Оновити проведенням пальцем</string>
     <string name="unit_celsius">℃</string>
     <string name="unit_fahrenheit">℉</string>
+    <string name="charts_two_items_only">Ви можете порівнювати лише два елементи одночасно.</string>
+    <string name="charts_at_least_one_item">Має бути вибрано хоча б один елемент.</string>
+    <string name="workout_cadence">Каденція</string>
+    <string name="workout_charts">Діаграми тренувань</string>
+    <string name="rotate_screen">Повернути екран</string>
+    <string name="filter_charts">Фільтрувати діаграми</string>
 </resources>
