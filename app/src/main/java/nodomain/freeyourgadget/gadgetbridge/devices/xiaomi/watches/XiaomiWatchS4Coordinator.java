@@ -37,4 +37,9 @@ public class XiaomiWatchS4Coordinator extends XiaomiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miwatch;
     }
+
+    @Override
+    public ConnectionType getConnectionType() {
+        return ConnectionType.BOTH;
+    }
 }
