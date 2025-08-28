@@ -7,7 +7,7 @@
     tools:context="nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.WorkoutChartsActivity">
 
 
-    <com.github.mikephil.charting.charts.LineChart
+    <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/workout_data_chart"
         android:layout_width="fill_parent"
         android:layout_height="300dp"

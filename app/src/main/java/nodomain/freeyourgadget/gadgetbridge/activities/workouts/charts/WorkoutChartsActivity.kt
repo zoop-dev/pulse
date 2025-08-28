@@ -12,11 +12,15 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.children
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.CombinedData
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.LineScatterCandleRadarDataSet
+import com.github.mikephil.charting.data.ScatterData
+import com.github.mikephil.charting.data.ScatterDataSet
 import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -126,17 +130,27 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
     }
 
     fun refreshChart() {
-        val lineDataSets = mutableListOf<ILineDataSet>()
+        val combinedData = CombinedData();
+        val lineData = LineData()
+        val scatterData = ScatterData()
         val lineDataSetsMarkerFormatters = mutableListOf<ValueFormatter?>()
         val lineDataSetsMarkerUnits = mutableListOf<String?>()
         var leftY = true
         selectedCharts.forEach { selectedChart ->
             val workoutChart = chartData?.find { it.id == selectedChart } ?: return@forEach
-            val dataSet = workoutChart.chartData.getDataSetByIndex(0) as? LineDataSet ?: return@forEach
+            val dataSet = workoutChart.chartData.getDataSetByIndex(0) as? LineScatterCandleRadarDataSet<Entry> ?: return@forEach
             dataSet.highLightColor = context.getColor(R.color.chart_highline_dolor);
             dataSet.highlightLineWidth = 1f;
             dataSet.axisDependency = if(leftY) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT;
-            lineDataSets.add(dataSet)
+            when (dataSet) {
+                is LineDataSet -> {
+                    lineData.addDataSet(dataSet)
+                }
+                is ScatterDataSet -> {
+                    scatterData.addDataSet(dataSet)
+                }
+                else -> {}
+            }
             lineDataSetsMarkerFormatters.add(workoutChart.chartYLabelFormatter);
             lineDataSetsMarkerUnits.add(workoutChart.unitString);
             val axis = if (leftY) binding.workoutDataChart.axisLeft else binding.workoutDataChart.axisRight
@@ -148,9 +162,10 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
             val workoutChart = chartData?.find { it.id == selectedChartId } ?: return
             binding.workoutDataChart.axisRight.valueFormatter = workoutChart?.chartYLabelFormatter ?: DefaultAxisValueFormatter(0)
         }
-        val lineData = LineData(lineDataSets)
-        binding.workoutDataChart.data = lineData;
-        binding.workoutDataChart.marker = ValueMarker(this, lineData, lineDataSetsMarkerFormatters, lineDataSetsMarkerUnits);
+        combinedData.setData(lineData)
+        combinedData.setData(scatterData)
+        binding.workoutDataChart.data = combinedData;
+        binding.workoutDataChart.marker = ValueMarker(this, combinedData, lineDataSetsMarkerFormatters, lineDataSetsMarkerUnits);
         binding.workoutDataChart.highlightValues(null)
         binding.workoutDataChart.invalidate()
     }

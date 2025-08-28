@@ -45,9 +45,12 @@ import androidx.fragment.app.Fragment
 import androidx.gridlayout.widget.GridLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.ScatterData
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +70,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.Activity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry
 import nodomain.freeyourgadget.gadgetbridge.databinding.FragmentWorkoutDetailsBinding
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
+import nodomain.freeyourgadget.gadgetbridge.entities.Device
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
@@ -434,7 +438,10 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
 
         val chartTextColor = GBApplication.getSecondaryTextColor(context);
-        val lineChart = LineChart(requireContext()).apply {
+        val lineChart: BarLineChartBase<*> = when (chart.chartData) {
+            is ScatterData -> ScatterChart(requireContext())
+            else -> LineChart(requireContext())
+        }.apply {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
@@ -468,7 +475,14 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             isEnabled = false
         }
         chart.lineChart(lineChart);
-        lineChart.data = chart.chartData as LineData?
+        when {
+            lineChart is LineChart && chart.chartData is LineData -> {
+                lineChart.data = chart.chartData
+            }
+            lineChart is ScatterChart && chart.chartData is ScatterData -> {
+                lineChart.data = chart.chartData
+            }
+        }
         lineChart.description.isEnabled = false;
         lineChart.onChartGestureListener = object : OnChartGestureListener {
             override fun onChartLongPressed(me: MotionEvent?) {}
@@ -809,7 +823,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun getGBDevice(device: nodomain.freeyourgadget.gadgetbridge.entities.Device?): GBDevice? {
+    private fun getGBDevice(device: Device?): GBDevice? {
         return device?.let { findDevice ->
             GBApplication.app().deviceManager.devices
                 .firstOrNull { it.address.equals(findDevice.identifier, ignoreCase = true) }

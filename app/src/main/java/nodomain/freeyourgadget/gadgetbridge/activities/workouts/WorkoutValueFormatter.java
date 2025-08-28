@@ -123,7 +123,6 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_SECONDS_PER_KM:
-                case UNIT_MINUTES_PER_KM:
                     if (units.equals(UNIT_IMPERIAL)) {
                         value = value / 60D * 1.609344;
                         unit = "minutes_mi";

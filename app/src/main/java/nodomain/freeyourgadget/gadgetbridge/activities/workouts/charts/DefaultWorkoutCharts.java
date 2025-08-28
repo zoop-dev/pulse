@@ -1,19 +1,22 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SPM;
 
 import android.content.Context;
-import android.graphics.Color;
 
-import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class DefaultWorkoutCharts {
 
         if (!heartRateDataPoints.isEmpty()) {
             final String label = String.format("%s(%s)", context.getString(R.string.heart_rate), getUnitString(context, UNIT_BPM));
-            final LineDataSet dataset = createDataSet(context, heartRateDataPoints, label, context.getResources().getColor(R.color.chart_line_heart_rate));
+            final LineDataSet dataset = createLineDataSet(context, heartRateDataPoints, label, context.getResources().getColor(R.color.chart_line_heart_rate));
             ValueFormatter integerFormatter = new ValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
@@ -81,24 +84,18 @@ public class DefaultWorkoutCharts {
         if (hasSpeedValues && !speedDataPoints.isEmpty()) {
             if (ActivityKind.isPaceActivity(activityKind)) {
                 final String label = String.format("%s (%s)", context.getString(R.string.Pace), getUnitString(context, UNIT_MINUTES_PER_KM));
-                final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
-                charts.add(new WorkoutChart("pace", context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_MINUTES_PER_KM), getUnitString(context, UNIT_MINUTES_PER_KM)));
+                final LineDataSet dataset = createLineDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
+                charts.add(new WorkoutChart("pace", context.getString(R.string.Pace), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_SECONDS_PER_KM), getUnitString(context, UNIT_MINUTES_PER_KM)));
             } else {
-                final String label = String.format("%s (%s)", context.getString(R.string.Speed), getUnitString(context, UNIT_METERS_PER_SECOND));
-                final LineDataSet dataset = createDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
-                charts.add(new WorkoutChart("speed", context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND), getUnitString(context, UNIT_METERS_PER_SECOND)));
+                final String label = String.format("%s (%s)", context.getString(R.string.Speed), getUnitString(context, UNIT_KMPH));
+                final LineDataSet dataset = createLineDataSet(context, speedDataPoints, label, context.getResources().getColor(R.color.chart_line_speed));
+                charts.add(new WorkoutChart("speed", context.getString(R.string.Speed), ActivitySummaryEntries.GROUP_SPEED, new LineData(dataset), new SpeedYLabelFormatter(UNIT_METERS_PER_SECOND), getUnitString(context, UNIT_KMPH)));
             }
         }
 
         if (hasCadenceValues && !cadenceDataPoints.isEmpty()) {
             final String label = String.format("%s (%s)", context.getString(R.string.workout_cadence), getUnitString(context, getCadenceUnit(cycleUnit)));
-            final LineDataSet dataset = createDataSet(context, cadenceDataPoints, label, context.getResources().getColor(R.color.transparent));
-            dataset.setDrawCircles(true);
-            dataset.setDrawCircleHole(false);
-            dataset.setLineWidth(-1);
-            dataset.setCircleRadius(3f);
-            dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            dataset.setCircleColor(context.getResources().getColor(R.color.chart_cadence_circle));
+            final ScatterDataSet dataset = createScatterDataSet(context, cadenceDataPoints, label, context.getResources().getColor(R.color.chart_cadence_circle));
             final ValueFormatter integerFormatter = new ValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
@@ -110,7 +107,7 @@ public class DefaultWorkoutCharts {
                     "cadence",
                     context.getString(R.string.workout_cadence),
                     ActivitySummaryEntries.GROUP_CADENCE,
-                    new LineData(dataset),
+                    new ScatterData(dataset),
                     integerFormatter,
                     getUnitString(context, UNIT_SPM),
                     lineChart -> {
@@ -120,12 +117,6 @@ public class DefaultWorkoutCharts {
                         YAxis yAxisRight = lineChart.getAxisRight();
                         yAxisRight.setAxisMinimum(0);
                         yAxisRight.setAxisMaximum(xAxisMaximum);
-                        List<LegendEntry> legendEntries = new ArrayList<>(1);
-                        LegendEntry hrEntry = new LegendEntry();
-                        hrEntry.label = label;
-                        hrEntry.formColor = context.getResources().getColor(R.color.chart_cadence_circle);
-                        legendEntries.add(hrEntry);
-                        lineChart.getLegend().setCustom(legendEntries);
                         return kotlin.Unit.INSTANCE;
                     }
                     )
@@ -134,7 +125,7 @@ public class DefaultWorkoutCharts {
 
         if (!elevationDataPoints.isEmpty()) {
             final String label = String.format("%s (%s)", context.getString(R.string.Elevation), getUnitString(context, UNIT_METERS));
-            LineDataSet dataset = createDataSet(context, elevationDataPoints, label, context.getResources().getColor(R.color.chart_line_elevation));
+            LineDataSet dataset = createLineDataSet(context, elevationDataPoints, label, context.getResources().getColor(R.color.chart_line_elevation));
             charts.add(new WorkoutChart("elevation", context.getString(R.string.Elevation), ActivitySummaryEntries.GROUP_ELEVATION, new LineData(dataset), null, getUnitString(context, UNIT_METERS)));
         }
 
@@ -149,7 +140,7 @@ public class DefaultWorkoutCharts {
         return "";
     }
 
-    public static LineDataSet createDataSet(final Context context,
+    public static LineDataSet createLineDataSet(final Context context,
                                             final List<Entry> entities,
                                             final String label,
                                             final int color) {
@@ -164,6 +155,22 @@ public class DefaultWorkoutCharts {
         dataSet.setHighlightLineWidth(2f);
         dataSet.setDrawValues(false);
         dataSet.setDrawHorizontalHighlightIndicator(false);
+        return dataSet;
+    }
+
+    public static ScatterDataSet createScatterDataSet(final Context context,
+                                                final List<Entry> entities,
+                                                final String label,
+                                                final int color) {
+        final ScatterDataSet dataSet = new ScatterDataSet(entities, label);
+        dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        dataSet.setColor(color);
+        dataSet.setValueTextColor(GBApplication.getSecondaryTextColor(context));
+        dataSet.setHighlightLineWidth(2f);
+        dataSet.setDrawValues(false);
+        dataSet.setDrawHorizontalHighlightIndicator(false);
+        dataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+        dataSet.setScatterShapeSize(10f);
         return dataSet;
     }
 

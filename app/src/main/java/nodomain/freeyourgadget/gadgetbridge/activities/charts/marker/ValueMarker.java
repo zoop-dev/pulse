@@ -5,11 +5,11 @@ import android.graphics.Canvas;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IBarLineScatterCandleBubbleDataSet;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.List;
@@ -20,14 +20,14 @@ public class ValueMarker extends MarkerView {
     private TextView markerContent;
     private List<ValueFormatter> valueFormatters;
     private List<String> valueUnits;
-    private LineData lineData;
+    private CombinedData lineData;
 
     public ValueMarker(Context context) {
         super(context, R.layout.value_marker);
         this.markerContent = findViewById(R.id.marker_content);
     }
 
-    public ValueMarker(Context context, LineData lineData, List<ValueFormatter> valueFormatters, List<String> valueUnits) {
+    public ValueMarker(Context context, CombinedData lineData, List<ValueFormatter> valueFormatters, List<String> valueUnits) {
         super(context, R.layout.value_marker);
         this.markerContent = findViewById(R.id.marker_content);
         this.valueFormatters = valueFormatters;
@@ -40,7 +40,7 @@ public class ValueMarker extends MarkerView {
         float xVal = e.getX();
         StringBuilder content = new StringBuilder();
         for (int i = 0; i < lineData.getDataSetCount(); i++) {
-            ILineDataSet dataSet = lineData.getDataSetByIndex(i);
+            IBarLineScatterCandleBubbleDataSet dataSet = lineData.getDataSetByIndex(i);
             if (dataSet == null || !dataSet.isVisible()) {
                 continue;
             }
