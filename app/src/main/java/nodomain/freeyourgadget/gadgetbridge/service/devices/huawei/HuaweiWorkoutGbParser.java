@@ -39,6 +39,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableRowEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
@@ -63,10 +64,13 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSa
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
+import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -83,6 +87,8 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
     private final GBDevice gbDevice;
     private final Context context;
 
+    private final List<ActivityPoint> activityPoints = new ArrayList<>();
+
     public HuaweiWorkoutGbParser(final GBDevice gbDevice, final Context context) {
         this.gbDevice = gbDevice;
         this.context = context;
@@ -90,10 +96,18 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
     @Override
     public BaseActivitySummary parseBinaryData(final BaseActivitySummary summary, final boolean forDetails) {
+        // FIXME Do not use this
+        return parseWorkout(summary, forDetails).getSummary();
+    }
+
+    @Override
+    public nodomain.freeyourgadget.gadgetbridge.model.workout.Workout parseWorkout(BaseActivitySummary summary, final boolean forDetails) {
         if (!forDetails) {
             // Our parsing is too slow, especially without a RecyclerView
-            return summary;
+            return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
         }
+
+        activityPoints.clear();
 
         // Find the existing HuaweiWorkoutSummarySample
         try (DBHandler db = GBApplication.acquireDB()) {
@@ -108,14 +122,24 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
             final List<HuaweiWorkoutSummarySample> huaweiSummaries = qb.build().list();
             if (huaweiSummaries.isEmpty()) {
                 LOG.warn("Failed to find huawei summary for {}", summary.getStartTime());
-                return summary;
+                return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
             }
-            updateBaseSummary(session, huaweiSummaries.get(0), summary);
+            final ActivitySummaryData activitySummaryData = updateBaseSummary(session, huaweiSummaries.get(0), summary);
+            final ActivityKind activityKind = ActivityKind.fromCode(summary.getActivityKind());
+            final List<WorkoutChart> charts = new LinkedList<>();
+            if (!this.activityPoints.isEmpty()) {
+                charts.addAll(DefaultWorkoutCharts.buildDefaultCharts(context, activityPoints, activityKind));
+            }
+            return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(
+                    summary,
+                    activitySummaryData,
+                    charts
+            );
         } catch (Exception e) {
             LOG.error("Failed to update summary");
         }
 
-        return summary;
+        return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
     }
 
     public enum HuaweiActivityType {
@@ -342,17 +366,13 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
     }
 
     private String getSwimStyle(byte swimType) {
-        switch (swimType) {
-            case 1:
-                return "breaststroke";
-            case 3:
-                return "butterfly";
-            case 4:
-                return "backstroke";
-            case 5:
-                return "medley";
-        }
-        return "freestyle";
+        return switch (swimType) {
+            case 1 -> "breaststroke";
+            case 3 -> "butterfly";
+            case 4 -> "backstroke";
+            case 5 -> "medley";
+            default -> "freestyle";
+        };
     }
 
     public void parseWorkout(Long workoutId) {
@@ -489,9 +509,12 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
         }
     }
 
-    public void updateBaseSummary(final DaoSession session,
+    public ActivitySummaryData updateBaseSummary(final DaoSession session,
                                   final HuaweiWorkoutSummarySample summary,
                                   final BaseActivitySummary baseSummary) {
+
+        ActivitySummaryData summaryData = new ActivitySummaryData();
+
         try {
 
             QueryBuilder<HuaweiWorkoutSummaryAdditionalValuesSample> avData = session.getHuaweiWorkoutSummaryAdditionalValuesSampleDao().queryBuilder().where(
@@ -519,8 +542,6 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
             }
 
             ActivityKind type = huaweiTypeToGbType(summary.getType());
-
-            ActivitySummaryData summaryData = new ActivitySummaryData();
 
             summaryData.add(ActivitySummaryEntries.CALORIES_BURNT, summary.getCalories(), ActivitySummaryEntries.UNIT_KCAL);
             summaryData.add(ActivitySummaryEntries.DISTANCE_METERS, summary.getDistance(), ActivitySummaryEntries.UNIT_METERS);
@@ -657,6 +678,9 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 int dataIdx = 0;
                 for (HuaweiWorkoutDataSample dataSample : dataSamples) {
 
+                    ActivityPoint ac = new ActivityPoint();
+                    ac.setTime(new Date(dataSample.getTimestamp() * 1000L));
+
                     if (HRZonesCfg != null) {
                         int zoneIdx = HRZonesCfg.getZoneByMethod(dataSample.getHeartRate() & 0xFF, zoneCalculateMethod);
                         if (zoneIdx != -1 && dataIdx < (dataSamples.size() - 1)) {
@@ -668,6 +692,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     if (dataSample.getSpeed() != -1) {
                         speed += dataSample.getSpeed();
                         speedCount += 1;
+                        ac.setSpeed(dataSample.getSpeed());
                     }
                     if (dataSample.getStepRate() != -1) {
                         stepRate += dataSample.getStepRate();
@@ -676,6 +701,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     if (dataSample.getCadence() != -1) {
                         cadence += dataSample.getCadence();
                         cadenceCount += 1;
+                        ac.setCadence(dataSample.getCadence());
                     }
                     if (dataSample.getStepLength() != -1) {
                         stepLength += dataSample.getStepLength();
@@ -735,6 +761,8 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                             maxHeartRate = hr;
                         if (hr < minHeartRate)
                             minHeartRate = hr;
+
+                        ac.setHeartRate(dataSample.getHeartRate() & 0xff);
                     }
                     if (dataSample.getCalories() != -1)
                         sumCalories += dataSample.getCalories();
@@ -762,9 +790,13 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                                 sumAltitudeDown += previousAlt - alt;
                         }
                         previousAlt = alt;
+
+                        ac.setLocation(new GPSCoordinate(0, 0,alt));
                     }
                     if (dataSample.getDataErrorHex() != null)
                         unknownData = true;
+
+                    activityPoints.add(ac);
                 }
 
 
@@ -1153,5 +1185,6 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
             GB.toast("Exception parsing workout data", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("Exception parsing workout data", e);
         }
+        return summaryData;
     }
 }
