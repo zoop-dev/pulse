@@ -4020,4 +4020,10 @@
     <string name="pref_refresh_on_swipe_title">Odśwież przy przeciągnięciu</string>
     <string name="unit_celsius">℃</string>
     <string name="unit_fahrenheit">℉</string>
+    <string name="charts_two_items_only">Możesz porównywać tylko dwa elementy jednocześnie.</string>
+    <string name="charts_at_least_one_item">Musisz wybrać co najmniej jeden element.</string>
+    <string name="workout_cadence">Kadencja</string>
+    <string name="workout_charts">Wykresy ćwiczeń</string>
+    <string name="rotate_screen">Obróć ekran</string>
+    <string name="filter_charts">Filtruj wykresy</string>
 </resources>
