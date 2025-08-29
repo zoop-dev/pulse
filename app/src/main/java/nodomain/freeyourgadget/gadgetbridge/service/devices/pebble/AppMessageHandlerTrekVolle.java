@@ -33,12 +33,26 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 class AppMessageHandlerTrekVolle extends AppMessageHandler {
-    private Integer MESSAGE_KEY_WEATHER_TEMPERATURE;
-    private Integer MESSAGE_KEY_WEATHER_CONDITIONS;
-    private Integer MESSAGE_KEY_WEATHER_ICON;
-    private Integer MESSAGE_KEY_WEATHER_TEMPERATURE_MIN;
-    private Integer MESSAGE_KEY_WEATHER_TEMPERATURE_MAX;
-    private Integer MESSAGE_KEY_WEATHER_LOCATION;
+    private int MESSAGE_KEY_WEATHER_TEMPERATURE;
+    private int MESSAGE_KEY_WEATHER_CONDITIONS;
+    private int MESSAGE_KEY_WEATHER_ICON;
+    private int MESSAGE_KEY_WEATHER_TEMPERATURE_MIN;
+    private int MESSAGE_KEY_WEATHER_TEMPERATURE_MAX;
+    private int MESSAGE_KEY_WEATHER_LOCATION;
+
+    private static final int ID_IMAGE_ERROR = 0;
+    private static final int ID_WEATHER_CLEARNIGHT = 1;
+    private static final int ID_WEATHER_CLEAR = 2;
+    private static final int ID_WEATHER_CLOUDYNIGHT = 3;
+    private static final int ID_WEATHER_CLOUDY = 4;
+    private static final int ID_WEATHER_CLOUDS = 5;
+    private static final int ID_WEATHER_THICKCLOUDS = 6;
+    private static final int ID_WEATHER_RAIN = 7;
+    private static final int ID_WEATHER_RAINYNIGHT = 8;
+    private static final int ID_WEATHER_RAINY = 9;
+    private static final int ID_WEATHER_LIGHTNING = 10;
+    private static final int ID_WEATHER_SNOW = 11;
+    private static final int ID_WEATHER_MIST = 12;
 
     AppMessageHandlerTrekVolle(UUID uuid, PebbleProtocol pebbleProtocol) {
         super(uuid, pebbleProtocol);
@@ -58,21 +72,51 @@ class AppMessageHandlerTrekVolle extends AppMessageHandler {
     }
 
     private int getIconForConditionCode(int conditionCode, boolean isNight) {
-        /*
-        case 1:  return RESOURCE_ID_IMAGE_WEATHER_CLEARNIGHT;
-        case 2:  return RESOURCE_ID_IMAGE_WEATHER_CLEAR;
-        case 3:  return RESOURCE_ID_IMAGE_WEATHER_CLOUDYNIGHT;
-        case 4:  return RESOURCE_ID_IMAGE_WEATHER_CLOUDY;
-        case 5:  return RESOURCE_ID_IMAGE_WEATHER_CLOUDS;
-        case 6:  return RESOURCE_ID_IMAGE_WEATHER_THICKCLOUDS;
-        case 7:  return RESOURCE_ID_IMAGE_WEATHER_RAIN;
-        case 8:  return RESOURCE_ID_IMAGE_WEATHER_RAINYNIGHT;
-        case 9:  return RESOURCE_ID_IMAGE_WEATHER_RAINY;
-        case 10: return RESOURCE_ID_IMAGE_WEATHER_LIGHTNING;
-        case 11: return RESOURCE_ID_IMAGE_WEATHER_SNOW;
-        case 12: return RESOURCE_ID_IMAGE_WEATHER_MIST;
-        */
-        return 2;
+        if (conditionCode == 800 || conditionCode == 951) {
+            return isNight ? ID_WEATHER_CLEARNIGHT : ID_WEATHER_CLEAR;
+        } else if (conditionCode == 801 || conditionCode == 802) {
+            return isNight ? ID_WEATHER_CLOUDYNIGHT : ID_WEATHER_CLOUDY;
+        } else if (conditionCode >= 300 && conditionCode < 313) {
+            return ID_WEATHER_RAIN;
+        } else if (conditionCode >= 313 && conditionCode < 400) {
+            return ID_WEATHER_RAIN;
+        } else if (conditionCode >= 500 && conditionCode < 600) {
+            return ID_WEATHER_RAIN;
+        } else if (conditionCode >= 700 && conditionCode < 732) {
+            return ID_WEATHER_CLOUDY;
+        } else if (conditionCode == 741 || conditionCode == 751 || conditionCode == 761 || conditionCode == 762 ) {
+            return ID_WEATHER_MIST;
+        //} else if (conditionCode == 771) {
+        //    return WINDY;
+        } else if (conditionCode == 781) {
+            return ID_WEATHER_LIGHTNING;
+        } else if (conditionCode >= 200 && conditionCode < 300) {
+            return ID_WEATHER_LIGHTNING;
+        } else if (conditionCode == 600 || conditionCode == 601 || conditionCode == 602 ) {
+            return ID_WEATHER_SNOW;
+        //} else if (conditionCode == 611 || conditionCode == 612) {
+        //    return HAIL;
+        } else if (conditionCode == 615 || conditionCode == 616 || conditionCode == 620 || conditionCode == 621 || conditionCode == 622) {
+            return ID_WEATHER_SNOW;
+        } else if (conditionCode == 906) {
+            return ID_WEATHER_SNOW;
+        } else if (conditionCode == 803) {
+            return ID_WEATHER_CLOUDS;
+        } else if (conditionCode == 804) {
+            return ID_WEATHER_THICKCLOUDS;
+        } else if (conditionCode >= 907 && conditionCode < 957) {
+            return ID_WEATHER_LIGHTNING;
+        } else if (conditionCode == 905) {
+            return ID_WEATHER_LIGHTNING;
+        } else if (conditionCode == 900) {
+            return ID_WEATHER_LIGHTNING;
+        } else if (conditionCode == 901 || conditionCode == 902 || conditionCode == 962) {
+            return ID_WEATHER_LIGHTNING;
+        //} else if (conditionCode == 903) {
+        //    return COLD;
+        }
+
+        return ID_IMAGE_ERROR;
     }
 
     private byte[] encodeTrekVolleWeather(WeatherSpec weatherSpec) {
@@ -83,13 +127,12 @@ class AppMessageHandlerTrekVolle extends AppMessageHandler {
 
         boolean isNight = false; // FIXME
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>();
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE, (Object) (weatherSpec.getCurrentTemp() - 273)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_CONDITIONS, (Object) (weatherSpec.getCurrentCondition())));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MAX, (Object) (weatherSpec.getTodayMaxTemp() - 273)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MIN, (Object) (weatherSpec.getTodayMinTemp() - 273)));
-        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_LOCATION, (Object) weatherSpec.getLocation()));
-
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE, weatherSpec.getCurrentTemp() - 273));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_CONDITIONS, weatherSpec.getCurrentCondition()));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_ICON, getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight)));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MAX, weatherSpec.getTodayMaxTemp() - 273));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE_MIN, weatherSpec.getTodayMinTemp() - 273));
+        pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_LOCATION, weatherSpec.getLocation()));
 
         return mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
     }
