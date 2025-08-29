@@ -54,7 +54,6 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
             finish()
             return
         }
-        ChartDataRepository.clear()
 
         val chartTextColor = GBApplication.getSecondaryTextColor(context)
         binding.workoutDataChart.xAxis.apply {
@@ -85,6 +84,11 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
         selectedCharts.add(0, initChartId)
         setupChipGroup(binding.workoutDataChartChipGroup, initChartId)
         refreshChart()
+    }
+
+    override fun onDestroy() {
+        ChartDataRepository.clear()
+        super.onDestroy()
     }
 
     fun setupChipGroup(chipGroup: ChipGroup, initChartId: String) {
