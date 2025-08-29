@@ -347,6 +347,9 @@ public class FitRecord extends RecordData {
         if (getCadence() != null) {
             activityPoint.setCadence(getCadence());
         }
+        if (getPower() != null) {
+            activityPoint.setPower(getPower());
+        }
         return activityPoint;
     }
 }

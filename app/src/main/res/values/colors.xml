@@ -93,6 +93,7 @@
     <color name="chart_line_speed" type="color">#80D8FF</color>
     <color name="chart_line_elevation" type="color">#66BB6A</color>
     <color name="chart_line_heart_rate" type="color">#F44336</color>
+    <color name="chart_line_power" type="color">#6A0DAD</color>
     <color name="chart_highline_dolor" type="color">#ffff8800</color>
 
     <attr name="row_separator" format="color" />

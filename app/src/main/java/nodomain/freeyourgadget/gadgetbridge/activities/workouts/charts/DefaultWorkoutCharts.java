@@ -7,6 +7,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SPM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_WATT;
 
 import android.content.Context;
 
@@ -47,6 +48,7 @@ public class DefaultWorkoutCharts {
         final List<Entry> speedDataPoints = new ArrayList<>();
         final List<Entry> cadenceDataPoints = new ArrayList<>();
         final List<Entry> elevationDataPoints = new ArrayList<>();
+        final List<Entry> powerDataPoints = new ArrayList<>();
         boolean hasSpeedValues = false;
         boolean hasCadenceValues = false;
         boolean hasElevationValues = false;
@@ -82,6 +84,9 @@ public class DefaultWorkoutCharts {
             if (!hasCadenceValues && point.getCadence() > 0) {
                 hasCadenceValues = true;
             }
+            if (point.getPower() >= 0) {
+                powerDataPoints.add(new Entry(tsShorten, (float) point.getPower()));
+            }
         }
 
         if (!heartRateDataPoints.isEmpty()) {
@@ -98,6 +103,10 @@ public class DefaultWorkoutCharts {
 
         if (hasElevationValues && !elevationDataPoints.isEmpty()) {
             charts.add(createElevationChart(context, elevationDataPoints));
+        }
+
+        if (!powerDataPoints.isEmpty()) {
+            charts.add(createPowerChart(context, powerDataPoints));
         }
 
         return charts;
@@ -199,6 +208,19 @@ public class DefaultWorkoutCharts {
                     return kotlin.Unit.INSTANCE;
                 }
         );
+    }
+
+    private static WorkoutChart createPowerChart(final Context context,
+                                                     final List<Entry> powerDataPoints) {
+        final String label = String.format("%s (%s)", context.getString(R.string.workout_power), getUnitString(context, UNIT_WATT));
+        LineDataSet dataset = createLineDataSet(context, powerDataPoints, label, context.getResources().getColor(R.color.chart_line_power));
+        final ValueFormatter integerFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart("power", context.getString(R.string.workout_power), ActivitySummaryEntries.GROUP_POWER, new LineData(dataset), integerFormatter, getUnitString(context, UNIT_WATT));
     }
 
     public static String getUnitString(final Context context, final String unit) {
