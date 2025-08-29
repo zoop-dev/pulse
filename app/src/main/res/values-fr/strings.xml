@@ -3808,4 +3808,5 @@ Temps de sommeil préféré en heures</string>
     <string name="work_info_status_blocked">Bloqué</string>
     <string name="work_info_status_cancelled">Annulée</string>
     <string name="datetime_in_the_future">%1$s (dans %2$s)</string>
+    <string name="uploading">Envoi des données …</string>
 </resources>
