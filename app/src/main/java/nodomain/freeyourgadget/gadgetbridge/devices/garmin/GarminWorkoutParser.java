@@ -204,6 +204,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         final ActivitySummaryData activitySummaryData = updateSummary(summary);
         final ActivityKind activityKind = ActivityKind.fromCode(summary.getActivityKind());
+        final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
+
+        if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
+            activityPoints.forEach(ap -> ap.setCadence(ap.getCadence() * 2));
+        }
+
         final List<WorkoutChart> charts = new LinkedList<>();
         if (!this.activityPoints.isEmpty()) {
             charts.addAll(DefaultWorkoutCharts.buildDefaultCharts(context, activityPoints, activityKind));
