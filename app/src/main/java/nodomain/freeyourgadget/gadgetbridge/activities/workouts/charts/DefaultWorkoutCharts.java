@@ -78,8 +78,8 @@ public class DefaultWorkoutCharts {
 
             // Cadence
             cadenceDataPoints.add(new Entry(tsShorten, point.getCadence()));
+            cadenceAccumulator.add(point.getCadence());
             if (!hasCadenceValues && point.getCadence() > 0) {
-                cadenceAccumulator.add(point.getCadence());
                 hasCadenceValues = true;
             }
         }
