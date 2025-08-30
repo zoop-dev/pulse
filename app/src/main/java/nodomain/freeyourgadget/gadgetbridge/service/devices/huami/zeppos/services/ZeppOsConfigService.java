@@ -227,14 +227,27 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         final int goalFatBurnTime = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_GOAL_FAT_BURN_TIME_MINUTES, ActivityUser.defaultUserFatBurnTimeMinutes);
         LOG.info("Setting Fitness Goals to steps={}, calories={}, sleep={}, weight={}, standingTime={}, fatBurn={}", goalSteps, goalCalories, goalSleep, goalWeight, goalStandingTime, goalFatBurnTime);
 
-        newSetter()
-                .setInt(ConfigArg.FITNESS_GOAL_STEPS, goalSteps)
+        final ConfigSetter setter = newSetter()
                 .setShort(ConfigArg.FITNESS_GOAL_CALORIES, (short) goalCalories)
                 .setShort(ConfigArg.FITNESS_GOAL_SLEEP, (short) (goalSleep * 60))
-                .setShort(ConfigArg.FITNESS_GOAL_WEIGHT, (short) goalWeight)
                 .setShort(ConfigArg.FITNESS_GOAL_STANDING_TIME, (short) (goalStandingTime))
-                .setShort(ConfigArg.FITNESS_GOAL_FAT_BURN_TIME, (short) goalFatBurnTime)
-                .write(builder);
+                .setShort(ConfigArg.FITNESS_GOAL_FAT_BURN_TIME, (short) goalFatBurnTime);
+
+        final byte healthVersion = Objects.requireNonNullElse(mGroupVersions.get(ConfigGroup.HEALTH), (byte) 0);
+
+        if (healthVersion <= 1) {
+            setter.setShort(ConfigArg.FITNESS_GOAL_STEPS, (short) goalSteps);
+        } else {
+            setter.setInt(ConfigArg.FITNESS_GOAL_STEPS, goalSteps);
+        }
+
+        if (healthVersion < 3) {
+            setter.setShort(ConfigArg.FITNESS_GOAL_WEIGHT, (short) goalWeight);
+        } else {
+            setter.setInt(ConfigArg.FITNESS_GOAL_WEIGHT, goalWeight);
+        }
+
+        setter.write(builder);
     }
 
     private void setMeasurementSystem(final ZeppOsTransactionBuilder builder) {
