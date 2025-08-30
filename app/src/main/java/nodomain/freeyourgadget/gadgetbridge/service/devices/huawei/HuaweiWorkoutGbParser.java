@@ -460,19 +460,6 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
         @Override
         public void addData(ActivitySummaryData summaryData, final String value) {
             int val = Integer.parseInt(value);
-            // TODO: I don't know mapping ot types. Also localization required.
-//            String waterType;
-//            switch (val) {
-//                case 1:
-//                    waterType = "resh";
-//                    break;
-//                case 2:
-//                    waterType = "type 2";
-//                    break;
-//                default:
-//                    waterType = String.format(Locale.ROOT, "type %d", val);
-//                    break;
-//            }
             summaryData.add(this.activityGroup, this.activityKey, String.format(Locale.ROOT, "type %d", val));
         }
     }
@@ -692,7 +679,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     if (dataSample.getSpeed() != -1) {
                         speed += dataSample.getSpeed();
                         speedCount += 1;
-                        ac.setSpeed(dataSample.getSpeed());
+                        ac.setSpeed(dataSample.getSpeed() / 10.0f);
                     }
                     if (dataSample.getStepRate() != -1) {
                         stepRate += dataSample.getStepRate();
@@ -791,7 +778,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                         }
                         previousAlt = alt;
 
-                        ac.setLocation(new GPSCoordinate(0, 0,alt));
+                        ac.setLocation(new GPSCoordinate(0, 0, alt/ 10.0f));
                     }
                     if (dataSample.getDataErrorHex() != null)
                         unknownData = true;
