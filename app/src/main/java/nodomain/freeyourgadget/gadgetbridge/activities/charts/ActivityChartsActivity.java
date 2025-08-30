@@ -430,7 +430,8 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
 
     @Override
     public void enableSwipeRefresh(final boolean enable) {
-        swipeLayout.setEnabled(enable && allowRefresh());
+        final boolean refreshOnSwipe = GBApplication.getPrefs().refreshOnSwipe();
+        swipeLayout.setEnabled(enable && refreshOnSwipe && allowRefresh());
     }
 
     protected boolean supportsRefresh() {
