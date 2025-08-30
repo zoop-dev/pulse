@@ -103,6 +103,8 @@ public class ActivitySummaryEntries {
     public static final String AVG_GROUND_CONTACT_TIME = "ground_contact_time";
     public static final String AVG_VERTICAL_RATIO = "vertical_ratio";
     public static final String AVG_GROUND_CONTACT_TIME_BALANCE = "ground_contact_time_balance";
+    public static final String STEP_SPEED_LOSS = "running_step_speed_loss";
+    public static final String STEP_SPEED_LOSS_PERCENTAGE = "running_step_speed_loss_percentage";
 
     public static final String DISTANCE_METERS = "distanceMeters";
     public static final String POOL_LENGTH = "poolLength";
@@ -197,6 +199,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_SECONDS_PER_KM = "seconds_km";
     public static final String UNIT_MINUTES_PER_KM = "minutes_km";
     public static final String UNIT_SECONDS_PER_M = "seconds_m";
+    public static final String UNIT_CENTIMETERS_PER_SECOND = "centimeters_second";
     public static final String UNIT_METERS_PER_SECOND = "meters_second";
     public static final String UNIT_KMPH = "km_h";
     public static final String UNIT_SPM = "spm";

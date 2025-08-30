@@ -95,7 +95,7 @@ public class GlobalFITMessage {
     ));
 
     public static GlobalFITMessage SESSION = new GlobalFITMessage(18, "SESSION", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"), // 9 lap
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"), // 8 session 9 lap
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"), // 1 stop
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time"),
             new FieldDefinitionPrimitive(3, BaseType.SINT32, "start_latitude", FieldDefinitionFactory.FIELD.COORDINATE),
@@ -104,7 +104,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(6, BaseType.ENUM, "sub_sport"),
             new FieldDefinitionPrimitive(7, BaseType.UINT32, "total_elapsed_time"), // with pauses
             new FieldDefinitionPrimitive(8, BaseType.UINT32, "total_timer_time"), // no pauses
-            new FieldDefinitionPrimitive(9, BaseType.UINT32, "total_distance"),
+            new FieldDefinitionPrimitive(9, BaseType.UINT32, "total_distance"), // cm
             new FieldDefinitionPrimitive(10, BaseType.UINT32, "total_cycles"),
             new FieldDefinitionPrimitive(11, BaseType.UINT16, "total_calories"),
             new FieldDefinitionPrimitive(16, BaseType.UINT8, "average_heart_rate"),
@@ -118,6 +118,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(24, BaseType.UINT8, "total_training_effect", 10, 0),
             new FieldDefinitionPrimitive(25, BaseType.UINT16, "first_lap_index"),
             new FieldDefinitionPrimitive(26, BaseType.UINT16, "num_laps"),
+            new FieldDefinitionPrimitive(28, BaseType.ENUM, "trigger"),
             new FieldDefinitionPrimitive(29, BaseType.SINT32, "nec_latitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(30, BaseType.SINT32, "nec_longitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(31, BaseType.SINT32, "swc_latitude", FieldDefinitionFactory.FIELD.COORDINATE),
@@ -133,6 +134,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(45, BaseType.UINT16, "threshold_power"), // watt
             new FieldDefinitionPrimitive(47, BaseType.UINT16, "num_active_lengths"),
             new FieldDefinitionPrimitive(48, BaseType.UINT32, "total_work"), // joule
+            new FieldDefinitionPrimitive(64, BaseType.UINT8, "min_heart_rate"), // bpm
             new FieldDefinitionPrimitive(79, BaseType.UINT16, "avg_swim_cadence", 10, 0), // rpm
             new FieldDefinitionPrimitive(80, BaseType.UINT16, "avg_swolf"),
             new FieldDefinitionPrimitive(89, BaseType.UINT16, "avg_vertical_oscillation", 10, 0), // mm
@@ -176,6 +178,11 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(196, BaseType.UINT16, "resting_calories"), // kcal
             new FieldDefinitionPrimitive(197, BaseType.UINT8, "hrv_sdrr"), // ms
             new FieldDefinitionPrimitive(198, BaseType.UINT8, "hrv_rmssd"), // ms
+            new FieldDefinitionPrimitive(205, BaseType.UINT8, "beginning_potential"),
+            new FieldDefinitionPrimitive(206, BaseType.UINT8, "ending_potential"),
+            new FieldDefinitionPrimitive(207, BaseType.UINT8, "min_stamina"),
+            new FieldDefinitionPrimitive(222, BaseType.UINT16, "step_speed_loss", 100, 0),
+            new FieldDefinitionPrimitive(223, BaseType.UINT16, "step_speed_loss_percentage", 100, 0),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -276,7 +283,7 @@ public class GlobalFITMessage {
     public static GlobalFITMessage ACTIVITY = new GlobalFITMessage(34, "ACTIVITY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "total_timer_time"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "num_sessions"),
-            new FieldDefinitionPrimitive(2, BaseType.ENUM, "type"), // 0
+            new FieldDefinitionPrimitive(2, BaseType.ENUM, "type"), // 0 manual
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "event"), // 26 activity
             new FieldDefinitionPrimitive(4, BaseType.ENUM, "event_type"), // 1 stop
             new FieldDefinitionPrimitive(5, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone

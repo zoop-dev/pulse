@@ -2636,6 +2636,7 @@
     <string name="ft">ft</string>
     <string name="steps_unit">steps</string>
     <string name="meters_second">m/s</string>
+    <string name="centimeters_second">cm/s</string>
     <string name="km_h">km/h</string>
     <string name="mi_h">mi/h</string>
     <string name="minutes_mi">min/mi</string>
@@ -2683,6 +2684,8 @@
     <string name="ground_contact_time">Ground Contact Time</string>
     <string name="vertical_ratio">Vertical Ratio</string>
     <string name="ground_contact_time_balance">Ground Contact Time Balance</string>
+    <string name="running_step_speed_loss">Step Speed Loss</string>
+    <string name="running_step_speed_loss_percentage">Step Speed Loss %</string>
     <string name="workout_repetitions">Repetitions</string>
     <string name="workout_revolutions">Revolutions</string>
     <string name="workout_swings">Swings</string>

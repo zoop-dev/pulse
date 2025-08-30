@@ -137,6 +137,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getTrigger() {
+        return (Integer) getFieldByNumber(28);
+    }
+
+    @Nullable
     public Double getNecLatitude() {
         return (Double) getFieldByNumber(29);
     }
@@ -209,6 +214,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Long getTotalWork() {
         return (Long) getFieldByNumber(48);
+    }
+
+    @Nullable
+    public Integer getMinHeartRate() {
+        return (Integer) getFieldByNumber(64);
     }
 
     @Nullable
@@ -483,6 +493,31 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getBeginningPotential() {
+        return (Integer) getFieldByNumber(205);
+    }
+
+    @Nullable
+    public Integer getEndingPotential() {
+        return (Integer) getFieldByNumber(206);
+    }
+
+    @Nullable
+    public Integer getMinStamina() {
+        return (Integer) getFieldByNumber(207);
+    }
+
+    @Nullable
+    public Float getStepSpeedLoss() {
+        return (Float) getFieldByNumber(222);
+    }
+
+    @Nullable
+    public Float getStepSpeedLossPercentage() {
+        return (Float) getFieldByNumber(223);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
     }
@@ -607,6 +642,11 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setTrigger(final Integer value) {
+            setFieldByNumber(28, value);
+            return this;
+        }
+
         public Builder setNecLatitude(final Double value) {
             setFieldByNumber(29, value);
             return this;
@@ -679,6 +719,11 @@ public class FitSession extends RecordData {
 
         public Builder setTotalWork(final Long value) {
             setFieldByNumber(48, value);
+            return this;
+        }
+
+        public Builder setMinHeartRate(final Integer value) {
+            setFieldByNumber(64, value);
             return this;
         }
 
@@ -894,6 +939,31 @@ public class FitSession extends RecordData {
 
         public Builder setHrvRmssd(final Integer value) {
             setFieldByNumber(198, value);
+            return this;
+        }
+
+        public Builder setBeginningPotential(final Integer value) {
+            setFieldByNumber(205, value);
+            return this;
+        }
+
+        public Builder setEndingPotential(final Integer value) {
+            setFieldByNumber(206, value);
+            return this;
+        }
+
+        public Builder setMinStamina(final Integer value) {
+            setFieldByNumber(207, value);
+            return this;
+        }
+
+        public Builder setStepSpeedLoss(final Float value) {
+            setFieldByNumber(222, value);
+            return this;
+        }
+
+        public Builder setStepSpeedLossPercentage(final Float value) {
+            setFieldByNumber(223, value);
             return this;
         }
 
