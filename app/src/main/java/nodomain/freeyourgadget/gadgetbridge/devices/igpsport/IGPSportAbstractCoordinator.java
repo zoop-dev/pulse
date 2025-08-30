@@ -45,7 +45,7 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
 
     @Override
     public String getManufacturer() {
-        return "IGPSPORT";
+        return "iGPSPORT";
     }
 
     @NonNull
