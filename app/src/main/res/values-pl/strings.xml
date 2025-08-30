@@ -4026,4 +4026,8 @@
     <string name="workout_charts">Wykresy ćwiczeń</string>
     <string name="rotate_screen">Obróć ekran</string>
     <string name="filter_charts">Filtruj wykresy</string>
+    <string name="centimeters_second">cm/s</string>
+    <string name="running_step_speed_loss">Spadek prędkości kroku</string>
+    <string name="running_step_speed_loss_percentage">Spadek prędkości kroku %</string>
+    <string name="recovery_heart_rate">Tętno regeneracyjne</string>
 </resources>
