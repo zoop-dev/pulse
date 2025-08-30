@@ -3989,4 +3989,24 @@
     <string name="weight_scale_stone_format">%1$d st %2$d lb</string>
     <string name="weight_scale_unknown">\???.??? ??</string>
     <string name="record_data">Uložit</string>
+    <string name="charts_two_items_only">Můžete porovnat pouze dvě položky najednou.</string>
+    <string name="charts_at_least_one_item">Měla by být vybrána alespoň jedna položka.</string>
+    <string name="workout_cadence">Kadence</string>
+    <string name="centimeters_second">cm/s</string>
+    <string name="running_step_speed_loss">Ztráta rychlosti kroků</string>
+    <string name="running_step_speed_loss_percentage">Ztráta rychlosti kroků %</string>
+    <string name="soundcore_auto_power_off_title">Automatické vypnutí</string>
+    <string name="soundcore_auto_power_off_summary">Při odpojení od telefonu se zařízení po dané době automaticky vypne</string>
+    <string name="soundcore_battery_low_tone_title">Tón vybité baterie</string>
+    <string name="soundcore_battery_low_tone_summary">Přehrát tón, když se úroveň baterie dostane pod 20 % a 10 %</string>
+    <string name="soundcore_gaming_mode_title">Herní režim</string>
+    <string name="soundcore_gaming_mode_summary">Snížit odezvu a vylepšit zvuk kroků a hlasů. Může snížit stabilitu připojení.</string>
+    <string name="pref_refresh_on_swipe_summary">Posuňte dolů pro získání nových dat z připojených zařízení.</string>
+    <string name="pref_refresh_on_swipe_title">Obnovit při posunutí</string>
+    <string name="unit_celsius">℃</string>
+    <string name="unit_fahrenheit">℉</string>
+    <string name="workout_charts">Tréninkové grafy</string>
+    <string name="rotate_screen">Otočte obrazovku</string>
+    <string name="filter_charts">Filtrovat grafy</string>
+    <string name="recovery_heart_rate">Tepová frekvence zotavení</string>
 </resources>
