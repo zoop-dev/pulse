@@ -3903,4 +3903,24 @@
     <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
     <string name="datetime_in_the_future">%1$s (in %2$s)</string>
     <string name="datetime_in_the_past">%1$s (vor %2$s)</string>
+    <string name="charts_two_items_only">Es können nur zwei Elemente gleichzeitig verglichen werden.</string>
+    <string name="charts_at_least_one_item">Es muss mindestens ein Element ausgewählt sein.</string>
+    <string name="workout_cadence">Trittfrequenz</string>
+    <string name="centimeters_second">cm/s</string>
+    <string name="running_step_speed_loss">Schrittgeschwindigkeitsverlust</string>
+    <string name="running_step_speed_loss_percentage">Schrittgeschwindigkeitsverlust %</string>
+    <string name="soundcore_auto_power_off_title">Automatisches Ausschalten</string>
+    <string name="soundcore_auto_power_off_summary">Beim Trennen vom Telefon schaltet sich das Gerät nach dem angegebenen Timeout aus</string>
+    <string name="soundcore_battery_low_tone_title">Warnsignal bei niedrigem Akku</string>
+    <string name="soundcore_battery_low_tone_summary">Hinweiston bei Akku &lt; 20 % und &lt; 10 %</string>
+    <string name="soundcore_gaming_mode_title">Gaming-Modus</string>
+    <string name="soundcore_gaming_mode_summary">Geringere Latenz, bessere Schritte-/Sprachgeräusche, evtl. instabilere Verbindung.</string>
+    <string name="pref_refresh_on_swipe_summary">Nach unten wischen, um neue Gerätedaten abzurufen.</string>
+    <string name="pref_refresh_on_swipe_title">Wischen zum Aktualisieren</string>
+    <string name="unit_celsius">℃</string>
+    <string name="unit_fahrenheit">℉</string>
+    <string name="workout_charts">Trainingsdiagramme</string>
+    <string name="rotate_screen">Bildschirm drehen</string>
+    <string name="filter_charts">Diagramme filtern</string>
+    <string name="recovery_heart_rate">Erholungspuls</string>
 </resources>
