@@ -206,7 +206,7 @@ public abstract class Logging {
         rollingPolicy.setContext(lc);
         rollingPolicy.setFileNamePattern(logDirectory + "/gadgetbridge-%d{yyyy-MM-dd}.%i.log.zip");
         rollingPolicy.setParent(fileAppender);
-        rollingPolicy.setMaxFileSize(FileSize.valueOf("2MB"));
+        rollingPolicy.setMaxFileSize(FileSize.valueOf("10MB"));
         rollingPolicy.setMaxHistory(10);
         rollingPolicy.setTotalSizeCap(FileSize.valueOf("100MB"));
         rollingPolicy.start();
