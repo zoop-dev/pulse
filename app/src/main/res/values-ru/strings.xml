@@ -4008,4 +4008,11 @@
     <string name="pref_refresh_on_swipe_title">Обновить при смахивании</string>
     <string name="unit_celsius">℃</string>
     <string name="unit_fahrenheit">℉</string>
+    <string name="charts_two_items_only">Одновременно можно сравнивать только два элемента.</string>
+    <string name="charts_at_least_one_item">Должен быть выбран хотя бы один элемент.</string>
+    <string name="workout_cadence">Каденс (частота шагов)</string>
+    <string name="centimeters_second">см/с</string>
+    <string name="workout_charts">Диаграммы тренировок</string>
+    <string name="rotate_screen">Повернуть экран</string>
+    <string name="filter_charts">Фильтровать диаграммы</string>
 </resources>
