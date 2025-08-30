@@ -4314,4 +4314,5 @@
     <string name="datetime_in_the_past">%1$s (%2$s ago)</string>
     <string name="rotate_screen">Rotate screen</string>
     <string name="filter_charts">Filter charts</string>
+    <string name="recovery_heart_rate">Recovery Heart rate</string>
 </resources>

@@ -273,6 +273,9 @@ object ActivitySummaryGroup {
                 )
             )
 
+            // Recovery Heart Rate
+            put(ActivitySummaryEntries.GROUP_RECOVERY_HEART_RATE, listOf<String>())
+
             // Other
             put(
                 ActivitySummaryEntries.GROUP_OTHER, listOf<String>(

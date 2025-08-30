@@ -242,6 +242,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_RUNNING_FORM = "RunningForm";
     public static final String GROUP_INTERVALS = "workout_intervals";
     public static final String GROUP_DIVING = "activity_type_diving";
+    public static final String GROUP_RECOVERY_HEART_RATE = "recovery_heart_rate";
     public static final String AVG_DEPTH = "diving_avg_depth";
     public static final String START_CNS = "diving_start_cns";
     public static final String END_CNS = "diving_end_cns";
