@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class IGPSportBSC200Coordinator extends IGPSportAbstractCoordinator{
-    private static final Logger LOG = LoggerFactory.getLogger(IGPSportBSC200Coordinator.class);
 
     @Override
     public int getDeviceNameResource() {

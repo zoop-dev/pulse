@@ -25,7 +25,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class IGPSportiGS800Coordinator extends IGPSportAbstractCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(IGPSportiGS800Coordinator.class);
 
     @Override
     public int getDeviceNameResource() {

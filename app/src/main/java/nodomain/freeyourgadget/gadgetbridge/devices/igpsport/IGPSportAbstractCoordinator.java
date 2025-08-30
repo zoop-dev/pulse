@@ -23,15 +23,10 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.regex.Pattern;
-
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -67,13 +62,6 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-//        Long deviceId = device.getId();
-//        QueryBuilder<?> qb = session.getIGPSportSampleDao().queryBuilder();
-//        qb.where(IGPSportSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-    }
-
-    @Override
     public boolean supportsActivityTracks(final GBDevice device) {
         return true;
     }
@@ -93,14 +81,8 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
         return AppManagerActivity.class;
     }
 
-
     @Override
     public InstallHandler findInstallHandler(final Uri uri, final Context context) {
-
-//        final IGPSportAgpsInstallHandler agpsInstallHandler = new IGPSportAgpsInstallHandler(uri, context);
-//        if (agpsInstallHandler.isValid()) {
-//            return agpsInstallHandler;
-//        }
 
         final IGPSportRouteInstallHandler routeInstallHandler = new IGPSportRouteInstallHandler(uri, context);
         if (routeInstallHandler.isValid()) {
