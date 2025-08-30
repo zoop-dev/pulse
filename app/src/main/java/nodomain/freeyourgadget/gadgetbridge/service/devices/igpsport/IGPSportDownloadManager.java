@@ -189,13 +189,10 @@ public class IGPSportDownloadManager {
         }
 
         public Boolean needMoreData() {
-            if (!downloadInProgress)
-                return false;
-            if (recievingDataBuffer.size() < (downloadingFile.getFileSize() + 20 + 4 + pbSize)) {
-                return true;
-            } else {
+            if (!downloadInProgress) {
                 return false;
             }
+            return recievingDataBuffer.size() < (downloadingFile.getFileSize() + 20 + 4 + pbSize);
         }
 
         public static class FileInfo {

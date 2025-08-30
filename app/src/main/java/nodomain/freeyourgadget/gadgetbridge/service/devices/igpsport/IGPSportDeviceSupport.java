@@ -286,6 +286,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
             if (characteristicUUID.compareTo(UUID_IGPSPORT_CHARACTERISTIC_THIRD_RX) == 0 ) {
                 downloadManager.addData(value);
             }
+            return true;
         }
 
         if(partialPacketInProgress) {
@@ -314,7 +315,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if ((value[0] == (byte) 0x01) && ( value[3] == (byte)0xff)) {
             int dataSize = ByteBuffer.wrap(value, 7, 2).getShort();
             if (dataSize+DATA_HEADER_SIZE > value.length) {
-                LOG.info("Partial packet detected, creating buffer for it");
+                LOG.info("Partial packet detected, creating buffer for it, buffer size: " + dataSize+DATA_HEADER_SIZE);
                 partialPacketInProgress = true;
                 partialBuffer = ByteBuffer.allocate(dataSize+DATA_HEADER_SIZE);
                 partialBuffer.put(value);
