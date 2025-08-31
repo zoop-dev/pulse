@@ -372,6 +372,27 @@ public class ZeppOsWeatherHandler {
 
         public IndexResponse(final WeatherSpec weatherSpec, final int days) {
             pubTime = new Date(weatherSpec.getTimestamp() * 1000L);
+            
+            final Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTime(pubTime);
+            
+            // Add current day
+            final IndexEntry todayEntry = new IndexEntry();
+            todayEntry.date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+            todayEntry.uvi = String.valueOf(Math.round(weatherSpec.getUvIndex()));
+            dataList.add(todayEntry);
+            
+            // Add forecast days
+            final int actualDays = Math.min(weatherSpec.getForecasts().size(), days - 1);
+            for (int i = 0; i < actualDays; i++) {
+                final WeatherSpec.Daily forecast = weatherSpec.getForecasts().get(i);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                
+                final IndexEntry entry = new IndexEntry();
+                entry.date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+                entry.uvi = String.valueOf(Math.round(forecast.getUvIndex()));
+                dataList.add(entry);
+            }
         }
 
         public static class Serializer implements JsonSerializer<IndexResponse> {
