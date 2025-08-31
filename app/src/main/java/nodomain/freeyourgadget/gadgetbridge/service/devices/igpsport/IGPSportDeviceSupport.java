@@ -63,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Back;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Config;
@@ -702,9 +703,9 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onSendWeather(ArrayList<WeatherSpec> weatherSpecs) {
-        if (!weatherSpecs.isEmpty()) {
-            WeatherSpec weatherSpec = weatherSpecs.get(0);
+    public void onSendWeather() {
+        WeatherSpec weatherSpec = Weather.getWeatherSpec();
+        if (weatherSpec != null) {
             weatherManager.handleWeather(weatherSpec);
         }
     }
@@ -831,7 +832,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
 
     public File getWritableExportDirectory() throws IOException {
-        return getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice());
+        return getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice(), true);
     }
 
 }

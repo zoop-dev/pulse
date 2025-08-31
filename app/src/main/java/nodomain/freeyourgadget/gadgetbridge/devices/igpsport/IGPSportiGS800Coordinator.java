@@ -42,7 +42,7 @@ public class IGPSportiGS800Coordinator extends IGPSportAbstractCoordinator {
     }
 
     @Override
-    public boolean supportsMusicInfo() {
+    public boolean supportsMusicInfo(final GBDevice device) {
         return true;
     }
 }
