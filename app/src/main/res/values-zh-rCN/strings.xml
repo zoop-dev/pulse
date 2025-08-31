@@ -2764,7 +2764,7 @@
     <string name="agps_status_error">错误</string>
     <string name="copied_to_clipboard">已复制到剪贴板</string>
     <string name="pref_title_garmin_default_reply_suffix">使用预定义的回复后缀</string>
-    <string name="pref_garmin_agps_help">下面的列表包含手表请求的 AGPS 更新的所有网址。 您可以从手机存储中选择一个文件，当手表请求更新时，该文件将发送到手表。</string>
+    <string name="pref_garmin_agps_help">下面的列表包含手表请求的 AGPS 更新的所有网址。 您可以从手机存储中选择一个文件，当手表请求更新时，该文件将发送到手表。\n\n只需配置其中一个文件。</string>
     <string name="pref_summary_garmin_default_reply_suffix">添加到 Gadgetbridge 中设置的后缀之外</string>
     <string name="no_folder_selected">未选择文件夹</string>
     <string name="none">无</string>
@@ -3997,4 +3997,18 @@
     <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
     <string name="datetime_in_the_future">%1$s (%2$s 后)</string>
     <string name="datetime_in_the_past">%1$s (%2$s 前)</string>
+    <string name="charts_two_items_only">一次只能比较两个项目。</string>
+    <string name="charts_at_least_one_item">至少应选择一个项目。</string>
+    <string name="workout_cadence">步频</string>
+    <string name="centimeters_second">厘米/秒</string>
+    <string name="running_step_speed_loss">步速损失</string>
+    <string name="running_step_speed_loss_percentage">步速损失百分比</string>
+    <string name="pref_refresh_on_swipe_summary">下拉刷新可从已连接设备获取新数据。</string>
+    <string name="pref_refresh_on_swipe_title">滑动刷新</string>
+    <string name="unit_celsius">℃</string>
+    <string name="unit_fahrenheit">℉</string>
+    <string name="workout_charts">锻炼图表</string>
+    <string name="rotate_screen">旋转屏幕</string>
+    <string name="filter_charts">筛选图表</string>
+    <string name="recovery_heart_rate">恢复心率</string>
 </resources>
