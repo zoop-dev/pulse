@@ -3844,4 +3844,8 @@
     <string name="workout_charts">Діаграми тренувань</string>
     <string name="rotate_screen">Повернути екран</string>
     <string name="filter_charts">Фільтрувати діаграми</string>
+    <string name="centimeters_second">см/с</string>
+    <string name="running_step_speed_loss">Втрата швидкості кроку</string>
+    <string name="running_step_speed_loss_percentage">Втрата швидкості кроку %</string>
+    <string name="recovery_heart_rate">Частота серцевих скорочень для відновлення</string>
 </resources>
