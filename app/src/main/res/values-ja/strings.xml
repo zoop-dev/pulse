@@ -92,7 +92,7 @@
     <string name="pref_header_cannned_messages">定型メッセージ</string>
     <string name="pref_title_canned_replies">返信</string>
     <string name="pref_title_canned_reply_suffix">共通の接尾語</string>
-    <string name="pref_title_canned_messages_dismisscall"></string>
+    <string name="pref_title_canned_messages_dismisscall"/>
     <string name="pref_title_canned_messages_set">デバイスの更新</string>
     <string name="pref_header_development">開発者用設定</string>
     <string name="pref_title_development_miaddr">Mi Band のアドレス</string>
@@ -426,7 +426,7 @@
     <string name="mi2_prefs_button_press_count">ボタンを押す回数</string>
     <string name="mi2_prefs_button_press_count_summary">イベント 1 を発動させるために押すボタンの回数。続けて同じ回数ボタンを押すとイベント 2 が発生します。</string>
     <string name="mi2_prefs_button_press_broadcast">送信するブロードキャスト メッセージ</string>
-    <string name="mi2_prefs_button_press_broadcast_summary"></string>
+    <string name="mi2_prefs_button_press_broadcast_summary"/>
     <string name="mi2_prefs_button_action">ボタンの動作を有効にする</string>
     <string name="mi2_prefs_button_action_summary">指定したボタンを押した数の動作を有効にします</string>
     <string name="mi2_prefs_button_action_vibrate">バンドの振動を有効にする</string>
