@@ -698,6 +698,7 @@
     <string name="widget_1_hour">1 hora</string>
     <plurals name="widget_alarm_target_hours">
         <item quantity="one">%d hora</item>
+        <item quantity="many"></item>
         <item quantity="other">%d hores</item>
     </plurals>
     <string name="pref_display_add_device_fab">Botó d\'afegir nou dispositiu</string>
