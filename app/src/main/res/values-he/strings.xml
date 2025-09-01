@@ -705,7 +705,6 @@
     <plurals name="widget_alarm_target_hours">
         <item quantity="one">שעה</item>
         <item quantity="two">שעתיים</item>
-        <item quantity="many">%d שעות</item>
         <item quantity="other">%d שעות</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">כדי לצפות בעקבות פעילות, עליך להתקין יישומון שיכול לטפל בקובצי GPX.</string>
