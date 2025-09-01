@@ -620,8 +620,6 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 int maxSpeed = Integer.MIN_VALUE;
                 int speed = 0;
                 int speedCount = 0;
-                boolean stepRatePresent = false;
-                int stepRate = 0;
                 int avgStepRate = 0;
                 int cadence = 0;
                 int cadenceCount = 0;
@@ -712,14 +710,17 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                             maxSpeed = dataSample.getSpeed();
                         ac.setSpeed(dataSample.getSpeed() / 10.0f);
                     }
-                    if (dataSample.getStepRate() != -1) {
-                        stepRate += dataSample.getStepRate();
-                        stepRatePresent = true;
-                    }
-                    if (dataSample.getCadence() != -1) {
-                        cadence += dataSample.getCadence();
-                        cadenceCount += 1;
-                        ac.setCadence(dataSample.getCadence());
+                    //TODO: currently only for walking but I suppose it can be used for all workouts
+                    if(summary.getNewSteps() && (type == ActivityKind.WALKING || type == ActivityKind.OUTDOOR_WALKING)) {
+                        if (dataSample.getStepRate() != -1) {
+                            ac.setCadence(dataSample.getStepRate());
+                        }
+                    } else {
+                        if (dataSample.getCadence() != -1) {
+                            cadence += dataSample.getCadence();
+                            cadenceCount += 1;
+                            ac.setCadence(dataSample.getCadence());
+                        }
                     }
                     if (dataSample.getStepLength() != -1) {
                         stepLength += dataSample.getStepLength();
@@ -846,11 +847,11 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
                 // Average the things that should be averaged
                 if (speedCount > 0)
-                    speed = speed / speedCount;
+                    speed = (int)((float)speed / speedCount);
                 if (cadenceCount > 0)
                     cadence = cadence / cadenceCount;
-                if (summary.getDuration() > 60)
-                    avgStepRate = stepRate / (summary.getDuration() / 60); // steps per minute
+
+                avgStepRate = (int)((summary.getStepCount() / ((float)dataSamples.size() * (float)dataDelta)) * 60.0f); // steps per minute
                 if (stepLengthCount > 0)
                     stepLength = stepLength / stepLengthCount;
                 if (groundContactTimeCount > 0)
@@ -877,7 +878,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     summaryData.add(ActivitySummaryEntries.SPEED_MAX, maxSpeed / 10f, ActivitySummaryEntries.UNIT_METERS_PER_SECOND);
                 }
 
-                if (stepRatePresent) {
+                if (avgStepRate > 0) {
                     summaryData.add(ActivitySummaryEntries.STEP_RATE_AVG, avgStepRate, ActivitySummaryEntries.UNIT_SPM);
                 }
 

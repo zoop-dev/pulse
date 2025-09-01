@@ -154,6 +154,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetN
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetOTAChangeLog;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSmartAlarmList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWatchfaceParams;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutCapability;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutTotalsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCameraRemoteSetupEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDeviceReportThreshold;
@@ -888,7 +889,7 @@ public class HuaweiSupportProvider {
             initRequestQueue.add(new GetContactsCount(this));
             initRequestQueue.add(new SendOTASetAutoUpdate(this));
             initRequestQueue.add(new GetOTAChangeLog(this));
-            //initRequestQueue.add(new GetWorkoutCapability(this)); // TODO: in current stage I don't understand how to parse new steps.
+            initRequestQueue.add(new GetWorkoutCapability(this));
             initRequestQueue.add(new GetEventAlarmList(this));
             initRequestQueue.add(new GetSmartAlarmList(this));
 
@@ -1956,7 +1957,8 @@ public class HuaweiSupportProvider {
                     packet.algType,
                     packet.trainingPoints,
                     packet.longestStreak,
-                    packet.tripped
+                    packet.tripped,
+                    getHuaweiCoordinator().isSupportsWorkoutNewSteps()
             );
 
             db.getDaoSession().getHuaweiWorkoutSummarySampleDao().insertOrReplace(summarySample);
