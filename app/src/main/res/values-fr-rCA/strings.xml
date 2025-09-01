@@ -96,6 +96,7 @@
     <string name="application_name_generic">Gadgetbridge</string>
     <plurals name="widget_alarm_target_hours" tools:ignore="MissingQuantity">
         <item quantity="one">%d heure</item>
+        <item quantity="many"></item>
         <item quantity="other">%d heures</item>
     </plurals>
     <string name="pref_qhybrid_title_widget_draw_circles">Widget traçant des cercles</string>
