@@ -248,16 +248,19 @@ public class ControlCenterv2 extends AppCompatActivity
 
         // Make sure the SwipeRefreshLayout doesn't interfere with the ViewPager2
         viewPager.getChildAt(0).setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                swipeLayout.setEnabled(false);
-            } else {
-                swipeLayout.setEnabled(true);
+            if (prefs.refreshOnSwipe()) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    swipeLayout.setEnabled(false);
+                } else {
+                    swipeLayout.setEnabled(true);
+                }
             }
             return false;
         });
 
         // Set pull-down-to-refresh action
         swipeLayout = findViewById(R.id.dashboard_swipe_layout);
+        swipeLayout.setEnabled(prefs.refreshOnSwipe());
         swipeLayout.setOnRefreshListener(() -> {
             if (prefs.refreshOnSwipe()) {
                 // Fetch activity for all connected devices
