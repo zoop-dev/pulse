@@ -105,7 +105,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                 // Consume the reported length
                 buf.get(new byte[length]);
                 continue;
-            } else if (length != type.getExpectedLength()) {
+            } else if (!isValidLength(type, length)) {
                 LOG.warn("Unexpected length {} for type {}", length, type);
                 // Consume the reported length
                 buf.get(new byte[length]);
@@ -118,10 +118,10 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                     consumeTimestamp(buf);
                     break;
                 case GPS_COORDS:
-                    consumeGpsCoords(buf);
+                    consumeGpsCoords(buf, length);
                     break;
                 case GPS_DELTA:
-                    consumeGpsDelta(buf);
+                    consumeGpsDelta(buf, length);
                     break;
                 case STATUS:
                     consumeStatus(buf);
@@ -130,7 +130,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                     consumeSpeed(buf);
                     break;
                 case ALTITUDE:
-                    consumeAltitude(buf);
+                    consumeAltitude(buf, length);
                     break;
                 case HEARTRATE:
                     consumeHeartRate(buf);
@@ -164,6 +164,22 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         return this.activityTrack;
     }
 
+    private boolean isValidLength(final Type type, final int length) {
+        switch (type) {
+            case GPS_COORDS:
+                // Support both old format (20 bytes) and new Balance 2 format (28 bytes)
+                return length == 20 || length == 28;
+            case GPS_DELTA:
+                // Support both old format (8 bytes) and new Balance 2 format (16 bytes)
+                return length == 8 || length == 16;
+            case ALTITUDE:
+                // Support both old format (6 bytes) and new Balance 2 format (7 bytes)
+                return length == 6 || length == 7;
+            default:
+                return length == type.getExpectedLength();
+        }
+    }
+
     private void consumeTimestamp(final ByteBuffer buf) {
         buf.getInt(); // ?
         this.timestamp = new Date(buf.getLong());
@@ -176,11 +192,19 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         this.offset = buf.getShort();
     }
 
-    private void consumeGpsCoords(final ByteBuffer buf) {
+    private void consumeGpsCoords(final ByteBuffer buf, final int length) {
         buf.get(new byte[6]); // ?
         this.longitude = buf.getInt();
         this.latitude = buf.getInt();
-        buf.get(new byte[6]); // ?
+        
+        // Handle different formats
+        if (length == 20) {
+            // Old format: skip remaining 6 bytes
+            buf.get(new byte[6]); // ?
+        } else if (length == 28) {
+            // Balance 2 format: skip remaining 14 bytes (6 old + 8 new)
+            buf.get(new byte[14]); // ? + additional Balance 2 data
+        }
 
         // TODO which one is the time offset? Not sure it is the first
 
@@ -192,7 +216,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         trace("Consumed GPS coords: {} {}", longitudeDeg, latitudeDeg);
     }
 
-    private void consumeGpsDelta(final ByteBuffer buf) {
+    private void consumeGpsDelta(final ByteBuffer buf, final int length) {
         consumeTimestampOffset(buf);
         final short longitudeDelta = buf.getShort();
         final short latitudeDelta = buf.getShort();
@@ -200,6 +224,12 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         this.longitude += longitudeDelta;
         this.latitude += latitudeDelta;
+
+        // Handle additional data in Balance 2 format (16 bytes total)
+        if (length == 16) {
+            // Skip additional 8 bytes: 2-byte flag + 2x 4-byte floats (likely speed/accuracy)
+            buf.get(new byte[8]);
+        }
 
         if (lastActivityPoint == null) {
             final String timestampStr = SDF.format(new Date(timestamp.getTime() + offset));
@@ -258,20 +288,43 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         trace("Consumed speed: cadence={}, stride={}, pace={}", cadence, stride, pace);
     }
 
-    private void consumeAltitude(final ByteBuffer buf) {
+    private void consumeAltitude(final ByteBuffer buf, final int length) {
         consumeTimestampOffset(buf);
-        altitude = (int) (buf.getInt() / 100.0f);
+        final int altitudeRaw = buf.getInt();
+        
+        // Check for Balance 2 format with validity flag
+        final double newAltitude;
+        if (length == 7) {
+            final byte validityFlag = buf.get();
+            // 0xFF or 0xFFFFFFFF indicates invalid/no altitude data
+            if (altitudeRaw == -1 || validityFlag == (byte) 0xFF) {
+                // Skip invalid altitude data - don't update altitude at all
+                return;
+            }
+            // Balance 2 barometric altitude: stored in 0.01mm, convert to meters
+            newAltitude = altitudeRaw / 100000.0f;
+        } else {
+            // Old 6-byte format - check for invalid altitude
+            if (altitudeRaw == -1) {
+                return;
+            }
+            // Old format: GPS altitude in centimeters, convert to meters
+            newAltitude = altitudeRaw / 100.0f;
+        }
 
         final ActivityPoint ap = getCurrentActivityPoint();
         if (ap != null) {
             final GPSCoordinate newCoordinate = new GPSCoordinate(
                     ap.getLocation().getLongitude(),
                     ap.getLocation().getLatitude(),
-                    altitude
+                    newAltitude
             );
 
             ap.setLocation(newCoordinate);
         }
+
+        // Only update the instance altitude if we have valid data
+        altitude = newAltitude;
 
         trace("Consumed altitude: {}", altitude);
     }
