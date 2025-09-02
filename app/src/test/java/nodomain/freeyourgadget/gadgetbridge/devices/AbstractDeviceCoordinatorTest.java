@@ -46,29 +46,43 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Amazfit T-Rex 3", DeviceType.AMAZFITTREX3);
             put("Amazfit T-Rex Ultra", DeviceType.AMAZFITTREXULTRA);
             put("Xiaomi Smart Band 7", DeviceType.MIBAND7);
+            put("Xiaomi Band 9 Active AB01", DeviceType.MIBAND9ACTIVE);
             put("P8", DeviceType.WASPOS);
             put("P8DFU", DeviceType.WASPOS);
             put("P80", DeviceType.COLMI_P80);
             put("R11C_B200", DeviceType.YAWELL_R11);
             put("R11_B200", DeviceType.YAWELL_R11);
+            put("WF-C710N", DeviceType.SONY_WF_C710N);
+            put("John's WF-C710N", DeviceType.SONY_WF_C710N);
+            put("LE_WF-C710N", null);
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {
+            final String bluetoothName = e.getKey();
+            final DeviceType expectedType = e.getValue();
             final List<DeviceType> matches = new ArrayList<>(1);
+            // Check the bluetooth name against all existing coordinators
             for (DeviceType type : DeviceType.values()) {
                 final Pattern pattern = ((AbstractDeviceCoordinator) type.getDeviceCoordinator()).getSupportedDeviceName();
                 if (pattern != null) {
-                    if (pattern.matcher(e.getKey()).matches()) {
+                    if (pattern.matcher(bluetoothName).matches()) {
                         matches.add(type);
                     }
                 }
             }
 
-            Assert.assertEquals(
-                    "Bluetooth name " + e.getKey() + " should only match the expected DeviceType",
-                    Collections.singletonList(e.getValue()),
-                    matches
-            );
+            if (expectedType != null) {
+                Assert.assertEquals(
+                        "Bluetooth name " + bluetoothName + " should only match the expected DeviceType",
+                        Collections.singletonList(expectedType),
+                        matches
+                );
+            } else {
+                Assert.assertTrue(
+                        "Bluetooth name " + bluetoothName + " should match no DeviceType",
+                        matches.isEmpty()
+                );
+            }
         }
     }
 }

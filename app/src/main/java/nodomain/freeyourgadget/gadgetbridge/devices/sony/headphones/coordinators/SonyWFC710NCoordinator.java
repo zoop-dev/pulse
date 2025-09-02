@@ -29,7 +29,8 @@ public class SonyWFC710NCoordinator extends SonyHeadphonesCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("WF-C710N");
+        // Each headphone reports a separate LE_WF-C710N, which we must ignore
+        return Pattern.compile("(?!LE_).*WF-C710N$");
     }
 
     @Override

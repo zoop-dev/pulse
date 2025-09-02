@@ -29,7 +29,7 @@ public class SonyWFC510Coordinator extends SonyHeadphonesCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("WF-C510");
+        return Pattern.compile(".*WF-C510.*");
     }
 
     @Override
