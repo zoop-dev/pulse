@@ -179,7 +179,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="15dp"
             android:layout_weight="4" />
 
         <com.google.android.material.chip.ChipGroup
@@ -189,7 +189,8 @@
             android:layout_weight="4"
             app:singleSelection="true"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <GridLayout
             android:background="@color/gauge_line_color"

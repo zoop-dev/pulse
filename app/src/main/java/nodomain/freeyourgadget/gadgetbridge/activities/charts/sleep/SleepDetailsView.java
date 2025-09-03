@@ -184,7 +184,7 @@ public class SleepDetailsView extends View {
         canvas.drawLine(chartLeftStart + chartWidth, chartTopStart, chartLeftStart + chartWidth, chartTopStart + chartHeight, gridPaint);
 
         if(curOverlay != null) {
-            curOverlay.drawOverlayScale(canvas, lineSpacing, horizontalLineCount, chartTopStart, chartLeftStart + chartWidth);
+            curOverlay.drawOverlayScale(canvas, lineSpacing, chartTopStart, chartLeftStart + chartWidth);
         }
     }
 
@@ -432,14 +432,15 @@ public class SleepDetailsView extends View {
         //draw selector
         if (selectorPos > chartLeftStart && selectorPos < chartLeftStart + chartWidth) {
             canvas.drawLine(selectorPos, chartTopStart, selectorPos, chartTopStart + chartHeight, selectorPaint);
-            if (curOverlay != null) {
-                curOverlay.drawOverlaySelector(canvas, chartLeftStart, chartTopStart, chartHeight, chartWidth, selectorPos);
-            }
             if (selectorPos > (chartLeftStart + timeInfoTextRect.width()) && selectorPos < (chartLeftStart + chartWidth - timeInfoTextRect.width())) {
                 final String selectedDate = formatDurationHoursMinutes(this.startTimestamp + (long) ((selectorPos - chartLeftStart) / unitWidth) * 60000L);
                 canvas.drawText(selectedDate, selectorPos, timeInfoY, timeInfoTextPaint);
             }
             drawSelectedInfo(canvas);
+
+            if (curOverlay != null) {
+                curOverlay.drawOverlaySelector(canvas, chartLeftStart, chartTopStart, chartHeight, chartWidth, selectorPos);
+            }
         }
     }
 
@@ -449,7 +450,7 @@ public class SleepDetailsView extends View {
         heightUnit = (float) (1.0 / (config.length * 2));
     }
 
-    public void setData(List<SleepDetail> sleepDetails) {
+    public void setData(List<SleepDetail> sleepDetails, SleepDetailsOverlay overlay) {
         curOverlay = null;
         this.sleepDetails = sleepDetails;
         this.sleepMinutesCount = 0;
@@ -462,14 +463,12 @@ public class SleepDetailsView extends View {
             this.endTimestamp = last.startTimestamp + ((last.durationMinutes) * 60000L);
         }
         selectorPos = -1.0F;
+        curOverlay = overlay;
+        if(curOverlay != null) {
+            curOverlay.init(horizontalLineCount);
+        }
         invalidate();
     }
-
-    public void setOverlay(SleepDetailsOverlay overlay) {
-        curOverlay = overlay;
-    }
-
-
 
     @Override
     public boolean performClick() {

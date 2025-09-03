@@ -27,7 +27,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +49,7 @@ import org.slf4j.LoggerFactory;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -60,14 +60,22 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepAnalysis.SleepSession;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SimpleSleepDetailsHROverlay;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.AbstractOverlayData;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.OverlayDataFloat;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.OverlayDataInt;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SimpleSleepDetailsOverlay;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetailsOverlay;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetailsView;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.GaugeDrawer;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
+import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -144,9 +152,118 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         List<SleepDetailsView.SleepDetail> stages = prepareStages(samples);
 
-        int[] hr = hrOverlay?prepareHR(samples):null;
-        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, hr);
+        AbstractOverlayData overlay = null;
+        if(currentOverlay == OverlayType.HEART_RATE) {
+            int average = SHOW_CHARTS_AVERAGE?Math.round(hrData.getLeft()):OverlayDataInt.NO_DATA;
+            overlay = new OverlayDataInt(20, 140, prepareHR(samples), average, HEARTRATE_COLOR, Color.RED);
+        } else if(currentOverlay == OverlayType.SPO2) {
+            overlay = new OverlayDataInt(68, 100, prepareSpO2Overlay(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataInt.NO_DATA, getResources().getColor(R.color.spo2_color), Color.RED);
+        } else if(currentOverlay == OverlayType.TEMPERATURE) {
+            overlay = new OverlayDataFloat(28, 45, prepareTemperature(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataFloat.NO_DATA, CHART_TEXT_COLOR, Color.RED);
+        }
+        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, overlay);
     }
+
+    public float[] prepareTemperature(DBHandler db, GBDevice device, long tsStart, long tsEnd) {
+
+        DeviceCoordinator coordinator = device.getDeviceCoordinator();
+        TimeSampleProvider<TemperatureSample> provider = (TimeSampleProvider<TemperatureSample>) coordinator.getTemperatureSampleProvider(device, db.getDaoSession());
+
+        List<TemperatureSample> samples =  provider.getAllSamples(tsStart, tsEnd);
+        if(samples.isEmpty())
+            return null;
+
+        long interval = Long.MAX_VALUE;
+        for(int i = 1; i < samples.size(); i++) {
+            long delta = samples.get(i).getTimestamp() - samples.get(i - 1).getTimestamp();
+            if(delta < interval) {
+                interval = delta;
+            }
+        }
+        int count = (int)((float)(tsEnd - tsStart) / interval);
+        if(count == 0)
+            return null;
+
+        float[] result = new float[count];
+        Arrays.fill(result, -1);
+
+        for(TemperatureSample sp: samples) {
+            int idx = (int)((float)(sp.getTimestamp() - tsStart) / interval);
+            if(idx > 0 && idx < count) {
+                result[idx] = sp.getTemperature();
+            }
+        }
+
+        return result;
+    }
+
+    public int[] prepareSpO2Overlay(DBHandler db, GBDevice device, long tsStart, long tsEnd) {
+        DeviceCoordinator coordinator = device.getDeviceCoordinator();
+        TimeSampleProvider<Spo2Sample> provider = (TimeSampleProvider<Spo2Sample>) coordinator.getSpo2SampleProvider(device, db.getDaoSession());
+
+        List<Spo2Sample> samples =  provider.getAllSamples(tsStart, tsEnd);
+
+        if(samples.isEmpty())
+            return null;
+
+        long interval = Long.MAX_VALUE;
+        for(int i = 1; i < samples.size(); i++) {
+            long delta = samples.get(i).getTimestamp() - samples.get(i - 1).getTimestamp();
+            if(delta < interval) {
+                interval = delta;
+            }
+        }
+        int count = (int)((float)(tsEnd - tsStart) / interval);
+
+        if(count == 0)
+            return null;
+
+        int[] result = new int[count];
+        Arrays.fill(result, -1);
+
+        for(Spo2Sample sp: samples) {
+            int idx = (int)((float)(sp.getTimestamp() - tsStart) / interval);
+            if(idx > 0 && idx < count) {
+                result[idx] = sp.getSpo2();
+            }
+        }
+        return result;
+    }
+
+    public int[] prepareHR(List<? extends ActivitySample> samples) {
+        if (samples.isEmpty()) {
+            return null;
+        }
+
+        //NOTE: The start and end times of the samples should correspond to the sleep stages.
+        // The time interval between samples is not important (it can be in minutes, seconds, etc.), but all intervals must be filled.
+        // If there is a gap in the raw data, 'SimpleSleepDetailsHROverlay.NO_DATA' should be used.
+        // As we exactly know the intervals, we can use primitive types (which have better performance during drawing).
+        // Samples already prepared in minute's interval  can simply be copied with filtering.
+
+        TimestampTranslation tsTranslation = new TimestampTranslation();
+        HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
+
+        int[] result = new int[samples.size()];
+        int idx = 0;
+        int lastTsShorten = 0;
+        for (ActivitySample sample : samples) {
+            if (sample.getKind() == ActivityKind.NOT_WORN || !heartRateUtilsInstance.isValidHeartRateValue(sample.getHeartRate())) {
+                result[idx++] = -1;
+                continue;
+            }
+            int tsShorten = tsTranslation.shorten(sample.getTimestamp());
+            if (lastTsShorten == 0 || (tsShorten - lastTsShorten) <= 60 * HeartRateUtils.MAX_HR_MEASUREMENTS_GAP_MINUTES) {
+                result[idx++] = sample.getHeartRate();
+            } else {
+                result[idx++] = OverlayDataInt.NO_DATA;
+            }
+            lastTsShorten = tsShorten;
+        }
+
+        return result;
+    }
+
 
     private MySleepChartsData refreshSleepAmounts(GBDevice mGBDevice, List<? extends ActivitySample> samples, List<? extends SleepScoreSample> sleepScoreSamples) {
         SleepAnalysis sleepAnalysis = new SleepAnalysis();
@@ -242,11 +359,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         MySleepChartsData pieData = mcd.getPieData();
 
         if (mcd.getStages() != null) {
-            mSleepDetailsView.setData(mcd.getStages());
-        }
-        if(mcd.getHr() != null) {
-            int average = SHOW_CHARTS_AVERAGE?Math.round(mcd.getHeartRateAverage()):SimpleSleepDetailsHROverlay.NO_DATA;
-            mSleepDetailsView.setOverlay(new SimpleSleepDetailsHROverlay(20, 140, mcd.getHr(), average, HEARTRATE_COLOR, Color.BLACK, Color.RED));
+            SleepDetailsOverlay overlay = (mcd.getOverlayData() != null)?new SimpleSleepDetailsOverlay(mcd.getOverlayData() , Color.BLACK): null;
+            mSleepDetailsView.setData(mcd.getStages(), overlay);
         }
 
         Date date = new Date((long) this.getTSEnd() * 1000);
@@ -384,7 +498,24 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         return result.toString();
     }
 
-    private boolean hrOverlay = false;
+    enum OverlayType {
+        NONE,
+        HEART_RATE,
+        SPO2,
+        TEMPERATURE,
+    }
+
+    private OverlayType currentOverlay = OverlayType.NONE;
+
+    public boolean supportsSpO2(GBDevice device) {
+        DeviceCoordinator coordinator = device.getDeviceCoordinator();
+        return coordinator.supportsSpo2(device);
+    }
+
+    public boolean supportsTemperature(GBDevice device) {
+        DeviceCoordinator coordinator = device.getDeviceCoordinator();
+        return coordinator.supportsTemperatureMeasurement(device);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -415,18 +546,55 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         ChipGroup chipGroup = rootView.findViewById(R.id.sleep_chart_overlay_group);
 
+        chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup chipGroup, @NonNull List<Integer> list) {
+                if(list.isEmpty()) {
+                    currentOverlay = OverlayType.NONE;
+                    refresh();
+                }
+            }
+        });
+
         if(supportsHeartrate(getChartsHost().getDevice())) {
             Chip hrChip = (Chip) inflater.inflate(R.layout.layout_chart_chip, chipGroup, false);
             hrChip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.heart_rate));
             hrChip.setChipIconVisible(true);
             hrChip.setChipIconResource(R.drawable.ic_heartrate);
             chipGroup.addView(hrChip);
-            hrChip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
-                    hrOverlay = isChecked;
-                    refresh();
+            hrChip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(isChecked) {
+                    currentOverlay = OverlayType.HEART_RATE;
                 }
+                refresh();
+            });
+        }
+
+        if(supportsSpO2(getChartsHost().getDevice())) {
+            Chip spo2Chip = (Chip) inflater.inflate(R.layout.layout_chart_chip, chipGroup, false);
+            spo2Chip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.menuitem_spo2));
+            spo2Chip.setChipIconVisible(true);
+            spo2Chip.setChipIconResource(R.drawable.ic_spo2);
+            chipGroup.addView(spo2Chip);
+            spo2Chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(isChecked) {
+                    currentOverlay = OverlayType.SPO2;
+                }
+                refresh();
+            });
+        }
+
+        if(supportsTemperature(getChartsHost().getDevice())) {
+            Chip tempChip = (Chip) inflater.inflate(R.layout.layout_chart_chip, chipGroup, false);
+            tempChip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.menuitem_temperature));
+            tempChip.setChipIconVisible(true);
+            tempChip.setChipIconResource(R.drawable.ic_temperature);
+            chipGroup.addView(tempChip);
+            tempChip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(isChecked) {
+                    currentOverlay = OverlayType.TEMPERATURE;
+                }
+                refresh();
             });
         }
 
@@ -580,9 +748,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         private final List<SleepDetailsView.SleepDetail> stages;
 
-        private final int[] hr;
+        private final AbstractOverlayData overlayData;
 
-        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages, int[] hr) {
+        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages, AbstractOverlayData overlayData) {
             this.pieData = pieData;
             this.chartsData = chartsData;
             this.heartRateAverage = heartRateAverage;
@@ -592,7 +760,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             this.intensityAxisMin = intensityAxisMin;
             this.intensityAxisMax = intensityAxisMax;
             this.stages = stages;
-            this.hr = hr;
+            this.overlayData = overlayData;
         }
 
         public MySleepChartsData getPieData() {
@@ -631,8 +799,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return stages;
         }
 
-        public int[] getHr() {
-            return hr;
+        public AbstractOverlayData getOverlayData() {
+            return overlayData;
         }
     }
 }
