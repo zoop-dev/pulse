@@ -40,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ import de.greenrobot.dao.query.DeleteQuery;
 import de.greenrobot.dao.query.QueryBuilder;
 import kotlin.Triple;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -66,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMessage;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCompatTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier;
@@ -83,6 +82,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressSamplePro
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTruSleepParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTrueSleepSequenceDataParser;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiUtil;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
@@ -92,10 +92,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValues;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
@@ -1540,15 +1536,13 @@ public class HuaweiSupportProvider {
                     public void onData(int dictClass, List<HuaweiP2PDataDictionarySyncService.DictData> dictData) {
                         LOG.info("DictionarySyncCallback onData: {}", dictClass);
                         if (dictClass == HuaweiDictTypes.SKIN_TEMPERATURE_CLASS) {
-
                             List<HuaweiTemperatureSample> temperatureSamples = new ArrayList<>();
-
                             for (HuaweiP2PDataDictionarySyncService.DictData dt : dictData) {
                                 long timestamp = dt.getStartTimestamp();
                                 long lastTime = Math.max(dt.getEndTimestamp(), dt.getModifyTimestamp());
                                 for (HuaweiP2PDataDictionarySyncService.DictData.DictDataValue val : dt.getData()) {
                                     if (val.getTag() == 10 && val.getDataType() == HuaweiDictTypes.SKIN_TEMPERATURE_VALUE) {
-                                        double skinTemperature = conv2Double(val.getValue());
+                                        double skinTemperature = HuaweiUtil.convBytes2Double(val.getValue());
                                         if (skinTemperature >= 20 && skinTemperature <= 42) {
                                             HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
                                             sample.setTimestamp(timestamp);
@@ -3121,91 +3115,14 @@ public class HuaweiSupportProvider {
         syncState.updateState(needSync);
     }
 
-    private double conv2Double(byte[] b) {
-        return ByteBuffer.wrap(b).getDouble();
-    }
-
     public void onTestNewFunction() {
 
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 long startTime = System.nanoTime();
-                long count = 0;
-                try (DBHandler db = GBApplication.acquireDB()) {
-                    DaoSession daoSession = db.getDaoSession();
-                    QueryBuilder<HuaweiDictDataValues> qbv1 = daoSession.getHuaweiDictDataValuesDao().queryBuilder();
-                    count = qbv1.count();
-
-                } catch (
-                        GBException e) {
-                    LOG.error("EX", e);
-                } catch (
-                        Exception e) {
-                    LOG.error("EX2", e);
-                }
-
-                int limit = 10000;
-                int offset = 0;
-                while (true) {
-                    try (DBHandler db = GBApplication.acquireDB()) {
-                        DaoSession daoSession = db.getDaoSession();
-
-                        QueryBuilder<HuaweiDictDataValues> qbv = daoSession.getHuaweiDictDataValuesDao().queryBuilder();
-
-                        qbv.where(HuaweiDictDataValuesDao.Properties.DictType.eq(HuaweiDictTypes.SKIN_TEMPERATURE_VALUE)).where(HuaweiDictDataValuesDao.Properties.Tag.eq(10)).limit(limit).offset(offset);
-
-                        final List<HuaweiDictDataValues> valuesData = qbv.build().list();
-
-                        if (valuesData.isEmpty())
-                            break;
-
-
-                        List<HuaweiTemperatureSample> res = new ArrayList<>();
-                        for (HuaweiDictDataValues vl : valuesData) {
-                            double skinTemperature = conv2Double(vl.getValue());
-                            if (skinTemperature >= 20 && skinTemperature <= 42) {
-                                res.add(new HuaweiTemperatureSample(vl.getHuaweiDictData().getStartTimestamp(), vl.getHuaweiDictData().getDeviceId(), vl.getHuaweiDictData().getUserId(), Math.max(vl.getHuaweiDictData().getModifyTimestamp(), vl.getHuaweiDictData().getEndTimestamp()), (float) skinTemperature, 0));
-                            }
-                        }
-                        daoSession.getHuaweiTemperatureSampleDao().insertInTx(res);
-                        offset += limit;
-                        LOG.info("Migrating: {}/{}", offset, count);
-                    } catch (GBException e) {
-                        LOG.error("EX", e);
-                        return;
-                    } catch (Exception e) {
-                        LOG.error("EX2", e);
-                        return;
-                    }
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        LOG.error("Sleep error", e);
-                    }
-                }
-
-                try (DBHandler db = GBApplication.acquireDB()) {
-                    DaoSession daoSession = db.getDaoSession();
-
-                    final DeleteQuery<HuaweiDictDataValues> tableValuesDeleteQuery = daoSession.getHuaweiDictDataValuesDao().queryBuilder()
-                            .where(HuaweiDictDataValuesDao.Properties.DictType.eq(HuaweiDictTypes.SKIN_TEMPERATURE_VALUE))
-                            .buildDelete();
-                    tableValuesDeleteQuery.executeDeleteWithoutDetachingEntities();
-
-                    final DeleteQuery<HuaweiDictData> tableDataDeleteQuery = daoSession.getHuaweiDictDataDao().queryBuilder()
-                            .where(HuaweiDictDataDao.Properties.DictClass.eq(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS))
-                            .buildDelete();
-                    tableDataDeleteQuery.executeDeleteWithoutDetachingEntities();
-
-                } catch (
-                        GBException e) {
-                    LOG.error("EX", e);
-                } catch (
-                        Exception e) {
-                    LOG.error("EX2", e);
-                }
-                LOG.info("Migrating took : {} ms", ((System.nanoTime() - startTime) / 1000000.0));
+                boolean ret = HuaweiCompatTemperatureSampleProvider.migrateOldData();
+                LOG.info("Migrating: {}  Took : {} ms", ret ? "OK" : "Error", ((System.nanoTime() - startTime) / 1000000.0));
             }
         });
     }

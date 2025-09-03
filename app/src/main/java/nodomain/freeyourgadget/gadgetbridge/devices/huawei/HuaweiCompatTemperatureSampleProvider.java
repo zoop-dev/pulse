@@ -3,11 +3,17 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.nio.ByteBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.greenrobot.dao.query.DeleteQuery;
 import de.greenrobot.dao.query.QueryBuilder;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -20,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider<HuaweiTemperatureSample> {
+    protected static final Logger LOG = LoggerFactory.getLogger(HuaweiCompatTemperatureSampleProvider.class);
 
     private final HuaweiTemperatureSampleProvider sp;
 
@@ -32,23 +39,18 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
         sp = new HuaweiTemperatureSampleProvider(device, session);
     }
 
-    private double conv2Double(byte[] b) {
-        return ByteBuffer.wrap(b).getDouble();
-    }
-
     @NonNull
     @Override
     public List<HuaweiTemperatureSample> getAllSamples(long timestampFrom, long timestampTo) {
 
         TemperatureSample newFirst = sp.getFirstSample();
-
         if (newFirst != null && newFirst.getTimestamp() < timestampFrom) {
             return sp.getAllSamples(timestampFrom, timestampTo);
         }
 
         List<HuaweiTemperatureSample> ret = sp.getAllSamples(timestampFrom, timestampTo);
 
-        long oldTo = timestampFrom;
+        long oldTo = timestampTo;
         if (!ret.isEmpty()) {
             oldTo = ret.get(0).getTimestamp();
         }
@@ -82,7 +84,7 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
 
         int idx = 0;
         for (HuaweiDictDataValues vl : valuesData) {
-            double skinTemperature = conv2Double(vl.getValue());
+            double skinTemperature = HuaweiUtil.convBytes2Double(vl.getValue());
             if (skinTemperature >= 20 && skinTemperature <= 42) {
                 HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
                 sample.setTimestamp(vl.getHuaweiDictData().getStartTimestamp());
@@ -146,7 +148,7 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
 
         HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
         sample.setTimestamp(valuesData.get(0).getHuaweiDictData().getStartTimestamp());
-        sample.setTemperature((float) conv2Double(valuesData.get(0).getValue()));
+        sample.setTemperature((float) HuaweiUtil.convBytes2Double(valuesData.get(0).getValue()));
         sample.setTemperatureType(0);
         return sample;
     }
@@ -186,7 +188,7 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
 
         HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
         sample.setTimestamp(valuesData.get(0).getHuaweiDictData().getStartTimestamp());
-        sample.setTemperature((float) conv2Double(valuesData.get(0).getValue()));
+        sample.setTemperature((float) HuaweiUtil.convBytes2Double(valuesData.get(0).getValue()));
         sample.setTemperatureType(0);
         return sample;
     }
@@ -219,8 +221,70 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
 
         HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
         sample.setTimestamp(valuesData.get(0).getHuaweiDictData().getStartTimestamp());
-        sample.setTemperature((float) conv2Double(valuesData.get(0).getValue()));
+        sample.setTemperature((float) HuaweiUtil.convBytes2Double(valuesData.get(0).getValue()));
         sample.setTemperatureType(0);
         return sample;
+    }
+
+    public static boolean migrateOldData() {
+        long count;
+        try (DBHandler db = GBApplication.acquireDB()) {
+            DaoSession daoSession = db.getDaoSession();
+            QueryBuilder<HuaweiDictDataValues> qbv1 = daoSession.getHuaweiDictDataValuesDao().queryBuilder();
+            count = qbv1.count();
+        } catch (Exception e) {
+            LOG.error("Error calculate data to migrate", e);
+            return false;
+        }
+
+        int limit = 10000;
+        int offset = 0;
+        while (true) {
+            try (DBHandler db = GBApplication.acquireDB()) {
+                DaoSession daoSession = db.getDaoSession();
+
+                QueryBuilder<HuaweiDictDataValues> qbv = daoSession.getHuaweiDictDataValuesDao().queryBuilder();
+
+                qbv.where(HuaweiDictDataValuesDao.Properties.DictType.eq(HuaweiDictTypes.SKIN_TEMPERATURE_VALUE)).where(HuaweiDictDataValuesDao.Properties.Tag.eq(10)).limit(limit).offset(offset);
+
+                final List<HuaweiDictDataValues> valuesData = qbv.build().list();
+
+                if (valuesData.isEmpty())
+                    break;
+
+                List<HuaweiTemperatureSample> res = new ArrayList<>();
+                for (HuaweiDictDataValues vl : valuesData) {
+                    double skinTemperature = HuaweiUtil.convBytes2Double(vl.getValue());
+                    if (skinTemperature >= 20 && skinTemperature <= 42) {
+                        res.add(new HuaweiTemperatureSample(vl.getHuaweiDictData().getStartTimestamp(), vl.getHuaweiDictData().getDeviceId(), vl.getHuaweiDictData().getUserId(), Math.max(vl.getHuaweiDictData().getModifyTimestamp(), vl.getHuaweiDictData().getEndTimestamp()), (float) skinTemperature, 0));
+                    }
+                }
+                daoSession.getHuaweiTemperatureSampleDao().insertInTx(res);
+                offset += limit;
+                LOG.info("Migrating: {}/{}", offset, count);
+            } catch (Exception e) {
+                LOG.error("Error migrate data", e);
+                return false;
+            }
+        }
+
+        try (DBHandler db = GBApplication.acquireDB()) {
+            DaoSession daoSession = db.getDaoSession();
+
+            final DeleteQuery<HuaweiDictDataValues> tableValuesDeleteQuery = daoSession.getHuaweiDictDataValuesDao().queryBuilder()
+                    .where(HuaweiDictDataValuesDao.Properties.DictType.eq(HuaweiDictTypes.SKIN_TEMPERATURE_VALUE))
+                    .buildDelete();
+            tableValuesDeleteQuery.executeDeleteWithoutDetachingEntities();
+
+            final DeleteQuery<HuaweiDictData> tableDataDeleteQuery = daoSession.getHuaweiDictDataDao().queryBuilder()
+                    .where(HuaweiDictDataDao.Properties.DictClass.eq(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS))
+                    .buildDelete();
+            tableDataDeleteQuery.executeDeleteWithoutDetachingEntities();
+
+        } catch (Exception e) {
+            LOG.error("Error delete data", e);
+            return false;
+        }
+        return true;
     }
 }

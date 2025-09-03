@@ -56,4 +56,8 @@ public class HuaweiUtil {
             .put(id)
             .array();
     }
+
+    public static double convBytes2Double(byte[] b) {
+        return ByteBuffer.wrap(b).getDouble();
+    }
 }
