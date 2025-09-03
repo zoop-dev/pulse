@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
+import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 
@@ -166,8 +167,10 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
         mWeeklyHRVStatusChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
         List<Entry> lineEntries = new ArrayList<>();
         final List<ILineDataSet> lineDataSets = new ArrayList<>();
+        final Accumulator dailyAccumulator = new Accumulator();
         weeklyData.getDaysData().forEach((HRVStatusDayData day) -> {
             if (day.dayAvg > 0) {
+                dailyAccumulator.add(day.dayAvg);
                 lineEntries.add(new Entry(day.i, day.dayAvg));
             } else {
                 if (!lineEntries.isEmpty()) {
@@ -192,6 +195,14 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
 
         final LineData lineData = new LineData(lineDataSets);
         mWeeklyHRVStatusChart.setData(lineData);
+
+        if (dailyAccumulator.getCount() > 0) {
+            mWeeklyHRVStatusChart.getAxisLeft().setAxisMaximum(Math.round(dailyAccumulator.getMax()) + 15);
+            mWeeklyHRVStatusChart.getAxisLeft().setAxisMinimum(Math.max(0, Math.round(dailyAccumulator.getMin()) - 15));
+        } else {
+            mWeeklyHRVStatusChart.getAxisLeft().setAxisMaximum(120);
+            mWeeklyHRVStatusChart.getAxisLeft().setAxisMinimum(0);
+        }
 
         final XAxis x = mWeeklyHRVStatusChart.getXAxis();
         x.setValueFormatter(getHRVStatusChartDayValueFormatter(weeklyData));
