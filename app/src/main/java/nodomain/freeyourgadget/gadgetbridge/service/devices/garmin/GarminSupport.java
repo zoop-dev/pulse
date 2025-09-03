@@ -1267,7 +1267,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
                 final File file;
                 try {
-                    file = File.createTempFile("activity-files-import", ".fit", getContext().getCacheDir());
+                    final File cacheDir = getContext().getExternalCacheDir();
+                    final File inflateDir = new File(cacheDir, "garmin-inflated");
+                    //noinspection ResultOfMethodCallIgnored
+                    inflateDir.mkdirs();
+                    file = File.createTempFile("activity-files-import", ".fit", inflateDir);
                     file.deleteOnExit();
                     FileUtils.copyStreamToFile(new ByteArrayInputStream(inflated), file);
                 } catch (final IOException e) {
