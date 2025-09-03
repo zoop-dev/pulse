@@ -34,11 +34,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.*;
-import com.github.mikephil.charting.data.LineData;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -83,7 +80,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChartsData> {
     protected static final Logger LOG = LoggerFactory.getLogger(SleepDailyFragment.class);
 
-    private LineChart mActivityChart;
     private ImageView sleepStagesGauge;
     private TextView mSleepchartInfo;
     private TextView remSleepTimeText;
@@ -131,7 +127,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         if (supportsSleepScore()) {
             sleepScoreSamples = getSleepScoreSamples(db, device, getTSStart(), getTSEnd());
         }
-        MySleepChartsData mySleepChartsData = refreshSleepAmounts(device, samples, sleepScoreSamples);
+        MySleepChartsData mySleepChartsData = refreshSleepAmounts(samples, sleepScoreSamples);
 
         if (!CHARTS_SLEEP_RANGE_24H) {
             if (!mySleepChartsData.sleepSessions.isEmpty()) {
@@ -146,7 +142,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 }
             }
         }
-        DefaultChartsData<LineData> chartsData = refresh(device, samples);
         Triple<Float, Integer, Integer> hrData = calculateHrData(samples);
         Triple<Float, Float, Float> intensityData = calculateIntensityData(samples);
 
@@ -161,7 +156,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         } else if(currentOverlay == OverlayType.TEMPERATURE) {
             overlay = new OverlayDataFloat(28, 45, prepareTemperature(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataFloat.NO_DATA, CHART_TEXT_COLOR, Color.RED);
         }
-        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, overlay);
+        return new MyChartsData(mySleepChartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, overlay);
     }
 
     public float[] prepareTemperature(DBHandler db, GBDevice device, long tsStart, long tsEnd) {
@@ -265,7 +260,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
 
-    private MySleepChartsData refreshSleepAmounts(GBDevice mGBDevice, List<? extends ActivitySample> samples, List<? extends SleepScoreSample> sleepScoreSamples) {
+    private MySleepChartsData refreshSleepAmounts(List<? extends ActivitySample> samples, List<? extends SleepScoreSample> sleepScoreSamples) {
         SleepAnalysis sleepAnalysis = new SleepAnalysis();
         List<SleepSession> sleepSessions = sleepAnalysis.calculateSleepSessions(samples);
 
@@ -388,11 +383,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         }
         mSleepchartInfo.setText(buildYouSleptText(pieData));
         mSleepchartInfo.setMovementMethod(new ScrollingMovementMethod());
-        mActivityChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
-        mActivityChart.getXAxis().setValueFormatter(mcd.getChartsData().getXValueFormatter());
-        mActivityChart.getAxisLeft().setDrawLabels(false);
 
-        mActivityChart.setData(mcd.getChartsData().getData());
         heartRateMin = mcd.getHeartRateAxisMin();
         heartRateMax = mcd.getHeartRateAxisMax();
         heartRateAvg = Math.round(mcd.getHeartRateAverage());
@@ -401,19 +392,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         highestHrText.setText(String.valueOf(heartRateMax > 0 ? heartRateMax : "-"));
         averageHrText.setText(String.valueOf(heartRateAvg > 0 ? heartRateAvg : "-"));
         movementIntensityText.setText(intensityTotal > 0 ? new DecimalFormat("###.#").format(intensityTotal) : "-");
-
-        if (supportsHeartrate(getChartsHost().getDevice()) && SHOW_CHARTS_AVERAGE) {
-            if (mcd.getHeartRateAxisMax() != 0 || mcd.getHeartRateAxisMin() != 0) {
-                mActivityChart.getAxisRight().setAxisMaximum(mcd.getHeartRateAxisMax() + (mcd.getHeartRateAxisMin() / 2f));
-                mActivityChart.getAxisRight().setAxisMinimum(mcd.getHeartRateAxisMin() / 2f);
-            }
-            LimitLine hrAverage_line = new LimitLine(mcd.getHeartRateAverage());
-            hrAverage_line.setLineColor(Color.RED);
-            hrAverage_line.setLineWidth(1.5f);
-            hrAverage_line.enableDashedLine(15f, 10f, 0f);
-            mActivityChart.getAxisRight().removeAllLimitLines();
-            mActivityChart.getAxisRight().addLimitLine(hrAverage_line);
-        }
     }
 
     private Triple<Float, Integer, Integer> calculateHrData(List<? extends ActivitySample> samples) {
@@ -527,8 +505,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 getChartsHost().enableSwipeRefresh(scrollY == 0);
             });
         }
-
-        mActivityChart = rootView.findViewById(R.id.sleepchart);
         sleepStagesGauge = rootView.findViewById(R.id.sleep_stages_gauge);
         mSleepchartInfo = rootView.findViewById(R.id.sleepchart_info);
         remSleepTimeText = rootView.findViewById(R.id.sleep_chart_legend_rem_time);
@@ -600,8 +576,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         mSleepchartInfo.setMaxLines(sleepLinesLimit);
 
-        setupActivityChart();
-
         mSleepDetailsView = rootView.findViewById(R.id.sleep_details);
 
         SleepDetailsView.DataConfig[] config = new SleepDetailsView.DataConfig[]{
@@ -633,36 +607,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         }
     }
 
-    private void setupActivityChart() {
-        mActivityChart.setBackgroundColor(BACKGROUND_COLOR);
-        mActivityChart.getDescription().setTextColor(DESCRIPTION_COLOR);
-        configureBarLineChartDefaults(mActivityChart);
-
-        XAxis x = mActivityChart.getXAxis();
-        x.setDrawLabels(true);
-        x.setDrawGridLines(false);
-        x.setEnabled(true);
-        x.setTextColor(CHART_TEXT_COLOR);
-        x.setDrawLimitLinesBehindData(true);
-
-        YAxis y = mActivityChart.getAxisLeft();
-        y.setDrawGridLines(false);
-        y.setAxisMaximum(1f);
-        y.setAxisMinimum(0);
-        y.setDrawTopYLabelEntry(false);
-        y.setTextColor(CHART_TEXT_COLOR);
-        y.setEnabled(true);
-
-        YAxis yAxisRight = mActivityChart.getAxisRight();
-        yAxisRight.setDrawGridLines(false);
-        yAxisRight.setEnabled(supportsHeartrate(getChartsHost().getDevice()));
-        yAxisRight.setDrawLabels(true);
-        yAxisRight.setDrawTopYLabelEntry(true);
-        yAxisRight.setTextColor(CHART_TEXT_COLOR);
-        yAxisRight.setAxisMaximum(HeartRateUtils.getInstance().getMaxHeartRate());
-        yAxisRight.setAxisMinimum(HeartRateUtils.getInstance().getMinHeartRate());
-    }
-
     @Override
     protected void setupLegend(Chart<?> chart) {
         List<LegendEntry> legendEntries = super.createLegendEntries(chart);
@@ -685,7 +629,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
     @Override
     protected void renderCharts() {
-        mActivityChart.animateX(ANIM_TIME, Easing.EaseInOutQuart);
     }
 
     protected static class MySleepChartsData extends ChartsData {
@@ -737,7 +680,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     protected static class MyChartsData extends ChartsData {
-        private final DefaultChartsData<LineData> chartsData;
         private final MySleepChartsData pieData;
         private final float heartRateAverage;
         private final int heartRateAxisMax;
@@ -750,9 +692,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         private final AbstractOverlayData overlayData;
 
-        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages, AbstractOverlayData overlayData) {
+        public MyChartsData(MySleepChartsData pieData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages, AbstractOverlayData overlayData) {
             this.pieData = pieData;
-            this.chartsData = chartsData;
             this.heartRateAverage = heartRateAverage;
             this.heartRateAxisMax = heartRateAxisMax;
             this.heartRateAxisMin = heartRateAxisMin;
@@ -765,10 +706,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         public MySleepChartsData getPieData() {
             return pieData;
-        }
-
-        public DefaultChartsData<LineData> getChartsData() {
-            return chartsData;
         }
 
         public float getHeartRateAverage() {
