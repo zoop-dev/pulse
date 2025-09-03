@@ -77,6 +77,7 @@ public class FileType {
         FBT_BACKUP(128, 72),
         SKIN_TEMP(128, 73),
         FBT_PTD_BACKUP(128, 74),
+        UNKNOWN_79(128, 79), // sent by instinct 3
 
         // Other files
         DOWNLOAD_COURSE(255, 4),

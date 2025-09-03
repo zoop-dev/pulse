@@ -1283,14 +1283,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 try {
                     final FitImporter fitImporter = new FitImporter(getContext(), gbDevice);
                     fitImporter.importFile(file);
-                } catch (final FitParseException e) {
-                    LOG.error("Inflated not fit file??", e);
-                    if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
-                        currentlyDownloading = null;
-                    }
-                    return;
-                } catch (IOException e) {
-                    LOG.error("Failed to read fit file", e);
+                } catch (final Exception e) {
+                    LOG.error("Failed to parse file as fit", e);
                     if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
                         currentlyDownloading = null;
                     }
