@@ -99,6 +99,56 @@ public class FitDiveSummary extends RecordData {
     }
 
     @Nullable
+    public Float getAvgPressureSac() {
+        return (Float) getFieldByNumber(12);
+    }
+
+    @Nullable
+    public Float getAvgVolumeSac() {
+        return (Float) getFieldByNumber(13);
+    }
+
+    @Nullable
+    public Float getAvgRmv() {
+        return (Float) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Double getDescentTime() {
+        return (Double) getFieldByNumber(15);
+    }
+
+    @Nullable
+    public Double getAscentTime() {
+        return (Double) getFieldByNumber(16);
+    }
+
+    @Nullable
+    public Double getAvgAscentRate() {
+        return (Double) getFieldByNumber(17);
+    }
+
+    @Nullable
+    public Double getAvgDescentRate() {
+        return (Double) getFieldByNumber(22);
+    }
+
+    @Nullable
+    public Double getMaxAscentRate() {
+        return (Double) getFieldByNumber(23);
+    }
+
+    @Nullable
+    public Double getMaxDescentRate() {
+        return (Double) getFieldByNumber(24);
+    }
+
+    @Nullable
+    public Double getHangTime() {
+        return (Double) getFieldByNumber(25);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
     }
@@ -168,6 +218,56 @@ public class FitDiveSummary extends RecordData {
 
         public Builder setBottomTime(final Double value) {
             setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setAvgPressureSac(final Float value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setAvgVolumeSac(final Float value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setAvgRmv(final Float value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setDescentTime(final Double value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
+        public Builder setAscentTime(final Double value) {
+            setFieldByNumber(16, value);
+            return this;
+        }
+
+        public Builder setAvgAscentRate(final Double value) {
+            setFieldByNumber(17, value);
+            return this;
+        }
+
+        public Builder setAvgDescentRate(final Double value) {
+            setFieldByNumber(22, value);
+            return this;
+        }
+
+        public Builder setMaxAscentRate(final Double value) {
+            setFieldByNumber(23, value);
+            return this;
+        }
+
+        public Builder setMaxDescentRate(final Double value) {
+            setFieldByNumber(24, value);
+            return this;
+        }
+
+        public Builder setHangTime(final Double value) {
+            setFieldByNumber(25, value);
             return this;
         }
 

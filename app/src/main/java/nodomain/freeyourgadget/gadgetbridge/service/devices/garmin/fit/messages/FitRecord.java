@@ -83,8 +83,60 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getCompressedSpeedDistance() {
+        return (Integer) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Float getGrade() {
+        return (Float) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public Integer getResistance() {
+        return (Integer) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Double getTimeFromCourse() {
+        return (Double) getFieldByNumber(11);
+    }
+
+    @Nullable
+    public Float getCycleLength() {
+        return (Float) getFieldByNumber(12);
+    }
+
+    @Nullable
     public Integer getTemperature() {
         return (Integer) getFieldByNumber(13);
+    }
+
+    @Nullable
+    public Number[] getSpeed1s() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(17);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Integer getCycles() {
+        return (Integer) getFieldByNumber(18);
+    }
+
+    @Nullable
+    public Long getTotalCycles() {
+        return (Long) getFieldByNumber(19);
+    }
+
+    @Nullable
+    public Integer getCompressedAccumulatedPower() {
+        return (Integer) getFieldByNumber(28);
     }
 
     @Nullable
@@ -93,8 +145,38 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getLeftRightBalance() {
+        return (Integer) getFieldByNumber(30);
+    }
+
+    @Nullable
+    public Integer getGpsAccuracy() {
+        return (Integer) getFieldByNumber(31);
+    }
+
+    @Nullable
+    public Float getVerticalSpeed() {
+        return (Float) getFieldByNumber(32);
+    }
+
+    @Nullable
+    public Integer getCalories() {
+        return (Integer) getFieldByNumber(33);
+    }
+
+    @Nullable
     public Float getOscillation() {
         return (Float) getFieldByNumber(39);
+    }
+
+    @Nullable
+    public Float getStanceTimePercent() {
+        return (Float) getFieldByNumber(40);
+    }
+
+    @Nullable
+    public Float getStanceTime() {
+        return (Float) getFieldByNumber(41);
     }
 
     @Nullable
@@ -103,8 +185,33 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getStrokeType() {
+        return (Integer) getFieldByNumber(49);
+    }
+
+    @Nullable
+    public Integer getZone() {
+        return (Integer) getFieldByNumber(50);
+    }
+
+    @Nullable
+    public Float getBallSpeed() {
+        return (Float) getFieldByNumber(51);
+    }
+
+    @Nullable
+    public Float getCadence256() {
+        return (Float) getFieldByNumber(52);
+    }
+
+    @Nullable
     public Float getFractionalCadence() {
         return (Float) getFieldByNumber(53);
+    }
+
+    @Nullable
+    public Integer getDeviceIndex() {
+        return (Integer) getFieldByNumber(62);
     }
 
     @Nullable
@@ -118,13 +225,33 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Float getBatterySoc() {
+        return (Float) getFieldByNumber(81);
+    }
+
+    @Nullable
+    public Integer getMotorPower() {
+        return (Integer) getFieldByNumber(82);
+    }
+
+    @Nullable
     public Float getVerticalRatio() {
         return (Float) getFieldByNumber(83);
     }
 
     @Nullable
+    public Float getStanceTimeBalance() {
+        return (Float) getFieldByNumber(84);
+    }
+
+    @Nullable
     public Float getStepLength() {
         return (Float) getFieldByNumber(85);
+    }
+
+    @Nullable
+    public Float getCycleLength16() {
+        return (Float) getFieldByNumber(87);
     }
 
     @Nullable
@@ -168,13 +295,68 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getRespirationRate() {
+        return (Integer) getFieldByNumber(99);
+    }
+
+    @Nullable
     public Integer getEnhancedRespirationRate() {
         return (Integer) getFieldByNumber(108);
     }
 
     @Nullable
+    public Float getGrit() {
+        return (Float) getFieldByNumber(114);
+    }
+
+    @Nullable
+    public Float getFlow() {
+        return (Float) getFieldByNumber(115);
+    }
+
+    @Nullable
+    public Float getCurrentStress() {
+        return (Float) getFieldByNumber(116);
+    }
+
+    @Nullable
+    public Long getAirTimeRemaining() {
+        return (Long) getFieldByNumber(123);
+    }
+
+    @Nullable
+    public Float getPressureSac() {
+        return (Float) getFieldByNumber(124);
+    }
+
+    @Nullable
+    public Float getVolumeSac() {
+        return (Float) getFieldByNumber(125);
+    }
+
+    @Nullable
+    public Float getRmv() {
+        return (Float) getFieldByNumber(126);
+    }
+
+    @Nullable
+    public Double getAscentRate() {
+        return (Double) getFieldByNumber(127);
+    }
+
+    @Nullable
+    public Float getPo2() {
+        return (Float) getFieldByNumber(129);
+    }
+
+    @Nullable
     public Integer getWristHeartRate() {
         return (Integer) getFieldByNumber(136);
+    }
+
+    @Nullable
+    public Float getCoreTemperature() {
+        return (Float) getFieldByNumber(139);
     }
 
     @Nullable
@@ -235,8 +417,53 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setCompressedSpeedDistance(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setGrade(final Float value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setResistance(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setTimeFromCourse(final Double value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setCycleLength(final Float value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
         public Builder setTemperature(final Integer value) {
             setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setSpeed1s(final Number[] value) {
+            setFieldByNumber(17, (Object[]) value);
+            return this;
+        }
+
+        public Builder setCycles(final Integer value) {
+            setFieldByNumber(18, value);
+            return this;
+        }
+
+        public Builder setTotalCycles(final Long value) {
+            setFieldByNumber(19, value);
+            return this;
+        }
+
+        public Builder setCompressedAccumulatedPower(final Integer value) {
+            setFieldByNumber(28, value);
             return this;
         }
 
@@ -245,8 +472,38 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setLeftRightBalance(final Integer value) {
+            setFieldByNumber(30, value);
+            return this;
+        }
+
+        public Builder setGpsAccuracy(final Integer value) {
+            setFieldByNumber(31, value);
+            return this;
+        }
+
+        public Builder setVerticalSpeed(final Float value) {
+            setFieldByNumber(32, value);
+            return this;
+        }
+
+        public Builder setCalories(final Integer value) {
+            setFieldByNumber(33, value);
+            return this;
+        }
+
         public Builder setOscillation(final Float value) {
             setFieldByNumber(39, value);
+            return this;
+        }
+
+        public Builder setStanceTimePercent(final Float value) {
+            setFieldByNumber(40, value);
+            return this;
+        }
+
+        public Builder setStanceTime(final Float value) {
+            setFieldByNumber(41, value);
             return this;
         }
 
@@ -255,8 +512,33 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setStrokeType(final Integer value) {
+            setFieldByNumber(49, value);
+            return this;
+        }
+
+        public Builder setZone(final Integer value) {
+            setFieldByNumber(50, value);
+            return this;
+        }
+
+        public Builder setBallSpeed(final Float value) {
+            setFieldByNumber(51, value);
+            return this;
+        }
+
+        public Builder setCadence256(final Float value) {
+            setFieldByNumber(52, value);
+            return this;
+        }
+
         public Builder setFractionalCadence(final Float value) {
             setFieldByNumber(53, value);
+            return this;
+        }
+
+        public Builder setDeviceIndex(final Integer value) {
+            setFieldByNumber(62, value);
             return this;
         }
 
@@ -270,13 +552,33 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setBatterySoc(final Float value) {
+            setFieldByNumber(81, value);
+            return this;
+        }
+
+        public Builder setMotorPower(final Integer value) {
+            setFieldByNumber(82, value);
+            return this;
+        }
+
         public Builder setVerticalRatio(final Float value) {
             setFieldByNumber(83, value);
             return this;
         }
 
+        public Builder setStanceTimeBalance(final Float value) {
+            setFieldByNumber(84, value);
+            return this;
+        }
+
         public Builder setStepLength(final Float value) {
             setFieldByNumber(85, value);
+            return this;
+        }
+
+        public Builder setCycleLength16(final Float value) {
+            setFieldByNumber(87, value);
             return this;
         }
 
@@ -320,13 +622,68 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setRespirationRate(final Integer value) {
+            setFieldByNumber(99, value);
+            return this;
+        }
+
         public Builder setEnhancedRespirationRate(final Integer value) {
             setFieldByNumber(108, value);
             return this;
         }
 
+        public Builder setGrit(final Float value) {
+            setFieldByNumber(114, value);
+            return this;
+        }
+
+        public Builder setFlow(final Float value) {
+            setFieldByNumber(115, value);
+            return this;
+        }
+
+        public Builder setCurrentStress(final Float value) {
+            setFieldByNumber(116, value);
+            return this;
+        }
+
+        public Builder setAirTimeRemaining(final Long value) {
+            setFieldByNumber(123, value);
+            return this;
+        }
+
+        public Builder setPressureSac(final Float value) {
+            setFieldByNumber(124, value);
+            return this;
+        }
+
+        public Builder setVolumeSac(final Float value) {
+            setFieldByNumber(125, value);
+            return this;
+        }
+
+        public Builder setRmv(final Float value) {
+            setFieldByNumber(126, value);
+            return this;
+        }
+
+        public Builder setAscentRate(final Double value) {
+            setFieldByNumber(127, value);
+            return this;
+        }
+
+        public Builder setPo2(final Float value) {
+            setFieldByNumber(129, value);
+            return this;
+        }
+
         public Builder setWristHeartRate(final Integer value) {
             setFieldByNumber(136, value);
+            return this;
+        }
+
+        public Builder setCoreTemperature(final Float value) {
+            setFieldByNumber(139, value);
             return this;
         }
 

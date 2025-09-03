@@ -39,6 +39,16 @@ public class FitDeviceInfo extends RecordData {
     }
 
     @Nullable
+    public Integer getDeviceIndex() {
+        return (Integer) getFieldByNumber(0);
+    }
+
+    @Nullable
+    public Integer getDeviceType() {
+        return (Integer) getFieldByNumber(1);
+    }
+
+    @Nullable
     public Integer getManufacturer() {
         return (Integer) getFieldByNumber(2);
     }
@@ -59,6 +69,71 @@ public class FitDeviceInfo extends RecordData {
     }
 
     @Nullable
+    public Integer getHardwareVersion() {
+        return (Integer) getFieldByNumber(6);
+    }
+
+    @Nullable
+    public Long getCumOperatingTime() {
+        return (Long) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Float getBatteryVoltage() {
+        return (Float) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Integer getBatteryStatus() {
+        return (Integer) getFieldByNumber(11);
+    }
+
+    @Nullable
+    public Integer getSensorPosition() {
+        return (Integer) getFieldByNumber(18);
+    }
+
+    @Nullable
+    public String getDescriptor() {
+        return (String) getFieldByNumber(19);
+    }
+
+    @Nullable
+    public Integer getAntTransmissionType() {
+        return (Integer) getFieldByNumber(20);
+    }
+
+    @Nullable
+    public Integer getAntDeviceNumber() {
+        return (Integer) getFieldByNumber(21);
+    }
+
+    @Nullable
+    public Integer getAntNetwork() {
+        return (Integer) getFieldByNumber(22);
+    }
+
+    @Nullable
+    public Long getAntId() {
+        return (Long) getFieldByNumber(24);
+    }
+
+    @Nullable
+    public Integer getSourceType() {
+        return (Integer) getFieldByNumber(25);
+    }
+
+    @Nullable
+    public String getProductName() {
+        return (String) getFieldByNumber(27);
+    }
+
+    @Nullable
+    public Integer getBatteryLevel() {
+        return (Integer) getFieldByNumber(32);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
     }
@@ -69,6 +144,16 @@ public class FitDeviceInfo extends RecordData {
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
             super(23);
+        }
+
+        public Builder setDeviceIndex(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setDeviceType(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
         }
 
         public Builder setManufacturer(final Integer value) {
@@ -88,6 +173,71 @@ public class FitDeviceInfo extends RecordData {
 
         public Builder setSoftwareVersion(final Integer value) {
             setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setHardwareVersion(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setCumOperatingTime(final Long value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setBatteryVoltage(final Float value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setBatteryStatus(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setSensorPosition(final Integer value) {
+            setFieldByNumber(18, value);
+            return this;
+        }
+
+        public Builder setDescriptor(final String value) {
+            setFieldByNumber(19, value);
+            return this;
+        }
+
+        public Builder setAntTransmissionType(final Integer value) {
+            setFieldByNumber(20, value);
+            return this;
+        }
+
+        public Builder setAntDeviceNumber(final Integer value) {
+            setFieldByNumber(21, value);
+            return this;
+        }
+
+        public Builder setAntNetwork(final Integer value) {
+            setFieldByNumber(22, value);
+            return this;
+        }
+
+        public Builder setAntId(final Long value) {
+            setFieldByNumber(24, value);
+            return this;
+        }
+
+        public Builder setSourceType(final Integer value) {
+            setFieldByNumber(25, value);
+            return this;
+        }
+
+        public Builder setProductName(final String value) {
+            setFieldByNumber(27, value);
+            return this;
+        }
+
+        public Builder setBatteryLevel(final Integer value) {
+            setFieldByNumber(32, value);
             return this;
         }
 

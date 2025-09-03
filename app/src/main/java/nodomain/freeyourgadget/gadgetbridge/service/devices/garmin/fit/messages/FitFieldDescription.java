@@ -59,8 +59,53 @@ public class FitFieldDescription extends RecordData {
     }
 
     @Nullable
+    public Integer getArray() {
+        return (Integer) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public String getComponents() {
+        return (String) getFieldByNumber(5);
+    }
+
+    @Nullable
+    public Integer getScale() {
+        return (Integer) getFieldByNumber(6);
+    }
+
+    @Nullable
+    public Integer getOffset() {
+        return (Integer) getFieldByNumber(7);
+    }
+
+    @Nullable
     public String getUnits() {
         return (String) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public String getBits() {
+        return (String) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public String getAccumulate() {
+        return (String) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Integer getFitBaseUnitId() {
+        return (Integer) getFieldByNumber(13);
+    }
+
+    @Nullable
+    public Integer getNativeMesgNum() {
+        return (Integer) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Integer getNativeFieldNum() {
+        return (Integer) getFieldByNumber(15);
     }
 
     /**
@@ -91,8 +136,53 @@ public class FitFieldDescription extends RecordData {
             return this;
         }
 
+        public Builder setArray(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setComponents(final String value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setScale(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setOffset(final Integer value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
         public Builder setUnits(final String value) {
             setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setBits(final String value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setAccumulate(final String value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setFitBaseUnitId(final Integer value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setNativeMesgNum(final Integer value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setNativeFieldNum(final Integer value) {
+            setFieldByNumber(15, value);
             return this;
         }
 

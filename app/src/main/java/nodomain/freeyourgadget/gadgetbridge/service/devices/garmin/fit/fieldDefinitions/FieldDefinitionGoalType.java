@@ -33,7 +33,13 @@ public class FieldDefinitionGoalType extends FieldDefinition {
     }
 
     public enum Type {
+        time(0),
+        distance(1),
+        calories(2),
+        frequency(3),
         steps(4),
+        ascent(5),
+        active_minutes(6)
         ;
 
         private final int id;

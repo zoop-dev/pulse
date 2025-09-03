@@ -59,6 +59,11 @@ public class FitSkinTempOvernight extends RecordData {
     }
 
     @Nullable
+    public Float getNightlyValue() {
+        return (Float) getFieldByNumber(4);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
     }
@@ -88,6 +93,11 @@ public class FitSkinTempOvernight extends RecordData {
 
         public Builder setUnk3(final Integer value) {
             setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setNightlyValue(final Float value) {
+            setFieldByNumber(4, value);
             return this;
         }
 

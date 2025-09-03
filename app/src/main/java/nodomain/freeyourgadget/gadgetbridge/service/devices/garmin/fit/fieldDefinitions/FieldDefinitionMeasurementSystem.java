@@ -34,6 +34,7 @@ public class FieldDefinitionMeasurementSystem extends FieldDefinition {
     public enum Type {
         metric,
         imperial,
+        nautical
         ;
 
         public static Type fromId(int id) {

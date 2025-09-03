@@ -44,6 +44,16 @@ public class FitConnectivity extends RecordData {
     }
 
     @Nullable
+    public Integer getBluetoothLeEnabled() {
+        return (Integer) getFieldByNumber(1);
+    }
+
+    @Nullable
+    public Integer getAntEnabled() {
+        return (Integer) getFieldByNumber(2);
+    }
+
+    @Nullable
     public String getName() {
         return (String) getFieldByNumber(3);
     }
@@ -83,6 +93,16 @@ public class FitConnectivity extends RecordData {
         return (Integer) getFieldByNumber(10);
     }
 
+    @Nullable
+    public Integer getIncidentDetectionEnabled() {
+        return (Integer) getFieldByNumber(11);
+    }
+
+    @Nullable
+    public Integer getGrouptrackEnabled() {
+        return (Integer) getFieldByNumber(12);
+    }
+
     /**
      * @noinspection unused
      */
@@ -93,6 +113,16 @@ public class FitConnectivity extends RecordData {
 
         public Builder setBluetoothEnabled(final Integer value) {
             setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setBluetoothLeEnabled(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setAntEnabled(final Integer value) {
+            setFieldByNumber(2, value);
             return this;
         }
 
@@ -133,6 +163,16 @@ public class FitConnectivity extends RecordData {
 
         public Builder setGpsEphemerisDownloadEnabled(final Integer value) {
             setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setIncidentDetectionEnabled(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setGrouptrackEnabled(final Integer value) {
+            setFieldByNumber(12, value);
             return this;
         }
 

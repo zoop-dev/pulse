@@ -41,13 +41,58 @@ public class FitGoals extends RecordData {
     }
 
     @Nullable
+    public Integer getSport() {
+        return (Integer) getFieldByNumber(0);
+    }
+
+    @Nullable
+    public Integer getSubSport() {
+        return (Integer) getFieldByNumber(1);
+    }
+
+    @Nullable
+    public Long getStartDate() {
+        return (Long) getFieldByNumber(2);
+    }
+
+    @Nullable
+    public Long getEndDate() {
+        return (Long) getFieldByNumber(3);
+    }
+
+    @Nullable
     public Type getType() {
         return (Type) getFieldByNumber(4);
     }
 
     @Nullable
+    public Long getValue() {
+        return (Long) getFieldByNumber(5);
+    }
+
+    @Nullable
+    public Integer getRepeat() {
+        return (Integer) getFieldByNumber(6);
+    }
+
+    @Nullable
     public Long getTargetValue() {
         return (Long) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Integer getRecurrence() {
+        return (Integer) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Integer getRecurrenceValue() {
+        return (Integer) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public Integer getEnabled() {
+        return (Integer) getFieldByNumber(10);
     }
 
     @Nullable
@@ -63,13 +108,58 @@ public class FitGoals extends RecordData {
             super(15);
         }
 
+        public Builder setSport(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setSubSport(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setStartDate(final Long value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setEndDate(final Long value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
         public Builder setType(final Type value) {
             setFieldByNumber(4, value);
             return this;
         }
 
+        public Builder setValue(final Long value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setRepeat(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
         public Builder setTargetValue(final Long value) {
             setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setRecurrence(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setRecurrenceValue(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setEnabled(final Integer value) {
+            setFieldByNumber(10, value);
             return this;
         }
 

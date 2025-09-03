@@ -39,13 +39,28 @@ public class FitDeveloperData extends RecordData {
     }
 
     @Nullable
+    public Integer getDeveloperId() {
+        return (Integer) getFieldByNumber(0);
+    }
+
+    @Nullable
     public Integer getApplicationId() {
         return (Integer) getFieldByNumber(1);
     }
 
     @Nullable
+    public Integer getManufacturerId() {
+        return (Integer) getFieldByNumber(2);
+    }
+
+    @Nullable
     public Integer getDeveloperDataIndex() {
         return (Integer) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Long getApplicationVersion() {
+        return (Long) getFieldByNumber(4);
     }
 
     /**
@@ -56,13 +71,28 @@ public class FitDeveloperData extends RecordData {
             super(207);
         }
 
+        public Builder setDeveloperId(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
         public Builder setApplicationId(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
+        public Builder setManufacturerId(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
         public Builder setDeveloperDataIndex(final Integer value) {
             setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setApplicationVersion(final Long value) {
+            setFieldByNumber(4, value);
             return this;
         }
 

@@ -68,6 +68,16 @@ public class FitMaxMetData extends RecordData {
         return (Integer) getFieldByNumber(9);
     }
 
+    @Nullable
+    public Integer getHrSource() {
+        return (Integer) getFieldByNumber(12);
+    }
+
+    @Nullable
+    public Integer getSpeedSource() {
+        return (Integer) getFieldByNumber(13);
+    }
+
     /**
      * @noinspection unused
      */
@@ -103,6 +113,16 @@ public class FitMaxMetData extends RecordData {
 
         public Builder setCalibratedData(final Integer value) {
             setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setHrSource(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setSpeedSource(final Integer value) {
+            setFieldByNumber(13, value);
             return this;
         }
 

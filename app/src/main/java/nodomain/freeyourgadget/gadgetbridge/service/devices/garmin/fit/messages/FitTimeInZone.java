@@ -61,6 +61,21 @@ public class FitTimeInZone extends RecordData {
     }
 
     @Nullable
+    public Double getTimeInSpeedZone() {
+        return (Double) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Double getTimeInCadenceZone() {
+        return (Double) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public Double getTimeInPowerZone() {
+        return (Double) getFieldByNumber(5);
+    }
+
+    @Nullable
     public Integer[] getHrZoneHighBoundary() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(6);
         if (objectsArray == null)
@@ -70,6 +85,21 @@ public class FitTimeInZone extends RecordData {
             ret[i] = (Integer) objectsArray[i];
         }
         return ret;
+    }
+
+    @Nullable
+    public Float getSpeedZoneHighBoundary() {
+        return (Float) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Integer getCadenceZoneHighBoundary() {
+        return (Integer) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Integer getPowerZoneHighBoundary() {
+        return (Integer) getFieldByNumber(9);
     }
 
     @Nullable
@@ -90,6 +120,16 @@ public class FitTimeInZone extends RecordData {
     @Nullable
     public Integer getThresholdHeartRate() {
         return (Integer) getFieldByNumber(13);
+    }
+
+    @Nullable
+    public Integer getPwrCalcType() {
+        return (Integer) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Integer getFunctionalThresholdPower() {
+        return (Integer) getFieldByNumber(15);
     }
 
     @Nullable
@@ -120,8 +160,38 @@ public class FitTimeInZone extends RecordData {
             return this;
         }
 
+        public Builder setTimeInSpeedZone(final Double value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setTimeInCadenceZone(final Double value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setTimeInPowerZone(final Double value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
         public Builder setHrZoneHighBoundary(final Integer[] value) {
             setFieldByNumber(6, (Object[]) value);
+            return this;
+        }
+
+        public Builder setSpeedZoneHighBoundary(final Float value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setCadenceZoneHighBoundary(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setPowerZoneHighBoundary(final Integer value) {
+            setFieldByNumber(9, value);
             return this;
         }
 
@@ -142,6 +212,16 @@ public class FitTimeInZone extends RecordData {
 
         public Builder setThresholdHeartRate(final Integer value) {
             setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setPwrCalcType(final Integer value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setFunctionalThresholdPower(final Integer value) {
+            setFieldByNumber(15, value);
             return this;
         }
 

@@ -1,0 +1,114 @@
+/*  Copyright (C) 2025 Freeyourgadget
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;
+
+import androidx.annotation.Nullable;
+
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+
+/**
+ * WARNING: This class was auto-generated, please avoid modifying it directly.
+ * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ * @noinspection unused
+ */
+public class FitSensorSettings extends RecordData {
+    public FitSensorSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+        super(recordDefinition, recordHeader);
+
+        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
+        if (globalNumber != 147) {
+            throw new IllegalArgumentException("FitSensorSettings expects global messages of " + 147 + ", got " + globalNumber);
+        }
+    }
+
+    @Nullable
+    public Long getAntId() {
+        return (Long) getFieldByNumber(0);
+    }
+
+    @Nullable
+    public String getName() {
+        return (String) getFieldByNumber(2);
+    }
+
+    @Nullable
+    public Integer getUseForSpeed() {
+        return (Integer) getFieldByNumber(45);
+    }
+
+    @Nullable
+    public Integer getUseForDistance() {
+        return (Integer) getFieldByNumber(46);
+    }
+
+    @Nullable
+    public Integer getConnectionType() {
+        return (Integer) getFieldByNumber(51);
+    }
+
+    @Nullable
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
+    }
+
+    /**
+     * @noinspection unused
+     */
+    public static class Builder extends FitRecordDataBuilder {
+        public Builder() {
+            super(147);
+        }
+
+        public Builder setAntId(final Long value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setName(final String value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setUseForSpeed(final Integer value) {
+            setFieldByNumber(45, value);
+            return this;
+        }
+
+        public Builder setUseForDistance(final Integer value) {
+            setFieldByNumber(46, value);
+            return this;
+        }
+
+        public Builder setConnectionType(final Integer value) {
+            setFieldByNumber(51, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
+            return this;
+        }
+
+        @Override
+        public FitSensorSettings build() {
+            return (FitSensorSettings) super.build();
+        }
+    }
+}

@@ -54,6 +54,11 @@ public class FitDiveGas extends RecordData {
     }
 
     @Nullable
+    public Integer getMode() {
+        return (Integer) getFieldByNumber(3);
+    }
+
+    @Nullable
     public Integer getMessageIndex() {
         return (Integer) getFieldByNumber(254);
     }
@@ -78,6 +83,11 @@ public class FitDiveGas extends RecordData {
 
         public Builder setStatus(final Integer value) {
             setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setMode(final Integer value) {
+            setFieldByNumber(3, value);
             return this;
         }
 

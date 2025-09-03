@@ -49,6 +49,11 @@ public class FitEvent extends RecordData {
     }
 
     @Nullable
+    public Integer getData16() {
+        return (Integer) getFieldByNumber(2);
+    }
+
+    @Nullable
     public Long getData() {
         return (Long) getFieldByNumber(3);
     }
@@ -78,6 +83,11 @@ public class FitEvent extends RecordData {
 
         public Builder setEventType(final Integer value) {
             setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setData16(final Integer value) {
+            setFieldByNumber(2, value);
             return this;
         }
 

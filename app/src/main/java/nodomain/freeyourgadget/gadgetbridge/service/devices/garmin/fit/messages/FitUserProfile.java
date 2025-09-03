@@ -86,6 +86,11 @@ public class FitUserProfile extends RecordData {
     }
 
     @Nullable
+    public Integer getDefaultMaxRunningHeartRate() {
+        return (Integer) getFieldByNumber(9);
+    }
+
+    @Nullable
     public Integer getDefaultMaxBikingHeartRate() {
         return (Integer) getFieldByNumber(10);
     }
@@ -131,6 +136,21 @@ public class FitUserProfile extends RecordData {
     }
 
     @Nullable
+    public Integer getLocalId() {
+        return (Integer) getFieldByNumber(22);
+    }
+
+    @Nullable
+    public Integer getGlobalId() {
+        return (Integer) getFieldByNumber(23);
+    }
+
+    @Nullable
+    public Integer getYearOfBirth() {
+        return (Integer) getFieldByNumber(24);
+    }
+
+    @Nullable
     public Long getWakeTime() {
         return (Long) getFieldByNumber(28);
     }
@@ -153,6 +173,21 @@ public class FitUserProfile extends RecordData {
     @Nullable
     public Integer getUserWalkingStepLength() {
         return (Integer) getFieldByNumber(32);
+    }
+
+    @Nullable
+    public Type getDepthSetting() {
+        return (Type) getFieldByNumber(47);
+    }
+
+    @Nullable
+    public Long getDiveCount() {
+        return (Long) getFieldByNumber(49);
+    }
+
+    @Nullable
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
     }
 
     /**
@@ -208,6 +243,11 @@ public class FitUserProfile extends RecordData {
             return this;
         }
 
+        public Builder setDefaultMaxRunningHeartRate(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
         public Builder setDefaultMaxBikingHeartRate(final Integer value) {
             setFieldByNumber(10, value);
             return this;
@@ -253,6 +293,21 @@ public class FitUserProfile extends RecordData {
             return this;
         }
 
+        public Builder setLocalId(final Integer value) {
+            setFieldByNumber(22, value);
+            return this;
+        }
+
+        public Builder setGlobalId(final Integer value) {
+            setFieldByNumber(23, value);
+            return this;
+        }
+
+        public Builder setYearOfBirth(final Integer value) {
+            setFieldByNumber(24, value);
+            return this;
+        }
+
         public Builder setWakeTime(final Long value) {
             setFieldByNumber(28, value);
             return this;
@@ -275,6 +330,21 @@ public class FitUserProfile extends RecordData {
 
         public Builder setUserWalkingStepLength(final Integer value) {
             setFieldByNumber(32, value);
+            return this;
+        }
+
+        public Builder setDepthSetting(final Type value) {
+            setFieldByNumber(47, value);
+            return this;
+        }
+
+        public Builder setDiveCount(final Long value) {
+            setFieldByNumber(49, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 

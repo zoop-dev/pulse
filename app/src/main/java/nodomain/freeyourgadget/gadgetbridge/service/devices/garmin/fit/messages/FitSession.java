@@ -99,6 +99,21 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getTotalFatCalories() {
+        return (Integer) getFieldByNumber(13);
+    }
+
+    @Nullable
+    public Float getAvgSpeed() {
+        return (Float) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Float getMaxSpeed() {
+        return (Float) getFieldByNumber(15);
+    }
+
+    @Nullable
     public Integer getAverageHeartRate() {
         return (Integer) getFieldByNumber(16);
     }
@@ -151,6 +166,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Integer getNumLaps() {
         return (Integer) getFieldByNumber(26);
+    }
+
+    @Nullable
+    public Integer getEventGroup() {
+        return (Integer) getFieldByNumber(27);
     }
 
     @Nullable
@@ -214,6 +234,21 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Long getAvgStrokeCount() {
+        return (Long) getFieldByNumber(41);
+    }
+
+    @Nullable
+    public Float getAvgStrokeDistance() {
+        return (Float) getFieldByNumber(42);
+    }
+
+    @Nullable
+    public Integer getSwimStroke() {
+        return (Integer) getFieldByNumber(43);
+    }
+
+    @Nullable
     public Float getPoolLength() {
         return (Float) getFieldByNumber(44);
     }
@@ -221,6 +256,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Integer getThresholdPower() {
         return (Integer) getFieldByNumber(45);
+    }
+
+    @Nullable
+    public Integer getPoolLengthUnit() {
+        return (Integer) getFieldByNumber(46);
     }
 
     @Nullable
@@ -234,8 +274,118 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Double getAvgAltitude() {
+        return (Double) getFieldByNumber(49);
+    }
+
+    @Nullable
+    public Double getMaxAltitude() {
+        return (Double) getFieldByNumber(50);
+    }
+
+    @Nullable
+    public Integer getGpsAccuracy() {
+        return (Integer) getFieldByNumber(51);
+    }
+
+    @Nullable
+    public Float getAvgGrade() {
+        return (Float) getFieldByNumber(52);
+    }
+
+    @Nullable
+    public Float getAvgPosGrade() {
+        return (Float) getFieldByNumber(53);
+    }
+
+    @Nullable
+    public Float getAvgNegGrade() {
+        return (Float) getFieldByNumber(54);
+    }
+
+    @Nullable
+    public Float getMaxPosGrade() {
+        return (Float) getFieldByNumber(55);
+    }
+
+    @Nullable
+    public Float getMaxNegGrade() {
+        return (Float) getFieldByNumber(56);
+    }
+
+    @Nullable
+    public Integer getAvgTemperature() {
+        return (Integer) getFieldByNumber(57);
+    }
+
+    @Nullable
+    public Integer getMaxTemperature() {
+        return (Integer) getFieldByNumber(58);
+    }
+
+    @Nullable
+    public Double getTotalMovingTime() {
+        return (Double) getFieldByNumber(59);
+    }
+
+    @Nullable
+    public Float getAvgPosVerticalSpeed() {
+        return (Float) getFieldByNumber(60);
+    }
+
+    @Nullable
+    public Float getAvgNegVerticalSpeed() {
+        return (Float) getFieldByNumber(61);
+    }
+
+    @Nullable
+    public Float getMaxPosVerticalSpeed() {
+        return (Float) getFieldByNumber(62);
+    }
+
+    @Nullable
+    public Float getMaxNegVerticalSpeed() {
+        return (Float) getFieldByNumber(63);
+    }
+
+    @Nullable
     public Integer getMinHeartRate() {
         return (Integer) getFieldByNumber(64);
+    }
+
+    @Nullable
+    public Double getTimeInHrZone() {
+        return (Double) getFieldByNumber(65);
+    }
+
+    @Nullable
+    public Double getTimeInSpeedZone() {
+        return (Double) getFieldByNumber(66);
+    }
+
+    @Nullable
+    public Double getTimeInCadenceZone() {
+        return (Double) getFieldByNumber(67);
+    }
+
+    @Nullable
+    public Double getTimeInPowerZone() {
+        return (Double) getFieldByNumber(68);
+    }
+
+    @Nullable
+    public Double getAvgLapTime() {
+        return (Double) getFieldByNumber(69);
+    }
+
+    @Nullable
+    public Integer getBestLapIndex() {
+        return (Integer) getFieldByNumber(70);
+    }
+
+    @Nullable
+    public Float getMinAltitude() {
+        return (Float) getFieldByNumber(71);
     }
 
     @Nullable
@@ -246,6 +396,41 @@ public class FitSession extends RecordData {
     @Nullable
     public Integer getAvgSwolf() {
         return (Integer) getFieldByNumber(80);
+    }
+
+    @Nullable
+    public Integer getPlayerScore() {
+        return (Integer) getFieldByNumber(82);
+    }
+
+    @Nullable
+    public Integer getOpponentScore() {
+        return (Integer) getFieldByNumber(83);
+    }
+
+    @Nullable
+    public String getOpponentName() {
+        return (String) getFieldByNumber(84);
+    }
+
+    @Nullable
+    public Integer getStrokeCount() {
+        return (Integer) getFieldByNumber(85);
+    }
+
+    @Nullable
+    public Integer getZoneCount() {
+        return (Integer) getFieldByNumber(86);
+    }
+
+    @Nullable
+    public Float getMaxBallSpeed() {
+        return (Float) getFieldByNumber(87);
+    }
+
+    @Nullable
+    public Float getAvgBallSpeed() {
+        return (Float) getFieldByNumber(88);
     }
 
     @Nullable
@@ -274,6 +459,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Float getTotalFractionalCycles() {
+        return (Float) getFieldByNumber(94);
+    }
+
+    @Nullable
     public Float getAvgLeftTorqueEffectiveness() {
         return (Float) getFieldByNumber(101);
     }
@@ -294,6 +484,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Float getAvgCombinedPedalSmoothness() {
+        return (Float) getFieldByNumber(105);
+    }
+
+    @Nullable
     public Integer getFrontShifts() {
         return (Integer) getFieldByNumber(107);
     }
@@ -306,6 +501,11 @@ public class FitSession extends RecordData {
     @Nullable
     public String getSportProfileName() {
         return (String) getFieldByNumber(110);
+    }
+
+    @Nullable
+    public Integer getSportIndex() {
+        return (Integer) getFieldByNumber(111);
     }
 
     @Nullable
@@ -455,6 +655,71 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Double getAvgDepth() {
+        return (Double) getFieldByNumber(140);
+    }
+
+    @Nullable
+    public Double getMaxDepth() {
+        return (Double) getFieldByNumber(141);
+    }
+
+    @Nullable
+    public Long getSurfaceInterval() {
+        return (Long) getFieldByNumber(142);
+    }
+
+    @Nullable
+    public Integer getStartCns() {
+        return (Integer) getFieldByNumber(143);
+    }
+
+    @Nullable
+    public Integer getEndCns() {
+        return (Integer) getFieldByNumber(144);
+    }
+
+    @Nullable
+    public Integer getStartN2() {
+        return (Integer) getFieldByNumber(145);
+    }
+
+    @Nullable
+    public Integer getEndN2() {
+        return (Integer) getFieldByNumber(146);
+    }
+
+    @Nullable
+    public Integer getAvgRespirationRate() {
+        return (Integer) getFieldByNumber(147);
+    }
+
+    @Nullable
+    public Integer getMaxRespirationRate() {
+        return (Integer) getFieldByNumber(148);
+    }
+
+    @Nullable
+    public Integer getMinRespirationRate() {
+        return (Integer) getFieldByNumber(149);
+    }
+
+    @Nullable
+    public Integer getMinTemperature() {
+        return (Integer) getFieldByNumber(150);
+    }
+
+    @Nullable
+    public Integer getO2Toxicity() {
+        return (Integer) getFieldByNumber(155);
+    }
+
+    @Nullable
+    public Long getDiveNumber() {
+        return (Long) getFieldByNumber(156);
+    }
+
+    @Nullable
     public Double getTrainingLoadPeak() {
         return (Double) getFieldByNumber(168);
     }
@@ -480,8 +745,43 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Float getTotalGrit() {
+        return (Float) getFieldByNumber(181);
+    }
+
+    @Nullable
+    public Float getTotalFlow() {
+        return (Float) getFieldByNumber(182);
+    }
+
+    @Nullable
+    public Integer getJumpCount() {
+        return (Integer) getFieldByNumber(183);
+    }
+
+    @Nullable
+    public Float getAvgGrit() {
+        return (Float) getFieldByNumber(186);
+    }
+
+    @Nullable
+    public Float getAvgFlow() {
+        return (Float) getFieldByNumber(187);
+    }
+
+    @Nullable
     public Integer getPrimaryBenefit() {
         return (Integer) getFieldByNumber(188);
+    }
+
+    @Nullable
+    public Integer getWorkoutFeel() {
+        return (Integer) getFieldByNumber(192);
+    }
+
+    @Nullable
+    public Integer getWorkoutRpe() {
+        return (Integer) getFieldByNumber(193);
     }
 
     @Nullable
@@ -510,6 +810,16 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Float getTotalFractionalAscent() {
+        return (Float) getFieldByNumber(199);
+    }
+
+    @Nullable
+    public Float getTotalFractionalDescent() {
+        return (Float) getFieldByNumber(200);
+    }
+
+    @Nullable
     public Integer getBeginningPotential() {
         return (Integer) getFieldByNumber(205);
     }
@@ -525,6 +835,21 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Float getAvgCoreTemperature() {
+        return (Float) getFieldByNumber(208);
+    }
+
+    @Nullable
+    public Float getMinCoreTemperature() {
+        return (Float) getFieldByNumber(209);
+    }
+
+    @Nullable
+    public Float getMaxCoreTemperature() {
+        return (Float) getFieldByNumber(210);
+    }
+
+    @Nullable
     public Float getStepSpeedLoss() {
         return (Float) getFieldByNumber(222);
     }
@@ -537,6 +862,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
+    }
+
+    @Nullable
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
     }
 
     /**
@@ -607,6 +937,21 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setTotalFatCalories(final Integer value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setAvgSpeed(final Float value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setMaxSpeed(final Float value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
         public Builder setAverageHeartRate(final Integer value) {
             setFieldByNumber(16, value);
             return this;
@@ -659,6 +1004,11 @@ public class FitSession extends RecordData {
 
         public Builder setNumLaps(final Integer value) {
             setFieldByNumber(26, value);
+            return this;
+        }
+
+        public Builder setEventGroup(final Integer value) {
+            setFieldByNumber(27, value);
             return this;
         }
 
@@ -722,6 +1072,21 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setAvgStrokeCount(final Long value) {
+            setFieldByNumber(41, value);
+            return this;
+        }
+
+        public Builder setAvgStrokeDistance(final Float value) {
+            setFieldByNumber(42, value);
+            return this;
+        }
+
+        public Builder setSwimStroke(final Integer value) {
+            setFieldByNumber(43, value);
+            return this;
+        }
+
         public Builder setPoolLength(final Float value) {
             setFieldByNumber(44, value);
             return this;
@@ -729,6 +1094,11 @@ public class FitSession extends RecordData {
 
         public Builder setThresholdPower(final Integer value) {
             setFieldByNumber(45, value);
+            return this;
+        }
+
+        public Builder setPoolLengthUnit(final Integer value) {
+            setFieldByNumber(46, value);
             return this;
         }
 
@@ -742,8 +1112,118 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setAvgAltitude(final Double value) {
+            setFieldByNumber(49, value);
+            return this;
+        }
+
+        public Builder setMaxAltitude(final Double value) {
+            setFieldByNumber(50, value);
+            return this;
+        }
+
+        public Builder setGpsAccuracy(final Integer value) {
+            setFieldByNumber(51, value);
+            return this;
+        }
+
+        public Builder setAvgGrade(final Float value) {
+            setFieldByNumber(52, value);
+            return this;
+        }
+
+        public Builder setAvgPosGrade(final Float value) {
+            setFieldByNumber(53, value);
+            return this;
+        }
+
+        public Builder setAvgNegGrade(final Float value) {
+            setFieldByNumber(54, value);
+            return this;
+        }
+
+        public Builder setMaxPosGrade(final Float value) {
+            setFieldByNumber(55, value);
+            return this;
+        }
+
+        public Builder setMaxNegGrade(final Float value) {
+            setFieldByNumber(56, value);
+            return this;
+        }
+
+        public Builder setAvgTemperature(final Integer value) {
+            setFieldByNumber(57, value);
+            return this;
+        }
+
+        public Builder setMaxTemperature(final Integer value) {
+            setFieldByNumber(58, value);
+            return this;
+        }
+
+        public Builder setTotalMovingTime(final Double value) {
+            setFieldByNumber(59, value);
+            return this;
+        }
+
+        public Builder setAvgPosVerticalSpeed(final Float value) {
+            setFieldByNumber(60, value);
+            return this;
+        }
+
+        public Builder setAvgNegVerticalSpeed(final Float value) {
+            setFieldByNumber(61, value);
+            return this;
+        }
+
+        public Builder setMaxPosVerticalSpeed(final Float value) {
+            setFieldByNumber(62, value);
+            return this;
+        }
+
+        public Builder setMaxNegVerticalSpeed(final Float value) {
+            setFieldByNumber(63, value);
+            return this;
+        }
+
         public Builder setMinHeartRate(final Integer value) {
             setFieldByNumber(64, value);
+            return this;
+        }
+
+        public Builder setTimeInHrZone(final Double value) {
+            setFieldByNumber(65, value);
+            return this;
+        }
+
+        public Builder setTimeInSpeedZone(final Double value) {
+            setFieldByNumber(66, value);
+            return this;
+        }
+
+        public Builder setTimeInCadenceZone(final Double value) {
+            setFieldByNumber(67, value);
+            return this;
+        }
+
+        public Builder setTimeInPowerZone(final Double value) {
+            setFieldByNumber(68, value);
+            return this;
+        }
+
+        public Builder setAvgLapTime(final Double value) {
+            setFieldByNumber(69, value);
+            return this;
+        }
+
+        public Builder setBestLapIndex(final Integer value) {
+            setFieldByNumber(70, value);
+            return this;
+        }
+
+        public Builder setMinAltitude(final Float value) {
+            setFieldByNumber(71, value);
             return this;
         }
 
@@ -754,6 +1234,41 @@ public class FitSession extends RecordData {
 
         public Builder setAvgSwolf(final Integer value) {
             setFieldByNumber(80, value);
+            return this;
+        }
+
+        public Builder setPlayerScore(final Integer value) {
+            setFieldByNumber(82, value);
+            return this;
+        }
+
+        public Builder setOpponentScore(final Integer value) {
+            setFieldByNumber(83, value);
+            return this;
+        }
+
+        public Builder setOpponentName(final String value) {
+            setFieldByNumber(84, value);
+            return this;
+        }
+
+        public Builder setStrokeCount(final Integer value) {
+            setFieldByNumber(85, value);
+            return this;
+        }
+
+        public Builder setZoneCount(final Integer value) {
+            setFieldByNumber(86, value);
+            return this;
+        }
+
+        public Builder setMaxBallSpeed(final Float value) {
+            setFieldByNumber(87, value);
+            return this;
+        }
+
+        public Builder setAvgBallSpeed(final Float value) {
+            setFieldByNumber(88, value);
             return this;
         }
 
@@ -782,6 +1297,11 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setTotalFractionalCycles(final Float value) {
+            setFieldByNumber(94, value);
+            return this;
+        }
+
         public Builder setAvgLeftTorqueEffectiveness(final Float value) {
             setFieldByNumber(101, value);
             return this;
@@ -802,6 +1322,11 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setAvgCombinedPedalSmoothness(final Float value) {
+            setFieldByNumber(105, value);
+            return this;
+        }
+
         public Builder setFrontShifts(final Integer value) {
             setFieldByNumber(107, value);
             return this;
@@ -814,6 +1339,11 @@ public class FitSession extends RecordData {
 
         public Builder setSportProfileName(final String value) {
             setFieldByNumber(110, value);
+            return this;
+        }
+
+        public Builder setSportIndex(final Integer value) {
+            setFieldByNumber(111, value);
             return this;
         }
 
@@ -907,6 +1437,71 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setAvgDepth(final Double value) {
+            setFieldByNumber(140, value);
+            return this;
+        }
+
+        public Builder setMaxDepth(final Double value) {
+            setFieldByNumber(141, value);
+            return this;
+        }
+
+        public Builder setSurfaceInterval(final Long value) {
+            setFieldByNumber(142, value);
+            return this;
+        }
+
+        public Builder setStartCns(final Integer value) {
+            setFieldByNumber(143, value);
+            return this;
+        }
+
+        public Builder setEndCns(final Integer value) {
+            setFieldByNumber(144, value);
+            return this;
+        }
+
+        public Builder setStartN2(final Integer value) {
+            setFieldByNumber(145, value);
+            return this;
+        }
+
+        public Builder setEndN2(final Integer value) {
+            setFieldByNumber(146, value);
+            return this;
+        }
+
+        public Builder setAvgRespirationRate(final Integer value) {
+            setFieldByNumber(147, value);
+            return this;
+        }
+
+        public Builder setMaxRespirationRate(final Integer value) {
+            setFieldByNumber(148, value);
+            return this;
+        }
+
+        public Builder setMinRespirationRate(final Integer value) {
+            setFieldByNumber(149, value);
+            return this;
+        }
+
+        public Builder setMinTemperature(final Integer value) {
+            setFieldByNumber(150, value);
+            return this;
+        }
+
+        public Builder setO2Toxicity(final Integer value) {
+            setFieldByNumber(155, value);
+            return this;
+        }
+
+        public Builder setDiveNumber(final Long value) {
+            setFieldByNumber(156, value);
+            return this;
+        }
+
         public Builder setTrainingLoadPeak(final Double value) {
             setFieldByNumber(168, value);
             return this;
@@ -932,8 +1527,43 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setTotalGrit(final Float value) {
+            setFieldByNumber(181, value);
+            return this;
+        }
+
+        public Builder setTotalFlow(final Float value) {
+            setFieldByNumber(182, value);
+            return this;
+        }
+
+        public Builder setJumpCount(final Integer value) {
+            setFieldByNumber(183, value);
+            return this;
+        }
+
+        public Builder setAvgGrit(final Float value) {
+            setFieldByNumber(186, value);
+            return this;
+        }
+
+        public Builder setAvgFlow(final Float value) {
+            setFieldByNumber(187, value);
+            return this;
+        }
+
         public Builder setPrimaryBenefit(final Integer value) {
             setFieldByNumber(188, value);
+            return this;
+        }
+
+        public Builder setWorkoutFeel(final Integer value) {
+            setFieldByNumber(192, value);
+            return this;
+        }
+
+        public Builder setWorkoutRpe(final Integer value) {
+            setFieldByNumber(193, value);
             return this;
         }
 
@@ -962,6 +1592,16 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setTotalFractionalAscent(final Float value) {
+            setFieldByNumber(199, value);
+            return this;
+        }
+
+        public Builder setTotalFractionalDescent(final Float value) {
+            setFieldByNumber(200, value);
+            return this;
+        }
+
         public Builder setBeginningPotential(final Integer value) {
             setFieldByNumber(205, value);
             return this;
@@ -977,6 +1617,21 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setAvgCoreTemperature(final Float value) {
+            setFieldByNumber(208, value);
+            return this;
+        }
+
+        public Builder setMinCoreTemperature(final Float value) {
+            setFieldByNumber(209, value);
+            return this;
+        }
+
+        public Builder setMaxCoreTemperature(final Float value) {
+            setFieldByNumber(210, value);
+            return this;
+        }
+
         public Builder setStepSpeedLoss(final Float value) {
             setFieldByNumber(222, value);
             return this;
@@ -989,6 +1644,11 @@ public class FitSession extends RecordData {
 
         public Builder setTimestamp(final Long value) {
             setFieldByNumber(253, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 

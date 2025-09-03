@@ -1,0 +1,3 @@
+# nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegenFitCodeGen
+# is hard coded to uses \n
+*.java text eol=lf

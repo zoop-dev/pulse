@@ -110,6 +110,23 @@ public class FitDeviceSettings extends RecordData {
     }
 
     @Nullable
+    public Long getClockTime() {
+        return (Long) getFieldByNumber(39);
+    }
+
+    @Nullable
+    public Number[] getPagesEnabled() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(40);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
     public Integer getMoveAlertEnabled() {
         return (Integer) getFieldByNumber(46);
     }
@@ -145,8 +162,18 @@ public class FitDeviceSettings extends RecordData {
     }
 
     @Nullable
+    public Integer getLactateThresholdAutodetectEnabled() {
+        return (Integer) getFieldByNumber(80);
+    }
+
+    @Nullable
     public Integer getBleAutoUploadEnabled() {
         return (Integer) getFieldByNumber(86);
+    }
+
+    @Nullable
+    public Integer getAutoSyncFrequency() {
+        return (Integer) getFieldByNumber(89);
     }
 
     @Nullable
@@ -164,6 +191,26 @@ public class FitDeviceSettings extends RecordData {
             ret[i] = (Number) objectsArray[i];
         }
         return ret;
+    }
+
+    @Nullable
+    public Integer getNumberOfScreens() {
+        return (Integer) getFieldByNumber(94);
+    }
+
+    @Nullable
+    public Integer getSmartNotificationDisplayOrientation() {
+        return (Integer) getFieldByNumber(95);
+    }
+
+    @Nullable
+    public Integer getTapInterface() {
+        return (Integer) getFieldByNumber(134);
+    }
+
+    @Nullable
+    public Integer getTapSensitivity() {
+        return (Integer) getFieldByNumber(174);
     }
 
     /**
@@ -224,6 +271,16 @@ public class FitDeviceSettings extends RecordData {
             return this;
         }
 
+        public Builder setClockTime(final Long value) {
+            setFieldByNumber(39, value);
+            return this;
+        }
+
+        public Builder setPagesEnabled(final Number[] value) {
+            setFieldByNumber(40, (Object[]) value);
+            return this;
+        }
+
         public Builder setMoveAlertEnabled(final Integer value) {
             setFieldByNumber(46, value);
             return this;
@@ -259,8 +316,18 @@ public class FitDeviceSettings extends RecordData {
             return this;
         }
 
+        public Builder setLactateThresholdAutodetectEnabled(final Integer value) {
+            setFieldByNumber(80, value);
+            return this;
+        }
+
         public Builder setBleAutoUploadEnabled(final Integer value) {
             setFieldByNumber(86, value);
+            return this;
+        }
+
+        public Builder setAutoSyncFrequency(final Integer value) {
+            setFieldByNumber(89, value);
             return this;
         }
 
@@ -271,6 +338,26 @@ public class FitDeviceSettings extends RecordData {
 
         public Builder setAlarmsRepeat(final Number[] value) {
             setFieldByNumber(92, (Object[]) value);
+            return this;
+        }
+
+        public Builder setNumberOfScreens(final Integer value) {
+            setFieldByNumber(94, value);
+            return this;
+        }
+
+        public Builder setSmartNotificationDisplayOrientation(final Integer value) {
+            setFieldByNumber(95, value);
+            return this;
+        }
+
+        public Builder setTapInterface(final Integer value) {
+            setFieldByNumber(134, value);
+            return this;
+        }
+
+        public Builder setTapSensitivity(final Integer value) {
+            setFieldByNumber(174, value);
             return this;
         }
 

@@ -39,8 +39,33 @@ public class FitTimestampCorrelation extends RecordData {
     }
 
     @Nullable
+    public Float getFractionalTimestamp() {
+        return (Float) getFieldByNumber(0);
+    }
+
+    @Nullable
+    public Long getSystemTimestamp() {
+        return (Long) getFieldByNumber(1);
+    }
+
+    @Nullable
+    public Float getFractionalSystemTimestamp() {
+        return (Float) getFieldByNumber(2);
+    }
+
+    @Nullable
     public Long getLocalTimestamp() {
         return (Long) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Integer getTimestampMs() {
+        return (Integer) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public Integer getSystemTimestampMs() {
+        return (Integer) getFieldByNumber(5);
     }
 
     @Nullable
@@ -56,8 +81,33 @@ public class FitTimestampCorrelation extends RecordData {
             super(162);
         }
 
+        public Builder setFractionalTimestamp(final Float value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setSystemTimestamp(final Long value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setFractionalSystemTimestamp(final Float value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
         public Builder setLocalTimestamp(final Long value) {
             setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setTimestampMs(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setSystemTimestampMs(final Integer value) {
+            setFieldByNumber(5, value);
             return this;
         }
 

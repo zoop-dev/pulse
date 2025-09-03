@@ -64,6 +64,16 @@ public class FitWorkout extends RecordData {
     }
 
     @Nullable
+    public Float getPoolLength() {
+        return (Float) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Integer getPoolLengthUnit() {
+        return (Integer) getFieldByNumber(15);
+    }
+
+    @Nullable
     public String getNotes() {
         return (String) getFieldByNumber(17);
     }
@@ -98,6 +108,16 @@ public class FitWorkout extends RecordData {
 
         public Builder setSubSport(final Integer value) {
             setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setPoolLength(final Float value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setPoolLengthUnit(final Integer value) {
+            setFieldByNumber(15, value);
             return this;
         }
 

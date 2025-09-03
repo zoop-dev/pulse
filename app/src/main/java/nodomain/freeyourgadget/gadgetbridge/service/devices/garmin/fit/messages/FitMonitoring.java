@@ -42,6 +42,16 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
+    public Integer getDeviceIndex() {
+        return (Integer) getFieldByNumber(0);
+    }
+
+    @Nullable
+    public Integer getCalories() {
+        return (Integer) getFieldByNumber(1);
+    }
+
+    @Nullable
     public Long getDistance() {
         return (Long) getFieldByNumber(2);
     }
@@ -59,6 +69,56 @@ public class FitMonitoring extends RecordData {
     @Nullable
     public Integer getActivityType() {
         return (Integer) getFieldByNumber(5);
+    }
+
+    @Nullable
+    public Integer getActivitySubtype() {
+        return (Integer) getFieldByNumber(6);
+    }
+
+    @Nullable
+    public Integer getActivityLevel() {
+        return (Integer) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Integer getDistance16() {
+        return (Integer) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Integer getCycles16() {
+        return (Integer) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public Integer getActiveTime16() {
+        return (Integer) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Integer getLocalTimestamp() {
+        return (Integer) getFieldByNumber(11);
+    }
+
+    @Nullable
+    public Float getTemperature() {
+        return (Float) getFieldByNumber(12);
+    }
+
+    @Nullable
+    public Float getTemperatureMin() {
+        return (Float) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Float getTemperatureMax() {
+        return (Float) getFieldByNumber(15);
+    }
+
+    @Nullable
+    public Integer getActivityTime() {
+        return (Integer) getFieldByNumber(16);
     }
 
     @Nullable
@@ -82,8 +142,33 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
+    public Integer getTimestampMin8() {
+        return (Integer) getFieldByNumber(25);
+    }
+
+    @Nullable
     public Integer getHeartRate() {
         return (Integer) getFieldByNumber(27);
+    }
+
+    @Nullable
+    public Float getIntensity() {
+        return (Float) getFieldByNumber(28);
+    }
+
+    @Nullable
+    public Long getDuration() {
+        return (Long) getFieldByNumber(30);
+    }
+
+    @Nullable
+    public Double getAscent() {
+        return (Double) getFieldByNumber(31);
+    }
+
+    @Nullable
+    public Double getDescent() {
+        return (Double) getFieldByNumber(32);
     }
 
     @Nullable
@@ -109,6 +194,16 @@ public class FitMonitoring extends RecordData {
             super(55);
         }
 
+        public Builder setDeviceIndex(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setCalories(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
         public Builder setDistance(final Long value) {
             setFieldByNumber(2, value);
             return this;
@@ -126,6 +221,56 @@ public class FitMonitoring extends RecordData {
 
         public Builder setActivityType(final Integer value) {
             setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setActivitySubtype(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setActivityLevel(final Integer value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setDistance16(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setCycles16(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setActiveTime16(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setLocalTimestamp(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setTemperature(final Float value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setTemperatureMin(final Float value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setTemperatureMax(final Float value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
+        public Builder setActivityTime(final Integer value) {
+            setFieldByNumber(16, value);
             return this;
         }
 
@@ -149,8 +294,33 @@ public class FitMonitoring extends RecordData {
             return this;
         }
 
+        public Builder setTimestampMin8(final Integer value) {
+            setFieldByNumber(25, value);
+            return this;
+        }
+
         public Builder setHeartRate(final Integer value) {
             setFieldByNumber(27, value);
+            return this;
+        }
+
+        public Builder setIntensity(final Float value) {
+            setFieldByNumber(28, value);
+            return this;
+        }
+
+        public Builder setDuration(final Long value) {
+            setFieldByNumber(30, value);
+            return this;
+        }
+
+        public Builder setAscent(final Double value) {
+            setFieldByNumber(31, value);
+            return this;
+        }
+
+        public Builder setDescent(final Double value) {
+            setFieldByNumber(32, value);
             return this;
         }
 

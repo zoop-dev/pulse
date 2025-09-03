@@ -69,6 +69,11 @@ public class FitActivity extends RecordData {
     }
 
     @Nullable
+    public Integer getEventGroup() {
+        return (Integer) getFieldByNumber(6);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
     }
@@ -108,6 +113,11 @@ public class FitActivity extends RecordData {
 
         public Builder setLocalTimestamp(final Long value) {
             setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setEventGroup(final Integer value) {
+            setFieldByNumber(6, value);
             return this;
         }
 

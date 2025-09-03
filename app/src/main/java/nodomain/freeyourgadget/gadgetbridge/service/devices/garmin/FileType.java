@@ -48,9 +48,13 @@ public class FileType {
         COURSES(128, 6),
         SCHEDULES(128, 7),
         LOCATION(128, 8),
+        WEIGHT(128, 9),
         TOTALS(128, 10),
         GOALS(128, 11),
+        BLOOD_PRESSURE(128, 14),
+        MONITOR_A(128, 15),
         SUMMARY(128, 20),
+        MONITOR_DAILY(128, 28),
         RECORDS(128, 29),
         UNKNOWN_31(128, 31), // sent by HRM Pro Plus
         MONITOR(128, 32),
@@ -78,6 +82,7 @@ public class FileType {
         FBT_BACKUP(128, 72),
         SKIN_TEMP(128, 73),
         FBT_PTD_BACKUP(128, 74),
+        SCHEDULE(128, 77),
         UNKNOWN_79(128, 79), // sent by instinct 3
 
         // Other files
