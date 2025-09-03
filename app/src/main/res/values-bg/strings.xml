@@ -583,4 +583,18 @@
     <string name="sonyswr12_settings_low_vibration_summary">Активирайте ниската интензивност на вибрациите на маншета</string>
     <string name="sonyswr12_settings_stamina_summary">Режимът за пестене на енергия изключва периодичното автоматично измерване на сърдечната честота, като по този начин увеличава работното време</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Интелигентният алармен интервал е интервал преди инсталираната аларма. В този интервал устройството се опитва да открие най-леката фаза на сън за събуждане на потребителя</string>
+    <string name="about_activity_title_generic">Относно Gadgetbridge</string>
+    <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="about_activity_title_banglejs_main">Относно Bangle.js Gadgetbridge</string>
+    <string name="gadgetbridge_running_banglejs_main">Bangle.js върви</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Еженощно)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Еженощно)</string>
+    <string name="about_activity_title_banglejs_nightly">Относно Bangle.js Gadgetbridge (Еженощно)</string>
+    <string name="gadgetbridge_running_banglejs_nightly">Еженощен Bangle.js върви</string>
+    <string name="application_name_main_nightly">Gadgetbridge (Еженощно)</string>
+    <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Еженощен</string>
+    <string name="about_activity_title_main_nightly">Относно Gadgetbridge Еженощен</string>
+    <string name="gadgetbridge_running_main_nightly">Еженощен GB върви</string>
+    <string name="application_name_main_nopebble">Gadgetbridge (Еженощен, без Pebble доставчик)</string>
 </resources>
