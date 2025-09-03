@@ -703,8 +703,8 @@
     <string name="widget_listing_label">Status und Wecker</string>
     <string name="widget_set_alarm_after">Wecker einstellen nach:</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d Stunde</item>
-        <item quantity="other">%d Stunden</item>
+        <item quantity="one">%1$d:%2$02d Stunde</item>
+        <item quantity="other">%1$d:%2$02d Stunden</item>
     </plurals>
     <string name="preferences_makibes_hr3_settings">Makibes HR3-Einstellungen</string>
     <string name="prefs_find_phone">Telefon finden</string>
@@ -3923,4 +3923,5 @@
     <string name="rotate_screen">Bildschirm drehen</string>
     <string name="filter_charts">Diagramme filtern</string>
     <string name="recovery_heart_rate">Erholungspuls</string>
+    <string name="activity_prefs_sleep_duration_minutes">Gewünschte Schlafdauer (Minuten)</string>
 </resources>
