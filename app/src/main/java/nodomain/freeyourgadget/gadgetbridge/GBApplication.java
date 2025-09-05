@@ -142,7 +142,7 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 52;
+    private static final int CURRENT_PREFS_VERSION = 53;
 
     private static final LimitedQueue<Integer, String> mIDSenderLookup = new LimitedQueue<>(16);
     private static GBPrefs prefs;
@@ -2140,12 +2140,12 @@ public class GBApplication extends Application {
             if (prefs.contains("activity_user_sleep_duration")) {
                 int hours = prefs.getInt("activity_user_sleep_duration", -1);
                 if (hours > -1){
-                    editor.putInt("activity_user_sleep_duration_minutes", hours * 60);
+                    editor.putString("activity_user_sleep_duration_minutes", String.valueOf(hours * 60));
                 }
             }
         }
 
-        if (oldVersion < 52) {
+        if (oldVersion < 53) {
             if (prefs.contains("activity_user_sleep_duration_minutes")) {
                 final int minutes = prefs.getInt("activity_user_sleep_duration_minutes", 7 * 60);
                 editor.remove("activity_user_sleep_duration_minutes");
