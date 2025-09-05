@@ -31,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.Chart;
@@ -73,6 +72,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
+import nodomain.freeyourgadget.gadgetbridge.model.TimeSample;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -134,7 +134,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 long tstart = mySleepChartsData.sleepSessions.get(0).getSleepStart().getTime() / 1000;
                 long tend = mySleepChartsData.sleepSessions.get(mySleepChartsData.sleepSessions.size() - 1).getSleepEnd().getTime() / 1000;
 
-                for (Iterator<ActivitySample> iterator = (Iterator<ActivitySample>) samples.iterator(); iterator.hasNext(); ) {
+                for (Iterator<? extends ActivitySample> iterator = samples.iterator(); iterator.hasNext(); ) {
                     ActivitySample sample = iterator.next();
                     if (sample.getTimestamp() < tstart || sample.getTimestamp() > tend) {
                         iterator.remove();
@@ -149,7 +149,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         AbstractOverlayData overlay = null;
         if(currentOverlay == OverlayType.HEART_RATE) {
-            int average = SHOW_CHARTS_AVERAGE?Math.round(hrData.getLeft()):OverlayDataInt.NO_DATA;
+            int average = Math.round(hrData.getLeft());
+            average = SHOW_CHARTS_AVERAGE && average > 0?average:OverlayDataInt.NO_DATA;
             overlay = new OverlayDataInt(20, 140, prepareHR(samples), average, HEARTRATE_COLOR, Color.RED);
         } else if(currentOverlay == OverlayType.SPO2) {
             overlay = new OverlayDataInt(68, 100, prepareSpO2Overlay(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataInt.NO_DATA, getResources().getColor(R.color.spo2_color), Color.RED);
@@ -159,22 +160,27 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         return new MyChartsData(mySleepChartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, overlay);
     }
 
-    public float[] prepareTemperature(DBHandler db, GBDevice device, long tsStart, long tsEnd) {
-
-        DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        TimeSampleProvider<TemperatureSample> provider = (TimeSampleProvider<TemperatureSample>) coordinator.getTemperatureSampleProvider(device, db.getDaoSession());
-
-        List<TemperatureSample> samples =  provider.getAllSamples(tsStart, tsEnd);
-        if(samples.isEmpty())
-            return null;
-
-        long interval = Long.MAX_VALUE;
+    private long getSamplesInterval(List<? extends TimeSample> samples) {
+        long interval = 60000; // NOTE: assume max interval 1 minute.
         for(int i = 1; i < samples.size(); i++) {
             long delta = samples.get(i).getTimestamp() - samples.get(i - 1).getTimestamp();
             if(delta < interval) {
                 interval = delta;
             }
         }
+        return interval;
+    }
+
+    public float[] prepareTemperature(DBHandler db, GBDevice device, long tsStart, long tsEnd) {
+
+        DeviceCoordinator coordinator = device.getDeviceCoordinator();
+        TimeSampleProvider<? extends TemperatureSample> provider = coordinator.getTemperatureSampleProvider(device, db.getDaoSession());
+
+        List<? extends TemperatureSample> samples =  provider.getAllSamples(tsStart, tsEnd);
+        if(samples.isEmpty())
+            return null;
+
+        long interval = getSamplesInterval(samples);
         int count = (int)((float)(tsEnd - tsStart) / interval);
         if(count == 0)
             return null;
@@ -194,20 +200,14 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
     public int[] prepareSpO2Overlay(DBHandler db, GBDevice device, long tsStart, long tsEnd) {
         DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        TimeSampleProvider<Spo2Sample> provider = (TimeSampleProvider<Spo2Sample>) coordinator.getSpo2SampleProvider(device, db.getDaoSession());
+        TimeSampleProvider<? extends Spo2Sample> provider = coordinator.getSpo2SampleProvider(device, db.getDaoSession());
 
-        List<Spo2Sample> samples =  provider.getAllSamples(tsStart, tsEnd);
+        List<? extends Spo2Sample> samples =  provider.getAllSamples(tsStart, tsEnd);
 
         if(samples.isEmpty())
             return null;
 
-        long interval = Long.MAX_VALUE;
-        for(int i = 1; i < samples.size(); i++) {
-            long delta = samples.get(i).getTimestamp() - samples.get(i - 1).getTimestamp();
-            if(delta < interval) {
-                interval = delta;
-            }
-        }
+        long interval = getSamplesInterval(samples);
         int count = (int)((float)(tsEnd - tsStart) / interval);
 
         if(count == 0)
@@ -230,9 +230,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return null;
         }
 
-        //NOTE: The start and end times of the samples should correspond to the sleep stages.
+        //NOTE: Overlay data. The start and end times of the samples should correspond to the sleep stages.
         // The time interval between samples is not important (it can be in minutes, seconds, etc.), but all intervals must be filled.
-        // If there is a gap in the raw data, 'SimpleSleepDetailsHROverlay.NO_DATA' should be used.
+        // If there is a gap in the raw data, 'NO_DATA' should be used.
         // As we exactly know the intervals, we can use primitive types (which have better performance during drawing).
         // Samples already prepared in minute's interval  can simply be copied with filtering.
 
@@ -476,7 +476,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         return result.toString();
     }
 
-    enum OverlayType {
+    private enum OverlayType {
         NONE,
         HEART_RATE,
         SPO2,
@@ -522,14 +522,9 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         ChipGroup chipGroup = rootView.findViewById(R.id.sleep_chart_overlay_group);
 
-        chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
-            @Override
-            public void onCheckedChanged(@NonNull ChipGroup chipGroup, @NonNull List<Integer> list) {
-                if(list.isEmpty()) {
-                    currentOverlay = OverlayType.NONE;
-                    refresh();
-                }
-            }
+        chipGroup.setOnCheckedStateChangeListener((group, list) -> {
+            currentOverlay = list.isEmpty()?OverlayType.NONE:(OverlayType) group.findViewById(list.get(0)).getTag();
+            refresh();
         });
 
         if(supportsHeartrate(getChartsHost().getDevice())) {
@@ -537,13 +532,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             hrChip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.heart_rate));
             hrChip.setChipIconVisible(true);
             hrChip.setChipIconResource(R.drawable.ic_heartrate);
+            hrChip.setTag(OverlayType.HEART_RATE);
             chipGroup.addView(hrChip);
-            hrChip.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked) {
-                    currentOverlay = OverlayType.HEART_RATE;
-                }
-                refresh();
-            });
         }
 
         if(supportsSpO2(getChartsHost().getDevice())) {
@@ -551,13 +541,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             spo2Chip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.menuitem_spo2));
             spo2Chip.setChipIconVisible(true);
             spo2Chip.setChipIconResource(R.drawable.ic_spo2);
+            spo2Chip.setTag(OverlayType.SPO2);
             chipGroup.addView(spo2Chip);
-            spo2Chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked) {
-                    currentOverlay = OverlayType.SPO2;
-                }
-                refresh();
-            });
         }
 
         if(supportsTemperature(getChartsHost().getDevice())) {
@@ -565,13 +550,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             tempChip.setText(ContextCompat.getString(GBApplication.getContext(), R.string.menuitem_temperature));
             tempChip.setChipIconVisible(true);
             tempChip.setChipIconResource(R.drawable.ic_temperature);
+            tempChip.setTag(OverlayType.TEMPERATURE);
             chipGroup.addView(tempChip);
-            tempChip.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked) {
-                    currentOverlay = OverlayType.TEMPERATURE;
-                }
-                refresh();
-            });
         }
 
         mSleepchartInfo.setMaxLines(sleepLinesLimit);

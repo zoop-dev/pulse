@@ -76,7 +76,7 @@ public class OverlayDataFloat extends AbstractOverlayData{
 
     @Override
     public String getCurrentValue(int i) {
-        return String.format(Locale.ROOT, "%.2f", this.data[i]);
+        return String.format(Locale.ROOT, "%.1f", this.data[i]);
     }
 
     @Override
@@ -86,6 +86,6 @@ public class OverlayDataFloat extends AbstractOverlayData{
 
     @Override
     public String getYLabelValue(float val) {
-        return String.format(Locale.ROOT, "%.2f", val);
+        return String.format(Locale.ROOT, "%.1f", val);
     }
 }
