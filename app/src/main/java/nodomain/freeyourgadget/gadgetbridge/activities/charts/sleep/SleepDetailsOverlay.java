@@ -20,7 +20,7 @@ import android.graphics.Canvas;
 
 public interface SleepDetailsOverlay {
 
-    void init(int horizontalLineCount);
+    void init(float scaleTextSize, float labelTextSize, int horizontalLineCount);
 
     void drawOverlayScale(Canvas canvas, int lineSpacing, int chartTopStart, int x);
 

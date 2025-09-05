@@ -99,7 +99,9 @@ public class SleepDetailsView extends View {
 
     private final int overlayAlpha = 128;
 
-    private final int infoTextSize = 25;
+    private int infoTextSize = 25;
+
+    private int scaleTextSize = 25;
 
     private final float cornerRadius = 10.0F;
 
@@ -132,6 +134,11 @@ public class SleepDetailsView extends View {
         horizontalLineCount = 8;
         heightUnit = (float) (1.0 / 8);
 
+        float scale = getResources().getConfiguration().fontScale;
+
+        infoTextSize = (int) (25 * scale);
+        scaleTextSize = (int) (25 * scale);
+
         gridPaint.setColor(Color.GRAY);
         gridPaint.setStrokeWidth(1.0F);
         gridPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -144,17 +151,17 @@ public class SleepDetailsView extends View {
 
         timeInfoTextPaint.setColor(Color.GRAY);
         timeInfoTextPaint.setTextAlign(Paint.Align.CENTER);
-        timeInfoTextPaint.setTextSize(25);
+        timeInfoTextPaint.setTextSize(scaleTextSize);
 
         infoTextPaint.setColor(Color.GRAY);
         infoTextPaint.setTextAlign(Paint.Align.LEFT);
         infoTextPaint.setTextSize(infoTextSize);
 
-        selectorPaint.setColor(Color.GRAY);
-        selectorPaint.setStrokeWidth(1.0F);
+        selectorPaint.setColor(Color.YELLOW);
+        selectorPaint.setStrokeWidth(2.0F);
         selectorPaint.setStrokeCap(Paint.Cap.ROUND);
         selectorPaint.setStyle(Paint.Style.STROKE);
-        selectorPaint.setPathEffect(new DashPathEffect(new float[]{2f, 10f}, 0f));
+        selectorPaint.setPathEffect(new DashPathEffect(new float[]{4f, 10f}, 0f));
     }
 
     @Override
@@ -383,7 +390,7 @@ public class SleepDetailsView extends View {
 
         fillPaint.setColor(getColorFromType(curDetail.type));
 
-        final int iconSize = infoTextSize;
+        final float iconSize = infoTextSize;
 
         final float infoIconX = chartLeftStart + ((float) chartWidth / 2) - (float) infoTextRect.width() / 2 - iconSize - 5;
 
@@ -465,7 +472,7 @@ public class SleepDetailsView extends View {
         selectorPos = -1.0F;
         curOverlay = overlay;
         if(curOverlay != null) {
-            curOverlay.init(horizontalLineCount);
+            curOverlay.init(scaleTextSize, infoTextSize, horizontalLineCount);
         }
         invalidate();
     }

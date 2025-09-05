@@ -77,9 +77,11 @@ public class SimpleSleepDetailsOverlay implements SleepDetailsOverlay {
     }
 
     @Override
-    public void init(int horizontalLineCount) {
+    public void init(float scaleTextSize, float labelTextSize, int horizontalLineCount) {
         this.horizontalLineCount = horizontalLineCount;
         labels = data.getYLabels(horizontalLineCount);
+        labelPaint.setTextSize(labelTextSize);
+        scalePaint.setTextSize(scaleTextSize);
     }
 
     @Override
