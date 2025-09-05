@@ -334,7 +334,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 MoyoungBloodPressureSample sample = new MoyoungBloodPressureSample();
                 sample.setTimestamp(System.currentTimeMillis());
                 sample.setBpSystolic(data1);
-                sample.setBpSystolic(data2);
+                sample.setBpDiastolic(data2);
                 sample.setDeviceId(deviceId);
                 sample.setUserId(userId);
 
