@@ -2096,6 +2096,7 @@
     <string name="devicetype_misirun_c17" translatable="false">Misirun C17</string>
     <string name="devicetype_c20" translatable="false">C20</string>
     <string name="devicetype_kt80" translatable="false">KT80</string>
+    <string name="devicetype_hc96" translatable="false">HC96</string>
     <string name="devicetype_ksix_venture" translatable="false">KSIX Venture</string>
     <string name="devicetype_fireboltt_talk" translatable="false">Fire-Boltt Talk</string>
     <string name="devicetype_viran_c29" translatable="false">Viran C29</string>

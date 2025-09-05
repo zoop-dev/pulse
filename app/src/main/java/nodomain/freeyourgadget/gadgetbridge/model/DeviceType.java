@@ -288,6 +288,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV72Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV76Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ColmiV89Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.FireBolttTalkCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.HC96Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.KT80Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.KsixVentureCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MisirunC17Coordinator;
@@ -766,6 +767,7 @@ public enum DeviceType {
     BLACKVIEW_R60(BlackviewR60Coordinator.class),
     MISIRUN_C17(MisirunC17Coordinator.class),
     C20(C20Coordinator.class),
+    HC96(HC96Coordinator.class),
     KT80(KT80Coordinator.class),
     KSIX_VENTURE(KsixVentureCoordinator.class),
     FIREBOLTT_TALK(FireBolttTalkCoordinator.class),
