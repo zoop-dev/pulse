@@ -715,10 +715,10 @@
     <string name="widget_20_minutes">20 минут</string>
     <string name="widget_1_hour">1 час</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d час</item>
-        <item quantity="few">%d часа</item>
-        <item quantity="many">%d часов</item>
-        <item quantity="other">%d часов</item>
+        <item quantity="one">%1$d:%2$02d час</item>
+        <item quantity="few">%1$d:%2$02d часа</item>
+        <item quantity="many">%1$d:%2$02d часов</item>
+        <item quantity="other">%1$d:%2$02d часов</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">Для просмотра трассировки активности установите приложение, которое может работать с GPX файлами.</string>
     <string name="preferences_makibes_hr3_settings">Настройки Makibes HR3</string>
@@ -4015,4 +4015,8 @@
     <string name="workout_charts">Диаграммы тренировок</string>
     <string name="rotate_screen">Повернуть экран</string>
     <string name="filter_charts">Фильтровать диаграммы</string>
+    <string name="activity_prefs_sleep_duration_minutes">Желаемая длительность сна в минутах</string>
+    <string name="running_step_speed_loss">Потеря скорости шага</string>
+    <string name="running_step_speed_loss_percentage">Скорость шага теряет %</string>
+    <string name="recovery_heart_rate">Восстановление пульса сердца</string>
 </resources>
