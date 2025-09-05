@@ -27,10 +27,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.Chart;
@@ -64,6 +62,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetails
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.SleepDetailsView;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.GaugeDrawer;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.databinding.FragmentSleepchartBinding;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -80,26 +79,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChartsData> {
     protected static final Logger LOG = LoggerFactory.getLogger(SleepDailyFragment.class);
 
-    private ImageView sleepStagesGauge;
-    private TextView mSleepchartInfo;
-    private TextView remSleepTimeText;
-    private LinearLayout remSleepTimeTextWrapper;
-    private TextView awakeSleepTimeText;
-    private LinearLayout awakeSleepTimeTextWrapper;
-    private TextView deepSleepTimeText;
-    private TextView lightSleepTimeText;
-    private TextView lowestHrText;
-    private TextView highestHrText;
-    private TextView averageHrText;
-    private TextView movementIntensityText;
-    private TextView sleepDateText;
-    private int heartRateMin = 0;
-    private int heartRateMax = 0;
-    private int heartRateAvg = 0;
-    private float intensityTotal = 0;
 
-    private SleepDetailsView mSleepDetailsView;
-
+    private FragmentSleepchartBinding binding;
 
     private int mSmartAlarmFrom = -1;
     private int mSmartAlarmTo = -1;
@@ -333,7 +314,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         if (supportsSleepScore()) {
             lowerText = GBApplication.getContext().getString(R.string.sleep_score_value, pieData.getSleepScore());
         }
-        sleepStagesGauge.setImageBitmap(GaugeDrawer.drawCircleGaugeSegmented(
+        binding.sleepStagesGauge.setImageBitmap(GaugeDrawer.drawCircleGaugeSegmented(
                 width,
                 width / 15,
                 colors,
@@ -355,43 +336,43 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         if (mcd.getStages() != null) {
             SleepDetailsOverlay overlay = (mcd.getOverlayData() != null)?new SimpleSleepDetailsOverlay(mcd.getOverlayData() , Color.BLACK): null;
-            mSleepDetailsView.setData(mcd.getStages(), overlay);
+            binding.sleepDetails.setData(mcd.getStages(), overlay);
         }
 
         Date date = new Date((long) this.getTSEnd() * 1000);
         String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
-        sleepDateText.setText(formattedDate);
+        binding.sleepDate.setText(formattedDate);
 
         sleepStagesGaugeUpdate(pieData);
 
         if (!pieData.sleepSessions.isEmpty()) {
-            awakeSleepTimeText.setText(timeStringFormat(pieData.getTotalAwake()));
-            remSleepTimeText.setText(timeStringFormat(pieData.getTotalRem()));
-            deepSleepTimeText.setText(timeStringFormat(pieData.getTotalDeep()));
-            lightSleepTimeText.setText(timeStringFormat(pieData.getTotalLight()));
+            binding.sleepChartLegendAwakeTime.setText(timeStringFormat(pieData.getTotalAwake()));
+            binding.sleepChartLegendRemTime.setText(timeStringFormat(pieData.getTotalRem()));
+            binding.sleepChartLegendDeepTime.setText(timeStringFormat(pieData.getTotalDeep()));
+            binding.sleepChartLegendLightTime.setText(timeStringFormat(pieData.getTotalLight()));
         } else {
-            awakeSleepTimeText.setText("-");
-            remSleepTimeText.setText("-");
-            deepSleepTimeText.setText("-");
-            lightSleepTimeText.setText("-");
+            binding.sleepChartLegendAwakeTime.setText("-");
+            binding.sleepChartLegendRemTime.setText("-");
+            binding.sleepChartLegendDeepTime.setText("-");
+            binding.sleepChartLegendLightTime.setText("-");
         }
         if (!supportsRemSleep(getChartsHost().getDevice())) {
-            remSleepTimeTextWrapper.setVisibility(View.GONE);
+            binding.sleepChartLegendRemTimeWrapper.setVisibility(View.GONE);
         }
         if (!supportsAwakeSleep(getChartsHost().getDevice())) {
-            awakeSleepTimeTextWrapper.setVisibility(View.GONE);
+            binding.sleepChartLegendAwakeTimeWrapper.setVisibility(View.GONE);
         }
-        mSleepchartInfo.setText(buildYouSleptText(pieData));
-        mSleepchartInfo.setMovementMethod(new ScrollingMovementMethod());
+        binding.sleepchartInfo.setText(buildYouSleptText(pieData));
+        binding.sleepchartInfo.setMovementMethod(new ScrollingMovementMethod());
 
-        heartRateMin = mcd.getHeartRateAxisMin();
-        heartRateMax = mcd.getHeartRateAxisMax();
-        heartRateAvg = Math.round(mcd.getHeartRateAverage());
-        intensityTotal = mcd.getIntensityTotal();
-        lowestHrText.setText(String.valueOf(heartRateMin > 0 ? heartRateMin : "-"));
-        highestHrText.setText(String.valueOf(heartRateMax > 0 ? heartRateMax : "-"));
-        averageHrText.setText(String.valueOf(heartRateAvg > 0 ? heartRateAvg : "-"));
-        movementIntensityText.setText(intensityTotal > 0 ? new DecimalFormat("###.#").format(intensityTotal) : "-");
+        int heartRateMin = mcd.getHeartRateAxisMin();
+        int heartRateMax = mcd.getHeartRateAxisMax();
+        int heartRateAvg = Math.round(mcd.getHeartRateAverage());
+        float intensityTotal = mcd.getIntensityTotal();
+        binding.sleepHrLowest.setText(String.valueOf(heartRateMin > 0 ? heartRateMin : "-"));
+        binding.sleepHrHighest.setText(String.valueOf(heartRateMax > 0 ? heartRateMax : "-"));
+        binding.sleepHrAverage.setText(String.valueOf(heartRateAvg > 0 ? heartRateAvg : "-"));
+        binding.sleepMovementIntensity.setText(intensityTotal > 0 ? new DecimalFormat("###.#").format(intensityTotal) : "-");
     }
 
     private Triple<Float, Integer, Integer> calculateHrData(List<? extends ActivitySample> samples) {
@@ -496,31 +477,17 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sleepchart, container, false);
+
+        binding = FragmentSleepchartBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                getChartsHost().enableSwipeRefresh(scrollY == 0);
-            });
+            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> getChartsHost().enableSwipeRefresh(scrollY == 0));
         }
-        sleepStagesGauge = rootView.findViewById(R.id.sleep_stages_gauge);
-        mSleepchartInfo = rootView.findViewById(R.id.sleepchart_info);
-        remSleepTimeText = rootView.findViewById(R.id.sleep_chart_legend_rem_time);
-        remSleepTimeTextWrapper = rootView.findViewById(R.id.sleep_chart_legend_rem_time_wrapper);
-        awakeSleepTimeText = rootView.findViewById(R.id.sleep_chart_legend_awake_time);
-        awakeSleepTimeTextWrapper = rootView.findViewById(R.id.sleep_chart_legend_awake_time_wrapper);
-        deepSleepTimeText = rootView.findViewById(R.id.sleep_chart_legend_deep_time);
-        lightSleepTimeText = rootView.findViewById(R.id.sleep_chart_legend_light_time);
-        lowestHrText = rootView.findViewById(R.id.sleep_hr_lowest);
-        highestHrText = rootView.findViewById(R.id.sleep_hr_highest);
-        averageHrText = rootView.findViewById(R.id.sleep_hr_average);
-        movementIntensityText = rootView.findViewById(R.id.sleep_movement_intensity);
-        sleepDateText = rootView.findViewById(R.id.sleep_date);
 
-
-        ChipGroup chipGroup = rootView.findViewById(R.id.sleep_chart_overlay_group);
+        ChipGroup chipGroup = binding.sleepChartOverlayGroup;
 
         chipGroup.setOnCheckedStateChangeListener((group, list) -> {
             currentOverlay = list.isEmpty()?OverlayType.NONE:(OverlayType) group.findViewById(list.get(0)).getTag();
@@ -554,9 +521,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             chipGroup.addView(tempChip);
         }
 
-        mSleepchartInfo.setMaxLines(sleepLinesLimit);
-
-        mSleepDetailsView = rootView.findViewById(R.id.sleep_details);
+        binding.sleepchartInfo.setMaxLines(sleepLinesLimit);
 
         SleepDetailsView.DataConfig[] config = new SleepDetailsView.DataConfig[]{
                 new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.AWAKE_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_awake_sleep_light)),
@@ -564,7 +529,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                 new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.LIGHT_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_light_sleep_light)),
                 new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.DEEP_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_deep_sleep_light)),
         };
-        mSleepDetailsView.setConfig(config);
+        binding.sleepDetails.setConfig(config);
 
         // refresh immediately instead of use refreshIfVisible(), for perceived performance
         refresh();
