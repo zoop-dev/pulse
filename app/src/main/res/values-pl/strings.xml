@@ -748,10 +748,10 @@
     <string name="widget_listing_label">Status i alarmy</string>
     <string name="widget_set_alarm_after">Ustaw alarm za:</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d godzina</item>
-        <item quantity="few">%d godziny</item>
-        <item quantity="many">%d godzin</item>
-        <item quantity="other">%d godzin</item>
+        <item quantity="one">%1$d:%2$02d godzina</item>
+        <item quantity="few">%1$d:%2$02d godziny</item>
+        <item quantity="many">%1$d:%2$02d godzin</item>
+        <item quantity="other">%1$d:%2$02d godzin</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">Aby wyświetlić ślad, zainstaluj aplikację obsługującą pliki GPX.</string>
     <string name="maximum_duration">Czas trwania</string>
@@ -4030,4 +4030,5 @@
     <string name="running_step_speed_loss">Spadek prędkości kroku</string>
     <string name="running_step_speed_loss_percentage">Spadek prędkości kroku %</string>
     <string name="recovery_heart_rate">Tętno regeneracyjne</string>
+    <string name="activity_prefs_sleep_duration_minutes">Preferowany czas spania w minutach</string>
 </resources>
