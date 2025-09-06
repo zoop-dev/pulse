@@ -91,8 +91,8 @@ public class BluetoothStateChangeReceiver extends BroadcastReceiver {
                 return;
             }
 
-            if (gbDevice.getState() != GBDevice.State.INITIALIZED) {
-                LOG.info("gbDevice {} not initialized, ignoring incoming battery information.", gbDevice);
+            if (!gbDevice.isConnected()) {
+                LOG.info("gbDevice {} not connected, ignoring incoming battery information.", gbDevice);
                 return;
             }
 
