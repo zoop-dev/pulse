@@ -697,7 +697,15 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         return Math.round(number.doubleValue());
     }
 
-    private static ActivityKind getActivityKind(final Integer sport, final Integer subsport) {
+    private static ActivityKind getActivityKind(Integer sport, Integer subsport) {
+        // Garmin inReach Mini 2: sport and subsport are missing (null)
+        if (sport == null) {
+            sport = 0;
+        }
+        if (subsport == null) {
+            subsport = 0;
+        }
+
         final Optional<GarminSport> garminSport = GarminSport.fromCodes(sport, subsport);
         if (garminSport.isPresent()) {
             return garminSport.get().getActivityKind();
