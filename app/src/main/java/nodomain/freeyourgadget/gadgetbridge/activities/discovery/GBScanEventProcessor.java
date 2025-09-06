@@ -170,7 +170,7 @@ public final class GBScanEventProcessor implements Runnable {
             final ParcelUuid[] uuids = candidate.getServiceUuids();
             if (uuids != null && uuids.length > 0) {
                 for (ParcelUuid uuid : uuids) {
-                    LOG.debug("  supports uuid: " + uuid.toString());
+                    LOG.debug("  supports uuid: {}", uuid.toString());
                 }
             }
         }

@@ -31,6 +31,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -123,11 +124,11 @@ public class DeviceHelper {
 
         return orderedDeviceTypes;
     }
-    public DeviceType resolveDeviceType(GBDeviceCandidate deviceCandidate) {
+    public DeviceType resolveDeviceType(@NonNull final GBDeviceCandidate deviceCandidate) {
         return resolveDeviceType(deviceCandidate, true);
     }
 
-    public DeviceType resolveDeviceType(GBDeviceCandidate deviceCandidate, boolean useCache){
+    public DeviceType resolveDeviceType(@NonNull final GBDeviceCandidate deviceCandidate, boolean useCache){
         final DeviceType forcedType = deviceCandidate.getForcedType();
         if (forcedType != null) {
             return forcedType;
