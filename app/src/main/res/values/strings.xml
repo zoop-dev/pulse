@@ -1940,6 +1940,7 @@
     <string name="devicetype_garmin_vivoactive_4" translatable="false">Garmin Vívoactive 4</string>
     <string name="devicetype_garmin_vivoactive_4s" translatable="false">Garmin Vívoactive 4S</string>
     <string name="devicetype_garmin_vivoactive_5" translatable="false">Garmin Vívoactive 5</string>
+    <string name="devicetype_garmin_vivoactive_6" translatable="false">Garmin Vívoactive 6</string>
     <string name="devicetype_garmin_vivoactive_hr" translatable="false">Garmin Vívoactive HR</string>
     <string name="devicetype_garmin_vivosmart_3" translatable="false">Garmin Vívosmart 3</string>
     <string name="devicetype_garmin_vivosmart_4" translatable="false">Garmin Vívosmart 4</string>

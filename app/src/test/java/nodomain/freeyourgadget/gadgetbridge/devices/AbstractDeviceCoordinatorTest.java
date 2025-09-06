@@ -47,6 +47,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Amazfit T-Rex Ultra", DeviceType.AMAZFITTREXULTRA);
             put("Xiaomi Smart Band 7", DeviceType.MIBAND7);
             put("Xiaomi Band 9 Active AB01", DeviceType.MIBAND9ACTIVE);
+            put("vívoactive 6", DeviceType.GARMIN_VIVOACTIVE_6);
             put("HC96", DeviceType.HC96);
             put("P8", DeviceType.WASPOS);
             put("P8DFU", DeviceType.WASPOS);
