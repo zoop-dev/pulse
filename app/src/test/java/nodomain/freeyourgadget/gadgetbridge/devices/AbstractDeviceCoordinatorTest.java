@@ -52,7 +52,10 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("P8", DeviceType.WASPOS);
             put("P8DFU", DeviceType.WASPOS);
             put("P80", DeviceType.COLMI_P80);
-            put("Y66", DeviceType.Y66);
+            put("BT103(ID-AB01)", DeviceType.OUKITEL_BT103);
+            put("P66D(ID-AB01)", DeviceType.DOTN_P66D);
+            put("HAYLOU Watch 2 Pro", DeviceType.HAYLOU_WATCH_2_PRO);
+            put("Y66(ID-AB01)", DeviceType.Y66);
             put("R11C_B200", DeviceType.YAWELL_R11);
             put("R11_B200", DeviceType.YAWELL_R11);
             put("WF-C710N", DeviceType.SONY_WF_C710N);
