@@ -3849,4 +3849,6 @@
     <string name="running_step_speed_loss_percentage">Втрата швидкості кроку %</string>
     <string name="recovery_heart_rate">Частота серцевих скорочень для відновлення</string>
     <string name="activity_prefs_sleep_duration_minutes">Бажана тривалість сну в хвилинах</string>
+    <string name="workout_lap">Коло</string>
+    <string name="lap_time">Час</string>
 </resources>
