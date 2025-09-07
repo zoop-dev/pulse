@@ -93,7 +93,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
             final Type type = Type.fromCode(typeCode);
 
-            //trace("Read typeCode={}, type={}, length={}, initialPosition={}", typeCode, type, length, initialPosition);
+            trace("Read typeCode={}, type={}, length={}, initialPosition={}", typeCode, type, length, initialPosition);
 
             if (type == null) {
                 if (!unknownTypeCodes.containsKey(typeCode)) {
@@ -138,6 +138,9 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                 case STRENGTH_SET:
                     consumeStrengthSet(buf);
                     break;
+                case LAP:
+                    consumeLap(buf);
+                    break;
                 default:
                     LOG.warn("No consumer for for type {}", type);
                     // Consume the reported length
@@ -166,7 +169,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         this.timestamp = new Date(buf.getLong());
         this.offset = 0;
 
-        //trace("Consumed timestamp");
+        trace("Consumed timestamp");
     }
 
     private void consumeTimestampOffset(final ByteBuffer buf) {
@@ -186,7 +189,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         final double longitudeDeg = convertHuamiValueToDecimalDegrees(longitude);
         final double latitudeDeg = convertHuamiValueToDecimalDegrees(latitude);
 
-        //trace("Consumed GPS coords: {} {}", longitudeDeg, latitudeDeg);
+        trace("Consumed GPS coords: {} {}", longitudeDeg, latitudeDeg);
     }
 
     private void consumeGpsDelta(final ByteBuffer buf) {
@@ -206,7 +209,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         addNewGpsCoordinates();
 
-        //trace("Consumed GPS delta: {} {} {}", longitudeDelta, latitudeDelta, two);
+        trace("Consumed GPS delta: {} {} {}", longitudeDelta, latitudeDelta, two);
     }
 
     private void consumeStatus(final ByteBuffer buf) {
@@ -234,7 +237,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                 LOG.warn("Unknown status code {}", String.format("0x%X", statusCode));
         }
 
-        //trace("Consumed Status: {}", status);
+        trace("Consumed Status: {}", status);
     }
 
     private void consumeSpeed(final ByteBuffer buf) {
@@ -252,7 +255,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
             }
         }
 
-        //trace("Consumed speed: cadence={}, stride={}, pace={}", cadence, stride, pace);
+        trace("Consumed speed: cadence={}, stride={}, pace={}", cadence, stride, pace);
     }
 
     private void consumeAltitude(final ByteBuffer buf) {
@@ -270,7 +273,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
             ap.setLocation(newCoordinate);
         }
 
-        //trace("Consumed altitude: {}", altitude);
+        trace("Consumed altitude: {}", altitude);
     }
 
     private void consumeHeartRate(final ByteBuffer buf) {
@@ -282,7 +285,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
             ap.setHeartRate(heartRate);
         }
 
-        //trace("Consumed HeartRate: {}", heartRate);
+        trace("Consumed HeartRate: {}", heartRate);
     }
 
     private void consumeStrengthSet(final ByteBuffer buf) {
@@ -294,7 +297,24 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         activityTrack.addStrengthSet(reps, weight != 0xffff ? weight / 10f : -1);
 
-        //trace("Consumed strength set: reps={}, weightKg={}", reps, weightKg);
+        trace("Consumed strength set: reps={}, weightKg={}", reps, weight);
+    }
+
+    private void consumeLap(final ByteBuffer buf) {
+        buf.get(new byte[2]); // ?
+        final int number = buf.getShort() & 0xffff;
+        buf.get(); // 3 ?
+        final int hr = buf.get() & 0xff;
+        final int pace = buf.getShort() & 0xffff; // s/km
+        final int calories = buf.getShort() & 0xffff;
+        final int distance = buf.getShort() & 0xffff; // m
+        buf.get(new byte[4]); // ?
+        final int duration = buf.getInt(); // ms
+        buf.get(new byte[99 - 20]); // ?
+
+        activityTrack.addLap(number, hr, pace, calories, distance, duration);
+
+        trace("Consumed lap: number={}, hr={}, pace={}, calories={}, distance={}, duration={}", number, hr, pace, calories, distance, duration);
     }
 
     @Nullable
@@ -341,8 +361,15 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
     }
 
     private void trace(final String format, final Object... args) {
-        final Object[] argsWithDate = ArrayUtils.insert(0, args, SDF.format(new Date(timestamp.getTime() + offset)));
-        LOG.debug("{}: " + format, argsWithDate);
+        final Object[] argsWithDate;
+        if (timestamp != null) {
+            argsWithDate = ArrayUtils.insert(0, args, SDF.format(new Date(timestamp.getTime() + offset)));
+        } else {
+            argsWithDate = ArrayUtils.insert(0, args, "(null)");
+        }
+
+        //noinspection StringConcatenationArgumentToLogCall
+        LOG.trace("{}: " + format, argsWithDate);
     }
 
     private enum Type {
@@ -353,6 +380,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         SPEED(5, 8),
         ALTITUDE(7, 6),
         HEARTRATE(8, 3),
+        LAP(11, 99),
         STRENGTH_SET(15, 34),
         ;
 

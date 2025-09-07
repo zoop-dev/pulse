@@ -2586,6 +2586,7 @@
     <string name="swimStyle">Swim Style</string>
     <string name="laneLength">Lane Length</string>
     <string name="laps">Laps</string>
+    <string name="workout_lap">Lap</string>
     <string name="ascentSeconds">Ascending</string>
     <string name="descentSeconds">Descending</string>
     <string name="flatSeconds">Flat</string>
@@ -2719,6 +2720,7 @@
     <string name="Elevation">Elevation</string>
     <string name="workout_power">Power</string>
     <string name="Speed">Speed</string>
+    <string name="lap_time">Time</string>
     <string name="Activity">Activity</string>
     <string name="Steps">Steps</string>
     <string name="RunningForm">Running Form</string>

@@ -7,30 +7,37 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 
 public class ZeppOsActivityTrack extends ActivityTrack {
     public final List<StrengthSet> strengthSets = new ArrayList<>();
+    public final List<Lap> laps = new ArrayList<>();
 
     public void addStrengthSet(final int reps, final float weightKg) {
         strengthSets.add(new StrengthSet(reps, weightKg));
+    }
+
+    public void addLap(final int number,
+                       final int hr,
+                       final int pace,
+                       final int calories,
+                       final int distance,
+                       final int duration) {
+        laps.add(new Lap(number, hr, pace, calories, distance, duration));
     }
 
     public List<StrengthSet> getStrengthSets() {
         return strengthSets;
     }
 
-    public static class StrengthSet {
-        private final int reps;
-        private final float weightKg;
+    public List<Lap> getLaps() {
+        return laps;
+    }
 
-        public StrengthSet(final int reps, final float weightKg) {
-            this.reps = reps;
-            this.weightKg = weightKg;
-        }
+    public record StrengthSet(int reps, float weightKg) {
+    }
 
-        public int getReps() {
-            return reps;
-        }
-
-        public float getWeightKg() {
-            return weightKg;
-        }
+    public record Lap(int number,
+                      int hr,
+                      int pace,
+                      int calories,
+                      int distance,
+                      int duration) {
     }
 }
