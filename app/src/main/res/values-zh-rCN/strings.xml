@@ -705,7 +705,7 @@
     <string name="pref_display_add_device_fab_on">总是可见</string>
     <string name="pref_display_add_device_fab_off">仅当没有设备添加时可见</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="other">%d 小时</item>
+        <item quantity="other">%1$d:%2$02d 小时</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">若需要查看活动轨迹，请安装一个能查看 GPX 文件的应用。</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 设置</string>
@@ -2731,7 +2731,7 @@
     <string name="cyclingPowerMin">最小骑行功率</string>
     <string name="cyclingPowerAverage">平均骑行功率</string>
     <string name="cyclingPowerMax">最大骑行功率</string>
-    <string name="huawei_trusleep_warning">警告：启用此功能将使所有睡眠在 Gadgetbridge 中显示为浅睡眠！如果您接受，请点击此处。</string>
+    <string name="huawei_trusleep_warning">警告：TruSleep™ 未完全实现。 在某些设备上启用它会导致所有睡眠数据在 Gadgetbrige 中显示为浅睡眠！</string>
     <string name="pref_touch_tone">按键音</string>
     <string name="pref_wearing_tone">穿戴提示音</string>
     <string name="pref_wearing_tone_summary">插入耳机时发出提示音</string>
@@ -3956,8 +3956,8 @@
     <string name="error_message">错误：%s</string>
     <string name="error_deleting_file">删除“%1$s”时出错</string>
     <string name="error_deleting_file_exception">删除时“%1$s”出错：%2$s</string>
-    <string name="bluetooth_multipoint_pairing">多端配对</string>
-    <string name="bluetooth_multipoint">多端</string>
+    <string name="bluetooth_multipoint_pairing">多点配对</string>
+    <string name="bluetooth_multipoint">多点</string>
     <string name="bluetooth_multipoint_pair_new">配对新设备</string>
     <string name="bluetooth_multipoint_no_devices">未找到已配对设备\n\n轻按“配对新设备”去添加设备</string>
     <string name="bluetooth_multipoint_pair_stop">停止配对</string>
@@ -4011,4 +4011,5 @@
     <string name="rotate_screen">旋转屏幕</string>
     <string name="filter_charts">筛选图表</string>
     <string name="recovery_heart_rate">恢复心率</string>
+    <string name="activity_prefs_sleep_duration_minutes">偏好的睡眠持续时间（分钟）</string>
 </resources>
