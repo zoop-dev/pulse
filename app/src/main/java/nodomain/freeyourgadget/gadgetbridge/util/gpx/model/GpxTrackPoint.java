@@ -27,15 +27,23 @@ import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 public class GpxTrackPoint extends GPSCoordinate {
     private final Date time;
     private final int heartRate;
+    private final float speed;
+    private final int cadence;
 
     public GpxTrackPoint(final double longitude, final double latitude, final double altitude, final Date time) {
         this(longitude, latitude, altitude, time, -1);
     }
 
     public GpxTrackPoint(final double longitude, final double latitude, final double altitude, final Date time, final int heartRate) {
+        this(longitude, latitude, altitude, time, heartRate, -1, -1);
+    }
+
+    public GpxTrackPoint(final double longitude, final double latitude, final double altitude, final Date time, final int heartRate, final float speed, final int cadence) {
         super(longitude, latitude, altitude);
         this.time = time;
         this.heartRate = heartRate;
+        this.speed = speed;
+        this.cadence = cadence;
     }
 
     public Date getTime() {
@@ -46,25 +54,34 @@ public class GpxTrackPoint extends GPSCoordinate {
         return heartRate;
     }
 
+    public float getSpeed() {
+        return speed;
+    }
+
+    public int getCadence() {
+        return cadence;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GpxTrackPoint)) return false;
+        if (!(o instanceof GpxTrackPoint that)) return false;
         if (!super.equals(o)) return false;
-        final GpxTrackPoint that = (GpxTrackPoint) o;
         return Objects.equals(time, that.time) &&
-                Objects.equals(heartRate, that.heartRate);
+                Objects.equals(heartRate, that.heartRate) &&
+                Objects.equals(cadence, that.cadence) &&
+                Objects.equals(speed, that.speed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), time, heartRate);
+        return Objects.hash(super.hashCode(), time, heartRate, speed, cadence);
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "ts: " + time.getTime() + ", " + super.toString() + ", heartRate: " + heartRate;
+        return "ts: " + time.getTime() + ", " + super.toString() + ", heartRate: " + heartRate + ", speed: " + speed + ", cadence: " + cadence;
     }
 
     public ActivityPoint toActivityPoint() {
@@ -72,6 +89,8 @@ public class GpxTrackPoint extends GPSCoordinate {
         activityPoint.setTime(time);
         activityPoint.setLocation(this);
         activityPoint.setHeartRate(heartRate);
+        activityPoint.setSpeed(speed);
+        activityPoint.setCadence(cadence);
 
         return activityPoint;
     }
@@ -82,6 +101,8 @@ public class GpxTrackPoint extends GPSCoordinate {
         private double altitude;
         private Date time;
         private int heartRate = -1;
+        private float speed = -1;
+        private int cadence = -1;
 
         public Builder withLongitude(final double longitude) {
             this.longitude = longitude;
@@ -108,8 +129,18 @@ public class GpxTrackPoint extends GPSCoordinate {
             return this;
         }
 
+        public Builder withSpeed(final float speed) {
+            this.speed = speed;
+            return this;
+        }
+
+        public Builder withCadence(final int cadence) {
+            this.cadence = cadence;
+            return this;
+        }
+
         public GpxTrackPoint build() {
-            return new GpxTrackPoint(longitude, latitude, altitude, time, heartRate);
+            return new GpxTrackPoint(longitude, latitude, altitude, time, heartRate, speed, cadence);
         }
     }
 }

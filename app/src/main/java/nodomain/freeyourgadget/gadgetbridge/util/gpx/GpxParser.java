@@ -240,8 +240,14 @@ public class GpxParser {
         while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("TrackPointExtension")) {
             if (parser.getEventType() == XmlPullParser.START_TAG) {
                 switch (parser.getName()) {
+                    case "cad":
+                        trackPointBuilder.withCadence(Integer.parseInt(parseStringContent("cad")));
+                        continue;
                     case "hr":
                         trackPointBuilder.withHeartRate(Integer.parseInt(parseStringContent("hr")));
+                        continue;
+                    case "speed":
+                        trackPointBuilder.withSpeed(Float.parseFloat(parseStringContent("speed")));
                         continue;
                 }
             }
