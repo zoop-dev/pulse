@@ -290,6 +290,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 addGroupContent(entries)
             }
 
+            if (!groupCharts.isEmpty() && entries.isEmpty()) {
+                // Add the initial separator
+                binding.summaryDetails.addView(createSeparator())
+            }
+
             groupCharts.forEach { chart ->
                 addChart(binding.summaryDetails, false, chart, workout.charts)
             }
