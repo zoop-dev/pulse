@@ -879,7 +879,7 @@
     <string name="meters">m</string>
     <string name="flatSeconds">V rovině</string>
     <string name="ascentSeconds">Stoupající</string>
-    <string name="laps">Bazénů</string>
+    <string name="laps">Kol</string>
     <string name="swimStyle">Plavecký styl</string>
     <string name="swolfIndex">SWOLF</string>
     <string name="averageLapPace">Průměrné tempo kola</string>
@@ -4010,4 +4010,6 @@
     <string name="filter_charts">Filtrovat grafy</string>
     <string name="recovery_heart_rate">Tepová frekvence zotavení</string>
     <string name="activity_prefs_sleep_duration_minutes">Preferovaná délka spánku v minutách</string>
+    <string name="workout_lap">Kolo</string>
+    <string name="lap_time">Čas</string>
 </resources>
