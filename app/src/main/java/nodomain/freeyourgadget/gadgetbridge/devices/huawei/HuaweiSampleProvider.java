@@ -333,8 +333,14 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
     protected List<HuaweiActivitySample> getGBActivitySamples(int timestamp_from, int timestamp_to) {
         List<HuaweiActivitySample> processedSamples = new ArrayList<>();
 
-        timestamp_from = adjustTimeSecToMinute(timestamp_from);
-        timestamp_to = adjustTimeSecToMinute(timestamp_to);
+        int adjustedTimestampFrom = adjustTimeSecToMinute(timestamp_from);
+        int adjustedTimestampTo = adjustTimeSecToMinute(timestamp_to);
+
+        timestamp_from = (adjustedTimestampFrom < timestamp_from)?adjustedTimestampFrom + 60:adjustedTimestampFrom;
+        timestamp_to = (adjustedTimestampTo > timestamp_to)?adjustedTimestampTo - 60:adjustedTimestampTo;
+
+        if(timestamp_from > timestamp_to)
+            return processedSamples;
 
         for (int timestamp = timestamp_from; timestamp <= timestamp_to; timestamp += 60) {
             processedSamples.add(createDummySample(timestamp));
@@ -349,9 +355,6 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
 
     @Override
     protected List<HuaweiActivitySample> getGBActivitySamplesHighRes(int timestamp_from, int timestamp_to) {
-        timestamp_from = adjustTimeSecToMinute(timestamp_from);
-        timestamp_to = adjustTimeSecToMinute(timestamp_to);
-
         List<HuaweiActivitySample> processedSamples = getRawOrderedActivitySamples(timestamp_from, timestamp_to);
         addWorkoutSamples(processedSamples, timestamp_from, timestamp_to);
         // Filter out the end markers before returning

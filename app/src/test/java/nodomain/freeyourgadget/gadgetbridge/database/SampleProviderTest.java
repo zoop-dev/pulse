@@ -202,7 +202,10 @@ public class SampleProviderTest extends TestBase {
 
         samples = sampleProvider.getAllActivitySamples(100, 150);
         assertEquals(1, samples.size());
-        assertEquals(100, samples.get(0).getTimestamp());
+        assertEquals(120, samples.get(0).getTimestamp()); //Time is adjusted to whole minute, so we have only one sample for requested interval.
+
+        samples = sampleProvider.getAllActivitySamples(100, 110);
+        assertEquals(0, samples.size()); // no samples, time is adjusted to minute but interval is not
 
         samples = sampleProvider.getAllActivitySamplesHighRes(100, 115);
         assertEquals(2, samples.size());
