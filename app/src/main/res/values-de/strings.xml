@@ -831,7 +831,7 @@
     <string name="permission_granting_mandatory">Alle Berechtigungen sind notwendig und es kann zu Problemen führen, wenn sie nicht genehmigt werden</string>
     <string name="menuitem_stress">Stress</string>
     <string name="menuitem_cycles">Zyklus-Tracking</string>
-    <string name="error_background_service_reason">Starten des Hintergrund-Service gescheitert wegen einer Ausnahme - klicken Sie hier für weitere Informationen.\n\nFehler:</string>
+    <string name="error_background_service_reason">Starten des Hintergrund-Service gescheitert wegen einer Ausnahme - klicke hier für weitere Informationen.\n\nFehler:</string>
     <string name="error_background_service_reason_truncated">Hintergrunddienst konnte nicht gestartet werden, wegen…</string>
     <string name="error_background_service">Start des Hintergrunddienstes fehlgeschlagen</string>
     <string name="menuitem_breathing">Atemübungen</string>
@@ -2624,7 +2624,7 @@
     <string name="pref_dashboard_widget_today_upside_down_summary">Im 24-Stunden-Modus zeichne Mitternacht unten und Mittag oben im Diagramm</string>
     <string name="pref_sleepasandroid_device_title">Auszuwählendes Gerät</string>
     <string name="pref_sleepasandroid_device_summary">Gerät als Sleep as Android-Datenanbieter auswählen</string>
-    <string name="pref_sleepasandroid_features_summary">Die Unterstützung ist von Gerät zu Gerät unterschiedlich</string>
+    <string name="pref_sleepasandroid_features_summary">Geräteabhängige Unterstützung</string>
     <string name="pref_sleepasandroid_feat_alarms">Alarme</string>
     <string name="alarm_slot_reset">Der Alarm-Platz wurde auf Standard eingestellt</string>
     <string name="pref_sleepasandroid_feat_notifications">Benachrichtigungen</string>
@@ -3153,7 +3153,7 @@
     <string name="activity_type_obstacle_race">Hindernislauf</string>
     <string name="activity_type_body_combat">Körperkampf</string>
     <string name="activity_type_orienteering">Orientierungslauf</string>
-    <string name="menuitem_calories_segmented">Calories (segmentiert)</string>
+    <string name="menuitem_calories_segmented">Kalorien (segmentiert)</string>
     <string name="menuitem_calories_active_goal">Kalorienziel (aktiv)</string>
     <string name="pref_header_deprecated_functionalities_warning">Die folgenden Funktionalitäten sind veraltet und werden in Kürze aus der Software entfernt.\nWenn du eine der folgenden Einstellungen aktivieren möchtest, wende dich bitte an das Projektteam.</string>
     <string name="permission_post_notification_title">Benachrichtigungen senden</string>
@@ -3562,7 +3562,7 @@
     <string name="maps">Karten</string>
     <string name="maps_settings">Karten-Einstellungen</string>
     <string name="maps_download_title">Karten herunterladen</string>
-    <string name="maps_download_summary">Klicken Sie hier, um die Kartendateien herunterzuladen. Sie müssen danach in dem unten ausgewählten Ordner verschoben werden.</string>
+    <string name="maps_download_summary">Klicke hier, um die Kartendateien herunterzuladen. Diese müssen danach in dem unten ausgewählten Ordner verschoben werden.</string>
     <string name="maps_track_color_title">Streckenfarbe</string>
     <string name="weather_condition_freezing_rain">Gefrierender Regen</string>
     <string name="audio_recordings">Audioaufnahmen</string>
@@ -3840,7 +3840,7 @@
     <string name="notifications_app_icon_uploading_limit_reached">Das Limit für das Hochladen von App-Symbolen wurde erreicht.</string>
     <string name="track_name_required">Streckenname darf nicht leer sein</string>
     <string name="first_start_permissions_do_not_ask_again">Nicht erneut fragen</string>
-    <string name="pref_check_permission_show_list">Berechtigungszustand anzeigen</string>
+    <string name="pref_check_permission_show_list">Berechtigungsstatus anzeigen</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Wenn diese Berechtigung nicht gegeben werden können Probleme auftreten. Du kannst diesen Bildschirm von den Einstellungen aus wieder aufrufen.</string>
     <string name="sound_and_vibration">Ton + Vibration</string>
     <string name="pref_title_screen_on_on_notifications_timeout">Benachrichtigungsanzeigedauer</string>
