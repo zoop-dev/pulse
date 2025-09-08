@@ -4031,4 +4031,6 @@
     <string name="running_step_speed_loss_percentage">Spadek prędkości kroku %</string>
     <string name="recovery_heart_rate">Tętno regeneracyjne</string>
     <string name="activity_prefs_sleep_duration_minutes">Preferowany czas spania w minutach</string>
+    <string name="workout_lap">Okrążenie</string>
+    <string name="lap_time">Czas</string>
 </resources>
