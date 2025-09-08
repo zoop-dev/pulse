@@ -155,7 +155,7 @@
     <string name="pref_title_pebble_forcele">Geef altijd de voorkeur aan BLE</string>
     <string name="pref_summary_pebble_forcele">Gebruik experimentele Pebble LE-ondersteuning voor alle Pebbels in plaats van BT classic. Dit vereist het eerst paren met een niet LE-versie en daarna met een Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU limiet</string>
-    <string name="pref_summary_pebble_mtu_limit">Als uw Pebble 2/Pebble LE niet werkt zoals verwacht, probeer deze instelling om de MTU te limiteren (geldig bereik: 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Als uw Pebble 2/Pebble LE niet werkt zoals verwacht, probeer deze instelling om de MTU te limiteren (geldig bereik: 20 – 512)</string>
     <string name="pref_title_pebble_enable_applogs">Logging van de horloge app inschakelen</string>
     <string name="pref_summary_pebble_enable_applogs">Zorgt ervoor dat logs van horloge-apps gelogd zullen worden door Gadgetbridge (opnieuw verbinden vereist)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Vroegtijdige ACK PebbleKit</string>
@@ -279,7 +279,7 @@
     <string name="chart_no_data_synchronize">Geen data. Apparaat synchroniseren\?</string>
     <string name="user_feedback_miband_activity_data_transfer">Klaar om %1$s data over te dragen van %2$s</string>
     <string name="miband_prefs_fitness_goal">Dagelijkse stappen doel</string>
-    <string name="dbaccess_error_executing">Fout bij het uitvoeren van \'%1$s\'</string>
+    <string name="dbaccess_error_executing">Fout bij het uitvoeren van %1$s</string>
     <string name="controlcenter_start_activitymonitor">Uw activiteit</string>
     <string name="cannot_connect">Kan niet verbinden: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Kan geen handler vinden om dit bestand te installeren.</string>
@@ -395,7 +395,7 @@
     <string name="charts_legend_heartrate">Hartslag</string>
     <string name="live_activity_heart_rate">Hartslag</string>
     <string name="pref_title_pebble_health_store_raw">Bewaar onbewerkte record in de database</string>
-    <string name="pref_summary_pebble_health_store_raw">Slaat de data op \"zoals ze is\", dit vergroot het gebruik van de database om latere interpretatie mogelijk te maken.</string>
+    <string name="pref_summary_pebble_health_store_raw">Slaat de data op zoals het binnenkomt, dit vergroot het gebruik van de database om latere interpretatie mogelijk te maken.</string>
     <string name="action_db_management">Gegevensbeheer</string>
     <string name="title_activity_db_management">Gegevensbeheer</string>
     <string name="activity_db_management_import_export_explanation">De export-/importbewerkingen gebruiken het volgende pad (zie hieronder) naar een map op uw apparaat. Deze map is toegankelijk voor andere Android-apps en uw computer. Houd er rekening mee dat deze map en alle bestanden erin, worden verwijderd als u Gadgetbridge verwijdert. De gegevens omvatten:
@@ -521,7 +521,7 @@
     <string name="horizontal">Horizontaal</string>
     <string name="vertical">Verticaal</string>
     <string name="watch9_pairing_tap_hint">Wanneer het horloge trilt, schud het of druk op de knop.</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Je hebt niet geslapen</string>
     <string name="mi3_prefs_band_screen_unlock">Band-scherm vrijgeven</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Veeg omhoog om het scherm vrij te geven</string>
@@ -653,7 +653,7 @@
     <string name="title_activity_device_specific_settings">Apparaatspecifieke instellingen</string>
     <string name="pref_title_authkey">Authenticatiesleutel</string>
     <string name="pref_summary_authkey">Wijzig de authenticatiesleutel in een algemene sleutel op al uw Android-apparaten waarmee u verbinding wilt maken. De vorige standaardsleutel voor alle apparaten is 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2. \n \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand. \n \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. \n \nGA VERDER OP EIGEN RISICO! \n \nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM \"Amazfit Band 2\" IS</string>
+    <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2. \n \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand. \n \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. \n \nGA VERDER OP EIGEN RISICO! \n \nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM Amazfit Band 2 IS</string>
     <string name="dutch">Nederlands</string>
     <string name="turkish">Turks</string>
     <string name="ukrainian">Oekraïens</string>
@@ -704,8 +704,8 @@
     <string name="widget_20_minutes">20 minuten</string>
     <string name="widget_1_hour">1 uur</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d uur</item>
-        <item quantity="other">%d uren</item>
+        <item quantity="one">%1$d:%2$02d uur</item>
+        <item quantity="other">%1$d:%2$02d uren</item>
     </plurals>
     <string name="pref_display_add_device_fab">Verbind nieuw apparaat knop</string>
     <string name="pref_display_add_device_fab_on">Altijd zichtbaar</string>
@@ -713,7 +713,7 @@
     <string name="activity_error_no_app_for_gpx">Om de route van de activiteit te zien: installeer een app die GPX bestanden kan tonen.</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 instellingen</string>
     <string name="prefs_find_phone">Vind telefoon</string>
-    <string name="prefs_enable_find_phone">\\\'Vind telefoon\\\' inschakelen</string>
+    <string name="prefs_enable_find_phone">Vind telefoon inschakelen</string>
     <string name="prefs_find_phone_summary">Gebruik je band om de beltoon van je telefoon af te spelen.</string>
     <string name="prefs_find_phone_duration">Belduur in seconden</string>
     <string name="maximum_duration">Duur</string>
@@ -855,12 +855,12 @@
     <string name="about_description_generic">Cloudloze vrije vervanging voor de gesloten Android-applicaties van gadgetfabrikanten.</string>
     <string name="about_activity_title_generic">Over Gadgetbridge</string>
     <string name="about_title">Over</string>
-    <string name="pref_title_weather_summary">Gebruikt voor de LineageOS-weeraanbieder, andere Android versies moeten een app zoals \"Weather notification\" gebruiken. Meer informatie is te vinden in de Gadgetbridge wiki.</string>
+    <string name="pref_title_weather_summary">Gebruikt voor de LineageOS-weeraanbieder, andere Android versies moeten een app zoals Weather notification gebruiken. Meer informatie is te vinden in de Gadgetbridge wiki.</string>
     <string name="menuitem_worldclock">Wereld Klok</string>
     <string name="error_background_service_reason_truncated">Het starten van de achtergrondservice is mislukt omdat…</string>
     <string name="error_background_service_reason">Het starten van de achtergrondservice is mislukt door een probleem. Klik hier voor meer informatie.\n\nFout:</string>
     <string name="error_background_service">Kan de achtergrondservice niet starten</string>
-    <string name="error_version_check_extreme_caution">LET OP: Fout bij het controleren van versie-informatie! Je moet niet doorgaan! Zag versienaam \"%s\"</string>
+    <string name="error_version_check_extreme_caution">LET OP: Fout bij het controleren van versie-informatie! Ga niet verder! Zag versienaam %s</string>
     <string name="permission_granting_mandatory">Al deze toestemmingen zijn vereist en er kan instabiliteit ontstaan als ze niet worden verleend</string>
     <string name="menuitem_stress">Spanning</string>
     <string name="menuitem_cycles">Cyclus volgen</string>
@@ -1052,8 +1052,8 @@
     <string name="averageStrokesPerSecond">Gemiddelde slagen</string>
     <string name="averageStrokeDistance">Gemiddelde slaglengte</string>
     <string name="averageStride">Gemiddelde paslengte</string>
-    <string name="averageKMPaceSeconds">Tempo</string>
-    <string name="averageHR">Hartslag</string>
+    <string name="averageKMPaceSeconds">Gemiddelde tempo</string>
+    <string name="averageHR">Gemiddelde hartslag</string>
     <string name="totalStride">Totaal aantal stappen</string>
     <string name="maxPace">Snelste tempo</string>
     <string name="minPace">Langzaamste tempo</string>
@@ -1490,7 +1490,7 @@
     <string name="pref_screen_vibration_patterns_title">Trillingspatronen</string>
     <string name="pref_screen_vibration_patterns_summary">Configureer de trillingspatronen voor verschillende meldingen</string>
     <string name="pref_world_clocks_summary">Klokken configureren voor andere tijdzones</string>
-    <string name="world_clock_delete_confirm_title">Verwijder \'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">Verwijder %1$s</string>
     <string name="world_clock_delete_confirm_description">Weet je zeker dat je de wereldklok wilt verwijderen\?</string>
     <string name="world_clock_no_free_slots_title">Geen vrije plekken</string>
     <string name="world_clock_no_free_slots_description">Het apparaat heeft geen vrije slots voor wereldklokken (totaal aantal slots: %1$s)</string>
@@ -1593,15 +1593,15 @@
     <string name="pref_explanation_authkey">Sommige apparaten hebben een speciale koppelingssleutel nodig voor de allereerste initialisatie van het apparaat. Tik hier voor meer details op de wiki.</string>
     <string name="quick_alarm_description">Alarm van widget</string>
     <string name="controlcenter_set_parent_folder">Map instellen</string>
-    <string name="permission_location">%1$s heeft toegang tot je locatie op de achtergrond nodig om verbonden te blijven met je horloge als het scherm is uitgeschakeld. \n \nKies \'%2$s\' in het volgende scherm, tik darna op \'Terug\' om terug te gaan naar %1$s.</string>
+    <string name="permission_location">%1$s heeft toegang tot je locatie op de achtergrond nodig om verbonden te blijven met je horloge als het scherm is uitgeschakeld. \n \nKies %2$s in het volgende scherm, tik darna op Terug om terug te gaan naar %1$s.</string>
     <string name="info_connected_count">%d apparaten verbonden</string>
     <string name="autoconnect_from_device_summary">Breng een verbinding tot stand wanneer de verbinding tot stand wordt gebracht door een apparaat, zoals een hoofdtelefoon</string>
     <string name="pref_workout_start_on_phone_title">Fitness-app tracking</string>
     <string name="pref_workout_send_gps_title">GPS verzenden tijdens training</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">GPS-locatie verzenden naar %1$d-apparaten</string>
-    <string name="permission_notification_policy_access">%1$s heeft toegang nodig tot de instellingen voor Niet storen om ze op je horloge te respecteren wanneer het scherm van je telefoon is uitgeschakeld. \n \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Niet storen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
-    <string name="permission_notification_listener">%1$s heeft toegang tot meldingen nodig om ze op je horloge weer te geven wanneer het scherm van je telefoon is uitgeschakeld. \n \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Toegang tot meldingen toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s heeft toegang nodig tot de instellingen voor Niet storen om ze op je horloge te respecteren wanneer het scherm van je telefoon is uitgeschakeld. \n \nTik op %2$s en vervolgens op %1$s en schakel Niet storen toestaan in, tik vervolgens op Terug om terug te keren naar %1$s.</string>
+    <string name="permission_notification_listener">%1$s heeft toegang tot meldingen nodig om ze op je horloge weer te geven wanneer het scherm van je telefoon is uitgeschakeld. \n \nTik op %2$s en vervolgens op %1$s en schakel Toegang tot meldingen toestaan in, tik vervolgens op Terug om terug te keren naar %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">GPS-locatie Listener Stop</string>
     <string name="pref_title_banglejs_webview_url">URL app-lader</string>
     <string name="pref_summary_banglejs_webview_url">Als u een aangepaste app-lader wilt, plaatst u hier uw https://…/android.html URL. Laat anders leeg voor https://banglejs.com/apps</string>
@@ -1623,7 +1623,7 @@
     <string name="lithuanian">Litouws</string>
     <string name="persian">Perzisch</string>
     <string name="notification_channel_gps">GPS-tracking</string>
-    <string name="pref_explanation_authkey_new_protocol">Als u het bericht \"Update de app naar de nieuwste versie\" op de band krijgt, controleer de bovenstaande optie \"New Auth Protocol\". Tik hier voor meer details op de wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Als u het bericht Update de app naar de nieuwste versie op de band krijgt, controleer de bovenstaande optie New Auth Protocol. Tik hier voor meer details op de wiki.</string>
     <string name="prefs_password_6_digits_0_to_9_summary">Het wachtwoord moet uit 6 cijfers bestaan, met alleen cijfers</string>
     <string name="scandinavian">Scandinavisch</string>
     <string name="ukranian">Oekraïens</string>
@@ -1748,10 +1748,10 @@
     <string name="menuitem_workout_history">Trainingsgeschiedenis</string>
     <string name="menuitem_female_health">Vrouwelijke gezondheid</string>
     <string name="menuitem_workout_status">Trainingsstatus</string>
-    <string name="permission_display_over_other_apps">%1$s heeft toestemming nodig om boven andere apps te worden weergegeven om Bangle.js-horloges activiteiten te laten starten via intents wanneer %1$s op de achtergrond is. \n \nDit kan worden gebruikt om een muziek-app te starten en een nummer af te spelen, en vele andere dingen. \n \nTik op \'%2$s\' en vervolgens op \'%1$s\' en schakel \'Weergave over andere apps toestaan\' in, tik vervolgens op \'Terug\' om terug te keren naar %1$s. \n \nOm te voorkomen dat %1$s om machtigingen vraagt, gaat u naar \'Instellingen\' en schakelt u \'Controleer machtigingsstatus\' uit. \n \nZorg ervoor dat u %1$s de machtigingen verleent die nodig zijn om te functioneren zoals u verwacht.</string>
+    <string name="permission_display_over_other_apps">%1$s heeft toestemming nodig om boven andere apps te worden weergegeven om Bangle.js-horloges activiteiten te laten starten via intents wanneer %1$s op de achtergrond is. \n \nDit kan worden gebruikt om een muziek-app te starten en een nummer af te spelen, en vele andere dingen. \n \nTik op %2$s en vervolgens op %1$s en schakel Weergave over andere apps toestaan in, tik vervolgens op Terug om terug te keren naar %1$s. \n \nOm te voorkomen dat %1$s om machtigingen vraagt, gaat u naar Instellingen en schakelt u Controleer machtigingsstatus uit. \n \nZorg ervoor dat u %1$s de machtigingen verleent die nodig zijn om te functioneren zoals u verwacht.</string>
     <string name="pref_header_spo2">Bloedzuurstof</string>
     <string name="pref_screen_brightness">Schermhelderheid</string>
-    <string name="pref_summary_screen_on_on_notifications">Schakel het scherm van de band in wanneer er een melding binnenkomt</string>
+    <string name="pref_summary_screen_on_on_notifications">Schakel het scherm van het apparaat in wanneer er een melding binnenkomt</string>
     <string name="pref_title_screen_on_on_notifications">Scherm aan bij meldingen</string>
     <string name="seconds_12">12 seconden</string>
     <string name="seconds_14">14 seconden</string>
@@ -2020,7 +2020,7 @@
     <string name="pref_pair_bluetooth_calls_help_title">Bluetooth-oproepen ontvangen</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Om bluetooth-oproepen te ontvangen, moet u uw telefoon koppelen met het tweede bluetooth-apparaat van het horloge.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tik op de onderstaande knop om het koppelingsproces te starten.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Ga naar de Bluetooth-instellingen van je telefoon en koppel met het nieuwe apparaat dat verschijnt (met soortgelijke naam als je huidige horloge, maar met een achtervoegsel, bijv. \"Amazfit GTR 4 - AFC8\").</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Ga naar de Bluetooth-instellingen van je telefoon en koppel met het nieuwe apparaat dat verschijnt (met soortgelijke naam als je huidige horloge, maar met een achtervoegsel, bijv. Amazfit GTR 4 - AFC8).</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Schakel de instelling voor Bluetooth-oproepen hieronder in.</string>
     <string name="pref_pair_bluetooth_calls_help_warning">WAARSCHUWING: Als u Bluetooth-oproepen inschakelt zonder te koppelen met het tweede bluetooth-apparaat, werken oproepmeldingen mogelijk niet zoals verwacht.</string>
     <string name="sony_button_mode_help_title">Knopmodi - Help</string>
@@ -2078,7 +2078,7 @@
     <string name="title_activity_set_contacts">Contacten configureren</string>
     <string name="pref_contacts_title">Contactpersonen</string>
     <string name="pref_contacts_summary">Configureer contactpersonen op het horloge</string>
-    <string name="contact_delete_confirm_description">Weet u zeker dat u \'%1$s\' wilt verwijderen?</string>
+    <string name="contact_delete_confirm_description">Weet u zeker dat u %1$s wilt verwijderen?</string>
     <string name="contact_delete_confirm_title">Contactpersoon verwijderen</string>
     <string name="title_activity_contact_details">Contactpersoondetails</string>
     <string name="contact_name">Naam</string>
@@ -2184,7 +2184,7 @@
     <string name="error_no_bluetooth_scan">Bluetooth-scantoegang moet worden verleend en ingeschakeld om het scannen correct te laten werken</string>
     <string name="activity_type_golf">Golfen</string>
     <string name="withings_calibration_text_minutes">Gebruik nu de draaiknop om de minutenwijzer op de 12 uit te lijnen.</string>
-    <string name="permission_request">Met %1$s kunt u berichten en andere gegevens van Android naar uw apparaat verzenden. Om dit te doen, heeft het toestemming nodig om toegang te krijgen tot die gegevens, zonder deze toestemmingen werkt het mogelijk niet goed. \n \nU krijgt nu enkele Android-dialoogvensters te zien waarin om die machtigingen wordt gevraagd. \n \nTik op \'%2$s\' om door te gaan.</string>
+    <string name="permission_request">Met %1$s kunt u berichten en andere gegevens van Android naar uw apparaat verzenden. Om dit te doen, heeft het toestemming nodig om toegang te krijgen tot die gegevens, zonder deze toestemmingen werkt het mogelijk niet goed. \n \nU krijgt nu enkele Android-dialoogvensters te zien waarin om die machtigingen wordt gevraagd. \n \nTik op %2$s om door te gaan.</string>
     <string name="withings_calibration_text_hours">Gebruik de onderstaande draaiknop om de uurwijzer op de 12 uit te lijnen.</string>
     <string name="pref_theme_dynamic">Dynamische kleuren</string>
     <string name="pref_canned_message">Bericht</string>
@@ -2220,7 +2220,7 @@
     <string name="button_open_menu_companion">Open begeleidende menu-app</string>
     <string name="button_reset_menu_structure">Reset menustructuur</string>
     <string name="info_menu_structure_removed">Menustructuur verwijderd</string>
-    <string name="error_menu_companion_not_installed">\'HR Menu Companion\' is waarschijnlijk niet geïnstalleerd</string>
+    <string name="error_menu_companion_not_installed">HR Menu Companion is waarschijnlijk niet geïnstalleerd</string>
     <string name="info_menu_structure_contents">Menustructuur: %s</string>
     <string name="spanish_es">Spaans (Spanje)</string>
     <string name="spanish_us">Spaans (Verenigde Staten)</string>
@@ -2331,7 +2331,7 @@
     <string name="zepp_os_watchface_the_ultima">Het uiterste</string>
     <string name="zepp_os_watchface_city_of_speed">Stad van snelheid</string>
     <string name="menuitem_headphone">Koptelefoon</string>
-    <string name="femometer_measurement_mode_normal">Normaal (60s-90s)</string>
+    <string name="femometer_measurement_mode_normal">Normaal (60s – 90s)</string>
     <string name="call_rejection_method_reject">Afwijzen</string>
     <string name="zepp_os_watchface_free_combination">Vrije combinatie</string>
     <string name="menuitem_body_composition">Lichaamssamenstelling</string>
@@ -2417,7 +2417,7 @@
     <string name="widget_screen_no_free_slots_description">Het apparaat heeft geen vrije plekken voor widget-schermen (totaal aantal plekken: %1$s)</string>
     <string name="widget_unknown_workout">Onbekende training - %s</string>
     <string name="widget_move_up">Omhoog</string>
-    <string name="widget_screen_delete_confirm_description">Weet u zeker dat u \'%1$s\' wilt verwijderen?</string>
+    <string name="widget_screen_delete_confirm_description">Weet u zeker dat u %1$s wilt verwijderen?</string>
     <string name="clap_hands_to_wakeup_device">Klap in handen voor scherm aan</string>"
     <string name="activity_type_trekking">Wandeltocht</string>
     <string name="widget_layout_two">2 widgets</string>
@@ -2451,7 +2451,7 @@
     <string name="prefs_active_noise_cancelling_light">Lichte actieve geluidsonderdrukking</string>
     <string name="prefs_active_noise_cancelling_transparency">Transparantie</string>
     <string name="huawei_alarm_smart_description">Verwijder het vinkje niet bij slim wakker worden.</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
     <string name="huawei_trusleep_summary_light">Verbeterde slaapmonitoring</string>
     <string name="pref_enable_call_accept">Telefoontjes accepteren inschakelen</string>
     <string name="pref_enable_call_accept_summary">Het op het apparaat accepteren van binnenkomende telefoongespreken inschakelen</string>
@@ -2463,7 +2463,7 @@
     <string name="prefs_disconnect_notification_summary">Melding op het apparaat bij verbroken Bluetooth-verbinding.</string>
     <string name="prefs_workmode">Werkmodus</string>
     <string name="huawei_alarm_event_description">Plaats geen vinkje bij slim wakker worden.</string>
-    <string name="huawei_trusleep_summary">Monitor uw slaapkwaliteit en adempatroon in realtime. \nAnalyseer uw slaappatronen en diagnosticeer 6 types slaapproblemen.</string>
+    <string name="huawei_trusleep_summary">Monitor uw slaapkwaliteit in realtime.</string>
     <string name="pref_force_options">Opties forceren</string>
     <string name="pref_force_options_summary">Sommige apparaten geven onterecht aan sommige opties niet te ondersteunen. Deze instellingen gebruikt worden om ze alsnog in te schakelen.
 \nGEBRUIK OP EIGEN RISICO
@@ -2661,7 +2661,7 @@
     <string name="pref_dashboard_widget_show_legend_summary">Toon een legenda onder de widget om de kleuren uit te leggen</string>
     <string name="pref_dashboard_select_devices_summary">Combineer activiteitsgegevens van specifieke apparaten voor het dashboard</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">Interval hartslagmeting</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">Het aantal minuten dat het diagram \'gedragen\' toont na elke succesvolle hartslagmeting</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Het aantal minuten dat het diagram gedragen toont na elke succesvolle hartslagmeting</string>
     <string name="pref_auto_reply_calls_summary">De telefoon neemt binnenkomende telefoongesprekken automatisch op</string>
     <string name="pref_auto_reply_calls_title">Binnenkomende gesprekken automatisch opnemen</string>
     <string name="dashboard_settings">Dashboard-instellingen</string>
@@ -2733,7 +2733,7 @@
     <string name="serbian">Servisch</string>
     <string name="pref_summary_huawei_account">Huawei-account dat gebruikt is tijdens het bindingsproces. Het hier instellen staat toe dat het apparaat gebonden kan worden zonder reset naar fabrieksinstellingen.</string>
     <string name="watchface_resolution_doesnt_match">Resolutie van wijzerplaat komt niet overeen met het scherm van het apparaat. Wijzerplaat is %1$s en scherm is %2$s</string>
-    <string name="huawei_trusleep_warning">Waarschuwing: wanneer u dit inschakelt zal alle slaap getoond worden als lichte slaap in Gadgetbridge. Klik hier om dit te accepteren.</string>
+    <string name="huawei_trusleep_warning">Waarschuwing: TruSleep™ is niet volledig geïmplementeerd. Op sommige apparaten zal het inschakelen van deze optie ervoor zorgen dat alle slaap als lichte slaap getoond wordt!</string>
     <string name="pref_summary_garmin_default_reply_suffix">Wordt toegevoegd aanvullend aan de bestaande toevoegingen in Gadgetbridge</string>
     <string name="pref_title_garmin_default_reply_suffix">Vaste toevoeging aan antwoord</string>
     <string name="device_name_cycling_sensor">Fietssensor</string>
@@ -2776,7 +2776,7 @@
     <string name="toast_camera_support_required">Camera-ondersteuning is vereist voor deze functie.</string>
     <string name="no_folder_selected">Geen directory geselecteerd</string>
     <string name="garmin_agps_url_i">AGPS %1$d URL</string>
-    <string name="pref_garmin_agps_help">De onderstaande lijst bevat alle URL\'s die door het horloge opgevraagd worden voor AGPS-updates. U kunt een bestand van de telefoon selecteren dat naar het horloge wordt gestuurd wanneer het een update opvraagt.</string>
+    <string name="pref_garmin_agps_help">De onderstaande lijst bevat alle URL\'s die door het horloge opgevraagd worden voor AGPS-updates. U kunt een bestand van de telefoon selecteren dat naar het horloge wordt gestuurd wanneer het een update opvraagt.\n\nSlechts één van de bestanden hoeft ingesteld te worden.</string>
     <string name="none">Geen</string>
     <string name="intent_api_broadcast_activity_sync_title">Stuur intent na synchronisatie</string>
     <string name="intent_api_broadcast_activity_sync_summary">Stuur een broadcast intent zodra de activiteitssynchronisatie van een apparaat is voltooid</string>
@@ -2901,7 +2901,7 @@
     <string name="abstract_chart_fragment_kind_awake_sleep">Wakker</string>
     <string name="hrv_status_seven_days_avg_long">7-dagengemiddelde</string>
     <string name="hrv_status_unit">%1$d ms</string>
-    <string name="hrv_status_baseline">%1$d-%2$d ms</string>
+    <string name="hrv_status_baseline">%1$d – %2$d ms</string>
     <string name="hrv_status_baseline_label">Basiswaarde</string>
     <string name="hrv_status_last_night_highest_5">Afgelopen nacht 5-minutengemiddelde</string>
     <string name="activity_type_indoor_track">Binnenbaan</string>
@@ -3183,13 +3183,13 @@
     <string name="mijia_lywsd_comfort_upper">Maximum</string>
     <string name="mijia_lywsd_comfort_lower">Minimum</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
-    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="mijia_lywsd_comfort_level_summary">Stel de temperatuur- en luchtvochtigheidslimieten in voor de weergegeven emoji</string>
     <string name="mijia_lywsd_comfort_level_title">Comfortniveau</string>
     <string name="mijia_lywsd_comfort_temperature_title">Temperatuur (°C)</string>
-    <string name="mijia_lywsd_comfort_temperature_summary">Aangeraden bereik: 19 - 27</string>
+    <string name="mijia_lywsd_comfort_temperature_summary">Aangeraden bereik: 19 – 27</string>
     <string name="mijia_lywsd_comfort_humidity_title">Luchtvochtigheid (%)</string>
-    <string name="mijia_lywsd_comfort_humidity_summary">Aangeraden bereik: 20 - 85</string>
+    <string name="mijia_lywsd_comfort_humidity_summary">Aangeraden bereik: 20 – 85</string>
     <string name="busy_task_fetch_hrv_data">HRV-gegevens ophalen</string>
     <string name="pref_dnd_follow_phone_title">Volg niet-storenstand</string>
     <string name="pref_dnd_follow_phone_summary">Wanneer \"niet storen\" wordt in- of uitgeschakeld op de telefoon, verander de instelling op het apparaat mee</string>
@@ -3209,7 +3209,7 @@
     <string name="idasen_control_button_sit">Zitten</string>
     <string name="idasen_control_button_stand">Staan</string>
     <string name="idasen_pref_mid_height">Middenpositie (in centimeters)</string>
-    <string name="idasen_pref_value_warning">De waarde moet tussen 62 en 126 cm zijn</string>
+    <string name="idasen_pref_value_warning">De waarde moet tussen 62 – 126 cm zijn</string>
     <string name="idasen_pref_sit_height">Zitpositie (in centimeters)</string>
     <string name="idasen_pref_stand_height">Stapositie (in centimeters)</string>
     <string name="music_upload_info">U staat op het punt om het volgende muziekbestand te uploaden:\n\n%1$s\nTitel: %2$s\nAlbum: %3$s\n</string>
@@ -3254,7 +3254,7 @@
     <string name="pref_music_management_title">Muziek beheren</string>
     <string name="music_delete_from_playlist">Van playlist verwijderen</string>
     <string name="first_start_overview_title">Overzicht</string>
-    <string name="music_delete_multiple_confirm_description">Weet u zeker dat u \'%1$d\' nummers wilt verwijderen?</string>
+    <string name="music_delete_multiple_confirm_description">Weet u zeker dat u %1$d nummers wilt verwijderen?</string>
     <string name="music_multiselect_limit">Limiet bereikt voor het selecteren van meer dan een item</string>
     <string name="first_start_intro_welcome_to">Welkom bij</string>
     <string name="garmin_intensity_minutes">Minuten intensiteit</string>
@@ -3303,7 +3303,7 @@
     <string name="redmi_buds_5_pro_equalizer_band_8k">8 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_12k">12 kHz</string>
     <string name="pref_music_management_summary">Muziek beheren op de horloge</string>
-    <string name="music_delete_confirm_description">Weet u zeker dat u \'%1$s\' wilt verwijderen?</string>
+    <string name="music_delete_confirm_description">Weet u zeker dat u %1$s wilt verwijderen?</string>
     <string name="music_add_to_playlist">Aan playlist toevoegen</string>
     <string name="first_start_welcome_title">Welkom</string>
     <string name="music_huawei_device_info">Ondersteunde formaten: %1$s\nOpslag horloge: %2$d MB</string>
@@ -3472,8 +3472,8 @@
     <string name="pref_spo_low_alert">Melding lage SpO2</string>
     <string name="pref_import_activity_files_title">Importeer activiteitsbestanden</string>
     <string name="cycling">Fietsen</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
     <string name="unit_rpm">rpm</string>
     <string name="unit_millimeter">mm</string>
     <string name="unit_watt">Watt</string>
@@ -3498,7 +3498,7 @@
     <string name="enhanced">Verbeterd</string>
     <string name="earfun_anc_mode_balanced">Gebalanceerd</string>
     <string name="earfun_tap_action_noise_control_normal_wind">Ruisonderdrukking (normaal, windgeluid)</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="earfun_anc_mode_ai_environment_adaptive">AI omgevingsaanpassing</string>
     <string name="zepp_os_watchface_vital_orange">Vitaal oranje</string>
     <string name="dual_device_mode_title">Twee-apparaten-stand</string>
@@ -3628,7 +3628,7 @@
     <string name="aqi_level_fair">acceptabel</string>
     <string name="aqi_level_poor">slecht</string>
     <string name="prefs_active_noise_cancelling_level_comfort">Comfort</string>
-    <string name="earfun_reboot_confirm_message">Na het toepassen van deze instelling zal het apparaat herstarten. Wanneer het weer beschikbaar is, ga naar het \'Apparaten\'-scherm en maak opnieuw verbinding.</string>
+    <string name="earfun_reboot_confirm_message">Na het toepassen van deze instelling zal het apparaat herstarten. Wanneer het weer beschikbaar is, ga naar het Apparaten-scherm en maak opnieuw verbinding.</string>
     <string name="earfun_low_latency_mode_hint">De modus voor weinig vertraging beperkt de vertraging van het geluid door een kleinere buffer te gebruiken. Dit kan soms zorgen voor een minder stabiele verbinding.</string>
     <string name="earfun_connect_two_devices">Verbinding met twee apparaten</string>
     <string name="earfun_microphone_mode">Microfoonmodus</string>
@@ -3823,7 +3823,7 @@
     <string name="interval_6_hour">elke 6 uur</string>
     <string name="fwinstaller_file_not_compatible_to_device">Het geselecteerde bestand is niet compatibel met het apparaat</string>
     <string name="fwinstaller_no_compatible_device_found">Geen compatibel apparaat gevonden om %1s te installeren</string>
-    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Schakel inactiviteitswaarschuwingen uit tijdens de lunchpauze (12:00 - 14:00)</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Schakel inactiviteitswaarschuwingen uit tijdens de lunchpauze (12:00 – 14:00)</string>
     <string name="activity_type_free_diving">Vrijduiken</string>
     <string name="activity_type_apnea_training">Apneu-training</string>
     <string name="activity_type_apnea_test">Apneu-test</string>
