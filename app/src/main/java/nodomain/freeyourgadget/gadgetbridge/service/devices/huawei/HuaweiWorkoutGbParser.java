@@ -713,7 +713,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     //TODO: currently only for walking but I suppose it can be used for all workouts
                     if(summary.getNewSteps() && (type == ActivityKind.WALKING || type == ActivityKind.OUTDOOR_WALKING)) {
                         if (dataSample.getStepRate() != -1) {
-                            ac.setCadence(dataSample.getStepRate());
+                            ac.setCadence(dataSample.getStepRate() & 0xFF);
                         }
                     } else {
                         if (dataSample.getCadence() != -1) {
