@@ -858,7 +858,7 @@
     <string name="activity_detail_start_label">Start</string>
     <string name="Steps">Schritte</string>
     <string name="Activity">Aktivität</string>
-    <string name="Speed">Geschwindigkeit</string>
+    <string name="Speed">Geschwindigkeiten</string>
     <string name="Distance">Strecke</string>
     <string name="Swimming">Schwimmen</string>
     <string name="laps_unit">Runden</string>
@@ -921,7 +921,7 @@
     <string name="prefs_events_forwarding_broadcast_title">Broadcast Nachricht</string>
     <string name="prefs_events_forwarding_title">Geräteaktionen</string>
     <string name="prefs_events_forwarding_summary">Nutze Geräteereignisse um Aktionen und Android broadcasts auszulösen</string>
-    <string name="Elevation">Höhe</string>
+    <string name="Elevation">Höhen</string>
     <string name="bpm">bpm</string>
     <string name="seconds_km">sek/km</string>
     <string name="strokes_unit">Züge</string>
@@ -1009,7 +1009,7 @@
     <string name="menuitem_stopwatch">Stoppuhr</string>
     <string name="menuitem_dnd">Nicht stören</string>
     <string name="menuitem_alexa">Alexa</string>
-    <string name="menuitem_takephoto">Kamera-Fernauslösung</string>
+    <string name="menuitem_takephoto">Kamera-Fernauslöser</string>
     <string name="menuitem_mutephone">Telefon stummschalten</string>
     <string name="menuitem_findphone">Telefon suchen</string>
     <string name="movement_intensity">Bewegungsintensität</string>
@@ -1911,7 +1911,7 @@
     <string name="pref_workout_keep_screen_on_title">Bildschirm während des Trainings eingeschaltet lassen</string>
     <string name="pref_workout_keep_screen_on_summary">Der Bildschirm bleibt während des Trainings eingeschaltet und die Helligkeit wird angepasst, um die Trainingsdaten in Echtzeit anzuzeigen</string>
     <string name="pref_camera_remote_summary">Ermöglicht der Smartwatch, die Kamera des Smartphones auszulösen</string>
-    <string name="pref_camera_remote_title">Kamera-Fernauslösung</string>
+    <string name="pref_camera_remote_title">Kamera-Fernauslöser</string>
     <string name="stop">Stop</string>
     <string name="status">Status</string>
     <string name="wifi_hotspot">WLAN Hotspot</string>
@@ -3924,4 +3924,6 @@
     <string name="filter_charts">Diagramme filtern</string>
     <string name="recovery_heart_rate">Erholungspuls</string>
     <string name="activity_prefs_sleep_duration_minutes">Gewünschte Schlafdauer (Minuten)</string>
+    <string name="workout_lap">Runde</string>
+    <string name="lap_time">Zeit</string>
 </resources>
