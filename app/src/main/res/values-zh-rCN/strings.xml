@@ -4012,4 +4012,6 @@
     <string name="filter_charts">筛选图表</string>
     <string name="recovery_heart_rate">恢复心率</string>
     <string name="activity_prefs_sleep_duration_minutes">偏好的睡眠持续时间（分钟）</string>
+    <string name="workout_lap">大腿</string>
+    <string name="lap_time">时间</string>
 </resources>
