@@ -139,7 +139,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 byte[] recHR = StringUtils.hexToBytes(new String(recoveryHR));
                 final List<Entry> heartRateDataPoints = new ArrayList<>();
                 for(int i = 0; i< recHR.length; i++) {
-                    heartRateDataPoints.add(new Entry(i * 5000, recHR[i]));
+                    heartRateDataPoints.add(new Entry(i * 5000, recHR[i]& 0xFF));
                 }
                 charts.add(createRecoveryHeartRateChart(context, heartRateDataPoints));
             }
