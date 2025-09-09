@@ -39,6 +39,7 @@ import java.util.Set;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -111,18 +112,10 @@ public class CatimaManager {
     public List<CharSequence> findInstalledCatimaPackages() {
         final List<CharSequence> installedCatimaPackages = new ArrayList<>();
         for (final String knownPackage : CatimaContentProvider.KNOWN_PACKAGES) {
-            if (isPackageInstalled(knownPackage)) {
+            if (AndroidUtils.isPackageInstalled(knownPackage)) {
                 installedCatimaPackages.add(knownPackage);
             }
         }
         return installedCatimaPackages;
-    }
-
-    private boolean isPackageInstalled(final String packageName) {
-        try {
-            return context.getPackageManager().getApplicationInfo(packageName, 0).enabled;
-        } catch (final PackageManager.NameNotFoundException e) {
-            return false;
-        }
     }
 }

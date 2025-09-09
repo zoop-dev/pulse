@@ -208,6 +208,9 @@ public class WebViewSingleton {
                 } catch (PackageManager.NameNotFoundException e) {
                     internetHelperInstalled = false;
                     LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.");
+                } catch (SecurityException e) {
+                    internetHelperInstalled = false;
+                    LOG.info("WEBVIEW: Permission for internet helper not granted, only mimicked HTTP requests will work.");
                 }
             }
         }

@@ -24,6 +24,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -354,6 +355,14 @@ public class AndroidUtils {
         } catch (final Exception e) {
             LOG.error("Failed to take partial wake lock {}: ", tag, e);
             return null;
+        }
+    }
+
+    public static boolean isPackageInstalled(final String packageName) {
+        try {
+            return GBApplication.getContext().getPackageManager().getApplicationInfo(packageName, 0).enabled;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }

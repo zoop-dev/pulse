@@ -46,6 +46,7 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
+import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class OsmandEventReceiver {
@@ -220,18 +221,10 @@ public class OsmandEventReceiver {
     public List<CharSequence> findInstalledOsmandPackages() {
         List<CharSequence> installedPackages = new ArrayList<>();
         for (String knownPackage : app.getBaseContext().getResources().getStringArray(R.array.osmand_package_names)) {
-            if (isPackageInstalled(knownPackage)) {
+            if (AndroidUtils.isPackageInstalled(knownPackage)) {
                 installedPackages.add(knownPackage);
             }
         }
         return installedPackages;
-    }
-
-    private boolean isPackageInstalled(final String packageName) {
-        try {
-            return app.getBaseContext().getPackageManager().getApplicationInfo(packageName, 0).enabled;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
     }
 }

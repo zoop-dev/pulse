@@ -60,6 +60,8 @@ public class PermissionsUtils {
     public static final String CUSTOM_PERM_NOTIFICATION_LISTENER = "custom_perm_notifications_listener";
     public static final String CUSTOM_PERM_NOTIFICATION_SERVICE = "custom_perm_notifications_service";
     public static final String CUSTOM_PERM_DISPLAY_OVER = "custom_perm_display_over";
+    public static final String CUSTOM_PERM_INTERNET_HELPER = "nodomain.freeyourgadget.internethelper.INTERNET";
+    public static final String PACKAGE_INTERNET_HELPER = "nodomain.freeyourgadget.internethelper";
 
     public static final List<String> specialPermissions = new ArrayList<>() {{
         add(CUSTOM_PERM_IGNORE_BATT_OPTIM);
@@ -141,6 +143,13 @@ public class PermissionsUtils {
                     Manifest.permission.INTERNET,
                     activity.getString(R.string.permission_internet_access_title),
                     activity.getString(R.string.permission_internet_access_summary)));
+        }
+        if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
+            permissionsList.add(new PermissionDetails(
+                    CUSTOM_PERM_INTERNET_HELPER,
+                    "Internet helper",
+                    "Permit access to the Gadgetbridge-internethelper add-on app"
+            ));
         }
 //        permissionsList.add(new PermissionDetails(  // NOTE: can't request this, it's only allowed for system apps
 //                Manifest.permission.MEDIA_CONTENT_CONTROL,
