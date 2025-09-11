@@ -41,6 +41,7 @@ public class HeartRateCapability {
     public enum MeasurementInterval {
         OFF(0, R.string.off),
         SMART(-1, R.string.smart),
+        CONTINUOUS(-2, R.string.hr_measurement_continuous),
         MINUTES_1(60, R.string.interval_one_minute),
         MINUTES_5(300, R.string.interval_five_minutes),
         MINUTES_10(600, R.string.interval_ten_minutes),

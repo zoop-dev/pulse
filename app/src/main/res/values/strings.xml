@@ -1413,6 +1413,7 @@
     <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 and Mili_pro.ft* installed.]]></string>
     <string name="on">On</string>
     <string name="smart">Smart</string>
+    <string name="hr_measurement_continuous">Continuous</string>
     <string name="off">Off</string>
     <string name="normal">Normal</string>
     <string name="sensitive">Sensitive</string>

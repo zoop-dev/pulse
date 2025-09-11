@@ -105,7 +105,7 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
         }
 
         // Hide all config groups that may not be mapped directly to a preference
-        final Map<String, List<String>> configScreens = new HashMap<String, List<String>>() {{
+        final Map<String, List<String>> configScreens = new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SCREEN_NIGHT_MODE, Arrays.asList(
                     ZeppOsConfigService.ConfigArg.NIGHT_MODE_MODE.name(),
                     ZeppOsConfigService.ConfigArg.NIGHT_MODE_SCHEDULED_START.name(),
