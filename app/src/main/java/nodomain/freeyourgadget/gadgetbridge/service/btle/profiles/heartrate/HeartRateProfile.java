@@ -1,5 +1,5 @@
-/*  Copyright (C) 2016-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti
+/*  Copyright (C) 2016-2025 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -27,11 +27,13 @@ import org.slf4j.LoggerFactory;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 
 /**
  * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml
+ * @see GattService#UUID_SERVICE_HEART_RATE
  */
 public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
     private static final Logger LOG = LoggerFactory.getLogger(HeartRateProfile.class);
@@ -82,6 +84,21 @@ public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends
             heartRate = BLETypeConversions.toUint16(value, 1);
         } else {
             heartRate = BLETypeConversions.toUnsigned(value, 1);
+        }
+
+        if ((flag & 0x04) != 0){
+            //  Sensor Contact supported
+            if ((flag & 0x02) == 0){
+                // Sensor Contact NOT detected - no or poor contact with the skin
+                LOG.debug("Got poor contact heartRate: {}", heartRate);
+                return true;
+            }
+        }
+        if ((flag & 0x08) != 0){
+            // TODO: Energy Expended present (UINT16, unit: kilo Joules since last reset)
+        }
+        if ((flag & 0x10) != 0){
+            // TODO: RR-Interval present (UINT16 array, unit: 1/1024 second)
         }
 
         LOG.debug("Got heartRate: {}", heartRate);

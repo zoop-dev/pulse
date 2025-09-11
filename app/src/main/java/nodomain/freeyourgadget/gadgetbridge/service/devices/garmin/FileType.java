@@ -52,6 +52,7 @@ public class FileType {
         GOALS(128, 11),
         SUMMARY(128, 20),
         RECORDS(128, 29),
+        UNKNOWN_31(128, 31), // sent by HRM Pro Plus
         MONITOR(128, 32),
         MLT_SPORT(128, 33),
         SEGMENTS(128, 34),
