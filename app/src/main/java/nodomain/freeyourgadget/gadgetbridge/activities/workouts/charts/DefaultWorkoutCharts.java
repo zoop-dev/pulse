@@ -4,7 +4,9 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_WATT;
@@ -149,7 +151,18 @@ public class DefaultWorkoutCharts {
     private static WorkoutChart createSpeedChart(final Context context,
                                                  final ActivityKind activityKind,
                                                  final List<Entry> speedDataPoints) {
-        if (ActivityKind.isPaceActivity(activityKind)) {
+        if (ActivityKind.isSwimActivity(activityKind)) {
+            final String label = String.format("%s (%s)", context.getString(R.string.Pace), getUnitString(context, UNIT_MINUTES_PER_100_METERS));
+            final LineDataSet dataset = createLineDataSet(context, speedDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_speed));
+            return new WorkoutChart(
+                    "pace",
+                    context.getString(R.string.Pace),
+                    ActivitySummaryEntries.GROUP_SPEED,
+                    new LineData(dataset),
+                    new SpeedYLabelFormatter(UNIT_SECONDS_PER_100_METERS),
+                    getUnitString(context, UNIT_MINUTES_PER_100_METERS)
+            );
+        } else if (ActivityKind.isPaceActivity(activityKind)) {
             final String label = String.format("%s (%s)", context.getString(R.string.Pace), getUnitString(context, UNIT_MINUTES_PER_KM));
             final LineDataSet dataset = createLineDataSet(context, speedDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_speed));
             return new WorkoutChart(
