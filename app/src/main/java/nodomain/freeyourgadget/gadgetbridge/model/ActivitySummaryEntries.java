@@ -224,7 +224,9 @@ public class ActivitySummaryEntries {
     public static final String UNIT_MM = "unit_millimeter";
     public static final String UNIT_WATT = "unit_watt";
     public static final String UNIT_JOULE = "unit_joule";
+    public static final String UNIT_MINUTES_PER_100_METERS = "minutes_100m";
     public static final String UNIT_SECONDS_PER_100_METERS = "seconds_100m";
+    public static final String UNIT_MINUTES_PER_100_YARDS = "minutes_100yd";
     public static final String UNIT_SECONDS_PER_100_YARDS = "seconds_100yd";
 
     public static final String GROUP_PACE = "Pace";

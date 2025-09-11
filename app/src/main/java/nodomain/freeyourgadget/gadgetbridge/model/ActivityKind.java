@@ -379,6 +379,10 @@ public enum ActivityKind {
                 activityKind.name().contains("TREADMILL") || activityKind.name().contains("WALK");
     }
 
+    public static boolean isSwimActivity(final ActivityKind activityKind) {
+        return activityKind.name().contains("SWIM");
+    }
+
     public static boolean isDiving(final ActivityKind activityKind) {
         return activityKind.name().contains("DIVING") || activityKind.name().contains("APNEA");
     }

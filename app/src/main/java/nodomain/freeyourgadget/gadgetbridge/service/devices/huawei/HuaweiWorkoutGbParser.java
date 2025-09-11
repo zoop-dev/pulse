@@ -553,7 +553,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
             Map<String, String> additionalValues = new HashMap<>();
 
-            for(HuaweiWorkoutSummaryAdditionalValuesSample sav: summaryAdditionalValuesSamples) {
+            for (HuaweiWorkoutSummaryAdditionalValuesSample sav : summaryAdditionalValuesSamples) {
                 additionalValues.put(sav.getKey(), sav.getValue());
             }
 
@@ -565,6 +565,18 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
             summaryData.add(ActivitySummaryEntries.ACTIVE_SECONDS, summary.getDuration(), ActivitySummaryEntries.UNIT_SECONDS);
             //summaryData.add(ActivitySummaryEntries.STATUS, summary.getStatus() & 0xFF, ActivitySummaryEntries.UNIT_NONE);
             summaryData.add(ActivitySummaryEntries.TYPE, summary.getType() & 0xFF, ActivitySummaryEntries.UNIT_NONE);
+
+            if (summary.getDuration() > 0) {
+                float totalAvgSpeed = (float)summary.getDistance() / (float)summary.getDuration();
+                LOG.info("totalAvgSpeed: {}", totalAvgSpeed);
+                if(ActivityKind.isSwimActivity(type)) {
+                    summaryData.add(ActivitySummaryEntries.PACE_AVG_SECONDS_KM, 100.0f / totalAvgSpeed, ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS);
+                } else if (ActivityKind.isPaceActivity(type)) {
+                    summaryData.add(ActivitySummaryEntries.PACE_AVG_SECONDS_KM,(60f / ((totalAvgSpeed * 3.6f))) * 60f, ActivitySummaryEntries.UNIT_SECONDS_PER_KM);
+                } else {
+                    summaryData.add(ActivitySummaryEntries.SPEED_AVG, totalAvgSpeed, ActivitySummaryEntries.UNIT_METERS_PER_SECOND);
+                }
+            }
 
             if (summary.getStrokes() != -1) {
                 summaryData.add(ActivitySummaryEntries.STROKES, summary.getStrokes(), ActivitySummaryEntries.UNIT_STROKES);
@@ -874,8 +886,13 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     avgAltitude = avgAltitude / altitudeCount;
 
                 if (speedCount > 0) {
-                    summaryData.add(ActivitySummaryEntries.SPEED_AVG, speed / 10f, ActivitySummaryEntries.UNIT_METERS_PER_SECOND);
-                    summaryData.add(ActivitySummaryEntries.SPEED_MAX, maxSpeed / 10f, ActivitySummaryEntries.UNIT_METERS_PER_SECOND);
+                    if(ActivityKind.isSwimActivity(type)) {
+                        summaryData.add(ActivitySummaryEntries.PACE_MAX, 100.0f / (maxSpeed/ 10f)  , ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS);
+                    } else if (ActivityKind.isPaceActivity(type)) {
+                        summaryData.add(ActivitySummaryEntries.PACE_MAX,(60f / ((maxSpeed/ 10f) * 3.6)) * 60f  , ActivitySummaryEntries.UNIT_SECONDS_PER_KM);
+                    } else {
+                        summaryData.add(ActivitySummaryEntries.SPEED_MAX, maxSpeed / 10f, ActivitySummaryEntries.UNIT_METERS_PER_SECOND);
+                    }
                 }
 
                 if (avgStepRate > 0) {
