@@ -523,11 +523,11 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         binding.sleepchartInfo.setMaxLines(sleepLinesLimit);
 
-        SleepDetailsView.DataConfig[] config = new SleepDetailsView.DataConfig[]{
-                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.AWAKE_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_awake_sleep_light)),
-                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.REM_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_rem_sleep_light)),
-                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.LIGHT_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_light_sleep_light)),
-                new SleepDetailsView.DataConfig(getIndexOfActivity(ActivityKind.DEEP_SLEEP), ContextCompat.getColor(GBApplication.getContext(), R.color.chart_deep_sleep_light)),
+        int[] config = new int[]{
+                getIndexOfActivity(ActivityKind.AWAKE_SLEEP),
+                getIndexOfActivity(ActivityKind.REM_SLEEP),
+                getIndexOfActivity(ActivityKind.LIGHT_SLEEP),
+                getIndexOfActivity(ActivityKind.DEEP_SLEEP)
         };
         binding.sleepDetails.setConfig(config);
 

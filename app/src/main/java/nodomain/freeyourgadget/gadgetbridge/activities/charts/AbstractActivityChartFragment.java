@@ -147,13 +147,13 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
         return false;
     }
 
-    protected Integer getColorFor(ActivityKind activityKind) {
+    protected int getColorFor(ActivityKind activityKind) {
         return switch (activityKind) {
             case DEEP_SLEEP -> akDeepSleep.color;
             case LIGHT_SLEEP -> akLightSleep.color;
             case REM_SLEEP -> akRemSleep.color;
             case AWAKE_SLEEP -> akAwakeSleep.color;
-            case ACTIVITY -> akActivity.color;
+            case NOT_WORN -> akNotWorn.color;
             default -> akActivity.color;
         };
     }
@@ -328,19 +328,21 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
         int currentType = getIndexOfActivity(samples.get(0).getKind());
         long timestamp = samples.get(0).getTimestamp() * 1000L;
         int duration = 0;
+        int color = getColorFor(samples.get(0).getKind());
 
         for (ActivitySample sample : samples) {
             int value = getIndexOfActivity(sample.getKind());
             if (value != currentType) {
-                result.add(new SleepDetailsView.SleepDetail(currentType, duration, timestamp));
+                result.add(new SleepDetailsView.SleepDetail(currentType, duration, timestamp, color));
                 currentType = value;
                 timestamp = sample.getTimestamp() * 1000L;
                 duration = 0;
+                color = getColorFor(sample.getKind());
             }
             duration++;
         }
 
-        result.add(new SleepDetailsView.SleepDetail(currentType, duration, timestamp));
+        result.add(new SleepDetailsView.SleepDetail(currentType, duration, timestamp, color));
         return result;
     }
 

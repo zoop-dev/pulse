@@ -30,6 +30,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
@@ -47,21 +48,12 @@ public class SleepDetailsView extends View {
         public int type;
         public int durationMinutes;
         public long startTimestamp;
+        public int color;
 
-        public SleepDetail(int type, int durationMinutes, long startTimestamp) {
+        public SleepDetail(int type, int durationMinutes, long startTimestamp, @ColorInt int color) {
             this.type = type;
             this.durationMinutes = durationMinutes;
             this.startTimestamp = startTimestamp;
-        }
-    }
-
-
-    public static class DataConfig {
-        public int type;
-        public int color;
-
-        public DataConfig(int type, int color) {
-            this.type = type;
             this.color = color;
         }
     }
@@ -74,7 +66,7 @@ public class SleepDetailsView extends View {
     private long startTimestamp;
     private long endTimestamp;
 
-    private DataConfig[] config;
+    private int[] config;
 
     private float heightUnit;
 
@@ -173,7 +165,7 @@ public class SleepDetailsView extends View {
         if (config == null)
             return -1;
         for (int i = 0; i < config.length; i++) {
-            if (config[i].type == type) {
+            if (config[i] == type) {
                 return i;
             }
         }
@@ -206,14 +198,6 @@ public class SleepDetailsView extends View {
         return idx * 2;
     }
 
-    private int getColorFromType(int type) {
-        int idx = getIndexByType(type);
-        if (idx == -1) {
-            return Color.GRAY;
-        }
-        return config[idx].color;
-    }
-
     private void drawConnections(Canvas canvas, List<SleepDetail> details, int currentIndex, float left) {
         if (currentIndex <= 0 || currentIndex >= details.size()) {
             return;
@@ -234,8 +218,8 @@ public class SleepDetailsView extends View {
         float topY = Math.min(prevY, curY) + barHeight;
         float bottomY = Math.max(prevY, curY);
 
-        int startColor = (curIdx < prevIdx) ? getColorFromType(curType) : getColorFromType(prevType);
-        int endColor = (curIdx < prevIdx) ? getColorFromType(prevType) : getColorFromType(curType);
+        int startColor = (curIdx < prevIdx) ? details.get(currentIndex).color : details.get(currentIndex - 1).color;
+        int endColor = (curIdx < prevIdx) ? details.get(currentIndex - 1).color: details.get(currentIndex).color;
 
         Shader shader = new LinearGradient(left, topY, left, bottomY, startColor, endColor, Shader.TileMode.MIRROR);
         connectionPaint.setShader(shader);
@@ -337,7 +321,7 @@ public class SleepDetailsView extends View {
             SleepDetail sd = sleepDetails.get(i);
             float top = chartTopStart + getPositionFromType(sd.type) * barHeight;
 
-            fillPaint.setColor(getColorFromType(sd.type));
+            fillPaint.setColor(sd.color);
 
             final float currentUnitWidth = sd.durationMinutes * unitWidth;
 
@@ -388,7 +372,7 @@ public class SleepDetailsView extends View {
 
         infoTextPaint.getTextBounds(info, 0, info.length(), infoTextRect);
 
-        fillPaint.setColor(getColorFromType(curDetail.type));
+        fillPaint.setColor(curDetail.color);
 
         final float iconSize = infoTextSize;
 
@@ -451,7 +435,7 @@ public class SleepDetailsView extends View {
         }
     }
 
-    public void setConfig(DataConfig[] config) {
+    public void setConfig(int[] config) {
         this.config = config;
         horizontalLineCount = config.length * 2;
         heightUnit = (float) (1.0 / (config.length * 2));
