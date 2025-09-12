@@ -6,30 +6,35 @@
 * Initial support for Blackview R60
 * Initial support for Colmi R07, P76, P80, V76
 * Initial support for Coospo H6, HW9, HW807
-* Initial support for Garmin Descent Mk3, Fenix 3, Fenix 3 HR, Forerunner 165 Music, Forerunner 945, Instinct Tactical, Venu X1, Vivomove Sport, Vivosmart 3
+* Initial support for Garmin Descent Mk3, Fenix 3, Fenix 3 HR, Fenix 6X Pro, Forerunner 165 Music, Forerunner 945, Instinct Tactical, Venu X1, Vívoactive 6, Vivomove Sport, Vivosmart 3
 * Initial support for Garmin Edge 540
-* Initial support for Garmin eTrex SE
+* Initial support for Garmin eTrex SE, inReach Mini 2
 * Initial support for Garmin HRM 200
 * Initial support for generic heart rate sensor
 * Initial support for generic thermal printer
 * Initial support for generic weight scale
-* Initial support for GloryFit devices - Oukitel BT103, Dotn P66D
-* Initial support for H59 (Da Fit / Moyoung)
+* Initial support for GloryFit devices - Dotn P66D, Oukitel BT103, Y66
+* Initial support for H59, HC96 (Da Fit / Moyoung)
+* Initial support for Haylou Watch 2 Pro
 * Initial support for Nothing Ear (a)
 * Initial support for Polar H9
 * Initial support for Redmi Smart Band 3 (experimental), Watch 5
 * Initial support for Shokz OpenSwim Pro
-* Initial support for Xiaomi Smart Band 9 Active, Band 10
+* Initial support for Soundcore AeroFit 2
+* Initial support for Xiaomi Smart Band 9 Active, Band 10, Watch S4
 * Initial support for Yawell rings R10 and R11
 * Experimental support for Amazfit Balance 2
 * Experimental support for ATC_BLE_OEPL
 * Amazfit Active 2: Change connection default to BTBR
+* Amazfit Active: Allow AGPS update with brm files
 * Amazfit Active: Fix firmware recognition
 * AsteroidOS: Add screenshot support
 * Bangle.js: Fix altitude stats in workout details
 * Casio: Fix connection to some devices
 * CMF Watch Pro: Firmware update
 * Even Realites G1: Support Notifications and improve disconnections
+* Fossil Q: Fix hands color in apps overview
+* Fossil Q: Fix hands positions during setup
 * Fossil/Skagen Hybrids: Add calendar support
 * Fossil/Skagen Hybrids: Add support for workouts sync
 * Fossil/Skagen Hybrids: Fix some crashes on config activity
@@ -37,43 +42,62 @@
 * Garmin: Allow gpx track name to be changed when uploading
 * Garmin: Display activity fetch and parse progress
 * Garmin: Display progress on fetch notification
-* Garmin: Display workout set exercise
+* Garmin: Display workout set exercise, step speed loss
 * Garmin: Fix distance not complete at end of day
 * Garmin: Fix sleep stages for partial syncs
+* Garmin: Fix upload of larger PRG files
 * Garmin: Initial diving support
+* Garmin: New workout details charts
 * Garmin: Set alarms from phone on older watches
 * Garmin: Split fit files per type / year
 * Huami: Allow fetching multiple workouts in current day
 * Huami: Sync calendar event updates
+* Huawei: Display recovery heart rate on workouts
+* Huawei: Fix avg speed/pace calculation
 * Huawei: Fix some device crashes on calendar sync
+* Huawei: Fix temperature sample provider
 * Huawei: Fix UI for apps icons uploading
 * Huawei: Improved activity and workout fetching
 * Huawei: Improved workout parsing
+* Huawei: Increase app icons upload limit to 30
 * Huawei: Initial diving support
+* Huawei: New step rate support
+* Huawei: New workout details charts
 * Huawei: Parse TruSleep data for new devices
 * Mi Band 9 Pro: Fix walking activity parsing
 * Mi Smart Scale: Fix disconnection
 * Moondrop Space Travel: Fix toast on null firmware version
+* Pebble: Map condition code icons for TrekVolle
 * Pebble: Send current weather when opening the native weather app
+* Sony headphones: Fix recognition of some bluetooth names
 * Xaomi-protobuf: Split fit files per type / year
 * Zepp OS: Add activity type for indoor walking
 * Zepp OS: Allow gpx track name to be changed when uploading
+* Zepp OS: Allow installing zpk files directly
 * Zepp OS: Fix settings on some firmware versions
 * Zepp OS: Fix some unknown setting items
 * Zepp OS: Fix some upload operations not finishing in the UI
+* Zepp OS: Fix steps and weight goals on some versions
+* Zepp OS: Fix weather UV Index
+* Zepp OS: Parse workout laps
 * Add auth key activity
 * Add automatic zip export
 * Add Emoji transliteration
 * Add Goodwy and Simple SMS to sms apps
 * Allow blocking screenshots
+* Allow disabling swipe to refresh
+* Allow sleep goal in minutes
 * Allow unsupported devices to follow normal pairing process
 * Bluetooth: Improved connection and reconnection for BLE/BTBR/BT Classic
 * Charts: Add additional sleep chart with sleep stages
+* Charts: Add sleep charts overlays (hr, spo2, temperature, respiratory rate)
 * Charts: Add training load
+* Charts: Compute time weighted avarage for heart rate
 * Charts: Fix crash if database fetch fails
 * Charts: Improve values text contrast
 * Charts: Rework blood oxygen chart
 * Delete export files when deleting a device
+* Display device type name during discovery
 * Drop support for outdated app Weather Notification
 * Fix caller number for some VoIP apps
 * Fix crash when exporting zip with large database
@@ -86,6 +110,7 @@
 * Fix repeating battery exemption request
 * Fix some crashes when using bulgarian language
 * Ignore Firefox call notifications
+* Improve workout list loading speed
 * Intent API: Add command for heap dump
 * Save track to GPX file when stopping OpenTracks recording
 * Settings: Add search
@@ -94,7 +119,7 @@
 * UI: Make device types not translatable
 * UI: Update material icons
 * Weather: Add compressed WeatherGz support
-* Workout details: add additional charts
+* Workout details: add additional charts (cadence, elevation, hr, power, speed)
 
 #### 0.86.1
 
