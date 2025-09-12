@@ -454,7 +454,7 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
 
         ActivitySample firstSample = samples.get(0);
         if (firstSample.getTimestamp() > tsStart) {
-            samples.add(createTrailingActivitySample(firstSample, tsStart));
+            samples.add(0, createTrailingActivitySample(firstSample, tsStart));
         }
     }
 
