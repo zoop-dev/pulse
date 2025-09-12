@@ -18,15 +18,16 @@ package nodomain.freeyourgadget.gadgetbridge.devices.lefun;
 
 import androidx.annotation.NonNull;
 
+import java.util.regex.Pattern;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 
 public class VivitarHrBpMonitorActivityTrackerCoordinator extends LefunDeviceCoordinator {
+    @NonNull
     @Override
-    public boolean supports(GBDeviceCandidate candidate) {
-        // Since the Lefun coordinator overrides supports, we also need to
-        return "IMP-2027".equals(candidate.getName());
+    protected Pattern getSupportedDeviceName() {
+        return Pattern.compile("^IMP-2027$");
     }
 
     @Override

@@ -41,6 +41,7 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.lefun.LefunConstants.
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Device coordinator for Lefun band
@@ -52,7 +53,12 @@ public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supports(GBDeviceCandidate candidate) {
+    public boolean supports(@NonNull GBDeviceCandidate candidate) {
+        final Pattern supportedDeviceName = getSupportedDeviceName();
+        if (supportedDeviceName != null) {
+            return supportedDeviceName.matcher(candidate.getName()).matches();
+        }
+
         // There's a bunch of other names other than "Lefun", but let's just focus on one for now.
         if (ADVERTISEMENT_NAME.equals(candidate.getName())) {
             // The device does not advertise service UUIDs, so can't check whether it supports
@@ -69,7 +75,7 @@ public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -89,7 +95,7 @@ public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
