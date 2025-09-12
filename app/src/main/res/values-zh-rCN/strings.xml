@@ -4014,4 +4014,5 @@
     <string name="activity_prefs_sleep_duration_minutes">偏好的睡眠持续时间（分钟）</string>
     <string name="workout_lap">大腿</string>
     <string name="lap_time">时间</string>
+    <string name="hr_measurement_continuous">持续性</string>
 </resources>
