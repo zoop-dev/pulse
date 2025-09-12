@@ -4012,4 +4012,5 @@
     <string name="activity_prefs_sleep_duration_minutes">Preferovaná délka spánku v minutách</string>
     <string name="workout_lap">Kolo</string>
     <string name="lap_time">Čas</string>
+    <string name="hr_measurement_continuous">Průběžné</string>
 </resources>
