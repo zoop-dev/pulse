@@ -129,6 +129,13 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Galaxy Buds Pro (B352)", DeviceType.GALAXY_BUDS_PRO); // #2642
             put("Redmi Watch 2 Lite 31A5", DeviceType.REDMIWATCH2LITE); // #2637
             put("HUAWEI Band 6-A47", DeviceType.HUAWEIBAND6); // #2569
+            put("716", DeviceType.FITPRO);
+            put("LH716", DeviceType.FITPRO);
+            put("Sunset 6", DeviceType.FITPRO);
+            put("Watch7", DeviceType.FITPRO);
+            put("Fit1900", DeviceType.FITPRO);
+            put("M6-4711", DeviceType.FITPRO);
+            put("M4-4711", DeviceType.FITPRO);
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {

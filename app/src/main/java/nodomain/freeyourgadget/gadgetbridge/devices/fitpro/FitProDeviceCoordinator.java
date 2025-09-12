@@ -57,7 +57,7 @@ public class FitProDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("M6.*|M4.*|LH716|Sunset 6|Watch7|Fit1900");
+        return Pattern.compile("^(M6.*|M4.*|LH716|Sunset 6|Watch7|Fit1900|716)$");
     }
 
     @Override
