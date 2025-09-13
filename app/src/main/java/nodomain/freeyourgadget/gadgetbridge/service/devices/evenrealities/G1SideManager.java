@@ -1,14 +1,14 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.icu.util.Calendar;
-import android.icu.util.TimeZone;
 import android.os.Build;
 import android.os.Handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
