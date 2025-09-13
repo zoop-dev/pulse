@@ -275,14 +275,14 @@
     <string name="bluetooth_calls_settings">Bluetooth calls settings</string>
     <string name="pref_display_caller_title">Show contact information</string>
     <string name="pref_display_caller_summary">Display phone number or name for incoming calls</string>
-    <string name="pref_pair_bluetooth_calls_title">Pair for bluetooth calls</string>
+    <string name="pref_pair_bluetooth_calls_title">Pair for Bluetooth calls</string>
     <string name="pref_pair_bluetooth_calls_summary">Click here to start the pairing process</string>
-    <string name="pref_pair_bluetooth_calls_help_title">How to receive bluetooth calls</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">In order to receive bluetooth calls, you need to pair your phone with a second instance of the watch.</string>
+    <string name="pref_pair_bluetooth_calls_help_title">How to receive Bluetooth calls</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">In order to receive Bluetooth calls, you need to pair your phone with a second instance of the watch.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tap the button below to start the pairing process.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Go to your phone\'s bluetooth settings, and pair with the new device that will show up (similar name to your current watch, but with a suffix, eg. "Amazfit GTR 4 - AFC8".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Go to your phone\'s Bluetooth settings, and pair with the new device that will show up (similar name to your current watch, but with a suffix, eg. "Amazfit GTR 4 - AFC8".</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Enable the "Bluetooth calls" setting below.</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">WARNING: If you enable bluetooth calls without pairing with the second instance, call notifications might not work as expected.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">WARNING: If you enable Bluetooth calls without pairing with the second instance, call notifications might not work as expected.</string>
     <string name="pref_title_support_voip_calls">Enable VoIP app calls</string>
     <string name="pref_title_ping_tone">Ping tone</string>
     <string name="pref_title_notifications_sms">SMS</string>
@@ -479,7 +479,7 @@
     <string name="prefs_notifications_and_calls_shake_reject">Shake wrist ignore/reject call</string>
     <string name="pref_summary_notifications_and_calls_title_shake_reject">Duplicates watch button action</string>
     <string name="connection_priority_low_power_title">Request low power</string>
-    <string name="connection_priority_low_power_summary">Reduce bluetooth priority and data rate connection parameters.</string>
+    <string name="connection_priority_low_power_summary">Reduce Bluetooth priority and data rate connection parameters.</string>
     <!-- Device Settings - Device Settings - Used in devicesettings_watchxplus.xml -->
     <string name="pref_header_device_spec_settings">Device settings</string>
     <string name="pref_title_device_spec_settings_force_time">Force synchronize time</string>
@@ -2490,7 +2490,7 @@
     <string name="error_setting_alias">Error setting alias: </string>
     <string name="error_retrieving_devices_database">Error retrieving devices from database</string>
     <string name="discover_unsupported_devices">Discover unsupported devices</string>
-    <string name="discover_unsupported_devices_description">Enabling this option will display all discovered bluetooth devices when scanning. Short tap will copy device name and mac address to clipboard. Long press will launch `Add test device` dialog. Can cause potential app freezing issues.</string>
+    <string name="discover_unsupported_devices_description">Enabling this option will display all discovered Bluetooth devices when scanning. Short tap will copy device name and mac address to clipboard. Long press will launch `Add test device` dialog. Can cause potential app freezing issues.</string>
     <string name="error_location_enabled_mandatory">Location must be turned on to scan for devices</string>
     <string name="sonyswr12_settings_title">Sony SWR12 Settings</string>
     <string name="sonyswr12_settings_low_vibration">Low vibration enabled</string>
@@ -3762,7 +3762,7 @@
     <string name="auto_reconnect_ble_scan_title">Reconnect by BLE scan</string>
     <string name="auto_reconnect_ble_scan_summary">Wait for device scan instead of blind connection attempts</string>
     <string name="prompt_restart_gadgetbridge">Please restart GB in order to take effect.</string>
-    <string name="waiting_for_bluetooth">Waiting for bluetooth…</string>
+    <string name="waiting_for_bluetooth">Waiting for Bluetooth…</string>
     <string name="error_scan_failed">Scan failed: %d</string>
     <string name="scan_not_scanning">Not scanning</string>
     <string name="scan_scanning_all_devices">Scanning all devices</string>
@@ -4232,7 +4232,7 @@
     <string name="pref_aawireless_disable_media_sink_title">Disable media sink</string>
     <string name="pref_aawireless_disable_tts_sink_summary">Allow speech instructions to through a different Bluetooth device</string>
     <string name="pref_aawireless_disable_tts_sink_title">Disable TTS sink</string>
-    <string name="pref_aawireless_dongle_mode_summary">Use the native dongle logic for Android Auto. This may help with bluetooth hands-free connectivity issues. When enabled, manual phone switching is not possible.</string>
+    <string name="pref_aawireless_dongle_mode_summary">Use the native dongle logic for Android Auto. This may help with Bluetooth hands-free connectivity issues. When enabled, manual phone switching is not possible.</string>
     <string name="pref_aawireless_dongle_mode_title">Dongle mode</string>
     <string name="pref_aawireless_dpi_summary">Set to 0 to use the car\'s default value</string>
     <string name="pref_aawireless_passthrough_summary">Pass data directly, without any processing</string>
