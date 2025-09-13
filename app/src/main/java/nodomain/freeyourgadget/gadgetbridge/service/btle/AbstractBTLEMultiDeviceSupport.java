@@ -274,26 +274,6 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         return createTransactionBuilder(taskName, deviceIdx);
     }
 
-    /// @deprecated use {@link TransactionBuilder#queueConnected()}
-    @Deprecated
-    public void performConnected(Transaction transaction, int deviceIdx) throws IOException {
-        if (!isConnected()) {
-            if (!connect()) {
-                throw new IOException("2: Unable to connect to device: " + getDevice(deviceIdx));
-            }
-        }
-        getQueue(deviceIdx).add(transaction);
-    }
-
-    /// @deprecated use {@link TransactionBuilder#queueImmediately()}
-    @Deprecated
-    public void performImmediately(TransactionBuilder builder, int deviceIdx) throws IOException {
-        if (!isConnected()) {
-            throw new IOException("Not connected to device: " + getDevice());
-        }
-        getQueue(deviceIdx).insert(builder.getTransaction());
-    }
-
     /**
      * Subclasses should call this method to add services they support.
      * Only supported services will be queried for characteristics.

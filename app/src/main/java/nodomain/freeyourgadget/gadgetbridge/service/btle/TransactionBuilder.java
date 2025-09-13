@@ -289,28 +289,10 @@ public class TransactionBuilder {
         return this;
     }
 
-    /**
-     * @deprecated use {@link #setDeviceState(GBDevice.State)}
-     */
-    @Deprecated
-    @NonNull
-    public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
-        BtLEAction action = new SetDeviceStateAction(device, state, context);
-        return add(action);
-    }
-
     /// Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
     @NonNull
     public TransactionBuilder setDeviceState(GBDevice.State state) {
         BtLEAction action = new SetDeviceStateAction(mDeviceSupport.getDevice(), state, mDeviceSupport.getContext());
-        return add(action);
-    }
-
-    /// @deprecated use {@link #setProgress(int, boolean, int)}
-    @Deprecated
-    @NonNull
-    public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage, @NonNull Context context) {
-        BtLEAction action = new SetProgressAction(textRes, ongoing, percentage, context);
         return add(action);
     }
 
@@ -344,15 +326,6 @@ public class TransactionBuilder {
         return add(action);
     }
 
-    /// @deprecated use {@link #setBusyTask(int)}
-    @Deprecated
-    @NonNull
-    public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
-                                          @NonNull final Context context) {
-        BtLEAction action = new SetDeviceBusyAction(device, taskName, context);
-        return add(action);
-    }
-
     /// Set the device as busy or not ({@code taskName = 0}).
     /// @see SetDeviceBusyAction#SetDeviceBusyAction
     @NonNull
@@ -375,12 +348,6 @@ public class TransactionBuilder {
     @Nullable
     GattCallback getGattCallback() {
         return mTransaction.getGattCallback();
-    }
-
-    /// @deprecated use {@link #queue()}
-    @Deprecated
-    public void queue(BtLEQueue queue) {
-        queue();
     }
 
     /// To be used as the final step to execute the transaction by the queue.

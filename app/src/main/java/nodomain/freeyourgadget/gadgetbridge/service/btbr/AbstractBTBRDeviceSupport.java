@@ -131,17 +131,6 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         return (mQueue != null) && mQueue.isConnected();
     }
 
-    /// @deprecated use {@link TransactionBuilder#queueConnected()}
-    @Deprecated
-    public void performConnected(Transaction transaction) throws IOException {
-        if (!isConnected()) {
-            if (!connect()) {
-                throw new IOException("2: Unable to connect to device: " + getDevice());
-            }
-        }
-        getQueue().add(transaction);
-    }
-
     BtBRQueue getQueue() {
         return mQueue;
     }

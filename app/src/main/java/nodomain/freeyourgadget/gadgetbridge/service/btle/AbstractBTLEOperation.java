@@ -112,12 +112,6 @@ public abstract class AbstractBTLEOperation<T extends AbstractBTLESingleDeviceSu
         return builder;
     }
 
-    /// @deprecated use {@link TransactionBuilder#queueImmediately()}
-    @Deprecated
-    public void performImmediately(TransactionBuilder builder) throws IOException {
-        mSupport.performImmediately(builder);
-    }
-
     /// Delegates to {@link AbstractBTLESingleDeviceSupport#getContext()}
     protected Context getContext() {
         return mSupport.getContext();

@@ -220,26 +220,6 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         return createServerTransactionBuilder(taskName);
     }
 
-    /// @deprecated use {@link TransactionBuilder#queueConnected()}
-    @Deprecated
-    public void performConnected(Transaction transaction) throws IOException {
-        if (!isConnected()) {
-            if (!connect()) {
-                throw new IOException("2: Unable to connect to device: " + getDevice());
-            }
-        }
-        getQueue().add(transaction);
-    }
-
-    /// @deprecated use {@link TransactionBuilder#queueImmediately()}
-    @Deprecated
-    public void performImmediately(TransactionBuilder builder) throws IOException {
-        if (!isConnected()) {
-            throw new IOException("Not connected to device: " + getDevice());
-        }
-        getQueue().insert(builder.getTransaction());
-    }
-
     public BtLEQueue getQueue() {
         return mQueue;
     }

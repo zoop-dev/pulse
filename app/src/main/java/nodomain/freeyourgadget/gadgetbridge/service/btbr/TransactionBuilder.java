@@ -95,28 +95,10 @@ public class TransactionBuilder {
         return this;
     }
 
-    /**
-     * @deprecated use {@link #setDeviceState(GBDevice.State)}
-     */
-    @Deprecated
-    @NonNull
-    public TransactionBuilder setUpdateState(@NonNull GBDevice device, GBDevice.State state, @NonNull Context context) {
-        BtBRAction action = new SetDeviceStateAction(device, state, context);
-        return add(action);
-    }
-
     /// Sets the device's state and sends an {@link GBDevice#ACTION_DEVICE_CHANGED} intent
     @NonNull
     public TransactionBuilder setDeviceState(GBDevice.State state) {
         BtBRAction action = new SetDeviceStateAction(mDeviceSupport.getDevice(), state, mDeviceSupport.getContext());
-        return add(action);
-    }
-
-    /// @deprecated use {@link #setProgress(int, boolean, int)}
-    @Deprecated
-    @NonNull
-    public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage, @NonNull Context context) {
-        BtBRAction action = new SetProgressAction(textRes, ongoing, percentage, context);
         return add(action);
     }
 
@@ -125,15 +107,6 @@ public class TransactionBuilder {
     @NonNull
     public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage) {
         BtBRAction action = new SetProgressAction(textRes, ongoing, percentage, mDeviceSupport.getContext());
-        return add(action);
-    }
-
-    /// @deprecated use {@link #setBusyTask(int)}
-    @Deprecated
-    @NonNull
-    public TransactionBuilder setBusyTask(@NonNull final GBDevice device, @StringRes final int taskName,
-                                          @NonNull final Context context) {
-        BtBRAction action = new SetDeviceBusyAction(device, taskName, context);
         return add(action);
     }
 
@@ -153,12 +126,6 @@ public class TransactionBuilder {
      */
     public void setCallback(@Nullable SocketCallback callback) {
         mTransaction.setCallback(callback);
-    }
-
-    /// @deprecated use {@link #queue()}
-    @Deprecated
-    public void queue(BtBRQueue queue) {
-        queue();
     }
 
     /**
