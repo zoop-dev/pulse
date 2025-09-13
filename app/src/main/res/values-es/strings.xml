@@ -3213,7 +3213,7 @@
     <string name="battery_minimum_charge">Carga mínima de la batería en %</string>
     <string name="battery_allow_pass_through">Permitir el paso de la batería</string>
     <string name="gree_pair_status_success">Emparejamiento exitoso.\n\nClave de vinculación: %s</string>
-    <string name="fw_upgrade_notice_huawei">Está a punto de cargar el firmware %1$s a su %2$s.\n\nSu firmware actual es %s\n\nTras la carga, su dispositivo se reiniciará.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!</string>
+    <string name="fw_upgrade_notice_huawei">Está a punto de cargar el firmware %1$s a su %2$s.\n\nSu firmware actual es %3$s\n\nTras la carga, su dispositivo se reiniciará.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!</string>
     <string name="pairing_even_realities_g1_working">Emparejando con %1s…</string>
     <string name="gree_pair_status_failure">Emparejamiento fallido: %s</string>
     <string name="view_file">Ver</string>

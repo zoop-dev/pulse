@@ -3410,7 +3410,7 @@
     <string name="pairing_even_realities_g1_working">Koppelen met %1s…</string>
     <string name="pairing_even_realities_g1_find_both_fail">Kon niet zowel de rechter als de linker lens vinden. Probeer opnieuw te scannen.</string>
     <string name="pairing_even_realities_g1_invalid_device">Even G1 apparaat ongeldig: %1$s.</string>
-    <string name="fw_upgrade_notice_huawei">Je staat op het punt om firmware %1$s naar je %2$s te uploaden.\n\nDe huidige firmware is %s\n\nJe apparaat zal herstarten na het uploaden.\n\nGA DOOR OP EIGEN RISICO!</string>
+    <string name="fw_upgrade_notice_huawei">Je staat op het punt om firmware %1$s naar je %2$s te uploaden.\n\nDe huidige firmware is %3$s\n\nJe apparaat zal herstarten na het uploaden.\n\nGA DOOR OP EIGEN RISICO!</string>
     <string name="remote_control">Afstandsbediening</string>
     <string name="workout_repetitions">Herhalingen</string>
     <string name="workout_revolutions">Omwentelingen</string>

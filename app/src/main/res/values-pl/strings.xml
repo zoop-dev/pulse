@@ -3409,7 +3409,7 @@
     <string name="remote_control">Zdalne sterowanie</string>
     <string name="update_firmware_operation_check_in_progress">Sprawdzanie oprogramowania sprzętowego</string>
     <string name="update_firmware_operation_check_failed">Niepowodzenie kontroli oprogramowania sprzętowego</string>
-    <string name="fw_upgrade_notice_huawei">Zamierzasz wgrać oprogramowanie sprzętowe %1$s na urządzenie %2$s.\n\nAktualne oprogramowanie sprzętowe to %s\n\nUrządzenie uruchomi się ponownie po wgraniu oprogramowania.\n\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
+    <string name="fw_upgrade_notice_huawei">Zamierzasz wgrać oprogramowanie sprzętowe %1$s na urządzenie %2$s.\n\nAktualne oprogramowanie sprzętowe to %3$s\n\nUrządzenie uruchomi się ponownie po wgraniu oprogramowania.\n\nKONTYNUUJ NA WŁASNE RYZYKO!</string>
     <string name="unit_repetitions">powtórzenia</string>
     <string name="unit_revolutions">obroty</string>
     <string name="unit_repetitions_per_minute">powtórzeń/min</string>

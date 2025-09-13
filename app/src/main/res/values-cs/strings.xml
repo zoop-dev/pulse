@@ -3389,7 +3389,7 @@
     <string name="remote_control">Vzdálené ovládání</string>
     <string name="update_firmware_operation_check_failed">Kontrola firmware selhala</string>
     <string name="update_firmware_operation_check_in_progress">Kontroluji firmware</string>
-    <string name="fw_upgrade_notice_huawei">Chystáte se nahrát firmware %1$s na vaše zařízení %2$s. \n\nVáš aktuální firmware je %s.\n\nVaše zařízení se po nahrání restartuje.\n\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="fw_upgrade_notice_huawei">Chystáte se nahrát firmware %1$s na vaše zařízení %2$s. \n\nVáš aktuální firmware je %3$s.\n\nVaše zařízení se po nahrání restartuje.\n\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="uploading">Nahrávání…</string>
     <string name="view_file">Zobrazit</string>
     <string name="activity_detail_inspect_file">Prozkoumat soubor</string>

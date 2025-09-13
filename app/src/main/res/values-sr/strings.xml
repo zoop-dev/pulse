@@ -2217,7 +2217,7 @@
     <string name="firmware_install_warning">УГРАДИЋЕТЕ ДРАМ, НАСТАВИТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ.\n\n\n Овај драм је прерада ХВ: %s</string>
     <string name="activity_type_jazz_dance">Плес џеза</string>
     <string name="fw_upgrade_notice_amazfit_trex2">Уградићете драм %s на свој Амејзфит Т-рекс 2.\n\nТрака ће се препокренути након уградње датотеке .zip.\n\nНАСТАВЉАТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
-    <string name="fw_upgrade_notice_huawei">Отпремићете драм %1$s на свој %2$s\n\nТренутни драм је %s\n\nУређај ће се препокренути након отпремања.\n\nНАСТАВЉАТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
+    <string name="fw_upgrade_notice_huawei">Отпремићете драм %1$s на свој %2$s\n\nТренутни драм је %3$s\n\nУређај ће се препокренути након отпремања.\n\nНАСТАВЉАТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
     <string name="activity_type_kite_flying">Летење змајем</string>
     <string name="activity_type_driving">Вожња кола</string>
     <string name="activity_type_obstacle_race">Трка с’ препрекама</string>

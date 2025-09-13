@@ -2537,7 +2537,7 @@
     <string name="open_source_licenses">Ліцензії</string>
     <string name="dialog_open_url">Відкрити покликання</string>
     <string name="zepp_os_install_map_instructions">Після початку встановлення на телефоні, вам потрібно підтвердити його на годиннику.</string>
-    <string name="fw_upgrade_notice_huawei">Ви збираєтеся завантажити прошивку %1$s на свій %2$s.\n\nВаша поточна прошивка – %s\n\nВаш пристрій перезавантажиться після завантаження.\n\nДІЙТЕ НА СВІЙ РИЗИК!</string>
+    <string name="fw_upgrade_notice_huawei">Ви збираєтеся завантажити прошивку %1$s на свій %2$s.\n\nВаша поточна прошивка – %3$s\n\nВаш пристрій перезавантажиться після завантаження.\n\nДІЙТЕ НА СВІЙ РИЗИК!</string>
     <string name="audio_recordings">Звукозаписи</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>

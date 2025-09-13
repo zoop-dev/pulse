@@ -3236,7 +3236,7 @@
     <string name="unit_revolutions_per_minute">fordulat/perc</string>
     <string name="workout_repetitions">Ismétlések</string>
     <string name="workout_revolutions">Forradalmi edzés</string>
-    <string name="fw_upgrade_notice_huawei">A(z) %s firmware-t kívánja feltölteni a(z) %2$s eszközre.\n\nA jelenlegi firmware a következő: %s\n\nAz eszköz a feltöltés után újraindul.\n\nCSAK SAJÁT FELELŐSSÉGRE FOLYTASSA!</string>
+    <string name="fw_upgrade_notice_huawei">A(z) %1$s firmware-t kívánja feltölteni a(z) %2$s eszközre.\n\nA jelenlegi firmware a következő: %3$s\n\nAz eszköz a feltöltés után újraindul.\n\nCSAK SAJÁT FELELŐSSÉGRE FOLYTASSA!</string>
     <string name="poolLength">Medencehossz</string>
     <string name="swim_avg_cadence">Úszási kadenciaátlag</string>
     <string name="uploading">Feltöltés…</string>

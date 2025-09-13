@@ -2210,7 +2210,7 @@
     <string name="pref_gps_mode_preset">Modo do GPS</string>
     <string name="title_activity_gps_track_installer">Instalador de rota GPS</string>
     <string name="fw_upgrade_notice_zepp_os">Está prestes a instalar o firmware %1$s no seu %2$s.\n\nO seu relógio será reiniciado após a instalação do ficheiro .zip.\n\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
-    <string name="fw_upgrade_notice_huawei">Está prestes a instalar o firmware %1$s no seu %2$s.\n\nO seu firmware atual é %s\n\nO seu relógio será reiniciado após a instalação do ficheiro .zip.\n\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
+    <string name="fw_upgrade_notice_huawei">Está prestes a instalar o firmware %1$s no seu %2$s.\n\nO seu firmware atual é %3$s\n\nO seu relógio será reiniciado após a instalação do ficheiro .zip.\n\nPROSSIGA POR SUA PRÓPRIA CONTA E RISCO!</string>
     <string name="sound_and_vibration">Som + Vibração</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>

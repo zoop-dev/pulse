@@ -3299,7 +3299,7 @@
     <string name="pairing_even_realities_g1_invalid_device">Fehlerhaftes G1 Gerät: %1$s.</string>
     <string name="activity_type_barbell">Langhantel</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %1$s auf dein %2$s zu installieren.\n \nDeine aktuelle Firmware ist %s\n \nDein Gerät wird nach dem Hochladen neustarten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %1$s auf dein %2$s zu installieren.\n \nDeine aktuelle Firmware ist %3$s\n \nDein Gerät wird nach dem Hochladen neustarten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="update_firmware_operation_check_failed">Firmware Überprüfung fehlgeschlagen</string>
     <string name="update_firmware_operation_check_in_progress">Überprüfe Firmware</string>
     <string name="uploading">Lade hoch…</string>

@@ -3412,7 +3412,7 @@
     <string name="activity_type_diving">Дайвинг</string>
     <string name="activity_type_powerboating">Водно-моторный спорт</string>
     <string name="activity_type_equestrian">Конный спорт</string>
-    <string name="fw_upgrade_notice_huawei">Вы собираетесь загрузить прошивку %1$s на ваше устройство %2$s.\n\nВаша текущая прошивка: %s\n\nВаше устройство перезагрузится после загрузки.\n\nПРОДОЛЖАЙТЕ НА СВОЙ РИСК!</string>
+    <string name="fw_upgrade_notice_huawei">Вы собираетесь загрузить прошивку %1$s на ваше устройство %2$s.\n\nВаша текущая прошивка: %3$s\n\nВаше устройство перезагрузится после загрузки.\n\nПРОДОЛЖАЙТЕ НА СВОЙ РИСК!</string>
     <string name="activity_type_other_water_sports">Другой водный спорт</string>
     <string name="copy_to_clipboard">Скопировать</string>
     <string name="gree_pair_status_success">Успешно сопряжено.\n\nКлюч сопряжения: %s</string>

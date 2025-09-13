@@ -3488,7 +3488,7 @@
     <string name="activity_type_paragliding">Parapendio</string>
     <string name="activity_type_burpee">Burpee</string>
     <string name="standing_count">Conteggio in piedi</string>
-    <string name="fw_upgrade_notice_huawei">Stai per inviare il firmware %1$s al tuo %2$s.\n\nIl firmware attuale è %s\n\nIl dispositivo si riavvierà dopo l\'aggiornamento.\n\nPROCEDI A TUO RISCHIO E PERICOLO!</string>
+    <string name="fw_upgrade_notice_huawei">Stai per inviare il firmware %1$s al tuo %2$s.\n\nIl firmware attuale è %3$s\n\nIl dispositivo si riavvierà dopo l\'aggiornamento.\n\nPROCEDI A TUO RISCHIO E PERICOLO!</string>
     <string name="charts_show_balance_steps_summary">Mostra eccesso/mancanza di passi nei grafici settimanali e mensili</string>
     <string name="poolLength">Lunghezza piscina</string>
     <string name="unit_repetitions_per_minute">ripetizioni/minuto</string>

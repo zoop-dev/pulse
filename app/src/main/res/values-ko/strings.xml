@@ -758,7 +758,7 @@
     <string name="audio_recordings">오디오 녹음</string>
     <string name="title_activity_file_installer">파일 설치 관리자</string>
     <string name="title_activity_gps_track_installer">GPS 트랙 설치 관리자</string>
-    <string name="fw_upgrade_notice_huawei">%2$s에 %1$s 펌웨어를 업로드합니다.\n\n현재 펌웨어 버전은 %s입니다.\n\n업로드 후 기기가 재부팅됩니다.\n\n진행에 따른 모든 책임은 본인에게 있습니다!</string>
+    <string name="fw_upgrade_notice_huawei">%2$s에 %1$s 펌웨어를 업로드합니다.\n\n현재 펌웨어 버전은 %3$s입니다.\n\n업로드 후 기기가 재부팅됩니다.\n\n진행에 따른 모든 책임은 본인에게 있습니다!</string>
     <string name="open_fw_installer_info_text">펌웨어/워치페이스/앱/파일 설치 관리자를 사용하면 지원되는 파일(펌웨어, 워치페이스, 애플리케이션, GPS, 리소스, 글꼴 등)을 기기에 업로드/설치할 수 있습니다. 자세한 내용은 위키(https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update)를 참조하세요.</string>
     <string name="open_source_licenses">라이선스</string>
     <string name="dialog_close">닫기</string>

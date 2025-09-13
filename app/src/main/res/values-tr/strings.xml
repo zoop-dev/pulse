@@ -3434,7 +3434,7 @@
     <string name="uploading">Yükleniyor…</string>
     <string name="pref_import_activity_files_summary">Telefon deposundan etkinlik dosyalarını elle içe aktarın</string>
     <string name="fit_file_viewer">FIT File Viewer</string>
-    <string name="fw_upgrade_notice_huawei">%1$sÜrün yazılımını %2$s aygıtınıza yüklemek üzeresiniz. \n\nMevcut aygıt yazılımınız %s\n\nYüklendikten sonra aygıtınız yeniden başlatılacaktır.\n\nDEVAM ETMEK SİZİN SORUMLULUĞUNUZDADIR!</string>
+    <string name="fw_upgrade_notice_huawei">%1$sÜrün yazılımını %2$s aygıtınıza yüklemek üzeresiniz. \n\nMevcut aygıt yazılımınız %3$s\n\nYüklendikten sonra aygıtınız yeniden başlatılacaktır.\n\nDEVAM ETMEK SİZİN SORUMLULUĞUNUZDADIR!</string>
     <string name="pref_workout_send_gps_timeout_summary">Aygıtta egzersiz açık değilse GPS göndermeyi bırak (mili saniye)</string>
     <string name="activity_type_step_aerobics">Adım aerobiği</string>
     <string name="title_activity_even_realities_g1_pairing">Even G1 eşleştirme</string>

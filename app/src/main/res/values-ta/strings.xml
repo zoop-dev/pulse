@@ -3193,7 +3193,7 @@
     <string name="range_percentage_float">%1$.1f%% -%2$.1f%%</string>
     <string name="range_degrees">%1$dº - %2$dº</string>
     <string name="audio_recordings">ஆடியோ பதிவுகள்</string>
-    <string name="fw_upgrade_notice_huawei">உங்கள் %1$s இல் %2$s ஃபார்ம்வேரை பதிவேற்ற உள்ளீர்கள். \n\nஉங்கள் தற்போதைய ஃபார்ம்வேர் %s \n\nபதிவேற்றிய பின் உங்கள் சாதனம் மறுதொடக்கம் செய்யும். \n\nஉங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
+    <string name="fw_upgrade_notice_huawei">உங்கள் %1$s இல் %2$s ஃபார்ம்வேரை பதிவேற்ற உள்ளீர்கள். \n\nஉங்கள் தற்போதைய ஃபார்ம்வேர் %3$s \n\nபதிவேற்றிய பின் உங்கள் சாதனம் மறுதொடக்கம் செய்யும். \n\nஉங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="open_source_licenses">உரிமங்கள்</string>
     <string name="dialog_close">மூடு</string>
     <string name="dialog_open_url">திறந்த முகவரி</string>
