@@ -732,7 +732,7 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
                 }
 
                 MultipointPairingActivity.ACTION_MULTIPOINT_DISABLE -> {
-                    val macAddress = bluetoothAdapter.address
+                    val macAddress = "02:00:00:00:00:00"  // TODO bluetoothAdapter.address
                     LOG.debug("Disabling multipoint from mac address {}", macAddress)
                     val macAddressBytes = macAddress.replace(":", "").hexToByteArray()
                     macAddressBytes.reverse()
