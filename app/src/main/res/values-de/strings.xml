@@ -3926,4 +3926,5 @@
     <string name="activity_prefs_sleep_duration_minutes">Gewünschte Schlafdauer (Minuten)</string>
     <string name="workout_lap">Runde</string>
     <string name="lap_time">Zeit</string>
+    <string name="hr_measurement_continuous">Kontinuierlich</string>
 </resources>
