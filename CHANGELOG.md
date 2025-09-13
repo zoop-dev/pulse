@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next release (WIP)
+#### 0.87.0
 
 * Initial support for Amazfit Active 2 Square, Helio Strap, Helio Ring
 * Initial support for Blackview R60
@@ -82,7 +82,6 @@
 * Zepp OS: Parse workout laps
 * Add auth key activity
 * Add automatic zip export
-* Add Emoji transliteration
 * Add Goodwy and Simple SMS to sms apps
 * Allow blocking screenshots
 * Allow disabling swipe to refresh

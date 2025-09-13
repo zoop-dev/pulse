@@ -1,5 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.87.0" versioncode="241">
+        <change>Initial support for Amazfit Active 2 Square, Helio Strap, Helio Ring</change>
+        <change>Initial support for Blackview R60</change>
+        <change>Initial support for Colmi R07, P76, P80, V76</change>
+        <change>Initial support for Coospo H6, HW9, HW807</change>
+        <change>Initial support for Garmin Descent Mk3, Fenix 3, Fenix 3 HR, Fenix 6X Pro, Forerunner 165 Music, Forerunner 945, Instinct Tactical, Venu X1, Vívoactive 6, Vivomove Sport, Vivosmart 3</change>
+        <change>Initial support for Garmin Edge 540</change>
+        <change>Initial support for Garmin eTrex SE, inReach Mini 2</change>
+        <change>Initial support for Garmin HRM 200</change>
+        <change>Initial support for generic heart rate sensor</change>
+        <change>Initial support for generic thermal printer</change>
+        <change>Initial support for generic weight scale</change>
+        <change>Initial support for GloryFit devices - Dotn P66D, Oukitel BT103, Y66</change>
+        <change>Initial support for H59, HC96 (Da Fit / Moyoung)</change>
+        <change>Initial support for Haylou Watch 2 Pro</change>
+        <change>Initial support for Nothing Ear (a)</change>
+        <change>Initial support for Polar H9</change>
+        <change>Initial support for Redmi Smart Band 3 (experimental), Watch 5</change>
+        <change>Initial support for Shokz OpenSwim Pro</change>
+        <change>Initial support for Soundcore AeroFit 2</change>
+        <change>Initial support for Xiaomi Smart Band 9 Active, Band 10, Watch S4</change>
+        <change>Initial support for Yawell rings R10 and R11</change>
+        <change>Experimental support for Amazfit Balance 2</change>
+        <change>Experimental support for ATC_BLE_OEPL</change>
+        <change>Amazfit Active 2: Change connection default to BTBR</change>
+        <change>Amazfit Active: Allow AGPS update with brm files</change>
+        <change>Amazfit Active: Fix firmware recognition</change>
+        <change>AsteroidOS: Add screenshot support</change>
+        <change>Bangle.js: Fix altitude stats in workout details</change>
+        <change>Casio: Fix connection to some devices</change>
+        <change>CMF Watch Pro: Firmware update</change>
+        <change>Even Realites G1: Support Notifications and improve disconnections</change>
+        <change>Fossil Q: Fix hands color in apps overview</change>
+        <change>Fossil Q: Fix hands positions during setup</change>
+        <change>Fossil/Skagen Hybrids: Add calendar support</change>
+        <change>Fossil/Skagen Hybrids: Add support for workouts sync</change>
+        <change>Fossil/Skagen Hybrids: Fix some crashes on config activity</change>
+        <change>Garmin: Add new sync protocol</change>
+        <change>Garmin: Allow gpx track name to be changed when uploading</change>
+        <change>Garmin: Display activity fetch and parse progress</change>
+        <change>Garmin: Display progress on fetch notification</change>
+        <change>Garmin: Display workout set exercise, step speed loss</change>
+        <change>Garmin: Fix distance not complete at end of day</change>
+        <change>Garmin: Fix sleep stages for partial syncs</change>
+        <change>Garmin: Fix upload of larger PRG files</change>
+        <change>Garmin: Initial diving support</change>
+        <change>Garmin: New workout details charts</change>
+        <change>Garmin: Set alarms from phone on older watches</change>
+        <change>Garmin: Split fit files per type / year</change>
+        <change>Huami: Allow fetching multiple workouts in current day</change>
+        <change>Huami: Sync calendar event updates</change>
+        <change>Huawei: Display recovery heart rate on workouts</change>
+        <change>Huawei: Fix avg speed/pace calculation</change>
+        <change>Huawei: Fix some device crashes on calendar sync</change>
+        <change>Huawei: Fix temperature sample provider</change>
+        <change>Huawei: Fix UI for apps icons uploading</change>
+        <change>Huawei: Improved activity and workout fetching</change>
+        <change>Huawei: Improved workout parsing</change>
+        <change>Huawei: Increase app icons upload limit to 30</change>
+        <change>Huawei: Initial diving support</change>
+        <change>Huawei: New step rate support</change>
+        <change>Huawei: New workout details charts</change>
+        <change>Huawei: Parse TruSleep data for new devices</change>
+        <change>Mi Band 9 Pro: Fix walking activity parsing</change>
+        <change>Mi Smart Scale: Fix disconnection</change>
+        <change>Moondrop Space Travel: Fix toast on null firmware version</change>
+        <change>Pebble: Map condition code icons for TrekVolle</change>
+        <change>Pebble: Send current weather when opening the native weather app</change>
+        <change>Sony headphones: Fix recognition of some bluetooth names</change>
+        <change>Xaomi-protobuf: Split fit files per type / year</change>
+        <change>Zepp OS: Add activity type for indoor walking</change>
+        <change>Zepp OS: Allow gpx track name to be changed when uploading</change>
+        <change>Zepp OS: Allow installing zpk files directly</change>
+        <change>Zepp OS: Fix settings on some firmware versions</change>
+        <change>Zepp OS: Fix some unknown setting items</change>
+        <change>Zepp OS: Fix some upload operations not finishing in the UI</change>
+        <change>Zepp OS: Fix steps and weight goals on some versions</change>
+        <change>Zepp OS: Fix weather UV Index</change>
+        <change>Zepp OS: Parse workout laps</change>
+        <change>Add auth key activity</change>
+        <change>Add automatic zip export</change>
+        <change>Add Goodwy and Simple SMS to sms apps</change>
+        <change>Allow blocking screenshots</change>
+        <change>Allow disabling swipe to refresh</change>
+        <change>Allow sleep goal in minutes</change>
+        <change>Allow unsupported devices to follow normal pairing process</change>
+        <change>Bluetooth: Improved connection and reconnection for BLE/BTBR/BT Classic</change>
+        <change>Charts: Add additional sleep chart with sleep stages</change>
+        <change>Charts: Add sleep charts overlays (hr, spo2, temperature, respiratory rate)</change>
+        <change>Charts: Add training load</change>
+        <change>Charts: Compute time weighted avarage for heart rate</change>
+        <change>Charts: Fix crash if database fetch fails</change>
+        <change>Charts: Improve values text contrast</change>
+        <change>Charts: Rework blood oxygen chart</change>
+        <change>Delete export files when deleting a device</change>
+        <change>Display device type name during discovery</change>
+        <change>Drop support for outdated app Weather Notification</change>
+        <change>Fix caller number for some VoIP apps</change>
+        <change>Fix crash when exporting zip with large database</change>
+        <change>Fix crash when music player sends unexpected duration format</change>
+        <change>Fix crash when no calendar provider is available</change>
+        <change>Fix crash when using large maps</change>
+        <change>Fix freeze when processing large firmware files</change>
+        <change>Fix headphones connection on some Android 12 devices</change>
+        <change>Fix notification pictures for some apps</change>
+        <change>Fix repeating battery exemption request</change>
+        <change>Fix some crashes when using bulgarian language</change>
+        <change>Ignore Firefox call notifications</change>
+        <change>Improve workout list loading speed</change>
+        <change>Intent API: Add command for heap dump</change>
+        <change>Save track to GPX file when stopping OpenTracks recording</change>
+        <change>Settings: Add search</change>
+        <change>Simplify disabling permissions request screen</change>
+        <change>Sort transliteration languages</change>
+        <change>UI: Make device types not translatable</change>
+        <change>UI: Update material icons</change>
+        <change>Weather: Add compressed WeatherGz support</change>
+        <change>Workout details: add additional charts (cadence, elevation, hr, power, speed)</change>
+    </release>
     <release version="0.86.1" versioncode="240">
         <change>Fossil/Skagen Hybrids: Fix connection failure</change>
     </release>
