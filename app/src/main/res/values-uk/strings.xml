@@ -3851,4 +3851,5 @@
     <string name="activity_prefs_sleep_duration_minutes">Бажана тривалість сну в хвилинах</string>
     <string name="workout_lap">Коло</string>
     <string name="lap_time">Час</string>
+    <string name="hr_measurement_continuous">Безперервний</string>
 </resources>
