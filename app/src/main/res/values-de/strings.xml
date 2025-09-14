@@ -2218,7 +2218,7 @@
     <string name="femometer_measurement_mode_normal">Normaler Modus (60s - 90s)</string>
     <string name="menuitem_zepp_pay">Zepp Pay</string>
     <string name="femometer_measurement_mode_quick">Schneller Modus (30s)</string>
-    <string name="pref_title_notifications_ignore_work_profile">Ignoriere Arbeitsprofilbenachrichtigungen</string>
+    <string name="pref_title_notifications_ignore_work_profile">Arbeitsprofilbenachrichtigungen ignorieren</string>
     <string name="yard">yd</string>
     <string name="strokes_minute">Züge/min</string>
     <string name="femometer_measurement_mode_title">Messmodus</string>
@@ -3923,7 +3923,7 @@
     <string name="rotate_screen">Bildschirm drehen</string>
     <string name="filter_charts">Diagramme filtern</string>
     <string name="recovery_heart_rate">Erholungspuls</string>
-    <string name="activity_prefs_sleep_duration_minutes">Gewünschte Schlafdauer (Minuten)</string>
+    <string name="activity_prefs_sleep_duration_minutes">Tagesziel: Schlafdauer in Minuten</string>
     <string name="workout_lap">Runde</string>
     <string name="lap_time">Zeit</string>
     <string name="hr_measurement_continuous">Kontinuierlich</string>
