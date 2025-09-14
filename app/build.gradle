@@ -94,7 +94,7 @@ android {
         targetSdk = 34
         compileSdk = 36
         // Note: update sourceCompatibility and targetCompatibility when changing minSdk
-        minSdk = 21
+        minSdk = 23
 
         buildToolsVersion = '36.0.0'
 
