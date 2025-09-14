@@ -19,17 +19,15 @@ vendor's servers.
 ## Download
 
 <a href="https://f-droid.org/app/nodomain.freeyourgadget.gadgetbridge">
-    <img alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png" height="80">
+    <img alt="Get it on F-Droid" src="https://gadgetbridge.org/assets/static/get-it-on-fdroid.png" height="60">
 </a>
 
 <a href="https://apt.izzysoft.de/fdroid/index/apk/nodomain.freeyourgadget.gadgetbridge">
-    <img alt="Get it on IzzyOnDroid" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80">
+    <img alt="Get it on IzzyOnDroid" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="60">
 </a>
 
-<br>
-
 <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/releases/">
-    <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="54">
+    <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-white-on-black.png" height="60">
 </a>
 <br><br>
 
