@@ -2018,7 +2018,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_pair_bluetooth_calls_help_title">Comment recevoir des appels Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Appuyer sur le bouton ci-dessous pour commencer le processus de pairage.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Activer les réglages d\'appel en Bluetooth ci-dessous.</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">AVERTISSEMENT : Si vous activez les appels Bluetooth sans faire le pairage avec la seconde instance, les notifications d\'appel pourraient ne pas marcher comme prévu.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">AVERTISSEMENT : Si vous activez les appels Bluetooth sans faire le pairage avec la seconde instance, les notifications d\'appel pourraient ne pas marcher comme prévu.</string>
     <string name="bluetooth_calls">Appels Bluetooth</string>
     <string name="pref_summary_receive_calls_watch">Passer et recevoir des appels directement depuis la montre</string>
     <string name="pref_pair_bluetooth_calls_title">Coupler pour les appels Bluetooth</string>
