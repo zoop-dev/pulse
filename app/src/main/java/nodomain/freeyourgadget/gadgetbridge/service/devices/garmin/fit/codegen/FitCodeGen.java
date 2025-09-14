@@ -40,7 +40,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
-/** @noinspection ReadWriteStringCanBeUsed*/ // This class is only used to generate code, and will not be packaged in the final apk
+/**
+ * @noinspection ReadWriteStringCanBeUsed
+ */ // This class is only used to generate code, and will not be packaged in the final apk
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class FitCodeGen {
     public static void main(final String[] args) throws Exception {
@@ -65,10 +67,10 @@ public class FitCodeGen {
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;\n");
         sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;\n");
         sbFactory.append("\n");
-        sbFactory.append("//\n");
-        sbFactory.append("// WARNING: This class was auto-generated, please avoid modifying it directly.\n");
-        sbFactory.append("// See ").append(getClass().getCanonicalName()).append("\n");
-        sbFactory.append("//\n");
+        sbFactory.append("/**\n");
+        sbFactory.append(" * WARNING: This class was auto-generated, please avoid modifying it directly.\n");
+        sbFactory.append(" * See {@link ").append(getClass().getCanonicalName()).append("}\n");
+        sbFactory.append(" */\n");
         sbFactory.append("public class FitRecordDataFactory {\n");
         sbFactory.append("    private FitRecordDataFactory() {\n");
         sbFactory.append("        // use create\n");
@@ -110,7 +112,7 @@ public class FitCodeGen {
 
         Collections.sort(imports);
 
-        final Set<String> uniqueImports =new LinkedHashSet<>(imports);
+        final Set<String> uniqueImports = new LinkedHashSet<>(imports);
 
         for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
@@ -124,8 +126,26 @@ public class FitCodeGen {
         if (!header.isEmpty()) {
             sb.append(header);
             sb.append("\n");
+        } else {
+            sb.append("""
+                /*  Copyright (C) 2025 Freeyourgadget
+                
+                    This file is part of Gadgetbridge.
+                
+                    Gadgetbridge is free software: you can redistribute it and/or modify
+                    it under the terms of the GNU Affero General Public License as published
+                    by the Free Software Foundation, either version 3 of the License, or
+                    (at your option) any later version.
+                
+                    Gadgetbridge is distributed in the hope that it will be useful,
+                    but WITHOUT ANY WARRANTY; without even the implied warranty of
+                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                    GNU Affero General Public License for more details.
+                
+                    You should have received a copy of the GNU Affero General Public License
+                    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+                """);
         }
-
         sb.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;");
         sb.append("\n");
 
@@ -174,10 +194,11 @@ public class FitCodeGen {
         if (anyImport) {
             sb.append("\n");
         }
-        sb.append("//\n");
-        sb.append("// WARNING: This class was auto-generated, please avoid modifying it directly.\n");
-        sb.append("// See ").append(getClass().getCanonicalName()).append("\n");
-        sb.append("//\n");
+        sb.append("/**\n");
+        sb.append(" * WARNING: This class was auto-generated, please avoid modifying it directly.\n");
+        sb.append(" * See {@link ").append(getClass().getCanonicalName()).append("}\n");
+        sb.append(" * @noinspection unused\n");
+        sb.append(" */\n");
         sb.append("public class ").append(className).append(" extends RecordData {\n");
         sb.append("    public ").append(className).append("(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {\n");
         sb.append("        super(recordDefinition, recordHeader);\n");
@@ -228,6 +249,9 @@ public class FitCodeGen {
         //
 
         sb.append("\n");
+        sb.append("    /**\n");
+        sb.append("     * @noinspection unused\n");
+        sb.append("     */\n");
         sb.append("    public static class Builder extends FitRecordDataBuilder {\n");
         sb.append("        public Builder() {\n");
         sb.append("            super(").append(globalFITMessage.getNumber()).append(");\n");
@@ -238,7 +262,7 @@ public class FitCodeGen {
             final String fieldTypeName = fieldType.getSimpleName();
             sb.append("\n");
             sb.append("        public Builder").append(method(" set", primitive)).append("(final ").append(fieldTypeName).append(" value) {\n");
-            sb.append("            setFieldByNumber(").append(primitive.getNumber()).append(", value);\n");
+            sb.append("            setFieldByNumber(").append(primitive.getNumber()).append(", ").append(fieldType.isArray() ? "(Object[]) " : "").append("value);\n");
             sb.append("            return this;\n");
             sb.append("        }\n");
         }

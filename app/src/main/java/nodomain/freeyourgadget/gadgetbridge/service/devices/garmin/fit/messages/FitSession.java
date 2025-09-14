@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025 Freeyourgadget
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;
 
 import androidx.annotation.Nullable;
@@ -7,10 +23,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDat
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 
-//
-// WARNING: This class was auto-generated, please avoid modifying it directly.
-// See nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen
-//
+/**
+ * WARNING: This class was auto-generated, please avoid modifying it directly.
+ * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ * @noinspection unused
+ */
 public class FitSession extends RecordData {
     public FitSession(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
@@ -522,6 +539,9 @@ public class FitSession extends RecordData {
         return (Long) getFieldByNumber(253);
     }
 
+    /**
+     * @noinspection unused
+     */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
             super(18);
@@ -818,42 +838,42 @@ public class FitSession extends RecordData {
         }
 
         public Builder setAvgLeftPowerPhase(final Number[] value) {
-            setFieldByNumber(116, value);
+            setFieldByNumber(116, (Object[]) value);
             return this;
         }
 
         public Builder setAvgLeftPowerPhasePeak(final Number[] value) {
-            setFieldByNumber(117, value);
+            setFieldByNumber(117, (Object[]) value);
             return this;
         }
 
         public Builder setAvgRightPowerPhase(final Number[] value) {
-            setFieldByNumber(118, value);
+            setFieldByNumber(118, (Object[]) value);
             return this;
         }
 
         public Builder setAvgRightPowerPhasePeak(final Number[] value) {
-            setFieldByNumber(119, value);
+            setFieldByNumber(119, (Object[]) value);
             return this;
         }
 
         public Builder setAvgPowerPosition(final Number[] value) {
-            setFieldByNumber(120, value);
+            setFieldByNumber(120, (Object[]) value);
             return this;
         }
 
         public Builder setMaxPowerPosition(final Number[] value) {
-            setFieldByNumber(121, value);
+            setFieldByNumber(121, (Object[]) value);
             return this;
         }
 
         public Builder setAvgCadencePosition(final Number[] value) {
-            setFieldByNumber(122, value);
+            setFieldByNumber(122, (Object[]) value);
             return this;
         }
 
         public Builder setMaxCadencePosition(final Number[] value) {
-            setFieldByNumber(123, value);
+            setFieldByNumber(123, (Object[]) value);
             return this;
         }
 

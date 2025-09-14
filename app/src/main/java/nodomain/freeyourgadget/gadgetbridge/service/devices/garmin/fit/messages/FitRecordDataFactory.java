@@ -4,10 +4,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDat
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 
-//
-// WARNING: This class was auto-generated, please avoid modifying it directly.
-// See nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen
-//
+/**
+ * WARNING: This class was auto-generated, please avoid modifying it directly.
+ * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ */
 public class FitRecordDataFactory {
     private FitRecordDataFactory() {
         // use create
