@@ -19,6 +19,8 @@ vendor's servers.
 
 [![Translate](https://hosted.weblate.org/widgets/freeyourgadget/-/gadgetbridge/svg-badge.svg)](https://hosted.weblate.org/projects/freeyourgadget/gadgetbridge)
 
+[<img src="https://shields.rbtlog.dev/simple/nodomain.freeyourgadget.gadgetbridge" alt="RB Status">](https://shields.rbtlog.dev/nodomain.freeyourgadget.gadgetbridge)
+
 ## Code Licenses
 
 * Gadgetbridge is licensed under the AGPLv3
