@@ -19,7 +19,12 @@ public class FileTransferDataMessage extends GFDIMessage {
         this.crc = crc;
         this.message = message;
 
-        this.statusMessage = new FileTransferDataStatusMessage(GarminMessage.FILE_TRANSFER_DATA, Status.ACK, FileTransferDataStatusMessage.TransferStatus.OK, dataOffset);
+        this.statusMessage = new FileTransferDataStatusMessage(
+                GarminMessage.FILE_TRANSFER_DATA,
+                Status.ACK,
+                FileTransferDataStatusMessage.TransferStatus.OK,
+                dataOffset + message.length
+        );
         this.sendOutgoing = sendOutgoing;
     }
 
