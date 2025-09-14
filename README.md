@@ -16,24 +16,22 @@ vendor's servers.
 
 [![Translate](https://hosted.weblate.org/widgets/freeyourgadget/-/gadgetbridge/svg-badge.svg)](https://hosted.weblate.org/projects/freeyourgadget/gadgetbridge)
 
-
-## Code Licenses
-
-* Gadgetbridge is licensed under the AGPLv3
-* Files in app/src/main/java/net/osmand/ and app/src/main/aidl/net/osmand/ are taken from the [OsmAnd](https://osmand.net/) project, licensed under the GPLv3 by OsmAnd BV
-* Files in app/src/main/java/org/bouncycastle are taken from the [Bouncy Castle](https://www.bouncycastle.org/java.html) project, licensed under the MIT license by The Legion of the Bouncy Castle Inc.
-* Files in app/src/main/java/com/android/nQuant are taken from the [nQuant.android](https://github.com/mcychan/nQuant.android/) project, licensed under the Apache license by Miller Cy Chan
-* Files in app/src/main/java/org/concentus are taken from the [Concentus](https://github.com/lostromb/concentus) project, licensed under the BSD-3 license by various holding parties
-* Files in GBDaoGenerator/src/de/greenrobot are taken from the [greenDAO](https://codeberg.org/Freeyourgadget/greenDAO) project (Gadgetbridge's fork), licensed under the GPLv3 by Markus Junginger, greenrobot
-* File app/src/main/java/nodomain/freeyourgadget/gadgetbridge/util/SearchPreferenceHighlighter.java is licensed under the MIT license by ByteHamster
-
 ## Download
 
-[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/nodomain.freeyourgadget.gadgetbridge)
+<a href="https://f-droid.org/app/nodomain.freeyourgadget.gadgetbridge">
+    <img alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png" height="80">
+</a>
+
+<a href="https://apt.izzysoft.de/fdroid/index/apk/nodomain.freeyourgadget.gadgetbridge">
+    <img alt="Get it on IzzyOnDroid" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80">
+</a>
+
+<br>
 
 <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/releases/">
-    <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60">
+    <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="54">
 </a>
+<br><br>
 
 [<img src="https://shields.rbtlog.dev/simple/nodomain.freeyourgadget.gadgetbridge" alt="RB Status">](https://shields.rbtlog.dev/nodomain.freeyourgadget.gadgetbridge)
 
@@ -111,3 +109,13 @@ Feel free to open an issue on our issue tracker, but please:
 4. File an issue at https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/new/choose and possibly provide the logfile
 
 Alternatively you may use the standard logcat functionality to access the log.
+
+## Code Licenses
+
+* Gadgetbridge is licensed under the [AGPLv3](LICENSE)
+* Files in app/src/main/java/net/osmand/ and app/src/main/aidl/net/osmand/ are taken from the [OsmAnd](https://osmand.net/) project, licensed under the GPLv3 by OsmAnd BV
+* Files in app/src/main/java/org/bouncycastle are taken from the [Bouncy Castle](https://www.bouncycastle.org/java.html) project, licensed under the MIT license by The Legion of the Bouncy Castle Inc.
+* Files in app/src/main/java/com/android/nQuant are taken from the [nQuant.android](https://github.com/mcychan/nQuant.android/) project, licensed under the Apache license by Miller Cy Chan
+* Files in app/src/main/java/org/concentus are taken from the [Concentus](https://github.com/lostromb/concentus) project, licensed under the BSD-3 license by various holding parties
+* Files in GBDaoGenerator/src/de/greenrobot are taken from the [greenDAO](https://codeberg.org/Freeyourgadget/greenDAO) project (Gadgetbridge's fork), licensed under the GPLv3 by Markus Junginger, greenrobot
+* File app/src/main/java/nodomain/freeyourgadget/gadgetbridge/util/SearchPreferenceHighlighter.java is taken from [SearchPreference](https://github.com/ByteHamster/SearchPreference), licensed under the MIT license by ByteHamster
