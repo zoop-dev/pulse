@@ -1298,7 +1298,7 @@
     <string name="activity_prefs_discovery_pairing">Налаштування виявлення та сполучення</string>
     <string name="add_test_device">Додати перевірочний пристрій</string>
     <string name="discover_unsupported_devices">Виявляти непідтримувані пристрої</string>
-    <string name="discover_unsupported_devices_description">Увімкнення цього налаштування, показуватиме всі виявлені Bluetooth пристрої під час пошуку нових пристроїв. Коротке затискання скопіює назву пристрою та MAC-адресу до буфера обміну. Тривале – відкриє спливне вікно «Додати перевірочний пристрій». Може спричинити до потенційних проблем із зависанням застосунку.</string>
+    <string name="discover_unsupported_devices_description">Увімкнення цієї опції дозволить відображати всі виявлені пристрої Bluetooth під час сканування. Коротким натисканням можна скопіювати назву пристрою та MAC-адресу до буфера обміну. Довгим натисканням відкриється діалогове вікно «Додати тестовий пристрій». Може спричинити потенційні проблеми із зависанням програми.</string>
     <string name="sony_button_mode_left">Режим кнопки (ліворуч)</string>
     <string name="sony_button_mode_volume_control">Керування гучністю</string>
     <string name="controlcenter_power_off_confirm_description">Ви впевнені, що хочете вимкнути пристрій\?</string>
@@ -1873,15 +1873,15 @@
     <string name="bluetooth_calls_pairing">Сполучення викликів через Bluetooth</string>
     <string name="bluetooth_calls_settings">Налаштування викликів Bluetooth</string>
     <string name="pref_display_caller_summary">Показувати номер телефону або імʼя для вхідних викликів</string>
-    <string name="pref_pair_bluetooth_calls_title">Сполучати виклики через Bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_help_title">Як отримувати виклики через Bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_title">Сполучення для дзвінків Bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_help_title">Як приймати дзвінки через Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Натисніть кнопку нижче, щоби розпочати сполучення.</string>
     <string name="pref_summary_receive_calls_watch">Здійснювати та приймати виклики безпосередньо на годиннику</string>
     <string name="pref_display_caller_title">Показати контактну інформацію</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Щоб отримувати виклики через Bluetooth, вам потрібно зʼєднати свій телефон із другим екземпляром годинника.</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Щоб приймати дзвінки через Bluetooth, потрібно підключити телефон до другого екземпляра годинника.</string>
     <string name="pref_pair_bluetooth_calls_summary">Натисніть тут, щоби розпочати сполучення</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Перейдіть до налаштувань Bluetooth вашого телефону та підключіть його до нового пристрою, який з’явиться (назва схожа на назву вашого поточного годинника, але з суфіксом, наприклад, Amazfit GTR 4 - AFC8).</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">ПОПЕРЕДЖЕННЯ: Якщо ви ввімкнете виклики через Bluetooth без сполучення з другим екземпляром, сповіщення про виклики можуть не працювати належним чином.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Перейдіть до налаштувань Bluetooth вашого телефону та з’єднайте його з новим пристроєм, який з’явиться (назва схожа на назву вашого поточного годинника, але з суфіксом, наприклад, Amazfit GTR 4 – AFC8).</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">ПОПЕРЕДЖЕННЯ: Якщо ввімкнути дзвінки Bluetooth без сполучення з другим пристроєм, сповіщення про дзвінки можуть працювати неналежним чином.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Увімкніть налаштування викликів через Bluetooth нижче.</string>
     <string name="pref_title_notification_cache_while_disconnected">Кеш поза зоною досяжності</string>
     <string name="pref_summary_notification_cache_while_disconnected">Надсилати пропущені сповіщення, коли пристрій перепідʼєднується після перебування поза зоною досяжності</string>
@@ -3023,7 +3023,7 @@
     <string name="activity_info">Подробиці про діяльність</string>
     <string name="pref_force_connection_type_auto">Автоматично</string>
     <string name="pref_developer_add_test_activities_summary">Наповнити базу даних несправжніми перевірочними діяльностями</string>
-    <string name="waiting_for_bluetooth">Очікування Bluetooth…</string>
+    <string name="waiting_for_bluetooth">Чекання на Bluetooth…</string>
     <string name="pref_force_connection_type_title">Примусовий тип з\'єднання</string>
     <string name="prompt_restart_gadgetbridge">Перезапустіть GB, щоби застосувати зміни.</string>
     <string name="auto_reconnect_ble_scan_title">Перез\'єднання через виявлення BLE</string>
@@ -3686,7 +3686,7 @@
     <string name="pref_aawireless_disable_media_sink_title">Вимкнути медіаприймач</string>
     <string name="pref_aawireless_disable_tts_sink_summary">Дозволити голосові інструкції через інший пристрій Bluetooth</string>
     <string name="pref_aawireless_disable_tts_sink_title">Вимкнути приймач тексту в мовленні</string>
-    <string name="pref_aawireless_dongle_mode_summary">Використовуйте вбудовану логіку электронного ключа для Android Auto. Це може допомогти з проблемами підключення Bluetooth для hands-free. Якщо цю функцію ввімкнено, ручне перемикання телефонів неможливе.</string>
+    <string name="pref_aawireless_dongle_mode_summary">Використовуйте вбудовану логіку электронного ключа для Android Auto. Це може допомогти з проблемами підключення Bluetooth у режимі hands-free. Якщо цю функцію ввімкнено, ручне перемикання телефонів неможливе.</string>
     <string name="pref_aawireless_dongle_mode_title">Режим электронного ключа</string>
     <string name="pref_aawireless_dpi_summary">Встановіть значення 0, щоб використовувати значення автомобіля за замовчуванням</string>
     <string name="pref_aawireless_passthrough_summary">Передавати дані безпосередньо, без будь-якої обробки</string>
