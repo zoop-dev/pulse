@@ -984,16 +984,25 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
             super.onScanResult(callbackType, result);
             try {
                 final ScanRecord scanRecord = result.getScanRecord();
+                if (scanRecord == null) {
+                    LOG.warn("Got a null scan record");
+                    return;
+                }
                 ParcelUuid[] uuids = null;
-                if (scanRecord != null) {
-                    final List<ParcelUuid> serviceUuids = scanRecord.getServiceUuids();
-                    if (serviceUuids != null) {
-                        uuids = serviceUuids.toArray(new ParcelUuid[0]);
-                    }
+                final List<ParcelUuid> serviceUuids = scanRecord.getServiceUuids();
+                if (serviceUuids != null) {
+                    uuids = serviceUuids.toArray(new ParcelUuid[0]);
                 }
                 final BluetoothDevice device = result.getDevice();
                 final short rssi = (short) result.getRssi();
-                LOG.debug("BLE result: {}, {}, {}", device.getAddress(), ((scanRecord != null) ? scanRecord.getBytes().length : -1), rssi);
+                LOG.debug(
+                        "BLE scan record for {} ({}): len={}, rssi={}, uuids={}",
+                        device.getAddress(),
+                        scanRecord.getDeviceName(),
+                        scanRecord.getBytes().length,
+                        rssi,
+                        uuids != null ? uuids.length : "null"
+                );
                 deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, uuids));
             } catch (final Exception e) {
                 LOG.warn("Error handling BLE scan result", e);
