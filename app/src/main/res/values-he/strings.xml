@@ -2017,7 +2017,7 @@
     <string name="pref_pair_bluetooth_calls_help_summary">כדי לקבל שיחות Bluetooth יש לצמד את הטלפון שלך עם מופע שני של השעון.</string>
     <string name="pref_summary_receive_calls_watch">התקשרות ומענה לשיחות ישירות מהשעון</string>
     <string name="pref_morning_updates_categories_summary">רשימת הקטגוריות להצגה בכל בוקר</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">אזהרה: כדי להפעיל שיחות Bluetooth מבלי לצמד למופע השני, הודעות שיחה לא תעבודנה כמתוכנן.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">אזהרה: הפעלת שיחות Bluetooth מבלי לצמד למופע השני תגרום לכך שהודעות שיחה לא תעבודנה כמתוכנן.</string>
     <string name="pref_title_notification_cache_while_disconnected">שמירה במטמון תוך חריגה מהטווח</string>
     <string name="pref_summary_notification_cache_while_disconnected">לשלוח התראות שהוחמצו כאשר ההתקן מתחבר מחדש לאחר היציאה מהטווח</string>
     <string name="pref_switch_controls_anc_ambient_off">ביטול רעשים →← הקפי →← כבוי</string>
