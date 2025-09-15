@@ -17,36 +17,19 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValues;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class HuaweiTemperatureSampleProvider extends AbstractTimeSampleProvider<HuaweiTemperatureSample> {
 
@@ -97,6 +80,4 @@ public class HuaweiTemperatureSampleProvider extends AbstractTimeSampleProvider<
         HuaweiTemperatureSample sample = samples.get(0);
         return sample.getLastTimestamp();
     }
-
-
 }

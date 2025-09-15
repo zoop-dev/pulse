@@ -114,16 +114,12 @@ public class HeartRateZonesConfig {
 
     //TODO: I am not sure about this. But it looks correct.
     private int getHRCorrection() {
-        switch (this.configType) {
-            case TYPE_SITTING:
-                return 6;
-            case TYPE_SWIMMING:
-                return 10;
-            case TYPE_OTHER:
-                return 5;
-            default:
-                return 0;
-        }
+        return switch (this.configType) {
+            case TYPE_SITTING -> 6;
+            case TYPE_SWIMMING -> 10;
+            case TYPE_OTHER -> 5;
+            default -> 0;
+        };
     }
 
     public int getCalculateMethod() {
@@ -296,8 +292,6 @@ public class HeartRateZonesConfig {
             return true;
         }
         return (method == CALCULATE_METHOD_MHR) || (method == CALCULATE_METHOD_HRR);
-
     }
-
 
 }

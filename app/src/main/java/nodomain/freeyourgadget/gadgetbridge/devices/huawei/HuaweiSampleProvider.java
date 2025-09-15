@@ -47,7 +47,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleD
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivitySample> {
 

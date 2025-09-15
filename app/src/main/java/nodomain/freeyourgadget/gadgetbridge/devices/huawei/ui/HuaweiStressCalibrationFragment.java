@@ -149,18 +149,13 @@ public class HuaweiStressCalibrationFragment extends AbstractGBFragment {
     }
 
     private String getLevelDescription(byte level) {
-        switch (level) {
-            case 1:
-                return getString(R.string.stress_relaxed);
-            case 2:
-                return getString(R.string.stress_mild);
-            case 3:
-                return getString(R.string.stress_moderate);
-            case 4:
-                return getString(R.string.stress_high);
-            default:
-                return getString(R.string.n_a);
-        }
+        return switch (level) {
+            case 1 -> getString(R.string.stress_relaxed);
+            case 2 -> getString(R.string.stress_mild);
+            case 3 -> getString(R.string.stress_moderate);
+            case 4 -> getString(R.string.stress_high);
+            default -> getString(R.string.n_a);
+        };
 
     }
 

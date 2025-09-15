@@ -26,10 +26,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 public class HuaweiWorkoutUtils {
     private static final Map<ActivityKind, Integer> activityHRZoneType = createActivityHRZoneType();
 
-
     //TODO: discover and add more activity types. Should be same as in the watch.
     private static Map<ActivityKind, Integer> createActivityHRZoneType() {
-        Map<ActivityKind, Integer>  result = new HashMap<>();
+        final Map<ActivityKind, Integer>  result = new HashMap<>();
         result.put(ActivityKind.RUNNING, HeartRateZonesConfig.TYPE_UPRIGHT);
         result.put(ActivityKind.WALKING, HeartRateZonesConfig.TYPE_UPRIGHT);
         result.put(ActivityKind.CYCLING, HeartRateZonesConfig.TYPE_SITTING);
@@ -60,5 +59,4 @@ public class HuaweiWorkoutUtils {
         }
         return null;
     }
-
 }
