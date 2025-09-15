@@ -36,7 +36,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.net.toUri
-import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
@@ -48,13 +47,16 @@ import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse
 import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback
 import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService
+import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStreamReader
 import java.io.OutputStream
 import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.util.concurrent.CountDownLatch
 import kotlin.concurrent.Volatile
 
@@ -158,8 +160,31 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         })
     }
 
-    // TODO: handle links like pebble://appstore/52b231c2b70e1c159500009b#
-    //       so we don't have to use ?dev_settings=true
+    private fun downloadInstallWatchappById(storeId: String) {
+        val url = "https://appstore-api.rebble.io/api/v1/apps/id/$storeId"
+        val httpHeaders = HttpHeaders()
+        val httpGetRequest = HttpGetRequest(url, httpHeaders)
+        iHttpService!!.get(httpGetRequest, object : IHttpCallback.Stub() {
+            override fun onResponse(response: HttpResponse) {
+                val contentType = response.headers["content-type"]?.split(";")?.get(0)
+                if (!contentType.equals("application/json")) {
+                    GB.toast("Fetching app info failed, wrong content-type: $contentType", Toast.LENGTH_LONG, GB.ERROR)
+                    return
+                }
+                val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
+                val responseBody = InputStreamReader(inputStream, StandardCharsets.UTF_8).readText()
+                val jsonObject = JSONObject(responseBody)
+                val dataArray = jsonObject.getJSONArray("data")
+                val firstAppObject = dataArray.getJSONObject(0)
+                val latestRelease = firstAppObject.getJSONObject("latest_release")
+                val pbwFile = latestRelease.getString("pbw_file")
+                downloadInstallWatchapp(pbwFile.toUri())
+            }
+            override fun onException(message: String?) {
+                GB.toast("Fetching download file failed: $message", Toast.LENGTH_LONG, GB.ERROR)
+            }
+        })
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initViews() {
@@ -170,7 +195,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
 
-        val url = "https://apps.rebble.io/en_US/watchfaces?dev_settings=true"
+        val url = "https://apps.rebble.io/en_US/watchfaces"
 
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
@@ -178,6 +203,14 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 request: WebResourceRequest
             ): Boolean {
                 val requestUrl = request.url
+                // Handle pebble:// urls
+                if (requestUrl.toString().startsWith("pebble://appstore/")) {
+                    val appId = requestUrl.lastPathSegment
+                    if (appId != null) {
+                        downloadInstallWatchappById(appId)
+                    }
+                    return true
+                }
                 // Check if the URL is a downloadable watchface/watchapp
                 if (isDownloadableWatchapp(requestUrl.toString())) {
                     downloadInstallWatchapp(requestUrl)
