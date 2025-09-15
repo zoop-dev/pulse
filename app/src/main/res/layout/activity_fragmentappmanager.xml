@@ -51,4 +51,17 @@
         android:visibility="invisible"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="90dp"
+        app:srcCompat="@drawable/ic_store"
+        android:visibility="invisible"
+        />
+
 </android.widget.RelativeLayout>

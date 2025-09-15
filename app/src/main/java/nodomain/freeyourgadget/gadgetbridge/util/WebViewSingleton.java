@@ -107,6 +107,28 @@ public class WebViewSingleton {
         }
     }
 
+    public boolean ensureInternetHelperBound() {
+        if (contextWrapper != null && !internetHelperBound) {
+            String internetHelperPkg = "nodomain.freeyourgadget.internethelper";
+            String internetHelperCls = internetHelperPkg + ".HttpService";
+            try {
+                contextWrapper.getPackageManager().getApplicationInfo(internetHelperPkg, 0);
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName(internetHelperPkg, internetHelperCls));
+
+                final Intent intent1 = new Intent("nodomain.freeyourgadget.internethelper.HttpService");
+                intent1.setPackage("nodomain.freeyourgadget.internethelper");
+                contextWrapper.getApplicationContext().bindService(intent1, internetHelperConnection, Context.BIND_AUTO_CREATE);
+                LOG.info("WEBVIEW: Internet helper bound successfully.");
+            } catch (PackageManager.NameNotFoundException e) {
+                LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.");
+            } catch (SecurityException e) {
+                LOG.info("WEBVIEW: Permission for internet helper not granted, only mimicked HTTP requests will work.");
+            }
+        }
+        return internetHelperBound;
+    }
+
     public static WebViewSingleton getInstance() {
         return instance;
     }
@@ -188,24 +210,7 @@ public class WebViewSingleton {
                 webView.addJavascriptInterface(jsInterface, "GBjs");
                 webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
             });
-            if (contextWrapper != null && !internetHelperBound) {
-                String internetHelperPkg = "nodomain.freeyourgadget.internethelper";
-                String internetHelperCls = internetHelperPkg + ".HttpService";
-                try {
-                    contextWrapper.getPackageManager().getApplicationInfo(internetHelperPkg, 0);
-                    Intent intent = new Intent();
-                    intent.setComponent(new ComponentName(internetHelperPkg, internetHelperCls));
-
-                    final Intent intent1 = new Intent("nodomain.freeyourgadget.internethelper.HttpService");
-                    intent1.setPackage("nodomain.freeyourgadget.internethelper");
-                    contextWrapper.getApplicationContext().bindService(intent1, internetHelperConnection, Context.BIND_AUTO_CREATE);
-                    LOG.info("WEBVIEW: Internet helper bound successfully.");
-                } catch (PackageManager.NameNotFoundException e) {
-                    LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.");
-                } catch (SecurityException e) {
-                    LOG.info("WEBVIEW: Permission for internet helper not granted, only mimicked HTTP requests will work.");
-                }
-            }
+            ensureInternetHelperBound();
         }
     }
 

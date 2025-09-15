@@ -67,6 +67,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.ExternalPebbleJSActivity;
 import nodomain.freeyourgadget.gadgetbridge.adapter.GBDeviceAppAdapter;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.FossilFileReader;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.FossilHRInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridConstants;
@@ -80,6 +81,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GridAutoFitLayoutManager;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
+import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
 
 
 public abstract class AbstractAppManagerFragment extends Fragment {
@@ -95,6 +97,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
     protected GBDevice mGBDevice = null;
     protected DeviceCoordinator mCoordinator = null;
     private Class<? extends Activity> watchfaceDesignerActivity;
+    private Class<? extends Activity> appStoreActivity;
 
     protected abstract List<GBDeviceApp> getSystemAppsInCategory();
 
@@ -424,12 +427,14 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         mGBDevice = ((AppManagerActivity) getActivity()).getGBDevice();
         mCoordinator = mGBDevice.getDeviceCoordinator();
 
-        final FloatingActionButton appListFab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
-        final FloatingActionButton appListFabNew = ((FloatingActionButton) getActivity().findViewById(R.id.fab_new));
+        final FloatingActionButton appListFab = getActivity().findViewById(R.id.fab);
+        final FloatingActionButton appListFabNew = getActivity().findViewById(R.id.fab_new);
+        final FloatingActionButton appListFabStore = getActivity().findViewById(R.id.fab_store);
         watchfaceDesignerActivity = mCoordinator.getWatchfaceDesignerActivity(mGBDevice);
+        appStoreActivity = mCoordinator.getAppStoreActivity(mGBDevice);
         View rootView = inflater.inflate(R.layout.activity_appmanager, container, false);
 
-        RecyclerView appListView = (RecyclerView) (rootView.findViewById(R.id.appListView));
+        RecyclerView appListView = rootView.findViewById(R.id.appListView);
 
         appListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -437,12 +442,18 @@ public abstract class AbstractAppManagerFragment extends Fragment {
                 if (dy > 0) {
                     appListFab.hide();
                     appListFabNew.hide();
+                    appListFabStore.hide();
                 } else if (dy < 0) {
                     if (mCoordinator.supportsFlashing(mGBDevice)) {
                         appListFab.show();
                     }
                     if (watchfaceDesignerActivity != null) {
                         appListFabNew.show();
+                    }
+                    if (appStoreActivity != null && mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
+                        if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
+                            appListFabStore.show();
+                        }
                     }
                 }
             }
@@ -462,15 +473,23 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         appManagementTouchHelper.attachToRecyclerView(appListView);
 
         if ((watchfaceDesignerActivity != null) && (appListFabNew != null)) {
-            appListFabNew.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent startIntent = new Intent(getContext(), watchfaceDesignerActivity);
-                    startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
-                    getContext().startActivity(startIntent);
-                }
+            appListFabNew.setOnClickListener(v -> {
+                Intent startIntent = new Intent(getContext(), watchfaceDesignerActivity);
+                startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
+                getContext().startActivity(startIntent);
             });
             appListFabNew.show();
+        }
+
+        if (appStoreActivity != null && mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
+            if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
+                appListFabStore.setOnClickListener(v -> {
+                    Intent startIntent = new Intent(getContext(), appStoreActivity);
+                    startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
+                    getContext().startActivity(startIntent);
+                });
+                appListFabStore.show();
+            }
         }
 
         return rootView;

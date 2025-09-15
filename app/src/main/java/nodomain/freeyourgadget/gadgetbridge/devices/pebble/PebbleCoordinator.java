@@ -38,6 +38,7 @@ import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.RebbleAppStoreActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
@@ -138,6 +139,11 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
         return AppManagerActivity.class;
+    }
+
+    @Override
+    public Class<? extends Activity> getAppStoreActivity(final GBDevice device) {
+        return RebbleAppStoreActivity.class;
     }
 
     @Override

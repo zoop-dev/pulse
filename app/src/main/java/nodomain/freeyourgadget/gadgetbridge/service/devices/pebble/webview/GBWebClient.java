@@ -78,8 +78,8 @@ public class GBWebClient extends WebViewClient {
     }
 
     private WebResourceResponse mimicReply(Uri requestedUri) {
-        if (requestedUri.getHost() != null && (StringUtils.indexOfAny(requestedUri.getHost(), AllowedDomains) != -1)) {
-            if (WebViewSingleton.getInstance().internetHelperBound) {
+        if (requestedUri.getHost() != null && !requestedUri.toString().startsWith("file://")) {// && (StringUtils.indexOfAny(requestedUri.getHost(), AllowedDomains) != -1)) {
+            if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
                     return WebViewSingleton.getInstance().send(requestedUri);

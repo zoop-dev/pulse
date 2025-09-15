@@ -580,6 +580,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return null;
     }
 
+    @Nullable
+    @Override
+    public Class<? extends Activity> getAppStoreActivity(final GBDevice device) {
+        return null;
+    }
+
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_ASK;

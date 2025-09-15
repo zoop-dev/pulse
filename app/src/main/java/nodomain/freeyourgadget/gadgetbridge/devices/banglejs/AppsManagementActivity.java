@@ -63,7 +63,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.Capsule;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest;
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders;
@@ -113,10 +112,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
             throw new IllegalArgumentException("Must provide a device when invoking this activity");
         }
         mCoordinator = mGBDevice.getDeviceCoordinator();
-    }
-
-    private void toast(String data) {
-        GB.toast(data, Toast.LENGTH_LONG, GB.INFO);
     }
 
     @Override
