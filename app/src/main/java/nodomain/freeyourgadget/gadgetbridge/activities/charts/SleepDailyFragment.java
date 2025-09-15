@@ -20,7 +20,6 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
@@ -140,7 +139,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             average = SHOW_CHARTS_AVERAGE && average > 0 ? average : OverlayDataInt.NO_DATA;
             overlay = new OverlayDataInt(20, 140, prepareHR(samples), average, HEARTRATE_COLOR, Color.RED);
         } else if (currentOverlay == OverlayType.SPO2) {
-            overlay = new OverlayDataInt(68, 100, prepareSpO2Overlay(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataInt.NO_DATA, getResources().getColor(R.color.spo2_color), Color.RED);
+            overlay = new OverlayDataInt(68, 100, prepareSpO2Overlay(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataInt.NO_DATA, ContextCompat.getColor(requireContext(), R.color.spo2_color), Color.RED);
         } else if (currentOverlay == OverlayType.TEMPERATURE) {
             overlay = new OverlayDataFloat(28, 45, prepareTemperature(db, device, samples.get(0).getTimestamp() * 1000L, samples.get(samples.size() - 1).getTimestamp() * 1000L), OverlayDataFloat.NO_DATA, CHART_TEXT_COLOR, Color.RED);
         } else if (currentOverlay == OverlayType.RESPIRATORY_RATE) {
@@ -154,7 +153,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                     (float) (1.5d * accumulator.getMax()),
                     respiratoryRateData,
                     OverlayDataFloat.NO_DATA,
-                    getResources().getColor(R.color.respiratory_rate_color),
+                    ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color),
                     Color.RED
             );
         }
@@ -528,9 +527,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         binding = FragmentSleepchartBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> getChartsHost().enableSwipeRefresh(scrollY == 0));
-        }
+        rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> getChartsHost().enableSwipeRefresh(scrollY == 0));
 
         ChipGroup chipGroup = binding.sleepChartOverlayGroup;
 
