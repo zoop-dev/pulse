@@ -63,8 +63,6 @@ public class WebViewSingleton {
     private UUID currentRunningUUID;
     private IHttpService internetHelper = null;
     public boolean internetHelperBound;
-    private boolean internetHelperInstalled;
-    private WebResourceResponse internetResponse;
 
     private WebViewSingleton() {
     }
@@ -184,32 +182,27 @@ public class WebViewSingleton {
             final JSInterface jsInterface = new JSInterface(device, uuid);
             LOG.debug("WEBVIEW uuid changed, restarting");
             currentRunningUUID = uuid;
-            invokeWebview(new WebViewRunnable() {
-                @Override
-                public void invoke(WebView webView) {
-                    webView.onResume();
-                    webView.removeJavascriptInterface("GBjs");
-                    webView.addJavascriptInterface(jsInterface, "GBjs");
-                    webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
-                }
+            invokeWebview(webView -> {
+                webView.onResume();
+                webView.removeJavascriptInterface("GBjs");
+                webView.addJavascriptInterface(jsInterface, "GBjs");
+                webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
             });
-            if (contextWrapper != null && !internetHelperBound && !internetHelperInstalled) {
+            if (contextWrapper != null && !internetHelperBound) {
                 String internetHelperPkg = "nodomain.freeyourgadget.internethelper";
                 String internetHelperCls = internetHelperPkg + ".HttpService";
                 try {
                     contextWrapper.getPackageManager().getApplicationInfo(internetHelperPkg, 0);
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(internetHelperPkg, internetHelperCls));
-                    internetHelperInstalled = true;
 
                     final Intent intent1 = new Intent("nodomain.freeyourgadget.internethelper.HttpService");
                     intent1.setPackage("nodomain.freeyourgadget.internethelper");
                     contextWrapper.getApplicationContext().bindService(intent1, internetHelperConnection, Context.BIND_AUTO_CREATE);
+                    LOG.info("WEBVIEW: Internet helper bound successfully.");
                 } catch (PackageManager.NameNotFoundException e) {
-                    internetHelperInstalled = false;
                     LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.");
                 } catch (SecurityException e) {
-                    internetHelperInstalled = false;
                     LOG.info("WEBVIEW: Permission for internet helper not granted, only mimicked HTTP requests will work.");
                 }
             }
@@ -217,12 +210,9 @@ public class WebViewSingleton {
     }
 
     public void stopJavascriptInterface() {
-        invokeWebview(new WebViewRunnable() {
-            @Override
-            public void invoke(WebView webView) {
-                webView.removeJavascriptInterface("GBjs");
-                webView.loadUrl("about:blank");
-            }
+        invokeWebview(webView -> {
+            webView.removeJavascriptInterface("GBjs");
+            webView.loadUrl("about:blank");
         });
     }
 
@@ -233,22 +223,19 @@ public class WebViewSingleton {
             internetHelperBound = false;
         }
         currentRunningUUID = null;
-        invokeWebview(new WebViewRunnable() {
-            @Override
-            public void invoke(WebView webView) {
-                webView.removeJavascriptInterface("GBjs");
-//                    webView.setWebChromeClient(null);
-//                    webView.setWebViewClient(null);
-                webView.clearHistory();
-                webView.clearCache(true);
-                webView.loadUrl("about:blank");
-//                    webView.freeMemory();
-                webView.pauseTimers();
-//                    webView.destroy();
-//                    webView = null;
-//                    contextWrapper = null;
-//                    jsInterface = null;
-            }
+        invokeWebview(webView -> {
+            webView.removeJavascriptInterface("GBjs");
+//            webView.setWebChromeClient(null);
+//            webView.setWebViewClient(null);
+            webView.clearHistory();
+            webView.clearCache(true);
+            webView.loadUrl("about:blank");
+//            webView.freeMemory();
+            webView.pauseTimers();
+//            webView.destroy();
+//            webView = null;
+//            contextWrapper = null;
+//            jsInterface = null;
         });
     }
 
@@ -257,15 +244,12 @@ public class WebViewSingleton {
             LOG.warn("Webview already disposed, ignoring runnable");
             return;
         }
-        new Handler(mainLooper).post(new Runnable() {
-            @Override
-            public void run() {
-                if (webView == null) {
-                    LOG.warn("Webview already disposed, cannot invoke runnable");
-                    return;
-                }
-                runnable.invoke(webView);
+        new Handler(mainLooper).post(() -> {
+            if (webView == null) {
+                LOG.warn("Webview already disposed, cannot invoke runnable");
+                return;
             }
+            runnable.invoke(webView);
         });
     }
 

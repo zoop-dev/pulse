@@ -77,7 +77,6 @@ public class GBWebClient extends WebViewClient {
         return super.shouldInterceptRequest(view, url);
     }
 
-
     private WebResourceResponse mimicReply(Uri requestedUri) {
         if (requestedUri.getHost() != null && (StringUtils.indexOfAny(requestedUri.getHost(), AllowedDomains) != -1)) {
             if (WebViewSingleton.getInstance().internetHelperBound) {
@@ -87,7 +86,6 @@ public class GBWebClient extends WebViewClient {
                 } catch (RemoteException | InterruptedException e) {
                     LOG.warn("Error downloading data from " + requestedUri, e);
                 }
-
             } else {
                 if (StringUtils.endsWith(requestedUri.getHost(), "openweathermap.org")){
                     LOG.debug("WEBVIEW request to openweathermap.org detected of type: " + requestedUri.getPath() + " params: " + requestedUri.getQuery());
@@ -96,11 +94,11 @@ public class GBWebClient extends WebViewClient {
                     LOG.debug("WEBVIEW request to rawgit.com detected of type: " + requestedUri.getPath() + " params: " + requestedUri.getQuery());
                     return mimicRawGitResponse(requestedUri.getPath());
                 } else {
-                    LOG.debug("WEBVIEW request to allowed domain detected but not intercepted: " + requestedUri.toString());
+                    LOG.debug("WEBVIEW request to allowed domain detected but not intercepted: " + requestedUri);
                 }
             }
         } else {
-            LOG.debug("WEBVIEW request:" + requestedUri.toString() + " not intercepted");
+            LOG.debug("WEBVIEW request not intercepted:" + requestedUri);
         }
         return null;
     }
@@ -277,5 +275,4 @@ public class GBWebClient extends WebViewClient {
         coord.put("lon", currentPosition.getLongitude());
         return coord;
     }
-
 }
