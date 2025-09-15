@@ -49,7 +49,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -446,42 +445,21 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return Triple.of(0f, 0, 0);
         }
 
-        List<Integer> heartRateValues = new ArrayList<>();
+        final Accumulator accumulator = new Accumulator();
         HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
         for (ActivitySample sample : samples) {
             if (ActivityKind.isSleep(sample.getKind())) {
                 int heartRate = sample.getHeartRate();
                 if (heartRateUtilsInstance.isValidHeartRateValue(heartRate)) {
-                    heartRateValues.add(heartRate);
+                    accumulator.add(heartRate);
                 }
             }
         }
-        if (heartRateValues.isEmpty()) {
+        if (accumulator.getCount() == 0) {
             return Triple.of(0f, 0, 0);
         }
 
-        int min = Collections.min(heartRateValues);
-        int max = Collections.max(heartRateValues);
-        int count = heartRateValues.size();
-        float sum = calculateSumOfInts(heartRateValues);
-        float average = sum / count;
-        return Triple.of(average, min, max);
-    }
-
-    private float calculateIntensitySum(List<Float> samples) {
-        float result = 0;
-        for (Float sample : samples) {
-            result += sample;
-        }
-        return result;
-    }
-
-    private float calculateSumOfInts(List<Integer> samples) {
-        float result = 0;
-        for (Integer sample : samples) {
-            result += sample;
-        }
-        return result;
+        return Triple.of((float) accumulator.getAverage(), (int) accumulator.getMin(), (int) accumulator.getMax());
     }
 
     private Triple<Float, Float, Float> calculateIntensityData(List<? extends ActivitySample> samples) {
@@ -489,23 +467,18 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             return Triple.of(0f, 0f, 0f);
         }
 
-        List<Float> allIntensities = new ArrayList<>();
-
+        final Accumulator accumulator = new Accumulator();
         for (ActivitySample s : samples) {
             if (s.getKind() == ActivityKind.LIGHT_SLEEP || s.getKind() == ActivityKind.DEEP_SLEEP) {
                 float intensity = s.getIntensity();
-                allIntensities.add(intensity);
+                accumulator.add(intensity);
             }
         }
-        if (allIntensities.isEmpty()) {
+        if (accumulator.getCount() == 0) {
             return Triple.of(0f, 0f, 0f);
         }
 
-        Float min = Collections.min(allIntensities);
-        Float max = Collections.max(allIntensities);
-        Float sum = calculateIntensitySum(allIntensities);
-
-        return Triple.of(sum, min, max);
+        return Triple.of((float) accumulator.getSum(), (float) accumulator.getMin(), (float) accumulator.getMax());
     }
 
     private String buildYouSleptText(MySleepChartsData pieData) {
