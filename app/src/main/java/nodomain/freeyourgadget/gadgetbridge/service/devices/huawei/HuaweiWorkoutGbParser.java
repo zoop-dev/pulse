@@ -561,7 +561,11 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
             summaryData.add(ActivitySummaryEntries.CALORIES_BURNT, summary.getCalories(), ActivitySummaryEntries.UNIT_KCAL);
             summaryData.add(ActivitySummaryEntries.DISTANCE_METERS, summary.getDistance(), ActivitySummaryEntries.UNIT_METERS);
-            summaryData.add(ActivitySummaryEntries.STEPS, summary.getStepCount(), ActivitySummaryEntries.UNIT_STEPS);
+            if (type == ActivityKind.JUMP_ROPING) {
+                summaryData.add(ActivitySummaryEntries.JUMPS, summary.getStepCount(), ActivitySummaryEntries.UNIT_JUMPS);
+            } else {
+                summaryData.add(ActivitySummaryEntries.STEPS, summary.getStepCount(), ActivitySummaryEntries.UNIT_STEPS);
+            }
             summaryData.add(ActivitySummaryEntries.ACTIVE_SECONDS, summary.getDuration(), ActivitySummaryEntries.UNIT_SECONDS);
             //summaryData.add(ActivitySummaryEntries.STATUS, summary.getStatus() & 0xFF, ActivitySummaryEntries.UNIT_NONE);
             summaryData.add(ActivitySummaryEntries.TYPE, summary.getType() & 0xFF, ActivitySummaryEntries.UNIT_NONE);
