@@ -38,6 +38,7 @@ public class FileType {
         // virtual/undocumented
         DIRECTORY(0, 0),
         UNKNOWN_1_0(1, 0), // venu 3, fileIndex=4096
+        DEVICE_XML(8, 255), // HRM-Pro Plus
 
         // fit files
         DEVICE_1(128, 1), // just "-"
