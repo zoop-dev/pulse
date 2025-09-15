@@ -1394,7 +1394,7 @@
     <string name="activity_prefs_discovery_pairing">发现和配对选项</string>
     <string name="add_test_device">添加测试设备</string>
     <string name="discover_unsupported_devices">发现未支持的设备</string>
-    <string name="discover_unsupported_devices_description">启用该选项将会显示扫描时所有已发现的设备。短按将会复制设备名称和MAC地址到剪切板。长按将会显示“添加测试设备”对话框。可能导致潜在的应用程序冻结问题。</string>
+    <string name="discover_unsupported_devices_description">启用该选项将会显示扫描时所有已发现的蓝牙设备。短按将会复制设备名称和MAC地址到剪切板。长按将会显示“添加测试设备”对话框。可能导致潜在的应用程序冻结问题。</string>
     <string name="sony_button_mode_off">关</string>
     <string name="sony_pause_when_taken_off">当摘下耳机时暂停</string>
     <string name="sony_button_mode_left">按钮模式（左）</string>
@@ -2008,14 +2008,14 @@
     <string name="pref_display_caller_title">显示联系人信息</string>
     <string name="pref_display_caller_summary">显示来电者的电话号码或姓名</string>
     <string name="pref_pair_bluetooth_calls_title">配对以进行蓝牙通话</string>
-    <string name="pref_pair_bluetooth_calls_help_title">如何接听蓝牙电话</string>
+    <string name="pref_pair_bluetooth_calls_help_title">如何接听蓝牙通话</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. 点击下面的按钮开始配对过程。</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. 转到手机的蓝牙设置，并与将显示的新设备配对（与您当前手表的名称相似，但带有后缀，例如 Amazfit GTR 4 - AFC8。</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. 启用下方的蓝牙通话设置。</string>
     <string name="pref_summary_receive_calls_watch">直接在手表上接打电话</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">警告：如果您在未与第二个实例配对的情况下启用蓝牙呼叫，来电通知可能无法按预期工作。</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">警告：如果在未与第二个实例配对的情况下启用蓝牙通话，来电通知可能无法按预期工作。</string>
     <string name="pref_pair_bluetooth_calls_summary">单击此处开始配对过程</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">为了接听蓝牙电话，您需要将手机与手表的第二个实例配对。</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">为了接听蓝牙通话，您需要将手机与手表的第二个实例配对。</string>
     <string name="pref_switch_controls_anc_ambient_off">降噪 ←→ 环境音 ←→ 关闭</string>
     <string name="sony_button_mode_help_title">按钮模式 - 帮助</string>
     <string name="long_press">长按</string>
@@ -2593,7 +2593,7 @@
     <string name="device_state_waiting_scan">正在等待设备扫描</string>
     <string name="auto_reconnect_ble_scan_summary">等待设备扫描而不是盲目连接尝试</string>
     <string name="prompt_restart_gadgetbridge">请重新启动 Gadgetbridge 才能生效。</string>
-    <string name="waiting_for_bluetooth">等待蓝牙…</string>
+    <string name="waiting_for_bluetooth">等待蓝牙中…</string>
     <string name="error_scan_failed">扫描失败： %d</string>
     <string name="scan_not_scanning">不扫描</string>
     <string name="scan_scanning_all_devices">扫描所有设备</string>
