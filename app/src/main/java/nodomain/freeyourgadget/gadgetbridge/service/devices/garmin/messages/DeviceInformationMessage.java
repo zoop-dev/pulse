@@ -101,6 +101,7 @@ public class DeviceInformationMessage extends GFDIMessage {
 
         GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
         versionCmd.fwVersion = getSoftwareVersionStr();
+        versionCmd.fwVersion2 = incomingUnitNumber;
         versionCmd.hwVersion = deviceModel;
         return Collections.singletonList(versionCmd);
     }
