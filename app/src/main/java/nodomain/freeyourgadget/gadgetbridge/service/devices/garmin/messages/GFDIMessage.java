@@ -36,6 +36,7 @@ public abstract class GFDIMessage {
     public static GFDIMessage parseIncoming(byte[] message) {
         final MessageReader messageReader = new MessageReader(message);
 
+        boolean supportedType = false;
         int messageType = messageReader.readShort();
         try {
             if ((messageType & 0x8000) != 0) {
@@ -44,16 +45,16 @@ public abstract class GFDIMessage {
             }
             final GarminMessage garminMessage = GarminMessage.fromId(messageType);
             if (garminMessage == null) {
-                LOG.warn("Unknown message type {}, message {}", messageType, message);
                 return new UnhandledMessage(messageType);
             }
             final Method m = garminMessage.objectClass.getMethod("parseIncoming", MessageReader.class, GarminMessage.class);
+            supportedType = true;
             return garminMessage.objectClass.cast(m.invoke(null, messageReader, garminMessage));
         } catch (final Exception e) {
             LOG.error("UNHANDLED GFDI MESSAGE TYPE {}, MESSAGE {}", messageType, message, e);
             return new UnhandledMessage(messageType);
         } finally {
-            messageReader.warnIfLeftover(messageType);
+            messageReader.warnIfLeftover(messageType, supportedType);
         }
     }
 
@@ -211,14 +212,18 @@ public abstract class GFDIMessage {
             }
         }
 
-        public void warnIfLeftover(int messageType) {
+        public void warnIfLeftover(int messageType, boolean supportedType) {
             if (byteBuffer.hasRemaining() && byteBuffer.position() < (byteBuffer.limit())) {
                 int pos = byteBuffer.position();
                 int numBytes = (byteBuffer.limit()) - byteBuffer.position();
                 byte[] leftover = new byte[numBytes];
                 byteBuffer.get(leftover);
                 byteBuffer.position(pos);
-                LOG.warn("Leftover bytes when parsing message type {}. Bytes: {}, complete message: {}", messageType, GB.hexdump(leftover), GB.hexdump(byteBuffer.array()));
+                if (supportedType){
+                    LOG.warn("Leftover bytes when parsing message type {}. Bytes: {}, complete message: {}", messageType, GB.hexdump(leftover), GB.hexdump(byteBuffer.array()));
+                } else {
+                    LOG.warn("Unknown message type {}. Bytes: {}", messageType, GB.hexdump(leftover));
+                }
             }
         }
     }
