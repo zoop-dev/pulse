@@ -1,7 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,10 +13,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 
 
 public class ConfigurationMessage extends GFDIMessage {
-    public final Set<GarminCapability> OUR_CAPABILITIES = GarminCapability.ALL_CAPABILITIES;
     private final byte[] incomingConfigurationPayload;
     private final Set<GarminCapability> capabilities;
-    private final byte[] ourConfigurationPayload = GarminCapability.setToBinary(OUR_CAPABILITIES);
+    private final byte[] ourConfigurationPayload = GarminCapability.setToBinary(GarminCapability.OUR_CAPABILITIES);
 
     public ConfigurationMessage(GarminMessage garminMessage, byte[] configurationPayload) {
         this.garminMessage = garminMessage;

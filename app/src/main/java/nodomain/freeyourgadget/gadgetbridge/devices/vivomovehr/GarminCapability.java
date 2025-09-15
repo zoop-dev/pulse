@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Petr Kadlec
+/*  Copyright (C) 2023-2025 Petr Kadlec, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -126,16 +126,49 @@ public enum GarminCapability {
     UNK_101,
     UNK_102,
     UNK_103,
+    UNK_104,
+    UNK_105,
+    UNK_106,
+    UNK_107,
+    UNK_108,
+    UNK_109,
+    UNK_110,
+    UNK_111,
+    UNK_112,
+    UNK_113,
+    UNK_114,
+    UNK_115,
+    UNK_116,
+    UNK_117,
+    UNK_118,
+    UNK_119,
     ;
 
-    public static final Set<GarminCapability> ALL_CAPABILITIES = new HashSet<>(values().length);
+    public static final Set<GarminCapability> OUR_CAPABILITIES = new HashSet<>(values().length);
     private static final Map<Integer, GarminCapability> FROM_ORDINAL = new HashMap<>(values().length);
 
     static {
         for (final GarminCapability cap : values()) {
             FROM_ORDINAL.put(cap.ordinal(), cap);
-            ALL_CAPABILITIES.add(cap);
+            OUR_CAPABILITIES.add(cap);
         }
+
+        // so far dumps from Garmin Connect have only supported
+        // UNK_112 and UNK_113
+        OUR_CAPABILITIES.remove(UNK_104);
+        OUR_CAPABILITIES.remove(UNK_105);
+        OUR_CAPABILITIES.remove(UNK_106);
+        OUR_CAPABILITIES.remove(UNK_107);
+        OUR_CAPABILITIES.remove(UNK_108);
+        OUR_CAPABILITIES.remove(UNK_109);
+        OUR_CAPABILITIES.remove(UNK_110);
+        OUR_CAPABILITIES.remove(UNK_111);
+        OUR_CAPABILITIES.remove(UNK_114);
+        OUR_CAPABILITIES.remove(UNK_115);
+        OUR_CAPABILITIES.remove(UNK_116);
+        OUR_CAPABILITIES.remove(UNK_117);
+        OUR_CAPABILITIES.remove(UNK_118);
+        OUR_CAPABILITIES.remove(UNK_119);
     }
 
     public static Set<GarminCapability> setFromBinary(final byte[] bytes) {
