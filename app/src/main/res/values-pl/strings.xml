@@ -2058,7 +2058,7 @@
     <string name="pref_pair_bluetooth_calls_help_warning">OSTRZEŻENIE: Jeśli włączysz połączenia Bluetooth bez parowania z drugą instancją, powiadomienia o połączeniach mogą nie działać zgodnie z oczekiwaniami.</string>
     <string name="pref_theme_dynamic">Dynamiczne kolory</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Włącz poniższe ustawienie połączeń Bluetooth.</string>
-    <string name="pref_pair_bluetooth_calls_title">Paruj dla połączeń bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_title">Paruj dla połączeń Bluetooth</string>
     <string name="pref_title_mb_intents">Bezpośrednie nadawanie intencji przycisków multimedialnych</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">Częstotliwość aktualizacji pozycji GPS, w ms</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit Bip 3 Pro.
@@ -2082,9 +2082,9 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">Interwał aktualizacji danych GPS</string>
     <string name="fw_upgrade_notice_zepp_os">Zamierzasz zainstalować oprogramowanie sprzętowe %1$s na %2$s.\n\nZegarek uruchomi się ponownie po zainstalowaniu pliku .zip.\n\nPOSTĘPUJ NA WŁASNE RYZYKO!</string>
     <string name="pref_summary_notification_cache_while_disconnected">Wysyłanie nieodebranych powiadomień, gdy urządzenie połączy się ponownie po utracie zasięgu</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. Amazfit GTR 4 - AFC8.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień Bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. Amazfit GTR 4 - AFC8.</string>
     <string name="pref_canned_message">Wiadomość</string>
-    <string name="pref_pair_bluetooth_calls_help_title">Jak odbierać połączenia bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_help_title">Jak odbierać połączenia Bluetooth</string>
     <string name="sony_button_mode_help_title">Tryby przycisków - Pomoc</string>
     <string name="prefs_wena3_receive_calls_title">Ustawienia połączeń przychodzących</string>
     <string name="pref_summary_navigation_forward">Przesyłaj instrukcje z aplikacji nawigacyjnych na zegarek</string>
@@ -3725,7 +3725,7 @@
     <string name="calorie_under_goal">Poniżej celu: %1$d kcal</string>
     <string name="active_calories_avg">Średnia aktywnych kalorii</string>
     <string name="connection_priority_low_power_title">Żądanie niskiej mocy</string>
-    <string name="connection_priority_low_power_summary">Zmniejszenie priorytetu bluetooth i parametrów połączenia szybkości transmisji danych.</string>
+    <string name="connection_priority_low_power_summary">Zmniejszenie priorytetu Bluetooth i parametrów połączenia szybkości transmisji danych.</string>
     <string name="prefs_events_forwarding_broadcast_package">Pakiet transmisji</string>
     <string name="silent_mode">Tryb cichy</string>
     <string name="pref_even_realities_g1_screen_depth_title">Głębia ekranu</string>
@@ -4033,4 +4033,5 @@
     <string name="activity_prefs_sleep_duration_minutes">Preferowany czas spania w minutach</string>
     <string name="workout_lap">Okrążenie</string>
     <string name="lap_time">Czas</string>
+    <string name="hr_measurement_continuous">Ciągły</string>
 </resources>
