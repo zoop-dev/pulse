@@ -28,34 +28,54 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitCourse extends RecordData {
-    public FitCourse(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitCoursePoint extends RecordData {
+    public FitCoursePoint(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 31) {
-            throw new IllegalArgumentException("FitCourse expects global messages of " + 31 + ", got " + globalNumber);
+        if (globalNumber != 32) {
+            throw new IllegalArgumentException("FitCoursePoint expects global messages of " + 32 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Integer getSport() {
-        return (Integer) getFieldByNumber(4);
+    public Long getTimestamp() {
+        return (Long) getFieldByNumber(1);
+    }
+
+    @Nullable
+    public Double getPositionLat() {
+        return (Double) getFieldByNumber(2);
+    }
+
+    @Nullable
+    public Double getPositionLong() {
+        return (Double) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Double getDistance() {
+        return (Double) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public Integer getType() {
+        return (Integer) getFieldByNumber(5);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(5);
+        return (String) getFieldByNumber(6);
     }
 
     @Nullable
-    public Long getCapabilities() {
-        return (Long) getFieldByNumber(6);
+    public Integer getFavorite() {
+        return (Integer) getFieldByNumber(8);
     }
 
     @Nullable
-    public Integer getSubSport() {
-        return (Integer) getFieldByNumber(7);
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
     }
 
     /**
@@ -63,32 +83,52 @@ public class FitCourse extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(31);
+            super(32);
         }
 
-        public Builder setSport(final Integer value) {
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setPositionLat(final Double value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setPositionLong(final Double value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setDistance(final Double value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setName(final String value) {
+        public Builder setType(final Integer value) {
             setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setCapabilities(final Long value) {
+        public Builder setName(final String value) {
             setFieldByNumber(6, value);
             return this;
         }
 
-        public Builder setSubSport(final Integer value) {
-            setFieldByNumber(7, value);
+        public Builder setFavorite(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 
         @Override
-        public FitCourse build() {
-            return (FitCourse) super.build();
+        public FitCoursePoint build() {
+            return (FitCoursePoint) super.build();
         }
     }
 }

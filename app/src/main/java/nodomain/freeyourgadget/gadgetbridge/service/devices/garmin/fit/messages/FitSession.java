@@ -274,13 +274,13 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
-    public Double getAvgAltitude() {
-        return (Double) getFieldByNumber(49);
+    public Float getAvgAltitude() {
+        return (Float) getFieldByNumber(49);
     }
 
     @Nullable
-    public Double getMaxAltitude() {
-        return (Double) getFieldByNumber(50);
+    public Float getMaxAltitude() {
+        return (Float) getFieldByNumber(50);
     }
 
     @Nullable
@@ -1112,12 +1112,12 @@ public class FitSession extends RecordData {
             return this;
         }
 
-        public Builder setAvgAltitude(final Double value) {
+        public Builder setAvgAltitude(final Float value) {
             setFieldByNumber(49, value);
             return this;
         }
 
-        public Builder setMaxAltitude(final Double value) {
+        public Builder setMaxAltitude(final Float value) {
             setFieldByNumber(50, value);
             return this;
         }

@@ -28,34 +28,39 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitCourse extends RecordData {
-    public FitCourse(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitMemoGlob extends RecordData {
+    public FitMemoGlob(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 31) {
-            throw new IllegalArgumentException("FitCourse expects global messages of " + 31 + ", got " + globalNumber);
+        if (globalNumber != 145) {
+            throw new IllegalArgumentException("FitMemoGlob expects global messages of " + 145 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Integer getSport() {
+    public Integer getMesgNum() {
+        return (Integer) getFieldByNumber(1);
+    }
+
+    @Nullable
+    public Integer getParentIndex() {
+        return (Integer) getFieldByNumber(2);
+    }
+
+    @Nullable
+    public Integer getFieldNum() {
+        return (Integer) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Integer getData() {
         return (Integer) getFieldByNumber(4);
     }
 
     @Nullable
-    public String getName() {
-        return (String) getFieldByNumber(5);
-    }
-
-    @Nullable
-    public Long getCapabilities() {
-        return (Long) getFieldByNumber(6);
-    }
-
-    @Nullable
-    public Integer getSubSport() {
-        return (Integer) getFieldByNumber(7);
+    public Long getPartIndex() {
+        return (Long) getFieldByNumber(250);
     }
 
     /**
@@ -63,32 +68,37 @@ public class FitCourse extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(31);
+            super(145);
         }
 
-        public Builder setSport(final Integer value) {
+        public Builder setMesgNum(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setParentIndex(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setFieldNum(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setData(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setName(final String value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setCapabilities(final Long value) {
-            setFieldByNumber(6, value);
-            return this;
-        }
-
-        public Builder setSubSport(final Integer value) {
-            setFieldByNumber(7, value);
+        public Builder setPartIndex(final Long value) {
+            setFieldByNumber(250, value);
             return this;
         }
 
         @Override
-        public FitCourse build() {
-            return (FitCourse) super.build();
+        public FitMemoGlob build() {
+            return (FitMemoGlob) super.build();
         }
     }
 }

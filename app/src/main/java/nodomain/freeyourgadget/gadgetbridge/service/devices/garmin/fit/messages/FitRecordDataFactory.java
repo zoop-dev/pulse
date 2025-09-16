@@ -39,6 +39,7 @@ public class FitRecordDataFactory {
             case 27 -> new FitWorkoutStep(recordDefinition, recordHeader);
             case 30 -> new FitWeightScale(recordDefinition, recordHeader);
             case 31 -> new FitCourse(recordDefinition, recordHeader);
+            case 32 -> new FitCoursePoint(recordDefinition, recordHeader);
             case 33 -> new FitTotals(recordDefinition, recordHeader);
             case 34 -> new FitActivity(recordDefinition, recordHeader);
             case 35 -> new FitSoftware(recordDefinition, recordHeader);
@@ -60,7 +61,12 @@ public class FitRecordDataFactory {
             case 132 -> new FitHr(recordDefinition, recordHeader);
             case 140 -> new FitPhysiologicalMetrics(recordDefinition, recordHeader);
             case 141 -> new FitEpoStatus(recordDefinition, recordHeader);
+            case 142 -> new FitSegmentLap(recordDefinition, recordHeader);
+            case 145 -> new FitMemoGlob(recordDefinition, recordHeader);
             case 147 -> new FitSensorSettings(recordDefinition, recordHeader);
+            case 148 -> new FitSegmentId(recordDefinition, recordHeader);
+            case 149 -> new FitSegmentLeaderboardEntry(recordDefinition, recordHeader);
+            case 150 -> new FitSegmentPoint(recordDefinition, recordHeader);
             case 151 -> new FitSegmentFile(recordDefinition, recordHeader);
             case 158 -> new FitWorkoutSession(recordDefinition, recordHeader);
             case 159 -> new FitWatchfaceSettings(recordDefinition, recordHeader);
@@ -92,6 +98,7 @@ public class FitRecordDataFactory {
             case 307 -> new FitHsaRespirationData(recordDefinition, recordHeader);
             case 308 -> new FitHsaHeartRateData(recordDefinition, recordHeader);
             case 312 -> new FitSplit(recordDefinition, recordHeader);
+            case 313 -> new FitSplitSummary(recordDefinition, recordHeader);
             case 314 -> new FitHsaBodyBatteryData(recordDefinition, recordHeader);
             case 315 -> new FitHsaEvent(recordDefinition, recordHeader);
             case 319 -> new FitTankUpdate(recordDefinition, recordHeader);

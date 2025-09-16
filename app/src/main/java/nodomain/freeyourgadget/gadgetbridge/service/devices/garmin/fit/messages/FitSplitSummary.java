@@ -28,13 +28,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitSplit extends RecordData {
-    public FitSplit(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitSplitSummary extends RecordData {
+    public FitSplitSummary(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 312) {
-            throw new IllegalArgumentException("FitSplit expects global messages of " + 312 + ", got " + globalNumber);
+        if (globalNumber != 313) {
+            throw new IllegalArgumentException("FitSplitSummary expects global messages of " + 313 + ", got " + globalNumber);
         }
     }
 
@@ -44,88 +44,68 @@ public class FitSplit extends RecordData {
     }
 
     @Nullable
-    public Double getTotalElapsedTime() {
-        return (Double) getFieldByNumber(1);
+    public Integer getNumSplits() {
+        return (Integer) getFieldByNumber(3);
     }
 
     @Nullable
     public Double getTotalTimerTime() {
-        return (Double) getFieldByNumber(2);
-    }
-
-    @Nullable
-    public Double getTotalDistance() {
-        return (Double) getFieldByNumber(3);
-    }
-
-    @Nullable
-    public Double getAvgSpeed() {
         return (Double) getFieldByNumber(4);
     }
 
     @Nullable
-    public Long getStartTime() {
-        return (Long) getFieldByNumber(9);
+    public Double getTotalDistance() {
+        return (Double) getFieldByNumber(5);
     }
 
     @Nullable
-    public Integer getTotalAscent() {
-        return (Integer) getFieldByNumber(13);
-    }
-
-    @Nullable
-    public Integer getTotalDescent() {
-        return (Integer) getFieldByNumber(14);
-    }
-
-    @Nullable
-    public Double getStartPositionLat() {
-        return (Double) getFieldByNumber(21);
-    }
-
-    @Nullable
-    public Double getStartPositionLong() {
-        return (Double) getFieldByNumber(22);
-    }
-
-    @Nullable
-    public Double getEndPositionLat() {
-        return (Double) getFieldByNumber(23);
-    }
-
-    @Nullable
-    public Double getEndPositionLong() {
-        return (Double) getFieldByNumber(24);
+    public Double getAvgSpeed() {
+        return (Double) getFieldByNumber(6);
     }
 
     @Nullable
     public Double getMaxSpeed() {
-        return (Double) getFieldByNumber(25);
+        return (Double) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Integer getTotalAscent() {
+        return (Integer) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Integer getTotalDescent() {
+        return (Integer) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public Integer getAvgHeartRate() {
+        return (Integer) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Integer getMaxHeartRate() {
+        return (Integer) getFieldByNumber(11);
     }
 
     @Nullable
     public Double getAvgVertSpeed() {
-        return (Double) getFieldByNumber(26);
-    }
-
-    @Nullable
-    public Long getEndTime() {
-        return (Long) getFieldByNumber(27);
+        return (Double) getFieldByNumber(12);
     }
 
     @Nullable
     public Long getTotalCalories() {
-        return (Long) getFieldByNumber(28);
-    }
-
-    @Nullable
-    public Double getStartElevation() {
-        return (Double) getFieldByNumber(74);
+        return (Long) getFieldByNumber(13);
     }
 
     @Nullable
     public Double getTotalMovingTime() {
-        return (Double) getFieldByNumber(101);
+        return (Double) getFieldByNumber(77);
+    }
+
+    @Nullable
+    public Long getTimestamp() {
+        return (Long) getFieldByNumber(253);
     }
 
     @Nullable
@@ -138,7 +118,7 @@ public class FitSplit extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(312);
+            super(313);
         }
 
         public Builder setSplitType(final Integer value) {
@@ -146,88 +126,68 @@ public class FitSplit extends RecordData {
             return this;
         }
 
-        public Builder setTotalElapsedTime(final Double value) {
-            setFieldByNumber(1, value);
-            return this;
-        }
-
-        public Builder setTotalTimerTime(final Double value) {
-            setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setTotalDistance(final Double value) {
+        public Builder setNumSplits(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setAvgSpeed(final Double value) {
+        public Builder setTotalTimerTime(final Double value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setStartTime(final Long value) {
-            setFieldByNumber(9, value);
+        public Builder setTotalDistance(final Double value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setTotalAscent(final Integer value) {
-            setFieldByNumber(13, value);
-            return this;
-        }
-
-        public Builder setTotalDescent(final Integer value) {
-            setFieldByNumber(14, value);
-            return this;
-        }
-
-        public Builder setStartPositionLat(final Double value) {
-            setFieldByNumber(21, value);
-            return this;
-        }
-
-        public Builder setStartPositionLong(final Double value) {
-            setFieldByNumber(22, value);
-            return this;
-        }
-
-        public Builder setEndPositionLat(final Double value) {
-            setFieldByNumber(23, value);
-            return this;
-        }
-
-        public Builder setEndPositionLong(final Double value) {
-            setFieldByNumber(24, value);
+        public Builder setAvgSpeed(final Double value) {
+            setFieldByNumber(6, value);
             return this;
         }
 
         public Builder setMaxSpeed(final Double value) {
-            setFieldByNumber(25, value);
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setTotalAscent(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setTotalDescent(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setAvgHeartRate(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setMaxHeartRate(final Integer value) {
+            setFieldByNumber(11, value);
             return this;
         }
 
         public Builder setAvgVertSpeed(final Double value) {
-            setFieldByNumber(26, value);
-            return this;
-        }
-
-        public Builder setEndTime(final Long value) {
-            setFieldByNumber(27, value);
+            setFieldByNumber(12, value);
             return this;
         }
 
         public Builder setTotalCalories(final Long value) {
-            setFieldByNumber(28, value);
-            return this;
-        }
-
-        public Builder setStartElevation(final Double value) {
-            setFieldByNumber(74, value);
+            setFieldByNumber(13, value);
             return this;
         }
 
         public Builder setTotalMovingTime(final Double value) {
-            setFieldByNumber(101, value);
+            setFieldByNumber(77, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 
@@ -237,8 +197,8 @@ public class FitSplit extends RecordData {
         }
 
         @Override
-        public FitSplit build() {
-            return (FitSplit) super.build();
+        public FitSplitSummary build() {
+            return (FitSplitSummary) super.build();
         }
     }
 }

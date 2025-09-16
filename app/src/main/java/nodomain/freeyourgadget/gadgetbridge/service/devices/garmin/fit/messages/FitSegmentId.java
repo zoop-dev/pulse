@@ -28,34 +28,59 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitCourse extends RecordData {
-    public FitCourse(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitSegmentId extends RecordData {
+    public FitSegmentId(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 31) {
-            throw new IllegalArgumentException("FitCourse expects global messages of " + 31 + ", got " + globalNumber);
+        if (globalNumber != 148) {
+            throw new IllegalArgumentException("FitSegmentId expects global messages of " + 148 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Integer getSport() {
-        return (Integer) getFieldByNumber(4);
-    }
-
-    @Nullable
     public String getName() {
-        return (String) getFieldByNumber(5);
+        return (String) getFieldByNumber(0);
     }
 
     @Nullable
-    public Long getCapabilities() {
-        return (Long) getFieldByNumber(6);
+    public String getUuid() {
+        return (String) getFieldByNumber(1);
     }
 
     @Nullable
-    public Integer getSubSport() {
+    public Integer getSport() {
+        return (Integer) getFieldByNumber(2);
+    }
+
+    @Nullable
+    public Integer getEnabled() {
+        return (Integer) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Long getUserProfilePrimaryKey() {
+        return (Long) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public Long getDeviceId() {
+        return (Long) getFieldByNumber(5);
+    }
+
+    @Nullable
+    public Integer getDefaultRaceLeader() {
+        return (Integer) getFieldByNumber(6);
+    }
+
+    @Nullable
+    public Integer getDeleteStatus() {
         return (Integer) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Integer getSelectionType() {
+        return (Integer) getFieldByNumber(8);
     }
 
     /**
@@ -63,32 +88,57 @@ public class FitCourse extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(31);
+            super(148);
+        }
+
+        public Builder setName(final String value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setUuid(final String value) {
+            setFieldByNumber(1, value);
+            return this;
         }
 
         public Builder setSport(final Integer value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setEnabled(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setUserProfilePrimaryKey(final Long value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setName(final String value) {
+        public Builder setDeviceId(final Long value) {
             setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setCapabilities(final Long value) {
+        public Builder setDefaultRaceLeader(final Integer value) {
             setFieldByNumber(6, value);
             return this;
         }
 
-        public Builder setSubSport(final Integer value) {
+        public Builder setDeleteStatus(final Integer value) {
             setFieldByNumber(7, value);
             return this;
         }
 
+        public Builder setSelectionType(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
         @Override
-        public FitCourse build() {
-            return (FitCourse) super.build();
+        public FitSegmentId build() {
+            return (FitSegmentId) super.build();
         }
     }
 }

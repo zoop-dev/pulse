@@ -300,6 +300,11 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Float getMinAltitude() {
+        return (Float) getFieldByNumber(62);
+    }
+
+    @Nullable
     public Integer getWktStepIndex() {
         return (Integer) getFieldByNumber(71);
     }
@@ -377,6 +382,26 @@ public class FitLap extends RecordData {
     @Nullable
     public Double getEnhancedMaxSpeed() {
         return (Double) getFieldByNumber(111);
+    }
+
+    @Nullable
+    public Integer getMinTemperature() {
+        return (Integer) getFieldByNumber(124);
+    }
+
+    @Nullable
+    public Float getAvgCoreTemperature() {
+        return (Float) getFieldByNumber(158);
+    }
+
+    @Nullable
+    public Float getMinCoreTemperature() {
+        return (Float) getFieldByNumber(159);
+    }
+
+    @Nullable
+    public Float getMaxCoreTemperature() {
+        return (Float) getFieldByNumber(160);
     }
 
     @Nullable
@@ -657,6 +682,11 @@ public class FitLap extends RecordData {
             return this;
         }
 
+        public Builder setMinAltitude(final Float value) {
+            setFieldByNumber(62, value);
+            return this;
+        }
+
         public Builder setWktStepIndex(final Integer value) {
             setFieldByNumber(71, value);
             return this;
@@ -734,6 +764,26 @@ public class FitLap extends RecordData {
 
         public Builder setEnhancedMaxSpeed(final Double value) {
             setFieldByNumber(111, value);
+            return this;
+        }
+
+        public Builder setMinTemperature(final Integer value) {
+            setFieldByNumber(124, value);
+            return this;
+        }
+
+        public Builder setAvgCoreTemperature(final Float value) {
+            setFieldByNumber(158, value);
+            return this;
+        }
+
+        public Builder setMinCoreTemperature(final Float value) {
+            setFieldByNumber(159, value);
+            return this;
+        }
+
+        public Builder setMaxCoreTemperature(final Float value) {
+            setFieldByNumber(160, value);
             return this;
         }
 

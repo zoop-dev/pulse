@@ -97,7 +97,7 @@ public class GlobalFITMessage {
     ));
 
     public static GlobalFITMessage HRM_PROFILE = new GlobalFITMessage(4, "HRM_PROFILE", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.ENUM, "enabled"),
+            new FieldDefinitionPrimitive(0, BaseType.UINT8, "enabled"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16Z, "hrm_ant_id"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "log_hrv"),
             new FieldDefinitionPrimitive(3, BaseType.UINT8Z, "hrm_ant_id_trans_type"),
@@ -128,15 +128,15 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(9, BaseType.UINT16, "auto_wheelsize", 1000, 0), // m
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "bike_weight", 10, 0), // kg
             new FieldDefinitionPrimitive(11, BaseType.UINT16, "power_cal_factor", 10, 0), // %
-            new FieldDefinitionPrimitive(12, BaseType.ENUM, "auto_wheel_cal"),
-            new FieldDefinitionPrimitive(13, BaseType.ENUM, "auto_power_zero"),
+            new FieldDefinitionPrimitive(12, BaseType.UINT8, "auto_wheel_cal"),
+            new FieldDefinitionPrimitive(13, BaseType.UINT8, "auto_power_zero"),
             new FieldDefinitionPrimitive(14, BaseType.UINT8, "id"),
-            new FieldDefinitionPrimitive(15, BaseType.ENUM, "spd_enabled"),
-            new FieldDefinitionPrimitive(16, BaseType.ENUM, "cad_enabled"),
-            new FieldDefinitionPrimitive(17, BaseType.ENUM, "spdcad_enabled"),
-            new FieldDefinitionPrimitive(18, BaseType.ENUM, "power_enabled"),
+            new FieldDefinitionPrimitive(15, BaseType.UINT8, "spd_enabled"),
+            new FieldDefinitionPrimitive(16, BaseType.UINT8, "cad_enabled"),
+            new FieldDefinitionPrimitive(17, BaseType.UINT8, "spdcad_enabled"),
+            new FieldDefinitionPrimitive(18, BaseType.UINT8, "power_enabled"),
             new FieldDefinitionPrimitive(19, BaseType.UINT8, "crank_length", 2, -100), // mm
-            new FieldDefinitionPrimitive(20, BaseType.ENUM, "enabled"),
+            new FieldDefinitionPrimitive(20, BaseType.UINT8, "enabled"),
             new FieldDefinitionPrimitive(21, BaseType.UINT8Z, "bike_spd_ant_id_trans_type"),
             new FieldDefinitionPrimitive(22, BaseType.UINT8Z, "bike_cad_ant_id_trans_type"),
             new FieldDefinitionPrimitive(23, BaseType.UINT8Z, "bike_spdcad_ant_id_trans_type"),
@@ -227,8 +227,8 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(19, BaseType.UINT8, "max_cadence"), // rpm
             new FieldDefinitionPrimitive(20, BaseType.UINT16, "avg_power"), // watt
             new FieldDefinitionPrimitive(21, BaseType.UINT16, "max_power"), // watt
-            new FieldDefinitionPrimitive(22, BaseType.UINT16, "total_ascent"),
-            new FieldDefinitionPrimitive(23, BaseType.UINT16, "total_descent"),
+            new FieldDefinitionPrimitive(22, BaseType.UINT16, "total_ascent"), // m
+            new FieldDefinitionPrimitive(23, BaseType.UINT16, "total_descent"), // m
             new FieldDefinitionPrimitive(24, BaseType.UINT8, "total_training_effect", 10, 0),
             new FieldDefinitionPrimitive(25, BaseType.UINT16, "first_lap_index"),
             new FieldDefinitionPrimitive(26, BaseType.UINT16, "num_laps"),
@@ -253,8 +253,8 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(46, BaseType.ENUM, "pool_length_unit"),
             new FieldDefinitionPrimitive(47, BaseType.UINT16, "num_active_lengths"),
             new FieldDefinitionPrimitive(48, BaseType.UINT32, "total_work"), // joule
-            new FieldDefinitionPrimitive(49, BaseType.UINT32, "avg_altitude", 5, 500), // m
-            new FieldDefinitionPrimitive(50, BaseType.UINT32, "max_altitude", 5, 500), // m
+            new FieldDefinitionPrimitive(49, BaseType.UINT16, "avg_altitude", 5, 500), // m
+            new FieldDefinitionPrimitive(50, BaseType.UINT16, "max_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(51, BaseType.UINT8, "gps_accuracy"), // m
             new FieldDefinitionPrimitive(52, BaseType.SINT16, "avg_grade", 100, 0), // %
             new FieldDefinitionPrimitive(53, BaseType.SINT16, "avg_pos_grade", 100, 0), // %
@@ -416,6 +416,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(55, BaseType.SINT16, "max_pos_vertical_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(56, BaseType.SINT16, "max_neg_vertical_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(57, BaseType.UINT32, "time_in_hr_zone", 1000, 0), // s
+            new FieldDefinitionPrimitive(62, BaseType.UINT16, "min_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(71, BaseType.UINT16, "wkt_step_index"),
             new FieldDefinitionPrimitive(73, BaseType.UINT16, "avg_swolf"),
             new FieldDefinitionPrimitive(80, BaseType.UINT8, "avg_fractional_cadence", 128, 0), // rpm
@@ -432,6 +433,10 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(109, BaseType.UINT8, "max_cadence_position"), // rpm
             new FieldDefinitionPrimitive(110, BaseType.UINT32, "enhanced_avg_speed", 100, 0), // m/s
             new FieldDefinitionPrimitive(111, BaseType.UINT32, "enhanced_max_speed", 100, 0), // m/s
+            new FieldDefinitionPrimitive(124, BaseType.SINT8, "min_temperature"), // °C
+            new FieldDefinitionPrimitive(158, BaseType.UINT16, "avg_core_temperature", 100, 0), // °C
+            new FieldDefinitionPrimitive(159, BaseType.UINT16, "min_core_temperature", 100, 0), // °C
+            new FieldDefinitionPrimitive(160, BaseType.UINT16, "max_core_temperature", 100, 0), // °C
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
@@ -597,7 +602,20 @@ public class GlobalFITMessage {
 
     public static GlobalFITMessage COURSE = new GlobalFITMessage(31, "COURSE", Arrays.asList(
             new FieldDefinitionPrimitive(4, BaseType.ENUM, "sport"),
-            new FieldDefinitionPrimitive(5, BaseType.STRING, 16, "name")
+            new FieldDefinitionPrimitive(5, BaseType.STRING, 16, "name"),
+            new FieldDefinitionPrimitive(6, BaseType.UINT32Z, "capabilities"),
+            new FieldDefinitionPrimitive(7, BaseType.ENUM, "sub_sport")
+    ));
+
+    public static GlobalFITMessage COURSE_POINT = new GlobalFITMessage(32, "COURSE_POINT", Arrays.asList(
+            new FieldDefinitionPrimitive(1, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(3, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(4, BaseType.UINT32, "distance", 100, 0), // m
+            new FieldDefinitionPrimitive(5, BaseType.ENUM, "type"),
+            new FieldDefinitionPrimitive(6, BaseType.STRING, 16, "name"),
+            new FieldDefinitionPrimitive(8, BaseType.ENUM, "favorite"),
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
     public static GlobalFITMessage TOTALS = new GlobalFITMessage(33, "TOTALS", Arrays.asList(
@@ -835,12 +853,74 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage SEGMENT_LAP = new GlobalFITMessage(142, "SEGMENT_LAP", Arrays.asList(
+            new FieldDefinitionPrimitive(3, BaseType.SINT32, "start_position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(4, BaseType.SINT32, "start_position_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(5, BaseType.SINT32, "end_position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(6, BaseType.SINT32, "end_position_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(9, BaseType.UINT32, "total_distance", 100, 0), // m
+            new FieldDefinitionPrimitive(21, BaseType.UINT16, "total_ascent"), // m
+            new FieldDefinitionPrimitive(22, BaseType.UINT16, "total_descent"), // m
+            new FieldDefinitionPrimitive(23, BaseType.ENUM, "sport"),
+            new FieldDefinitionPrimitive(25, BaseType.SINT32, "nec_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(26, BaseType.SINT32, "nec_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(27, BaseType.SINT32, "swc_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(28, BaseType.SINT32, "swc_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(29, BaseType.STRING, 50, "name"),
+            new FieldDefinitionPrimitive(42, BaseType.SINT8, "avg_temperature"), // °C
+            new FieldDefinitionPrimitive(43, BaseType.SINT8, "max_temperature"), // °C
+            new FieldDefinitionPrimitive(65, BaseType.STRING, 33, "uuid"),
+            new FieldDefinitionPrimitive(89, BaseType.UINT8, "total_fractional_ascent", 100, 0), // m
+            new FieldDefinitionPrimitive(90, BaseType.UINT8, "total_fractional_descent", 100, 0), // m
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
+    ));
+
+    public static GlobalFITMessage MEMO_GLOB = new GlobalFITMessage(145, "MEMO_GLOB", Arrays.asList(
+            new FieldDefinitionPrimitive(1, BaseType.UINT16, "mesg_num"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT16, "parent_index"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT8, "field_num"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT8Z, "data"),
+            new FieldDefinitionPrimitive(250, BaseType.UINT32, "part_index")
+    ));
+
     public static GlobalFITMessage SENSOR_SETTINGS = new GlobalFITMessage(147, "SENSOR_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32Z, "ant_id"),
             new FieldDefinitionPrimitive(2, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(45, BaseType.ENUM, "use_for_speed"),
             new FieldDefinitionPrimitive(46, BaseType.ENUM, "use_for_distance"),
             new FieldDefinitionPrimitive(51, BaseType.ENUM, "connection_type"),
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
+    ));
+
+    public static GlobalFITMessage SEGMENT_ID = new GlobalFITMessage(148, "SEGMENT_ID", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.STRING, 50, "name"),
+            new FieldDefinitionPrimitive(1, BaseType.STRING, 33, "uuid"),
+            new FieldDefinitionPrimitive(2, BaseType.ENUM, "sport"),
+            new FieldDefinitionPrimitive(3, BaseType.ENUM, "enabled"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT32, "user_profile_primary_key"),
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, "device_id"),
+            new FieldDefinitionPrimitive(6, BaseType.UINT8, "default_race_leader"),
+            new FieldDefinitionPrimitive(7, BaseType.ENUM, "delete_status"),
+            new FieldDefinitionPrimitive(8, BaseType.ENUM, "selection_type")
+    ));
+
+    public static GlobalFITMessage SEGMENT_LEADERBOARD_ENTRY = new GlobalFITMessage(149, "SEGMENT_LEADERBOARD_ENTRY", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.STRING, 100, "name"),
+            new FieldDefinitionPrimitive(1, BaseType.ENUM, "type"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "group_primary_key"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT32, "activity_id"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT32, "segment_time", 1000, 0), // s
+            new FieldDefinitionPrimitive(5, BaseType.STRING, 22, "activity_id_string"),
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
+    ));
+
+    public static GlobalFITMessage SEGMENT_POINT = new GlobalFITMessage(150, "SEGMENT_POINT", Arrays.asList(
+            new FieldDefinitionPrimitive(1, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(3, BaseType.UINT32, "distance", 100, 0), // m
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, 6,"leader_time",  FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
+            new FieldDefinitionPrimitive(6, BaseType.UINT32, "enhanced_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
@@ -1144,16 +1224,34 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(9, BaseType.UINT32, "start_time"),
             new FieldDefinitionPrimitive(13, BaseType.UINT16, "total_ascent"), // meter
             new FieldDefinitionPrimitive(14, BaseType.UINT16, "total_descent"), // meter
-            new FieldDefinitionPrimitive(21, BaseType.SINT32, "start_position_lat"),
-            new FieldDefinitionPrimitive(22, BaseType.SINT32, "start_position_long"),
-            new FieldDefinitionPrimitive(23, BaseType.SINT32, "end_position_lat"),
-            new FieldDefinitionPrimitive(24, BaseType.SINT32, "end_position_long"),
+            new FieldDefinitionPrimitive(21, BaseType.SINT32, "start_position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(22, BaseType.SINT32, "start_position_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(23, BaseType.SINT32, "end_position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(24, BaseType.SINT32, "end_position_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(25, BaseType.UINT32, "max_speed", 1000, 0), // meter / second
             new FieldDefinitionPrimitive(26, BaseType.SINT32, "avg_vert_speed", 1000, 0), // meter / second
             new FieldDefinitionPrimitive(27, BaseType.UINT32, "end_time"),
             new FieldDefinitionPrimitive(28, BaseType.UINT32, "total_calories"), // kcal
             new FieldDefinitionPrimitive(74, BaseType.UINT32, "start_elevation", 5, 500), // meter
             new FieldDefinitionPrimitive(101, BaseType.UINT32, "total_moving_time", 1000, 0), // seconds
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
+    ));
+
+    public static GlobalFITMessage SPLIT_SUMMARY = new GlobalFITMessage(313, "SPLIT_SUMMARY", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "split_type"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "num_splits"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT32, "total_timer_time", 1000, 0), // s
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, "total_distance", 100, 0), // m
+            new FieldDefinitionPrimitive(6, BaseType.UINT32, "avg_speed", 1000, 0), // m/s
+            new FieldDefinitionPrimitive(7, BaseType.UINT32, "max_speed", 1000, 0), // m/s
+            new FieldDefinitionPrimitive(8, BaseType.UINT16, "total_ascent"), // m
+            new FieldDefinitionPrimitive(9, BaseType.UINT16, "total_descent"), // m
+            new FieldDefinitionPrimitive(10, BaseType.UINT8, "avg_heart_rate"), // bpm
+            new FieldDefinitionPrimitive(11, BaseType.UINT8, "max_heart_rate"), // bpm
+            new FieldDefinitionPrimitive(12, BaseType.SINT32, "avg_vert_speed", 1000, 0), // m/s
+            new FieldDefinitionPrimitive(13, BaseType.UINT32,  "total_calories"), // kcal
+            new FieldDefinitionPrimitive(77, BaseType.UINT32,  "total_moving_time", 1000, 0), // s
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
@@ -1331,6 +1429,7 @@ public class GlobalFITMessage {
         put(27, WORKOUT_STEP);
         put(30, WEIGHT_SCALE);
         put(31, COURSE);
+        put(32, COURSE_POINT);
         put(33, TOTALS);
         put(34, ACTIVITY);
         put(35, SOFTWARE);
@@ -1352,7 +1451,12 @@ public class GlobalFITMessage {
         put(132, HR);
         put(140, PHYSIOLOGICAL_METRICS);
         put(141, EPO_STATUS);
+        put(142, SEGMENT_LAP);
+        put(145, MEMO_GLOB);
         put(147, SENSOR_SETTINGS);
+        put(148, SEGMENT_ID);
+        put(149, SEGMENT_LEADERBOARD_ENTRY);
+        put(150, SEGMENT_POINT);
         put(151, SEGMENT_FILE);
         put(158, WORKOUT_SESSION);
         put(159, WATCHFACE_SETTINGS);
@@ -1384,6 +1488,7 @@ public class GlobalFITMessage {
         put(307, HSA_RESPIRATION_DATA);
         put(308, HSA_HEART_RATE_DATA);
         put(312, SPLIT);
+        put(313, SPLIT_SUMMARY);
         put(314, HSA_BODY_BATTERY_DATA);
         put(315, HSA_EVENT);
         put(319, TANK_UPDATE);
