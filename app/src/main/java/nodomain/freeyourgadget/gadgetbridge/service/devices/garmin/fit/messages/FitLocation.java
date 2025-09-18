@@ -28,59 +28,49 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitTotals extends RecordData {
-    public FitTotals(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitLocation extends RecordData {
+    public FitLocation(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 33) {
-            throw new IllegalArgumentException("FitTotals expects global messages of " + 33 + ", got " + globalNumber);
+        if (globalNumber != 29) {
+            throw new IllegalArgumentException("FitLocation expects global messages of " + 29 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Long getTimerTime() {
-        return (Long) getFieldByNumber(0);
+    public String getName() {
+        return (String) getFieldByNumber(0);
     }
 
     @Nullable
-    public Long getDistance() {
-        return (Long) getFieldByNumber(1);
+    public Double getPositionLat() {
+        return (Double) getFieldByNumber(1);
     }
 
     @Nullable
-    public Long getCalories() {
-        return (Long) getFieldByNumber(2);
+    public Double getPositionLong() {
+        return (Double) getFieldByNumber(2);
     }
 
     @Nullable
-    public Integer getSport() {
+    public Integer getSymbol() {
         return (Integer) getFieldByNumber(3);
     }
 
     @Nullable
-    public Long getElapsedTime() {
-        return (Long) getFieldByNumber(4);
+    public Float getAltitude() {
+        return (Float) getFieldByNumber(4);
     }
 
     @Nullable
-    public Integer getSessions() {
+    public Integer getEnhancedAltitude() {
         return (Integer) getFieldByNumber(5);
     }
 
     @Nullable
-    public Long getActiveTime() {
-        return (Long) getFieldByNumber(6);
-    }
-
-    @Nullable
-    public Integer getSportIndex() {
-        return (Integer) getFieldByNumber(9);
-    }
-
-    @Nullable
-    public String getActivityProfile() {
-        return (String) getFieldByNumber(10);
+    public String getDescription() {
+        return (String) getFieldByNumber(6);
     }
 
     @Nullable
@@ -98,51 +88,41 @@ public class FitTotals extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(33);
+            super(29);
         }
 
-        public Builder setTimerTime(final Long value) {
+        public Builder setName(final String value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setDistance(final Long value) {
+        public Builder setPositionLat(final Double value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setCalories(final Long value) {
+        public Builder setPositionLong(final Double value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setSport(final Integer value) {
+        public Builder setSymbol(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setElapsedTime(final Long value) {
+        public Builder setAltitude(final Float value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setSessions(final Integer value) {
+        public Builder setEnhancedAltitude(final Integer value) {
             setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setActiveTime(final Long value) {
+        public Builder setDescription(final String value) {
             setFieldByNumber(6, value);
-            return this;
-        }
-
-        public Builder setSportIndex(final Integer value) {
-            setFieldByNumber(9, value);
-            return this;
-        }
-
-        public Builder setActivityProfile(final String value) {
-            setFieldByNumber(10, value);
             return this;
         }
 
@@ -157,8 +137,8 @@ public class FitTotals extends RecordData {
         }
 
         @Override
-        public FitTotals build() {
-            return (FitTotals) super.build();
+        public FitLocation build() {
+            return (FitLocation) super.build();
         }
     }
 }

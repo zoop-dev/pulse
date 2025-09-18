@@ -176,6 +176,16 @@ public class FitUserProfile extends RecordData {
     }
 
     @Nullable
+    public Float getLtspeed() {
+        return (Float) getFieldByNumber(37);
+    }
+
+    @Nullable
+    public Long getTimeLastLthrUpdate() {
+        return (Long) getFieldByNumber(41);
+    }
+
+    @Nullable
     public Type getDepthSetting() {
         return (Type) getFieldByNumber(47);
     }
@@ -183,6 +193,11 @@ public class FitUserProfile extends RecordData {
     @Nullable
     public Long getDiveCount() {
         return (Long) getFieldByNumber(49);
+    }
+
+    @Nullable
+    public Integer getGenderX() {
+        return (Integer) getFieldByNumber(62);
     }
 
     @Nullable
@@ -333,6 +348,16 @@ public class FitUserProfile extends RecordData {
             return this;
         }
 
+        public Builder setLtspeed(final Float value) {
+            setFieldByNumber(37, value);
+            return this;
+        }
+
+        public Builder setTimeLastLthrUpdate(final Long value) {
+            setFieldByNumber(41, value);
+            return this;
+        }
+
         public Builder setDepthSetting(final Type value) {
             setFieldByNumber(47, value);
             return this;
@@ -340,6 +365,11 @@ public class FitUserProfile extends RecordData {
 
         public Builder setDiveCount(final Long value) {
             setFieldByNumber(49, value);
+            return this;
+        }
+
+        public Builder setGenderX(final Integer value) {
+            setFieldByNumber(62, value);
             return this;
         }
 

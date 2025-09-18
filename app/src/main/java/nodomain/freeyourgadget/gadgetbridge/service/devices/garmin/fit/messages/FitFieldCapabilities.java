@@ -28,64 +28,34 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitTotals extends RecordData {
-    public FitTotals(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitFieldCapabilities extends RecordData {
+    public FitFieldCapabilities(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 33) {
-            throw new IllegalArgumentException("FitTotals expects global messages of " + 33 + ", got " + globalNumber);
+        if (globalNumber != 39) {
+            throw new IllegalArgumentException("FitFieldCapabilities expects global messages of " + 39 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Long getTimerTime() {
-        return (Long) getFieldByNumber(0);
+    public Integer getFile() {
+        return (Integer) getFieldByNumber(0);
     }
 
     @Nullable
-    public Long getDistance() {
-        return (Long) getFieldByNumber(1);
+    public Integer getMesgNum() {
+        return (Integer) getFieldByNumber(1);
     }
 
     @Nullable
-    public Long getCalories() {
-        return (Long) getFieldByNumber(2);
+    public Integer getFieldNum() {
+        return (Integer) getFieldByNumber(2);
     }
 
     @Nullable
-    public Integer getSport() {
+    public Integer getCount() {
         return (Integer) getFieldByNumber(3);
-    }
-
-    @Nullable
-    public Long getElapsedTime() {
-        return (Long) getFieldByNumber(4);
-    }
-
-    @Nullable
-    public Integer getSessions() {
-        return (Integer) getFieldByNumber(5);
-    }
-
-    @Nullable
-    public Long getActiveTime() {
-        return (Long) getFieldByNumber(6);
-    }
-
-    @Nullable
-    public Integer getSportIndex() {
-        return (Integer) getFieldByNumber(9);
-    }
-
-    @Nullable
-    public String getActivityProfile() {
-        return (String) getFieldByNumber(10);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
     }
 
     @Nullable
@@ -98,56 +68,26 @@ public class FitTotals extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(33);
+            super(39);
         }
 
-        public Builder setTimerTime(final Long value) {
+        public Builder setFile(final Integer value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setDistance(final Long value) {
+        public Builder setMesgNum(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setCalories(final Long value) {
+        public Builder setFieldNum(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setSport(final Integer value) {
+        public Builder setCount(final Integer value) {
             setFieldByNumber(3, value);
-            return this;
-        }
-
-        public Builder setElapsedTime(final Long value) {
-            setFieldByNumber(4, value);
-            return this;
-        }
-
-        public Builder setSessions(final Integer value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setActiveTime(final Long value) {
-            setFieldByNumber(6, value);
-            return this;
-        }
-
-        public Builder setSportIndex(final Integer value) {
-            setFieldByNumber(9, value);
-            return this;
-        }
-
-        public Builder setActivityProfile(final String value) {
-            setFieldByNumber(10, value);
-            return this;
-        }
-
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
             return this;
         }
 
@@ -157,8 +97,8 @@ public class FitTotals extends RecordData {
         }
 
         @Override
-        public FitTotals build() {
-            return (FitTotals) super.build();
+        public FitFieldCapabilities build() {
+            return (FitFieldCapabilities) super.build();
         }
     }
 }
