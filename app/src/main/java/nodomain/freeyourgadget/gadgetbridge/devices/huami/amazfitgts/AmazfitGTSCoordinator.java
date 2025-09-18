@@ -43,7 +43,7 @@ public class AmazfitGTSCoordinator extends HuamiCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("Amazfit GTS", Pattern.CASE_INSENSITIVE);
+        return Pattern.compile("Amazfit GTS");
     }
 
     @Override
