@@ -43,7 +43,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitCourse;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitWorkout;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
@@ -87,24 +86,7 @@ public class GarminFitFileInstallHandler implements InstallHandler {
         try (InputStream in = new BufferedInputStream(uriHelper.openInputStream())) {
             rawBytes = FileUtils.readAll(in, 10 * 1024 * 1024); // 10MB
             fitFile = FitFile.parseIncoming(rawBytes);
-
-            final Optional<FitFileId> fitFileIdOpt = fitFile.getRecords().stream()
-                    .filter(r -> r instanceof FitFileId)
-                    .map(r -> (FitFileId) r)
-                    .findFirst();
-
-            if (!fitFileIdOpt.isPresent()) {
-                LOG.error("Fit file has no ID");
-                return;
-            }
-
-            final FitFileId fitFileId = fitFileIdOpt.get();
-            if (fitFileId.getType() == null) {
-                LOG.error("Fit file ID has null type");
-                return;
-            }
-
-            fileType = fitFileId.getType();
+            fileType = fitFile.getFileType();
         } catch (final FitParseException e) {
             LOG.error("Fit file is corrupted", e);
             fitParseException = e;

@@ -90,7 +90,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteF
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.PredefinedLocalMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
@@ -947,7 +946,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 "set alarms",
                 fileTransferHandler.initiateUpload(
                         fitFile.getOutgoingMessage(),
-                        FileType.FILETYPE.SETTINGS
+                        fitFile.getFileType()
                 ).getOutgoingMessage()
         );
     }
@@ -1193,7 +1192,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     garminGpxRouteInstallHandler.getGpxFile(),
                     trackName
             );
-            communicator.sendMessage("upload course file", fileTransferHandler.initiateUpload(gpxRouteFileConverter.getConvertedFile().getOutgoingMessage(), FileType.FILETYPE.DOWNLOAD_COURSE).getOutgoingMessage());
+            final FitFile convertedFile = gpxRouteFileConverter.getConvertedFile();
+            final FileType.FILETYPE fileType = convertedFile.getFileType();
+            communicator.sendMessage("upload " + fileType + " file", fileTransferHandler.initiateUpload(convertedFile.getOutgoingMessage(), fileType).getOutgoingMessage());
         }
 
         final GarminPrgFileInstallHandler prgFileInstallHandler = new GarminPrgFileInstallHandler(uri, getContext());

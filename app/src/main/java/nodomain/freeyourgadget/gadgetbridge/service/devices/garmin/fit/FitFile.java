@@ -1,6 +1,23 @@
+/*  Copyright (C) 2024-2025 Daniele Gobbetti, José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.ChecksumCalculator;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminByteBufferReader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecordDataFactory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MessageWriter;
 
@@ -150,6 +170,31 @@ public class FitFile {
         this.header.generateOutgoingDataPayload(writer);
         writer.writeBytes(temporary.getBytes());
         writer.writeShort(ChecksumCalculator.computeCrc(writer.getBytes(), this.header.getHeaderSize(), writer.getBytes().length - this.header.getHeaderSize()));
+    }
+
+    @Nullable
+    public FileType.FILETYPE getFileType() {
+        if (dataRecords == null || dataRecords.isEmpty()) {
+            LOG.error("FIT file has no dataRecords");
+            return null;
+        }
+
+        final Optional<FitFileId> fitFileIdOpt = dataRecords.stream()
+                .filter(r -> r instanceof FitFileId)
+                .map(r -> (FitFileId) r)
+                .findFirst();
+
+        if (!fitFileIdOpt.isPresent()) {
+            LOG.error("FIT file has no FILE_ID message");
+            return null;
+        }
+
+        final FitFileId fitFileId = fitFileIdOpt.get();
+        FileType.FILETYPE type = fitFileId.getType();
+        if (type == null) {
+            LOG.error("FIT file FILE_ID message has 'type' value null");
+        }
+        return type;
     }
 
     public byte[] getOutgoingMessage() {
