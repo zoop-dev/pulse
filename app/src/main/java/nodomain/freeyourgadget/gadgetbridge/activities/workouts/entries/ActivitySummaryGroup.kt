@@ -176,6 +176,8 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.JUMPS,
                     ActivitySummaryEntries.JUMP_RATE_AVG,
                     ActivitySummaryEntries.JUMP_RATE_MAX,
+                    ActivitySummaryEntries.JUMP_ROPE_LONGEST_STREAK,
+                    ActivitySummaryEntries.JUMP_ROPE_INTERRUPTIONS,
                 )
             )
 

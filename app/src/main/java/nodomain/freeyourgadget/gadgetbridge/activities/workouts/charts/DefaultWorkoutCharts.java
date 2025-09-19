@@ -41,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 
 public class DefaultWorkoutCharts {
     public static List<WorkoutChart> buildDefaultCharts(final Context context,
-                                                        final List<ActivityPoint> activityPoints,
+                                                        final List<? extends ActivityPoint> activityPoints,
                                                         final ActivityKind activityKind) {
         final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
         final List<WorkoutChart> charts = new LinkedList<>();

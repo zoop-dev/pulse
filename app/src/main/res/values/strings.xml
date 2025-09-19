@@ -2578,9 +2578,12 @@
     <string name="avgStrokeRate">Average Stroke Rate</string>
     <string name="maxStrokeRate">Max Stroke Rate</string>
     <string name="strokes">Total Strokes</string>
+    <string name="stroke_rate">Stroke Rate</string>
     <string name="avgJumpRate">Average Jump Rate</string>
     <string name="maxJumpRate">Max Jump Rate</string>
     <string name="totalJumps">Total Jumps</string>
+    <string name="jump_rope_longest_streak">Longest Streak</string>
+    <string name="jump_rope_interruptions">Interruptions</string>
     <string name="averageLapPace">Average Lap Pace</string>
     <string name="swolfIndex">SWOLF</string>
     <string name="swolfAvg">Average swolf</string>

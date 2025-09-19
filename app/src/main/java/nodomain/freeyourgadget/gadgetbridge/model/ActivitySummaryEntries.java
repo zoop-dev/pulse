@@ -154,6 +154,8 @@ public class ActivitySummaryEntries {
     public static final String JUMP_RATE_AVG = "avgJumpRate";
     public static final String JUMP_RATE_MAX = "maxJumpRate";
     public static final String JUMPS = "totalJumps";
+    public static final String JUMP_ROPE_LONGEST_STREAK = "jump_rope_longest_streak";
+    public static final String JUMP_ROPE_INTERRUPTIONS = "jump_rope_interruptions";
 
     public static final String SWIM_STYLE = "swimStyle";
     public static final String SWOLF_INDEX = "swolfIndex";

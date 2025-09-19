@@ -45,6 +45,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslation;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableRowEntry;
@@ -88,6 +89,36 @@ import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiWorkoutGbParser.class);
 
+    public static class HuaweiActivityPoint extends ActivityPoint {
+        private int swolf = -1;
+        private int strokeRate = -1;
+        private int frequency = -1;
+
+        public int getSwolf() {
+            return swolf;
+        }
+
+        public void setSwolf(int swolf) {
+            this.swolf = swolf;
+        }
+
+        public int getStrokeRate() {
+            return strokeRate;
+        }
+
+        public void setStrokeRate(int strokeRate) {
+            this.strokeRate = strokeRate;
+        }
+
+        public int getFrequency() {
+            return frequency;
+        }
+
+        public void setFrequency(int frequency) {
+            this.frequency = frequency;
+        }
+    }
+
     // TODO: Might be nicer to propagate the exceptions, so they can be handled upstream
 
     private final GBDevice gbDevice;
@@ -102,6 +133,82 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
     public BaseActivitySummary parseBinaryData(final BaseActivitySummary summary, final boolean forDetails) {
         // FIXME Do not use this
         return parseWorkout(summary, forDetails).getSummary();
+    }
+
+    private static WorkoutChart createSwolfChart(final Context context,
+                                                 final List<Entry> swolfDataPoints) {
+        final String label = String.format("%s", context.getString(R.string.swolfIndex));
+        final LineDataSet dataset = DefaultWorkoutCharts.createLineDataSet(context, swolfDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_swolf));
+        return new WorkoutChart(
+                "swolf",
+                context.getString(R.string.swolfIndex),
+                ActivitySummaryEntries.GROUP_SWIMMING,
+                new LineData(dataset),
+                null,
+                DefaultWorkoutCharts.getUnitString(context, ActivitySummaryEntries.UNIT_NONE)
+        );
+    }
+
+    private static WorkoutChart createStrokeRateChart(final Context context,
+                                                      final List<Entry> strokesDataPoints) {
+        final String label = String.format("%s (%s)", context.getString(R.string.stroke_rate), DefaultWorkoutCharts.getUnitString(context, ActivitySummaryEntries.UNIT_STROKES_PER_MINUTE));
+        final LineDataSet dataset = DefaultWorkoutCharts.createLineDataSet(context, strokesDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_stroke_rate));
+        return new WorkoutChart(
+                "strokesRate",
+                context.getString(R.string.stroke_rate),
+                ActivitySummaryEntries.GROUP_STROKES,
+                new LineData(dataset),
+                null,
+                DefaultWorkoutCharts.getUnitString(context, ActivitySummaryEntries.UNIT_STROKES_PER_MINUTE)
+        );
+    }
+
+    private static WorkoutChart createFrequencyChart(final Context context,
+                                                     final List<Entry> frequencyDataPoints) {
+        final String label = String.format("%s (%s)", context.getString(R.string.Speed), DefaultWorkoutCharts.getUnitString(context, ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE));
+        final LineDataSet dataset = DefaultWorkoutCharts.createLineDataSet(context, frequencyDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_speed));
+        return new WorkoutChart(
+                "frequency",
+                context.getString(R.string.Speed),
+                ActivitySummaryEntries.GROUP_JUMPS,
+                new LineData(dataset),
+                null,
+                DefaultWorkoutCharts.getUnitString(context, ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE)
+        );
+    }
+
+    private List<WorkoutChart> buildHuaweiCharts(final Context context,
+                                                 final List<HuaweiActivityPoint> activityPoints) {
+
+        final List<WorkoutChart> charts = new LinkedList<>();
+        final TimestampTranslation tsTranslation = new TimestampTranslation();
+        final List<Entry> swolfDataPoints = new ArrayList<>();
+        final List<Entry> strokeRateDataPoints = new ArrayList<>();
+        final List<Entry> frequencyDataPoints = new ArrayList<>();
+
+        for (int i = 0; i <= activityPoints.size() - 1; i++) {
+            final HuaweiActivityPoint point = activityPoints.get(i);
+            final long tsShorten = tsTranslation.shorten((int) point.getTime().getTime());
+            if (point.getSwolf() >= 0) {
+                swolfDataPoints.add(new Entry(tsShorten, point.getSwolf()));
+            }
+            if (point.getStrokeRate() >= 0) {
+                strokeRateDataPoints.add(new Entry(tsShorten, point.getStrokeRate()));
+            }
+            if (point.getFrequency() >= 0) {
+                frequencyDataPoints.add(new Entry(tsShorten, point.getFrequency()));
+            }
+        }
+        if (!swolfDataPoints.isEmpty()) {
+            charts.add(createSwolfChart(context, swolfDataPoints));
+        }
+        if (!strokeRateDataPoints.isEmpty()) {
+            charts.add(createStrokeRateChart(context, strokeRateDataPoints));
+        }
+        if (!frequencyDataPoints.isEmpty()) {
+            charts.add(createFrequencyChart(context, frequencyDataPoints));
+        }
+        return charts;
     }
 
     @Override
@@ -126,12 +233,13 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 LOG.warn("Failed to find huawei summary for {}", summary.getStartTime());
                 return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
             }
-            final List<ActivityPoint> activityPoints = new ArrayList<>();
+            final List<HuaweiActivityPoint> activityPoints = new ArrayList<>();
             final ActivitySummaryData activitySummaryData = updateBaseSummary(session, huaweiSummaries.get(0), summary, activityPoints);
             final ActivityKind activityKind = ActivityKind.fromCode(summary.getActivityKind());
             final List<WorkoutChart> charts = new LinkedList<>();
             if (!activityPoints.isEmpty()) {
                 charts.addAll(DefaultWorkoutCharts.buildDefaultCharts(context, activityPoints, activityKind));
+                charts.addAll(buildHuaweiCharts(context, activityPoints));
             }
             byte[] recoveryHR = huaweiSummaries.get(0).getRecoveryHeartRates();
             if (recoveryHR != null && recoveryHR.length > 0) {
@@ -421,7 +529,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 summary.getStartTimestamp()
         );
 
-        final List<ActivityPoint> activityPoints = new ArrayList<>();
+        final List<HuaweiActivityPoint> activityPoints = new ArrayList<>();
         updateBaseSummary(session, summary, baseSummary, activityPoints);
 
         session.getBaseActivitySummaryDao().insertOrReplace(baseSummary);
@@ -527,7 +635,8 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
     public ActivitySummaryData updateBaseSummary(final DaoSession session,
                                                  final HuaweiWorkoutSummarySample summary,
-                                                 final BaseActivitySummary baseSummary, final List<ActivityPoint> activityPoints) {
+                                                 final BaseActivitySummary baseSummary,
+                                                 final List<HuaweiActivityPoint> activityPoints) {
 
         ActivitySummaryData summaryData = new ActivitySummaryData();
 
@@ -618,6 +727,15 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 summaryData.add(ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE, oxygenUptake, ActivitySummaryEntries.UNIT_ML_KG_MIN);
             }
 
+            if (summary.getLongestStreak() > 0) {
+                summaryData.add(ActivitySummaryEntries.JUMP_ROPE_LONGEST_STREAK, summary.getLongestStreak(), ActivitySummaryEntries.UNIT_JUMPS);
+            }
+
+            if (summary.getTripped() > 0) {
+                summaryData.add(ActivitySummaryEntries.JUMP_ROPE_INTERRUPTIONS, summary.getTripped(), ActivitySummaryEntries.UNIT_NONE);
+            }
+
+
             Integer summaryMinAltitude = summary.getMinAltitude();
             Integer summaryMaxAltitude = summary.getMaxAltitude();
             Integer elevationGain = summary.getElevationGain();
@@ -676,6 +794,8 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 int sumAltitudeUp = 0;
                 int sumAltitudeDown = 0;
 
+                int maxFrequency = -1;
+
                 //NOTE: The method of retrieving HR zones from the Huawei watch is not discovered. It may not return zones.
                 // So they are calculated based on config.
                 HeartRateZonesConfig HRZonesCfg = null;
@@ -705,8 +825,9 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 int dataIdx = 0;
                 for (HuaweiWorkoutDataSample dataSample : dataSamples) {
 
-                    ActivityPoint ac = new ActivityPoint();
+                    HuaweiActivityPoint ac = new HuaweiActivityPoint();
                     ac.setTime(new Date(dataSample.getTimestamp() * 1000L));
+
 
                     if (HRZonesCfg != null) {
                         int zoneIdx = HRZonesCfg.getZoneByMethod(dataSample.getHeartRate() & 0xFF, zoneCalculateMethod);
@@ -777,12 +898,15 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                             maxSwolf = dataSample.getSwolf();
                         if (dataSample.getSwolf() < minSwolf)
                             minSwolf = dataSample.getSwolf();
+
+                        ac.setSwolf(dataSample.getSwolf());
                     }
                     if (dataSample.getStrokeRate() != -1) {
                         strokeRate += dataSample.getStrokeRate();
                         strokeRateCount += 1;
                         if (dataSample.getStrokeRate() > maxStrokeRate)
                             maxStrokeRate = dataSample.getStrokeRate();
+                        ac.setStrokeRate(dataSample.getStrokeRate());
                     }
                     if (dataSample.getHeartRate() != -1 && dataSample.getHeartRate() != 0) {
                         int hr = dataSample.getHeartRate() & 0xff;
@@ -794,6 +918,11 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                             minHeartRate = hr;
 
                         ac.setHeartRate(dataSample.getHeartRate() & 0xff);
+                    }
+                    if (dataSample.getFrequency() != -1) {
+                        if (dataSample.getFrequency() > maxFrequency)
+                            maxFrequency = dataSample.getFrequency();
+                        ac.setFrequency(dataSample.getFrequency());
                     }
                     if (dataSample.getCalories() != -1)
                         sumCalories += dataSample.getCalories();
@@ -829,7 +958,6 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
                     activityPoints.add(ac);
                 }
-
 
                 if (HRZonesCfg != null) {
                     final double totalTime = Arrays.stream(HRZones).sum();
@@ -894,7 +1022,11 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                 }
 
                 if (avgStepRate > 0) {
-                    summaryData.add(ActivitySummaryEntries.STEP_RATE_AVG, avgStepRate, ActivitySummaryEntries.UNIT_SPM);
+                    if (type == ActivityKind.JUMP_ROPING) {
+                        summaryData.add(ActivitySummaryEntries.JUMP_RATE_AVG, avgStepRate, ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE);
+                    } else {
+                        summaryData.add(ActivitySummaryEntries.STEP_RATE_AVG, avgStepRate, ActivitySummaryEntries.UNIT_SPM);
+                    }
                 }
 
                 if (cadenceCount > 0) {
@@ -983,6 +1115,10 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     if (elevationLoss == null) {
                         elevationLoss = sumAltitudeDown;
                     }
+                }
+
+                if (maxFrequency > 0) {
+                    summaryData.add(ActivitySummaryEntries.JUMP_RATE_MAX, maxFrequency, ActivitySummaryEntries.UNIT_JUMPS_PER_MINUTE);
                 }
             }
 
