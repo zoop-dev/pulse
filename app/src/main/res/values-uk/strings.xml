@@ -3852,4 +3852,7 @@
     <string name="workout_lap">Коло</string>
     <string name="lap_time">Час</string>
     <string name="hr_measurement_continuous">Безперервний</string>
+    <string name="stroke_rate">Частота ударів</string>
+    <string name="jump_rope_longest_streak">Найдовша серія</string>
+    <string name="jump_rope_interruptions">Переривання</string>
 </resources>
