@@ -20,6 +20,7 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RemoteFileSystemCache {
 

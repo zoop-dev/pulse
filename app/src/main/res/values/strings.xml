@@ -1003,6 +1003,7 @@
     <string name="devicestatus_upload_aborted">Upload has been aborted!</string>
     <string name="devicestatus_upload_failed">Upload has failed</string>
     <string name="firmware_update_progress">Upload is in progress\n%1$d%% at %2$.2fkbps (average %3$.2fkbps)\nPart %4$d of %5$d</string>
+    <string name="uploading_resources">Uploading resources…</string>
     <string name="updating_firmware">Flashing firmware…</string>
     <string name="fwapp_install_device_not_supported">File cannot be installed, device not supported.</string>
     <string name="fwapp_install_device_not_ready">File cannot be installed, device not ready.</string>

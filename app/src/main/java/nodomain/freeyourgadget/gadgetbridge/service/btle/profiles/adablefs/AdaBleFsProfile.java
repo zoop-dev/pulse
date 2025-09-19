@@ -41,16 +41,17 @@ import java.util.Vector;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
+import nodomain.freeyourgadget.gadgetbridge.util.GBZipFile;
 import nodomain.freeyourgadget.gadgetbridge.util.RemoteFileSystemCache;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
-import nodomain.freeyourgadget.gadgetbridge.util.ZipFile;
 import nodomain.freeyourgadget.gadgetbridge.util.ZipFileException;
 
-public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends AbstractBleProfile {
+public class AdaBleFsProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile {
     final byte PADDING_BYTE = 0x00;
     final byte REQUEST_CONTINUED = 0x01;
     final byte REQUEST_WRITE_FILE_START = 0x20;
@@ -84,7 +85,6 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
     int chunkSize;
 
     private RemoteFileSystemCache remoteFs;
-
     List<String> listingDirectory;
 
     private static final Logger LOG = LoggerFactory.getLogger(AdaBleFsProfile.class);
@@ -101,7 +101,7 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         // Unzip
         try {
             UriHelper uriHelper = UriHelper.get(uri, context);
-            ZipFile zipPackage = new ZipFile(uriHelper.openInputStream());
+            GBZipFile zipPackage = new GBZipFile(uriHelper.openInputStream());
 
             JSONObject resources_manifest = new JSONObject(new String(zipPackage.getFileFromZip(("resources.json"))));
             JSONArray resources = resources_manifest.getJSONArray("resources");
@@ -127,10 +127,14 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         } catch (Exception e) {
             LOG.error("Unknown error occurred.", e);
         }
-        this.startNextAdaFsAction();
+        try {
+            this.startNextAdaFsAction();
+        } catch (IOException e) {
+            LOG.error("Error while loading resources: ", e);
+        }
     }
 
-    private void startNextAdaFsAction() {
+    private void startNextAdaFsAction() throws IOException {
         if (adaBleFsQueue.size() == 0) {
             return;
         }
@@ -149,11 +153,16 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
     public void enableNotify(TransactionBuilder builder, boolean enable) {
         builder.notify(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), enable);
     }
+
     public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
             UUID charUuid = characteristic.getUuid();
             if (charUuid.equals(UUID_CHARACTERISTIC_FS_TRANSFER)) {
-                handleNextStatus(gatt, characteristic);
+                try {
+                    handleNextStatus(gatt, characteristic);
+                } catch (IOException e) {
+                    LOG.error("Error handling status: ", e);
+                }
                 return true;
             } else {
                 LOG.info("Unexpected onCharacteristicRead: " + GattCharacteristic.toString(characteristic));
@@ -164,7 +173,7 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         return false;
     }
 
-    private void handleNextStatus(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    private void handleNextStatus(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) throws IOException {
         // Determine what we are waiting on
         final byte[] returned = characteristic.getValue();
         // if doing file upload
@@ -233,55 +242,55 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int counter = 0; counter < length; counter++) {
             stringBytes[counter] = returned[28+counter];
         }
-        Map<String, Object> relativeRoot = directoryTree;
-        for(String path: listingDirectory) {
-            relativeRoot = (Map<String, Object>) relativeRoot.get(path);
-        }
+//        Map<String, Object> relativeRoot = directoryTree;
+//        for(String path: listingDirectory) {
+//            relativeRoot = (Map<String, Object>) relativeRoot.get(path);
+//        }
         try {
             String path = new String(stringBytes, "UTF-8");
-            Map<String, Object> here = directoryTree; // TODO Paths returned are relative to where we requested paths from so we need to alter this
-            // TODO Remove first / ?
-            // Split path on /
-            String soFar = "";
-            final String[] paths = path.split("/");
-            for(int counter = 0; counter < paths.length; counter++) {
-                final String dir = paths[counter];
-                soFar = soFar + "/" + dir;
-                if (here.containsKey(dir)) {
-                    Object entry = here.get(dir);
-                    if (counter < (paths.length-1) || isDirectory) {
-                        // If not at last entry in paths, or if the response says this is a directory
-                        if (entry instanceof HashMap) {
-                            // All good, continue;
-                        } else {
-                            // our map doesn't list directory, but this is?
-                            LOG.warn("GadgetBridge cache thinks " + soFar + " is a file, but device thinks it's a directory.");
-                            here.put(dir, new HashMap<String, Object>());
-                        }
-                    } else {
-                        // We are at the last string in paths, and response says this isn't a file
-                        if (entry instanceof String) {
-                            // All good, continue
-                        } else {
-                            LOG.warn("GadgetBridge cache thinks " + soFar + " is a directory, but device thinks it's a file.");
-                            here.put(dir, dir);
-                        }
-                    }
-                } else {
-                    // Our cache doesn't know of soFar
-                    if (counter < (paths.length-1) || isDirectory) {
-                        here.put(dir, new HashMap<String, Object>());
-                    } else {
-                        here.put(dir, dir);
-                    }
-                }
-            }
+//            Map<String, Object> here = directoryTree; // TODO Paths returned are relative to where we requested paths from so we need to alter this
+//            // TODO Remove first / ?
+//            // Split path on /
+//            String soFar = "";
+//            final String[] paths = path.split("/");
+//            for(int counter = 0; counter < paths.length; counter++) {
+//                final String dir = paths[counter];
+//                soFar = soFar + "/" + dir;
+//                if (here.containsKey(dir)) {
+//                    Object entry = here.get(dir);
+//                    if (counter < (paths.length-1) || isDirectory) {
+//                        // If not at last entry in paths, or if the response says this is a directory
+//                        if (entry instanceof HashMap) {
+//                            // All good, continue;
+//                        } else {
+//                            // our map doesn't list directory, but this is?
+//                            LOG.warn("GadgetBridge cache thinks " + soFar + " is a file, but device thinks it's a directory.");
+//                            here.put(dir, new HashMap<String, Object>());
+//                        }
+//                    } else {
+//                        // We are at the last string in paths, and response says this isn't a file
+//                        if (entry instanceof String) {
+//                            // All good, continue
+//                        } else {
+//                            LOG.warn("GadgetBridge cache thinks " + soFar + " is a directory, but device thinks it's a file.");
+//                            here.put(dir, dir);
+//                        }
+//                    }
+//                } else {
+//                    // Our cache doesn't know of soFar
+//                    if (counter < (paths.length-1) || isDirectory) {
+//                        here.put(dir, new HashMap<String, Object>());
+//                    } else {
+//                        here.put(dir, dir);
+//                    }
+//                }
+//            }
         } catch (UnsupportedEncodingException e) {
             // Pretty sure this branch will never happen
         }
-        if (entryNum == totalEntries) {
-            relativeRoot.put(".", ".");
-        }
+//        if (entryNum == totalEntries) {
+//            relativeRoot.put(".", ".");
+//        }
         return entryNum == totalEntries;
     }
 
@@ -310,7 +319,7 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         return true;
     }
 
-    private boolean checkContinueFileUpload(byte[] returned) {
+    private boolean checkContinueFileUpload(byte[] returned) throws IOException {
         /**
          * Check that a file upload command has completed
          *
@@ -329,11 +338,11 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
     }
 
     @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+    public boolean onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
         return onCharacteristicRead(gatt, characteristic, BluetoothGatt.GATT_SUCCESS);
     }
 
-    private void uploadNextFileChunk() {
+    private void uploadNextFileChunk() throws IOException {
         final AdaBleFsAction nextAction = adaBleFsQueue.getFirst();
         final int toSendSize = Math.min(chunkSize, nextAction.data.length - bytesOfFileWritten);
         ArrayList<Byte> command = new ArrayList<>();
@@ -356,10 +365,10 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int i = 0; i < command.size(); i++) {
             bytes[i] = command.get(i);
         }
-        TransactionBuilder builder = new TransactionBuilder("Upload file chunk");
+        TransactionBuilder builder = performInitialized("Upload file chunk");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), bytes);
         builder.read(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER));
-        builder.queue(getQueue());
+        builder.queue();
     }
 
     private void uploadFileInitialise() {
@@ -371,33 +380,33 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         // then uploadFileStart()
     }
 
-    private TriState directoryExists(String[] directoryList) {
-        Map<String, Object> here = directoryTree;
-        String[] soFar;
-        String totalPath = "/";
-        for(String directory: directoryList) {
-            if (here.containsKey(directory)) {
-                Object entry = here.get(directory);
-                if (entry instanceof HashMap) {
-                    here = (Map<String, Object>) entry;
-                    totalPath += directory + "/";
-                } else {
-                    // Not a HashMap, must be a string then and so this is a file, not a directory
-                    return TriState.FALSE;
-                }
-            } else if (here.containsKey(".")) {
-                // We have listed this directory, and the requested path does not exist
-                return TriState.FALSE;
-            }
-            // Request directory listing for here
-            totalPath += directory;
-            requestListDirectory(totalPath);
-            return TriState.UNKNOWN;
-        }
-        return TriState.TRUE;
-    }
+//    private TriState directoryExists(String[] directoryList) throws IOException {
+//        Map<String, Object> here = directoryTree;
+//        String[] soFar;
+//        String totalPath = "/";
+//        for(String directory: directoryList) {
+//            if (here.containsKey(directory)) {
+//                Object entry = here.get(directory);
+//                if (entry instanceof HashMap) {
+//                    here = (Map<String, Object>) entry;
+//                    totalPath += directory + "/";
+//                } else {
+//                    // Not a HashMap, must be a string then and so this is a file, not a directory
+//                    return TriState.FALSE;
+//                }
+//            } else if (here.containsKey(".")) {
+//                // We have listed this directory, and the requested path does not exist
+//                return TriState.FALSE;
+//            }
+//            // Request directory listing for here
+//            totalPath += directory;
+//            requestListDirectory(totalPath);
+//            return TriState.UNKNOWN;
+//        }
+//        return TriState.TRUE;
+//    }
 
-    private void uploadFileStart() {
+    private void uploadFileStart() throws IOException {
         bytesOfFileWritten = 0;
         // TODO Should this be the time we upload, or should it somehow be the timestamp of the
         // resources.zip archive file
@@ -429,14 +438,14 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int i = 0; i < command.size(); i++) {
             bytes[i] = command.get(i);
         }
-        TransactionBuilder builder = new TransactionBuilder("Upload file start");
+        TransactionBuilder builder = performInitialized("Upload file start");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), bytes);
         builder.read(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER));
-        builder.queue(getQueue());
+        builder.queue();
         return;
     }
 
-    private void requestListDirectory(String path) {
+    private void requestListDirectory(String path) throws IOException {
         Vector<Byte> command = new Vector<Byte>();
         command.add(REQUEST_LIST_DIRECTORY);
         command.add(PADDING_BYTE);
@@ -451,14 +460,14 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int i = 0; i < command.size(); i++) {
             bytes[i] = command.get(i);
         }
-        TransactionBuilder builder = new TransactionBuilder("List directory");
+        TransactionBuilder builder = performInitialized("List directory");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), bytes);
         builder.read(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER));
-        builder.queue(getQueue());
+        builder.queue();
         listingDirectory = Arrays.asList(path.split("/"));
         return;
     }
-    private void deleteFile() {
+    private void deleteFile() throws IOException {
         final AdaBleFsAction nextAction = adaBleFsQueue.getFirst();
         Vector<Byte> command = new Vector<Byte>();
         command.add(REQUEST_DELETE_FILE);
@@ -474,14 +483,14 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int i = 0; i < command.size(); i++) {
             bytes[i] = command.get(i);
         }
-        TransactionBuilder builder = new TransactionBuilder("Delete file or directory");
+        TransactionBuilder builder = performInitialized("Delete file or directory");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), bytes);
         builder.read(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER));
-        builder.queue(getQueue());
+        builder.queue();
         return;
     }
 
-    private void makeDirectory() {
+    private void makeDirectory() throws IOException {
         final AdaBleFsAction nextAction = adaBleFsQueue.getFirst();
         long unixTime = System.currentTimeMillis() / 1000L;
         Vector<Byte> command = new Vector<Byte>();
@@ -510,14 +519,14 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int i = 0; i < command.size(); i++) {
             bytes[i] = command.get(i);
         }
-        TransactionBuilder builder = new TransactionBuilder("Create directory");
+        TransactionBuilder builder = performInitialized("Create directory");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), bytes);
         builder.read(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER));
-        builder.queue(getQueue());
+        builder.queue();
         return;
     }
 
-    private void moveFileOrDirectory() {
+    private void moveFileOrDirectory() throws IOException {
         final AdaBleFsAction nextAction = adaBleFsQueue.getFirst();
         long unixTime = System.currentTimeMillis() / 1000L;
         Vector<Byte> command = new Vector<Byte>();
@@ -540,10 +549,10 @@ public class AdaBleFsProfile<T extends AbstractBTLEDeviceSupport> extends Abstra
         for(int i = 0; i < command.size(); i++) {
             bytes[i] = command.get(i);
         }
-        TransactionBuilder builder = new TransactionBuilder("Move file or directory");
+        TransactionBuilder builder = performInitialized("Move file or directory");
         builder.write(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER), bytes);
         builder.read(getCharacteristic(UUID_CHARACTERISTIC_FS_TRANSFER));
-        builder.queue(getQueue());
+        builder.queue();
         return;
     }
 

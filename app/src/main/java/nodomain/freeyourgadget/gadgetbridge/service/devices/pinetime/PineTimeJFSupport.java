@@ -62,6 +62,7 @@ import no.nordicsemi.android.dfu.DfuServiceInitiator;
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
@@ -91,15 +92,13 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.adablefs.AdaBleFsProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.ResourceUploadProgressListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.ResourceUploadProgressListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.adablefs.AdaBleFsProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertNotificationProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.NewAlert;
@@ -563,7 +562,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     public void installResource(Uri uri) {
         try {
-            gbDevice.setBusyTask("resources upgrade");
+            gbDevice.setBusyTask(R.string.uploading_resources, getContext());
             adaBleFsProfile.loadResources(uri, getContext(), getQueue());
 
             LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR)
@@ -574,7 +573,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             );
         } catch (Exception ex) {
             GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
-            if (gbDevice.isBusy() && gbDevice.getBusyTask().equals("resources upgrade")) {
+            if (gbDevice.isBusy() && gbDevice.getBusyTask().equals(getContext().getString(R.string.uploading_resources))) {
                 gbDevice.unsetBusyTask();
             }
         }

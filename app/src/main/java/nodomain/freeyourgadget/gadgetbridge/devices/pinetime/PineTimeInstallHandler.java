@@ -17,8 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.pinetime;
 
 import android.app.Activity;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import android.content.Context;
 import android.net.Uri;
 
