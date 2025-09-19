@@ -1,3 +1,19 @@
+/*  Copyright (C) 2024-2025 Daniele Gobbetti, José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
 import android.content.Intent;
@@ -91,6 +107,13 @@ public class FileTransferHandler implements MessageHandler {
         download.setCurrentlyDownloading(new FileFragment(new DirectoryEntry(0, FileType.FILETYPE.DIRECTORY, 0, 0, 0, 0, null)));
         return new DownloadRequestMessage(0, 0, DownloadRequestMessage.REQUEST_TYPE.NEW, 0, 0);
     }
+
+    public DownloadRequestMessage initiateDebugDownload() {
+        DirectoryEntry deviceXml = new DirectoryEntry(0xFFFD, FileType.FILETYPE.DEVICE_XML, 0xFFFD, 0, 0, 0, new Date());
+        download.setCurrentlyDownloading(new FileFragment(deviceXml));
+        return new DownloadRequestMessage(deviceXml.getFileIndex(), 0, DownloadRequestMessage.REQUEST_TYPE.NEW, 0, 0);
+    }
+
 //    public DownloadRequestMessage downloadSettings() {
 //        download.setCurrentlyDownloading(new FileFragment(new DirectoryEntry(0, FileType.FILETYPE.SETTINGS, 0, 0, 0, 0, null)));
 //        return new DownloadRequestMessage(0, 0, DownloadRequestMessage.REQUEST_TYPE.NEW, 0, 0);
@@ -199,10 +222,11 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
                 final DirectoryEntry directoryEntry = new DirectoryEntry(fileIndex, filetype, fileNumber, specificFlags, fileFlags, fileSize, fileDate);
                 if (directoryEntry.filetype == null) {
                     // discard unsupported files
-                    LOG.warn("Unsupported directory entry of type {}/{}", fileDataType, fileSubType);
+                    LOG.warn("Unsupported directory entry of type {}/{}: {}", fileDataType, fileSubType, directoryEntry);
                     continue;
                 }
                 if (!FILE_TYPES_TO_PROCESS.contains(directoryEntry.filetype) && !fetchUnknownFiles) {
+                    LOG.debug("Skipping directory entry: {}", directoryEntry);
                     continue;
                 }
                 if (fileIndex == 0 && fileDataType == 0 && fileSubType == 0 && fileNumber == 0 && specificFlags == 0 && fileFlags == 0 && fileSize == 0) {

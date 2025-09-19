@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCore;
@@ -444,6 +445,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     public void onFetchRecordedData(final int dataTypes) {
         if (this.supportedFileTypeList.isEmpty()) {
             LOG.warn("No known supported file types");
+            return;
+        }
+
+        if (dataTypes == RecordedDataTypes.TYPE_DEBUGLOGS){
+            sendOutgoingMessage("fetch debug data", fileTransferHandler.initiateDebugDownload());
             return;
         }
 
