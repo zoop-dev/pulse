@@ -99,13 +99,13 @@ public class FitBikeProfile extends RecordData {
     }
 
     @Nullable
-    public Integer getAutoWheelCal() {
-        return (Integer) getFieldByNumber(12);
+    public Boolean getAutoWheelCal() {
+        return (Boolean) getFieldByNumber(12);
     }
 
     @Nullable
-    public Integer getAutoPowerZero() {
-        return (Integer) getFieldByNumber(13);
+    public Boolean getAutoPowerZero() {
+        return (Boolean) getFieldByNumber(13);
     }
 
     @Nullable
@@ -114,23 +114,23 @@ public class FitBikeProfile extends RecordData {
     }
 
     @Nullable
-    public Integer getSpdEnabled() {
-        return (Integer) getFieldByNumber(15);
+    public Boolean getSpdEnabled() {
+        return (Boolean) getFieldByNumber(15);
     }
 
     @Nullable
-    public Integer getCadEnabled() {
-        return (Integer) getFieldByNumber(16);
+    public Boolean getCadEnabled() {
+        return (Boolean) getFieldByNumber(16);
     }
 
     @Nullable
-    public Integer getSpdcadEnabled() {
-        return (Integer) getFieldByNumber(17);
+    public Boolean getSpdcadEnabled() {
+        return (Boolean) getFieldByNumber(17);
     }
 
     @Nullable
-    public Integer getPowerEnabled() {
-        return (Integer) getFieldByNumber(18);
+    public Boolean getPowerEnabled() {
+        return (Boolean) getFieldByNumber(18);
     }
 
     @Nullable
@@ -139,8 +139,8 @@ public class FitBikeProfile extends RecordData {
     }
 
     @Nullable
-    public Integer getEnabled() {
-        return (Integer) getFieldByNumber(20);
+    public Boolean getEnabled() {
+        return (Boolean) getFieldByNumber(20);
     }
 
     @Nullable
@@ -203,8 +203,8 @@ public class FitBikeProfile extends RecordData {
     }
 
     @Nullable
-    public Integer getShimanoDi2Enabled() {
-        return (Integer) getFieldByNumber(44);
+    public Boolean getShimanoDi2Enabled() {
+        return (Boolean) getFieldByNumber(44);
     }
 
     @Nullable
@@ -280,12 +280,12 @@ public class FitBikeProfile extends RecordData {
             return this;
         }
 
-        public Builder setAutoWheelCal(final Integer value) {
+        public Builder setAutoWheelCal(final Boolean value) {
             setFieldByNumber(12, value);
             return this;
         }
 
-        public Builder setAutoPowerZero(final Integer value) {
+        public Builder setAutoPowerZero(final Boolean value) {
             setFieldByNumber(13, value);
             return this;
         }
@@ -295,22 +295,22 @@ public class FitBikeProfile extends RecordData {
             return this;
         }
 
-        public Builder setSpdEnabled(final Integer value) {
+        public Builder setSpdEnabled(final Boolean value) {
             setFieldByNumber(15, value);
             return this;
         }
 
-        public Builder setCadEnabled(final Integer value) {
+        public Builder setCadEnabled(final Boolean value) {
             setFieldByNumber(16, value);
             return this;
         }
 
-        public Builder setSpdcadEnabled(final Integer value) {
+        public Builder setSpdcadEnabled(final Boolean value) {
             setFieldByNumber(17, value);
             return this;
         }
 
-        public Builder setPowerEnabled(final Integer value) {
+        public Builder setPowerEnabled(final Boolean value) {
             setFieldByNumber(18, value);
             return this;
         }
@@ -320,7 +320,7 @@ public class FitBikeProfile extends RecordData {
             return this;
         }
 
-        public Builder setEnabled(final Integer value) {
+        public Builder setEnabled(final Boolean value) {
             setFieldByNumber(20, value);
             return this;
         }
@@ -370,7 +370,7 @@ public class FitBikeProfile extends RecordData {
             return this;
         }
 
-        public Builder setShimanoDi2Enabled(final Integer value) {
+        public Builder setShimanoDi2Enabled(final Boolean value) {
             setFieldByNumber(44, value);
             return this;
         }

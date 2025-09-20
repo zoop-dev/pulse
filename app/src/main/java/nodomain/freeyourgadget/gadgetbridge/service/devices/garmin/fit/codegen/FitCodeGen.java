@@ -296,6 +296,7 @@ public class FitCodeGen {
             return switch (primitive.getType()) {
                 case ALARM -> LocalTime.class;
                 case ARRAY -> Number[].class;
+                case BOOLEAN -> Boolean.class;
                 case DAY_OF_WEEK -> DayOfWeek.class;
                 case EXERCISE_CATEGORY -> FieldDefinitionExerciseCategory.ExerciseCategory[].class;
                 case ALARM_LABEL -> FieldDefinitionAlarmLabel.Label.class;

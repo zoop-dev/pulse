@@ -4,6 +4,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarm;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionArray;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBoolean;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionDayOfWeek;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
@@ -30,6 +31,7 @@ public class FieldDefinitionFactory {
         return switch (field) {
             case ALARM -> new FieldDefinitionAlarm(localNumber, size, baseType, name);
             case ARRAY -> new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
+            case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name);
             case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
             case EXERCISE_CATEGORY -> new FieldDefinitionExerciseCategory(localNumber, size, baseType, name);
             case ALARM_LABEL -> new FieldDefinitionAlarmLabel(localNumber, size, baseType, name);
@@ -54,6 +56,7 @@ public class FieldDefinitionFactory {
     public enum FIELD {
         ALARM,
         ARRAY,
+        BOOLEAN,
         DAY_OF_WEEK,
         EXERCISE_CATEGORY,
         ALARM_LABEL,

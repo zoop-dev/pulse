@@ -131,15 +131,15 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(9, BaseType.UINT16, "auto_wheelsize", 1000, 0), // m
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "bike_weight", 10, 0), // kg
             new FieldDefinitionPrimitive(11, BaseType.UINT16, "power_cal_factor", 10, 0), // %
-            new FieldDefinitionPrimitive(12, BaseType.ENUM, "auto_wheel_cal"),
-            new FieldDefinitionPrimitive(13, BaseType.ENUM, "auto_power_zero"),
+            new FieldDefinitionPrimitive(12, BaseType.ENUM, "auto_wheel_cal", FieldDefinitionFactory.FIELD.BOOLEAN),
+            new FieldDefinitionPrimitive(13, BaseType.ENUM, "auto_power_zero", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(14, BaseType.UINT8, "id"),
-            new FieldDefinitionPrimitive(15, BaseType.ENUM, "spd_enabled"),
-            new FieldDefinitionPrimitive(16, BaseType.ENUM, "cad_enabled"),
-            new FieldDefinitionPrimitive(17, BaseType.ENUM, "spdcad_enabled"),
-            new FieldDefinitionPrimitive(18, BaseType.ENUM, "power_enabled"),
+            new FieldDefinitionPrimitive(15, BaseType.ENUM, "spd_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
+            new FieldDefinitionPrimitive(16, BaseType.ENUM, "cad_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
+            new FieldDefinitionPrimitive(17, BaseType.ENUM, "spdcad_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
+            new FieldDefinitionPrimitive(18, BaseType.ENUM, "power_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(19, BaseType.UINT8, "crank_length", 2, -100), // mm
-            new FieldDefinitionPrimitive(20, BaseType.ENUM, "enabled"),
+            new FieldDefinitionPrimitive(20, BaseType.ENUM, "enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(21, BaseType.UINT8Z, "bike_spd_ant_id_trans_type"),
             new FieldDefinitionPrimitive(22, BaseType.UINT8Z, "bike_cad_ant_id_trans_type"),
             new FieldDefinitionPrimitive(23, BaseType.UINT8Z, "bike_spdcad_ant_id_trans_type"),
@@ -149,7 +149,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(39, BaseType.UINT8Z, "front_gear", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(40, BaseType.UINT8Z, "rear_gear_num"),
             new FieldDefinitionPrimitive(41, BaseType.UINT8Z, "rear_gear", FieldDefinitionFactory.FIELD.ARRAY),
-            new FieldDefinitionPrimitive(44, BaseType.ENUM, "shimano_di2_enabled"),
+            new FieldDefinitionPrimitive(44, BaseType.ENUM, "shimano_di2_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
