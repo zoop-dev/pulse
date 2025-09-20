@@ -3657,7 +3657,7 @@
     <string name="weather_condition_fresh_breeze">svěží vánek</string>
     <string name="weather_condition_hail">krupobití</string>
     <string name="audio_recordings">Nahrávky zvuku</string>
-    <string name="map_theme_motorider">Motorider</string>
+    <string name="map_theme_motorider">Motorkář</string>
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="menuitem_calculator">Kalkulačka</string>
     <string name="menuitem_real_time_heart_rate">Sledování tepu v reálném čase</string>
@@ -4013,4 +4013,9 @@
     <string name="workout_lap">Kolo</string>
     <string name="lap_time">Čas</string>
     <string name="hr_measurement_continuous">Průběžné</string>
+    <string name="map_theme_biker">Cyklista</string>
+    <string name="map_theme_indigo">Indigo</string>
+    <string name="stroke_rate">Frekvence úderů</string>
+    <string name="jump_rope_longest_streak">Nejdelší série</string>
+    <string name="jump_rope_interruptions">Přerušení</string>
 </resources>
