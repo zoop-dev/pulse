@@ -81,7 +81,15 @@ public class FitRecordDataFactory {
             case 158 -> new FitWorkoutSession(recordDefinition, recordHeader);
             case 159 -> new FitWatchfaceSettings(recordDefinition, recordHeader);
             case 160 -> new FitGpsMetadata(recordDefinition, recordHeader);
+            case 161 -> new FitCameraEvent(recordDefinition, recordHeader);
             case 162 -> new FitTimestampCorrelation(recordDefinition, recordHeader);
+            case 169 -> new FitVideoFrame(recordDefinition, recordHeader);
+            case 174 -> new FitObdiiData(recordDefinition, recordHeader);
+            case 177 -> new FitNmeaSentence(recordDefinition, recordHeader);
+            case 184 -> new FitVideo(recordDefinition, recordHeader);
+            case 185 -> new FitVideoTitle(recordDefinition, recordHeader);
+            case 186 -> new FitVideoDescription(recordDefinition, recordHeader);
+            case 187 -> new FitVideoClip(recordDefinition, recordHeader);
             case 188 -> new FitOhrSettings(recordDefinition, recordHeader);
             case 206 -> new FitFieldDescription(recordDefinition, recordHeader);
             case 207 -> new FitDeveloperData(recordDefinition, recordHeader);
