@@ -61,10 +61,19 @@ public abstract class Logging {
             getLogger().info("Gadgetbridge version: {}-{} {} {}", BuildConfig.VERSION_NAME,
                     BuildConfig.GIT_HASH_SHORT, BuildConfig.FLAVOR, BuildConfig.BUILD_TYPE);
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                getLogger().info("Android: SDK_INT={}", Build.VERSION.SDK_INT);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
+                getLogger().info(
+                        "Android: SDK_INT={} SECURITY_PATCH={}",
+                        Build.VERSION.SDK_INT,
+                        Build.VERSION.SECURITY_PATCH
+                );
             } else {
-                getLogger().info("Android: SDK_INT_FULL={} SECURITY_PATCH={}", Build.VERSION.SDK_INT_FULL, Build.VERSION.SECURITY_PATCH);
+                getLogger().info(
+                        "Android: SDK_INT={} SDK_INT_FULL={} SECURITY_PATCH={}",
+                        Build.VERSION.SDK_INT,
+                        Build.VERSION.SDK_INT_FULL,
+                        Build.VERSION.SECURITY_PATCH
+                );
             }
         } catch (Exception ex) {
             Log.e("GBApplication", "External files dir not available, cannot log to file", ex);

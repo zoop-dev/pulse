@@ -32,7 +32,7 @@ import static nodomain.freeyourgadget.gadgetbridge.Logging.PROP_LOGFILES_DIR;
  * directory.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 21, application = GBTestApplication.class)
+@Config(sdk = 23, application = GBTestApplication.class)
 public abstract class TestBase {
     protected static File logFilesDir;
 
