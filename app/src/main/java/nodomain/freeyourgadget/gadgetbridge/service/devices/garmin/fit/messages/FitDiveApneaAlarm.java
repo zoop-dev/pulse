@@ -28,38 +28,43 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitSegmentPoint extends RecordData {
-    public FitSegmentPoint(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitDiveApneaAlarm extends RecordData {
+    public FitDiveApneaAlarm(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 150) {
-            throw new IllegalArgumentException("FitSegmentPoint expects global messages of " + 150 + ", got " + globalNumber);
+        if (globalNumber != 393) {
+            throw new IllegalArgumentException("FitDiveApneaAlarm expects global messages of " + 393 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Double getPositionLat() {
-        return (Double) getFieldByNumber(1);
+    public Double getDepth() {
+        return (Double) getFieldByNumber(0);
     }
 
     @Nullable
-    public Double getPositionLong() {
-        return (Double) getFieldByNumber(2);
+    public Long getTime() {
+        return (Long) getFieldByNumber(1);
     }
 
     @Nullable
-    public Double getDistance() {
-        return (Double) getFieldByNumber(3);
+    public Boolean getEnabled() {
+        return (Boolean) getFieldByNumber(2);
     }
 
     @Nullable
-    public Float getAltitude() {
-        return (Float) getFieldByNumber(4);
+    public Integer getAlarmType() {
+        return (Integer) getFieldByNumber(3);
     }
 
     @Nullable
-    public Number[] getLeaderTime() {
+    public Integer getSound() {
+        return (Integer) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public Number[] getDiveTypes() {
         final Object[] objectsArray = (Object[]) getFieldByNumber(5);
         if (objectsArray == null)
             return null;
@@ -71,8 +76,33 @@ public class FitSegmentPoint extends RecordData {
     }
 
     @Nullable
-    public Double getEnhancedAltitude() {
-        return (Double) getFieldByNumber(6);
+    public Long getId() {
+        return (Long) getFieldByNumber(6);
+    }
+
+    @Nullable
+    public Boolean getPopupEnabled() {
+        return (Boolean) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Boolean getTriggerOnDescent() {
+        return (Boolean) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Boolean getTriggerOnAscent() {
+        return (Boolean) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public Boolean getRepeating() {
+        return (Boolean) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Double getSpeed() {
+        return (Double) getFieldByNumber(11);
     }
 
     @Nullable
@@ -85,36 +115,66 @@ public class FitSegmentPoint extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(150);
+            super(393);
         }
 
-        public Builder setPositionLat(final Double value) {
+        public Builder setDepth(final Double value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setTime(final Long value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setPositionLong(final Double value) {
+        public Builder setEnabled(final Boolean value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setDistance(final Double value) {
+        public Builder setAlarmType(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setAltitude(final Float value) {
+        public Builder setSound(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setLeaderTime(final Number[] value) {
+        public Builder setDiveTypes(final Number[] value) {
             setFieldByNumber(5, (Object[]) value);
             return this;
         }
 
-        public Builder setEnhancedAltitude(final Double value) {
+        public Builder setId(final Long value) {
             setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setPopupEnabled(final Boolean value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setTriggerOnDescent(final Boolean value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setTriggerOnAscent(final Boolean value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setRepeating(final Boolean value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setSpeed(final Double value) {
+            setFieldByNumber(11, value);
             return this;
         }
 
@@ -124,8 +184,8 @@ public class FitSegmentPoint extends RecordData {
         }
 
         @Override
-        public FitSegmentPoint build() {
-            return (FitSegmentPoint) super.build();
+        public FitDiveApneaAlarm build() {
+            return (FitDiveApneaAlarm) super.build();
         }
     }
 }

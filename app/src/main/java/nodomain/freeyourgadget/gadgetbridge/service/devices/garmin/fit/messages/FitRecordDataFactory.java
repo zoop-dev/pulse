@@ -37,6 +37,7 @@ public class FitRecordDataFactory {
             case 23 -> new FitDeviceInfo(recordDefinition, recordHeader);
             case 26 -> new FitWorkout(recordDefinition, recordHeader);
             case 27 -> new FitWorkoutStep(recordDefinition, recordHeader);
+            case 28 -> new FitSchedule(recordDefinition, recordHeader);
             case 29 -> new FitLocation(recordDefinition, recordHeader);
             case 30 -> new FitWeightScale(recordDefinition, recordHeader);
             case 31 -> new FitCourse(recordDefinition, recordHeader);
@@ -55,6 +56,9 @@ public class FitRecordDataFactory {
             case 72 -> new FitTrainingFile(recordDefinition, recordHeader);
             case 78 -> new FitHrv(recordDefinition, recordHeader);
             case 79 -> new FitUserMetrics(recordDefinition, recordHeader);
+            case 80 -> new FitAntRx(recordDefinition, recordHeader);
+            case 81 -> new FitAntTx(recordDefinition, recordHeader);
+            case 82 -> new FitAntChannelId(recordDefinition, recordHeader);
             case 101 -> new FitLength(recordDefinition, recordHeader);
             case 103 -> new FitMonitoringInfo(recordDefinition, recordHeader);
             case 104 -> new FitDeviceStatus(recordDefinition, recordHeader);
@@ -62,6 +66,7 @@ public class FitRecordDataFactory {
             case 106 -> new FitSlaveDevice(recordDefinition, recordHeader);
             case 127 -> new FitConnectivity(recordDefinition, recordHeader);
             case 128 -> new FitWeather(recordDefinition, recordHeader);
+            case 129 -> new FitWeatherAlert(recordDefinition, recordHeader);
             case 131 -> new FitCadenceZone(recordDefinition, recordHeader);
             case 132 -> new FitHr(recordDefinition, recordHeader);
             case 140 -> new FitPhysiologicalMetrics(recordDefinition, recordHeader);
@@ -89,12 +94,14 @@ public class FitRecordDataFactory {
             case 229 -> new FitMaxMetData(recordDefinition, recordHeader);
             case 258 -> new FitDiveSettings(recordDefinition, recordHeader);
             case 259 -> new FitDiveGas(recordDefinition, recordHeader);
+            case 262 -> new FitDiveAlarm(recordDefinition, recordHeader);
             case 264 -> new FitExerciseTitle(recordDefinition, recordHeader);
             case 268 -> new FitDiveSummary(recordDefinition, recordHeader);
             case 269 -> new FitSpo2(recordDefinition, recordHeader);
             case 273 -> new FitSleepDataInfo(recordDefinition, recordHeader);
             case 274 -> new FitSleepDataRaw(recordDefinition, recordHeader);
             case 275 -> new FitSleepStage(recordDefinition, recordHeader);
+            case 285 -> new FitJump(recordDefinition, recordHeader);
             case 290 -> new FitBeatIntervals(recordDefinition, recordHeader);
             case 297 -> new FitRespirationRate(recordDefinition, recordHeader);
             case 304 -> new FitHsaStepData(recordDefinition, recordHeader);
@@ -106,6 +113,7 @@ public class FitRecordDataFactory {
             case 313 -> new FitSplitSummary(recordDefinition, recordHeader);
             case 314 -> new FitHsaBodyBatteryData(recordDefinition, recordHeader);
             case 315 -> new FitHsaEvent(recordDefinition, recordHeader);
+            case 317 -> new FitClimbPro(recordDefinition, recordHeader);
             case 319 -> new FitTankUpdate(recordDefinition, recordHeader);
             case 323 -> new FitTankSummary(recordDefinition, recordHeader);
             case 326 -> new FitGpsEvent(recordDefinition, recordHeader);
@@ -118,7 +126,10 @@ public class FitRecordDataFactory {
             case 375 -> new FitDeviceAuxBatteryInfo(recordDefinition, recordHeader);
             case 378 -> new FitTrainingLoad(recordDefinition, recordHeader);
             case 379 -> new FitSleepSchedule(recordDefinition, recordHeader);
+            case 387 -> new FitChronoShotSession(recordDefinition, recordHeader);
+            case 388 -> new FitChronoShotData(recordDefinition, recordHeader);
             case 389 -> new FitHsaConfigurationData(recordDefinition, recordHeader);
+            case 393 -> new FitDiveApneaAlarm(recordDefinition, recordHeader);
             case 394 -> new FitCpeStatus(recordDefinition, recordHeader);
             case 397 -> new FitSkinTempRaw(recordDefinition, recordHeader);
             case 398 -> new FitSkinTempOvernight(recordDefinition, recordHeader);

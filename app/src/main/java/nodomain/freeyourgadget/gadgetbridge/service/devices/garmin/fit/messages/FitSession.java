@@ -464,6 +464,78 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Number[] getAvgTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(95);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMinTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(96);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(97);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(98);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMinSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(99);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(100);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
     public Float getAvgLeftTorqueEffectiveness() {
         return (Float) getFieldByNumber(101);
     }
@@ -635,6 +707,36 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Double getEnhancedAvgAltitude() {
+        return (Double) getFieldByNumber(126);
+    }
+
+    @Nullable
+    public Double getEnhancedMinAltitude() {
+        return (Double) getFieldByNumber(127);
+    }
+
+    @Nullable
+    public Double getEnhancedMaxAltitude() {
+        return (Double) getFieldByNumber(128);
+    }
+
+    @Nullable
+    public Integer getAvgLevMotorPower() {
+        return (Integer) getFieldByNumber(129);
+    }
+
+    @Nullable
+    public Integer getMaxLevMotorPower() {
+        return (Integer) getFieldByNumber(130);
+    }
+
+    @Nullable
+    public Float getLevBatteryConsumption() {
+        return (Float) getFieldByNumber(131);
+    }
+
+    @Nullable
     public Float getAvgVerticalRatio() {
         return (Float) getFieldByNumber(132);
     }
@@ -652,6 +754,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Float getTotalAnaerobicTrainingEffect() {
         return (Float) getFieldByNumber(137);
+    }
+
+    @Nullable
+    public Float getAvgVam() {
+        return (Float) getFieldByNumber(139);
     }
 
     @Nullable
@@ -1302,6 +1409,36 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setAvgTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(95, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMinTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(96, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMaxTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(97, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(98, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMinSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(99, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMaxSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(100, (Object[]) value);
+            return this;
+        }
+
         public Builder setAvgLeftTorqueEffectiveness(final Float value) {
             setFieldByNumber(101, value);
             return this;
@@ -1417,6 +1554,36 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setEnhancedAvgAltitude(final Double value) {
+            setFieldByNumber(126, value);
+            return this;
+        }
+
+        public Builder setEnhancedMinAltitude(final Double value) {
+            setFieldByNumber(127, value);
+            return this;
+        }
+
+        public Builder setEnhancedMaxAltitude(final Double value) {
+            setFieldByNumber(128, value);
+            return this;
+        }
+
+        public Builder setAvgLevMotorPower(final Integer value) {
+            setFieldByNumber(129, value);
+            return this;
+        }
+
+        public Builder setMaxLevMotorPower(final Integer value) {
+            setFieldByNumber(130, value);
+            return this;
+        }
+
+        public Builder setLevBatteryConsumption(final Float value) {
+            setFieldByNumber(131, value);
+            return this;
+        }
+
         public Builder setAvgVerticalRatio(final Float value) {
             setFieldByNumber(132, value);
             return this;
@@ -1434,6 +1601,11 @@ public class FitSession extends RecordData {
 
         public Builder setTotalAnaerobicTrainingEffect(final Float value) {
             setFieldByNumber(137, value);
+            return this;
+        }
+
+        public Builder setAvgVam(final Float value) {
+            setFieldByNumber(139, value);
             return this;
         }
 

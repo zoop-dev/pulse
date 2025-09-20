@@ -28,56 +28,49 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitSegmentPoint extends RecordData {
-    public FitSegmentPoint(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitSchedule extends RecordData {
+    public FitSchedule(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 150) {
-            throw new IllegalArgumentException("FitSegmentPoint expects global messages of " + 150 + ", got " + globalNumber);
+        if (globalNumber != 28) {
+            throw new IllegalArgumentException("FitSchedule expects global messages of " + 28 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Double getPositionLat() {
-        return (Double) getFieldByNumber(1);
+    public Integer getManufacturer() {
+        return (Integer) getFieldByNumber(0);
     }
 
     @Nullable
-    public Double getPositionLong() {
-        return (Double) getFieldByNumber(2);
+    public Integer getProduct() {
+        return (Integer) getFieldByNumber(1);
     }
 
     @Nullable
-    public Double getDistance() {
-        return (Double) getFieldByNumber(3);
+    public Long getSerialNumber() {
+        return (Long) getFieldByNumber(2);
     }
 
     @Nullable
-    public Float getAltitude() {
-        return (Float) getFieldByNumber(4);
+    public Long getTimeCreated() {
+        return (Long) getFieldByNumber(3);
     }
 
     @Nullable
-    public Number[] getLeaderTime() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(5);
-        if (objectsArray == null)
-            return null;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Boolean getCompleted() {
+        return (Boolean) getFieldByNumber(4);
     }
 
     @Nullable
-    public Double getEnhancedAltitude() {
-        return (Double) getFieldByNumber(6);
+    public Integer getType() {
+        return (Integer) getFieldByNumber(5);
     }
 
     @Nullable
-    public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+    public Long getScheduledTime() {
+        return (Long) getFieldByNumber(6);
     }
 
     /**
@@ -85,47 +78,47 @@ public class FitSegmentPoint extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(150);
+            super(28);
         }
 
-        public Builder setPositionLat(final Double value) {
+        public Builder setManufacturer(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setProduct(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setPositionLong(final Double value) {
+        public Builder setSerialNumber(final Long value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setDistance(final Double value) {
+        public Builder setTimeCreated(final Long value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setAltitude(final Float value) {
+        public Builder setCompleted(final Boolean value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setLeaderTime(final Number[] value) {
-            setFieldByNumber(5, (Object[]) value);
+        public Builder setType(final Integer value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setEnhancedAltitude(final Double value) {
+        public Builder setScheduledTime(final Long value) {
             setFieldByNumber(6, value);
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
-            return this;
-        }
-
         @Override
-        public FitSegmentPoint build() {
-            return (FitSegmentPoint) super.build();
+        public FitSchedule build() {
+            return (FitSchedule) super.build();
         }
     }
 }

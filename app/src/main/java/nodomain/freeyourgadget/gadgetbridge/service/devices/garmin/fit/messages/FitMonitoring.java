@@ -97,8 +97,8 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
-    public Integer getLocalTimestamp() {
-        return (Integer) getFieldByNumber(11);
+    public Long getLocalTimestamp() {
+        return (Long) getFieldByNumber(11);
     }
 
     @Nullable
@@ -249,7 +249,7 @@ public class FitMonitoring extends RecordData {
             return this;
         }
 
-        public Builder setLocalTimestamp(final Integer value) {
+        public Builder setLocalTimestamp(final Long value) {
             setFieldByNumber(11, value);
             return this;
         }

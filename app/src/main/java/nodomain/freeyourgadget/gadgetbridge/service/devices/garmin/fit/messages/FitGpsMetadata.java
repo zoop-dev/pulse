@@ -39,13 +39,55 @@ public class FitGpsMetadata extends RecordData {
     }
 
     @Nullable
-    public Long getEnhancedAltitude() {
-        return (Long) getFieldByNumber(3);
+    public Integer getTimestampMs() {
+        return (Integer) getFieldByNumber(0);
     }
 
     @Nullable
-    public Long getEnhancedSpeed() {
-        return (Long) getFieldByNumber(4);
+    public Double getPositionLat() {
+        return (Double) getFieldByNumber(1);
+    }
+
+    @Nullable
+    public Double getPositionLong() {
+        return (Double) getFieldByNumber(2);
+    }
+
+    @Nullable
+    public Double getEnhancedAltitude() {
+        return (Double) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Double getEnhancedSpeed() {
+        return (Double) getFieldByNumber(4);
+    }
+
+    @Nullable
+    public Float getHeading() {
+        return (Float) getFieldByNumber(5);
+    }
+
+    @Nullable
+    public Long getUtcTimestamp() {
+        return (Long) getFieldByNumber(6);
+    }
+
+    @Nullable
+    public Number[] getVelocity() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(7);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Long getTimestamp() {
+        return (Long) getFieldByNumber(253);
     }
 
     /**
@@ -56,13 +98,48 @@ public class FitGpsMetadata extends RecordData {
             super(160);
         }
 
-        public Builder setEnhancedAltitude(final Long value) {
+        public Builder setTimestampMs(final Integer value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setPositionLat(final Double value) {
+            setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setPositionLong(final Double value) {
+            setFieldByNumber(2, value);
+            return this;
+        }
+
+        public Builder setEnhancedAltitude(final Double value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setEnhancedSpeed(final Long value) {
+        public Builder setEnhancedSpeed(final Double value) {
             setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setHeading(final Float value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setUtcTimestamp(final Long value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setVelocity(final Number[] value) {
+            setFieldByNumber(7, (Object[]) value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 

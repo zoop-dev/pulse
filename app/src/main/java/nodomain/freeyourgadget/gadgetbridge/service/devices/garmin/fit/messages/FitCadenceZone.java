@@ -48,6 +48,11 @@ public class FitCadenceZone extends RecordData {
         return (String) getFieldByNumber(1);
     }
 
+    @Nullable
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
+    }
+
     /**
      * @noinspection unused
      */
@@ -63,6 +68,11 @@ public class FitCadenceZone extends RecordData {
 
         public Builder setName(final String value) {
             setFieldByNumber(1, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 

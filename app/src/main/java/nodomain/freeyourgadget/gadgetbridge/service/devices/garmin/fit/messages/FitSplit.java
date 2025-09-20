@@ -125,7 +125,7 @@ public class FitSplit extends RecordData {
 
     @Nullable
     public Double getTotalMovingTime() {
-        return (Double) getFieldByNumber(101);
+        return (Double) getFieldByNumber(110);
     }
 
     @Nullable
@@ -227,7 +227,7 @@ public class FitSplit extends RecordData {
         }
 
         public Builder setTotalMovingTime(final Double value) {
-            setFieldByNumber(101, value);
+            setFieldByNumber(110, value);
             return this;
         }
 

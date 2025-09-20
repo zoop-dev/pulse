@@ -100,6 +100,11 @@ public class FitGoals extends RecordData {
         return (Source) getFieldByNumber(11);
     }
 
+    @Nullable
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
+    }
+
     /**
      * @noinspection unused
      */
@@ -165,6 +170,11 @@ public class FitGoals extends RecordData {
 
         public Builder setSource(final Source value) {
             setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 

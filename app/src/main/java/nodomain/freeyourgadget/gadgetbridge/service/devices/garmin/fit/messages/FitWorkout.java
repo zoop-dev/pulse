@@ -78,6 +78,11 @@ public class FitWorkout extends RecordData {
         return (String) getFieldByNumber(17);
     }
 
+    @Nullable
+    public Integer getMessageIndex() {
+        return (Integer) getFieldByNumber(254);
+    }
+
     /**
      * @noinspection unused
      */
@@ -123,6 +128,11 @@ public class FitWorkout extends RecordData {
 
         public Builder setNotes(final String value) {
             setFieldByNumber(17, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 

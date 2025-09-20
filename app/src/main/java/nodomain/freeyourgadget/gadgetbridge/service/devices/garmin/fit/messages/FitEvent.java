@@ -64,6 +64,71 @@ public class FitEvent extends RecordData {
     }
 
     @Nullable
+    public Integer getScore() {
+        return (Integer) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Integer getOpponentScore() {
+        return (Integer) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Integer getFrontGearNum() {
+        return (Integer) getFieldByNumber(9);
+    }
+
+    @Nullable
+    public Integer getFrontGear() {
+        return (Integer) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Integer getRearGearNum() {
+        return (Integer) getFieldByNumber(11);
+    }
+
+    @Nullable
+    public Integer getRearGear() {
+        return (Integer) getFieldByNumber(12);
+    }
+
+    @Nullable
+    public Integer getDeviceIndex() {
+        return (Integer) getFieldByNumber(13);
+    }
+
+    @Nullable
+    public Integer getActivityType() {
+        return (Integer) getFieldByNumber(14);
+    }
+
+    @Nullable
+    public Long getStartTimestamp() {
+        return (Long) getFieldByNumber(15);
+    }
+
+    @Nullable
+    public Integer getRadarThreatLevelMax() {
+        return (Integer) getFieldByNumber(21);
+    }
+
+    @Nullable
+    public Integer getRadarThreatCount() {
+        return (Integer) getFieldByNumber(22);
+    }
+
+    @Nullable
+    public Float getRadarThreatAvgApproachSpeed() {
+        return (Float) getFieldByNumber(23);
+    }
+
+    @Nullable
+    public Float getRadarThreatMaxApproachSpeed() {
+        return (Float) getFieldByNumber(24);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return (Long) getFieldByNumber(253);
     }
@@ -98,6 +163,71 @@ public class FitEvent extends RecordData {
 
         public Builder setEventGroup(final Integer value) {
             setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setScore(final Integer value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setOpponentScore(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setFrontGearNum(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setFrontGear(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setRearGearNum(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setRearGear(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setDeviceIndex(final Integer value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setActivityType(final Integer value) {
+            setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setStartTimestamp(final Long value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
+        public Builder setRadarThreatLevelMax(final Integer value) {
+            setFieldByNumber(21, value);
+            return this;
+        }
+
+        public Builder setRadarThreatCount(final Integer value) {
+            setFieldByNumber(22, value);
+            return this;
+        }
+
+        public Builder setRadarThreatAvgApproachSpeed(final Float value) {
+            setFieldByNumber(23, value);
+            return this;
+        }
+
+        public Builder setRadarThreatMaxApproachSpeed(final Float value) {
+            setFieldByNumber(24, value);
             return this;
         }
 

@@ -28,54 +28,29 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitSdmProfile extends RecordData {
-    public FitSdmProfile(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitChronoShotData extends RecordData {
+    public FitChronoShotData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 5) {
-            throw new IllegalArgumentException("FitSdmProfile expects global messages of " + 5 + ", got " + globalNumber);
+        if (globalNumber != 388) {
+            throw new IllegalArgumentException("FitChronoShotData expects global messages of " + 388 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Boolean getEnabled() {
-        return (Boolean) getFieldByNumber(0);
+    public Double getShotSpeed() {
+        return (Double) getFieldByNumber(0);
     }
 
     @Nullable
-    public Integer getSdmAntId() {
+    public Integer getShotNum() {
         return (Integer) getFieldByNumber(1);
     }
 
     @Nullable
-    public Float getSdmCalFactor() {
-        return (Float) getFieldByNumber(2);
-    }
-
-    @Nullable
-    public Double getOdometer() {
-        return (Double) getFieldByNumber(3);
-    }
-
-    @Nullable
-    public Integer getSpeedSource() {
-        return (Integer) getFieldByNumber(4);
-    }
-
-    @Nullable
-    public Integer getSdmAntIdTransType() {
-        return (Integer) getFieldByNumber(5);
-    }
-
-    @Nullable
-    public Integer getOdometerRollover() {
-        return (Integer) getFieldByNumber(7);
-    }
-
-    @Nullable
-    public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+    public Long getTimestamp() {
+        return (Long) getFieldByNumber(253);
     }
 
     /**
@@ -83,52 +58,27 @@ public class FitSdmProfile extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(5);
+            super(388);
         }
 
-        public Builder setEnabled(final Boolean value) {
+        public Builder setShotSpeed(final Double value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setSdmAntId(final Integer value) {
+        public Builder setShotNum(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setSdmCalFactor(final Float value) {
-            setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setOdometer(final Double value) {
-            setFieldByNumber(3, value);
-            return this;
-        }
-
-        public Builder setSpeedSource(final Integer value) {
-            setFieldByNumber(4, value);
-            return this;
-        }
-
-        public Builder setSdmAntIdTransType(final Integer value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setOdometerRollover(final Integer value) {
-            setFieldByNumber(7, value);
-            return this;
-        }
-
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 
         @Override
-        public FitSdmProfile build() {
-            return (FitSdmProfile) super.build();
+        public FitChronoShotData build() {
+            return (FitChronoShotData) super.build();
         }
     }
 }

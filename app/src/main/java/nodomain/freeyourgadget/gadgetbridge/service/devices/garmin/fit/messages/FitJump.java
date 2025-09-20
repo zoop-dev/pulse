@@ -28,56 +28,64 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
  * @noinspection unused
  */
-public class FitSegmentPoint extends RecordData {
-    public FitSegmentPoint(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitJump extends RecordData {
+    public FitJump(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 150) {
-            throw new IllegalArgumentException("FitSegmentPoint expects global messages of " + 150 + ", got " + globalNumber);
+        if (globalNumber != 285) {
+            throw new IllegalArgumentException("FitJump expects global messages of " + 285 + ", got " + globalNumber);
         }
     }
 
     @Nullable
-    public Double getPositionLat() {
-        return (Double) getFieldByNumber(1);
+    public Float getDistance() {
+        return (Float) getFieldByNumber(0);
     }
 
     @Nullable
-    public Double getPositionLong() {
-        return (Double) getFieldByNumber(2);
+    public Float getHeigh() {
+        return (Float) getFieldByNumber(1);
     }
 
     @Nullable
-    public Double getDistance() {
-        return (Double) getFieldByNumber(3);
+    public Integer getRotations() {
+        return (Integer) getFieldByNumber(2);
     }
 
     @Nullable
-    public Float getAltitude() {
+    public Float getHangTime() {
+        return (Float) getFieldByNumber(3);
+    }
+
+    @Nullable
+    public Float getScore() {
         return (Float) getFieldByNumber(4);
     }
 
     @Nullable
-    public Number[] getLeaderTime() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(5);
-        if (objectsArray == null)
-            return null;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Double getPositionLat() {
+        return (Double) getFieldByNumber(5);
     }
 
     @Nullable
-    public Double getEnhancedAltitude() {
+    public Double getPositionLong() {
         return (Double) getFieldByNumber(6);
     }
 
     @Nullable
-    public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+    public Float getSpeed() {
+        return (Float) getFieldByNumber(7);
+    }
+
+    @Nullable
+    public Double getEnhancedSpeed() {
+        return (Double) getFieldByNumber(8);
+    }
+
+    @Nullable
+    public Long getTimestamp() {
+        return (Long) getFieldByNumber(253);
     }
 
     /**
@@ -85,47 +93,62 @@ public class FitSegmentPoint extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(150);
+            super(285);
         }
 
-        public Builder setPositionLat(final Double value) {
+        public Builder setDistance(final Float value) {
+            setFieldByNumber(0, value);
+            return this;
+        }
+
+        public Builder setHeigh(final Float value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setPositionLong(final Double value) {
+        public Builder setRotations(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setDistance(final Double value) {
+        public Builder setHangTime(final Float value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setAltitude(final Float value) {
+        public Builder setScore(final Float value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setLeaderTime(final Number[] value) {
-            setFieldByNumber(5, (Object[]) value);
+        public Builder setPositionLat(final Double value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setEnhancedAltitude(final Double value) {
+        public Builder setPositionLong(final Double value) {
             setFieldByNumber(6, value);
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
+        public Builder setSpeed(final Float value) {
+            setFieldByNumber(7, value);
+            return this;
+        }
+
+        public Builder setEnhancedSpeed(final Double value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 
         @Override
-        public FitSegmentPoint build() {
-            return (FitSegmentPoint) super.build();
+        public FitJump build() {
+            return (FitJump) super.build();
         }
     }
 }

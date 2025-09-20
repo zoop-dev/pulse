@@ -295,13 +295,66 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
-    public Double getTimeInHrZone() {
-        return (Double) getFieldByNumber(57);
+    public Number[] getTimeInHrZone() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(57);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getTimeInSpeedZone() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(58);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getTimeInCadenceZone() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(59);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getTimeInPowerZone() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(60);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Integer getRepetitionNum() {
+        return (Integer) getFieldByNumber(61);
     }
 
     @Nullable
     public Float getMinAltitude() {
         return (Float) getFieldByNumber(62);
+    }
+
+    @Nullable
+    public Integer getMinHeartRate() {
+        return (Integer) getFieldByNumber(63);
     }
 
     @Nullable
@@ -315,6 +368,71 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Integer getOpponentScore() {
+        return (Integer) getFieldByNumber(74);
+    }
+
+    @Nullable
+    public Number[] getStrokeCount() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(75);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getZoneCount() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(76);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgVerticalOscillation() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(77);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgStanceTimePercen() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(78);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgStanceTime() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(79);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
     public Float getAvgFractionalCadence() {
         return (Float) getFieldByNumber(80);
     }
@@ -322,6 +440,123 @@ public class FitLap extends RecordData {
     @Nullable
     public Float getMaxFractionalCadence() {
         return (Float) getFieldByNumber(81);
+    }
+
+    @Nullable
+    public Float getTotalFractionalCycles() {
+        return (Float) getFieldByNumber(82);
+    }
+
+    @Nullable
+    public Integer getPlayerScore() {
+        return (Integer) getFieldByNumber(83);
+    }
+
+    @Nullable
+    public Number[] getAvgTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(84);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMinTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(85);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(86);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(87);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMinSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(88);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(89);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Float getAvgLeftTorqueEffectiveness() {
+        return (Float) getFieldByNumber(91);
+    }
+
+    @Nullable
+    public Float getAvgRightTorqueEffectiveness() {
+        return (Float) getFieldByNumber(92);
+    }
+
+    @Nullable
+    public Float getAvgLeftPedalSmoothness() {
+        return (Float) getFieldByNumber(93);
+    }
+
+    @Nullable
+    public Float getAvgRightPedalSmoothness() {
+        return (Float) getFieldByNumber(94);
+    }
+
+    @Nullable
+    public Float getAvgCombinedPedalSmoothness() {
+        return (Float) getFieldByNumber(95);
+    }
+
+    @Nullable
+    public Double getTimeStanding() {
+        return (Double) getFieldByNumber(98);
+    }
+
+    @Nullable
+    public Integer getStandCount() {
+        return (Integer) getFieldByNumber(99);
     }
 
     @Nullable
@@ -385,8 +620,123 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Double getEnhancedAvgAltitude() {
+        return (Double) getFieldByNumber(112);
+    }
+
+    @Nullable
+    public Double getEnhancedMinAltitude() {
+        return (Double) getFieldByNumber(113);
+    }
+
+    @Nullable
+    public Double getEnhancedMaxAltitude() {
+        return (Double) getFieldByNumber(114);
+    }
+
+    @Nullable
+    public Integer getAvgLevMotorPower() {
+        return (Integer) getFieldByNumber(115);
+    }
+
+    @Nullable
+    public Integer getMaxLevMotorPower() {
+        return (Integer) getFieldByNumber(116);
+    }
+
+    @Nullable
+    public Float getLevBatteryConsumption() {
+        return (Float) getFieldByNumber(117);
+    }
+
+    @Nullable
+    public Float getAvgVerticalRatio() {
+        return (Float) getFieldByNumber(118);
+    }
+
+    @Nullable
+    public Float getAvgStanceTimeBalance() {
+        return (Float) getFieldByNumber(119);
+    }
+
+    @Nullable
+    public Float getAvgStepLength() {
+        return (Float) getFieldByNumber(120);
+    }
+
+    @Nullable
+    public Float getAvgVam() {
+        return (Float) getFieldByNumber(121);
+    }
+
+    @Nullable
+    public Double getAvgDepth() {
+        return (Double) getFieldByNumber(122);
+    }
+
+    @Nullable
+    public Double getMaxDepth() {
+        return (Double) getFieldByNumber(123);
+    }
+
+    @Nullable
     public Integer getMinTemperature() {
         return (Integer) getFieldByNumber(124);
+    }
+
+    @Nullable
+    public Float getEnhancedAvgRespirationRate() {
+        return (Float) getFieldByNumber(136);
+    }
+
+    @Nullable
+    public Float getEnhancedMaxRespirationRate() {
+        return (Float) getFieldByNumber(137);
+    }
+
+    @Nullable
+    public Integer getAvgRespirationRate() {
+        return (Integer) getFieldByNumber(147);
+    }
+
+    @Nullable
+    public Integer getMaxRespirationRate() {
+        return (Integer) getFieldByNumber(148);
+    }
+
+    @Nullable
+    public Float getTotalGrit() {
+        return (Float) getFieldByNumber(149);
+    }
+
+    @Nullable
+    public Float getTotalFlow() {
+        return (Float) getFieldByNumber(150);
+    }
+
+    @Nullable
+    public Integer getJumpCount() {
+        return (Integer) getFieldByNumber(151);
+    }
+
+    @Nullable
+    public Float getAvgGrit() {
+        return (Float) getFieldByNumber(153);
+    }
+
+    @Nullable
+    public Float getAvgFlow() {
+        return (Float) getFieldByNumber(154);
+    }
+
+    @Nullable
+    public Float getTotalFractionalAscent() {
+        return (Float) getFieldByNumber(156);
+    }
+
+    @Nullable
+    public Float getTotalFractionalDescent() {
+        return (Float) getFieldByNumber(157);
     }
 
     @Nullable
@@ -677,13 +1027,38 @@ public class FitLap extends RecordData {
             return this;
         }
 
-        public Builder setTimeInHrZone(final Double value) {
-            setFieldByNumber(57, value);
+        public Builder setTimeInHrZone(final Number[] value) {
+            setFieldByNumber(57, (Object[]) value);
+            return this;
+        }
+
+        public Builder setTimeInSpeedZone(final Number[] value) {
+            setFieldByNumber(58, (Object[]) value);
+            return this;
+        }
+
+        public Builder setTimeInCadenceZone(final Number[] value) {
+            setFieldByNumber(59, (Object[]) value);
+            return this;
+        }
+
+        public Builder setTimeInPowerZone(final Number[] value) {
+            setFieldByNumber(60, (Object[]) value);
+            return this;
+        }
+
+        public Builder setRepetitionNum(final Integer value) {
+            setFieldByNumber(61, value);
             return this;
         }
 
         public Builder setMinAltitude(final Float value) {
             setFieldByNumber(62, value);
+            return this;
+        }
+
+        public Builder setMinHeartRate(final Integer value) {
+            setFieldByNumber(63, value);
             return this;
         }
 
@@ -697,6 +1072,36 @@ public class FitLap extends RecordData {
             return this;
         }
 
+        public Builder setOpponentScore(final Integer value) {
+            setFieldByNumber(74, value);
+            return this;
+        }
+
+        public Builder setStrokeCount(final Number[] value) {
+            setFieldByNumber(75, (Object[]) value);
+            return this;
+        }
+
+        public Builder setZoneCount(final Number[] value) {
+            setFieldByNumber(76, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgVerticalOscillation(final Number[] value) {
+            setFieldByNumber(77, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgStanceTimePercen(final Number[] value) {
+            setFieldByNumber(78, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgStanceTime(final Number[] value) {
+            setFieldByNumber(79, (Object[]) value);
+            return this;
+        }
+
         public Builder setAvgFractionalCadence(final Float value) {
             setFieldByNumber(80, value);
             return this;
@@ -704,6 +1109,81 @@ public class FitLap extends RecordData {
 
         public Builder setMaxFractionalCadence(final Float value) {
             setFieldByNumber(81, value);
+            return this;
+        }
+
+        public Builder setTotalFractionalCycles(final Float value) {
+            setFieldByNumber(82, value);
+            return this;
+        }
+
+        public Builder setPlayerScore(final Integer value) {
+            setFieldByNumber(83, value);
+            return this;
+        }
+
+        public Builder setAvgTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(84, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMinTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(85, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMaxTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(86, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(87, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMinSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(88, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMaxSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(89, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgLeftTorqueEffectiveness(final Float value) {
+            setFieldByNumber(91, value);
+            return this;
+        }
+
+        public Builder setAvgRightTorqueEffectiveness(final Float value) {
+            setFieldByNumber(92, value);
+            return this;
+        }
+
+        public Builder setAvgLeftPedalSmoothness(final Float value) {
+            setFieldByNumber(93, value);
+            return this;
+        }
+
+        public Builder setAvgRightPedalSmoothness(final Float value) {
+            setFieldByNumber(94, value);
+            return this;
+        }
+
+        public Builder setAvgCombinedPedalSmoothness(final Float value) {
+            setFieldByNumber(95, value);
+            return this;
+        }
+
+        public Builder setTimeStanding(final Double value) {
+            setFieldByNumber(98, value);
+            return this;
+        }
+
+        public Builder setStandCount(final Integer value) {
+            setFieldByNumber(99, value);
             return this;
         }
 
@@ -767,8 +1247,123 @@ public class FitLap extends RecordData {
             return this;
         }
 
+        public Builder setEnhancedAvgAltitude(final Double value) {
+            setFieldByNumber(112, value);
+            return this;
+        }
+
+        public Builder setEnhancedMinAltitude(final Double value) {
+            setFieldByNumber(113, value);
+            return this;
+        }
+
+        public Builder setEnhancedMaxAltitude(final Double value) {
+            setFieldByNumber(114, value);
+            return this;
+        }
+
+        public Builder setAvgLevMotorPower(final Integer value) {
+            setFieldByNumber(115, value);
+            return this;
+        }
+
+        public Builder setMaxLevMotorPower(final Integer value) {
+            setFieldByNumber(116, value);
+            return this;
+        }
+
+        public Builder setLevBatteryConsumption(final Float value) {
+            setFieldByNumber(117, value);
+            return this;
+        }
+
+        public Builder setAvgVerticalRatio(final Float value) {
+            setFieldByNumber(118, value);
+            return this;
+        }
+
+        public Builder setAvgStanceTimeBalance(final Float value) {
+            setFieldByNumber(119, value);
+            return this;
+        }
+
+        public Builder setAvgStepLength(final Float value) {
+            setFieldByNumber(120, value);
+            return this;
+        }
+
+        public Builder setAvgVam(final Float value) {
+            setFieldByNumber(121, value);
+            return this;
+        }
+
+        public Builder setAvgDepth(final Double value) {
+            setFieldByNumber(122, value);
+            return this;
+        }
+
+        public Builder setMaxDepth(final Double value) {
+            setFieldByNumber(123, value);
+            return this;
+        }
+
         public Builder setMinTemperature(final Integer value) {
             setFieldByNumber(124, value);
+            return this;
+        }
+
+        public Builder setEnhancedAvgRespirationRate(final Float value) {
+            setFieldByNumber(136, value);
+            return this;
+        }
+
+        public Builder setEnhancedMaxRespirationRate(final Float value) {
+            setFieldByNumber(137, value);
+            return this;
+        }
+
+        public Builder setAvgRespirationRate(final Integer value) {
+            setFieldByNumber(147, value);
+            return this;
+        }
+
+        public Builder setMaxRespirationRate(final Integer value) {
+            setFieldByNumber(148, value);
+            return this;
+        }
+
+        public Builder setTotalGrit(final Float value) {
+            setFieldByNumber(149, value);
+            return this;
+        }
+
+        public Builder setTotalFlow(final Float value) {
+            setFieldByNumber(150, value);
+            return this;
+        }
+
+        public Builder setJumpCount(final Integer value) {
+            setFieldByNumber(151, value);
+            return this;
+        }
+
+        public Builder setAvgGrit(final Float value) {
+            setFieldByNumber(153, value);
+            return this;
+        }
+
+        public Builder setAvgFlow(final Float value) {
+            setFieldByNumber(154, value);
+            return this;
+        }
+
+        public Builder setTotalFractionalAscent(final Float value) {
+            setFieldByNumber(156, value);
+            return this;
+        }
+
+        public Builder setTotalFractionalDescent(final Float value) {
+            setFieldByNumber(157, value);
             return this;
         }
 

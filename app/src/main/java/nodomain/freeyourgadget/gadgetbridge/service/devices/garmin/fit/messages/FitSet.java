@@ -77,8 +77,30 @@ public class FitSet extends RecordData {
     }
 
     @Nullable
+    public Number[] getCategorySubtype() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(8);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Integer getWeightDisplayUnit() {
+        return (Integer) getFieldByNumber(9);
+    }
+
+    @Nullable
     public Integer getMessageIndex() {
         return (Integer) getFieldByNumber(10);
+    }
+
+    @Nullable
+    public Integer getWktStepIndex() {
+        return (Integer) getFieldByNumber(11);
     }
 
     @Nullable
@@ -124,8 +146,23 @@ public class FitSet extends RecordData {
             return this;
         }
 
+        public Builder setCategorySubtype(final Number[] value) {
+            setFieldByNumber(8, (Object[]) value);
+            return this;
+        }
+
+        public Builder setWeightDisplayUnit(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
         public Builder setMessageIndex(final Integer value) {
             setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setWktStepIndex(final Integer value) {
+            setFieldByNumber(11, value);
             return this;
         }
 

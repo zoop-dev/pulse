@@ -39,8 +39,8 @@ public class FitHrmProfile extends RecordData {
     }
 
     @Nullable
-    public Integer getEnabled() {
-        return (Integer) getFieldByNumber(0);
+    public Boolean getEnabled() {
+        return (Boolean) getFieldByNumber(0);
     }
 
     @Nullable
@@ -71,7 +71,7 @@ public class FitHrmProfile extends RecordData {
             super(4);
         }
 
-        public Builder setEnabled(final Integer value) {
+        public Builder setEnabled(final Boolean value) {
             setFieldByNumber(0, value);
             return this;
         }

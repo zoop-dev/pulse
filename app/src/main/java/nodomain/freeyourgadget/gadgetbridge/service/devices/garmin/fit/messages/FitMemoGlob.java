@@ -39,6 +39,18 @@ public class FitMemoGlob extends RecordData {
     }
 
     @Nullable
+    public Number[] getMemo() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(0);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
     public Integer getMesgNum() {
         return (Integer) getFieldByNumber(1);
     }
@@ -69,6 +81,11 @@ public class FitMemoGlob extends RecordData {
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
             super(145);
+        }
+
+        public Builder setMemo(final Number[] value) {
+            setFieldByNumber(0, (Object[]) value);
+            return this;
         }
 
         public Builder setMesgNum(final Integer value) {

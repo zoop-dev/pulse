@@ -185,6 +185,36 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Float getLeftTorqueEffectiveness() {
+        return (Float) getFieldByNumber(43);
+    }
+
+    @Nullable
+    public Float getRightTorqueEffectiveness() {
+        return (Float) getFieldByNumber(44);
+    }
+
+    @Nullable
+    public Float getLeftPedalSmoothness() {
+        return (Float) getFieldByNumber(45);
+    }
+
+    @Nullable
+    public Float getRightPedalSmoothness() {
+        return (Float) getFieldByNumber(46);
+    }
+
+    @Nullable
+    public Float getCombinedPedalSmoothness() {
+        return (Float) getFieldByNumber(47);
+    }
+
+    @Nullable
+    public Float getTime128() {
+        return (Float) getFieldByNumber(48);
+    }
+
+    @Nullable
     public Integer getStrokeType() {
         return (Integer) getFieldByNumber(49);
     }
@@ -210,8 +240,138 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Number[] getAvgTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(54);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMinTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(55);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxTotalHemoglobinConc() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(56);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getAvgSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(57);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMinSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(58);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getMaxSaturatedHemoglobinPercent() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(59);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
     public Integer getDeviceIndex() {
         return (Integer) getFieldByNumber(62);
+    }
+
+    @Nullable
+    public Integer getLeftPco() {
+        return (Integer) getFieldByNumber(67);
+    }
+
+    @Nullable
+    public Integer getRightPco() {
+        return (Integer) getFieldByNumber(68);
+    }
+
+    @Nullable
+    public Number[] getLeftPowerPhase() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(69);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getLeftPowerPhasePeak() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(70);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getRightPowerPhase() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(71);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
+    }
+
+    @Nullable
+    public Number[] getRightPowerPhasePeak() {
+        final Object[] objectsArray = (Object[]) getFieldByNumber(72);
+        if (objectsArray == null)
+            return null;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -317,6 +477,26 @@ public class FitRecord extends RecordData {
     @Nullable
     public Float getCurrentStress() {
         return (Float) getFieldByNumber(116);
+    }
+
+    @Nullable
+    public Integer getEbikeTravelRang() {
+        return (Integer) getFieldByNumber(117);
+    }
+
+    @Nullable
+    public Integer getEbikeBatteryLevel() {
+        return (Integer) getFieldByNumber(118);
+    }
+
+    @Nullable
+    public Integer getEbikeAssistMode() {
+        return (Integer) getFieldByNumber(119);
+    }
+
+    @Nullable
+    public Integer getEbikeAssistLevelPercent() {
+        return (Integer) getFieldByNumber(120);
     }
 
     @Nullable
@@ -512,6 +692,36 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setLeftTorqueEffectiveness(final Float value) {
+            setFieldByNumber(43, value);
+            return this;
+        }
+
+        public Builder setRightTorqueEffectiveness(final Float value) {
+            setFieldByNumber(44, value);
+            return this;
+        }
+
+        public Builder setLeftPedalSmoothness(final Float value) {
+            setFieldByNumber(45, value);
+            return this;
+        }
+
+        public Builder setRightPedalSmoothness(final Float value) {
+            setFieldByNumber(46, value);
+            return this;
+        }
+
+        public Builder setCombinedPedalSmoothness(final Float value) {
+            setFieldByNumber(47, value);
+            return this;
+        }
+
+        public Builder setTime128(final Float value) {
+            setFieldByNumber(48, value);
+            return this;
+        }
+
         public Builder setStrokeType(final Integer value) {
             setFieldByNumber(49, value);
             return this;
@@ -537,8 +747,68 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setAvgTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(54, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMinTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(55, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMaxTotalHemoglobinConc(final Number[] value) {
+            setFieldByNumber(56, (Object[]) value);
+            return this;
+        }
+
+        public Builder setAvgSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(57, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMinSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(58, (Object[]) value);
+            return this;
+        }
+
+        public Builder setMaxSaturatedHemoglobinPercent(final Number[] value) {
+            setFieldByNumber(59, (Object[]) value);
+            return this;
+        }
+
         public Builder setDeviceIndex(final Integer value) {
             setFieldByNumber(62, value);
+            return this;
+        }
+
+        public Builder setLeftPco(final Integer value) {
+            setFieldByNumber(67, value);
+            return this;
+        }
+
+        public Builder setRightPco(final Integer value) {
+            setFieldByNumber(68, value);
+            return this;
+        }
+
+        public Builder setLeftPowerPhase(final Number[] value) {
+            setFieldByNumber(69, (Object[]) value);
+            return this;
+        }
+
+        public Builder setLeftPowerPhasePeak(final Number[] value) {
+            setFieldByNumber(70, (Object[]) value);
+            return this;
+        }
+
+        public Builder setRightPowerPhase(final Number[] value) {
+            setFieldByNumber(71, (Object[]) value);
+            return this;
+        }
+
+        public Builder setRightPowerPhasePeak(final Number[] value) {
+            setFieldByNumber(72, (Object[]) value);
             return this;
         }
 
@@ -644,6 +914,26 @@ public class FitRecord extends RecordData {
 
         public Builder setCurrentStress(final Float value) {
             setFieldByNumber(116, value);
+            return this;
+        }
+
+        public Builder setEbikeTravelRang(final Integer value) {
+            setFieldByNumber(117, value);
+            return this;
+        }
+
+        public Builder setEbikeBatteryLevel(final Integer value) {
+            setFieldByNumber(118, value);
+            return this;
+        }
+
+        public Builder setEbikeAssistMode(final Integer value) {
+            setFieldByNumber(119, value);
+            return this;
+        }
+
+        public Builder setEbikeAssistLevelPercent(final Integer value) {
+            setFieldByNumber(120, value);
             return this;
         }
 
