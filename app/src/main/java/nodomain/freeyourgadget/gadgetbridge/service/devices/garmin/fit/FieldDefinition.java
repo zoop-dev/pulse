@@ -43,7 +43,13 @@ public class FieldDefinition implements FieldInterface {
             if (global.getBaseType().equals(baseType)) {
                 return global;
             } else {
-                LOG.warn("Global is of type {}, but message declares {}", global.getBaseType(), baseType);
+                LOG.warn(
+                        "Global for {}[{}] is of type {}, but message declares {}",
+                        globalFITMessage.name(),
+                        global.name,
+                        global.getBaseType(),
+                        baseType
+                );
             }
         }
 
