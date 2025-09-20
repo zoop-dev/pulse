@@ -4015,4 +4015,7 @@
     <string name="workout_lap">大腿</string>
     <string name="lap_time">时间</string>
     <string name="hr_measurement_continuous">持续性</string>
+    <string name="stroke_rate">划率</string>
+    <string name="jump_rope_longest_streak">最长连跳</string>
+    <string name="jump_rope_interruptions">中断</string>
 </resources>
