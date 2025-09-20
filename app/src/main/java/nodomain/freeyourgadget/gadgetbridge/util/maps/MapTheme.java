@@ -10,14 +10,17 @@ import java.io.InputStream;
 
 public enum MapTheme implements XmlRenderTheme {
     DEFAULT("/assets/mapsforge/default.xml"),
-    OSMARENDER("/assets/mapsforge/osmarender.xml"),
+    BIKER("/assets/mapsforge/biker.xml"),
+    DARK("/assets/mapsforge/dark.xml"),
+    INDIGO("/assets/mapsforge/indigo.xml"),
     MOTORIDER("/assets/mapsforge/motorider.xml"),
+    OSMARENDER("/assets/mapsforge/osmarender.xml"),
     ;
 
     private XmlRenderThemeMenuCallback menuCallback;
     private final String path;
 
-    MapTheme(String path) {
+    MapTheme(final String path) {
         this.path = path;
     }
 
