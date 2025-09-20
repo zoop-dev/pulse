@@ -272,11 +272,11 @@ dependencies {
     implementation 'org.msgpack:msgpack-core:0.9.10'
     implementation 'com.github.ByteHamster:SearchPreference:2.7.3'
 
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-core:0.25.0'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-map:0.25.0'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-reader:0.25.0'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-themes:0.25.0'
-    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-android:0.25.0'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-core:0.26.1'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-map:0.26.1'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-reader:0.26.1'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-themes:0.26.1'
+    implementation 'com.github.mapsforge.mapsforge:mapsforge-map-android:0.26.1'
     implementation 'com.caverock:androidsvg:1.4'
     implementation 'org.jsoup:jsoup:1.21.2'
 
