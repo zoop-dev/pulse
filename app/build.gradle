@@ -13,9 +13,9 @@ tasks.withType(Test).configureEach {
     systemProperty "GB_LOGFILES_DIR", Files.createTempDirectory("gblog").toString()
 }
 
-def getVersionCode = { ->
+final def getVersionCode = { ->
     try {
-        def commitCount = providers.exec {
+        final def commitCount = providers.exec {
             commandLine('git', 'rev-list', 'HEAD', '--count')
         }.standardOutput.asText.get().trim()
         return Integer.valueOf(commitCount)
@@ -25,31 +25,31 @@ def getVersionCode = { ->
 }
 
 tasks.register("buildGitChangelog"){
-    def changelogFile = new File("${project.rootDir}/app/build/generated/res/changelog/xml/changelog_git.xml")
+    final def changelogFile = new File("${project.rootDir}/app/build/generated/res/changelog/xml/changelog_git.xml")
 
     inputs.file(project.rootProject.file(".git/HEAD"))
     outputs.file(changelogFile)
 
     doLast {
-        def allCommits = providers.exec {
+        final def allCommits = providers.exec {
             commandLine('git', 'log', '--pretty=format:%h %s')
         }.standardOutput.asText.get()
 
         def commitVersionCode = getVersionCode()
         def includedCommits = 0
-        def changelogNode = new Node(null, 'changelog')
+        final def changelogNode = new Node(null, 'changelog')
 
-        allCommits.trim().eachLine { line ->
+        allCommits.trim().eachLine { final line ->
             if (includedCommits > 100) {
                 return true
             }
 
-            def (commitHash, commitMessage) = line.split(" ", 2)
+            final def (commitHash, commitMessage) = line.split(" ", 2)
             if (commitMessage.contains("Translated using Weblate")) {
                 return true
             }
 
-            def releaseNode = new Node(changelogNode, 'release', [version: commitHash, versioncode: commitVersionCode--])
+            final def releaseNode = new Node(changelogNode, 'release', [version: commitHash, versioncode: commitVersionCode--])
             def _ = new Node(releaseNode, 'change', [:], commitMessage)
             includedCommits++
         }
@@ -59,7 +59,7 @@ tasks.register("buildGitChangelog"){
     }
 }
 
-def getGitHashShort = { ->
+final def getGitHashShort = { ->
     try {
         return providers.exec {
             commandLine('git', 'rev-parse', '--short', 'HEAD')
@@ -85,6 +85,8 @@ android {
     }
 
     namespace = 'nodomain.freeyourgadget.gadgetbridge'
+    compileSdk = 36
+    buildToolsVersion = '36.0.0'
 
     defaultConfig {
         applicationId "nodomain.freeyourgadget.gadgetbridge"
@@ -92,11 +94,8 @@ android {
         // Note: update toolchain.languageVersion when changing targetSdk
         //noinspection OldTargetApi
         targetSdk = 34
-        compileSdk = 36
         // Note: update sourceCompatibility and targetCompatibility when changing minSdk
         minSdk = 23
-
-        buildToolsVersion = '36.0.0'
 
         // Note: always bump BOTH versionCode and versionName!
         versionName "0.87.0"
@@ -314,7 +313,7 @@ protobuf {
         artifact = 'com.google.protobuf:protoc:4.32.1'
     }
     generateProtoTasks {
-        all().each { task ->
+        all().each { final task ->
             task.builtins {
                 java {
                     option 'lite'
